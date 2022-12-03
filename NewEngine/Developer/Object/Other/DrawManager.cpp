@@ -220,7 +220,7 @@ unique_ptr<Material> LoadMaterial(const std::string& filePath)
 			lineStream >> material->textureFilepath;
 
 			// テクスチャ読み込み
-			materialTextureList->Add(LoadTexture((directoryPath + material->textureFilepath).c_str()), numberIndex);
+			//materialTextureList->Add(LoadTexture((directoryPath + material->textureFilepath).c_str()), numberIndex);
 			numberIndex++;
 		}
 	}

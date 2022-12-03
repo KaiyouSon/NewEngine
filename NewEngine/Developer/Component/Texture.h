@@ -1,12 +1,8 @@
 #pragma once
-#include "IComponent.h"
 #include "MathUtil.h"
 #include <d3d12.h>
 #include <wrl.h>
-#include <memory>
-#include <vector>
 #include <string>
-#include <list>
 
 class Texture
 {
@@ -28,20 +24,3 @@ public: // セッター
 public: // ゲッター
 	inline D3D12_GPU_DESCRIPTOR_HANDLE GetGpuHandle() { return gpuHandle; }
 };
-
-class TextureManager
-{
-public:
-	std::list<std::unique_ptr<Texture>> list;
-
-public:
-	void Add(std::unique_ptr<Texture>&& texture, const std::string& tag);
-	void Add(std::unique_ptr<Texture>&& texture, const uint32_t& index);
-	Texture* GetBackTexture();
-	Texture* GetTexture(const std::string& tag);
-	Texture* GetTexture(const uint32_t& index);
-	void DestroyTexture(const std::string& tag);
-};
-
-extern std::unique_ptr<TextureManager> gameTextureList;
-extern std::unique_ptr<TextureManager> materialTextureList;

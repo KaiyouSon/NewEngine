@@ -1,46 +1,7 @@
 #include "Texture.h"
 #include "RenderBase.h"
 #include <DirectXTex.h>
-using namespace std;
 using namespace DirectX;
-
-void TextureManager::Add(unique_ptr<Texture>&& texture, const string& tag)
-{
-	list.push_back(move(texture));
-}
-
-void TextureManager::Add(std::unique_ptr<Texture>&& texture, const uint32_t& index)
-{
-	list.push_back(move(texture));
-}
-
-Texture* TextureManager::GetBackTexture()
-{
-	if (list.size() > 0)
-	{
-		return list.back().get();
-	}
-}
-
-Texture* TextureManager::GetTexture(const string& tag)
-{
-
-	return nullptr;
-}
-
-Texture* TextureManager::GetTexture(const uint32_t& index)
-{
-
-	return nullptr;
-}
-
-void TextureManager::DestroyTexture(const string& tag)
-{
-
-}
-
-unique_ptr<TextureManager> gameTextureList(new TextureManager);
-unique_ptr<TextureManager> materialTextureList(new TextureManager);
 
 Texture::Texture(std::string filePath)
 {
@@ -49,16 +10,17 @@ Texture::Texture(std::string filePath)
 	HRESULT result;
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
-	wstring wfilePath(path.begin(), path.end());
+	std::wstring wfilePath(path.begin(), path.end());
 
 	// WICテクスチャのロード
 	result = LoadFromWICFile(
 		wfilePath.c_str(),
 		WIC_FLAGS_NONE,
 		&metadata, scratchImg);
+
 	if (result != S_OK)
 	{
-		assert(SUCCEEDED(result));
+		assert(0 && "テクスチャーの読み込みが失敗しました");
 	}
 
 	// ミップマップ生成
@@ -94,7 +56,7 @@ Texture::Texture(std::string filePath)
 	textureResourceDesc.SampleDesc.Count = 1;
 
 	// テクスチャのサイズをセット
-	//texture->SetTextureSize(Vec2(textureResourceDesc.Width, textureResourceDesc.Height));
+	size = { (float)textureResourceDesc.Width, (float)textureResourceDesc.Height };
 
 	// テクスチャバッファの生成
 	result = RenderBase::GetInstance()->GetDevice()->

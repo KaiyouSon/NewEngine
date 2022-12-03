@@ -15,7 +15,7 @@ Model::Model(std::string modelName)
 	// ファイルオープン失敗をチェック
 	if (file.fail())
 	{
-		assert(0);
+		assert(0 && "モデルの読み込みが失敗しました");
 	}
 	vector<Vec3> positions;
 	vector<Vec3> normals;

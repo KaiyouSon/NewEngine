@@ -5,7 +5,6 @@ using namespace std;
 
 Object3D::Object3D() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
-	model(nullptr), texture(nullptr),
 	isInitConstantBuffer(false), constantBuffer(new ConstantBuffer)
 {
 }
