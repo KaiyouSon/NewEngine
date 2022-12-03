@@ -10,10 +10,6 @@ class Object3D
 private:
 	ConstantBuffer* constantBuffer;
 	Transform transform;
-	bool isInit;
-
-private:
-	void Init();
 
 public:
 	Model model;

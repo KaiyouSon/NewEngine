@@ -5,33 +5,24 @@ using namespace std;
 
 Object3D::Object3D() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
-	isInit(false), constantBuffer(new ConstantBuffer)
+	constantBuffer(new ConstantBuffer)
 {
+	// 定数バッファ初期化
+	constantBuffer->TransformBufferInit();
+	constantBuffer->MaterialBufferInit();
 	texture.isMaterial = true;
+
 }
 Object3D::~Object3D()
 {
 	delete constantBuffer;
 }
-
-void Object3D::Init()
+void Object3D::Update()
 {
-	if (isInit == true) return;
-
-	// 定数バッファ初期化
-	constantBuffer->TransformBufferInit();
-	constantBuffer->MaterialBufferInit();
-
 	if (texture.isMaterial == true)
 	{
 		texture = model.material.texture;
 	}
-
-	isInit = true;
-}
-void Object3D::Update()
-{
-	Init();
 
 	transform.pos = pos;
 	transform.scale = scale;

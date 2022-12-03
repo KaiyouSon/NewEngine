@@ -6,31 +6,15 @@
 using namespace std;
 
 Sprite::Sprite() :
+	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0), anchorPoint(0.0f, 0.0f),
 	vertexBuffer(new VertexBuffer<VertexPosUv>),
 	indexBuffer(new IndexBuffer),
 	constantBuffer(new ConstantBuffer)
 {
-	layer = false;
-}
-
-Sprite::~Sprite()
-{
-	delete vertexBuffer;
-	delete indexBuffer;
-	delete constantBuffer;
-}
-
-void Sprite::Initialize()
-{
-	//componentManager->GetComponent<Texture>()->SetTexture(*TextureBuffer::GetDefaultTexture());
-
-	//float width = componentManager->GetComponent<Texture>()->GetTextureSize().x;
-	//float height = componentManager->GetComponent<Texture>()->GetTextureSize().y;
-
-	//vertices.push_back({ { -(width / 2), +(height / 2), 0.0f }, {0.0f, 1.0f} });	//左下
-	//vertices.push_back({ { -(width / 2), -(height / 2), 0.0f }, {0.0f, 0.0f} });	//左上
-	//vertices.push_back({ { +(width / 2), +(height / 2), 0.0f }, {1.0f, 1.0f} });	//右下
-	//vertices.push_back({ { +(width / 2), -(height / 2), 0.0f }, {1.0f, 0.0f} });	//右上
+	vertices.push_back({ { 0.0f, 0.0f, 0.0f }, {0.0f, 1.0f} });	//左下
+	vertices.push_back({ { 0.0f, 0.0f, 0.0f }, {0.0f, 0.0f} });	//左上
+	vertices.push_back({ { 0.0f, 0.0f, 0.0f }, {1.0f, 1.0f} });	//右下
+	vertices.push_back({ { 0.0f, 0.0f, 0.0f }, {1.0f, 0.0f} });	//右上
 
 	indices.push_back(0); indices.push_back(1); indices.push_back(2);	// 三角形1つ目
 	indices.push_back(2); indices.push_back(1);	indices.push_back(3);	// 三角形2つ目
@@ -43,35 +27,41 @@ void Sprite::Initialize()
 	constantBuffer->TransformBufferInit();
 }
 
+Sprite::~Sprite()
+{
+	delete vertexBuffer;
+	delete indexBuffer;
+	delete constantBuffer;
+}
+
 void Sprite::Update()
 {
-	componentManager->GetComponent<Transform>()->Update();
+	transform.pos = pos;
+	transform.scale = scale;
+	transform.rot = rot;
+	transform.Update();
 
 	// 定数バッファに転送
 	constantBuffer->constMapTransform->mat =
-		componentManager->GetComponent<Transform>()->worldMat *
+		transform.worldMat *
 		view->matProjection2D;
 
-	//float width = componentManager->GetComponent<Texture>()->GetTextureSize().x;
-	//float height = componentManager->GetComponent<Texture>()->GetTextureSize().y;
+	float width = texture.size.x;
+	float height = texture.size.y;
 
-	//if (width / 2 != mathUtil->Absolut(vertices.at(0).pos.x) ||
-	//	height / 2 != mathUtil->Absolut(vertices.at(0).pos.y) ||
-	//	width / 2 != mathUtil->Absolut(vertices.at(1).pos.x) ||
-	//	height / 2 != mathUtil->Absolut(vertices.at(1).pos.y) ||
-	//	width / 2 != mathUtil->Absolut(vertices.at(2).pos.x) ||
-	//	height / 2 != mathUtil->Absolut(vertices.at(2).pos.y) ||
-	//	width / 2 != mathUtil->Absolut(vertices.at(3).pos.x) ||
-	//	height / 2 != mathUtil->Absolut(vertices.at(3).pos.y))
-	//{
-	//	vertices.at(0) = { { -(width / 2), +(height / 2), 0.0f }, {0.0f, 1.0f} };	// 左下
-	//	vertices.at(1) = { { -(width / 2), -(height / 2), 0.0f }, {0.0f, 0.0f} };	//左上
-	//	vertices.at(2) = { { +(width / 2), +(height / 2), 0.0f }, {1.0f, 1.0f} };	//右下
-	//	vertices.at(3) = { { +(width / 2), -(height / 2), 0.0f }, {1.0f, 0.0f} };	//右上
+	float width2 = vertices[0].pos.x - vertices[2].pos.x;
+	float height2 = vertices[1].pos.x - vertices[3].pos.x;
 
-	//	vertexBuffer->TransferToBuffer(vertices);
-	//	vertexBuffer->Unmap();
-	//}
+	if (width != fabsf(width2) || width != fabsf(height2))
+	{
+		vertices[0].pos = { (0.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f };
+		vertices[1].pos = { (0.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f };
+		vertices[2].pos = { (1.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f };
+		vertices[3].pos = { (1.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f };
+
+		vertexBuffer->TransferToBuffer(vertices);
+		vertexBuffer->Unmap();
+	}
 
 	constantBuffer->SetColor(color);
 }
@@ -98,18 +88,7 @@ void Sprite::Draw()
 	auto temp = renderBase->GetSrvDescHeap();
 	renderBase->GetCommandList()->SetDescriptorHeaps(1, &temp);
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-		2, componentManager->GetComponent<Texture>()->GetGpuHandle());
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture.GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced((unsigned short)indices.size(), 1, 0, 0, 0);
-}
-
-bool Sprite::GetLayer()
-{
-	return layer;
-}
-
-Mat4 Sprite::GetFinalMat()
-{
-	return constantBuffer->constMapTransform->mat;
 }

@@ -1,8 +1,18 @@
 #pragma once
-void Load();
-void Initialize();
-void Update();
-void Draw2D();
-void Draw3D();
-void DrawLine();
-void Destroy();
+#include "Sprite.h"
+#include "Object3D.h"
+
+class TestScene
+{
+private:
+	Object3D obj;
+	Sprite spr;
+
+public:
+	void Load();
+	void Init();
+	void Update();
+	void DrawFrontSprite();
+	void DrawBackSprite();
+	void DrawModel();
+};

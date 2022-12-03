@@ -223,10 +223,10 @@
     <ClInclude Include="NewEngine\Developer\Math\Vec2.h" />
     <ClInclude Include="NewEngine\Developer\Math\Vec3.h" />
     <ClInclude Include="NewEngine\Developer\Math\Vec4.h" />
+    <ClInclude Include="NewEngine\Developer\Object\2D\Sprite.h" />
     <ClInclude Include="NewEngine\Developer\Object\3D\Line.h" />
     <ClInclude Include="NewEngine\Developer\Object\3D\Object3D.h" />
     <ClInclude Include="NewEngine\Developer\Object\Object2D\RenderTexture.h" />
-    <ClInclude Include="NewEngine\Developer\Object\Object2D\Sprite.h" />
     <ClInclude Include="NewEngine\Developer\Object\Other\DebugCamera.h" />
     <ClInclude Include="NewEngine\Developer\Object\Other\DrawManager.h" />
     <ClInclude Include="NewEngine\Developer\Object\Other\GameObject.h" />

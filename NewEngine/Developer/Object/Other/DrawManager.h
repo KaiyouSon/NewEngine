@@ -1,8 +1,8 @@
 #pragma once
 #include "Sprite.h"
+#include "Object3D.h"
 #include "RenderTexture.h"
 #include "Line.h"
-#include "Object3D.h"
 #include "ViewProjection.h"
 #include "DebugCamera.h"
 #include "TextureBuffer.h"

@@ -10,33 +10,30 @@
 #include "Texture.h"
 using namespace std;
 
-Object3D obj;
-Texture tex;
-
-// 画像の読み込み
-void Load()
+void TestScene::Load()
 {
 	Model test = Model("Cube");
 	Texture tex = Texture("pic.png");
 	obj.model = test;
-	//obj.texture = tex;
+	obj.texture = tex;
+
+	spr.texture = tex;
 }
-// 初期化処理
-void Initialize()
+
+void TestScene::Init()
 {
 	//view->SetPos(Vec3(0, 0, -50));
 	//view->SetTarget(Vec3::zero);
 	//view->SetUp(Vec3::up);
 
-	//obj.Initialize();
 
 	DebugCamera::GetInstance()->Initialize();
 }
 
-// 更新処理
-void Update()
+void TestScene::Update()
 {
 	obj.Update();
+	spr.Update();
 
 	view->SetPos(debugCamera->GetPos());
 	view->SetTarget(debugCamera->GetTarget());
@@ -45,20 +42,16 @@ void Update()
 	DebugCamera::GetInstance()->Update();
 }
 
-void Draw2D()
+void TestScene::DrawFrontSprite()
 {
 }
 
-void Draw3D()
+void TestScene::DrawBackSprite()
+{
+	spr.Draw();
+}
+
+void TestScene::DrawModel()
 {
 	obj.Draw();
-}
-
-void DrawLine()
-{
-}
-
-// インスタンスのdelete
-void Destroy()
-{
 }

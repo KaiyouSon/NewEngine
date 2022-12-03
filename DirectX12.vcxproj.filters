@@ -332,9 +332,6 @@
     <ClInclude Include="NewEngine\Developer\Object\Object2D\RenderTexture.h">
       <Filter>NewEngine\Header\Developer\Object\Object2D</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Object\Object2D\Sprite.h">
-      <Filter>NewEngine\Header\Developer\Object\Object2D</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Developer\Object\Other\DebugCamera.h">
       <Filter>NewEngine\Header\Developer\Object\Other</Filter>
     </ClInclude>
@@ -403,6 +400,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Developer\Component\Texture.h">
       <Filter>NewEngine\Header\Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Object\2D\Sprite.h">
+      <Filter>NewEngine\Header\Developer\Object\Object2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

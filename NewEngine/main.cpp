@@ -2,7 +2,6 @@
 #include "main2.h"
 #include "InputManager.h"
 #include "Util.h"
-#include "ObjectManager.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
@@ -12,8 +11,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//SetBackGroundColor(25.5, 63.75, 127.5);	// 背景色
 	SetBackGroundColor(0, 0, 0);	// 背景色
 	NewEngineInit();	// エンジンの初期化
-	Load();			// ゲーム内のロード処理
-	Initialize();	// ゲーム内の初期化処理
+	TestScene testScene;
+
+	testScene.Load();			// ゲーム内のロード処理
+	testScene.Init();	// ゲーム内の初期化処理
 
 	frameRate->Initialize(60);
 
@@ -24,7 +25,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		// ----------- ここから更新処理を記述 ----------- //
 		////////////////////////////////////////////////////
 		NewEngineUpda();	// エンジンの更新処理
-		Update();			// ゲーム内の更新処理
+		testScene.Update();			// ゲーム内の更新処理
 		////////////////////////////////////////////////////
 		// ---------- ここまでに更新処理を記述 ---------- //
 		////////////////////////////////////////////////////
@@ -33,8 +34,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		// ----------- ここから描画処理を記述 ----------- //
 		////////////////////////////////////////////////////
 		NewEneineDraw();		// エンジンの描画処理
-		Draw3D();
-		DrawLine();
+		testScene.DrawFrontSprite();
+		testScene.DrawModel();
+		testScene.DrawBackSprite();
 		////////////////////////////////////////////////////
 		// ---------- ここまでに描画処理を記述 ---------- //
 		////////////////////////////////////////////////////
@@ -49,7 +51,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		frameRate->Update();
 	}
 
-	Destroy();	// インスタンスの破棄
 	NewEngineEnd();	// エンジンのエンド処理
 
 	// 正常終了
