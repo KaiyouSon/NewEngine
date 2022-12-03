@@ -90,7 +90,7 @@ Material::Material(std::string filePath) :
 
 			// テクスチャ読み込み
 			texture = Texture(directoryPath + textureName, true);
-			texture.isLoaded = true;
+			texture.isMaterial = true;
 		}
 	}
 

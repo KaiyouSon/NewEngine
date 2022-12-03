@@ -3,11 +3,11 @@
 #include <DirectXTex.h>
 using namespace DirectX;
 
-Texture::Texture() : isLoaded(false)
+Texture::Texture() : isMaterial(false)
 {
 }
 
-Texture::Texture(std::string filePath, bool isDirectoryPath) : isLoaded(false)
+Texture::Texture(std::string filePath, bool isDirectoryPath) : isMaterial(false)
 {
 	std::string path = isDirectoryPath ? filePath : "Application/Resources/Texture/" + filePath;
 

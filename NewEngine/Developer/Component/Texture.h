@@ -12,7 +12,7 @@ private:
 public:
 	Microsoft::WRL::ComPtr<ID3D12Resource> buffer; //テクスチャのリソース
 	Vec2 size;
-	bool isLoaded;
+	bool isMaterial;
 
 public:
 	Texture();
