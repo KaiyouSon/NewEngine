@@ -8,18 +8,12 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{ebea575b-6f4d-4e6e-b893-a47bace55e10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="nlohmann">
-      <UniqueIdentifier>{28d170d7-68b9-4ebe-8342-9a87d930bba5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="NewEngine">
       <UniqueIdentifier>{a0e509e1-416c-4df2-a204-ba1f23432926}</UniqueIdentifier>
     </Filter>
     <Filter Include="NewEngine\Source">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="NewEngine\Source\Gui">
-      <UniqueIdentifier>{79dd6d11-35f6-4175-95f4-e1abb2d413bd}</UniqueIdentifier>
     </Filter>
     <Filter Include="NewEngine\Source\Render">
       <UniqueIdentifier>{0cd6b8a8-b44a-41d8-98cd-686e7f36ec4f}</UniqueIdentifier>
@@ -102,9 +96,6 @@
     </Filter>
     <Filter Include="NewEngine\Header\Developer\Collision">
       <UniqueIdentifier>{83e19682-79a0-43d8-8575-d4adfaf103c0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header\Gui">
-      <UniqueIdentifier>{256f88ef-ad73-45a9-a226-583307bda5de}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -225,27 +216,6 @@
     <ClCompile Include="NewEngine\Developer\Sound.cpp">
       <Filter>NewEngine\Source\Developer</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Gui\GuiManager.cpp">
-      <Filter>NewEngine\Source\Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Gui\HierarchyLayer.cpp">
-      <Filter>NewEngine\Source\Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Gui\InspectorLayer.cpp">
-      <Filter>NewEngine\Source\Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Gui\MainLayer.cpp">
-      <Filter>NewEngine\Source\Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Gui\ProjectLayer.cpp">
-      <Filter>NewEngine\Source\Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Gui\SceneLayer.cpp">
-      <Filter>NewEngine\Source\Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Gui\UserLayer.cpp">
-      <Filter>NewEngine\Source\Gui</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Render\Buffer\ConstantBuffer.cpp">
       <Filter>NewEngine\Source\Render\Buffer</Filter>
     </ClCompile>
@@ -286,141 +256,6 @@
     </ClInclude>
     <ClInclude Include="NewEngine\NewEngine.h">
       <Filter>NewEngine\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\adl_serializer.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\byte_container_with_subtype.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\abi_macros.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\conversions\from_json.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\conversions\to_chars.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\conversions\to_json.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\exceptions.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\hash.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\input\binary_reader.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\input\input_adapters.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\input\json_sax.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\input\lexer.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\input\parser.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\input\position_t.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\iterators\internal_iterator.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\iterators\iteration_proxy.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\iterators\iterator_traits.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\iterators\iter_impl.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\iterators\json_reverse_iterator.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\iterators\primitive_iterator.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\json_custom_base_class.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\json_pointer.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\json_ref.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\macro_scope.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\macro_unscope.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\meta\call_std\begin.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\meta\call_std\end.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\meta\cpp_future.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\meta\detected.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\meta\identity_tag.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\meta\is_sax.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\meta\std_fs.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\meta\type_traits.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\meta\void_t.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\output\binary_writer.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\output\output_adapters.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\output\serializer.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\string_concat.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\string_escape.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\detail\value_t.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\json.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\json_fwd.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\ordered_map.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\thirdparty\hedley\hedley.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="nlohmann\thirdparty\hedley\hedley_undef.hpp">
-      <Filter>nlohmann</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Developer\Collision\Collider.h">
       <Filter>NewEngine\Header\Developer\Collision</Filter>
@@ -526,30 +361,6 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Developer\Sound.h">
       <Filter>NewEngine\Header\Developer</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Gui\GuiManager.h">
-      <Filter>NewEngine\Header\Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Gui\HierarchyLayer.h">
-      <Filter>NewEngine\Header\Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Gui\ILayer.h">
-      <Filter>NewEngine\Header\Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Gui\InspectorLayer.h">
-      <Filter>NewEngine\Header\Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Gui\MainLayer.h">
-      <Filter>NewEngine\Header\Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Gui\ProjectLayer.h">
-      <Filter>NewEngine\Header\Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Gui\SceneLayer.h">
-      <Filter>NewEngine\Header\Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Gui\UserLayer.h">
-      <Filter>NewEngine\Header\Gui</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
       <Filter>NewEngine\Header\Render\Buffer</Filter>

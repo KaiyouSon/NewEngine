@@ -1,7 +1,6 @@
 #include "Viewport.h"
 #include "RenderBase.h"
 #include "RenderWindow.h"
-#include "SceneLayer.h"
 #include <memory>
 using namespace std;
 

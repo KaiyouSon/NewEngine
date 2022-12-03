@@ -1,5 +1,4 @@
 #include "NewEngine.h"
-#include "GuiManager.h"
 #include "RenderBase.h"
 #include "RenderWindow.h"
 #include "DeveloperManager.h"
@@ -13,7 +12,6 @@ void NewEngineInit()
 {
 	RenderBase* renderBase = RenderBase::GetInstance().get();
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
-	GuiManager* guiManager = GuiManager::GetInstance().get();
 
 #ifdef _DEBUG
 	//デバッグレイヤーをオンに
@@ -59,19 +57,12 @@ void NewEngineInit()
 
 	developerManager->Initialize();
 
-#ifdef _DEBUG
-	guiManager->Initialize();
-#endif
-
 	sceneViewTexture->Initialize({ 960,540 });
 }
 void NewEngineUpda()
 {
 	developerManager->Update();
 
-#ifdef _DEBUG
-	GuiManager::GetInstance()->Update();
-#endif
 }
 void NewEnginePreDraw()
 {
@@ -94,9 +85,6 @@ void NewEnginePostDraw()
 
 	renderBase->PreDraw();
 
-#ifdef _DEBUG
-	GuiManager::GetInstance()->Draw();
-#endif
 
 #ifdef NDEBUG
 	DeveloperManager::GetInstance()->Draw();
@@ -111,9 +99,6 @@ void NewEngineEnd()
 	RenderWindow::GetInstance()->TerminateGameWindow();
 
 	//ComPtr<ID3D12Device> tmpDevice = RenderBase::GetInstance()->GetDevice().Get();
-#ifdef _DEBUG
-	GuiManager::GetInstance()->Destroy();
-#endif
 
 	//ID3D12DebugDevice* debugInterface;
 	//if (SUCCEEDED(tmpDevice.Get()->QueryInterface(&debugInterface)))

@@ -2,8 +2,6 @@
 #include "RenderWindow.h"
 #include "Viewport.h"
 #include "ScissorRectangle.h"
-#include "SceneLayer.h"
-#include "MainLayer.h"
 #include <cassert>
 #include <string>
 #include <d3dcompiler.h>
@@ -23,10 +21,6 @@ void RenderBase::Initialize()
 {
 	renderWindow = RenderWindow::GetInstance().get();
 
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<NewEngine> initialization process started");
-#endif
-
 	DeviceInit();			// デバイスの初期化
 	CommandInit();			// コマンド関連の初期化
 	SwapChainInit();		// スワップチェンの初期化
@@ -36,11 +30,8 @@ void RenderBase::Initialize()
 	ShaderCompilerInit();	// シェーダーコンパイラーの初期化
 	RootSignatureInit();	// ルードシグネチャーの初期化
 	GraphicsPipelineInit();	// グラフィックスパイプラインの初期化
-
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<NewEngine> initialization process completed");
-#endif
 }
+
 void RenderBase::PreDraw()
 {
 	//---------------------- リソースバリアの変更コマンド ----------------------//
@@ -152,10 +143,6 @@ void RenderBase::CreateSrv(Texture& texture, const D3D12_RESOURCE_DESC& textureR
 // 各初期化
 void RenderBase::DeviceInit()
 {
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<Device> initialization process started");
-#endif
-
 	HRESULT result;
 
 	// DXGIファクトリーの生成
@@ -215,15 +202,9 @@ void RenderBase::DeviceInit()
 		}
 	}
 
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<Device> initialization successful");
-#endif
 }
 void RenderBase::CommandInit()
 {
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<Command> initialization process started");
-#endif
 
 	HRESULT result;
 
@@ -250,17 +231,9 @@ void RenderBase::CommandInit()
 	//コマンドキューを生成
 	result = device.Get()->CreateCommandQueue(&commandQueueDesc, IID_PPV_ARGS(&commandQueue));
 	assert(SUCCEEDED(result));
-
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<Command> initialization successful");
-#endif
 }
 void RenderBase::SwapChainInit()
 {
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<SwapChain> initialization process started");
-#endif
-
 	HRESULT result;
 
 	// リソースの設定
@@ -316,15 +289,9 @@ void RenderBase::SwapChainInit()
 		device->CreateRenderTargetView(backBuffers[i].Get(), &rtvDesc, rtvHandle);
 	}
 
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<SwapChain> initialization successful");
-#endif
 }
 void RenderBase::FenceInit()
 {
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<Fence> initialization process started");
-#endif
 
 	HRESULT result;
 
@@ -332,16 +299,9 @@ void RenderBase::FenceInit()
 	result = device->CreateFence(
 		fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(fence.GetAddressOf()));
 
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<Fence> initialization successful");
-#endif
 }
 void RenderBase::DepthBufferInit()
 {
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<DepthBuffer> initialization process started");
-#endif
-
 	HRESULT result;
 
 	// リソースの設定
@@ -392,15 +352,9 @@ void RenderBase::DepthBufferInit()
 		dsvDescHeap->GetCPUDescriptorHandleForHeapStart()
 	);
 
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<DepthBuffer> initialization successful");
-#endif
 }
 void RenderBase::SrvInit()
 {
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<SRVDescriptor> initialization process started");
-#endif
 
 	HRESULT result;
 
@@ -417,15 +371,9 @@ void RenderBase::SrvInit()
 	result = device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvDescHeap));
 	assert(SUCCEEDED(result));
 
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<SRVDescriptor> initialization successful");
-#endif
 }
 void RenderBase::ShaderCompilerInit()
 {
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<ShaderCompiler> initialization process started");
-#endif
 
 	// 3Dオブジェクトのシェーダー
 	basicShader = std::move(std::make_unique<ShaderObject>());
@@ -466,15 +414,9 @@ void RenderBase::ShaderCompilerInit()
 	particleShader->CompileGeometryShader("Shader/ParticleGS.hlsl", "main");
 	particleShader->CompilePixelShader("Shader/ParticlePS.hlsl", "main");
 
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<ShaderCompiler> initialization successful");
-#endif
 }
 void RenderBase::RootSignatureInit()
 {
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<RootSignature> initialization process started");
-#endif
 
 	HRESULT result;
 
@@ -541,15 +483,9 @@ void RenderBase::RootSignatureInit()
 	);
 	assert(SUCCEEDED(result));
 
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<RootSignature> initialization successful");
-#endif
 }
 void RenderBase::GraphicsPipelineInit()
 {
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<GraphicsPipeline> initialization process started");
-#endif
 
 	HRESULT result;
 
@@ -607,7 +543,4 @@ void RenderBase::GraphicsPipelineInit()
 	particlePipeline->SetRootSignature(rootSignature.Get());
 	particlePipeline->Init();
 
-#ifdef _DEBUG
-	MainLayer::GetInstance()->AddText("<GraphicsPipeline> initialization successful");
-#endif
 }

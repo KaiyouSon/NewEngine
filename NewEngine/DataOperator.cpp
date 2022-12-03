@@ -1,6 +1,5 @@
 #include "DataOperator.h"
 #include "Scene.h"
-#include "UserLayer.h"
 #include "NewEngine/NewEngine.h"
 #include "ImGUI/imgui.h"
 #include <direct.h>
@@ -8,8 +7,6 @@
 #include <sstream>
 #include <stdlib.h>
 
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
 using namespace std;
 
 void DataOperator::Initialize()
