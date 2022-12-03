@@ -112,8 +112,6 @@ ComPtr<ID3D12Resource> ConstantBuffer::GetConstBuffTransform()
 
 void ConstantBuffer::SetColor(const Color& color)
 {
-	//if (constMapMaterial == nullptr) return;
-
 	HRESULT result;
 
 	// 定数バッファのマッピング

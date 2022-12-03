@@ -486,7 +486,6 @@ void RenderBase::RootSignatureInit()
 }
 void RenderBase::GraphicsPipelineInit()
 {
-
 	HRESULT result;
 
 	// グラフィックスパイプライン3D用

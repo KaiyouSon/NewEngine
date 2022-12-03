@@ -1,23 +1,32 @@
 #pragma once
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
 #include "ConstantBuffer.h"
-#include "GameObject.h"
+#include "Transform.h"
+#include "Model.h"
+#include "Texture.h"
+#include "Util.h"
 
-class Object3D : public GameObject
+class Object3D
 {
 private:
-	VertexBuffer<VertexPosNormalUv>* vertexBuffer;
-	IndexBuffer* indexBuffer;
 	ConstantBuffer* constantBuffer;
+	Transform transform;
+	bool isInitConstantBuffer;
+
+private:
+	void InitConstantBuffer();
+
+public:
+	Model model;
+	Texture texture;
+	Vec3 pos;
+	Vec3 scale;
+	Vec3 rot;
+	Color color;
 
 public:
 	Object3D();
 	~Object3D();
-	void Initialize();
 	void Update();
 	void Draw();
-
-	Mat4 GetFinalMat();
 };
 

@@ -2,7 +2,6 @@
 #include "RenderBase.h"
 #include "RenderWindow.h"
 #include "DeveloperManager.h"
-#include "DataOperator.h"
 #include "RenderTexture.h"
 #include "NewEngine/main2.h"
 #include <wrl.h>
@@ -57,7 +56,6 @@ void NewEngineInit()
 
 	developerManager->Initialize();
 
-	sceneViewTexture->Initialize({ 960,540 });
 }
 void NewEngineUpda()
 {
@@ -66,9 +64,8 @@ void NewEngineUpda()
 }
 void NewEnginePreDraw()
 {
-#ifdef _DEBUG
-	sceneViewTexture->PreDrawScene();
-#endif
+	RenderBase* renderBase = RenderBase::GetInstance().get();
+	renderBase->PreDraw();
 }
 void NewEneineDraw()
 {
@@ -78,20 +75,12 @@ void NewEneineDraw()
 }
 void NewEnginePostDraw()
 {
-#ifdef _DEBUG
-	sceneViewTexture->PostDrawScene();
-#endif
 	RenderBase* renderBase = RenderBase::GetInstance().get();
-
-	renderBase->PreDraw();
-
 
 #ifdef NDEBUG
 	DeveloperManager::GetInstance()->Draw();
 #endif
 	renderBase->GetInstance()->PostDraw();
-
-
 }
 void NewEngineEnd()
 {

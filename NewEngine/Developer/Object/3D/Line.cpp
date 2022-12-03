@@ -20,7 +20,7 @@ Line::~Line()
 
 void Line::Initialize(const Vec3& startPos, const Vec3& endPos)
 {
-	componentManager->GetComponent<Texture>()->SetTexture(*TextureBuffer::GetDefaultTexture());
+	//componentManager->GetComponent<Texture>()->SetTexture(*TextureBuffer::GetDefaultTexture());
 
 	vertices.push_back({ startPos,{}, {0.0f, 1.0f} });	//ç∂â∫
 	vertices.push_back({ endPos,  {}, {0.0f, 1.0f} });	//ç∂â∫

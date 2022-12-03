@@ -36,5 +36,3 @@ public:
 
 	Texture* GetRenderTexture();
 };
-
-extern std::unique_ptr<RenderTexture> sceneViewTexture;

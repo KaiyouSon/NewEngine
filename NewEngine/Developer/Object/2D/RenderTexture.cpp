@@ -52,7 +52,7 @@ void RenderTexture::Initialize(const Vec2& size)
 			(float)renderWindow->GetWindowSize().x,
 			(float)renderWindow->GetWindowSize().y,
 		});
-	componentManager->GetComponent<Texture>()->SetTexture(*tempTex);
+	//componentManager->GetComponent<Texture>()->SetTexture(*tempTex);
 
 	// RTV用デスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc = {};
@@ -226,17 +226,17 @@ void RenderTexture::SetColor(const Color& color)
 }
 void RenderTexture::SetCutPosAndSize(const Vec2& cutPos, const Vec2& cutSize)
 {
-	float texLeft = cutPos.x / componentManager->GetComponent<Texture>()->GetTextureSize().x;
-	float texRight = (cutPos.x + cutSize.x) / componentManager->GetComponent<Texture>()->GetTextureSize().x;
-	float texUp = cutPos.y / componentManager->GetComponent<Texture>()->GetTextureSize().y;
-	float texDown = (cutPos.y + cutSize.y) / componentManager->GetComponent<Texture>()->GetTextureSize().y;
+	//float texLeft = cutPos.x / componentManager->GetComponent<Texture>()->GetTextureSize().x;
+	//float texRight = (cutPos.x + cutSize.x) / componentManager->GetComponent<Texture>()->GetTextureSize().x;
+	//float texUp = cutPos.y / componentManager->GetComponent<Texture>()->GetTextureSize().y;
+	//float texDown = (cutPos.y + cutSize.y) / componentManager->GetComponent<Texture>()->GetTextureSize().y;
 
-	vertices[0].uv = { texLeft , texDown };	// 左下
-	vertices[1].uv = { texLeft ,   texUp };	// 左上
-	vertices[2].uv = { texRight ,texDown }; // 右下
-	vertices[3].uv = { texRight ,  texUp }; // 右上
+	//vertices[0].uv = { texLeft , texDown };	// 左下
+	//vertices[1].uv = { texLeft ,   texUp };	// 左上
+	//vertices[2].uv = { texRight ,texDown }; // 右下
+	//vertices[3].uv = { texRight ,  texUp }; // 右上
 
-	vertexBuffer->TransferToBuffer(vertices);
+	//vertexBuffer->TransferToBuffer(vertices);
 }
 
 Texture* RenderTexture::GetRenderTexture()

@@ -1,9 +1,8 @@
 #pragma once
-#include "Object3D.h"
-#include "Line.h"
-#include "Emitter.h"
-#include "RenderTexture.h"
 #include "Sprite.h"
+#include "RenderTexture.h"
+#include "Line.h"
+#include "Object3D.h"
 #include "ViewProjection.h"
 #include "DebugCamera.h"
 #include "TextureBuffer.h"
@@ -14,7 +13,7 @@
 // テクスチャーの読み込み
 std::unique_ptr<Texture> LoadTexture(const char* filePath);
 // モデルの読み込み
-std::unique_ptr<ModelData> LoadModelData(const char* filePath);
+std::unique_ptr<Model> LoadModelData(const char* filePath);
 // マテリアルの世も込み
 std::unique_ptr<Material> LoadMaterial(const std::string& filePath);
 

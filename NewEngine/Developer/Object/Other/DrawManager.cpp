@@ -1,5 +1,4 @@
 #include "DrawManager.h"
-
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -12,10 +11,9 @@ unique_ptr<Texture> LoadTexture(const char* filePath)
 	return move(TextureBuffer::LoadTexture(filePath));
 }
 
-unique_ptr<ModelData> LoadModelData(const char* filePath)
+unique_ptr<Model> LoadModelData(const char* filePath)
 {
 	static uint32_t numberIndex = 0;
-
 
 	// ファイルストリーム
 	ifstream file;
@@ -24,12 +22,11 @@ unique_ptr<ModelData> LoadModelData(const char* filePath)
 	// ファイルオープン失敗をチェック
 	if (file.fail())
 	{
-		unique_ptr<ModelData> errorModel = move(make_unique<ModelData>());;
-		errorModel->SetTag("error");
+		unique_ptr<Model> errorModel = move(make_unique<Model>());;
 		return move(errorModel);
 	}
 
-	unique_ptr<ModelData> modelData = move(make_unique<ModelData>());
+	unique_ptr<Model> modelData = move(make_unique<Model>());
 	vector<Vec3> positions;
 	vector<Vec3> normals;
 	vector<Vec2> texcoords;
@@ -64,7 +61,6 @@ unique_ptr<ModelData> LoadModelData(const char* filePath)
 			if (filepath.size() > 0)
 			{
 				materialList->AddMaterial(LoadMaterial(materialFileName + filepath), numberIndex);
-				modelData->SetIndex(numberIndex);
 				numberIndex++;
 			}
 			continue;
@@ -137,9 +133,6 @@ unique_ptr<ModelData> LoadModelData(const char* filePath)
 
 	// ファイルを閉じる
 	file.close();
-
-	// ファイルパス
-	modelData->SetFilePath(filePath);
 
 	return move(modelData);
 }

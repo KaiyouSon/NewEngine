@@ -28,7 +28,6 @@ unique_ptr<Texture> TextureBuffer::LoadTexture(const string filePath)
 		&metadata, scratchImg);
 	if (result != S_OK)
 	{
-		texture->SetTag("error");
 		return texture;
 	}
 	//assert(SUCCEEDED(result));
@@ -66,7 +65,7 @@ unique_ptr<Texture> TextureBuffer::LoadTexture(const string filePath)
 	textureResourceDesc.SampleDesc.Count = 1;
 
 	// テクスチャのサイズをセット
-	texture->SetTextureSize(Vec2(textureResourceDesc.Width, textureResourceDesc.Height));
+	//texture->SetTextureSize(Vec2(textureResourceDesc.Width, textureResourceDesc.Height));
 
 	// テクスチャバッファの生成
 	result = RenderBase::GetInstance()->GetDevice()->
@@ -98,7 +97,6 @@ unique_ptr<Texture> TextureBuffer::LoadTexture(const string filePath)
 	RenderBase::GetInstance()->CreateSrv(*texture, textureResourceDesc);
 
 	// ファイルパス
-	texture->SetFilePath(filePath);
 
 	return texture;
 }
@@ -132,7 +130,7 @@ unique_ptr<Texture> TextureBuffer::GetDefaultTexture()
 	textureResourceDesc.SampleDesc.Count = 1;
 
 	// テクスチャのサイズをセット
-	texture->SetTextureSize(Vec2(textureResourceDesc.Width, textureResourceDesc.Height));
+	//texture->SetTextureSize(Vec2(textureResourceDesc.Width, textureResourceDesc.Height));
 
 	// テクスチャバッファの生成
 	result = RenderBase::GetInstance()->GetDevice()->

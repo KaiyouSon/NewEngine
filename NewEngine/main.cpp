@@ -3,18 +3,15 @@
 #include "InputManager.h"
 #include "Util.h"
 #include "ObjectManager.h"
-#include "DataOperator.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-	DataOperator* dataOperator = DataOperator::GetInstance().get();
 	FrameRate* frameRate = FrameRate::GetInstance().get();
 
 	//SetBackGroundColor(25.5, 63.75, 127.5);	// 背景色
 	SetBackGroundColor(0, 0, 0);	// 背景色
 	NewEngineInit();	// エンジンの初期化
-	dataOperator->LoadData();
 	Load();			// ゲーム内のロード処理
 	Initialize();	// ゲーム内の初期化処理
 
@@ -46,7 +43,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		// XボタンもしくはESCキーでゲームループを抜ける
 		if (ProcessMessage() || Key::GetKey(DIK_ESCAPE))
 		{
-			dataOperator->SaveData();
 			break;
 		}
 

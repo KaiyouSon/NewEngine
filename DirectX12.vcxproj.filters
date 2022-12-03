@@ -8,61 +8,25 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{ebea575b-6f4d-4e6e-b893-a47bace55e10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="NewEngine">
+    <Filter Include="Uncategorized">
       <UniqueIdentifier>{a0e509e1-416c-4df2-a204-ba1f23432926}</UniqueIdentifier>
     </Filter>
-    <Filter Include="NewEngine\Source">
+    <Filter Include="Uncategorized\Source">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="NewEngine\Source\Render">
-      <UniqueIdentifier>{0cd6b8a8-b44a-41d8-98cd-686e7f36ec4f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Render\Buffer">
-      <UniqueIdentifier>{d2a9d334-35c1-4264-9900-6d58bd7e450b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Developer">
-      <UniqueIdentifier>{ceedb053-8fb4-4651-9a6f-187337a3c996}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Developer\Input">
-      <UniqueIdentifier>{3bf80bd3-9b30-4f5b-8de2-f6e3f60626c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Developer\Util">
-      <UniqueIdentifier>{05acc0a5-2e3c-4e6c-ae62-b2401ee4f0bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Developer\Object">
-      <UniqueIdentifier>{117a8dd3-3ddc-41ce-9f23-ae9983cf8c86}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Developer\Object\Object3D">
-      <UniqueIdentifier>{ac670bac-76b7-4485-be61-793c005e8cdf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Developer\Object\Object2D">
-      <UniqueIdentifier>{f53c939f-8689-4e71-8f1e-76adc2adba10}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Developer\Object\Other">
-      <UniqueIdentifier>{39eabe2a-4601-4599-a0bc-87a28b0c2e44}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Developer\Math">
-      <UniqueIdentifier>{1372c687-48b5-4467-9b55-0b4b24d494db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Developer\Component">
-      <UniqueIdentifier>{dad0205d-fcef-4700-8c16-9784e303e65e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Developer\Scene">
-      <UniqueIdentifier>{a2771bf3-2d2b-4daf-b279-b9b4ab147eca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Developer\Collision">
-      <UniqueIdentifier>{1562e754-1226-417c-beb2-375650af80bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header">
+    <Filter Include="Uncategorized\Header">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="NewEngine\Header\Render">
-      <UniqueIdentifier>{1edb732b-13ca-4c1b-ac35-75dc673cdede}</UniqueIdentifier>
+    <Filter Include="NewEngine">
+      <UniqueIdentifier>{1cb946a9-b40c-4db0-b91b-7eaad5137338}</UniqueIdentifier>
     </Filter>
-    <Filter Include="NewEngine\Header\Render\Buffer">
-      <UniqueIdentifier>{b7bd0bb9-118e-4ba2-acc1-de14edef096b}</UniqueIdentifier>
+    <Filter Include="NewEngine\Header">
+      <UniqueIdentifier>{02c56b0b-d499-41e5-ab27-513a6dd69739}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source">
+      <UniqueIdentifier>{c4bc0090-2eda-4495-888b-c14817b54d79}</UniqueIdentifier>
     </Filter>
     <Filter Include="NewEngine\Header\Developer">
       <UniqueIdentifier>{d19aa256-ee51-47f2-b6f2-a9b283408773}</UniqueIdentifier>
@@ -91,23 +55,65 @@
     <Filter Include="NewEngine\Header\Developer\Component">
       <UniqueIdentifier>{adf165e6-eeec-4fde-9113-9620645ca794}</UniqueIdentifier>
     </Filter>
-    <Filter Include="NewEngine\Header\Developer\Scene">
-      <UniqueIdentifier>{f88d86f3-2b29-435b-8adc-423ad60c63cc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="NewEngine\Header\Developer\Collision">
       <UniqueIdentifier>{83e19682-79a0-43d8-8575-d4adfaf103c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NewEngine\Header\Render">
+      <UniqueIdentifier>{1edb732b-13ca-4c1b-ac35-75dc673cdede}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Render\Buffer">
+      <UniqueIdentifier>{b7bd0bb9-118e-4ba2-acc1-de14edef096b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer">
+      <UniqueIdentifier>{ceedb053-8fb4-4651-9a6f-187337a3c996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Input">
+      <UniqueIdentifier>{3bf80bd3-9b30-4f5b-8de2-f6e3f60626c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Util">
+      <UniqueIdentifier>{05acc0a5-2e3c-4e6c-ae62-b2401ee4f0bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Object">
+      <UniqueIdentifier>{117a8dd3-3ddc-41ce-9f23-ae9983cf8c86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Object\Object3D">
+      <UniqueIdentifier>{ac670bac-76b7-4485-be61-793c005e8cdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Object\Object2D">
+      <UniqueIdentifier>{f53c939f-8689-4e71-8f1e-76adc2adba10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Object\Other">
+      <UniqueIdentifier>{39eabe2a-4601-4599-a0bc-87a28b0c2e44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Math">
+      <UniqueIdentifier>{1372c687-48b5-4467-9b55-0b4b24d494db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Component">
+      <UniqueIdentifier>{dad0205d-fcef-4700-8c16-9784e303e65e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Collision">
+      <UniqueIdentifier>{1562e754-1226-417c-beb2-375650af80bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Render">
+      <UniqueIdentifier>{0cd6b8a8-b44a-41d8-98cd-686e7f36ec4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Render\Buffer">
+      <UniqueIdentifier>{d2a9d334-35c1-4264-9900-6d58bd7e450b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Object">
+      <UniqueIdentifier>{cd92289e-f889-407f-bfad-74adf7942696}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Object\3D">
+      <UniqueIdentifier>{a0695b39-eff6-4e74-9fc2-4b4022aa935e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Object">
+      <UniqueIdentifier>{43122723-d83e-49bb-856b-479583eeb5de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Object\3D">
+      <UniqueIdentifier>{595114dc-e3c0-442d-98e7-5e3aa5140a07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NewEngine\main.cpp">
-      <Filter>NewEngine\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\main2.cpp">
-      <Filter>NewEngine\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\NewEngine.cpp">
-      <Filter>NewEngine\Source</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Developer\Collision\ColliderManager.cpp">
       <Filter>NewEngine\Source\Developer\Collision</Filter>
     </ClCompile>
@@ -165,9 +171,6 @@
     <ClCompile Include="NewEngine\Developer\Component\Material.cpp">
       <Filter>NewEngine\Source\Developer\Component</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Component\ModelData.cpp">
-      <Filter>NewEngine\Source\Developer\Component</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Developer\Component\Tag.cpp">
       <Filter>NewEngine\Source\Developer\Component</Filter>
     </ClCompile>
@@ -189,9 +192,6 @@
     <ClCompile Include="NewEngine\Developer\Object\3D\Object3D.cpp">
       <Filter>NewEngine\Source\Developer\Object\Object3D</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Object\3D\Emitter.cpp">
-      <Filter>NewEngine\Source\Developer\Object\Object3D</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Developer\Object\Other\DebugCamera.cpp">
       <Filter>NewEngine\Source\Developer\Object\Other</Filter>
     </ClCompile>
@@ -201,14 +201,8 @@
     <ClCompile Include="NewEngine\Developer\Object\Other\GameObject.cpp">
       <Filter>NewEngine\Source\Developer\Object\Other</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Object\Other\ObjectManager.cpp">
-      <Filter>NewEngine\Source\Developer\Object\Other</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Developer\Object\Other\ViewProjection.cpp">
       <Filter>NewEngine\Source\Developer\Object\Other</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Scene\Scene.cpp">
-      <Filter>NewEngine\Source\Developer\Scene</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Developer\DeveloperManager.cpp">
       <Filter>NewEngine\Source\Developer</Filter>
@@ -243,20 +237,23 @@
     <ClCompile Include="NewEngine\Render\Viewport.cpp">
       <Filter>NewEngine\Source\Render</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\DataOperator.cpp">
-      <Filter>NewEngine\Source</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp">
       <Filter>NewEngine\Source\Render</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\main.cpp">
+      <Filter>NewEngine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\main2.cpp">
+      <Filter>NewEngine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\NewEngine.cpp">
+      <Filter>NewEngine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Component\Model.cpp">
+      <Filter>NewEngine\Source\Object\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NewEngine\main2.h">
-      <Filter>NewEngine\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\NewEngine.h">
-      <Filter>NewEngine\Header</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Developer\Collision\Collider.h">
       <Filter>NewEngine\Header\Developer\Collision</Filter>
     </ClInclude>
@@ -320,9 +317,6 @@
     <ClInclude Include="NewEngine\Developer\Component\Material.h">
       <Filter>NewEngine\Header\Developer\Component</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Component\ModelData.h">
-      <Filter>NewEngine\Header\Developer\Component</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Developer\Component\Tag.h">
       <Filter>NewEngine\Header\Developer\Component</Filter>
     </ClInclude>
@@ -347,14 +341,8 @@
     <ClInclude Include="NewEngine\Developer\Object\Other\GameObject.h">
       <Filter>NewEngine\Header\Developer\Object\Other</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Object\Other\ObjectManager.h">
-      <Filter>NewEngine\Header\Developer\Object\Other</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Developer\Object\Other\ViewProjection.h">
       <Filter>NewEngine\Header\Developer\Object\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Scene\Scene.h">
-      <Filter>NewEngine\Header\Developer\Scene</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Developer\DeveloperManager.h">
       <Filter>NewEngine\Header\Developer</Filter>
@@ -392,9 +380,6 @@
     <ClInclude Include="NewEngine\Render\Viewport.h">
       <Filter>NewEngine\Header\Render</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\DataOperator.h">
-      <Filter>NewEngine\Header</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Render\GraphicsPipeline.h">
       <Filter>NewEngine\Header\Render</Filter>
     </ClInclude>
@@ -404,8 +389,14 @@
     <ClInclude Include="NewEngine\Developer\Object\3D\Line.h">
       <Filter>NewEngine\Header\Developer\Object\Object3D</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Object\3D\Emitter.h">
-      <Filter>NewEngine\Header\Developer\Object\Object3D</Filter>
+    <ClInclude Include="NewEngine\main2.h">
+      <Filter>NewEngine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\NewEngine.h">
+      <Filter>NewEngine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Component\Model.h">
+      <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,8 +6,6 @@ ComponentManager::ComponentManager()
 	// デフォルトで持っているコンポネント
 	list.push_back(move(make_unique<Tag>()));			// タグ
 	list.push_back(move(make_unique<Transform>()));		// トランスフォーム
-	list.push_back(move(make_unique<Texture>()));		// テクスチャー
-	list.push_back(move(make_unique<ModelData>()));		// モデルデータ
 	list.push_back(move(make_unique<Blend>()));			// ブレンド
 }
 
