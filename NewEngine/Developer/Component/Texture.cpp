@@ -3,9 +3,13 @@
 #include <DirectXTex.h>
 using namespace DirectX;
 
-Texture::Texture(std::string filePath)
+Texture::Texture() : isLoaded(false)
 {
-	std::string path = "Application/Resources/Texture/" + filePath;
+}
+
+Texture::Texture(std::string filePath, bool isDirectoryPath) : isLoaded(false)
+{
+	std::string path = isDirectoryPath ? filePath : "Application/Resources/Texture/" + filePath;
 
 	HRESULT result;
 	TexMetadata metadata{};

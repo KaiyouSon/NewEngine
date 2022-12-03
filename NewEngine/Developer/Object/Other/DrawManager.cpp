@@ -60,7 +60,7 @@ unique_ptr<Model> LoadModelData(const char* filePath)
 
 			if (filepath.size() > 0)
 			{
-				materialList->AddMaterial(LoadMaterial(materialFileName + filepath), numberIndex);
+				//materialList->AddMaterial(LoadMaterial(materialFileName + filepath), numberIndex);
 				numberIndex++;
 			}
 			continue;
@@ -151,7 +151,7 @@ unique_ptr<Material> LoadMaterial(const std::string& filePath)
 	{
 		//assert(0);
 		unique_ptr<Material> errorMaterial = move(make_unique<Material>());
-		errorMaterial->name = "error";
+		//errorMaterial->name = "error";
 		return move(errorMaterial);
 	}
 
@@ -186,7 +186,7 @@ unique_ptr<Material> LoadMaterial(const std::string& filePath)
 		if (key == "newmtl")
 		{
 			// マテリアル名読み込み
-			lineStream >> material->name;
+			//lineStream >> material->name;
 		}
 
 		// 先頭文字列がKaならアンビエント色
@@ -217,7 +217,7 @@ unique_ptr<Material> LoadMaterial(const std::string& filePath)
 		if (key == "map_Kd")
 		{
 			// テクスチャのファイル名読み込み
-			lineStream >> material->textureFilepath;
+			//lineStream >> material->textureFilepath;
 
 			// テクスチャ読み込み
 			//materialTextureList->Add(LoadTexture((directoryPath + material->textureFilepath).c_str()), numberIndex);

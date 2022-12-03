@@ -10,9 +10,9 @@ class Model
 public:
 	VertexBuffer<VertexPosNormalUv> vertexBuffer;
 	IndexBuffer indexBuffer;
-
 	std::vector<VertexPosNormalUv> vertices;
 	std::vector<unsigned short> indices;
+	Material material;
 
 public:
 	Model() {}

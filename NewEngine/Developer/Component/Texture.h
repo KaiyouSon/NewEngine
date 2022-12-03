@@ -12,10 +12,11 @@ private:
 public:
 	Microsoft::WRL::ComPtr<ID3D12Resource> buffer; //テクスチャのリソース
 	Vec2 size;
+	bool isLoaded;
 
 public:
-	Texture() {};
-	Texture(std::string filePath);
+	Texture();
+	Texture(std::string filePath, bool isDirectoryPath = false);
 
 public: // セッター
 	inline void SetCpuHandle(D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle) { this->cpuHandle = cpuHandle; }

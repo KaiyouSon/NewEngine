@@ -174,9 +174,6 @@
     <ClCompile Include="NewEngine\Developer\Component\ComponentManager.cpp">
       <Filter>NewEngine\Source\Developer\Component</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Component\Material.cpp">
-      <Filter>NewEngine\Source\Developer\Component</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Developer\Component\Tag.cpp">
       <Filter>NewEngine\Source\Developer\Component</Filter>
     </ClCompile>
@@ -257,6 +254,9 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Developer\Component\Texture.cpp">
       <Filter>NewEngine\Source\Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Component\Material.cpp">
+      <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

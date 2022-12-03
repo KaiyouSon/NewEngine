@@ -52,7 +52,14 @@ void Object3D::Draw()
 	auto temp = renderBase->GetSrvDescHeap();
 	renderBase->GetCommandList()->SetDescriptorHeaps(1, &temp);
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture.GetGpuHandle());
+	if (model.material.texture.isLoaded == false)
+	{
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture.GetGpuHandle());
+	}
+	else
+	{
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(2, model.material.texture.GetGpuHandle());
+	}
 
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(unsigned short)model.indices.size(), 1, 0, 0, 0);

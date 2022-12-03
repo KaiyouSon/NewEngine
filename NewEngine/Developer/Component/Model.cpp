@@ -3,7 +3,7 @@
 #include <sstream>
 using namespace std;
 
-Model::Model(std::string modelName)
+Model::Model(string modelName)
 {
 	string path = "Application/Resources/Model/" + modelName + "/";
 	string objfile = modelName + ".obj";
@@ -21,16 +21,6 @@ Model::Model(std::string modelName)
 	vector<Vec3> normals;
 	vector<Vec2> texcoords;
 
-	//string materialFileName = filePath;
-	//while (true)
-	//{
-	//	materialFileName.pop_back();
-	//	if (materialFileName.back() == '/')
-	//	{
-	//		break;
-	//	}
-	//}
-
 	// 1行ずつ読み込む
 	string line;
 	while (getline(file, line))
@@ -42,19 +32,15 @@ Model::Model(std::string modelName)
 		string key;
 		getline(lineStream, key, ' ');
 
-		//if (key == "mtllib")
-		//{
-		//	// マテリアルのファイル名を読み込む
-		//	string filepath;
-		//	lineStream >> filepath;
+		if (key == "mtllib")
+		{
+			// マテリアルのファイル名を読み込む
+			string fileName;
+			lineStream >> fileName;
 
-		//	if (filepath.size() > 0)
-		//	{
-		//		//materialList->AddMaterial(LoadMaterial(materialFileName + filepath), numberIndex);
-		//		numberIndex++;
-		//	}
-		//	continue;
-		//}
+			material = Material(path + fileName);
+			continue;
+		}
 
 		// 先頭文字列がvなら頂点座標
 		if (key == "v")
