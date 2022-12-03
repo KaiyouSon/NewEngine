@@ -1,14 +1,11 @@
 #pragma once
-#include "IComponent.h"
 #include "Material.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include <vector>
-#include <list>
 #include <string>
-#include <memory>
 
-class Model : public IComponent
+class Model
 {
 public:
 	VertexBuffer<VertexPosNormalUv> vertexBuffer;

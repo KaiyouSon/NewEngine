@@ -112,6 +112,12 @@
     <Filter Include="NewEngine\Header\Object\3D">
       <UniqueIdentifier>{595114dc-e3c0-442d-98e7-5e3aa5140a07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NewEngine\Source\Object\2D">
+      <UniqueIdentifier>{58dfdb2c-2035-4a63-b87f-edadb925c616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Object\2D">
+      <UniqueIdentifier>{af739827-4b00-4818-ad5a-e73cc687b7a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Developer\Collision\ColliderManager.cpp">
@@ -172,9 +178,6 @@
       <Filter>NewEngine\Source\Developer\Component</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Developer\Component\Tag.cpp">
-      <Filter>NewEngine\Source\Developer\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Component\Texture.cpp">
       <Filter>NewEngine\Source\Developer\Component</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Developer\Component\Transform.cpp">
@@ -252,6 +255,9 @@
     <ClCompile Include="NewEngine\Developer\Component\Model.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Component\Texture.cpp">
+      <Filter>NewEngine\Source\Object\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Developer\Collision\Collider.h">
@@ -318,9 +324,6 @@
       <Filter>NewEngine\Header\Developer\Component</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Developer\Component\Tag.h">
-      <Filter>NewEngine\Header\Developer\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Component\Texture.h">
       <Filter>NewEngine\Header\Developer\Component</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Developer\Component\Transform.h">
@@ -397,6 +400,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Developer\Component\Model.h">
       <Filter>NewEngine\Header\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Component\Texture.h">
+      <Filter>NewEngine\Header\Object\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
