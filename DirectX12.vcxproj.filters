@@ -1,0 +1,652 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{ebea575b-6f4d-4e6e-b893-a47bace55e10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nlohmann">
+      <UniqueIdentifier>{28d170d7-68b9-4ebe-8342-9a87d930bba5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine">
+      <UniqueIdentifier>{a0e509e1-416c-4df2-a204-ba1f23432926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="NewEngine\Source\Gui">
+      <UniqueIdentifier>{79dd6d11-35f6-4175-95f4-e1abb2d413bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Render">
+      <UniqueIdentifier>{0cd6b8a8-b44a-41d8-98cd-686e7f36ec4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Render\Buffer">
+      <UniqueIdentifier>{d2a9d334-35c1-4264-9900-6d58bd7e450b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer">
+      <UniqueIdentifier>{ceedb053-8fb4-4651-9a6f-187337a3c996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Input">
+      <UniqueIdentifier>{3bf80bd3-9b30-4f5b-8de2-f6e3f60626c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Util">
+      <UniqueIdentifier>{05acc0a5-2e3c-4e6c-ae62-b2401ee4f0bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Object">
+      <UniqueIdentifier>{117a8dd3-3ddc-41ce-9f23-ae9983cf8c86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Object\Object3D">
+      <UniqueIdentifier>{ac670bac-76b7-4485-be61-793c005e8cdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Object\Object2D">
+      <UniqueIdentifier>{f53c939f-8689-4e71-8f1e-76adc2adba10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Object\Other">
+      <UniqueIdentifier>{39eabe2a-4601-4599-a0bc-87a28b0c2e44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Math">
+      <UniqueIdentifier>{1372c687-48b5-4467-9b55-0b4b24d494db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Component">
+      <UniqueIdentifier>{dad0205d-fcef-4700-8c16-9784e303e65e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Scene">
+      <UniqueIdentifier>{a2771bf3-2d2b-4daf-b279-b9b4ab147eca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Developer\Collision">
+      <UniqueIdentifier>{1562e754-1226-417c-beb2-375650af80bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="NewEngine\Header\Render">
+      <UniqueIdentifier>{1edb732b-13ca-4c1b-ac35-75dc673cdede}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Render\Buffer">
+      <UniqueIdentifier>{b7bd0bb9-118e-4ba2-acc1-de14edef096b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Developer">
+      <UniqueIdentifier>{d19aa256-ee51-47f2-b6f2-a9b283408773}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Developer\Input">
+      <UniqueIdentifier>{bd90a779-2263-4b95-9523-3cf86543769f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Developer\Util">
+      <UniqueIdentifier>{c114a9f0-fd56-40e7-9188-5a7ec45f430e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Developer\Object">
+      <UniqueIdentifier>{caa4cac8-a121-40ae-a325-bb27cdcea57d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Developer\Object\Object3D">
+      <UniqueIdentifier>{77c437cb-71c6-4003-9cb4-b1fa2f2d2796}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Developer\Object\Object2D">
+      <UniqueIdentifier>{27f66026-8aa8-4bfd-9e12-a340ca0bed29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Developer\Object\Other">
+      <UniqueIdentifier>{4a7d6d31-2394-4009-9928-b7ca79df5161}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Developer\Math">
+      <UniqueIdentifier>{590935c1-a828-435e-8837-a3f876a738f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Developer\Component">
+      <UniqueIdentifier>{adf165e6-eeec-4fde-9113-9620645ca794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Developer\Scene">
+      <UniqueIdentifier>{f88d86f3-2b29-435b-8adc-423ad60c63cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Developer\Collision">
+      <UniqueIdentifier>{83e19682-79a0-43d8-8575-d4adfaf103c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Gui">
+      <UniqueIdentifier>{256f88ef-ad73-45a9-a226-583307bda5de}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="NewEngine\main.cpp">
+      <Filter>NewEngine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\main2.cpp">
+      <Filter>NewEngine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\NewEngine.cpp">
+      <Filter>NewEngine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Collision\ColliderManager.cpp">
+      <Filter>NewEngine\Source\Developer\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Collision\Collision.cpp">
+      <Filter>NewEngine\Source\Developer\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Collision\Collider.cpp">
+      <Filter>NewEngine\Source\Developer\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Input\InputManager.cpp">
+      <Filter>NewEngine\Source\Developer\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Input\JoypadInput.cpp">
+      <Filter>NewEngine\Source\Developer\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Input\KeyBoardInput.cpp">
+      <Filter>NewEngine\Source\Developer\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Input\MouseInput.cpp">
+      <Filter>NewEngine\Source\Developer\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Math\Mat4.cpp">
+      <Filter>NewEngine\Source\Developer\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Math\MathUtil.cpp">
+      <Filter>NewEngine\Source\Developer\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Math\Vec2.cpp">
+      <Filter>NewEngine\Source\Developer\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Math\Vec3.cpp">
+      <Filter>NewEngine\Source\Developer\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Math\Vec4.cpp">
+      <Filter>NewEngine\Source\Developer\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Util\Color.cpp">
+      <Filter>NewEngine\Source\Developer\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Util\FrameRate.cpp">
+      <Filter>NewEngine\Source\Developer\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Util\Random.cpp">
+      <Filter>NewEngine\Source\Developer\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Util\Util.cpp">
+      <Filter>NewEngine\Source\Developer\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Component\Blend.cpp">
+      <Filter>NewEngine\Source\Developer\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Component\ComponentManager.cpp">
+      <Filter>NewEngine\Source\Developer\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Component\Material.cpp">
+      <Filter>NewEngine\Source\Developer\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Component\ModelData.cpp">
+      <Filter>NewEngine\Source\Developer\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Component\Tag.cpp">
+      <Filter>NewEngine\Source\Developer\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Component\Texture.cpp">
+      <Filter>NewEngine\Source\Developer\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Component\Transform.cpp">
+      <Filter>NewEngine\Source\Developer\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Object\2D\RenderTexture.cpp">
+      <Filter>NewEngine\Source\Developer\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Object\2D\Sprite.cpp">
+      <Filter>NewEngine\Source\Developer\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Object\3D\Line.cpp">
+      <Filter>NewEngine\Source\Developer\Object\Object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Object\3D\Object3D.cpp">
+      <Filter>NewEngine\Source\Developer\Object\Object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Object\3D\Emitter.cpp">
+      <Filter>NewEngine\Source\Developer\Object\Object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Object\Other\DebugCamera.cpp">
+      <Filter>NewEngine\Source\Developer\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Object\Other\DrawManager.cpp">
+      <Filter>NewEngine\Source\Developer\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Object\Other\GameObject.cpp">
+      <Filter>NewEngine\Source\Developer\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Object\Other\ObjectManager.cpp">
+      <Filter>NewEngine\Source\Developer\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Object\Other\ViewProjection.cpp">
+      <Filter>NewEngine\Source\Developer\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Scene\Scene.cpp">
+      <Filter>NewEngine\Source\Developer\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\DeveloperManager.cpp">
+      <Filter>NewEngine\Source\Developer</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Developer\Sound.cpp">
+      <Filter>NewEngine\Source\Developer</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Gui\GuiManager.cpp">
+      <Filter>NewEngine\Source\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Gui\HierarchyLayer.cpp">
+      <Filter>NewEngine\Source\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Gui\InspectorLayer.cpp">
+      <Filter>NewEngine\Source\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Gui\MainLayer.cpp">
+      <Filter>NewEngine\Source\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Gui\ProjectLayer.cpp">
+      <Filter>NewEngine\Source\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Gui\SceneLayer.cpp">
+      <Filter>NewEngine\Source\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Gui\UserLayer.cpp">
+      <Filter>NewEngine\Source\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\Buffer\ConstantBuffer.cpp">
+      <Filter>NewEngine\Source\Render\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
+      <Filter>NewEngine\Source\Render\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\Buffer\TextureBuffer.cpp">
+      <Filter>NewEngine\Source\Render\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\Buffer\VertexBuffer.cpp">
+      <Filter>NewEngine\Source\Render\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\RenderBase.cpp">
+      <Filter>NewEngine\Source\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\RenderWindow.cpp">
+      <Filter>NewEngine\Source\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\ScissorRectangle.cpp">
+      <Filter>NewEngine\Source\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\ShaderObject.cpp">
+      <Filter>NewEngine\Source\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\Viewport.cpp">
+      <Filter>NewEngine\Source\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\DataOperator.cpp">
+      <Filter>NewEngine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp">
+      <Filter>NewEngine\Source\Render</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="NewEngine\main2.h">
+      <Filter>NewEngine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\NewEngine.h">
+      <Filter>NewEngine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\adl_serializer.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\byte_container_with_subtype.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\abi_macros.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\conversions\from_json.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\conversions\to_chars.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\conversions\to_json.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\exceptions.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\hash.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\input\binary_reader.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\input\input_adapters.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\input\json_sax.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\input\lexer.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\input\parser.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\input\position_t.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\iterators\internal_iterator.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\iterators\iteration_proxy.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\iterators\iterator_traits.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\iterators\iter_impl.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\iterators\json_reverse_iterator.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\iterators\primitive_iterator.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\json_custom_base_class.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\json_pointer.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\json_ref.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\macro_scope.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\macro_unscope.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\meta\call_std\begin.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\meta\call_std\end.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\meta\cpp_future.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\meta\detected.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\meta\identity_tag.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\meta\is_sax.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\meta\std_fs.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\meta\type_traits.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\meta\void_t.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\output\binary_writer.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\output\output_adapters.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\output\serializer.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\string_concat.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\string_escape.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\detail\value_t.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\json.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\json_fwd.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\ordered_map.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\thirdparty\hedley\hedley.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\thirdparty\hedley\hedley_undef.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Collision\Collider.h">
+      <Filter>NewEngine\Header\Developer\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Collision\ColliderManager.h">
+      <Filter>NewEngine\Header\Developer\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Collision\Collision.h">
+      <Filter>NewEngine\Header\Developer\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Input\InputManager.h">
+      <Filter>NewEngine\Header\Developer\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Input\JoypadInput.h">
+      <Filter>NewEngine\Header\Developer\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Input\KeyBoardInput.h">
+      <Filter>NewEngine\Header\Developer\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Input\MouseInput.h">
+      <Filter>NewEngine\Header\Developer\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Math\Mat4.h">
+      <Filter>NewEngine\Header\Developer\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Math\MathUtil.h">
+      <Filter>NewEngine\Header\Developer\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Math\Vec2.h">
+      <Filter>NewEngine\Header\Developer\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Math\Vec3.h">
+      <Filter>NewEngine\Header\Developer\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Math\Vec4.h">
+      <Filter>NewEngine\Header\Developer\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Util\Color.h">
+      <Filter>NewEngine\Header\Developer\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Util\FrameRate.h">
+      <Filter>NewEngine\Header\Developer\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Util\Random.h">
+      <Filter>NewEngine\Header\Developer\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Util\Singleton.h">
+      <Filter>NewEngine\Header\Developer\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Util\Util.h">
+      <Filter>NewEngine\Header\Developer\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Component\Blend.h">
+      <Filter>NewEngine\Header\Developer\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Component\ComponentManager.h">
+      <Filter>NewEngine\Header\Developer\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Component\IComponent.h">
+      <Filter>NewEngine\Header\Developer\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Component\Material.h">
+      <Filter>NewEngine\Header\Developer\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Component\ModelData.h">
+      <Filter>NewEngine\Header\Developer\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Component\Tag.h">
+      <Filter>NewEngine\Header\Developer\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Component\Texture.h">
+      <Filter>NewEngine\Header\Developer\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Component\Transform.h">
+      <Filter>NewEngine\Header\Developer\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Object\Object2D\RenderTexture.h">
+      <Filter>NewEngine\Header\Developer\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Object\Object2D\Sprite.h">
+      <Filter>NewEngine\Header\Developer\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Object\Other\DebugCamera.h">
+      <Filter>NewEngine\Header\Developer\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Object\Other\DrawManager.h">
+      <Filter>NewEngine\Header\Developer\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Object\Other\GameObject.h">
+      <Filter>NewEngine\Header\Developer\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Object\Other\ObjectManager.h">
+      <Filter>NewEngine\Header\Developer\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Object\Other\ViewProjection.h">
+      <Filter>NewEngine\Header\Developer\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Scene\Scene.h">
+      <Filter>NewEngine\Header\Developer\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\DeveloperManager.h">
+      <Filter>NewEngine\Header\Developer</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Sound.h">
+      <Filter>NewEngine\Header\Developer</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Gui\GuiManager.h">
+      <Filter>NewEngine\Header\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Gui\HierarchyLayer.h">
+      <Filter>NewEngine\Header\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Gui\ILayer.h">
+      <Filter>NewEngine\Header\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Gui\InspectorLayer.h">
+      <Filter>NewEngine\Header\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Gui\MainLayer.h">
+      <Filter>NewEngine\Header\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Gui\ProjectLayer.h">
+      <Filter>NewEngine\Header\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Gui\SceneLayer.h">
+      <Filter>NewEngine\Header\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Gui\UserLayer.h">
+      <Filter>NewEngine\Header\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
+      <Filter>NewEngine\Header\Render\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\Buffer\IndexBuffer.h">
+      <Filter>NewEngine\Header\Render\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\Buffer\TextureBuffer.h">
+      <Filter>NewEngine\Header\Render\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\Buffer\VertexBuffer.h">
+      <Filter>NewEngine\Header\Render\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\RenderBase.h">
+      <Filter>NewEngine\Header\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\RenderWindow.h">
+      <Filter>NewEngine\Header\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\ScissorRectangle.h">
+      <Filter>NewEngine\Header\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\ShaderObject.h">
+      <Filter>NewEngine\Header\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\Vertex.h">
+      <Filter>NewEngine\Header\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\Viewport.h">
+      <Filter>NewEngine\Header\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\DataOperator.h">
+      <Filter>NewEngine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\GraphicsPipeline.h">
+      <Filter>NewEngine\Header\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Object\3D\Object3D.h">
+      <Filter>NewEngine\Header\Developer\Object\Object3D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Object\3D\Line.h">
+      <Filter>NewEngine\Header\Developer\Object\Object3D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Developer\Object\3D\Emitter.h">
+      <Filter>NewEngine\Header\Developer\Object\Object3D</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\Basic.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\RenderTexture.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\ObjectBasic.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\Particle.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\Sprite.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\BasicPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\SpritePS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\BasicVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\RenderTexturePS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\RenderTextureVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ObjectBasicPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ObjectBasicVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ParticleGS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ParticlePS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ParticleVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\SpriteVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

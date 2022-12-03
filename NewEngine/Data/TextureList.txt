@@ -1,0 +1,15 @@
+FilePath GameProject/Resources/pic.png
+Tag pic
+
+FilePath GameProject/Resources/effect1.png
+Tag par
+
+FilePath GameProject/Resources/bg.png
+Tag backGround
+
+FilePath GameProject/Resources/line.png
+Tag line
+
+FilePath GameProject/Resources/kusa.png
+Tag kusa
+

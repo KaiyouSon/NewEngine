@@ -1,0 +1,60 @@
+SceneIndex 0
+
+ModelDataTag 
+ObjectType 5
+Name Sprite
+isShow 1
+Tag Default 
+TransformPos 962.4 490 0 
+TransformRot 0 0 0 
+TransformScale 1 1 1 
+UseBillboard 0 
+BillboardType 0 
+TextureTag backGround
+
+ModelDataTag 
+ObjectType 7
+Name ParticleEmitter
+isShow 1
+Tag Default 
+TransformPos -13.2 0 0 
+TransformRot 0 0 0 
+TransformScale 1 1 1 
+UseBillboard 1 
+BillboardType 3 
+TextureTag par
+
+ModelDataTag 
+ObjectType 7
+Name ParticleEmitter1
+isShow 1
+Tag Default 
+TransformPos 10.85 0 0 
+TransformRot 0 0 0 
+TransformScale 1 1 1 
+UseBillboard 1 
+BillboardType 3 
+TextureTag par
+
+ModelDataTag 
+ObjectType 7
+Name ParticleEmitter2
+isShow 1
+Tag Default 
+TransformPos 0 0 0 
+TransformRot 0 0 0 
+TransformScale 1 1 1 
+UseBillboard 1 
+BillboardType 3 
+TextureTag kusa
+
+--------------------------------------------
+
+SceneIndex 1
+
+--------------------------------------------
+
+SceneIndex 2
+
+--------------------------------------------
+

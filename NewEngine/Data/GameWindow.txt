@@ -1,0 +1,2 @@
+GameWindowTitle 
+GameWindowSize 0 0 
