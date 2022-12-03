@@ -5,17 +5,33 @@ using namespace std;
 
 Object3D::Object3D() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
-	isInitConstantBuffer(false), constantBuffer(new ConstantBuffer)
+	isInit(false), constantBuffer(new ConstantBuffer)
 {
+	texture.isMaterial = true;
 }
 Object3D::~Object3D()
 {
 	delete constantBuffer;
 }
 
+void Object3D::Init()
+{
+	if (isInit == true) return;
+
+	// 定数バッファ初期化
+	constantBuffer->TransformBufferInit();
+	constantBuffer->MaterialBufferInit();
+
+	if (texture.isMaterial == true)
+	{
+		texture = model.material.texture;
+	}
+
+	isInit = true;
+}
 void Object3D::Update()
 {
-	InitConstantBuffer();
+	Init();
 
 	transform.pos = pos;
 	transform.scale = scale;
@@ -52,25 +68,9 @@ void Object3D::Draw()
 	auto temp = renderBase->GetSrvDescHeap();
 	renderBase->GetCommandList()->SetDescriptorHeaps(1, &temp);
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	if (model.material.texture.isLoaded == false)
-	{
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture.GetGpuHandle());
-	}
-	else
-	{
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(2, model.material.texture.GetGpuHandle());
-	}
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture.GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(unsigned short)model.indices.size(), 1, 0, 0, 0);
 }
 
-void Object3D::InitConstantBuffer()
-{
-	if (isInitConstantBuffer == true) return;
-
-	// 定数バッファ初期化
-	constantBuffer->TransformBufferInit();
-	constantBuffer->MaterialBufferInit();
-	isInitConstantBuffer = true;
-}

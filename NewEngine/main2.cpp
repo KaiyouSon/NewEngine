@@ -11,15 +11,15 @@
 using namespace std;
 
 Object3D obj;
+Texture tex;
 
 // ‰æ‘œ‚Ì“Ç‚İ‚İ
 void Load()
 {
 	Model test = Model("Cube");
 	Texture tex = Texture("pic.png");
-
 	obj.model = test;
-	obj.texture = tex;
+	//obj.texture = tex;
 }
 // ‰Šú‰»ˆ—
 void Initialize()
