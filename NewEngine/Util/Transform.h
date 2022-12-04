@@ -1,5 +1,4 @@
 #pragma once
-#include "IComponent.h"
 #include "Util.h"
 
 enum BillBoardType
@@ -10,7 +9,7 @@ enum BillBoardType
 	AllAxisBillboard,
 };
 
-class Transform : public IComponent
+class Transform
 {
 public:
 	Vec3 pos;	// ç¿ïW

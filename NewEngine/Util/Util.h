@@ -20,15 +20,11 @@ enum BlendMode
 	Inv
 };
 
-class Util
-{
-public:
-	// ”äŠr‚µ‚Ä‘å‚«‚¢•û‚ğ•Ô‚·
-	static float Max(float a, float b);
+// ”äŠr‚µ‚Ä‘å‚«‚¢•û‚ğ•Ô‚·
+float Max(float a, float b);
 
-	// ”äŠr‚µ‚Ä¬‚³‚¢•û‚ğ•Ô‚·
-	static float Min(float a, float b);
+// ”äŠr‚µ‚Ä¬‚³‚¢•û‚ğ•Ô‚·
+float Min(float a, float b);
 
-	// •„†‚ğ•Ô‚·i -1, 0, 1 j
-	static int Sign(float a);
-};
+// •„†‚ğ•Ô‚·i -1, 0, 1 j
+int Sign(float a);

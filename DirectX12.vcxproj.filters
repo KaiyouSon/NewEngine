@@ -99,51 +99,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NewEngine\Developer\Collision\Collision.cpp">
-      <Filter>NewEngine\Source\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Collision\Collider.cpp">
-      <Filter>NewEngine\Source\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Input\InputManager.cpp">
-      <Filter>NewEngine\Source\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Input\JoypadInput.cpp">
-      <Filter>NewEngine\Source\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Input\KeyBoardInput.cpp">
-      <Filter>NewEngine\Source\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Input\MouseInput.cpp">
-      <Filter>NewEngine\Source\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Math\Mat4.cpp">
-      <Filter>NewEngine\Source\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Math\MathUtil.cpp">
-      <Filter>NewEngine\Source\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Math\Vec2.cpp">
-      <Filter>NewEngine\Source\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Math\Vec3.cpp">
-      <Filter>NewEngine\Source\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Math\Vec4.cpp">
-      <Filter>NewEngine\Source\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Util\Color.cpp">
-      <Filter>NewEngine\Source\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Util\FrameRate.cpp">
-      <Filter>NewEngine\Source\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Util\Random.cpp">
-      <Filter>NewEngine\Source\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Util\Util.cpp">
-      <Filter>NewEngine\Source\Util</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Render\Buffer\ConstantBuffer.cpp">
       <Filter>NewEngine\Source\Render\Buffer</Filter>
     </ClCompile>
@@ -180,98 +135,95 @@
     <ClCompile Include="NewEngine\NewEngine.cpp">
       <Filter>NewEngine\Source</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Component\Model.cpp">
-      <Filter>NewEngine\Source\Object\3D</Filter>
+    <ClCompile Include="NewEngine\Collision\Collider.cpp">
+      <Filter>NewEngine\Source\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Component\Texture.cpp">
+    <ClCompile Include="NewEngine\Collision\Collision.cpp">
+      <Filter>NewEngine\Source\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Input\InputManager.cpp">
+      <Filter>NewEngine\Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Input\JoypadInput.cpp">
+      <Filter>NewEngine\Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Input\KeyBoardInput.cpp">
+      <Filter>NewEngine\Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Input\MouseInput.cpp">
+      <Filter>NewEngine\Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Math\Mat4.cpp">
+      <Filter>NewEngine\Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Math\MathUtil.cpp">
+      <Filter>NewEngine\Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Math\Vec2.cpp">
+      <Filter>NewEngine\Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Math\Vec3.cpp">
+      <Filter>NewEngine\Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Math\Vec4.cpp">
+      <Filter>NewEngine\Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\2D\RenderTexture.cpp">
       <Filter>NewEngine\Source\Object\2D</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Component\Material.cpp">
-      <Filter>NewEngine\Source\Object\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Object\3D\Object3D.cpp">
-      <Filter>NewEngine\Source\Object\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Object\2D\Sprite.cpp">
+    <ClCompile Include="NewEngine\Object\2D\Sprite.cpp">
       <Filter>NewEngine\Source\Object\2D</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Object\Other\Camera.cpp">
+    <ClCompile Include="NewEngine\Object\2D\Texture.cpp">
+      <Filter>NewEngine\Source\Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\Camera.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Component\Transform.cpp">
+    <ClCompile Include="NewEngine\Object\3D\DebugCamera.cpp">
+      <Filter>NewEngine\Source\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\Line.cpp">
+      <Filter>NewEngine\Source\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\Material.cpp">
+      <Filter>NewEngine\Source\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\Model.cpp">
+      <Filter>NewEngine\Source\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\Object3D.cpp">
+      <Filter>NewEngine\Source\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Util\Color.cpp">
       <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene.cpp">
-      <Filter>Application\Source\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Application\Source\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>Application\Source\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Object\3D\Line.cpp">
-      <Filter>NewEngine\Source\Object\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Object\2D\RenderTexture.cpp">
-      <Filter>NewEngine\Source\Object\2D</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Sound.cpp">
+    <ClCompile Include="NewEngine\Util\FrameRate.cpp">
       <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Developer\Object\Other\DebugCamera.cpp">
-      <Filter>NewEngine\Source\Object\3D</Filter>
+    <ClCompile Include="NewEngine\Util\Random.cpp">
+      <Filter>NewEngine\Source\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Util\Sound.cpp">
+      <Filter>NewEngine\Source\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Util\Transform.cpp">
+      <Filter>NewEngine\Source\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Util\Util.cpp">
+      <Filter>NewEngine\Source\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scene\GameScene.cpp">
+      <Filter>Application\Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scene\SceneManager.cpp">
+      <Filter>Application\Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scene\TitleScene.cpp">
+      <Filter>Application\Source\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NewEngine\Developer\Collision\Collider.h">
-      <Filter>NewEngine\Header\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Collision\Collision.h">
-      <Filter>NewEngine\Header\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Input\InputManager.h">
-      <Filter>NewEngine\Header\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Input\JoypadInput.h">
-      <Filter>NewEngine\Header\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Input\KeyBoardInput.h">
-      <Filter>NewEngine\Header\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Input\MouseInput.h">
-      <Filter>NewEngine\Header\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Math\Mat4.h">
-      <Filter>NewEngine\Header\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Math\MathUtil.h">
-      <Filter>NewEngine\Header\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Math\Vec2.h">
-      <Filter>NewEngine\Header\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Math\Vec3.h">
-      <Filter>NewEngine\Header\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Math\Vec4.h">
-      <Filter>NewEngine\Header\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Util\Color.h">
-      <Filter>NewEngine\Header\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Util\FrameRate.h">
-      <Filter>NewEngine\Header\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Util\Random.h">
-      <Filter>NewEngine\Header\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Util\Singleton.h">
-      <Filter>NewEngine\Header\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Util\Util.h">
-      <Filter>NewEngine\Header\Util</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
       <Filter>NewEngine\Header\Render\Buffer</Filter>
     </ClInclude>
@@ -308,50 +260,98 @@
     <ClInclude Include="NewEngine\NewEngine.h">
       <Filter>NewEngine\Header</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Component\Model.h">
-      <Filter>NewEngine\Header\Object\3D</Filter>
+    <ClInclude Include="NewEngine\Collision\Collider.h">
+      <Filter>NewEngine\Header\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Component\Texture.h">
+    <ClInclude Include="NewEngine\Collision\Collision.h">
+      <Filter>NewEngine\Header\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Input\InputManager.h">
+      <Filter>NewEngine\Header\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Input\JoypadInput.h">
+      <Filter>NewEngine\Header\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Input\KeyBoardInput.h">
+      <Filter>NewEngine\Header\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Input\MouseInput.h">
+      <Filter>NewEngine\Header\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Math\Mat4.h">
+      <Filter>NewEngine\Header\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Math\MathUtil.h">
+      <Filter>NewEngine\Header\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Math\Vec2.h">
+      <Filter>NewEngine\Header\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Math\Vec3.h">
+      <Filter>NewEngine\Header\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Math\Vec4.h">
+      <Filter>NewEngine\Header\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\2D\Sprite.h">
       <Filter>NewEngine\Header\Object\2D</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Object\2D\Sprite.h">
+    <ClInclude Include="NewEngine\Object\2D\Texture.h">
       <Filter>NewEngine\Header\Object\2D</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Object\3D\Object3D.h">
+    <ClInclude Include="NewEngine\Object\2D\RenderTexture.h">
+      <Filter>NewEngine\Header\Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\Camera.h">
       <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Object\Other\Camera.h">
+    <ClInclude Include="NewEngine\Object\3D\DebugCamera.h">
       <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Component\Transform.h">
+    <ClInclude Include="NewEngine\Object\3D\Line.h">
+      <Filter>NewEngine\Header\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\Material.h">
+      <Filter>NewEngine\Header\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\Model.h">
+      <Filter>NewEngine\Header\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\Object3D.h">
+      <Filter>NewEngine\Header\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Util\Color.h">
       <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Component\Material.h">
-      <Filter>NewEngine\Header\Object\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene.h">
-      <Filter>Application\Header\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\IScene.h">
-      <Filter>Application\Header\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Application\Header\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>Application\Header\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Object\Object2D\RenderTexture.h">
-      <Filter>NewEngine\Header\Object\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Object\3D\Line.h">
-      <Filter>NewEngine\Header\Object\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Sound.h">
+    <ClInclude Include="NewEngine\Util\FrameRate.h">
       <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Object\Other\DebugCamera.h">
-      <Filter>NewEngine\Header\Object\3D</Filter>
+    <ClInclude Include="NewEngine\Util\Random.h">
+      <Filter>NewEngine\Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Util\Singleton.h">
+      <Filter>NewEngine\Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Util\Sound.h">
+      <Filter>NewEngine\Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Util\Transform.h">
+      <Filter>NewEngine\Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Util\Util.h">
+      <Filter>NewEngine\Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scene\GameScene.h">
+      <Filter>Application\Header\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scene\IScene.h">
+      <Filter>Application\Header\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scene\SceneManager.h">
+      <Filter>Application\Header\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scene\TitleScene.h">
+      <Filter>Application\Header\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

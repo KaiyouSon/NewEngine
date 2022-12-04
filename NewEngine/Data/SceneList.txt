@@ -1,5 +1,0 @@
-ListSize 3
-Current 0
-Name Default
-Name Test
-Name Test1

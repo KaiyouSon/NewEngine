@@ -1,5 +1,4 @@
 #include "NewEngine.h"
-#include "main2.h"
 #include "Util.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
