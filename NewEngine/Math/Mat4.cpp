@@ -61,18 +61,18 @@ Mat4 Mat4::Inverse(const Mat4& mat)
 	for (int i = 0; i < 4; i++)
 	{
 		// Å‘å¬•ª‚ð’Tõ‚·‚é
-		float max = mathUtil->Absolut(sweepMat[i][i]);
+		float max = fabsf(sweepMat[i][i]);
 		int maxIndex = i;
 		for (int j = i + 1; j < 4; j++)
 		{
-			if (max < mathUtil->Absolut(sweepMat[i][i]))
+			if (max < fabsf(sweepMat[i][i]))
 			{
-				max = mathUtil->Absolut(sweepMat[i][i]);
+				max = fabsf(sweepMat[i][i]);
 				maxIndex = j;
 			}
 		}
 		// ‹ts—ñ‹‚ß‚é‚©‚Ç‚¤‚©
-		if (mathUtil->Absolut(sweepMat[maxIndex][i]) <= 0.000001f)
+		if (fabsf(sweepMat[maxIndex][i]) <= 0.000001f)
 		{
 			// ‹‚ß‚ê‚È‚¢ê‡‚Í’PˆÊs—ñ‚ð•Ô‚·
 			return Identity();

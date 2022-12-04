@@ -18,12 +18,12 @@ Transform::Transform(Vec3 pos, Vec3 scale, Vec3 rot) :
 
 void Transform::Update()
 {
-	scaleMat = mathUtil->ConvertScalingMat(scale);		 // ƒXƒP[ƒŠƒ“ƒO
+	scaleMat = ConvertScalingMat(scale);		 // ƒXƒP[ƒŠƒ“ƒO
 	rotMat = Mat4::Identity();
-	rotMat *= mathUtil->ConvertRotationZAxisMat(rot.z); // zŽ²‰ñ“]
-	rotMat *= mathUtil->ConvertRotationXAxisMat(rot.x); // xŽ²‰ñ“]
-	rotMat *= mathUtil->ConvertRotationYAxisMat(rot.y); // yŽ²‰ñ“]
-	transMat = mathUtil->ConvertTranslationMat(pos);	 // •½sˆÚ“®
+	rotMat *= ConvertRotationZAxisMat(rot.z); // zŽ²‰ñ“]
+	rotMat *= ConvertRotationXAxisMat(rot.x); // xŽ²‰ñ“]
+	rotMat *= ConvertRotationYAxisMat(rot.y); // yŽ²‰ñ“]
+	transMat = ConvertTranslationMat(pos);	 // •½sˆÚ“®
 
 	BillBoardUpdate();
 
@@ -47,25 +47,25 @@ void Transform::BillBoardUpdate()
 		case XAxisBillboard:
 		{
 			billboardMat = Mat4::Identity();
-			billboardMat *= mathUtil->ConvertBillBoardXAxis();
+			billboardMat *= ConvertBillBoardXAxis();
 			break;
 		}
 		case YAxisBillboard:
 		{
 			billboardMat = Mat4::Identity();
-			billboardMat *= mathUtil->ConvertBillBoardYAxis();
+			billboardMat *= ConvertBillBoardYAxis();
 			break;
 		}
 		case ZAxisBillboard:
 		{
 			billboardMat = Mat4::Identity();
-			billboardMat *= mathUtil->ConvertBillBoardZAxis();
+			billboardMat *= ConvertBillBoardZAxis();
 			break;
 		}
 		case AllAxisBillboard:
 		{
 			billboardMat = Mat4::Identity();
-			billboardMat *= mathUtil->ConvertBillBoardAllAxis();
+			billboardMat *= ConvertBillBoardAllAxis();
 			break;
 		}
 		default:

@@ -1,6 +1,6 @@
 #include "Util.h"
 
-Mat4 MathUtil::ConvertScalingMat(Vec3 scale)
+Mat4 ConvertScalingMat(Vec3 scale)
 {
 	return
 	{
@@ -10,37 +10,37 @@ Mat4 MathUtil::ConvertScalingMat(Vec3 scale)
 		0,0,0,1
 	};
 }
-Mat4 MathUtil::ConvertRotationXAxisMat(float angle)
+Mat4 ConvertRotationXAxisMat(float angle)
 {
 	return
 	{
 		1,0,0,0,
-		0, cosf(MathUtil::Radian(angle)),sinf(MathUtil::Radian(angle)),0,
-		0,-sinf(MathUtil::Radian(angle)),cosf(MathUtil::Radian(angle)),0,
+		0, cosf(Radian(angle)),sinf(Radian(angle)),0,
+		0,-sinf(Radian(angle)),cosf(Radian(angle)),0,
 		0,0,0,1
 	};
 }
-Mat4 MathUtil::ConvertRotationYAxisMat(float angle)
+Mat4 ConvertRotationYAxisMat(float angle)
 {
 	return
 	{
-		cosf(MathUtil::Radian(angle)),0,-sinf(MathUtil::Radian(angle)),0,
+		cosf(Radian(angle)),0,-sinf(Radian(angle)),0,
 		0,1,0,0,
-		sinf(MathUtil::Radian(angle)),0, cosf(MathUtil::Radian(angle)),0,
+		sinf(Radian(angle)),0, cosf(Radian(angle)),0,
 		0,0,0,1
 	};
 }
-Mat4 MathUtil::ConvertRotationZAxisMat(float angle)
+Mat4 ConvertRotationZAxisMat(float angle)
 {
 	return
 	{
-		 cosf(MathUtil::Radian(angle)),sinf(MathUtil::Radian(angle)),0,0,
-		-sinf(MathUtil::Radian(angle)),cosf(MathUtil::Radian(angle)),0,0,
+		 cosf(Radian(angle)),sinf(Radian(angle)),0,0,
+		-sinf(Radian(angle)),cosf(Radian(angle)),0,0,
 		0,0,1,0,
 		0,0,0,1
 	};
 }
-Mat4 MathUtil::ConvertTranslationMat(const Vec3& pos)
+Mat4 ConvertTranslationMat(const Vec3& pos)
 {
 	return
 	{
@@ -51,7 +51,7 @@ Mat4 MathUtil::ConvertTranslationMat(const Vec3& pos)
 	};
 }
 
-Mat4 MathUtil::ConvertBillBoardXAxis()
+Mat4 ConvertBillBoardXAxis()
 {
 	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewProjectionMat());
 
@@ -67,7 +67,7 @@ Mat4 MathUtil::ConvertBillBoardXAxis()
 
 	return tempMat;
 }
-Mat4 MathUtil::ConvertBillBoardYAxis()
+Mat4 ConvertBillBoardYAxis()
 {
 	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewProjectionMat());
 
@@ -83,7 +83,7 @@ Mat4 MathUtil::ConvertBillBoardYAxis()
 
 	return tempMat;
 }
-Mat4 MathUtil::ConvertBillBoardZAxis()
+Mat4 ConvertBillBoardZAxis()
 {
 	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewProjectionMat());
 
@@ -99,7 +99,7 @@ Mat4 MathUtil::ConvertBillBoardZAxis()
 
 	return tempMat;
 }
-Mat4 MathUtil::ConvertBillBoardAllAxis()
+Mat4 ConvertBillBoardAllAxis()
 {
 	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewProjectionMat());
 
@@ -111,7 +111,7 @@ Mat4 MathUtil::ConvertBillBoardAllAxis()
 	return tempMat;
 }
 
-Mat4 MathUtil::ConvertViewProjectionMatLookAt(const Vec3& pos, const Vec3& target, const Vec3& up)
+Mat4 ConvertViewProjectionMatLookAt(const Vec3& pos, const Vec3& target, const Vec3& up)
 {
 	// 単位行列で初期化
 	Mat4 view = Mat4::Identity();
@@ -141,7 +141,7 @@ Mat4 MathUtil::ConvertViewProjectionMatLookAt(const Vec3& pos, const Vec3& targe
 
 	return view;
 }
-Mat4 MathUtil::ConvertViewProjectionMatLookTo(const Vec3& pos, const Vec3& zAxis, const Vec3& yAxis)
+Mat4 ConvertViewProjectionMatLookTo(const Vec3& pos, const Vec3& zAxis, const Vec3& yAxis)
 {
 	Vec3 xAxisVec = Vec3::Cross(yAxis, zAxis).Normalized();
 	Vec3 yAxisVec = Vec3::Cross(zAxis, xAxisVec).Normalized();
@@ -154,7 +154,7 @@ Mat4 MathUtil::ConvertViewProjectionMatLookTo(const Vec3& pos, const Vec3& zAxis
 		pos.x,pos.y,-pos.z,1,
 	};
 }
-Mat4 MathUtil::ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, float farZ)
+Mat4 ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, float farZ)
 {
 	// 単位行列で初期化
 	Mat4 perspective = Mat4::Zero();
@@ -172,7 +172,7 @@ Mat4 MathUtil::ConvertPerspectiveProjectionMat(float fovAngle, float aspect, flo
 
 	return perspective;
 }
-Mat4 MathUtil::ConvertOrthoGrphicProjectionMat(int WIN_WIDTH, int WIN_HEIGHT)
+Mat4 ConvertOrthoGrphicProjectionMat(int WIN_WIDTH, int WIN_HEIGHT)
 {
 	return
 	{
@@ -183,7 +183,7 @@ Mat4 MathUtil::ConvertOrthoGrphicProjectionMat(int WIN_WIDTH, int WIN_HEIGHT)
 	};
 }
 
-Mat4 MathUtil::ConvertViewportMat(Viewport& viewport)
+Mat4 ConvertViewportMat(Viewport& viewport)
 {
 	Mat4 viewportMat = Mat4::Identity();
 	viewportMat.m[0][0] = viewport.GetSize().x / 2;
@@ -194,5 +194,3 @@ Mat4 MathUtil::ConvertViewportMat(Viewport& viewport)
 	viewportMat.m[3][2] = viewport.GetMinDepth();
 	return viewportMat;
 }
-
-MathUtil* mathUtil = MathUtil::GetInstance().get();

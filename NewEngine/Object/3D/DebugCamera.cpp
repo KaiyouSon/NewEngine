@@ -24,8 +24,8 @@ void DebugCamera::Update()
 	{
 		if (Mouse::GetMouseMove().x != 0 || Mouse::GetMouseMove().y != 0)
 		{
-			clickedVec.x += mathUtil->Radian(Mouse::GetMouseMove().x) * 0.5;
-			clickedVec.y += mathUtil->Radian(Mouse::GetMouseMove().y) * 0.5;
+			clickedVec.x += Radian(Mouse::GetMouseMove().x) * 0.5;
+			clickedVec.y += Radian(Mouse::GetMouseMove().y) * 0.5;
 
 			pos.x = dis * cosf(clickedVec.x) * cosf(clickedVec.y) + velocity.x;
 			pos.y = -dis * sinf(clickedVec.y);

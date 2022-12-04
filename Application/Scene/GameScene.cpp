@@ -22,7 +22,7 @@ void GameScene::Update()
 	for (int i = 0; i < 10; i++)
 	{
 		const float offsetAngle = (360 / 10) * i;
-		obj[i].pos = { sinf(mathUtil->Radian(offsetAngle)) * 30, 0, cosf(mathUtil->Radian(offsetAngle)) * 30 };
+		obj[i].pos = { sinf(Radian(offsetAngle)) * 30, 0, cosf(Radian(offsetAngle)) * 30 };
 		obj[i].rot.y = offsetAngle;
 		obj[i].Update();
 	}
