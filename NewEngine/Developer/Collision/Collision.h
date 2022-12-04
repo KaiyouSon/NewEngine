@@ -1,35 +1,21 @@
 #pragma once
-#include "ColliderManager.h"
-#include "Singleton.h"
-#include <list>
-#include <memory>
+#include "Collider.h"
 
-template<typename T> class Singleton;
-
-class Collision : public Singleton<Collision>
+class Collision
 {
-private:
-	friend Singleton<Collision>;
-
-private:
+public:
 	// 球と球
-	bool SphereHitSphere(
+	static bool SphereHitSphere(
 		const SphereCollider& sphere1,
 		const SphereCollider& sphere2);
 
 	// レイとメッシュ
-	bool ReyHitMesh(
+	static bool ReyHitMesh(
 		const ReyCollider& rey,
 		const MeshCollider& mesh);
 
 	// 線とメッシュ
-	bool LineHitMesh(
+	static bool LineHitMesh(
 		const LineCollider& line,
 		const MeshCollider& mesh);
-
-public:
-	// 当たったら
-	//bool OnTrigger(
-	//	const GameObject* obj1,
-	//	const GameObject* obj2);
 };

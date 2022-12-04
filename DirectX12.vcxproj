@@ -150,7 +150,6 @@
   <ItemGroup>
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="NewEngine\Developer\Collision\Collider.cpp" />
-    <ClCompile Include="NewEngine\Developer\Collision\ColliderManager.cpp" />
     <ClCompile Include="NewEngine\Developer\Collision\Collision.cpp" />
     <ClCompile Include="NewEngine\Developer\Component\Material.cpp" />
     <ClCompile Include="NewEngine\Developer\Component\Model.cpp" />
@@ -198,7 +197,6 @@
     <ClInclude Include="Application\IScene.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="NewEngine\Developer\Collision\Collider.h" />
-    <ClInclude Include="NewEngine\Developer\Collision\ColliderManager.h" />
     <ClInclude Include="NewEngine\Developer\Collision\Collision.h" />
     <ClInclude Include="NewEngine\Developer\Component\Material.h" />
     <ClInclude Include="NewEngine\Developer\Component\Model.h" />

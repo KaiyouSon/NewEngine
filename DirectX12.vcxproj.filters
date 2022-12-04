@@ -99,9 +99,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NewEngine\Developer\Collision\ColliderManager.cpp">
-      <Filter>NewEngine\Source\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Developer\Collision\Collision.cpp">
       <Filter>NewEngine\Source\Collision</Filter>
     </ClCompile>
@@ -228,9 +225,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Developer\Collision\Collider.h">
-      <Filter>NewEngine\Header\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Developer\Collision\ColliderManager.h">
       <Filter>NewEngine\Header\Collision</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Developer\Collision\Collision.h">

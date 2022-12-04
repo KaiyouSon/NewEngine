@@ -66,8 +66,7 @@ void NewEngineEnd()
 	// ウィンドウクラスを登録解除
 	RenderWindow::GetInstance()->TerminateGameWindow();
 
-	//ComPtr<ID3D12Device> tmpDevice = RenderBase::GetInstance()->GetDevice().Get();
-
+	//ComPtr<ID3D12Device> tempDevice = RenderBase::GetInstance()->GetDevice().Get();
 	//ID3D12DebugDevice* debugInterface;
 	//if (SUCCEEDED(tmpDevice.Get()->QueryInterface(&debugInterface)))
 	//{
