@@ -24,5 +24,7 @@ public:
 	~Object3D();
 	void Update();
 	void Draw();
+
+	static void SetBlendMode(const BlendMode& blendMode);
 };
 

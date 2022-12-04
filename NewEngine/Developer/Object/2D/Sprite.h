@@ -29,5 +29,7 @@ public:
 	~Sprite();
 	void Update();
 	void Draw();
+
+	static void SetBlendMode(const BlendMode& blendMode);
 };
 

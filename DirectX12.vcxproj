@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)/ImGui;$(ProjectDir)/NewEngine/Render/Buffer;$(ProjectDir)/NewEngine/Render;$(ProjectDir)/NewEngine/Gui;$(ProjectDir)/NewEngine/Developer;$(ProjectDir)/NewEngine/Developer/Scene;$(ProjectDir)/NewEngine/Developer/Object/Other;$(ProjectDir)/NewEngine/Developer/Object/3D;$(ProjectDir)/NewEngine/Developer/Object/2D;$(ProjectDir)/NewEngine/Developer/Component;$(ProjectDir)/NewEngine/Developer/Util;$(ProjectDir)/NewEngine/Developer/Math;$(ProjectDir)/NewEngine/Developer/Input;$(ProjectDir)/NewEngine/Developer/Collision;$(ProjectDir)/NewEngine;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/Application;$(ProjectDir)/ImGui;$(ProjectDir)/NewEngine/Render/Buffer;$(ProjectDir)/NewEngine/Render;$(ProjectDir)/NewEngine/Gui;$(ProjectDir)/NewEngine/Developer;$(ProjectDir)/NewEngine/Developer/Scene;$(ProjectDir)/NewEngine/Developer/Object/Other;$(ProjectDir)/NewEngine/Developer/Object/3D;$(ProjectDir)/NewEngine/Developer/Object/2D;$(ProjectDir)/NewEngine/Developer/Component;$(ProjectDir)/NewEngine/Developer/Util;$(ProjectDir)/NewEngine/Developer/Math;$(ProjectDir)/NewEngine/Developer/Input;$(ProjectDir)/NewEngine/Developer/Collision;$(ProjectDir)/NewEngine;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -135,7 +135,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)/ImGui;$(ProjectDir)/NewEngine/Render/Buffer;$(ProjectDir)/NewEngine/Render;$(ProjectDir)/NewEngine/Gui;$(ProjectDir)/NewEngine/Developer;$(ProjectDir)/NewEngine/Developer/Scene;$(ProjectDir)/NewEngine/Developer/Object/Other;$(ProjectDir)/NewEngine/Developer/Object/3D;$(ProjectDir)/NewEngine/Developer/Object/2D;$(ProjectDir)/NewEngine/Developer/Component;$(ProjectDir)/NewEngine/Developer/Util;$(ProjectDir)/NewEngine/Developer/Math;$(ProjectDir)/NewEngine/Developer/Input;$(ProjectDir)/NewEngine/Developer/Collision;$(ProjectDir)/NewEngine;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/Application;$(ProjectDir)/ImGui;$(ProjectDir)/NewEngine/Render/Buffer;$(ProjectDir)/NewEngine/Render;$(ProjectDir)/NewEngine/Gui;$(ProjectDir)/NewEngine/Developer;$(ProjectDir)/NewEngine/Developer/Scene;$(ProjectDir)/NewEngine/Developer/Object/Other;$(ProjectDir)/NewEngine/Developer/Object/3D;$(ProjectDir)/NewEngine/Developer/Object/2D;$(ProjectDir)/NewEngine/Developer/Component;$(ProjectDir)/NewEngine/Developer/Util;$(ProjectDir)/NewEngine/Developer/Math;$(ProjectDir)/NewEngine/Developer/Input;$(ProjectDir)/NewEngine/Developer/Collision;$(ProjectDir)/NewEngine;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -148,15 +148,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="NewEngine\Developer\Collision\Collider.cpp" />
     <ClCompile Include="NewEngine\Developer\Collision\ColliderManager.cpp" />
     <ClCompile Include="NewEngine\Developer\Collision\Collision.cpp" />
-    <ClCompile Include="NewEngine\Developer\Component\Blend.cpp" />
     <ClCompile Include="NewEngine\Developer\Component\Material.cpp" />
     <ClCompile Include="NewEngine\Developer\Component\Model.cpp" />
     <ClCompile Include="NewEngine\Developer\Component\Texture.cpp" />
     <ClCompile Include="NewEngine\Developer\Component\Transform.cpp" />
-    <ClCompile Include="NewEngine\Developer\DeveloperManager.cpp" />
     <ClCompile Include="NewEngine\Developer\Input\InputManager.cpp" />
     <ClCompile Include="NewEngine\Developer\Input\JoypadInput.cpp" />
     <ClCompile Include="NewEngine\Developer\Input\KeyBoardInput.cpp" />
@@ -171,7 +170,6 @@
     <ClCompile Include="NewEngine\Developer\Object\3D\Line.cpp" />
     <ClCompile Include="NewEngine\Developer\Object\3D\Object3D.cpp" />
     <ClCompile Include="NewEngine\Developer\Object\Other\DebugCamera.cpp" />
-    <ClCompile Include="NewEngine\Developer\Object\Other\DrawManager.cpp" />
     <ClCompile Include="NewEngine\Developer\Object\Other\Camera.cpp" />
     <ClCompile Include="NewEngine\Developer\Sound.cpp" />
     <ClCompile Include="NewEngine\Developer\Util\Color.cpp" />
@@ -179,10 +177,6 @@
     <ClCompile Include="NewEngine\Developer\Util\Random.cpp" />
     <ClCompile Include="NewEngine\Developer\Util\Util.cpp" />
     <ClCompile Include="NewEngine\main.cpp" />
-    <ClCompile Include="NewEngine\main2.cpp">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
     <ClCompile Include="NewEngine\NewEngine.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -197,18 +191,19 @@
     <ClCompile Include="NewEngine\Render\ScissorRectangle.cpp" />
     <ClCompile Include="NewEngine\Render\ShaderObject.cpp" />
     <ClCompile Include="NewEngine\Render\Viewport.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\IScene.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="NewEngine\Developer\Collision\Collider.h" />
     <ClInclude Include="NewEngine\Developer\Collision\ColliderManager.h" />
     <ClInclude Include="NewEngine\Developer\Collision\Collision.h" />
-    <ClInclude Include="NewEngine\Developer\Component\Blend.h" />
-    <ClInclude Include="NewEngine\Developer\Component\IComponent.h" />
     <ClInclude Include="NewEngine\Developer\Component\Material.h" />
     <ClInclude Include="NewEngine\Developer\Component\Model.h" />
     <ClInclude Include="NewEngine\Developer\Component\Texture.h" />
     <ClInclude Include="NewEngine\Developer\Component\Transform.h" />
-    <ClInclude Include="NewEngine\Developer\DeveloperManager.h" />
     <ClInclude Include="NewEngine\Developer\Input\InputManager.h" />
     <ClInclude Include="NewEngine\Developer\Input\JoypadInput.h" />
     <ClInclude Include="NewEngine\Developer\Input\KeyBoardInput.h" />
@@ -223,7 +218,6 @@
     <ClInclude Include="NewEngine\Developer\Object\3D\Object3D.h" />
     <ClInclude Include="NewEngine\Developer\Object\Object2D\RenderTexture.h" />
     <ClInclude Include="NewEngine\Developer\Object\Other\DebugCamera.h" />
-    <ClInclude Include="NewEngine\Developer\Object\Other\DrawManager.h" />
     <ClInclude Include="NewEngine\Developer\Object\Other\Camera.h" />
     <ClInclude Include="NewEngine\Developer\Sound.h" />
     <ClInclude Include="NewEngine\Developer\Util\Color.h" />
@@ -231,7 +225,6 @@
     <ClInclude Include="NewEngine\Developer\Util\Random.h" />
     <ClInclude Include="NewEngine\Developer\Util\Singleton.h" />
     <ClInclude Include="NewEngine\Developer\Util\Util.h" />
-    <ClInclude Include="NewEngine\main2.h" />
     <ClInclude Include="NewEngine\NewEngine.h" />
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\IndexBuffer.h" />
@@ -244,6 +237,8 @@
     <ClInclude Include="NewEngine\Render\ShaderObject.h" />
     <ClInclude Include="NewEngine\Render\Vertex.h" />
     <ClInclude Include="NewEngine\Render\Viewport.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

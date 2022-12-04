@@ -9,10 +9,10 @@ GraphicsPipeline::GraphicsPipeline() :
 
 void GraphicsPipeline::Init()
 {
-	CreatePipelineState(AlphaBlend);	// αブレンド
-	CreatePipelineState(AddBlend);		// 加算ブレンド
-	CreatePipelineState(SubBlend);		// 減算ブレンド
-	CreatePipelineState(InvBlend);
+	CreatePipelineState(Alpha);	// αブレンド
+	CreatePipelineState(Add);		// 加算ブレンド
+	CreatePipelineState(Sub);		// 減算ブレンド
+	CreatePipelineState(Inv);
 }
 
 void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
@@ -69,25 +69,25 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
 	// 半透明合成
 	switch (blendMode)
 	{
-	case AlphaBlend: // αブレンド
+	case Alpha: // αブレンド
 		blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// 加算
 		blendDesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;			// ソースのアルファ値
 		blendDesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;	// 1.0f-ソースのアルファ値
 		break;
 
-	case AddBlend:	// 加算ブレンド
+	case Add:	// 加算ブレンド
 		blendDesc.BlendOp = D3D12_BLEND_OP_ADD;		// 加算
 		blendDesc.SrcBlend = D3D12_BLEND_ONE;		// ソースの値を100％使う
 		blendDesc.DestBlend = D3D12_BLEND_ONE;		// デストの値を100％使う
 		break;
 
-	case SubBlend:	// 減算ブレンド
+	case Sub:	// 減算ブレンド
 		blendDesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;	// デストからソースを減算
 		blendDesc.SrcBlend = D3D12_BLEND_ONE;				// ソースの値を100％使う
 		blendDesc.DestBlend = D3D12_BLEND_ONE;				// デストの値を100％使う
 		break;
 
-	case InvBlend:	// 反転
+	case Inv:	// 反転
 		blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// 加算
 		blendDesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;	// 1.0f-デストカラーの値
 		blendDesc.DestBlend = D3D12_BLEND_ZERO;				// 使わない
@@ -131,19 +131,19 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
 	// パイプランステートの生成
 	switch (blendMode)
 	{
-	case AlphaBlend: // αブレンド
+	case Alpha: // αブレンド
 		result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&alphaPipeline));
 		break;
 
-	case AddBlend:	// 加算ブレンド
+	case Add:	// 加算ブレンド
 		result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&addPipeline));
 		break;
 
-	case SubBlend:	// 減算ブレンド
+	case Sub:	// 減算ブレンド
 		result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&subPipeline));
 		break;
 
-	case InvBlend:	// 反転
+	case Inv:	// 反転
 		result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&invPipeline));
 		break;
 

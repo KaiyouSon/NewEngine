@@ -6,15 +6,19 @@
 #include "MathUtil.h"
 #include "Transform.h"
 #include "Camera.h"
+#include "SceneManager.h"
 #include <memory>
 #include <vector>
 #include <string>
 #include <list>
 
-const int WIN_WIDTH = 1920;
-const int WIN_HEIGHT = 1010;
-const int WIN_HALF_WIDTH = WIN_WIDTH / 2;
-const int WIN_HALF_HEIGHT = WIN_HEIGHT / 2;
+enum BlendMode
+{
+	Alpha,
+	Add,
+	Sub,
+	Inv
+};
 
 class Util
 {

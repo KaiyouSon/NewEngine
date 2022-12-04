@@ -1,18 +1,13 @@
 #include "NewEngine.h"
 #include "RenderBase.h"
 #include "RenderWindow.h"
-#include "DeveloperManager.h"
 #include "RenderTexture.h"
-#include "NewEngine/main2.h"
 #include <wrl.h>
 using namespace Microsoft::WRL;
 
 void NewEngineInit()
 {
-	RenderBase* renderBase = RenderBase::GetInstance().get();
-	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
-
-#ifdef _DEBUG
+#ifdef _DEBUG 
 	//デバッグレイヤーをオンに
 	ComPtr<ID3D12Debug1> debugController;
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(debugController.GetAddressOf()))))
@@ -21,29 +16,21 @@ void NewEngineInit()
 		debugController->SetEnableGPUBasedValidation(TRUE);
 	}
 #endif
+	// -------------------------------------------------------------------------------- //
 
-#ifdef NDEBUG
-	dataOperator->Initialize();
-	dataOperator->LoadWindowData();
 
-	renderWindow->SetWindowTitle(
-		dataOperator->GetGameWindowTitleForStorage());
-	renderWindow->SetWindowSize(
-		{
-			dataOperator->GetGameWindowSizeForStorage().x,
-			dataOperator->GetGameWindowSizeForStorage().y
-		});
-#endif
-
-#ifdef _DEBUG
-	renderWindow->SetWindowTitle("NewEngine");
-	renderWindow->SetWindowSize({ 1920, 1010 });
-#endif
+	RenderBase* renderBase = RenderBase::GetInstance().get();
+	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
 
 	renderWindow->CreateGameWindow();
 
 	renderBase->Initialize();
+	InputManager::GetInstance()->Initialize();
+	SoundManager::GetInstance()->Initialize();
+	SceneManager::GetInstance()->Init();
 
+
+	// -------------------------------------------------------------------------------- //
 #ifdef _DEBUG
 	ComPtr<ID3D12InfoQueue> infoQuene;
 	if (SUCCEEDED(renderBase->GetDevice()->QueryInterface(IID_PPV_ARGS(&infoQuene))))
@@ -53,14 +40,11 @@ void NewEngineInit()
 		infoQuene->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);	// ワーニング時に止まる
 	}
 #endif
-
-	developerManager->Initialize();
-
 }
 void NewEngineUpda()
 {
-	developerManager->Update();
-
+	InputManager::GetInstance()->Update();
+	SceneManager::GetInstance()->Update();
 }
 void NewEnginePreDraw()
 {
@@ -69,17 +53,12 @@ void NewEnginePreDraw()
 }
 void NewEneineDraw()
 {
-#ifdef _DEBUG
-	developerManager->Draw();
-#endif
+	SceneManager::GetInstance()->Draw();
 }
 void NewEnginePostDraw()
 {
 	RenderBase* renderBase = RenderBase::GetInstance().get();
 
-#ifdef NDEBUG
-	DeveloperManager::GetInstance()->Draw();
-#endif
 	renderBase->GetInstance()->PostDraw();
 }
 void NewEngineEnd()
@@ -106,9 +85,34 @@ bool ProcessMessage()
 	}
 	return false;
 }
-void SetBackGroundColor(float Red, float Green, float Blue)
+void SetWindowTitle(const std::string& title)
 {
-	RenderBase::GetInstance()->clearColor[0] = Red / 255;
-	RenderBase::GetInstance()->clearColor[1] = Green / 255;
-	RenderBase::GetInstance()->clearColor[2] = Blue / 255;
+	RenderWindow::GetInstance()->SetWindowTitle(title);
+}
+void SetWindowSize(const Vec2& size)
+{
+	RenderWindow::GetInstance()->SetWindowSize(size);
+}
+void SetBackGroundColor(const float& r, const float& g, const float& b)
+{
+	RenderBase::GetInstance()->clearColor[0] = r / 255;
+	RenderBase::GetInstance()->clearColor[1] = g / 255;
+	RenderBase::GetInstance()->clearColor[2] = b / 255;
+}
+Vec2 GetWindowSize()
+{
+	return RenderWindow::GetInstance()->GetWindowSize();
+}
+Vec2 GetWindowHalfSize()
+{
+	return RenderWindow::GetInstance()->GetWindowSize() / 2;
+}
+
+void SetFrameRate(const float& frameRate)
+{
+	FrameRate::GetInstance()->Initialize(frameRate);
+}
+void FrameRateUpdate()
+{
+	FrameRate::GetInstance()->Update();
 }

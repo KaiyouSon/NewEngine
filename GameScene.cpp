@@ -1,16 +1,9 @@
-#include "main2.h"
-#include "Util.h"
-#include "MathUtil.h"
+#include "GameScene.h"
+#include "TitleScene.h"
+#include "SceneManager.h"
 #include "InputManager.h"
-#include "DrawManager.h"
-#include "Sound.h"
-#include <memory>
-#include "Collision.h"
-#include "Model.h"
-#include "Texture.h"
-using namespace std;
 
-void TestScene::Load()
+void GameScene::Init()
 {
 	Model test = Model("Cube");
 	Texture tex = Texture("pic.png");
@@ -24,12 +17,7 @@ void TestScene::Load()
 	spr.texture = tex;
 }
 
-void TestScene::Init()
-{
-	DebugCamera::GetInstance()->Initialize();
-}
-
-void TestScene::Update()
+void GameScene::Update()
 {
 	for (int i = 0; i < 10; i++)
 	{
@@ -40,22 +28,24 @@ void TestScene::Update()
 	}
 	spr.Update();
 
-	Camera::current.Update();
-	DebugCamera::GetInstance()->Update();
+	if (Key::GetKeyTrigger(DIK_SPACE))
+	{
+		SceneManager::ChangeScene<TitleScene>();
+	}
 }
 
-void TestScene::DrawFrontSprite()
+void GameScene::DrawBackSprite()
 {
 }
 
-void TestScene::DrawBackSprite()
-{
-}
-
-void TestScene::DrawModel()
+void GameScene::DrawModel()
 {
 	for (int i = 0; i < 10; i++)
 	{
 		obj[i].Draw();
 	}
+}
+
+void GameScene::DrawFrontSprite()
+{
 }

@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "Util.h"
+#include "NewEngine.h"
 
 Camera Camera::current = {};
 
@@ -17,11 +18,11 @@ Camera::Camera() : pos(0, 0, 0), rot(0, 0, 0), fov(mathUtil->Radian(45)), nearZ(
 	viewProjectionMat = mathUtil->ConvertViewProjectionMatLookTo(v1, v2, v3);
 
 	// •Às“Š‰es—ñ‚ÌŒvŽZ
-	orthoGrphicProjectionMat = mathUtil->ConvertOrthoGrphicProjectionMat(WIN_WIDTH, WIN_HEIGHT);
+	orthoGrphicProjectionMat = mathUtil->ConvertOrthoGrphicProjectionMat(GetWindowSize().x, GetWindowSize().y);
 
 	// “§Ž‹“Š‰es—ñ‚ÌŒvŽZ
 	perspectiveProjectionMat = mathUtil->ConvertPerspectiveProjectionMat(
-		fov, (float)WIN_WIDTH / WIN_HEIGHT, nearZ, farZ);
+		fov, (float)GetWindowSize().x / GetWindowSize().y, nearZ, farZ);
 }
 
 void Camera::Update()
@@ -38,9 +39,9 @@ void Camera::Update()
 	viewProjectionMat = mathUtil->ConvertViewProjectionMatLookTo(v1, v2, v3);
 
 	// •½s“Š‰es—ñ‚ÌŒvŽZ
-	orthoGrphicProjectionMat = mathUtil->ConvertOrthoGrphicProjectionMat(WIN_WIDTH, WIN_HEIGHT);
+	orthoGrphicProjectionMat = mathUtil->ConvertOrthoGrphicProjectionMat(GetWindowSize().x, GetWindowSize().y);
 
 	// “§Ž‹“Š‰es—ñ‚ÌŒvŽZ
 	perspectiveProjectionMat = mathUtil->ConvertPerspectiveProjectionMat(
-		fov, (float)WIN_WIDTH / WIN_HEIGHT, nearZ, farZ);
+		fov, (float)GetWindowSize().x / GetWindowSize().y, nearZ, farZ);
 }

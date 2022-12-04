@@ -91,3 +91,30 @@ void Sprite::Draw()
 
 	renderBase->GetCommandList()->DrawIndexedInstanced((unsigned short)indices.size(), 1, 0, 0, 0);
 }
+
+void Sprite::SetBlendMode(const BlendMode& blendMode)
+{
+	RenderBase* renderBase = RenderBase::GetInstance().get();
+
+	switch (blendMode)
+	{
+	case BlendMode::Alpha: // ƒ¿ƒuƒŒƒ“ƒh
+		renderBase->GetCommandList()->SetPipelineState(renderBase->GetBasicPipeline()->GetAlphaPipeline());
+		break;
+
+	case BlendMode::Add:	// ‰ÁŽZƒuƒŒƒ“ƒh
+		renderBase->GetCommandList()->SetPipelineState(renderBase->GetBasicPipeline()->GetAddPipeline());
+		break;
+
+	case BlendMode::Sub:	// Œ¸ŽZƒuƒŒƒ“ƒh
+		renderBase->GetCommandList()->SetPipelineState(renderBase->GetBasicPipeline()->GetSubPipeline());
+		break;
+
+	case BlendMode::Inv:	// ”½“]
+		renderBase->GetCommandList()->SetPipelineState(renderBase->GetBasicPipeline()->GetInvPipeline());
+		break;
+
+	default:
+		break;
+	}
+}

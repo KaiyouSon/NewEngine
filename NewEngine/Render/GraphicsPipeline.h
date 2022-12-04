@@ -1,5 +1,6 @@
 #pragma once
 #include "ShaderObject.h"
+#include "Util.h"
 #include <d3d12.h>
 #include <wrl.h>
 
@@ -12,15 +13,6 @@ enum TopologyType
 
 class GraphicsPipeline
 {
-public:
-	enum BlendMode
-	{
-		AlphaBlend,
-		AddBlend,
-		SubBlend,
-		InvBlend
-	};
-
 private:
 	HRESULT result;
 

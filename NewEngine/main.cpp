@@ -1,45 +1,22 @@
 #include "NewEngine.h"
 #include "main2.h"
-#include "InputManager.h"
 #include "Util.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-	FrameRate* frameRate = FrameRate::GetInstance().get();
-
-	//SetBackGroundColor(25.5, 63.75, 127.5);	// 背景色
-	SetBackGroundColor(0, 0, 0);	// 背景色
+	SetWindowTitle("NewEngine");
+	SetWindowSize({ 1280, 720 });
+	SetBackGroundColor(25.5, 63.75, 127.5);
+	SetFrameRate(60);
 	NewEngineInit();	// エンジンの初期化
-	TestScene testScene;
-
-	testScene.Load();			// ゲーム内のロード処理
-	testScene.Init();	// ゲーム内の初期化処理
-
-	frameRate->Initialize(60);
 
 	// ゲームループ
 	while (true)
 	{
-		////////////////////////////////////////////////////
-		// ----------- ここから更新処理を記述 ----------- //
-		////////////////////////////////////////////////////
-		NewEngineUpda();	// エンジンの更新処理
-		testScene.Update();			// ゲーム内の更新処理
-		////////////////////////////////////////////////////
-		// ---------- ここまでに更新処理を記述 ---------- //
-		////////////////////////////////////////////////////
+		NewEngineUpda();		// エンジンの更新処理
 		NewEnginePreDraw();		// エンジン描画前処理
-		////////////////////////////////////////////////////
-		// ----------- ここから描画処理を記述 ----------- //
-		////////////////////////////////////////////////////
 		NewEneineDraw();		// エンジンの描画処理
-		testScene.DrawBackSprite();
-		testScene.DrawModel();
-		testScene.DrawFrontSprite();
-		////////////////////////////////////////////////////
-		// ---------- ここまでに描画処理を記述 ---------- //
-		////////////////////////////////////////////////////
 		NewEnginePostDraw();	// エンジン描画後処理
 
 		// XボタンもしくはESCキーでゲームループを抜ける
@@ -48,7 +25,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			break;
 		}
 
-		frameRate->Update();
+		FrameRateUpdate();
 	}
 
 	NewEngineEnd();	// エンジンのエンド処理
