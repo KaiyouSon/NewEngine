@@ -52,6 +52,7 @@ public:
 	Vec3 operator-(float num) const;		 // 一つの値との引き算
 	Vec3 operator*(float num) const;         // 一つの値との掛け算
 	Vec3 operator/(float num) const;         // 一つの値との割り算
+	Vec3 operator-() const;
 
 	// 複合代入演算子のオーバーロード
 	Vec3& operator+=(const Vec3& other); // 複合代入演算 +=

@@ -1,6 +1,5 @@
 #pragma once
 #include "ColliderManager.h"
-#include "GameObject.h"
 #include "Singleton.h"
 #include <list>
 #include <memory>
@@ -30,7 +29,7 @@ private:
 
 public:
 	// “–‚½‚Á‚½‚ç
-	bool OnTrigger(
-		const GameObject* obj1,
-		const GameObject* obj2);
+	//bool OnTrigger(
+	//	const GameObject* obj1,
+	//	const GameObject* obj2);
 };

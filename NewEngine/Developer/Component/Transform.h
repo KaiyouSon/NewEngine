@@ -1,6 +1,6 @@
 #pragma once
 #include "IComponent.h"
-#include "MathUtil.h"
+#include "Util.h"
 
 enum BillBoardType
 {
@@ -17,13 +17,12 @@ public:
 	Vec3 scale;	// スケール
 	Vec3 rot;	// 回転
 
-	// ワールド変換行列
-	Mat4 worldMat;
 private:
 	Mat4 scaleMat;	// スケール行列
 	Mat4 rotMat;	// 回転行列
 	Mat4 transMat;	// 平行移動行列
-	Mat4 billboardMat;
+	Mat4 worldMat;	// ワールド変換行列
+	Mat4 billboardMat; // ビルボード行列
 
 	bool isUseBillboard;
 	int billboardType;
@@ -42,6 +41,7 @@ public:	// セッター
 
 	inline bool GetisUseBillboard() { return isUseBillboard; }
 	inline int GetBillboardType() { return billboardType; }
+	inline Mat4 GetWorldMat() { return worldMat; }
 
 };
 

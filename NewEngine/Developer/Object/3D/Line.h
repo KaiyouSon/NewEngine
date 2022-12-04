@@ -2,10 +2,9 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "ConstantBuffer.h"
-#include "GameObject.h"
 #include <vector>
 
-class Line : public GameObject
+class Line
 {
 private:
 	VertexBuffer<VertexPosNormalUv>* vertexBuffer;

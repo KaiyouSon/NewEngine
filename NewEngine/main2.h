@@ -5,7 +5,7 @@
 class TestScene
 {
 private:
-	Object3D obj;
+	Object3D obj[10];
 	Sprite spr;
 
 public:

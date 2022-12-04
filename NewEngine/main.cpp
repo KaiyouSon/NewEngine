@@ -34,9 +34,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		// ----------- ここから描画処理を記述 ----------- //
 		////////////////////////////////////////////////////
 		NewEneineDraw();		// エンジンの描画処理
-		testScene.DrawFrontSprite();
-		testScene.DrawModel();
 		testScene.DrawBackSprite();
+		testScene.DrawModel();
+		testScene.DrawFrontSprite();
 		////////////////////////////////////////////////////
 		// ---------- ここまでに描画処理を記述 ---------- //
 		////////////////////////////////////////////////////

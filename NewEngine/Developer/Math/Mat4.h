@@ -17,6 +17,10 @@ public:
 	static Mat4 Identity();	// 単位行列を返す関数
 	static Mat4 Inverse(const Mat4& mat);	// 逆行列を返す関数
 
+	Vec3 ExtractAxisX() const;
+	Vec3 ExtractAxisY() const;
+	Vec3 ExtractAxisZ() const;
+
 	// 単項演算子オーバーロード
 	Mat4 operator*(const Mat4& other) const;
 	Mat4 operator*(const float& num);

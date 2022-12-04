@@ -1,5 +1,4 @@
 #include "Object3D.h"
-#include "ViewProjection.h"
 #include "RenderBase.h"
 using namespace std;
 
@@ -31,9 +30,9 @@ void Object3D::Update()
 
 	// 定数バッファに転送
 	constantBuffer->constMapTransform->mat =
-		transform.worldMat *
-		view->matView *
-		view->matProjection3D;
+		transform.GetWorldMat() *
+		Camera::current.GetViewProjectionMat() *
+		Camera::current.GetPerspectiveProjectionMat();
 
 	constantBuffer->SetColor(color);
 }

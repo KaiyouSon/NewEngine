@@ -1,13 +1,12 @@
 #include "DeveloperManager.h"
 #include "InputManager.h"
-#include "ViewProjection.h"
 #include "Sound.h"
+#include "Util.h"
 
 void DeveloperManager::Initialize()
 {
 	inputManager->Initialize();
 	soundManager->Initialize();
-	view->Initialize();
 	Random::Initialize();
 }
 void DeveloperManager::Update()

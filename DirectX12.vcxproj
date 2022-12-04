@@ -152,10 +152,8 @@
     <ClCompile Include="NewEngine\Developer\Collision\ColliderManager.cpp" />
     <ClCompile Include="NewEngine\Developer\Collision\Collision.cpp" />
     <ClCompile Include="NewEngine\Developer\Component\Blend.cpp" />
-    <ClCompile Include="NewEngine\Developer\Component\ComponentManager.cpp" />
     <ClCompile Include="NewEngine\Developer\Component\Material.cpp" />
     <ClCompile Include="NewEngine\Developer\Component\Model.cpp" />
-    <ClCompile Include="NewEngine\Developer\Component\Tag.cpp" />
     <ClCompile Include="NewEngine\Developer\Component\Texture.cpp" />
     <ClCompile Include="NewEngine\Developer\Component\Transform.cpp" />
     <ClCompile Include="NewEngine\Developer\DeveloperManager.cpp" />
@@ -174,8 +172,7 @@
     <ClCompile Include="NewEngine\Developer\Object\3D\Object3D.cpp" />
     <ClCompile Include="NewEngine\Developer\Object\Other\DebugCamera.cpp" />
     <ClCompile Include="NewEngine\Developer\Object\Other\DrawManager.cpp" />
-    <ClCompile Include="NewEngine\Developer\Object\Other\GameObject.cpp" />
-    <ClCompile Include="NewEngine\Developer\Object\Other\ViewProjection.cpp" />
+    <ClCompile Include="NewEngine\Developer\Object\Other\Camera.cpp" />
     <ClCompile Include="NewEngine\Developer\Sound.cpp" />
     <ClCompile Include="NewEngine\Developer\Util\Color.cpp" />
     <ClCompile Include="NewEngine\Developer\Util\FrameRate.cpp" />
@@ -206,11 +203,9 @@
     <ClInclude Include="NewEngine\Developer\Collision\ColliderManager.h" />
     <ClInclude Include="NewEngine\Developer\Collision\Collision.h" />
     <ClInclude Include="NewEngine\Developer\Component\Blend.h" />
-    <ClInclude Include="NewEngine\Developer\Component\ComponentManager.h" />
     <ClInclude Include="NewEngine\Developer\Component\IComponent.h" />
     <ClInclude Include="NewEngine\Developer\Component\Material.h" />
     <ClInclude Include="NewEngine\Developer\Component\Model.h" />
-    <ClInclude Include="NewEngine\Developer\Component\Tag.h" />
     <ClInclude Include="NewEngine\Developer\Component\Texture.h" />
     <ClInclude Include="NewEngine\Developer\Component\Transform.h" />
     <ClInclude Include="NewEngine\Developer\DeveloperManager.h" />
@@ -229,8 +224,7 @@
     <ClInclude Include="NewEngine\Developer\Object\Object2D\RenderTexture.h" />
     <ClInclude Include="NewEngine\Developer\Object\Other\DebugCamera.h" />
     <ClInclude Include="NewEngine\Developer\Object\Other\DrawManager.h" />
-    <ClInclude Include="NewEngine\Developer\Object\Other\GameObject.h" />
-    <ClInclude Include="NewEngine\Developer\Object\Other\ViewProjection.h" />
+    <ClInclude Include="NewEngine\Developer\Object\Other\Camera.h" />
     <ClInclude Include="NewEngine\Developer\Sound.h" />
     <ClInclude Include="NewEngine\Developer\Util\Color.h" />
     <ClInclude Include="NewEngine\Developer\Util\FrameRate.h" />

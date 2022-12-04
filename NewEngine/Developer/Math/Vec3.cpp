@@ -52,6 +52,8 @@ Vec3 Vec3::operator-(float num) const { return { x - num, y - num, z - num }; }	
 Vec3 Vec3::operator*(float num) const { return { x * num, y * num, z * num }; }	// ˆê‚Â‚Ì’l‚Æ‚ÌŠ|‚¯Z
 Vec3 Vec3::operator/(float num) const { return { x / num, y / num, z / num }; }	// ˆê‚Â‚Ì’l‚Æ‚ÌŠ„‚èZ
 
+Vec3 Vec3::operator-() const { return { -x,-y,-z }; }
+
 // •¡‡‘ã“ü‰‰Z +=
 Vec3& Vec3::operator+=(const Vec3& other)
 {

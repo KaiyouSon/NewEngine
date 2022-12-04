@@ -2,13 +2,13 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "ConstantBuffer.h"
-#include "GameObject.h"
+//#include "GameObject.h"
 #include <vector>
 #include <memory>
 #include <d3dx12.h>
 #include <wrl.h>
 
-class RenderTexture : public GameObject
+class RenderTexture //: public GameObject
 {
 private:
 	VertexBuffer<VertexPosUv>* vertexBuffer;

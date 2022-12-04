@@ -1,5 +1,4 @@
 #include "Sprite.h"
-#include "ViewProjection.h"
 #include "MathUtil.h"
 #include "RenderBase.h"
 #include <memory>
@@ -43,8 +42,8 @@ void Sprite::Update()
 
 	// 定数バッファに転送
 	constantBuffer->constMapTransform->mat =
-		transform.worldMat *
-		view->matProjection2D;
+		transform.GetWorldMat() *
+		Camera::current.GetOrthoGrphicProjectionMat();
 
 	float width = texture.size.x;
 	float height = texture.size.y;
@@ -54,10 +53,10 @@ void Sprite::Update()
 
 	if (width != fabsf(width2) || width != fabsf(height2))
 	{
-		vertices[0].pos = { (0.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f };
-		vertices[1].pos = { (0.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f };
-		vertices[2].pos = { (1.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f };
-		vertices[3].pos = { (1.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f };
+		vertices[0].pos = { (0.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f }; //左下
+		vertices[1].pos = { (0.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f }; //左上
+		vertices[2].pos = { (1.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f }; //右下
+		vertices[3].pos = { (1.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f }; //右上
 
 		vertexBuffer->TransferToBuffer(vertices);
 		vertexBuffer->Unmap();

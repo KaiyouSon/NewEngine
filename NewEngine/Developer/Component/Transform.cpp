@@ -1,5 +1,4 @@
 #include "Transform.h"
-#include "ViewProjection.h"
 
 Transform::Transform() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),

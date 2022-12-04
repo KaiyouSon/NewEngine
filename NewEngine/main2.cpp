@@ -14,31 +14,33 @@ void TestScene::Load()
 {
 	Model test = Model("Cube");
 	Texture tex = Texture("pic.png");
-	obj.model = test;
-	obj.texture = tex;
+
+	for (int i = 0; i < 10; i++)
+	{
+		obj[i].model = test;
+		obj[i].texture = tex;
+	}
 
 	spr.texture = tex;
 }
 
 void TestScene::Init()
 {
-	//view->SetPos(Vec3(0, 0, -50));
-	//view->SetTarget(Vec3::zero);
-	//view->SetUp(Vec3::up);
-
-
 	DebugCamera::GetInstance()->Initialize();
 }
 
 void TestScene::Update()
 {
-	obj.Update();
+	for (int i = 0; i < 10; i++)
+	{
+		const float offsetAngle = (360 / 10) * i;
+		obj[i].pos = { sinf(mathUtil->Radian(offsetAngle)) * 30, 0, cosf(mathUtil->Radian(offsetAngle)) * 30 };
+		obj[i].rot.y = offsetAngle;
+		obj[i].Update();
+	}
 	spr.Update();
 
-	view->SetPos(debugCamera->GetPos());
-	view->SetTarget(debugCamera->GetTarget());
-	view->SetUp(debugCamera->GetUp());
-	view->Update();
+	Camera::current.Update();
 	DebugCamera::GetInstance()->Update();
 }
 
@@ -48,10 +50,12 @@ void TestScene::DrawFrontSprite()
 
 void TestScene::DrawBackSprite()
 {
-	spr.Draw();
 }
 
 void TestScene::DrawModel()
 {
-	obj.Draw();
+	for (int i = 0; i < 10; i++)
+	{
+		obj[i].Draw();
+	}
 }

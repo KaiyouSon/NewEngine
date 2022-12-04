@@ -1,8 +1,11 @@
 #pragma once
 #include "Color.h"
+#include "FrameRate.h"
 #include "Random.h"
 #include "Singleton.h"
-#include "FrameRate.h"
+#include "MathUtil.h"
+#include "Transform.h"
+#include "Camera.h"
 #include <memory>
 #include <vector>
 #include <string>

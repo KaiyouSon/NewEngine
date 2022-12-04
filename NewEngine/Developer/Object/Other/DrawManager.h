@@ -3,10 +3,8 @@
 #include "Object3D.h"
 #include "RenderTexture.h"
 #include "Line.h"
-#include "ViewProjection.h"
 #include "DebugCamera.h"
 #include "TextureBuffer.h"
-#include "ComponentManager.h"
 
 #include <memory>
 

@@ -1,5 +1,4 @@
-#include "MathUtil.h"
-#include "ViewProjection.h"
+#include "Util.h"
 
 Mat4 MathUtil::ConvertScalingMat(Vec3 scale)
 {
@@ -54,7 +53,7 @@ Mat4 MathUtil::ConvertTranslationMat(const Vec3& pos)
 
 Mat4 MathUtil::ConvertBillBoardXAxis()
 {
-	Mat4 tempMat = Mat4::Inverse(view->matView);
+	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewProjectionMat());
 
 	tempMat.m[0][0] = 1;
 	tempMat.m[0][1] = 0;
@@ -70,7 +69,7 @@ Mat4 MathUtil::ConvertBillBoardXAxis()
 }
 Mat4 MathUtil::ConvertBillBoardYAxis()
 {
-	Mat4 tempMat = Mat4::Inverse(view->matView);
+	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewProjectionMat());
 
 	tempMat.m[1][0] = 0;
 	tempMat.m[1][1] = 1;
@@ -86,7 +85,7 @@ Mat4 MathUtil::ConvertBillBoardYAxis()
 }
 Mat4 MathUtil::ConvertBillBoardZAxis()
 {
-	Mat4 tempMat = Mat4::Inverse(view->matView);
+	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewProjectionMat());
 
 	tempMat.m[2][0] = 0;
 	tempMat.m[2][1] = 0;
@@ -102,7 +101,7 @@ Mat4 MathUtil::ConvertBillBoardZAxis()
 }
 Mat4 MathUtil::ConvertBillBoardAllAxis()
 {
-	Mat4 tempMat = Mat4::Inverse(view->matView);
+	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewProjectionMat());
 
 	tempMat.m[3][0] = 0;
 	tempMat.m[3][1] = 0;
@@ -112,7 +111,7 @@ Mat4 MathUtil::ConvertBillBoardAllAxis()
 	return tempMat;
 }
 
-Mat4 MathUtil::ConvertViewProjectionMat(const Vec3& pos, const Vec3& target, const Vec3& up)
+Mat4 MathUtil::ConvertViewProjectionMatLookAt(const Vec3& pos, const Vec3& target, const Vec3& up)
 {
 	// íPà çsóÒÇ≈èâä˙âª
 	Mat4 view = Mat4::Identity();
@@ -141,6 +140,19 @@ Mat4 MathUtil::ConvertViewProjectionMat(const Vec3& pos, const Vec3& target, con
 	view.m[3][2] = -Vec3::Dot(pos, zAxis.Normalized());
 
 	return view;
+}
+Mat4 MathUtil::ConvertViewProjectionMatLookTo(const Vec3& pos, const Vec3& zAxis, const Vec3& yAxis)
+{
+	Vec3 xAxisVec = Vec3::Cross(yAxis, zAxis).Normalized();
+	Vec3 yAxisVec = Vec3::Cross(zAxis, xAxisVec).Normalized();
+
+	return
+	{
+		xAxisVec.x,xAxisVec.y,xAxisVec.z,0,
+		yAxisVec.x,yAxisVec.y,yAxisVec.z,0,
+		zAxis.x,zAxis.y,zAxis.z,0,
+		pos.x,pos.y,-pos.z,1,
+	};
 }
 Mat4 MathUtil::ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, float farZ)
 {
