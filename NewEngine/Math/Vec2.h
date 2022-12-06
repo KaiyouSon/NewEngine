@@ -23,8 +23,8 @@ public:
 	constexpr Vec2(float x, float y) : x(x), y(y) {};
 
 	// 関数
-	float Magnitude() const;	// ベクトルの大きさ
-	Vec2 Normalized() const;	// 正規化にしたベクトル
+	float Lenght() const;	// ベクトルの大きさ
+	Vec2 Norm() const;	// 正規化にしたベクトル
 
 	// static関数
 	static float Dot(const Vec2& v1, const Vec2& v2);		// 二つのベクトルの内積

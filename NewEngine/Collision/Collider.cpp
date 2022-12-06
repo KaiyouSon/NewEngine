@@ -47,7 +47,7 @@ MeshCollider::MeshCollider(const Vec3& centerPos, const Vec3& scale) :
 	lowerLeftPos(centerPos.x - scale.x, centerPos.y - scale.y, centerPos.z),
 	lowerRightPos(centerPos.x + scale.x, centerPos.y - scale.y, centerPos.z),
 	normal(Vec3::Cross(
-		(lowerRightPos - lowerLeftPos).Normalized(),
-		(upperLeftPos - lowerLeftPos).Normalized()))
+		(lowerRightPos - lowerLeftPos).Norm(),
+		(upperLeftPos - lowerLeftPos).Norm()))
 {
 }

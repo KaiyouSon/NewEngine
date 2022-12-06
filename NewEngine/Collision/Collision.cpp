@@ -25,10 +25,10 @@ bool Collision::ReyHitMesh(const ReyCollider& rey, const MeshCollider& mesh)
 	// レイの始点とメッシュ距離
 	float dist = dis1 - dis2;
 	// メッシュの法線とレイのベクトルでcosθを求める
-	float cosRadius = Vec3::Dot(mesh.normal * -1, rey.dirVec.Normalized());
+	float cosRadius = Vec3::Dot(mesh.normal * -1, rey.dirVec.Norm());
 
 	// 当たった点
-	Vec3 inter = rey.startPos + rey.dirVec.Normalized() * dist;
+	Vec3 inter = rey.startPos + rey.dirVec.Norm() * dist;
 
 	if (inter.x >= mesh.lowerLeftPos.x && inter.x <= mesh.lowerRightPos.x &&
 		inter.y >= mesh.lowerLeftPos.y && inter.y <= mesh.upperLeftPos.y)

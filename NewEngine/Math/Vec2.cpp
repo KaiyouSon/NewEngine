@@ -9,15 +9,15 @@ const Vec2 Vec2::one(1, 1);
 const Vec2 Vec2::zero(0, 0);
 
 // ベクトルの大きさ
-float Vec2::Magnitude() const
+float Vec2::Lenght() const
 {
 	return sqrt(pow(x, 2) + pow(y, 2));
 }
 
 // 正規化（長さを１にした）ベクトル
-Vec2 Vec2::Normalized() const
+Vec2 Vec2::Norm() const
 {
-	return{ x / Magnitude() , y / Magnitude() };
+	return{ x / Lenght() , y / Lenght() };
 }
 
 // 二つのベクトルの内積

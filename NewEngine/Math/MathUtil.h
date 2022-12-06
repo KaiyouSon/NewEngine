@@ -10,8 +10,9 @@ const float PI = 3.141592f;
 
 // 絶対値を返す関数
 inline float Absolut(const float& num) { return num >= 0 ? num : num * -1; }
-
-// 弧度法から度数法に変換する関数
+inline Vec2 Absolut(const Vec2& num) { return { Absolut(num.x),Absolut(num.y) }; }
+inline Vec3 Absolut(const Vec3& num) { return { Absolut(num.x),Absolut(num.y),Absolut(num.z) }; }
+// 弧度法を度数法に変換する関数
 inline float Angle(const float& radian) { return radian * 360 / (2 * PI); }
 inline Vec2 Angle(const Vec2& radian) { return { Angle(radian.x),Angle(radian.y) }; }
 inline Vec3 Angle(const Vec3& radian) { return { Angle(radian.x),Angle(radian.y),Angle(radian.z) }; }

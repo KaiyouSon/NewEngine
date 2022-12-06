@@ -20,14 +20,14 @@ public:
 	const static Vec3 right;   // Vec3(1,0,0) と同じ意味
 	const static Vec3 up;      // Vec3(0,1,0) と同じ意味
 	const static Vec3 down;    // Vec3(0,-1,0) と同じ意味
-	const static Vec3 forward; // Vec3(0,0,1) と同じ意味
+	const static Vec3 front; // Vec3(0,0,1) と同じ意味
 	const static Vec3 back;    // Vec3(0,0,-1)と同じ意味
 	const static Vec3 one;     // Vec3(1,1,1) と同じ意味
 	const static Vec3 zero;    // Vec3(0,0,0) と同じ意味
 
 	// 関数
-	float Magnitude() const;    // ベクトルの大きさ
-	Vec3 Normalized() const;    // 正規化にしたベクトル
+	float Lenght() const;    // ベクトルの大きさ
+	Vec3 Norm() const;    // 正規化にしたベクトル
 
 	// static関数
 	static float Dot(const Vec3& v1, const Vec3& v2);		// 二つのベクトルの内積

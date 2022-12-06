@@ -15,9 +15,9 @@ void DebugCamera::Update()
 {
 	float dis = Vec3::Distance(target, pos);
 
-	Vec3 fowardVec = (target - pos).Normalized();
-	Vec3 upVec = up.Normalized();
-	Vec3 rightVec = Vec3::Cross(upVec, fowardVec).Normalized();
+	Vec3 fowardVec = (target - pos).Norm();
+	Vec3 upVec = up.Norm();
+	Vec3 rightVec = Vec3::Cross(upVec, fowardVec).Norm();
 
 	// ‰ñ“]
 	if (Mouse::GetClick(MouseCodo::Wheel) && !Key::GetKey(DIK_LSHIFT))
@@ -42,7 +42,7 @@ void DebugCamera::Update()
 		{
 			Vec3 move =
 			{
-				Vec3::Cross(Vec3::up, fowardVec).Normalized().x * -Mouse::GetMouseMove().x,
+				Vec3::Cross(Vec3::up, fowardVec).Norm().x * -Mouse::GetMouseMove().x,
 				0,
 				fowardVec.x * -Mouse::GetMouseMove().x
 			};

@@ -5,14 +5,14 @@ const Vec3 Vec3::left(-1, 0, 0);
 const Vec3 Vec3::right(1, 0, 0);
 const Vec3 Vec3::up(0, 1, 0);
 const Vec3 Vec3::down(0, -1, 0);
-const Vec3 Vec3::forward(0, 0, 1);
+const Vec3 Vec3::front(0, 0, 1);
 const Vec3 Vec3::back(0, 0, -1);
 const Vec3 Vec3::one(1, 1, 1);
 const Vec3 Vec3::zero(0, 0, 0);
 
-float Vec3::Magnitude() const { return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2)); }
+float Vec3::Lenght() const { return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2)); }
 
-Vec3 Vec3::Normalized() const { return { x / Magnitude(), y / Magnitude(), z / Magnitude() }; }
+Vec3 Vec3::Norm() const { return { x / Lenght(), y / Lenght(), z / Lenght() }; }
 
 float Vec3::Dot(const Vec3& v1, const Vec3& v2) { return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z; }
 
