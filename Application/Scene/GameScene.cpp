@@ -15,10 +15,14 @@ void GameScene::Init()
 {
 	Model test = Model("Cube");
 	Texture tex = Texture("pic.png");
+
+	m1 = Model("player");
+	m2 = Model("bee");
+
 	for (int i = 0; i < 10; i++)
 	{
 		obj[i].model = test;
-		obj[i].texture = tex;
+		//obj[i].texture = tex;
 	}
 
 	spr.texture = tex;
@@ -38,6 +42,22 @@ void GameScene::Update()
 	if (Key::GetKeyTrigger(DIK_SPACE))
 	{
 		SceneManager::ChangeScene<TitleScene>();
+	}
+
+	if (Key::GetKeyTrigger(DIK_1))
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			obj[i].model = m1;
+		}
+	}
+
+	if (Key::GetKeyTrigger(DIK_2))
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			obj[i].model = m2;
+		}
 	}
 }
 
