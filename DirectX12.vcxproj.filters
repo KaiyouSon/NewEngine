@@ -231,6 +231,9 @@
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp">
       <Filter>NewEngine\Source\Gui</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Util\Easing.cpp">
+      <Filter>NewEngine\Source\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -364,6 +367,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Gui\GuiManager.h">
       <Filter>NewEngine\Header\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Util\Easing.h">
+      <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
