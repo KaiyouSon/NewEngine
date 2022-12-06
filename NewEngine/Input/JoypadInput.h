@@ -12,18 +12,38 @@ private:
 	friend Singleton<JoypadInput>;
 	Microsoft::WRL::ComPtr<IDirectInputDevice8> joypad;
 	DIJOYSTATE2 padInput;
-	DIJOYSTATE2 oldPadInput;
+	DIJOYSTATE2 prevPadInput;
 
 	static BOOL CALLBACK DeviceFindCallBack(const DIDEVICEINSTANCE* pdidInstance, VOID* pContext);
+private:
+	JoypadInput();
+
 public:
-	void Initialize();
+	void Init();
 	void Update();
 
-	bool GetButton(const int& buttonNumber);
-	bool GetButtonTrigger(const int& buttonNumber);
-	bool GetButtonReleased(const int& buttonNumber);
-	Vec2 GetLeftStickParam();
-	Vec2 GetLeftStickVec();
-	Vec2 GetRightStickParam();
-	Vec2 GetRightStickVec();
+	static inline bool GetButton(const int& buttonNumber)
+	{
+		return GetInstance()->padInput.rgbButtons[buttonNumber] & 0x80;
+	}
+	static inline bool GetButtonTrigger(const int& buttonNumber)
+	{
+		return (GetInstance()->padInput.rgbButtons[buttonNumber] & 0x80) &&
+			!(GetInstance()->prevPadInput.rgbButtons[buttonNumber] & 0x80);
+	}
+	static inline bool GetButtonReleased(const int& buttonNumber)
+	{
+		return !(GetInstance()->padInput.rgbButtons[buttonNumber] & 0x80) &&
+			(GetInstance()->prevPadInput.rgbButtons[buttonNumber] & 0x80);
+	}
+	static inline Vec2 GetLeftStick()
+	{
+		return Vec2((float)GetInstance()->padInput.lX, (float)GetInstance()->padInput.lY);
+	}
+	static inline Vec2 GetRightStick()
+	{
+		return Vec2((float)GetInstance()->padInput.lRx, (float)GetInstance()->padInput.lRy);
+	}
 };
+
+typedef JoypadInput Pad;

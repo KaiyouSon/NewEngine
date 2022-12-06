@@ -18,7 +18,7 @@ void RenderWindow::CreateGameWindow()
 	// ウィンドウクラスをOSに登録
 	RegisterClassEx(&wndClass);
 	// ウィンドウサイズ{ X座標 Y座標 縦幅 横幅 }
-	RECT wrc = { 0,0,size.x,size.y };
+	RECT wrc = { 0,0,(LONG)size.x,(LONG)size.y };
 	// 自動でサイズ補正する
 	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
 

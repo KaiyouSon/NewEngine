@@ -3,7 +3,11 @@
 #include "RenderWindow.h"
 #include <cassert>
 
-void MouseInput::Initialize()
+MouseInput::MouseInput() : mouse(nullptr), mouseInput({}), prevMouseInput({})
+{
+}
+
+void MouseInput::Init()
 {
 	HRESULT result;
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();

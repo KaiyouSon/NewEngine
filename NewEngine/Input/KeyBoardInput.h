@@ -13,7 +13,7 @@ private:
 	BYTE keys[256] = { 0 };
 	BYTE prevKeys[256] = { 0 };
 public:
-	void Initialize();	// 初期化
+	void Init();	// 初期化
 	void Update();		// 更新処理
 
 	// キーが押されてる時

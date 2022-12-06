@@ -14,8 +14,12 @@ private:
 	Vec2 mousePos;
 	DIMOUSESTATE2 mouseInput;
 	DIMOUSESTATE2 prevMouseInput;
+
+private:
+	MouseInput();
+
 public:
-	void Initialize();
+	void Init();
 	void Update();
 
 	// マウスの取得関連

@@ -167,7 +167,7 @@ unique_ptr<Texture> TextureBuffer::GetRenderTexture(const Vec2& size)
 	CD3DX12_RESOURCE_DESC textureResourceDesc =
 		CD3DX12_RESOURCE_DESC::Tex2D(
 			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
-			size.x,
+			(UINT64)size.x,
 			(UINT)size.y,
 			1, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
 
@@ -191,14 +191,14 @@ unique_ptr<Texture> TextureBuffer::GetRenderTexture(const Vec2& size)
 	// テクスチャを赤クリア
 	{
 		// 画素数
-		const UINT pixelCont = size.x * size.y;
+		const UINT pixelCont = (UINT)size.x * (UINT)size.y;
 		// 画像１行分のデータサイズ
-		const UINT rowPitch = sizeof(UINT) * size.x;
+		const UINT rowPitch = sizeof(UINT) * (UINT)size.x;
 		// 画像全体のデータサイズ
-		const UINT depthPitch = rowPitch * size.y;
+		const UINT depthPitch = rowPitch * (UINT)size.y;
 		// 画像イメージ
 		UINT* img = new UINT[pixelCont];
-		for (int i = 0; i < pixelCont; i++) { img[i] = 0xff0000ff; }
+		for (UINT i = 0; i < pixelCont; i++) { img[i] = 0xff0000ff; }
 
 		// テクスチャバッファにデータ転送
 		result = texture->buffer->WriteToSubresource(0, nullptr,

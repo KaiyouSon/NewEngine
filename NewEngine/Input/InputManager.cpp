@@ -17,9 +17,9 @@ void InputManager::Initialize()
 		(void**)&directInput, nullptr);
 	assert(SUCCEEDED(result));
 
-	JoypadInput::GetInstance()->Initialize();
-	KeyBoardInput::GetInstance()->Initialize();
-	MouseInput::GetInstance()->Initialize();
+	JoypadInput::GetInstance()->Init();
+	KeyBoardInput::GetInstance()->Init();
+	MouseInput::GetInstance()->Init();
 }
 
 void InputManager::Update()
@@ -28,8 +28,3 @@ void InputManager::Update()
 	KeyBoardInput::GetInstance()->Update();
 	MouseInput::GetInstance()->Update();
 }
-
-InputManager* inputManager = InputManager::GetInstance().get();
-JoypadInput* pad = JoypadInput::GetInstance().get();
-KeyBoardInput* key = KeyBoardInput::GetInstance().get();
-MouseInput* mouse = MouseInput::GetInstance().get();

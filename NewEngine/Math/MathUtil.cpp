@@ -172,12 +172,12 @@ Mat4 ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, 
 
 	return perspective;
 }
-Mat4 ConvertOrthoGrphicProjectionMat(int WIN_WIDTH, int WIN_HEIGHT)
+Mat4 ConvertOrthoGrphicProjectionMat(float WIN_WIDTH, float WIN_HEIGHT)
 {
 	return
 	{
-		2 / (float)WIN_WIDTH,0,0,0,
-		0,-2 / (float)WIN_HEIGHT,0,0,
+		2 / WIN_WIDTH,0,0,0,
+		0,-2 / WIN_HEIGHT,0,0,
 		0,0,1,0,
 		-1,1,0,1
 	};

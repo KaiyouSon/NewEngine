@@ -38,6 +38,3 @@ public:
 public: // ƒQƒbƒ^[
 	inline Microsoft::WRL::ComPtr<IDirectInput8> GetDirectInput() { return directInput; }
 };
-
-extern InputManager* inputManager;
-extern JoypadInput* pad;

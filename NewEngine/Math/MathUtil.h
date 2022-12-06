@@ -35,5 +35,5 @@ Mat4 ConvertBillBoardAllAxis();
 Mat4 ConvertViewProjectionMatLookAt(const Vec3& pos, const Vec3& target, const Vec3& up);		// ビュー変換
 Mat4 ConvertViewProjectionMatLookTo(const Vec3& pos, const Vec3& zAxis, const Vec3& yAxis);		// ビュー変換
 Mat4 ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, float farZ);	// 透視射影変換
-Mat4 ConvertOrthoGrphicProjectionMat(int WIN_WIDTH, int WIN_HEIGHT);							// 平行射影変換
+Mat4 ConvertOrthoGrphicProjectionMat(float WIN_WIDTH, float WIN_HEIGHT);							// 平行射影変換
 Mat4 ConvertViewportMat(Viewport& viewport);

@@ -4,7 +4,11 @@
 #include <cassert>
 #pragma comment(lib, "xinput.lib")
 
-void JoypadInput::Initialize()
+JoypadInput::JoypadInput() : joypad(nullptr), padInput({}), prevPadInput({})
+{
+}
+
+void JoypadInput::Init()
 {
 	HRESULT result;
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
@@ -60,47 +64,10 @@ void JoypadInput::Update()
 	joypad->Acquire();
 
 	// 最新のパット情報だったものは1フレーム前のキーボード情報として保存
-	oldPadInput = padInput;
+	prevPadInput = padInput;
 
 	// 最新のジョイパット情報を取得する
 	joypad->GetDeviceState(sizeof(padInput), &padInput);
-}
-
-bool JoypadInput::GetButton(const int& buttonNumber)
-{
-	return padInput.rgbButtons[buttonNumber] & 0x80;
-}
-
-bool JoypadInput::GetButtonTrigger(const int& buttonNumber)
-{
-	return (padInput.rgbButtons[buttonNumber] & 0x80) &&
-		!(oldPadInput.rgbButtons[buttonNumber] & 0x80);
-}
-
-bool JoypadInput::GetButtonReleased(const int& buttonNumber)
-{
-	return !(padInput.rgbButtons[buttonNumber] & 0x80) &&
-		(oldPadInput.rgbButtons[buttonNumber] & 0x80);
-}
-
-Vec2 JoypadInput::GetLeftStickParam()
-{
-	return Vec2(padInput.lX, padInput.lY);
-}
-
-Vec2 JoypadInput::GetLeftStickVec()
-{
-	return Vec2(padInput.lX, padInput.lY).Normalized();
-}
-
-Vec2 JoypadInput::GetRightStickParam()
-{
-	return Vec2(padInput.lRx, padInput.lRy);
-}
-
-Vec2 JoypadInput::GetRightStickVec()
-{
-	return Vec2(padInput.lRx, padInput.lRy).Normalized();
 }
 
 // デバイス発見時に実行される

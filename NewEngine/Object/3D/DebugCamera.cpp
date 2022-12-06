@@ -24,8 +24,8 @@ void DebugCamera::Update()
 	{
 		if (Mouse::GetMouseMove().x != 0 || Mouse::GetMouseMove().y != 0)
 		{
-			clickedVec.x += Radian(Mouse::GetMouseMove().x) * 0.5;
-			clickedVec.y += Radian(Mouse::GetMouseMove().y) * 0.5;
+			clickedVec.x += Radian(Mouse::GetMouseMove().x) * 0.5f;
+			clickedVec.y += Radian(Mouse::GetMouseMove().y) * 0.5f;
 
 			pos.x = dis * cosf(clickedVec.x) * cosf(clickedVec.y) + velocity.x;
 			pos.y = -dis * sinf(clickedVec.y);
@@ -59,7 +59,7 @@ void DebugCamera::Update()
 	// âúçs
 	if (Mouse::GetWheelMove() != 0)
 	{
-		pos += (target - pos) * 0.001 * Mouse::GetWheelMove();
+		pos += (target - pos) * 0.001f * Mouse::GetWheelMove();
 	}
 
 	if (Key::GetKey(DIK_SPACE))

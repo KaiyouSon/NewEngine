@@ -11,9 +11,9 @@ private:
 	Vec2 size = { 1280 ,720 };		// サイズ
 	std::string title = "error";	// タイトル
 
-	WNDCLASSEX wndClass;	// ウィンドウクラス
-	HWND hwnd;				// ウィンドウハンドル
-	MSG msg;				//メッセージ
+	WNDCLASSEX wndClass = {};	// ウィンドウクラス
+	HWND hwnd = {};				// ウィンドウハンドル
+	MSG msg = {};				//メッセージ
 public:
 	// ウィンドウプロシージャ
 

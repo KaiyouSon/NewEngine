@@ -4,7 +4,7 @@
 #include <cassert>
 #include <memory>
 
-void KeyBoardInput::Initialize()
+void KeyBoardInput::Init()
 {
 	HRESULT result;
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
