@@ -28,7 +28,7 @@ void GuiManager::Init()
 		renderBase->GetSrvDescHeap()->GetGPUDescriptorHandleForHeapStart());
 }
 
-void GuiManager::Update()
+void GuiManager::PreDraw()
 {
 	// Start the Dear ImGui frame
 	ImGui_ImplDX12_NewFrame();
@@ -39,7 +39,7 @@ void GuiManager::Update()
 	ImGui::NewFrame();
 }
 
-void GuiManager::Draw()
+void GuiManager::PostDraw()
 {
 	ImGui::Render();
 	// SRVヒープの設定コマンド
@@ -55,4 +55,35 @@ void GuiManager::Destroy()
 	ImGui_ImplDX12_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
+}
+
+bool GuiManager::BeginWindow()
+{
+	return ImGui::Begin("Debug");
+}
+
+void GuiManager::EndWindow()
+{
+	ImGui::End();
+}
+
+void GuiManager::DrawString(const char* fmt, ...)
+{
+	ImGui::Text(fmt);
+}
+
+void GuiManager::DrawCheckBox(const char* label, bool* flag)
+{
+	ImGui::Checkbox(label, flag);
+}
+
+void GuiManager::DrawSlider(const char* label, Vec3& v)
+{
+	float temp[3] = { v.x,v.y,v.z };
+
+	ImGui::DragFloat3(label, temp);
+
+	v.x = temp[0];
+	v.y = temp[1];
+	v.z = temp[2];
 }

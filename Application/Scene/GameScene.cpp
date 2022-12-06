@@ -24,7 +24,6 @@ void GameScene::Init()
 	spr.texture = tex;
 
 }
-
 void GameScene::Update()
 {
 	for (int i = 0; i < 10; i++)
@@ -40,11 +39,6 @@ void GameScene::Update()
 	{
 		SceneManager::ChangeScene<TitleScene>();
 	}
-
-	ImGui::Begin("Debug");
-
-	ImGui::Text("pos.z = %f", obj[0].pos.z);
-	ImGui::End();
 }
 
 void GameScene::DrawBackSprite()
@@ -61,4 +55,15 @@ void GameScene::DrawModel()
 
 void GameScene::DrawFrontSprite()
 {
+}
+
+void GameScene::DrawDebugGui()
+{
+	GuiManager::BeginWindow();
+
+	GuiManager::DrawString("%f", obj[0].pos.z);
+
+	GuiManager::DrawSlider("test", obj[0].pos);
+
+	GuiManager::EndWindow();
 }

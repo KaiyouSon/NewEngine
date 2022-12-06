@@ -18,18 +18,15 @@ void NewEngineInit()
 #endif
 	// -------------------------------------------------------------------------------- //
 
-
 	RenderBase* renderBase = RenderBase::GetInstance().get();
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
 
 	renderWindow->CreateGameWindow();
-
 	renderBase->Initialize();
 	Sound::Init();
 	InputManager::GetInstance()->Initialize();
 	SceneManager::GetInstance()->Init();
 	GuiManager::GetInstance()->Init();
-
 
 	// -------------------------------------------------------------------------------- //
 #ifdef _DEBUG
@@ -44,7 +41,6 @@ void NewEngineInit()
 }
 void NewEngineUpda()
 {
-	GuiManager::GetInstance()->Update();
 	InputManager::GetInstance()->Update();
 	SceneManager::GetInstance()->Update();
 }
@@ -54,11 +50,12 @@ void NewEnginePreDraw()
 }
 void NewEneineDraw()
 {
+	GuiManager::GetInstance()->PreDraw();
 	SceneManager::GetInstance()->Draw();
+	GuiManager::GetInstance()->PostDraw();
 }
 void NewEnginePostDraw()
 {
-	GuiManager::GetInstance()->Draw();
 	RenderBase::GetInstance()->PostDraw();
 }
 void NewEngineEnd()

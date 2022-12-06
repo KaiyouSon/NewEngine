@@ -34,4 +34,8 @@ void SceneManager::Draw()
 
 	Sprite::SetBlendMode(BlendMode::Alpha);
 	currentScene->DrawFrontSprite();
+
+#ifdef _DEBUG
+	currentScene->DrawDebugGui();
+#endif
 }

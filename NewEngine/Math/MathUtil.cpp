@@ -15,8 +15,8 @@ Mat4 ConvertRotationXAxisMat(float angle)
 	return
 	{
 		1,0,0,0,
-		0, cosf(Radian(angle)),sinf(Radian(angle)),0,
-		0,-sinf(Radian(angle)),cosf(Radian(angle)),0,
+		0, cosf(angle),sinf(angle),0,
+		0,-sinf(angle),cosf(angle),0,
 		0,0,0,1
 	};
 }
@@ -24,9 +24,9 @@ Mat4 ConvertRotationYAxisMat(float angle)
 {
 	return
 	{
-		cosf(Radian(angle)),0,-sinf(Radian(angle)),0,
+		cosf(angle),0,-sinf(angle),0,
 		0,1,0,0,
-		sinf(Radian(angle)),0, cosf(Radian(angle)),0,
+		sinf(angle),0, cosf(angle),0,
 		0,0,0,1
 	};
 }
@@ -34,8 +34,8 @@ Mat4 ConvertRotationZAxisMat(float angle)
 {
 	return
 	{
-		 cosf(Radian(angle)),sinf(Radian(angle)),0,0,
-		-sinf(Radian(angle)),cosf(Radian(angle)),0,0,
+		 cosf(angle),sinf(angle),0,0,
+		-sinf(angle),cosf(angle),0,0,
 		0,0,1,0,
 		0,0,0,1
 	};

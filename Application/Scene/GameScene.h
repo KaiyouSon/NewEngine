@@ -18,5 +18,6 @@ public:
 	void DrawBackSprite() override;
 	void DrawModel() override;
 	void DrawFrontSprite() override;
+	void DrawDebugGui() override;
 };
 

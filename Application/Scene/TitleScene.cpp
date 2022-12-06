@@ -21,3 +21,7 @@ void TitleScene::DrawModel()
 void TitleScene::DrawFrontSprite()
 {
 }
+
+void TitleScene::DrawDebugGui()
+{
+}
