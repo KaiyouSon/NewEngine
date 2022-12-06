@@ -2,12 +2,19 @@
 #include "TitleScene.h"
 #include "SceneManager.h"
 #include "InputManager.h"
+#include "NewEngine.h"
+
+GameScene::GameScene()
+{
+}
+GameScene::~GameScene()
+{
+}
 
 void GameScene::Init()
 {
 	Model test = Model("Cube");
 	Texture tex = Texture("pic.png");
-
 	for (int i = 0; i < 10; i++)
 	{
 		obj[i].model = test;
@@ -15,6 +22,7 @@ void GameScene::Init()
 	}
 
 	spr.texture = tex;
+
 }
 
 void GameScene::Update()
@@ -32,6 +40,11 @@ void GameScene::Update()
 	{
 		SceneManager::ChangeScene<TitleScene>();
 	}
+
+	ImGui::Begin("Debug");
+
+	ImGui::Text("pos.z = %f", obj[0].pos.z);
+	ImGui::End();
 }
 
 void GameScene::DrawBackSprite()

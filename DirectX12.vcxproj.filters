@@ -97,6 +97,12 @@
     <Filter Include="NewEngine\Header\Collision">
       <UniqueIdentifier>{83e19682-79a0-43d8-8575-d4adfaf103c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NewEngine\Source\Gui">
+      <UniqueIdentifier>{83bfc96f-f374-408f-b1f1-74847e2cfb31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Gui">
+      <UniqueIdentifier>{5bc23d66-9f43-496b-91af-4305d090a2bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\ConstantBuffer.cpp">
@@ -221,6 +227,9 @@
     </ClCompile>
     <ClCompile Include="Application\Scene\TitleScene.cpp">
       <Filter>Application\Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Gui\GuiManager.cpp">
+      <Filter>NewEngine\Source\Gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +361,9 @@
     </ClInclude>
     <ClInclude Include="Application\Scene\TitleScene.h">
       <Filter>Application\Header\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Gui\GuiManager.h">
+      <Filter>NewEngine\Header\Gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

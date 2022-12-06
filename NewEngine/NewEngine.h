@@ -2,8 +2,10 @@
 #include "Util.h"
 #include "Object3D.h"
 #include "Sprite.h"
-#include "InputManager.h"
 #include "Sound.h"
+#include "GuiManager.h"
+#include "InputManager.h"
+#include "imgui.h"
 #include <memory>
 #include <vector>
 #include <string>

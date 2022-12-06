@@ -11,6 +11,8 @@ private:
 	Sprite spr;
 
 public:
+	GameScene();
+	~GameScene();
 	void Init() override;
 	void Update() override;
 	void DrawBackSprite() override;

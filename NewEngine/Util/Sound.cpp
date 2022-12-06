@@ -1,7 +1,11 @@
 #include "Sound.h"
 #include <cassert>
+using namespace std;
 
-void SoundManager::Initialize()
+IXAudio2MasteringVoice* Sound::masterVoice = nullptr;
+Microsoft::WRL::ComPtr<IXAudio2> Sound::xAudio2 = nullptr;
+
+void Sound::Init()
 {
 	HRESULT result;
 
@@ -12,14 +16,23 @@ void SoundManager::Initialize()
 	result = xAudio2->CreateMasteringVoice(&masterVoice);
 }
 
-Sound SoundManager::LoadSoundWave(const char* filePath)
+Sound::Sound() : volume(1)
 {
+}
+
+Sound::Sound(std::string filePath) : volume(1)
+{
+	string path = "Application/Sound/" + filePath;
+
 	// ファイル入力ストリームのインスタンス
 	std::ifstream file;
 	// .wavファイルをバイナリモードで開く
-	file.open(filePath, std::ios_base::binary);
+	file.open(path, std::ios_base::binary);
 	// ファイルオープン失敗を検出
-	assert(file.is_open());
+	if (file.is_open() == false)
+	{
+		assert(0 && "サウンドファイルの読み込みが失敗しました");
+	}
 
 	// RIFFヘッダーの読み込み
 	RiffHeader riff;
@@ -67,22 +80,16 @@ Sound SoundManager::LoadSoundWave(const char* filePath)
 	// waveファイルを閉じる
 	file.close();
 
-	// returnするための音声データ
-	Sound soundData = {};
 	soundData.wfex = format.fmt;
 	soundData.pBuffer = reinterpret_cast<BYTE*>(pBuffer);
 	soundData.bufferSize = data.size;
-
-	return soundData;
 }
 
-void SoundManager::PlaySoundWave(const Sound& soundData)
+void Sound::Play(const bool& isRoop)
 {
-	HRESULT result;
-
 	// 波形フォーマットを元にSourceVoiceの生成
-	IXAudio2SourceVoice* pSourceVoice = nullptr;
-	result = xAudio2->CreateSourceVoice(&pSourceVoice, &soundData.wfex);
+	//IXAudio2SourceVoice* pSourceVoice = nullptr;
+	result = xAudio2->CreateSourceVoice(&soundData.pSourceVoice, &soundData.wfex);
 	assert(SUCCEEDED(result));
 
 	// 再生する波形データの設定
@@ -90,35 +97,47 @@ void SoundManager::PlaySoundWave(const Sound& soundData)
 	buffer.pAudioData = soundData.pBuffer;
 	buffer.AudioBytes = soundData.bufferSize;
 	buffer.Flags = XAUDIO2_END_OF_STREAM;
+	if (isRoop == true)
+	{
+		buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
+	}
 
 	// 波形データの再生
-	result = pSourceVoice->SubmitSourceBuffer(&buffer);
-	result = pSourceVoice->Start();
+	result = soundData.pSourceVoice->SubmitSourceBuffer(&buffer);
+	result = soundData.pSourceVoice->Start();
 }
 
-void SoundManager::UnLoadSoundWave(Sound* soundData)
+void Sound::Stop()
 {
+	if (soundData.pSourceVoice == nullptr)	return;
+	soundData.pSourceVoice->Stop();
+}
+
+void Sound::SetVolume(const float& volume)
+{
+	this->volume = volume;
+	if (this->volume >= 1)
+	{
+		soundData.pSourceVoice->SetVolume(1);
+	}
+	else if (this->volume <= 0)
+	{
+		soundData.pSourceVoice->SetVolume(0);
+	}
+	else
+	{
+		soundData.pSourceVoice->SetVolume(volume);
+	}
+}
+
+void Sound::UnLoad()
+{
+	soundData.pSourceVoice->Stop();
+
 	// バッファのメモリ解放
-	delete[] soundData->pBuffer;
+	delete[] soundData.pBuffer;
 
-	soundData->pBuffer = 0;
-	soundData->bufferSize = 0;
-	soundData->wfex = {};
-}
-
-SoundManager* soundManager = SoundManager::GetInstance().get();
-
-Sound LoadSoundWave(const char* filePath)
-{
-	return soundManager->LoadSoundWave(filePath);
-}
-
-void PlaySoundWave(const Sound& soundData)
-{
-	soundManager->PlaySoundWave(soundData);
-}
-
-void UnLoadSoundWave(Sound* soundData)
-{
-	soundManager->UnLoadSoundWave(soundData);
+	soundData.pBuffer = 0;
+	soundData.bufferSize = 0;
+	soundData.wfex = {};
 }

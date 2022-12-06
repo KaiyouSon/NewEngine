@@ -25,9 +25,10 @@ void NewEngineInit()
 	renderWindow->CreateGameWindow();
 
 	renderBase->Initialize();
+	Sound::Init();
 	InputManager::GetInstance()->Initialize();
-	SoundManager::GetInstance()->Initialize();
 	SceneManager::GetInstance()->Init();
+	GuiManager::GetInstance()->Init();
 
 
 	// -------------------------------------------------------------------------------- //
@@ -43,13 +44,13 @@ void NewEngineInit()
 }
 void NewEngineUpda()
 {
+	GuiManager::GetInstance()->Update();
 	InputManager::GetInstance()->Update();
 	SceneManager::GetInstance()->Update();
 }
 void NewEnginePreDraw()
 {
-	RenderBase* renderBase = RenderBase::GetInstance().get();
-	renderBase->PreDraw();
+	RenderBase::GetInstance()->PreDraw();
 }
 void NewEneineDraw()
 {
@@ -57,15 +58,14 @@ void NewEneineDraw()
 }
 void NewEnginePostDraw()
 {
-	RenderBase* renderBase = RenderBase::GetInstance().get();
-
-	renderBase->GetInstance()->PostDraw();
+	GuiManager::GetInstance()->Draw();
+	RenderBase::GetInstance()->PostDraw();
 }
 void NewEngineEnd()
 {
+	GuiManager::GetInstance()->Destroy();
 	// ウィンドウクラスを登録解除
 	RenderWindow::GetInstance()->TerminateGameWindow();
-
 	//ComPtr<ID3D12Device> tempDevice = RenderBase::GetInstance()->GetDevice().Get();
 	//ID3D12DebugDevice* debugInterface;
 	//if (SUCCEEDED(tmpDevice.Get()->QueryInterface(&debugInterface)))
