@@ -234,6 +234,9 @@
     <ClCompile Include="NewEngine\Util\Easing.cpp">
       <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Util\BezierCurve.cpp">
+      <Filter>NewEngine\Source\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -369,6 +372,9 @@
       <Filter>NewEngine\Header\Gui</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Util\Easing.h">
+      <Filter>NewEngine\Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Util\BezierCurve.h">
       <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
   </ItemGroup>

@@ -187,6 +187,7 @@
     <ClCompile Include="NewEngine\Render\ScissorRectangle.cpp" />
     <ClCompile Include="NewEngine\Render\ShaderObject.cpp" />
     <ClCompile Include="NewEngine\Render\Viewport.cpp" />
+    <ClCompile Include="NewEngine\Util\BezierCurve.cpp" />
     <ClCompile Include="NewEngine\Util\Color.cpp" />
     <ClCompile Include="NewEngine\Util\Easing.cpp" />
     <ClCompile Include="NewEngine\Util\FrameRate.cpp" />
@@ -233,6 +234,7 @@
     <ClInclude Include="NewEngine\Render\ShaderObject.h" />
     <ClInclude Include="NewEngine\Render\Vertex.h" />
     <ClInclude Include="NewEngine\Render\Viewport.h" />
+    <ClInclude Include="NewEngine\Util\BezierCurve.h" />
     <ClInclude Include="NewEngine\Util\Color.h" />
     <ClInclude Include="NewEngine\Util\Easing.h" />
     <ClInclude Include="NewEngine\Util\FrameRate.h" />

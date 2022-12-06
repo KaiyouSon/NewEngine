@@ -113,15 +113,34 @@ Vec3 Easing::Out(const Vec3& startPos, const Vec3& endPos)
 // インアウト
 float Easing::InOut(const float& startPos, const float& endPos)
 {
-	float dis = (endPos - startPos) / 2;
-	if (timeRate < 0.5)
+	//float dis = (endPos - startPos) / 2;
+	float dis1 = (endPos - startPos) / 2;
+	float dis2 = (endPos - dis1);
+
+	if (timeRate <= 0.5)
 	{
-		return In(startPos, endPos);
+		return dis1 * powf(timeRate, powNum) + startPos;
 	}
 	else
 	{
-		return Out(startPos, endPos);
+		if ((int)powNum % 2 == 1)
+		{
+			return dis2 * (powf(timeRate - 1, powNum) + 1) + startPos;
+		}
+		else if ((int)powNum % 2 == 0)
+		{
+			return dis2 * -1 * (powf(timeRate - 1, powNum) - 1) + startPos;
+		}
 	}
+
+	//if (timeRate < 0.5)
+	//{
+	//	return In(startPos, endPos);
+	//}
+	//else
+	//{
+	//	return Out(startPos, endPos);
+	//}
 }
 Vec2 Easing::InOut(const Vec2& startPos, const Vec2& endPos)
 {
