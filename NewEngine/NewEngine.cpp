@@ -21,6 +21,7 @@ void NewEngineInit()
 	RenderWindow::GetInstance()->CreateGameWindow();
 	RenderBase::GetInstance()->Init();
 	Sound::Init();
+	Random::Init();
 	InputManager::GetInstance()->Init();
 	GuiManager::GetInstance()->Init();
 	SceneManager::GetInstance()->Init();
