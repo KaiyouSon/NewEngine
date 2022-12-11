@@ -82,7 +82,6 @@ void GameScene::DrawDebugGui()
 	GuiManager::BeginWindow();
 
 	GuiManager::DrawString("%f", obj[0].pos.z);
-
 	GuiManager::DrawSlider("test", obj[0].pos);
 
 	GuiManager::EndWindow();

@@ -32,7 +32,7 @@ private:
 	Microsoft::WRL::ComPtr<IDirectInput8> directInput;
 
 public:
-	void Initialize();
+	void Init();
 	void Update();
 
 public: // ÉQÉbÉ^Å[

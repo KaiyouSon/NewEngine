@@ -4,7 +4,7 @@
 #pragma comment(lib,"dinput8.lib")
 #pragma comment(lib,"dxguid.lib")
 
-void InputManager::Initialize()
+void InputManager::Init()
 {
 	HRESULT result;
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();

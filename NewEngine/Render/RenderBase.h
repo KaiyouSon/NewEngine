@@ -19,7 +19,7 @@ public:
 	static float clearColor[4];
 
 public:
-	void Initialize();
+	void Init();
 	void PreDraw();
 	void PostDraw();
 	void CreateSrv(Texture& texture, const D3D12_RESOURCE_DESC& textureResourceDesc);

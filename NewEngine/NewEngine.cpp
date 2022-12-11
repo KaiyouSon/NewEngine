@@ -18,25 +18,38 @@ void NewEngineInit()
 #endif
 	// -------------------------------------------------------------------------------- //
 
-	RenderBase* renderBase = RenderBase::GetInstance().get();
-	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
-
-	renderWindow->CreateGameWindow();
-	renderBase->Initialize();
+	RenderWindow::GetInstance()->CreateGameWindow();
+	RenderBase::GetInstance()->Init();
 	Sound::Init();
-	InputManager::GetInstance()->Initialize();
-	SceneManager::GetInstance()->Init();
+	InputManager::GetInstance()->Init();
 	GuiManager::GetInstance()->Init();
+	SceneManager::GetInstance()->Init();
 
 	// -------------------------------------------------------------------------------- //
 #ifdef _DEBUG
-	ComPtr<ID3D12InfoQueue> infoQuene;
-	if (SUCCEEDED(renderBase->GetDevice()->QueryInterface(IID_PPV_ARGS(&infoQuene))))
+	ComPtr<ID3D12InfoQueue> infoQueue;
+	if (SUCCEEDED(RenderBase::GetInstance()->
+		GetDevice()->QueryInterface(IID_PPV_ARGS(&infoQueue))))
 	{
-		infoQuene->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);	// やばいエラー一時に止まる
-		infoQuene->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);		// エラー時に止まる
-		infoQuene->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);	// ワーニング時に止まる
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);	// やばいエラー一時に止まる
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);		// エラー時に止まる
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);	// ワーニング時に止まる
 	}
+
+	//抑制するエラー
+	D3D12_MESSAGE_ID denyIds[] = {
+		D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE
+	};
+
+	//抑制される表示レベル
+	D3D12_MESSAGE_SEVERITY severities[] = { D3D12_MESSAGE_SEVERITY_INFO };
+	D3D12_INFO_QUEUE_FILTER filter{};
+	filter.DenyList.NumIDs = _countof(denyIds);
+	filter.DenyList.pIDList = denyIds;
+	filter.DenyList.NumSeverities = _countof(severities);
+	filter.DenyList.pSeverityList = severities;
+	//指定したエラーの表示を抑制する
+	infoQueue->PushStorageFilter(&filter);
 #endif
 }
 void NewEngineUpda()

@@ -3,9 +3,11 @@
 #include "Object3D.h"
 #include "Sprite.h"
 #include "Sound.h"
+#include "imgui.h"
 #include "GuiManager.h"
 #include "InputManager.h"
-#include "imgui.h"
+#include "SceneManager.h"
+#include "Collision.h"
 #include <memory>
 #include <vector>
 #include <string>

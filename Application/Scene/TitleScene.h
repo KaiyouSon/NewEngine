@@ -1,5 +1,5 @@
 #pragma once
-#include "IScene.h"
+#include "NewEngine.h"
 
 class TitleScene : public IScene
 {
