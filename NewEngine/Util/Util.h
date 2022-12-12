@@ -21,10 +21,16 @@ enum BlendMode
 };
 
 // ”äŠr‚µ‚Ä‘å‚«‚¢•û‚ğ•Ô‚·
-float Max(float a, float b);
+float Max(const float& a, const float& b);
 
 // ”äŠr‚µ‚Ä¬‚³‚¢•û‚ğ•Ô‚·
-float Min(float a, float b);
+float Min(const float& a, const float& b);
 
 // •„†‚ğ•Ô‚·i -1, 0, 1 j
-int Sign(float a);
+int Sign(const float& a);
+
+// ’l‚ğ§ŒÀ‚·‚éŠÖ”
+float Clamp(const float& value, const float& min = 0, const float& max = 1);
+
+// Œ…”‚ğæ“¾
+int GetDight(const int& value);

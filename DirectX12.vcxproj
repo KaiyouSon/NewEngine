@@ -172,7 +172,6 @@
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp" />
     <ClCompile Include="NewEngine\Object\2D\Texture.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Camera.cpp" />
-    <ClCompile Include="NewEngine\Object\3D\DebugCamera.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Line.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Material.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Model.cpp" />
@@ -193,6 +192,7 @@
     <ClCompile Include="NewEngine\Util\FrameRate.cpp" />
     <ClCompile Include="NewEngine\Util\Random.cpp" />
     <ClCompile Include="NewEngine\Util\Sound.cpp" />
+    <ClCompile Include="NewEngine\Util\Timer.cpp" />
     <ClCompile Include="NewEngine\Util\Transform.cpp" />
     <ClCompile Include="NewEngine\Util\Util.cpp" />
   </ItemGroup>
@@ -218,7 +218,6 @@
     <ClInclude Include="NewEngine\Object\2D\Sprite.h" />
     <ClInclude Include="NewEngine\Object\2D\Texture.h" />
     <ClInclude Include="NewEngine\Object\3D\Camera.h" />
-    <ClInclude Include="NewEngine\Object\3D\DebugCamera.h" />
     <ClInclude Include="NewEngine\Object\3D\Line.h" />
     <ClInclude Include="NewEngine\Object\3D\Material.h" />
     <ClInclude Include="NewEngine\Object\3D\Model.h" />
@@ -241,6 +240,7 @@
     <ClInclude Include="NewEngine\Util\Random.h" />
     <ClInclude Include="NewEngine\Util\Singleton.h" />
     <ClInclude Include="NewEngine\Util\Sound.h" />
+    <ClInclude Include="NewEngine\Util\Timer.h" />
     <ClInclude Include="NewEngine\Util\Transform.h" />
     <ClInclude Include="NewEngine\Util\Util.h" />
   </ItemGroup>

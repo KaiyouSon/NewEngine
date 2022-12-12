@@ -1,5 +1,4 @@
 #include "Camera.h"
-#include "Util.h"
 #include "NewEngine.h"
 
 Camera Camera::current = {};
@@ -44,4 +43,42 @@ void Camera::Update()
 	// ìßéãìäâeçsóÒÇÃåvéZ
 	perspectiveProjectionMat = ConvertPerspectiveProjectionMat(
 		fov, (float)GetWindowSize().x / GetWindowSize().y, nearZ, farZ);
+}
+
+void Camera::DebugCameraUpdate()
+{
+	const Vec3 frontVec =
+	{
+		sinf(current.rot.y),
+		-sinf(current.rot.x),
+		cosf(current.rot.y),
+	};
+
+	// âÒì]
+	if (Mouse::GetClick(MouseCodo::Wheel) && !Key::GetKey(DIK_LSHIFT))
+	{
+		if (Mouse::GetMouseMove().x != 0 || Mouse::GetMouseMove().y != 0)
+		{
+			const float moveSpeed = 0.005f;
+			current.rot.x += Mouse::GetMouseMove().y * moveSpeed;
+			current.rot.y += Mouse::GetMouseMove().x * moveSpeed;
+		}
+	}
+
+	// ïΩçsà⁄ìÆ
+	if (Mouse::GetClick(MouseCodo::Wheel) && Key::GetKey(DIK_LSHIFT))
+	{
+		if (Mouse::GetMouseMove().x != 0 || Mouse::GetMouseMove().y != 0)
+		{
+			const Vec3 rightVec = -Vec3::Cross(frontVec, { 0,1,0 });
+			current.pos += rightVec * Mouse::GetMouseMove().x * 0.1f;
+		}
+	}
+
+	// âúçs
+	if (Mouse::GetWheelMove() != 0)
+	{
+		const float moveSpeed = 0.025f;
+		current.pos += frontVec * Mouse::GetWheelMove() * 0.025f;
+	}
 }

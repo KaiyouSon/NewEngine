@@ -143,15 +143,18 @@ Mat4 ConvertViewProjectionMatLookAt(const Vec3& pos, const Vec3& target, const V
 }
 Mat4 ConvertViewProjectionMatLookTo(const Vec3& pos, const Vec3& zAxis, const Vec3& yAxis)
 {
+	// íPà çsóÒÇ≈èâä˙âª
+	Mat4 view = Mat4::Identity();
+
 	Vec3 xAxisVec = Vec3::Cross(yAxis, zAxis).Norm();
 	Vec3 yAxisVec = Vec3::Cross(zAxis, xAxisVec).Norm();
 
 	return
 	{
-		xAxisVec.x,xAxisVec.y,xAxisVec.z,0,
-		yAxisVec.x,yAxisVec.y,yAxisVec.z,0,
-		zAxis.x,zAxis.y,zAxis.z,0,
-		pos.x,pos.y,-pos.z,1,
+		xAxisVec.x,yAxisVec.x,zAxis.x,0,
+		xAxisVec.y,yAxisVec.y,zAxis.y,0,
+		xAxisVec.z,yAxisVec.z,zAxis.z,0,
+		Vec3::Dot(-pos, xAxisVec.Norm()),Vec3::Dot(-pos, yAxisVec.Norm()),Vec3::Dot(-pos, zAxis.Norm()),1,
 	};
 }
 Mat4 ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, float farZ)

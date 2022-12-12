@@ -1,20 +1,41 @@
 #include "Util.h"
 
-float Max(float a, float b)
+float Max(const float& a, const float& b)
 {
-	if (a > b)return a;
-	return b;
+	return a >= b ? a : b;
 }
 
-float Min(float a, float b)
+float Min(const float& a, const float& b)
 {
-	if (a < b)return a;
-	return b;
+	return a <= b ? a : b;
 }
 
-int Sign(float a)
+int Sign(const float& a)
 {
-	if (a > 0)return 1;
-	if (a < 0)return -1;
-	return 0;
+	return a >= 0 ? 1 : -1;
+}
+
+float Clamp(const float& value, const float& min, const float& max)
+{
+	if (value < min)
+	{
+		return min;
+	}
+	if (value > max)
+	{
+		return max;
+	}
+	return value;
+}
+
+int GetDight(const int& value)
+{
+	int tempValue = value;
+	int digit = 0;
+	while (tempValue != 0)
+	{
+		tempValue /= 10;
+		digit++;
+	}
+	return digit;
 }

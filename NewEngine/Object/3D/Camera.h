@@ -21,6 +21,7 @@ private:
 public:
 	Camera();
 	void Update();
+	static void DebugCameraUpdate();
 
 	inline Mat4 GetViewProjectionMat() { return viewProjectionMat; }
 	inline Mat4 GetOrthoGrphicProjectionMat() { return orthoGrphicProjectionMat; }

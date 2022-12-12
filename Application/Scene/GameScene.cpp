@@ -28,16 +28,19 @@ void GameScene::Init()
 	spr.texture = tex;
 
 }
+
 void GameScene::Update()
 {
 	for (int i = 0; i < 10; i++)
 	{
 		const float offsetAngle = (360 / 10) * i;
 		obj[i].pos = { sinf(Radian(offsetAngle)) * 30, 0, cosf(Radian(offsetAngle)) * 30 };
-		obj[i].rot.y = offsetAngle;
+		//obj[i].rot.y = offsetAngle;
 		obj[i].Update();
 	}
 	spr.Update();
+
+	Camera::DebugCameraUpdate();
 
 	if (Key::GetKeyTrigger(DIK_SPACE))
 	{
@@ -81,7 +84,7 @@ void GameScene::DrawDebugGui()
 {
 	GuiManager::BeginWindow();
 
-	GuiManager::DrawString("%f", obj[0].pos.z);
+	//GuiManager::DrawString("%f", obj[0].pos.z);
 	GuiManager::DrawSlider("test", obj[0].pos);
 
 	GuiManager::EndWindow();
