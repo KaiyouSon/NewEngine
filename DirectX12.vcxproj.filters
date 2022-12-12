@@ -237,6 +237,9 @@
     <ClCompile Include="NewEngine\Util\Timer.cpp">
       <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\Mesh.cpp">
+      <Filter>NewEngine\Source\Object\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -376,6 +379,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Util\Timer.h">
       <Filter>NewEngine\Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\Mesh.h">
+      <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

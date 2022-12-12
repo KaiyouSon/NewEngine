@@ -3,7 +3,7 @@
 #include <sstream>
 using namespace std;
 
-Model::Model(string modelName)
+Model::Model(const std::string& modelName, const bool& isSmoothing)
 {
 	string path = "Application/Resources/Model/" + modelName + "/";
 	string objfile = modelName + ".obj";
@@ -17,6 +17,7 @@ Model::Model(string modelName)
 	{
 		assert(0 && "モデルの読み込みが失敗しました");
 	}
+
 	vector<Vec3> positions;
 	vector<Vec3> normals;
 	vector<Vec2> texcoords;
@@ -89,20 +90,27 @@ Model::Model(string modelName)
 				// 頂点インデックス1個分の文字列をストリームに変換して解析しやすくする
 				istringstream indexStream(indexString);
 				unsigned short indexPos, indexNormal, indexTexcoord;
+
 				indexStream >> indexPos;
 				indexStream.seekg(1, ios_base::cur);	// スラッシュを飛ばす
 				indexStream >> indexTexcoord;
 				indexStream.seekg(1, ios_base::cur);	// スラッシュを飛ばす
+
 				indexStream >> indexNormal;
 				// 頂点データの追加
 				VertexPosNormalUv vertex{};
 				vertex.pos = positions[indexPos - 1];
 				vertex.normal = normals[indexNormal - 1];
 				vertex.uv = texcoords[indexTexcoord - 1];
-				vertices.emplace_back(vertex);
+				mesh.AddVertex(vertex);
+
+				if (isSmoothing == true)
+				{
+					mesh.AddSmoothData(indexPos, (unsigned short)mesh.GetVertexSize() - 1);
+				}
 
 				// 頂点インデックスに追加
-				indices.emplace_back((unsigned short)indices.size());
+				mesh.AddIndex((unsigned short)mesh.GetIndexSize());
 			}
 		}
 	}
@@ -110,8 +118,10 @@ Model::Model(string modelName)
 	// ファイルを閉じる
 	file.close();
 
-	// 頂点バッファ
-	vertexBuffer.Initialize(vertices);
-	// インデックスバッファ
-	indexBuffer.Initialize(indices);
+	if (isSmoothing == true)
+	{
+		mesh.CalculateSmoothedVertexNormals();
+	}
+
+	mesh.CreateBuffer();
 }

@@ -2,21 +2,19 @@
 #include "Material.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "Mesh.h"
 #include <vector>
 #include <string>
 
 class Model
 {
 public:
-	VertexBuffer<VertexPosNormalUv> vertexBuffer;
-	IndexBuffer indexBuffer;
-	std::vector<VertexPosNormalUv> vertices;
-	std::vector<unsigned short> indices;
 	Material material;
+	Mesh mesh;
 
 public:
 	Model() {}
-	Model(std::string modelName);
+	Model(const std::string& modelName, const bool& isSmoothing = false);
 	~Model() {};
 };
 

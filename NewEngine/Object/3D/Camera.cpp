@@ -70,7 +70,7 @@ void Camera::DebugCameraUpdate()
 	{
 		if (Mouse::GetMouseMove().x != 0 || Mouse::GetMouseMove().y != 0)
 		{
-			const Vec3 rightVec = -Vec3::Cross(frontVec, { 0,1,0 });
+			const Vec3 rightVec = Vec3::Cross(frontVec, { 0,1,0 });
 			current.pos += rightVec * Mouse::GetMouseMove().x * 0.1f;
 		}
 	}

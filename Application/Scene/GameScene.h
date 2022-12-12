@@ -5,10 +5,7 @@
 class GameScene : public IScene
 {
 private:
-	Object3D obj[10];
-	Sprite spr;
-	Model m1;
-	Model m2;
+	Object3D obj;
 
 public:
 	GameScene();

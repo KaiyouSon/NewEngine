@@ -13,55 +13,28 @@ GameScene::~GameScene()
 
 void GameScene::Init()
 {
-	Model test = Model("Cube");
+	Camera::current.pos = { 0,0,-30 };
+
+	Model model = Model("sphere", true);
 	Texture tex = Texture("pic.png");
 
-	m1 = Model("player");
-	m2 = Model("bee");
-
-	for (int i = 0; i < 10; i++)
-	{
-		obj[i].model = test;
-		//obj[i].texture = tex;
-	}
-
-	spr.texture = tex;
-
+	obj.model = model;
 }
 
 void GameScene::Update()
 {
-	for (int i = 0; i < 10; i++)
+	obj.Update();
+
+	if (Key::GetKey(DIK_RIGHT))
 	{
-		const float offsetAngle = (360 / 10) * i;
-		obj[i].pos = { sinf(Radian(offsetAngle)) * 30, 0, cosf(Radian(offsetAngle)) * 30 };
-		//obj[i].rot.y = offsetAngle;
-		obj[i].Update();
+		obj.rot.y -= Radian(5);
 	}
-	spr.Update();
+	if (Key::GetKey(DIK_LEFT))
+	{
+		obj.rot.y += Radian(5);
+	}
 
 	Camera::DebugCameraUpdate();
-
-	if (Key::GetKeyTrigger(DIK_SPACE))
-	{
-		SceneManager::ChangeScene<TitleScene>();
-	}
-
-	if (Key::GetKeyTrigger(DIK_1))
-	{
-		for (int i = 0; i < 10; i++)
-		{
-			obj[i].model = m1;
-		}
-	}
-
-	if (Key::GetKeyTrigger(DIK_2))
-	{
-		for (int i = 0; i < 10; i++)
-		{
-			obj[i].model = m2;
-		}
-	}
 }
 
 void GameScene::DrawBackSprite()
@@ -70,10 +43,7 @@ void GameScene::DrawBackSprite()
 
 void GameScene::DrawModel()
 {
-	for (int i = 0; i < 10; i++)
-	{
-		obj[i].Draw();
-	}
+	obj.Draw();
 }
 
 void GameScene::DrawFrontSprite()
@@ -82,10 +52,7 @@ void GameScene::DrawFrontSprite()
 
 void GameScene::DrawDebugGui()
 {
-	GuiManager::BeginWindow();
+	//GuiManager::BeginWindow();
 
-	//GuiManager::DrawString("%f", obj[0].pos.z);
-	GuiManager::DrawSlider("test", obj[0].pos);
-
-	GuiManager::EndWindow();
+	//GuiManager::EndWindow();
 }

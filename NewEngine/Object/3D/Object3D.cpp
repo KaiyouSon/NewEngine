@@ -44,8 +44,8 @@ void Object3D::Draw()
 	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// VBVとIBVの設定コマンド
-	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, model.vertexBuffer.GetvbViewAddress());
-	renderBase->GetCommandList()->IASetIndexBuffer(model.indexBuffer.GetibViewAddress());
+	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, model.mesh.GetVertexBuffer().GetvbViewAddress());
+	renderBase->GetCommandList()->IASetIndexBuffer(model.mesh.GetIndexBuffer().GetibViewAddress());
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
@@ -60,7 +60,7 @@ void Object3D::Draw()
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture.GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced(
-		(unsigned short)model.indices.size(), 1, 0, 0, 0);
+		(unsigned short)model.mesh.GetIndexSize(), 1, 0, 0, 0);
 }
 
 void Object3D::SetBlendMode(const BlendMode& blendMode)
