@@ -7,7 +7,8 @@ using namespace std;
 Line::Line() :
 	vertexBuffer(new VertexBuffer<VertexPosNormalUv>),
 	indexBuffer(new IndexBuffer),
-	constantBuffer(new ConstantBuffer)
+	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform>),
+	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>)
 {
 }
 
@@ -15,7 +16,8 @@ Line::~Line()
 {
 	delete vertexBuffer;
 	delete indexBuffer;
-	delete constantBuffer;
+	delete constantBufferTransform;
+	delete constantBufferColor;
 }
 
 void Line::Initialize(const Vec3& startPos, const Vec3& endPos)
@@ -32,8 +34,8 @@ void Line::Initialize(const Vec3& startPos, const Vec3& endPos)
 	indexBuffer->Initialize(indices);
 
 	// 定数バッファ
-	constantBuffer->MaterialBufferInit();
-	constantBuffer->TransformBufferInit();
+	constantBufferTransform->Init();
+	constantBufferColor->Init();
 }
 
 void Line::Update()

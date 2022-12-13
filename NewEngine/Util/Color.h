@@ -17,5 +17,12 @@ public:
 
 	// 比較演算子のオーバーロード
 	bool operator!=(const Color& other) const;
+	Color& operator++();
+
+	Color operator+(float num) const;		 // 一つの値との足し算
+	Color operator-(float num) const;		 // 一つの値との引き算
+	Color operator*(float num) const;         // 一つの値との掛け算
+	Color operator/(float num) const;         // 一つの値との割り算
+
 };
 

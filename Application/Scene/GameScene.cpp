@@ -1,8 +1,5 @@
 #include "GameScene.h"
 #include "TitleScene.h"
-#include "SceneManager.h"
-#include "InputManager.h"
-#include "NewEngine.h"
 
 GameScene::GameScene()
 {
@@ -13,7 +10,10 @@ GameScene::~GameScene()
 
 void GameScene::Init()
 {
-	Camera::current.pos = { 0,0,-30 };
+	Camera::current.pos = { 0,15,-15 };
+	Camera::current.rot = { Radian(45),0,0 };
+	Light::current.Init();
+	Light::current.lightDir = { 0,1,5 };
 
 	Model model = Model("sphere", true);
 	Texture tex = Texture("pic.png");
@@ -34,7 +34,18 @@ void GameScene::Update()
 		obj.rot.y += Radian(5);
 	}
 
+	if (Key::GetKey(DIK_UP))
+	{
+		obj.color.r++;
+	}
+	if (Key::GetKey(DIK_DOWN))
+	{
+		obj.color.r--;
+	}
+
 	Camera::DebugCameraUpdate();
+
+	Light::current.Update();
 }
 
 void GameScene::DrawBackSprite()

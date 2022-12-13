@@ -31,7 +31,7 @@ void SceneManager::Draw()
 
 	Object3D::SetBlendMode(BlendMode::Alpha);
 	currentScene->DrawModel();
-
+	
 	Sprite::SetBlendMode(BlendMode::Alpha);
 	currentScene->DrawFrontSprite();
 

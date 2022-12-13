@@ -17,7 +17,7 @@ private:
 	Mat4 viewProjectionMat;			// ビュー変換行列
 	Mat4 orthoGrphicProjectionMat;	// 平行投影行列
 	Mat4 perspectiveProjectionMat;	// 透視投影行列
-
+	
 public:
 	Camera();
 	void Update();

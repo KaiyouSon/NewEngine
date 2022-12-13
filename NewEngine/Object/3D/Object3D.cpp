@@ -1,20 +1,25 @@
 #include "Object3D.h"
 #include "RenderBase.h"
+#include "Light.h"
 using namespace std;
 
 Object3D::Object3D() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
-	constantBuffer(new ConstantBuffer)
+	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform3D>),
+	constantBufferMaterial(new ConstantBuffer<ConstantBufferDataMaterial>),
+	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>)
 {
 	// 定数バッファ初期化
-	constantBuffer->TransformBufferInit();
-	constantBuffer->MaterialBufferInit();
-	texture.isMaterial = true;
+	constantBufferTransform->Init();	// 3D行列
+	constantBufferMaterial->Init();		// マテリアル
+	constantBufferColor->Init();		// 色
 
+	texture.isMaterial = true;
 }
 Object3D::~Object3D()
 {
-	delete constantBuffer;
+	delete constantBufferTransform;
+	delete constantBufferColor;
 }
 void Object3D::Update()
 {
@@ -28,13 +33,21 @@ void Object3D::Update()
 	transform.rot = rot;
 	transform.Update();
 
-	// 定数バッファに転送
-	constantBuffer->constMapTransform->mat =
-		transform.GetWorldMat() *
+	// マトリックス転送
+	constantBufferTransform->constantBufferMap->viewMat =
 		Camera::current.GetViewProjectionMat() *
 		Camera::current.GetPerspectiveProjectionMat();
+	constantBufferTransform->constantBufferMap->worldMat = transform.GetWorldMat();
+	constantBufferTransform->constantBufferMap->cameraPos = Camera::current.pos;
 
-	constantBuffer->SetColor(color);
+	// マテリアルの転送
+	constantBufferMaterial->constantBufferMap->ambient = model.material.ambient;
+	constantBufferMaterial->constantBufferMap->diffuse = model.material.diffuse;
+	constantBufferMaterial->constantBufferMap->specular = model.material.specular;
+	constantBufferMaterial->constantBufferMap->alpha = model.material.alpha;
+
+	// 色転送
+	constantBufferColor->constantBufferMap->color = color / 255;
 }
 void Object3D::Draw()
 {
@@ -49,9 +62,10 @@ void Object3D::Draw()
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, constantBuffer->GetConstBuffTransform()->GetGPUVirtualAddress());
+		0, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, constantBuffer->GetConstBuffMaterial()->GetGPUVirtualAddress());
+		1, constantBufferMaterial->constantBuffer->GetGPUVirtualAddress());
+	Light::current.Draw();
 
 	// SRVヒープの設定コマンド
 	auto temp = renderBase->GetSrvDescHeap();
@@ -70,19 +84,19 @@ void Object3D::SetBlendMode(const BlendMode& blendMode)
 	switch (blendMode)
 	{
 	case BlendMode::Alpha: // αブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetBasicPipeline()->GetAlphaPipeline());
+		renderBase->GetCommandList()->SetPipelineState(renderBase->GetLoadModelPipeline()->GetAlphaPipeline());
 		break;
 
 	case BlendMode::Add:	// 加算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetBasicPipeline()->GetAddPipeline());
+		renderBase->GetCommandList()->SetPipelineState(renderBase->GetLoadModelPipeline()->GetAddPipeline());
 		break;
 
 	case BlendMode::Sub:	// 減算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetBasicPipeline()->GetSubPipeline());
+		renderBase->GetCommandList()->SetPipelineState(renderBase->GetLoadModelPipeline()->GetSubPipeline());
 		break;
 
 	case BlendMode::Inv:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetBasicPipeline()->GetInvPipeline());
+		renderBase->GetCommandList()->SetPipelineState(renderBase->GetLoadModelPipeline()->GetInvPipeline());
 		break;
 
 	default:

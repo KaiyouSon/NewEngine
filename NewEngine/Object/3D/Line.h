@@ -9,9 +9,10 @@ class Line
 private:
 	VertexBuffer<VertexPosNormalUv>* vertexBuffer;
 	IndexBuffer* indexBuffer;
-	ConstantBuffer* constantBuffer;
 	std::vector<VertexPosNormalUv> vertices;
 	std::vector<unsigned short> indices;
+	ConstantBuffer<ConstantBufferDataTransform>* constantBufferTransform;
+	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
 
 public:
 	Line();

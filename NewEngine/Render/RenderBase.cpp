@@ -417,7 +417,6 @@ void RenderBase::ShaderCompilerInit()
 }
 void RenderBase::RootSignatureInit()
 {
-
 	HRESULT result;
 
 	// デスクリプタレンジの設定
@@ -440,7 +439,7 @@ void RenderBase::RootSignatureInit()
 	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;			// ピクセルシェーダからのみ使用可能
 
 	// ルートパラメーターの設定
-	D3D12_ROOT_PARAMETER rootParams[3] = {};
+	D3D12_ROOT_PARAMETER rootParams[4] = {};
 	// 定数バッファの0番
 	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
 	rootParams[0].Descriptor.ShaderRegister = 0;					// 定数バッファ番号
@@ -458,6 +457,12 @@ void RenderBase::RootSignatureInit()
 	rootParams[2].DescriptorTable.pDescriptorRanges = &descriptorRange;		  // デスクリプタレンジ
 	rootParams[2].DescriptorTable.NumDescriptorRanges = 1;					  // デスクリプタレンジ数
 	rootParams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;			  // 全てのシェーダから見える
+
+	// 定数バッファの2番
+	rootParams[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
+	rootParams[3].Descriptor.ShaderRegister = 2;					// 定数バッファ番号
+	rootParams[3].Descriptor.RegisterSpace = 0;						// デフォルト値
+	rootParams[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
 
 	// ルートシグネチャの設定
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};

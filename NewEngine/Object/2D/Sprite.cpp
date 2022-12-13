@@ -8,7 +8,8 @@ Sprite::Sprite() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0), anchorPoint(0.0f, 0.0f),
 	vertexBuffer(new VertexBuffer<VertexPosUv>),
 	indexBuffer(new IndexBuffer),
-	constantBuffer(new ConstantBuffer)
+	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform2D>),
+	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>)
 {
 	vertices.push_back({ { 0.0f, 0.0f, 0.0f }, {0.0f, 1.0f} });	//左下
 	vertices.push_back({ { 0.0f, 0.0f, 0.0f }, {0.0f, 0.0f} });	//左上
@@ -22,15 +23,16 @@ Sprite::Sprite() :
 	indexBuffer->Initialize(indices);
 
 	// 定数バッファ
-	constantBuffer->MaterialBufferInit();
-	constantBuffer->TransformBufferInit();
+	constantBufferTransform->Init();
+	constantBufferColor->Init();
 }
 
 Sprite::~Sprite()
 {
 	delete vertexBuffer;
 	delete indexBuffer;
-	delete constantBuffer;
+	delete constantBufferTransform;
+	delete constantBufferColor;
 }
 
 void Sprite::Update()
@@ -41,9 +43,12 @@ void Sprite::Update()
 	transform.Update();
 
 	// 定数バッファに転送
-	constantBuffer->constMapTransform->mat =
+	constantBufferTransform->constantBufferMap->mat =
 		transform.GetWorldMat() *
 		Camera::current.GetOrthoGrphicProjectionMat();
+
+	// 色転送
+	constantBufferColor->constantBufferMap->color = color;
 
 	float width = texture.size.x;
 	float height = texture.size.y;
@@ -61,8 +66,6 @@ void Sprite::Update()
 		vertexBuffer->TransferToBuffer(vertices);
 		vertexBuffer->Unmap();
 	}
-
-	constantBuffer->SetColor(color);
 }
 
 void Sprite::Draw()
@@ -79,15 +82,15 @@ void Sprite::Draw()
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, constantBuffer->GetConstBuffTransform()->GetGPUVirtualAddress());
+		0, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, constantBuffer->GetConstBuffMaterial()->GetGPUVirtualAddress());
+		1, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
 
 	// SRVヒープの設定コマンド
 	auto temp = renderBase->GetSrvDescHeap();
 	renderBase->GetCommandList()->SetDescriptorHeaps(1, &temp);
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture.GetGpuHandle());
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(0, texture.GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced((unsigned short)indices.size(), 1, 0, 0, 0);
 }

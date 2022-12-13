@@ -9,6 +9,6 @@ float4 main(VSOutput input) : SV_TARGET
 	float diffuse = saturate(dot(-light, input.normal)); //	diffuseを[0,1]の範囲にClampする
 	float brightness = diffuse + 0.3f;					 //	アンビエント項を0.3として計算
 	float4 texColor = float4(tex.Sample(smp, input.uv));
-	
+
 	return float4(texColor.rgb * brightness, texColor.a) * color;
 }

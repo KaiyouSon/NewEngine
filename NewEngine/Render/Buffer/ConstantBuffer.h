@@ -1,59 +1,52 @@
 #pragma once
-#include "Util.h"
-#include "MathUtil.h"
-#include "Material.h"
+#include "RenderBase.h"
+#include "ConstantBufferData.h"
 #include <d3d12.h>
 #include <wrl.h>
 
-// 定数バッファ用データ構造体(マテリアル)
-struct ConstBufferDateMaterial
-{
-	Vec4 color;	// 色(RGBA)
-};
-
-// 定数バッファ用データ構造体(3D変換行列)
-struct ConstBufferDataTransform
-{
-	Mat4 mat;	//3D変換行列
-};
-
-// 定数バッファ用データ構造体B1
-struct ConstBufferDataB1
-{
-	Vec3 ambient;	// アンビエント係数
-	float pad1;
-	Vec3 diffuse;	// ディフューズ係数
-	float pad2;
-	Vec3 specular;	// スペキュラー係数
-	float alpha;	// アルファ
-};
-
+template<typename T>
 class ConstantBuffer
 {
-	//private:
-	//	Microsoft::WRL::ComPtr<ID3D12Resource> constBuffB0;	// 定数バッファ
-	//	Microsoft::WRL::ComPtr<ID3D12Resource> constBuffB1;	// 定数バッファ
-	//public:
-	//	void ConstBuffInit();
-
-
-private:
-	// マテリアルの定数バッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterial;
-	// トランスフォームの定数バッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> constBuffTransform;
+public:
+	Microsoft::WRL::ComPtr<ID3D12Resource> constantBuffer;//	定数バッファ
+	T* constantBufferMap;	// マッピング用
 
 public:
-	ConstBufferDataB1* constMapModelMaterial = nullptr;
-	ConstBufferDateMaterial* constMapMaterial = nullptr;
-	ConstBufferDataTransform* constMapTransform = nullptr;
-public:
-	void MaterialBufferInit();
-	void MaterialBufferInit(const Material& material);
-	void TransformBufferInit();
-public:
-	Microsoft::WRL::ComPtr<ID3D12Resource> GetConstBuffMaterial();
-	Microsoft::WRL::ComPtr<ID3D12Resource> GetConstBuffTransform();
+	~ConstantBuffer()
+	{
+		constantBuffer->Unmap(0, nullptr);
+	}
 
-	void SetColor(const Color& color);
+	void Init()
+	{
+		HRESULT result;
+
+		// ヒープの設定
+		D3D12_HEAP_PROPERTIES cbHeapProp{};
+		cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	// GPUへの転送用
+		// リソース設定
+		D3D12_RESOURCE_DESC cbResourceDesc{};
+		cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+		cbResourceDesc.Width = (sizeof(T) + 0xff) & ~0xff; // 256バイトアラインメント
+		cbResourceDesc.Height = 1;
+		cbResourceDesc.DepthOrArraySize = 1;
+		cbResourceDesc.MipLevels = 1;
+		cbResourceDesc.SampleDesc.Count = 1;
+		cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+		// 定数バッファの生成
+		result = RenderBase::GetInstance()->GetDevice()->
+			CreateCommittedResource(
+				&cbHeapProp,	// ヒープの設定
+				D3D12_HEAP_FLAG_NONE,
+				&cbResourceDesc, // リソースの設定
+				D3D12_RESOURCE_STATE_GENERIC_READ,
+				nullptr,
+				IID_PPV_ARGS(&constantBuffer));
+		assert(SUCCEEDED(result));
+
+		// 定数バッファのマッピング
+		result = constantBuffer->Map(0, nullptr, (void**)&constantBufferMap);	// マッピング
+		assert(SUCCEEDED(result));
+	}
 };

@@ -2,6 +2,7 @@
 #include "Util.h"
 #include "Object3D.h"
 #include "Sprite.h"
+#include "Light.h"
 #include "Sound.h"
 #include "imgui.h"
 #include "GuiManager.h"
