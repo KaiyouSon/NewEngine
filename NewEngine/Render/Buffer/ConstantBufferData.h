@@ -34,3 +34,13 @@ struct ConstantBufferDataLight
 	float pad1;
 	Vec3 color;
 };
+
+struct ConstantBufferDataPointLight
+{
+	Vec3 pos;
+	float pad1;
+	Vec3 color;
+	float pad2;
+	Vec3 atten;
+	unsigned int active;
+};

@@ -10,7 +10,7 @@ private:
 	friend Singleton<SceneManager>;
 	static std::unique_ptr<IScene> currentScene;
 
-private:
+public:
 	SceneManager();
 	~SceneManager();
 

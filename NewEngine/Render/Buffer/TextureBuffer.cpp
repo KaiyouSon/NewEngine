@@ -158,7 +158,7 @@ unique_ptr<Texture> TextureBuffer::GetDefaultTexture()
 }
 unique_ptr<Texture> TextureBuffer::GetRenderTexture(const Vec2& size)
 {
-	RenderBase* renderBase = RenderBase::GetInstance().get();
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
 	HRESULT result;
 	unique_ptr<Texture> texture = make_unique<Texture>();

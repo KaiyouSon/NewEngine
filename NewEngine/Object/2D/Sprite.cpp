@@ -70,7 +70,7 @@ void Sprite::Update()
 
 void Sprite::Draw()
 {
-	RenderBase* renderBase = RenderBase::GetInstance().get();
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
 	renderBase->GetCommandList()->SetPipelineState(renderBase->GetSpritePipeline()->GetAlphaPipeline());
 	renderBase->GetCommandList()->SetGraphicsRootSignature(renderBase->GetRootSignature());
@@ -97,7 +97,7 @@ void Sprite::Draw()
 
 void Sprite::SetBlendMode(const BlendMode& blendMode)
 {
-	RenderBase* renderBase = RenderBase::GetInstance().get();
+	RenderBase* renderBase = RenderBase::GetInstance();//.get();
 
 	switch (blendMode)
 	{

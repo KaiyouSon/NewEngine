@@ -405,15 +405,6 @@ void RenderBase::ShaderCompilerInit()
 	loadModelShader->CompileVertexShader("Shader/ObjectBasicVS.hlsl", "main");
 	loadModelShader->CompilePixelShader("Shader/ObjectBasicPS.hlsl", "main");
 
-	// パーティクルのシェーダー
-	particleShader = std::move(std::make_unique<ShaderObject>());
-	particleShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	particleShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT);
-	particleShader->AddInputLayout("COLOR", DXGI_FORMAT_R32G32B32_FLOAT);
-	particleShader->CompileVertexShader("Shader/ParticleVS.hlsl", "main");
-	particleShader->CompileGeometryShader("Shader/ParticleGS.hlsl", "main");
-	particleShader->CompilePixelShader("Shader/ParticlePS.hlsl", "main");
-
 }
 void RenderBase::RootSignatureInit()
 {
@@ -439,7 +430,7 @@ void RenderBase::RootSignatureInit()
 	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;			// ピクセルシェーダからのみ使用可能
 
 	// ルートパラメーターの設定
-	D3D12_ROOT_PARAMETER rootParams[4] = {};
+	D3D12_ROOT_PARAMETER rootParams[5] = {};
 	// 定数バッファの0番
 	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
 	rootParams[0].Descriptor.ShaderRegister = 0;					// 定数バッファ番号
@@ -463,6 +454,12 @@ void RenderBase::RootSignatureInit()
 	rootParams[3].Descriptor.ShaderRegister = 2;					// 定数バッファ番号
 	rootParams[3].Descriptor.RegisterSpace = 0;						// デフォルト値
 	rootParams[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
+
+	// 定数バッファの3番
+	rootParams[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
+	rootParams[4].Descriptor.ShaderRegister = 3;					// 定数バッファ番号
+	rootParams[4].Descriptor.RegisterSpace = 0;						// デフォルト値
+	rootParams[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
 
 	// ルートシグネチャの設定
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
@@ -537,14 +534,5 @@ void RenderBase::GraphicsPipelineInit()
 	loadModelPipeline->SetTopologyType(TriangleTopology);
 	loadModelPipeline->SetRootSignature(rootSignature.Get());
 	loadModelPipeline->Init();
-
-	// グラフィックスパイプラインポイント用
-	particlePipeline = std::move(std::make_unique<GraphicsPipeline>());
-	particlePipeline->SetShaderObject(particleShader.get());
-	particlePipeline->SetisCullBack(false);
-	particlePipeline->SetisDepthEnable(false);
-	particlePipeline->SetTopologyType(PointTopology);
-	particlePipeline->SetRootSignature(rootSignature.Get());
-	particlePipeline->Init();
 
 }

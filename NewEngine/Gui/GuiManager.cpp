@@ -10,7 +10,7 @@ const int GuiManager::NumFramesInFlight = 3;
 
 void GuiManager::Init()
 {
-	RenderBase* renderBase = RenderBase::GetInstance().get();
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -43,7 +43,7 @@ void GuiManager::PostDraw()
 {
 	ImGui::Render();
 	// SRVヒープの設定コマンド
-	RenderBase* renderBase = RenderBase::GetInstance().get();
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 	auto srvDescHeap = renderBase->GetSrvDescHeap();
 	renderBase->GetCommandList()->SetDescriptorHeaps(1, &srvDescHeap);
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), renderBase->GetCommandList());

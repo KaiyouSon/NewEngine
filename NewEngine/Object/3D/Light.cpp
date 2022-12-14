@@ -1,7 +1,7 @@
 #include "Light.h"
 #include "RenderBase.h"
 
-Light Light::current = {};
+Light* Light::current = new Light;
 
 Light::Light()
 {
@@ -29,7 +29,7 @@ void Light::Update()
 
 void Light::Draw()
 {
-	RenderBase* renderBase = RenderBase::GetInstance().get();
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(

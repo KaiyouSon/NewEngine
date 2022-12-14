@@ -19,6 +19,7 @@ Object3D::Object3D() :
 Object3D::~Object3D()
 {
 	delete constantBufferTransform;
+	delete constantBufferMaterial;
 	delete constantBufferColor;
 }
 void Object3D::Update()
@@ -51,7 +52,7 @@ void Object3D::Update()
 }
 void Object3D::Draw()
 {
-	RenderBase* renderBase = RenderBase::GetInstance().get();
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
 	renderBase->GetCommandList()->SetGraphicsRootSignature(renderBase->GetRootSignature());
 	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -65,7 +66,7 @@ void Object3D::Draw()
 		0, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		1, constantBufferMaterial->constantBuffer->GetGPUVirtualAddress());
-	Light::current.Draw();
+	Light::GetCurrent()->Draw();
 
 	// SRVヒープの設定コマンド
 	auto temp = renderBase->GetSrvDescHeap();
@@ -79,7 +80,7 @@ void Object3D::Draw()
 
 void Object3D::SetBlendMode(const BlendMode& blendMode)
 {
-	RenderBase* renderBase = RenderBase::GetInstance().get();
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
 	switch (blendMode)
 	{

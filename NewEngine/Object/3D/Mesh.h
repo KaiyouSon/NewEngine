@@ -15,6 +15,7 @@ private:
 	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothData;
 
 public:
+
 	// スムージングデータの追加
 	void AddSmoothData(const unsigned short& indexPos, const unsigned short& indexVertex);
 

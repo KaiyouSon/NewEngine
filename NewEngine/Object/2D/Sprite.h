@@ -14,7 +14,7 @@ private:
 	IndexBuffer* indexBuffer;
 	std::vector<VertexPosUv> vertices;
 	std::vector<unsigned short> indices;
-	ConstantBuffer<ConstantBufferDataTransform>* constantBufferTransform;
+	ConstantBuffer<ConstantBufferDataTransform2D>* constantBufferTransform;
 	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
 	Transform transform;
 

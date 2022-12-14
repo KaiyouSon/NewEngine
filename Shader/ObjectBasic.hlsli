@@ -23,6 +23,15 @@ cbuffer ConstantBufferDataLight : register(b2)
 	float3 lightColor;	// ライトの色(RGB)
 };
 
+// 点光源
+struct PointLight
+{
+	float3 pos;		// 座標
+	float3 color;	// 色
+	float4 atten;	// ライト距離減衰係数
+	uint active;
+};
+
 // 頂点シェーダーの出力構造体
 // （頂点シェーダーからピクセルシェーダーヘのやり取りに使用する）
 struct VSOutput

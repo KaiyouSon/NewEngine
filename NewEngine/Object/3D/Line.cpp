@@ -7,7 +7,7 @@ using namespace std;
 Line::Line() :
 	vertexBuffer(new VertexBuffer<VertexPosNormalUv>),
 	indexBuffer(new IndexBuffer),
-	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform>),
+	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform3D>),
 	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>)
 {
 }

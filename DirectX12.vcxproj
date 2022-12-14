@@ -178,6 +178,7 @@
     <ClCompile Include="NewEngine\Object\3D\Mesh.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Model.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Object3D.cpp" />
+    <ClCompile Include="NewEngine\Object\3D\PointLight.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\TextureBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\VertexBuffer.cpp" />
@@ -225,6 +226,7 @@
     <ClInclude Include="NewEngine\Object\3D\Mesh.h" />
     <ClInclude Include="NewEngine\Object\3D\Model.h" />
     <ClInclude Include="NewEngine\Object\3D\Object3D.h" />
+    <ClInclude Include="NewEngine\Object\3D\PointLight.h" />
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBufferData.h" />
     <ClInclude Include="NewEngine\Render\Buffer\IndexBuffer.h" />
@@ -259,21 +261,10 @@
   <ItemGroup>
     <None Include="Shader\Basic.hlsli" />
     <None Include="Shader\ObjectBasic.hlsli" />
-    <None Include="Shader\Particle.hlsli" />
     <None Include="Shader\RenderTexture.hlsli" />
     <None Include="Shader\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Shader\ParticleGS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-    </FxCompile>
     <FxCompile Include="Shader\BasicPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
@@ -303,22 +294,6 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Shader\ParticlePS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="Shader\ParticleVS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Shader\RenderTexturePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

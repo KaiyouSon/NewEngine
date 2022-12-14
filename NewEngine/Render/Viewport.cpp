@@ -6,7 +6,7 @@ using namespace std;
 
 void Viewport::Update()
 {
-	RenderBase* renderBase = RenderBase::GetInstance().get();
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
 	//----------------------- ビューポートの設定コマンド -----------------------//
 	// ビューポート設定コマンド

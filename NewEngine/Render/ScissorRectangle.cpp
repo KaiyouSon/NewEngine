@@ -4,7 +4,7 @@
 
 void ScissorRectangle::Update()
 {
-	RenderBase* renderBase = RenderBase::GetInstance().get();
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
 
 	//------------------------ シザー矩形の設定コマンド ------------------------//

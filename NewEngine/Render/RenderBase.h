@@ -12,7 +12,7 @@
 
 template<typename T> class Singleton;
 
-class RenderBase : public Singleton<RenderBase>
+class RenderBase// : public Singleton<RenderBase>
 {
 public:
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr <T>;
@@ -47,10 +47,9 @@ public:
 	inline GraphicsPipeline* GetLinePipeline()const { return linePipeline.get(); }
 	inline GraphicsPipeline* GetRenderTexturePipeline()const { return renderTexturePipeline.get(); }
 	inline GraphicsPipeline* GetLoadModelPipeline()const { return loadModelPipeline.get(); }
-	inline GraphicsPipeline* GetParticlePipeline()const { return particlePipeline.get(); }
 
 private:
-	friend Singleton<RenderBase>;
+	//friend Singleton<RenderBase>;
 
 	// デバイス関連
 	ComPtr<ID3D12Device> device;
@@ -92,7 +91,6 @@ private:
 	std::unique_ptr<GraphicsPipeline> linePipeline;
 	std::unique_ptr<GraphicsPipeline> renderTexturePipeline;
 	std::unique_ptr<GraphicsPipeline> loadModelPipeline;
-	std::unique_ptr<GraphicsPipeline> particlePipeline;
 
 	// ルートシグネチャー関連
 	ComPtr <ID3DBlob> errorBlob;	// エラーオブジェクト
@@ -103,4 +101,24 @@ private:
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle;	// レンダーターゲットビューのハンドル
 
 	RenderWindow* renderWindow;
+
+private:
+	RenderBase() {}
+	~RenderBase() {}
+
+	RenderBase(const RenderBase&) = delete;
+	RenderBase& operator=(const RenderBase&) = delete;
+	RenderBase(const RenderBase&&) = delete;
+	RenderBase& operator=(const RenderBase&&) = delete;
+public:
+	static RenderBase* GetInstance()
+	{
+		static RenderBase* renderBase = new RenderBase;
+		return renderBase;
+	};
+
+	static void Destroy()
+	{
+		delete GetInstance();
+	}
 };

@@ -103,6 +103,12 @@
     <Filter Include="NewEngine\Header\Gui">
       <UniqueIdentifier>{5bc23d66-9f43-496b-91af-4305d090a2bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NewEngine\Source\Light">
+      <UniqueIdentifier>{723b8732-9770-4eb3-b3b6-b67e8efb9d57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Light">
+      <UniqueIdentifier>{2e138d45-a1d0-4dde-97af-e473ac0908db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -238,7 +244,10 @@
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\Light.cpp">
-      <Filter>NewEngine\Source\Object\3D</Filter>
+      <Filter>NewEngine\Source\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\PointLight.cpp">
+      <Filter>NewEngine\Source\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -386,8 +395,11 @@
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBufferData.h">
       <Filter>NewEngine\Header\Render\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\3D\Light.h">
+    <ClInclude Include="NewEngine\Object\3D\PointLight.h">
       <Filter>NewEngine\Header\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\Light.h">
+      <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -398,9 +410,6 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="Shader\ObjectBasic.hlsli">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\Particle.hlsli">
       <Filter>Shader</Filter>
     </None>
     <None Include="Shader\Sprite.hlsli">
@@ -427,15 +436,6 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\ObjectBasicVS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="Shader\ParticleGS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="Shader\ParticlePS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="Shader\ParticleVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\SpriteVS.hlsl">

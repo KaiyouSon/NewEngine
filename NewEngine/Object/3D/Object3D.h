@@ -8,7 +8,7 @@
 class Object3D
 {
 private:
-	ConstantBuffer<ConstantBufferDataTransform>* constantBufferTransform;
+	ConstantBuffer<ConstantBufferDataTransform3D>* constantBufferTransform;
 	ConstantBuffer<ConstantBufferDataMaterial>* constantBufferMaterial;
 	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
 	Transform transform;
