@@ -7,7 +7,8 @@ Object3D::Object3D() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform3D>),
 	constantBufferMaterial(new ConstantBuffer<ConstantBufferDataMaterial>),
-	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>)
+	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>),
+	isLighting(false)
 {
 	// 定数バッファ初期化
 	constantBufferTransform->Init();	// 3D行列
@@ -42,9 +43,18 @@ void Object3D::Update()
 	constantBufferTransform->constantBufferMap->cameraPos = Camera::current.pos;
 
 	// マテリアルの転送
-	constantBufferMaterial->constantBufferMap->ambient = model.material.ambient;
-	constantBufferMaterial->constantBufferMap->diffuse = model.material.diffuse;
-	constantBufferMaterial->constantBufferMap->specular = model.material.specular;
+	if (isLighting == true)
+	{
+		constantBufferMaterial->constantBufferMap->ambient = model.material.ambient;
+		constantBufferMaterial->constantBufferMap->diffuse = model.material.diffuse;
+		constantBufferMaterial->constantBufferMap->specular = model.material.specular;
+	}
+	else
+	{
+		constantBufferMaterial->constantBufferMap->ambient = Vec3::one;
+		constantBufferMaterial->constantBufferMap->diffuse = Vec3::zero;
+		constantBufferMaterial->constantBufferMap->specular = Vec3::zero;
+	}
 	constantBufferMaterial->constantBufferMap->alpha = model.material.alpha;
 
 	// 色転送

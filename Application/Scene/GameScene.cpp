@@ -6,7 +6,6 @@ GameScene::GameScene()
 }
 GameScene::~GameScene()
 {
-	//delete obj;
 }
 
 void GameScene::Init()
@@ -16,18 +15,17 @@ void GameScene::Init()
 	//Camera::current.pos = { 0,0,0 };
 	//Camera::current.rot = { 0,0,0 };
 	Light::GetCurrent()->Init();
-	Light::GetCurrent()->lightDir = Vec3::down;
+	//Light::GetCurrent()->lightDir = Vec3::down;
 
-	//Model model = Model("sphere", true);
-	//Texture tex = Texture("pic.png");
+	Model model = Model("sphere", true);
+	Texture tex = Texture("pic.png");
 
-	//obj = new Object3D;
-	//obj.model = model;
+	obj.model = model;
 }
 
 void GameScene::Update()
 {
-	//obj.Update();
+	obj.Update();
 
 	//if (Key::GetKey(DIK_RIGHT))
 	//{
@@ -50,8 +48,6 @@ void GameScene::Update()
 	//}
 
 	Camera::DebugCameraUpdate();
-
-	//Light::current.Update();
 }
 
 void GameScene::DrawBackSprite()
@@ -60,7 +56,7 @@ void GameScene::DrawBackSprite()
 
 void GameScene::DrawModel()
 {
-	//obj.Draw();
+	obj.Draw();
 }
 
 void GameScene::DrawFrontSprite()

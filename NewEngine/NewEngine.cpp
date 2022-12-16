@@ -57,6 +57,7 @@ void NewEngineUpda()
 {
 	InputManager::GetInstance()->Update();
 	SceneManager::GetInstance()->Update();
+	Light::GetCurrent()->Update();
 }
 void NewEnginePreDraw()
 {
