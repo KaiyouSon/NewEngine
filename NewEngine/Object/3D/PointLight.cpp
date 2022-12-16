@@ -30,5 +30,5 @@ void PointLight::Draw()
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		4, constantBufferPointLight->constantBuffer->GetGPUVirtualAddress());
+		5, constantBufferPointLight->constantBuffer->GetGPUVirtualAddress());
 }

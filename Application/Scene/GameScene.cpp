@@ -12,10 +12,7 @@ void GameScene::Init()
 {
 	Camera::current.pos = { 0,15,-15 };
 	Camera::current.rot = { Radian(45),0,0 };
-	//Camera::current.pos = { 0,0,0 };
-	//Camera::current.rot = { 0,0,0 };
 	Light::GetCurrent()->Init();
-	//Light::GetCurrent()->lightDir = Vec3::down;
 
 	Model model = Model("sphere", true);
 	Texture tex = Texture("pic.png");
@@ -26,26 +23,7 @@ void GameScene::Init()
 void GameScene::Update()
 {
 	obj.Update();
-
-	//if (Key::GetKey(DIK_RIGHT))
-	//{
-	//	obj.rot.y -= Radian(5);
-	//}
-	//if (Key::GetKey(DIK_LEFT))
-	//{
-	//	obj.rot.y += Radian(5);
-	//}
-
-	//if (Key::GetKey(DIK_UP))
-	//{
-	//	obj.rot.x += Radian(5);
-	//	//obj.color.r++;
-	//}
-	//if (Key::GetKey(DIK_DOWN))
-	//{
-	//	obj.rot.x -= Radian(5);
-	//	//obj.color.r--;
-	//}
+	obj.color = Color::red;
 
 	Camera::DebugCameraUpdate();
 }

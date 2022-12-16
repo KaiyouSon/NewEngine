@@ -15,6 +15,8 @@ public:
 	const static Color white;
 	const static Color black;
 
+	Color operator=(const Color& other);
+
 	// 比較演算子のオーバーロード
 	bool operator!=(const Color& other) const;
 	Color& operator++();

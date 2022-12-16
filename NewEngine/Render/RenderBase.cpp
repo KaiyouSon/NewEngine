@@ -430,36 +430,43 @@ void RenderBase::RootSignatureInit()
 	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;			// ピクセルシェーダからのみ使用可能
 
 	// ルートパラメーターの設定
-	D3D12_ROOT_PARAMETER rootParams[5] = {};
-	// 定数バッファの0番
-	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
-	rootParams[0].Descriptor.ShaderRegister = 0;					// 定数バッファ番号
-	rootParams[0].Descriptor.RegisterSpace = 0;						// デフォルト値
-	rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
+	D3D12_ROOT_PARAMETER rootParams[6] = {};
 
-	// 定数バッファの1番
+	// テクスチャレジスタ0番（SRV）
+	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE; // 種類
+	rootParams[0].DescriptorTable.pDescriptorRanges = &descriptorRange;		  // デスクリプタレンジ
+	rootParams[0].DescriptorTable.NumDescriptorRanges = 1;					  // デスクリプタレンジ数
+	rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;			  // 全てのシェーダから見える
+
+	// 定数バッファ（トランスフォーム）
 	rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
-	rootParams[1].Descriptor.ShaderRegister = 1;					// 定数バッファ番号
+	rootParams[1].Descriptor.ShaderRegister = 0;					// 定数バッファ番号
 	rootParams[1].Descriptor.RegisterSpace = 0;						// デフォルト値
 	rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
 
-	// テクスチャレジスタ0番
-	rootParams[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE; // 種類
-	rootParams[2].DescriptorTable.pDescriptorRanges = &descriptorRange;		  // デスクリプタレンジ
-	rootParams[2].DescriptorTable.NumDescriptorRanges = 1;					  // デスクリプタレンジ数
-	rootParams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;			  // 全てのシェーダから見える
+	// 定数バッファ（マテリアル）
+	rootParams[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
+	rootParams[2].Descriptor.ShaderRegister = 1;					// 定数バッファ番号
+	rootParams[2].Descriptor.RegisterSpace = 0;						// デフォルト値
+	rootParams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
 
-	// 定数バッファの2番
+	// 定数バッファ（マテリアル）
 	rootParams[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
 	rootParams[3].Descriptor.ShaderRegister = 2;					// 定数バッファ番号
 	rootParams[3].Descriptor.RegisterSpace = 0;						// デフォルト値
 	rootParams[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
 
-	// 定数バッファの3番
+	// 定数バッファ（平行光源、ディレクショナルライト）
 	rootParams[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
 	rootParams[4].Descriptor.ShaderRegister = 3;					// 定数バッファ番号
 	rootParams[4].Descriptor.RegisterSpace = 0;						// デフォルト値
 	rootParams[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
+
+	// 定数バッファ（点光源、スポットライト）
+	rootParams[5].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
+	rootParams[5].Descriptor.ShaderRegister = 4;					// 定数バッファ番号
+	rootParams[5].Descriptor.RegisterSpace = 0;						// デフォルト値
+	rootParams[5].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
 
 	// ルートシグネチャの設定
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};

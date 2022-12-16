@@ -82,9 +82,9 @@ void Sprite::Draw()
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
+		1, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
+		2, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
 
 	// SRVヒープの設定コマンド
 	auto temp = renderBase->GetSrvDescHeap();

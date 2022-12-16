@@ -13,6 +13,12 @@ bool Color::operator!=(const Color& other) const
 	return r != other.r || g != other.g || b != other.b || a != other.a;
 }
 
+Color Color::operator=(const Color& other)
+{
+	r = other.r, g = other.g, b = other.b;
+	return *this;
+}
+
 Color& Color::operator++()
 {
 	r++;

@@ -13,11 +13,17 @@ cbuffer ConstantBufferDataMaterial : register(b1)
 	float3 ambient : packoffset(c0);	// アンビエント係数
 	float3 diffuse : packoffset(c1);	// ディフューズ係数
 	float3 specular : packoffset(c2);	// スペキュラー係数
-	float alpha : packoffset(c2.w);	// アルファ
+	float alpha : packoffset(c2.w);		// アルファ
+}
+
+// 色
+cbuffer ConstantBufferDataColor : register(b2)
+{
+	float4 color;	// 色
 }
 
 // ライト
-cbuffer ConstantBufferDataLight : register(b2)
+cbuffer ConstantBufferDataLight : register(b3)
 {
 	float3 lightVec;	// ライトへの方向の単位ベクトル
 	float3 lightColor;	// ライトの色(RGB)
