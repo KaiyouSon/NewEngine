@@ -13,7 +13,8 @@ public:
 
 	// コンストラクタ
 	constexpr Vec3() : x(0), y(0), z(0) {};
-	constexpr Vec3(float x, float y, float z) : x(x), y(y), z(z) {};
+	constexpr Vec3(const float& num) : x(num), y(num), z(num) {};
+	constexpr Vec3(const float& x, const float& y, const float& z) : x(x), y(y), z(z) {};
 
 	// static変数
 	const static Vec3 left;    // Vec3(-1,0,0) と同じ意味
