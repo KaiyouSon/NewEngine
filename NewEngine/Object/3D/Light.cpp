@@ -1,7 +1,7 @@
 #include "Light.h"
 #include "RenderBase.h"
 
-Light* Light::current = new Light;
+Light Light::current;
 
 Light::Light()
 {
@@ -15,7 +15,7 @@ Light::~Light()
 
 void Light::Init()
 {
-	lightDir = { 0,1,1 };
+	lightPos = { 0,0,0 };
 	lightColor = { 1,1,1 };
 	constantBufferLight = new ConstantBuffer<ConstantBufferDataLight>;
 	constantBufferLight->Init();
@@ -23,7 +23,7 @@ void Light::Init()
 
 void Light::Update()
 {
-	constantBufferLight->constantBufferMap->dir = -lightDir;
+	constantBufferLight->constantBufferMap->dir = lightPos;
 	constantBufferLight->constantBufferMap->color = lightColor;
 }
 

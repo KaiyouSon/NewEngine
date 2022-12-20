@@ -6,6 +6,7 @@ class GameScene : public IScene
 {
 private:
 	Object3D obj;
+	Object3D obj2;
 
 public:
 	GameScene();

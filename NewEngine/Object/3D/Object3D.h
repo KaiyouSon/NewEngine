@@ -12,7 +12,6 @@ private:
 	ConstantBuffer<ConstantBufferDataMaterial>* constantBufferMaterial;
 	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
 	Transform transform;
-	bool isLighting;
 
 public:
 	Model model;
@@ -21,6 +20,7 @@ public:
 	Vec3 scale;
 	Vec3 rot;
 	Color color;
+	bool isLighting;
 
 public:
 	Object3D();
@@ -29,6 +29,5 @@ public:
 	void Draw();
 
 	static void SetBlendMode(const BlendMode& blendMode);
-	inline void SetisLighting(const bool& isLighting) { this->isLighting = isLighting; }
 };
 

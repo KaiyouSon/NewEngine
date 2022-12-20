@@ -79,7 +79,7 @@ void Object3D::Draw()
 		2, constantBufferMaterial->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		3, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
-	Light::GetCurrent()->Draw();
+	Light::current.Draw();
 
 	// SRVヒープの設定コマンド
 	auto temp = renderBase->GetSrvDescHeap();

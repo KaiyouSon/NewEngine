@@ -24,6 +24,7 @@ void NewEngineInit()
 	Random::Init();
 	InputManager::GetInstance()->Init();
 	GuiManager::GetInstance()->Init();
+	Light::current.Init();
 	SceneManager::GetInstance()->Init();
 
 	// -------------------------------------------------------------------------------- //
@@ -57,7 +58,7 @@ void NewEngineUpda()
 {
 	InputManager::GetInstance()->Update();
 	SceneManager::GetInstance()->Update();
-	Light::GetCurrent()->Update();
+	Light::current.Update();
 }
 void NewEnginePreDraw()
 {
@@ -78,8 +79,6 @@ void NewEngineEnd()
 	GuiManager::GetInstance()->Destroy();
 	// ウィンドウクラスを登録解除
 	RenderWindow::GetInstance()->TerminateGameWindow();
-
-	delete Light::GetCurrent();
 
 	ComPtr<ID3D12Device> tempDevice = RenderBase::GetInstance()->GetDevice();
 	RenderBase::Destroy();
