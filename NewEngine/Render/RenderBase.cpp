@@ -239,8 +239,8 @@ void RenderBase::SwapChainInit()
 
 	// リソースの設定
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
-	swapChainDesc.Width = renderWindow->GetWindowSize().x;
-	swapChainDesc.Height = renderWindow->GetWindowSize().y;
+	swapChainDesc.Width = (UINT)renderWindow->GetWindowSize().x;
+	swapChainDesc.Height = (UINT)renderWindow->GetWindowSize().y;
 	swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;				 // 色情報の書式
 	swapChainDesc.SampleDesc.Count = 1;								 // マルチサンプルしない
 	swapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER;				 // バックバッファ用
@@ -308,8 +308,8 @@ void RenderBase::DepthBufferInit()
 	// リソースの設定
 	D3D12_RESOURCE_DESC depthResourceDesc{};
 	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	depthResourceDesc.Width = renderWindow->GetWindowSize().x;		// 幅
-	depthResourceDesc.Height = renderWindow->GetWindowSize().y; // 高さ
+	depthResourceDesc.Width = (UINT)renderWindow->GetWindowSize().x;		// 幅
+	depthResourceDesc.Height = (UINT)renderWindow->GetWindowSize().y; // 高さ
 	depthResourceDesc.DepthOrArraySize = 1;
 	depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;	// 深度値デフォルト
 	depthResourceDesc.SampleDesc.Count = 1;
@@ -496,51 +496,49 @@ void RenderBase::RootSignatureInit()
 }
 void RenderBase::GraphicsPipelineInit()
 {
-	HRESULT result;
-
 	// グラフィックスパイプライン3D用
 	basicPipeline = std::move(std::make_unique<GraphicsPipeline>());
 	basicPipeline->SetShaderObject(basicShader.get());
 	basicPipeline->SetisCullBack(true);
 	basicPipeline->SetisDepthEnable(true);
-	basicPipeline->SetTopologyType(TriangleTopology);
+	basicPipeline->SetTopologyType(TopologyType::TriangleTopology);
 	basicPipeline->SetRootSignature(rootSignature.Get());
-	basicPipeline->Init();
+	basicPipeline->Create();
 
 	// グラフィックスパイプライン2D用
 	spritePipeline = std::move(std::make_unique<GraphicsPipeline>());
 	spritePipeline->SetShaderObject(spriteShader.get());
 	spritePipeline->SetisCullBack(false);
 	spritePipeline->SetisDepthEnable(false);
-	spritePipeline->SetTopologyType(TriangleTopology);
+	spritePipeline->SetTopologyType(TopologyType::TriangleTopology);
 	spritePipeline->SetRootSignature(rootSignature.Get());
-	spritePipeline->Init();
+	spritePipeline->Create();
 
 	// グラフィックスパイプラインLine用
 	linePipeline = std::move(std::make_unique<GraphicsPipeline>());
 	linePipeline->SetShaderObject(basicShader.get());
 	linePipeline->SetisCullBack(true);
 	linePipeline->SetisDepthEnable(true);
-	linePipeline->SetTopologyType(LineTopology);
+	linePipeline->SetTopologyType(TopologyType::LineTopology);
 	linePipeline->SetRootSignature(rootSignature.Get());
-	linePipeline->Init();
+	linePipeline->Create();
 
 	// レンダーテクスチャ用
 	renderTexturePipeline = std::move(std::make_unique<GraphicsPipeline>());
 	renderTexturePipeline->SetShaderObject(renderTextureShader.get());
 	renderTexturePipeline->SetisCullBack(true);
 	renderTexturePipeline->SetisDepthEnable(true);
-	renderTexturePipeline->SetTopologyType(TriangleTopology);
+	renderTexturePipeline->SetTopologyType(TopologyType::TriangleTopology);
 	renderTexturePipeline->SetRootSignature(rootSignature.Get());
-	renderTexturePipeline->Init();
+	renderTexturePipeline->Create();
 
 	// 読み込みオブジェクト用
 	loadModelPipeline = std::move(std::make_unique<GraphicsPipeline>());
 	loadModelPipeline->SetShaderObject(loadModelShader.get());
 	loadModelPipeline->SetisCullBack(true);
 	loadModelPipeline->SetisDepthEnable(true);
-	loadModelPipeline->SetTopologyType(TriangleTopology);
+	loadModelPipeline->SetTopologyType(TopologyType::TriangleTopology);
 	loadModelPipeline->SetRootSignature(rootSignature.Get());
-	loadModelPipeline->Init();
+	loadModelPipeline->Create();
 
 }

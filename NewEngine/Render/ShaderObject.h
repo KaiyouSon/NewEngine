@@ -20,6 +20,8 @@ private:
 	void ShowErrorDetails();
 
 public:
+	ShaderObject();
+
 	// 頂点シェーダーのコンパイル
 	void CompileVertexShader(
 		const std::string& filePath,

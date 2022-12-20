@@ -14,7 +14,8 @@ private:
 	float fps;
 
 public:
-	void Initialize(const float& fps);
+	FrameRate();
+	void Init(const float& fps);
 	void Update();
 };
 

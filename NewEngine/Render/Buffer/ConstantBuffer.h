@@ -45,7 +45,7 @@ public:
 				IID_PPV_ARGS(&constantBuffer));
 		assert(SUCCEEDED(result));
 
-		constantBuffer->SetName(L"ConstantBuffer");
+		//constantBuffer->SetName(L"ConstantBuffer");
 
 		// 定数バッファのマッピング
 		result = constantBuffer->Map(0, nullptr, (void**)&constantBufferMap);	// マッピング

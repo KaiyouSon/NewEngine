@@ -4,7 +4,7 @@
 #include <d3d12.h>
 #include <wrl.h>
 
-enum TopologyType
+enum class TopologyType
 {
 	PointTopology,
 	LineTopology,
@@ -33,7 +33,7 @@ private:
 
 public:
 	GraphicsPipeline();
-	void Init();
+	void Create();
 
 public:
 	// セッター

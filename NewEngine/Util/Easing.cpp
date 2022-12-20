@@ -84,6 +84,8 @@ float Easing::Out(const float& startPos, const float& endPos)
 	{
 		return dis * -1 * (powf(timeRate - 1, powNum) - 1) + startPos;
 	}
+
+	return -1;
 }
 Vec2 Easing::Out(const Vec2& startPos, const Vec2& endPos)
 {
@@ -96,6 +98,8 @@ Vec2 Easing::Out(const Vec2& startPos, const Vec2& endPos)
 	{
 		return dis * -1 * (powf(timeRate - 1, powNum) - 1) + startPos;
 	}
+
+	return -1;
 }
 Vec3 Easing::Out(const Vec3& startPos, const Vec3& endPos)
 {
@@ -108,6 +112,8 @@ Vec3 Easing::Out(const Vec3& startPos, const Vec3& endPos)
 	{
 		return dis * -1 * (powf(timeRate - 1, powNum) - 1) + startPos;
 	}
+
+	return -1;
 }
 
 // インアウト
@@ -131,6 +137,8 @@ float Easing::InOut(const float& startPos, const float& endPos)
 			return dis2 * -1 * (powf(timeRate - 1, powNum) - 1) + startPos;
 		}
 	}
+
+	return -1;
 }
 Vec2 Easing::InOut(const Vec2& startPos, const Vec2& endPos)
 {
@@ -143,6 +151,8 @@ Vec2 Easing::InOut(const Vec2& startPos, const Vec2& endPos)
 	{
 		return Out(startPos, endPos);
 	}
+
+	return -1;
 }
 Vec3 Easing::InOut(const Vec3& startPos, const Vec3& endPos)
 {
@@ -154,26 +164,28 @@ Vec3 Easing::InOut(const Vec3& startPos, const Vec3& endPos)
 	{
 		return Out(startPos, endPos);
 	}
+
+	return -1;
 }
 
 // インバック
 float Easing::InBack(const float& startPos, const float& endPos)
 {
-	const float back1 = 1.701540198866824;
+	const float back1 = 1.70154f;
 
 	float dis = endPos - startPos;
 	return dis * powf(timeRate, powNum) * ((back1 + 1.0f) * timeRate - back1) + startPos;
 }
 Vec2 Easing::InBack(const Vec2& startPos, const Vec2& endPos)
 {
-	const float back1 = 1.701540198866824;
+	const float back1 = 1.70154f;
 
 	Vec2 dis = endPos - startPos;
 	return dis * powf(timeRate, powNum) * ((back1 + 1.0f) * timeRate - back1) + startPos;
 }
 Vec3 Easing::InBack(const Vec3& startPos, const Vec3& endPos)
 {
-	const float back1 = 1.701540198866824;
+	const float back1 = 1.70154f;
 
 	Vec3 dis = endPos - startPos;
 	return dis * powf(timeRate, powNum) * ((back1 + 1.0f) * timeRate - back1) + startPos;

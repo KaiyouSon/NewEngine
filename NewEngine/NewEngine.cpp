@@ -80,15 +80,15 @@ void NewEngineEnd()
 	// ウィンドウクラスを登録解除
 	RenderWindow::GetInstance()->TerminateGameWindow();
 
-	ComPtr<ID3D12Device> tempDevice = RenderBase::GetInstance()->GetDevice();
+	//ComPtr<ID3D12Device> tempDevice = RenderBase::GetInstance()->GetDevice();
 	RenderBase::Destroy();
 
-	ID3D12DebugDevice* debugInterface;
-	if (SUCCEEDED(tempDevice->QueryInterface(&debugInterface)))
-	{
-		debugInterface->ReportLiveDeviceObjects(D3D12_RLDO_DETAIL | D3D12_RLDO_IGNORE_INTERNAL);
-		debugInterface->Release();
-	}
+	//ID3D12DebugDevice* debugInterface;
+	//if (SUCCEEDED(tempDevice->QueryInterface(&debugInterface)))
+	//{
+	//	debugInterface->ReportLiveDeviceObjects(D3D12_RLDO_DETAIL | D3D12_RLDO_IGNORE_INTERNAL);
+	//	debugInterface->Release();
+	//}
 }
 
 bool ProcessMessage()
@@ -125,7 +125,7 @@ Vec2 GetWindowHalfSize()
 
 void SetFrameRate(const float& frameRate)
 {
-	FrameRate::GetInstance()->Initialize(frameRate);
+	FrameRate::GetInstance()->Init(frameRate);
 }
 void FrameRateUpdate()
 {

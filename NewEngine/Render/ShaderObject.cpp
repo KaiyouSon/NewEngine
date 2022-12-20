@@ -6,6 +6,10 @@
 
 Microsoft::WRL::ComPtr <ID3DBlob> ShaderObject::errorBlob = nullptr;
 
+ShaderObject::ShaderObject() : result(HRESULT())
+{
+}
+
 void ShaderObject::ShowErrorDetails()
 {
 	// シェーダのエラー内容を表示
@@ -28,27 +32,6 @@ void ShaderObject::ShowErrorDetails()
 void ShaderObject::CompileVertexShader(
 	const std::string& filePath, const std::string& entryPointName)
 {
-	//// 頂点シェーダに渡すための頂点データを整える
-	//inputLayout[0] =
-	//{	// xyz座標
-	//	"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
-	//	D3D12_APPEND_ALIGNED_ELEMENT,
-	//	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
-	//};
-	//inputLayout[1] =
-	//{	// xyz座標
-	//	"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
-	//	D3D12_APPEND_ALIGNED_ELEMENT,
-	//	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
-	//};
-	//inputLayout[2] =
-	//{	// uv座標
-	//	"TEXCOORD",0,DXGI_FORMAT_R32G32_FLOAT,0,
-	//	D3D12_APPEND_ALIGNED_ELEMENT,
-	//	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
-	//};
-
-
 	// stringをwstringに変換
 	std::wstring wFilePath(filePath.begin(), filePath.end());
 
@@ -64,28 +47,6 @@ void ShaderObject::CompileVertexShader(
 
 	// シェーダのエラー内容を表示
 	ShowErrorDetails();
-
-	// 頂点シェーダに渡すための頂点データを整える
-	//inputLayout.push_back(
-	//	{	// xyz座標
-	//		"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
-	//		D3D12_APPEND_ALIGNED_ELEMENT,
-	//		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
-	//	});
-
-	//inputLayout.push_back(
-	//	{	// 法線
-	//		"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
-	//		D3D12_APPEND_ALIGNED_ELEMENT,
-	//		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
-	//	});
-
-	//inputLayout.push_back(
-	//	{	// uv座標
-	//	"TEXCOORD",0,DXGI_FORMAT_R32G32_FLOAT,0,
-	//	D3D12_APPEND_ALIGNED_ELEMENT,
-	//	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
-	//	});
 }
 
 // ジオメトリシェーダー

@@ -7,10 +7,11 @@ class Viewport
 private:
 	Vec2 leftTopPos;
 	Vec2 size;
-	float MinDepth;
-	float MaxDepth;
+	float minDepth;
+	float maxDepth;
 
 public:
+	Viewport();
 	void Update();
 
 public: // セッター
@@ -18,14 +19,14 @@ public: // セッター
 	{
 		this->leftTopPos = leftTopPos;
 		this->size = size;
-		this->MinDepth = MinDepth;
-		this->MaxDepth = MaxDepth;
+		this->minDepth = MinDepth;
+		this->maxDepth = MaxDepth;
 	}
 
 public: // ゲッター
 	inline Vec2 GetLeftTopPos() { return leftTopPos; }
 	inline Vec2 GetSize() { return size; }
-	inline float GetMinDepth() { return MinDepth; }
-	inline float GetMaxDepth() { return MaxDepth; }
+	inline float GetMinDepth() { return minDepth; }
+	inline float GetMaxDepth() { return maxDepth; }
 };
 

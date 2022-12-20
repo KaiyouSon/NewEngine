@@ -3,16 +3,17 @@
 #include <d3dx12.h>
 
 GraphicsPipeline::GraphicsPipeline() :
-	isCullBack(true), shaderObject(nullptr), rootSignature(nullptr)
+	isCullBack(true), isDepthEnable(true), topologyType(TopologyType::TriangleTopology),
+	shaderObject(nullptr), rootSignature(nullptr), result(HRESULT())
 {
 }
 
-void GraphicsPipeline::Init()
+void GraphicsPipeline::Create()
 {
-	CreatePipelineState(Alpha);	// αブレンド
-	CreatePipelineState(Add);		// 加算ブレンド
-	CreatePipelineState(Sub);		// 減算ブレンド
-	CreatePipelineState(Inv);
+	CreatePipelineState(BlendMode::Alpha);		// αブレンド
+	CreatePipelineState(BlendMode::Add);		// 加算ブレンド
+	CreatePipelineState(BlendMode::Sub);		// 減算ブレンド
+	CreatePipelineState(BlendMode::Inv);
 }
 
 void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
@@ -69,25 +70,25 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
 	// 半透明合成
 	switch (blendMode)
 	{
-	case Alpha: // αブレンド
+	case BlendMode::Alpha: // αブレンド
 		blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// 加算
 		blendDesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;			// ソースのアルファ値
 		blendDesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;	// 1.0f-ソースのアルファ値
 		break;
 
-	case Add:	// 加算ブレンド
+	case BlendMode::Add:	// 加算ブレンド
 		blendDesc.BlendOp = D3D12_BLEND_OP_ADD;		// 加算
 		blendDesc.SrcBlend = D3D12_BLEND_ONE;		// ソースの値を100％使う
 		blendDesc.DestBlend = D3D12_BLEND_ONE;		// デストの値を100％使う
 		break;
 
-	case Sub:	// 減算ブレンド
+	case BlendMode::Sub:	// 減算ブレンド
 		blendDesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;	// デストからソースを減算
 		blendDesc.SrcBlend = D3D12_BLEND_ONE;				// ソースの値を100％使う
 		blendDesc.DestBlend = D3D12_BLEND_ONE;				// デストの値を100％使う
 		break;
 
-	case Inv:	// 反転
+	case BlendMode::Inv:	// 反転
 		blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// 加算
 		blendDesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;	// 1.0f-デストカラーの値
 		blendDesc.DestBlend = D3D12_BLEND_ZERO;				// 使わない
@@ -99,20 +100,20 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
 
 	// 頂点レイアウトの設定
 	pipelineDesc.InputLayout.pInputElementDescs = shaderObject->GetInputLayout().data();
-	pipelineDesc.InputLayout.NumElements = shaderObject->GetInputLayout().size();
+	pipelineDesc.InputLayout.NumElements = (UINT)shaderObject->GetInputLayout().size();
 
 	// 図形の形状設定
 	switch (topologyType)
 	{
-	case PointTopology:
+	case TopologyType::PointTopology:
 		pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
 		break;
 
-	case LineTopology:
+	case TopologyType::LineTopology:
 		pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE;
 		break;
 
-	case TriangleTopology:
+	case TopologyType::TriangleTopology:
 		pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 		break;
 
@@ -131,19 +132,19 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
 	// パイプランステートの生成
 	switch (blendMode)
 	{
-	case Alpha: // αブレンド
+	case BlendMode::Alpha: // αブレンド
 		result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&alphaPipeline));
 		break;
 
-	case Add:	// 加算ブレンド
+	case BlendMode::Add:	// 加算ブレンド
 		result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&addPipeline));
 		break;
 
-	case Sub:	// 減算ブレンド
+	case BlendMode::Sub:	// 減算ブレンド
 		result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&subPipeline));
 		break;
 
-	case Inv:	// 反転
+	case BlendMode::Inv:	// 反転
 		result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&invPipeline));
 		break;
 

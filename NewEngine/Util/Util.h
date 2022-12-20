@@ -12,7 +12,7 @@
 #include <string>
 #include <list>
 
-enum BlendMode
+enum class BlendMode
 {
 	Alpha,
 	Add,

@@ -46,6 +46,8 @@ float Convergence(const float& value, const float& speed, const float& origin)
 		tValue += fabs(speed);
 		return Min(tValue, origin);
 	}
+
+	return -1;
 }
 
 int GetDight(const int& value)

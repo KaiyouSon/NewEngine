@@ -4,7 +4,11 @@
 using namespace std::chrono;
 using namespace std::this_thread;
 
-void FrameRate::Initialize(const float& fps)
+FrameRate::FrameRate() : fps(0)
+{
+}
+
+void FrameRate::Init(const float& fps)
 {
 	reference = steady_clock::now();
 	this->fps = fps;
