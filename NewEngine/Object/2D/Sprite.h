@@ -11,9 +11,7 @@ class Sprite
 {
 private:
 	VertexBuffer<VertexPosUv>* vertexBuffer;
-	//IndexBuffer* indexBuffer;
 	std::vector<VertexPosUv> vertices;
-	//std::vector<unsigned short> indices;
 	ConstantBuffer<ConstantBufferDataTransform2D>* constantBufferTransform;
 	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
 	Transform transform;
@@ -25,6 +23,10 @@ public:
 	float rot;
 	Color color;
 	Vec2 anchorPoint;
+
+private:
+	void TransferTexturePos();
+	void TransferTextureUv();
 
 public:
 	Sprite();

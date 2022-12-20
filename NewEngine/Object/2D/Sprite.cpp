@@ -7,20 +7,15 @@ using namespace std;
 Sprite::Sprite() :
 	pos(0), scale(1), rot(0), anchorPoint(0.5f),
 	vertexBuffer(new VertexBuffer<VertexPosUv>),
-	//indexBuffer(new IndexBuffer),
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform2D>),
 	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>)
 {
-	vertices.push_back({ { 0.0f, 0.0f, 0.0f }, {0.0f, 1.0f} });	//左下
-	vertices.push_back({ { 0.0f, 0.0f, 0.0f }, {0.0f, 0.0f} });	//左上
-	vertices.push_back({ { 0.0f, 0.0f, 0.0f }, {1.0f, 1.0f} });	//右下
-	vertices.push_back({ { 0.0f, 0.0f, 0.0f }, {1.0f, 0.0f} });	//右上
-
-	//indices.push_back(0); indices.push_back(1); indices.push_back(2);	// 三角形1つ目
-	//indices.push_back(2); indices.push_back(1);	indices.push_back(3);	// 三角形2つ目
-
+	vertices.resize(4);
+	vertices[0].uv = { 0.0f,1.0f };
+	vertices[1].uv = { 0.0f,0.0f };
+	vertices[2].uv = { 1.0f,1.0f };
+	vertices[3].uv = { 1.0f,0.0f };
 	vertexBuffer->Create(vertices);
-	//indexBuffer->Create(indices);
 
 	// 定数バッファ
 	constantBufferTransform->Init();
@@ -30,7 +25,6 @@ Sprite::Sprite() :
 Sprite::~Sprite()
 {
 	delete vertexBuffer;
-	//delete indexBuffer;
 	delete constantBufferTransform;
 	delete constantBufferColor;
 }
@@ -50,26 +44,8 @@ void Sprite::Update()
 	// 色転送
 	constantBufferColor->constantBufferMap->color = color;
 
-	float width = texture.size.x;
-	float height = texture.size.y;
-
-	float width2 = vertices[0].pos.x - vertices[2].pos.x;
-	float height2 = vertices[1].pos.x - vertices[3].pos.x;
-
-	if (width != fabsf(width2) || width != fabsf(height2))
-	{
-		vertices[0].pos = { (0.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f }; //左下
-		vertices[1].pos = { (0.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f }; //左上
-		vertices[2].pos = { (1.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f }; //右下
-		vertices[3].pos = { (1.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f }; //右上
-
-		//vertices[0].pos = { (0.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f }; //左上
-		//vertices[1].pos = { (0.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f }; //左下
-		//vertices[2].pos = { (1.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f }; //右上
-		//vertices[3].pos = { (1.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f }; //右下
-
-		vertexBuffer->TransferToBuffer(vertices);
-	}
+	// 頂点バッファーに頂点を転送
+	TransferTexturePos();
 }
 
 void Sprite::Draw()
@@ -82,7 +58,6 @@ void Sprite::Draw()
 
 	// VBVとIBVの設定コマンド
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, vertexBuffer->GetvbViewAddress());
-	//renderBase->GetCommandList()->IASetIndexBuffer(indexBuffer->GetibViewAddress());
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
@@ -96,7 +71,6 @@ void Sprite::Draw()
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(0, texture.GetGpuHandle());
 
-	//renderBase->GetCommandList()->DrawIndexedInstanced((unsigned short)indices.size(), 1, 0, 0, 0);
 	renderBase->GetCommandList()->DrawInstanced((unsigned short)vertices.size(), 1, 0, 0);
 }
 
@@ -124,5 +98,26 @@ void Sprite::SetBlendMode(const BlendMode& blendMode)
 
 	default:
 		break;
+	}
+}
+
+void Sprite::TransferTexturePos()
+{
+	// 新しいのサイズ
+	float width = texture.size.x;
+	float height = texture.size.y;
+
+	// 現在のサイズ
+	float width2 = vertices[0].pos.x - vertices[2].pos.x;
+	float height2 = vertices[1].pos.x - vertices[3].pos.x;
+
+	if (width != fabsf(width2) || width != fabsf(height2))
+	{
+		vertices[0].pos = { (0.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f }; //左下
+		vertices[1].pos = { (0.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f }; //左上
+		vertices[2].pos = { (1.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f }; //右下
+		vertices[3].pos = { (1.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f }; //右上
+
+		vertexBuffer->TransferToBuffer(vertices);
 	}
 }
