@@ -19,8 +19,8 @@ Sprite::Sprite() :
 	indices.push_back(0); indices.push_back(1); indices.push_back(2);	// 三角形1つ目
 	indices.push_back(2); indices.push_back(1);	indices.push_back(3);	// 三角形2つ目
 
-	vertexBuffer->Initialize(vertices);
-	indexBuffer->Initialize(indices);
+	vertexBuffer->Create(vertices);
+	indexBuffer->Create(indices);
 
 	// 定数バッファ
 	constantBufferTransform->Init();
@@ -64,7 +64,6 @@ void Sprite::Update()
 		vertices[3].pos = { (1.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f }; //右上
 
 		vertexBuffer->TransferToBuffer(vertices);
-		vertexBuffer->Unmap();
 	}
 }
 

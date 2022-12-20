@@ -12,6 +12,7 @@ public:
 	T* constantBufferMap;	// マッピング用
 
 public:
+	ConstantBuffer() :constantBufferMap(nullptr) {}
 	~ConstantBuffer()
 	{
 		constantBuffer->Unmap(0, nullptr);

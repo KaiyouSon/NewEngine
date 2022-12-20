@@ -12,11 +12,10 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff;
 
 public:
-	void Initialize(uint16_t indices[], const int& arrarySize);
-	void Initialize(std::vector<unsigned short> indices);
+	void Create(std::vector<unsigned short> indices);
+
 public:
 	// インデックスバッファビューを取得する関数
-	D3D12_INDEX_BUFFER_VIEW* GetibViewAddress();
-
+	inline D3D12_INDEX_BUFFER_VIEW* GetibViewAddress() { return &ibView; }
 };
 

@@ -40,8 +40,6 @@ void Mesh::AddIndex(const unsigned short& index)
 
 void Mesh::CreateBuffer()
 {
-	// 頂点バッファ
-	vertexBuffer.Initialize(vertices);
-	// インデックスバッファ
-	indexBuffer.Initialize(indices);
+	vertexBuffer.Create(vertices);
+	indexBuffer.Create(indices);
 }

@@ -181,7 +181,6 @@
     <ClCompile Include="NewEngine\Object\3D\PointLight.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\TextureBuffer.cpp" />
-    <ClCompile Include="NewEngine\Render\Buffer\VertexBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp" />
     <ClCompile Include="NewEngine\Render\RenderBase.cpp" />
     <ClCompile Include="NewEngine\Render\RenderWindow.cpp" />

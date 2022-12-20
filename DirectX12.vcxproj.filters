@@ -117,9 +117,6 @@
     <ClCompile Include="NewEngine\Render\Buffer\TextureBuffer.cpp">
       <Filter>NewEngine\Source\Render\Buffer</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Render\Buffer\VertexBuffer.cpp">
-      <Filter>NewEngine\Source\Render\Buffer</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Render\RenderBase.cpp">
       <Filter>NewEngine\Source\Render</Filter>
     </ClCompile>

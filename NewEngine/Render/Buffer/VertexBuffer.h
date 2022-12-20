@@ -16,8 +16,13 @@ private:
 	T* vertMap;
 
 public:
+	~VertexBuffer()
+	{
+		vertexBuffer->Unmap(0, nullptr);
+	}
+
 	// 初期化
-	void Initialize(const std::vector<T>& vertices)
+	void Create(const std::vector<T>& vertices)
 	{
 		// 頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
 		unsigned int sizeVB = static_cast<unsigned int>(sizeof(T) * vertices.size());
@@ -74,12 +79,6 @@ public:
 		assert(SUCCEEDED(result));
 		// 全頂点に対してコピー
 		copy(vertices.begin(), vertices.end(), vertMap);
-	}
-
-	// アンマップ
-	void Unmap()
-	{
-		vertexBuffer->Unmap(0, nullptr);
 	}
 
 public:

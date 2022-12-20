@@ -41,7 +41,7 @@ void Easing::Update()
 // ƒ‰[ƒv
 float Easing::Lerp(const float& startPos, const float& endPos)
 {
-	float dis = endPos - startPos;
+	float dis = endPos - startPos;	
 	return dis * timeRate + startPos;
 }
 Vec2 Easing::Lerp(const Vec2& startPos, const Vec2& endPos)

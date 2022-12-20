@@ -30,8 +30,8 @@ void Line::Initialize(const Vec3& startPos, const Vec3& endPos)
 	indices.push_back(0);
 	indices.push_back(1);
 
-	vertexBuffer->Initialize(vertices);
-	indexBuffer->Initialize(indices);
+	vertexBuffer->Create(vertices);
+	indexBuffer->Create(indices);
 
 	// 定数バッファ
 	constantBufferTransform->Init();
