@@ -16,11 +16,6 @@ private:
 	T* vertMap;
 
 public:
-	~VertexBuffer()
-	{
-		vertexBuffer->Unmap(0, nullptr);
-	}
-
 	// 初期化
 	void Create(const std::vector<T>& vertices)
 	{
@@ -60,9 +55,6 @@ public:
 		// 全頂点に対して
 		copy(vertices.begin(), vertices.end(), vertMap);
 
-		// 繋がりを解除
-		vertexBuffer->Unmap(0, nullptr);
-
 		// GPU仮想アドレス
 		vbView.BufferLocation = vertexBuffer->GetGPUVirtualAddress();
 		// 頂点バッファのサイズ
@@ -74,9 +66,6 @@ public:
 	// 転送
 	void TransferToBuffer(const std::vector<T>& vertices)
 	{
-		vertMap = nullptr;
-		result = vertexBuffer->Map(0, nullptr, (void**)&vertMap);
-		assert(SUCCEEDED(result));
 		// 全頂点に対してコピー
 		copy(vertices.begin(), vertices.end(), vertMap);
 	}
