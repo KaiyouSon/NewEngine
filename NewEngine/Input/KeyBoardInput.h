@@ -26,10 +26,10 @@ public:
 	static inline bool GetKeyTrigger(const unsigned int& key)
 	{
 		if (key >= 256 || key < 0) return false;
-		return (bool)(GetInstance()->keys[key] && GetInstance()->prevKeys[key]);
+		return (bool)(GetInstance()->keys[key] && !GetInstance()->prevKeys[key]);
 	}
 	// ƒL[‚ğ—£‚µ‚½uŠÔ
-	inline bool GetKeyReleased(const unsigned int& key)
+	static inline bool GetKeyReleased(const unsigned int& key)
 	{
 		if (key >= 256 || key < 0) return false;
 		return (bool)(!GetInstance()->keys[key] && GetInstance()->prevKeys[key]);

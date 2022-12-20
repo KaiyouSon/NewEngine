@@ -48,11 +48,17 @@ void JoypadInput::Init()
 	diprg.diph.dwSize = sizeof(DIPROPRANGE);
 	diprg.diph.dwHeaderSize = sizeof(DIPROPHEADER);
 	diprg.diph.dwHow = DIPH_BYOFFSET;
-	diprg.lMin = -32768;
-	diprg.lMax = 32767;
+	diprg.lMin = -1000;
+	diprg.lMax = 1000;
 	diprg.diph.dwObj = DIJOFS_X;
 	joypad->SetProperty(DIPROP_RANGE, &diprg.diph);
 	diprg.diph.dwObj = DIJOFS_Y;
+	joypad->SetProperty(DIPROP_RANGE, &diprg.diph);
+	diprg.diph.dwObj = DIJOFS_Z;
+	joypad->SetProperty(DIPROP_RANGE, &diprg.diph);
+	diprg.diph.dwObj = DIJOFS_RX;
+	joypad->SetProperty(DIPROP_RANGE, &diprg.diph);
+	diprg.diph.dwObj = DIJOFS_RY;
 	joypad->SetProperty(DIPROP_RANGE, &diprg.diph);
 }
 
