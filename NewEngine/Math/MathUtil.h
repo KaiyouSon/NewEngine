@@ -21,6 +21,9 @@ inline float Radian(const float& angle) { return angle * (2 * PI) / 360; }
 inline Vec2 Radian(const Vec2& angle) { return { Radian(angle.x),Radian(angle.y) }; }
 inline Vec3 Radian(const Vec3& angle) { return { Radian(angle.x),Radian(angle.y),Radian(angle.z) }; }
 
+// 3次元ベクトルと4x4行列の掛け算
+Vec3 Vec3MulMat4(const Vec3& v, const Mat4& m, const bool& isMulW = false);
+
 Mat4 ConvertScalingMat(Vec3 scale);		// スケーリング行列を返す関数
 Mat4 ConvertRotationXAxisMat(float angle);	// 回転行列ｘ軸を返す関数
 Mat4 ConvertRotationYAxisMat(float angle);	// 回転行列ｙ軸を返す関数
@@ -36,5 +39,5 @@ Mat4 ConvertBillBoardAllAxis();
 Mat4 ConvertViewProjectionMatLookAt(const Vec3& pos, const Vec3& target, const Vec3& up);		// ビュー変換
 Mat4 ConvertViewProjectionMatLookTo(const Vec3& pos, const Vec3& zAxis, const Vec3& yAxis);		// ビュー変換
 Mat4 ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, float farZ);	// 透視射影変換
-Mat4 ConvertOrthoGrphicProjectionMat(float WIN_WIDTH, float WIN_HEIGHT);							// 平行射影変換
+Mat4 ConvertOrthoGrphicProjectionMat(float WIN_WIDTH, float WIN_HEIGHT);						// 平行射影変換
 Mat4 ConvertViewportMat(Viewport& viewport);

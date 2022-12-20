@@ -20,6 +20,7 @@ float RenderBase::clearColor[4] = { 0.1f,0.25f,0.5f,1.0f };
 void RenderBase::Init()
 {
 	renderWindow = RenderWindow::GetInstance().get();
+	viewport = move(make_unique<Viewport>());
 
 	DeviceInit();			// デバイスの初期化
 	CommandInit();			// コマンド関連の初期化

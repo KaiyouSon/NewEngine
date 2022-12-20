@@ -37,7 +37,7 @@ void Object3D::Update()
 
 	// マトリックス転送
 	constantBufferTransform->constantBufferMap->viewMat =
-		Camera::current.GetViewProjectionMat() *
+		Camera::current.GetViewLookToMat() *
 		Camera::current.GetPerspectiveProjectionMat();
 	constantBufferTransform->constantBufferMap->worldMat = transform.GetWorldMat();
 	constantBufferTransform->constantBufferMap->cameraPos = Camera::current.pos;

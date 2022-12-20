@@ -48,6 +48,7 @@ public:
 	inline GraphicsPipeline* GetRenderTexturePipeline()const { return renderTexturePipeline.get(); }
 	inline GraphicsPipeline* GetLoadModelPipeline()const { return loadModelPipeline.get(); }
 
+	inline Viewport* GetViewport() const { return viewport.get(); }
 private:
 	//friend Singleton<RenderBase>;
 
@@ -101,6 +102,8 @@ private:
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle;	// レンダーターゲットビューのハンドル
 
 	RenderWindow* renderWindow;
+
+	std::unique_ptr<Viewport> viewport;
 
 private:
 	RenderBase() {}

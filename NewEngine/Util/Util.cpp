@@ -1,4 +1,5 @@
 #include "Util.h"
+#include "RenderBase.h"
 
 float Max(const float& a, const float& b)
 {
@@ -28,6 +29,25 @@ float Clamp(const float& value, const float& min, const float& max)
 	return value;
 }
 
+float Convergence(const float& value, const float& speed, const float& origin)
+{
+	float tValue = value;
+	if (value == origin)
+	{
+		return origin;
+	}
+	else if (value > origin)
+	{
+		tValue -= fabs(speed);
+		return Max(tValue, origin);
+	}
+	else if (value < origin)
+	{
+		tValue += fabs(speed);
+		return Min(tValue, origin);
+	}
+}
+
 int GetDight(const int& value)
 {
 	int tempValue = value;
@@ -38,4 +58,19 @@ int GetDight(const int& value)
 		digit++;
 	}
 	return digit;
+}
+
+Vec2 WorldToScreen(const Vec3& worldPos)
+{
+	Mat4 viewportMat =
+		ConvertViewportMat(*RenderBase::GetInstance()->GetViewport());
+
+	Mat4 finalMat =
+		Camera::current.GetViewLookAtMat() *
+		Camera::current.GetPerspectiveProjectionMat() *
+		viewportMat;
+
+	Vec3 result = Vec3MulMat4(worldPos, finalMat, true);
+
+	return { result.x,result.y };
 }

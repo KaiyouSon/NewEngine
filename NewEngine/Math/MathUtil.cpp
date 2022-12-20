@@ -1,5 +1,32 @@
 #include "Util.h"
 
+Vec3 Vec3MulMat4(const Vec3& v, const Mat4& m, const bool& isMulW)
+{
+	Vec3 result = Vec3::zero;
+	if (isMulW == true)
+	{
+		float w = v.x * m.m[0][3] + v.y * m.m[1][3] + v.z * m.m[2][3] + m.m[3][3];
+
+		result =
+		{
+		  (v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + m.m[3][0]) / w,
+		  (v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1] + m.m[3][1]) / w,
+		  (v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2] + m.m[3][2]) / w
+		};
+	}
+	else
+	{
+		result =
+		{
+			 (v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + m.m[3][0]),
+			 (v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1] + m.m[3][1]),
+			 (v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2] + m.m[3][2])
+		};
+	}
+
+	return result;
+}
+
 Mat4 ConvertScalingMat(Vec3 scale)
 {
 	return
@@ -53,7 +80,7 @@ Mat4 ConvertTranslationMat(const Vec3& pos)
 
 Mat4 ConvertBillBoardXAxis()
 {
-	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewProjectionMat());
+	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewLookToMat());
 
 	tempMat.m[0][0] = 1;
 	tempMat.m[0][1] = 0;
@@ -69,7 +96,7 @@ Mat4 ConvertBillBoardXAxis()
 }
 Mat4 ConvertBillBoardYAxis()
 {
-	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewProjectionMat());
+	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewLookToMat());
 
 	tempMat.m[1][0] = 0;
 	tempMat.m[1][1] = 1;
@@ -85,7 +112,7 @@ Mat4 ConvertBillBoardYAxis()
 }
 Mat4 ConvertBillBoardZAxis()
 {
-	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewProjectionMat());
+	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewLookToMat());
 
 	tempMat.m[2][0] = 0;
 	tempMat.m[2][1] = 0;
@@ -101,7 +128,7 @@ Mat4 ConvertBillBoardZAxis()
 }
 Mat4 ConvertBillBoardAllAxis()
 {
-	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewProjectionMat());
+	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewLookToMat());
 
 	tempMat.m[3][0] = 0;
 	tempMat.m[3][1] = 0;
