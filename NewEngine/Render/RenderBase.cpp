@@ -499,7 +499,7 @@ void RenderBase::GraphicsPipelineInit()
 	// グラフィックスパイプライン3D用
 	basicPipeline = std::move(std::make_unique<GraphicsPipeline>());
 	basicPipeline->SetShaderObject(basicShader.get());
-	basicPipeline->SetisCullBack(true);
+	basicPipeline->SetCullMode(CullMode::CullBack);
 	basicPipeline->SetisDepthEnable(true);
 	basicPipeline->SetTopologyType(TopologyType::TriangleTopology);
 	basicPipeline->SetRootSignature(rootSignature.Get());
@@ -508,7 +508,7 @@ void RenderBase::GraphicsPipelineInit()
 	// グラフィックスパイプライン2D用
 	spritePipeline = std::move(std::make_unique<GraphicsPipeline>());
 	spritePipeline->SetShaderObject(spriteShader.get());
-	spritePipeline->SetisCullBack(false);
+	spritePipeline->SetCullMode(CullMode::None);
 	spritePipeline->SetisDepthEnable(false);
 	spritePipeline->SetTopologyType(TopologyType::TriangleTopology);
 	spritePipeline->SetRootSignature(rootSignature.Get());
@@ -517,7 +517,7 @@ void RenderBase::GraphicsPipelineInit()
 	// グラフィックスパイプラインLine用
 	linePipeline = std::move(std::make_unique<GraphicsPipeline>());
 	linePipeline->SetShaderObject(basicShader.get());
-	linePipeline->SetisCullBack(true);
+	linePipeline->SetCullMode(CullMode::CullBack);
 	linePipeline->SetisDepthEnable(true);
 	linePipeline->SetTopologyType(TopologyType::LineTopology);
 	linePipeline->SetRootSignature(rootSignature.Get());
@@ -526,7 +526,7 @@ void RenderBase::GraphicsPipelineInit()
 	// レンダーテクスチャ用
 	renderTexturePipeline = std::move(std::make_unique<GraphicsPipeline>());
 	renderTexturePipeline->SetShaderObject(renderTextureShader.get());
-	renderTexturePipeline->SetisCullBack(true);
+	renderTexturePipeline->SetCullMode(CullMode::CullBack);
 	renderTexturePipeline->SetisDepthEnable(true);
 	renderTexturePipeline->SetTopologyType(TopologyType::TriangleTopology);
 	renderTexturePipeline->SetRootSignature(rootSignature.Get());
@@ -535,7 +535,7 @@ void RenderBase::GraphicsPipelineInit()
 	// 読み込みオブジェクト用
 	loadModelPipeline = std::move(std::make_unique<GraphicsPipeline>());
 	loadModelPipeline->SetShaderObject(loadModelShader.get());
-	loadModelPipeline->SetisCullBack(true);
+	loadModelPipeline->SetCullMode(CullMode::CullBack);
 	loadModelPipeline->SetisDepthEnable(true);
 	loadModelPipeline->SetTopologyType(TopologyType::TriangleTopology);
 	loadModelPipeline->SetRootSignature(rootSignature.Get());

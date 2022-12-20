@@ -11,13 +11,20 @@ enum class TopologyType
 	TriangleTopology,
 };
 
+enum class CullMode
+{
+	None,
+	CullFront,
+	CullBack,
+};
+
 class GraphicsPipeline
 {
 private:
 	HRESULT result;
 
-	bool isCullBack;
 	bool isDepthEnable;
+	CullMode cullMode;
 	TopologyType topologyType;
 	ShaderObject* shaderObject;
 	ID3D12RootSignature* rootSignature;
@@ -37,7 +44,7 @@ public:
 
 public:
 	// セッター
-	inline void SetisCullBack(const bool& isCullBack) { this->isCullBack = isCullBack; }
+	inline void SetCullMode(const CullMode& cullMode) { this->cullMode = cullMode; }
 	inline void SetisDepthEnable(const bool& isDepthEnable) { this->isDepthEnable = isDepthEnable; }
 	inline void SetTopologyType(const TopologyType& topologyType) { this->topologyType = topologyType; }
 	inline void SetShaderObject(ShaderObject* shaderObject) { this->shaderObject = shaderObject; }

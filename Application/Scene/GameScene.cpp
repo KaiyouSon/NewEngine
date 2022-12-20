@@ -23,6 +23,10 @@ void GameScene::Init()
 
 	obj.isLighting = true;
 	obj2.isLighting = true;
+
+	spr.texture = tex;
+	spr.scale = 0.25f;
+	spr.anchorPoint = 0.5f;
 }
 
 void GameScene::Update()
@@ -50,6 +54,8 @@ void GameScene::Update()
 		Light::current.lightPos.x -= 0.1f;
 	}
 
+	spr.Update();
+
 	Camera::DebugCameraUpdate();
 }
 
@@ -65,6 +71,7 @@ void GameScene::DrawModel()
 
 void GameScene::DrawFrontSprite()
 {
+	spr.Draw();
 }
 
 void GameScene::DrawDebugGui()

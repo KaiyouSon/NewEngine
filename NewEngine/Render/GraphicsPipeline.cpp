@@ -3,7 +3,8 @@
 #include <d3dx12.h>
 
 GraphicsPipeline::GraphicsPipeline() :
-	isCullBack(true), isDepthEnable(true), topologyType(TopologyType::TriangleTopology),
+	isDepthEnable(true), cullMode(CullMode::None),
+	topologyType(TopologyType::TriangleTopology),
 	shaderObject(nullptr), rootSignature(nullptr), result(HRESULT())
 {
 }
@@ -41,8 +42,24 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
 	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // 標準設定
 
 	// ラスタライザの設定
-	pipelineDesc.RasterizerState.CullMode =
-		isCullBack ? D3D12_CULL_MODE_BACK : D3D12_CULL_MODE_NONE;	// 背面カリング設定
+	switch (cullMode)
+	{
+	case CullMode::None:	// カリングしない
+		pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+		break;
+
+	case CullMode::CullFront:	// 前面カリング
+		pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_FRONT;
+		break;
+
+	case CullMode::CullBack:	// 背面カリング
+		pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;
+		break;
+
+	default:
+		pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+		break;
+	}
 	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;	// ポリゴン内塗りつぶし
 	pipelineDesc.RasterizerState.DepthClipEnable = true; // 深度クリッピングを有効に
 
@@ -53,6 +70,10 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
 		pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み許可
 		pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
 		pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	// 深度値フォーマット
+	}
+	else
+	{
+		pipelineDesc.DepthStencilState.DepthEnable = false; // 深度テストを行う
 	}
 
 	// レンダーターゲットのブレンド設定

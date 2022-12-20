@@ -23,7 +23,7 @@ Object3D::~Object3D()
 	delete constantBufferMaterial;
 	delete constantBufferColor;
 }
-void Object3D::Update()
+void Object3D::Update(const Object3D* parent)
 {
 	if (texture.isMaterial == true)
 	{
@@ -34,12 +34,16 @@ void Object3D::Update()
 	transform.scale = scale;
 	transform.rot = rot;
 	transform.Update();
+	if (parent != nullptr)
+	{
+		transform.worldMat *= parent->transform.worldMat;
+	}
 
 	// マトリックス転送
 	constantBufferTransform->constantBufferMap->viewMat =
 		Camera::current.GetViewLookToMat() *
 		Camera::current.GetPerspectiveProjectionMat();
-	constantBufferTransform->constantBufferMap->worldMat = transform.GetWorldMat();
+	constantBufferTransform->constantBufferMap->worldMat = transform.worldMat;
 	constantBufferTransform->constantBufferMap->cameraPos = Camera::current.pos;
 
 	// マテリアルの転送
