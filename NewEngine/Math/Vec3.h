@@ -1,7 +1,9 @@
 #pragma once
 #include "Vec2.h"
+#include "Quaternion.h"
 
 class Vec2;
+class Quaternion;
 
 class Vec3
 {
@@ -66,6 +68,7 @@ public:
 	// 代入演算子のオーバーロード
 	Vec3& operator=(float num);			// 一つの値を代入
 	Vec3& operator=(const Vec2& other); // Vec2をVec3に変換
+	Vec3& operator=(const Quaternion& q); // QuaternionをVec3に変換
 
 	// インクリメント/デクリメント演算子のオーバーロード
 	Vec3& operator++();   // 前置インクリメント

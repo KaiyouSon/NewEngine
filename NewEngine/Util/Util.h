@@ -38,4 +38,5 @@ float Convergence(const float& value, const float& speed, const float& origin = 
 // 桁数を取得
 int GetDight(const int& value);
 
+// ワールド座標をスクリーン座標に変換する
 Vec2 WorldToScreen(const Vec3& worldPos);

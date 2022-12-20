@@ -6,14 +6,19 @@
 #include <dinput.h>
 #include <wrl.h>
 
-enum ButtonCodo
+enum PadCodo
 {
-	A = 0,
-	B = 1,
-	X = 2,
-	Y = 3,
-	L1 = 4,
-	R1 = 5,
+	ButtonA = 0,
+	ButtonB = 1,
+	ButtonX = 2,
+	ButtonY = 3,
+	ButtonL1 = 4,
+	ButtonR1 = 5,
+
+	LeftStick = 96,
+	RightStick = 97,
+	LeftTrigger = 98,
+	RightTrigger = 99,
 };
 
 enum MouseCodo

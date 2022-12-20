@@ -161,6 +161,7 @@
     <ClCompile Include="NewEngine\main.cpp" />
     <ClCompile Include="NewEngine\Math\Mat4.cpp" />
     <ClCompile Include="NewEngine\Math\MathUtil.cpp" />
+    <ClCompile Include="NewEngine\Math\Quaternion.cpp" />
     <ClCompile Include="NewEngine\Math\Vec2.cpp" />
     <ClCompile Include="NewEngine\Math\Vec3.cpp" />
     <ClCompile Include="NewEngine\Math\Vec4.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="NewEngine\Input\MouseInput.h" />
     <ClInclude Include="NewEngine\Math\Mat4.h" />
     <ClInclude Include="NewEngine\Math\MathUtil.h" />
+    <ClInclude Include="NewEngine\Math\Quaternion.h" />
     <ClInclude Include="NewEngine\Math\Vec2.h" />
     <ClInclude Include="NewEngine\Math\Vec3.h" />
     <ClInclude Include="NewEngine\Math\Vec4.h" />

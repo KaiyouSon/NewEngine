@@ -121,6 +121,14 @@ Vec3& Vec3::operator=(const Vec2& other)
 	return *this;
 }
 
+Vec3& Vec3::operator=(const Quaternion& q)
+{
+	x = q.x;
+	y = q.y;
+	z = q.z;
+	return *this;
+}
+
 Vec3& Vec3::operator++()
 {
 	x++;

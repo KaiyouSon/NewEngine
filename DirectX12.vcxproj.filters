@@ -246,6 +246,9 @@
     <ClCompile Include="NewEngine\Object\3D\PointLight.cpp">
       <Filter>NewEngine\Source\Light</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Math\Quaternion.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -397,6 +400,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\Light.h">
       <Filter>NewEngine\Header\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Math\Quaternion.h">
+      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

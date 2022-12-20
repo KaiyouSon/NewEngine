@@ -8,6 +8,7 @@ private:
 	Object3D obj;
 	Object3D obj2;
 	Sprite spr;
+	Quaternion q;
 
 public:
 	GameScene();

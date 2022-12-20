@@ -24,19 +24,27 @@ void GameScene::Init()
 	obj.isLighting = true;
 	obj2.isLighting = true;
 
-	spr.texture = tex;
-	spr.scale = 0.25f;
-	spr.anchorPoint = 0.5f;
+	//spr.texture = tex;
+	//spr.scale = 0.25f;
+	//spr.anchorPoint = 0.5f;
+
 }
 
 void GameScene::Update()
 {
+	static int angle = 0;
+	angle++;
+	if (angle > 360) angle = 1;
+
+	Quaternion q = { 10,0,0 };
+	obj.pos = q.AnyAxisRotation({ 0,0,1 }, angle);
+
+	//obj2.Update();
+
+	//obj.rot.y -= Radian(3);
+	//obj2.rot.y -= Radian(3);
+
 	obj.Update();
-	obj2.Update();
-
-	obj.rot.y -= Radian(3);
-	obj2.rot.y -= Radian(3);
-
 	if (Key::GetKey(DIK_UP))
 	{
 		Light::current.lightPos.z += 0.1f;
@@ -54,7 +62,7 @@ void GameScene::Update()
 		Light::current.lightPos.x -= 0.1f;
 	}
 
-	spr.Update();
+	//spr.Update();
 
 	Camera::DebugCameraUpdate();
 }
@@ -66,17 +74,23 @@ void GameScene::DrawBackSprite()
 void GameScene::DrawModel()
 {
 	obj.Draw();
-	obj2.Draw();
+	//obj2.Draw();
 }
 
 void GameScene::DrawFrontSprite()
 {
-	spr.Draw();
+	//spr.Draw();
 }
 
 void GameScene::DrawDebugGui()
 {
-	//GuiManager::BeginWindow();
+	// 座標(0,5,0)のクォータニオン作成
+	Quaternion p = { 5,0,0 };
+	Quaternion q = p.AnyAxisRotation({ 1,0,1 }, 180);
 
-	//GuiManager::EndWindow();
+	GuiManager::BeginWindow();
+
+	//GuiManager::DrawString("q = (%f, %f, %f)", q.x, q.y, q.z);
+
+	GuiManager::EndWindow();
 }
