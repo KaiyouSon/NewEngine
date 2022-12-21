@@ -164,7 +164,6 @@
     <ClCompile Include="NewEngine\Math\Quaternion.cpp" />
     <ClCompile Include="NewEngine\Math\Vec2.cpp" />
     <ClCompile Include="NewEngine\Math\Vec3.cpp" />
-    <ClCompile Include="NewEngine\Math\Vec4.cpp" />
     <ClCompile Include="NewEngine\NewEngine.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -181,7 +180,6 @@
     <ClCompile Include="NewEngine\Object\3D\Object3D.cpp" />
     <ClCompile Include="NewEngine\Object\3D\PointLight.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp" />
-    <ClCompile Include="NewEngine\Render\Buffer\TextureBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp" />
     <ClCompile Include="NewEngine\Render\RenderBase.cpp" />
     <ClCompile Include="NewEngine\Render\RenderWindow.cpp" />
@@ -215,7 +213,6 @@
     <ClInclude Include="NewEngine\Math\Quaternion.h" />
     <ClInclude Include="NewEngine\Math\Vec2.h" />
     <ClInclude Include="NewEngine\Math\Vec3.h" />
-    <ClInclude Include="NewEngine\Math\Vec4.h" />
     <ClInclude Include="NewEngine\NewEngine.h" />
     <ClInclude Include="NewEngine\Object\2D\RenderTexture.h" />
     <ClInclude Include="NewEngine\Object\2D\Sprite.h" />
@@ -231,7 +228,6 @@
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBufferData.h" />
     <ClInclude Include="NewEngine\Render\Buffer\IndexBuffer.h" />
-    <ClInclude Include="NewEngine\Render\Buffer\TextureBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\VertexBuffer.h" />
     <ClInclude Include="NewEngine\Render\GraphicsPipeline.h" />
     <ClInclude Include="NewEngine\Render\RenderBase.h" />

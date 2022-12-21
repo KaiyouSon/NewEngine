@@ -31,7 +31,7 @@ private:
 
 public:
 	Transform();
-	Transform(Vec3 pos, Vec3 scale, Vec3 rot);
+	Transform(const Vec3& pos, const Vec3& scale, const Vec3& rot);
 	void Update();
 
 public:	// セッター

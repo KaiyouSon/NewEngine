@@ -16,7 +16,7 @@ int Random::Range(const int& min, const int& max)
 float Random::RangeF(const float& min, const float& max)
 {
 	double tmp = (min < 0 && max>0) ? (fabs(min) + max) : (fabs(max - min));
-	return (double)rand() / RAND_MAX * tmp + min;
+	return (float)rand() / RAND_MAX * tmp + min;
 }
 
 Vec2 Random::RangeVec2(const int& min, const int& max, const bool& isSameValue)

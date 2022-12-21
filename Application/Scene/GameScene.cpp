@@ -18,11 +18,15 @@ void GameScene::Init()
 	obj.model = Model("sphere", true);
 	obj2.model = Model("sphere");
 
+	Texture tex2 = Texture(Color::red);
+
 	obj.pos.x = 3;
 	obj2.pos.x = -3;
 
-	obj.isLighting = true;
+	//obj.isLighting = true;
 	obj2.isLighting = true;
+
+	obj.texture = tex2;
 
 	//spr.texture = tex;
 	//spr.scale = 0.25f;
@@ -37,7 +41,7 @@ void GameScene::Update()
 	if (angle > 360) angle = 1;
 
 	Quaternion q = { 10,0,0 };
-	obj.pos = q.AnyAxisRotation({ 0,0,1 }, angle);
+	//obj.pos = q.AnyAxisRotation({ 0,0,1 }, angle);
 
 	//obj2.Update();
 
@@ -45,23 +49,6 @@ void GameScene::Update()
 	//obj2.rot.y -= Radian(3);
 
 	obj.Update();
-	if (Key::GetKey(DIK_UP))
-	{
-		Light::current.lightPos.z += 0.1f;
-	}
-	if (Key::GetKey(DIK_DOWN))
-	{
-		Light::current.lightPos.z -= 0.1f;
-	}
-	if (Key::GetKey(DIK_RIGHT))
-	{
-		Light::current.lightPos.x += 0.1f;
-	}
-	if (Key::GetKey(DIK_LEFT))
-	{
-		Light::current.lightPos.x -= 0.1f;
-	}
-
 	//spr.Update();
 
 	Camera::DebugCameraUpdate();

@@ -4,6 +4,11 @@
 class Collision
 {
 public:
+	// ‰~‚Æ‰~
+	static bool CircleHitCircle(
+		const CircleCollider& circle1,
+		const CircleCollider& circle2);
+
 	// ‹…‚Æ‹…
 	static bool SphereHitSphere(
 		const SphereCollider& sphere1,

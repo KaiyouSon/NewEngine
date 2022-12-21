@@ -1,8 +1,8 @@
 #pragma once
-#include "TextureBuffer.h"
 #include "RenderWindow.h"
 #include "ShaderObject.h"
 #include "GraphicsPipeline.h"
+#include "Texture.h"
 #include "Util.h"
 #include <d3d12.h>
 #include <dxgi1_6.h>

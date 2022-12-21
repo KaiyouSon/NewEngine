@@ -1,6 +1,7 @@
 #include "GraphicsPipeline.h"
 #include "RenderBase.h"
 #include <d3dx12.h>
+#include <cassert>
 
 GraphicsPipeline::GraphicsPipeline() :
 	isDepthEnable(true), cullMode(CullMode::None),

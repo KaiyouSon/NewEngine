@@ -1,11 +1,20 @@
 #include "Collider.h"
 
+// ----- 円コライダー ------------------- //
+CircleCollider::CircleCollider()
+{
+}
+
+CircleCollider::CircleCollider(const Vec2& centerPos, const float& radius)
+{
+}
+
 // ----- 球コライダー ------------------- //
 SphereCollider::SphereCollider() :
 	centerPos(0, 0, 0), radius(1)
 {
 }
-SphereCollider::SphereCollider(Vec3 centerPos, float radius) :
+SphereCollider::SphereCollider(const Vec3& centerPos, const float& radius) :
 	centerPos(centerPos), radius(radius)
 {
 }

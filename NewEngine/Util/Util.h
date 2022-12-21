@@ -29,7 +29,7 @@ float Min(const float& a, const float& b);
 // 符号を返す（ -1, 0, 1 ）
 int Sign(const float& a);
 
-// 値を制限する関数
+// 値をMinとMaxの間に制限する関数
 float Clamp(const float& value, const float& min = 0, const float& max = 1);
 
 // 値が収束する関数

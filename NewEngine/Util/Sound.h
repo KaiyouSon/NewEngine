@@ -55,7 +55,7 @@ private:
 
 public:
 	Sound();
-	Sound(std::string filePath);
+	Sound(const std::string& filePath);
 	void Play(const bool& isRoop = false);
 	void Stop();
 	void SetVolume(const float& volume);

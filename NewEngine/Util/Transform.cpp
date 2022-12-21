@@ -8,7 +8,7 @@ Transform::Transform() :
 {
 }
 
-Transform::Transform(Vec3 pos, Vec3 scale, Vec3 rot) :
+Transform::Transform(const Vec3& pos, const Vec3& scale, const Vec3& rot) :
 	pos(pos), scale(scale), rot(rot),
 	worldMat(Mat4::Identity()), scaleMat(Mat4::Identity()),
 	rotMat(Mat4::Identity()), transMat(Mat4::Identity()),

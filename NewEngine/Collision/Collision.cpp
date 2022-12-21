@@ -1,6 +1,19 @@
 #include "Collision.h"
 using namespace std;
 
+bool Collision::CircleHitCircle(const CircleCollider& circle1, const CircleCollider& circle2)
+{
+	return
+	{
+		(circle2.centerPos.x - circle1.centerPos.x) *
+		(circle2.centerPos.x - circle1.centerPos.x) +
+		(circle2.centerPos.y - circle1.centerPos.y) *
+		(circle2.centerPos.y - circle1.centerPos.y) <=
+		(circle2.radius + circle1.radius) *
+		(circle2.radius + circle1.radius)
+	};
+}
+
 bool Collision::SphereHitSphere(const SphereCollider& sphere1, const SphereCollider& sphere2)
 {
 	return

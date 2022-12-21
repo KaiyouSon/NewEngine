@@ -3,15 +3,58 @@
 #include <DirectXTex.h>
 using namespace DirectX;
 
-Texture::Texture() : isMaterial(false)
+Texture::Texture() : result(HRESULT()), isMaterial(false)
 {
 }
 
-Texture::Texture(std::string filePath, bool isDirectoryPath) : isMaterial(false)
+Texture::Texture(const Color& color) : result(HRESULT()), isMaterial(false)
+{
+	// ヒープの設定
+	D3D12_HEAP_PROPERTIES textureHeapProp{};
+	textureHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
+	textureHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
+	textureHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
+	// リソース設定
+	D3D12_RESOURCE_DESC textureResourceDesc{};
+	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+	textureResourceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	textureResourceDesc.Width = 1; // 幅
+	textureResourceDesc.Height = 1; // 高さ
+	textureResourceDesc.DepthOrArraySize = 1;
+	textureResourceDesc.MipLevels = 1;
+	textureResourceDesc.SampleDesc.Count = 1;
+
+	// テクスチャのサイズをセット
+	size = { (float)textureResourceDesc.Width, (float)textureResourceDesc.Height };
+
+	// テクスチャバッファの生成
+	result = RenderBase::GetInstance()->GetDevice()->
+		CreateCommittedResource(
+			&textureHeapProp,
+			D3D12_HEAP_FLAG_NONE,
+			&textureResourceDesc,
+			D3D12_RESOURCE_STATE_GENERIC_READ,
+			nullptr,
+			IID_PPV_ARGS(&buffer));
+	assert(SUCCEEDED(result));
+
+	// テクスチャバッファにデータ転送
+	result = buffer->WriteToSubresource(
+		0,
+		nullptr, // 全領域へコピー
+		&color,	// 元データアドレス
+		sizeof(Color) * 1, // 1ラインサイズ
+		sizeof(Color) * 1 // 全サイズ
+	);
+
+	RenderBase::GetInstance()->CreateSrv(*this, textureResourceDesc);
+}
+
+Texture::Texture(const std::string& filePath, const bool& isDirectoryPath) :
+	result(HRESULT()), isMaterial(false)
 {
 	std::string path = isDirectoryPath ? filePath : "Application/Resources/Texture/" + filePath;
 
-	HRESULT result;
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
 	std::wstring wfilePath(path.begin(), path.end());

@@ -9,33 +9,21 @@ const Vec2 Vec2::one(1, 1);
 const Vec2 Vec2::zero(0, 0);
 
 // ベクトルの大きさ
-float Vec2::Lenght() const
-{
-	return sqrt(pow(x, 2) + pow(y, 2));
-}
+float Vec2::Lenght() const { return sqrtf(x * x + y * y); }
 
 // 正規化（長さを１にした）ベクトル
-Vec2 Vec2::Norm() const
-{
-	return{ x / Lenght() , y / Lenght() };
-}
+Vec2 Vec2::Norm() const { return{ x / Lenght() , y / Lenght() }; }
 
 // 二つのベクトルの内積
-float Vec2::Dot(const Vec2& v1, const Vec2& v2)
-{
-	return v1.x * v2.x + v1.y * v2.y;
-}
+float Vec2::Dot(const Vec2& v1, const Vec2& v2) { return v1.x * v2.x + v1.y * v2.y; }
 
 // 二つのベクトルの外積
-float Vec2::Cross(const Vec2& v1, const Vec2& v2)
-{
-	return v1.x * v2.y - v1.y * v2.x;
-}
+float Vec2::Cross(const Vec2& v1, const Vec2& v2) { return v1.x * v2.y - v1.y * v2.x; }
 
 // 二つのベクトルの距離
 float Vec2::Distance(const Vec2& v1, const Vec2& v2)
 {
-	return sqrt(pow(v2.x - v1.x, 2) + pow(v2.y - v1.y, 2));
+	return sqrtf(pow(v2.x - v1.x, 2) + pow(v2.y - v1.y, 2));
 }
 
 // 二つのベクトルで各成分の一番大きな値を使用してベクトルを作成する

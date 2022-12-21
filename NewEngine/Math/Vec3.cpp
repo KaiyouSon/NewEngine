@@ -10,7 +10,7 @@ const Vec3 Vec3::back(0, 0, -1);
 const Vec3 Vec3::one(1, 1, 1);
 const Vec3 Vec3::zero(0, 0, 0);
 
-float Vec3::Lenght() const { return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2)); }
+float Vec3::Lenght() const { return sqrtf(x * x + y * y + z * z); }
 
 Vec3 Vec3::Norm() const { return { x / Lenght(), y / Lenght(), z / Lenght() }; }
 
@@ -26,7 +26,7 @@ Vec3 Vec3::Cross(const Vec3& v1, const Vec3& v2)
 
 float Vec3::Distance(const Vec3& v1, const Vec3& v2)
 {
-	return sqrt(pow(v2.x - v1.x, 2) + pow(v2.y - v1.y, 2) + pow(v2.z - v1.z, 2));
+	return sqrtf(pow(v2.x - v1.x, 2) + pow(v2.y - v1.y, 2) + pow(v2.z - v1.z, 2));
 }
 
 Vec3 Vec3::Max(const Vec3& v1, const Vec3& v2)

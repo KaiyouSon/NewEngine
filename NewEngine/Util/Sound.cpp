@@ -16,11 +16,12 @@ void Sound::Init()
 	result = xAudio2->CreateMasteringVoice(&masterVoice);
 }
 
-Sound::Sound() : volume(1)
+Sound::Sound() : result(HRESULT()), soundData(SoundData()), volume(1)
 {
 }
 
-Sound::Sound(std::string filePath) : volume(1)
+Sound::Sound(const std::string& filePath) :
+	result(HRESULT()), soundData(SoundData()), volume(1)
 {
 	string path = "Application/Sound/" + filePath;
 
