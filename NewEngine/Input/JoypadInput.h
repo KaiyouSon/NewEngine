@@ -67,6 +67,48 @@ public:
 
 		return stick;
 	}
+	static inline bool GetStickTrigger(const int& padCode, const Vec2& num = 0)
+	{
+		if (padCode == 96)
+		{
+			return
+				(((float)GetInstance()->padInput.lX > +num.x) && !((float)GetInstance()->prevPadInput.lX > +num.x)) ||
+				(((float)GetInstance()->padInput.lX < -num.x) && !((float)GetInstance()->prevPadInput.lX < -num.x)) ||
+				(((float)GetInstance()->padInput.lY > +num.y) && !((float)GetInstance()->prevPadInput.lY > +num.y)) ||
+				(((float)GetInstance()->padInput.lY < -num.y) && !((float)GetInstance()->prevPadInput.lY < -num.y));
+		}
+		else if (padCode == 97)
+		{
+			return
+				(((float)GetInstance()->padInput.lRx > +num.x) && !((float)GetInstance()->prevPadInput.lRx > +num.x)) ||
+				(((float)GetInstance()->padInput.lRx < -num.x) && !((float)GetInstance()->prevPadInput.lRx < -num.x)) ||
+				(((float)GetInstance()->padInput.lRy > +num.y) && !((float)GetInstance()->prevPadInput.lRy > +num.y)) ||
+				(((float)GetInstance()->padInput.lRy < -num.y) && !((float)GetInstance()->prevPadInput.lRy < -num.y));
+		}
+
+		return false;
+	}
+	static inline bool GetStickReleased(const int& padCode, const Vec2& num = 0)
+	{
+		if (padCode == 96)
+		{
+			return
+				!(((float)GetInstance()->padInput.lX > +num.x) && ((float)GetInstance()->prevPadInput.lX > +num.x)) ||
+				!(((float)GetInstance()->padInput.lX < -num.x) && ((float)GetInstance()->prevPadInput.lX < -num.x)) ||
+				!(((float)GetInstance()->padInput.lY > +num.y) && ((float)GetInstance()->prevPadInput.lY > +num.y)) ||
+				!(((float)GetInstance()->padInput.lY < -num.y) && ((float)GetInstance()->prevPadInput.lY < -num.y));
+		}
+		else if (padCode == 97)
+		{
+			return
+				!(((float)GetInstance()->padInput.lRx > +num.x) && ((float)GetInstance()->prevPadInput.lRx > +num.x)) ||
+				!(((float)GetInstance()->padInput.lRx < -num.x) && ((float)GetInstance()->prevPadInput.lRx < -num.x)) ||
+				!(((float)GetInstance()->padInput.lRy > +num.y) && ((float)GetInstance()->prevPadInput.lRy > +num.y)) ||
+				!(((float)GetInstance()->padInput.lRy < -num.y) && ((float)GetInstance()->prevPadInput.lRy < -num.y));
+		}
+
+		return false;
+	}
 
 	static inline bool GetTrigger(const int& padCode, const float& num = 0)
 	{
