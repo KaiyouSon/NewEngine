@@ -17,9 +17,15 @@ public:
 	static Mat4 Identity();	// 単位行列を返す関数
 	static Mat4 Inverse(const Mat4& mat);	// 逆行列を返す関数
 
+	void SetXAxis(const Vec3& xAxis);
+	void SetYAxis(const Vec3& yAxis);
+	void SetZAxis(const Vec3& zAxis);
+	void SetTranslation(const Vec3& pos);
+
 	Vec3 ExtractAxisX() const;
 	Vec3 ExtractAxisY() const;
 	Vec3 ExtractAxisZ() const;
+	Vec3 ExtractTranslation() const;
 
 	// 単項演算子オーバーロード
 	Mat4 operator*(const Mat4& other) const;

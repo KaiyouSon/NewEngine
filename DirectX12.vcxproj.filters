@@ -243,6 +243,9 @@
     <ClCompile Include="NewEngine\Math\Quaternion.cpp">
       <Filter>NewEngine\Source\Math</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\TextureManager.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -391,6 +394,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Math\Quaternion.h">
       <Filter>NewEngine\Header\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\TextureManager.h">
+      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

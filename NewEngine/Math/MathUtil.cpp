@@ -78,6 +78,25 @@ Mat4 ConvertTranslationMat(const Vec3& pos)
 	};
 }
 
+Mat4 ConvertRotationMat(const Quaternion& q)
+{
+	Mat4 result = Mat4::Identity();
+
+	result.m[0][0] = (q.w * q.w) + (q.x * q.x) - (q.y * q.y) - (q.z * q.z);
+	result.m[0][1] = 2 * (q.x * q.y + q.w * q.z);
+	result.m[0][2] = 2 * (q.x * q.z - q.w * q.y);
+
+	result.m[1][0] = 2 * (q.x * q.y - q.w * q.z);
+	result.m[1][1] = (q.w * q.w) - (q.x * q.x) + (q.y * q.y) - (q.z * q.z);
+	result.m[1][2] = 2 * (q.y * q.z + q.w * q.x);
+
+	result.m[2][0] = 2 * (q.x * q.z + q.w * q.y);
+	result.m[2][1] = 2 * (q.y * q.z - q.w * q.x);
+	result.m[1][2] = (q.w * q.w) - (q.x * q.x) - (q.y * q.y) + (q.z * q.z);
+
+	return result;
+}
+
 Mat4 ConvertBillBoardXAxis()
 {
 	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewLookToMat());

@@ -15,12 +15,14 @@ public:
 
 	// 関数
 	float Lenght() const;			// クオータニオンの大きさ
-	Quaternion Norm() const;		// 正規化にしたクオータニオン
+	Quaternion Norm() const;		// 正規化クオータニオン
+	Quaternion Identity() const;	// 単位クオータニオン
 	Quaternion Conjugate() const;	// 共役クオータニオン
+	Quaternion Inverse() const;		// 逆クオータニオン
+
 
 	// 任意軸回転
-	Quaternion AnyAxisRotation(const Vec3& v, const float& angle);
-	static Quaternion MakeAxisRotation(const Vec3& v, const float& angle);
+	Quaternion AnyAxisRotation(const Vec3& v, const float& radian);
 
 	static float Dot(const Quaternion& q1, const Quaternion& q2);		// 二つのクオータニオンの内積
 

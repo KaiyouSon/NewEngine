@@ -5,14 +5,27 @@ float Quaternion::Lenght() const { return sqrt(x * x + y * y + z * z + w * w); }
 
 Quaternion Quaternion::Norm() const { return { x / Lenght(),y / Lenght(),z / Lenght() ,w / Lenght() }; }
 
+Quaternion Quaternion::Identity() const { return { 0, 0, 0, 1 }; }
+
 Quaternion Quaternion::Conjugate() const { return { -x,-y,-z,w }; }
 
-Quaternion Quaternion::AnyAxisRotation(const Vec3& v, const float& angle)
+Quaternion Quaternion::Inverse() const
+{
+	return Conjugate() / (Lenght() * Lenght());
+}
+
+Quaternion Quaternion::AnyAxisRotation(const Vec3& v, const float& radian)
 {
 	Quaternion result = { x,y,z,w };
 
-	// XY平面上の軸で180°回転クォータニオン作成      
-	Quaternion q = Quaternion::MakeAxisRotation(v, Radian(angle));
+	// 回転クォータニオン作成
+	Quaternion q =
+	{
+		v.Norm().x * sinf(radian / 2),
+		v.Norm().y * sinf(radian / 2),
+		v.Norm().z * sinf(radian / 2),
+		cosf(radian / 2)
+	};
 	// 回転クォータニオンの共役クォータニオン作成      
 	Quaternion qc = q.Conjugate();
 
@@ -21,12 +34,6 @@ Quaternion Quaternion::AnyAxisRotation(const Vec3& v, const float& angle)
 	result = result * qc;
 
 	return result;
-}
-
-Quaternion Quaternion::MakeAxisRotation(const Vec3& v, const float& angle)
-{
-	float sinA = sinf(angle / 2.0f);
-	return { v.Norm().x * sinA, v.Norm().y * sinA, v.Norm().z * sinA, cosf(angle / 2.0f) };
 }
 
 float Quaternion::Dot(const Quaternion& q1, const Quaternion& q2)

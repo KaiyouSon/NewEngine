@@ -38,11 +38,15 @@ Texture::Texture(const Color& color) : result(HRESULT()), isMaterial(false)
 			IID_PPV_ARGS(&buffer));
 	assert(SUCCEEDED(result));
 
+	Color tempColor;
+	tempColor = color / 255;
+	tempColor.a = color.a / 255;
+
 	// テクスチャバッファにデータ転送
 	result = buffer->WriteToSubresource(
 		0,
 		nullptr, // 全領域へコピー
-		&color,	// 元データアドレス
+		&tempColor,	// 元データアドレス
 		sizeof(Color) * 1, // 1ラインサイズ
 		sizeof(Color) * 1 // 全サイズ
 	);

@@ -4,6 +4,7 @@ using namespace std;
 
 IXAudio2MasteringVoice* Sound::masterVoice = nullptr;
 Microsoft::WRL::ComPtr<IXAudio2> Sound::xAudio2 = nullptr;
+bool Sound::isDestroy = false;
 
 void Sound::Init()
 {
@@ -14,6 +15,12 @@ void Sound::Init()
 
 	// マスターボイスを生成
 	result = xAudio2->CreateMasteringVoice(&masterVoice);
+}
+
+void Sound::Destroy()
+{
+	xAudio2.Reset();
+	isDestroy = true;
 }
 
 Sound::Sound() : result(HRESULT()), soundData(SoundData()), volume(1)
@@ -133,7 +140,10 @@ void Sound::SetVolume(const float& volume)
 
 void Sound::UnLoad()
 {
-	soundData.pSourceVoice->Stop();
+	if (isDestroy == false)
+	{
+		Stop();
+	}
 
 	// バッファのメモリ解放
 	delete[] soundData.pBuffer;

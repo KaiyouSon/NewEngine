@@ -30,7 +30,9 @@ Mat4 ConvertRotationYAxisMat(float angle);	// 回転行列ｙ軸を返す関数
 Mat4 ConvertRotationZAxisMat(float angle);	// 回転行列ｚ軸を返す関数
 Mat4 ConvertTranslationMat(const Vec3& pos);	// 平行移動を返す関数
 
- // ビルボード行列変換
+Mat4 ConvertRotationMat(const Quaternion& q); // クォータニオンで回転行列を生成する関数
+
+// ビルボード行列変換
 Mat4 ConvertBillBoardXAxis();
 Mat4 ConvertBillBoardYAxis();
 Mat4 ConvertBillBoardZAxis();

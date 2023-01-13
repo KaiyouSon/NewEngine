@@ -111,9 +111,15 @@ Mat4 Mat4::Inverse(const Mat4& mat)
 	return inverseMat;
 }
 
+void Mat4::SetXAxis(const Vec3& xAxis) { m[0][0] = xAxis.x; m[0][1] = xAxis.y; m[0][2] = xAxis.z; }
+void Mat4::SetYAxis(const Vec3& yAxis) { m[1][0] = yAxis.x;	m[1][1] = yAxis.y; m[1][2] = yAxis.z; }
+void Mat4::SetZAxis(const Vec3& zAxis) { m[2][0] = zAxis.x;	m[2][1] = zAxis.y; m[2][2] = zAxis.z; }
+void Mat4::SetTranslation(const Vec3& pos) { m[3][0] = pos.x; m[3][1] = pos.y; m[3][2] = pos.z; }
+
 Vec3 Mat4::ExtractAxisX() const { return { m[0][0],m[0][1] ,m[0][2] }; }
 Vec3 Mat4::ExtractAxisY() const { return { m[1][0],m[1][1] ,m[1][2] }; }
 Vec3 Mat4::ExtractAxisZ() const { return { m[2][0],m[2][1] ,m[2][2] }; }
+Vec3 Mat4::ExtractTranslation() const { return { m[3][0],m[3][1] ,m[3][2] }; }
 
 Mat4 Mat4::operator*(const Mat4& other) const
 {

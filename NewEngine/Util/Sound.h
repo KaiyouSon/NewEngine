@@ -47,6 +47,8 @@ private:
 	static Microsoft::WRL::ComPtr<IXAudio2> xAudio2;
 public:
 	static void Init();
+	static void Destroy();
+	static bool isDestroy;
 
 private:
 	HRESULT result;

@@ -48,7 +48,23 @@ void GameScene::DrawFrontSprite()
 
 void GameScene::DrawDebugGui()
 {
-	//GuiManager::BeginWindow();
+	Quaternion q = { 0,1,0 };
 
-	//GuiManager::EndWindow();
+	Vec3 v;
+	v = q.AnyAxisRotation({ 0,0,1 }, Radian(90));
+
+	Quaternion q2;
+	q2 = q * q.Inverse();
+	//v = v * v1;
+
+	Mat4 m = ConvertRotationMat(q.AnyAxisRotation({ 0,0,1 }, Radian(90)));
+	m.SetTranslation(v);
+	Vec3 v2 = m.ExtractTranslation();
+
+	GuiManager::BeginWindow();
+
+	GuiManager::DrawString("%f,%f,%f", v.x, v.y, v.z);
+	GuiManager::DrawString("%f,%f,%f", v2.x, v2.y, v2.z);
+
+	GuiManager::EndWindow();
 }
