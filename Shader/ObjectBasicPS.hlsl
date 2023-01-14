@@ -10,39 +10,71 @@ float4 main(VSOutput input) : SV_TARGET
 
 	// 光沢度
 	const float shininess = 4.0f;
+
 	// 頂点から視点へのベクトル
 	float3 eyeDir = normalize(cameraPos - input.worldPos.xyz);
-	// ライトに向かうベクトルと法線の内積
-	float3 dotLightNormal = dot(lightVec, input.normal);
-	// 反射光ベクトル
-	float3 reflect = normalize(-lightVec + 2 * dotLightNormal * input.normal);
 
 	// 環境反射光
 	float3 tAmbient = ambient;
-	// 拡散反射光
-	float3 tDiffuse = dotLightNormal * diffuse;
-	// 鏡面反射光
-	float tSpecular = pow(saturate(dot(reflect, eyeDir)), shininess) * specular;
 
-	// シェーディングによる色
-	float4 shaderColor;
-	shaderColor.rgb = (tAmbient + tDiffuse + tSpecular) * lightColor;
-	shaderColor.a = alpha;
+	float4 shaderColor = float4(float3(1,1,1) * tAmbient, alpha);
+
+	// 平行光源
+	for (int i = 0; i < DirectionalLightNum; i++)
+	{
+		if (directionalLights[i].isActive)
+		{
+			// ライトに向かうベクトルと法線の内積
+			float3 dotLightNormal = dot(directionalLights[i].lightVec, input.normal);
+			// 反射光ベクトル
+			float3 reflect = normalize(-directionalLights[i].lightVec + 2 * dotLightNormal * input.normal);
+
+			// 拡散反射光
+			float3 tDiffuse = dotLightNormal * diffuse;
+			// 鏡面反射光
+			float tSpecular = pow(saturate(dot(reflect, eyeDir)), shininess) * specular;
+
+			// 全て加算する
+			shaderColor.rgb += (tDiffuse + tSpecular) * directionalLights[i].color;
+
+			// シェーディングによる色
+			//shaderColor.rgb += (tAmbient + tDiffuse + tSpecular) * color;
+			//shaderColor.a = alpha;
+		}
+	}
+
+	// 点光源
+	for (int i = 0; i < PointLightNum; i++)
+	{
+		if (pointLights[i].isActive)
+		{
+			// ライトへの方向ベクトル
+			float3 lightv = pointLights[i].pos - input.worldPos.xyz;
+			// ベクトルの長さ
+			float d = length(lightv);
+			// 正規化
+			lightv = normalize(lightv);
+
+			// 距離減衰係数
+			float atten = 1.0f /
+				(pointLights[i].atten.x +
+				pointLights[i].atten.y * d +
+				pointLights[i].atten.z * d * d);
+
+			// ライトに向かうベクトルと法線の内積
+			float3 dotlightnormal = dot(lightv, input.normal);
+
+			// 反射光ベクトル
+			float3 reflect = normalize(-lightv + 2 * dotlightnormal * input.normal);
+			// 拡散反射光
+			float3 tDiffuse = dotlightnormal * diffuse;
+			// 鏡面反射光
+			float3 tSpecular = pow(saturate(dot(reflect, eyeDir)), shininess) * specular;
+
+			// 全て加算する
+			shaderColor.rgb += atten * (tDiffuse + tSpecular) * pointLights[i].color;
+		}
+	}
 
 	return shaderColor * texColor * color;
-
-	//return float4(shaderColor * texColor.rgb,texColor.a +alpha)
-
-
-	//float4 texColor = tex.Sample(smp, input.uv);
-	//return input.color * texColor;
-
-	//float3 light = normalize(float3(1,-1,1));	// 右下奥 向きのライト
-	//float lightDiffuse = saturate(dot(-light, input.normal));
-	//float3 shadeColor;
-	//shadeColor = ambient;	// アンビエント項
-	//shadeColor += diffuse * lightDiffuse;
-	//float4 texColor = tex.Sample(smp, input.uv);
-
-	//return float4(texColor.rgb * shadeColor, texColor.a * alpha);
 }

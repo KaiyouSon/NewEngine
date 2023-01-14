@@ -3,7 +3,7 @@
 #include "Util.h"
 #include "Object3D.h"
 #include "Sprite.h"
-#include "Light.h"
+#include "DirectionalLight.h"
 #include "PointLight.h"
 #include "Sound.h"
 #include "imgui.h"

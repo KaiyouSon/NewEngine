@@ -28,11 +28,12 @@ struct ConstantBufferDataMaterial
 	float alpha;	// ƒAƒ‹ƒtƒ@
 };
 
-struct ConstantBufferDataLight
+struct ConstantBufferDataDirectionalLight
 {
 	Vec3 dir;
 	float pad1;
 	Vec3 color;
+	unsigned int isActive;
 };
 
 struct ConstantBufferDataPointLight
@@ -42,5 +43,5 @@ struct ConstantBufferDataPointLight
 	Vec3 color;
 	float pad2;
 	Vec3 atten;
-	unsigned int active;
+	unsigned int isActive;
 };

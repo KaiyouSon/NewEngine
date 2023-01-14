@@ -24,7 +24,7 @@ void NewEngineInit()
 	Random::Init();
 	InputManager::GetInstance()->Init();
 	GuiManager::GetInstance()->Init();
-	Light::current.Init();
+	//DirectionalLight::current.Init();
 	SceneManager::GetInstance()->Init();
 
 	// -------------------------------------------------------------------------------- //
@@ -58,7 +58,7 @@ void NewEngineUpda()
 {
 	InputManager::GetInstance()->Update();
 	SceneManager::GetInstance()->Update();
-	Light::current.Update();
+	//DirectionalLight::current.Update();
 }
 void NewEnginePreDraw()
 {

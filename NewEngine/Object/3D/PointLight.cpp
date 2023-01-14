@@ -21,7 +21,8 @@ void PointLight::Update()
 	constantBufferPointLight->constantBufferMap->pos = pos;
 	constantBufferPointLight->constantBufferMap->color = color;
 	constantBufferPointLight->constantBufferMap->atten = atten;
-	constantBufferPointLight->constantBufferMap->active = isActive;
+	constantBufferPointLight->constantBufferMap->isActive = isActive == true ? 1 : 0;
+	//constantBufferPointLight->constantBufferMap->isActive = 1;
 }
 
 void PointLight::Draw()

@@ -1,7 +1,10 @@
 #include "Object3D.h"
 #include "RenderBase.h"
-#include "Light.h"
+#include "DirectionalLight.h"
+#include "LightManager.h"
 using namespace std;
+
+bool Object3D::isAllLighting = false;
 
 Object3D::Object3D() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
@@ -47,7 +50,7 @@ void Object3D::Update(const Object3D* parent)
 	constantBufferTransform->constantBufferMap->cameraPos = Camera::current.pos;
 
 	// マテリアルの転送
-	if (isLighting == true)
+	if (isLighting == true || isAllLighting == true)
 	{
 		constantBufferMaterial->constantBufferMap->ambient = model.material.ambient;
 		constantBufferMaterial->constantBufferMap->diffuse = model.material.diffuse;
@@ -83,7 +86,8 @@ void Object3D::Draw()
 		2, constantBufferMaterial->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		3, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
-	Light::current.Draw();
+	//DirectionalLight::current.Draw();
+	LightManager::GetInstance()->Draw();
 
 	// SRVヒープの設定コマンド
 	auto temp = renderBase->GetSrvDescHeap();

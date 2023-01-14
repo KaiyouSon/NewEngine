@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)/Application/Scene;$(ProjectDir)/Application;$(ProjectDir)/ImGui;$(ProjectDir)/NewEngine/Render/Buffer;$(ProjectDir)/NewEngine/Render;$(ProjectDir)/NewEngine/Gui;$(ProjectDir)/NewEngine/Object/3D;$(ProjectDir)/NewEngine/Object/2D;$(ProjectDir)/NewEngine/Component;$(ProjectDir)/NewEngine/Util;$(ProjectDir)/NewEngine/Math;$(ProjectDir)/NewEngine/Input;$(ProjectDir)/NewEngine/Collision;$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)/Application/Scene;$(ProjectDir)/Application;$(ProjectDir)/ImGui;$(ProjectDir)/NewEngine/Render/Buffer;$(ProjectDir)/NewEngine/Render;$(ProjectDir)/NewEngine/Gui;$(ProjectDir)/NewEngine/Light;$(ProjectDir)/NewEngine/Object/3D;$(ProjectDir)/NewEngine/Object/2D;$(ProjectDir)/NewEngine/Component;$(ProjectDir)/NewEngine/Util;$(ProjectDir)/NewEngine/Math;$(ProjectDir)/NewEngine/Input;$(ProjectDir)/NewEngine/Collision;$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -135,7 +135,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)/Application/Scene;$(ProjectDir)/Application;$(ProjectDir)/ImGui;$(ProjectDir)/NewEngine/Render/Buffer;$(ProjectDir)/NewEngine/Render;$(ProjectDir)/NewEngine/Gui;$(ProjectDir)/NewEngine/Object/3D;$(ProjectDir)/NewEngine/Object/2D;$(ProjectDir)/NewEngine/Component;$(ProjectDir)/NewEngine/Util;$(ProjectDir)/NewEngine/Math;$(ProjectDir)/NewEngine/Input;$(ProjectDir)/NewEngine/Collision;$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/NewEngine/Light;$(ProjectDir);$(ProjectDir)/Application/Scene;$(ProjectDir)/Application;$(ProjectDir)/ImGui;$(ProjectDir)/NewEngine/Render/Buffer;$(ProjectDir)/NewEngine/Render;$(ProjectDir)/NewEngine/Gui;$(ProjectDir)/NewEngine/Object/3D;$(ProjectDir)/NewEngine/Object/2D;$(ProjectDir)/NewEngine/Component;$(ProjectDir)/NewEngine/Util;$(ProjectDir)/NewEngine/Math;$(ProjectDir)/NewEngine/Input;$(ProjectDir)/NewEngine/Collision;$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -158,6 +158,7 @@
     <ClCompile Include="NewEngine\Input\JoypadInput.cpp" />
     <ClCompile Include="NewEngine\Input\KeyBoardInput.cpp" />
     <ClCompile Include="NewEngine\Input\MouseInput.cpp" />
+    <ClCompile Include="NewEngine\Light\LightManager.cpp" />
     <ClCompile Include="NewEngine\main.cpp" />
     <ClCompile Include="NewEngine\Math\Mat4.cpp" />
     <ClCompile Include="NewEngine\Math\MathUtil.cpp" />
@@ -172,7 +173,7 @@
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp" />
     <ClCompile Include="NewEngine\Object\2D\Texture.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Camera.cpp" />
-    <ClCompile Include="NewEngine\Object\3D\Light.cpp" />
+    <ClCompile Include="NewEngine\Object\3D\DirectionalLight.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Line.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Material.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Mesh.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="NewEngine\Input\JoypadInput.h" />
     <ClInclude Include="NewEngine\Input\KeyBoardInput.h" />
     <ClInclude Include="NewEngine\Input\MouseInput.h" />
+    <ClInclude Include="NewEngine\Light\LightManager.h" />
     <ClInclude Include="NewEngine\Math\Mat4.h" />
     <ClInclude Include="NewEngine\Math\MathUtil.h" />
     <ClInclude Include="NewEngine\Math\Quaternion.h" />
@@ -219,7 +221,7 @@
     <ClInclude Include="NewEngine\Object\2D\Sprite.h" />
     <ClInclude Include="NewEngine\Object\2D\Texture.h" />
     <ClInclude Include="NewEngine\Object\3D\Camera.h" />
-    <ClInclude Include="NewEngine\Object\3D\Light.h" />
+    <ClInclude Include="NewEngine\Object\3D\DirectionalLight.h" />
     <ClInclude Include="NewEngine\Object\3D\Line.h" />
     <ClInclude Include="NewEngine\Object\3D\Material.h" />
     <ClInclude Include="NewEngine\Object\3D\Mesh.h" />

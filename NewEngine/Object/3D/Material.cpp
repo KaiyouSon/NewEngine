@@ -74,7 +74,7 @@ Material::Material(std::string filePath) :
 		}
 
 		// 先頭文字列がKaならスペキュラー色
-		if (key == "Kd")
+		if (key == "Ks")
 		{
 			lineStream >> specular.x;
 			lineStream >> specular.y;

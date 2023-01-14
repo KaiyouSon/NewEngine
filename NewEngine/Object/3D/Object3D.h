@@ -13,6 +13,7 @@ private:
 	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
 	Transform transform;
 
+
 public:
 	Model model;
 	Texture texture;
@@ -21,6 +22,7 @@ public:
 	Vec3 rot;
 	Color color;
 	bool isLighting;
+	static bool isAllLighting;
 
 public:
 	Object3D();
