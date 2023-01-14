@@ -5,7 +5,11 @@
 class GameScene : public IScene
 {
 private:
+	Object3D skyDomeObj;
+	Object3D groundObj;
+
 	Object3D obj;
+	Object3D obj2;
 	Sprite spr;
 	Quaternion q;
 

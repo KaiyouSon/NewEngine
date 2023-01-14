@@ -1,4 +1,5 @@
 #pragma once
+// é©çÏ
 #include "Util.h"
 #include "Object3D.h"
 #include "Sprite.h"
@@ -10,10 +11,13 @@
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Collision.h"
+
+// c++
 #include <memory>
 #include <vector>
 #include <string>
 #include <list>
+#include <array>
 
 void NewEngineInit();
 void NewEngineUpda();

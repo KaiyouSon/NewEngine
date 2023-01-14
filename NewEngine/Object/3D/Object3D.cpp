@@ -117,6 +117,10 @@ void Object3D::SetBlendMode(const BlendMode& blendMode)
 		renderBase->GetCommandList()->SetPipelineState(renderBase->GetLoadModelPipeline()->GetInvPipeline());
 		break;
 
+	case BlendMode::Screen:	// ”½“]
+		renderBase->GetCommandList()->SetPipelineState(renderBase->GetLoadModelPipeline()->GetScreenPipeline());
+		break;
+
 	default:
 		break;
 	}

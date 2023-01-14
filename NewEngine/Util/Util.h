@@ -17,7 +17,8 @@ enum class BlendMode
 	Alpha,
 	Add,
 	Sub,
-	Inv
+	Inv,
+	Screen
 };
 
 // ”äŠr‚µ‚Ä‘å‚«‚¢•û‚ð•Ô‚·

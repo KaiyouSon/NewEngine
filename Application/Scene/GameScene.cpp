@@ -10,13 +10,20 @@ GameScene::~GameScene()
 
 void GameScene::Init()
 {
-	Camera::current.pos = { 0,15,-15 };
-	Camera::current.rot = { Radian(45),0,0 };
+	Camera::current.pos = { 0,0,-15 };
+	Camera::current.rot = { Radian(0),0,0 };
 	Light::current.lightPos = { 1,1,1 };
 
+	skyDomeObj.model = Model("SkyDome", true);
+	groundObj.model = Model("Ground");
+	groundObj.pos.y = -5;
+
 	Texture tex = Texture("pic.png");
-	obj.model = Model("sphere", true);
-	obj.pos.x = 3;
+	obj.model = Model("bee", true);
+	obj.pos.z = -5;
+
+	obj2.model = Model("player", true);
+	obj2.pos.z = 0;
 
 	spr.texture = tex;
 	spr.scale = 0.25f;
@@ -27,7 +34,11 @@ void GameScene::Init()
 void GameScene::Update()
 {
 	obj.Update();
+	obj2.Update();
 	spr.Update();
+
+	skyDomeObj.Update();
+	groundObj.Update();
 
 	Camera::DebugCameraUpdate();
 }
@@ -39,6 +50,9 @@ void GameScene::DrawBackSprite()
 void GameScene::DrawModel()
 {
 	obj.Draw();
+	obj2.Draw();
+	skyDomeObj.Draw();
+	groundObj.Draw();
 }
 
 void GameScene::DrawFrontSprite()

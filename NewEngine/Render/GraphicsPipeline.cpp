@@ -16,6 +16,7 @@ void GraphicsPipeline::Create()
 	CreatePipelineState(BlendMode::Add);		// 加算ブレンド
 	CreatePipelineState(BlendMode::Sub);		// 減算ブレンド
 	CreatePipelineState(BlendMode::Inv);
+	CreatePipelineState(BlendMode::Screen);
 }
 
 void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
@@ -108,12 +109,22 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
 		blendDesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;	// デストからソースを減算
 		blendDesc.SrcBlend = D3D12_BLEND_ONE;				// ソースの値を100％使う
 		blendDesc.DestBlend = D3D12_BLEND_ONE;				// デストの値を100％使う
+
+		//blendDesc.BlendOp = D3D12_BLEND_OP_ADD;	// デストからソースを減算
+		//blendDesc.SrcBlend = D3D12_BLEND_ZERO;				// ソースの値を100％使う
+		//blendDesc.DestBlend = D3D12_BLEND_SRC_COLOR;				// デストの値を100％使う
 		break;
 
 	case BlendMode::Inv:	// 反転
 		blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// 加算
 		blendDesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;	// 1.0f-デストカラーの値
 		blendDesc.DestBlend = D3D12_BLEND_ZERO;				// 使わない
+		break;
+
+	case BlendMode::Screen:	// 反転
+		blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// 加算
+		blendDesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;
+		blendDesc.DestBlend = D3D12_BLEND_ONE;
 		break;
 
 	default:
@@ -168,6 +179,10 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
 
 	case BlendMode::Inv:	// 反転
 		result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&invPipeline));
+		break;
+
+	case BlendMode::Screen:	// 反転
+		result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&screenPipeline));
 		break;
 
 	default:
