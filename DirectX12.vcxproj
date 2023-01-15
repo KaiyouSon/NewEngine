@@ -159,6 +159,7 @@
     <ClCompile Include="NewEngine\Input\KeyBoardInput.cpp" />
     <ClCompile Include="NewEngine\Input\MouseInput.cpp" />
     <ClCompile Include="NewEngine\Light\LightManager.cpp" />
+    <ClCompile Include="NewEngine\Light\SpotLight.cpp" />
     <ClCompile Include="NewEngine\main.cpp" />
     <ClCompile Include="NewEngine\Math\Mat4.cpp" />
     <ClCompile Include="NewEngine\Math\MathUtil.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="NewEngine\Input\KeyBoardInput.h" />
     <ClInclude Include="NewEngine\Input\MouseInput.h" />
     <ClInclude Include="NewEngine\Light\LightManager.h" />
+    <ClInclude Include="NewEngine\Light\SpotLight.h" />
     <ClInclude Include="NewEngine\Math\Mat4.h" />
     <ClInclude Include="NewEngine\Math\MathUtil.h" />
     <ClInclude Include="NewEngine\Math\Quaternion.h" />

@@ -1,6 +1,6 @@
 #pragma once
-#include "Vec3.h"
 #include "ConstantBuffer.h"
+#include "Util.h"
 
 class DirectionalLight
 {

@@ -13,7 +13,6 @@ private:
 	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
 	Transform transform;
 
-
 public:
 	Model model;
 	Texture texture;

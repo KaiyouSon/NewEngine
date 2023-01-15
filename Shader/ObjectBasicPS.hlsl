@@ -22,7 +22,7 @@ float4 main(VSOutput input) : SV_TARGET
 	// 平行光源
 	for (int i = 0; i < DirectionalLightNum; i++)
 	{
-		if (directionalLights[i].isActive)
+		if (directionalLights[i].isActive == true)
 		{
 			// ライトに向かうベクトルと法線の内積
 			float3 dotLightNormal = dot(directionalLights[i].lightVec, input.normal);
@@ -36,17 +36,13 @@ float4 main(VSOutput input) : SV_TARGET
 
 			// 全て加算する
 			shaderColor.rgb += (tDiffuse + tSpecular) * directionalLights[i].color;
-
-			// シェーディングによる色
-			//shaderColor.rgb += (tAmbient + tDiffuse + tSpecular) * color;
-			//shaderColor.a = alpha;
 		}
 	}
 
 	// 点光源
 	for (int i = 0; i < PointLightNum; i++)
 	{
-		if (pointLights[i].isActive)
+		if (pointLights[i].isActive == true)
 		{
 			// ライトへの方向ベクトル
 			float3 lightv = pointLights[i].pos - input.worldPos.xyz;
@@ -73,6 +69,48 @@ float4 main(VSOutput input) : SV_TARGET
 
 			// 全て加算する
 			shaderColor.rgb += atten * (tDiffuse + tSpecular) * pointLights[i].color;
+		}
+	}
+
+	// スポットライト
+	for (int i = 0; i < spotLightNum; i++)
+	{
+		if (spotLights[i].isActive == true)
+		{
+			// ライトへの方向ベクトル
+			float3 lightv = spotLights[i].pos - input.worldPos.xyz;
+			// ベクトルの長さ
+			float d = length(lightv);
+			// 正規化
+			lightv = normalize(lightv);
+
+			// 距離減衰係数
+			float atten = saturate(1.0f /
+				(spotLights[i].atten.x +
+					spotLights[i].atten.y * d +
+					spotLights[i].atten.z * d * d));
+
+			// 角度減衰
+			float cos = dot(lightv, spotLights[i].vec);
+			// 減衰開始角度から、減衰終了角度にかけて減衰
+			// 減衰開始角度の内側は１倍、減衰終了角度の外側は０倍の輝度
+			float angleAtten = smoothstep(spotLights[i].factorAngleCos.y, spotLights[i].factorAngleCos.x, cos);
+			// 角度減衰を乗算
+			atten *= angleAtten;
+
+			// ライト方向に向かうベクトルと法線の内積
+			float3 dotLightNormal = dot(lightv, input.normal);
+
+			// 反射光ベクトル
+			float3 reflect = normalize(-lightv + 2 * dotLightNormal * input.normal);
+
+			// 拡散反射光
+			float3 tDiffuse = dotLightNormal * diffuse;
+			// 鏡面反射光
+			float3 tSpecular = pow(saturate(dot(reflect, eyeDir)), shininess) * specular;
+
+			// 全て加算する
+			shaderColor.rgb += atten * (tDiffuse + tSpecular) * spotLights[i].color;
 		}
 	}
 

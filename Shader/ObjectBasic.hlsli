@@ -22,25 +22,22 @@ cbuffer ConstantBufferDataColor : register(b2)
 	float4 color;	// 色
 }
 
+// --- 平行光源 ------------------------------------------------- //
 static const int DirectionalLightNum = 3;
-
-// 点光源
 struct DirectionalLight
 {
-	float3 lightVec;		// 座標
-	float3 color;	// 色
+	float3 lightVec;	// 方向
+	float3 color;		// 色
 	uint isActive;
 };
 
-// ライト
 cbuffer ConstantBufferDataDirectionalLight : register(b3)
 {
 	DirectionalLight directionalLights[DirectionalLightNum];
 };
 
+// --- 点光源 --------------------------------------------------- //
 static const int PointLightNum = 3;
-
-// 点光源
 struct PointLight
 {
 	float3 pos;		// 座標
@@ -54,14 +51,29 @@ cbuffer ConstantBufferDataPointLight : register(b4)
 	PointLight pointLights[PointLightNum];
 }
 
+// --- スポットライト ------------------------------------------- //
+static const int spotLightNum = 3;
+struct SpotLight
+{
+	float3 vec;		// 逆ベクトル
+	float3 pos;		// 座標
+	float3 color;	// 色
+	float3 atten;	// ライト距離減衰係数
+	float2 factorAngleCos;	// ライトの減衰角度のコサイン
+	uint isActive;
+};
+
+cbuffer ConstantBufferDataSpotLight : register(b5)
+{
+	SpotLight spotLights[spotLightNum];
+}
+
 
 // 頂点シェーダーの出力構造体
-// （頂点シェーダーからピクセルシェーダーヘのやり取りに使用する）
 struct VSOutput
 {
 	float4 svpos : SV_POSITION;	// システム用頂点座標
 	float4 worldPos : POSITION;	// ワールド座標
 	float3 normal : NORMAL;		// 法線ベクトル
-	//float4 color: COLOR;
 	float2 uv : TEXCOORD;		// uv値
 };

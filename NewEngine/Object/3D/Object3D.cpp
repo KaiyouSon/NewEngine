@@ -19,6 +19,11 @@ Object3D::Object3D() :
 	constantBufferColor->Init();		// 色
 
 	texture.isMaterial = true;
+
+	if (isAllLighting == true)
+	{
+		isLighting = true;
+	}
 }
 Object3D::~Object3D()
 {
@@ -50,7 +55,7 @@ void Object3D::Update(const Object3D* parent)
 	constantBufferTransform->constantBufferMap->cameraPos = Camera::current.pos;
 
 	// マテリアルの転送
-	if (isLighting == true || isAllLighting == true)
+	if (isLighting == true && isAllLighting == true)
 	{
 		constantBufferMaterial->constantBufferMap->ambient = model.material.ambient;
 		constantBufferMaterial->constantBufferMap->diffuse = model.material.diffuse;

@@ -57,9 +57,9 @@ void GuiManager::Destroy()
 	ImGui::DestroyContext();
 }
 
-bool GuiManager::BeginWindow()
+bool GuiManager::BeginWindow(const char* name)
 {
-	return ImGui::Begin("Debug");
+	return ImGui::Begin(name);
 }
 
 void GuiManager::EndWindow()
@@ -77,13 +77,21 @@ void GuiManager::DrawCheckBox(const char* label, bool* flag)
 	ImGui::Checkbox(label, flag);
 }
 
-void GuiManager::DrawSlider(const char* label, Vec3& v)
+void GuiManager::DrawSlider1(const char* label, float& v)
+{
+	ImGui::DragFloat(label, &v);
+}
+
+void GuiManager::DrawSlider2(const char* label, Vec2& v)
+{
+	float temp[2] = { v.x,v.y };
+	ImGui::DragFloat2(label, temp);
+	v.x = temp[0]; v.y = temp[1];
+}
+
+void GuiManager::DrawSlider3(const char* label, Vec3& v)
 {
 	float temp[3] = { v.x,v.y,v.z };
-
 	ImGui::DragFloat3(label, temp);
-
-	v.x = temp[0];
-	v.y = temp[1];
-	v.z = temp[2];
+	v.x = temp[0];	v.y = temp[1];	v.z = temp[2];
 }

@@ -45,3 +45,18 @@ struct ConstantBufferDataPointLight
 	Vec3 atten;
 	unsigned int isActive;
 };
+
+struct ConstantBufferDataSpotLight
+{
+	Vec3 vec;
+	float pad1;
+	Vec3 pos;
+	float pad2;
+	Vec3 color;
+	float pad3;
+	Vec3 atten;
+	float pad4;
+	Vec2 factorAngleCos;
+	unsigned int isActive;
+	float pad5;
+};

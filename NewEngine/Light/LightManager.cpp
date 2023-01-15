@@ -2,6 +2,7 @@
 
 const int LightManager::directionalLightNum = 3;
 const int LightManager::pointLightNum = 3;
+const int LightManager::spotLightNum = 3;
 
 void LightManager::Init()
 {
@@ -27,6 +28,11 @@ void LightManager::Update()
 	{
 		pointLights[i].Update();
 	}
+
+	for (int i = 0; i < spotLights.size(); i++)
+	{
+		spotLights[i].Update();
+	}
 }
 
 void LightManager::Draw()
@@ -39,5 +45,10 @@ void LightManager::Draw()
 	for (int i = 0; i < pointLights.size(); i++)
 	{
 		pointLights[i].Draw();
+	}
+
+	for (int i = 0; i < spotLights.size(); i++)
+	{
+		spotLights[i].Draw();
 	}
 }
