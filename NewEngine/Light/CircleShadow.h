@@ -2,22 +2,22 @@
 #include "ConstantBuffer.h"
 #include "Util.h"
 
-class SpotLight
+class CircleShadow
 {
 private:
-	ConstantBuffer<ConstantBufferDataSpotLight>* constantBufferSpotLight;
+	ConstantBuffer<ConstantBufferDataCircleShadow>* constantBufferCircleShadow;
 
 public:
 	Vec3 vec;
 	Vec3 pos;
-	Color color;
+	float disCasterLight;
 	Vec3 atten;
 	Vec2 factorAngleCos;
 	bool isActive;
 
 public:
-	SpotLight();
-	~SpotLight();
+	CircleShadow();
+	~CircleShadow();
 	void Update();
 	void Draw();
 };

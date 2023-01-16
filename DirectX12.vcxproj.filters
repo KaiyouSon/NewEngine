@@ -252,6 +252,9 @@
     <ClCompile Include="NewEngine\Light\SpotLight.cpp">
       <Filter>NewEngine\Source\Light</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Light\CircleShadow.cpp">
+      <Filter>NewEngine\Source\Light</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -408,6 +411,9 @@
       <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\PointLight.h">
+      <Filter>NewEngine\Header\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Light\CircleShadow.h">
       <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
   </ItemGroup>

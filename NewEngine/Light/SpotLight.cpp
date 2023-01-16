@@ -12,10 +12,6 @@ SpotLight::~SpotLight()
 	delete constantBufferSpotLight;
 }
 
-void SpotLight::Init()
-{
-}
-
 void SpotLight::Update()
 {
 	constantBufferSpotLight->constantBufferMap->vec = -vec;

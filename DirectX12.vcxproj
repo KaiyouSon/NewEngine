@@ -158,6 +158,7 @@
     <ClCompile Include="NewEngine\Input\JoypadInput.cpp" />
     <ClCompile Include="NewEngine\Input\KeyBoardInput.cpp" />
     <ClCompile Include="NewEngine\Input\MouseInput.cpp" />
+    <ClCompile Include="NewEngine\Light\CircleShadow.cpp" />
     <ClCompile Include="NewEngine\Light\LightManager.cpp" />
     <ClCompile Include="NewEngine\Light\SpotLight.cpp" />
     <ClCompile Include="NewEngine\main.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="NewEngine\Input\JoypadInput.h" />
     <ClInclude Include="NewEngine\Input\KeyBoardInput.h" />
     <ClInclude Include="NewEngine\Input\MouseInput.h" />
+    <ClInclude Include="NewEngine\Light\CircleShadow.h" />
     <ClInclude Include="NewEngine\Light\LightManager.h" />
     <ClInclude Include="NewEngine\Light\SpotLight.h" />
     <ClInclude Include="NewEngine\Math\Mat4.h" />

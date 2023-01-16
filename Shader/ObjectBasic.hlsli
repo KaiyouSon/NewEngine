@@ -68,6 +68,22 @@ cbuffer ConstantBufferDataSpotLight : register(b5)
 	SpotLight spotLights[spotLightNum];
 }
 
+// --- 丸影 ----------------------------------------------------- //
+static const int circleShadowNum = 1;
+struct CircleShadow
+{
+	float3 vec;		// 逆ベクトル
+	float3 pos;		// 座標
+	float disCasterLight;	// キャスターとライトの距離
+	float3 atten;	// 距離減衰係数
+	float2 factorAngleCos;	// 減衰角度のコサイン
+	uint isActive;
+};
+
+cbuffer ConstantBufferDataCircleShadow : register(b6)
+{
+	CircleShadow circleShadows[circleShadowNum];
+}
 
 // 頂点シェーダーの出力構造体
 struct VSOutput

@@ -431,7 +431,7 @@ void RenderBase::RootSignatureInit()
 	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;			// ピクセルシェーダからのみ使用可能
 
 	// ルートパラメーターの設定
-	D3D12_ROOT_PARAMETER rootParams[7] = {};
+	D3D12_ROOT_PARAMETER rootParams[8] = {};
 
 	// テクスチャレジスタ0番（SRV）
 	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE; // 種類
@@ -474,6 +474,12 @@ void RenderBase::RootSignatureInit()
 	rootParams[6].Descriptor.ShaderRegister = 5;					// 定数バッファ番号
 	rootParams[6].Descriptor.RegisterSpace = 0;						// デフォルト値
 	rootParams[6].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
+
+	// 定数バッファ（丸影）
+	rootParams[7].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
+	rootParams[7].Descriptor.ShaderRegister = 6;					// 定数バッファ番号
+	rootParams[7].Descriptor.RegisterSpace = 0;						// デフォルト値
+	rootParams[7].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
 
 	// ルートシグネチャの設定
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};

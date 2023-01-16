@@ -33,6 +33,8 @@ void LightManager::Update()
 	{
 		spotLights[i].Update();
 	}
+
+	circleShadow.Update();
 }
 
 void LightManager::Draw()
@@ -51,4 +53,6 @@ void LightManager::Draw()
 	{
 		spotLights[i].Draw();
 	}
+
+	circleShadow.Draw();
 }

@@ -1,10 +1,8 @@
 #include "DirectionalLight.h"
 #include "RenderBase.h"
 
-//DirectionalLight DirectionalLight::current;
-
-DirectionalLight::DirectionalLight() : 
-	pos(0,0,0),color(Color::white),isActive(false)
+DirectionalLight::DirectionalLight() :
+	pos(0, 1, 0), color(Color::white), isActive(false)
 {
 
 }
@@ -16,9 +14,6 @@ DirectionalLight::~DirectionalLight()
 
 void DirectionalLight::Init()
 {
-	pos = { 0,0,0 };
-	color = { 1,1,1 };
-	isActive = true;
 	constantBufferDirectionalLight = new ConstantBuffer<ConstantBufferDataDirectionalLight>;
 	constantBufferDirectionalLight->Init();
 }

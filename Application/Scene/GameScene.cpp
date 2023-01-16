@@ -30,6 +30,11 @@ void GameScene::Init()
 	LightManager::GetInstance()->pointLights[2].color = Color::white;
 	LightManager::GetInstance()->pointLights[2].atten = { 0.3f, 0.1f ,0.1f };
 
+	LightManager::GetInstance()->circleShadow.isActive = true;
+	LightManager::GetInstance()->circleShadow.vec = { 0,-1,0 };
+	LightManager::GetInstance()->circleShadow.atten = { 0.5f,0.6f,0.0f };
+	LightManager::GetInstance()->circleShadow.factorAngleCos = { 0.0f,0.5f };
+
 	skyDomeObj.model = Model("SkyDome", true);
 	groundObj.model = Model("Ground");
 	groundObj.pos.y = -2;
@@ -61,11 +66,10 @@ void GameScene::Update()
 	skyDomeObj.Update();
 	groundObj.Update();
 
-
+	LightManager::GetInstance()->circleShadow.pos = obj2.pos;
 
 	Camera::DebugCameraUpdate();
 	LightManager::GetInstance()->Update();
-
 
 	//CollisionUpdate();
 }

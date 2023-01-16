@@ -60,3 +60,16 @@ struct ConstantBufferDataSpotLight
 	unsigned int isActive;
 	float pad5;
 };
+
+struct ConstantBufferDataCircleShadow
+{
+	Vec3 vec;
+	float pad1;
+	Vec3 pos;
+	float disCasterLight;
+	Vec3 atten;
+	float pad2;
+	Vec2 factorAngleCos;
+	unsigned int isActive;
+	float pad3;
+};

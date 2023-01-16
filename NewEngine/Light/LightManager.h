@@ -2,6 +2,7 @@
 #include "DirectionalLight.h"
 #include "PointLight.h"
 #include "SpotLight.h"
+#include "CircleShadow.h"
 #include <array>
 
 template<typename T> class Singleton;
@@ -18,6 +19,7 @@ public:
 	std::array<DirectionalLight, 3> directionalLights;
 	std::array<PointLight, 3> pointLights;
 	std::array<SpotLight, 3> spotLights;
+	CircleShadow circleShadow;
 
 	void Init();
 	void Update();
