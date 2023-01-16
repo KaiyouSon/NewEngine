@@ -13,6 +13,22 @@ private:
 	Sprite spr;
 	Quaternion q;
 
+
+
+
+private:
+	// “–‚½‚è”»’èŠÖ˜A
+	Object3D sphereObj;
+	Object3D planeObj;
+	Object3D triangleObj;
+	Object3D rayObj;
+	int currentCollision;
+
+	void CollisionInit();
+	void CollisionUpdate();
+	void CollisionDrawModel();
+	void CollisionDrawGui();
+
 public:
 	GameScene();
 	~GameScene();

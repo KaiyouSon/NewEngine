@@ -67,6 +67,16 @@ void GuiManager::EndWindow()
 	ImGui::End();
 }
 
+void GuiManager::DrawDebugWindow(bool& flag)
+{
+	ImGui::ShowDemoWindow(&flag);
+}
+
+void GuiManager::DrawTab()
+{
+	ImGui::SameLine();
+}
+
 void GuiManager::DrawString(const char* fmt, ...)
 {
 	ImGui::Text(fmt);
@@ -77,21 +87,32 @@ void GuiManager::DrawCheckBox(const char* label, bool* flag)
 	ImGui::Checkbox(label, flag);
 }
 
-void GuiManager::DrawSlider1(const char* label, float& v)
+bool GuiManager::DrawRadioButton(const char* label, int& current, const int& index, const bool& isTab)
 {
-	ImGui::DragFloat(label, &v);
+	bool flag = ImGui::RadioButton(label, &current, index);
+	if (isTab == true)
+	{
+		ImGui::SameLine();
+	}
+
+	return flag;
 }
 
-void GuiManager::DrawSlider2(const char* label, Vec2& v)
+void GuiManager::DrawSlider1(const char* label, float& v, const float& moveSpeed)
+{
+	ImGui::DragFloat(label, &v, moveSpeed);
+}
+
+void GuiManager::DrawSlider2(const char* label, Vec2& v, const float& moveSpeed)
 {
 	float temp[2] = { v.x,v.y };
-	ImGui::DragFloat2(label, temp);
+	ImGui::DragFloat2(label, temp, moveSpeed);
 	v.x = temp[0]; v.y = temp[1];
 }
 
-void GuiManager::DrawSlider3(const char* label, Vec3& v)
+void GuiManager::DrawSlider3(const char* label, Vec3& v, const float& moveSpeed)
 {
 	float temp[3] = { v.x,v.y,v.z };
-	ImGui::DragFloat3(label, temp);
+	ImGui::DragFloat3(label, temp, moveSpeed);
 	v.x = temp[0];	v.y = temp[1];	v.z = temp[2];
 }

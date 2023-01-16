@@ -1,11 +1,13 @@
 #include "Collider.h"
 
 // ----- 円コライダー ------------------- //
-CircleCollider::CircleCollider()
+CircleCollider::CircleCollider() :
+	centerPos(0), radius(1)
 {
 }
 
-CircleCollider::CircleCollider(const Vec2& centerPos, const float& radius)
+CircleCollider::CircleCollider(const Vec2& centerPos, const float& radius) :
+	centerPos(centerPos), radius(radius)
 {
 }
 
@@ -20,11 +22,11 @@ SphereCollider::SphereCollider(const Vec3& centerPos, const float& radius) :
 }
 
 // ----- レイコライダー ----------------- //
-ReyCollider::ReyCollider() :
+RayCollider::RayCollider() :
 	startPos(0, 0, 0), dirVec(0, 0, 1)
 {
 }
-ReyCollider::ReyCollider(const Vec3& startPos, const Vec3& dirVec) :
+RayCollider::RayCollider(const Vec3& startPos, const Vec3& dirVec) :
 	startPos(startPos), dirVec(dirVec)
 {
 }
@@ -40,23 +42,23 @@ LineCollider::LineCollider(const Vec3& startPos, const Vec3& endPos) :
 {
 }
 
-// ----- メッシュコライダー ------------- //
-MeshCollider::MeshCollider() :
-	centerPos(0, 0, 0),
-	upperLeftPos(0, 0, 0), upperRightPos(0, 0, 0),
-	lowerLeftPos(0, 0, 0), lowerRightPos(0, 0, 0),
-	normal(0, 0, 0)
+// ----- 平面コライダー ------------- //
+PlaneCollider::PlaneCollider() :
+	centerPos(0, 0, 0), normal(0, 0, 0)
 {
 }
 
-MeshCollider::MeshCollider(const Vec3& centerPos, const Vec3& scale) :
-	centerPos(centerPos),
-	upperLeftPos(centerPos.x - scale.x, centerPos.y + scale.y, centerPos.z),
-	upperRightPos(centerPos.x + scale.x, centerPos.y + scale.y, centerPos.z),
-	lowerLeftPos(centerPos.x - scale.x, centerPos.y - scale.y, centerPos.z),
-	lowerRightPos(centerPos.x + scale.x, centerPos.y - scale.y, centerPos.z),
-	normal(Vec3::Cross(
-		(lowerRightPos - lowerLeftPos).Norm(),
-		(upperLeftPos - lowerLeftPos).Norm()))
+PlaneCollider::PlaneCollider(const Vec3& centerPos, const Vec3& normal) :
+	centerPos(centerPos), normal(normal)
+{
+}
+
+TriangleCollider::TriangleCollider() :
+	p0(0), p1(0), p2(0), normal(0)
+{
+}
+
+TriangleCollider::TriangleCollider(const Vec3& p0, const Vec3& p1, const Vec3& p2, const Vec3& normal) :
+	p0(p0), p1(p1), p2(p2), normal(normal)
 {
 }

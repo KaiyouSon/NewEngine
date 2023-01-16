@@ -1,5 +1,7 @@
 #include "Collision.h"
+#include <DirectXMath.h>
 using namespace std;
+using namespace DirectX;
 
 bool Collision::CircleHitCircle(const CircleCollider& circle1, const CircleCollider& circle2)
 {
@@ -29,46 +31,130 @@ bool Collision::SphereHitSphere(const SphereCollider& sphere1, const SphereColli
 	};
 }
 
-bool Collision::ReyHitMesh(const ReyCollider& rey, const MeshCollider& mesh)
+bool Collision::SphereHitPlane(const SphereCollider& sphere, const PlaneCollider& plane)
 {
-	// レイの始点と原点の距離
-	float dis1 = Vec3::Distance(rey.startPos, Vec3::zero);
-	// メッシュの中心座標と原点の距離
-	float dis2 = Vec3::Distance(mesh.centerPos, Vec3::zero);
-	// レイの始点とメッシュ距離
-	float dist = dis1 - dis2;
-	// メッシュの法線とレイのベクトルでcosθを求める
-	float cosRadius = Vec3::Dot(mesh.normal * -1, rey.dirVec.Norm());
+	// 座標系の原点から球の中心座標への距離
+	float dot1 = Vec3::Dot(sphere.centerPos, plane.normal);
+	// 平面の原点距離
+	float dot2 = Vec3::Dot(plane.centerPos, plane.normal);
+	float dis = dot1 - dot2;
 
-	// 当たった点
-	Vec3 inter = rey.startPos + rey.dirVec.Norm() * dist;
+	if (fabsf(dis) > sphere.radius)
+	{
+		return false;
+	}
 
-	if (inter.x >= mesh.lowerLeftPos.x && inter.x <= mesh.lowerRightPos.x &&
-		inter.y >= mesh.lowerLeftPos.y && inter.y <= mesh.upperLeftPos.y)
-		return true;
-
-	return false;
+	return true;
 }
 
-bool Collision::LineHitMesh(const LineCollider& line, const MeshCollider& mesh)
+bool Collision::SphereHitTriangle(const SphereCollider& sphere, const TriangleCollider& triangle)
 {
-	Vec3 v1 = line.startPos - mesh.centerPos;
-	Vec3 v2 = line.endPos - mesh.centerPos;
-	//Vec3 v3 = v1 + v2;
+	Vec3 p = ClosestPointOfPointAndTriangle(sphere.centerPos, triangle);
 
-	if (Vec3::Dot(v1, mesh.normal * Vec3::Dot(v2, mesh.normal)) <= 0)
+	Vec3 v = p - sphere.centerPos;
+
+	float value = Vec3::Dot(v, v);
+
+	if (value > sphere.radius * sphere.radius)
 	{
-		if (v1.x >= mesh.lowerLeftPos.x && v1.x <= mesh.lowerRightPos.x &&
-			v1.y >= mesh.lowerLeftPos.y && v1.y <= mesh.upperLeftPos.y)
-		{
-			return true;
-		}
-		if (v2.x >= mesh.lowerLeftPos.x && v2.x <= mesh.lowerRightPos.x &&
-			v2.y >= mesh.lowerLeftPos.y && v2.y <= mesh.upperLeftPos.y)
-		{
-			return true;
-		}
-
+		return false;
 	}
-	return false;
+
+	return true;
+}
+
+bool Collision::RayHitPlane(const RayCollider& ray, const PlaneCollider& plane)
+{
+	const float epsilon = 1.0e-5f;
+
+	// 座標系の原点からレイの始点座標への距離
+	float dot1 = Vec3::Dot(plane.normal, ray.dirVec);
+
+	// 裏面判定
+	if (dot1 > -epsilon)
+	{
+		return false;
+	}
+
+	// 平面の原点距離
+	float dot2 = Vec3::Dot(plane.normal, ray.startPos);
+
+	float dis = dot2 - Vec3::Dot(plane.centerPos, plane.normal);
+
+	float t = dis / -dot1;
+	if (t < 0)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+Vec3 Collision::ClosestPointOfPointAndTriangle(const Vec3 point, const TriangleCollider& triangle)
+{
+	// pointがp0の外側の頂点領域の中にあるかどうかチェック
+	Vec3 p0_p1 = triangle.p1 - triangle.p0;
+	Vec3 p0_p2 = triangle.p2 - triangle.p0;
+	Vec3 p0_pt = point - triangle.p0;
+
+	float d1 = Vec3::Dot(p0_p1, p0_pt);
+	float d2 = Vec3::Dot(p0_p2, p0_pt);
+
+	if (d1 <= 0.0f && d2 <= 0.0f)
+	{
+		// p0が最近傍
+		return triangle.p0;
+	}
+
+	// pointがp1の外側の頂点領域の中にあるかどうかチェック
+	Vec3 p1_pt = point - triangle.p1;
+
+	float d3 = Vec3::Dot(p0_p1, p1_pt);
+	float d4 = Vec3::Dot(p0_p2, p1_pt);
+
+	if (d3 >= 0.0f && d4 <= d3)
+	{
+		// p1が最近傍
+		return triangle.p1;
+	}
+
+	// pointがp0_p1の辺領域の中にあるかどうかチェックし、あればpointのp0_p1上に対する射影を返す
+	float vc = d1 * d4 - d3 * d2;
+	if (vc <= 0.0f && d1 >= 0.0f && d3 <= 0.0f)
+	{
+		float v = d1 / (d1 - d3);
+		return triangle.p0 + p0_p1 * v;
+	}
+
+	// pointがp2の外側の頂点領域の中にあるかどうかチェック
+	Vec3 p2_pt = point - triangle.p2;
+
+	float d5 = Vec3::Dot(p0_p1, p2_pt);
+	float d6 = Vec3::Dot(p0_p2, p2_pt);
+	if (d6 >= 0.0f && d5 <= d6)
+	{
+		return triangle.p2;
+	}
+
+	// pointがp0_p2の辺領域の中にあるかどうかチェックし、あればpointのp0_p2上に対する射影を返す
+	float vb = d5 * d2 - d1 * d6;
+	if (vb <= 0.0f && d2 >= 0.0f && d6 <= 0.0f)
+	{
+		float w = d2 / (d2 - d6);
+		return triangle.p0 + p0_p2 * w;
+	}
+
+	// pointがp1_p2の辺領域の中にあるかどうかチェックし、あればpointのp1_p2上に対する射影を返す
+	float va = d3 * d6 - d5 * d4;
+	if (va <= 0.0f && (d4 - d3) >= 0.0f && (d5 - d6) >= 0.0f)
+	{
+		float w = (d4 - d3) / ((d4 - d3) + (d5 - d6));
+		return triangle.p1 + (triangle.p2 - triangle.p1) * w;
+	}
+
+	float denom = 1.0f / (va + vb + vc);
+	float v = vb * denom;
+	float w = vc * denom;
+
+	return 0;
 }

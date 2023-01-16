@@ -18,11 +18,16 @@ public:
 
 	static bool BeginWindow(const char* name);
 	static void EndWindow();
+	static void DrawDebugWindow(bool& flag);
+
+	static void DrawTab();
 
 	static void DrawString(const char* fmt, ...);
 	static void DrawCheckBox(const char* label, bool* flag);
 
-	static void DrawSlider1(const char* label, float& v);
-	static void DrawSlider2(const char* label, Vec2& v);
-	static void DrawSlider3(const char* label, Vec3& v);
+	static bool DrawRadioButton(const char* label, int& current, const int& index, const bool& isTab = true);
+
+	static void DrawSlider1(const char* label, float& v, const float& moveSpeed = 1.f);
+	static void DrawSlider2(const char* label, Vec2& v, const float& moveSpeed = 1.f);
+	static void DrawSlider3(const char* label, Vec3& v, const float& moveSpeed = 1.f);
 };

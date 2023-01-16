@@ -6,7 +6,7 @@ std::unique_ptr<IScene> SceneManager::currentScene = nullptr;
 
 SceneManager::SceneManager()
 {
-	Object3D::isAllLighting = true;
+	Object3D::isAllLighting = false;
 
 	currentScene = std::move(std::make_unique<GameScene>());
 }
@@ -33,7 +33,7 @@ void SceneManager::Draw()
 
 	Object3D::SetBlendMode(BlendMode::Alpha);
 	currentScene->DrawModel();
-	
+
 	Sprite::SetBlendMode(BlendMode::Alpha);
 	currentScene->DrawFrontSprite();
 

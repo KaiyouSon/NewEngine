@@ -14,13 +14,24 @@ public:
 		const SphereCollider& sphere1,
 		const SphereCollider& sphere2);
 
-	// レイとメッシュ
-	static bool ReyHitMesh(
-		const ReyCollider& rey,
-		const MeshCollider& mesh);
+	// 球と平面
+	static bool SphereHitPlane(
+		const SphereCollider& sphere,
+		const PlaneCollider& plane);
 
-	// 線とメッシュ
-	static bool LineHitMesh(
-		const LineCollider& line,
-		const MeshCollider& mesh);
+	// 三角形ト平面
+	static bool SphereHitTriangle(
+		const SphereCollider& sphere,
+		const TriangleCollider& triangle);
+
+	// レイと平面
+	static bool RayHitPlane(
+		const RayCollider& ray,
+		const PlaneCollider& plane);
+
+	// 点と三角形の最近接点
+	static Vec3 ClosestPointOfPointAndTriangle(
+		const Vec3 point,
+		const TriangleCollider& triangle);
+
 };
