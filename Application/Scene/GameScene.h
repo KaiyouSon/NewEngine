@@ -29,6 +29,12 @@ private:
 	void CollisionDrawModel();
 	void CollisionDrawGui();
 
+private:
+	// ƒ‰ƒCƒgŠÖ˜A
+	void DirectionalLightDrawGui();
+	void PointLightDrawGui();
+	void SpotLightDrawGui();
+
 public:
 	GameScene();
 	~GameScene();

@@ -8,11 +8,9 @@ private:
 	ConstantBuffer<ConstantBufferDataDirectionalLight>* constantBufferDirectionalLight;
 
 public:
-	Vec3 pos = { 1,0,0 };
-	Vec3 color = { 1,1,1 };
-	bool isActive = false;
-	bool isDirty = false;
-	//static DirectionalLight current;
+	Vec3 pos;
+	Color color;
+	bool isActive;
 
 public:
 	DirectionalLight();

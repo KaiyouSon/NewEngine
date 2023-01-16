@@ -16,9 +16,19 @@ void GameScene::Init()
 	//DirectionalLight::current.pos = { 1,1,1 };
 
 	LightManager::GetInstance()->Init();
-	LightManager::GetInstance()->directionalLights[0].isActive = false;
-	LightManager::GetInstance()->directionalLights[1].isActive = false;
 	LightManager::GetInstance()->directionalLights[2].isActive = false;
+
+	LightManager::GetInstance()->spotLights[2].isActive = false;
+	LightManager::GetInstance()->spotLights[2].vec = Vec3::down;
+	LightManager::GetInstance()->spotLights[2].pos = { 0,5,0 };
+	LightManager::GetInstance()->spotLights[2].color = Color::white;
+	LightManager::GetInstance()->spotLights[2].atten = Vec3::zero;
+	LightManager::GetInstance()->spotLights[2].factorAngleCos = { 20.f,30.f };
+
+	LightManager::GetInstance()->pointLights[2].isActive = true;
+	LightManager::GetInstance()->pointLights[2].pos = { 0.5f, 1.0f, 0.0f };
+	LightManager::GetInstance()->pointLights[2].color = Color::white;
+	LightManager::GetInstance()->pointLights[2].atten = { 0.3f, 0.1f ,0.1f };
 
 	skyDomeObj.model = Model("SkyDome", true);
 	groundObj.model = Model("Ground");
@@ -37,37 +47,10 @@ void GameScene::Init()
 
 	triangleObj.model = Model("Triangle");
 
-	LightManager::GetInstance()->spotLights[0].isActive = false;
-	LightManager::GetInstance()->spotLights[1].isActive = false;
-	LightManager::GetInstance()->spotLights[2].isActive = true;
-
-	 LightManager::GetInstance()->spotLights[2].vec = Vec3::down;
-	 LightManager::GetInstance()->spotLights[2].pos = { 0,5,0 };
-	 LightManager::GetInstance()->spotLights[2].color = 1.f;
-	 LightManager::GetInstance()->spotLights[2].atten = Vec3::zero;
-	 LightManager::GetInstance()->spotLights[2].factorAngleCos = { 20.f,30.f };
-
 	CollisionInit();
 }
-
 void GameScene::Update()
 {
-	LightManager::GetInstance()->pointLights[0].pos = { 0.5f, 1.0f, 0.0f };
-	LightManager::GetInstance()->pointLights[1].pos = { 0.5f, 1.0f, 0.0f };
-	LightManager::GetInstance()->pointLights[2].pos = { 0.5f, 1.0f, 0.0f };
-
-	LightManager::GetInstance()->pointLights[0].color = 1.f;
-	LightManager::GetInstance()->pointLights[1].color = 1.f;
-	LightManager::GetInstance()->pointLights[2].color = 1.f;
-
-	LightManager::GetInstance()->pointLights[0].atten = { 0.3f, 0.1f ,0.1f };
-	LightManager::GetInstance()->pointLights[1].atten = { 0.3f, 0.1f ,0.1f };
-	LightManager::GetInstance()->pointLights[2].atten = { 0.3f, 0.1f ,0.1f };
-
-	LightManager::GetInstance()->pointLights[0].isActive = false;
-	LightManager::GetInstance()->pointLights[1].isActive = false;
-	LightManager::GetInstance()->pointLights[2].isActive = false;
-
 	obj.rot.y += Radian(2);
 	obj2.rot.y += Radian(2);
 
@@ -90,7 +73,6 @@ void GameScene::Update()
 void GameScene::DrawBackSprite()
 {
 }
-
 void GameScene::DrawModel()
 {
 	obj.Draw();
@@ -100,12 +82,10 @@ void GameScene::DrawModel()
 
 	//CollisionDrawModel();
 }
-
 void GameScene::DrawFrontSprite()
 {
 	spr.Draw();
 }
-
 void GameScene::DrawDebugGui()
 {
 	//	Quaternion q = { 0,1,0 };
@@ -122,17 +102,11 @@ void GameScene::DrawDebugGui()
 	//	Vec3 v2 = m.ExtractTranslation();
 	//
 
+	DirectionalLightDrawGui();
+	PointLightDrawGui();
+	SpotLightDrawGui();
+
 	CollisionDrawGui();
-
-	GuiManager::BeginWindow("SpotLight");
-
-	GuiManager::DrawSlider3("vec", LightManager::GetInstance()->spotLights[2].vec);
-	GuiManager::DrawSlider3("pos", LightManager::GetInstance()->spotLights[2].pos);
-	GuiManager::DrawSlider3("color", LightManager::GetInstance()->spotLights[2].color);
-	GuiManager::DrawSlider3("atten", LightManager::GetInstance()->spotLights[2].atten);
-	GuiManager::DrawSlider2("factor angle cos", LightManager::GetInstance()->spotLights[2].factorAngleCos);
-
-	GuiManager::EndWindow();
 }
 
 void GameScene::CollisionInit()
@@ -148,7 +122,6 @@ void GameScene::CollisionInit()
 	rayObj.scale.y = 100;
 	//rayObj.scale = { 0.1f,1,1f };
 }
-
 void GameScene::CollisionUpdate()
 {
 	if (currentCollision == 0)
@@ -217,7 +190,6 @@ void GameScene::CollisionUpdate()
 		planeObj.Update();
 	}
 }
-
 void GameScene::CollisionDrawModel()
 {
 	if (currentCollision == 0)
@@ -236,7 +208,6 @@ void GameScene::CollisionDrawModel()
 		planeObj.Draw();
 	}
 }
-
 void GameScene::CollisionDrawGui()
 {
 	GuiManager::BeginWindow("Collision Debug");
@@ -263,5 +234,40 @@ void GameScene::CollisionDrawGui()
 	GuiManager::BeginWindow("Camera Option");
 	GuiManager::DrawSlider3("Camera Pos", Camera::current.pos, 0.01f);
 	GuiManager::DrawSlider3("Camera Rot", Camera::current.rot, 0.01f);
+	GuiManager::EndWindow();
+}
+
+void GameScene::DirectionalLightDrawGui()
+{
+	GuiManager::BeginWindow("DirectionalLight");
+
+	GuiManager::DrawCheckBox("DirectionalLight isActive", &LightManager::GetInstance()->directionalLights[2].isActive);
+	GuiManager::DrawSlider3("DirectionalLight pos", LightManager::GetInstance()->directionalLights[2].pos);
+	GuiManager::DrawColorEdit("DirectionalLight color", LightManager::GetInstance()->directionalLights[2].color);
+
+	GuiManager::EndWindow();
+}
+void GameScene::PointLightDrawGui()
+{
+	GuiManager::BeginWindow("PointLight");
+
+	GuiManager::DrawCheckBox("PointLight isActive", &LightManager::GetInstance()->pointLights[2].isActive);
+	GuiManager::DrawSlider3("PointLight pos", LightManager::GetInstance()->pointLights[2].pos);
+	GuiManager::DrawSlider3("PointLight atten", LightManager::GetInstance()->pointLights[2].atten);
+	GuiManager::DrawColorEdit("PointLight color", LightManager::GetInstance()->pointLights[2].color);
+
+	GuiManager::EndWindow();
+}
+void GameScene::SpotLightDrawGui()
+{
+	GuiManager::BeginWindow("SpotLight");
+
+	GuiManager::DrawCheckBox("SpotLight isActive", &LightManager::GetInstance()->spotLights[2].isActive);
+	GuiManager::DrawSlider3("SpotLight vec", LightManager::GetInstance()->spotLights[2].vec);
+	GuiManager::DrawSlider3("SpotLight pos", LightManager::GetInstance()->spotLights[2].pos);
+	GuiManager::DrawSlider3("SpotLight atten", LightManager::GetInstance()->spotLights[2].atten);
+	GuiManager::DrawSlider2("SpotLight factor angle cos", LightManager::GetInstance()->spotLights[2].factorAngleCos);
+	GuiManager::DrawColorEdit("SpotLight color", LightManager::GetInstance()->spotLights[2].color);
+
 	GuiManager::EndWindow();
 }

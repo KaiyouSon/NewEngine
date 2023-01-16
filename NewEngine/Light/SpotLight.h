@@ -10,10 +10,10 @@ private:
 public:
 	Vec3 vec;
 	Vec3 pos;
-	Vec3 color;
+	Color color;
 	Vec3 atten;
 	Vec2 factorAngleCos;
-	unsigned int isActive;
+	bool isActive;
 
 public:
 	SpotLight();

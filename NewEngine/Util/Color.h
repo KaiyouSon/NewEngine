@@ -15,6 +15,8 @@ public:
 	const static Color white;
 	const static Color black;
 
+	Color GetColorTo01() { return { r / 255,g / 255,b / 255 ,a / 255 }; }
+
 	Color operator=(const Color& other);
 
 	// 比較演算子のオーバーロード

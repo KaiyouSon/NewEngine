@@ -116,3 +116,10 @@ void GuiManager::DrawSlider3(const char* label, Vec3& v, const float& moveSpeed)
 	ImGui::DragFloat3(label, temp, moveSpeed);
 	v.x = temp[0];	v.y = temp[1];	v.z = temp[2];
 }
+
+void GuiManager::DrawColorEdit(const char* label, Color& color)
+{
+	float temp[4] = { color.r / 255,color.g / 255,color.b / 255,color.a / 255 };
+	ImGui::ColorEdit4(label, temp);
+	color.r = temp[0] * 255; color.g = temp[1] * 255; color.b = temp[2] * 255; color.a = temp[3] * 255;
+}

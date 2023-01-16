@@ -9,7 +9,7 @@ private:
 
 public:
 	Vec3 pos;
-	Vec3 color;
+	Color color;
 	Vec3 atten;
 	bool isActive;
 

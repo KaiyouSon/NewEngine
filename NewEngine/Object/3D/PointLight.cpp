@@ -1,7 +1,7 @@
 #include "PointLight.h"
 
 PointLight::PointLight() :
-	pos(0, 0, 0), color(1, 1, 1), atten(1, 1, 1), isActive(false)
+	pos(0, 0, 0), color(Color::white), atten(1, 1, 1), isActive(false)
 {
 }
 
@@ -19,7 +19,9 @@ void PointLight::Init()
 void PointLight::Update()
 {
 	constantBufferPointLight->constantBufferMap->pos = pos;
-	constantBufferPointLight->constantBufferMap->color = color;
+	constantBufferPointLight->constantBufferMap->color.x = color.r / 255;
+	constantBufferPointLight->constantBufferMap->color.y = color.g / 255;
+	constantBufferPointLight->constantBufferMap->color.z = color.b / 255;
 	constantBufferPointLight->constantBufferMap->atten = atten;
 	constantBufferPointLight->constantBufferMap->isActive = isActive == true ? 1 : 0;
 	//constantBufferPointLight->constantBufferMap->isActive = 1;

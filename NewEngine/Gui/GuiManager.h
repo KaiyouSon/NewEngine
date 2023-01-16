@@ -30,4 +30,5 @@ public:
 	static void DrawSlider1(const char* label, float& v, const float& moveSpeed = 1.f);
 	static void DrawSlider2(const char* label, Vec2& v, const float& moveSpeed = 1.f);
 	static void DrawSlider3(const char* label, Vec3& v, const float& moveSpeed = 1.f);
+	static void DrawColorEdit(const char* label, Color& color);
 };

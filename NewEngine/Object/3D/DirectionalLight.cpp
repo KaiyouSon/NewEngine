@@ -3,7 +3,8 @@
 
 //DirectionalLight DirectionalLight::current;
 
-DirectionalLight::DirectionalLight()
+DirectionalLight::DirectionalLight() : 
+	pos(0,0,0),color(Color::white),isActive(false)
 {
 
 }
@@ -25,7 +26,9 @@ void DirectionalLight::Init()
 void DirectionalLight::Update()
 {
 	constantBufferDirectionalLight->constantBufferMap->dir = pos;
-	constantBufferDirectionalLight->constantBufferMap->color = color;
+	constantBufferDirectionalLight->constantBufferMap->color.x = color.r / 255;
+	constantBufferDirectionalLight->constantBufferMap->color.y = color.g / 255;
+	constantBufferDirectionalLight->constantBufferMap->color.z = color.b / 255;
 	constantBufferDirectionalLight->constantBufferMap->isActive = isActive == true ? 1 : 0;
 }
 
