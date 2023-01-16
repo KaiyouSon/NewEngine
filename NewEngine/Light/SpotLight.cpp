@@ -22,7 +22,8 @@ void SpotLight::Update()
 	constantBufferSpotLight->constantBufferMap->pos = pos;
 	constantBufferSpotLight->constantBufferMap->color = color;
 	constantBufferSpotLight->constantBufferMap->atten = atten;
-	constantBufferSpotLight->constantBufferMap->factorAngleCos = factorAngleCos;
+	constantBufferSpotLight->constantBufferMap->factorAngleCos.x = cosf(Radian(factorAngleCos.x));
+	constantBufferSpotLight->constantBufferMap->factorAngleCos.y = cosf(Radian(factorAngleCos.y));
 	constantBufferSpotLight->constantBufferMap->isActive = isActive;
 }
 

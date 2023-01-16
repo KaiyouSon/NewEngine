@@ -6,7 +6,7 @@ std::unique_ptr<IScene> SceneManager::currentScene = nullptr;
 
 SceneManager::SceneManager()
 {
-	Object3D::isAllLighting = false;
+	Object3D::isAllLighting = true;
 
 	currentScene = std::move(std::make_unique<GameScene>());
 }

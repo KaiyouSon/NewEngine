@@ -41,11 +41,11 @@ void GameScene::Init()
 	LightManager::GetInstance()->spotLights[1].isActive = false;
 	LightManager::GetInstance()->spotLights[2].isActive = true;
 
-	// LightManager::GetInstance()->spotLights[2].vec = Vec3::down;
-	// LightManager::GetInstance()->spotLights[2].pos = { 0,5,0 };
-	// LightManager::GetInstance()->spotLights[2].color = 1.f;
-	// LightManager::GetInstance()->spotLights[2].atten = Vec3::zero;
-	// LightManager::GetInstance()->spotLights[2].factorAngleCos = { 20.f,30.f };
+	 LightManager::GetInstance()->spotLights[2].vec = Vec3::down;
+	 LightManager::GetInstance()->spotLights[2].pos = { 0,5,0 };
+	 LightManager::GetInstance()->spotLights[2].color = 1.f;
+	 LightManager::GetInstance()->spotLights[2].atten = Vec3::zero;
+	 LightManager::GetInstance()->spotLights[2].factorAngleCos = { 20.f,30.f };
 
 	CollisionInit();
 }
@@ -84,7 +84,7 @@ void GameScene::Update()
 	LightManager::GetInstance()->Update();
 
 
-	CollisionUpdate();
+	//CollisionUpdate();
 }
 
 void GameScene::DrawBackSprite()
@@ -93,12 +93,12 @@ void GameScene::DrawBackSprite()
 
 void GameScene::DrawModel()
 {
-	//obj.Draw();
-	//obj2.Draw();
-	//skyDomeObj.Draw();
-	//groundObj.Draw();
+	obj.Draw();
+	obj2.Draw();
+	skyDomeObj.Draw();
+	groundObj.Draw();
 
-	CollisionDrawModel();
+	//CollisionDrawModel();
 }
 
 void GameScene::DrawFrontSprite()
@@ -124,15 +124,15 @@ void GameScene::DrawDebugGui()
 
 	CollisionDrawGui();
 
-	//GuiManager::BeginWindow("SpotLight");
+	GuiManager::BeginWindow("SpotLight");
 
-	//GuiManager::DrawSlider3("vec", LightManager::GetInstance()->spotLights[2].vec);
-	//GuiManager::DrawSlider3("pos", LightManager::GetInstance()->spotLights[2].pos);
-	//GuiManager::DrawSlider3("color", LightManager::GetInstance()->spotLights[2].color);
-	//GuiManager::DrawSlider3("atten", LightManager::GetInstance()->spotLights[2].atten);
-	//GuiManager::DrawSlider2("factor angle cos", LightManager::GetInstance()->spotLights[2].factorAngleCos);
+	GuiManager::DrawSlider3("vec", LightManager::GetInstance()->spotLights[2].vec);
+	GuiManager::DrawSlider3("pos", LightManager::GetInstance()->spotLights[2].pos);
+	GuiManager::DrawSlider3("color", LightManager::GetInstance()->spotLights[2].color);
+	GuiManager::DrawSlider3("atten", LightManager::GetInstance()->spotLights[2].atten);
+	GuiManager::DrawSlider2("factor angle cos", LightManager::GetInstance()->spotLights[2].factorAngleCos);
 
-	//GuiManager::EndWindow();
+	GuiManager::EndWindow();
 }
 
 void GameScene::CollisionInit()
