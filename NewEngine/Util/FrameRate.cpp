@@ -4,23 +4,23 @@
 using namespace std::chrono;
 using namespace std::this_thread;
 
-FrameRate::FrameRate() : fps(0)
+FrameRate::FrameRate() : frameRate(0)
 {
 }
 
-void FrameRate::Init(const float& fps)
+void FrameRate::Init(const float& frameRate)
 {
 	reference = steady_clock::now();
-	this->fps = fps;
+	this->frameRate = frameRate;
 }
 
 void FrameRate::Update()
 {
 	// ‚P/‚U‚O•b‚Ò‚Á‚½‚è‚ÌŠÔ
-	const microseconds minTime(uint64_t(1000000.0f / fps));
+	const microseconds minTime(uint64_t(1000000.0f / frameRate));
 
 	// ‚P/‚U‚O•b‚æ‚è‚í‚¸‚©‚É’Z‚¢ŠÔ
-	const microseconds minCheckTime(uint64_t(1000000.0f / (fps + 5)));
+	const microseconds minCheckTime(uint64_t(1000000.0f / (frameRate + 5)));
 
 	// Œ»İ‚ÌŠÔ‚ğæ“¾
 	steady_clock::time_point nowTime = steady_clock::now();

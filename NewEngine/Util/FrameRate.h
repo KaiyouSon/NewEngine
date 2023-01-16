@@ -11,11 +11,11 @@ private:
 
 private:
 	std::chrono::steady_clock::time_point reference;
-	float fps;
+	float frameRate;
 
 public:
 	FrameRate();
-	void Init(const float& fps);
+	void Init(const float& frameRate);
 	void Update();
 };
 
