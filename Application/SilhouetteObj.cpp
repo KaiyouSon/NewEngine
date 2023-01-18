@@ -5,15 +5,13 @@
 using namespace std;
 
 SilhouetteObj::SilhouetteObj() :
-	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
+	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0), color(Color::blue),
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform3D>),
 	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>)
 {
 	// 定数バッファ初期化
 	constantBufferTransform->Init();	// 3D行列
 	constantBufferColor->Init();		// 色
-
-	texture = Texture(Color::black);
 }
 SilhouetteObj::~SilhouetteObj()
 {
@@ -63,14 +61,6 @@ void SilhouetteObj::Draw()
 		1, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		2, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
-	//DirectionalLight::current.Draw();
-	LightManager::GetInstance()->Draw();
-
-	// SRVヒープの設定コマンド
-	auto temp = renderBase->GetSrvDescHeap();
-	renderBase->GetCommandList()->SetDescriptorHeaps(1, &temp);
-	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(0, texture.GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(unsigned short)obj->model.mesh.GetIndexSize(), 1, 0, 0, 0);

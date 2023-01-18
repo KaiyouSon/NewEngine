@@ -14,11 +14,6 @@ private:
 	Transform transform;
 
 public:
-	//Model model;
-	Texture texture;
-	Vec3 pos;
-	Vec3 scale;
-	Vec3 rot;
 	Color color;
 	Object3D* obj;
 
