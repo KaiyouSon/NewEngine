@@ -5,7 +5,7 @@
 using namespace std;
 
 SilhouetteObj::SilhouetteObj() :
-	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0), color(Color::blue),
+	color(Color::blue),
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform3D>),
 	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>)
 {
