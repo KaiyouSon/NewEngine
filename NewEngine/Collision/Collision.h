@@ -19,7 +19,12 @@ public:
 		const SphereCollider& sphere,
 		const PlaneCollider& plane);
 
-	// 三角形ト平面
+	// 球とカプセル
+	static bool SphereHitCapsule(
+		const SphereCollider& sphere,
+		const CapsuleCollider& capsule);
+
+	// 三角形と平面
 	static bool SphereHitTriangle(
 		const SphereCollider& sphere,
 		const TriangleCollider& triangle);
@@ -28,6 +33,16 @@ public:
 	static bool RayHitPlane(
 		const RayCollider& ray,
 		const PlaneCollider& plane);
+
+	// レイと球
+	static bool RayHitSphere(
+		const RayCollider& ray,
+		const SphereCollider& sphere);
+
+	// カプセルとカプセル
+	static bool CapsuleHitCapsule(
+		const CapsuleCollider& capsule1,
+		const CapsuleCollider& capsule2);
 
 	// 点と三角形の最近接点
 	static Vec3 ClosestPointOfPointAndTriangle(

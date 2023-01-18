@@ -1,8 +1,8 @@
 #include "Collision.h"
-#include <DirectXMath.h>
+#include "Util.h"
 using namespace std;
-using namespace DirectX;
 
+// 円と円
 bool Collision::CircleHitCircle(const CircleCollider& circle1, const CircleCollider& circle2)
 {
 	return
@@ -16,6 +16,7 @@ bool Collision::CircleHitCircle(const CircleCollider& circle1, const CircleColli
 	};
 }
 
+// 球と球
 bool Collision::SphereHitSphere(const SphereCollider& sphere1, const SphereCollider& sphere2)
 {
 	return
@@ -31,6 +32,7 @@ bool Collision::SphereHitSphere(const SphereCollider& sphere1, const SphereColli
 	};
 }
 
+// 球と平面
 bool Collision::SphereHitPlane(const SphereCollider& sphere, const PlaneCollider& plane)
 {
 	// 座標系の原点から球の中心座標への距離
@@ -47,6 +49,24 @@ bool Collision::SphereHitPlane(const SphereCollider& sphere, const PlaneCollider
 	return true;
 }
 
+// 球とカプセル
+bool Collision::SphereHitCapsule(const SphereCollider& sphere, const CapsuleCollider& capsule)
+{
+	Vec3 d1 = capsule.endPos - capsule.startPos;
+
+	Vec3 n = d1.Norm();
+
+	Vec3 v = sphere.centerPos - capsule.startPos;
+
+	float t = Vec3::Dot(v, n);
+
+	Vec3 v2 = n * t;
+	//Vec3 v3 =
+
+	return false;
+}
+
+// 球と三角形
 bool Collision::SphereHitTriangle(const SphereCollider& sphere, const TriangleCollider& triangle)
 {
 	Vec3 p = ClosestPointOfPointAndTriangle(sphere.centerPos, triangle);
@@ -63,6 +83,7 @@ bool Collision::SphereHitTriangle(const SphereCollider& sphere, const TriangleCo
 	return true;
 }
 
+// レイと平面
 bool Collision::RayHitPlane(const RayCollider& ray, const PlaneCollider& plane)
 {
 	const float epsilon = 1.0e-5f;
@@ -90,6 +111,95 @@ bool Collision::RayHitPlane(const RayCollider& ray, const PlaneCollider& plane)
 	return true;
 }
 
+// レイと球
+bool Collision::RayHitSphere(const RayCollider& ray, const SphereCollider& sphere)
+{
+	Vec3 v = ray.startPos - sphere.centerPos;
+	float dot1 = Vec3::Dot(v, ray.dirVec);
+	float dot2 = Vec3::Dot(v, v) - (sphere.radius * sphere.radius);
+
+	// レイが球から離れていく方向を差している場合(b > 0)、レイの始点がsphereの外側にあり(c > 0)
+	if (dot1 > 0.f && dot2 > 0.f)
+	{
+		return false;
+	}
+
+	// 負の判別式はレイが球を外れていることに一致
+	float discr = (dot1 * dot1) - dot2;
+	if (discr < 0.f)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+// カプセルとカプセル
+bool Collision::CapsuleHitCapsule(const CapsuleCollider& capsule1, const CapsuleCollider& capsule2)
+{
+	Vec3 d1 = capsule1.endPos - capsule1.startPos;
+	Vec3 d2 = capsule2.endPos - capsule2.startPos;
+
+	Vec3 r = capsule1.startPos - capsule2.startPos;
+
+	float a = Vec3::Dot(d1, d1);
+	float b = Vec3::Dot(d1, d2);
+	float e = Vec3::Dot(d2, d2);
+
+	float c = Vec3::Dot(d1, r);
+	float f = Vec3::Dot(d2, r);
+
+	float s = 0.f;
+	float t = 0.f;
+
+	float denominator = a * e - b * b;
+
+	// s の値を求める
+	if (denominator != 0.0f)
+	{
+		s = (b * f - c * e) / denominator;
+		s = Clamp(s);
+	}
+	else
+	{
+		s = 0;
+	}
+
+	// t の値を求める
+	t = (f + b * s) / e;
+
+	// t が[ 0.0, 1.0 ]の範囲であれば、s を再計算
+	if (t < 0.0f)
+	{
+		t = 0.0f;
+		s = Clamp(-c / a);
+	}
+	else if (t > 1.0f)
+	{
+		s = Clamp((b - c) / a);
+		t = 1.0f;
+	}
+
+	Vec3 c1 = capsule1.startPos + d1 * s;
+	Vec3 c2 = capsule2.startPos + d2 * t;
+
+	float disPow2 =
+		((c2.x - c1.x) * (c2.x - c1.x)) +
+		((c2.y - c1.y) * (c2.y - c1.y)) +
+		((c2.z - c1.z) * (c2.z - c1.z));
+
+	// 二つのカプセルの半径の和
+	float radius = capsule1.radius + capsule2.radius;
+
+	if (disPow2 < radius * radius)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+// 点と三角形の最近接点
 Vec3 Collision::ClosestPointOfPointAndTriangle(const Vec3 point, const TriangleCollider& triangle)
 {
 	// pointがp0の外側の頂点領域の中にあるかどうかチェック

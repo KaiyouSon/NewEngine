@@ -16,7 +16,7 @@ void GameScene::Init()
 	//DirectionalLight::current.pos = { 1,1,1 };
 
 	LightManager::GetInstance()->Init();
-	LightManager::GetInstance()->directionalLights[2].isActive = false;
+	LightManager::GetInstance()->directionalLights[2].isActive = true;
 
 	LightManager::GetInstance()->spotLights[2].isActive = false;
 	LightManager::GetInstance()->spotLights[2].vec = Vec3::down;
@@ -25,12 +25,14 @@ void GameScene::Init()
 	LightManager::GetInstance()->spotLights[2].atten = Vec3::zero;
 	LightManager::GetInstance()->spotLights[2].factorAngleCos = { 20.f,30.f };
 
-	LightManager::GetInstance()->pointLights[2].isActive = true;
+	LightManager::GetInstance()->pointLights[0].isActive = true;
+
+	LightManager::GetInstance()->pointLights[2].isActive = false;
 	LightManager::GetInstance()->pointLights[2].pos = { 0.5f, 1.0f, 0.0f };
 	LightManager::GetInstance()->pointLights[2].color = Color::white;
 	LightManager::GetInstance()->pointLights[2].atten = { 0.3f, 0.1f ,0.1f };
 
-	LightManager::GetInstance()->circleShadow.isActive = true;
+	LightManager::GetInstance()->circleShadow.isActive = false;
 	LightManager::GetInstance()->circleShadow.vec = { 0,-1,0 };
 	LightManager::GetInstance()->circleShadow.atten = { 0.5f,0.6f,0.0f };
 	LightManager::GetInstance()->circleShadow.factorAngleCos = { 0.0f,0.5f };
@@ -40,28 +42,30 @@ void GameScene::Init()
 	groundObj.pos.y = -2;
 
 	Texture tex = Texture("pic.png");
-	obj.model = Model("bee", true);
-	obj.pos.x = -2.f;
+	obj.model = Model("Sphere", true);
+	obj.pos.z = 5.f;
 
-	obj2.model = Model("Sphere", true);
-	obj2.pos.x = 2.f;
+	obj2.model = Model("Cube", true);
+	obj2.scale.x = 2.f;
 
 	spr.texture = tex;
 	spr.scale = 0.25f;
 	spr.anchorPoint = 0.5f;
 
-	triangleObj.model = Model("Triangle");
+	silhouetteObj.obj = &obj;
 
 	CollisionInit();
 }
 void GameScene::Update()
 {
-	obj.rot.y += Radian(2);
-	obj2.rot.y += Radian(2);
+	//obj.rot.y += Radian(2);
+	//obj2.rot.y += Radian(2);
 
 	obj.Update();
 	obj2.Update();
 	spr.Update();
+
+	silhouetteObj.Update();
 
 	skyDomeObj.Update();
 	groundObj.Update();
@@ -71,7 +75,7 @@ void GameScene::Update()
 	Camera::DebugCameraUpdate();
 	LightManager::GetInstance()->Update();
 
-	//CollisionUpdate();
+	CollisionUpdate();
 }
 
 void GameScene::DrawBackSprite()
@@ -79,10 +83,21 @@ void GameScene::DrawBackSprite()
 }
 void GameScene::DrawModel()
 {
-	obj.Draw();
+
+	Object3D::SetBlendMode(BlendMode::Alpha);
 	obj2.Draw();
-	skyDomeObj.Draw();
-	groundObj.Draw();
+
+	silhouetteObj.Draw();
+
+
+
+
+	//SilhouetteObj::SetBlendMode(BlendMode::Alpha);
+	//obj.Draw();
+
+
+	//skyDomeObj.Draw();
+	//groundObj.Draw();
 
 	//CollisionDrawModel();
 }
@@ -106,11 +121,23 @@ void GameScene::DrawDebugGui()
 	//	Vec3 v2 = m.ExtractTranslation();
 	//
 
-	DirectionalLightDrawGui();
-	PointLightDrawGui();
-	SpotLightDrawGui();
+	DebugGui();
 
-	CollisionDrawGui();
+	//DirectionalLightDrawGui();
+	//PointLightDrawGui();
+	//SpotLightDrawGui();
+	//
+	//CollisionDrawGui();
+}
+
+void GameScene::DebugGui()
+{
+	GuiManager::BeginWindow("Debug");
+
+	GuiManager::DrawSlider3("Sphere pos", obj.pos, 0.01f);
+	GuiManager::DrawSlider3("Cube pos", obj2.pos, 0.01f);
+
+	GuiManager::EndWindow();
 }
 
 void GameScene::CollisionInit()
@@ -121,10 +148,19 @@ void GameScene::CollisionInit()
 
 	planeObj.model = Model("Ground");
 
+	triangleObj.model = Model("Triangle");
+
 	rayObj.model = Model("Ray");
 	rayObj.pos.y = 5;
 	rayObj.scale.y = 100;
-	//rayObj.scale = { 0.1f,1,1f };
+
+	capsuleObj1.model = Model("Capsule");
+	capsuleObj1.pos.x = +2;
+	//capsuleObj1.scale = 0.5f;
+	capsuleObj2.model = Model("Capsule");
+	capsuleObj2.pos.x = -2;
+	//capsuleObj2.scale = 0.5f;
+
 }
 void GameScene::CollisionUpdate()
 {
@@ -146,10 +182,9 @@ void GameScene::CollisionUpdate()
 		SphereCollider c1 = { sphereObj.pos,sphereObj.scale.x };
 		TriangleCollider c2 =
 		{
-			triangleObj.pos + Vec3(-1,1,0),
-			triangleObj.pos + Vec3(-1,-1,0),
-			triangleObj.pos + Vec3(1,-1,0),
-			Vec3(0,0,-1)
+			triangleObj.pos + Vec3(-1.f,+1.f,0.f),
+			triangleObj.pos + Vec3(-1.f,-1.f,0.f),
+			triangleObj.pos + Vec3(+1.f,-1.f,0.f),
 		};
 
 		if (Collision::SphereHitTriangle(c1, c2) == true)
@@ -177,22 +212,56 @@ void GameScene::CollisionUpdate()
 			rayObj.color = Color::white;
 		}
 	}
+	else if (currentCollision == 3)
+	{
+		RayCollider c1 = { rayObj.pos,{0,-1,0} };
+		SphereCollider c2 = { sphereObj.pos,sphereObj.scale.x };
 
-	if (currentCollision == 0)
-	{
-		sphereObj.Update();
-		planeObj.Update();
+		if (Collision::RayHitSphere(c1, c2) == true)
+		{
+			rayObj.color = Color::red;
+			sphereObj.color = Color::red;
+		}
+		else
+		{
+			rayObj.color = Color::white;
+			sphereObj.color = Color::white;
+		}
 	}
-	else if (currentCollision == 1)
+	else if (currentCollision == 4)
 	{
-		sphereObj.Update();
-		triangleObj.Update();
+		CapsuleCollider c1 =
+		{
+			capsuleObj1.pos + Vec3(0,+1.f,0),
+			capsuleObj1.pos + Vec3(0,-1.f,0),
+			1
+		};
+		CapsuleCollider c2 =
+		{
+			capsuleObj2.pos + Vec3(0,+1.f,0),
+			capsuleObj2.pos + Vec3(0,-1.f,0),
+			1
+		};
+
+		if (Collision::CapsuleHitCapsule(c1, c2) == true)
+		{
+			capsuleObj1.color = Color::red;
+			capsuleObj2.color = Color::red;
+		}
+		else
+		{
+			capsuleObj1.color = Color::white;
+			capsuleObj2.color = Color::white;
+		}
 	}
-	else if (currentCollision == 2)
-	{
-		rayObj.Update();
-		planeObj.Update();
-	}
+
+	sphereObj.Update();
+	planeObj.Update();
+	triangleObj.Update();
+	rayObj.Update();
+
+	capsuleObj1.Update();
+	capsuleObj2.Update();
 }
 void GameScene::CollisionDrawModel()
 {
@@ -211,13 +280,25 @@ void GameScene::CollisionDrawModel()
 		rayObj.Draw();
 		planeObj.Draw();
 	}
+	else if (currentCollision == 3)
+	{
+		rayObj.Draw();
+		sphereObj.Draw();
+	}
+	else if (currentCollision == 4)
+	{
+		capsuleObj1.Draw();
+		capsuleObj2.Draw();
+	}
 }
 void GameScene::CollisionDrawGui()
 {
 	GuiManager::BeginWindow("Collision Debug");
-	GuiManager::DrawRadioButton("Radio Button A", currentCollision, 0, false);
-	GuiManager::DrawRadioButton("Radio Button B", currentCollision, 1, false);
-	GuiManager::DrawRadioButton("Radio Button C", currentCollision, 2, false);
+	GuiManager::DrawRadioButton("Sphere Hit Plane", currentCollision, 0, false);
+	GuiManager::DrawRadioButton("Sphere Hit Triangle", currentCollision, 1, false);
+	GuiManager::DrawRadioButton("Ray Hit Plane", currentCollision, 2, false);
+	GuiManager::DrawRadioButton("Ray Hit Sphere", currentCollision, 3, false);
+	GuiManager::DrawRadioButton("Capsule Hit Capsule", currentCollision, 4, false);
 
 	if (currentCollision == 0)
 	{
@@ -230,7 +311,17 @@ void GameScene::CollisionDrawGui()
 	}
 	else if (currentCollision == 2)
 	{
-		GuiManager::DrawSlider3("rayObj pos", rayObj.pos, 0.01f);
+		GuiManager::DrawSlider3("ray pos", rayObj.pos, 0.01f);
+	}
+	else if (currentCollision == 3)
+	{
+		GuiManager::DrawSlider3("ray pos", rayObj.pos, 0.01f);
+		GuiManager::DrawSlider3("sphere pos", sphereObj.pos, 0.01f);
+	}
+	else if (currentCollision == 4)
+	{
+		GuiManager::DrawSlider3("capsule1 pos", capsuleObj1.pos, 0.01f);
+		GuiManager::DrawSlider3("capsule2 pos", capsuleObj2.pos, 0.01f);
 	}
 
 	GuiManager::EndWindow();

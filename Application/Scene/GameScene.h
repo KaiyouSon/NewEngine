@@ -1,6 +1,7 @@
 #pragma once
 #include "IScene.h"
 #include "NewEngine.h"
+#include "SilhouetteObj.h"
 
 class GameScene : public IScene
 {
@@ -8,13 +9,13 @@ private:
 	Object3D skyDomeObj;
 	Object3D groundObj;
 
+	SilhouetteObj silhouetteObj;
 	Object3D obj;
 	Object3D obj2;
 	Sprite spr;
 	Quaternion q;
 
-
-
+	void DebugGui();
 
 private:
 	// “–‚½‚è”»’èŠÖ˜A
@@ -22,6 +23,8 @@ private:
 	Object3D planeObj;
 	Object3D triangleObj;
 	Object3D rayObj;
+	Object3D capsuleObj1;
+	Object3D capsuleObj2;
 	int currentCollision;
 
 	void CollisionInit();

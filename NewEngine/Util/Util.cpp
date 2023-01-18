@@ -76,3 +76,14 @@ Vec2 WorldToScreen(const Vec3& worldPos)
 
 	return { result.x,result.y };
 }
+
+// OŠpŒ`‚Ì–@ü‚ğ‹‚ß‚é
+Vec3 GetTriangleNormal(const Vec3& p0, const Vec3& p1, const Vec3& p2)
+{
+	Vec3 v1 = p1 - p0;
+	Vec3 v2 = p2 - p0;
+
+	Vec3 normal = Vec3::Cross(v1, v2);
+
+	return normal.Norm();
+}

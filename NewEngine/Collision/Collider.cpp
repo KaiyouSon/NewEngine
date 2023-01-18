@@ -1,4 +1,5 @@
 #include "Collider.h"
+#include "Util.h"
 
 // ----- 円コライダー ------------------- //
 CircleCollider::CircleCollider() :
@@ -31,17 +32,6 @@ RayCollider::RayCollider(const Vec3& startPos, const Vec3& dirVec) :
 {
 }
 
-// ----- 線コライダー ------------------- //
-LineCollider::LineCollider() :
-	startPos(0, 0, 0), endPos(0, 0, 0)
-{
-}
-
-LineCollider::LineCollider(const Vec3& startPos, const Vec3& endPos) :
-	startPos(startPos), endPos(endPos)
-{
-}
-
 // ----- 平面コライダー ------------- //
 PlaneCollider::PlaneCollider() :
 	centerPos(0, 0, 0), normal(0, 0, 0)
@@ -53,12 +43,24 @@ PlaneCollider::PlaneCollider(const Vec3& centerPos, const Vec3& normal) :
 {
 }
 
+// ----- 三角形コライダー ----------- //
 TriangleCollider::TriangleCollider() :
 	p0(0), p1(0), p2(0), normal(0)
 {
 }
 
-TriangleCollider::TriangleCollider(const Vec3& p0, const Vec3& p1, const Vec3& p2, const Vec3& normal) :
-	p0(p0), p1(p1), p2(p2), normal(normal)
+TriangleCollider::TriangleCollider(const Vec3& p0, const Vec3& p1, const Vec3& p2) :
+	p0(p0), p1(p1), p2(p2), normal(GetTriangleNormal(p0, p1, p2))
+{
+}
+
+// ----- カプセルコライダー --------- //
+CapsuleCollider::CapsuleCollider() :
+	startPos(0), endPos(0), radius(0)
+{
+}
+
+CapsuleCollider::CapsuleCollider(const Vec3& startPos, const Vec3& endPos, const float& radius) :
+	startPos(startPos), endPos(endPos), radius(radius)
 {
 }

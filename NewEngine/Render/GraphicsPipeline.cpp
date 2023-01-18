@@ -65,18 +65,19 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
 	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;	// ポリゴン内塗りつぶし
 	pipelineDesc.RasterizerState.DepthClipEnable = true; // 深度クリッピングを有効に
 
-	// デプスステンシルステートの設定
+	pipelineDesc.DepthStencilState = depthStencilDesc;
+	//// デプスステンシルステートの設定
 	if (isDepthEnable == true)
 	{
-		pipelineDesc.DepthStencilState.DepthEnable = true; // 深度テストを行う
-		pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み許可
-		pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
+		//pipelineDesc.DepthStencilState.DepthEnable = true; // 深度テストを行う
+		//pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// 書き込み許可
+		//pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
 		pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	// 深度値フォーマット
 	}
-	else
-	{
-		pipelineDesc.DepthStencilState.DepthEnable = false; // 深度テストを行う
-	}
+	//else
+	//{
+	//	pipelineDesc.DepthStencilState.DepthEnable = false; // 深度テストを行う
+	//}
 
 	// レンダーターゲットのブレンド設定
 	D3D12_RENDER_TARGET_BLEND_DESC& blendDesc = pipelineDesc.BlendState.RenderTarget[0];

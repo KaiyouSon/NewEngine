@@ -255,6 +255,9 @@
     <ClCompile Include="NewEngine\Light\CircleShadow.cpp">
       <Filter>NewEngine\Source\Light</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SilhouetteObj.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -416,6 +419,9 @@
     <ClInclude Include="NewEngine\Light\CircleShadow.h">
       <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SilhouetteObj.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\Basic.hlsli">
@@ -428,6 +434,9 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="Shader\Sprite.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\Silhouette.hlsli">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
@@ -454,6 +463,12 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\SpriteVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\SilhouettePS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\SilhouetteVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

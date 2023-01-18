@@ -151,6 +151,7 @@
     <ClCompile Include="Application\Scene\GameScene.cpp" />
     <ClCompile Include="Application\Scene\SceneManager.cpp" />
     <ClCompile Include="Application\Scene\TitleScene.cpp" />
+    <ClCompile Include="Application\SilhouetteObj.cpp" />
     <ClCompile Include="NewEngine\Collision\Collider.cpp" />
     <ClCompile Include="NewEngine\Collision\Collision.cpp" />
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="Application\Scene\IScene.h" />
     <ClInclude Include="Application\Scene\SceneManager.h" />
     <ClInclude Include="Application\Scene\TitleScene.h" />
+    <ClInclude Include="Application\SilhouetteObj.h" />
     <ClInclude Include="NewEngine\Collision\Collider.h" />
     <ClInclude Include="NewEngine\Collision\Collision.h" />
     <ClInclude Include="NewEngine\Gui\GuiManager.h" />
@@ -267,6 +269,7 @@
     <None Include="Shader\Basic.hlsli" />
     <None Include="Shader\ObjectBasic.hlsli" />
     <None Include="Shader\RenderTexture.hlsli" />
+    <None Include="Shader\Silhouette.hlsli" />
     <None Include="Shader\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>
@@ -274,6 +277,22 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Shader\SilhouettePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Shader\SilhouetteVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Shader\SpritePS.hlsl">

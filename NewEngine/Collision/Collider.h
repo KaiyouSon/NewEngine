@@ -31,16 +31,6 @@ struct RayCollider
 	RayCollider(const Vec3& startPos, const Vec3& dirVec);
 };
 
-// ----- 線コライダー ------------------- //
-struct LineCollider
-{
-	Vec3 startPos;
-	Vec3 endPos;
-
-	LineCollider();
-	LineCollider(const Vec3& startPos, const Vec3& endPos);
-};
-
 // ----- 平面コライダー ------------- //
 struct PlaneCollider
 {
@@ -60,5 +50,16 @@ struct TriangleCollider
 	Vec3 normal;		// 法線ベクトル
 
 	TriangleCollider();
-	TriangleCollider(const Vec3& p0, const Vec3& p1, const Vec3& p2, const Vec3& normal);
+	TriangleCollider(const Vec3& p0, const Vec3& p1, const Vec3& p2);
+};
+
+// ----- カプセルコライダー --------- //
+struct CapsuleCollider
+{
+	Vec3 startPos;
+	Vec3 endPos;
+	float radius;
+
+	CapsuleCollider();
+	CapsuleCollider(const Vec3& startPos, const Vec3& endPos, const float& radius);
 };

@@ -41,3 +41,6 @@ int GetDight(const int& value);
 
 // ワールド座標をスクリーン座標に変換する
 Vec2 WorldToScreen(const Vec3& worldPos);
+
+// 三角形の法線を求める
+Vec3 GetTriangleNormal(const Vec3& p0, const Vec3& p1, const Vec3& p2);
