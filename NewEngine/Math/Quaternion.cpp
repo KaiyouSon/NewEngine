@@ -5,7 +5,6 @@ float Quaternion::Lenght() const { return sqrt(x * x + y * y + z * z + w * w); }
 
 Quaternion Quaternion::Norm() const { return { x / Lenght(),y / Lenght(),z / Lenght() ,w / Lenght() }; }
 
-Quaternion Quaternion::Identity() const { return { 0, 0, 0, 1 }; }
 
 Quaternion Quaternion::Conjugate() const { return { -x,-y,-z,w }; }
 
@@ -40,6 +39,8 @@ float Quaternion::Dot(const Quaternion& q1, const Quaternion& q2)
 {
 	return { (q1.w * q2.w) + (q1.x * q2.x) + (q1.y * q2.y) + (q1.z * q2.z) };
 }
+
+Quaternion Quaternion::Identity() { return { 0, 0, 0, 1 }; }
 
 Quaternion Quaternion::operator+(const Quaternion& other) const
 {

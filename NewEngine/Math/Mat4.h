@@ -15,7 +15,7 @@ public:
 
 	static Mat4 Zero();		// ゼロ行列を返す関数
 	static Mat4 Identity();	// 単位行列を返す関数
-	static Mat4 Inverse(const Mat4& mat);	// 逆行列を返す関数
+	Mat4 Inverse();	// 逆行列を返す関数
 
 	void SetXAxis(const Vec3& xAxis);
 	void SetYAxis(const Vec3& yAxis);

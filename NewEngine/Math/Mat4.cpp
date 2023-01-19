@@ -39,10 +39,10 @@ Mat4 Mat4::Identity()
 	};
 }
 
-Mat4 Mat4::Inverse(const Mat4& mat)
+Mat4 Mat4::Inverse()
 {
 	float sweepMat[4][8] = {};
-	float tmpNum = 0;
+	float tmepNum = 0;
 
 	// 掃き出し行列の初期化
 	for (int i = 0; i < 4; i++)
@@ -50,7 +50,7 @@ Mat4 Mat4::Inverse(const Mat4& mat)
 		for (int j = 0; j < 4; j++)
 		{
 			// 引数でもらった行列（左 4 * 4）
-			sweepMat[i][j] = mat.m[i][j];
+			sweepMat[i][j] = m[i][j];
 
 			// 単位行列（右 4 * 4）
 			sweepMat[i][j + 4] = (i == j) ? 1.0f : 0.0f;
@@ -79,10 +79,10 @@ Mat4 Mat4::Inverse(const Mat4& mat)
 		}
 
 		// 対象となる行列の対角成分を1にする
-		tmpNum = 1 / sweepMat[i][i];
+		tmepNum = 1 / sweepMat[i][i];
 		for (int j = 0; j < 8; j++)
 		{
-			sweepMat[i][j] *= tmpNum;
+			sweepMat[i][j] *= tmepNum;
 		}
 
 		// 対象となる行列の対角成分以外を0にするため
@@ -90,10 +90,10 @@ Mat4 Mat4::Inverse(const Mat4& mat)
 		{
 			if (i == j) continue;
 
-			tmpNum = -sweepMat[j][i];
+			tmepNum = -sweepMat[j][i];
 			for (int k = 0; k < 8; k++)
 			{
-				sweepMat[j][k] += sweepMat[i][k] * tmpNum;
+				sweepMat[j][k] += sweepMat[i][k] * tmepNum;
 			}
 		}
 	}

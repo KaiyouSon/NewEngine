@@ -84,10 +84,10 @@ void GameScene::DrawBackSprite()
 void GameScene::DrawModel()
 {
 
-	Object3D::SetBlendMode(BlendMode::Alpha);
-	obj2.Draw();
-
-	silhouetteObj.Draw();
+	//Object3D::SetBlendMode(BlendMode::Alpha);
+	//obj2.Draw();
+	//
+	//silhouetteObj.Draw();
 
 
 
@@ -99,7 +99,7 @@ void GameScene::DrawModel()
 	//skyDomeObj.Draw();
 	//groundObj.Draw();
 
-	//CollisionDrawModel();
+	CollisionDrawModel();
 }
 void GameScene::DrawFrontSprite()
 {
@@ -121,7 +121,8 @@ void GameScene::DrawDebugGui()
 	//	Vec3 v2 = m.ExtractTranslation();
 	//
 
-	DebugGui();
+	//DebugGui();
+	QuaternionDrawGui();
 
 	//DirectionalLightDrawGui();
 	//PointLightDrawGui();
@@ -365,4 +366,50 @@ void GameScene::SpotLightDrawGui()
 	GuiManager::DrawColorEdit("SpotLight color", LightManager::GetInstance()->spotLights[2].color);
 
 	GuiManager::EndWindow();
+}
+
+void GameScene::QuaternionDrawGui()
+{
+	Quaternion q1 = { 2.f,3.f,4.f,1.f };
+	Quaternion q2 = { 1.f,3.f,5.f,2.f };
+
+	Quaternion mul1 = q1 * q2;
+	Quaternion mul2 = q2 * q1;
+
+	GuiManager::BeginWindow("Quaternion");
+
+	ImGui::Text("%f,%f,%f,%f : Identity",
+		Quaternion::Identity().x, Quaternion::Identity().y, Quaternion::Identity().z, Quaternion::Identity().w);
+
+	ImGui::Text("%f,%f,%f,%f : Conjugate",
+		q1.Conjugate().x, q1.Conjugate().y, q1.Conjugate().z, q1.Conjugate().w);
+
+	ImGui::Text("%f,%f,%f,%f Inverse",
+		q1.Inverse().x, q1.Inverse().y, q1.Inverse().z, q1.Inverse().w);
+
+	ImGui::Text("%f,%f,%f,%f : Normalize",
+		q1.Norm().x, q1.Norm().y, q1.Norm().z, q1.Norm().w);
+
+	ImGui::Text("%f,%f,%f,%f : mul1",
+		mul1.x, mul1.y, mul1.z, mul1.w);
+
+	ImGui::Text("%f,%f,%f,%f : mul2",
+		mul2.x, mul2.y, mul2.z, mul2.w);
+
+	ImGui::Text("%f : Lenght", q1.Lenght());
+
+	//GuiManager::DrawString("%f,%f,%f,%f",
+	//	Quaternion::Identity().x, Quaternion::Identity().y, Quaternion::Identity().z, Quaternion::Identity().w);
+
+	//GuiManager::DrawString("%f,%f,%f,%f : Conjugate",
+	//	q1.Conjugate().x, q1.Conjugate().y, q1.Conjugate().z, q1.Conjugate().w);
+
+	//ImGui::Text("%f,%f,%f,%f	: Conjugate",
+	//	q1.Conjugate().x, q1.Conjugate().y, q1.Conjugate().z, 1.25f);
+
+	//GuiManager::DrawString("%f,%f,%f,%f Inverse",
+	//	q1.Inverse().x, q1.Inverse().y, q1.Inverse().z, q1.Inverse().w);
+
+	GuiManager::EndWindow();
+
 }

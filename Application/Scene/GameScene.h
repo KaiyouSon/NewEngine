@@ -38,6 +38,11 @@ private:
 	void PointLightDrawGui();
 	void SpotLightDrawGui();
 
+private:
+	// クォータニオン関連
+	void QuaternionDrawGui();
+	
+
 public:
 	GameScene();
 	~GameScene();
