@@ -11,6 +11,20 @@ struct CircleCollider
 	CircleCollider(const Vec2& centerPos, const float& radius);
 };
 
+// ----- 矩形コライダー ----------------- //
+struct SquareCollider
+{
+	Vec2 centerPos;
+	Vec2 size;
+	Vec2 leftTop;
+	Vec2 leftDown;
+	Vec2 rightTop;
+	Vec2 rightDown;
+
+	SquareCollider();
+	SquareCollider(const Vec2& centerPos, const Vec2& size);
+};
+
 // ----- 球コライダー ------------------- //
 struct SphereCollider
 {

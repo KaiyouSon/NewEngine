@@ -12,6 +12,22 @@ CircleCollider::CircleCollider(const Vec2& centerPos, const float& radius) :
 {
 }
 
+// ----- 矩形コライダー ----------------- //
+SquareCollider::SquareCollider() :
+	centerPos(0), size(0), leftTop(0), leftDown(0), rightTop(0), rightDown(0)
+{
+}
+
+SquareCollider::SquareCollider(const Vec2& centerPos, const Vec2& size) :
+	centerPos(centerPos), size(size),
+	leftTop({ centerPos.x - size.x, centerPos.y - size.y }),
+	leftDown({ centerPos.x - size.x, centerPos.y + size.y }),
+	rightTop({ centerPos.x + size.x, centerPos.y - size.y }),
+	rightDown({ centerPos.x + size.x, centerPos.y + size.y })
+{
+}
+
+
 // ----- 球コライダー ------------------- //
 SphereCollider::SphereCollider() :
 	centerPos(0, 0, 0), radius(1)
