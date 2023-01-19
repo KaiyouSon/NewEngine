@@ -44,8 +44,6 @@ void SilhouetteObj::Update(const SilhouetteObj* parent)
 }
 void SilhouetteObj::Draw()
 {
-	obj->Draw();
-
 	SetBlendMode(BlendMode::Alpha);
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
@@ -66,6 +64,7 @@ void SilhouetteObj::Draw()
 		(unsigned short)obj->model.mesh.GetIndexSize(), 1, 0, 0, 0);
 
 	Object3D::SetBlendMode(BlendMode::Alpha);
+	obj->Draw();
 }
 
 void SilhouetteObj::SetBlendMode(const BlendMode& blendMode)

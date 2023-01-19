@@ -521,12 +521,6 @@ void RenderBase::GraphicsPipelineInit()
 	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み許可
 	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
 
-	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc3 = D3D12_DEPTH_STENCIL_DESC();
-	depthStencilDesc3.DepthEnable = true; // 深度テストを行う
-	depthStencilDesc3.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// 書き込み許可
-	depthStencilDesc3.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;	// 小さいほうを採用
-	depthStencilDesc3.StencilWriteMask = D3D12_DEFAULT_STENCIL_WRITE_MASK;
-
 	// グラフィックスパイプライン3D用
 	basicPipeline = std::move(std::make_unique<GraphicsPipeline>());
 	basicPipeline->SetShaderObject(basicShader.get());
@@ -579,8 +573,8 @@ void RenderBase::GraphicsPipelineInit()
 
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc2 = D3D12_DEPTH_STENCIL_DESC();
 	depthStencilDesc2.DepthEnable = true; // 深度テストを行う
-	depthStencilDesc2.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み許可
-	depthStencilDesc2.DepthFunc = D3D12_COMPARISON_FUNC_GREATER;	// 小さいほうを採用
+	depthStencilDesc2.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// 書き込み許可
+	depthStencilDesc2.DepthFunc = D3D12_COMPARISON_FUNC_GREATER;	// 大きいほうを採用
 
 	silhouettePipeline = std::move(std::make_unique<GraphicsPipeline>());
 	silhouettePipeline->SetShaderObject(silhouetteShader.get());

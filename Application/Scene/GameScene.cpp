@@ -42,7 +42,7 @@ void GameScene::Init()
 	groundObj.pos.y = -2;
 
 	Texture tex = Texture("pic.png");
-	obj.model = Model("Sphere", true);
+	obj.model = Model("Boss", true);
 	obj.pos.z = 5.f;
 
 	obj2.model = Model("Cube", true);
@@ -85,10 +85,10 @@ void GameScene::DrawModel()
 {
 
 	//Object3D::SetBlendMode(BlendMode::Alpha);
-	//obj2.Draw();
-	//
-	//silhouetteObj.Draw();
 
+	obj2.Draw();
+
+	silhouetteObj.Draw();
 
 
 
@@ -99,7 +99,7 @@ void GameScene::DrawModel()
 	//skyDomeObj.Draw();
 	//groundObj.Draw();
 
-	CollisionDrawModel();
+	//CollisionDrawModel();
 }
 void GameScene::DrawFrontSprite()
 {
@@ -121,8 +121,8 @@ void GameScene::DrawDebugGui()
 	//	Vec3 v2 = m.ExtractTranslation();
 	//
 
-	//DebugGui();
-	QuaternionDrawGui();
+	DebugGui();
+	//QuaternionDrawGui();
 
 	//DirectionalLightDrawGui();
 	//PointLightDrawGui();
@@ -397,18 +397,6 @@ void GameScene::QuaternionDrawGui()
 		mul2.x, mul2.y, mul2.z, mul2.w);
 
 	ImGui::Text("%f : Lenght", q1.Lenght());
-
-	//GuiManager::DrawString("%f,%f,%f,%f",
-	//	Quaternion::Identity().x, Quaternion::Identity().y, Quaternion::Identity().z, Quaternion::Identity().w);
-
-	//GuiManager::DrawString("%f,%f,%f,%f : Conjugate",
-	//	q1.Conjugate().x, q1.Conjugate().y, q1.Conjugate().z, q1.Conjugate().w);
-
-	//ImGui::Text("%f,%f,%f,%f	: Conjugate",
-	//	q1.Conjugate().x, q1.Conjugate().y, q1.Conjugate().z, 1.25f);
-
-	//GuiManager::DrawString("%f,%f,%f,%f Inverse",
-	//	q1.Inverse().x, q1.Inverse().y, q1.Inverse().z, q1.Inverse().w);
 
 	GuiManager::EndWindow();
 

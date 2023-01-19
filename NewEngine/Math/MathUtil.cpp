@@ -99,7 +99,7 @@ Mat4 ConvertRotationMat(const Quaternion& q)
 
 Mat4 ConvertBillBoardXAxis()
 {
-	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewLookToMat());
+	Mat4 tempMat = Camera::current.GetViewLookToMat().Inverse();
 
 	tempMat.m[0][0] = 1;
 	tempMat.m[0][1] = 0;
@@ -115,7 +115,7 @@ Mat4 ConvertBillBoardXAxis()
 }
 Mat4 ConvertBillBoardYAxis()
 {
-	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewLookToMat());
+	Mat4 tempMat = Camera::current.GetViewLookToMat().Inverse();
 
 	tempMat.m[1][0] = 0;
 	tempMat.m[1][1] = 1;
@@ -131,7 +131,7 @@ Mat4 ConvertBillBoardYAxis()
 }
 Mat4 ConvertBillBoardZAxis()
 {
-	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewLookToMat());
+	Mat4 tempMat = Camera::current.GetViewLookToMat().Inverse();
 
 	tempMat.m[2][0] = 0;
 	tempMat.m[2][1] = 0;
@@ -147,7 +147,7 @@ Mat4 ConvertBillBoardZAxis()
 }
 Mat4 ConvertBillBoardAllAxis()
 {
-	Mat4 tempMat = Mat4::Inverse(Camera::current.GetViewLookToMat());
+	Mat4 tempMat = Camera::current.GetViewLookToMat().Inverse();
 
 	tempMat.m[3][0] = 0;
 	tempMat.m[3][1] = 0;
