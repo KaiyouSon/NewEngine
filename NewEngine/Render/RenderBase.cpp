@@ -531,11 +531,16 @@ void RenderBase::GraphicsPipelineInit()
 	basicPipeline->SetRootSignature(rootSignature.Get());
 	basicPipeline->Create();
 
+	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc3 = D3D12_DEPTH_STENCIL_DESC();
+	depthStencilDesc3.DepthEnable = false; // 深度テストを行う
+	//depthStencilDesc3.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み許可
+	//depthStencilDesc3.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
 	// グラフィックスパイプライン2D用
 	spritePipeline = std::move(std::make_unique<GraphicsPipeline>());
 	spritePipeline->SetShaderObject(spriteShader.get());
 	spritePipeline->SetCullMode(CullMode::None);
 	spritePipeline->SetisDepthEnable(false);
+	spritePipeline->SetDepthStencilDesc(depthStencilDesc3);
 	spritePipeline->SetTopologyType(TopologyType::TriangleTopology);
 	spritePipeline->SetRootSignature(rootSignature.Get());
 	spritePipeline->Create();

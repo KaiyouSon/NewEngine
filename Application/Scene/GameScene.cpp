@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "TitleScene.h"
 #include "LightManager.h"
+#include "TextureManager.h"
 
 GameScene::GameScene()
 {
@@ -41,14 +42,17 @@ void GameScene::Init()
 	groundObj.model = Model("Ground");
 	groundObj.pos.y = -2;
 
-	Texture tex = Texture("pic.png");
+	TextureManager::LoadTexture("pic.png", "pic");
 	obj.model = Model("Boss", true);
 	obj.pos.z = 5.f;
+	obj.texture = TextureManager::GetTexture("pic");
 
 	obj2.model = Model("Cube", true);
 	obj2.scale.x = 2.f;
 
-	spr.texture = tex;
+	//TextureManager::LoadTexture("pic.png");
+	spr.texture = TextureManager::GetTexture("pic");
+	spr.pos = 256;
 	spr.scale = 0.25f;
 	spr.anchorPoint = 0.5f;
 
@@ -61,9 +65,13 @@ void GameScene::Update()
 	//obj.rot.y += Radian(2);
 	//obj2.rot.y += Radian(2);
 
+	spr.SetTextureRect(408, 816);
+
 	obj.Update();
 	obj2.Update();
 	spr.Update();
+
+
 
 	silhouetteObj.Update();
 
@@ -76,6 +84,11 @@ void GameScene::Update()
 	LightManager::GetInstance()->Update();
 
 	CollisionUpdate();
+
+	if (Key::GetKey(DIK_SPACE))
+	{
+		SceneManager::ChangeScene<TitleScene>();
+	}
 }
 
 void GameScene::DrawBackSprite()
@@ -107,19 +120,19 @@ void GameScene::DrawFrontSprite()
 }
 void GameScene::DrawDebugGui()
 {
-	//	Quaternion q = { 0,1,0 };
-	//
-	//	Vec3 v;
-	//	v = q.AnyAxisRotation({ 0,0,1 }, Radian(90));
-	//
-	//	Quaternion q2;
-	//	q2 = q * q.Inverse();
-	//	//v = v * v1;
-	//
-	//	Mat4 m = ConvertRotationMat(q.AnyAxisRotation({ 0,0,1 }, Radian(90)));
-	//	m.SetTranslation(v);
-	//	Vec3 v2 = m.ExtractTranslation();
-	//
+	Quaternion q = { 0,1,0 };
+
+	Vec3 v;
+	v = q.AnyAxisRotation({ 0,0,1 }, Radian(90));
+
+	Quaternion q2;
+	q2 = q * q.Inverse();
+	//v = v * v1;
+
+	Mat4 m = ConvertRotationMat(q.AnyAxisRotation({ 0,0,1 }, Radian(90)));
+	//m.SetTranslation(v);
+	Vec3 v2 = Vec3MulMat4(v, m);
+
 
 	DebugGui();
 	//QuaternionDrawGui();

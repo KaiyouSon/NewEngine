@@ -3,6 +3,9 @@
 
 class TitleScene : public IScene
 {
+private:
+	Object3D obj;
+
 public:
 	void Init() override;
 	void Update() override;

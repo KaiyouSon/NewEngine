@@ -1,14 +1,15 @@
 #pragma once
 #include "Texture.h"
-#include <list>
 #include <string>
+#include <map>
 
 class TextureManager
 {
 private:
-	std::list<Texture> textureList;
+	static std::map<std::string, Texture> textureMap;
 
 public:
-	Texture GetTexture(const std::string& textureName);
+	static Texture GetTexture(const std::string& textureTag);
+	static Texture LoadTexture(const std::string& filePath, const std::string textureTag);
 };
 

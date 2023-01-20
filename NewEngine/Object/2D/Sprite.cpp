@@ -32,7 +32,7 @@ Sprite::~Sprite()
 void Sprite::Update()
 {
 	transform.pos = pos;
-	transform.scale = scale;
+	transform.scale = { scale.x,scale.y,1 };
 	transform.rot = { 0,0,rot };
 	transform.Update();
 
@@ -42,7 +42,8 @@ void Sprite::Update()
 		Camera::current.GetOrthoGrphicProjectionMat();
 
 	// 色転送
-	constantBufferColor->constantBufferMap->color = color;
+	constantBufferColor->constantBufferMap->color = color / 255;
+	constantBufferColor->constantBufferMap->color.a = color.a / 255;
 
 	// 頂点バッファーに頂点を転送
 	TransferTexturePos();
@@ -120,4 +121,19 @@ void Sprite::TransferTexturePos()
 
 		vertexBuffer->TransferToBuffer(vertices);
 	}
+}
+
+void Sprite::SetTextureRect(const Vec2& leftTopPos, const Vec2 rightDownPos)
+{
+	float left = leftTopPos.x / texture.buffer->GetDesc().Width;
+	float right = rightDownPos.x / texture.buffer->GetDesc().Width;
+	float up = leftTopPos.y / texture.buffer->GetDesc().Height;
+	float down = rightDownPos.y / texture.buffer->GetDesc().Height;
+
+	vertices[0].uv = { left,down };
+	vertices[1].uv = { left,up };
+	vertices[2].uv = { right,down };
+	vertices[3].uv = { right,up };
+
+	vertexBuffer->TransferToBuffer(vertices);
 }
