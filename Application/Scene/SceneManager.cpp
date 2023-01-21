@@ -26,14 +26,20 @@ void SceneManager::Update()
 	Camera::current.Update();
 }
 
-void SceneManager::Draw()
+void SceneManager::DrawBackSprite()
 {
 	Sprite::SetBlendMode(BlendMode::Alpha);
 	currentScene->DrawBackSprite();
+}
 
+void SceneManager::DrawModel()
+{
 	Object3D::SetBlendMode(BlendMode::Alpha);
 	currentScene->DrawModel();
+}
 
+void SceneManager::DrawFrontSprite()
+{
 	Sprite::SetBlendMode(BlendMode::Alpha);
 	currentScene->DrawFrontSprite();
 

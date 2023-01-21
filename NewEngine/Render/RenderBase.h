@@ -22,6 +22,8 @@ public:
 	void Init();
 	void PreDraw();
 	void PostDraw();
+	void SetObject3DDrawCommand();
+	void SetSpriteDrawCommand();
 	void CreateSrv(Texture& texture, const D3D12_RESOURCE_DESC& textureResourceDesc);
 
 private:

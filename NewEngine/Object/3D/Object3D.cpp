@@ -77,7 +77,6 @@ void Object3D::Draw()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	renderBase->GetCommandList()->SetGraphicsRootSignature(renderBase->GetRootSignature());
 	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// VBV‚ÆIBV‚ÌÝ’èƒRƒ}ƒ“ƒh

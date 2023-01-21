@@ -112,6 +112,15 @@ void RenderBase::PostDraw()
 	result = commandList.Get()->Reset(commandAllocator.Get(), nullptr);
 	assert(SUCCEEDED(result));
 }
+void RenderBase::SetObject3DDrawCommand()
+{
+	commandList->SetGraphicsRootSignature(rootSignature.Get());
+}
+void RenderBase::SetSpriteDrawCommand()
+{
+	commandList->SetGraphicsRootSignature(rootSignature.Get());
+}
+
 void RenderBase::CreateSrv(Texture& texture, const D3D12_RESOURCE_DESC& textureResourceDesc)
 {
 	// SRVヒープの先頭ハンドルを取得

@@ -17,7 +17,9 @@ public:
 public:
 	void Init();
 	void Update();
-	void Draw();
+	void DrawBackSprite();
+	void DrawModel();
+	void DrawFrontSprite();
 
 	template<typename T>
 	static void ChangeScene()

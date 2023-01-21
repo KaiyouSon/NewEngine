@@ -14,8 +14,8 @@ private:
 	Transform transform;
 
 public:
-	Color color;
 	Object3D* obj;
+	Color color;
 
 public:
 	SilhouetteObj();

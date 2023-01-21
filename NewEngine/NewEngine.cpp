@@ -63,15 +63,22 @@ void NewEngineUpda()
 void NewEnginePreDraw()
 {
 	RenderBase::GetInstance()->PreDraw();
+	GuiManager::GetInstance()->PreDraw();
 }
 void NewEneineDraw()
 {
-	GuiManager::GetInstance()->PreDraw();
-	SceneManager::GetInstance()->Draw();
-	GuiManager::GetInstance()->PostDraw();
+	RenderBase::GetInstance()->SetSpriteDrawCommand();
+	SceneManager::GetInstance()->DrawBackSprite();
+
+	RenderBase::GetInstance()->SetObject3DDrawCommand();
+	SceneManager::GetInstance()->DrawModel();
+
+	RenderBase::GetInstance()->SetSpriteDrawCommand();
+	SceneManager::GetInstance()->DrawFrontSprite();
 }
 void NewEnginePostDraw()
 {
+	GuiManager::GetInstance()->PostDraw();
 	RenderBase::GetInstance()->PostDraw();
 }
 void NewEngineEnd()

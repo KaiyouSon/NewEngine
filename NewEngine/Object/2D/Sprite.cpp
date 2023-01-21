@@ -54,7 +54,6 @@ void Sprite::Draw()
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
 	renderBase->GetCommandList()->SetPipelineState(renderBase->GetSpritePipeline()->GetAlphaPipeline());
-	renderBase->GetCommandList()->SetGraphicsRootSignature(renderBase->GetRootSignature());
 	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	// VBV‚ÆIBV‚ÌÝ’èƒRƒ}ƒ“ƒh
