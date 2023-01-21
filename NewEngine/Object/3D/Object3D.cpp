@@ -110,23 +110,23 @@ void Object3D::SetBlendMode(const BlendMode& blendMode)
 	switch (blendMode)
 	{
 	case BlendMode::Alpha: // ƒ¿ƒuƒŒƒ“ƒh
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetLoadModelPipeline()->GetAlphaPipeline());
+		renderBase->GetCommandList()->SetPipelineState(renderBase->GetObject3DPipeline()->GetAlphaPipeline());
 		break;
 
 	case BlendMode::Add:	// ‰ÁZƒuƒŒƒ“ƒh
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetLoadModelPipeline()->GetAddPipeline());
+		renderBase->GetCommandList()->SetPipelineState(renderBase->GetObject3DPipeline()->GetAddPipeline());
 		break;
 
 	case BlendMode::Sub:	// Œ¸ZƒuƒŒƒ“ƒh
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetLoadModelPipeline()->GetSubPipeline());
+		renderBase->GetCommandList()->SetPipelineState(renderBase->GetObject3DPipeline()->GetSubPipeline());
 		break;
 
 	case BlendMode::Inv:	// ”½“]
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetLoadModelPipeline()->GetInvPipeline());
+		renderBase->GetCommandList()->SetPipelineState(renderBase->GetObject3DPipeline()->GetInvPipeline());
 		break;
 
 	case BlendMode::Screen:	// ”½“]
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetLoadModelPipeline()->GetScreenPipeline());
+		renderBase->GetCommandList()->SetPipelineState(renderBase->GetObject3DPipeline()->GetScreenPipeline());
 		break;
 
 	default:

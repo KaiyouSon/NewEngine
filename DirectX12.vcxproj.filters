@@ -430,7 +430,7 @@
     <None Include="Shader\RenderTexture.hlsli">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shader\ObjectBasic.hlsli">
+    <None Include="Shader\Object3DH.hlsli">
       <Filter>Shader</Filter>
     </None>
     <None Include="Shader\Sprite.hlsli">
@@ -456,10 +456,10 @@
     <FxCompile Include="Shader\RenderTextureVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\ObjectBasicPS.hlsl">
+    <FxCompile Include="Shader\Object3DPS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\ObjectBasicVS.hlsl">
+    <FxCompile Include="Shader\Object3DVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\SpriteVS.hlsl">

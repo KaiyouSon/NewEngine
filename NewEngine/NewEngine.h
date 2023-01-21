@@ -10,6 +10,7 @@
 #include "GuiManager.h"
 #include "InputManager.h"
 #include "SceneManager.h"
+#include "TextureManager.h"
 #include "Collision.h"
 
 // c++
@@ -18,6 +19,7 @@
 #include <string>
 #include <list>
 #include <array>
+#include <map>
 
 void NewEngineInit();
 void NewEngineUpda();

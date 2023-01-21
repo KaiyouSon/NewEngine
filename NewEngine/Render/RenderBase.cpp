@@ -120,7 +120,6 @@ void RenderBase::SetSpriteDrawCommand()
 {
 	commandList->SetGraphicsRootSignature(rootSignature.Get());
 }
-
 void RenderBase::CreateSrv(Texture& texture, const D3D12_RESOURCE_DESC& textureResourceDesc)
 {
 	// SRVヒープの先頭ハンドルを取得
@@ -384,7 +383,6 @@ void RenderBase::SrvInit()
 }
 void RenderBase::ShaderCompilerInit()
 {
-
 	// 3Dオブジェクトのシェーダー
 	basicShader = std::move(std::make_unique<ShaderObject>());
 	basicShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -408,12 +406,12 @@ void RenderBase::ShaderCompilerInit()
 	renderTextureShader->CompilePixelShader("Shader/RenderTexturePS.hlsl", "main");
 
 	// ロードしたモデルのシェーダー
-	loadModelShader = std::move(std::make_unique<ShaderObject>());
-	loadModelShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	loadModelShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	loadModelShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	loadModelShader->CompileVertexShader("Shader/ObjectBasicVS.hlsl", "main");
-	loadModelShader->CompilePixelShader("Shader/ObjectBasicPS.hlsl", "main");
+	object3DShader = std::move(std::make_unique<ShaderObject>());
+	object3DShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	object3DShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	object3DShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	object3DShader->CompileVertexShader("Shader/Object3DVS.hlsl", "main");
+	object3DShader->CompilePixelShader("Shader/Object3DPS.hlsl", "main");
 
 	silhouetteShader = std::move(std::make_unique<ShaderObject>());
 	silhouetteShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -575,14 +573,14 @@ void RenderBase::GraphicsPipelineInit()
 	renderTexturePipeline->Create();
 
 	// 読み込みオブジェクト用
-	loadModelPipeline = std::move(std::make_unique<GraphicsPipeline>());
-	loadModelPipeline->SetShaderObject(loadModelShader.get());
-	loadModelPipeline->SetCullMode(CullMode::CullBack);
-	loadModelPipeline->SetisDepthEnable(true);
-	loadModelPipeline->SetDepthStencilDesc(depthStencilDesc);
-	loadModelPipeline->SetTopologyType(TopologyType::TriangleTopology);
-	loadModelPipeline->SetRootSignature(rootSignature.Get());
-	loadModelPipeline->Create();
+	object3DPipeline = std::move(std::make_unique<GraphicsPipeline>());
+	object3DPipeline->SetShaderObject(object3DShader.get());
+	object3DPipeline->SetCullMode(CullMode::CullBack);
+	object3DPipeline->SetisDepthEnable(true);
+	object3DPipeline->SetDepthStencilDesc(depthStencilDesc);
+	object3DPipeline->SetTopologyType(TopologyType::TriangleTopology);
+	object3DPipeline->SetRootSignature(rootSignature.Get());
+	object3DPipeline->Create();
 
 
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc2 = D3D12_DEPTH_STENCIL_DESC();
