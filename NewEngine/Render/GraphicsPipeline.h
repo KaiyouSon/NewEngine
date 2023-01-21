@@ -23,7 +23,6 @@ class GraphicsPipeline
 private:
 	HRESULT result;
 
-	bool isDepthEnable;
 	CullMode cullMode;
 	TopologyType topologyType;
 	ShaderObject* shaderObject;
@@ -48,7 +47,6 @@ public:
 public:
 	// セッター
 	inline void SetCullMode(const CullMode& cullMode) { this->cullMode = cullMode; }
-	inline void SetisDepthEnable(const bool& isDepthEnable) { this->isDepthEnable = isDepthEnable; }
 	inline void SetTopologyType(const TopologyType& topologyType) { this->topologyType = topologyType; }
 	inline void SetShaderObject(ShaderObject* shaderObject) { this->shaderObject = shaderObject; }
 	inline void SetRootSignature(ID3D12RootSignature* rootSignature) { this->rootSignature = rootSignature; }

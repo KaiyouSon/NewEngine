@@ -523,41 +523,41 @@ void RenderBase::RootSignatureInit()
 }
 void RenderBase::GraphicsPipelineInit()
 {
-	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc = D3D12_DEPTH_STENCIL_DESC();
-	depthStencilDesc.DepthEnable = true; // 深度テストを行う
-	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み許可
-	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
+	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc1 = D3D12_DEPTH_STENCIL_DESC();
+	depthStencilDesc1.DepthEnable = true; // 深度テストを行う
+	depthStencilDesc1.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み許可
+	depthStencilDesc1.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
 
-	// グラフィックスパイプライン3D用
+	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc2 = D3D12_DEPTH_STENCIL_DESC();
+	depthStencilDesc2.DepthEnable = false; // 深度テストを行わない
+
+	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc3 = D3D12_DEPTH_STENCIL_DESC();
+	depthStencilDesc3.DepthEnable = true; // 深度テストを行う
+	depthStencilDesc3.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// 書き込み不可
+	depthStencilDesc3.DepthFunc = D3D12_COMPARISON_FUNC_GREATER;	// 大きいほうを採用
+
+	// ベーシック
 	basicPipeline = std::move(std::make_unique<GraphicsPipeline>());
 	basicPipeline->SetShaderObject(basicShader.get());
 	basicPipeline->SetCullMode(CullMode::CullBack);
-	basicPipeline->SetisDepthEnable(true);
-	basicPipeline->SetDepthStencilDesc(depthStencilDesc);
 	basicPipeline->SetTopologyType(TopologyType::TriangleTopology);
 	basicPipeline->SetRootSignature(rootSignature.Get());
 	basicPipeline->Create();
 
-	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc3 = D3D12_DEPTH_STENCIL_DESC();
-	depthStencilDesc3.DepthEnable = false; // 深度テストを行う
-	//depthStencilDesc3.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み許可
-	//depthStencilDesc3.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
-	// グラフィックスパイプライン2D用
+	// スプライト用
 	spritePipeline = std::move(std::make_unique<GraphicsPipeline>());
 	spritePipeline->SetShaderObject(spriteShader.get());
 	spritePipeline->SetCullMode(CullMode::None);
-	spritePipeline->SetisDepthEnable(false);
-	spritePipeline->SetDepthStencilDesc(depthStencilDesc3);
+	spritePipeline->SetDepthStencilDesc(depthStencilDesc2);
 	spritePipeline->SetTopologyType(TopologyType::TriangleTopology);
 	spritePipeline->SetRootSignature(rootSignature.Get());
 	spritePipeline->Create();
 
-	// グラフィックスパイプラインLine用
+	// Line用
 	linePipeline = std::move(std::make_unique<GraphicsPipeline>());
 	linePipeline->SetShaderObject(basicShader.get());
 	linePipeline->SetCullMode(CullMode::CullBack);
-	linePipeline->SetisDepthEnable(true);
-	linePipeline->SetDepthStencilDesc(depthStencilDesc);
+	linePipeline->SetDepthStencilDesc(depthStencilDesc1);
 	linePipeline->SetTopologyType(TopologyType::LineTopology);
 	linePipeline->SetRootSignature(rootSignature.Get());
 	linePipeline->Create();
@@ -566,33 +566,25 @@ void RenderBase::GraphicsPipelineInit()
 	renderTexturePipeline = std::move(std::make_unique<GraphicsPipeline>());
 	renderTexturePipeline->SetShaderObject(renderTextureShader.get());
 	renderTexturePipeline->SetCullMode(CullMode::CullBack);
-	renderTexturePipeline->SetisDepthEnable(true);
-	renderTexturePipeline->SetDepthStencilDesc(depthStencilDesc);
+	renderTexturePipeline->SetDepthStencilDesc(depthStencilDesc1);
 	renderTexturePipeline->SetTopologyType(TopologyType::TriangleTopology);
 	renderTexturePipeline->SetRootSignature(rootSignature.Get());
 	renderTexturePipeline->Create();
 
-	// 読み込みオブジェクト用
+	// 3Dオブジェクト用
 	object3DPipeline = std::move(std::make_unique<GraphicsPipeline>());
 	object3DPipeline->SetShaderObject(object3DShader.get());
 	object3DPipeline->SetCullMode(CullMode::CullBack);
-	object3DPipeline->SetisDepthEnable(true);
-	object3DPipeline->SetDepthStencilDesc(depthStencilDesc);
+	object3DPipeline->SetDepthStencilDesc(depthStencilDesc1);
 	object3DPipeline->SetTopologyType(TopologyType::TriangleTopology);
 	object3DPipeline->SetRootSignature(rootSignature.Get());
 	object3DPipeline->Create();
 
-
-	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc2 = D3D12_DEPTH_STENCIL_DESC();
-	depthStencilDesc2.DepthEnable = true; // 深度テストを行う
-	depthStencilDesc2.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// 書き込み許可
-	depthStencilDesc2.DepthFunc = D3D12_COMPARISON_FUNC_GREATER;	// 大きいほうを採用
-
+	// シルエット用
 	silhouettePipeline = std::move(std::make_unique<GraphicsPipeline>());
 	silhouettePipeline->SetShaderObject(silhouetteShader.get());
 	silhouettePipeline->SetCullMode(CullMode::CullBack);
-	silhouettePipeline->SetisDepthEnable(true);
-	silhouettePipeline->SetDepthStencilDesc(depthStencilDesc2);
+	silhouettePipeline->SetDepthStencilDesc(depthStencilDesc3);
 	silhouettePipeline->SetTopologyType(TopologyType::TriangleTopology);
 	silhouettePipeline->SetRootSignature(rootSignature.Get());
 	silhouettePipeline->Create();
