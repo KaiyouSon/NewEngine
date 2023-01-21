@@ -5,7 +5,7 @@ void TitleScene::Init()
 {
 	obj.model = Model("Sphere", true);
 	obj.pos.z = 5.f;
-	obj.texture = TextureManager::GetTexture("pic");
+	obj.texture = *TextureManager::GetTexture("pic");
 }
 
 void TitleScene::Update()

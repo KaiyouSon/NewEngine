@@ -45,13 +45,13 @@ void GameScene::Init()
 	TextureManager::LoadTexture("pic.png", "pic");
 	obj.model = Model("Boss", true);
 	obj.pos.z = 5.f;
-	obj.texture = TextureManager::GetTexture("pic");
+	obj.texture = *TextureManager::GetTexture("pic");
 
 	obj2.model = Model("Cube", true);
 	obj2.scale.x = 2.f;
 
 	//TextureManager::LoadTexture("pic.png");
-	spr.texture = TextureManager::GetTexture("pic");
+	spr.texture = *TextureManager::GetTexture("pic");
 	spr.pos = 256;
 	spr.scale = 0.25f;
 	spr.anchorPoint = 0.5f;
