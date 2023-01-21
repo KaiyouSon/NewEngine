@@ -1,6 +1,7 @@
 #pragma once
 #include "RenderWindow.h"
 #include "ShaderObject.h"
+#include "RootSignature.h"
 #include "GraphicsPipeline.h"
 #include "Texture.h"
 #include "Util.h"
@@ -101,6 +102,8 @@ private:
 	// ルートシグネチャー関連
 	ComPtr <ID3DBlob> errorBlob;	// エラーオブジェクト
 	ComPtr <ID3D12RootSignature> rootSignature;
+
+	std::unique_ptr<RootSignature> spriteRootSigneture;
 
 	// 描画処理関連
 	D3D12_RESOURCE_BARRIER barrierDesc{};	// リソースバリア

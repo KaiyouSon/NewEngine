@@ -258,6 +258,9 @@
     <ClCompile Include="Application\SilhouetteObj.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Render\RootSignature.cpp">
+      <Filter>NewEngine\Source\Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -421,6 +424,9 @@
     </ClInclude>
     <ClInclude Include="Application\SilhouetteObj.h">
       <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\RootSignature.h">
+      <Filter>NewEngine\Header\Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -118,7 +118,7 @@ void RenderBase::SetObject3DDrawCommand()
 }
 void RenderBase::SetSpriteDrawCommand()
 {
-	commandList->SetGraphicsRootSignature(rootSignature.Get());
+	commandList->SetGraphicsRootSignature(spriteRootSigneture->GetRootSignature());
 }
 void RenderBase::CreateSrv(Texture& texture, const D3D12_RESOURCE_DESC& textureResourceDesc)
 {
@@ -424,6 +424,10 @@ void RenderBase::ShaderCompilerInit()
 }
 void RenderBase::RootSignatureInit()
 {
+	spriteRootSigneture = std::move(make_unique<RootSignature>());
+	spriteRootSigneture->AddConstantBufferToRootRrameter(2);
+	spriteRootSigneture->Create();
+
 	HRESULT result;
 
 	// デスクリプタレンジの設定
@@ -432,18 +436,6 @@ void RenderBase::RootSignatureInit()
 	descriptorRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	descriptorRange.BaseShaderRegister = 0;		// テクスチャレジスタ0番
 	descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
-
-	// テクスチャサンプラーの設定
-	D3D12_STATIC_SAMPLER_DESC samplerDesc{};
-	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// 横繰り返し(タイリング)
-	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// 縦繰り返し(タイリング)
-	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// 奥行繰り返し(タイリング)
-	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;	// ボーダーの時は黒
-	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;					// 全てのリニア補間
-	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;									// ミップマップ最大値
-	samplerDesc.MinLOD = 0.0f;												// ミップマップ最小値
-	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;			// ピクセルシェーダからのみ使用可能
 
 	// ルートパラメーターの設定
 	D3D12_ROOT_PARAMETER rootParams[8] = {};
@@ -495,6 +487,18 @@ void RenderBase::RootSignatureInit()
 	rootParams[7].Descriptor.ShaderRegister = 6;					// 定数バッファ番号
 	rootParams[7].Descriptor.RegisterSpace = 0;						// デフォルト値
 	rootParams[7].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
+
+	// テクスチャサンプラーの設定
+	D3D12_STATIC_SAMPLER_DESC samplerDesc{};
+	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// 横繰り返し(タイリング)
+	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// 縦繰り返し(タイリング)
+	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// 奥行繰り返し(タイリング)
+	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;	// ボーダーの時は黒
+	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;					// 全てのリニア補間
+	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;									// ミップマップ最大値
+	samplerDesc.MinLOD = 0.0f;												// ミップマップ最小値
+	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;			// ピクセルシェーダからのみ使用可能
 
 	// ルートシグネチャの設定
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
@@ -550,7 +554,7 @@ void RenderBase::GraphicsPipelineInit()
 	spritePipeline->SetCullMode(CullMode::None);
 	spritePipeline->SetDepthStencilDesc(depthStencilDesc2);
 	spritePipeline->SetTopologyType(TopologyType::TriangleTopology);
-	spritePipeline->SetRootSignature(rootSignature.Get());
+	spritePipeline->SetRootSignature(spriteRootSigneture->GetRootSignature());
 	spritePipeline->Create();
 
 	// Line用

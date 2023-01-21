@@ -41,6 +41,7 @@ public:
 	inline ID3DBlob* GetVSBlob() { return  vsBlob.Get(); }
 	inline ID3DBlob* GetGSBlob() { return  gsBlob.Get(); }
 	inline ID3DBlob* GetPSBlob() { return  psBlob.Get(); }
+	inline static ID3DBlob* GetErrorBlob() { return  errorBlob.Get(); }
 	inline const std::vector <D3D12_INPUT_ELEMENT_DESC>& GetInputLayout() { return inputLayout; }
 	inline void AddInputLayout(const LPCSTR& semanticName, const DXGI_FORMAT& format)
 	{

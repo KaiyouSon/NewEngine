@@ -187,6 +187,7 @@
     <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp" />
     <ClCompile Include="NewEngine\Render\RenderBase.cpp" />
     <ClCompile Include="NewEngine\Render\RenderWindow.cpp" />
+    <ClCompile Include="NewEngine\Render\RootSignature.cpp" />
     <ClCompile Include="NewEngine\Render\ScissorRectangle.cpp" />
     <ClCompile Include="NewEngine\Render\ShaderObject.cpp" />
     <ClCompile Include="NewEngine\Render\Viewport.cpp" />
@@ -241,6 +242,7 @@
     <ClInclude Include="NewEngine\Render\GraphicsPipeline.h" />
     <ClInclude Include="NewEngine\Render\RenderBase.h" />
     <ClInclude Include="NewEngine\Render\RenderWindow.h" />
+    <ClInclude Include="NewEngine\Render\RootSignature.h" />
     <ClInclude Include="NewEngine\Render\ScissorRectangle.h" />
     <ClInclude Include="NewEngine\Render\ShaderObject.h" />
     <ClInclude Include="NewEngine\Render\Vertex.h" />

@@ -61,15 +61,15 @@ void Sprite::Draw()
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
+		0, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		2, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
+		1, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
 
 	// SRVヒープの設定コマンド
 	auto temp = renderBase->GetSrvDescHeap();
 	renderBase->GetCommandList()->SetDescriptorHeaps(1, &temp);
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(0, texture.GetGpuHandle());
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture.GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawInstanced((unsigned short)vertices.size(), 1, 0, 0);
 }
