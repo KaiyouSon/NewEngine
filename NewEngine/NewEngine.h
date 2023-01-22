@@ -7,10 +7,13 @@
 #include "PointLight.h"
 #include "Sound.h"
 #include "imgui.h"
+#include "IScene.h"
 #include "GuiManager.h"
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "TextureManager.h"
+#include "ModelManager.h"
+#include "LightManager.h"
 #include "Collision.h"
 
 // c++

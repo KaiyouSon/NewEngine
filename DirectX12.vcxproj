@@ -181,6 +181,7 @@
     <ClCompile Include="NewEngine\Object\3D\Material.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Mesh.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Model.cpp" />
+    <ClCompile Include="NewEngine\Object\3D\ModelManager.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Object3D.cpp" />
     <ClCompile Include="NewEngine\Object\3D\PointLight.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp" />
@@ -233,6 +234,7 @@
     <ClInclude Include="NewEngine\Object\3D\Material.h" />
     <ClInclude Include="NewEngine\Object\3D\Mesh.h" />
     <ClInclude Include="NewEngine\Object\3D\Model.h" />
+    <ClInclude Include="NewEngine\Object\3D\ModelManager.h" />
     <ClInclude Include="NewEngine\Object\3D\Object3D.h" />
     <ClInclude Include="NewEngine\Object\3D\PointLight.h" />
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h" />

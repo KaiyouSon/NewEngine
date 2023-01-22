@@ -261,6 +261,9 @@
     <ClCompile Include="NewEngine\Render\RootSignature.cpp">
       <Filter>NewEngine\Source\Render</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\ModelManager.cpp">
+      <Filter>NewEngine\Source\Object\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -427,6 +430,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Render\RootSignature.h">
       <Filter>NewEngine\Header\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\ModelManager.h">
+      <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

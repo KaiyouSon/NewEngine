@@ -1,7 +1,6 @@
 #include "GameScene.h"
 #include "TitleScene.h"
 #include "LightManager.h"
-#include "TextureManager.h"
 
 GameScene::GameScene()
 {
@@ -38,19 +37,24 @@ void GameScene::Init()
 	LightManager::GetInstance()->circleShadow.atten = { 0.5f,0.6f,0.0f };
 	LightManager::GetInstance()->circleShadow.factorAngleCos = { 0.0f,0.5f };
 
-	skyDomeObj.model = Model("SkyDome", true);
-	groundObj.model = Model("Ground");
-	groundObj.pos.y = -2;
+	ModelManager::LoadModel("SkyDome", "SkyDome");
+	ModelManager::LoadModel("Ground", "Ground");
+	ModelManager::LoadModel("Boss", "Boss");
+	ModelManager::LoadModel("Cube", "Cube");
 
 	TextureManager::LoadTexture("pic.png", "pic");
-	obj.model = Model("Boss", true);
-	obj.pos.z = 5.f;
-	obj.texture = *TextureManager::GetTexture("pic");
 
-	obj2.model = Model("Cube", true);
+	skyDomeObj.model = *ModelManager::GetModel("SkyDome");
+	groundObj.model = *ModelManager::GetModel("Ground");
+	groundObj.pos.y = -2;
+
+	obj.model = *ModelManager::GetModel("Boss");
+	obj.texture = *TextureManager::GetTexture("pic");
+	obj.pos.z = 5.f;
+
+	obj2.model = *ModelManager::GetModel("Cube");
 	obj2.scale.x = 2.f;
 
-	//TextureManager::LoadTexture("pic.png");
 	spr.texture = *TextureManager::GetTexture("pic");
 	spr.pos = 256;
 	spr.scale = 0.25f;

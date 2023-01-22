@@ -1,5 +1,4 @@
 #pragma once
-#include "IScene.h"
 #include "NewEngine.h"
 #include "SilhouetteObj.h"
 
