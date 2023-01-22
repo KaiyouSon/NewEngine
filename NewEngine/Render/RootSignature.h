@@ -13,8 +13,9 @@ private:
 
 public:
 	void Create();
-	void AddConstantBufferToRootRrameter(const size_t& number);
+	void AddConstantBufferViewToRootRrameter(const size_t& number);
 
 	inline ID3D12RootSignature* GetRootSignature() { return rootSignature.Get(); }
+	inline UINT GetRootDescriptorTableIndex() { return rootParameters.size() - 1; }
 };
 

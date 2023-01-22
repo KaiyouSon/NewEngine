@@ -106,10 +106,6 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
 		blendDesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;	// デストからソースを減算
 		blendDesc.SrcBlend = D3D12_BLEND_ONE;				// ソースの値を100％使う
 		blendDesc.DestBlend = D3D12_BLEND_ONE;				// デストの値を100％使う
-
-		//blendDesc.BlendOp = D3D12_BLEND_OP_ADD;	// デストからソースを減算
-		//blendDesc.SrcBlend = D3D12_BLEND_ZERO;				// ソースの値を100％使う
-		//blendDesc.DestBlend = D3D12_BLEND_SRC_COLOR;				// デストの値を100％使う
 		break;
 
 	case BlendMode::Inv:	// 反転

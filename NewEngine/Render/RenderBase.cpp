@@ -114,11 +114,11 @@ void RenderBase::PostDraw()
 }
 void RenderBase::SetObject3DDrawCommand()
 {
-	commandList->SetGraphicsRootSignature(rootSignature.Get());
+	commandList->SetGraphicsRootSignature(object3DRootSignature->GetRootSignature());
 }
 void RenderBase::SetSpriteDrawCommand()
 {
-	commandList->SetGraphicsRootSignature(spriteRootSigneture->GetRootSignature());
+	commandList->SetGraphicsRootSignature(spriteRootSignature->GetRootSignature());
 }
 void RenderBase::CreateSrv(Texture& texture, const D3D12_RESOURCE_DESC& textureResourceDesc)
 {
@@ -424,106 +424,15 @@ void RenderBase::ShaderCompilerInit()
 }
 void RenderBase::RootSignatureInit()
 {
-	spriteRootSigneture = std::move(make_unique<RootSignature>());
-	spriteRootSigneture->AddConstantBufferToRootRrameter(2);
-	spriteRootSigneture->Create();
+	// 3Dオブジェクト用
+	object3DRootSignature = std::move(make_unique<RootSignature>());
+	object3DRootSignature->AddConstantBufferViewToRootRrameter(7);
+	object3DRootSignature->Create();
 
-	HRESULT result;
-
-	// デスクリプタレンジの設定
-	D3D12_DESCRIPTOR_RANGE descriptorRange{};
-	descriptorRange.NumDescriptors = 1;			// 一度の描画に使うテクスチャが1枚なので１
-	descriptorRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-	descriptorRange.BaseShaderRegister = 0;		// テクスチャレジスタ0番
-	descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
-
-	// ルートパラメーターの設定
-	D3D12_ROOT_PARAMETER rootParams[8] = {};
-
-	// テクスチャレジスタ0番（SRV）
-	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE; // 種類
-	rootParams[0].DescriptorTable.pDescriptorRanges = &descriptorRange;		  // デスクリプタレンジ
-	rootParams[0].DescriptorTable.NumDescriptorRanges = 1;					  // デスクリプタレンジ数
-	rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;			  // 全てのシェーダから見える
-
-	// 定数バッファ（トランスフォーム）
-	rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
-	rootParams[1].Descriptor.ShaderRegister = 0;					// 定数バッファ番号
-	rootParams[1].Descriptor.RegisterSpace = 0;						// デフォルト値
-	rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
-
-	// 定数バッファ（マテリアル）
-	rootParams[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
-	rootParams[2].Descriptor.ShaderRegister = 1;					// 定数バッファ番号
-	rootParams[2].Descriptor.RegisterSpace = 0;						// デフォルト値
-	rootParams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
-
-	// 定数バッファ（マテリアル）
-	rootParams[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
-	rootParams[3].Descriptor.ShaderRegister = 2;					// 定数バッファ番号
-	rootParams[3].Descriptor.RegisterSpace = 0;						// デフォルト値
-	rootParams[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
-
-	// 定数バッファ（平行光源、ディレクショナルライト）
-	rootParams[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
-	rootParams[4].Descriptor.ShaderRegister = 3;					// 定数バッファ番号
-	rootParams[4].Descriptor.RegisterSpace = 0;						// デフォルト値
-	rootParams[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
-
-	// 定数バッファ（点光源）
-	rootParams[5].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
-	rootParams[5].Descriptor.ShaderRegister = 4;					// 定数バッファ番号
-	rootParams[5].Descriptor.RegisterSpace = 0;						// デフォルト値
-	rootParams[5].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
-
-	// 定数バッファ（スポットライト）
-	rootParams[6].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
-	rootParams[6].Descriptor.ShaderRegister = 5;					// 定数バッファ番号
-	rootParams[6].Descriptor.RegisterSpace = 0;						// デフォルト値
-	rootParams[6].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
-
-	// 定数バッファ（丸影）
-	rootParams[7].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
-	rootParams[7].Descriptor.ShaderRegister = 6;					// 定数バッファ番号
-	rootParams[7].Descriptor.RegisterSpace = 0;						// デフォルト値
-	rootParams[7].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
-
-	// テクスチャサンプラーの設定
-	D3D12_STATIC_SAMPLER_DESC samplerDesc{};
-	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// 横繰り返し(タイリング)
-	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// 縦繰り返し(タイリング)
-	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// 奥行繰り返し(タイリング)
-	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;	// ボーダーの時は黒
-	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;					// 全てのリニア補間
-	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;									// ミップマップ最大値
-	samplerDesc.MinLOD = 0.0f;												// ミップマップ最小値
-	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;			// ピクセルシェーダからのみ使用可能
-
-	// ルートシグネチャの設定
-	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
-	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-	rootSignatureDesc.pParameters = rootParams;	// ルートパラメータの先頭アドレス
-	rootSignatureDesc.NumParameters = _countof(rootParams);		// ルートパラメータ数
-	rootSignatureDesc.pStaticSamplers = &samplerDesc;
-	rootSignatureDesc.NumStaticSamplers = 1;
-	// ルートシグネチャのシリアライズ
-	ComPtr<ID3DBlob> rootSigBlob;
-	result = D3D12SerializeRootSignature(
-		&rootSignatureDesc,
-		D3D_ROOT_SIGNATURE_VERSION_1_0,
-		&rootSigBlob,
-		&errorBlob);
-	assert(SUCCEEDED(result));
-	result = device->CreateRootSignature
-	(
-		0,
-		rootSigBlob->GetBufferPointer(),
-		rootSigBlob->GetBufferSize(),
-		IID_PPV_ARGS(&rootSignature)
-	);
-	assert(SUCCEEDED(result));
-
+	// スプライト用
+	spriteRootSignature = std::move(make_unique<RootSignature>());
+	spriteRootSignature->AddConstantBufferViewToRootRrameter(2);
+	spriteRootSignature->Create();
 }
 void RenderBase::GraphicsPipelineInit()
 {
@@ -545,7 +454,7 @@ void RenderBase::GraphicsPipelineInit()
 	basicPipeline->SetShaderObject(basicShader.get());
 	basicPipeline->SetCullMode(CullMode::CullBack);
 	basicPipeline->SetTopologyType(TopologyType::TriangleTopology);
-	basicPipeline->SetRootSignature(rootSignature.Get());
+	basicPipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
 	basicPipeline->Create();
 
 	// スプライト用
@@ -554,7 +463,7 @@ void RenderBase::GraphicsPipelineInit()
 	spritePipeline->SetCullMode(CullMode::None);
 	spritePipeline->SetDepthStencilDesc(depthStencilDesc2);
 	spritePipeline->SetTopologyType(TopologyType::TriangleTopology);
-	spritePipeline->SetRootSignature(spriteRootSigneture->GetRootSignature());
+	spritePipeline->SetRootSignature(spriteRootSignature->GetRootSignature());
 	spritePipeline->Create();
 
 	// Line用
@@ -563,7 +472,7 @@ void RenderBase::GraphicsPipelineInit()
 	linePipeline->SetCullMode(CullMode::CullBack);
 	linePipeline->SetDepthStencilDesc(depthStencilDesc1);
 	linePipeline->SetTopologyType(TopologyType::LineTopology);
-	linePipeline->SetRootSignature(rootSignature.Get());
+	linePipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
 	linePipeline->Create();
 
 	// レンダーテクスチャ用
@@ -572,7 +481,7 @@ void RenderBase::GraphicsPipelineInit()
 	renderTexturePipeline->SetCullMode(CullMode::CullBack);
 	renderTexturePipeline->SetDepthStencilDesc(depthStencilDesc1);
 	renderTexturePipeline->SetTopologyType(TopologyType::TriangleTopology);
-	renderTexturePipeline->SetRootSignature(rootSignature.Get());
+	renderTexturePipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
 	renderTexturePipeline->Create();
 
 	// 3Dオブジェクト用
@@ -581,7 +490,7 @@ void RenderBase::GraphicsPipelineInit()
 	object3DPipeline->SetCullMode(CullMode::CullBack);
 	object3DPipeline->SetDepthStencilDesc(depthStencilDesc1);
 	object3DPipeline->SetTopologyType(TopologyType::TriangleTopology);
-	object3DPipeline->SetRootSignature(rootSignature.Get());
+	object3DPipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
 	object3DPipeline->Create();
 
 	// シルエット用
@@ -590,7 +499,7 @@ void RenderBase::GraphicsPipelineInit()
 	silhouettePipeline->SetCullMode(CullMode::CullBack);
 	silhouettePipeline->SetDepthStencilDesc(depthStencilDesc3);
 	silhouettePipeline->SetTopologyType(TopologyType::TriangleTopology);
-	silhouettePipeline->SetRootSignature(rootSignature.Get());
+	silhouettePipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
 	silhouettePipeline->Create();
 
 }

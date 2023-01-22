@@ -47,7 +47,6 @@ void SilhouetteObj::Draw()
 	SetBlendMode(BlendMode::Alpha);
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	renderBase->GetCommandList()->SetGraphicsRootSignature(renderBase->GetRootSignature());
 	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// VBVとIBVの設定コマンド
@@ -56,9 +55,9 @@ void SilhouetteObj::Draw()
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
+		0, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		2, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
+		1, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(unsigned short)obj->model.mesh.GetIndexSize(), 1, 0, 0, 0);

@@ -45,6 +45,9 @@ public:
 	inline ID3D12DescriptorHeap* GetSrvDescHeap() const { return srvDescHeap.Get(); }
 	inline ID3D12RootSignature* GetRootSignature() const { return rootSignature.Get(); }
 
+	inline RootSignature* GetObject3DRootSignature() const { return object3DRootSignature.get(); }
+	inline RootSignature* GetSpriteRootSignature() const { return spriteRootSignature.get(); }
+
 	inline GraphicsPipeline* GetBasicPipeline()const { return basicPipeline.get(); }
 	inline GraphicsPipeline* GetSpritePipeline()const { return spritePipeline.get(); }
 	inline GraphicsPipeline* GetLinePipeline()const { return linePipeline.get(); }
@@ -103,7 +106,8 @@ private:
 	ComPtr <ID3DBlob> errorBlob;	// エラーオブジェクト
 	ComPtr <ID3D12RootSignature> rootSignature;
 
-	std::unique_ptr<RootSignature> spriteRootSigneture;
+	std::unique_ptr<RootSignature> object3DRootSignature;
+	std::unique_ptr<RootSignature> spriteRootSignature;
 
 	// 描画処理関連
 	D3D12_RESOURCE_BARRIER barrierDesc{};	// リソースバリア

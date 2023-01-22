@@ -85,11 +85,11 @@ void Object3D::Draw()
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
+		0, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		2, constantBufferMaterial->constantBuffer->GetGPUVirtualAddress());
+		1, constantBufferMaterial->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		3, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
+		2, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
 	//DirectionalLight::current.Draw();
 	LightManager::GetInstance()->Draw();
 
@@ -97,7 +97,8 @@ void Object3D::Draw()
 	auto temp = renderBase->GetSrvDescHeap();
 	renderBase->GetCommandList()->SetDescriptorHeaps(1, &temp);
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(0, texture.GetGpuHandle());
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+		renderBase->GetObject3DRootSignature()->GetRootDescriptorTableIndex(), texture.GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(unsigned short)model.mesh.GetIndexSize(), 1, 0, 0, 0);

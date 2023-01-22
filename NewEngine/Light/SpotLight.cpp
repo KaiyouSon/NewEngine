@@ -31,5 +31,5 @@ void SpotLight::Draw()
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		6, constantBufferSpotLight->constantBuffer->GetGPUVirtualAddress());
+		5, constantBufferSpotLight->constantBuffer->GetGPUVirtualAddress());
 }

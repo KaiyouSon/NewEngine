@@ -33,5 +33,5 @@ void DirectionalLight::Draw()
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		4, constantBufferDirectionalLight->constantBuffer->GetGPUVirtualAddress());
+		3, constantBufferDirectionalLight->constantBuffer->GetGPUVirtualAddress());
 }

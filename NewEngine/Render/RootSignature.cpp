@@ -61,7 +61,7 @@ void RootSignature::Create()
 	assert(SUCCEEDED(result));
 }
 
-void RootSignature::AddConstantBufferToRootRrameter(const size_t& number)
+void RootSignature::AddConstantBufferViewToRootRrameter(const size_t& number)
 {
 	for (int i = 0; i < number; i++)
 	{
