@@ -1,58 +1,100 @@
 #include "LightManager.h"
 
-const int LightManager::directionalLightNum = 3;
-const int LightManager::pointLightNum = 3;
-const int LightManager::spotLightNum = 3;
+LightManager::LightManager() :
+	constantBufferLightManager(new ConstantBuffer<ConstantBufferDataLightManager>)
+{
+	constantBufferLightManager->Init();
+}
+
+LightManager::~LightManager()
+{
+	delete constantBufferLightManager;
+}
 
 void LightManager::Init()
 {
-	for (int i = 0; i < directionalLights.size(); i++)
-	{
-		directionalLights[i].Init();
-	}
-
-	for (int i = 0; i < pointLights.size(); i++)
-	{
-		pointLights[i].Init();
-	}
 }
 
 void LightManager::Update()
 {
-	for (int i = 0; i < directionalLights.size(); i++)
+	for (int i = 0; i < directionalLightNum; i++)
 	{
-		directionalLights[i].Update();
+		constantBufferLightManager->constantBufferMap->
+			constantBufferDirectionalLights[i].dir = directionalLights[i].dirVec;
+
+		constantBufferLightManager->constantBufferMap->
+			constantBufferDirectionalLights[i].color.x = directionalLights[i].color.r / 255;
+
+		constantBufferLightManager->constantBufferMap->
+			constantBufferDirectionalLights[i].color.y = directionalLights[i].color.g / 255;
+
+		constantBufferLightManager->constantBufferMap->
+			constantBufferDirectionalLights[i].color.z = directionalLights[i].color.b / 255;
+
+		constantBufferLightManager->constantBufferMap->
+			constantBufferDirectionalLights[i].isActive = directionalLights[i].isActive;
 	}
 
-	for (int i = 0; i < pointLights.size(); i++)
+	for (int i = 0; i < pointLightNum; i++)
 	{
-		pointLights[i].Update();
+		constantBufferLightManager->constantBufferMap->
+			constantBufferPointLights[i].pos = pointLights[i].pos;
+
+		constantBufferLightManager->constantBufferMap->
+			constantBufferPointLights[i].color.x = pointLights[i].color.r / 255;
+
+		constantBufferLightManager->constantBufferMap->
+			constantBufferPointLights[i].color.y = pointLights[i].color.g / 255;
+
+		constantBufferLightManager->constantBufferMap->
+			constantBufferPointLights[i].color.z = pointLights[i].color.b / 255;
+
+		constantBufferLightManager->constantBufferMap->
+			constantBufferPointLights[i].atten = pointLights[i].atten;
+
+		constantBufferLightManager->constantBufferMap->
+			constantBufferPointLights[i].isActive = pointLights[i].isActive;
 	}
 
-	for (int i = 0; i < spotLights.size(); i++)
+	for (int i = 0; i < spotLightNum; i++)
 	{
-		spotLights[i].Update();
-	}
+		constantBufferLightManager->constantBufferMap->
+			constantBufferSpotLights[i].vec = -spotLights[i].vec;
 
+		constantBufferLightManager->constantBufferMap->
+			constantBufferSpotLights[i].pos = spotLights[i].pos;
+
+		constantBufferLightManager->constantBufferMap->
+			constantBufferSpotLights[i].color.x = spotLights[i].color.r / 255;
+
+		constantBufferLightManager->constantBufferMap->
+			constantBufferSpotLights[i].color.y = spotLights[i].color.g / 255;
+
+		constantBufferLightManager->constantBufferMap->
+			constantBufferSpotLights[i].color.z = spotLights[i].color.b / 255;
+
+		constantBufferLightManager->constantBufferMap->
+			constantBufferSpotLights[i].atten = spotLights[i].atten;
+
+		constantBufferLightManager->constantBufferMap->
+			constantBufferSpotLights[i].factorAngleCos.x = cosf(Radian(spotLights[i].factorAngle.x));
+
+		constantBufferLightManager->constantBufferMap->
+			constantBufferSpotLights[i].factorAngleCos.y = cosf(Radian(spotLights[i].factorAngle.y));
+
+		constantBufferLightManager->constantBufferMap->
+			constantBufferSpotLights[i].isActive = spotLights[i].isActive;
+	}
 	circleShadow.Update();
 }
 
 void LightManager::Draw()
 {
-	for (int i = 0; i < directionalLights.size(); i++)
-	{
-		directionalLights[i].Draw();
-	}
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	for (int i = 0; i < pointLights.size(); i++)
-	{
-		pointLights[i].Draw();
-	}
-
-	for (int i = 0; i < spotLights.size(); i++)
-	{
-		spotLights[i].Draw();
-	}
+	// マテリアルとトランスフォームのCBVの設定コマンド
+	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+		3, constantBufferLightManager->constantBuffer->GetGPUVirtualAddress());
 
 	circleShadow.Draw();
 }

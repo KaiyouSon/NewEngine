@@ -4,7 +4,7 @@
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	SetWindowTitle("NewEngine");
-	SetWindowSize({ 1280, 720 });
+	SetWindowSize({ 1920, 1080 });
 	SetBackGroundColor(25.5, 63.75, 127.5);
 	SetFrameRate(60);
 	NewEngineInit();	// ƒGƒ“ƒWƒ“‚Ì‰Šú‰»

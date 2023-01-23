@@ -22,8 +22,8 @@ cbuffer ConstantBufferDataColor : register(b2)
 	float4 color;	// 色
 }
 
-// --- 平行光源 ------------------------------------------------- //
-static const int DirectionalLightNum = 3;
+// --- 平行光源 ---------------------------- //
+static const int DirectionalLightNum = 1;
 struct DirectionalLight
 {
 	float3 lightVec;	// 方向
@@ -31,12 +31,7 @@ struct DirectionalLight
 	uint isActive;
 };
 
-cbuffer ConstantBufferDataDirectionalLight : register(b3)
-{
-	DirectionalLight directionalLights[DirectionalLightNum];
-};
-
-// --- 点光源 --------------------------------------------------- //
+// --- 点光源 ------------------------------ //
 static const int PointLightNum = 3;
 struct PointLight
 {
@@ -46,12 +41,7 @@ struct PointLight
 	uint isActive;
 };
 
-cbuffer ConstantBufferDataPointLight : register(b4)
-{
-	PointLight pointLights[PointLightNum];
-}
-
-// --- スポットライト ------------------------------------------- //
+// --- スポットライト ---------------------- //
 static const int spotLightNum = 3;
 struct SpotLight
 {
@@ -63,10 +53,13 @@ struct SpotLight
 	uint isActive;
 };
 
-cbuffer ConstantBufferDataSpotLight : register(b5)
+cbuffer ConstantBufferDataLightManager : register(b3)
 {
+	DirectionalLight directionalLights[DirectionalLightNum];
+	PointLight pointLights[PointLightNum];
 	SpotLight spotLights[spotLightNum];
-}
+
+};
 
 // --- 丸影 ----------------------------------------------------- //
 static const int circleShadowNum = 1;

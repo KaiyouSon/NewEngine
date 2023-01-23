@@ -234,12 +234,6 @@
     <ClCompile Include="NewEngine\Object\3D\Mesh.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\3D\DirectionalLight.cpp">
-      <Filter>NewEngine\Source\Light</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Object\3D\PointLight.cpp">
-      <Filter>NewEngine\Source\Light</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Math\Quaternion.cpp">
       <Filter>NewEngine\Source\Math</Filter>
     </ClCompile>
@@ -247,9 +241,6 @@
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Light\LightManager.cpp">
-      <Filter>NewEngine\Source\Light</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Light\SpotLight.cpp">
       <Filter>NewEngine\Source\Light</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Light\CircleShadow.cpp">
@@ -404,9 +395,6 @@
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBufferData.h">
       <Filter>NewEngine\Header\Render\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\3D\DirectionalLight.h">
-      <Filter>NewEngine\Header\Light</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Math\Quaternion.h">
       <Filter>NewEngine\Header\Math</Filter>
     </ClInclude>
@@ -414,12 +402,6 @@
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Light\LightManager.h">
-      <Filter>NewEngine\Header\Light</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Light\SpotLight.h">
-      <Filter>NewEngine\Header\Light</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Object\3D\PointLight.h">
       <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Light\CircleShadow.h">

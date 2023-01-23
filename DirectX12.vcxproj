@@ -161,7 +161,6 @@
     <ClCompile Include="NewEngine\Input\MouseInput.cpp" />
     <ClCompile Include="NewEngine\Light\CircleShadow.cpp" />
     <ClCompile Include="NewEngine\Light\LightManager.cpp" />
-    <ClCompile Include="NewEngine\Light\SpotLight.cpp" />
     <ClCompile Include="NewEngine\main.cpp" />
     <ClCompile Include="NewEngine\Math\Mat4.cpp" />
     <ClCompile Include="NewEngine\Math\MathUtil.cpp" />
@@ -176,14 +175,12 @@
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp" />
     <ClCompile Include="NewEngine\Object\2D\Texture.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Camera.cpp" />
-    <ClCompile Include="NewEngine\Object\3D\DirectionalLight.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Line.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Material.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Mesh.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Model.cpp" />
     <ClCompile Include="NewEngine\Object\3D\ModelManager.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Object3D.cpp" />
-    <ClCompile Include="NewEngine\Object\3D\PointLight.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp" />
     <ClCompile Include="NewEngine\Render\RenderBase.cpp" />
@@ -218,7 +215,6 @@
     <ClInclude Include="NewEngine\Input\MouseInput.h" />
     <ClInclude Include="NewEngine\Light\CircleShadow.h" />
     <ClInclude Include="NewEngine\Light\LightManager.h" />
-    <ClInclude Include="NewEngine\Light\SpotLight.h" />
     <ClInclude Include="NewEngine\Math\Mat4.h" />
     <ClInclude Include="NewEngine\Math\MathUtil.h" />
     <ClInclude Include="NewEngine\Math\Quaternion.h" />
@@ -229,14 +225,12 @@
     <ClInclude Include="NewEngine\Object\2D\Sprite.h" />
     <ClInclude Include="NewEngine\Object\2D\Texture.h" />
     <ClInclude Include="NewEngine\Object\3D\Camera.h" />
-    <ClInclude Include="NewEngine\Object\3D\DirectionalLight.h" />
     <ClInclude Include="NewEngine\Object\3D\Line.h" />
     <ClInclude Include="NewEngine\Object\3D\Material.h" />
     <ClInclude Include="NewEngine\Object\3D\Mesh.h" />
     <ClInclude Include="NewEngine\Object\3D\Model.h" />
     <ClInclude Include="NewEngine\Object\3D\ModelManager.h" />
     <ClInclude Include="NewEngine\Object\3D\Object3D.h" />
-    <ClInclude Include="NewEngine\Object\3D\PointLight.h" />
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBufferData.h" />
     <ClInclude Include="NewEngine\Render\Buffer\IndexBuffer.h" />

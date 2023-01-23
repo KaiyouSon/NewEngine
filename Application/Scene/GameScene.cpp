@@ -13,24 +13,6 @@ void GameScene::Init()
 {
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
-	//DirectionalLight::current.pos = { 1,1,1 };
-
-	LightManager::GetInstance()->Init();
-	LightManager::GetInstance()->directionalLights[2].isActive = true;
-
-	LightManager::GetInstance()->spotLights[2].isActive = false;
-	LightManager::GetInstance()->spotLights[2].vec = Vec3::down;
-	LightManager::GetInstance()->spotLights[2].pos = { 0,5,0 };
-	LightManager::GetInstance()->spotLights[2].color = Color::white;
-	LightManager::GetInstance()->spotLights[2].atten = Vec3::zero;
-	LightManager::GetInstance()->spotLights[2].factorAngleCos = { 20.f,30.f };
-
-	LightManager::GetInstance()->pointLights[0].isActive = true;
-
-	LightManager::GetInstance()->pointLights[2].isActive = false;
-	LightManager::GetInstance()->pointLights[2].pos = { 0.5f, 1.0f, 0.0f };
-	LightManager::GetInstance()->pointLights[2].color = Color::white;
-	LightManager::GetInstance()->pointLights[2].atten = { 0.3f, 0.1f ,0.1f };
 
 	LightManager::GetInstance()->circleShadow.isActive = false;
 	LightManager::GetInstance()->circleShadow.vec = { 0,-1,0 };
@@ -100,23 +82,13 @@ void GameScene::DrawBackSprite()
 }
 void GameScene::DrawModel()
 {
-
-	//Object3D::SetBlendMode(BlendMode::Alpha);
-
 	obj2.Draw();
-
 	silhouetteObj.Draw();
-
-
-
-	//SilhouetteObj::SetBlendMode(BlendMode::Alpha);
 	//obj.Draw();
-
-
 	//skyDomeObj.Draw();
 	//groundObj.Draw();
 
-	//CollisionDrawModel();
+	CollisionDrawModel();
 }
 void GameScene::DrawFrontSprite()
 {
@@ -124,28 +96,11 @@ void GameScene::DrawFrontSprite()
 }
 void GameScene::DrawDebugGui()
 {
-	Quaternion q = { 0,1,0 };
-
-	Vec3 v;
-	v = q.AnyAxisRotation({ 0,0,1 }, Radian(90));
-
-	Quaternion q2;
-	q2 = q * q.Inverse();
-	//v = v * v1;
-
-	Mat4 m = ConvertRotationMat(q.AnyAxisRotation({ 0,0,1 }, Radian(90)));
-	//m.SetTranslation(v);
-	Vec3 v2 = Vec3MulMat4(v, m);
-
-
 	DebugGui();
-	//QuaternionDrawGui();
-
-	//DirectionalLightDrawGui();
-	//PointLightDrawGui();
-	//SpotLightDrawGui();
-	//
-	//CollisionDrawGui();
+	DirectionalLightDrawGui();
+	PointLightDrawGui();
+	SpotLightDrawGui();
+	CollisionDrawGui();
 }
 
 void GameScene::DebugGui()
@@ -354,9 +309,9 @@ void GameScene::DirectionalLightDrawGui()
 {
 	GuiManager::BeginWindow("DirectionalLight");
 
-	GuiManager::DrawCheckBox("DirectionalLight isActive", &LightManager::GetInstance()->directionalLights[2].isActive);
-	GuiManager::DrawSlider3("DirectionalLight pos", LightManager::GetInstance()->directionalLights[2].pos);
-	GuiManager::DrawColorEdit("DirectionalLight color", LightManager::GetInstance()->directionalLights[2].color);
+	GuiManager::DrawCheckBox("DirectionalLight isActive", &LightManager::GetInstance()->directionalLights[0].isActive);
+	GuiManager::DrawSlider3("DirectionalLight pos", LightManager::GetInstance()->directionalLights[0].dirVec);
+	GuiManager::DrawColorEdit("DirectionalLight color", LightManager::GetInstance()->directionalLights[0].color);
 
 	GuiManager::EndWindow();
 }
@@ -364,10 +319,22 @@ void GameScene::PointLightDrawGui()
 {
 	GuiManager::BeginWindow("PointLight");
 
-	GuiManager::DrawCheckBox("PointLight isActive", &LightManager::GetInstance()->pointLights[2].isActive);
-	GuiManager::DrawSlider3("PointLight pos", LightManager::GetInstance()->pointLights[2].pos);
-	GuiManager::DrawSlider3("PointLight atten", LightManager::GetInstance()->pointLights[2].atten);
-	GuiManager::DrawColorEdit("PointLight color", LightManager::GetInstance()->pointLights[2].color);
+	for (int i = 0; i < 3; i++)
+	{
+		std::string str;
+
+		str = "PointLight isActive" + std::to_string(i);
+		GuiManager::DrawCheckBox(str.c_str(), &LightManager::GetInstance()->pointLights[i].isActive);
+
+		str = "PointLight pos" + std::to_string(i);
+		GuiManager::DrawSlider3(str.c_str(), LightManager::GetInstance()->pointLights[i].pos);
+
+		str = "PointLight atten" + std::to_string(i);
+		GuiManager::DrawSlider3(str.c_str(), LightManager::GetInstance()->pointLights[i].atten);
+
+		str = "PointLight color" + std::to_string(i);
+		GuiManager::DrawColorEdit(str.c_str(), LightManager::GetInstance()->pointLights[i].color);
+	}
 
 	GuiManager::EndWindow();
 }
@@ -375,12 +342,28 @@ void GameScene::SpotLightDrawGui()
 {
 	GuiManager::BeginWindow("SpotLight");
 
-	GuiManager::DrawCheckBox("SpotLight isActive", &LightManager::GetInstance()->spotLights[2].isActive);
-	GuiManager::DrawSlider3("SpotLight vec", LightManager::GetInstance()->spotLights[2].vec);
-	GuiManager::DrawSlider3("SpotLight pos", LightManager::GetInstance()->spotLights[2].pos);
-	GuiManager::DrawSlider3("SpotLight atten", LightManager::GetInstance()->spotLights[2].atten);
-	GuiManager::DrawSlider2("SpotLight factor angle cos", LightManager::GetInstance()->spotLights[2].factorAngleCos);
-	GuiManager::DrawColorEdit("SpotLight color", LightManager::GetInstance()->spotLights[2].color);
+	for (int i = 0; i < 3; i++)
+	{
+		std::string str;
+
+		str = "SpotLight isActive" + std::to_string(i);
+		GuiManager::DrawCheckBox(str.c_str(), &LightManager::GetInstance()->spotLights[i].isActive);
+
+		str = "SpotLight pos" + std::to_string(i);
+		GuiManager::DrawSlider3(str.c_str(), LightManager::GetInstance()->spotLights[i].pos);
+
+		str = "SpotLight vec" + std::to_string(i);
+		GuiManager::DrawSlider3(str.c_str(), LightManager::GetInstance()->spotLights[i].vec);
+
+		str = "SpotLight atten" + std::to_string(i);
+		GuiManager::DrawSlider3(str.c_str(), LightManager::GetInstance()->spotLights[i].atten);
+
+		str = "SpotLight factor angle cos" + std::to_string(i);
+		GuiManager::DrawSlider2(str.c_str(), LightManager::GetInstance()->spotLights[i].factorAngle);
+
+		str = "SpotLight color" + std::to_string(i);
+		GuiManager::DrawColorEdit(str.c_str(), LightManager::GetInstance()->spotLights[i].color);
+	}
 
 	GuiManager::EndWindow();
 }

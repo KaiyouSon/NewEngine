@@ -15,7 +15,7 @@ bool Color::operator!=(const Color& other) const
 
 Color Color::operator=(const Color& other)
 {
-	r = other.r, g = other.g, b = other.b;
+	r = other.r, g = other.g, b = other.b, a = other.a;
 	return *this;
 }
 
