@@ -405,7 +405,7 @@ void RenderBase::ShaderCompilerInit()
 	renderTextureShader->CompileVertexShader("Shader/RenderTextureVS.hlsl", "main");
 	renderTextureShader->CompilePixelShader("Shader/RenderTexturePS.hlsl", "main");
 
-	// ロードしたモデルのシェーダー
+	// Object3D用シェーダー
 	object3DShader = std::move(std::make_unique<ShaderObject>());
 	object3DShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	object3DShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -413,6 +413,7 @@ void RenderBase::ShaderCompilerInit()
 	object3DShader->CompileVertexShader("Shader/Object3DVS.hlsl", "main");
 	object3DShader->CompilePixelShader("Shader/Object3DPS.hlsl", "main");
 
+	// シルエット用シェーダー
 	silhouetteShader = std::move(std::make_unique<ShaderObject>());
 	silhouetteShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	silhouetteShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -420,7 +421,13 @@ void RenderBase::ShaderCompilerInit()
 	silhouetteShader->CompileVertexShader("Shader/SilhouetteVS.hlsl", "main");
 	silhouetteShader->CompilePixelShader("Shader/SilhouettePS.hlsl", "main");
 
-
+	// アウトラインObject用シェーダー
+	outlineShader = std::move(std::make_unique<ShaderObject>());
+	outlineShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	outlineShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	outlineShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	outlineShader->CompileVertexShader("Shader/OutLineVS.hlsl", "main");
+	outlineShader->CompilePixelShader("Shader/OutLinePS.hlsl", "main");
 }
 void RenderBase::RootSignatureInit()
 {
@@ -448,6 +455,11 @@ void RenderBase::GraphicsPipelineInit()
 	depthStencilDesc3.DepthEnable = true; // 深度テストを行う
 	depthStencilDesc3.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// 書き込み不可
 	depthStencilDesc3.DepthFunc = D3D12_COMPARISON_FUNC_GREATER;	// 大きいほうを採用
+
+	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc4 = D3D12_DEPTH_STENCIL_DESC();
+	depthStencilDesc4.DepthEnable = true; // 深度テストを行う
+	depthStencilDesc4.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み不可
+	depthStencilDesc4.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 大きいほうを採用
 
 	// ベーシック
 	basicPipeline = std::move(std::make_unique<GraphicsPipeline>());
@@ -502,4 +514,12 @@ void RenderBase::GraphicsPipelineInit()
 	silhouettePipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
 	silhouettePipeline->Create();
 
+	// アウトライン用
+	outlinePipeline = std::move(std::make_unique<GraphicsPipeline>());
+	outlinePipeline->SetShaderObject(outlineShader.get());
+	outlinePipeline->SetCullMode(CullMode::CullFront);
+	outlinePipeline->SetDepthStencilDesc(depthStencilDesc4);
+	outlinePipeline->SetTopologyType(TopologyType::TriangleTopology);
+	outlinePipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
+	outlinePipeline->Create();
 }

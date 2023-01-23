@@ -7,6 +7,9 @@ struct DirectionalLight
 	Vec3 dirVec = Vec3::up;
 	Color color = Color::white;
 	bool isActive = true;
+
+	DirectionalLight() {}
+	~DirectionalLight() {}
 };
 
 struct PointLight
@@ -37,7 +40,6 @@ template<typename T> class Singleton;
 class LightManager : public Singleton<LightManager>
 {
 private:
-	friend Singleton<LightManager>;
 	static const int directionalLightNum = 1;
 	static const int pointLightNum = 3;
 	static const int spotLightNum = 3;
@@ -58,6 +60,7 @@ public:
 	CircleShadow circleShadow;
 
 private:
+	friend Singleton<LightManager>;
 	LightManager();
 
 public:

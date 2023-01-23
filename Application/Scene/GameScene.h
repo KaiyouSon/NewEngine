@@ -1,6 +1,5 @@
 #pragma once
 #include "NewEngine.h"
-#include "SilhouetteObj.h"
 
 class GameScene : public IScene
 {
@@ -9,6 +8,7 @@ private:
 	Object3D groundObj;
 
 	SilhouetteObj silhouetteObj;
+	OutLineObj outlineObj;
 	Object3D obj;
 	Object3D obj2;
 	Sprite spr;
@@ -40,7 +40,7 @@ private:
 private:
 	// クォータニオン関連
 	void QuaternionDrawGui();
-	
+
 
 public:
 	GameScene();

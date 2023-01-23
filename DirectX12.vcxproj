@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)/Application/Scene;$(ProjectDir)/Application;$(ProjectDir)/ImGui;$(ProjectDir)/NewEngine/Render/Buffer;$(ProjectDir)/NewEngine/Render;$(ProjectDir)/NewEngine/Gui;$(ProjectDir)/NewEngine/Light;$(ProjectDir)/NewEngine/Object/3D;$(ProjectDir)/NewEngine/Object/2D;$(ProjectDir)/NewEngine/Component;$(ProjectDir)/NewEngine/Util;$(ProjectDir)/NewEngine/Math;$(ProjectDir)/NewEngine/Input;$(ProjectDir)/NewEngine/Collision;$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)/Application/Scene;$(ProjectDir)/Application;$(ProjectDir)/ImGui;$(ProjectDir)/NewEngine/Render/Buffer;$(ProjectDir)/NewEngine/Render;$(ProjectDir)/NewEngine/Gui;$(ProjectDir)/NewEngine/Light;$(ProjectDir)/NewEngine/Object/3D;$(ProjectDir)/NewEngine/Object/2D;$(ProjectDir)/NewEngine/Component;$(ProjectDir)/NewEngine/Util;$(ProjectDir)/NewEngine/Math;$(ProjectDir)/NewEngine/Input;$(ProjectDir)/NewEngine/Collision;$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)$(ProjectDir)NewEngine</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -135,7 +135,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)/NewEngine/Light;$(ProjectDir);$(ProjectDir)/Application/Scene;$(ProjectDir)/Application;$(ProjectDir)/ImGui;$(ProjectDir)/NewEngine/Render/Buffer;$(ProjectDir)/NewEngine/Render;$(ProjectDir)/NewEngine/Gui;$(ProjectDir)/NewEngine/Object/3D;$(ProjectDir)/NewEngine/Object/2D;$(ProjectDir)/NewEngine/Component;$(ProjectDir)/NewEngine/Util;$(ProjectDir)/NewEngine/Math;$(ProjectDir)/NewEngine/Input;$(ProjectDir)/NewEngine/Collision;$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/NewEngine/Light;$(ProjectDir);$(ProjectDir)/Application/Scene;$(ProjectDir)/Application;$(ProjectDir)/ImGui;$(ProjectDir)/NewEngine/Render/Buffer;$(ProjectDir)/NewEngine/Render;$(ProjectDir)/NewEngine/Gui;$(ProjectDir)/NewEngine/Object/3D;$(ProjectDir)/NewEngine/Object/2D;$(ProjectDir)/NewEngine/Component;$(ProjectDir)/NewEngine/Util;$(ProjectDir)/NewEngine/Math;$(ProjectDir)/NewEngine/Input;$(ProjectDir)/NewEngine/Collision;$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)$(ProjectDir)NewEngine</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -151,7 +151,6 @@
     <ClCompile Include="Application\Scene\GameScene.cpp" />
     <ClCompile Include="Application\Scene\SceneManager.cpp" />
     <ClCompile Include="Application\Scene\TitleScene.cpp" />
-    <ClCompile Include="Application\SilhouetteObj.cpp" />
     <ClCompile Include="NewEngine\Collision\Collider.cpp" />
     <ClCompile Include="NewEngine\Collision\Collision.cpp" />
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp" />
@@ -181,6 +180,8 @@
     <ClCompile Include="NewEngine\Object\3D\Model.cpp" />
     <ClCompile Include="NewEngine\Object\3D\ModelManager.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Object3D.cpp" />
+    <ClCompile Include="NewEngine\Object\3D\OutLineObj.cpp" />
+    <ClCompile Include="NewEngine\Object\3D\SilhouetteObj.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp" />
     <ClCompile Include="NewEngine\Render\RenderBase.cpp" />
@@ -205,7 +206,6 @@
     <ClInclude Include="Application\Scene\IScene.h" />
     <ClInclude Include="Application\Scene\SceneManager.h" />
     <ClInclude Include="Application\Scene\TitleScene.h" />
-    <ClInclude Include="Application\SilhouetteObj.h" />
     <ClInclude Include="NewEngine\Collision\Collider.h" />
     <ClInclude Include="NewEngine\Collision\Collision.h" />
     <ClInclude Include="NewEngine\Gui\GuiManager.h" />
@@ -231,6 +231,8 @@
     <ClInclude Include="NewEngine\Object\3D\Model.h" />
     <ClInclude Include="NewEngine\Object\3D\ModelManager.h" />
     <ClInclude Include="NewEngine\Object\3D\Object3D.h" />
+    <ClInclude Include="NewEngine\Object\3D\OutLineObj.h" />
+    <ClInclude Include="NewEngine\Object\3D\SilhouetteObj.h" />
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBufferData.h" />
     <ClInclude Include="NewEngine\Render\Buffer\IndexBuffer.h" />
@@ -266,6 +268,7 @@
   <ItemGroup>
     <None Include="Shader\Basic.hlsli" />
     <None Include="Shader\Object3DH.hlsli" />
+    <None Include="Shader\OutLine.hlsli" />
     <None Include="Shader\RenderTexture.hlsli" />
     <None Include="Shader\Silhouette.hlsli" />
     <None Include="Shader\Sprite.hlsli" />
@@ -275,6 +278,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Shader\OutLinePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Shader\OutLineVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Shader\SilhouettePS.hlsl">

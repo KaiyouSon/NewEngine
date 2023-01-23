@@ -1,11 +1,8 @@
-#include "SilhouetteObj.h"
+#include "OutLineObj.h"
 #include "RenderBase.h"
-#include "DirectionalLight.h"
-#include "LightManager.h"
-using namespace std;
 
-SilhouetteObj::SilhouetteObj() :
-	color(Color::blue),
+OutLineObj::OutLineObj() :
+	color(Color::black),
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform3D>),
 	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>)
 {
@@ -13,12 +10,14 @@ SilhouetteObj::SilhouetteObj() :
 	constantBufferTransform->Init();	// 3D行列
 	constantBufferColor->Init();		// 色
 }
-SilhouetteObj::~SilhouetteObj()
+
+OutLineObj::~OutLineObj()
 {
 	delete constantBufferTransform;
 	delete constantBufferColor;
 }
-void SilhouetteObj::Update(const SilhouetteObj* parent)
+
+void OutLineObj::Update(const OutLineObj* parent)
 {
 	obj->Update();
 
@@ -42,22 +41,25 @@ void SilhouetteObj::Update(const SilhouetteObj* parent)
 	constantBufferColor->constantBufferMap->color = color / 255;
 	constantBufferColor->constantBufferMap->color.a = color.a / 255;
 }
-void SilhouetteObj::Draw()
+
+void OutLineObj::Draw()
 {
-	SetBlendMode(BlendMode::Alpha);
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
+	renderBase->GetCommandList()->SetPipelineState(renderBase->GetOutLinePipeline()->GetAlphaPipeline());
 	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// VBVとIBVの設定コマンド
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, obj->model.mesh.GetVertexBuffer().GetvbViewAddress());
 	renderBase->GetCommandList()->IASetIndexBuffer(obj->model.mesh.GetIndexBuffer().GetibViewAddress());
 
-	// マテリアルとトランスフォームのCBVの設定コマンド
+	// トランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		0, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
+
+	// トランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
+		1, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(unsigned short)obj->model.mesh.GetIndexSize(), 1, 0, 0, 0);
@@ -65,35 +67,3 @@ void SilhouetteObj::Draw()
 	Object3D::SetBlendMode(BlendMode::Alpha);
 	obj->Draw();
 }
-
-void SilhouetteObj::SetBlendMode(const BlendMode& blendMode)
-{
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
-
-	switch (blendMode)
-	{
-	case BlendMode::Alpha: // αブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetSilhouettePipeline()->GetAlphaPipeline());
-		break;
-
-	case BlendMode::Add:	// 加算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetSilhouettePipeline()->GetAddPipeline());
-		break;
-
-	case BlendMode::Sub:	// 減算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetSilhouettePipeline()->GetSubPipeline());
-		break;
-
-	case BlendMode::Inv:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetSilhouettePipeline()->GetInvPipeline());
-		break;
-
-	case BlendMode::Screen:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetSilhouettePipeline()->GetScreenPipeline());
-		break;
-
-	default:
-		break;
-	}
-}
-

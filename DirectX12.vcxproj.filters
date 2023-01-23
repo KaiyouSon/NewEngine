@@ -246,13 +246,16 @@
     <ClCompile Include="NewEngine\Light\CircleShadow.cpp">
       <Filter>NewEngine\Source\Light</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SilhouetteObj.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Render\RootSignature.cpp">
       <Filter>NewEngine\Source\Render</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\ModelManager.cpp">
+      <Filter>NewEngine\Source\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\SilhouetteObj.cpp">
+      <Filter>NewEngine\Source\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\OutLineObj.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
   </ItemGroup>
@@ -407,13 +410,16 @@
     <ClInclude Include="NewEngine\Light\CircleShadow.h">
       <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SilhouetteObj.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Render\RootSignature.h">
       <Filter>NewEngine\Header\Render</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\ModelManager.h">
+      <Filter>NewEngine\Header\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\SilhouetteObj.h">
+      <Filter>NewEngine\Header\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\OutLineObj.h">
       <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
   </ItemGroup>
@@ -431,6 +437,9 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="Shader\Silhouette.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\OutLine.hlsli">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
@@ -463,6 +472,12 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\SilhouetteVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\OutLinePS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\OutLineVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

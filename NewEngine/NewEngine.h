@@ -2,6 +2,8 @@
 // é©çÏ
 #include "Util.h"
 #include "Object3D.h"
+#include "SilhouetteObj.h"
+#include "OutLineObj.h"
 #include "Sprite.h"
 #include "Sound.h"
 #include "imgui.h"

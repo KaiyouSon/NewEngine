@@ -1,6 +1,5 @@
 #include "Object3D.h"
 #include "RenderBase.h"
-#include "DirectionalLight.h"
 #include "LightManager.h"
 using namespace std;
 

@@ -22,7 +22,7 @@ void GameScene::Init()
 	ModelManager::LoadModel("SkyDome", "SkyDome");
 	ModelManager::LoadModel("Ground", "Ground");
 	ModelManager::LoadModel("Boss", "Boss");
-	ModelManager::LoadModel("Cube", "Cube");
+	ModelManager::LoadModel("Cube", "Cube", true);
 
 	TextureManager::LoadTexture("pic.png", "pic");
 
@@ -43,6 +43,7 @@ void GameScene::Init()
 	spr.anchorPoint = 0.5f;
 
 	silhouetteObj.obj = &obj;
+	outlineObj.obj = &obj2;
 
 	CollisionInit();
 }
@@ -53,13 +54,12 @@ void GameScene::Update()
 
 	spr.SetTextureRect(408, 816);
 
-	obj.Update();
-	obj2.Update();
+	//obj.Update();
+	//obj2.Update();
 	spr.Update();
 
-
-
 	silhouetteObj.Update();
+	outlineObj.Update();
 
 	skyDomeObj.Update();
 	groundObj.Update();
@@ -82,8 +82,9 @@ void GameScene::DrawBackSprite()
 }
 void GameScene::DrawModel()
 {
-	obj2.Draw();
+	//obj2.Draw();
 	silhouetteObj.Draw();
+	outlineObj.Draw();
 	//obj.Draw();
 	//skyDomeObj.Draw();
 	//groundObj.Draw();

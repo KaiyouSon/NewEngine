@@ -43,7 +43,6 @@ public:
 	inline ID3D12Device* GetDevice() const { return device.Get(); }
 	inline ID3D12GraphicsCommandList* GetCommandList() const { return commandList.Get(); }
 	inline ID3D12DescriptorHeap* GetSrvDescHeap() const { return srvDescHeap.Get(); }
-	inline ID3D12RootSignature* GetRootSignature() const { return rootSignature.Get(); }
 
 	inline RootSignature* GetObject3DRootSignature() const { return object3DRootSignature.get(); }
 	inline RootSignature* GetSpriteRootSignature() const { return spriteRootSignature.get(); }
@@ -54,6 +53,7 @@ public:
 	inline GraphicsPipeline* GetRenderTexturePipeline()const { return renderTexturePipeline.get(); }
 	inline GraphicsPipeline* GetObject3DPipeline()const { return object3DPipeline.get(); }
 	inline GraphicsPipeline* GetSilhouettePipeline()const { return silhouettePipeline.get(); }
+	inline GraphicsPipeline* GetOutLinePipeline()const { return outlinePipeline.get(); }
 
 	inline Viewport* GetViewport() const { return viewport.get(); }
 private:
@@ -93,6 +93,7 @@ private:
 	std::unique_ptr<ShaderObject> object3DShader;
 	std::unique_ptr<ShaderObject> particleShader;
 	std::unique_ptr<ShaderObject> silhouetteShader;
+	std::unique_ptr<ShaderObject> outlineShader;
 
 	// グラフィックスパイプライン関連
 	std::unique_ptr<GraphicsPipeline> basicPipeline;
@@ -101,11 +102,10 @@ private:
 	std::unique_ptr<GraphicsPipeline> renderTexturePipeline;
 	std::unique_ptr<GraphicsPipeline> object3DPipeline;
 	std::unique_ptr<GraphicsPipeline> silhouettePipeline;
+	std::unique_ptr<GraphicsPipeline> outlinePipeline;
 
 	// ルートシグネチャー関連
 	ComPtr <ID3DBlob> errorBlob;	// エラーオブジェクト
-	ComPtr <ID3D12RootSignature> rootSignature;
-
 	std::unique_ptr<RootSignature> object3DRootSignature;
 	std::unique_ptr<RootSignature> spriteRootSignature;
 
