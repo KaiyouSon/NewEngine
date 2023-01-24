@@ -383,51 +383,53 @@ void RenderBase::SrvInit()
 }
 void RenderBase::ShaderCompilerInit()
 {
+	std::string path = "NewEngine/Shader/";
+
 	// 3Dオブジェクトのシェーダー
 	basicShader = std::move(std::make_unique<ShaderObject>());
 	basicShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	basicShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	basicShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	basicShader->CompileVertexShader("Shader/BasicVS.hlsl", "main");
-	basicShader->CompilePixelShader("Shader/BasicPS.hlsl", "main");
+	basicShader->CompileVertexShader(path + "BasicVS.hlsl", "main");
+	basicShader->CompilePixelShader(path + "BasicPS.hlsl", "main");
 
 	// スプライト用シェーダー
 	spriteShader = std::move(std::make_unique<ShaderObject>());
 	spriteShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	spriteShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	spriteShader->CompileVertexShader("Shader/SpriteVS.hlsl", "main");
-	spriteShader->CompilePixelShader("Shader/SpritePS.hlsl", "main");
+	spriteShader->CompileVertexShader(path + "SpriteVS.hlsl", "main");
+	spriteShader->CompilePixelShader(path + "SpritePS.hlsl", "main");
 
 	// レンダーテクスチャーのシェーダー
 	renderTextureShader = std::move(std::make_unique<ShaderObject>());
 	renderTextureShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	renderTextureShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	renderTextureShader->CompileVertexShader("Shader/RenderTextureVS.hlsl", "main");
-	renderTextureShader->CompilePixelShader("Shader/RenderTexturePS.hlsl", "main");
+	renderTextureShader->CompileVertexShader(path + "RenderTextureVS.hlsl", "main");
+	renderTextureShader->CompilePixelShader(path + "RenderTexturePS.hlsl", "main");
 
 	// Object3D用シェーダー
 	object3DShader = std::move(std::make_unique<ShaderObject>());
 	object3DShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	object3DShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	object3DShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	object3DShader->CompileVertexShader("Shader/Object3DVS.hlsl", "main");
-	object3DShader->CompilePixelShader("Shader/Object3DPS.hlsl", "main");
+	object3DShader->CompileVertexShader(path + "Object3DVS.hlsl", "main");
+	object3DShader->CompilePixelShader(path + "Object3DPS.hlsl", "main");
 
 	// シルエット用シェーダー
 	silhouetteShader = std::move(std::make_unique<ShaderObject>());
 	silhouetteShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	silhouetteShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	silhouetteShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	silhouetteShader->CompileVertexShader("Shader/SilhouetteVS.hlsl", "main");
-	silhouetteShader->CompilePixelShader("Shader/SilhouettePS.hlsl", "main");
+	silhouetteShader->CompileVertexShader(path + "SilhouetteVS.hlsl", "main");
+	silhouetteShader->CompilePixelShader(path + "SilhouettePS.hlsl", "main");
 
 	// アウトラインObject用シェーダー
 	outlineShader = std::move(std::make_unique<ShaderObject>());
 	outlineShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	outlineShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	outlineShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	outlineShader->CompileVertexShader("Shader/OutLineVS.hlsl", "main");
-	outlineShader->CompilePixelShader("Shader/OutLinePS.hlsl", "main");
+	outlineShader->CompileVertexShader(path + "OutLineVS.hlsl", "main");
+	outlineShader->CompilePixelShader(path + "OutLinePS.hlsl", "main");
 }
 void RenderBase::RootSignatureInit()
 {

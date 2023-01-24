@@ -430,60 +430,60 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shader\Basic.hlsli">
+    <None Include="NewEngine\Shader\Basic.hlsli">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shader\RenderTexture.hlsli">
+    <None Include="NewEngine\Shader\RenderTexture.hlsli">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shader\Object3DH.hlsli">
+    <None Include="NewEngine\Shader\Object3DH.hlsli">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shader\Sprite.hlsli">
+    <None Include="NewEngine\Shader\Sprite.hlsli">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shader\Silhouette.hlsli">
+    <None Include="NewEngine\Shader\Silhouette.hlsli">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shader\OutLine.hlsli">
+    <None Include="NewEngine\Shader\OutLine.hlsli">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Shader\BasicPS.hlsl">
+    <FxCompile Include="NewEngine\Shader\BasicPS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\SpritePS.hlsl">
+    <FxCompile Include="NewEngine\Shader\SpritePS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\BasicVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\BasicVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\RenderTexturePS.hlsl">
+    <FxCompile Include="NewEngine\Shader\RenderTexturePS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\RenderTextureVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\RenderTextureVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\Object3DPS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Object3DPS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\Object3DVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Object3DVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\SpriteVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\SpriteVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\SilhouettePS.hlsl">
+    <FxCompile Include="NewEngine\Shader\SilhouettePS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\SilhouetteVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\SilhouetteVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\OutLinePS.hlsl">
+    <FxCompile Include="NewEngine\Shader\OutLinePS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\OutLineVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\OutLineVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>
