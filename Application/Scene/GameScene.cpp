@@ -21,7 +21,8 @@ void GameScene::Init()
 
 	ModelManager::LoadModel("SkyDome", "SkyDome");
 	ModelManager::LoadModel("Ground", "Ground");
-	ModelManager::LoadModel("Boss", "Boss");
+	ModelManager::LoadModel("Boss", "Boss", true);
+	ModelManager::LoadModel("Sphere", "Sphere", true);
 	ModelManager::LoadModel("Cube", "Cube", true);
 
 	TextureManager::LoadTexture("pic.png", "pic");
@@ -34,7 +35,7 @@ void GameScene::Init()
 	obj.texture = *TextureManager::GetTexture("pic");
 	obj.pos.z = 5.f;
 
-	obj2.model = *ModelManager::GetModel("Cube");
+	obj2.model = *ModelManager::GetModel("Sphere");
 	obj2.scale.x = 2.f;
 
 	spr.texture = *TextureManager::GetTexture("pic");
@@ -71,6 +72,15 @@ void GameScene::Update()
 
 	CollisionUpdate();
 
+	Quaternion q3 = Quaternion::MakeAxisAngle({ 0.71f,0.71f,0.0f }, 0.3f);
+	Quaternion q4 = -q3;
+
+	Quaternion i0 = Quaternion::Slerp(q3, q4, 0.0f);
+	Quaternion i1 = Quaternion::Slerp(q3, q4, 0.3f);
+	Quaternion i2 = Quaternion::Slerp(q3, q4, 0.5f);
+	Quaternion i3 = Quaternion::Slerp(q3, q4, 0.7f);
+	Quaternion i4 = Quaternion::Slerp(q3, q4, 1.0f);
+
 	if (Key::GetKey(DIK_SPACE))
 	{
 		SceneManager::ChangeScene<TitleScene>();
@@ -82,14 +92,10 @@ void GameScene::DrawBackSprite()
 }
 void GameScene::DrawModel()
 {
-	//obj2.Draw();
-	silhouetteObj.Draw();
-	outlineObj.Draw();
-	//obj.Draw();
-	//skyDomeObj.Draw();
-	//groundObj.Draw();
-
 	CollisionDrawModel();
+
+	outlineObj.Draw();
+	silhouetteObj.Draw();
 }
 void GameScene::DrawFrontSprite()
 {
@@ -371,12 +377,12 @@ void GameScene::SpotLightDrawGui()
 
 void GameScene::QuaternionDrawGui()
 {
+
 	Quaternion q1 = { 2.f,3.f,4.f,1.f };
 	Quaternion q2 = { 1.f,3.f,5.f,2.f };
 
 	Quaternion mul1 = q1 * q2;
 	Quaternion mul2 = q2 * q1;
-
 	GuiManager::BeginWindow("Quaternion");
 
 	ImGui::Text("%f,%f,%f,%f : Identity",

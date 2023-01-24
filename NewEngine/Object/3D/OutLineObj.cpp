@@ -53,11 +53,9 @@ void OutLineObj::Draw()
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, obj->model.mesh.GetVertexBuffer().GetvbViewAddress());
 	renderBase->GetCommandList()->IASetIndexBuffer(obj->model.mesh.GetIndexBuffer().GetibViewAddress());
 
-	// トランスフォームのCBVの設定コマンド
+	// CBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		0, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
-
-	// トランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		1, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
 

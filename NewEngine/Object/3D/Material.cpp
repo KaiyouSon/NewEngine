@@ -1,4 +1,5 @@
 #include "Material.h"
+#include "TextureManager.h"
 #include <fstream>
 #include <sstream>
 #include <cassert>
@@ -6,12 +7,12 @@ using namespace std;
 
 Material::Material() :
 	ambient(0.3f, 0.3f, 0.3f), diffuse(0.0f, 0.0f, 0.0f),
-	specular(0.0f, 0.0f, 0.0f), alpha(1.0f), texture(Texture(Color::white))
+	specular(0.0f, 0.0f, 0.0f), alpha(1.0f), texture(*TextureManager::GetTexture("White"))
 {
 }
 Material::Material(std::string filePath) :
 	ambient(0.3f, 0.3f, 0.3f), diffuse(0.0f, 0.0f, 0.0f),
-	specular(0.0f, 0.0f, 0.0f), alpha(1.0f), texture(Texture(Color::white))
+	specular(0.0f, 0.0f, 0.0f), alpha(1.0f), texture(*TextureManager::GetTexture("White"))
 {
 	// ファイルストリーム
 	ifstream file;

@@ -458,8 +458,8 @@ void RenderBase::GraphicsPipelineInit()
 
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc4 = D3D12_DEPTH_STENCIL_DESC();
 	depthStencilDesc4.DepthEnable = true; // 深度テストを行う
-	depthStencilDesc4.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み不可
-	depthStencilDesc4.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 大きいほうを採用
+	depthStencilDesc4.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み許可
+	depthStencilDesc4.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
 
 	// ベーシック
 	basicPipeline = std::move(std::make_unique<GraphicsPipeline>());

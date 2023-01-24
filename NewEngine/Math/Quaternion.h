@@ -24,6 +24,11 @@ public:
 
 	static float Dot(const Quaternion& q1, const Quaternion& q2);		// 二つのクオータニオンの内積
 	static Quaternion Identity();	// 単位クオータニオン
+	static Quaternion Slerp(const Quaternion& q1, const Quaternion& q2, float t);
+	static Quaternion MakeAxisAngle(const Vec3& v, const float& radian);
+
+
+	Quaternion operator-() const;
 
 	// 算術演算子のオーバーロード
 	Quaternion operator+(const Quaternion& other) const;	// もう一つのクオータニオンとの足し算
@@ -41,3 +46,4 @@ public:
 	Quaternion& operator/=(const float& num);			// 複合代入演算 /=
 };
 
+Quaternion operator*(const float& num, const Quaternion& q);
