@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)/Application/Scene;$(ProjectDir)/Application;$(ProjectDir)/ImGui;$(ProjectDir)/NewEngine/Render/Buffer;$(ProjectDir)/NewEngine/Render;$(ProjectDir)/NewEngine/Gui;$(ProjectDir)/NewEngine/Light;$(ProjectDir)/NewEngine/Object/3D;$(ProjectDir)/NewEngine/Object/2D;$(ProjectDir)/NewEngine/Component;$(ProjectDir)/NewEngine/Util;$(ProjectDir)/NewEngine/Math;$(ProjectDir)/NewEngine/Input;$(ProjectDir)/NewEngine/Collision;$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)$(ProjectDir)NewEngine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)ImGUI;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -135,7 +135,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)/NewEngine/Light;$(ProjectDir);$(ProjectDir)/Application/Scene;$(ProjectDir)/Application;$(ProjectDir)/ImGui;$(ProjectDir)/NewEngine/Render/Buffer;$(ProjectDir)/NewEngine/Render;$(ProjectDir)/NewEngine/Gui;$(ProjectDir)/NewEngine/Object/3D;$(ProjectDir)/NewEngine/Object/2D;$(ProjectDir)/NewEngine/Component;$(ProjectDir)/NewEngine/Util;$(ProjectDir)/NewEngine/Math;$(ProjectDir)/NewEngine/Input;$(ProjectDir)/NewEngine/Collision;$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)$(ProjectDir)NewEngine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)ImGUI;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -148,9 +148,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application\Scene\GameScene.cpp" />
-    <ClCompile Include="Application\Scene\SceneManager.cpp" />
-    <ClCompile Include="Application\Scene\TitleScene.cpp" />
+    <ClCompile Include="Application\SourceCode\Scene\GameScene.cpp" />
+    <ClCompile Include="Application\SourceCode\Scene\SceneManager.cpp" />
+    <ClCompile Include="Application\SourceCode\Scene\TitleScene.cpp" />
     <ClCompile Include="NewEngine\Collision\Collider.cpp" />
     <ClCompile Include="NewEngine\Collision\Collision.cpp" />
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp" />
@@ -172,13 +172,13 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Object\2D\RenderTexture.cpp" />
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp" />
-    <ClCompile Include="NewEngine\Object\2D\Texture.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\Texture.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Camera.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Line.cpp" />
-    <ClCompile Include="NewEngine\Object\3D\Material.cpp" />
-    <ClCompile Include="NewEngine\Object\3D\Mesh.cpp" />
-    <ClCompile Include="NewEngine\Object\3D\Model.cpp" />
-    <ClCompile Include="NewEngine\Object\3D\ModelManager.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\Material.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\Mesh.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\Model.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\ModelManager.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Object3D.cpp" />
     <ClCompile Include="NewEngine\Object\3D\OutLineObj.cpp" />
     <ClCompile Include="NewEngine\Object\3D\SilhouetteObj.cpp" />
@@ -190,7 +190,7 @@
     <ClCompile Include="NewEngine\Render\ScissorRectangle.cpp" />
     <ClCompile Include="NewEngine\Render\ShaderObject.cpp" />
     <ClCompile Include="NewEngine\Render\Viewport.cpp" />
-    <ClCompile Include="NewEngine\TextureManager.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\TextureManager.cpp" />
     <ClCompile Include="NewEngine\Util\BezierCurve.cpp" />
     <ClCompile Include="NewEngine\Util\Color.cpp" />
     <ClCompile Include="NewEngine\Util\Easing.cpp" />
@@ -202,10 +202,10 @@
     <ClCompile Include="NewEngine\Util\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application\Scene\GameScene.h" />
-    <ClInclude Include="Application\Scene\IScene.h" />
-    <ClInclude Include="Application\Scene\SceneManager.h" />
-    <ClInclude Include="Application\Scene\TitleScene.h" />
+    <ClInclude Include="Application\SourceCode\Scene\GameScene.h" />
+    <ClInclude Include="Application\SourceCode\Scene\IScene.h" />
+    <ClInclude Include="Application\SourceCode\Scene\SceneManager.h" />
+    <ClInclude Include="Application\SourceCode\Scene\TitleScene.h" />
     <ClInclude Include="NewEngine\Collision\Collider.h" />
     <ClInclude Include="NewEngine\Collision\Collision.h" />
     <ClInclude Include="NewEngine\Gui\GuiManager.h" />
@@ -223,13 +223,13 @@
     <ClInclude Include="NewEngine\NewEngine.h" />
     <ClInclude Include="NewEngine\Object\2D\RenderTexture.h" />
     <ClInclude Include="NewEngine\Object\2D\Sprite.h" />
-    <ClInclude Include="NewEngine\Object\2D\Texture.h" />
+    <ClInclude Include="NewEngine\Object\Other\Texture.h" />
     <ClInclude Include="NewEngine\Object\3D\Camera.h" />
     <ClInclude Include="NewEngine\Object\3D\Line.h" />
-    <ClInclude Include="NewEngine\Object\3D\Material.h" />
-    <ClInclude Include="NewEngine\Object\3D\Mesh.h" />
-    <ClInclude Include="NewEngine\Object\3D\Model.h" />
-    <ClInclude Include="NewEngine\Object\3D\ModelManager.h" />
+    <ClInclude Include="NewEngine\Object\Other\Material.h" />
+    <ClInclude Include="NewEngine\Object\Other\Mesh.h" />
+    <ClInclude Include="NewEngine\Object\Other\Model.h" />
+    <ClInclude Include="NewEngine\Object\Other\ModelManager.h" />
     <ClInclude Include="NewEngine\Object\3D\Object3D.h" />
     <ClInclude Include="NewEngine\Object\3D\OutLineObj.h" />
     <ClInclude Include="NewEngine\Object\3D\SilhouetteObj.h" />
@@ -245,7 +245,7 @@
     <ClInclude Include="NewEngine\Render\ShaderObject.h" />
     <ClInclude Include="NewEngine\Render\Vertex.h" />
     <ClInclude Include="NewEngine\Render\Viewport.h" />
-    <ClInclude Include="NewEngine\TextureManager.h" />
+    <ClInclude Include="NewEngine\Object\Other\TextureManager.h" />
     <ClInclude Include="NewEngine\Util\BezierCurve.h" />
     <ClInclude Include="NewEngine\Util\Color.h" />
     <ClInclude Include="NewEngine\Util\Easing.h" />

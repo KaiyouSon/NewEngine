@@ -109,6 +109,12 @@
     <Filter Include="NewEngine\Header\Light">
       <UniqueIdentifier>{2e138d45-a1d0-4dde-97af-e473ac0908db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NewEngine\Source\Object\Other">
+      <UniqueIdentifier>{d7b10524-188d-4511-b7e3-7bba22bb0c24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Object\Other">
+      <UniqueIdentifier>{1d799c42-18cb-46b5-83c2-5b012a786d2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -174,19 +180,10 @@
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp">
       <Filter>NewEngine\Source\Object\2D</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\2D\Texture.cpp">
-      <Filter>NewEngine\Source\Object\2D</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\Camera.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\Line.cpp">
-      <Filter>NewEngine\Source\Object\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Object\3D\Material.cpp">
-      <Filter>NewEngine\Source\Object\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Object\3D\Model.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\Object3D.cpp">
@@ -210,13 +207,13 @@
     <ClCompile Include="NewEngine\Util\Util.cpp">
       <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Scene\GameScene.cpp">
+    <ClCompile Include="Application\SourceCode\Scene\GameScene.cpp">
       <Filter>Application\Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Scene\SceneManager.cpp">
+    <ClCompile Include="Application\SourceCode\Scene\SceneManager.cpp">
       <Filter>Application\Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Scene\TitleScene.cpp">
+    <ClCompile Include="Application\SourceCode\Scene\TitleScene.cpp">
       <Filter>Application\Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp">
@@ -231,14 +228,8 @@
     <ClCompile Include="NewEngine\Util\Timer.cpp">
       <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\3D\Mesh.cpp">
-      <Filter>NewEngine\Source\Object\3D</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Math\Quaternion.cpp">
       <Filter>NewEngine\Source\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\TextureManager.cpp">
-      <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Light\LightManager.cpp">
       <Filter>NewEngine\Source\Light</Filter>
@@ -249,14 +240,29 @@
     <ClCompile Include="NewEngine\Render\RootSignature.cpp">
       <Filter>NewEngine\Source\Render</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\3D\ModelManager.cpp">
-      <Filter>NewEngine\Source\Object\3D</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\SilhouetteObj.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\OutLineObj.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\ModelManager.cpp">
+      <Filter>NewEngine\Source\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\Model.cpp">
+      <Filter>NewEngine\Source\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\Mesh.cpp">
+      <Filter>NewEngine\Source\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\Material.cpp">
+      <Filter>NewEngine\Source\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\Texture.cpp">
+      <Filter>NewEngine\Source\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\TextureManager.cpp">
+      <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -326,9 +332,6 @@
     <ClInclude Include="NewEngine\Object\2D\Sprite.h">
       <Filter>NewEngine\Header\Object\2D</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\2D\Texture.h">
-      <Filter>NewEngine\Header\Object\2D</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Object\2D\RenderTexture.h">
       <Filter>NewEngine\Header\Object\2D</Filter>
     </ClInclude>
@@ -336,12 +339,6 @@
       <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\Line.h">
-      <Filter>NewEngine\Header\Object\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Object\3D\Material.h">
-      <Filter>NewEngine\Header\Object\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Object\3D\Model.h">
       <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\Object3D.h">
@@ -368,16 +365,16 @@
     <ClInclude Include="NewEngine\Util\Util.h">
       <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Scene\GameScene.h">
+    <ClInclude Include="Application\SourceCode\Scene\GameScene.h">
       <Filter>Application\Header\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Scene\IScene.h">
+    <ClInclude Include="Application\SourceCode\Scene\IScene.h">
       <Filter>Application\Header\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Scene\SceneManager.h">
+    <ClInclude Include="Application\SourceCode\Scene\SceneManager.h">
       <Filter>Application\Header\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Scene\TitleScene.h">
+    <ClInclude Include="Application\SourceCode\Scene\TitleScene.h">
       <Filter>Application\Header\Scene</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Gui\GuiManager.h">
@@ -392,17 +389,11 @@
     <ClInclude Include="NewEngine\Util\Timer.h">
       <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\3D\Mesh.h">
-      <Filter>NewEngine\Header\Object\3D</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBufferData.h">
       <Filter>NewEngine\Header\Render\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Math\Quaternion.h">
       <Filter>NewEngine\Header\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\TextureManager.h">
-      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Light\LightManager.h">
       <Filter>NewEngine\Header\Light</Filter>
@@ -413,14 +404,29 @@
     <ClInclude Include="NewEngine\Render\RootSignature.h">
       <Filter>NewEngine\Header\Render</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\3D\ModelManager.h">
-      <Filter>NewEngine\Header\Object\3D</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\SilhouetteObj.h">
       <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\OutLineObj.h">
       <Filter>NewEngine\Header\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\ModelManager.h">
+      <Filter>NewEngine\Header\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\Model.h">
+      <Filter>NewEngine\Header\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\Mesh.h">
+      <Filter>NewEngine\Header\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\Material.h">
+      <Filter>NewEngine\Header\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\Texture.h">
+      <Filter>NewEngine\Header\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\TextureManager.h">
+      <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
