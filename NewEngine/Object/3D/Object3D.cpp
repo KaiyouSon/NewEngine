@@ -10,6 +10,7 @@ Object3D::Object3D() :
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform3D>),
 	constantBufferMaterial(new ConstantBuffer<ConstantBufferDataMaterial>),
 	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>),
+	graphicsPipeline(RenderBase::GetInstance()->GetObject3DPipeline()),
 	isLighting(false)
 {
 	// 定数バッファ初期化
@@ -72,8 +73,10 @@ void Object3D::Update(const Object3D* parent)
 	constantBufferColor->constantBufferMap->color = color / 255;
 	constantBufferColor->constantBufferMap->color.a = color.a / 255;
 }
-void Object3D::Draw()
+void Object3D::Draw(const BlendMode& blendMode)
 {
+	SetBlendMode(blendMode);
+
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
 	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -82,14 +85,13 @@ void Object3D::Draw()
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, model.mesh.GetVertexBuffer().GetvbViewAddress());
 	renderBase->GetCommandList()->IASetIndexBuffer(model.mesh.GetIndexBuffer().GetibViewAddress());
 
-	// マテリアルとトランスフォームのCBVの設定コマンド
+	// CBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		0, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		1, constantBufferMaterial->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		2, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
-	//DirectionalLight::current.Draw();
 	LightManager::GetInstance()->Draw();
 
 	// SRVヒープの設定コマンド
@@ -110,23 +112,23 @@ void Object3D::SetBlendMode(const BlendMode& blendMode)
 	switch (blendMode)
 	{
 	case BlendMode::Alpha: // αブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetObject3DPipeline()->GetAlphaPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetAlphaPipeline());
 		break;
 
 	case BlendMode::Add:	// 加算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetObject3DPipeline()->GetAddPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetAddPipeline());
 		break;
 
 	case BlendMode::Sub:	// 減算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetObject3DPipeline()->GetSubPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetSubPipeline());
 		break;
 
 	case BlendMode::Inv:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetObject3DPipeline()->GetInvPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetInvPipeline());
 		break;
 
 	case BlendMode::Screen:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetObject3DPipeline()->GetScreenPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetScreenPipeline());
 		break;
 
 	default:

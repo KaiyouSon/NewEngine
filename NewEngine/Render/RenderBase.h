@@ -54,6 +54,7 @@ public:
 	inline GraphicsPipeline* GetObject3DPipeline()const { return object3DPipeline.get(); }
 	inline GraphicsPipeline* GetSilhouettePipeline()const { return silhouettePipeline.get(); }
 	inline GraphicsPipeline* GetOutLinePipeline()const { return outlinePipeline.get(); }
+	inline GraphicsPipeline* GetToonRenderPipeline()const { return toonRenderPipeline.get(); }
 
 	inline Viewport* GetViewport() const { return viewport.get(); }
 private:
@@ -94,6 +95,7 @@ private:
 	std::unique_ptr<ShaderObject> particleShader;
 	std::unique_ptr<ShaderObject> silhouetteShader;
 	std::unique_ptr<ShaderObject> outlineShader;
+	std::unique_ptr<ShaderObject> toonRenderShader;
 
 	// グラフィックスパイプライン関連
 	std::unique_ptr<GraphicsPipeline> basicPipeline;
@@ -103,6 +105,7 @@ private:
 	std::unique_ptr<GraphicsPipeline> object3DPipeline;
 	std::unique_ptr<GraphicsPipeline> silhouettePipeline;
 	std::unique_ptr<GraphicsPipeline> outlinePipeline;
+	std::unique_ptr<GraphicsPipeline> toonRenderPipeline;
 
 	// ルートシグネチャー関連
 	ComPtr <ID3DBlob> errorBlob;	// エラーオブジェクト

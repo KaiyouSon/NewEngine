@@ -62,6 +62,6 @@ void OutLineObj::Draw()
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(unsigned short)obj->model.mesh.GetIndexSize(), 1, 0, 0, 0);
 
-	Object3D::SetBlendMode(BlendMode::Alpha);
-	obj->Draw();
+	obj->graphicsPipeline = RenderBase::GetInstance()->GetToonRenderPipeline();
+	obj->Draw(BlendMode::Alpha);
 }

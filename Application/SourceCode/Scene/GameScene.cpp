@@ -14,6 +14,9 @@ void GameScene::Init()
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
+	LightManager::isPointLighting = false;
+	LightManager::isSpotLighting = false;
+
 	LightManager::GetInstance()->circleShadow.isActive = false;
 	LightManager::GetInstance()->circleShadow.vec = { 0,-1,0 };
 	LightManager::GetInstance()->circleShadow.atten = { 0.5f,0.6f,0.0f };
@@ -24,6 +27,8 @@ void GameScene::Init()
 	ModelManager::LoadModel("Boss", "Boss", true);
 	ModelManager::LoadModel("Sphere", "Sphere", true);
 	ModelManager::LoadModel("Cube", "Cube", true);
+	ModelManager::LoadModel("player", "Player", true);
+
 
 	TextureManager::LoadTexture("pic.png", "pic");
 
@@ -35,8 +40,8 @@ void GameScene::Init()
 	obj.texture = *TextureManager::GetTexture("pic");
 	obj.pos.z = 5.f;
 
-	obj2.model = *ModelManager::GetModel("Sphere");
-	obj2.scale.x = 2.f;
+	obj2.model = *ModelManager::GetModel("Player");
+	//obj2.color = Color::red;
 
 	spr.texture = *TextureManager::GetTexture("pic");
 	spr.pos = 256;
@@ -59,8 +64,10 @@ void GameScene::Update()
 	//obj2.Update();
 	spr.Update();
 
-	silhouetteObj.Update();
+	//obj2.rot.y += Radian(1);
+
 	outlineObj.Update();
+	silhouetteObj.Update();
 
 	skyDomeObj.Update();
 	groundObj.Update();
@@ -92,10 +99,11 @@ void GameScene::DrawBackSprite()
 }
 void GameScene::DrawModel()
 {
-	CollisionDrawModel();
+	//CollisionDrawModel();
 
 	outlineObj.Draw();
-	silhouetteObj.Draw();
+	groundObj.Draw();
+	//silhouetteObj.Draw();
 }
 void GameScene::DrawFrontSprite()
 {
@@ -136,10 +144,8 @@ void GameScene::CollisionInit()
 
 	capsuleObj1.model = Model("Capsule");
 	capsuleObj1.pos.x = +2;
-	//capsuleObj1.scale = 0.5f;
 	capsuleObj2.model = Model("Capsule");
 	capsuleObj2.pos.x = -2;
-	//capsuleObj2.scale = 0.5f;
 
 }
 void GameScene::CollisionUpdate()

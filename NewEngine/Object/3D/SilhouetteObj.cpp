@@ -60,8 +60,7 @@ void SilhouetteObj::Draw()
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(unsigned short)obj->model.mesh.GetIndexSize(), 1, 0, 0, 0);
 
-	Object3D::SetBlendMode(BlendMode::Alpha);
-	obj->Draw();
+	obj->Draw(BlendMode::Alpha);
 }
 
 void SilhouetteObj::SetBlendMode(const BlendMode& blendMode)

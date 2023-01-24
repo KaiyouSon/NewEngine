@@ -14,6 +14,7 @@ private:
 	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
 	Transform transform;
 
+	void SetBlendMode(const BlendMode& blendMode);
 public:
 	Model model;
 	Texture texture;
@@ -21,6 +22,7 @@ public:
 	Vec3 scale;
 	Vec3 rot;
 	Color color;
+	GraphicsPipeline* graphicsPipeline;
 	bool isLighting;
 	static bool isAllLighting;
 
@@ -28,8 +30,7 @@ public:
 	Object3D();
 	~Object3D();
 	void Update(const Object3D* parent = nullptr);
-	void Draw();
+	void Draw(const BlendMode& blendMode = BlendMode::Alpha);
 
-	static void SetBlendMode(const BlendMode& blendMode);
 };
 

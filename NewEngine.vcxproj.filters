@@ -430,9 +430,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="NewEngine\Shader\Basic.hlsli">
-      <Filter>Shader</Filter>
-    </None>
     <None Include="NewEngine\Shader\RenderTexture.hlsli">
       <Filter>Shader</Filter>
     </None>
@@ -448,15 +445,12 @@
     <None Include="NewEngine\Shader\OutLine.hlsli">
       <Filter>Shader</Filter>
     </None>
+    <None Include="NewEngine\Shader\ToonRenderH.hlsli">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="NewEngine\Shader\BasicPS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
     <FxCompile Include="NewEngine\Shader\SpritePS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\BasicVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\RenderTexturePS.hlsl">
@@ -484,6 +478,12 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\OutLineVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ToonRenderPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ToonRenderVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

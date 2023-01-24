@@ -44,6 +44,7 @@ private:
 	static const int pointLightNum = 3;
 	static const int spotLightNum = 3;
 
+
 	struct ConstantBufferDataLightManager
 	{
 		std::array<ConstantBufferDataDirectionalLight, directionalLightNum> constantBufferDirectionalLights;
@@ -58,6 +59,10 @@ public:
 	std::array<PointLight, pointLightNum> pointLights;
 	std::array<SpotLight, spotLightNum> spotLights;
 	CircleShadow circleShadow;
+
+	static bool isPointLighting;
+	static bool isSpotLighting;
+
 
 private:
 	friend Singleton<LightManager>;

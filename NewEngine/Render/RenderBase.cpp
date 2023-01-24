@@ -386,12 +386,12 @@ void RenderBase::ShaderCompilerInit()
 	std::string path = "NewEngine/Shader/";
 
 	// 3Dオブジェクトのシェーダー
-	basicShader = std::move(std::make_unique<ShaderObject>());
-	basicShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	basicShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	basicShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	basicShader->CompileVertexShader(path + "BasicVS.hlsl", "main");
-	basicShader->CompilePixelShader(path + "BasicPS.hlsl", "main");
+	//basicShader = std::move(std::make_unique<ShaderObject>());
+	//basicShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//basicShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	//basicShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//basicShader->CompileVertexShader(path + "BasicVS.hlsl", "main");
+	//basicShader->CompilePixelShader(path + "BasicPS.hlsl", "main");
 
 	// スプライト用シェーダー
 	spriteShader = std::move(std::make_unique<ShaderObject>());
@@ -430,6 +430,14 @@ void RenderBase::ShaderCompilerInit()
 	outlineShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
 	outlineShader->CompileVertexShader(path + "OutLineVS.hlsl", "main");
 	outlineShader->CompilePixelShader(path + "OutLinePS.hlsl", "main");
+
+	// トゥーンレンダーリング用
+	toonRenderShader = std::move(std::make_unique<ShaderObject>());
+	toonRenderShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	toonRenderShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	toonRenderShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	toonRenderShader->CompileVertexShader(path + "ToonRenderVS.hlsl", "main");
+	toonRenderShader->CompilePixelShader(path + "ToonRenderPS.hlsl", "main");
 }
 void RenderBase::RootSignatureInit()
 {
@@ -464,12 +472,12 @@ void RenderBase::GraphicsPipelineInit()
 	depthStencilDesc4.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
 
 	// ベーシック
-	basicPipeline = std::move(std::make_unique<GraphicsPipeline>());
-	basicPipeline->SetShaderObject(basicShader.get());
-	basicPipeline->SetCullMode(CullMode::CullBack);
-	basicPipeline->SetTopologyType(TopologyType::TriangleTopology);
-	basicPipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
-	basicPipeline->Create();
+	//basicPipeline = std::move(std::make_unique<GraphicsPipeline>());
+	//basicPipeline->SetShaderObject(basicShader.get());
+	//basicPipeline->SetCullMode(CullMode::CullBack);
+	//basicPipeline->SetTopologyType(TopologyType::TriangleTopology);
+	//basicPipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
+	//basicPipeline->Create();
 
 	// スプライト用
 	spritePipeline = std::move(std::make_unique<GraphicsPipeline>());
@@ -482,7 +490,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// Line用
 	linePipeline = std::move(std::make_unique<GraphicsPipeline>());
-	linePipeline->SetShaderObject(basicShader.get());
+	linePipeline->SetShaderObject(object3DShader.get());
 	linePipeline->SetCullMode(CullMode::CullBack);
 	linePipeline->SetDepthStencilDesc(depthStencilDesc1);
 	linePipeline->SetTopologyType(TopologyType::LineTopology);
@@ -524,4 +532,13 @@ void RenderBase::GraphicsPipelineInit()
 	outlinePipeline->SetTopologyType(TopologyType::TriangleTopology);
 	outlinePipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
 	outlinePipeline->Create();
+
+	// アウトライン用
+	toonRenderPipeline = std::move(std::make_unique<GraphicsPipeline>());
+	toonRenderPipeline->SetShaderObject(toonRenderShader.get());
+	toonRenderPipeline->SetCullMode(CullMode::CullBack);
+	toonRenderPipeline->SetDepthStencilDesc(depthStencilDesc1);
+	toonRenderPipeline->SetTopologyType(TopologyType::TriangleTopology);
+	toonRenderPipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
+	toonRenderPipeline->Create();
 }
