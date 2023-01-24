@@ -385,25 +385,25 @@ void GameScene::QuaternionDrawGui()
 	Quaternion mul2 = q2 * q1;
 	GuiManager::BeginWindow("Quaternion");
 
-	ImGui::Text("%f,%f,%f,%f : Identity",
-		Quaternion::Identity().x, Quaternion::Identity().y, Quaternion::Identity().z, Quaternion::Identity().w);
+	//ImGui::Text("%f,%f,%f,%f : Identity",
+	//	Quaternion::Identity().x, Quaternion::Identity().y, Quaternion::Identity().z, Quaternion::Identity().w);
 
-	ImGui::Text("%f,%f,%f,%f : Conjugate",
-		q1.Conjugate().x, q1.Conjugate().y, q1.Conjugate().z, q1.Conjugate().w);
+	//ImGui::Text("%f,%f,%f,%f : Conjugate",
+	//	q1.Conjugate().x, q1.Conjugate().y, q1.Conjugate().z, q1.Conjugate().w);
 
-	ImGui::Text("%f,%f,%f,%f Inverse",
-		q1.Inverse().x, q1.Inverse().y, q1.Inverse().z, q1.Inverse().w);
+	//ImGui::Text("%f,%f,%f,%f Inverse",
+	//	q1.Inverse().x, q1.Inverse().y, q1.Inverse().z, q1.Inverse().w);
 
-	ImGui::Text("%f,%f,%f,%f : Normalize",
-		q1.Norm().x, q1.Norm().y, q1.Norm().z, q1.Norm().w);
+	//ImGui::Text("%f,%f,%f,%f : Normalize",
+	//	q1.Norm().x, q1.Norm().y, q1.Norm().z, q1.Norm().w);
 
-	ImGui::Text("%f,%f,%f,%f : mul1",
-		mul1.x, mul1.y, mul1.z, mul1.w);
+	//ImGui::Text("%f,%f,%f,%f : mul1",
+	//	mul1.x, mul1.y, mul1.z, mul1.w);
 
-	ImGui::Text("%f,%f,%f,%f : mul2",
-		mul2.x, mul2.y, mul2.z, mul2.w);
+	//ImGui::Text("%f,%f,%f,%f : mul2",
+	//	mul2.x, mul2.y, mul2.z, mul2.w);
 
-	ImGui::Text("%f : Lenght", q1.Lenght());
+	//ImGui::Text("%f : Lenght", q1.Lenght());
 
 	GuiManager::EndWindow();
 

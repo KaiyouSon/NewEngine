@@ -2,9 +2,9 @@
 #include "RenderBase.h"
 #include "RenderWindow.h"
 #include "Util.h"
-#include "imgui.h"
-#include "imgui_impl_dx12.h"
-#include "imgui_impl_win32.h"
+#include <imgui.h>
+#include <imgui_impl_dx12.h>
+#include <imgui_impl_win32.h>
 
 const int GuiManager::NumFramesInFlight = 3;
 
