@@ -115,6 +115,7 @@ void GameScene::DrawDebugGui()
 	DirectionalLightDrawGui();
 	PointLightDrawGui();
 	SpotLightDrawGui();
+	FogDrawGui();
 	CollisionDrawGui();
 }
 
@@ -378,6 +379,15 @@ void GameScene::SpotLightDrawGui()
 		GuiManager::DrawColorEdit(str.c_str(), LightManager::GetInstance()->spotLights[i].color);
 	}
 
+	GuiManager::EndWindow();
+}
+void GameScene::FogDrawGui()
+{
+	GuiManager::BeginWindow("Fog");
+	GuiManager::DrawCheckBox("Fog isActive", &LightManager::GetInstance()->fog.isActive);
+	GuiManager::DrawSlider1("Fog nearDis", LightManager::GetInstance()->fog.nearDis);
+	GuiManager::DrawSlider1("Fog farDis", LightManager::GetInstance()->fog.farDis);
+	GuiManager::DrawColorEdit("Fog Color", LightManager::GetInstance()->fog.color);
 	GuiManager::EndWindow();
 }
 

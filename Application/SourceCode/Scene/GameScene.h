@@ -36,6 +36,7 @@ private:
 	void DirectionalLightDrawGui();
 	void PointLightDrawGui();
 	void SpotLightDrawGui();
+	void FogDrawGui();
 
 private:
 	// クォータニオン関連
