@@ -24,6 +24,7 @@ void RenderBase::Init()
 
 	rtvIncrementIndex = 0;
 	srvIncrementIndex = 1;	// ImGuiで一個使っているから、１からずらす
+	dsvIncrementIndex = 0;
 
 	DeviceInit();			// デバイスの初期化
 
@@ -37,7 +38,6 @@ void RenderBase::Init()
 	RootSignatureInit();	// ルードシグネチャーの初期化
 	GraphicsPipelineInit();	// グラフィックスパイプラインの初期化
 }
-
 void RenderBase::PreDraw()
 {
 	//---------------------- リソースバリアの変更コマンド ----------------------//
@@ -55,7 +55,7 @@ void RenderBase::PreDraw()
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = backBuffers[bbIndex]->GetCpuHandle();
 
 	// 深度ステンシルビュー用デスクリプタヒープのハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = dsvDescHeap->GetCPUDescriptorHandleForHeapStart();
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = depthBuffer->GetCpuHandle();
 	commandList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
 
 	// 画面クリア R G B A
@@ -124,7 +124,8 @@ void RenderBase::SetSpriteDrawCommand()
 {
 	commandList->SetGraphicsRootSignature(spriteRootSignature->GetRootSignature());
 }
-void RenderBase::CreateSrv(Texture& texture, const D3D12_RESOURCE_DESC& textureResourceDesc)
+
+void RenderBase::CreateSRV(Texture& texture, const D3D12_RESOURCE_DESC& textureResourceDesc)
 {
 	// SRVヒープの先頭ハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE srvCpuHandle = srvDescHeap->GetCPUDescriptorHandleForHeapStart();
@@ -150,8 +151,7 @@ void RenderBase::CreateSrv(Texture& texture, const D3D12_RESOURCE_DESC& textureR
 
 	srvIncrementIndex++;
 }
-void RenderBase::CreateRenderTargetView(
-	RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC& rtvDesc)
+void RenderBase::CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC& rtvDesc)
 {
 	// RTVヒープの先頭ハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvCpuHandle = rtvDescHeap->GetCPUDescriptorHandleForHeapStart();
@@ -170,8 +170,31 @@ void RenderBase::CreateRenderTargetView(
 
 	rtvIncrementIndex++;
 }
+void RenderBase::CreateDSV(DepthBuffer& depthBuffer)
+{
+	// RTVヒープの先頭ハンドルを取得
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvCpuHandle = dsvDescHeap->GetCPUDescriptorHandleForHeapStart();
+	D3D12_GPU_DESCRIPTOR_HANDLE dsvGpuHandle = dsvDescHeap->GetGPUDescriptorHandleForHeapStart();
 
-// 各初期化
+	UINT descriptorSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+
+	dsvCpuHandle.ptr += descriptorSize * dsvIncrementIndex;
+	dsvGpuHandle.ptr += descriptorSize * dsvIncrementIndex;
+
+	depthBuffer.SetCpuHandle(dsvCpuHandle);
+	depthBuffer.SetGpuHandle(dsvGpuHandle);
+
+	// 深度ビュー作成
+	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;	// 深度値フォーマット
+	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+
+	// ハンドルの指す位置にRTV作成
+	device->CreateDepthStencilView(depthBuffer.GetBuffer(), &dsvDesc, dsvCpuHandle);
+
+	dsvIncrementIndex++;
+}
+
 void RenderBase::DeviceInit()
 {
 	HRESULT result;
@@ -238,30 +261,42 @@ void RenderBase::DescriptorHeapInit()
 {
 	HRESULT result;
 
-	// SRVの最大個数
-	const size_t maxSRVCount = 2056;
+	// --- SRV ------------------------------------------------------ //
+	const size_t maxSRVCount = 2056;	// SRVの最大個数
 
-	// デスクリプタヒープの設定
+	// SRV用デスクリプタヒープの設定
 	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
 	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;	// シェーダから見えるように
 	srvHeapDesc.NumDescriptors = maxSRVCount;
 
-	// 設定を元にSRV用デスクリプタヒープを生成
+	// SRV用デスクリプタヒープを生成
 	result = device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvDescHeap));
 	assert(SUCCEEDED(result));
 
+
 	// --- RTV ------------------------------------------------------ //
+	const size_t maxRTVCount = 2;	// RTVの最大個数
 
-	// RTVの最大個数
-	const size_t maxRTVCount = 2;
-
-	// デスクリプタヒープの設定
+	// RTV用デスクリプタヒープの設定
 	rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;		// レンダーターゲットビュー
 	rtvHeapDesc.NumDescriptors = maxRTVCount; // 裏表の２つ
 
-	// デスクリプタヒープの生成
+	// RTV用デスクリプタヒープの生成
 	result = device->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(&rtvDescHeap));
+	assert(SUCCEEDED(result));
+
+
+	// --- DSV ------------------------------------------------------ //
+	const size_t maxDSVCount = 1;	// DSVの最大個数
+
+	// DSV用デスクリプタヒープの設定
+	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
+	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;		// デプスステンシルビュー
+	dsvHeapDesc.NumDescriptors = maxDSVCount;	// 深度ビューは一つ
+
+	// DSV用デスクリプタヒープの生成
+	result = device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvDescHeap));
 	assert(SUCCEEDED(result));
 }
 void RenderBase::CommandInit()
@@ -338,7 +373,7 @@ void RenderBase::SwapChainInit()
 		swapChain->GetBuffer((UINT)i, IID_PPV_ARGS(&backBuffers[i]->buffer));
 
 		// レンダーターゲットビューの生成
-		CreateRenderTargetView(*backBuffers[i], rtvDesc);
+		CreateRTV(*backBuffers[i], rtvDesc);
 	}
 }
 void RenderBase::FenceInit()
@@ -355,54 +390,49 @@ void RenderBase::DepthBufferInit()
 {
 	HRESULT result;
 
-	// リソースの設定
-	D3D12_RESOURCE_DESC depthResourceDesc{};
-	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	depthResourceDesc.Width = (UINT)renderWindow->GetWindowSize().x;		// 幅
-	depthResourceDesc.Height = (UINT)renderWindow->GetWindowSize().y; // 高さ
-	depthResourceDesc.DepthOrArraySize = 1;
-	depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;	// 深度値デフォルト
-	depthResourceDesc.SampleDesc.Count = 1;
-	depthResourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+	depthBuffer = std::move(std::make_unique<DepthBuffer>());
+	depthBuffer->Create();
 
-	// 深度用ヒーププロパティ
-	D3D12_HEAP_PROPERTIES depthHeapProp{};
-	depthHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
-	// 深度値のクリア設定
-	D3D12_CLEAR_VALUE depthClearValue{};
-	depthClearValue.DepthStencil.Depth = 1.0f;	// 深度値1.0f(最大値)でクリア
-	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	// 深度値フォーマット
+	//// リソースの設定
+	//D3D12_RESOURCE_DESC depthResourceDesc{};
+	//depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+	//depthResourceDesc.Width = (UINT)renderWindow->GetWindowSize().x;		// 幅
+	//depthResourceDesc.Height = (UINT)renderWindow->GetWindowSize().y; // 高さ
+	//depthResourceDesc.DepthOrArraySize = 1;
+	//depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;	// 深度値デフォルト
+	//depthResourceDesc.SampleDesc.Count = 1;
+	//depthResourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
-	// リソースの生成
-	result = device->CreateCommittedResource
-	(
-		&depthHeapProp,
-		D3D12_HEAP_FLAG_NONE,
-		&depthResourceDesc,
-		D3D12_RESOURCE_STATE_DEPTH_WRITE, // 深度値書き込みに使用
-		&depthClearValue,
-		IID_PPV_ARGS(&depthBuffer)
-	);
-	assert(SUCCEEDED(result));
+	//// 深度用ヒーププロパティ
+	//D3D12_HEAP_PROPERTIES depthHeapProp{};
+	//depthHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
+	//// 深度値のクリア設定
+	//D3D12_CLEAR_VALUE depthClearValue{};
+	//depthClearValue.DepthStencil.Depth = 1.0f;	// 深度値1.0f(最大値)でクリア
+	//depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	// 深度値フォーマット
 
-	// dsv用デスクリプタヒープの作成
-	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
-	dsvHeapDesc.NumDescriptors = 1;	// 深度ビューは一つ
-	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV; // デプスステンシルビュー
-	result = device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvDescHeap));
-	assert(SUCCEEDED(result));
+	//// リソースの生成
+	//result = device->CreateCommittedResource
+	//(
+	//	&depthHeapProp,
+	//	D3D12_HEAP_FLAG_NONE,
+	//	&depthResourceDesc,
+	//	D3D12_RESOURCE_STATE_DEPTH_WRITE, // 深度値書き込みに使用
+	//	&depthClearValue,
+	//	IID_PPV_ARGS(&depthBuffer)
+	//);
+	//assert(SUCCEEDED(result));
 
-	// 深度ビュー作成
-	D3D12_DEPTH_STENCIL_VIEW_DESC dsvViewDesc = {};
-	dsvViewDesc.Format = DXGI_FORMAT_D32_FLOAT;	// 深度値フォーマット
-	dsvViewDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
-	device->CreateDepthStencilView
-	(
-		depthBuffer.Get(),
-		&dsvViewDesc,
-		dsvDescHeap->GetCPUDescriptorHandleForHeapStart()
-	);
-
+	//// 深度ビュー作成
+	//D3D12_DEPTH_STENCIL_VIEW_DESC dsvViewDesc = {};
+	//dsvViewDesc.Format = DXGI_FORMAT_D32_FLOAT;	// 深度値フォーマット
+	//dsvViewDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+	//device->CreateDepthStencilView
+	//(
+	//	depthBuffer.Get(),
+	//	&dsvViewDesc,
+	//	dsvDescHeap->GetCPUDescriptorHandleForHeapStart()
+	//);
 }
 void RenderBase::ShaderCompilerInit()
 {

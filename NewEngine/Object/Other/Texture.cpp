@@ -54,7 +54,7 @@ Texture::Texture(const Color& color) : result(HRESULT()), isMaterial(false)
 		sizeof(Color) * 1 // 全サイズ
 	);
 
-	RenderBase::GetInstance()->CreateSrv(*this, textureResourceDesc);
+	RenderBase::GetInstance()->CreateSRV(*this, textureResourceDesc);
 }
 
 Texture::Texture(const std::string& filePath, const bool& isDirectoryPath) :
@@ -139,5 +139,5 @@ Texture::Texture(const std::string& filePath, const bool& isDirectoryPath) :
 		assert(SUCCEEDED(result));
 	}
 
-	RenderBase::GetInstance()->CreateSrv(*this, textureResourceDesc);
+	RenderBase::GetInstance()->CreateSRV(*this, textureResourceDesc);
 }

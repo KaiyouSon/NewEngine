@@ -5,6 +5,7 @@
 #include "GraphicsPipeline.h"
 #include "Texture.h"
 #include "RenderTarget.h"
+#include "DepthBuffer.h"
 #include "Util.h"
 #include <d3d12.h>
 #include <dxgi1_6.h>
@@ -27,8 +28,9 @@ public:
 	void PostDraw();
 	void SetObject3DDrawCommand();
 	void SetSpriteDrawCommand();
-	void CreateSrv(Texture& texture, const D3D12_RESOURCE_DESC& textureResourceDesc);
-	void CreateRenderTargetView(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC& rtvDesc);
+	void CreateSRV(Texture& texture, const D3D12_RESOURCE_DESC& textureResourceDesc);
+	void CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC& rtvDesc);
+	void CreateDSV(DepthBuffer& depthBuffer);
 
 private:
 	// 初期化関連
@@ -82,14 +84,15 @@ private:
 	UINT64 fenceVal = 0;
 
 	// 深度バッファ
-	ComPtr<ID3D12DescriptorHeap> dsvDescHeap;	// 深度バッファビュー用デスクリプタヒープ
-	ComPtr<ID3D12Resource> depthBuffer;			// 深度バッファ
+	std::unique_ptr<DepthBuffer> depthBuffer;
 
 	// ティスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> rtvDescHeap;		// rtv用デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> srvDescHeap;		// srv用デスクリプタヒープ
-	UINT rtvIncrementIndex = 0;
-	UINT srvIncrementIndex = 1;
+	ComPtr<ID3D12DescriptorHeap> dsvDescHeap;		// dsv用デスクリプタヒープ
+	UINT rtvIncrementIndex;
+	UINT srvIncrementIndex;
+	UINT dsvIncrementIndex;
 
 	// シェーダコンパイラー
 	std::unique_ptr<ShaderObject> basicShader;

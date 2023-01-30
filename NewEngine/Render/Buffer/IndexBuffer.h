@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include <d3d12.h>
-#include <stdint.h>
 #include <wrl.h>
 
 class IndexBuffer

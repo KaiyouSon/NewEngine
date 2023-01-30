@@ -270,6 +270,9 @@
     <ClCompile Include="NewEngine\Render\RenderTarget.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Render\Buffer\DepthBuffer.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -438,6 +441,9 @@
       <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Render\RenderTarget.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\Buffer\DepthBuffer.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
