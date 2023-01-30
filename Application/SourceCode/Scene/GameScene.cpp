@@ -40,10 +40,6 @@ void GameScene::Update()
 	}
 
 	Camera::DebugCameraUpdate();
-	//if (Key::GetKey(DIK_SPACE))
-	//{
-	//	SceneManager::ChangeScene<TitleScene>();
-	//}
 }
 
 void GameScene::DrawBackSprite()

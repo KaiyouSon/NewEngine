@@ -1,5 +1,6 @@
 #pragma once
 #include "NewEngine.h"
+#include "RenderTexture.h"
 
 class GameScene : public IScene
 {
@@ -47,7 +48,6 @@ private:
 private:
 	// クォータニオン関連
 	void QuaternionDrawGui();
-
 
 public:
 	GameScene();
