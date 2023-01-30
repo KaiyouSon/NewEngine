@@ -17,17 +17,19 @@ public:
 	// 球と平面
 	static bool SphereHitPlane(
 		const SphereCollider& sphere,
-		const PlaneCollider& plane);
+		const PlaneCollider& plane,
+		Vec3* hitPos = 0);
+
+	// 球と三角形
+	static bool SphereHitTriangle(
+		const SphereCollider& sphere,
+		const TriangleCollider& triangle,
+		Vec3* hitPos = 0);
 
 	// 球とカプセル
 	static bool SphereHitCapsule(
 		const SphereCollider& sphere,
 		const CapsuleCollider& capsule);
-
-	// 三角形と平面
-	static bool SphereHitTriangle(
-		const SphereCollider& sphere,
-		const TriangleCollider& triangle);
 
 	// レイと平面
 	static bool RayHitPlane(

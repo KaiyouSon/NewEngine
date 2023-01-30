@@ -95,6 +95,7 @@ void LightManager::Update()
 		}
 	}
 
+	fog.Update();
 	circleShadow.Update();
 }
 
@@ -106,5 +107,6 @@ void LightManager::Draw()
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		3, constantBufferLightManager->constantBuffer->GetGPUVirtualAddress());
 
+	fog.Draw();
 	circleShadow.Draw();
 }

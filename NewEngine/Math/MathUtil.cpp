@@ -243,3 +243,8 @@ Mat4 ConvertViewportMat(Viewport& viewport)
 	viewportMat.m[3][2] = viewport.GetMinDepth();
 	return viewportMat;
 }
+
+Vec3 operator+(const float& num, const Vec3& v) { return { num + v.x,num + v.y,num + v.z }; }
+Vec3 operator-(const float& num, const Vec3& v) { return { num - v.x,num - v.y,num - v.z }; }
+Vec3 operator*(const float& num, const Vec3& v) { return { num * v.x,num * v.y,num * v.z }; }
+Vec3 operator/(const float& num, const Vec3& v) { return { num / v.x,num / v.y,num / v.z }; }

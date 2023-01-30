@@ -73,3 +73,12 @@ struct ConstantBufferDataCircleShadow
 	unsigned int isActive;
 	float pad3;
 };
+
+struct ConstantBufferDataFog
+{
+	unsigned int isActive;
+	float nearDis;
+	float farDis;
+	float pad;
+	Color color;
+};

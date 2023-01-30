@@ -17,7 +17,7 @@ void GameScene::Init()
 	LightManager::isPointLighting = false;
 	LightManager::isSpotLighting = false;
 
-	LightManager::GetInstance()->circleShadow.isActive = false;
+	LightManager::GetInstance()->circleShadow.isActive = true;
 	LightManager::GetInstance()->circleShadow.vec = { 0,-1,0 };
 	LightManager::GetInstance()->circleShadow.atten = { 0.5f,0.6f,0.0f };
 	LightManager::GetInstance()->circleShadow.factorAngleCos = { 0.0f,0.5f };
@@ -28,7 +28,6 @@ void GameScene::Init()
 	ModelManager::LoadModel("Sphere", "Sphere", true);
 	ModelManager::LoadModel("Cube", "Cube", true);
 	ModelManager::LoadModel("player", "Player", true);
-
 
 	TextureManager::LoadTexture("pic.png", "pic");
 
@@ -99,10 +98,11 @@ void GameScene::DrawBackSprite()
 }
 void GameScene::DrawModel()
 {
-	//CollisionDrawModel();
+	CollisionDrawModel();
 
-	outlineObj.Draw();
-	groundObj.Draw();
+	//outlineObj.Draw();
+	//groundObj.Draw();
+	skyDomeObj.Draw();
 	//silhouetteObj.Draw();
 }
 void GameScene::DrawFrontSprite()

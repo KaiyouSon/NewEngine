@@ -33,7 +33,7 @@ bool Collision::SphereHitSphere(const SphereCollider& sphere1, const SphereColli
 }
 
 // 球と平面
-bool Collision::SphereHitPlane(const SphereCollider& sphere, const PlaneCollider& plane)
+bool Collision::SphereHitPlane(const SphereCollider& sphere, const PlaneCollider& plane, Vec3* hitPos)
 {
 	// 座標系の原点から球の中心座標への距離
 	float dot1 = Vec3::Dot(sphere.centerPos, plane.normal);
@@ -45,6 +45,30 @@ bool Collision::SphereHitPlane(const SphereCollider& sphere, const PlaneCollider
 	{
 		return false;
 	}
+
+	if (hitPos != nullptr)
+	{
+		*hitPos = dis * plane.normal + sphere.centerPos;
+	}
+
+	return true;
+}
+
+// 球と三角形
+bool Collision::SphereHitTriangle(const SphereCollider& sphere, const TriangleCollider& triangle, Vec3* hitPos)
+{
+	Vec3 p = ClosestPointOfPointAndTriangle(sphere.centerPos, triangle);
+
+	Vec3 v = p - sphere.centerPos;
+
+	float value = Vec3::Dot(v, v);
+
+	if (value > sphere.radius * sphere.radius)
+	{
+		return false;
+	}
+
+	*hitPos = p;
 
 	return true;
 }
@@ -64,23 +88,6 @@ bool Collision::SphereHitCapsule(const SphereCollider& sphere, const CapsuleColl
 	//Vec3 v3 =
 
 	return false;
-}
-
-// 球と三角形
-bool Collision::SphereHitTriangle(const SphereCollider& sphere, const TriangleCollider& triangle)
-{
-	Vec3 p = ClosestPointOfPointAndTriangle(sphere.centerPos, triangle);
-
-	Vec3 v = p - sphere.centerPos;
-
-	float value = Vec3::Dot(v, v);
-
-	if (value > sphere.radius * sphere.radius)
-	{
-		return false;
-	}
-
-	return true;
 }
 
 // レイと平面

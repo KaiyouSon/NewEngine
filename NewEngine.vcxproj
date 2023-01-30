@@ -199,6 +199,7 @@
     <ClCompile Include="NewEngine\Util\BezierCurve.cpp" />
     <ClCompile Include="NewEngine\Util\Color.cpp" />
     <ClCompile Include="NewEngine\Util\Easing.cpp" />
+    <ClCompile Include="NewEngine\Light\Fog.cpp" />
     <ClCompile Include="NewEngine\Util\FrameRate.cpp" />
     <ClCompile Include="NewEngine\Util\Random.cpp" />
     <ClCompile Include="NewEngine\Util\Sound.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="NewEngine\Util\BezierCurve.h" />
     <ClInclude Include="NewEngine\Util\Color.h" />
     <ClInclude Include="NewEngine\Util\Easing.h" />
+    <ClInclude Include="NewEngine\Light\Fog.h" />
     <ClInclude Include="NewEngine\Util\FrameRate.h" />
     <ClInclude Include="NewEngine\Util\Random.h" />
     <ClInclude Include="NewEngine\Util\Singleton.h" />

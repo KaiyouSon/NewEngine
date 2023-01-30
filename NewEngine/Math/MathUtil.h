@@ -43,3 +43,8 @@ Mat4 ConvertViewProjectionMatLookTo(const Vec3& pos, const Vec3& zAxis, const Ve
 Mat4 ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, float farZ);	// “§‹Ë‰e•ÏŠ·
 Mat4 ConvertOrthoGrphicProjectionMat(float WIN_WIDTH, float WIN_HEIGHT);						// •½sË‰e•ÏŠ·
 Mat4 ConvertViewportMat(Viewport& viewport);
+
+Vec3 operator+(const float& num, const Vec3& v);
+Vec3 operator-(const float& num, const Vec3& v);
+Vec3 operator*(const float& num, const Vec3& v);
+Vec3 operator/(const float& num, const Vec3& v);

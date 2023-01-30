@@ -61,6 +61,15 @@ cbuffer ConstantBufferDataLightManager : register(b3)
 
 };
 
+// --- ÉtÉHÉO ---------------------- //
+cbuffer ConstantBufferDataFog : register(b4)
+{
+	uint isActiveFog;
+	float fogNearDis;
+	float fogFarDis;
+	float4 fogColor;
+};
+
 // --- ä€âe ----------------------------------------------------- //
 static const int circleShadowNum = 1;
 struct CircleShadow

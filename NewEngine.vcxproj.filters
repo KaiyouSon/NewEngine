@@ -264,6 +264,9 @@
     <ClCompile Include="NewEngine\Object\Other\TextureManager.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Light\Fog.cpp">
+      <Filter>NewEngine\Source\Light</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -427,6 +430,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\TextureManager.h">
       <Filter>NewEngine\Header\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Light\Fog.h">
+      <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

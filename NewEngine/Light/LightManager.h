@@ -1,5 +1,6 @@
 #pragma once
 #include "CircleShadow.h"
+#include "Fog.h"
 #include <array>
 
 struct DirectionalLight
@@ -59,6 +60,7 @@ public:
 	std::array<PointLight, pointLightNum> pointLights;
 	std::array<SpotLight, spotLightNum> spotLights;
 	CircleShadow circleShadow;
+	Fog fog;
 
 	static bool isPointLighting;
 	static bool isSpotLighting;

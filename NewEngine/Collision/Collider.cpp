@@ -27,7 +27,6 @@ SquareCollider::SquareCollider(const Vec2& centerPos, const Vec2& size) :
 {
 }
 
-
 // ----- 球コライダー ------------------- //
 SphereCollider::SphereCollider() :
 	centerPos(0, 0, 0), radius(1)

@@ -35,6 +35,7 @@ float4 main(VSOutput input) : SV_TARGET
 			float tSpecular = pow(saturate(dot(reflect, eyeDir)), shininess) * specular;
 
 			// 全て加算する
+
 			shaderColor.rgb += (tDiffuse + tSpecular) * directionalLights[i].color;
 		}
 	}
@@ -152,5 +153,18 @@ float4 main(VSOutput input) : SV_TARGET
 		}
 	}
 
-	return shaderColor * texColor * color;
+	if (isActiveFog == true)
+	{
+		// カメラの座標と頂点の距離
+		float dis = distance(input.worldPos.xyz, cameraPos);
+		float rate = smoothstep(fogNearDis, fogFarDis, dis);
+
+		// フォグの色
+		float4 tFogColor = fogColor * rate;
+		return shaderColor * texColor * color + tFogColor;
+	}
+	else
+	{
+		return shaderColor * texColor * color;
+	}
 }
