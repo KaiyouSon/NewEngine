@@ -192,6 +192,7 @@
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp" />
     <ClCompile Include="NewEngine\Render\RenderBase.cpp" />
+    <ClCompile Include="NewEngine\Render\RenderTarget.cpp" />
     <ClCompile Include="NewEngine\Render\RenderWindow.cpp" />
     <ClCompile Include="NewEngine\Render\RootSignature.cpp" />
     <ClCompile Include="NewEngine\Render\ScissorRectangle.cpp" />
@@ -247,6 +248,7 @@
     <ClInclude Include="NewEngine\Render\Buffer\VertexBuffer.h" />
     <ClInclude Include="NewEngine\Render\GraphicsPipeline.h" />
     <ClInclude Include="NewEngine\Render\RenderBase.h" />
+    <ClInclude Include="NewEngine\Render\RenderTarget.h" />
     <ClInclude Include="NewEngine\Render\RenderWindow.h" />
     <ClInclude Include="NewEngine\Render\RootSignature.h" />
     <ClInclude Include="NewEngine\Render\ScissorRectangle.h" />

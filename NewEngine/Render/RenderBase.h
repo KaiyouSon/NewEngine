@@ -4,12 +4,14 @@
 #include "RootSignature.h"
 #include "GraphicsPipeline.h"
 #include "Texture.h"
+#include "RenderTarget.h"
 #include "Util.h"
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <vector>
 #include <wrl.h>
 #include <memory>
+#include <array>
 
 template<typename T> class Singleton;
 
@@ -26,6 +28,7 @@ public:
 	void SetObject3DDrawCommand();
 	void SetSpriteDrawCommand();
 	void CreateSrv(Texture& texture, const D3D12_RESOURCE_DESC& textureResourceDesc);
+	void CreateRenderTargetView(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC& rtvDesc);
 
 private:
 	// 初期化関連
@@ -34,7 +37,7 @@ private:
 	void SwapChainInit();
 	void FenceInit();
 	void DepthBufferInit();
-	void SrvInit();
+	void DescriptorHeapInit();
 	void ShaderCompilerInit();
 	void RootSignatureInit();
 	void GraphicsPipelineInit();
@@ -72,8 +75,7 @@ private:
 	// スワップチェーン
 	ComPtr<IDXGISwapChain4> swapChain;
 	D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc{};		 // rtv設定構造体
-	ComPtr<ID3D12DescriptorHeap> rtvDescHeap;		 // rtv用デスクリプタヒープ
-	std::vector<ComPtr<ID3D12Resource>> backBuffers; // バックバッファ
+	std::array<std::unique_ptr<RenderTarget>, 2> backBuffers;
 
 	// フェンス
 	ComPtr<ID3D12Fence> fence;
@@ -83,9 +85,11 @@ private:
 	ComPtr<ID3D12DescriptorHeap> dsvDescHeap;	// 深度バッファビュー用デスクリプタヒープ
 	ComPtr<ID3D12Resource> depthBuffer;			// 深度バッファ
 
-	// srv
-	ComPtr<ID3D12DescriptorHeap> srvDescHeap;	// srv用デスクリプタヒープ
-	UINT incrementIndex = 1;
+	// ティスクリプタヒープ
+	ComPtr<ID3D12DescriptorHeap> rtvDescHeap;		// rtv用デスクリプタヒープ
+	ComPtr<ID3D12DescriptorHeap> srvDescHeap;		// srv用デスクリプタヒープ
+	UINT rtvIncrementIndex = 0;
+	UINT srvIncrementIndex = 1;
 
 	// シェーダコンパイラー
 	std::unique_ptr<ShaderObject> basicShader;
@@ -114,7 +118,6 @@ private:
 
 	// 描画処理関連
 	D3D12_RESOURCE_BARRIER barrierDesc{};	// リソースバリア
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle;	// レンダーターゲットビューのハンドル
 
 	RenderWindow* renderWindow;
 

@@ -22,12 +22,17 @@ void RenderBase::Init()
 	renderWindow = RenderWindow::GetInstance().get();
 	viewport = move(make_unique<Viewport>());
 
+	rtvIncrementIndex = 0;
+	srvIncrementIndex = 1;	// ImGuiで一個使っているから、１からずらす
+
 	DeviceInit();			// デバイスの初期化
+
+	DescriptorHeapInit();	// ティスクリプターヒープの初期化
+
 	CommandInit();			// コマンド関連の初期化
 	SwapChainInit();		// スワップチェンの初期化
 	FenceInit();			// フェンスの初期化
 	DepthBufferInit();		// 深度バッファの初期化
-	SrvInit();				// シェーダーリソースビュー関連の初期化
 	ShaderCompilerInit();	// シェーダーコンパイラーの初期化
 	RootSignatureInit();	// ルードシグネチャーの初期化
 	GraphicsPipelineInit();	// グラフィックスパイプラインの初期化
@@ -39,7 +44,7 @@ void RenderBase::PreDraw()
 	// バックバッファの番号を取得（2つなので0番か1番）
 	UINT bbIndex = swapChain->GetCurrentBackBufferIndex();
 	// １．リソースバリアで書き込み可能に変更
-	barrierDesc.Transition.pResource = backBuffers[bbIndex].Get();	// バックバッファを指定
+	barrierDesc.Transition.pResource = backBuffers[bbIndex]->buffer.Get();	// バックバッファを指定
 	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;	// 表示状態から
 	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画状態へ
 	commandList->ResourceBarrier(1, &barrierDesc);
@@ -47,8 +52,7 @@ void RenderBase::PreDraw()
 	//--------------------------- 描画先指定コマンド ---------------------------//
 	// ２．描画先の変更
 	// レンダーターゲットビューのハンドルを取得
-	rtvHandle = rtvDescHeap->GetCPUDescriptorHandleForHeapStart();
-	rtvHandle.ptr += bbIndex * device->GetDescriptorHandleIncrementSize(rtvHeapDesc.Type);
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = backBuffers[bbIndex]->GetCpuHandle();
 
 	// 深度ステンシルビュー用デスクリプタヒープのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = dsvDescHeap->GetCPUDescriptorHandleForHeapStart();
@@ -126,11 +130,10 @@ void RenderBase::CreateSrv(Texture& texture, const D3D12_RESOURCE_DESC& textureR
 	D3D12_CPU_DESCRIPTOR_HANDLE srvCpuHandle = srvDescHeap->GetCPUDescriptorHandleForHeapStart();
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvDescHeap->GetGPUDescriptorHandleForHeapStart();
 
-	UINT descriptorSize = RenderBase::GetInstance()->GetDevice()->
-		GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	UINT descriptorSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-	srvCpuHandle.ptr += descriptorSize * incrementIndex;
-	srvGpuHandle.ptr += descriptorSize * incrementIndex;
+	srvCpuHandle.ptr += descriptorSize * srvIncrementIndex;
+	srvGpuHandle.ptr += descriptorSize * srvIncrementIndex;
 
 	texture.SetCpuHandle(srvCpuHandle);
 	texture.SetGpuHandle(srvGpuHandle);
@@ -143,10 +146,29 @@ void RenderBase::CreateSrv(Texture& texture, const D3D12_RESOURCE_DESC& textureR
 	srvDesc.Texture2D.MipLevels = textureResourceDesc.MipLevels;
 
 	// ハンドルの指す位置にシェーダーリソースビュー作成
-	RenderBase::GetInstance()->GetDevice()->
-		CreateShaderResourceView(texture.buffer.Get(), &srvDesc, srvCpuHandle);
+	device->CreateShaderResourceView(texture.buffer.Get(), &srvDesc, srvCpuHandle);
 
-	incrementIndex++;
+	srvIncrementIndex++;
+}
+void RenderBase::CreateRenderTargetView(
+	RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC& rtvDesc)
+{
+	// RTVヒープの先頭ハンドルを取得
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvCpuHandle = rtvDescHeap->GetCPUDescriptorHandleForHeapStart();
+	D3D12_GPU_DESCRIPTOR_HANDLE rtvGpuHandle = rtvDescHeap->GetGPUDescriptorHandleForHeapStart();
+
+	UINT descriptorSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+
+	rtvCpuHandle.ptr += descriptorSize * rtvIncrementIndex;
+	rtvGpuHandle.ptr += descriptorSize * rtvIncrementIndex;
+
+	renderTarget.SetCpuHandle(rtvCpuHandle);
+	renderTarget.SetGpuHandle(rtvGpuHandle);
+
+	// ハンドルの指す位置にRTV作成
+	device->CreateRenderTargetView(renderTarget.buffer.Get(), &rtvDesc, rtvCpuHandle);
+
+	rtvIncrementIndex++;
 }
 
 // 各初期化
@@ -212,6 +234,36 @@ void RenderBase::DeviceInit()
 	}
 
 }
+void RenderBase::DescriptorHeapInit()
+{
+	HRESULT result;
+
+	// SRVの最大個数
+	const size_t maxSRVCount = 2056;
+
+	// デスクリプタヒープの設定
+	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
+	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;	// シェーダから見えるように
+	srvHeapDesc.NumDescriptors = maxSRVCount;
+
+	// 設定を元にSRV用デスクリプタヒープを生成
+	result = device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvDescHeap));
+	assert(SUCCEEDED(result));
+
+	// --- RTV ------------------------------------------------------ //
+
+	// RTVの最大個数
+	const size_t maxRTVCount = 2;
+
+	// デスクリプタヒープの設定
+	rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;		// レンダーターゲットビュー
+	rtvHeapDesc.NumDescriptors = maxRTVCount; // 裏表の２つ
+
+	// デスクリプタヒープの生成
+	result = device->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(&rtvDescHeap));
+	assert(SUCCEEDED(result));
+}
 void RenderBase::CommandInit()
 {
 
@@ -245,6 +297,9 @@ void RenderBase::SwapChainInit()
 {
 	HRESULT result;
 
+	backBuffers[0] = std::move(std::make_unique<RenderTarget>());
+	backBuffers[1] = std::move(std::make_unique<RenderTarget>());
+
 	// リソースの設定
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 	swapChainDesc.Width = (UINT)renderWindow->GetWindowSize().x;
@@ -270,34 +325,21 @@ void RenderBase::SwapChainInit()
 	swapChain1.As(&swapChain);
 	assert(SUCCEEDED(result));
 
-	// デスクリプタヒープの設定
-	rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;		// レンダーターゲットビュー
-	rtvHeapDesc.NumDescriptors = swapChainDesc.BufferCount; // 裏表の２つ
-
-	// デスクリプタヒープの生成
-	device->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(&rtvDescHeap));
-
-	// バックバッファ
-	backBuffers.resize(swapChainDesc.BufferCount);
+	// レンダーターゲットビューの設定
+	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
+	// シェーダーの計算結果をSRGBに変換して書き込む
+	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
 	// スワップチェーンの全てのバッファについて処理する
 	for (size_t i = 0; i < backBuffers.size(); i++)
 	{
 		// スワップチェーンからバッファを取得
-		swapChain->GetBuffer((UINT)i, IID_PPV_ARGS(&backBuffers[i]));
-		// デスクリプタヒープのハンドルを取得
-		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = rtvDescHeap->GetCPUDescriptorHandleForHeapStart();
-		// 裏か表かでアドレスがずれる
-		rtvHandle.ptr += i * device.Get()->GetDescriptorHandleIncrementSize(rtvHeapDesc.Type);
-		// レンダーターゲットビューの設定
-		D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
-		// シェーダーの計算結果をSRGBに変換して書き込む
-		rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-		rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
-		// レンダーターゲットビューの生成
-		device->CreateRenderTargetView(backBuffers[i].Get(), &rtvDesc, rtvHandle);
-	}
+		swapChain->GetBuffer((UINT)i, IID_PPV_ARGS(&backBuffers[i]->buffer));
 
+		// レンダーターゲットビューの生成
+		CreateRenderTargetView(*backBuffers[i], rtvDesc);
+	}
 }
 void RenderBase::FenceInit()
 {
@@ -360,25 +402,6 @@ void RenderBase::DepthBufferInit()
 		&dsvViewDesc,
 		dsvDescHeap->GetCPUDescriptorHandleForHeapStart()
 	);
-
-}
-void RenderBase::SrvInit()
-{
-
-	HRESULT result;
-
-	// SRVの最大個数
-	const size_t kMaxSRVCount = 2056;
-
-	// デスクリプタヒープの設定
-	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
-	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;	// シェーダから見えるように
-	srvHeapDesc.NumDescriptors = kMaxSRVCount;
-
-	// 設定を元にSRV用デスクリプタヒープを生成
-	result = device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvDescHeap));
-	assert(SUCCEEDED(result));
 
 }
 void RenderBase::ShaderCompilerInit()

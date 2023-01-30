@@ -267,6 +267,9 @@
     <ClCompile Include="NewEngine\Light\Fog.cpp">
       <Filter>NewEngine\Source\Light</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Render\RenderTarget.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -433,6 +436,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Light\Fog.h">
       <Filter>NewEngine\Header\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\RenderTarget.h">
+      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
