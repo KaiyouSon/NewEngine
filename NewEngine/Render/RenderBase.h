@@ -6,7 +6,8 @@
 #include "Texture.h"
 #include "RenderTarget.h"
 #include "DepthBuffer.h"
-#include "Util.h"
+#include "Viewport.h"
+#include "ScissorRectangle.h"
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <vector>
@@ -52,14 +53,14 @@ public:
 	inline RootSignature* GetObject3DRootSignature() const { return object3DRootSignature.get(); }
 	inline RootSignature* GetSpriteRootSignature() const { return spriteRootSignature.get(); }
 
-	inline GraphicsPipeline* GetBasicPipeline()const { return basicPipeline.get(); }
-	inline GraphicsPipeline* GetSpritePipeline()const { return spritePipeline.get(); }
-	inline GraphicsPipeline* GetLinePipeline()const { return linePipeline.get(); }
-	inline GraphicsPipeline* GetRenderTexturePipeline()const { return renderTexturePipeline.get(); }
-	inline GraphicsPipeline* GetObject3DPipeline()const { return object3DPipeline.get(); }
-	inline GraphicsPipeline* GetSilhouettePipeline()const { return silhouettePipeline.get(); }
-	inline GraphicsPipeline* GetOutLinePipeline()const { return outlinePipeline.get(); }
-	inline GraphicsPipeline* GetToonRenderPipeline()const { return toonRenderPipeline.get(); }
+	inline GraphicsPipeline* GetBasicPipeline() const { return basicPipeline.get(); }
+	inline GraphicsPipeline* GetSpritePipeline() const { return spritePipeline.get(); }
+	inline GraphicsPipeline* GetLinePipeline() const { return linePipeline.get(); }
+	inline GraphicsPipeline* GetRenderTexturePipeline() const { return renderTexturePipeline.get(); }
+	inline GraphicsPipeline* GetObject3DPipeline() const { return object3DPipeline.get(); }
+	inline GraphicsPipeline* GetSilhouettePipeline() const { return silhouettePipeline.get(); }
+	inline GraphicsPipeline* GetOutLinePipeline() const { return outlinePipeline.get(); }
+	inline GraphicsPipeline* GetToonRenderPipeline() const { return toonRenderPipeline.get(); }
 
 	inline Viewport* GetViewport() const { return viewport.get(); }
 private:
@@ -121,10 +122,10 @@ private:
 
 	// 描画処理関連
 	D3D12_RESOURCE_BARRIER barrierDesc{};	// リソースバリア
+	std::unique_ptr<Viewport> viewport;
+	std::unique_ptr<ScissorRectangle> scissorRectangle;
 
 	RenderWindow* renderWindow;
-
-	std::unique_ptr<Viewport> viewport;
 
 private:
 	RenderBase() {}

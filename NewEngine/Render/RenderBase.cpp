@@ -10,17 +10,14 @@
 #pragma comment(lib,"dxgi.lib")
 #pragma comment(lib,"d3dcompiler.lib")
 using namespace Microsoft::WRL;
-using namespace std;
-
-unique_ptr<ScissorRectangle> scissorRectangle = move(make_unique<ScissorRectangle>());
-unique_ptr<Viewport> viewport = move(make_unique<Viewport>());
 
 float RenderBase::clearColor[4] = { 0.1f,0.25f,0.5f,1.0f };
 
 void RenderBase::Init()
 {
 	renderWindow = RenderWindow::GetInstance().get();
-	viewport = move(make_unique<Viewport>());
+	viewport = std::move(std::make_unique<Viewport>());
+	scissorRectangle = std::move(std::make_unique<ScissorRectangle>());
 
 	rtvIncrementIndex = 0;
 	srvIncrementIndex = 1;	// ImGuiで一個使っているから、１からずらす
@@ -438,14 +435,6 @@ void RenderBase::ShaderCompilerInit()
 {
 	std::string path = "NewEngine/Shader/";
 
-	// 3Dオブジェクトのシェーダー
-	//basicShader = std::move(std::make_unique<ShaderObject>());
-	//basicShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	//basicShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	//basicShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	//basicShader->CompileVertexShader(path + "BasicVS.hlsl", "main");
-	//basicShader->CompilePixelShader(path + "BasicPS.hlsl", "main");
-
 	// スプライト用シェーダー
 	spriteShader = std::move(std::make_unique<ShaderObject>());
 	spriteShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -495,12 +484,12 @@ void RenderBase::ShaderCompilerInit()
 void RenderBase::RootSignatureInit()
 {
 	// 3Dオブジェクト用
-	object3DRootSignature = std::move(make_unique<RootSignature>());
+	object3DRootSignature = std::move(std::make_unique<RootSignature>());
 	object3DRootSignature->AddConstantBufferViewToRootRrameter(7);
 	object3DRootSignature->Create();
 
 	// スプライト用
-	spriteRootSignature = std::move(make_unique<RootSignature>());
+	spriteRootSignature = std::move(std::make_unique<RootSignature>());
 	spriteRootSignature->AddConstantBufferViewToRootRrameter(2);
 	spriteRootSignature->Create();
 }
