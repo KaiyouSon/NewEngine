@@ -38,7 +38,7 @@ void RootSignature::Create()
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
 	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 	rootSignatureDesc.pParameters = rootParameters.data();	// ルートパラメータの先頭アドレス
-	rootSignatureDesc.NumParameters = rootParameters.size();		// ルートパラメータ数
+	rootSignatureDesc.NumParameters = (UINT)rootParameters.size();		// ルートパラメータ数
 	rootSignatureDesc.pStaticSamplers = &samplerDesc;
 	rootSignatureDesc.NumStaticSamplers = 1;
 
@@ -67,7 +67,7 @@ void RootSignature::AddConstantBufferViewToRootRrameter(const size_t& number)
 	{
 		D3D12_ROOT_PARAMETER rootParam;
 		rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
-		rootParam.Descriptor.ShaderRegister = rootParameters.size();	// 定数バッファ番号
+		rootParam.Descriptor.ShaderRegister = (UINT)rootParameters.size();	// 定数バッファ番号
 		rootParam.Descriptor.RegisterSpace = 0;						// デフォルト値
 		rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
 

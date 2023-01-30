@@ -1,6 +1,9 @@
 #include "Texture.h"
 #include "RenderBase.h"
+#pragma push
+#pragma warning(disable:4023)
 #include <DirectXTex.h>
+#pragma pop
 using namespace DirectX;
 
 Texture::Texture() : result(HRESULT()), isMaterial(false)
