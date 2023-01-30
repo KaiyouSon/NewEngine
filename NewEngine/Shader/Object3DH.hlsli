@@ -58,7 +58,6 @@ cbuffer ConstantBufferDataLightManager : register(b3)
 	DirectionalLight directionalLights[DirectionalLightNum];
 	PointLight pointLights[PointLightNum];
 	SpotLight spotLights[spotLightNum];
-
 };
 
 // --- ÉtÉHÉO ---------------------- //

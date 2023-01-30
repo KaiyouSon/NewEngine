@@ -57,7 +57,7 @@ void OutLineObj::Draw()
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		0, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
+		1, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(unsigned short)obj->model.mesh.GetIndexSize(), 1, 0, 0, 0);

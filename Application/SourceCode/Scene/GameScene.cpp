@@ -14,83 +14,36 @@ void GameScene::Init()
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
-	LightManager::isPointLighting = false;
-	LightManager::isSpotLighting = false;
-
-	LightManager::GetInstance()->circleShadow.isActive = true;
-	LightManager::GetInstance()->circleShadow.vec = { 0,-1,0 };
-	LightManager::GetInstance()->circleShadow.atten = { 0.5f,0.6f,0.0f };
-	LightManager::GetInstance()->circleShadow.factorAngleCos = { 0.0f,0.5f };
-
 	ModelManager::LoadModel("SkyDome", "SkyDome");
 	ModelManager::LoadModel("Ground", "Ground");
-	ModelManager::LoadModel("Boss", "Boss", true);
+	ModelManager::LoadModel("AttackEnemy", "AttackEnemy", true);
 	ModelManager::LoadModel("Sphere", "Sphere", true);
 	ModelManager::LoadModel("Cube", "Cube", true);
 	ModelManager::LoadModel("player", "Player", true);
 
 	TextureManager::LoadTexture("pic.png", "pic");
-
-	skyDomeObj.model = *ModelManager::GetModel("SkyDome");
-	groundObj.model = *ModelManager::GetModel("Ground");
-	groundObj.pos.y = -2;
-
-	obj.model = *ModelManager::GetModel("Boss");
-	obj.texture = *TextureManager::GetTexture("pic");
-	obj.pos.z = 5.f;
-
-	obj2.model = *ModelManager::GetModel("Player");
-	//obj2.color = Color::red;
-
-	spr.texture = *TextureManager::GetTexture("pic");
-	spr.pos = 256;
-	spr.scale = 0.25f;
-	spr.anchorPoint = 0.5f;
-
-	silhouetteObj.obj = &obj;
-	outlineObj.obj = &obj2;
+	isCG3 = true;
+	isAL4 = false;
 
 	CollisionInit();
+	CG3Init();
 }
 void GameScene::Update()
 {
-	//obj.rot.y += Radian(2);
-	//obj2.rot.y += Radian(2);
-
-	spr.SetTextureRect(408, 816);
-
-	//obj.Update();
-	//obj2.Update();
-	spr.Update();
-
-	//obj2.rot.y += Radian(1);
-
-	outlineObj.Update();
-	silhouetteObj.Update();
-
-	skyDomeObj.Update();
-	groundObj.Update();
-
-	LightManager::GetInstance()->circleShadow.pos = obj2.pos;
+	if (isCG3 == true)
+	{
+		CG3Update();
+	}
+	if (isAL4 == true)
+	{
+		CollisionUpdate();
+	}
 
 	Camera::DebugCameraUpdate();
-	LightManager::GetInstance()->Update();
-
-	CollisionUpdate();
-
-	Quaternion q3 = Quaternion::MakeAxisAngle({ 0.71f,0.71f,0.0f }, 0.3f);
-	Quaternion q4 = -q3;
-
-	Quaternion i0 = Quaternion::Slerp(q3, q4, 0.0f);
-	Quaternion i1 = Quaternion::Slerp(q3, q4, 0.3f);
-	Quaternion i2 = Quaternion::Slerp(q3, q4, 0.5f);
-	Quaternion i3 = Quaternion::Slerp(q3, q4, 0.7f);
-	Quaternion i4 = Quaternion::Slerp(q3, q4, 1.0f);
-
-	if (Key::GetKey(DIK_SPACE))
-	{
-		SceneManager::ChangeScene<TitleScene>();
-	}
+	//if (Key::GetKey(DIK_SPACE))
+	//{
+	//	SceneManager::ChangeScene<TitleScene>();
+	//}
 }
 
 void GameScene::DrawBackSprite()
@@ -98,35 +51,33 @@ void GameScene::DrawBackSprite()
 }
 void GameScene::DrawModel()
 {
-	CollisionDrawModel();
-
-	//outlineObj.Draw();
-	//groundObj.Draw();
-	skyDomeObj.Draw();
-	//silhouetteObj.Draw();
+	if (isCG3 == true)
+	{
+		CG3DrawModel();
+	}
+	if (isAL4 == true)
+	{
+		CollisionDrawModel();
+	}
 }
 void GameScene::DrawFrontSprite()
 {
-	spr.Draw();
 }
 void GameScene::DrawDebugGui()
 {
-	DebugGui();
-	DirectionalLightDrawGui();
-	PointLightDrawGui();
-	SpotLightDrawGui();
-	FogDrawGui();
-	CollisionDrawGui();
-}
-
-void GameScene::DebugGui()
-{
-	GuiManager::BeginWindow("Debug");
-
-	GuiManager::DrawSlider3("Sphere pos", obj.pos, 0.01f);
-	GuiManager::DrawSlider3("Cube pos", obj2.pos, 0.01f);
-
+	GuiManager::BeginWindow("Main");
+	GuiManager::DrawCheckBox("CG3", &isCG3);
+	GuiManager::DrawTab();
+	GuiManager::DrawCheckBox("AL4", &isAL4);
 	GuiManager::EndWindow();
+
+	GuiManager::BeginWindow("Camera Option");
+	GuiManager::DrawSlider3("Camera Pos", Camera::current.pos, 0.01f);
+	GuiManager::DrawSlider3("Camera Rot", Camera::current.rot, 0.01f);
+	GuiManager::EndWindow();
+
+	CG3DrawGui();
+	CollisionDrawGui();
 }
 
 void GameScene::CollisionInit()
@@ -312,10 +263,71 @@ void GameScene::CollisionDrawGui()
 	}
 
 	GuiManager::EndWindow();
+}
 
-	GuiManager::BeginWindow("Camera Option");
-	GuiManager::DrawSlider3("Camera Pos", Camera::current.pos, 0.01f);
-	GuiManager::DrawSlider3("Camera Rot", Camera::current.rot, 0.01f);
+void GameScene::CG3Init()
+{
+	LightManager::isPointLighting = true;
+	LightManager::isSpotLighting = true;
+
+	LightManager::GetInstance()->directionalLights[0].isActive = true;
+	LightManager::GetInstance()->circleShadow.isActive = true;
+	LightManager::GetInstance()->circleShadow.vec = Vec3::down;
+	LightManager::GetInstance()->circleShadow.atten = { 0.5f,0.6f,0.0f };
+	LightManager::GetInstance()->circleShadow.factorAngleCos = { 0.0f,0.5f };
+
+	skyDomeObj.model = *ModelManager::GetModel("SkyDome");
+	groundObj.model = *ModelManager::GetModel("Ground");
+	groundObj.pos.y = -1.f;
+
+	obj.model = *ModelManager::GetModel("AttackEnemy");
+	obj.pos = { 1.5f,0.f,5.f };
+
+	obj2.model = *ModelManager::GetModel("Player");
+	obj2.pos.y = 1.5f;
+
+	obj3.model = *ModelManager::GetModel("Sphere");
+	obj3.pos = { -3.f,2.f,0.f };
+
+	silhouetteObj.obj = &obj;
+	outlineObj.obj = &obj2;
+}
+void GameScene::CG3Update()
+{
+	obj3.rot.y += Radian(1);
+
+	obj3.Update();
+	outlineObj.Update();
+	silhouetteObj.Update();
+	skyDomeObj.Update();
+	groundObj.Update();
+
+	LightManager::GetInstance()->circleShadow.pos = obj3.pos;
+	LightManager::GetInstance()->Update();
+}
+void GameScene::CG3DrawModel()
+{
+	obj3.Draw();
+	outlineObj.Draw();
+	groundObj.Draw();
+	skyDomeObj.Draw();
+	silhouetteObj.Draw();
+}
+void GameScene::CG3DrawGui()
+{
+	CG3DrawModelGui();
+	DirectionalLightDrawGui();
+	PointLightDrawGui();
+	SpotLightDrawGui();
+	CircleDrawGui();
+	FogDrawGui();
+}
+void GameScene::CG3DrawModelGui()
+{
+	GuiManager::BeginWindow("Model");
+	GuiManager::DrawSlider3("Enemy pos", obj.pos, 0.01f);
+	GuiManager::DrawSlider3("Player pos", obj2.pos, 0.01f);
+	GuiManager::DrawSlider3("Sphere pos", obj3.pos, 0.01f);
 	GuiManager::EndWindow();
 }
 
@@ -381,6 +393,16 @@ void GameScene::SpotLightDrawGui()
 
 	GuiManager::EndWindow();
 }
+void GameScene::CircleDrawGui()
+{
+	GuiManager::BeginWindow("CircleShadow");
+	GuiManager::DrawCheckBox("CircleShadow isActive", &LightManager::GetInstance()->circleShadow.isActive);
+	GuiManager::DrawSlider3("CircleShadow vec", LightManager::GetInstance()->circleShadow.vec);
+	GuiManager::DrawSlider3("CircleShadow atten", LightManager::GetInstance()->circleShadow.atten);
+	GuiManager::DrawSlider2("CircleShadow factorAngleCos", LightManager::GetInstance()->circleShadow.factorAngleCos);
+	GuiManager::DrawSlider1("CircleShadow disCasterLight", LightManager::GetInstance()->circleShadow.disCasterLight);
+	GuiManager::EndWindow();
+}
 void GameScene::FogDrawGui()
 {
 	GuiManager::BeginWindow("Fog");
@@ -424,3 +446,4 @@ void GameScene::QuaternionDrawGui()
 	GuiManager::EndWindow();
 
 }
+

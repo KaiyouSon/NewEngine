@@ -8,7 +8,6 @@ LightManager::LightManager() :
 {
 	constantBufferLightManager->Init();
 }
-
 LightManager::~LightManager()
 {
 	delete constantBufferLightManager;
@@ -17,7 +16,6 @@ LightManager::~LightManager()
 void LightManager::Init()
 {
 }
-
 void LightManager::Update()
 {
 	for (int i = 0; i < directionalLightNum; i++)
@@ -98,7 +96,6 @@ void LightManager::Update()
 	fog.Update();
 	circleShadow.Update();
 }
-
 void LightManager::Draw()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
