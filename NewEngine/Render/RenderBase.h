@@ -88,7 +88,6 @@ private:
 	std::unique_ptr<DepthBuffer> depthBuffer;
 
 	// ティスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> rtvSwapChainDescHeap;	// スワップチェンのrtv用デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> rtvDescHeap;		// rtv用デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> srvDescHeap;		// srv用デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> dsvDescHeap;		// dsv用デスクリプタヒープ

@@ -161,7 +161,8 @@ float4 main(VSOutput input) : SV_TARGET
 
 		// フォグの色
         float4 tFogColor = fogColor * rate;
-        return shaderColor * texColor * color + tFogColor;
+        float4 outPutColor = shaderColor * texColor * color;
+        return fogColor * rate + outPutColor * (1 - rate);
     }
     else
     {

@@ -273,7 +273,7 @@ void RenderBase::DescriptorHeapInit()
 
 
 	// --- RTV ------------------------------------------------------ //
-	const size_t maxRTVCount = 1;	// RTVの最大個数
+	const size_t maxRTVCount = 64;	// RTVの最大個数
 
 	// RTV用デスクリプタヒープの設定
 	rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;		// レンダーターゲットビュー
@@ -295,19 +295,6 @@ void RenderBase::DescriptorHeapInit()
 	// DSV用デスクリプタヒープの生成
 	result = device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvDescHeap));
 	assert(SUCCEEDED(result));
-
-	// --- RTV（ SwapChian ） --------------------------------------- //
-	const size_t maxSwapChainRTVCount = 2;	// RTVの最大個数
-
-	// RTV用デスクリプタヒープの設定
-	D3D12_DESCRIPTOR_HEAP_DESC rtvSawapChainDesc{};
-	rtvSawapChainDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;	// レンダーターゲットビュー
-	rtvSawapChainDesc.NumDescriptors = maxSwapChainRTVCount;	// 裏表の２つ
-
-	// RTV用デスクリプタヒープの生成
-	result = device->CreateDescriptorHeap(&rtvSawapChainDesc, IID_PPV_ARGS(&rtvSwapChainDescHeap));
-	assert(SUCCEEDED(result));
-
 }
 void RenderBase::CommandInit()
 {
@@ -382,12 +369,14 @@ void RenderBase::SwapChainInit()
 		// スワップチェーンからバッファを取得
 		swapChain->GetBuffer((UINT)i, IID_PPV_ARGS(backBuffers[i]->GetBufferAddress()));
 
-		D3D12_CPU_DESCRIPTOR_HANDLE rtvCpuHandle = rtvSwapChainDescHeap->GetCPUDescriptorHandleForHeapStart();
-		rtvCpuHandle.ptr += i * device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+		CreateRTV(*backBuffers[i], rtvDesc);
 
-		backBuffers[i]->SetCpuHandle(rtvCpuHandle);
+		//D3D12_CPU_DESCRIPTOR_HANDLE rtvCpuHandle = rtvSwapChainDescHeap->GetCPUDescriptorHandleForHeapStart();
+		//rtvCpuHandle.ptr += i * device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
-		device->CreateRenderTargetView(backBuffers[i]->GetBuffer(), &rtvDesc, rtvCpuHandle);
+		//backBuffers[i]->SetCpuHandle(rtvCpuHandle);
+
+		//device->CreateRenderTargetView(backBuffers[i]->GetBuffer(), &rtvDesc, rtvCpuHandle);
 	}
 }
 void RenderBase::FenceInit()
@@ -406,47 +395,6 @@ void RenderBase::DepthBufferInit()
 
 	depthBuffer = std::move(std::make_unique<DepthBuffer>());
 	depthBuffer->Create();
-
-	//// リソースの設定
-	//D3D12_RESOURCE_DESC depthResourceDesc{};
-	//depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	//depthResourceDesc.Width = (UINT)renderWindow->GetWindowSize().x;		// 幅
-	//depthResourceDesc.Height = (UINT)renderWindow->GetWindowSize().y; // 高さ
-	//depthResourceDesc.DepthOrArraySize = 1;
-	//depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;	// 深度値デフォルト
-	//depthResourceDesc.SampleDesc.Count = 1;
-	//depthResourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
-
-	//// 深度用ヒーププロパティ
-	//D3D12_HEAP_PROPERTIES depthHeapProp{};
-	//depthHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
-	//// 深度値のクリア設定
-	//D3D12_CLEAR_VALUE depthClearValue{};
-	//depthClearValue.DepthStencil.Depth = 1.0f;	// 深度値1.0f(最大値)でクリア
-	//depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	// 深度値フォーマット
-
-	//// リソースの生成
-	//result = device->CreateCommittedResource
-	//(
-	//	&depthHeapProp,
-	//	D3D12_HEAP_FLAG_NONE,
-	//	&depthResourceDesc,
-	//	D3D12_RESOURCE_STATE_DEPTH_WRITE, // 深度値書き込みに使用
-	//	&depthClearValue,
-	//	IID_PPV_ARGS(&depthBuffer)
-	//);
-	//assert(SUCCEEDED(result));
-
-	//// 深度ビュー作成
-	//D3D12_DEPTH_STENCIL_VIEW_DESC dsvViewDesc = {};
-	//dsvViewDesc.Format = DXGI_FORMAT_D32_FLOAT;	// 深度値フォーマット
-	//dsvViewDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
-	//device->CreateDepthStencilView
-	//(
-	//	depthBuffer.Get(),
-	//	&dsvViewDesc,
-	//	dsvDescHeap->GetCPUDescriptorHandleForHeapStart()
-	//);
 }
 void RenderBase::ShaderCompilerInit()
 {
