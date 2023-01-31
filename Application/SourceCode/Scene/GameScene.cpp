@@ -56,7 +56,6 @@ void GameScene::DrawRenderTexture()
 	//CG3DrawModel();
 	//renderTexture.PostDrawScene();
 }
-
 void GameScene::DrawBackSprite()
 {
 }
@@ -64,7 +63,7 @@ void GameScene::DrawModel()
 {
 	if (isCG3 == true)
 	{
-
+		CG3DrawModel();
 	}
 	if (isAL4 == true)
 	{
