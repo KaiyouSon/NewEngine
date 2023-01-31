@@ -52,9 +52,9 @@ void GameScene::Update()
 
 void GameScene::DrawRenderTexture()
 {
-	renderTexture.PreDrawScene();
-	CG3DrawModel();
-	renderTexture.PostDrawScene();
+	//renderTexture.PreDrawScene();
+	//CG3DrawModel();
+	//renderTexture.PostDrawScene();
 }
 
 void GameScene::DrawBackSprite()
@@ -73,7 +73,7 @@ void GameScene::DrawModel()
 }
 void GameScene::DrawFrontSprite()
 {
-	renderTexture.Draw();
+	//renderTexture.Draw();
 }
 void GameScene::DrawDebugGui()
 {
