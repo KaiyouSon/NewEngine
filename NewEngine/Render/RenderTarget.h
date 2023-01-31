@@ -7,7 +7,6 @@ class RenderTarget
 private:
 	D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle = D3D12_CPU_DESCRIPTOR_HANDLE(); //RTVのハンドル(CPU側)
 	D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle = D3D12_GPU_DESCRIPTOR_HANDLE(); //RTVのハンドル(GPU側)
-public:
 	Microsoft::WRL::ComPtr<ID3D12Resource> buffer; // レンダーターゲットのリソース
 
 public: // セッター
@@ -17,5 +16,7 @@ public: // セッター
 public: // ゲッター
 	inline D3D12_CPU_DESCRIPTOR_HANDLE GetCpuHandle() { return cpuHandle; }
 	inline D3D12_GPU_DESCRIPTOR_HANDLE GetGpuHandle() { return gpuHandle; }
+	inline ID3D12Resource* GetBuffer() { return buffer.Get(); }
+	inline ID3D12Resource** GetBufferAddress() { return buffer.GetAddressOf(); }
 };
 

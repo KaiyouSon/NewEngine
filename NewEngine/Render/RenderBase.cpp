@@ -41,7 +41,7 @@ void RenderBase::PreDraw()
 	// バックバッファの番号を取得（2つなので0番か1番）
 	UINT bbIndex = swapChain->GetCurrentBackBufferIndex();
 	// １．リソースバリアで書き込み可能に変更
-	barrierDesc.Transition.pResource = backBuffers[bbIndex]->buffer.Get();	// バックバッファを指定
+	barrierDesc.Transition.pResource = backBuffers[bbIndex]->GetBuffer();	// バックバッファを指定
 	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;	// 表示状態から
 	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画状態へ
 	commandList->ResourceBarrier(1, &barrierDesc);
@@ -163,7 +163,7 @@ void RenderBase::CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET
 	renderTarget.SetGpuHandle(rtvGpuHandle);
 
 	// ハンドルの指す位置にRTV作成
-	device->CreateRenderTargetView(renderTarget.buffer.Get(), &rtvDesc, rtvCpuHandle);
+	device->CreateRenderTargetView(renderTarget.GetBuffer(), &rtvDesc, rtvCpuHandle);
 
 	rtvIncrementIndex++;
 }
@@ -273,7 +273,7 @@ void RenderBase::DescriptorHeapInit()
 
 
 	// --- RTV ------------------------------------------------------ //
-	const size_t maxRTVCount = 2;	// RTVの最大個数
+	const size_t maxRTVCount = 1;	// RTVの最大個数
 
 	// RTV用デスクリプタヒープの設定
 	rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;		// レンダーターゲットビュー
@@ -295,6 +295,19 @@ void RenderBase::DescriptorHeapInit()
 	// DSV用デスクリプタヒープの生成
 	result = device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvDescHeap));
 	assert(SUCCEEDED(result));
+
+	// --- RTV（ SwapChian ） --------------------------------------- //
+	const size_t maxSwapChainRTVCount = 2;	// RTVの最大個数
+
+	// RTV用デスクリプタヒープの設定
+	D3D12_DESCRIPTOR_HEAP_DESC rtvSawapChainDesc{};
+	rtvSawapChainDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;	// レンダーターゲットビュー
+	rtvSawapChainDesc.NumDescriptors = maxSwapChainRTVCount;	// 裏表の２つ
+
+	// RTV用デスクリプタヒープの生成
+	result = device->CreateDescriptorHeap(&rtvSawapChainDesc, IID_PPV_ARGS(&rtvSwapChainDescHeap));
+	assert(SUCCEEDED(result));
+
 }
 void RenderBase::CommandInit()
 {
@@ -367,10 +380,14 @@ void RenderBase::SwapChainInit()
 	for (size_t i = 0; i < backBuffers.size(); i++)
 	{
 		// スワップチェーンからバッファを取得
-		swapChain->GetBuffer((UINT)i, IID_PPV_ARGS(&backBuffers[i]->buffer));
+		swapChain->GetBuffer((UINT)i, IID_PPV_ARGS(backBuffers[i]->GetBufferAddress()));
 
-		// レンダーターゲットビューの生成
-		CreateRTV(*backBuffers[i], rtvDesc);
+		D3D12_CPU_DESCRIPTOR_HANDLE rtvCpuHandle = rtvSwapChainDescHeap->GetCPUDescriptorHandleForHeapStart();
+		rtvCpuHandle.ptr += i * device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+
+		backBuffers[i]->SetCpuHandle(rtvCpuHandle);
+
+		device->CreateRenderTargetView(backBuffers[i]->GetBuffer(), &rtvDesc, rtvCpuHandle);
 	}
 }
 void RenderBase::FenceInit()
