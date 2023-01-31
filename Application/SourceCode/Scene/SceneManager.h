@@ -17,6 +17,7 @@ public:
 public:
 	void Init();
 	void Update();
+	void DrawRenderTexture();
 	void DrawBackSprite();
 	void DrawModel();
 	void DrawFrontSprite();

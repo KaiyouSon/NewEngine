@@ -19,6 +19,7 @@ public: // セッター
 
 public: // ゲッター
 	inline ID3D12Resource* GetBuffer() { return buffer.Get(); }
+	inline ID3D12Resource** GetBufferAddress() { return buffer.GetAddressOf(); }
 	inline D3D12_CPU_DESCRIPTOR_HANDLE GetCpuHandle() { return cpuHandle; }
 	inline D3D12_GPU_DESCRIPTOR_HANDLE GetGpuHandle() { return gpuHandle; }
 };

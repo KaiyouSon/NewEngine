@@ -1,11 +1,13 @@
 #pragma once
 #include "NewEngine.h"
+#include "RenderTexture.h"
 
 class GameScene : public IScene
 {
 private:
 	bool isCG3;
 	bool isAL4;
+	RenderTexture renderTexture;
 
 private:
 	// “–‚½‚è”»’èŠÖ˜A
@@ -54,6 +56,7 @@ public:
 	~GameScene();
 	void Init() override;
 	void Update() override;
+	void DrawRenderTexture() override;
 	void DrawBackSprite() override;
 	void DrawModel() override;
 	void DrawFrontSprite() override;

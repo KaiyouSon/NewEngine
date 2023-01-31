@@ -13,6 +13,10 @@ void TitleScene::Update()
 	obj.Update();
 }
 
+void TitleScene::DrawRenderTexture()
+{
+}
+
 void TitleScene::DrawBackSprite()
 {
 }

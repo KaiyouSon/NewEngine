@@ -28,6 +28,12 @@ void SceneManager::Update()
 	Camera::current.Update();
 }
 
+void SceneManager::DrawRenderTexture()
+{
+	RenderBase::GetInstance()->SetObject3DDrawCommand();
+	currentScene->DrawRenderTexture();
+}
+
 void SceneManager::DrawBackSprite()
 {
 	Sprite::SetBlendMode(BlendMode::Alpha);

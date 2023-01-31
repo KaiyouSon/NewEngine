@@ -25,11 +25,15 @@ void GameScene::Init()
 	isCG3 = true;
 	isAL4 = false;
 
+	//renderTexture.pos = GetWindowHalfSize();
+
 	CollisionInit();
 	CG3Init();
 }
 void GameScene::Update()
 {
+	renderTexture.Update();
+
 	if (isCG3 == true)
 	{
 		CG3Update();
@@ -46,6 +50,13 @@ void GameScene::Update()
 	//}
 }
 
+void GameScene::DrawRenderTexture()
+{
+	renderTexture.PreDrawScene();
+	CG3DrawModel();
+	renderTexture.PostDrawScene();
+}
+
 void GameScene::DrawBackSprite()
 {
 }
@@ -53,7 +64,7 @@ void GameScene::DrawModel()
 {
 	if (isCG3 == true)
 	{
-		CG3DrawModel();
+
 	}
 	if (isAL4 == true)
 	{
@@ -62,6 +73,7 @@ void GameScene::DrawModel()
 }
 void GameScene::DrawFrontSprite()
 {
+	renderTexture.Draw();
 }
 void GameScene::DrawDebugGui()
 {

@@ -4,6 +4,7 @@
 #include "ConstantBuffer.h"
 #include "Transform.h"
 #include "Texture.h"
+#include "RenderTarget.h"
 #include "MathUtil.h"
 #include <vector>
 #include <memory>
@@ -17,17 +18,18 @@ private:
 	std::vector<VertexPosUv> vertices;
 	ConstantBuffer<ConstantBufferDataTransform2D>* constantBufferTransform;
 	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
-	Transform transform;
+	RenderTarget renderTarget;
+	DepthBuffer depthBuffer;
 	Texture texture;
+	Transform transform;
 
-	Vec2 size;
-	Microsoft::WRL::ComPtr<ID3D12Resource> depthBuff;
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeapRTV;
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeapDSV;
+
+	static const float clearColor[4];
 
 public:
 	Vec2 pos;
 	Vec2 scale;
+	Vec2 size;
 	float rot;
 	Color color;
 	Vec2 anchorPoint;
@@ -40,8 +42,8 @@ public:
 	void PreDrawScene();
 	void PostDrawScene();
 	void Draw();
+
+	void TransferTexturePos();
 public:
 	void SetCutPosAndSize(const Vec2& cutPos, const Vec2& cutSize);
-
-	Texture* GetRenderTexture();
 };

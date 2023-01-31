@@ -33,9 +33,9 @@ void NewEngineInit()
 	if (SUCCEEDED(RenderBase::GetInstance()->
 		GetDevice()->QueryInterface(IID_PPV_ARGS(&infoQueue))))
 	{
-		//infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);	// やばいエラー一時に止まる
-		//infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);		// エラー時に止まる
-		//infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);	// ワーニング時に止まる
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);	// やばいエラー一時に止まる
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);		// エラー時に止まる
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);	// ワーニング時に止まる
 	}
 
 	//抑制するエラー
@@ -62,6 +62,8 @@ void NewEngineUpda()
 }
 void NewEnginePreDraw()
 {
+	SceneManager::GetInstance()->DrawRenderTexture();
+
 	RenderBase::GetInstance()->PreDraw();
 	GuiManager::GetInstance()->PreDraw();
 }
@@ -117,9 +119,9 @@ void SetWindowSize(const Vec2& size)
 }
 void SetBackGroundColor(const float& r, const float& g, const float& b)
 {
-	RenderBase::GetInstance()->clearColor[0] = r / 255;
-	RenderBase::GetInstance()->clearColor[1] = g / 255;
-	RenderBase::GetInstance()->clearColor[2] = b / 255;
+	RenderBase::clearColor[0] = r / 255;
+	RenderBase::clearColor[1] = g / 255;
+	RenderBase::clearColor[2] = b / 255;
 }
 Vec2 GetWindowSize()
 {

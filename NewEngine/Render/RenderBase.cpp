@@ -148,7 +148,7 @@ void RenderBase::CreateSRV(Texture& texture, const D3D12_RESOURCE_DESC& textureR
 
 	srvIncrementIndex++;
 }
-void RenderBase::CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC& rtvDesc)
+void RenderBase::CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC* rtvDesc)
 {
 	// RTVヒープの先頭ハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvCpuHandle = rtvDescHeap->GetCPUDescriptorHandleForHeapStart();
@@ -163,7 +163,7 @@ void RenderBase::CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET
 	renderTarget.SetGpuHandle(rtvGpuHandle);
 
 	// ハンドルの指す位置にRTV作成
-	device->CreateRenderTargetView(renderTarget.GetBuffer(), &rtvDesc, rtvCpuHandle);
+	device->CreateRenderTargetView(renderTarget.GetBuffer(), rtvDesc, rtvCpuHandle);
 
 	rtvIncrementIndex++;
 }
@@ -173,7 +173,7 @@ void RenderBase::CreateDSV(DepthBuffer& depthBuffer)
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvCpuHandle = dsvDescHeap->GetCPUDescriptorHandleForHeapStart();
 	D3D12_GPU_DESCRIPTOR_HANDLE dsvGpuHandle = dsvDescHeap->GetGPUDescriptorHandleForHeapStart();
 
-	UINT descriptorSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+	UINT descriptorSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 
 	dsvCpuHandle.ptr += descriptorSize * dsvIncrementIndex;
 	dsvGpuHandle.ptr += descriptorSize * dsvIncrementIndex;
@@ -285,7 +285,7 @@ void RenderBase::DescriptorHeapInit()
 
 
 	// --- DSV ------------------------------------------------------ //
-	const size_t maxDSVCount = 1;	// DSVの最大個数
+	const size_t maxDSVCount = 64;	// DSVの最大個数
 
 	// DSV用デスクリプタヒープの設定
 	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
@@ -369,7 +369,7 @@ void RenderBase::SwapChainInit()
 		// スワップチェーンからバッファを取得
 		swapChain->GetBuffer((UINT)i, IID_PPV_ARGS(backBuffers[i]->GetBufferAddress()));
 
-		CreateRTV(*backBuffers[i], rtvDesc);
+		CreateRTV(*backBuffers[i], &rtvDesc);
 
 		//D3D12_CPU_DESCRIPTOR_HANDLE rtvCpuHandle = rtvSwapChainDescHeap->GetCPUDescriptorHandleForHeapStart();
 		//rtvCpuHandle.ptr += i * device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);

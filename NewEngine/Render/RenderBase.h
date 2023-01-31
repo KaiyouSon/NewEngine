@@ -30,7 +30,7 @@ public:
 	void SetObject3DDrawCommand();
 	void SetSpriteDrawCommand();
 	void CreateSRV(Texture& texture, const D3D12_RESOURCE_DESC& textureResourceDesc);
-	void CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC& rtvDesc);
+	void CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC* rtvDesc);
 	void CreateDSV(DepthBuffer& depthBuffer);
 
 private:
