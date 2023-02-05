@@ -13,6 +13,13 @@ struct ConstantBufferDataTransform2D
 	Mat4 mat;	//3D•ÏŠ·s—ñ
 };
 
+struct ConstantBufferDataCircleGauge
+{
+	float startRadian;
+	float endRadian;
+	Vec2 pad;
+};
+
 struct ConstantBufferDataColor
 {
 	Color color;// F

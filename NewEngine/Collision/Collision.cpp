@@ -68,7 +68,10 @@ bool Collision::SphereHitTriangle(const SphereCollider& sphere, const TriangleCo
 		return false;
 	}
 
-	*hitPos = p;
+	if (hitPos != nullptr)
+	{
+		*hitPos = p;
+	}
 
 	return true;
 }

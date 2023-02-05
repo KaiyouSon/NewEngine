@@ -26,7 +26,7 @@ public:
 	static Quaternion Identity();	// 単位クオータニオン
 	static Quaternion Slerp(const Quaternion& q1, const Quaternion& q2, float t);
 	static Quaternion MakeAxisAngle(const Vec3& v, const float& radian);
-
+	static Quaternion DirectionToDirection(const Vec3& v1, const Vec3& v2);
 
 	Quaternion operator-() const;
 

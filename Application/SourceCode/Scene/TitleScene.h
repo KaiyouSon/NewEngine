@@ -1,10 +1,13 @@
 #pragma once
 #include "NewEngine.h"
+#include "CircleGaugeSprite.h"
 
 class TitleScene : public IScene
 {
 private:
 	Object3D obj;
+
+	CircleGaugeSprite spr;
 
 public:
 	void Init() override;

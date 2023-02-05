@@ -177,6 +177,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="NewEngine\Object\2D\CircleGaugeSprite.cpp" />
     <ClCompile Include="NewEngine\Object\2D\RenderTexture.cpp" />
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Texture.cpp" />
@@ -231,6 +232,7 @@
     <ClInclude Include="NewEngine\Math\Vec2.h" />
     <ClInclude Include="NewEngine\Math\Vec3.h" />
     <ClInclude Include="NewEngine\NewEngine.h" />
+    <ClInclude Include="NewEngine\Object\2D\CircleGaugeSprite.h" />
     <ClInclude Include="NewEngine\Object\2D\RenderTexture.h" />
     <ClInclude Include="NewEngine\Object\2D\Sprite.h" />
     <ClInclude Include="NewEngine\Object\Other\Texture.h" />
@@ -271,6 +273,7 @@
     <ClInclude Include="NewEngine\Util\Util.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="NewEngine\Shader\CircleGaugeSpriteH.hlsli" />
     <None Include="NewEngine\Shader\Object3DH.hlsli" />
     <None Include="NewEngine\Shader\OutLine.hlsli" />
     <None Include="NewEngine\Shader\RenderTexture.hlsli" />
@@ -279,6 +282,22 @@
     <None Include="NewEngine\Shader\ToonRenderH.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="NewEngine\Shader\CircleGaugeSpritePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\CircleGaugeSpriteVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="NewEngine\Shader\OutLinePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>

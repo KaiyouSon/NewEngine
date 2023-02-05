@@ -36,6 +36,9 @@ float Clamp(const float& value, const float& min = 0, const float& max = 1);
 // ’l‚ªû‘©‚·‚éŠÖ”
 float Convergence(const float& value, const float& speed, const float& origin = 0);
 
+// ’l‚ğ’´‚¦‚½‚ç–ß‚·
+float Restore(const float& value, const float& limit, const float& origin = 0);
+
 // Œ…”‚ğæ“¾
 int GetDight(const int& value);
 

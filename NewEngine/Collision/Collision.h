@@ -18,13 +18,13 @@ public:
 	static bool SphereHitPlane(
 		const SphereCollider& sphere,
 		const PlaneCollider& plane,
-		Vec3* hitPos = 0);
+		Vec3* hitPos = nullptr);
 
 	// 球と三角形
 	static bool SphereHitTriangle(
 		const SphereCollider& sphere,
 		const TriangleCollider& triangle,
-		Vec3* hitPos = 0);
+		Vec3* hitPos = nullptr);
 
 	// 球とカプセル
 	static bool SphereHitCapsule(

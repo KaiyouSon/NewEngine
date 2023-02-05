@@ -1,5 +1,6 @@
 #include "Quaternion.h"
 #include "MathUtil.h"
+#include <math.h>
 
 float Quaternion::Lenght() const { return sqrt(x * x + y * y + z * z + w * w); }
 
@@ -82,6 +83,30 @@ Quaternion Quaternion::MakeAxisAngle(const Vec3& v, const float& radian)
 	};
 
 	return q;
+}
+
+Quaternion Quaternion::DirectionToDirection(const Vec3& v1, const Vec3& v2)
+{
+	// uとvを正規化して内積を求める。u,vを単位ベクトル前提とするなら正規化は不要
+	Vec3 u = v1;
+	u.Norm();
+	Vec3 v = v2;
+	v.Norm();
+
+	float dot = Vec3::Dot(u.Norm(), v.Norm());
+
+	// u,vの外積をとる
+	Vec3 cross = Vec3::Cross(v1, v2);
+
+	// 軸は単位ベクトルである必要があるので正規化
+	// uとvが単位ベクトルであっても、外積が単位ベクトルとは限らないのでここの正規化は必須
+	Vec3 axis = cross.Norm();
+
+	// 単位ベクトルで内積をとっているのでacosで角度を求める
+	float theta = acosf(dot);
+
+	// axisとthetaで任意軸回転を作って返す
+	return MakeAxisAngle(axis, theta);
 }
 
 Quaternion Quaternion::operator-() const { return { -x,-y,-z,-w }; }

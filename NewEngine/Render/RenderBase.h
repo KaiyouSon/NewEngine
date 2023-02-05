@@ -55,6 +55,7 @@ public:
 
 	inline GraphicsPipeline* GetBasicPipeline() const { return basicPipeline.get(); }
 	inline GraphicsPipeline* GetSpritePipeline() const { return spritePipeline.get(); }
+	inline GraphicsPipeline* GetCircleGaugeSpritePipeline() const { return circleGaugeSpritePipeline.get(); }
 	inline GraphicsPipeline* GetLinePipeline() const { return linePipeline.get(); }
 	inline GraphicsPipeline* GetRenderTexturePipeline() const { return renderTexturePipeline.get(); }
 	inline GraphicsPipeline* GetObject3DPipeline() const { return object3DPipeline.get(); }
@@ -98,6 +99,7 @@ private:
 	// シェーダコンパイラー
 	std::unique_ptr<ShaderObject> basicShader;
 	std::unique_ptr<ShaderObject> spriteShader;
+	std::unique_ptr<ShaderObject> circleGaugeSpriteShader;
 	std::unique_ptr<ShaderObject> renderTextureShader;
 	std::unique_ptr<ShaderObject> object3DShader;
 	std::unique_ptr<ShaderObject> particleShader;
@@ -108,6 +110,7 @@ private:
 	// グラフィックスパイプライン関連
 	std::unique_ptr<GraphicsPipeline> basicPipeline;
 	std::unique_ptr<GraphicsPipeline> spritePipeline;
+	std::unique_ptr<GraphicsPipeline> circleGaugeSpritePipeline;
 	std::unique_ptr<GraphicsPipeline> linePipeline;
 	std::unique_ptr<GraphicsPipeline> renderTexturePipeline;
 	std::unique_ptr<GraphicsPipeline> object3DPipeline;

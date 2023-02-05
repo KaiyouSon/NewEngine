@@ -273,6 +273,9 @@
     <ClCompile Include="NewEngine\Render\Buffer\DepthBuffer.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Object\2D\CircleGaugeSprite.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -446,6 +449,9 @@
     <ClInclude Include="NewEngine\Render\Buffer\DepthBuffer.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
+    <ClInclude Include="NewEngine\Object\2D\CircleGaugeSprite.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\RenderTexture.hlsli">
@@ -464,6 +470,9 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="NewEngine\Shader\ToonRenderH.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="NewEngine\Shader\CircleGaugeSpriteH.hlsli">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
@@ -502,6 +511,12 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\ToonRenderVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\CircleGaugeSpriteVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\CircleGaugeSpritePS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

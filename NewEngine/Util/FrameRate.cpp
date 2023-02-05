@@ -40,4 +40,6 @@ void FrameRate::Update()
 
 	// Œ»İ‚ÌŠÔ‚ğ‹L˜^‚·‚é
 	reference = steady_clock::now();
+
+
 }

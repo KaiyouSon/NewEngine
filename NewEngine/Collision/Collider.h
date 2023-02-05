@@ -4,8 +4,8 @@
 // ----- 円コライダー ------------------- //
 struct CircleCollider
 {
-	Vec2 centerPos;
-	float radius;
+	Vec2 centerPos = 0;
+	float radius = 0;
 
 	CircleCollider();
 	CircleCollider(const Vec2& centerPos, const float& radius);
@@ -28,8 +28,8 @@ struct SquareCollider
 // ----- 球コライダー ------------------- //
 struct SphereCollider
 {
-	Vec3 centerPos;
-	float radius;
+	Vec3 centerPos = 0;
+	float radius = 0;
 
 	SphereCollider();
 	SphereCollider(const Vec3& centerPos, const float& radius);

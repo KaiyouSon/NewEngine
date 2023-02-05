@@ -43,6 +43,8 @@ void GameScene::Update()
 		CollisionUpdate();
 	}
 
+	Quaternion q = Quaternion::DirectionToDirection({ 1.f,0.f,1.f }, { 1.f,1.f,0.f });
+
 	Camera::DebugCameraUpdate();
 	//if (Key::GetKey(DIK_SPACE))
 	//{
@@ -109,7 +111,6 @@ void GameScene::CollisionInit()
 	capsuleObj1.pos.x = +2;
 	capsuleObj2.model = Model("Capsule");
 	capsuleObj2.pos.x = -2;
-
 }
 void GameScene::CollisionUpdate()
 {
@@ -181,14 +182,14 @@ void GameScene::CollisionUpdate()
 	{
 		CapsuleCollider c1 =
 		{
-			capsuleObj1.pos + Vec3(0,+1.f,0),
-			capsuleObj1.pos + Vec3(0,-1.f,0),
+			capsuleObj1.pos + Vec3(0.f,+1.f,0.f),
+			capsuleObj1.pos + Vec3(0.f,-1.f,0.f),
 			1
 		};
 		CapsuleCollider c2 =
 		{
-			capsuleObj2.pos + Vec3(0,+1.f,0),
-			capsuleObj2.pos + Vec3(0,-1.f,0),
+			capsuleObj2.pos + Vec3(0.f,+1.f,0.f),
+			capsuleObj2.pos + Vec3(0.f,-1.f,0.f),
 			1
 		};
 
@@ -252,6 +253,7 @@ void GameScene::CollisionDrawGui()
 	if (currentCollision == 0)
 	{
 		GuiManager::DrawSlider3("sphere pos", sphereObj.pos, 0.01f);
+		GuiManager::DrawSlider3("mesh pos", planeObj.pos, 0.01f);
 	}
 	else if (currentCollision == 1)
 	{
@@ -261,6 +263,7 @@ void GameScene::CollisionDrawGui()
 	else if (currentCollision == 2)
 	{
 		GuiManager::DrawSlider3("ray pos", rayObj.pos, 0.01f);
+		GuiManager::DrawSlider3("mesh pos", planeObj.pos, 0.01f);
 	}
 	else if (currentCollision == 3)
 	{

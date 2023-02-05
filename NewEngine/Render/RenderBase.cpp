@@ -407,6 +407,13 @@ void RenderBase::ShaderCompilerInit()
 	spriteShader->CompileVertexShader(path + "SpriteVS.hlsl", "main");
 	spriteShader->CompilePixelShader(path + "SpritePS.hlsl", "main");
 
+	// スプライト用シェーダー
+	circleGaugeSpriteShader = std::move(std::make_unique<ShaderObject>());
+	circleGaugeSpriteShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	circleGaugeSpriteShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	circleGaugeSpriteShader->CompileVertexShader(path + "CircleGaugeSpriteVS.hlsl", "main");
+	circleGaugeSpriteShader->CompilePixelShader(path + "CircleGaugeSpritePS.hlsl", "main");
+
 	// レンダーテクスチャーのシェーダー
 	renderTextureShader = std::move(std::make_unique<ShaderObject>());
 	renderTextureShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -455,7 +462,7 @@ void RenderBase::RootSignatureInit()
 
 	// スプライト用
 	spriteRootSignature = std::move(std::make_unique<RootSignature>());
-	spriteRootSignature->AddConstantBufferViewToRootRrameter(2);
+	spriteRootSignature->AddConstantBufferViewToRootRrameter(3);
 	spriteRootSignature->Create();
 }
 void RenderBase::GraphicsPipelineInit()
@@ -494,6 +501,15 @@ void RenderBase::GraphicsPipelineInit()
 	spritePipeline->SetTopologyType(TopologyType::TriangleTopology);
 	spritePipeline->SetRootSignature(spriteRootSignature->GetRootSignature());
 	spritePipeline->Create();
+
+	// スプライト用
+	circleGaugeSpritePipeline = std::move(std::make_unique<GraphicsPipeline>());
+	circleGaugeSpritePipeline->SetShaderObject(circleGaugeSpriteShader.get());
+	circleGaugeSpritePipeline->SetCullMode(CullMode::None);
+	circleGaugeSpritePipeline->SetDepthStencilDesc(depthStencilDesc2);
+	circleGaugeSpritePipeline->SetTopologyType(TopologyType::TriangleTopology);
+	circleGaugeSpritePipeline->SetRootSignature(spriteRootSignature->GetRootSignature());
+	circleGaugeSpritePipeline->Create();
 
 	// Line用
 	linePipeline = std::move(std::make_unique<GraphicsPipeline>());

@@ -50,6 +50,16 @@ float Convergence(const float& value, const float& speed, const float& origin)
 	return -1;
 }
 
+float Restore(const float& value, const float& limit, const float& origin)
+{
+	if (value > limit)
+	{
+		return origin;
+	}
+
+	return value;
+}
+
 int GetDight(const int& value)
 {
 	int tempValue = value;
