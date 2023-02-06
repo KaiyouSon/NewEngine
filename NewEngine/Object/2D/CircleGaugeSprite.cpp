@@ -36,8 +36,14 @@ void CircleGaugeSprite::Update()
 	transform.rot = { 0,0,rot };
 	transform.Update();
 
-	startRadian = Clamp(startRadian, 0, Radian(360));
+	//startRadian = Clamp(startRadian, 0, Radian(360));
 	endRadian = Clamp(endRadian, 0, Radian(360));
+
+	//startRadian = Restore(startRadian, Radian(360));
+	//endRadian = Restore(endRadian, Radian(360));
+
+	//startRadian = Restore(startRadian, 0, Radian(360));
+	//endRadian = Restore(endRadian, 0,Radian(360));
 
 	// 定数バッファに転送
 	constantBufferTransform->constantBufferMap->mat =
@@ -48,9 +54,10 @@ void CircleGaugeSprite::Update()
 	constantBufferColor->constantBufferMap->color = color / 255;
 	constantBufferColor->constantBufferMap->color.a = color.a / 255;
 
+
 	// 色転送
 	constantBufferCircleGauge->constantBufferMap->startRadian = startRadian;
-	constantBufferCircleGauge->constantBufferMap->endRadian = endRadian;
+	constantBufferCircleGauge->constantBufferMap->endRadian = endRadian + startRadian;
 
 	// 頂点バッファーに頂点を転送
 	TransferTexturePos();

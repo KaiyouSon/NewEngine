@@ -54,7 +54,7 @@ float Restore(const float& value, const float& limit, const float& origin)
 {
 	if (value > limit)
 	{
-		return origin;
+		return origin + value - limit;
 	}
 
 	return value;
