@@ -11,7 +11,7 @@
 #pragma comment(lib,"d3dcompiler.lib")
 using namespace Microsoft::WRL;
 
-float RenderBase::clearColor[4] = { 0.1f,0.25f,0.5f,1.0f };
+float RenderBase::clearColor[4] = { 0.1f,0.25f,0.5f,0.0f };
 
 void RenderBase::Init()
 {
@@ -502,7 +502,7 @@ void RenderBase::GraphicsPipelineInit()
 	spritePipeline->SetRootSignature(spriteRootSignature->GetRootSignature());
 	spritePipeline->Create();
 
-	// スプライト用
+	// 円形ゲージスプライト用
 	circleGaugeSpritePipeline = std::move(std::make_unique<GraphicsPipeline>());
 	circleGaugeSpritePipeline->SetShaderObject(circleGaugeSpriteShader.get());
 	circleGaugeSpritePipeline->SetCullMode(CullMode::None);
@@ -523,10 +523,10 @@ void RenderBase::GraphicsPipelineInit()
 	// レンダーテクスチャ用
 	renderTexturePipeline = std::move(std::make_unique<GraphicsPipeline>());
 	renderTexturePipeline->SetShaderObject(renderTextureShader.get());
-	renderTexturePipeline->SetCullMode(CullMode::CullBack);
-	renderTexturePipeline->SetDepthStencilDesc(depthStencilDesc1);
+	renderTexturePipeline->SetCullMode(CullMode::None);
+	renderTexturePipeline->SetDepthStencilDesc(depthStencilDesc2);
 	renderTexturePipeline->SetTopologyType(TopologyType::TriangleTopology);
-	renderTexturePipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
+	renderTexturePipeline->SetRootSignature(spriteRootSignature->GetRootSignature());
 	renderTexturePipeline->Create();
 
 	// 3Dオブジェクト用

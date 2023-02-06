@@ -5,7 +5,7 @@
 #include <memory>
 using namespace std;
 
-const float RenderTexture::clearColor[4] = { 0.25f,0.5f,0.1f,1.0f };
+const float RenderTexture::clearColor[4] = { 0.0f,0.0f,0.0f,0.0f };
 
 RenderTexture::RenderTexture() :
 	pos(0), scale(1), rot(0), anchorPoint(0.5f),
@@ -68,7 +68,8 @@ RenderTexture::RenderTexture() :
 		UINT* img = new UINT[pixelCount];
 		for (int i = 0; i < pixelCount; i++)
 		{
-			img[i] = 0xff0000ff;
+			//img[i] = 0xffffffff;
+			img[i] = 0x00000ff;
 		}
 
 		result = texture.buffer->WriteToSubresource(0, nullptr, img, rowPitch, depthPitch);
@@ -173,7 +174,7 @@ void RenderTexture::Draw()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	renderBase->GetCommandList()->SetPipelineState(renderBase->GetSpritePipeline()->GetAlphaPipeline());
+	renderBase->GetCommandList()->SetPipelineState(renderBase->GetRenderTexturePipeline()->GetAlphaPipeline());
 	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	// VBVÇ∆IBVÇÃê›íËÉRÉ}ÉìÉh

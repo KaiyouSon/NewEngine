@@ -475,6 +475,9 @@
     <None Include="NewEngine\Shader\CircleGaugeSpriteH.hlsli">
       <Filter>Shader</Filter>
     </None>
+    <None Include="NewEngine\Shader\Blur.hlsli">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="NewEngine\Shader\SpritePS.hlsl">

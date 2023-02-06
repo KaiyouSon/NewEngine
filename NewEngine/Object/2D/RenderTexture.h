@@ -23,7 +23,6 @@ private:
 	Texture texture;
 	Transform transform;
 
-
 	static const float clearColor[4];
 
 public:

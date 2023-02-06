@@ -6,6 +6,8 @@
 #include "OutLineObj.h"
 #include "Fog.h"
 #include "Sprite.h"
+#include "CircleGaugeSprite.h"
+#include "RenderTexture.h"
 #include "Sound.h"
 #include "imgui.h"
 #include "IScene.h"

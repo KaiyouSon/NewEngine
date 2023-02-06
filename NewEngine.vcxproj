@@ -273,6 +273,7 @@
     <ClInclude Include="NewEngine\Util\Util.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="NewEngine\Shader\Blur.hlsli" />
     <None Include="NewEngine\Shader\CircleGaugeSpriteH.hlsli" />
     <None Include="NewEngine\Shader\Object3DH.hlsli" />
     <None Include="NewEngine\Shader\OutLine.hlsli" />
