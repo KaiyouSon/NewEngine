@@ -32,7 +32,7 @@ void GameScene::Init()
 }
 void GameScene::Update()
 {
-	renderTexture.Update();
+	//renderTexture.Update();
 
 	if (isCG3 == true)
 	{

@@ -97,7 +97,6 @@ void RenderBase::PostDraw()
 
 	// コマンドの実行完了を待つ
 	commandQueue->Signal(fence.Get(), ++fenceVal);
-	//RenderBase::GetInstance()->PreIncreFenceVal());
 	if (fence.Get()->GetCompletedValue() != fenceVal)
 	{
 		HANDLE event = CreateEvent(nullptr, false, false, nullptr);

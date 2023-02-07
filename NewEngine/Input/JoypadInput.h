@@ -4,6 +4,21 @@
 #include <dinput.h>
 #include <wrl.h>
 
+enum PadCodo
+{
+	ButtonA = 0,
+	ButtonB = 1,
+	ButtonX = 2,
+	ButtonY = 3,
+	ButtonL1 = 4,
+	ButtonR1 = 5,
+
+	LeftStick = 96,
+	RightStick = 97,
+	LeftTrigger = 98,
+	RightTrigger = 99,
+};
+
 template<typename T> class Singleton;
 
 class JoypadInput : public Singleton<JoypadInput>
@@ -22,50 +37,46 @@ public:
 	void Init();
 	void Update();
 
-	static inline bool GetButton(const int& padCode)
+	static inline bool GetButton(const PadCodo& padCode)
 	{
-		return GetInstance()->padInput.rgbButtons[padCode] & 0x80;
+		return GetInstance()->padInput.rgbButtons[(int)padCode] & 0x80;
 	}
-	static inline bool GetButtonTrigger(const int& padCode)
+	static inline bool GetButtonTrigger(const PadCodo& padCode)
 	{
-		return (GetInstance()->padInput.rgbButtons[padCode] & 0x80) &&
-			!(GetInstance()->prevPadInput.rgbButtons[padCode] & 0x80);
+		return (GetInstance()->padInput.rgbButtons[(int)padCode] & 0x80) &&
+			!(GetInstance()->prevPadInput.rgbButtons[(int)padCode] & 0x80);
 	}
-	static inline bool GetButtonReleased(const int& padCode)
+	static inline bool GetButtonReleased(const PadCodo& padCode)
 	{
-		return !(GetInstance()->padInput.rgbButtons[padCode] & 0x80) &&
-			(GetInstance()->prevPadInput.rgbButtons[padCode] & 0x80);
+		return !(GetInstance()->padInput.rgbButtons[(int)padCode] & 0x80) &&
+			(GetInstance()->prevPadInput.rgbButtons[(int)padCode] & 0x80);
 	}
 
-	static inline Vec2 GetStick(const int& padCode, const Vec2& num = 0)
+	static inline Vec2 GetStick(const PadCodo& padCode, const float& lenght = 0)
 	{
 		Vec2 stick = 0;
-		if (padCode == 96)
+		if (padCode == PadCodo::LeftStick)
 		{
-			if ((float)GetInstance()->padInput.lX > num.x || (float)GetInstance()->padInput.lX < -num.x)
+			stick.x = (float)GetInstance()->padInput.lX;
+			stick.y = (float)GetInstance()->padInput.lY;
+
+			if (stick.Lenght() > lenght)
 			{
-				stick.x = (float)GetInstance()->padInput.lX;
+				return stick.Norm() * lenght;
 			}
-			if ((float)GetInstance()->padInput.lY > num.y || (float)GetInstance()->padInput.lY < -num.y)
-			{
-				stick.y = (float)GetInstance()->padInput.lY;
-			}
-			return stick;
 		}
-		else if (padCode == 97)
+		else if (padCode == PadCodo::LeftStick)
 		{
-			if ((float)GetInstance()->padInput.lRx > num.x || (float)GetInstance()->padInput.lRx < -num.x)
+			stick.x = (float)GetInstance()->padInput.lRx;
+			stick.y = (float)GetInstance()->padInput.lRy;
+
+			if (stick.Lenght() > lenght)
 			{
-				stick.x = (float)GetInstance()->padInput.lRx;
+				return stick.Norm() * lenght;
 			}
-			if ((float)GetInstance()->padInput.lRy > num.y || (float)GetInstance()->padInput.lRy < -num.y)
-			{
-				stick.y = (float)GetInstance()->padInput.lRy;
-			}
-			return stick;
 		}
 
-		return stick;
+		return 0;
 	}
 	static inline bool GetStickTrigger(const int& padCode, const Vec2& num = 0)
 	{

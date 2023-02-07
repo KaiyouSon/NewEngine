@@ -11,8 +11,10 @@ void TitleScene::Init()
 	obj.rot.y = Radian(180);
 	//obj.texture = *TextureManager::GetTexture("pic");
 
-	renderTexture.anchorPoint = 0;
 	skyDome.model = Model("SkyDome");
+
+	sprite.texture = renderTexture;
+	sprite.anchorPoint = 0;
 }
 
 void TitleScene::Update()
@@ -20,15 +22,14 @@ void TitleScene::Update()
 	//obj.rot.y += Radian(1);
 	const float speed = 10;
 
-	renderTexture.pos.x += (Key::GetKey(DIK_RIGHT) - Key::GetKey(DIK_LEFT)) * speed;
-	renderTexture.pos.y += (Key::GetKey(DIK_DOWN) - Key::GetKey(DIK_UP)) * speed;
-	renderTexture.color.a += Key::GetKey(DIK_Q) - Key::GetKey(DIK_E);
+	sprite.pos.x += (Key::GetKey(DIK_RIGHT) - Key::GetKey(DIK_LEFT)) * speed;
+	sprite.pos.y += (Key::GetKey(DIK_DOWN) - Key::GetKey(DIK_UP)) * speed;
+	sprite.color.a += Key::GetKey(DIK_Q) - Key::GetKey(DIK_E);
 
 	obj.pos.x += (Key::GetKey(DIK_D) - Key::GetKey(DIK_A));
 	obj.pos.y += (Key::GetKey(DIK_W) - Key::GetKey(DIK_S));
 
-	renderTexture.Update();
-
+	sprite.Update();
 	skyDome.Update();
 	obj.Update();
 }
@@ -43,7 +44,7 @@ void TitleScene::DrawRenderTexture()
 
 void TitleScene::DrawBackSprite()
 {
-	renderTexture.Draw();
+	sprite.Draw();
 }
 
 void TitleScene::DrawModel()
