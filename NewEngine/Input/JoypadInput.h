@@ -4,7 +4,7 @@
 #include <dinput.h>
 #include <wrl.h>
 
-enum PadCodo
+enum class PadCodo
 {
 	ButtonA = 0,
 	ButtonB = 1,
@@ -12,6 +12,11 @@ enum PadCodo
 	ButtonY = 3,
 	ButtonL1 = 4,
 	ButtonR1 = 5,
+
+	ButtonLeft = 20,
+	ButtonRight = 21,
+	ButtonUp = 22,
+	ButtonDown = 23,
 
 	LeftStick = 96,
 	RightStick = 97,
@@ -39,17 +44,88 @@ public:
 
 	static inline bool GetButton(const PadCodo& padCode)
 	{
-		return GetInstance()->padInput.rgbButtons[(int)padCode] & 0x80;
+		if (padCode == PadCodo::ButtonLeft)
+		{
+			return GetInstance()->padInput.rgdwPOV[0] == 27000;
+		}
+		else if (padCode == PadCodo::ButtonRight)
+		{
+			return GetInstance()->padInput.rgdwPOV[0] == 9000;
+		}
+		else if (padCode == PadCodo::ButtonUp)
+		{
+			return GetInstance()->padInput.rgdwPOV[0] == 0;
+		}
+		else if (padCode == PadCodo::ButtonDown)
+		{
+			return GetInstance()->padInput.rgdwPOV[0] == 18000;
+		}
+		else
+		{
+			return GetInstance()->padInput.rgbButtons[(int)padCode] & 0x80;
+		}
+
+		return false;
 	}
 	static inline bool GetButtonTrigger(const PadCodo& padCode)
 	{
-		return (GetInstance()->padInput.rgbButtons[(int)padCode] & 0x80) &&
-			!(GetInstance()->prevPadInput.rgbButtons[(int)padCode] & 0x80);
+		if (padCode == PadCodo::ButtonLeft)
+		{
+			return (GetInstance()->padInput.rgdwPOV[0] == 27000) &&
+				!(GetInstance()->padInput.rgdwPOV[0] == 27000);
+		}
+		else if (padCode == PadCodo::ButtonRight)
+		{
+			return (GetInstance()->padInput.rgdwPOV[0] == 9000) &&
+				!(GetInstance()->padInput.rgdwPOV[0] == 9000);
+		}
+		else if (padCode == PadCodo::ButtonUp)
+		{
+			return (GetInstance()->padInput.rgdwPOV[0] == 0) &&
+				!(GetInstance()->padInput.rgdwPOV[0] == 0);
+		}
+		else if (padCode == PadCodo::ButtonDown)
+		{
+			return (GetInstance()->padInput.rgdwPOV[0] == 18000) &&
+				!(GetInstance()->padInput.rgdwPOV[0] == 18000);
+		}
+		else
+		{
+			return (GetInstance()->padInput.rgbButtons[(int)padCode] & 0x80) &&
+				!(GetInstance()->prevPadInput.rgbButtons[(int)padCode] & 0x80);
+		}
+
+		return false;
 	}
 	static inline bool GetButtonReleased(const PadCodo& padCode)
 	{
-		return !(GetInstance()->padInput.rgbButtons[(int)padCode] & 0x80) &&
-			(GetInstance()->prevPadInput.rgbButtons[(int)padCode] & 0x80);
+		if (padCode == PadCodo::ButtonLeft)
+		{
+			return !(GetInstance()->padInput.rgdwPOV[0] == 27000) &&
+				(GetInstance()->padInput.rgdwPOV[0] == 27000);
+		}
+		else if (padCode == PadCodo::ButtonRight)
+		{
+			return !(GetInstance()->padInput.rgdwPOV[0] == 9000) &&
+				(GetInstance()->padInput.rgdwPOV[0] == 9000);
+		}
+		else if (padCode == PadCodo::ButtonUp)
+		{
+			return !(GetInstance()->padInput.rgdwPOV[0] == 0) &&
+				(GetInstance()->padInput.rgdwPOV[0] == 0);
+		}
+		else if (padCode == PadCodo::ButtonDown)
+		{
+			return !(GetInstance()->padInput.rgdwPOV[0] == 18000) &&
+				(GetInstance()->padInput.rgdwPOV[0] == 18000);
+		}
+		else
+		{
+			return !(GetInstance()->padInput.rgbButtons[(int)padCode] & 0x80) &&
+				(GetInstance()->prevPadInput.rgbButtons[(int)padCode] & 0x80);
+		}
+
+		return false;
 	}
 
 	static inline Vec2 GetStick(const PadCodo& padCode, const float& lenght = 0)
