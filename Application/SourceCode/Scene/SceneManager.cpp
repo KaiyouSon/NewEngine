@@ -35,7 +35,6 @@ void SceneManager::DrawRenderTexture()
 
 void SceneManager::DrawBackSprite()
 {
-	Sprite::SetBlendMode(BlendMode::Alpha);
 	currentScene->DrawBackSprite();
 }
 
@@ -46,7 +45,6 @@ void SceneManager::DrawModel()
 
 void SceneManager::DrawFrontSprite()
 {
-	Sprite::SetBlendMode(BlendMode::Alpha);
 	currentScene->DrawFrontSprite();
 
 #ifdef _DEBUG

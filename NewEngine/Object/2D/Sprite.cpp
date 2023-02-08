@@ -8,7 +8,8 @@ Sprite::Sprite() :
 	pos(0), scale(1), rot(0), anchorPoint(0.5f),
 	vertexBuffer(new VertexBuffer<VertexPosUv>),
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform2D>),
-	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>)
+	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>),
+	graphicsPipeline(RenderBase::GetInstance()->GetSpritePipeline())
 {
 	vertices.resize(4);
 	vertices[0].uv = { 0.0f,1.0f };
@@ -49,11 +50,13 @@ void Sprite::Update()
 	TransferTexturePos();
 }
 
-void Sprite::Draw()
+void Sprite::Draw(const BlendMode& blendMode)
 {
+	SetBlendMode(blendMode);
+
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	renderBase->GetCommandList()->SetPipelineState(renderBase->GetSpritePipeline()->GetAlphaPipeline());
+	//renderBase->GetCommandList()->SetPipelineState(renderBase->GetSpritePipeline()->GetAlphaPipeline());
 	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	// VBVとIBVの設定コマンド
@@ -82,19 +85,19 @@ void Sprite::SetBlendMode(const BlendMode& blendMode)
 	switch (blendMode)
 	{
 	case BlendMode::Alpha: // αブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetSpritePipeline()->GetAlphaPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetAlphaPipeline());
 		break;
 
 	case BlendMode::Add:	// 加算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetSpritePipeline()->GetAddPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetAddPipeline());
 		break;
 
 	case BlendMode::Sub:	// 減算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetSpritePipeline()->GetSubPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetSubPipeline());
 		break;
 
 	case BlendMode::Inv:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetSpritePipeline()->GetInvPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetInvPipeline());
 		break;
 
 	default:

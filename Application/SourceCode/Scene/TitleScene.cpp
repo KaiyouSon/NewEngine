@@ -30,6 +30,8 @@ void TitleScene::Update()
 	obj.pos.y += (Key::GetKey(DIK_W) - Key::GetKey(DIK_S));
 
 	sprite.Update();
+
+	sprite.graphicsPipeline = RenderBase::GetInstance()->GetRenderTexturePipeline();
 	skyDome.Update();
 	obj.Update();
 }

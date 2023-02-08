@@ -25,6 +25,7 @@ public:
 	float rot;
 	Color color;
 	Vec2 anchorPoint;
+	GraphicsPipeline* graphicsPipeline;
 
 private:
 	void TransferTexturePos();
@@ -33,11 +34,11 @@ public:
 	Sprite();
 	~Sprite();
 	void Update();
-	void Draw();
+	void Draw(const BlendMode& blendMode = BlendMode::Alpha);
 
 	inline Vec2 GetTextureSize() { return texture.size; }
 	void SetTextureRect(const Vec2& leftTopPos, const Vec2 rightDownPos);
 
-	static void SetBlendMode(const BlendMode& blendMode);
+	void SetBlendMode(const BlendMode& blendMode);
 };
 
