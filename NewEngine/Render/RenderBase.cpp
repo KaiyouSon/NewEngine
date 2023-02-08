@@ -24,9 +24,7 @@ void RenderBase::Init()
 	dsvIncrementIndex = 0;
 
 	DeviceInit();			// デバイスの初期化
-
 	DescriptorHeapInit();	// ティスクリプターヒープの初期化
-
 	CommandInit();			// コマンド関連の初期化
 	SwapChainInit();		// スワップチェンの初期化
 	FenceInit();			// フェンスの初期化
@@ -151,15 +149,12 @@ void RenderBase::CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET
 {
 	// RTVヒープの先頭ハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvCpuHandle = rtvDescHeap->GetCPUDescriptorHandleForHeapStart();
-	D3D12_GPU_DESCRIPTOR_HANDLE rtvGpuHandle = rtvDescHeap->GetGPUDescriptorHandleForHeapStart();
 
 	UINT descriptorSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
 	rtvCpuHandle.ptr += descriptorSize * rtvIncrementIndex;
-	rtvGpuHandle.ptr += descriptorSize * rtvIncrementIndex;
 
 	renderTarget.SetCpuHandle(rtvCpuHandle);
-	renderTarget.SetGpuHandle(rtvGpuHandle);
 
 	// ハンドルの指す位置にRTV作成
 	device->CreateRenderTargetView(renderTarget.GetBuffer(), rtvDesc, rtvCpuHandle);
@@ -170,15 +165,12 @@ void RenderBase::CreateDSV(DepthBuffer& depthBuffer)
 {
 	// RTVヒープの先頭ハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvCpuHandle = dsvDescHeap->GetCPUDescriptorHandleForHeapStart();
-	D3D12_GPU_DESCRIPTOR_HANDLE dsvGpuHandle = dsvDescHeap->GetGPUDescriptorHandleForHeapStart();
 
 	UINT descriptorSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 
 	dsvCpuHandle.ptr += descriptorSize * dsvIncrementIndex;
-	dsvGpuHandle.ptr += descriptorSize * dsvIncrementIndex;
 
 	depthBuffer.SetCpuHandle(dsvCpuHandle);
-	depthBuffer.SetGpuHandle(dsvGpuHandle);
 
 	// 深度ビュー作成
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
@@ -276,6 +268,7 @@ void RenderBase::DescriptorHeapInit()
 
 	// RTV用デスクリプタヒープの設定
 	rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;		// レンダーターゲットビュー
+	//rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;	// シェーダから見えるように
 	rtvHeapDesc.NumDescriptors = maxRTVCount; // 裏表の２つ
 
 	// RTV用デスクリプタヒープの生成
@@ -289,6 +282,7 @@ void RenderBase::DescriptorHeapInit()
 	// DSV用デスクリプタヒープの設定
 	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
 	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;		// デプスステンシルビュー
+	//dsvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;	// シェーダから見えるように
 	dsvHeapDesc.NumDescriptors = maxDSVCount;	// 深度ビューは一つ
 
 	// DSV用デスクリプタヒープの生成
