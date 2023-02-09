@@ -267,14 +267,17 @@
     <ClCompile Include="NewEngine\Light\Fog.cpp">
       <Filter>NewEngine\Source\Light</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Render\RenderTarget.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Render\Buffer\DepthBuffer.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\2D\CircleGaugeSprite.cpp">
       <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\LoadManager.cpp">
+      <Filter>Application\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\Buffer\DepthBuffer.cpp">
+      <Filter>NewEngine\Source\Render\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\RenderTarget.cpp">
+      <Filter>NewEngine\Source\Render\Buffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -286,9 +289,6 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Render\Buffer\VertexBuffer.h">
       <Filter>NewEngine\Header\Render\Buffer</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Render\RenderBase.h">
-      <Filter>NewEngine\Header\Render</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Render\RenderWindow.h">
       <Filter>NewEngine\Header\Render</Filter>
@@ -443,14 +443,20 @@
     <ClInclude Include="NewEngine\Light\Fog.h">
       <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Render\RenderTarget.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Render\Buffer\DepthBuffer.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Object\2D\CircleGaugeSprite.h">
       <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\LoadManager.h">
+      <Filter>Application\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\RenderTarget.h">
+      <Filter>NewEngine\Header\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\RenderBase.h">
+      <Filter>NewEngine\Header\Render\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\Buffer\DepthBuffer.h">
+      <Filter>NewEngine\Header\Render\Buffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

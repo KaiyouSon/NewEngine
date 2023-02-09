@@ -81,9 +81,6 @@ void CircleGaugeSprite::Draw()
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		2, constantBufferCircleGauge->constantBuffer->GetGPUVirtualAddress());
 
-	// SRVヒープの設定コマンド
-	auto temp = renderBase->GetSrvDescHeap();
-	renderBase->GetCommandList()->SetDescriptorHeaps(1, &temp);
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
 		renderBase->GetSpriteRootSignature()->GetRootDescriptorTableIndex(), texture.GetGpuHandle());
