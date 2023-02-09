@@ -9,7 +9,7 @@ SceneManager::SceneManager()
 	Object3D::isAllLighting = true;
 	TextureManager::CreateTexture(Color::white, "White");
 
-	currentScene = std::move(std::make_unique<GameScene>());
+	currentScene = std::move(std::make_unique<TitleScene>());
 }
 
 SceneManager::~SceneManager()

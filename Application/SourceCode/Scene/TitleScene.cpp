@@ -42,6 +42,18 @@ void TitleScene::Update()
 	obj.pos.x += (Key::GetKey(DIK_D) - Key::GetKey(DIK_A));
 	obj.pos.y += (Key::GetKey(DIK_W) - Key::GetKey(DIK_S));
 
+	if (Pad::GetButton(PadCodo::ButtonA))
+	{
+		static int a = 0;
+		a++;
+	}
+
+	obj.pos.x = +Pad::GetStick(PadCodo::LeftStick, 300).x / 1000;
+	obj.pos.y = -Pad::GetStick(PadCodo::LeftStick, 300).y / 1000;
+
+	sprite.pos.x += Pad::GetStick(PadCodo::LeftStick, 300, 1).x / 1000;
+	sprite.pos.y += Pad::GetStick(PadCodo::LeftStick, 300, 1).y / 1000;
+
 	sprite.Update();
 
 	sprite.graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture");
