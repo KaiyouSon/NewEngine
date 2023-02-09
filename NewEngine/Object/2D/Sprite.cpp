@@ -68,9 +68,9 @@ void Sprite::Draw(const BlendMode& blendMode)
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		1, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
 
-	// SRVヒープの設定コマンド
-	auto temp = renderBase->GetSrvDescHeap();
-	renderBase->GetCommandList()->SetDescriptorHeaps(1, &temp);
+	//// SRVヒープの設定コマンド
+	//auto temp = renderBase->GetSrvDescHeap();
+	//renderBase->GetCommandList()->SetDescriptorHeaps(1, &temp);
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
 		renderBase->GetSpriteRootSignature()->GetRootDescriptorTableIndex(), texture.GetGpuHandle());

@@ -70,6 +70,12 @@ void RenderBase::PreDraw()
 
 	// シザー矩形の処理
 	scissorRectangle->Update();
+
+	//commandList->SetDescriptorHeaps(1, srvDescHeap.GetAddressOf());
+
+
+	// SRVヒープの設定コマンド
+	//auto temp = renderBase->GetSrvDescHeap();
 }
 void RenderBase::PostDraw()
 {

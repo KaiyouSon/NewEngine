@@ -13,7 +13,7 @@ void NewEngineInit()
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(debugController.GetAddressOf()))))
 	{
 		debugController->EnableDebugLayer();
-		debugController->SetEnableGPUBasedValidation(TRUE);
+		debugController->SetEnableGPUBasedValidation(false);
 	}
 #endif
 	// -------------------------------------------------------------------------------- //
@@ -62,6 +62,9 @@ void NewEngineUpda()
 }
 void NewEnginePreDraw()
 {
+	// SRVヒープの設定コマンド
+	auto temp = RenderBase::GetInstance()->GetSrvDescHeap();
+	RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &temp);
 	SceneManager::GetInstance()->DrawRenderTexture();
 
 	RenderBase::GetInstance()->PreDraw();

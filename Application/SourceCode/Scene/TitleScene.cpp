@@ -17,8 +17,22 @@ void TitleScene::Init()
 	sprite.anchorPoint = 0;
 }
 
+static bool isDraw = false;
+
 void TitleScene::Update()
 {
+	if (Key::GetKeyTrigger(DIK_SPACE))
+	{
+		if (isDraw == false)
+		{
+			isDraw = true;
+		}
+		else
+		{
+			isDraw = false;
+		}
+	}
+
 	//obj.rot.y += Radian(1);
 	const float speed = 10;
 
@@ -42,7 +56,10 @@ void TitleScene::Update()
 void TitleScene::DrawRenderTexture()
 {
 	renderTexture.PreDrawScene();
-	skyDome.Draw();
+	if (isDraw == true)
+	{
+		skyDome.Draw();
+	}
 	obj.Draw();
 	renderTexture.PostDrawScene();
 }
