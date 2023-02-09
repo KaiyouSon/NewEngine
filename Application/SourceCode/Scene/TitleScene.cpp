@@ -3,7 +3,6 @@
 
 void TitleScene::Init()
 {
-	TextureManager::LoadTexture("pic.png", "pic");
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
@@ -43,12 +42,9 @@ void TitleScene::Update()
 	obj.pos.x += (Key::GetKey(DIK_D) - Key::GetKey(DIK_A));
 	obj.pos.y += (Key::GetKey(DIK_W) - Key::GetKey(DIK_S));
 
-	obj.pos.x += (Pad::GetButton(PadCodo::ButtonRight) - Pad::GetButton(PadCodo::ButtonLeft)) * 0.5f;
-	obj.pos.y += (Pad::GetButton(PadCodo::ButtonUp) - Pad::GetButton(PadCodo::ButtonDown)) * 0.5f;
-
 	sprite.Update();
 
-	sprite.graphicsPipeline = RenderBase::GetInstance()->GetRenderTexturePipeline();
+	sprite.graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture");
 	skyDome.Update();
 	obj.Update();
 }

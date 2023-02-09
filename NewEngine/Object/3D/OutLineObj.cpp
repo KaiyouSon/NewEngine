@@ -46,7 +46,8 @@ void OutLineObj::Draw()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	renderBase->GetCommandList()->SetPipelineState(renderBase->GetOutLinePipeline()->GetAlphaPipeline());
+	renderBase->GetCommandList()->SetPipelineState(
+		GraphicsPipelineManager::GetGraphicsPipeline("Outline")->GetAlphaPipeline());
 	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// VBV‚ÆIBV‚ÌÝ’èƒRƒ}ƒ“ƒh
@@ -62,6 +63,6 @@ void OutLineObj::Draw()
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(unsigned short)obj->model.mesh.GetIndexSize(), 1, 0, 0, 0);
 
-	obj->graphicsPipeline = RenderBase::GetInstance()->GetToonRenderPipeline();
+	obj->graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("ToonRendering");
 	obj->Draw(BlendMode::Alpha);
 }

@@ -2,7 +2,7 @@
 #include "RenderWindow.h"
 #include "ShaderObject.h"
 #include "RootSignature.h"
-#include "GraphicsPipeline.h"
+#include "GraphicsPipelineManager.h"
 #include "Texture.h"
 #include "RenderTarget.h"
 #include "DepthBuffer.h"
@@ -53,15 +53,7 @@ public:
 	inline RootSignature* GetObject3DRootSignature() const { return object3DRootSignature.get(); }
 	inline RootSignature* GetSpriteRootSignature() const { return spriteRootSignature.get(); }
 
-	inline GraphicsPipeline* GetBasicPipeline() const { return basicPipeline.get(); }
-	inline GraphicsPipeline* GetSpritePipeline() const { return spritePipeline.get(); }
-	inline GraphicsPipeline* GetCircleGaugeSpritePipeline() const { return circleGaugeSpritePipeline.get(); }
 	inline GraphicsPipeline* GetLinePipeline() const { return linePipeline.get(); }
-	inline GraphicsPipeline* GetRenderTexturePipeline() const { return renderTexturePipeline.get(); }
-	inline GraphicsPipeline* GetObject3DPipeline() const { return object3DPipeline.get(); }
-	inline GraphicsPipeline* GetSilhouettePipeline() const { return silhouettePipeline.get(); }
-	inline GraphicsPipeline* GetOutLinePipeline() const { return outlinePipeline.get(); }
-	inline GraphicsPipeline* GetToonRenderPipeline() const { return toonRenderPipeline.get(); }
 
 	inline Viewport* GetViewport() const { return viewport.get(); }
 private:
@@ -108,15 +100,7 @@ private:
 	std::unique_ptr<ShaderObject> toonRenderShader;
 
 	// グラフィックスパイプライン関連
-	std::unique_ptr<GraphicsPipeline> basicPipeline;
-	std::unique_ptr<GraphicsPipeline> spritePipeline;
-	std::unique_ptr<GraphicsPipeline> circleGaugeSpritePipeline;
 	std::unique_ptr<GraphicsPipeline> linePipeline;
-	std::unique_ptr<GraphicsPipeline> renderTexturePipeline;
-	std::unique_ptr<GraphicsPipeline> object3DPipeline;
-	std::unique_ptr<GraphicsPipeline> silhouettePipeline;
-	std::unique_ptr<GraphicsPipeline> outlinePipeline;
-	std::unique_ptr<GraphicsPipeline> toonRenderPipeline;
 
 	// ルートシグネチャー関連
 	ComPtr <ID3DBlob> errorBlob;	// エラーオブジェクト

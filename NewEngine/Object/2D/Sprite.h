@@ -4,7 +4,6 @@
 #include "ConstantBuffer.h"
 #include "Transform.h"
 #include "Texture.h"
-#include "Util.h"
 #include <vector>
 
 class Sprite

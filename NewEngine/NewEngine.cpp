@@ -2,6 +2,7 @@
 #include "RenderBase.h"
 #include "RenderWindow.h"
 #include "RenderTexture.h"
+#include "LoadManager.h"
 #include <wrl.h>
 using namespace Microsoft::WRL;
 
@@ -24,7 +25,7 @@ void NewEngineInit()
 	Random::Init();
 	InputManager::GetInstance()->Init();
 	GuiManager::GetInstance()->Init();
-	//DirectionalLight::current.Init();
+	LoadManager::GetInstance()->Load();
 	SceneManager::GetInstance()->Init();
 
 	// -------------------------------------------------------------------------------- //

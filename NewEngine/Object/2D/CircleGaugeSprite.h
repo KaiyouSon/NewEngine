@@ -14,6 +14,7 @@ private:
 	ConstantBuffer<ConstantBufferDataTransform2D>* constantBufferTransform;
 	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
 	ConstantBuffer<ConstantBufferDataCircleGauge>* constantBufferCircleGauge;
+	GraphicsPipeline* graphicsPipeline;
 	Transform transform;
 
 public:
@@ -30,12 +31,11 @@ public:
 
 private:
 	void TransferTexturePos();
+	void SetBlendMode(const BlendMode& blendMode);
 
 public:
 	CircleGaugeSprite();
 	~CircleGaugeSprite();
 	void Update();
-	void Draw();
-
-	static void SetBlendMode(const BlendMode& blendMode);
+	void Draw(const BlendMode& blendMode = BlendMode::Alpha);
 };

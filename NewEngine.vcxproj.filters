@@ -174,9 +174,6 @@
     <ClCompile Include="NewEngine\Math\Vec3.cpp">
       <Filter>NewEngine\Source\Math</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\2D\RenderTexture.cpp">
-      <Filter>NewEngine\Source\Object\2D</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp">
       <Filter>NewEngine\Source\Object\2D</Filter>
     </ClCompile>
@@ -267,9 +264,6 @@
     <ClCompile Include="NewEngine\Light\Fog.cpp">
       <Filter>NewEngine\Source\Light</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\2D\CircleGaugeSprite.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\LoadManager.cpp">
       <Filter>Application\Source</Filter>
     </ClCompile>
@@ -278,6 +272,15 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Render\RenderTarget.cpp">
       <Filter>NewEngine\Source\Render\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\2D\CircleGaugeSprite.cpp">
+      <Filter>NewEngine\Source\Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\GraphicsPipelineManager.cpp">
+      <Filter>NewEngine\Source\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\2D\RenderTexture.cpp">
+      <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -297,9 +300,6 @@
       <Filter>NewEngine\Header\Render</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Render\ShaderObject.h">
-      <Filter>NewEngine\Header\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Render\Vertex.h">
       <Filter>NewEngine\Header\Render</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Render\Viewport.h">
@@ -443,9 +443,6 @@
     <ClInclude Include="NewEngine\Light\Fog.h">
       <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\2D\CircleGaugeSprite.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\LoadManager.h">
       <Filter>Application\Header</Filter>
     </ClInclude>
@@ -457,6 +454,15 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Render\Buffer\DepthBuffer.h">
       <Filter>NewEngine\Header\Render\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\2D\CircleGaugeSprite.h">
+      <Filter>NewEngine\Header\Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\VertexBufferData.h">
+      <Filter>NewEngine\Header\Render\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\GraphicsPipelineManager.h">
+      <Filter>NewEngine\Header\Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

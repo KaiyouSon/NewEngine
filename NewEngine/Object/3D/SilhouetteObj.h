@@ -11,6 +11,7 @@ class SilhouetteObj
 private:
 	ConstantBuffer<ConstantBufferDataTransform3D>* constantBufferTransform;
 	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
+	GraphicsPipeline* graphicsPipeline;
 	Transform transform;
 
 public:
@@ -21,8 +22,8 @@ public:
 	SilhouetteObj();
 	~SilhouetteObj();
 	void Update(const SilhouetteObj* parent = nullptr);
-	void Draw();
+	void Draw(const BlendMode& blendMode = BlendMode::Alpha);
 
-	static void SetBlendMode(const BlendMode& blendMode);
+	void SetBlendMode(const BlendMode& blendMode);
 };
 

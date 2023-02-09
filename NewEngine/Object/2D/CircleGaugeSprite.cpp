@@ -6,7 +6,8 @@ CircleGaugeSprite::CircleGaugeSprite() :
 	vertexBuffer(new VertexBuffer<VertexPosUv>),
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform2D>),
 	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>),
-	constantBufferCircleGauge(new ConstantBuffer<ConstantBufferDataCircleGauge>)
+	constantBufferCircleGauge(new ConstantBuffer<ConstantBufferDataCircleGauge>),
+	graphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("CircleGaugeSprite"))
 {
 	vertices.resize(4);
 	vertices[0].uv = { 0.0f,1.0f };
@@ -36,14 +37,7 @@ void CircleGaugeSprite::Update()
 	transform.rot = { 0,0,rot };
 	transform.Update();
 
-	//startRadian = Clamp(startRadian, 0, Radian(360));
 	endRadian = Clamp(endRadian, 0, Radian(360));
-
-	//startRadian = Restore(startRadian, Radian(360));
-	//endRadian = Restore(endRadian, Radian(360));
-
-	//startRadian = Restore(startRadian, 0, Radian(360));
-	//endRadian = Restore(endRadian, 0,Radian(360));
 
 	// 定数バッファに転送
 	constantBufferTransform->constantBufferMap->mat =
@@ -54,7 +48,6 @@ void CircleGaugeSprite::Update()
 	constantBufferColor->constantBufferMap->color = color / 255;
 	constantBufferColor->constantBufferMap->color.a = color.a / 255;
 
-
 	// 色転送
 	constantBufferCircleGauge->constantBufferMap->startRadian = startRadian;
 	constantBufferCircleGauge->constantBufferMap->endRadian = endRadian + startRadian;
@@ -63,11 +56,12 @@ void CircleGaugeSprite::Update()
 	TransferTexturePos();
 }
 
-void CircleGaugeSprite::Draw()
+void CircleGaugeSprite::Draw(const BlendMode& blendMode)
 {
+	SetBlendMode(blendMode);
+
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	renderBase->GetCommandList()->SetPipelineState(renderBase->GetCircleGaugeSpritePipeline()->GetAlphaPipeline());
 	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	// VBVとIBVの設定コマンド
@@ -95,19 +89,19 @@ void CircleGaugeSprite::SetBlendMode(const BlendMode& blendMode)
 	switch (blendMode)
 	{
 	case BlendMode::Alpha: // αブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetCircleGaugeSpritePipeline()->GetAlphaPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetAlphaPipeline());
 		break;
 
 	case BlendMode::Add:	// 加算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetCircleGaugeSpritePipeline()->GetAddPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetAddPipeline());
 		break;
 
 	case BlendMode::Sub:	// 減算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetCircleGaugeSpritePipeline()->GetSubPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetSubPipeline());
 		break;
 
 	case BlendMode::Inv:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetCircleGaugeSpritePipeline()->GetInvPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetInvPipeline());
 		break;
 
 	default:

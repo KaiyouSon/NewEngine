@@ -10,7 +10,7 @@ Object3D::Object3D() :
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform3D>),
 	constantBufferMaterial(new ConstantBuffer<ConstantBufferDataMaterial>),
 	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>),
-	graphicsPipeline(RenderBase::GetInstance()->GetObject3DPipeline()),
+	graphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
 	isLighting(false)
 {
 	// 定数バッファ初期化

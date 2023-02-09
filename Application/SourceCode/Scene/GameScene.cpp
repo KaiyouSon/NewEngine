@@ -14,14 +14,6 @@ void GameScene::Init()
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
-	ModelManager::LoadModel("SkyDome", "SkyDome");
-	ModelManager::LoadModel("Ground", "Ground");
-	ModelManager::LoadModel("AttackEnemy", "AttackEnemy", true);
-	ModelManager::LoadModel("Sphere", "Sphere", true);
-	ModelManager::LoadModel("Cube", "Cube", true);
-	ModelManager::LoadModel("player", "Player", true);
-
-	TextureManager::LoadTexture("pic.png", "pic");
 	isCG3 = true;
 	isAL4 = false;
 

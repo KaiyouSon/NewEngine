@@ -9,7 +9,7 @@ Sprite::Sprite() :
 	vertexBuffer(new VertexBuffer<VertexPosUv>),
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform2D>),
 	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>),
-	graphicsPipeline(RenderBase::GetInstance()->GetSpritePipeline())
+	graphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Sprite"))
 {
 	vertices.resize(4);
 	vertices[0].uv = { 0.0f,1.0f };

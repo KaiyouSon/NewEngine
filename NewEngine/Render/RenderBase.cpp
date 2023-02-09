@@ -466,15 +466,15 @@ void RenderBase::RootSignatureInit()
 }
 void RenderBase::GraphicsPipelineInit()
 {
-	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc1 = D3D12_DEPTH_STENCIL_DESC();
+	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc1{};
 	depthStencilDesc1.DepthEnable = true; // 深度テストを行う
 	depthStencilDesc1.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み許可
 	depthStencilDesc1.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
 
-	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc2 = D3D12_DEPTH_STENCIL_DESC();
+	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc2{};
 	depthStencilDesc2.DepthEnable = false; // 深度テストを行わない
 
-	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc3 = D3D12_DEPTH_STENCIL_DESC();
+	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc3{};
 	depthStencilDesc3.DepthEnable = true; // 深度テストを行う
 	depthStencilDesc3.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// 書き込み不可
 	depthStencilDesc3.DepthFunc = D3D12_COMPARISON_FUNC_GREATER;	// 大きいほうを採用
@@ -484,31 +484,68 @@ void RenderBase::GraphicsPipelineInit()
 	depthStencilDesc4.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み許可
 	depthStencilDesc4.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
 
-	// ベーシック
-	//basicPipeline = std::move(std::make_unique<GraphicsPipeline>());
-	//basicPipeline->SetShaderObject(basicShader.get());
-	//basicPipeline->SetCullMode(CullMode::CullBack);
-	//basicPipeline->SetTopologyType(TopologyType::TriangleTopology);
-	//basicPipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
-	//basicPipeline->Create();
+	// 3Dオブジェクト用
+	GraphicsPipelineManager::Create(
+		object3DShader.get(),
+		object3DRootSignature->GetRootSignature(),
+		CullMode::CullBack,
+		depthStencilDesc1,
+		TopologyType::TriangleTopology,
+		"Object3D");
 
 	// スプライト用
-	spritePipeline = std::move(std::make_unique<GraphicsPipeline>());
-	spritePipeline->SetShaderObject(spriteShader.get());
-	spritePipeline->SetCullMode(CullMode::None);
-	spritePipeline->SetDepthStencilDesc(depthStencilDesc2);
-	spritePipeline->SetTopologyType(TopologyType::TriangleTopology);
-	spritePipeline->SetRootSignature(spriteRootSignature->GetRootSignature());
-	spritePipeline->Create();
+	GraphicsPipelineManager::Create(
+		spriteShader.get(),
+		spriteRootSignature->GetRootSignature(),
+		CullMode::None,
+		depthStencilDesc2,
+		TopologyType::TriangleTopology,
+		"Sprite");
 
 	// 円形ゲージスプライト用
-	circleGaugeSpritePipeline = std::move(std::make_unique<GraphicsPipeline>());
-	circleGaugeSpritePipeline->SetShaderObject(circleGaugeSpriteShader.get());
-	circleGaugeSpritePipeline->SetCullMode(CullMode::None);
-	circleGaugeSpritePipeline->SetDepthStencilDesc(depthStencilDesc2);
-	circleGaugeSpritePipeline->SetTopologyType(TopologyType::TriangleTopology);
-	circleGaugeSpritePipeline->SetRootSignature(spriteRootSignature->GetRootSignature());
-	circleGaugeSpritePipeline->Create();
+	GraphicsPipelineManager::Create(
+		circleGaugeSpriteShader.get(),
+		spriteRootSignature->GetRootSignature(),
+		CullMode::None,
+		depthStencilDesc2,
+		TopologyType::TriangleTopology,
+		"CircleGaugeSprite");
+
+	// レンダーテクスチャ用
+	GraphicsPipelineManager::Create(
+		renderTextureShader.get(),
+		spriteRootSignature->GetRootSignature(),
+		CullMode::None,
+		depthStencilDesc2,
+		TopologyType::TriangleTopology,
+		"RenderTexture");
+
+	// シルエット用
+	GraphicsPipelineManager::Create(
+		silhouetteShader.get(),
+		object3DRootSignature->GetRootSignature(),
+		CullMode::CullBack,
+		depthStencilDesc3,
+		TopologyType::TriangleTopology,
+		"Silhouette");
+
+	// アウトライン用
+	GraphicsPipelineManager::Create(
+		outlineShader.get(),
+		object3DRootSignature->GetRootSignature(),
+		CullMode::CullFront,
+		depthStencilDesc4,
+		TopologyType::TriangleTopology,
+		"Outline");
+
+	// トゥーンレンダリング用
+	GraphicsPipelineManager::Create(
+		toonRenderShader.get(),
+		object3DRootSignature->GetRootSignature(),
+		CullMode::CullBack,
+		depthStencilDesc1,
+		TopologyType::TriangleTopology,
+		"ToonRendering");
 
 	// Line用
 	linePipeline = std::move(std::make_unique<GraphicsPipeline>());
@@ -518,49 +555,4 @@ void RenderBase::GraphicsPipelineInit()
 	linePipeline->SetTopologyType(TopologyType::LineTopology);
 	linePipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
 	linePipeline->Create();
-
-	// レンダーテクスチャ用
-	renderTexturePipeline = std::move(std::make_unique<GraphicsPipeline>());
-	renderTexturePipeline->SetShaderObject(renderTextureShader.get());
-	renderTexturePipeline->SetCullMode(CullMode::None);
-	renderTexturePipeline->SetDepthStencilDesc(depthStencilDesc2);
-	renderTexturePipeline->SetTopologyType(TopologyType::TriangleTopology);
-	renderTexturePipeline->SetRootSignature(spriteRootSignature->GetRootSignature());
-	renderTexturePipeline->Create();
-
-	// 3Dオブジェクト用
-	object3DPipeline = std::move(std::make_unique<GraphicsPipeline>());
-	object3DPipeline->SetShaderObject(object3DShader.get());
-	object3DPipeline->SetCullMode(CullMode::CullBack);
-	object3DPipeline->SetDepthStencilDesc(depthStencilDesc1);
-	object3DPipeline->SetTopologyType(TopologyType::TriangleTopology);
-	object3DPipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
-	object3DPipeline->Create();
-
-	// シルエット用
-	silhouettePipeline = std::move(std::make_unique<GraphicsPipeline>());
-	silhouettePipeline->SetShaderObject(silhouetteShader.get());
-	silhouettePipeline->SetCullMode(CullMode::CullBack);
-	silhouettePipeline->SetDepthStencilDesc(depthStencilDesc3);
-	silhouettePipeline->SetTopologyType(TopologyType::TriangleTopology);
-	silhouettePipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
-	silhouettePipeline->Create();
-
-	// アウトライン用
-	outlinePipeline = std::move(std::make_unique<GraphicsPipeline>());
-	outlinePipeline->SetShaderObject(outlineShader.get());
-	outlinePipeline->SetCullMode(CullMode::CullFront);
-	outlinePipeline->SetDepthStencilDesc(depthStencilDesc4);
-	outlinePipeline->SetTopologyType(TopologyType::TriangleTopology);
-	outlinePipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
-	outlinePipeline->Create();
-
-	// アウトライン用
-	toonRenderPipeline = std::move(std::make_unique<GraphicsPipeline>());
-	toonRenderPipeline->SetShaderObject(toonRenderShader.get());
-	toonRenderPipeline->SetCullMode(CullMode::CullBack);
-	toonRenderPipeline->SetDepthStencilDesc(depthStencilDesc1);
-	toonRenderPipeline->SetTopologyType(TopologyType::TriangleTopology);
-	toonRenderPipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
-	toonRenderPipeline->Create();
 }

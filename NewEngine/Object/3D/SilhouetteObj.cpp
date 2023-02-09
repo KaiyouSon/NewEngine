@@ -5,7 +5,8 @@ using namespace std;
 SilhouetteObj::SilhouetteObj() :
 	color(Color::black),
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform3D>),
-	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>)
+	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>),
+	graphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Silhouette"))
 {
 	// 定数バッファ初期化
 	constantBufferTransform->Init();	// 3D行列
@@ -40,7 +41,7 @@ void SilhouetteObj::Update(const SilhouetteObj* parent)
 	constantBufferColor->constantBufferMap->color = color / 255;
 	constantBufferColor->constantBufferMap->color.a = color.a / 255;
 }
-void SilhouetteObj::Draw()
+void SilhouetteObj::Draw(const BlendMode& blendMode)
 {
 	SetBlendMode(BlendMode::Alpha);
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
@@ -70,23 +71,23 @@ void SilhouetteObj::SetBlendMode(const BlendMode& blendMode)
 	switch (blendMode)
 	{
 	case BlendMode::Alpha: // αブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetSilhouettePipeline()->GetAlphaPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetAlphaPipeline());
 		break;
 
 	case BlendMode::Add:	// 加算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetSilhouettePipeline()->GetAddPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetAddPipeline());
 		break;
 
 	case BlendMode::Sub:	// 減算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetSilhouettePipeline()->GetSubPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetSubPipeline());
 		break;
 
 	case BlendMode::Inv:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetSilhouettePipeline()->GetInvPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetInvPipeline());
 		break;
 
 	case BlendMode::Screen:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(renderBase->GetSilhouettePipeline()->GetScreenPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetScreenPipeline());
 		break;
 
 	default:

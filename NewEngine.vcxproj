@@ -194,6 +194,7 @@
     <ClCompile Include="NewEngine\Render\Buffer\DepthBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp" />
+    <ClCompile Include="NewEngine\Render\GraphicsPipelineManager.cpp" />
     <ClCompile Include="NewEngine\Render\RenderBase.cpp" />
     <ClCompile Include="NewEngine\Render\RenderTarget.cpp" />
     <ClCompile Include="NewEngine\Render\RenderWindow.cpp" />
@@ -253,13 +254,14 @@
     <ClInclude Include="NewEngine\Render\Buffer\IndexBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\VertexBuffer.h" />
     <ClInclude Include="NewEngine\Render\GraphicsPipeline.h" />
+    <ClInclude Include="NewEngine\Render\GraphicsPipelineManager.h" />
     <ClInclude Include="NewEngine\Render\RenderBase.h" />
     <ClInclude Include="NewEngine\Render\RenderTarget.h" />
     <ClInclude Include="NewEngine\Render\RenderWindow.h" />
     <ClInclude Include="NewEngine\Render\RootSignature.h" />
     <ClInclude Include="NewEngine\Render\ScissorRectangle.h" />
     <ClInclude Include="NewEngine\Render\ShaderObject.h" />
-    <ClInclude Include="NewEngine\Render\Vertex.h" />
+    <ClInclude Include="NewEngine\Render\VertexBufferData.h" />
     <ClInclude Include="NewEngine\Render\Viewport.h" />
     <ClInclude Include="NewEngine\Object\Other\TextureManager.h" />
     <ClInclude Include="NewEngine\Util\BezierCurve.h" />
