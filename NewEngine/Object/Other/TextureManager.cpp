@@ -12,8 +12,7 @@ Texture* TextureManager::GetTexture(const std::string& textureTag)
 
 Texture* TextureManager::CreateTexture(const Color& color, const std::string& textureTag)
 {
-	std::unique_ptr<Texture> tex;
-	tex.reset(new Texture(color));
+	std::unique_ptr<Texture> tex = std::make_unique<Texture>(color);
 	textureMap.insert(std::make_pair(textureTag, std::move(tex)));
 
 	return textureMap[textureTag].get();

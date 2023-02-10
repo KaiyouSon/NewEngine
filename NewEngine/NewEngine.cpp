@@ -17,18 +17,10 @@ void NewEngineInit()
 		debugController->SetEnableGPUBasedValidation(false);
 	}
 #endif
-	// -------------------------------------------------------------------------------- //
 
 	RenderWindow::GetInstance()->CreateGameWindow();
 	RenderBase::GetInstance()->Init();
-	Sound::Init();
-	Random::Init();
-	InputManager::GetInstance()->Init();
-	GuiManager::GetInstance()->Init();
-	LoadManager::GetInstance()->Load();
-	SceneManager::GetInstance()->Init();
 
-	// -------------------------------------------------------------------------------- //
 #ifdef _DEBUG
 	ComPtr<ID3D12InfoQueue> infoQueue;
 	if (SUCCEEDED(RenderBase::GetInstance()->
@@ -54,6 +46,19 @@ void NewEngineInit()
 	//指定したエラーの表示を抑制する
 	infoQueue->PushStorageFilter(&filter);
 #endif
+
+	// -------------------------------------------------------------------------------- //
+
+
+	Sound::Init();
+	Random::Init();
+	InputManager::GetInstance()->Init();
+	GuiManager::GetInstance()->Init();
+	LoadManager::GetInstance()->Load();
+	SceneManager::GetInstance()->Init();
+
+	// -------------------------------------------------------------------------------- //
+
 }
 void NewEngineUpda()
 {

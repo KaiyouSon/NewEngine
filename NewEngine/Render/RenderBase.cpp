@@ -144,6 +144,7 @@ void RenderBase::CreateSRV(Texture& texture, const D3D12_RESOURCE_DESC& textureR
 	srvDesc.Format = textureResourceDesc.Format;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	// 2Dテクスチャ
+	//srvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;	// 2Dテクスチャ
 	srvDesc.Texture2D.MipLevels = textureResourceDesc.MipLevels;
 
 	// ハンドルの指す位置にシェーダーリソースビュー作成
@@ -297,7 +298,6 @@ void RenderBase::DescriptorHeapInit()
 }
 void RenderBase::CommandInit()
 {
-
 	HRESULT result;
 
 	// コマンドアロケータを生成
@@ -380,13 +380,11 @@ void RenderBase::SwapChainInit()
 }
 void RenderBase::FenceInit()
 {
-
 	HRESULT result;
 
 	// フェンスの生成
 	result = device->CreateFence(
 		fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(fence.GetAddressOf()));
-
 }
 void RenderBase::DepthBufferInit()
 {

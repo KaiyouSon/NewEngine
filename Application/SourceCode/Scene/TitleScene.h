@@ -4,10 +4,10 @@
 class TitleScene : public IScene
 {
 private:
-	Object3D obj;
-	Object3D skyDome;
+	//Object3D obj;
+	//Object3D skyDome;
 	Sprite sprite;
-	RenderTexture renderTexture;
+	//RenderTexture renderTexture;
 
 public:
 	void Init() override;

@@ -2,6 +2,7 @@
 #include "MathUtil.h"
 #include "RenderBase.h"
 #include <memory>
+#include <d3dx12.h>
 using namespace std;
 
 Sprite::Sprite() :
@@ -47,7 +48,7 @@ void Sprite::Update()
 	constantBufferColor->constantBufferMap->color.a = color.a / 255;
 
 	// 頂点バッファーに頂点を転送
-	TransferTexturePos();
+	TransferTexturePos(size);
 }
 
 void Sprite::Draw(const BlendMode& blendMode)
@@ -105,11 +106,11 @@ void Sprite::SetBlendMode(const BlendMode& blendMode)
 	}
 }
 
-void Sprite::TransferTexturePos()
+void Sprite::TransferTexturePos(const Vec2& size)
 {
 	// 新しいのサイズ
-	float width = texture.size.x;
-	float height = texture.size.y;
+	float width = size.x == 0 ? texture.size.x : size.x;
+	float height = size.y == 0 ? texture.size.y : size.y;
 
 	// 現在のサイズ
 	float width2 = vertices[0].pos.x - vertices[2].pos.x;

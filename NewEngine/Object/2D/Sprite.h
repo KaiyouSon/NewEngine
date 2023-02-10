@@ -27,7 +27,7 @@ public:
 	GraphicsPipeline* graphicsPipeline;
 
 private:
-	void TransferTexturePos();
+	void TransferTexturePos(const Vec2& size = 0);
 
 public:
 	Sprite();

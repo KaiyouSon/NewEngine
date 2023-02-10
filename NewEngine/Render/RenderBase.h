@@ -48,6 +48,9 @@ private:
 public:
 	inline ID3D12Device* GetDevice() const { return device.Get(); }
 	inline ID3D12GraphicsCommandList* GetCommandList() const { return commandList.Get(); }
+	inline ID3D12CommandQueue* GetCommandQueue() const { return commandQueue.Get(); }
+	inline ID3D12CommandAllocator* GetCommandAllocator() const { return commandAllocator.Get(); }
+	inline ID3D12Fence* GetFence() const { return fence.Get(); }
 	inline ID3D12DescriptorHeap* GetSrvDescHeap() const { return srvDescHeap.Get(); }
 
 	inline RootSignature* GetObject3DRootSignature() const { return object3DRootSignature.get(); }
