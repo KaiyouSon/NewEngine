@@ -29,7 +29,6 @@ public:
 	void PostDraw();
 	void SetObject3DDrawCommand();
 	void SetSpriteDrawCommand();
-	void CreateSRV(Texture& texture, const D3D12_RESOURCE_DESC& textureResourceDesc);
 	void CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC* rtvDesc);
 	void CreateDSV(DepthBuffer& depthBuffer);
 
@@ -51,7 +50,6 @@ public:
 	inline ID3D12CommandQueue* GetCommandQueue() const { return commandQueue.Get(); }
 	inline ID3D12CommandAllocator* GetCommandAllocator() const { return commandAllocator.Get(); }
 	inline ID3D12Fence* GetFence() const { return fence.Get(); }
-	inline ID3D12DescriptorHeap* GetSrvDescHeap() const { return srvDescHeap.Get(); }
 
 	inline RootSignature* GetObject3DRootSignature() const { return object3DRootSignature.get(); }
 	inline RootSignature* GetSpriteRootSignature() const { return spriteRootSignature.get(); }
@@ -88,10 +86,8 @@ private:
 
 	// ティスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> rtvDescHeap;		// rtv用デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> srvDescHeap;		// srv用デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> dsvDescHeap;		// dsv用デスクリプタヒープ
 	UINT rtvIncrementIndex;
-	UINT srvIncrementIndex;
 	UINT dsvIncrementIndex;
 
 	// シェーダコンパイラー

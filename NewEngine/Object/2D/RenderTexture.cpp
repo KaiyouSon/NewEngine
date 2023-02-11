@@ -2,6 +2,7 @@
 #include "Camera.h"
 #include "RenderBase.h"
 #include "RenderWindow.h"
+#include "TextureManager.h"
 #include <memory>
 using namespace std;
 
@@ -74,7 +75,7 @@ RenderTexture::RenderTexture()
 
 	depthBuffer.Create();
 	renderTarget.buffer = buffer;
-	renderBase->CreateSRV(*this, texturenResourceDesc);
+	TextureManager::CreateSRV(*this);
 	renderBase->CreateRTV(renderTarget, &rtvDesc);
 	renderBase->CreateDSV(depthBuffer);
 }

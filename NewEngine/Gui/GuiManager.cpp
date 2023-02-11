@@ -1,6 +1,7 @@
 #include "GuiManager.h"
 #include "RenderBase.h"
 #include "RenderWindow.h"
+#include "TextureManager.h"
 #include "Util.h"
 #include <imgui.h>
 #include <imgui_impl_dx12.h>
@@ -23,9 +24,9 @@ void GuiManager::Init()
 		renderBase->GetDevice(),
 		NumFramesInFlight,
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
-		renderBase->GetSrvDescHeap(),
-		renderBase->GetSrvDescHeap()->GetCPUDescriptorHandleForHeapStart(),
-		renderBase->GetSrvDescHeap()->GetGPUDescriptorHandleForHeapStart());
+		TextureManager::GetSrvDescHeap(),
+		TextureManager::GetSrvDescHeap()->GetCPUDescriptorHandleForHeapStart(),
+		TextureManager::GetSrvDescHeap()->GetGPUDescriptorHandleForHeapStart());
 }
 
 void GuiManager::PreDraw()
@@ -44,7 +45,7 @@ void GuiManager::PostDraw()
 	ImGui::Render();
 	// SRVヒープの設定コマンド
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
-	auto srvDescHeap = renderBase->GetSrvDescHeap();
+	auto srvDescHeap = TextureManager::GetSrvDescHeap();
 	renderBase->GetCommandList()->SetDescriptorHeaps(1, &srvDescHeap);
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), renderBase->GetCommandList());
 }

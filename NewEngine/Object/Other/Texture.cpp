@@ -1,5 +1,6 @@
 #include "Texture.h"
 #include "RenderBase.h"
+#include "TextureManager.h"
 #pragma push
 #pragma warning(disable:4023)
 #include <DirectXTex.h>
@@ -72,7 +73,7 @@ Texture::Texture(const Color& color) : result(HRESULT()), isMaterial(false)
 
 	UploadHeap(16);
 
-	RenderBase::GetInstance()->CreateSRV(*this, textureResourceDesc);
+	TextureManager::CreateSRV(*this);
 }
 
 Texture::Texture(const std::string& filePath, const bool& isDirectoryPath) :
@@ -216,7 +217,7 @@ Texture::Texture(const std::string& filePath, const bool& isDirectoryPath) :
 
 	//UploadHeap(16);
 
-	RenderBase::GetInstance()->CreateSRV(*this, textureResourceDesc);
+	TextureManager::CreateSRV(*this);
 }
 
 void Texture::UploadHeap(const Vec2& size)

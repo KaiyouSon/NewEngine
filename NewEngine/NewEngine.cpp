@@ -69,7 +69,7 @@ void NewEngineUpda()
 void NewEnginePreDraw()
 {
 	// SRVヒープの設定コマンド
-	auto temp = RenderBase::GetInstance()->GetSrvDescHeap();
+	auto temp = TextureManager::GetSrvDescHeap();
 	RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &temp);
 	SceneManager::GetInstance()->DrawRenderTexture();
 
