@@ -28,6 +28,7 @@ public:
 
 private:
 	void TransferTexturePos(const Vec2& size = 0);
+	void SetBlendMode(const BlendMode& blendMode);
 
 public:
 	Sprite();
@@ -35,9 +36,7 @@ public:
 	void Update();
 	void Draw(const BlendMode& blendMode = BlendMode::Alpha);
 
-	inline Vec2 GetTextureSize() { return texture.size; }
 	void SetTextureRect(const Vec2& leftTopPos, const Vec2 rightDownPos);
 
-	void SetBlendMode(const BlendMode& blendMode);
 };
 

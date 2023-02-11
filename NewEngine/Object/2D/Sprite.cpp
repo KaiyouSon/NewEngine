@@ -1,12 +1,14 @@
 #include "Sprite.h"
 #include "MathUtil.h"
 #include "RenderBase.h"
+#include "TextureManager.h"
 #include <memory>
 #include <d3dx12.h>
 using namespace std;
 
 Sprite::Sprite() :
-	pos(0), scale(1), rot(0), anchorPoint(0.5f),
+	texture(*TextureManager::GetTexture("White")),
+	pos(0), scale(1), size(0), rot(0),color(Color::white), anchorPoint(0.5f),
 	vertexBuffer(new VertexBuffer<VertexPosUv>),
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform2D>),
 	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>),
@@ -69,9 +71,6 @@ void Sprite::Draw(const BlendMode& blendMode)
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		1, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
 
-	//// SRVヒープの設定コマンド
-	//auto temp = renderBase->GetSrvDescHeap();
-	//renderBase->GetCommandList()->SetDescriptorHeaps(1, &temp);
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
 		renderBase->GetSpriteRootSignature()->GetRootDescriptorTableIndex(), texture.GetGpuHandle());

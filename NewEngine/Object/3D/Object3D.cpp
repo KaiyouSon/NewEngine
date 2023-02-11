@@ -94,9 +94,6 @@ void Object3D::Draw(const BlendMode& blendMode)
 		2, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
 	LightManager::GetInstance()->Draw();
 
-	// SRVヒープの設定コマンド
-	//auto temp = renderBase->GetSrvDescHeap();
-	//renderBase->GetCommandList()->SetDescriptorHeaps(1, &temp);
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
 		renderBase->GetObject3DRootSignature()->GetRootDescriptorTableIndex(), texture.GetGpuHandle());
