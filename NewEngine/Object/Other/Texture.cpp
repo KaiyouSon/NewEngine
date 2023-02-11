@@ -16,16 +16,9 @@ Texture::Texture(const Color& color) : result(HRESULT()), isMaterial(false)
 	// ヒープの設定
 	D3D12_HEAP_PROPERTIES textureHeapProp{};
 	textureHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
-	//textureHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
-	//textureHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
-	//textureHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
 
 	// リソース設定
 	D3D12_RESOURCE_DESC textureResourceDesc{};
-	//textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	//textureResourceDesc.Format = DXGI_FORMAT_UNKNOWN;
-	//textureResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-
 	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	textureResourceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 	textureResourceDesc.Width = 1; // 幅
@@ -54,27 +47,30 @@ Texture::Texture(const Color& color) : result(HRESULT()), isMaterial(false)
 	RenderBase::GetInstance()->GetDevice()->
 		GetCopyableFootprints(&textureResourceDesc, 0, 1, 0, &footprint, nullptr, nullptr, &total_bytes);
 
+	// ヒープの設定
+	D3D12_HEAP_PROPERTIES textureHeapProp1{};
+	textureHeapProp1.Type = D3D12_HEAP_TYPE_UPLOAD;
+	CD3DX12_RESOURCE_DESC textureResourceDesc1 =
+		CD3DX12_RESOURCE_DESC::Buffer(total_bytes);
+
+	// テクスチャバッファの生成
+	result = RenderBase::GetInstance()->GetDevice()->
+		CreateCommittedResource(
+			&textureHeapProp1,
+			D3D12_HEAP_FLAG_NONE,
+			&textureResourceDesc1,
+			D3D12_RESOURCE_STATE_GENERIC_READ,
+			nullptr,
+			IID_PPV_ARGS(&uploadBuffer));
+	assert(SUCCEEDED(result));
+
+	Color* ptr = nullptr;
+	uploadBuffer->Map(0, nullptr, (void**)&ptr);
+	assert(SUCCEEDED(result));
+	Color col = { 1,1,1,1 };
+	memcpy(ptr, &col, sizeof(Color));
+
 	UploadHeap(16);
-
-	//Texture* textureMap;
-	//textureMap = this;
-
-	//// テクスチャバッファのマッピング
-	//result = buffer->Map(0, nullptr, (void**)&textureMap);	// マッピング
-	//assert(SUCCEEDED(result));
-
-	//Color tempColor;
-	//tempColor = color / 255;
-	//tempColor.a = color.a / 255;
-
-	// テクスチャバッファにデータ転送
-	//result = buffer->WriteToSubresource(
-	//	0,
-	//	nullptr, // 全領域へコピー
-	//	&tempColor,	// 元データアドレス
-	//	sizeof(Color) * 1, // 1ラインサイズ
-	//	sizeof(Color) * 1 // 全サイズ
-	//);
 
 	RenderBase::GetInstance()->CreateSRV(*this, textureResourceDesc);
 }
@@ -116,20 +112,20 @@ Texture::Texture(const std::string& filePath, const bool& isDirectoryPath) :
 	metadata.format = MakeSRGB(metadata.format);
 
 	// ヒープの設定
-	D3D12_HEAP_PROPERTIES textureHeapProp{};
-	textureHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
-	textureHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
-	textureHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
+	CD3DX12_HEAP_PROPERTIES textureHeapProp =
+		CD3DX12_HEAP_PROPERTIES(
+			D3D12_CPU_PAGE_PROPERTY_WRITE_BACK,
+			D3D12_MEMORY_POOL_L0);
 
 	// リソース設定
-	D3D12_RESOURCE_DESC textureResourceDesc{};
-	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	textureResourceDesc.Format = metadata.format;
-	textureResourceDesc.Width = metadata.width; // 幅
-	textureResourceDesc.Height = (UINT)metadata.height; // 高さ
-	textureResourceDesc.DepthOrArraySize = (UINT16)metadata.arraySize;
-	textureResourceDesc.MipLevels = (UINT16)metadata.mipLevels;
-	textureResourceDesc.SampleDesc.Count = 1;
+	CD3DX12_RESOURCE_DESC textureResourceDesc =
+		CD3DX12_RESOURCE_DESC::Tex2D(
+			metadata.format,
+			(UINT64)metadata.width,
+			(UINT)metadata.height,
+			(UINT16)metadata.arraySize,
+			(UINT16)metadata.mipLevels,
+			1);
 
 	// テクスチャのサイズをセット
 	size = { (float)textureResourceDesc.Width, (float)textureResourceDesc.Height };
@@ -140,16 +136,20 @@ Texture::Texture(const std::string& filePath, const bool& isDirectoryPath) :
 			&textureHeapProp,
 			D3D12_HEAP_FLAG_NONE,
 			&textureResourceDesc,
+			//D3D12_RESOURCE_STATE_COPY_DEST,
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
 			IID_PPV_ARGS(&buffer));
 	assert(SUCCEEDED(result));
+
+
 
 	// 全ミップマップについて
 	for (size_t i = 0; i < metadata.mipLevels; i++)
 	{
 		// 全ミップマップレベルを指定してイメージを取得
 		const Image* img = scratchImg.GetImage(i, 0, 0);
+
 		// テクスチャバッファにデータ転送
 		result = buffer->WriteToSubresource(
 			(UINT)i,
@@ -161,44 +161,66 @@ Texture::Texture(const std::string& filePath, const bool& isDirectoryPath) :
 		assert(SUCCEEDED(result));
 	}
 
+
+	//RenderBase::GetInstance()->GetDevice()->
+//	GetCopyableFootprints(&textureResourceDesc, 0, 1, 0, &footprint, nullptr, nullptr, &total_bytes);
+
+	//// ヒープの設定
+	//D3D12_HEAP_PROPERTIES textureHeapProp1{};
+	//textureHeapProp1.Type = D3D12_HEAP_TYPE_UPLOAD;
+	//CD3DX12_RESOURCE_DESC textureResourceDesc1 =
+	//	CD3DX12_RESOURCE_DESC::Buffer(total_bytes);
+
+	//// テクスチャバッファの生成
+	//result = RenderBase::GetInstance()->GetDevice()->
+	//	CreateCommittedResource(
+	//		&textureHeapProp1,
+	//		D3D12_HEAP_FLAG_NONE,
+	//		&textureResourceDesc1,
+	//		D3D12_RESOURCE_STATE_GENERIC_READ,
+	//		nullptr,
+	//		IID_PPV_ARGS(&uploadBuffer));
+	//assert(SUCCEEDED(result));
+
+	//// = scratchImg.GetImage(0, 0, 0);
+	//int test = sizeof(Image) * scratchImg.GetImageCount();
+
+	//const Image* img = nullptr;
+	//uploadBuffer->Map(0, nullptr, (void**)&img);
+	//img = scratchImg.GetImages();
+
+	//uint8_t* pixel = nullptr;
+	//uploadBuffer->Map(0, nullptr, (void**)&pixel);
+	//pixel = scratchImg.GetPixels();
+
+	// 全ミップマップについて
+	//for (size_t i = 0; i < metadata.mipLevels; i++)
+	//{
+	//	// 全ミップマップレベルを指定してイメージを取得
+	//	//img = scratchImg.GetImage(i, 0, 0);
+
+	//	const Image* scratchImage = scratchImg.GetImage(i, 0, 0);
+	//	memcpy(img->pixels, &scratchImage, sizeof(Image));
+
+
+	//	//// テクスチャバッファにデータ転送
+	//	//result = buffer->WriteToSubresource(
+	//	//	(UINT)i,
+	//	//	nullptr,				// 全領域へコピー
+	//	//	img->pixels,			// 元データアドレス
+	//	//	(UINT)img->rowPitch,	// １ラインサイズ
+	//	//	(UINT)img->slicePitch	// １枚サイズ
+	//	//);
+	//	//assert(SUCCEEDED(result));
+	//}
+
+	//UploadHeap(16);
+
 	RenderBase::GetInstance()->CreateSRV(*this, textureResourceDesc);
 }
 
 void Texture::UploadHeap(const Vec2& size)
 {
-	// ヒープの設定
-	D3D12_HEAP_PROPERTIES textureHeapProp{};
-	textureHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
-	CD3DX12_RESOURCE_DESC textureResourceDesc =
-		CD3DX12_RESOURCE_DESC::Buffer(total_bytes);
-
-	// テクスチャバッファの生成
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc,
-			D3D12_RESOURCE_STATE_GENERIC_READ,
-			nullptr,
-			IID_PPV_ARGS(&uploadBuffer));
-	assert(SUCCEEDED(result));
-
-	Color* ptr = nullptr;
-	uploadBuffer->Map(0, nullptr, (void**)&ptr);
-	assert(SUCCEEDED(result));
-
-	Color tempColor;
-	tempColor = Color::white / 255;
-	tempColor.a = 1;
-
-	//ptr = &tempColor;
-
-	//////int a = sizeof(Color);
-
-	memcpy(ptr, &tempColor, 16);
-
-	//uploadBuffer->SetName(L"UploadBuffer");
-
 	D3D12_TEXTURE_COPY_LOCATION destLocation;
 	destLocation.pResource = buffer.Get();
 	destLocation.Type = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX;
@@ -227,16 +249,16 @@ void Texture::UploadHeap(const Vec2& size)
 	ID3D12CommandList* list[] = { iCommandList };
 	iCommandQueue->ExecuteCommandLists(1, list);
 
-	static int index = 0;
+	RenderBase::GetInstance()->PreIncrimentFenceValue();
 
 	// コマンドの実行完了を待つ
-	iCommandQueue->Signal(RenderBase::GetInstance()->GetFence(), ++index);
+	iCommandQueue->Signal(RenderBase::GetInstance()->GetFence(), RenderBase::GetInstance()->GetFenceValue());
 
 	auto test = RenderBase::GetInstance()->GetFence()->GetCompletedValue();
-	if (RenderBase::GetInstance()->GetFence()->GetCompletedValue() != index)
+	if (RenderBase::GetInstance()->GetFence()->GetCompletedValue() != RenderBase::GetInstance()->GetFenceValue())
 	{
 		HANDLE event = CreateEvent(nullptr, false, false, nullptr);
-		RenderBase::GetInstance()->GetFence()->SetEventOnCompletion(index, event);
+		RenderBase::GetInstance()->GetFence()->SetEventOnCompletion(RenderBase::GetInstance()->GetFenceValue(), event);
 		WaitForSingleObject(event, INFINITE);
 		CloseHandle(event);
 	}

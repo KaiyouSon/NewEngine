@@ -11,7 +11,6 @@ private:
 	D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle = D3D12_CPU_DESCRIPTOR_HANDLE(); //SRVのハンドル(CPU側)
 	D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle = D3D12_GPU_DESCRIPTOR_HANDLE(); //SRVのハンドル(GPU側)
 
-
 public:
 	HRESULT result;
 	Microsoft::WRL::ComPtr<ID3D12Resource> uploadBuffer; //テクスチャのリソース

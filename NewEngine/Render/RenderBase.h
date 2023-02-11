@@ -59,6 +59,9 @@ public:
 	inline GraphicsPipeline* GetLinePipeline() const { return linePipeline.get(); }
 
 	inline Viewport* GetViewport() const { return viewport.get(); }
+
+	inline void PreIncrimentFenceValue() { ++fenceVal; }
+	inline UINT64 GetFenceValue() { return fenceVal; }
 private:
 	//friend Singleton<RenderBase>;
 

@@ -264,9 +264,6 @@
     <ClCompile Include="NewEngine\Light\Fog.cpp">
       <Filter>NewEngine\Source\Light</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\LoadManager.cpp">
-      <Filter>Application\Source</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Render\Buffer\DepthBuffer.cpp">
       <Filter>NewEngine\Source\Render\Buffer</Filter>
     </ClCompile>
@@ -281,6 +278,9 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Object\2D\RenderTexture.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\LoadManager.cpp">
+      <Filter>Application\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

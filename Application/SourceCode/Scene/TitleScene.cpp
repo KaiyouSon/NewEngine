@@ -11,9 +11,10 @@ void TitleScene::Init()
 
 	//skyDome.model = Model("SkyDome");
 
-	sprite.texture = *TextureManager::GetTexture("White");
+	//sprite.texture = *TextureManager::GetTexture("White");
+	sprite.texture = *TextureManager::GetTexture("pic");
 	sprite.size = { 256,256 };
-	sprite.anchorPoint = 0;
+	sprite.pos = GetWindowHalfSize();
 
 
 	//ID3D12GraphicsCommandList* iCommandList = RenderBase::GetInstance()->GetCommandList();
