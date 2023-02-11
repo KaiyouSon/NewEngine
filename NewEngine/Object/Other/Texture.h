@@ -13,20 +13,14 @@ private:
 
 public:
 	HRESULT result;
-	Microsoft::WRL::ComPtr<ID3D12Resource> uploadBuffer; //テクスチャのリソース
 	Microsoft::WRL::ComPtr<ID3D12Resource> buffer; //テクスチャのリソース
 	Vec2 size;
 	bool isMaterial;
-	D3D12_PLACED_SUBRESOURCE_FOOTPRINT  footprint;
-	UINT64  total_bytes = 0;
-	UINT64 index = 0;
 
 public:
 	Texture();
 	Texture(const Color& color);
 	Texture(const std::string& filePath, const bool& isDirectoryPath = false);
-
-	void UploadHeap(const Vec2& size);
 
 public: // セッター
 	inline void SetCpuHandle(const D3D12_CPU_DESCRIPTOR_HANDLE& cpuHandle) { this->cpuHandle = cpuHandle; }

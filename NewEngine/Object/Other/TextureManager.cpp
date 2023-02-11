@@ -78,3 +78,38 @@ void TextureManager::CreateSRV(Texture& texture)
 
 	srvIncrementIndex++;
 }
+
+void TextureManager::ExcuteComandList()
+{
+	ID3D12GraphicsCommandList* iCommandList = RenderBase::GetInstance()->GetCommandList();
+
+	iCommandList->Close();
+
+	ID3D12CommandQueue* iCommandQueue = RenderBase::GetInstance()->GetCommandQueue();
+
+	ID3D12CommandList* list[] = { iCommandList };
+	iCommandQueue->ExecuteCommandLists(1, list);
+
+	RenderBase::GetInstance()->PreIncrimentFenceValue();
+
+	// コマンドの実行完了を待つ
+	iCommandQueue->Signal(RenderBase::GetInstance()->GetFence(), RenderBase::GetInstance()->GetFenceValue());
+
+	auto test = RenderBase::GetInstance()->GetFence()->GetCompletedValue();
+	if (RenderBase::GetInstance()->GetFence()->GetCompletedValue() != RenderBase::GetInstance()->GetFenceValue())
+	{
+		HANDLE event = CreateEvent(nullptr, false, false, nullptr);
+		RenderBase::GetInstance()->GetFence()->SetEventOnCompletion(RenderBase::GetInstance()->GetFenceValue(), event);
+		WaitForSingleObject(event, INFINITE);
+		CloseHandle(event);
+	}
+
+	HRESULT result;
+
+	// キューをクリア
+	result = RenderBase::GetInstance()->GetCommandAllocator()->Reset();
+	assert(SUCCEEDED(result));
+	// 再びコマンドリストを貯める準備
+	result = iCommandList->Reset(RenderBase::GetInstance()->GetCommandAllocator(), nullptr);
+	assert(SUCCEEDED(result));
+}

@@ -12,8 +12,10 @@ void LoadManager::ModelLoad()
 
 void LoadManager::TextureLoad()
 {
-	//TextureManager::CreateTexture(Color::white, "White");
+	TextureManager::CreateTexture(Color::white, "White");
 	TextureManager::LoadTexture("pic.png", "pic");
+
+	//TextureManager::ExcuteComandList();
 }
 
 void LoadManager::SoundLoad()

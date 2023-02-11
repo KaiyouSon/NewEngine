@@ -11,37 +11,10 @@ void TitleScene::Init()
 
 	//skyDome.model = Model("SkyDome");
 
-	//sprite.texture = *TextureManager::GetTexture("White");
-	sprite.texture = *TextureManager::GetTexture("pic");
+	sprite.texture = *TextureManager::GetTexture("White");
+	//sprite.texture = *TextureManager::GetTexture("pic");
 	sprite.size = { 256,256 };
 	sprite.pos = GetWindowHalfSize();
-
-
-	//ID3D12GraphicsCommandList* iCommandList = RenderBase::GetInstance()->GetCommandList();
-
-	//iCommandList->Close();
-	//ID3D12CommandQueue* iCommandQueue = RenderBase::GetInstance()->GetCommandQueue();
-
-	//ID3D12CommandList* list[] = { iCommandList };
-	//iCommandQueue->ExecuteCommandLists(1, list);
-
-	//// コマンドの実行完了を待つ
-	//iCommandQueue->Signal(RenderBase::GetInstance()->GetFence(), ++sprite.texture.index);
-	//if (RenderBase::GetInstance()->GetFence()->GetCompletedValue() != sprite.texture.index)
-	//{
-	//	HANDLE event = CreateEvent(nullptr, false, false, nullptr);
-	//	RenderBase::GetInstance()->GetFence()->SetEventOnCompletion(sprite.texture.index, event);
-	//	WaitForSingleObject(event, INFINITE);
-	//	CloseHandle(event);
-	//}
-
-	//HRESULT result;
-	//// キューをクリア
-	//result = RenderBase::GetInstance()->GetCommandAllocator()->Reset();
-	//assert(SUCCEEDED(result));
-	//// 再びコマンドリストを貯める準備
-	//result = iCommandList->Reset(RenderBase::GetInstance()->GetCommandAllocator(), nullptr);
-	//assert(SUCCEEDED(result));
 }
 
 static bool isDraw = false;

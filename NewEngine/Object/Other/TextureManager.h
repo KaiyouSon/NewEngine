@@ -19,5 +19,7 @@ public:
 	static void CreateDescriptorHeap();
 	static void CreateSRV(Texture& texture);
 	static inline ID3D12DescriptorHeap* GetSrvDescHeap() { return srvDescHeap.Get(); }
+
+	static void ExcuteComandList();
 };
 
