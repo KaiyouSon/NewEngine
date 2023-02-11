@@ -12,15 +12,12 @@ private:
 	D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle = D3D12_GPU_DESCRIPTOR_HANDLE(); //SRVのハンドル(GPU側)
 
 public:
-	HRESULT result;
 	Microsoft::WRL::ComPtr<ID3D12Resource> buffer; //テクスチャのリソース
 	Vec2 size;
 	bool isMaterial;
 
 public:
-	Texture();
-	Texture(const Color& color);
-	Texture(const std::string& filePath, const bool& isDirectoryPath = false);
+	Texture() {};
 
 public: // セッター
 	inline void SetCpuHandle(const D3D12_CPU_DESCRIPTOR_HANDLE& cpuHandle) { this->cpuHandle = cpuHandle; }

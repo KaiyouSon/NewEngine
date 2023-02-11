@@ -6,7 +6,7 @@ void LoadManager::ModelLoad()
 	//ModelManager::LoadModel("Sphere", "Sphere", true);
 	//ModelManager::LoadModel("SkyDome", "SkyDome");
 	//ModelManager::LoadModel("Ground", "Ground");
-	//ModelManager::LoadModel("AttackEnemy", "AttackEnemy", true);
+	ModelManager::LoadModel("AttackEnemy", "AttackEnemy", true);
 	//ModelManager::LoadModel("player", "Player", true);
 }
 

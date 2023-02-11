@@ -255,9 +255,6 @@
     <ClCompile Include="NewEngine\Object\Other\Material.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\Other\Texture.cpp">
-      <Filter>NewEngine\Source\Object\Other</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\TextureManager.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>

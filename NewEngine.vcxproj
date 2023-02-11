@@ -181,7 +181,6 @@
     <ClCompile Include="NewEngine\Object\2D\CircleGaugeSprite.cpp" />
     <ClCompile Include="NewEngine\Object\2D\RenderTexture.cpp" />
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp" />
-    <ClCompile Include="NewEngine\Object\Other\Texture.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Camera.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Line.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Material.cpp" />

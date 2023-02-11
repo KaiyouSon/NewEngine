@@ -15,6 +15,7 @@ public:
 	static Texture* GetTexture(const std::string& textureTag);
 	static Texture* CreateTexture(const Color& color, const std::string& textureTag);
 	static Texture* LoadTexture(const std::string& filePath, const std::string& textureTag);
+	static Texture LoadMaterialTexture(const std::string& filePath);
 
 	static void CreateDescriptorHeap();
 	static void CreateSRV(Texture& texture);

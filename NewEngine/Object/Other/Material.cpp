@@ -90,7 +90,7 @@ Material::Material(std::string filePath) :
 			lineStream >> textureName;
 
 			// テクスチャ読み込み
-			texture = Texture(directoryPath + textureName, true);
+			texture = TextureManager::LoadMaterialTexture(directoryPath + textureName);
 			texture.isMaterial = true;
 		}
 	}

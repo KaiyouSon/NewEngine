@@ -6,13 +6,13 @@ void TitleScene::Init()
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
-	//obj.model = Model("AttackEnemy", true);
-	//obj.rot.y = Radian(180);
+	obj.model = Model("AttackEnemy", true);
+	obj.rot.y = Radian(180);
 
 	//skyDome.model = Model("SkyDome");
 
-	sprite.texture = *TextureManager::GetTexture("White");
-	//sprite.texture = *TextureManager::GetTexture("pic");
+	//sprite.texture = *TextureManager::GetTexture("White");
+	sprite.texture = *TextureManager::GetTexture("pic");
 	sprite.size = { 256,256 };
 	sprite.pos = GetWindowHalfSize();
 }
