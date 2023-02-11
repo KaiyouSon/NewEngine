@@ -14,13 +14,13 @@
 class RenderTexture : public Texture
 {
 private:
-	HRESULT result;
-
-	RenderTarget renderTarget;
-	DepthBuffer depthBuffer;
 	Transform transform;
 
 	static const float clearColor[4];
+
+public:
+	RenderTarget renderTarget;
+	DepthBuffer depthBuffer;
 
 public:
 	RenderTexture();
