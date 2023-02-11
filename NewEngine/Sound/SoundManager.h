@@ -10,11 +10,11 @@ class SoundManager
 private:
 	static IXAudio2MasteringVoice* masterVoice;
 	static Microsoft::WRL::ComPtr<IXAudio2> xAudio2;
-	static std::map<std::string, Sound> soundMap;
+	static std::map<std::string, std::unique_ptr<Sound>> soundMap;
 
 public:
-	static Sound GetSound(const std::string& soundTag);
-	static Sound LoadSound(const std::string& filePath, const std::string soundTag);
+	static Sound* GetSound(const std::string& soundTag);
+	static Sound* LoadSound(const std::string& filePath, const std::string soundTag);
 	static void Play(const std::string soundTag, const bool& isRoop = false);
 	static void Stop(const std::string soundTag);
 	static bool GetIsPlaying(const std::string soundTag);
