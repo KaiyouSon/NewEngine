@@ -1,4 +1,5 @@
 #include "LoadManager.h"
+#include "NewEngine.h"
 
 void LoadManager::ModelLoad()
 {
@@ -21,6 +22,7 @@ void LoadManager::TextureLoad()
 
 void LoadManager::SoundLoad()
 {
+	SoundManager::LoadSound("Tutorial_BGM.wav", "BGM");
 }
 
 void LoadManager::Load()

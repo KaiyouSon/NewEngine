@@ -115,6 +115,12 @@
     <Filter Include="NewEngine\Header\Object\Other">
       <UniqueIdentifier>{1d799c42-18cb-46b5-83c2-5b012a786d2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NewEngine\Source\Sound">
+      <UniqueIdentifier>{85d7aaa5-e8a8-4a6d-9861-cefb5831292f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Sound">
+      <UniqueIdentifier>{924c731e-5f51-4001-a0dc-7fdcdb05bee1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -193,9 +199,6 @@
       <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Util\Random.cpp">
-      <Filter>NewEngine\Source\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Util\Sound.cpp">
       <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Util\Transform.cpp">
@@ -278,6 +281,12 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\LoadManager.cpp">
       <Filter>Application\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Sound\SoundManager.cpp">
+      <Filter>NewEngine\Source\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Sound\Sound.cpp">
+      <Filter>NewEngine\Source\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -363,9 +372,6 @@
       <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Util\Singleton.h">
-      <Filter>NewEngine\Header\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Util\Sound.h">
       <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Util\Transform.h">
@@ -460,6 +466,12 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Render\GraphicsPipelineManager.h">
       <Filter>NewEngine\Header\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Sound\SoundManager.h">
+      <Filter>NewEngine\Header\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Sound\Sound.h">
+      <Filter>NewEngine\Header\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

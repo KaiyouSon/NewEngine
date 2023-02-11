@@ -1,5 +1,5 @@
 #pragma once
-#include "NewEngine.h"
+#include "Singleton.h"
 
 template<typename T> class Singleton;
 

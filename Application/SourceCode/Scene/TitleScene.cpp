@@ -14,8 +14,9 @@ void TitleScene::Init()
 	//sprite.texture = *TextureManager::GetTexture("White");
 	//sprite.texture = *TextureManager::GetTexture("pic");
 	sprite.texture = *TextureManager::GetRenderTexture("PostEffect");
-	//sprite.size = { 256,256 };
 	sprite.pos = GetWindowHalfSize();
+
+	SoundManager::Play("BGM");
 }
 
 static bool isDraw = false;
@@ -37,8 +38,8 @@ void TitleScene::Update()
 	////obj.rot.y += Radian(1);
 	//const float speed = 10;
 
-	sprite.pos.x += (Key::GetKey(DIK_RIGHT) - Key::GetKey(DIK_LEFT)) * 5.f;
-	sprite.pos.y += (Key::GetKey(DIK_DOWN) - Key::GetKey(DIK_UP)) * 5.f;
+	//sprite.pos.x += (Key::GetKey(DIK_RIGHT) - Key::GetKey(DIK_LEFT)) * 5.f;
+	//sprite.pos.y += (Key::GetKey(DIK_DOWN) - Key::GetKey(DIK_UP)) * 5.f;
 	//sprite.color.a += Key::GetKey(DIK_Q) - Key::GetKey(DIK_E);
 
 	//obj.pos.x += (Key::GetKey(DIK_D) - Key::GetKey(DIK_A));

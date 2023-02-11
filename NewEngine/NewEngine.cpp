@@ -50,8 +50,8 @@ void NewEngineInit()
 	// -------------------------------------------------------------------------------- //
 
 
-	Sound::Init();
 	Random::Init();
+	SoundManager::Init();
 	InputManager::GetInstance()->Init();
 	GuiManager::GetInstance()->Init();
 	LoadManager::GetInstance()->Load();
@@ -95,8 +95,8 @@ void NewEnginePostDraw()
 void NewEngineEnd()
 {
 	GuiManager::GetInstance()->Destroy();
-	// ウィンドウクラスを登録解除
-	RenderWindow::GetInstance()->TerminateGameWindow();
+	RenderWindow::GetInstance()->TerminateGameWindow();		// ウィンドウクラスを登録解除
+	SoundManager::Destroy();
 
 	//ComPtr<ID3D12Device> tempDevice = RenderBase::GetInstance()->GetDevice();
 	RenderBase::Destroy();

@@ -5,17 +5,19 @@
 #include "SilhouetteObj.h"
 #include "OutLineObj.h"
 #include "Fog.h"
+
 #include "Sprite.h"
 #include "CircleGaugeSprite.h"
-#include "RenderTexture.h"
-#include "Sound.h"
+
+#include "TextureManager.h"
+#include "ModelManager.h"
+#include "SoundManager.h"
+
 #include "imgui.h"
-#include "IScene.h"
 #include "GuiManager.h"
 #include "InputManager.h"
 #include "SceneManager.h"
-#include "TextureManager.h"
-#include "ModelManager.h"
+
 #include "LightManager.h"
 #include "Collision.h"
 
