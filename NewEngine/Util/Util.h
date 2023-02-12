@@ -3,9 +3,7 @@
 #include "FrameRate.h"
 #include "Random.h"
 #include "Singleton.h"
-#include "MathUtil.h"
 #include "Transform.h"
-#include "Camera.h"
 #include "SceneManager.h"
 #include <memory>
 #include <vector>
