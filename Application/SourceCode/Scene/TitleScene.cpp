@@ -16,24 +16,47 @@ void TitleScene::Init()
 	sprite.texture = *TextureManager::GetRenderTexture("PostEffect");
 	sprite.pos = GetWindowHalfSize();
 
-	SoundManager::Play("BGM");
+	//SoundManager::Play("BGM");
 }
 
 static bool isDraw = false;
 
 void TitleScene::Update()
 {
-	//if (Key::GetKeyTrigger(DIK_SPACE))
+	//if (isDraw == false)
 	//{
-	//	if (isDraw == false)
-	//	{
-	//		isDraw = true;
-	//	}
-	//	else
-	//	{
-	//		isDraw = false;
-	//	}
+	//	isDraw = true;
 	//}
+	//else
+	//{
+	//	isDraw = false;
+	//}
+
+	Vec2 v = Pad::GetStickDown(PadCodo::StickLeft, 300);
+
+	static int a = 0;
+	if (Pad::GetStickDown(PadCodo::StickLeft, 300).x > 0)
+	{
+		a++;
+
+		isDraw = true;
+	}
+	if (Pad::GetStickDown(PadCodo::StickLeft, 300).x < 0)
+	{
+		a--;
+
+		isDraw = false;
+	}
+
+	if (Pad::GetTriggerUp(PadCodo::TriggerLeft, 300) > 0)
+	{
+		sprite.pos.y += 10;
+	}
+
+	if (Pad::GetTriggerUp(PadCodo::TriggerRight, 300) > 0)
+	{
+		sprite.pos.y -= 10;
+	}
 
 	////obj.rot.y += Radian(1);
 	//const float speed = 10;
@@ -51,8 +74,8 @@ void TitleScene::Update()
 	//	a++;
 	//}
 
-	//obj.pos.x = +Pad::GetStick(PadCodo::LeftStick, 300).x / 1000;
-	//obj.pos.y = -Pad::GetStick(PadCodo::LeftStick, 300).y / 1000;
+	obj.pos.x = +Pad::GetStick(PadCodo::StickLeft, 300).x / 1000;
+	obj.pos.y = -Pad::GetStick(PadCodo::StickLeft, 300).y / 1000;
 
 	//sprite.pos.x += Pad::GetStick(PadCodo::LeftStick, 300, 1).x / 1000;
 	//sprite.pos.y += Pad::GetStick(PadCodo::LeftStick, 300, 1).y / 1000;

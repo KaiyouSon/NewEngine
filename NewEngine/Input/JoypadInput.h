@@ -19,10 +19,11 @@ enum class PadCodo
 	ButtonUp = 22,
 	ButtonDown = 23,
 
-	LeftStick = 96,
-	RightStick = 97,
-	LeftTrigger = 98,
-	RightTrigger = 99,
+	StickLeft = 96,
+	StickRight = 97,
+
+	TriggerLeft = 98,
+	TriggerRight = 99,
 };
 
 template<typename T> class Singleton;
@@ -75,27 +76,27 @@ public:
 
 		return false;
 	}
-	static inline bool GetButtonTrigger(const PadCodo& padCode, const int& padIndex = 0)
+	static inline bool GetButtonDown(const PadCodo& padCode, const int& padIndex = 0)
 	{
 		if (padCode == PadCodo::ButtonLeft)
 		{
 			return (GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 27000) &&
-				!(GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 27000);
+				!(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgdwPOV[0] == 27000);
 		}
 		else if (padCode == PadCodo::ButtonRight)
 		{
 			return (GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 9000) &&
-				!(GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 9000);
+				!(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgdwPOV[0] == 9000);
 		}
 		else if (padCode == PadCodo::ButtonUp)
 		{
 			return (GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 0) &&
-				!(GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 0);
+				!(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgdwPOV[0] == 0);
 		}
 		else if (padCode == PadCodo::ButtonDown)
 		{
 			return (GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 18000) &&
-				!(GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 18000);
+				!(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgdwPOV[0] == 18000);
 		}
 		else
 		{
@@ -105,27 +106,27 @@ public:
 
 		return false;
 	}
-	static inline bool GetButtonReleased(const PadCodo& padCode, const int& padIndex = 0)
+	static inline bool GetButtonUp(const PadCodo& padCode, const int& padIndex = 0)
 	{
 		if (padCode == PadCodo::ButtonLeft)
 		{
 			return !(GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 27000) &&
-				(GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 27000);
+				(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgdwPOV[0] == 27000);
 		}
 		else if (padCode == PadCodo::ButtonRight)
 		{
 			return !(GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 9000) &&
-				(GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 9000);
+				(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgdwPOV[0] == 9000);
 		}
 		else if (padCode == PadCodo::ButtonUp)
 		{
 			return !(GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 0) &&
-				(GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 0);
+				(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgdwPOV[0] == 0);
 		}
 		else if (padCode == PadCodo::ButtonDown)
 		{
 			return !(GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 18000) &&
-				(GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 18000);
+				(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgdwPOV[0] == 18000);
 		}
 		else
 		{
@@ -139,113 +140,147 @@ public:
 	static inline Vec2 GetStick(const PadCodo& padCode, const float& lenght = 0, const int& padIndex = 0)
 	{
 		Vec2 stick = 0;
-		if (padCode == PadCodo::LeftStick)
+		if (padCode == PadCodo::StickLeft)
+		{
+			stick.x = (float)GetInstance()->jyopadObjs[padIndex].padInput.lX;
+			stick.y = (float)GetInstance()->jyopadObjs[padIndex].padInput.lY;
+		}
+		else if (padCode == PadCodo::StickLeft)
+		{
+			stick.x = (float)GetInstance()->jyopadObjs[padIndex].padInput.lRx;
+			stick.y = (float)GetInstance()->jyopadObjs[padIndex].padInput.lRy;
+		}
+
+		if (stick.Lenght() > lenght)
+		{
+			return stick.Norm() * lenght;
+		}
+
+		return 0;
+	}
+	static inline Vec2 GetStickDown(const PadCodo& padCode, const float& lenght = 0, const int& padIndex = 0)
+	{
+		Vec2 stick = 0;
+		Vec2 prevStick = 0;
+		if (padCode == PadCodo::StickLeft)
 		{
 			stick.x = (float)GetInstance()->jyopadObjs[padIndex].padInput.lX;
 			stick.y = (float)GetInstance()->jyopadObjs[padIndex].padInput.lY;
 
-			if (stick.Lenght() > lenght)
-			{
-				return stick.Norm() * lenght;
-			}
+			prevStick.x = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lX;
+			prevStick.y = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lY;
 		}
-		else if (padCode == PadCodo::LeftStick)
+		else if (padCode == PadCodo::StickRight)
 		{
 			stick.x = (float)GetInstance()->jyopadObjs[padIndex].padInput.lRx;
 			stick.y = (float)GetInstance()->jyopadObjs[padIndex].padInput.lRy;
 
-			if (stick.Lenght() > lenght)
+			prevStick.x = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRx;
+			prevStick.y = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRy;
+		}
+
+		if ((stick.Lenght() > fabsf(lenght)) && !(prevStick.Lenght() > fabsf(lenght)))
+		{
+			return stick.Norm() * lenght;
+		}
+
+		return 0;
+	}
+	static inline Vec2 GetStickUp(const PadCodo& padCode, const float& lenght = 0, const int& padIndex = 0)
+	{
+		Vec2 stick = 0;
+		Vec2 prevStick = 0;
+		if (padCode == PadCodo::StickLeft)
+		{
+			stick.x = (float)GetInstance()->jyopadObjs[padIndex].padInput.lX;
+			stick.y = (float)GetInstance()->jyopadObjs[padIndex].padInput.lY;
+
+			prevStick.x = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lX;
+			prevStick.y = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lY;
+		}
+		else if (padCode == PadCodo::StickRight)
+		{
+			stick.x = (float)GetInstance()->jyopadObjs[padIndex].padInput.lRx;
+			stick.y = (float)GetInstance()->jyopadObjs[padIndex].padInput.lRy;
+
+			prevStick.x = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRx;
+			prevStick.y = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRy;
+		}
+
+		if (!(stick.Lenght() > fabsf(lenght)) && (prevStick.Lenght() > fabsf(lenght)))
+		{
+			return stick.Norm() * lenght;
+		}
+
+		return 0;
+	}
+
+	static inline float GetTrigger(const PadCodo& padCode, const float& num = 0, const int& padIndex = 0)
+	{
+		if (padCode == PadCodo::TriggerLeft)
+		{
+			if ((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ > num)
 			{
-				return stick.Norm() * lenght;
+				return (float)GetInstance()->jyopadObjs[padIndex].padInput.lZ;
+			}
+		}
+		else if (padCode == PadCodo::TriggerRight)
+		{
+			if ((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ < -num)
+			{
+				return (float)GetInstance()->jyopadObjs[padIndex].padInput.lZ * -1;
 			}
 		}
 
 		return 0;
 	}
-	static inline bool GetStickTrigger(const int& padCode, const Vec2& num = 0, const int& padIndex = 0)
+	static inline bool GetTriggerDown(const PadCodo& padCode, const float& num = 0, const int& padIndex = 0)
 	{
-		if (padCode == 96)
+		if (padCode == PadCodo::TriggerLeft)
 		{
-			return
-				(((float)GetInstance()->jyopadObjs[padIndex].padInput.lX > +num.x) && !((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lX > +num.x)) ||
-				(((float)GetInstance()->jyopadObjs[padIndex].padInput.lX < -num.x) && !((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lX < -num.x)) ||
-				(((float)GetInstance()->jyopadObjs[padIndex].padInput.lY > +num.y) && !((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lY > +num.y)) ||
-				(((float)GetInstance()->jyopadObjs[padIndex].padInput.lY < -num.y) && !((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lY < -num.y));
+			if (((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ > num) &&
+				!((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lZ > num))
+			{
+				return (float)GetInstance()->jyopadObjs[padIndex].padInput.lZ;
+			}
 		}
-		else if (padCode == 97)
+		else if (padCode == PadCodo::TriggerRight)
 		{
-			return
-				(((float)GetInstance()->jyopadObjs[padIndex].padInput.lRx > +num.x) && !((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRx > +num.x)) ||
-				(((float)GetInstance()->jyopadObjs[padIndex].padInput.lRx < -num.x) && !((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRx < -num.x)) ||
-				(((float)GetInstance()->jyopadObjs[padIndex].padInput.lRy > +num.y) && !((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRy > +num.y)) ||
-				(((float)GetInstance()->jyopadObjs[padIndex].padInput.lRy < -num.y) && !((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRy < -num.y));
+			if (((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ < -num) &&
+				!((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lZ < -num))
+			{
+				return (float)GetInstance()->jyopadObjs[padIndex].padInput.lZ * -1;
+			}
 		}
 
-		return false;
+		return 0;
 	}
-	static inline bool GetStickReleased(const int& padCode, const Vec2& num = 0, const int& padIndex = 0)
+	static inline bool GetTriggerUp(const PadCodo& padCode, const float& num = 0, const int& padIndex = 0)
 	{
-		if (padCode == 96)
+		if (padCode == PadCodo::TriggerLeft)
 		{
-			return
-				!(((float)GetInstance()->jyopadObjs[padIndex].padInput.lX > +num.x) && ((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lX > +num.x)) ||
-				!(((float)GetInstance()->jyopadObjs[padIndex].padInput.lX < -num.x) && ((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lX < -num.x)) ||
-				!(((float)GetInstance()->jyopadObjs[padIndex].padInput.lY > +num.y) && ((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lY > +num.y)) ||
-				!(((float)GetInstance()->jyopadObjs[padIndex].padInput.lY < -num.y) && ((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lY < -num.y));
+			if (!((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ > num) &&
+				((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lZ > num))
+			{
+				return (float)GetInstance()->jyopadObjs[padIndex].padInput.lZ;
+			}
 		}
-		else if (padCode == 97)
+		else if (padCode == PadCodo::TriggerRight)
 		{
-			return
-				!(((float)GetInstance()->jyopadObjs[padIndex].padInput.lRx > +num.x) && ((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRx > +num.x)) ||
-				!(((float)GetInstance()->jyopadObjs[padIndex].padInput.lRx < -num.x) && ((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRx < -num.x)) ||
-				!(((float)GetInstance()->jyopadObjs[padIndex].padInput.lRy > +num.y) && ((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRy > +num.y)) ||
-				!(((float)GetInstance()->jyopadObjs[padIndex].padInput.lRy < -num.y) && ((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRy < -num.y));
+			if (!((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ < -num) &&
+				((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lZ < -num))
+			{
+				return (float)GetInstance()->jyopadObjs[padIndex].padInput.lZ * -1;
+			}
 		}
 
-		return false;
+		return 0;
 	}
 
-	static inline bool GetTrigger(const int& padCode, const float& num = 0, const int& padIndex = 0)
+	static inline bool GetisLinkPad(const int& padIndex = 0)
 	{
-		if (padCode == 98)
-		{
-			return ((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ > num) ? (float)GetInstance()->jyopadObjs[padIndex].padInput.lZ : 0;
-		}
-		else if (padCode == 99)
-		{
-			return ((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ < num) ? (float)GetInstance()->jyopadObjs[padIndex].padInput.lZ : 0;
-		}
-
-		return false;
+		return GetInstance()->jyopadObjs[padIndex].joypad != nullptr;
 	}
-	static inline bool GetTriggerDown(const int& padCode, const float& num = 0, const int& padIndex = 0)
-	{
-		if (padCode == 98)
-		{
-			return ((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ > num) &&
-				!((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lZ > num);
-		}
-		else if (padCode == 99)
-		{
-			return ((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ < num) &&
-				!((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lZ < num);
-		}
-	}
-	static inline bool GetTriggerUp(const int& padCode, const float& num = 0, const int& padIndex = 0)
-	{
-		if (padCode == 98)
-		{
-			return !((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ > num) &&
-				((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lZ > num);
-		}
-		else if (padCode == 99)
-		{
-			return !((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ < num) &&
-				((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lZ < num);
-		}
-	}
-
-	static inline bool GetisLinkPad(const int& padIndex = 0) { return GetInstance()->jyopadObjs[padIndex].joypad != nullptr; }
 };
 
 typedef JoypadInput Pad;
