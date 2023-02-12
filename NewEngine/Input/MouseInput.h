@@ -32,21 +32,21 @@ public:
 	// マウスの取得関連
 
 	// クリックしてる時
-	static inline bool GetClick(const MouseCodo& mouse)
+	static inline bool GetClick(const MouseCodo& mouseCodo)
 	{
-		return (GetInstance()->mouseInput.rgbButtons[(int)mouse] & 0x80) != 0;
+		return (GetInstance()->mouseInput.rgbButtons[(int)mouseCodo] & 0x80) != 0;
 	}
 	// クリックした瞬間
-	static inline bool GetClickTrigger(const MouseCodo& mouse)
+	static inline bool GetClickDown(const MouseCodo& mouseCodo)
 	{
-		return (GetInstance()->mouseInput.rgbButtons[(int)mouse] & 0x80) == 0 &&
-			(GetInstance()->prevMouseInput.rgbButtons[(int)mouse] & 0x80) != 0;
+		return (GetInstance()->mouseInput.rgbButtons[(int)mouseCodo] & 0x80) == 0 &&
+			(GetInstance()->prevMouseInput.rgbButtons[(int)mouseCodo] & 0x80) != 0;
 	}
 	// クリックし終わった瞬間
-	static inline bool GetClickReleased(const MouseCodo& mouse)
+	static inline bool GetClickUp(const MouseCodo& mouseCodo)
 	{
-		return (GetInstance()->mouseInput.rgbButtons[(int)mouse] & 0x80) != 0 &&
-			(GetInstance()->prevMouseInput.rgbButtons[(int)mouse] & 0x80) == 0;
+		return (GetInstance()->mouseInput.rgbButtons[(int)mouseCodo] & 0x80) != 0 &&
+			(GetInstance()->prevMouseInput.rgbButtons[(int)mouseCodo] & 0x80) == 0;
 	}
 	// マウスの座標
 	static inline Vec2 GetMousePos()
