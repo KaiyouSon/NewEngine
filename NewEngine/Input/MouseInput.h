@@ -29,8 +29,6 @@ public:
 	void Init();
 	void Update();
 
-	// マウスの取得関連
-
 	// クリックしてる時
 	static inline bool GetClick(const MouseCodo& mouseCodo)
 	{
