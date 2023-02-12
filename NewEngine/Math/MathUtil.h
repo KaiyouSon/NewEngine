@@ -6,7 +6,7 @@
 #include "Quaternion.h"
 #include "Viewport.h"
 
-const float PI = 3.141592f;
+constexpr float PI = 3.141592f;
 
 // â‘Î’l‚ğ•Ô‚·ŠÖ”
 inline float Absolut(const float& num) { return num >= 0 ? num : num * -1; }

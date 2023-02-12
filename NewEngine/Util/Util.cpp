@@ -16,6 +16,16 @@ int Sign(const float& a)
 	return a >= 0 ? 1 : -1;
 }
 
+Vec2 Sign(const Vec2& a)
+{
+	return { (float)Sign(a.x),(float)Sign(a.y) };
+}
+
+Vec3 Sign(const Vec3& a)
+{
+	return { (float)Sign(a.x),(float)Sign(a.y),(float)Sign(a.z) };
+}
+
 float Clamp(const float& value, const float& min, const float& max)
 {
 	if (value < min)
@@ -52,11 +62,10 @@ float Convergence(const float& value, const float& speed, const float& origin)
 
 float Restore(const float& value, const float& limit, const float& origin)
 {
-	if (value > limit)
+	if (value >= limit)
 	{
 		return origin + value - limit;
 	}
-
 	return value;
 }
 
@@ -72,6 +81,25 @@ int GetDight(const int& value)
 	return digit;
 }
 
+unsigned long GetNowTime(const TimeUnit& timeUnit)
+{
+	switch (timeUnit)
+	{
+	case TimeUnit::MilliSecond:
+		return GetTickCount64();
+		break;
+	case TimeUnit::Second:
+		return (GetTickCount64() / 1000) % 60;
+		break;
+	case TimeUnit::Minute:
+		return (GetTickCount64() / 60000) % 60;
+		break;
+	default:
+		break;
+	}
+
+	return -1;
+}
 Vec2 WorldToScreen(const Vec3& worldPos)
 {
 	Mat4 viewportMat =

@@ -14,7 +14,7 @@ public:
 	Quaternion(const float& x, const float& y, const float& z, const float& w) : x(x), y(y), z(z), w(w) {}
 
 	// 関数
-	float Lenght() const;			// クオータニオンの大きさ
+	float Length() const;			// クオータニオンの大きさ
 	Quaternion Norm() const;		// 正規化クオータニオン
 	Quaternion Conjugate() const;	// 共役クオータニオン
 	Quaternion Inverse() const;		// 逆クオータニオン

@@ -24,7 +24,7 @@ public:
 	constexpr Vec2(const float& x, const float& y) : x(x), y(y) {};
 
 	// 関数
-	float Lenght() const;	// ベクトルの大きさ
+	float Length() const;	// ベクトルの大きさ
 	Vec2 Norm() const;	// 正規化にしたベクトル
 
 	// static関数

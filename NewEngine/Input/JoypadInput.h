@@ -137,7 +137,7 @@ public:
 		return false;
 	}
 
-	static inline Vec2 GetStick(const PadCodo& padCode, const float& lenght = 0, const int& padIndex = 0)
+	static inline Vec2 GetStick(const PadCodo& padCode, const float& Length = 0, const int& padIndex = 0)
 	{
 		Vec2 stick = 0;
 		if (padCode == PadCodo::StickLeft)
@@ -151,14 +151,14 @@ public:
 			stick.y = (float)GetInstance()->jyopadObjs[padIndex].padInput.lRy;
 		}
 
-		if (stick.Lenght() > lenght)
+		if (stick.Length() > Length)
 		{
-			return stick.Norm() * lenght;
+			return stick.Norm() * Length;
 		}
 
 		return 0;
 	}
-	static inline Vec2 GetStickDown(const PadCodo& padCode, const float& lenght = 0, const int& padIndex = 0)
+	static inline Vec2 GetStickDown(const PadCodo& padCode, const float& Length = 0, const int& padIndex = 0)
 	{
 		Vec2 stick = 0;
 		Vec2 prevStick = 0;
@@ -179,14 +179,14 @@ public:
 			prevStick.y = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRy;
 		}
 
-		if ((stick.Lenght() > fabsf(lenght)) && !(prevStick.Lenght() > fabsf(lenght)))
+		if ((stick.Length() > fabsf(Length)) && !(prevStick.Length() > fabsf(Length)))
 		{
-			return stick.Norm() * lenght;
+			return stick.Norm() * Length;
 		}
 
 		return 0;
 	}
-	static inline Vec2 GetStickUp(const PadCodo& padCode, const float& lenght = 0, const int& padIndex = 0)
+	static inline Vec2 GetStickUp(const PadCodo& padCode, const float& Length = 0, const int& padIndex = 0)
 	{
 		Vec2 stick = 0;
 		Vec2 prevStick = 0;
@@ -207,9 +207,9 @@ public:
 			prevStick.y = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRy;
 		}
 
-		if (!(stick.Lenght() > fabsf(lenght)) && (prevStick.Lenght() > fabsf(lenght)))
+		if (!(stick.Length() > fabsf(Length)) && (prevStick.Length() > fabsf(Length)))
 		{
-			return stick.Norm() * lenght;
+			return stick.Norm() * Length;
 		}
 
 		return 0;

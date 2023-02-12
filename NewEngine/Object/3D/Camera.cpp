@@ -10,8 +10,8 @@ Camera::Camera() : pos(0, 0, 0), rot(0, 0, 0), fov(Radian(45)), nearZ(0.1f), far
 	transform.rot = rot;
 	transform.Update();
 	Vec3 v1 = pos;
-	Vec3 v2 = transform.worldMat.ExtractAxisZ();
-	Vec3 v3 = transform.worldMat.ExtractAxisY();
+	Vec3 v2 = transform.worldMat.GetZAxis();
+	Vec3 v3 = transform.worldMat.GetYAxis();
 
 	// ビュー変換行列
 	viewLookToMat = ConvertViewProjectionMatLookTo(v1, v2, v3);
@@ -32,8 +32,8 @@ void Camera::Update()
 	transform.rot = rot;
 	transform.Update();
 	Vec3 v1 = pos;
-	Vec3 v2 = transform.worldMat.ExtractAxisZ();
-	Vec3 v3 = transform.worldMat.ExtractAxisY();
+	Vec3 v2 = transform.worldMat.GetZAxis();
+	Vec3 v3 = transform.worldMat.GetYAxis();
 
 	// ビュー変換行列
 	viewLookToMat = ConvertViewProjectionMatLookTo(v1, v2, v3);

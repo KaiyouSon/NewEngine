@@ -29,7 +29,7 @@ public:
 	const static Vec3 zero;    // Vec3(0,0,0) と同じ意味
 
 	// 関数
-	float Lenght() const;    // ベクトルの大きさ
+	float Length() const;    // ベクトルの大きさ
 	Vec3 Norm() const;    // 正規化にしたベクトル
 
 	// static関数

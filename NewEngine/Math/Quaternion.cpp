@@ -2,15 +2,15 @@
 #include "MathUtil.h"
 #include <math.h>
 
-float Quaternion::Lenght() const { return sqrt(x * x + y * y + z * z + w * w); }
+float Quaternion::Length() const { return sqrt(x * x + y * y + z * z + w * w); }
 
-Quaternion Quaternion::Norm() const { return { x / Lenght(),y / Lenght(),z / Lenght() ,w / Lenght() }; }
+Quaternion Quaternion::Norm() const { return { x / Length(),y / Length(),z / Length() ,w / Length() }; }
 
 Quaternion Quaternion::Conjugate() const { return { -x,-y,-z,w }; }
 
 Quaternion Quaternion::Inverse() const
 {
-	return Conjugate() / (Lenght() * Lenght());
+	return Conjugate() / (Length() * Length());
 }
 
 Quaternion Quaternion::AnyAxisRotation(const Vec3& v, const float& radian)

@@ -447,7 +447,7 @@ void GameScene::QuaternionDrawGui()
 	//ImGui::Text("%f,%f,%f,%f : mul2",
 	//	mul2.x, mul2.y, mul2.z, mul2.w);
 
-	//ImGui::Text("%f : Lenght", q1.Lenght());
+	//ImGui::Text("%f : Length", q1.Length());
 
 	GuiManager::EndWindow();
 
