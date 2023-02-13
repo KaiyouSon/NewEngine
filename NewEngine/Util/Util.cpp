@@ -1,5 +1,6 @@
 #include "Util.h"
 #include "RenderBase.h"
+#include "Camera.h"
 
 float Max(const float& a, const float& b)
 {

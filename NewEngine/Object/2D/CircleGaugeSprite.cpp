@@ -1,4 +1,5 @@
 #include "CircleGaugeSprite.h"
+#include "Camera.h"
 
 CircleGaugeSprite::CircleGaugeSprite() :
 	pos(0), scale(1), rot(0), anchorPoint(0.5f),

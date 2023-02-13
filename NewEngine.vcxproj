@@ -161,6 +161,7 @@
     <ClCompile Include="Application\SourceCode\Scene\TitleScene.cpp" />
     <ClCompile Include="NewEngine\Collision\Collider.cpp" />
     <ClCompile Include="NewEngine\Collision\Collision.cpp" />
+    <ClCompile Include="NewEngine\Collision\SphereCollider.cpp" />
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp" />
     <ClCompile Include="NewEngine\Input\InputManager.cpp" />
     <ClCompile Include="NewEngine\Input\JoypadInput.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="Application\SourceCode\Scene\TitleScene.h" />
     <ClInclude Include="NewEngine\Collision\Collider.h" />
     <ClInclude Include="NewEngine\Collision\Collision.h" />
+    <ClInclude Include="NewEngine\Collision\SphereCollider.h" />
     <ClInclude Include="NewEngine\Gui\GuiManager.h" />
     <ClInclude Include="NewEngine\Input\InputManager.h" />
     <ClInclude Include="NewEngine\Input\JoypadInput.h" />
@@ -280,6 +282,7 @@
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli" />
     <None Include="NewEngine\Shader\CircleGaugeSpriteH.hlsli" />
+    <None Include="NewEngine\Shader\LineH.hlsli" />
     <None Include="NewEngine\Shader\Object3DH.hlsli" />
     <None Include="NewEngine\Shader\OutLine.hlsli" />
     <None Include="NewEngine\Shader\RenderTexture.hlsli" />
@@ -297,6 +300,22 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\CircleGaugeSpriteVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\LinePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\LineVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>

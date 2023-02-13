@@ -106,7 +106,7 @@ void GameScene::CollisionInit()
 }
 void GameScene::CollisionUpdate()
 {
-	if (currentCollision == 0)
+	/*if (currentCollision == 0)
 	{
 		SphereCollider c1 = { sphereObj.pos,sphereObj.scale.x };
 		PlaneCollider c2 = { planeObj.pos,{0,1,0} };
@@ -195,7 +195,7 @@ void GameScene::CollisionUpdate()
 			capsuleObj1.color = Color::white;
 			capsuleObj2.color = Color::white;
 		}
-	}
+	}*/
 
 	sphereObj.Update();
 	planeObj.Update();

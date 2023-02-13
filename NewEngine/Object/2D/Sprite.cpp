@@ -2,13 +2,12 @@
 #include "MathUtil.h"
 #include "RenderBase.h"
 #include "TextureManager.h"
-#include <memory>
-#include <d3dx12.h>
+#include "Camera.h"
 using namespace std;
 
 Sprite::Sprite() :
 	texture(*TextureManager::GetTexture("White")),
-	pos(0), scale(1), size(0), rot(0),color(Color::white), anchorPoint(0.5f),
+	pos(0), scale(1), size(0), rot(0), color(Color::white), anchorPoint(0.5f),
 	vertexBuffer(new VertexBuffer<VertexPosUv>),
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform2D>),
 	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>),

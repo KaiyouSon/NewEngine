@@ -1,5 +1,6 @@
 #include "SilhouetteObj.h"
 #include "RenderBase.h"
+#include "Camera.h"
 using namespace std;
 
 SilhouetteObj::SilhouetteObj() :

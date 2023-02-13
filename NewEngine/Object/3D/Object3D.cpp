@@ -1,6 +1,7 @@
 #include "Object3D.h"
 #include "RenderBase.h"
 #include "LightManager.h"
+#include "Camera.h"
 using namespace std;
 
 bool Object3D::isAllLighting = false;

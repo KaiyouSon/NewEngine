@@ -1,4 +1,6 @@
 #include "Util.h"
+#include "Camera.h"
+#include "Viewport.h"
 
 Vec3 Vec3MulMat4(const Vec3& v, const Mat4& m, const bool& isMulW)
 {

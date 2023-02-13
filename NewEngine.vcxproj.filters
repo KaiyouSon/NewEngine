@@ -288,6 +288,9 @@
     <ClCompile Include="NewEngine\Sound\Sound.cpp">
       <Filter>NewEngine\Source\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Collision\SphereCollider.cpp">
+      <Filter>NewEngine\Source\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -473,6 +476,9 @@
     <ClInclude Include="NewEngine\Sound\Sound.h">
       <Filter>NewEngine\Header\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="NewEngine\Collision\SphereCollider.h">
+      <Filter>NewEngine\Header\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\RenderTexture.hlsli">
@@ -497,6 +503,9 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="NewEngine\Shader\Blur.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="NewEngine\Shader\LineH.hlsli">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
@@ -541,6 +550,12 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\CircleGaugeSpritePS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\LinePS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\LineVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

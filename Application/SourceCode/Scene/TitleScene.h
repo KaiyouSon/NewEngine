@@ -7,6 +7,7 @@ private:
 	Object3D obj;
 	Object3D skyDome;
 	Sprite sprite;
+	SphereCollider sphereCollider;
 	//RenderTexture renderTexture;
 
 public:

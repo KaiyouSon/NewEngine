@@ -1,5 +1,7 @@
 #pragma once
 #include "Util.h"
+#include "Vec3.h"
+#include "Mat4.h"
 
 enum BillBoardType
 {

@@ -9,6 +9,7 @@ void LoadManager::ModelLoad()
 	ModelManager::LoadModel("Ground", "Ground");
 	ModelManager::LoadModel("AttackEnemy", "AttackEnemy", true);
 	ModelManager::LoadModel("player", "Player", true);
+	ModelManager::LoadModel("SphereCollider", "SphereCollider");
 }
 
 void LoadManager::TextureLoad()

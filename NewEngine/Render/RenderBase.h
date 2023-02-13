@@ -100,6 +100,7 @@ private:
 	std::unique_ptr<ShaderObject> silhouetteShader;
 	std::unique_ptr<ShaderObject> outlineShader;
 	std::unique_ptr<ShaderObject> toonRenderShader;
+	std::unique_ptr<ShaderObject> lineShader;
 
 	// グラフィックスパイプライン関連
 	std::unique_ptr<GraphicsPipeline> linePipeline;
