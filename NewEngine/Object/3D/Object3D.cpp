@@ -60,7 +60,8 @@ void Object3D::Update(const Object3D* parent)
 	{
 		constantBufferMaterial->constantBufferMap->ambient = model.material.ambient;
 		constantBufferMaterial->constantBufferMap->diffuse = model.material.diffuse;
-		constantBufferMaterial->constantBufferMap->specular = model.material.specular;
+		//constantBufferMaterial->constantBufferMap->specular = model.material.specular;
+		constantBufferMaterial->constantBufferMap->specular = Vec3::one;
 	}
 	else
 	{

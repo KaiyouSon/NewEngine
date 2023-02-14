@@ -13,6 +13,8 @@ private:
 
 public:
 	Microsoft::WRL::ComPtr<ID3D12Resource> buffer; //テクスチャのリソース
+	//DirectX::TexMetadata metadata{};
+	//DirectX::ScratchImage scratchImg{};
 	Vec2 size = 0;
 	bool isMaterial = false;
 

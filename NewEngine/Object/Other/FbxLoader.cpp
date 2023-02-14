@@ -1,6 +1,7 @@
 ﻿#include "FbxLoader.h"
 #include "MathUtil.h"
 #include "VertexBufferData.h"
+#include "TextureManager.h"
 #include <cassert>
 #include <DirectXTex.h>
 
@@ -28,11 +29,11 @@ void FbxLoader::Destroy()
 	fbxManager->Destroy();
 }
 
-void FbxLoader::Load(const std::string& modelName)
+FbxModel* FbxLoader::Load(const std::string& modelName)
 {
 	// モデルと同じ名前のフォルダーから読み込む
 	std::string path = "Application/Resources/Model/" + modelName + "/";
-	std::string fbxfile = modelName + ".obj";
+	std::string fbxfile = modelName + ".fbx";
 	std::string fullPath = path + fbxfile;
 
 	if (!fbxImporter->Initialize(fullPath.c_str(), -1, fbxManager->GetIOSettings()))
@@ -59,6 +60,10 @@ void FbxLoader::Load(const std::string& modelName)
 	// fbxシーンの解放
 	fbxScene->Destroy();
 
+	fbxModel->mesh.vertexBuffer.Create(fbxModel->mesh.vertices);
+	fbxModel->mesh.indexBuffer.Create(fbxModel->mesh.indices);
+
+	return fbxModel;
 }
 
 void FbxLoader::ParseMesh(FbxModel* fbxModel, FbxNode* fbxNode)
@@ -78,14 +83,14 @@ void FbxLoader::ParseMesh(FbxModel* fbxModel, FbxNode* fbxNode)
 
 void FbxLoader::ParseMeshVertices(FbxModel* fbxModel, FbxMesh* fbxMesh)
 {
-	std::vector<VertexPosNormalUv>& vertices = fbxModel->vertices;
+	std::vector<VertexPosNormalUv>& vertices = fbxModel->mesh.vertices;
 
 	// 頂点座標データの数
 	const size_t controlPointsCount = fbxMesh->GetControlPointsCount();
 
 	// 必要の数分メモリを確保
 	VertexPosNormalUv vert{};
-	fbxModel->vertices.resize(controlPointsCount, vert);
+	fbxModel->mesh.vertices.resize(controlPointsCount, vert);
 
 	// FBXメッシュの頂点座標配列を取得
 	FbxVector4* pCoord = fbxMesh->GetControlPoints();
@@ -104,8 +109,8 @@ void FbxLoader::ParseMeshVertices(FbxModel* fbxModel, FbxMesh* fbxMesh)
 
 void FbxLoader::ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh)
 {
-	std::vector<VertexPosNormalUv>& vertices = fbxModel->vertices;
-	std::vector<unsigned short>& indices = fbxModel->indices;
+	std::vector<VertexPosNormalUv>& vertices = fbxModel->mesh.vertices;
+	std::vector<unsigned short>& indices = fbxModel->mesh.indices;
 
 	// 1ファイルに複数メッシュのモデルは否対応
 	if (indices.size() > 0)
@@ -187,8 +192,6 @@ void FbxLoader::ParseMaterial(FbxModel* fbxModel, FbxNode* fbxNode)
 	{
 		// 先頭マテリアルを取得
 		FbxSurfaceMaterial* material = fbxNode->GetMaterial(0);
-		// テクスチャを読み込んだかどうかを表すフラグ
-		bool textureLoaded = false;
 
 		if (material)
 		{
@@ -199,15 +202,15 @@ void FbxLoader::ParseMaterial(FbxModel* fbxModel, FbxNode* fbxNode)
 
 				// 環境光
 				FbxPropertyT<FbxDouble3> ambient = lambert->Ambient;
-				fbxModel->ambient.x = (float)ambient.Get()[0];
-				fbxModel->ambient.y = (float)ambient.Get()[1];
-				fbxModel->ambient.z = (float)ambient.Get()[2];
+				fbxModel->material.ambient.x = (float)ambient.Get()[0];
+				fbxModel->material.ambient.y = (float)ambient.Get()[1];
+				fbxModel->material.ambient.z = (float)ambient.Get()[2];
 
 				// 拡散反射光
 				FbxPropertyT<FbxDouble3> diffuse = lambert->Diffuse;
-				fbxModel->diffuse.x = (float)diffuse.Get()[0];
-				fbxModel->diffuse.y = (float)diffuse.Get()[1];
-				fbxModel->diffuse.z = (float)diffuse.Get()[2];
+				fbxModel->material.diffuse.x = (float)diffuse.Get()[0];
+				fbxModel->material.diffuse.y = (float)diffuse.Get()[1];
+				fbxModel->material.diffuse.z = (float)diffuse.Get()[2];
 			}
 		}
 
@@ -222,15 +225,11 @@ void FbxLoader::ParseMaterial(FbxModel* fbxModel, FbxNode* fbxNode)
 				// ファイルパスからファイル名を抽出
 				std::string pathStr(filePath);
 				std::string name = ExractFileName(pathStr);
+				std::string fullPath = baseDirectory + fbxModel->name + "/" + name;
 				// テクスチャ読み込み
-				LoadTexture(fbxModel, baseDirectory + fbxModel->name + "/" + name);
-				textureLoaded = true;
+				fbxModel->material.texture =
+					TextureManager::LoadMaterialTexture(fullPath);
 			}
-		}
-
-		if (!textureLoaded)
-		{
-			LoadTexture(fbxModel, "Application/Resources/Texture/" + defaultTextureFileName);
 		}
 	}
 }
@@ -240,24 +239,24 @@ void FbxLoader::LoadTexture(FbxModel* fbxModel, const std::string fullPath)
 	HRESULT result = S_FALSE;
 
 	// WICテクスチャのロード
-	DirectX::TexMetadata& metadata = fbxModel->metedata;
-	DirectX::ScratchImage& scratchImg = fbxModel->scratchImg;
+	//DirectX::TexMetadata& metadata = fbxModel->material.texture.metadata;
+	//DirectX::ScratchImage& scratchImg = fbxModel->material.texture.scratchImg;
 
 	//wchar_t wfilePath[128];
 	//MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, wfilePath, _countof(wfilePath));
 
-	std::wstring wfilePath(fullPath.begin(), fullPath.end());
+	//std::wstring wfilePath(fullPath.begin(), fullPath.end());
 
-	// WICテクスチャのロード
-	result = LoadFromWICFile(
-		wfilePath.c_str(),
-		DirectX::WIC_FLAGS::WIC_FLAGS_NONE,
-		&metadata, scratchImg);
+	//// WICテクスチャのロード
+	//result = LoadFromWICFile(
+	//	wfilePath.c_str(),
+	//	DirectX::WIC_FLAGS::WIC_FLAGS_NONE,
+	//	&metadata, scratchImg);
 
-	if (result != S_OK)
-	{
-		assert(0 && "テクスチャーの読み込みが失敗しました");
-	}
+	//if (result != S_OK)
+	//{
+	//	assert(0 && "テクスチャーの読み込みが失敗しました");
+	//}
 }
 
 void FbxLoader::ParseNodeRecursive(FbxModel* fbxModel, FbxNode* fbxNode, FbxModelNode* parent)

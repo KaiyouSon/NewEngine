@@ -6,13 +6,14 @@
 class Mesh
 {
 private:
+	// 頂点法線スムージング用データ
+	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothData;
+
+public:
 	VertexBuffer<VertexPosNormalUv> vertexBuffer;
 	IndexBuffer indexBuffer;
 	std::vector<VertexPosNormalUv> vertices;
 	std::vector<unsigned short> indices;
-
-	// 頂点法線スムージング用データ
-	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothData;
 
 public:
 

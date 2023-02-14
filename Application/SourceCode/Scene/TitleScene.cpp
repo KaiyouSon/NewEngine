@@ -1,12 +1,16 @@
 #include "TitleScene.h"
 #include "TextureManager.h"
+#include "FbxLoader.h"
 
 void TitleScene::Init()
 {
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
-	obj.model = *ModelManager::GetModel("Sphere");
+	obj.model = *FbxLoader::GetInstance()->Load("cube");
+	obj.pos.y = -5;
+	obj.scale = 0.1f;
+
 	//obj.rot.y = Radian(180);
 
 	skyDome.model = *ModelManager::GetModel("SkyDome");
@@ -68,8 +72,8 @@ void TitleScene::Update()
 	//sprite.pos.y += (Key::GetKey(DIK_DOWN) - Key::GetKey(DIK_UP)) * 5.f;
 	//sprite.color.a += Key::GetKey(DIK_Q) - Key::GetKey(DIK_E);
 
-	obj.pos.x += (Key::GetKey(DIK_D) - Key::GetKey(DIK_A));
-	obj.pos.y += (Key::GetKey(DIK_W) - Key::GetKey(DIK_S));
+	obj.pos.x += (Key::GetKey(DIK_D) - Key::GetKey(DIK_A)) * 0.1f;
+	obj.pos.y += (Key::GetKey(DIK_W) - Key::GetKey(DIK_S)) * 0.1f;
 
 	//if (Pad::GetButton(PadCodo::ButtonA))
 	//{
@@ -83,13 +87,13 @@ void TitleScene::Update()
 	//sprite.pos.x += Pad::GetStick(PadCodo::LeftStick, 300, 1).x / 1000;
 	//sprite.pos.y += Pad::GetStick(PadCodo::LeftStick, 300, 1).y / 1000;
 
-	sprite.Update();
+	//sprite.Update();
 
-	sprite.graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture");
-	skyDome.Update();
+	//sprite.graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture");
+	//skyDome.Update();
 	obj.Update();
 
-	sphereCollider.Update();
+	//sphereCollider.Update();
 
 	Camera::DebugCameraUpdate();
 }
@@ -112,9 +116,9 @@ void TitleScene::DrawBackSprite()
 
 void TitleScene::DrawModel()
 {
-	//obj.Draw();
+	obj.Draw();
 
-	sphereCollider.Draw();
+	//sphereCollider.Draw();
 }
 
 void TitleScene::DrawFrontSprite()

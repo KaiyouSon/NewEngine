@@ -8,6 +8,12 @@ float4 main(VSOutput input) : SV_TARGET
 	// テクスチャーマッピング
     float4 texColor = tex.Sample(smp, input.uv);
 
+    float3 l = normalize(float3(1, -1, 1));
+    float d = saturate(dot(-l, input.normal));
+    float b = d + 0.3f;
+    float4 sc = float4(b, b, b, 1);
+    return sc * texColor;
+    
 	// 光沢度
     const float shininess = 4.0f;
 

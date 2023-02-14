@@ -344,6 +344,124 @@ Texture TextureManager::LoadMaterialTexture(const std::string& filePath)
 
 	return tex;
 }
+Texture TextureManager::LoadFBXMaterialTexture(	const std::string& filePath)
+{
+	Texture tex;
+	//std::wstring wfilePath(filePath.begin(), filePath.end());
+
+	//HRESULT result;
+
+	//// WICテクスチャのロード
+	//result = LoadFromWICFile(
+	//	wfilePath.c_str(),
+	//	WIC_FLAGS_NONE,
+	//	&metadata, scratchImg);
+
+	//if (result != S_OK)
+	//{
+	//	assert(0 && "テクスチャーの読み込みが失敗しました");
+	//}
+
+	//// ミップマップ生成
+	//ScratchImage mipChain{};
+	//result = GenerateMipMaps(
+	//	scratchImg.GetImages(),
+	//	scratchImg.GetImageCount(),
+	//	scratchImg.GetMetadata(),
+	//	TEX_FILTER_DEFAULT, 0, mipChain);
+	//if (SUCCEEDED(result))
+	//{
+	//	scratchImg = std::move(mipChain);
+	//	metadata = scratchImg.GetMetadata();
+	//}
+
+	//// 読み込んだディフューズテクスチャをSRGBとして扱う
+	//metadata.format = MakeSRGB(metadata.format);
+
+	//// ヒープの設定
+	//CD3DX12_HEAP_PROPERTIES textureHeapProp =
+	//	CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+
+	//// リソース設定
+	//CD3DX12_RESOURCE_DESC textureResourceDesc =
+	//	CD3DX12_RESOURCE_DESC::Tex2D(
+	//		metadata.format,
+	//		(UINT64)metadata.width,
+	//		(UINT)metadata.height,
+	//		(UINT16)metadata.arraySize,
+	//		(UINT16)metadata.mipLevels,
+	//		1);
+
+	//// テクスチャのサイズをセット
+	//tex.size = { (float)textureResourceDesc.Width, (float)textureResourceDesc.Height };
+
+	//// テクスチャバッファの生成
+	//result = RenderBase::GetInstance()->GetDevice()->
+	//	CreateCommittedResource(
+	//		&textureHeapProp,
+	//		D3D12_HEAP_FLAG_NONE,
+	//		&textureResourceDesc,
+	//		D3D12_RESOURCE_STATE_COPY_DEST,
+	//		nullptr,
+	//		IID_PPV_ARGS(&tex.buffer));
+	//assert(SUCCEEDED(result));
+
+	//TextureManager::CreateSRV(tex);
+
+	//std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas{};
+	//subResourcesDatas.resize(metadata.mipLevels);
+
+	//for (size_t i = 0; i < subResourcesDatas.size(); i++)
+	//{
+	//	// 全ミップマップレベルを指定してイメージを取得
+	//	const Image* img = scratchImg.GetImage(i, 0, 0);
+
+	//	subResourcesDatas[i].pData = img->pixels;
+	//	subResourcesDatas[i].RowPitch = img->rowPitch;
+	//	subResourcesDatas[i].SlicePitch = img->slicePitch;
+	//}
+
+	//uint64_t uploadSize = GetRequiredIntermediateSize(tex.buffer.Get(), 0, metadata.mipLevels);
+
+	//// ヒープの設定
+	//D3D12_HEAP_PROPERTIES textureHeapProp1{};
+	//textureHeapProp1.Type = D3D12_HEAP_TYPE_UPLOAD;
+	//CD3DX12_RESOURCE_DESC textureResourceDesc1 =
+	//	CD3DX12_RESOURCE_DESC::Buffer(uploadSize);
+
+	//Microsoft::WRL::ComPtr<ID3D12Resource> uploadBuffer;
+
+	//// テクスチャバッファの生成
+	//result = RenderBase::GetInstance()->GetDevice()->
+	//	CreateCommittedResource(
+	//		&textureHeapProp1,
+	//		D3D12_HEAP_FLAG_NONE,
+	//		&textureResourceDesc1,
+	//		D3D12_RESOURCE_STATE_GENERIC_READ,
+	//		nullptr,
+	//		IID_PPV_ARGS(&uploadBuffer));
+	//assert(SUCCEEDED(result));
+
+	//UpdateSubresources(
+	//	RenderBase::GetInstance()->GetCommandList(),
+	//	tex.buffer.Get(),
+	//	uploadBuffer.Get(),
+	//	0,
+	//	0,
+	//	metadata.mipLevels,
+	//	subResourcesDatas.data());
+
+	//D3D12_RESOURCE_BARRIER  barrier;
+	//barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	//barrier.Transition.pResource = tex.buffer.Get();
+	//barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+	//barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
+	//barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
+
+	//ExcuteComandList();
+
+	return tex;
+}
 
 RenderTexture* TextureManager::GetRenderTexture(const std::string& textureTag)
 {

@@ -23,7 +23,7 @@ public:
 	void Init();
 	void Destroy();
 
-	void Load(const std::string& modelName);
+	FbxModel* Load(const std::string& modelName);
 	void ParseMesh(FbxModel* fbxModel, FbxNode* fbxNode);
 	void ParseMeshVertices(FbxModel* fbxModel, FbxMesh* fbxMesh);
 	void ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh);

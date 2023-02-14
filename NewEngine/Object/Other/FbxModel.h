@@ -17,21 +17,15 @@ struct FbxModelNode
 	FbxModelNode* parent = nullptr;
 };
 
-class FbxModel
+class FbxModel : public Model
 {
 private:
 	std::string name;
 	std::vector<FbxModelNode> nodes;
 	FbxModelNode* meshNode = nullptr;
 
-	std::vector<VertexPosNormalUv> vertices;
-	std::vector<unsigned short> indices;
-
-	Vec3 ambient = Vec3::one;
-	Vec3 diffuse = Vec3::one;
-
-	DirectX::TexMetadata metedata = {};
-	DirectX::ScratchImage scratchImg = {};
+	//DirectX::TexMetadata metedata = {};
+	//DirectX::ScratchImage scratchImg = {};
 
 public:
 	friend class FbxLoader;
