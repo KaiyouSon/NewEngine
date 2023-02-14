@@ -1,8 +1,11 @@
 #include "TitleScene.h"
 #include "TextureManager.h"
+#include <fbxsdk.h>
 
 void TitleScene::Init()
 {
+	FbxManager* fbxManager = FbxManager::Create();
+
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
