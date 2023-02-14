@@ -3,6 +3,7 @@
 #include "RenderWindow.h"
 #include "RenderTexture.h"
 #include "LoadManager.h"
+#include "FbxLoader.h"
 #include <wrl.h>
 using namespace Microsoft::WRL;
 
@@ -52,6 +53,7 @@ void NewEngineInit()
 
 	Random::Init();
 	SoundManager::Init();
+	FbxLoader::GetInstance()->Init();
 	InputManager::GetInstance()->Init();
 	GuiManager::GetInstance()->Init();
 	LoadManager::GetInstance()->Load();
@@ -94,6 +96,7 @@ void NewEnginePostDraw()
 }
 void NewEngineEnd()
 {
+	FbxLoader::GetInstance()->Destroy();
 	GuiManager::GetInstance()->Destroy();
 	RenderWindow::GetInstance()->TerminateGameWindow();		// ウィンドウクラスを登録解除
 	SoundManager::Destroy();

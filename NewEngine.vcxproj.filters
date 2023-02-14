@@ -8,17 +8,6 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{ebea575b-6f4d-4e6e-b893-a47bace55e10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Uncategorized">
-      <UniqueIdentifier>{a0e509e1-416c-4df2-a204-ba1f23432926}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Uncategorized\Source">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Uncategorized\Header">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="NewEngine">
       <UniqueIdentifier>{1cb946a9-b40c-4db0-b91b-7eaad5137338}</UniqueIdentifier>
     </Filter>
@@ -120,6 +109,17 @@
     </Filter>
     <Filter Include="NewEngine\Header\Sound">
       <UniqueIdentifier>{924c731e-5f51-4001-a0dc-7fdcdb05bee1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uncategorized">
+      <UniqueIdentifier>{a0e509e1-416c-4df2-a204-ba1f23432926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uncategorized\Source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Uncategorized\Header">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -290,6 +290,12 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Collision\SphereCollider.cpp">
       <Filter>NewEngine\Source\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\FbxLoader.cpp">
+      <Filter>NewEngine\Source\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\FbxModel.cpp">
+      <Filter>Uncategorized\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -478,6 +484,12 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Collision\SphereCollider.h">
       <Filter>NewEngine\Header\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\FbxLoader.h">
+      <Filter>NewEngine\Header\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\FbxModel.h">
+      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

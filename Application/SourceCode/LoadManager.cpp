@@ -1,5 +1,6 @@
 #include "LoadManager.h"
 #include "NewEngine.h"
+#include "FbxLoader.h"
 
 void LoadManager::ModelLoad()
 {
@@ -10,6 +11,8 @@ void LoadManager::ModelLoad()
 	ModelManager::LoadModel("AttackEnemy", "AttackEnemy", true);
 	ModelManager::LoadModel("player", "Player", true);
 	ModelManager::LoadModel("SphereCollider", "SphereCollider");
+
+	FbxLoader::GetInstance()->Load("cube");
 }
 
 void LoadManager::TextureLoad()
