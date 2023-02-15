@@ -5,6 +5,7 @@ class TitleScene : public IScene
 {
 private:
 	Object3D obj;
+	Object3D fbx;
 	Object3D skyDome;
 	Sprite sprite;
 	SphereCollider sphereCollider;
