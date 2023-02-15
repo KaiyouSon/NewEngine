@@ -520,6 +520,9 @@
     <None Include="NewEngine\Shader\LineH.hlsli">
       <Filter>Shader</Filter>
     </None>
+    <None Include="NewEngine\Shader\Lighting.hlsli">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="NewEngine\Shader\SpritePS.hlsl">

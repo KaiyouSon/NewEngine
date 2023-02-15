@@ -290,6 +290,7 @@
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli" />
     <None Include="NewEngine\Shader\CircleGaugeSpriteH.hlsli" />
+    <None Include="NewEngine\Shader\Lighting.hlsli" />
     <None Include="NewEngine\Shader\LineH.hlsli" />
     <None Include="NewEngine\Shader\Object3DH.hlsli" />
     <None Include="NewEngine\Shader\OutLine.hlsli" />

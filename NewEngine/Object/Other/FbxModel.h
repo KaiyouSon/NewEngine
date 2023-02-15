@@ -24,9 +24,6 @@ private:
 	std::vector<FbxModelNode> nodes;
 	FbxModelNode* meshNode = nullptr;
 
-	//DirectX::TexMetadata metedata = {};
-	//DirectX::ScratchImage scratchImg = {};
-
 public:
 	friend class FbxLoader;
 };

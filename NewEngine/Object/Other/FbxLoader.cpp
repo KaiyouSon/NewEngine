@@ -234,31 +234,6 @@ void FbxLoader::ParseMaterial(FbxModel* fbxModel, FbxNode* fbxNode)
 	}
 }
 
-void FbxLoader::LoadTexture(FbxModel* fbxModel, const std::string fullPath)
-{
-	HRESULT result = S_FALSE;
-
-	// WICテクスチャのロード
-	//DirectX::TexMetadata& metadata = fbxModel->material.texture.metadata;
-	//DirectX::ScratchImage& scratchImg = fbxModel->material.texture.scratchImg;
-
-	//wchar_t wfilePath[128];
-	//MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, wfilePath, _countof(wfilePath));
-
-	//std::wstring wfilePath(fullPath.begin(), fullPath.end());
-
-	//// WICテクスチャのロード
-	//result = LoadFromWICFile(
-	//	wfilePath.c_str(),
-	//	DirectX::WIC_FLAGS::WIC_FLAGS_NONE,
-	//	&metadata, scratchImg);
-
-	//if (result != S_OK)
-	//{
-	//	assert(0 && "テクスチャーの読み込みが失敗しました");
-	//}
-}
-
 void FbxLoader::ParseNodeRecursive(FbxModel* fbxModel, FbxNode* fbxNode, FbxModelNode* parent)
 {
 	// ノード名を取得
@@ -296,6 +271,15 @@ void FbxLoader::ParseNodeRecursive(FbxModel* fbxModel, FbxNode* fbxNode, FbxMode
 	fbxModelNode.localTransformMat *= scaleMat;
 	fbxModelNode.localTransformMat *= rotMat;
 	fbxModelNode.localTransformMat *= transMat;
+
+	// グローバル変形行列の計算
+	fbxModelNode.globalTransformMat = fbxModelNode.localTransformMat;
+	if (parent)
+	{
+		fbxModelNode.parent = parent;
+		// 親の変形を乗算
+		fbxModelNode.globalTransformMat *= parent->globalTransformMat;
+	}
 
 	// FBXノードのメッシュ情報を解析
 	FbxNodeAttribute* fbxNodeAttribute = fbxNode->GetNodeAttribute();

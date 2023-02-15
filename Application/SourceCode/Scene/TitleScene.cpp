@@ -7,11 +7,10 @@ void TitleScene::Init()
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
-	obj.model = *FbxLoader::GetInstance()->Load("cube");
-	obj.pos.y = -5;
-	obj.scale = 0.1f;
-
-	//obj.rot.y = Radian(180);
+	obj.model = *FbxLoader::GetInstance()->Load("AttackEnemy");
+	obj.rot.y = Radian(180);
+	//obj.pos.y = -5;
+	//obj.scale = 0.1f;
 
 	skyDome.model = *ModelManager::GetModel("SkyDome");
 
@@ -22,49 +21,10 @@ void TitleScene::Init()
 
 	sphereCollider.centerPos = Vec3::zero;
 	sphereCollider.radius = 1;
-
-	//SoundManager::Play("BGM");
 }
-
-static bool isDraw = false;
 
 void TitleScene::Update()
 {
-	//if (isDraw == false)
-	//{
-	//	isDraw = true;
-	//}
-	//else
-	//{
-	//	isDraw = false;
-	//}
-
-	Vec2 v = Pad::GetStickDown(PadCodo::StickLeft, 300);
-
-	static int a = 0;
-	if (Pad::GetStickDown(PadCodo::StickLeft, 300).x > 0)
-	{
-		a++;
-
-		isDraw = true;
-	}
-	if (Pad::GetStickDown(PadCodo::StickLeft, 300).x < 0)
-	{
-		a--;
-
-		isDraw = false;
-	}
-
-	if (Pad::GetTriggerUp(PadCodo::TriggerLeft, 300) > 0)
-	{
-		sprite.pos.y += 10;
-	}
-
-	if (Pad::GetTriggerUp(PadCodo::TriggerRight, 300) > 0)
-	{
-		sprite.pos.y -= 10;
-	}
-
 	////obj.rot.y += Radian(1);
 	//const float speed = 10;
 
@@ -75,17 +35,8 @@ void TitleScene::Update()
 	obj.pos.x += (Key::GetKey(DIK_D) - Key::GetKey(DIK_A)) * 0.1f;
 	obj.pos.y += (Key::GetKey(DIK_W) - Key::GetKey(DIK_S)) * 0.1f;
 
-	//if (Pad::GetButton(PadCodo::ButtonA))
-	//{
-	//	static int a = 0;
-	//	a++;
-	//}
-
 	//obj.pos.x = +Pad::GetStick(PadCodo::StickLeft, 300).x / 1000;
 	//obj.pos.y = -Pad::GetStick(PadCodo::StickLeft, 300).y / 1000;
-
-	//sprite.pos.x += Pad::GetStick(PadCodo::LeftStick, 300, 1).x / 1000;
-	//sprite.pos.y += Pad::GetStick(PadCodo::LeftStick, 300, 1).y / 1000;
 
 	//sprite.Update();
 
@@ -101,10 +52,7 @@ void TitleScene::Update()
 void TitleScene::DrawRenderTexture()
 {
 	//TextureManager::GetRenderTexture("PostEffect")->PreDrawScene();
-	//if (isDraw == true)
-	//{
-	//	skyDome.Draw();
-	//}
+	//skyDome.Draw();
 	//obj.Draw();
 	//TextureManager::GetRenderTexture("PostEffect")->PostDrawScene();
 }

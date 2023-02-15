@@ -28,7 +28,6 @@ public:
 	void ParseMeshVertices(FbxModel* fbxModel, FbxMesh* fbxMesh);
 	void ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh);
 	void ParseMaterial(FbxModel* fbxModel, FbxNode* fbxNode);
-	void LoadTexture(FbxModel* fbxModel, const std::string fullPath);
 	void ParseNodeRecursive(FbxModel* fbxModel, FbxNode* fbxNode, FbxModelNode* parent = nullptr);
 
 	// ディレクトリーを含んだファイルパスからファイル名を抽出する
