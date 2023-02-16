@@ -7,7 +7,6 @@ std::unique_ptr<IScene> SceneManager::currentScene = nullptr;
 SceneManager::SceneManager()
 {
 	Object3D::isAllLighting = true;
-	//TextureManager::CreateTexture(Color::white, "White");
 
 	currentScene = std::move(std::make_unique<TitleScene>());
 }

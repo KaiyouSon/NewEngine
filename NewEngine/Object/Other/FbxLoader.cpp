@@ -29,43 +29,6 @@ void FbxLoader::Destroy()
 	fbxManager->Destroy();
 }
 
-FbxModel* FbxLoader::Load(const std::string& modelName)
-{
-	// モデルと同じ名前のフォルダーから読み込む
-	std::string path = "Application/Resources/Model/" + modelName + "/";
-	std::string fbxfile = modelName + ".fbx";
-	std::string fullPath = path + fbxfile;
-
-	if (!fbxImporter->Initialize(fullPath.c_str(), -1, fbxManager->GetIOSettings()))
-	{
-		assert(0 && "モデルの読み込みが失敗しました");
-	}
-
-	// シーン生成
-	FbxScene* fbxScene = FbxScene::Create(fbxManager, "fbxScene");
-
-	// ファイルからロードしたFBXの情報をシーンインポート
-	fbxImporter->Import(fbxScene);
-
-	// モデル生成
-	FbxModel* fbxModel = new FbxModel;
-	fbxModel->name = modelName;
-
-	// fbxノード数を取得して必要サイズ分メモリ確保する
-	const size_t nodeCount = fbxScene->GetNodeCount();
-	fbxModel->nodes.reserve(nodeCount);
-
-	// ルートノードから順に解析してモデルに流し込む
-	ParseNodeRecursive(fbxModel, fbxScene->GetRootNode());
-	// fbxシーンの解放
-	fbxScene->Destroy();
-
-	fbxModel->mesh.vertexBuffer.Create(fbxModel->mesh.vertices);
-	fbxModel->mesh.indexBuffer.Create(fbxModel->mesh.indices);
-
-	return fbxModel;
-}
-
 void FbxLoader::ParseMesh(FbxModel* fbxModel, FbxNode* fbxNode)
 {
 	// ノードのメッシュを取得
@@ -161,7 +124,7 @@ void FbxLoader::ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh)
 				if (fbxMesh->GetPolygonVertexUV(i, j, uvNames[0], uvs, lUnmappedUv))
 				{
 					vertex.uv.x = (float)uvs[0];
-					vertex.uv.y = (float)uvs[1];
+					vertex.uv.y = -(float)uvs[1];
 				}
 			}
 

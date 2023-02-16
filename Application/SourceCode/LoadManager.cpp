@@ -5,12 +5,12 @@
 void LoadManager::ModelLoad()
 {
 	//ModelManager::LoadModel("Cube", "Cube", true);
-	ModelManager::LoadModel("Sphere", "Sphere", true);
-	ModelManager::LoadModel("SkyDome", "SkyDome");
-	ModelManager::LoadModel("Ground", "Ground");
-	//ModelManager::LoadModel("AttackEnemy", "AttackEnemy", true);
-	ModelManager::LoadModel("Enemy", "Enemy", true);
-	ModelManager::LoadModel("SphereCollider", "SphereCollider");
+	ModelManager::LoadObjModel("Sphere", "Sphere", true);
+	ModelManager::LoadObjModel("SkyDome", "SkyDome");
+	ModelManager::LoadObjModel("Ground", "Ground");
+	ModelManager::LoadObjModel("Enemy", "Enemy", true);
+	ModelManager::LoadObjModel("SphereCollider", "SphereCollider");
+	ModelManager::LoadFbxModel("AttackEnemy", "AttackEnemy");
 
 }
 

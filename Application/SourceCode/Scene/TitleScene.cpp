@@ -11,7 +11,7 @@ void TitleScene::Init()
 	obj.pos = { -3,0,0 };
 	obj.rot.y = Radian(180);
 
-	fbx.model = *FbxLoader::GetInstance()->Load("AttackEnemy");
+	fbx.model = *ModelManager::GetModel("AttackEnemy");
 	fbx.pos = { +3,0,0 };
 	fbx.rot.y = Radian(180);
 

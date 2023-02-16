@@ -19,7 +19,7 @@ struct FbxModelNode
 
 class FbxModel : public Model
 {
-private:
+public:
 	std::string name;
 	std::vector<FbxModelNode> nodes;
 	FbxModelNode* meshNode = nullptr;

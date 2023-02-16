@@ -19,21 +19,23 @@ private:
 	static const std::string baseDirectory;
 	static const std::string defaultTextureFileName;
 
-public:
-	void Init();
-	void Destroy();
-
-	FbxModel* Load(const std::string& modelName);
+private:
 	void ParseMesh(FbxModel* fbxModel, FbxNode* fbxNode);
 	void ParseMeshVertices(FbxModel* fbxModel, FbxMesh* fbxMesh);
 	void ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh);
 	void ParseMaterial(FbxModel* fbxModel, FbxNode* fbxNode);
+
+public:
+	void Init();
+	void Destroy();
+
 	void ParseNodeRecursive(FbxModel* fbxModel, FbxNode* fbxNode, FbxModelNode* parent = nullptr);
 
 	// ディレクトリーを含んだファイルパスからファイル名を抽出する
 	std::string ExractFileName(const std::string& path);
 
-
+	inline FbxManager* GetFbxManager() { return fbxManager; }
+	inline FbxImporter* GetFbxImporter() { return fbxImporter; }
 private:
 	friend Singleton<FbxLoader>;
 };
