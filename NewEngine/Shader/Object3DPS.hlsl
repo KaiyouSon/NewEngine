@@ -19,7 +19,7 @@ float4 main(VSOutput input) : SV_TARGET
     float3 tAmbient = ambient;
 
     float4 shaderColor = float4(float3(1, 1, 1) * tAmbient, alpha);
-
+    
 	// •½sŒõŒ¹
     for (int i = 0; i < DirectionalLightNum; i++)
     {
