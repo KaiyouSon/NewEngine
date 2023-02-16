@@ -91,14 +91,14 @@ void FbxLoader::ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh)
 	fbxMesh->GetUVSetNames(uvNames);
 
 	// 面ごとの情報読み取り
-	for (size_t i = 0; i < polygonCount; i++)
+	for (int i = 0; i < polygonCount; i++)
 	{
 		// 面を構成する頂点の数を取得（3なら三角形ポリゴン）
 		const int polygonSize = fbxMesh->GetPolygonSize(i);
 		assert(polygonSize <= 4);
 
 		// 1頂点ずつ処理
-		for (size_t j = 0; j < polygonSize; j++)
+		for (int j = 0; j < polygonSize; j++)
 		{
 			// FBX頂点配列のインデックス
 			int index = fbxMesh->GetPolygonVertex(i, j);
@@ -257,7 +257,7 @@ void FbxLoader::ParseNodeRecursive(FbxModel* fbxModel, FbxNode* fbxNode, FbxMode
 	}
 
 	// 再帰
-	for (size_t i = 0; i < fbxNode->GetChildCount(); i++)
+	for (int i = 0; i < fbxNode->GetChildCount(); i++)
 	{
 		ParseNodeRecursive(fbxModel, fbxNode->GetChild(i), &fbxModelNode);
 	}

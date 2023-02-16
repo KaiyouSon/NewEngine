@@ -85,8 +85,8 @@ void RenderTexture::PreDrawScene()
 	// シザリング矩形の設定
 	CD3DX12_RECT scissorRect = CD3DX12_RECT(
 		0, 0,
-		renderWindow->GetWindowSize().x,
-		renderWindow->GetWindowSize().y);
+		(LONG)renderWindow->GetWindowSize().x,
+		(LONG)renderWindow->GetWindowSize().y);
 	renderBase->GetCommandList()->RSSetScissorRects(1, &scissorRect);
 
 	// 全画面クリア

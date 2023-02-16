@@ -2,7 +2,7 @@
 #include "MathUtil.h"
 #include <math.h>
 
-float Quaternion::Length() const { return sqrt(x * x + y * y + z * z + w * w); }
+float Quaternion::Length() const { return sqrtf(x * x + y * y + z * z + w * w); }
 
 Quaternion Quaternion::Norm() const { return { x / Length(),y / Length(),z / Length() ,w / Length() }; }
 
@@ -59,8 +59,8 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, const Quaternion& q2, float t
 	if ((1.f - cos) > 0.001f)
 	{
 		float theta = acosf(cos);
-		k0 = sinf(theta * k0) / sin(theta);
-		k1 = sinf(theta * k1) / sin(theta);
+		k0 = sinf(theta * k0) / sinf(theta);
+		k1 = sinf(theta * k1) / sinf(theta);
 	}
 
 	if (cos >= 1.f - 0.0005f)
@@ -182,8 +182,11 @@ Quaternion& Quaternion::operator-=(const Quaternion& other)
 }
 Quaternion& Quaternion::operator*=(const Quaternion& other)
 {
-	Quaternion result = *this * other;
-	return result;
+	x *= other.x;
+	y *= other.y;
+	z *= other.z;
+	w *= other.w;
+	return *this;
 }
 
 Quaternion& Quaternion::operator*=(const float& num)
