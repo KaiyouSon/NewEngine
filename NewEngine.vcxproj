@@ -79,14 +79,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)External/FBXSDK;$(SolutionDir)External/ImGUI;$(SolutionDir)External/DirectXTex</IncludePath>
+    <IncludePath>$(SolutionDir)External/FBXSDK/include;$(SolutionDir)External/ImGUI;$(SolutionDir)External/DirectXTex</IncludePath>
     <IntDir>$(SolutionDir)../Generated/Obj/$(ProjectName)/$(Configuration)/</IntDir>
     <OutDir>$(SolutionDir)../Generated/Outputs/$(ProjectName)/$(Configuration)/</OutDir>
     <LibraryPath>$(SolutionDir)../Generated/Outputs/FBXSDK/$(Configuration)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)External/FBXSDK;$(SolutionDir)External/ImGUI;$(SolutionDir)External/DirectXTex</IncludePath>
+    <IncludePath>$(SolutionDir)External/FBXSDK/include;$(SolutionDir)External/ImGUI;$(SolutionDir)External/DirectXTex</IncludePath>
     <IntDir>$(SolutionDir)../Generated/Obj/$(ProjectName)/$(Configuration)/</IntDir>
     <OutDir>$(SolutionDir)../Generated/Outputs/$(ProjectName)/$(Configuration)/</OutDir>
     <LibraryPath>$(SolutionDir)../Generated/Outputs/FBXSDK/$(Configuration)/;$(LibraryPath)</LibraryPath>
