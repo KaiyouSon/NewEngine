@@ -121,6 +121,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="Shader\Util">
+      <UniqueIdentifier>{0031c42b-881b-489c-9e3d-7deffda456b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -458,12 +461,6 @@
     <ClInclude Include="Application\SourceCode\LoadManager.h">
       <Filter>Application\Header</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Render\RenderTarget.h">
-      <Filter>NewEngine\Header\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Render\RenderBase.h">
-      <Filter>NewEngine\Header\Render\Buffer</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Render\Buffer\DepthBuffer.h">
       <Filter>NewEngine\Header\Render\Buffer</Filter>
     </ClInclude>
@@ -491,6 +488,12 @@
     <ClInclude Include="NewEngine\Object\Other\FbxModel.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
+    <ClInclude Include="NewEngine\Render\RenderTarget.h">
+      <Filter>NewEngine\Header\Render\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\RenderBase.h">
+      <Filter>NewEngine\Header\Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\RenderTexture.hlsli">
@@ -514,14 +517,17 @@
     <None Include="NewEngine\Shader\CircleGaugeSpriteH.hlsli">
       <Filter>Shader</Filter>
     </None>
-    <None Include="NewEngine\Shader\Blur.hlsli">
-      <Filter>Shader</Filter>
-    </None>
     <None Include="NewEngine\Shader\LineH.hlsli">
       <Filter>Shader</Filter>
     </None>
+    <None Include="NewEngine\Shader\Blur.hlsli">
+      <Filter>Shader\Util</Filter>
+    </None>
     <None Include="NewEngine\Shader\Lighting.hlsli">
-      <Filter>Shader</Filter>
+      <Filter>Shader\Util</Filter>
+    </None>
+    <None Include="NewEngine\Shader\ShaderIO.hlsli">
+      <Filter>Shader\Util</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

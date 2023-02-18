@@ -70,7 +70,7 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
 
 	// デプスステンシルステートの設定
 	pipelineDesc.DepthStencilState = depthStencilDesc;
-	if (depthStencilDesc.DepthEnable == true)
+	if (depthStencilDesc.DepthEnable == (BOOL)true)
 	{
 		pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	// 深度値フォーマット
 	}

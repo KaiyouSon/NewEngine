@@ -1,19 +1,20 @@
 #include "Object3DH.hlsli"
 #include "Lighting.hlsli"
+#include "ShaderIO.hlsli"
 
 Texture2D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
 SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
 
-float4 main(VSOutput input) : SV_TARGET
+float4 main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
 {
 	// テクスチャーマッピング
-    float4 texColor = tex.Sample(smp, input.uv);
+    float4 texColor = tex.Sample(smp, vsOutput.uv);
     
 	// 光沢度
     const float shininess = 4.0f;
 
 	// 頂点から視点へのベクトル
-    float3 eyeDir = normalize(cameraPos - input.worldPos.xyz);
+    float3 eyeDir = normalize(cameraPos - vsOutput.worldPos.xyz);
 
 	// 環境反射光
     float3 tAmbient = ambient;
@@ -26,9 +27,9 @@ float4 main(VSOutput input) : SV_TARGET
         if (directionalLights[i].isActive == true)
         {
 			// ライトに向かうベクトルと法線の内積
-            float3 dotLightNormal = dot(directionalLights[i].lightVec, input.normal);
+            float3 dotLightNormal = dot(directionalLights[i].lightVec, vsOutput.normal);
 			// 反射光ベクトル
-            float3 reflect = normalize(-directionalLights[i].lightVec + 2 * dotLightNormal * input.normal);
+            float3 reflect = normalize(-directionalLights[i].lightVec + 2 * dotLightNormal * vsOutput.normal);
 
 			// 拡散反射光
             float3 tDiffuse = dotLightNormal * diffuse;
@@ -47,7 +48,7 @@ float4 main(VSOutput input) : SV_TARGET
         if (pointLights[i].isActive == true)
         {
 			// ライトへの方向ベクトル
-            float3 lightv = pointLights[i].pos - input.worldPos.xyz;
+            float3 lightv = pointLights[i].pos - vsOutput.worldPos.xyz;
 			// ベクトルの長さ
             float d = length(lightv);
 			// 正規化
@@ -60,10 +61,10 @@ float4 main(VSOutput input) : SV_TARGET
 				pointLights[i].atten.z * d * d);
 
 			// ライトに向かうベクトルと法線の内積
-            float3 dotlightnormal = dot(lightv, input.normal);
+            float3 dotlightnormal = dot(lightv, vsOutput.normal);
 
 			// 反射光ベクトル
-            float3 reflect = normalize(-lightv + 2 * dotlightnormal * input.normal);
+            float3 reflect = normalize(-lightv + 2 * dotlightnormal * vsOutput.normal);
 			// 拡散反射光
             float3 tDiffuse = dotlightnormal * diffuse;
 			// 鏡面反射光
@@ -80,7 +81,7 @@ float4 main(VSOutput input) : SV_TARGET
         if (spotLights[i].isActive == true)
         {
 			// ライトへの方向ベクトル
-            float3 lightv = spotLights[i].pos - input.worldPos.xyz;
+            float3 lightv = spotLights[i].pos - vsOutput.worldPos.xyz;
 			// ベクトルの長さ
             float d = length(lightv);
 			// 正規化
@@ -101,10 +102,10 @@ float4 main(VSOutput input) : SV_TARGET
             atten *= angleAtten;
 
 			// ライト方向に向かうベクトルと法線の内積
-            float3 dotLightNormal = dot(lightv, input.normal);
+            float3 dotLightNormal = dot(lightv, vsOutput.normal);
 
 			// 反射光ベクトル
-            float3 reflect = normalize(-lightv + 2 * dotLightNormal * input.normal);
+            float3 reflect = normalize(-lightv + 2 * dotLightNormal * vsOutput.normal);
 
 			// 拡散反射光
             float3 tDiffuse = dotLightNormal * diffuse;
@@ -122,7 +123,7 @@ float4 main(VSOutput input) : SV_TARGET
         if (circleShadows[i].isActive == true)
         {
 			// オブジェクト表面からキャスターへのベクトル
-            float3 casterV = circleShadows[i].pos - input.worldPos.xyz;
+            float3 casterV = circleShadows[i].pos - vsOutput.worldPos.xyz;
 
 			// 投影方向での距離
             float d = dot(casterV, circleShadows[i].vec);
@@ -139,7 +140,7 @@ float4 main(VSOutput input) : SV_TARGET
             float3 lightPos = circleShadows[i].pos + circleShadows[i].vec * circleShadows[i].disCasterLight;
 
 			// オブジェクト表面からライトへのベクトル
-            float3 lightV = normalize(lightPos - input.worldPos.xyz);
+            float3 lightV = normalize(lightPos - vsOutput.worldPos.xyz);
 
 			// 角度計算
             float cos = dot(lightV, circleShadows[i].vec);
@@ -157,7 +158,7 @@ float4 main(VSOutput input) : SV_TARGET
     if (isActiveFog == true)
     {
 		// カメラの座標と頂点の距離
-        float dis = distance(input.worldPos.xyz, cameraPos);
+        float dis = distance(vsOutput.worldPos.xyz, cameraPos);
         float rate = smoothstep(fogNearDis, fogFarDis, dis);
 
 		// フォグの色

@@ -349,8 +349,6 @@ void RenderBase::FenceInit()
 }
 void RenderBase::DepthBufferInit()
 {
-	HRESULT result;
-
 	depthBuffer = std::move(std::make_unique<DepthBuffer>());
 	depthBuffer->Create();
 }
@@ -399,7 +397,7 @@ void RenderBase::ShaderCompilerInit()
 	outlineShader = std::move(std::make_unique<ShaderObject>());
 	outlineShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	outlineShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	outlineShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//outlineShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
 	outlineShader->CompileVertexShader(path + "OutLineVS.hlsl", "main");
 	outlineShader->CompilePixelShader(path + "OutLinePS.hlsl", "main");
 
@@ -446,7 +444,7 @@ void RenderBase::GraphicsPipelineInit()
 	depthStencilDesc3.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// 書き込み不可
 	depthStencilDesc3.DepthFunc = D3D12_COMPARISON_FUNC_GREATER;	// 大きいほうを採用
 
-	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc4 = D3D12_DEPTH_STENCIL_DESC();
+	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc4{};
 	depthStencilDesc4.DepthEnable = true; // 深度テストを行う
 	depthStencilDesc4.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み許可
 	depthStencilDesc4.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用

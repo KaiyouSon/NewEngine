@@ -11,13 +11,3 @@ cbuffer ConstantBufferDataColor : register(b1)
 {
     float4 color; // 色
 }
-
-// 頂点シェーダーの出力構造体
-// （頂点シェーダーからピクセルシェーダーヘのやり取りに使用する）
-struct VSOutput
-{
-    float4 svpos : SV_POSITION; // システム用頂点座標
-    float4 worldPos : POSITION; // ワールド座標
-    float3 normal : NORMAL; // 法線ベクトル
-    float2 uv : TEXCOORD; // uv値
-};

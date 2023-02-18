@@ -14,10 +14,6 @@ void TitleScene::Init()
 	fbx.model = *ModelManager::GetModel("AttackEnemy");
 	fbx.pos = { +3,0,0 };
 	fbx.rot.y = Radian(180);
-	
-
-	//obj.pos.y = -5;
-	//obj.scale = 0.1f;
 
 	skyDome.model = *ModelManager::GetModel("SkyDome");
 
@@ -26,6 +22,9 @@ void TitleScene::Init()
 
 	sphereCollider.centerPos = Vec3::zero;
 	sphereCollider.radius = 1;
+
+	olobj.obj = &obj;
+
 }
 
 void TitleScene::Update()
@@ -33,12 +32,14 @@ void TitleScene::Update()
 	obj.pos.x += (Key::GetKey(DIK_D) - Key::GetKey(DIK_A)) * 0.1f;
 	obj.pos.y += (Key::GetKey(DIK_W) - Key::GetKey(DIK_S)) * 0.1f;
 
-	//sprite.Update();
-	//sprite.graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture");
+	sprite.Update();
+	sprite.graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture");
 	//skyDome.Update();
 
-	obj.Update();
+	//obj.Update();
 	fbx.Update();
+
+	olobj.Update();
 
 	//sphereCollider.Update();
 
@@ -48,7 +49,7 @@ void TitleScene::Update()
 void TitleScene::DrawRenderTexture()
 {
 	//TextureManager::GetRenderTexture("PostEffect")->PreDrawScene();
-	//skyDome.Draw();
+	//fbx.Draw();
 	//obj.Draw();
 	//TextureManager::GetRenderTexture("PostEffect")->PostDrawScene();
 }
@@ -60,10 +61,12 @@ void TitleScene::DrawBackSprite()
 
 void TitleScene::DrawModel()
 {
-	obj.Draw();
-	fbx.Draw();
+	//obj.Draw();
+	//fbx.Draw();
 
 	//sphereCollider.Draw();
+
+	olobj.Draw();
 }
 
 void TitleScene::DrawFrontSprite()

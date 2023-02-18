@@ -52,8 +52,8 @@ Texture* TextureManager::CreateTexture(const Color& color, const std::string& te
 
 	D3D12_SUBRESOURCE_DATA subResourcesData{};
 	subResourcesData.pData = (void**)&color;
-	subResourcesData.RowPitch = sizeof(Color) * tex->size.x;
-	subResourcesData.SlicePitch = sizeof(Color) * tex->size.x * tex->size.y;
+	subResourcesData.RowPitch = (LONG_PTR)(sizeof(Color) * tex->size.x);
+	subResourcesData.SlicePitch = (LONG_PTR)(sizeof(Color) * tex->size.x * tex->size.y);
 
 	uint64_t uploadSize = GetRequiredIntermediateSize(tex->buffer.Get(), 0, 1);
 
@@ -180,7 +180,7 @@ Texture* TextureManager::LoadTexture(const std::string& filePath, const std::str
 		subResourcesDatas[i].SlicePitch = img->slicePitch;
 	}
 
-	uint64_t uploadSize = GetRequiredIntermediateSize(tex->buffer.Get(), 0, metadata.mipLevels);
+	uint64_t uploadSize = GetRequiredIntermediateSize(tex->buffer.Get(), 0, (UINT)metadata.mipLevels);
 
 	// ÉqÅ[ÉvÇÃê›íË
 	D3D12_HEAP_PROPERTIES textureHeapProp1{};
@@ -207,7 +207,7 @@ Texture* TextureManager::LoadTexture(const std::string& filePath, const std::str
 		uploadBuffer.Get(),
 		0,
 		0,
-		metadata.mipLevels,
+		(UINT)metadata.mipLevels,
 		subResourcesDatas.data());
 
 	D3D12_RESOURCE_BARRIER  barrier;
@@ -303,7 +303,7 @@ Texture TextureManager::LoadMaterialTexture(const std::string& filePath)
 		subResourcesDatas[i].SlicePitch = img->slicePitch;
 	}
 
-	uint64_t uploadSize = GetRequiredIntermediateSize(tex.buffer.Get(), 0, metadata.mipLevels);
+	uint64_t uploadSize = GetRequiredIntermediateSize(tex.buffer.Get(), 0, (UINT)metadata.mipLevels);
 
 	// ÉqÅ[ÉvÇÃê›íË
 	D3D12_HEAP_PROPERTIES textureHeapProp1{};
@@ -330,7 +330,7 @@ Texture TextureManager::LoadMaterialTexture(const std::string& filePath)
 		uploadBuffer.Get(),
 		0,
 		0,
-		metadata.mipLevels,
+		(UINT)metadata.mipLevels,
 		subResourcesDatas.data());
 
 	D3D12_RESOURCE_BARRIER  barrier;
@@ -344,7 +344,7 @@ Texture TextureManager::LoadMaterialTexture(const std::string& filePath)
 
 	return tex;
 }
-Texture TextureManager::LoadFBXMaterialTexture(	const std::string& filePath)
+Texture TextureManager::LoadFBXMaterialTexture(const std::string& filePath)
 {
 	Texture tex;
 	//std::wstring wfilePath(filePath.begin(), filePath.end());
@@ -484,7 +484,7 @@ RenderTexture* TextureManager::CreateRenderTexture(const Vec2& size, const std::
 	CD3DX12_RESOURCE_DESC texturenResourceDesc =
 		CD3DX12_RESOURCE_DESC::Tex2D(
 			DXGI_FORMAT_R8G8B8A8_UNORM,
-			size.x, size.y,
+			(UINT64)size.x, (UINT)size.y,
 			1, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
 
 	CD3DX12_CLEAR_VALUE textureResourceClearValue =

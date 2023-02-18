@@ -1,17 +1,15 @@
 #include "OutLine.hlsli"
+#include "ShaderIO.hlsli"
 
-VSOutput main(float4 pos : POSITION, float3 normal : NORMAL, float2 uv : TEXCOORD)
+VSOutputSvpos main(VSInputPosNormal vsInput)
 {
-	// 法線にワールド行列によるスケーリング・回転を適用		
-	float4 wnormal = normalize(mul(worldMat, float4(normal, 0)));
-	float4 wpos = mul(worldMat, pos);
+    // ワールド行列とビュー行列をかけた    
+    matrix mat = mul(viewMat, worldMat);
+    float4 pos = vsInput.pos + float4(vsInput.normal, 0) * 0.1f;
+    
+    // 出力構造体
+    VSOutputSvpos output; 
+    output.svpos = mul(mat, pos);
 
-	VSOutput output; // ピクセルシェーダーに渡す値
-
-	output.svpos = mul(mul(viewMat, worldMat), pos + float4(normal, 0) * 0.1f);
-	output.worldPos = wpos;
-	output.normal = wnormal.xyz;
-	output.uv = uv;
-
-	return output;
+    return output;
 }

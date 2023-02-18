@@ -87,13 +87,13 @@ unsigned long GetNowTime(const TimeUnit& timeUnit)
 	switch (timeUnit)
 	{
 	case TimeUnit::MilliSecond:
-		return GetTickCount64();
+		return (unsigned long)(GetTickCount64());
 		break;
 	case TimeUnit::Second:
-		return (GetTickCount64() / 1000) % 60;
+		return (unsigned long)((GetTickCount64() / 1000) % 60);
 		break;
 	case TimeUnit::Minute:
-		return (GetTickCount64() / 60000) % 60;
+		return (unsigned long)((GetTickCount64() / 60000) % 60);
 		break;
 	default:
 		break;
