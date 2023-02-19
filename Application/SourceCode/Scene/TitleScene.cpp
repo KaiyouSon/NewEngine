@@ -24,7 +24,6 @@ void TitleScene::Init()
 	sphereCollider.radius = 1;
 
 	olobj.obj = &obj;
-
 }
 
 void TitleScene::Update()

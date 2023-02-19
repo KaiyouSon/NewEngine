@@ -292,7 +292,7 @@ void GameScene::CG3Init()
 	obj2.model = *ModelManager::GetModel("Player");
 	obj2.pos.y = 1.5f;
 
-	obj3.model = *ModelManager::GetModel("Sphere");
+	obj3.model = *ModelManager::GetModel("Enemy");
 	obj3.pos = { -3.f,2.f,0.f };
 
 	silhouetteObj.obj = &obj;
@@ -309,15 +309,14 @@ void GameScene::CG3Update()
 	groundObj.Update();
 
 	LightManager::GetInstance()->circleShadow.pos = obj3.pos;
-	LightManager::GetInstance()->Update();
 }
 void GameScene::CG3DrawModel()
 {
 	obj3.Draw();
-	outlineObj.Draw();
-	groundObj.Draw();
-	skyDomeObj.Draw();
-	silhouetteObj.Draw();
+	//outlineObj.Draw();
+	//groundObj.Draw();
+	//skyDomeObj.Draw();
+	//silhouetteObj.Draw();
 }
 void GameScene::CG3DrawGui()
 {

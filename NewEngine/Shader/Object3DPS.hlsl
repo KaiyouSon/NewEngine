@@ -1,5 +1,4 @@
 #include "Object3D.hlsli"
-#include "Lighting.hlsli"
 #include "ShaderIO.hlsli"
 
 Texture2D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
@@ -24,22 +23,8 @@ float4 main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
 	// 平行光源
     for (int i = 0; i < DirectionalLightNum; i++)
     {
-        if (directionalLights[i].isActive == true)
-        {
-			// ライトに向かうベクトルと法線の内積
-            float3 dotLightNormal = dot(directionalLights[i].lightVec, vsOutput.normal);
-			// 反射光ベクトル
-            float3 reflect = normalize(-directionalLights[i].lightVec + 2 * dotLightNormal * vsOutput.normal);
-
-			// 拡散反射光
-            float3 tDiffuse = dotLightNormal * diffuse;
-			// 鏡面反射光
-            float tSpecular = pow(saturate(dot(reflect, eyeDir)), shininess) * specular;
-
-			// 全て加算する
-
-            shaderColor.rgb += (tDiffuse + tSpecular) * directionalLights[i].color;
-        }
+        float3 color = DirectionalLightFunc(directionalLights[i], vsOutput.normal, eyeDir, shininess, ambient, diffuse);
+        shaderColor.rgb += color;
     }
 
 	// 点光源
