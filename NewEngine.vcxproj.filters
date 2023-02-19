@@ -298,7 +298,7 @@
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\FbxModel.cpp">
-      <Filter>Uncategorized\Source</Filter>
+      <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -485,14 +485,14 @@
     <ClInclude Include="NewEngine\Object\Other\FbxLoader.h">
       <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\Other\FbxModel.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Render\RenderTarget.h">
       <Filter>NewEngine\Header\Render\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Render\RenderBase.h">
       <Filter>NewEngine\Header\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\FbxModel.h">
+      <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -16,6 +16,7 @@ void TitleScene::Init()
 	fbx.rot.y = Radian(180);
 
 	skyDome.model = *ModelManager::GetModel("SkyDome");
+	skyDome.isLighting = false;
 
 	sprite.texture = *TextureManager::GetRenderTexture("PostEffect");
 	sprite.pos = GetWindowHalfSize();

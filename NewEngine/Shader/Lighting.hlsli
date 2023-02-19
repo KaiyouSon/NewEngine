@@ -45,7 +45,6 @@ struct LightCalculateData
     float3 lightNormal;
 };
 
-
 // ŠÛ‰e
 struct CircleShadow
 {

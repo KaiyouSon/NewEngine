@@ -283,6 +283,8 @@ void GameScene::CG3Init()
 	LightManager::GetInstance()->circleShadow.factorAngleCos = { 0.0f,0.5f };
 
 	skyDomeObj.model = *ModelManager::GetModel("SkyDome");
+	skyDomeObj.isLighting = false;
+
 	groundObj.model = *ModelManager::GetModel("Ground");
 	groundObj.pos.y = -1.f;
 
