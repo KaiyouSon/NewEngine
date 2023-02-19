@@ -56,6 +56,15 @@ struct CircleShadow
     uint isActive;
 };
 
+// フォグ
+struct Fog
+{
+    uint isActive;
+    float nearDis;
+    float farDis;
+    float4 color;
+};
+
 // ランバート反射
 float3 Lambert(float3 lightV, float3 normal)
 {
@@ -232,4 +241,18 @@ float3 CalculateCircleShadow(CircleShadow _circleShadow, float3 _pos)
     }
     
     return resultColor;
+}
+
+float4 CalculateFog(Fog fog, float dis, float4 currentColor)
+{
+    if (fog.isActive == true)
+    {
+		// カメラの座標と頂点の距離
+        float rate = smoothstep(fog.nearDis, fog.farDis, dis);
+
+		// フォグの色
+        return fog.color * rate + currentColor * (1 - rate);
+    }
+    
+    return currentColor;
 }

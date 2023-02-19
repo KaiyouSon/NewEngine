@@ -76,19 +76,9 @@ float4 main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
         shaderColor.rgb += color;
     }
 
-    if (isActiveFog == true)
-    {
-		// カメラの座標と頂点の距離
-        float dis = distance(vsOutput.worldPos.xyz, cameraPos);
-        float rate = smoothstep(fogNearDis, fogFarDis, dis);
-
-		// フォグの色
-        float4 tFogColor = fogColor * rate;
-        float4 outPutColor = shaderColor * texColor * color;
-        return fogColor * rate + outPutColor * (1 - rate);
-    }
-    else
-    {
-        return shaderColor * texColor * color;
-    }
+    float dis = distance(vsOutput.worldPos.xyz, cameraPos);
+    float rate = smoothstep(fog.nearDis, fog.farDis, dis);
+    float4 currentColor = shaderColor * texColor * color;
+    float4 outputColor = CalculateFog(fog, dis, currentColor);
+    return outputColor;
 }
