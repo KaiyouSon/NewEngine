@@ -36,6 +36,16 @@ struct SpotLight
     uint isActive;
 };
 
+// 光源計算用データ
+struct LightCalculateData
+{
+    float3 vertexPos;
+    float3 vertexNormal;
+    float3 lightVec;
+    float3 lightNormal;
+};
+
+
 // 丸影
 struct CircleShadow
 {
@@ -84,19 +94,17 @@ float3 Phone(float3 _lightV, float3 _normal, float3 _eyeDir, float _shininess, f
 
 // 平行光源
 float3 CalculateDirectionalLight(DirectionalLight _directionalLight, Material _material,
-    float3 _normal, float3 _eyeDir, float _shininess)
+    float3 _normal, float3 _lightNormal, float3 _eyeDir, float _shininess)
 {
     float3 resultColor = 0;
     
     if (_directionalLight.isActive == true)
     {
-		// ライトに向かうベクトルと法線の内積
-        float3 dotLightNormal = dot(_directionalLight.vec, _normal);
 		// 反射光ベクトル
-        float3 reflect = normalize(-_directionalLight.vec + 2 * dotLightNormal * _normal);
+        float3 reflect = normalize(-_directionalLight.vec + 2 * _lightNormal * _normal);
 
 		// 拡散反射光
-        float3 diffuse = dotLightNormal * _material.diffuse;
+        float3 diffuse = _lightNormal * _material.diffuse;
 		// 鏡面反射光
         float specular = pow(saturate(dot(reflect, _eyeDir)), _shininess) * _material.specular;
 
@@ -109,18 +117,14 @@ float3 CalculateDirectionalLight(DirectionalLight _directionalLight, Material _m
 
 // 点光源
 float3 CalculatePointLight(PointLight _pointLight, Material _material,
-    float3 _pos, float3 _normal, float3 _eyeDir, float _shininess)
+    LightCalculateData _lightCalculateData, float3 _eyeDir, float _shininess)
 {
     float3 resultColor = 0;
     
     if (_pointLight.isActive == true)
     {
-		// ライトへの方向ベクトル
-        float3 lightv = _pointLight.pos - _pos.xyz;
 		// ベクトルの長さ
-        float d = length(lightv);
-		// 正規化
-        lightv = normalize(lightv);
+        float d = length(_lightCalculateData.lightVec);
 
 		// 距離減衰係数
         float atten = 1.0f /
@@ -128,13 +132,14 @@ float3 CalculatePointLight(PointLight _pointLight, Material _material,
 				_pointLight.atten.y * d +
 				_pointLight.atten.z * d * d);
 
-		// ライトに向かうベクトルと法線の内積
-        float3 dotlightnormal = dot(lightv, _normal);
-
 		// 反射光ベクトル
-        float3 reflect = normalize(-lightv + 2 * dotlightnormal * _normal);
+        float3 reflect = normalize(
+        -_lightCalculateData.lightVec + 2 *
+        _lightCalculateData.lightNormal *
+        _lightCalculateData.vertexNormal);
+        
 		// 拡散反射光
-        float3 diffuse = dotlightnormal * _material.diffuse;
+        float3 diffuse = _lightCalculateData.lightNormal * _material.diffuse;
 		// 鏡面反射光
         float3 specular = pow(saturate(dot(reflect, _eyeDir)), _shininess) * _material.specular;
 
@@ -147,18 +152,14 @@ float3 CalculatePointLight(PointLight _pointLight, Material _material,
 
 // スポットライト
 float3 CalculateSpotLight(SpotLight _spotLight, Material _material,
-    float3 _pos, float3 _normal, float3 _eyeDir, float _shininess)
+    LightCalculateData _lightCalculateData, float3 _eyeDir, float _shininess)
 {
     float3 resultColor = 0;
     
     if (_spotLight.isActive == true)
     {
-		// ライトへの方向ベクトル
-        float3 lightv = _spotLight.pos - _pos;
 		// ベクトルの長さ
-        float d = length(lightv);
-		// 正規化
-        lightv = normalize(lightv);
+        float d = length(_lightCalculateData.lightVec);
 
 		// 距離減衰係数
         float atten = saturate(1.0f /
@@ -167,21 +168,21 @@ float3 CalculateSpotLight(SpotLight _spotLight, Material _material,
 					_spotLight.atten.z * d * d));
 
 		// 角度減衰
-        float cos = dot(lightv, _spotLight.vec);
+        float cos = dot(_lightCalculateData.lightVec, _spotLight.vec);
 		// 減衰開始角度から、減衰終了角度にかけて減衰
 		// 減衰開始角度の内側は１倍、減衰終了角度の外側は０倍の輝度
         float angleAtten = smoothstep(_spotLight.factorAngleCos.y, _spotLight.factorAngleCos.x, cos);
 		// 角度減衰を乗算
         atten *= angleAtten;
 
-		// ライト方向に向かうベクトルと法線の内積
-        float3 dotLightNormal = dot(lightv, _normal);
-
 		// 反射光ベクトル
-        float3 reflect = normalize(-lightv + 2 * dotLightNormal * _normal);
+        float3 reflect = normalize(
+            -_lightCalculateData.lightVec + 2 *
+            _lightCalculateData.lightNormal *
+            _lightCalculateData.vertexNormal);
 
 		// 拡散反射光
-        float3 diffuse = dotLightNormal * _material.diffuse;
+        float3 diffuse = _lightCalculateData.lightNormal * _material.diffuse;
 		// 鏡面反射光
         float3 specular = pow(saturate(dot(reflect, _eyeDir)), _shininess) * _material.specular;
 

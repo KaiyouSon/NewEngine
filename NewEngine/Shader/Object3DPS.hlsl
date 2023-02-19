@@ -24,24 +24,48 @@ float4 main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
 	// 平行光源
     for (int i = 0; i < directionalLightNum; i++)
     {
+		// ライトに向かうベクトルと法線の内積
+        float3 lightNormal = dot(directionalLights[i].vec, vsOutput.normal);
+        
         float3 color = CalculateDirectionalLight(
-            directionalLights[i], material, vsOutput.normal, eyeDir, shininess);
+            directionalLights[i], material, vsOutput.normal, lightNormal, eyeDir, shininess);
         shaderColor.rgb += color;
     }
 
+    // 光源計算用データ
+    LightCalculateData lightCalculateData;
+    
 	// 点光源
     for (int i = 0; i < pointLightNum; i++)
     {
+        // 頂点のワールド座標
+        lightCalculateData.vertexPos = vsOutput.worldPos.xyz;
+        // 頂点法線
+        lightCalculateData.vertexNormal = vsOutput.normal;
+        // 頂点のワールド座標からライトに向かうベクトル
+        lightCalculateData.lightVec = normalize(pointLights[i].pos - vsOutput.worldPos.xyz);
+        // ライトに向かうベクトルと法線の内積
+        lightCalculateData.lightNormal = dot(lightCalculateData.lightVec, vsOutput.normal);
+        
         float3 color = CalculatePointLight(
-            pointLights[i], material, vsOutput.worldPos.xyz, vsOutput.normal, eyeDir, shininess);
+            pointLights[i], material, lightCalculateData, eyeDir, shininess);
         shaderColor.rgb += color;
     }
 
 	// スポットライト
     for (int i = 0; i < spotLightNum; i++)
     {
+        // 頂点のワールド座標
+        lightCalculateData.vertexPos = vsOutput.worldPos.xyz;
+        // 頂点法線
+        lightCalculateData.vertexNormal = vsOutput.normal;
+        // 頂点のワールド座標からライトに向かうベクトル
+        lightCalculateData.lightVec = normalize(spotLights[i].pos - vsOutput.worldPos.xyz);
+        // ライトに向かうベクトルと法線の内積
+        lightCalculateData.lightNormal = dot(lightCalculateData.lightVec, vsOutput.normal);
+        
         float3 color = CalculateSpotLight(
-            spotLights[i], material, vsOutput.worldPos.xyz, vsOutput.normal, eyeDir, shininess);
+            spotLights[i], material, lightCalculateData, eyeDir, shininess);
         shaderColor.rgb += color;
     }
 
