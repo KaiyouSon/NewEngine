@@ -24,41 +24,14 @@ cbuffer ConstantBufferDataColor : register(b2)
     float4 color; // 色
 }
 
-// --- 平行光源 ---------------------------- //
-static const int DirectionalLightNum = 1;
-//struct DirectionalLight
-//{
-//	float3 lightVec;	// 方向
-//	float3 color;		// 色
-//	uint isActive;
-//};
-
-// --- 点光源 ------------------------------ //
-static const int PointLightNum = 3;
-struct PointLight
-{
-    float3 pos; // 座標
-    float3 color; // 色
-    float3 atten; // ライト距離減衰係数
-    uint isActive;
-};
-
-// --- スポットライト ---------------------- //
+static const int directionalLightNum = 1;
+static const int pointLightNum = 3;
 static const int spotLightNum = 3;
-struct SpotLight
-{
-    float3 vec; // 逆ベクトル
-    float3 pos; // 座標
-    float3 color; // 色
-    float3 atten; // ライト距離減衰係数
-    float2 factorAngleCos; // ライトの減衰角度のコサイン
-    uint isActive;
-};
 
 cbuffer ConstantBufferDataLightManager : register(b3)
 {
-    DirectionalLight directionalLights[DirectionalLightNum];
-    PointLight pointLights[PointLightNum];
+    DirectionalLight directionalLights[directionalLightNum];
+    PointLight pointLights[pointLightNum];
     SpotLight spotLights[spotLightNum];
 };
 
@@ -73,15 +46,15 @@ cbuffer ConstantBufferDataFog : register(b4)
 
 // --- 丸影 ----------------------------------------------------- //
 static const int circleShadowNum = 1;
-struct CircleShadow
-{
-    float3 vec; // 逆ベクトル
-    float3 pos; // 座標
-    float disCasterLight; // キャスターとライトの距離
-    float3 atten; // 距離減衰係数
-    float2 factorAngleCos; // 減衰角度のコサイン
-    uint isActive;
-};
+//struct CircleShadow
+//{
+//    float3 vec; // 逆ベクトル
+//    float3 pos; // 座標
+//    float disCasterLight; // キャスターとライトの距離
+//    float3 atten; // 距離減衰係数
+//    float2 factorAngleCos; // 減衰角度のコサイン
+//    uint isActive;
+//};
 
 cbuffer ConstantBufferDataCircleShadow : register(b6)
 {

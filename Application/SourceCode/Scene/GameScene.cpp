@@ -313,10 +313,10 @@ void GameScene::CG3Update()
 void GameScene::CG3DrawModel()
 {
 	obj3.Draw();
-	//outlineObj.Draw();
-	//groundObj.Draw();
-	//skyDomeObj.Draw();
-	//silhouetteObj.Draw();
+	outlineObj.Draw();
+	groundObj.Draw();
+	skyDomeObj.Draw();
+	silhouetteObj.Draw();
 }
 void GameScene::CG3DrawGui()
 {
