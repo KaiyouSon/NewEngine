@@ -330,13 +330,6 @@ void RenderBase::SwapChainInit()
 		swapChain->GetBuffer((UINT)i, IID_PPV_ARGS(backBuffers[i]->GetBufferAddress()));
 
 		CreateRTV(*backBuffers[i], &rtvDesc);
-
-		//D3D12_CPU_DESCRIPTOR_HANDLE rtvCpuHandle = rtvSwapChainDescHeap->GetCPUDescriptorHandleForHeapStart();
-		//rtvCpuHandle.ptr += i * device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-
-		//backBuffers[i]->SetCpuHandle(rtvCpuHandle);
-
-		//device->CreateRenderTargetView(backBuffers[i]->GetBuffer(), &rtvDesc, rtvCpuHandle);
 	}
 }
 void RenderBase::FenceInit()
@@ -397,7 +390,6 @@ void RenderBase::ShaderCompilerInit()
 	outlineShader = std::move(std::make_unique<ShaderObject>());
 	outlineShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	outlineShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	//outlineShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
 	outlineShader->CompileVertexShader(path + "OutLineVS.hlsl", "main");
 	outlineShader->CompilePixelShader(path + "OutLinePS.hlsl", "main");
 

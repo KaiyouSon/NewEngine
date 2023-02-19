@@ -21,8 +21,10 @@ float4 main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
     // シェーダーカラー
     float4 shaderColor = float4(float3(1, 1, 1) * material.ambient, alpha);
     
+    int i = 0;
+    
 	// 平行光源
-    for (int i = 0; i < directionalLightNum; i++)
+    for (i = 0; i < directionalLightNum; i++)
     {
 		// ライトに向かうベクトルと法線の内積
         float3 lightNormal = dot(directionalLights[i].vec, vsOutput.normal);
@@ -36,7 +38,7 @@ float4 main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
     LightCalculateData lightCalculateData;
     
 	// 点光源
-    for (int i = 0; i < pointLightNum; i++)
+    for (i = 0; i < pointLightNum; i++)
     {
         // 頂点のワールド座標
         lightCalculateData.vertexPos = vsOutput.worldPos.xyz;
@@ -53,7 +55,7 @@ float4 main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
     }
 
 	// スポットライト
-    for (int i = 0; i < spotLightNum; i++)
+    for (i = 0; i < spotLightNum; i++)
     {
         // 頂点のワールド座標
         lightCalculateData.vertexPos = vsOutput.worldPos.xyz;
@@ -70,7 +72,7 @@ float4 main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
     }
 
 	// 丸影
-    for (int i = 0; i < circleShadowNum; i++)
+    for (i = 0; i < circleShadowNum; i++)
     {
         float3 color = CalculateCircleShadow(circleShadows[i], vsOutput.worldPos.xyz);
         shaderColor.rgb += color;

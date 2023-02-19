@@ -106,7 +106,7 @@ float3 CalculateDirectionalLight(DirectionalLight _directionalLight, Material _m
 {
     float3 resultColor = 0;
     
-    if (_directionalLight.isActive == true)
+    if (_directionalLight.isActive == (uint) true)
     {
 		// 反射光ベクトル
         float3 reflect = normalize(-_directionalLight.vec + 2 * _lightNormal * _normal);
@@ -114,7 +114,7 @@ float3 CalculateDirectionalLight(DirectionalLight _directionalLight, Material _m
 		// 拡散反射光
         float3 diffuse = _lightNormal * _material.diffuse;
 		// 鏡面反射光
-        float specular = pow(saturate(dot(reflect, _eyeDir)), _shininess) * _material.specular;
+        float3 specular = pow(saturate(dot(reflect, _eyeDir)), _shininess) * _material.specular;
 
 		// 全て加算する
         resultColor.rgb += (diffuse + specular) * _directionalLight.color;
@@ -129,7 +129,7 @@ float3 CalculatePointLight(PointLight _pointLight, Material _material,
 {
     float3 resultColor = 0;
     
-    if (_pointLight.isActive == true)
+    if (_pointLight.isActive == (uint) true)
     {
 		// ベクトルの長さ
         float d = length(_lightCalculateData.lightVec);
@@ -164,7 +164,7 @@ float3 CalculateSpotLight(SpotLight _spotLight, Material _material,
 {
     float3 resultColor = 0;
     
-    if (_spotLight.isActive == true)
+    if (_spotLight.isActive == (uint) true)
     {
 		// ベクトルの長さ
         float d = length(_lightCalculateData.lightVec);
@@ -206,7 +206,7 @@ float3 CalculateCircleShadow(CircleShadow _circleShadow, float3 _pos)
 {
     float3 resultColor = 0;
     
-    if (_circleShadow.isActive == true)
+    if (_circleShadow.isActive == (uint) true)
     {
 			// オブジェクト表面からキャスターへのベクトル
         float3 casterV = _circleShadow.pos - _pos;
@@ -245,7 +245,7 @@ float3 CalculateCircleShadow(CircleShadow _circleShadow, float3 _pos)
 
 float4 CalculateFog(Fog fog, float dis, float4 currentColor)
 {
-    if (fog.isActive == true)
+    if (fog.isActive == (uint) true)
     {
 		// カメラの座標と頂点の距離
         float rate = smoothstep(fog.nearDis, fog.farDis, dis);
