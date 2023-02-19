@@ -7,7 +7,7 @@ void TitleScene::Init()
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
-	obj.model = *ModelManager::GetModel("Enemy");
+	obj.model = *ModelManager::GetModel("Sphere");
 	obj.pos = { -3,0,0 };
 	obj.rot.y = Radian(180);
 

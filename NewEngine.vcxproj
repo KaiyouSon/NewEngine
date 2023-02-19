@@ -289,16 +289,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli" />
-    <None Include="NewEngine\Shader\CircleGaugeSpriteH.hlsli" />
+    <None Include="NewEngine\Shader\CircleGaugeSprite.hlsli" />
     <None Include="NewEngine\Shader\Lighting.hlsli" />
-    <None Include="NewEngine\Shader\LineH.hlsli" />
-    <None Include="NewEngine\Shader\Object3DH.hlsli" />
+    <None Include="NewEngine\Shader\Line.hlsli" />
+    <None Include="NewEngine\Shader\Object3D.hlsli" />
     <None Include="NewEngine\Shader\OutLine.hlsli" />
     <None Include="NewEngine\Shader\RenderTexture.hlsli" />
     <None Include="NewEngine\Shader\ShaderIO.hlsli" />
     <None Include="NewEngine\Shader\Silhouette.hlsli" />
     <None Include="NewEngine\Shader\Sprite.hlsli" />
-    <None Include="NewEngine\Shader\ToonRenderH.hlsli" />
+    <None Include="NewEngine\Shader\ToonRender.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="NewEngine\Shader\CircleGaugeSpritePS.hlsl">

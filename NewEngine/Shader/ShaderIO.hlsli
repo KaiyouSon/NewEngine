@@ -1,8 +1,14 @@
-// --- 頂点シェーダー入力構造体 -----------------------------  //
+// --- 頂点シェーダー入力構造体 ----------------------------- //
 struct VSInputPosNormal
 {
     float4 pos : POSITION;
     float3 normal : NORMAL;
+};
+
+struct VSInputPosUv
+{
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD;
 };
 
 struct VSInputPosNormalUv
@@ -12,7 +18,7 @@ struct VSInputPosNormalUv
     float2 uv : TEXCOORD;
 };
 
-// --- 頂点シェーダー出力構造体 -----------------------------  //
+// --- 頂点シェーダー出力構造体 ----------------------------- //
 struct VSOutputSvpos
 {
     float4 svpos : SV_POSITION; // システム用頂点座標
@@ -21,6 +27,13 @@ struct VSOutputSvpos
 struct VSOutputSvposUv
 {
     float4 svpos : SV_POSITION; // システム用頂点座標
+    float2 uv : TEXCOORD; // uv値
+};
+
+struct VSOutputSvposNormalUv
+{
+    float4 svpos : SV_POSITION; // システム用頂点座標
+    float3 normal : NORMAL; // 法線ベクトル
     float2 uv : TEXCOORD; // uv値
 };
 

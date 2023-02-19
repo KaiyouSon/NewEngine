@@ -1,4 +1,4 @@
-#include "CircleGaugeSpriteH.hlsli"
+#include "CircleGaugeSprite.hlsli"
 #include "ShaderIO.hlsli"
 
 VSOutputSvposUv main(float4 pos : POSITION, float2 uv : TEXCOORD)

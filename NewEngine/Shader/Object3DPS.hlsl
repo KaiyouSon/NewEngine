@@ -1,4 +1,4 @@
-#include "Object3DH.hlsli"
+#include "Object3D.hlsli"
 #include "Lighting.hlsli"
 #include "ShaderIO.hlsli"
 

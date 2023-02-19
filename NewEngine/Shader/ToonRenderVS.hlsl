@@ -1,16 +1,17 @@
-#include "ToonRenderH.hlsli"
+#include "ToonRender.hlsli"
+#include "ShaderIO.hlsli"
 
-VSOutput main(float4 pos : POSITION, float3 normal : NORMAL, float2 uv : TEXCOORD)
+VSOutputSvposPosNormalUv main(VSInputPosNormalUv vsInput)
 {
 	// 法線にワールド行列によるスケーリング・回転を適用		
-	float4 wnormal = normalize(mul(worldMat, float4(normal, 0)));
-	float4 wpos = mul(worldMat, pos);
+    float4 wnormal = normalize(mul(worldMat, float4(vsInput.normal, 0)));
+    float4 wpos = mul(worldMat, vsInput.pos);
 
-	VSOutput output; // ピクセルシェーダーに渡す値
-	output.svpos = mul(mul(viewMat, worldMat), pos);
-	output.worldPos = wpos;
-	output.normal = wnormal.xyz;
-	output.uv = uv;
+    VSOutputSvposPosNormalUv output; // ピクセルシェーダーに渡す値
+    output.svpos = mul(mul(viewMat, worldMat), vsInput.pos);
+    output.worldPos = wpos;
+    output.normal = wnormal.xyz;
+    output.uv = vsInput.uv;
 
-	return output;
+    return output;
 }

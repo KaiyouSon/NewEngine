@@ -1,9 +1,10 @@
 #include "Sprite.hlsli"
+#include "ShaderIO.hlsli"
 
-VSOutput main(float4 pos : POSITION, float2 uv : TEXCOORD)
+VSOutputSvposUv main(VSInputPosUv vsInput)
 {
-	VSOutput output; // ピクセルシェーダーに渡す値
-	output.svpos = mul(mat, pos); // 座標に行列を乗算
-	output.uv = uv;
-	return output;
+    VSOutputSvposUv output; // ピクセルシェーダーに渡す値
+    output.svpos = mul(mat, vsInput.pos); // 座標に行列を乗算
+    output.uv = vsInput.uv;
+    return output;
 }
