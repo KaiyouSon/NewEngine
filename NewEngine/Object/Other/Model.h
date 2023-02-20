@@ -6,15 +6,17 @@
 #include <vector>
 #include <string>
 
+class FbxModel;
+
 class Model
 {
 public:
 	Material material;
 	Mesh mesh;
-
+	std::string modelType = "OBJ";
 public:
 	Model() {}
 	Model(const std::string& modelName, const bool& isSmoothing = false);
-	~Model() {};
+	virtual ~Model() {}
 };
 

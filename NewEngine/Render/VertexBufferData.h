@@ -1,6 +1,6 @@
 #pragma once
 #include "MathUtil.h"
-#include "Color.h"
+#include "Util.h"
 
 // 頂点データクラス
 struct VertexPosNormalUv
@@ -8,6 +8,15 @@ struct VertexPosNormalUv
 	Vec3 pos;	 // xyz座標
 	Vec3 normal; // 法線ベクトル
 	Vec2 uv;	 // uv座標
+};
+
+struct VertexPosNormalUvBone
+{
+	Vec3 pos;	 // xyz座標
+	Vec3 normal; // 法線ベクトル
+	Vec2 uv;	 // uv座標
+	unsigned int boneIndex[maxBoneIndices];
+	float boneWeight[maxBoneIndices];
 };
 
 struct VertexPosUv

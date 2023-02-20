@@ -28,7 +28,7 @@ void Mesh::CalculateSmoothedVertexNormals()
 	}
 }
 
-void Mesh::AddVertex(const VertexPosNormalUv& vertex)
+void Mesh::AddVertex(const VertexPosNormalUvBone& vertex)
 {
 	vertices.emplace_back(vertex);
 }

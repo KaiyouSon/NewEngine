@@ -24,6 +24,9 @@ private:
 	void ParseMeshVertices(FbxModel* fbxModel, FbxMesh* fbxMesh);
 	void ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh);
 	void ParseMaterial(FbxModel* fbxModel, FbxNode* fbxNode);
+	void ParseSkin(FbxModel* fbxModel, FbxMesh* fbxMesh);
+
+	static void ConvertMat4FromFbx(Mat4* dst, const FbxAMatrix& src);
 
 public:
 	void Init();

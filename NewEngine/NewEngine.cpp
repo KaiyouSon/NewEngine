@@ -98,6 +98,7 @@ void NewEnginePostDraw()
 }
 void NewEngineEnd()
 {
+	ModelManager::Destroy();
 	FbxLoader::GetInstance()->Destroy();
 	GuiManager::GetInstance()->Destroy();
 	RenderWindow::GetInstance()->TerminateGameWindow();		// ウィンドウクラスを登録解除

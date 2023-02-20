@@ -2,9 +2,19 @@
 #include "Vec3.h"
 #include "Mat4.h"
 #include "Model.h"
+#include <fbxsdk.h>
 #include <DirectXTex.h>
 #include <string>
 #include <vector>
+
+struct FbxModelBone
+{
+	std::string name;
+	Mat4 invInitMat;
+	FbxCluster* fbxCluster;
+
+	FbxModelBone(const std::string& name) : name(name) {}
+};
 
 struct FbxModelNode
 {
@@ -22,7 +32,14 @@ class FbxModel : public Model
 public:
 	std::string name;
 	std::vector<FbxModelNode> nodes;
+	std::vector<FbxModelBone> bones;
 	FbxModelNode* meshNode = nullptr;
+	FbxScene* fbxScene = nullptr;
+
+	FbxModel()
+	{
+		modelType = "FBX";
+	}
 
 public:
 	friend class FbxLoader;

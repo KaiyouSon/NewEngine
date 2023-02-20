@@ -98,7 +98,7 @@ Model::Model(const std::string& modelName, const bool& isSmoothing)
 
 				indexStream >> indexNormal;
 				// 頂点データの追加
-				VertexPosNormalUv vertex{};
+				VertexPosNormalUvBone vertex{};
 				vertex.pos = positions[indexPos - 1];
 				vertex.normal = normals[indexNormal - 1];
 				vertex.uv = texcoords[indexTexcoord - 1];

@@ -3,6 +3,7 @@
 #include "Viewport.h"
 #include "ScissorRectangle.h"
 #include "TextureManager.h"
+#include "ShaderObjectManager.h"
 #include <cassert>
 #include <string>
 #include <d3dcompiler.h>
@@ -349,57 +350,57 @@ void RenderBase::ShaderCompilerInit()
 {
 	std::string path = "NewEngine/Shader/";
 
-	// スプライト用シェーダー
-	spriteShader = std::move(std::make_unique<ShaderObject>());
-	spriteShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	spriteShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	spriteShader->CompileVertexShader(path + "SpriteVS.hlsl", "main");
-	spriteShader->CompilePixelShader(path + "SpritePS.hlsl", "main");
+	// Object3D用シェーダー
+	ShaderObjectManager::Create("Object3D");
+	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderObjectManager::GetShaderObject("Object3D")->CompileVertexShader(path + "Object3DVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Object3D")->CompilePixelShader(path + "Object3DPS.hlsl", "main");
 
 	// スプライト用シェーダー
-	circleGaugeSpriteShader = std::move(std::make_unique<ShaderObject>());
-	circleGaugeSpriteShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	circleGaugeSpriteShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	circleGaugeSpriteShader->CompileVertexShader(path + "CircleGaugeSpriteVS.hlsl", "main");
-	circleGaugeSpriteShader->CompilePixelShader(path + "CircleGaugeSpritePS.hlsl", "main");
+	ShaderObjectManager::Create("Sprite");
+	ShaderObjectManager::GetShaderObject("Sprite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("Sprite")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderObjectManager::GetShaderObject("Sprite")->CompileVertexShader(path + "SpriteVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Sprite")->CompilePixelShader(path + "SpritePS.hlsl", "main");
+
+	// 円ゲージスプライト用シェーダー
+	ShaderObjectManager::Create("CircleGaugeSprite");
+	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->CompileVertexShader(path + "CircleGaugeSpriteVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->CompilePixelShader(path + "CircleGaugeSpritePS.hlsl", "main");
 
 	// レンダーテクスチャーのシェーダー
-	renderTextureShader = std::move(std::make_unique<ShaderObject>());
-	renderTextureShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	renderTextureShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	renderTextureShader->CompileVertexShader(path + "RenderTextureVS.hlsl", "main");
-	renderTextureShader->CompilePixelShader(path + "RenderTexturePS.hlsl", "main");
-
-	// Object3D用シェーダー
-	object3DShader = std::move(std::make_unique<ShaderObject>());
-	object3DShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	object3DShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	object3DShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	object3DShader->CompileVertexShader(path + "Object3DVS.hlsl", "main");
-	object3DShader->CompilePixelShader(path + "Object3DPS.hlsl", "main");
+	ShaderObjectManager::Create("RenderTexture");
+	ShaderObjectManager::GetShaderObject("RenderTexture")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("RenderTexture")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderObjectManager::GetShaderObject("RenderTexture")->CompileVertexShader(path + "RenderTextureVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("RenderTexture")->CompilePixelShader(path + "RenderTexturePS.hlsl", "main");
 
 	// シルエット用シェーダー
-	silhouetteShader = std::move(std::make_unique<ShaderObject>());
-	silhouetteShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	silhouetteShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	silhouetteShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	silhouetteShader->CompileVertexShader(path + "SilhouetteVS.hlsl", "main");
-	silhouetteShader->CompilePixelShader(path + "SilhouettePS.hlsl", "main");
+	ShaderObjectManager::Create("Silhouette");
+	ShaderObjectManager::GetShaderObject("Silhouette")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("Silhouette")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("Silhouette")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderObjectManager::GetShaderObject("Silhouette")->CompileVertexShader(path + "SilhouetteVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Silhouette")->CompilePixelShader(path + "SilhouettePS.hlsl", "main");
 
 	// アウトラインObject用シェーダー
-	outlineShader = std::move(std::make_unique<ShaderObject>());
-	outlineShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	outlineShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	outlineShader->CompileVertexShader(path + "OutLineVS.hlsl", "main");
-	outlineShader->CompilePixelShader(path + "OutLinePS.hlsl", "main");
+	ShaderObjectManager::Create("Outline");
+	ShaderObjectManager::GetShaderObject("Outline")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("Outline")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("Outline")->CompileVertexShader(path + "OutLineVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Outline")->CompilePixelShader(path + "OutLinePS.hlsl", "main");
 
 	// トゥーンレンダーリング用
-	toonRenderShader = std::move(std::make_unique<ShaderObject>());
-	toonRenderShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	toonRenderShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	toonRenderShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	toonRenderShader->CompileVertexShader(path + "ToonRenderVS.hlsl", "main");
-	toonRenderShader->CompilePixelShader(path + "ToonRenderPS.hlsl", "main");
+	ShaderObjectManager::Create("ToonRender");
+	ShaderObjectManager::GetShaderObject("ToonRender")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("ToonRender")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("ToonRender")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderObjectManager::GetShaderObject("ToonRender")->CompileVertexShader(path + "ToonRenderVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("ToonRender")->CompilePixelShader(path + "ToonRenderPS.hlsl", "main");
 
 	// ライン用
 	lineShader = std::move(std::make_unique<ShaderObject>());
@@ -443,7 +444,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// 3Dオブジェクト用
 	GraphicsPipelineManager::Create(
-		object3DShader.get(),
+		ShaderObjectManager::GetShaderObject("Object3D"),
 		object3DRootSignature->GetRootSignature(),
 		CullMode::CullBack,
 		depthStencilDesc1,
@@ -452,7 +453,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// スプライト用
 	GraphicsPipelineManager::Create(
-		spriteShader.get(),
+		ShaderObjectManager::GetShaderObject("Sprite"),
 		spriteRootSignature->GetRootSignature(),
 		CullMode::None,
 		depthStencilDesc2,
@@ -461,7 +462,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// 円形ゲージスプライト用
 	GraphicsPipelineManager::Create(
-		circleGaugeSpriteShader.get(),
+		ShaderObjectManager::GetShaderObject("CircleGaugeSprite"),
 		spriteRootSignature->GetRootSignature(),
 		CullMode::None,
 		depthStencilDesc2,
@@ -470,7 +471,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// レンダーテクスチャ用
 	GraphicsPipelineManager::Create(
-		renderTextureShader.get(),
+		ShaderObjectManager::GetShaderObject("RenderTexture"),
 		spriteRootSignature->GetRootSignature(),
 		CullMode::None,
 		depthStencilDesc2,
@@ -479,7 +480,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// シルエット用
 	GraphicsPipelineManager::Create(
-		silhouetteShader.get(),
+		ShaderObjectManager::GetShaderObject("Silhouette"),
 		object3DRootSignature->GetRootSignature(),
 		CullMode::CullBack,
 		depthStencilDesc3,
@@ -488,7 +489,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// アウトライン用
 	GraphicsPipelineManager::Create(
-		outlineShader.get(),
+		ShaderObjectManager::GetShaderObject("Outline"),
 		object3DRootSignature->GetRootSignature(),
 		CullMode::CullFront,
 		depthStencilDesc4,
@@ -497,7 +498,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// トゥーンレンダリング用
 	GraphicsPipelineManager::Create(
-		toonRenderShader.get(),
+		ShaderObjectManager::GetShaderObject("ToonRender"),
 		object3DRootSignature->GetRootSignature(),
 		CullMode::CullBack,
 		depthStencilDesc1,
@@ -514,11 +515,13 @@ void RenderBase::GraphicsPipelineInit()
 		"Collider");
 
 	// Line用
-	linePipeline = std::move(std::make_unique<GraphicsPipeline>());
-	linePipeline->SetShaderObject(object3DShader.get());
-	linePipeline->SetCullMode(CullMode::None);
-	linePipeline->SetDepthStencilDesc(depthStencilDesc1);
-	linePipeline->SetTopologyType(TopologyType::LineTopology);
-	linePipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
-	linePipeline->Create();
+	//linePipeline = std::move(std::make_unique<GraphicsPipeline>());
+	//linePipeline->SetShaderObject(object3DShader.get());
+	//linePipeline->SetCullMode(CullMode::None);
+	//linePipeline->SetDepthStencilDesc(depthStencilDesc1);
+	//linePipeline->SetTopologyType(TopologyType::LineTopology);
+	//linePipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
+	//linePipeline->Create();
+
+
 }

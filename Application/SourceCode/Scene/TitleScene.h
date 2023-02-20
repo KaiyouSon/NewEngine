@@ -4,6 +4,10 @@
 class TitleScene : public IScene
 {
 private:
+	Object3D front;
+	Object3D back;
+	Timer scaleTimer;
+
 	Object3D obj;
 	Object3D fbx;
 	Object3D skyDome;

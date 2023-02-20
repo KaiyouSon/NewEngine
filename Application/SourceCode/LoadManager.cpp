@@ -11,7 +11,8 @@ void LoadManager::ModelLoad()
 	ModelManager::LoadObjModel("Enemy", "Enemy", true);
 	ModelManager::LoadObjModel("SphereCollider", "SphereCollider");
 	ModelManager::LoadFbxModel("AttackEnemy", "AttackEnemy");
-	ModelManager::LoadObjModel("player", "Player",true);
+	ModelManager::LoadObjModel("player", "Player", true);
+	ModelManager::LoadObjModel("Plane", "Plane");
 }
 
 void LoadManager::TextureLoad()

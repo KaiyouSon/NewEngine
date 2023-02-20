@@ -91,15 +91,6 @@ private:
 	UINT dsvIncrementIndex;
 
 	// シェーダコンパイラー
-	std::unique_ptr<ShaderObject> basicShader;
-	std::unique_ptr<ShaderObject> spriteShader;
-	std::unique_ptr<ShaderObject> circleGaugeSpriteShader;
-	std::unique_ptr<ShaderObject> renderTextureShader;
-	std::unique_ptr<ShaderObject> object3DShader;
-	std::unique_ptr<ShaderObject> particleShader;
-	std::unique_ptr<ShaderObject> silhouetteShader;
-	std::unique_ptr<ShaderObject> outlineShader;
-	std::unique_ptr<ShaderObject> toonRenderShader;
 	std::unique_ptr<ShaderObject> lineShader;
 	
 	// グラフィックスパイプライン関連

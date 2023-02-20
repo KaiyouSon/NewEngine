@@ -207,6 +207,7 @@
     <ClCompile Include="NewEngine\Render\RootSignature.cpp" />
     <ClCompile Include="NewEngine\Render\ScissorRectangle.cpp" />
     <ClCompile Include="NewEngine\Render\ShaderObject.cpp" />
+    <ClCompile Include="NewEngine\Render\ShaderObjectManager.cpp" />
     <ClCompile Include="NewEngine\Render\Viewport.cpp" />
     <ClCompile Include="NewEngine\Object\Other\TextureManager.cpp" />
     <ClCompile Include="NewEngine\Sound\SoundManager.cpp" />
@@ -271,6 +272,7 @@
     <ClInclude Include="NewEngine\Render\RootSignature.h" />
     <ClInclude Include="NewEngine\Render\ScissorRectangle.h" />
     <ClInclude Include="NewEngine\Render\ShaderObject.h" />
+    <ClInclude Include="NewEngine\Render\ShaderObjectManager.h" />
     <ClInclude Include="NewEngine\Render\VertexBufferData.h" />
     <ClInclude Include="NewEngine\Render\Viewport.h" />
     <ClInclude Include="NewEngine\Object\Other\TextureManager.h" />

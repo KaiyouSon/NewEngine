@@ -5,10 +5,13 @@
 #include "Singleton.h"
 #include "Transform.h"
 #include "SceneManager.h"
+#include "Timer.h"
 #include <memory>
 #include <vector>
 #include <string>
 #include <list>
+
+static const int maxBoneIndices = 4;
 
 enum class BlendMode
 {

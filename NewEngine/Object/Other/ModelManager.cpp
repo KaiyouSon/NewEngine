@@ -48,7 +48,8 @@ Model* ModelManager::LoadFbxModel(const std::string& filePath, const std::string
 	// ルートノードから順に解析してモデルに流し込む
 	FbxLoader::GetInstance()->ParseNodeRecursive(model.get(), fbxScene->GetRootNode());
 	// fbxシーンの解放
-	fbxScene->Destroy();
+	//fbxScene->Destroy();
+	model->fbxScene = fbxScene;
 
 	model->mesh.vertexBuffer.Create(model->mesh.vertices);
 	model->mesh.indexBuffer.Create(model->mesh.indices);
@@ -56,4 +57,15 @@ Model* ModelManager::LoadFbxModel(const std::string& filePath, const std::string
 	modelMap.insert(std::make_pair(modelTag, std::move(model)));
 
 	return modelMap[modelTag].get();
+}
+
+void ModelManager::Destroy()
+{
+	for (auto& model : modelMap)
+	{
+		if (model.second->modelType == "FBX")
+		{
+			static_cast<FbxModel*>(model.second.get())->fbxScene->Destroy();
+		}
+	}
 }

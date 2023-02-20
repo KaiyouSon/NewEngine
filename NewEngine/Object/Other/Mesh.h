@@ -10,9 +10,9 @@ private:
 	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothData;
 
 public:
-	VertexBuffer<VertexPosNormalUv> vertexBuffer;
+	VertexBuffer<VertexPosNormalUvBone> vertexBuffer;
 	IndexBuffer indexBuffer;
-	std::vector<VertexPosNormalUv> vertices;
+	std::vector<VertexPosNormalUvBone> vertices;
 	std::vector<unsigned short> indices;
 
 public:
@@ -21,7 +21,7 @@ public:
 	void AddSmoothData(const unsigned short& indexPos, const unsigned short& indexVertex);
 
 	// Vertex‚Ì’Ç‰Á
-	void AddVertex(const VertexPosNormalUv& vertex);
+	void AddVertex(const VertexPosNormalUvBone& vertex);
 
 	// Index‚Ì’Ç‰Á
 	void AddIndex(const unsigned short& index);
@@ -37,7 +37,7 @@ public:
 	inline size_t GetVertexSize() { return vertices.size(); }
 	inline size_t GetIndexSize() { return indices.size(); }
 
-	inline VertexBuffer<VertexPosNormalUv> GetVertexBuffer() { return vertexBuffer; }
+	inline VertexBuffer<VertexPosNormalUvBone> GetVertexBuffer() { return vertexBuffer; }
 	inline IndexBuffer GetIndexBuffer() { return indexBuffer; }
 };
 

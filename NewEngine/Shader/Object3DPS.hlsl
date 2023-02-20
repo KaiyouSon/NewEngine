@@ -78,9 +78,11 @@ float4 main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
         shaderColor.rgb += color;
     }
 
-    float dis = distance(vsOutput.worldPos.xyz, cameraPos);
-    float rate = smoothstep(fog.nearDis, fog.farDis, dis);
-    float4 currentColor = shaderColor * texColor * color;
-    float4 outputColor = CalculateFog(fog, dis, currentColor);
-    return outputColor;
+    //float dis = distance(vsOutput.worldPos.xyz, cameraPos);
+    //float rate = smoothstep(fog.nearDis, fog.farDis, dis);
+    //float4 currentColor = shaderColor * texColor * color;
+    //float4 outputColor = CalculateFog(fog, dis, currentColor);
+    //return outputColor;
+    
+    return shaderColor * texColor * color;
 }

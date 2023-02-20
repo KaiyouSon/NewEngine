@@ -14,10 +14,24 @@ void Timer::Reset()
 	isTimeOut = false;
 }
 
-void Timer::Update()
+void Timer::AddTimer(const float& addTimer)
 {
 	timer++;
 	if (timer >= maxTimer)
+	{
+		timer = maxTimer;
+		isTimeOut = true;
+	}
+	else
+	{
+		isTimeOut = false;
+	}
+}
+
+void Timer::SubTimer(const float& subTimer)
+{
+	timer++;
+	if (timer <= maxTimer)
 	{
 		timer = maxTimer;
 		isTimeOut = true;

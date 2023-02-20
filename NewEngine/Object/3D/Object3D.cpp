@@ -58,7 +58,9 @@ void Object3D::Update(const Object3D* parent)
 	// ƒ}ƒeƒŠƒAƒ‹‚Ì“]‘—
 	if (isLighting == true && isAllLighting == true)
 	{
-		constantBufferMaterial->constantBufferMap->ambient = Vec3::zero;
+		constantBufferMaterial->constantBufferMap->ambient = Vec3::one - 0.5f;
+		//constantBufferMaterial->constantBufferMap->ambient = model.material.ambient;
+
 		constantBufferMaterial->constantBufferMap->diffuse = model.material.diffuse;
 		constantBufferMaterial->constantBufferMap->specular = model.material.specular;
 	}

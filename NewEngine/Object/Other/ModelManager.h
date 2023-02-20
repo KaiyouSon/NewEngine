@@ -1,5 +1,6 @@
 #pragma once
 #include "Model.h"
+#include "FbxModel.h"
 #include <string>
 #include <map>
 
@@ -12,4 +13,6 @@ public:
 	static Model* GetModel(const std::string& modelTag);
 	static Model* LoadObjModel(const std::string& filePath, const std::string& modelTag, const bool& isSmoothing = false);
 	static Model* LoadFbxModel(const std::string& filePath, const std::string& modelTag);
+
+	static void Destroy();
 };

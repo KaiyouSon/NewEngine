@@ -300,6 +300,9 @@
     <ClCompile Include="NewEngine\Object\Other\FbxModel.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Render\ShaderObjectManager.cpp">
+      <Filter>NewEngine\Source\Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -493,6 +496,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\FbxModel.h">
       <Filter>NewEngine\Header\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\ShaderObjectManager.h">
+      <Filter>NewEngine\Header\Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

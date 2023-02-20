@@ -7,8 +7,8 @@ SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
 
 float4 main(VSOutputSvposUv vsOutput) : SV_TARGET
 {
-    return Monochrome(tex, smp, vsOutput.uv);
-    //return AverageBlur(float2(1920, 1080), 4, tex, smp, input.uv);
+   //return Monochrome(tex, smp, vsOutput.uv);
+    return AverageBlur(float2(1920, 1080), 4, tex, smp, vsOutput.uv);
     //return HorizontalBlur(1920, tex, smp, input.uv);
     //return VerticalBlur(1080, tex, smp, input.uv);
 }
