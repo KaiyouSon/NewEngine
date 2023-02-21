@@ -355,7 +355,7 @@ void RenderBase::ShaderCompilerInit()
 	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("BONEINDICES", DXGI_FORMAT_R32G32B32A32_FLOAT);
+	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("BONEINDICES", DXGI_FORMAT_R32G32B32A32_UINT);
 	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("BONEWEIGHTS", DXGI_FORMAT_R32G32B32A32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Object3D")->CompileVertexShader(path + "Object3DVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Object3D")->CompilePixelShader(path + "Object3DPS.hlsl", "main");

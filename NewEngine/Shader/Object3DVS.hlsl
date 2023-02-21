@@ -11,28 +11,28 @@ SkinOutput ComputeSkin(VSInputPosNormalUvBone vsInput)
     
     // ボーン0
     iBone = vsInput.boneIndices.x;
-    weight = vsInput.boneIndices.x;
+    weight = vsInput.boneWeights.x;
     skinMat = skinningMat[iBone];
     output.pos += weight * mul(skinMat, vsInput.pos);
     output.normal += weight * mul((float3x3) skinMat, vsInput.normal);
     
     // ボーン1
     iBone = vsInput.boneIndices.y;
-    weight = vsInput.boneIndices.y;
+    weight = vsInput.boneWeights.y;
     skinMat = skinningMat[iBone];
     output.pos += weight * mul(skinMat, vsInput.pos);
     output.normal += weight * mul((float3x3) skinMat, vsInput.normal);
     
     // ボーン2
     iBone = vsInput.boneIndices.z;
-    weight = vsInput.boneIndices.z;
+    weight = vsInput.boneWeights.z;
     skinMat = skinningMat[iBone];
     output.pos += weight * mul(skinMat, vsInput.pos);
     output.normal += weight * mul((float3x3) skinMat, vsInput.normal);
     
     // ボーン3
     iBone = vsInput.boneIndices.w;
-    weight = vsInput.boneIndices.w;
+    weight = vsInput.boneWeights.w;
     skinMat = skinningMat[iBone];
     output.pos += weight * mul(skinMat, vsInput.pos);
     output.normal += weight * mul((float3x3) skinMat, vsInput.normal);
@@ -42,9 +42,6 @@ SkinOutput ComputeSkin(VSInputPosNormalUvBone vsInput)
 
 VSOutputSvposPosNormalUv main(VSInputPosNormalUvBone vsInput)
 {
-    // ピクセルシェーダーに渡す値
-    VSOutputSvposPosNormalUv output = (VSOutputSvposPosNormalUv) 0;
-    
     // スキニング計算
     SkinOutput skinned = ComputeSkin(vsInput);
     
@@ -53,6 +50,8 @@ VSOutputSvposPosNormalUv main(VSInputPosNormalUvBone vsInput)
     float4 wpos = mul(worldMat, skinned.pos);
     float4 vertexPos = mul(mul(viewMat, worldMat), skinned.pos);
 
+    // ピクセルシェーダーに渡す値
+    VSOutputSvposPosNormalUv output = (VSOutputSvposPosNormalUv) 0;
     output.svpos = vertexPos;
     output.worldPos = wpos;
     output.normal = wnormal.xyz;

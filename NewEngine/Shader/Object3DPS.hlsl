@@ -23,6 +23,8 @@ float4 main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
     
     int i = 0;
     
+    return color;
+    
 	// ïΩçsåıåπ
     for (i = 0; i < directionalLightNum; i++)
     {

@@ -230,7 +230,7 @@ void FbxLoader::ParseSkin(FbxModel* fbxModel, FbxMesh* fbxMesh)
 
 		// FBXから初期姿勢行列を取得する
 		FbxAMatrix fbxMat;
-		fbxCluster->GetTransformMatrix(fbxMat);
+		fbxCluster->GetTransformLinkMatrix(fbxMat);
 
 		// Mat4型に変換する
 		Mat4 initPoseMat;
@@ -282,7 +282,7 @@ void FbxLoader::ParseSkin(FbxModel* fbxModel, FbxMesh* fbxMesh)
 	for (size_t i = 0; i < vertices.size(); i++)
 	{
 		// 頂点のウェイトから最も大きい4つを選択
-		std::list<WeightSet>& weightList = weightLists[i];
+		auto& weightList = weightLists[i];
 		// 大小比較用のラムダ式を指定して降順にソート
 		weightList.sort(
 			[](auto const& lhs, auto const& rhs)

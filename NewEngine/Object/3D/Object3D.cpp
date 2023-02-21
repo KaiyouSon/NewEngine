@@ -3,6 +3,8 @@
 #include "LightManager.h"
 #include "Camera.h"
 #include "FbxModel.h"
+#include <DirectXMath.h>
+
 using namespace std;
 
 bool Object3D::isAllLighting = false;
@@ -90,9 +92,11 @@ void Object3D::Update(const Object3D* parent)
 		for (size_t i = 0; i < bones.size(); i++)
 		{
 			Mat4 currentPoseMat;
-			FbxAMatrix currentPoseFbxMat =
-				static_cast<FbxModel*>(model)->bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(0);
+			FbxAMatrix currentPoseFbxMat = bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(0);
 			ConvertMat4FromFbx(&currentPoseMat, currentPoseFbxMat);
+
+			Mat4 test = currentPoseMat.Inverse();
+
 			constantBufferSkin->constantBufferMap->bones[i] = bones[i].invInitPoseMat * currentPoseMat;
 		}
 	}
