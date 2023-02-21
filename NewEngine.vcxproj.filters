@@ -304,6 +304,9 @@
       <Filter>NewEngine\Source\Render</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\TextureAnimeiton.cpp">
+      <Filter>NewEngine\Source\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Scene\LogoScene.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -504,6 +507,9 @@
       <Filter>NewEngine\Header\Render</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\TextureAnimeiton.h">
+      <Filter>NewEngine\Header\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Scene\LogoScene.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>

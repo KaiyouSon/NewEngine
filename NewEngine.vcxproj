@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClCompile Include="Application\SourceCode\LoadManager.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\GameScene.cpp" />
+    <ClCompile Include="Application\SourceCode\Scene\LogoScene.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\SceneManager.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\TitleScene.cpp" />
     <ClCompile Include="NewEngine\Collision\Collider.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="Application\SourceCode\LoadManager.h" />
     <ClInclude Include="Application\SourceCode\Scene\GameScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\IScene.h" />
+    <ClInclude Include="Application\SourceCode\Scene\LogoScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\SceneManager.h" />
     <ClInclude Include="Application\SourceCode\Scene\TitleScene.h" />
     <ClInclude Include="NewEngine\Collision\Collider.h" />

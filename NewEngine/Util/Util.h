@@ -6,6 +6,8 @@
 #include "Transform.h"
 #include "SceneManager.h"
 #include "Timer.h"
+#include "Easing.h"
+#include "BezierCurve.h"
 #include <memory>
 #include <vector>
 #include <string>

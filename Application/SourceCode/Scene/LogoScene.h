@@ -1,22 +1,21 @@
 #pragma once
 #include "NewEngine.h"
 
-class TitleScene : public IScene
+class LogoScene : public IScene
 {
 private:
-	Object3D front;
-	Object3D back;
-	Timer scaleTimer;
-	TextureAnimeiton anime;
+	std::unique_ptr<Sprite> logoSprite;
+	std::unique_ptr<Sprite> backSprite;
 
-	Object3D obj;
-	Object3D fbx;
-	Object3D skyDome;
-	OutLineObj olobj;
-	Sprite sprite;
-	SphereCollider sphereCollider;
+	Timer stayTimer;
+
+	Easing alphaEase;
+	bool isRevercr;
+	bool isEnd;
 
 public:
+	LogoScene();
+	~LogoScene();
 	void Init() override;
 	void Update() override;
 	void DrawRenderTexture() override;
@@ -24,5 +23,6 @@ public:
 	void DrawModel() override;
 	void DrawFrontSprite() override;
 	void DrawDebugGui() override;
+
 };
 

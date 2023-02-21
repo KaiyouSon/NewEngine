@@ -23,8 +23,8 @@ private:
 
 public:
 	BezierCurve();
-	BezierCurve(const float& easeTimer);
-	BezierCurve(const float& easeTimer, const float& powNum);
+	BezierCurve(const int& easeTimer);
+	BezierCurve(const int& easeTimer, const float& powNum);
 	void Reset();
 	void Update();
 	Vec3 InterPolation(const BezierCurveType& type = BezierCurveType::Lerp);	// 補間
@@ -35,7 +35,7 @@ public:
 	inline void AddPoint(const Vec3& pos) { points.push_back(pos); }
 
 	// 補間時間をセットする
-	inline void SetEaseTime(const float& easeTime) { ease.SetEaseTimer(easeTime); }
+	inline void SetEaseTime(const int& easeTime) { ease.SetEaseTimer(easeTime); }
 
 	// N乗をセットする
 	inline void SetEasePowNum(const float& pownum) { ease.SetPowNum(pownum); }
