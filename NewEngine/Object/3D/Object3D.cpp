@@ -38,6 +38,16 @@ Object3D::~Object3D()
 	delete constantBufferColor;
 	delete constantBufferSkin;
 }
+void Object3D::PlayAnimetion()
+{
+	if (model->modelType == "FBX")
+	{
+		// É{Å[ÉìîzóÒ
+		auto fbxModel = static_cast<FbxModel*>(model);
+		fbxModel->PlayAnimetion();
+	}
+}
+
 void Object3D::Update(const Object3D* parent)
 {
 	if (texture.isMaterial == true)
@@ -92,10 +102,9 @@ void Object3D::Update(const Object3D* parent)
 		for (size_t i = 0; i < bones.size(); i++)
 		{
 			Mat4 currentPoseMat;
-			FbxAMatrix currentPoseFbxMat = bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(0);
+			FbxAMatrix currentPoseFbxMat =
+				bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(fbxModel->fbxAnimetion.currentTime);
 			ConvertMat4FromFbx(&currentPoseMat, currentPoseFbxMat);
-
-			Mat4 test = currentPoseMat.Inverse();
 
 			constantBufferSkin->constantBufferMap->bones[i] = bones[i].invInitPoseMat * currentPoseMat;
 		}

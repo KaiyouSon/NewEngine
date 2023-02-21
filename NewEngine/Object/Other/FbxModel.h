@@ -27,6 +27,23 @@ struct FbxModelNode
 	FbxModelNode* parent = nullptr;
 };
 
+class FbxAnimetion
+{
+private:
+	FbxTime frameTime;
+	FbxTime startTime;
+	FbxTime endTime;
+	bool isPlay = false;
+
+public:
+	FbxTime currentTime;
+
+public:
+	void Init();
+	void Update();
+	void Play(const FbxScene& fbxScene);
+};
+
 class FbxModel : public Model
 {
 public:
@@ -35,12 +52,12 @@ public:
 	std::vector<FbxModelBone> bones;
 	FbxModelNode* meshNode = nullptr;
 	FbxScene* fbxScene = nullptr;
+	FbxAnimetion fbxAnimetion;
 
-	FbxModel()
-	{
-		modelType = "FBX";
-	}
+	FbxModel();
+	void PlayAnimetion();
 
 public:
 	friend class FbxLoader;
 };
+

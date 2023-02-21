@@ -30,6 +30,7 @@ public:
 public:
 	Object3D();
 	~Object3D();
+	void PlayAnimetion();
 	void Update(const Object3D* parent = nullptr);
 	void Draw(const BlendMode& blendMode = BlendMode::Alpha);
 

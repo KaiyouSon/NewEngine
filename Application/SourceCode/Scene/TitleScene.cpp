@@ -12,8 +12,8 @@ void TitleScene::Init()
 	obj.rot.y = Radian(180);
 
 	fbx.model = ModelManager::GetModel("BoneTest");
-	fbx.pos = { +3,0,0 };
-	fbx.rot.y = Radian(180);
+	fbx.pos = { 0,0,0 };
+	fbx.rot.y = Radian(90);
 
 	skyDome.model = ModelManager::GetModel("SkyDome");
 	skyDome.isLighting = false;
@@ -49,6 +49,7 @@ void TitleScene::Update()
 
 	obj.Update();
 	fbx.Update();
+	fbx.PlayAnimetion();
 
 	olobj.Update();
 
