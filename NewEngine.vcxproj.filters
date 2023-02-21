@@ -535,6 +535,9 @@
     <None Include="NewEngine\Shader\ShaderIO.hlsli">
       <Filter>Shader\Util</Filter>
     </None>
+    <None Include="NewEngine\Shader\FbxModel.hlsli">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="NewEngine\Shader\SpritePS.hlsl">
@@ -583,6 +586,12 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\LineVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\FbxModelPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\FbxModelVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

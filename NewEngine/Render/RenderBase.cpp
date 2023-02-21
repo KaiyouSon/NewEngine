@@ -355,10 +355,18 @@ void RenderBase::ShaderCompilerInit()
 	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("BONEINDICES", DXGI_FORMAT_R32G32B32A32_UINT);
-	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("BONEWEIGHTS", DXGI_FORMAT_R32G32B32A32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Object3D")->CompileVertexShader(path + "Object3DVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Object3D")->CompilePixelShader(path + "Object3DPS.hlsl", "main");
+
+	// Fbxモデル用シェーダー
+	ShaderObjectManager::Create("FbxModel");
+	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("BONEINDICES", DXGI_FORMAT_R32G32B32A32_UINT);
+	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("BONEWEIGHTS", DXGI_FORMAT_R32G32B32A32_FLOAT);
+	ShaderObjectManager::GetShaderObject("FbxModel")->CompileVertexShader(path + "FbxModelVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("FbxModel")->CompilePixelShader(path + "FbxModelPS.hlsl", "main");
 
 	// スプライト用シェーダー
 	ShaderObjectManager::Create("Sprite");
@@ -452,6 +460,15 @@ void RenderBase::GraphicsPipelineInit()
 		depthStencilDesc1,
 		TopologyType::TriangleTopology,
 		"Object3D");
+
+	// 3Dオブジェクト用
+	GraphicsPipelineManager::Create(
+		ShaderObjectManager::GetShaderObject("FbxModel"),
+		object3DRootSignature->GetRootSignature(),
+		CullMode::CullBack,
+		depthStencilDesc1,
+		TopologyType::TriangleTopology,
+		"FbxModel");
 
 	// スプライト用
 	GraphicsPipelineManager::Create(

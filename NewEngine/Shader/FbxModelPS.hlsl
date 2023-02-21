@@ -1,4 +1,4 @@
-#include "Object3D.hlsli"
+#include "FbxModel.hlsli"
 #include "ShaderIO.hlsli"
 
 Texture2D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
@@ -22,6 +22,8 @@ float4 main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
     float4 shaderColor = float4(float3(1, 1, 1) * material.ambient, alpha);
     
     int i = 0;
+    
+    return color;
     
 	// 平行光源
     for (i = 0; i < directionalLightNum; i++)

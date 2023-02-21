@@ -104,10 +104,10 @@ void TitleScene::DrawBackSprite()
 
 void TitleScene::DrawModel()
 {
-	//front.Draw();
-	//back.Draw();
+	front.Draw();
+	back.Draw();
 
-	//obj.Draw();
+	obj.Draw();
 	fbx.Draw();
 
 	//sphereCollider.Draw();

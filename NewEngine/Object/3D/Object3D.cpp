@@ -53,6 +53,14 @@ void Object3D::Update(const Object3D* parent)
 	if (texture.isMaterial == true)
 	{
 		texture = model->material.texture;
+		if (model->modelType == "OBJ")
+		{
+			graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("Object3D");
+		}
+		if (model->modelType == "FBX")
+		{
+			graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("FbxModel");
+		}
 	}
 
 	transform.pos = pos;
