@@ -4,6 +4,8 @@
 
 void TitleScene::Init()
 {
+	anime.Init({ 0,0 }, { 68,72 });
+
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
@@ -18,7 +20,8 @@ void TitleScene::Init()
 	skyDome.model = ModelManager::GetModel("SkyDome");
 	skyDome.isLighting = false;
 
-	sprite.texture = *TextureManager::GetRenderTexture("PostEffect");
+	//sprite.texture = *TextureManager::GetRenderTexture("PostEffect");
+	sprite.texture = *TextureManager::GetTexture("NumberSheet");
 	sprite.pos = GetWindowHalfSize();
 
 	sphereCollider.centerPos = Vec3::zero;
@@ -43,8 +46,10 @@ void TitleScene::Update()
 	obj.pos.x += (Key::GetKey(DIK_D) - Key::GetKey(DIK_A)) * 0.1f;
 	obj.pos.y += (Key::GetKey(DIK_W) - Key::GetKey(DIK_S)) * 0.1f;
 
+	anime.Play(5, &sprite);
 	sprite.Update();
-	sprite.graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture");
+
+	//sprite.graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture");
 	//skyDome.Update();
 
 	obj.Update();
@@ -99,16 +104,16 @@ void TitleScene::DrawRenderTexture()
 
 void TitleScene::DrawBackSprite()
 {
-	//sprite.Draw();
+	sprite.Draw();
 }
 
 void TitleScene::DrawModel()
 {
-	front.Draw();
-	back.Draw();
+	//front.Draw();
+	//back.Draw();
 
-	obj.Draw();
-	fbx.Draw();
+	//obj.Draw();
+	//fbx.Draw();
 
 	//sphereCollider.Draw();
 

@@ -197,6 +197,7 @@
     <ClCompile Include="NewEngine\Object\3D\Object3D.cpp" />
     <ClCompile Include="NewEngine\Object\3D\OutLineObj.cpp" />
     <ClCompile Include="NewEngine\Object\3D\SilhouetteObj.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\TextureAnimeiton.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\DepthBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp" />
@@ -249,6 +250,7 @@
     <ClInclude Include="NewEngine\Object\2D\Sprite.h" />
     <ClInclude Include="NewEngine\Object\Other\FbxLoader.h" />
     <ClInclude Include="NewEngine\Object\Other\FbxModel.h" />
+    <ClInclude Include="NewEngine\Object\Other\TextureAnimeiton.h" />
     <ClInclude Include="NewEngine\Object\Other\Texture.h" />
     <ClInclude Include="NewEngine\Object\3D\Camera.h" />
     <ClInclude Include="NewEngine\Object\3D\Line.h" />

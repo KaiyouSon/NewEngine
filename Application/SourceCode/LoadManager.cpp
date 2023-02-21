@@ -19,7 +19,9 @@ void LoadManager::TextureLoad()
 {
 	TextureManager::CreateTexture(Color::white, "White");
 	TextureManager::LoadTexture("pic.png", "pic");
+	TextureManager::LoadTexture("number.png", "NumberSheet");
 	TextureManager::CreateRenderTexture(GetWindowSize(), "PostEffect");
+
 
 	//TextureManager::ExcuteComandList();
 }

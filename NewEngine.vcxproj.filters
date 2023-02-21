@@ -303,6 +303,9 @@
     <ClCompile Include="NewEngine\Render\ShaderObjectManager.cpp">
       <Filter>NewEngine\Source\Render</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\TextureAnimeiton.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -499,6 +502,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Render\ShaderObjectManager.h">
       <Filter>NewEngine\Header\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\TextureAnimeiton.h">
+      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
