@@ -7,15 +7,15 @@ void TitleScene::Init()
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
-	obj.model = *ModelManager::GetModel("Sphere");
+	obj.model = ModelManager::GetModel("Sphere");
 	obj.pos = { -3,0,0 };
 	obj.rot.y = Radian(180);
 
-	fbx.model = *ModelManager::GetModel("AttackEnemy");
+	fbx.model = ModelManager::GetModel("BoneTest");
 	fbx.pos = { +3,0,0 };
 	fbx.rot.y = Radian(180);
 
-	skyDome.model = *ModelManager::GetModel("SkyDome");
+	skyDome.model = ModelManager::GetModel("SkyDome");
 	skyDome.isLighting = false;
 
 	sprite.texture = *TextureManager::GetRenderTexture("PostEffect");
@@ -26,9 +26,9 @@ void TitleScene::Init()
 
 	olobj.obj = &obj;
 
-	front.model = *ModelManager::GetModel("Plane");
+	front.model = ModelManager::GetModel("Plane");
 	front.texture = *TextureManager::GetTexture("pic");
-	back.model = *ModelManager::GetModel("Plane");
+	back.model = ModelManager::GetModel("Plane");
 	back.texture = *TextureManager::GetTexture("pic");
 	back.rot.y = Radian(90);
 
@@ -103,11 +103,11 @@ void TitleScene::DrawBackSprite()
 
 void TitleScene::DrawModel()
 {
-	front.Draw();
-	back.Draw();
+	//front.Draw();
+	//back.Draw();
 
 	//obj.Draw();
-	//fbx.Draw();
+	fbx.Draw();
 
 	//sphereCollider.Draw();
 

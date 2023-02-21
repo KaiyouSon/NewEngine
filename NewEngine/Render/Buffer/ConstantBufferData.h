@@ -89,3 +89,9 @@ struct ConstantBufferDataFog
 	float pad;
 	Color color;
 };
+
+static const int maxBones = 32;
+struct ConstantBufferDataSkin
+{
+	Mat4 bones[maxBones];
+};

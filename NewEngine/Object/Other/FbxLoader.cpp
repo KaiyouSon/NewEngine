@@ -43,7 +43,7 @@ void FbxLoader::ParseMesh(FbxModel* fbxModel, FbxNode* fbxNode)
 	ParseMaterial(fbxModel, fbxNode);
 
 	// スキニング情報の読み取り
-	//ParseSkin(fbxModel, fbxMesh);
+	ParseSkin(fbxModel, fbxMesh);
 }
 void FbxLoader::ParseMeshVertices(FbxModel* fbxModel, FbxMesh* fbxMesh)
 {
@@ -233,11 +233,11 @@ void FbxLoader::ParseSkin(FbxModel* fbxModel, FbxMesh* fbxMesh)
 		fbxCluster->GetTransformMatrix(fbxMat);
 
 		// Mat4型に変換する
-		Mat4 initMat;
-		ConvertMat4FromFbx(&initMat, fbxMat);
+		Mat4 initPoseMat;
+		ConvertMat4FromFbx(&initPoseMat, fbxMat);
 
 		// 初期姿勢行列の逆行列を得る
-		bone.invInitMat = initMat.Inverse();
+		bone.invInitPoseMat = initPoseMat.Inverse();
 	}
 
 	// ボーン番号とスキンウェイトのペア
@@ -302,7 +302,7 @@ void FbxLoader::ParseSkin(FbxModel* fbxModel, FbxMesh* fbxMesh)
 			{
 				float weight = 0.f;
 				// 2番目以降のウェイトを合計
-				for (int j = 1; j < maxBoneIndices; j++)
+				for (size_t j = 1; j < maxBoneIndices; j++)
 				{
 					weight += vertices[i].boneWeight[j];
 				}
@@ -396,14 +396,4 @@ std::string FbxLoader::ExractFileName(const std::string& path)
 	}
 
 	return path;
-}
-void FbxLoader::ConvertMat4FromFbx(Mat4* dst, const FbxAMatrix& src)
-{
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			dst->m[i][j] = (float)src.Get(i, j);
-		}
-	}
 }

@@ -10,7 +10,7 @@
 struct FbxModelBone
 {
 	std::string name;
-	Mat4 invInitMat;
+	Mat4 invInitPoseMat;
 	FbxCluster* fbxCluster;
 
 	FbxModelBone(const std::string& name) : name(name) {}

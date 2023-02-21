@@ -26,8 +26,6 @@ private:
 	void ParseMaterial(FbxModel* fbxModel, FbxNode* fbxNode);
 	void ParseSkin(FbxModel* fbxModel, FbxMesh* fbxMesh);
 
-	static void ConvertMat4FromFbx(Mat4* dst, const FbxAMatrix& src);
-
 public:
 	void Init();
 	void Destroy();

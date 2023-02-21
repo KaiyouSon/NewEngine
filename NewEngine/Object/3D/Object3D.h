@@ -12,11 +12,12 @@ private:
 	ConstantBuffer<ConstantBufferDataTransform3D>* constantBufferTransform;
 	ConstantBuffer<ConstantBufferDataMaterial>* constantBufferMaterial;
 	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
+	ConstantBuffer<ConstantBufferDataSkin>* constantBufferSkin;
 	Transform transform;
 
 	void SetBlendMode(const BlendMode& blendMode);
 public:
-	Model model;
+	Model* model;
 	Texture texture;
 	Vec3 pos;
 	Vec3 scale;

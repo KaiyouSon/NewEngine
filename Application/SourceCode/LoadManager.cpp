@@ -4,7 +4,7 @@
 
 void LoadManager::ModelLoad()
 {
-	//ModelManager::LoadModel("Cube", "Cube", true);
+	ModelManager::LoadFbxModel("boneTest", "BoneTest");
 	ModelManager::LoadObjModel("Sphere", "Sphere");
 	ModelManager::LoadObjModel("SkyDome", "SkyDome");
 	ModelManager::LoadObjModel("Ground", "Ground");

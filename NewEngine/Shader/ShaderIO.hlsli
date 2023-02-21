@@ -18,6 +18,15 @@ struct VSInputPosNormalUv
     float2 uv : TEXCOORD;
 };
 
+struct VSInputPosNormalUvBone
+{
+    float4 pos : POSITION;
+    float3 normal : NORMAL;
+    float2 uv : TEXCOORD;
+    uint4 boneIndices : BONEINDICES; // ボーンの番号
+    float4 boneWeights : BONEWEIGHTS; // ボーンのスキンウェイト
+};
+
 // --- 頂点シェーダー出力構造体 ----------------------------- //
 struct VSOutputSvpos
 {

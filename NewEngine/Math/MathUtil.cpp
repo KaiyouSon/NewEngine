@@ -1,3 +1,4 @@
+#include "MathUtil.h"
 #include "Util.h"
 #include "Camera.h"
 #include "Viewport.h"
@@ -28,6 +29,18 @@ Vec3 Vec3MulMat4(const Vec3& v, const Mat4& m, const bool& isMulW)
 
 	return result;
 }
+
+void ConvertMat4FromFbx(Mat4* dst, const FbxAMatrix& src)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			dst->m[i][j] = (float)src.Get(i, j);
+		}
+	}
+}
+
 
 Mat4 ConvertScalingMat(Vec3 scale)
 {

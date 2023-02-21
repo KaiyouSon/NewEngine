@@ -87,22 +87,22 @@ void GameScene::DrawDebugGui()
 
 void GameScene::CollisionInit()
 {
-	currentCollision = 0;
+	//currentCollision = 0;
 
-	sphereObj.model = Model("Sphere");
+	//sphereObj.model = Model("Sphere");
 
-	planeObj.model = Model("Ground");
+	//planeObj.model = Model("Ground");
 
-	triangleObj.model = Model("Triangle");
+	//triangleObj.model = Model("Triangle");
 
-	rayObj.model = Model("Ray");
-	rayObj.pos.y = 5;
-	rayObj.scale.y = 100;
+	//rayObj.model = Model("Ray");
+	//rayObj.pos.y = 5;
+	//rayObj.scale.y = 100;
 
-	capsuleObj1.model = Model("Capsule");
-	capsuleObj1.pos.x = +2;
-	capsuleObj2.model = Model("Capsule");
-	capsuleObj2.pos.x = -2;
+	//capsuleObj1.model = Model("Capsule");
+	//capsuleObj1.pos.x = +2;
+	//capsuleObj2.model = Model("Capsule");
+	//capsuleObj2.pos.x = -2;
 }
 void GameScene::CollisionUpdate()
 {
@@ -282,19 +282,19 @@ void GameScene::CG3Init()
 	LightManager::GetInstance()->circleShadow.atten = { 0.5f,0.6f,0.0f };
 	LightManager::GetInstance()->circleShadow.factorAngleCos = { 0.0f,0.5f };
 
-	skyDomeObj.model = *ModelManager::GetModel("SkyDome");
+	skyDomeObj.model = ModelManager::GetModel("SkyDome");
 	skyDomeObj.isLighting = false;
 
-	groundObj.model = *ModelManager::GetModel("Ground");
+	groundObj.model = ModelManager::GetModel("Ground");
 	groundObj.pos.y = -1.f;
 
-	obj.model = *ModelManager::GetModel("AttackEnemy");
+	obj.model = ModelManager::GetModel("AttackEnemy");
 	obj.pos = { 1.5f,0.f,5.f };
 
-	obj2.model = *ModelManager::GetModel("Player");
+	obj2.model = ModelManager::GetModel("Player");
 	obj2.pos.y = 1.5f;
 
-	obj3.model = *ModelManager::GetModel("Sphere");
+	obj3.model = ModelManager::GetModel("Sphere");
 	obj3.pos = { -3.f,2.f,0.f };
 
 	silhouetteObj.obj = &obj;
