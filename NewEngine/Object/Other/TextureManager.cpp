@@ -149,8 +149,6 @@ Texture* TextureManager::CreateTexture(const Color& color, const std::string& te
 	CD3DX12_RESOURCE_DESC textureResourceDesc1 =
 		CD3DX12_RESOURCE_DESC::Buffer(uploadSize);
 
-	//Microsoft::WRL::ComPtr<ID3D12Resource> uploadBuffer;
-
 	// テクスチャバッファの生成
 	result = RenderBase::GetInstance()->GetDevice()->
 		CreateCommittedResource(
@@ -161,8 +159,6 @@ Texture* TextureManager::CreateTexture(const Color& color, const std::string& te
 			nullptr,
 			IID_PPV_ARGS(&textureMap[textureTag]->uploadBuffer));
 	assert(SUCCEEDED(result));
-
-	textureMap[textureTag]->uploadBuffer->SetName(L"UploadBuffer");
 
 	UpdateSubresources(
 		RenderBase::GetInstance()->GetCommandList(),
@@ -397,8 +393,6 @@ Texture* TextureManager::LoadTexture(const std::string& filePath, const std::str
 	textureHeapProp1.Type = D3D12_HEAP_TYPE_UPLOAD;
 	CD3DX12_RESOURCE_DESC textureResourceDesc1 =
 		CD3DX12_RESOURCE_DESC::Buffer(uploadSize);
-
-	//Microsoft::WRL::ComPtr<ID3D12Resource> uploadBuffer;
 
 	// テクスチャバッファの生成
 	result = RenderBase::GetInstance()->GetDevice()->
