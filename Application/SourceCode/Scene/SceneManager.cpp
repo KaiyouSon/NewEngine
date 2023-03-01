@@ -9,7 +9,7 @@ SceneManager::SceneManager()
 {
 	Object3D::isAllLighting = true;
 
-	currentScene = std::move(std::make_unique<LogoScene>());
+	currentScene = std::move(std::make_unique<TitleScene>());
 }
 
 SceneManager::~SceneManager()

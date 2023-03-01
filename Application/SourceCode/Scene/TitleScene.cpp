@@ -28,17 +28,6 @@ void TitleScene::Init()
 	sphereCollider.radius = 1;
 
 	olobj.obj = &obj;
-
-	front.model = ModelManager::GetModel("Plane");
-	front.texture = *TextureManager::GetTexture("pic");
-	back.model = ModelManager::GetModel("Plane");
-	back.texture = *TextureManager::GetTexture("pic");
-	back.rot.y = Radian(90);
-
-	//front.pos.x = 3.f;
-	//back.pos.x = -3.f;
-	scaleTimer.SetMaxTimer(20);
-
 }
 
 void TitleScene::Update()
@@ -58,38 +47,10 @@ void TitleScene::Update()
 
 	olobj.Update();
 
-	scaleTimer.AddTimer();
-	if (scaleTimer.GetisTimeOut() == true)
-	{
-		front.scale = 1.f;
-		back.scale = 1.f;
-		scaleTimer.Reset();
-	}
-
-	if (scaleTimer.GetTimeRate() <= 0.5)
-	{
-		front.scale.x -= 0.01f;
-		back.scale.x -= 0.01f;
-
-		front.scale.y += 0.01f;
-		back.scale.y += 0.01f;
-	}
-	else
-	{
-		front.scale.x += 0.01f;
-		back.scale.x += 0.01f;
-
-		front.scale.y -= 0.01f;
-		back.scale.y -= 0.01f;
-	}
-
 	//sphereCollider.Update();
 
 	//front.rot.y += Radian(1);
 	//back.rot.y += Radian(1);
-
-	front.Update();
-	back.Update();
 
 	Camera::DebugCameraUpdate();
 }
@@ -109,9 +70,6 @@ void TitleScene::DrawBackSprite()
 
 void TitleScene::DrawModel()
 {
-	//front.Draw();
-	//back.Draw();
-
 	//obj.Draw();
 	//fbx.Draw();
 

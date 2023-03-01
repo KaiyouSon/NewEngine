@@ -72,7 +72,7 @@ Mat4 Mat4::Inverse()
 			}
 		}
 		// ‹ts—ñ‹‚ß‚é‚©‚Ç‚¤‚©
-		if (fabsf(sweepMat[maxIndex][i]) <= 1.e-30)
+		if (fabsf(sweepMat[maxIndex][i]) <= 1.e-50)
 		{
 			// ‹‚ß‚ê‚È‚¢ê‡‚Í’PˆÊs—ñ‚ğ•Ô‚·
 			return Identity();

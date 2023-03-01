@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <random>
 
 void Random::Init()
 {
-	srand(time(nullptr));
+	srand((unsigned int)time(nullptr));
 }
 
 int Random::Range(const int& min, const int& max)
@@ -15,11 +16,14 @@ int Random::Range(const int& min, const int& max)
 
 float Random::RangeF(const float& min, const float& max)
 {
-	double tmp = (min < 0 && max>0) ? (fabs(min) + max) : (fabs(max - min));
-	return (float)rand() / RAND_MAX * tmp + min;
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<> dist(min, max);
+	return float(dist(gen));
 }
 
-Vec2 Random::RangeVec2(const int& min, const int& max, const bool& isSameValue)
+
+Vec2 Random::RangeVec2(const float& min, const float& max, const bool& isSameValue)
 {
 	if (isSameValue == true)
 	{
@@ -32,7 +36,7 @@ Vec2 Random::RangeVec2(const int& min, const int& max, const bool& isSameValue)
 	}
 }
 
-Vec3 Random::RangeVec3(const int& min, const int& max, const bool& isSameValue)
+Vec3 Random::RangeVec3(const float& min, const float& max, const bool& isSameValue)
 {
 	if (isSameValue == true)
 	{

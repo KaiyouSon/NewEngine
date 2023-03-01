@@ -13,10 +13,10 @@ public:
 	static float RangeF(const float& min, const float& max);
 
 	// Vec2Œ^‚Ì—”‚ğæ“¾
-	static Vec2 RangeVec2(const int& min, const int& max, const bool& isSameValue = false);
+	static Vec2 RangeVec2(const float& min, const float& max, const bool& isSameValue = false);
 
 	// Vec3Œ^‚Ì—”‚ğæ“¾
-	static Vec3 RangeVec3(const int& min, const int& max, const bool& isSameValue = false);
+	static Vec3 RangeVec3(const float& min, const float& max, const bool& isSameValue = false);
 
 	// Šm—¦‚Åtrue‚ğ•Ô‚·
 	static bool RangeB(const float& rate);

@@ -22,7 +22,6 @@ public:
 	static Texture LoadTexture(const std::string& filePath);
 	static Texture* LoadTexture(const std::string& filePath, const std::string& textureTag);
 	static Texture LoadMaterialTexture(const std::string& filePath);
-	static Texture LoadFBXMaterialTexture(const std::string& filePath);
 
 	static RenderTexture* GetRenderTexture(const std::string& textureTag);
 	static RenderTexture* CreateRenderTexture(const Vec2& size, const std::string& textureTag);

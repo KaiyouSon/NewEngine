@@ -4,9 +4,6 @@
 class TitleScene : public IScene
 {
 private:
-	Object3D front;
-	Object3D back;
-	Timer scaleTimer;
 	TextureAnimeiton anime;
 
 	Object3D obj;
