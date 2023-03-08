@@ -121,8 +121,14 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Shader\Util">
+    <Filter Include="Shader\Engine">
+      <UniqueIdentifier>{34972156-5f9a-4832-bb11-aad9c71353e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\Util">
       <UniqueIdentifier>{0031c42b-881b-489c-9e3d-7deffda456b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application">
+      <UniqueIdentifier>{a6427656-65d8-448f-a149-1d8ea1006296}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -290,9 +296,6 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Sound\Sound.cpp">
       <Filter>NewEngine\Source\Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Collision\SphereCollider.cpp">
-      <Filter>NewEngine\Source\Collision</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\FbxLoader.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
@@ -488,9 +491,6 @@
     <ClInclude Include="NewEngine\Sound\Sound.h">
       <Filter>NewEngine\Header\Sound</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Collision\SphereCollider.h">
-      <Filter>NewEngine\Header\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\FbxLoader.h">
       <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
@@ -514,97 +514,97 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="NewEngine\Shader\RenderTexture.hlsli">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="NewEngine\Shader\Object3D.hlsli">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="NewEngine\Shader\Sprite.hlsli">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="NewEngine\Shader\Silhouette.hlsli">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="NewEngine\Shader\OutLine.hlsli">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="NewEngine\Shader\ToonRender.hlsli">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="NewEngine\Shader\CircleGaugeSprite.hlsli">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="NewEngine\Shader\Line.hlsli">
-      <Filter>Shader</Filter>
-    </None>
     <None Include="NewEngine\Shader\Blur.hlsli">
-      <Filter>Shader\Util</Filter>
+      <Filter>Shader\Engine\Util</Filter>
     </None>
     <None Include="NewEngine\Shader\Lighting.hlsli">
-      <Filter>Shader\Util</Filter>
+      <Filter>Shader\Engine\Util</Filter>
     </None>
     <None Include="NewEngine\Shader\ShaderIO.hlsli">
-      <Filter>Shader\Util</Filter>
+      <Filter>Shader\Engine\Util</Filter>
+    </None>
+    <None Include="NewEngine\Shader\CircleGaugeSprite.hlsli">
+      <Filter>Shader\Engine</Filter>
     </None>
     <None Include="NewEngine\Shader\FbxModel.hlsli">
-      <Filter>Shader</Filter>
+      <Filter>Shader\Engine</Filter>
+    </None>
+    <None Include="NewEngine\Shader\Line.hlsli">
+      <Filter>Shader\Engine</Filter>
+    </None>
+    <None Include="NewEngine\Shader\Object3D.hlsli">
+      <Filter>Shader\Engine</Filter>
+    </None>
+    <None Include="NewEngine\Shader\OutLine.hlsli">
+      <Filter>Shader\Engine</Filter>
+    </None>
+    <None Include="NewEngine\Shader\RenderTexture.hlsli">
+      <Filter>Shader\Engine</Filter>
+    </None>
+    <None Include="NewEngine\Shader\Silhouette.hlsli">
+      <Filter>Shader\Engine</Filter>
+    </None>
+    <None Include="NewEngine\Shader\Sprite.hlsli">
+      <Filter>Shader\Engine</Filter>
+    </None>
+    <None Include="NewEngine\Shader\ToonRender.hlsli">
+      <Filter>Shader\Engine</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="NewEngine\Shader\SpritePS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\RenderTexturePS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\RenderTextureVS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Object3DPS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Object3DVS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\SpriteVS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\SilhouettePS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\SilhouetteVS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\OutLinePS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\OutLineVS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ToonRenderPS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ToonRenderVS.hlsl">
-      <Filter>Shader</Filter>
+    <FxCompile Include="NewEngine\Shader\CircleGaugeSpritePS.hlsl">
+      <Filter>Shader\Engine</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\CircleGaugeSpriteVS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\CircleGaugeSpritePS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\LinePS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\LineVS.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Shader\Engine</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\FbxModelPS.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Shader\Engine</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\FbxModelVS.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\LinePS.hlsl">
+      <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\LineVS.hlsl">
+      <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\Object3DPS.hlsl">
+      <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\Object3DVS.hlsl">
+      <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\OutLinePS.hlsl">
+      <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\OutLineVS.hlsl">
+      <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\RenderTexturePS.hlsl">
+      <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\RenderTextureVS.hlsl">
+      <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\SilhouettePS.hlsl">
+      <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\SilhouetteVS.hlsl">
+      <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\SpritePS.hlsl">
+      <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\SpriteVS.hlsl">
+      <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ToonRenderPS.hlsl">
+      <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ToonRenderVS.hlsl">
+      <Filter>Shader\Engine</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

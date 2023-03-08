@@ -28,13 +28,13 @@ SquareCollider::SquareCollider(const Vec2& centerPos, const Vec2& size) :
 }
 
 // ----- 球コライダー ------------------- //
-//SphereCollider::SphereCollider()
-//{
-//}
-//SphereCollider::SphereCollider(const Vec3& centerPos, const float& radius) :
-//	centerPos(centerPos), radius(radius)
-//{
-//}
+SphereCollider::SphereCollider()
+{
+}
+SphereCollider::SphereCollider(const Vec3& centerPos, const float& radius) :
+	centerPos(centerPos), radius(radius)
+{
+}
 
 // ----- レイコライダー ----------------- //
 RayCollider::RayCollider() :

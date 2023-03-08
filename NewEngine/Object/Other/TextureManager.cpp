@@ -87,7 +87,7 @@ Texture TextureManager::CreateTexture(const Color& color)
 		1,
 		&subResourcesData);
 
-	D3D12_RESOURCE_BARRIER  barrier;
+	D3D12_RESOURCE_BARRIER  barrier{};
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 	barrier.Transition.pResource = tex.buffer.Get();
 	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
@@ -169,15 +169,12 @@ Texture* TextureManager::CreateTexture(const Color& color, const std::string& te
 		1,
 		&subResourcesData);
 
-	D3D12_RESOURCE_BARRIER  barrier;
+	D3D12_RESOURCE_BARRIER  barrier{};
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 	barrier.Transition.pResource = textureMap[textureTag]->buffer.Get();
 	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
-
-	//ExcuteComandList();
-
 
 	return textureMap[textureTag].get();
 }
@@ -293,7 +290,7 @@ Texture TextureManager::LoadTexture(const std::string& filePath)
 		(UINT)metadata.mipLevels,
 		subResourcesDatas.data());
 
-	D3D12_RESOURCE_BARRIER  barrier;
+	D3D12_RESOURCE_BARRIER  barrier{};
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 	barrier.Transition.pResource = tex.buffer.Get();
 	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
@@ -414,16 +411,12 @@ Texture* TextureManager::LoadTexture(const std::string& filePath, const std::str
 		(UINT)metadata.mipLevels,
 		subResourcesDatas.data());
 
-	D3D12_RESOURCE_BARRIER  barrier;
+	D3D12_RESOURCE_BARRIER  barrier{};
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 	barrier.Transition.pResource = textureMap[textureTag]->buffer.Get();
 	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
-
-	//ExcuteComandList();
-
-	//textureMap.insert(std::make_pair(textureTag, std::move(tex)));
 
 	return textureMap[textureTag].get();
 }
@@ -515,8 +508,6 @@ Texture TextureManager::LoadMaterialTexture(const std::string& filePath)
 	CD3DX12_RESOURCE_DESC textureResourceDesc1 =
 		CD3DX12_RESOURCE_DESC::Buffer(uploadSize);
 
-	//Microsoft::WRL::ComPtr<ID3D12Resource> uploadBuffer;
-
 	// テクスチャバッファの生成
 	result = RenderBase::GetInstance()->GetDevice()->
 		CreateCommittedResource(
@@ -537,7 +528,7 @@ Texture TextureManager::LoadMaterialTexture(const std::string& filePath)
 		(UINT)metadata.mipLevels,
 		subResourcesDatas.data());
 
-	D3D12_RESOURCE_BARRIER  barrier;
+	D3D12_RESOURCE_BARRIER  barrier{};
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 	barrier.Transition.pResource = tex.buffer.Get();
 	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
@@ -633,8 +624,8 @@ void TextureManager::CreateSRV(Texture& texture)
 	UINT descriptorSize = RenderBase::GetInstance()->GetDevice()->
 		GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-	srvCpuHandle.ptr += descriptorSize * srvIncrementIndex;
-	srvGpuHandle.ptr += descriptorSize * srvIncrementIndex;
+	srvCpuHandle.ptr += (SIZE_T)(descriptorSize * srvIncrementIndex);
+	srvGpuHandle.ptr += (SIZE_T)(descriptorSize * srvIncrementIndex);
 
 	texture.SetCpuHandle(srvCpuHandle);
 	texture.SetGpuHandle(srvGpuHandle);

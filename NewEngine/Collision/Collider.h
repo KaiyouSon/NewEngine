@@ -1,6 +1,5 @@
 #pragma once
 #include "MathUtil.h"
-#include "SphereCollider.h"
 
 // ----- 円コライダー ------------------- //
 struct CircleCollider
@@ -27,14 +26,14 @@ struct SquareCollider
 };
 
 // ----- 球コライダー ------------------- //
-//struct SphereCollider
-//{
-//	Vec3 centerPos = 0;
-//	float radius = 0;
-//
-//	SphereCollider();
-//	SphereCollider(const Vec3& centerPos, const float& radius);
-//};
+struct SphereCollider
+{
+	Vec3 centerPos = 0;
+	float radius = 0;
+
+	SphereCollider();
+	SphereCollider(const Vec3& centerPos, const float& radius);
+};
 
 // ----- レイコライダー ----------------- //
 struct RayCollider

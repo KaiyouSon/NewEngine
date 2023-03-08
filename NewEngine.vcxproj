@@ -166,7 +166,6 @@
     <ClCompile Include="Application\SourceCode\Scene\TitleScene.cpp" />
     <ClCompile Include="NewEngine\Collision\Collider.cpp" />
     <ClCompile Include="NewEngine\Collision\Collision.cpp" />
-    <ClCompile Include="NewEngine\Collision\SphereCollider.cpp" />
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp" />
     <ClCompile Include="NewEngine\Input\InputManager.cpp" />
     <ClCompile Include="NewEngine\Input\JoypadInput.cpp" />
@@ -233,7 +232,6 @@
     <ClInclude Include="Application\SourceCode\Scene\TitleScene.h" />
     <ClInclude Include="NewEngine\Collision\Collider.h" />
     <ClInclude Include="NewEngine\Collision\Collision.h" />
-    <ClInclude Include="NewEngine\Collision\SphereCollider.h" />
     <ClInclude Include="NewEngine\Gui\GuiManager.h" />
     <ClInclude Include="NewEngine\Input\InputManager.h" />
     <ClInclude Include="NewEngine\Input\JoypadInput.h" />
