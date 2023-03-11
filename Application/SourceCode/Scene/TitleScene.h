@@ -9,7 +9,6 @@ private:
 	Object3D obj;
 	Object3D fbx;
 	Object3D skyDome;
-	OutLineObj olobj;
 	Sprite sprite;
 	SphereCollider sphereCollider;
 

@@ -13,6 +13,7 @@ void LoadManager::ModelLoad()
 	ModelManager::LoadFbxModel("AttackEnemy", "AttackEnemy");
 	ModelManager::LoadObjModel("player", "Player", true);
 	ModelManager::LoadObjModel("Plane", "Plane");
+	ModelManager::LoadObjModel("Block1", "Block1");
 }
 
 void LoadManager::TextureLoad()

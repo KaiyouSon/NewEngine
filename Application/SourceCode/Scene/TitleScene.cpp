@@ -6,10 +6,10 @@ void TitleScene::Init()
 {
 	anime.Init({ 0,0 }, { 68,72 });
 
-	Camera::current.pos = { 0,1,-15 };
-	Camera::current.rot = { Radian(0),0,0 };
+	Camera::current.pos = { 0,10,-10 };
+	Camera::current.rot = { Radian(45),0,0 };
 
-	obj.model = ModelManager::GetModel("Sphere");
+	obj.model = ModelManager::GetModel("Block1");
 	obj.pos = { -3,0,0 };
 	obj.rot.y = Radian(180);
 
@@ -26,8 +26,6 @@ void TitleScene::Init()
 
 	sphereCollider.centerPos = Vec3::zero;
 	sphereCollider.radius = 1;
-
-	olobj.obj = &obj;
 }
 
 void TitleScene::Update()
@@ -44,8 +42,6 @@ void TitleScene::Update()
 	obj.Update();
 	fbx.Update();
 	fbx.PlayAnimetion();
-
-	olobj.Update();
 
 	//sphereCollider.Update();
 
@@ -65,12 +61,12 @@ void TitleScene::DrawRenderTexture()
 
 void TitleScene::DrawBackSprite()
 {
-	sprite.Draw();
+	//sprite.Draw();
 }
 
 void TitleScene::DrawModel()
 {
-	//obj.Draw();
+	obj.Draw();
 	//fbx.Draw();
 
 	//sphereCollider.Draw();
