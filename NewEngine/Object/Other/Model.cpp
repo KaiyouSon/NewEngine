@@ -51,6 +51,7 @@ Model::Model(const std::string& modelName, const bool& isSmoothing)
 			lineStream >> pos.x;
 			lineStream >> pos.y;
 			lineStream >> pos.z;
+			pos.z *= -1;
 			// 座標データに追加
 			positions.emplace_back(pos);
 		}
@@ -85,6 +86,8 @@ Model::Model(const std::string& modelName, const bool& isSmoothing)
 		{
 			// 半角スペース区切りで行の続きを読み込む
 			string indexString;
+			int count = 0;
+
 			while (getline(lineStream, indexString, ' '))
 			{
 				// 頂点インデックス1個分の文字列をストリームに変換して解析しやすくする
@@ -102,6 +105,7 @@ Model::Model(const std::string& modelName, const bool& isSmoothing)
 				vertex.pos = positions[indexPos - 1];
 				vertex.normal = normals[indexNormal - 1];
 				vertex.uv = texcoords[indexTexcoord - 1];
+
 				mesh.AddVertex(vertex);
 
 				if (isSmoothing == true)
@@ -110,7 +114,20 @@ Model::Model(const std::string& modelName, const bool& isSmoothing)
 				}
 
 				// 頂点インデックスに追加
-				mesh.AddIndex((unsigned short)mesh.GetIndexSize());
+				if (count % 3 == 0)
+				{
+					mesh.AddIndex((unsigned short)mesh.GetIndexSize());
+				}
+				if (count % 3 == 1)
+				{
+					mesh.AddIndex((unsigned short)mesh.GetIndexSize() + 1);
+				}
+				if (count % 3 == 2)
+				{
+					mesh.AddIndex((unsigned short)mesh.GetIndexSize() - 1);
+				}
+
+				count++;
 			}
 		}
 	}
