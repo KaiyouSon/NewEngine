@@ -51,3 +51,9 @@ cbuffer ConstantBufferDataSkinning : register(b5)
 {
     matrix skinningMat[maxBones];
 }
+
+struct PSOutput
+{
+    float4 target0 : SV_TARGET0;
+    float4 target1 : SV_TARGET1;
+};

@@ -8,6 +8,7 @@ GraphicsPipeline* GraphicsPipelineManager::Create(
 	const CullMode& cullMode,
 	const D3D12_DEPTH_STENCIL_DESC& depthStencilDesc,
 	const TopologyType& topologyType,
+	const size_t& rtvNum,
 	const std::string& graphicsPipelineTag)
 {
 	std::unique_ptr<GraphicsPipeline> gp = std::make_unique<GraphicsPipeline>();
@@ -16,6 +17,7 @@ GraphicsPipeline* GraphicsPipelineManager::Create(
 	gp->SetDepthStencilDesc(depthStencilDesc);
 	gp->SetTopologyType(topologyType);
 	gp->SetRootSignature(rootSignature);
+	gp->SetRTVNum(rtvNum);
 	gp->Create();
 
 	graphicsPipelineMap.insert(std::make_pair(graphicsPipelineTag, std::move(gp)));

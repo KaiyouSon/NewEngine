@@ -27,8 +27,8 @@ private:
 	TopologyType topologyType;
 	ShaderObject* shaderObject;
 	ID3D12RootSignature* rootSignature;
-
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc;
+	size_t rtvNum = 1;	// RTVの数
 
 	// 各ブレンドのパイプライン
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> alphaPipeline;	// αブレンド
@@ -50,6 +50,7 @@ public:
 	inline void SetShaderObject(ShaderObject* shaderObject) { this->shaderObject = shaderObject; }
 	inline void SetRootSignature(ID3D12RootSignature* rootSignature) { this->rootSignature = rootSignature; }
 	inline void SetDepthStencilDesc(const D3D12_DEPTH_STENCIL_DESC& depthStencilDesc) { this->depthStencilDesc = depthStencilDesc; }
+	inline void SetRTVNum(const size_t& rtvNum) { this->rtvNum = rtvNum; }
 
 public:
 	// ゲッター

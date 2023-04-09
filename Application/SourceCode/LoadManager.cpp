@@ -22,6 +22,8 @@ void LoadManager::TextureLoad()
 	TextureManager::LoadTexture("pic.png", "pic");
 	TextureManager::LoadTexture("number.png", "NumberSheet");
 
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 2, "Test");
+
 	TextureManager::ExcuteComandList();
 }
 

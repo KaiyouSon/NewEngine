@@ -75,46 +75,51 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
 	}
 
 	// レンダーターゲットのブレンド設定
-	D3D12_RENDER_TARGET_BLEND_DESC& blendDesc = pipelineDesc.BlendState.RenderTarget[0];
-
-	blendDesc.RenderTargetWriteMask =
-		D3D12_COLOR_WRITE_ENABLE_RED |
-		D3D12_COLOR_WRITE_ENABLE_GREEN |
-		D3D12_COLOR_WRITE_ENABLE_BLUE;
-	blendDesc.BlendEnable = true;					// ブレンドを有効にする
-	blendDesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;	// 加算
-	blendDesc.SrcBlendAlpha = D3D12_BLEND_ONE;		// ソースの値を100％使う
-	blendDesc.DestBlendAlpha = D3D12_BLEND_ZERO;	// デストの値を  0％使う
-
-	// 半透明合成
-	switch (blendMode)
+	for (int i = 0; i < rtvNum; i++)
 	{
-	case BlendMode::Alpha: // αブレンド
-		blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// 加算
-		blendDesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;			// ソースのアルファ値
-		blendDesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;	// 1.0f-ソースのアルファ値
-		break;
+		D3D12_RENDER_TARGET_BLEND_DESC blendDesc{};// = pipelineDesc.BlendState.RenderTarget[i];
 
-	case BlendMode::Add:	// 加算ブレンド
-		blendDesc.BlendOp = D3D12_BLEND_OP_ADD;		// 加算
-		blendDesc.SrcBlend = D3D12_BLEND_ONE;		// ソースの値を100％使う
-		blendDesc.DestBlend = D3D12_BLEND_ONE;		// デストの値を100％使う
-		break;
+		blendDesc.RenderTargetWriteMask =
+			D3D12_COLOR_WRITE_ENABLE_RED |
+			D3D12_COLOR_WRITE_ENABLE_GREEN |
+			D3D12_COLOR_WRITE_ENABLE_BLUE;
+		blendDesc.BlendEnable = true;					// ブレンドを有効にする
+		blendDesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;	// 加算
+		blendDesc.SrcBlendAlpha = D3D12_BLEND_ONE;		// ソースの値を100％使う
+		blendDesc.DestBlendAlpha = D3D12_BLEND_ZERO;	// デストの値を  0％使う
 
-	case BlendMode::Sub:	// 減算ブレンド
-		blendDesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;	// デストからソースを減算
-		blendDesc.SrcBlend = D3D12_BLEND_ONE;				// ソースの値を100％使う
-		blendDesc.DestBlend = D3D12_BLEND_ONE;				// デストの値を100％使う
-		break;
+		// 半透明合成
+		switch (blendMode)
+		{
+		case BlendMode::Alpha: // αブレンド
+			blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// 加算
+			blendDesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;			// ソースのアルファ値
+			blendDesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;	// 1.0f-ソースのアルファ値
+			break;
 
-	case BlendMode::Inv:	// 反転
-		blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// 加算
-		blendDesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;	// 1.0f-デストカラーの値
-		blendDesc.DestBlend = D3D12_BLEND_ZERO;				// 使わない
-		break;
+		case BlendMode::Add:	// 加算ブレンド
+			blendDesc.BlendOp = D3D12_BLEND_OP_ADD;		// 加算
+			blendDesc.SrcBlend = D3D12_BLEND_ONE;		// ソースの値を100％使う
+			blendDesc.DestBlend = D3D12_BLEND_ONE;		// デストの値を100％使う
+			break;
 
-	default:
-		break;
+		case BlendMode::Sub:	// 減算ブレンド
+			blendDesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;	// デストからソースを減算
+			blendDesc.SrcBlend = D3D12_BLEND_ONE;				// ソースの値を100％使う
+			blendDesc.DestBlend = D3D12_BLEND_ONE;				// デストの値を100％使う
+			break;
+
+		case BlendMode::Inv:	// 反転
+			blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// 加算
+			blendDesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;	// 1.0f-デストカラーの値
+			blendDesc.DestBlend = D3D12_BLEND_ZERO;				// 使わない
+			break;
+
+		default:
+			break;
+		}
+
+		pipelineDesc.BlendState.RenderTarget[i] = blendDesc;
 	}
 
 	// 頂点レイアウトの設定
@@ -141,8 +146,11 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
 	}
 
 	// その他の設定
-	pipelineDesc.NumRenderTargets = 1; // 描画対象は1つ
-	pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB; // 0～255指定のRGBA
+	pipelineDesc.NumRenderTargets = (UINT)rtvNum; // 描画対象は1つ
+	for (size_t i = 0; i < rtvNum; i++)
+	{
+		pipelineDesc.RTVFormats[i] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB; // 0～255指定のRGBA
+	}
 	pipelineDesc.SampleDesc.Count = 1; // 1ピクセルにつき1回サンプリング
 
 	// パイプラインにルートシグネチャをセット

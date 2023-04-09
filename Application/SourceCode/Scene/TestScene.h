@@ -4,6 +4,12 @@
 class TestScene : public IScene
 {
 private:
+	Object3D obj;
+
+	Sprite spr1;
+	Sprite spr2;
+
+	RenderTexture* renderTex;
 
 public:
 	TestScene();

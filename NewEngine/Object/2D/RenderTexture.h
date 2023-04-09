@@ -14,12 +14,15 @@
 class RenderTexture : public Texture
 {
 private:
+	static const float clearColor[4];
 	Transform transform;
 
-	static const float clearColor[4];
+	std::vector<CD3DX12_VIEWPORT> viewports;	// ビューポート
+	std::vector<CD3DX12_RECT> scissorRects;		// シザー矩形
 
 public:
-	RenderTarget renderTarget;
+	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> buffers; //テクスチャのリソース
+	std::vector<RenderTarget> renderTargets;
 	DepthBuffer depthBuffer;
 
 public:

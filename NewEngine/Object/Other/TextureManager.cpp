@@ -48,7 +48,7 @@ Texture TextureManager::CreateTexture(const Color& color)
 			IID_PPV_ARGS(&tex.buffer));
 	assert(SUCCEEDED(result));
 
-	TextureManager::CreateSRV(tex);
+	CreateSRV(tex, tex.buffer.Get());
 
 	Color col = Color(color.r / 255, color.g / 255, color.b / 255, color.a / 255);
 
@@ -132,7 +132,8 @@ Texture* TextureManager::CreateTexture(const Color& color, const std::string& te
 			IID_PPV_ARGS(&textureMap[textureTag]->buffer));
 	assert(SUCCEEDED(result));
 
-	TextureManager::CreateSRV(*textureMap[textureTag]);
+	CreateSRV(*textureMap[textureTag], textureMap[textureTag]->buffer.Get());
+
 
 	Color col = Color(color.r / 255, color.g / 255, color.b / 255, color.a / 255);
 
@@ -245,7 +246,7 @@ Texture TextureManager::LoadTexture(const std::string& filePath)
 			IID_PPV_ARGS(&tex.buffer));
 	assert(SUCCEEDED(result));
 
-	TextureManager::CreateSRV(tex);
+	CreateSRV(tex, tex.buffer.Get());
 
 	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas{};
 	subResourcesDatas.resize(metadata.mipLevels);
@@ -368,7 +369,7 @@ Texture* TextureManager::LoadTexture(const std::string& filePath, const std::str
 			IID_PPV_ARGS(&textureMap[textureTag]->buffer));
 	assert(SUCCEEDED(result));
 
-	TextureManager::CreateSRV(*textureMap[textureTag]);
+	CreateSRV(*textureMap[textureTag], textureMap[textureTag]->buffer.Get());
 
 	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas{};
 	subResourcesDatas.resize(metadata.mipLevels);
@@ -485,7 +486,7 @@ Texture TextureManager::LoadMaterialTexture(const std::string& filePath)
 			IID_PPV_ARGS(&tex.buffer));
 	assert(SUCCEEDED(result));
 
-	TextureManager::CreateSRV(tex);
+	CreateSRV(tex, tex.buffer.Get());
 
 	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas{};
 	subResourcesDatas.resize(metadata.mipLevels);
@@ -542,9 +543,10 @@ RenderTexture* TextureManager::GetRenderTexture(const std::string& textureTag)
 {
 	return renderTextureMap[textureTag].get();
 }
-RenderTexture* TextureManager::CreateRenderTexture(const Vec2& size, const std::string& textureTag)
+RenderTexture* TextureManager::CreateRenderTexture(const Vec2& size, const size_t num, const std::string& textureTag)
 {
 	std::unique_ptr<RenderTexture> renderTex = std::make_unique<RenderTexture>();
+	renderTex->buffers.resize(num);
 
 	float clearColor[4] = { 0.0f,0.0f,0.0f,1.0f };
 
@@ -569,15 +571,18 @@ RenderTexture* TextureManager::CreateRenderTexture(const Vec2& size, const std::
 
 	renderTex->size = size;
 
-	result = renderBase->GetDevice()->
-		CreateCommittedResource(
-			&texturenResourceHeapProp,
-			D3D12_HEAP_FLAG_NONE,
-			&texturenResourceDesc,
-			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-			&textureResourceClearValue,
-			IID_PPV_ARGS(&renderTex->buffer));
-	assert(SUCCEEDED(result));
+	for (int i = 0; i < num; i++)
+	{
+		result = renderBase->GetDevice()->
+			CreateCommittedResource(
+				&texturenResourceHeapProp,
+				D3D12_HEAP_FLAG_NONE,
+				&texturenResourceDesc,
+				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+				&textureResourceClearValue,
+				IID_PPV_ARGS(&renderTex->buffers[i]));
+		assert(SUCCEEDED(result));
+	}
 
 	// レンダーターゲットビューの設定
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
@@ -585,10 +590,19 @@ RenderTexture* TextureManager::CreateRenderTexture(const Vec2& size, const std::
 	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
+	renderTex->renderTargets.resize(num);
+	for (int i = 0; i < num; i++)
+	{
+		// SRV作成
+		CreateSRV(*renderTex, renderTex->buffers[i].Get());
+
+		// RTV作成
+		renderTex->renderTargets[i].buffer = renderTex->buffers[i];
+		renderBase->CreateRTV(renderTex->renderTargets[i], &rtvDesc);
+	}
+
+	// DSV作成
 	renderTex->depthBuffer.Create();
-	renderTex->renderTarget.buffer = renderTex->buffer;
-	CreateSRV(*renderTex);
-	renderBase->CreateRTV(renderTex->renderTarget, &rtvDesc);
 	renderBase->CreateDSV(renderTex->depthBuffer);
 
 	renderTextureMap.insert(std::make_pair(textureTag, std::move(renderTex)));
@@ -615,7 +629,7 @@ void TextureManager::CreateDescriptorHeap()
 	assert(SUCCEEDED(result));
 
 }
-void TextureManager::CreateSRV(Texture& texture)
+void TextureManager::CreateSRV(Texture& texture, ID3D12Resource* buffer)
 {
 	// SRVヒープの先頭ハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE srvCpuHandle = srvDescHeap->GetCPUDescriptorHandleForHeapStart();
@@ -632,15 +646,15 @@ void TextureManager::CreateSRV(Texture& texture)
 
 	// シェーダーリソースビュー設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	// srv設定構造体
-	srvDesc.Format = texture.buffer->GetDesc().Format;
+	srvDesc.Format = buffer->GetDesc().Format;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	// 2Dテクスチャ
 	//srvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;	// 2Dテクスチャ
-	srvDesc.Texture2D.MipLevels = texture.buffer->GetDesc().MipLevels;
+	srvDesc.Texture2D.MipLevels = buffer->GetDesc().MipLevels;
 
 	// ハンドルの指す位置にシェーダーリソースビュー作成
 	RenderBase::GetInstance()->GetDevice()->
-		CreateShaderResourceView(texture.buffer.Get(), &srvDesc, srvCpuHandle);
+		CreateShaderResourceView(buffer, &srvDesc, srvCpuHandle);
 
 	srvIncrementIndex++;
 }

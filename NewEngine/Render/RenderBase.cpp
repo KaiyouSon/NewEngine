@@ -457,6 +457,7 @@ void RenderBase::GraphicsPipelineInit()
 		CullMode::CullBack,
 		depthStencilDesc1,
 		TopologyType::TriangleTopology,
+		2,
 		"Object3D");
 
 	// 3Dオブジェクト用
@@ -466,6 +467,7 @@ void RenderBase::GraphicsPipelineInit()
 		CullMode::CullBack,
 		depthStencilDesc1,
 		TopologyType::TriangleTopology,
+		1,
 		"FbxModel");
 
 	// スプライト用
@@ -475,6 +477,7 @@ void RenderBase::GraphicsPipelineInit()
 		CullMode::None,
 		depthStencilDesc2,
 		TopologyType::TriangleTopology,
+		1,
 		"Sprite");
 
 	// 円形ゲージスプライト用
@@ -484,6 +487,7 @@ void RenderBase::GraphicsPipelineInit()
 		CullMode::None,
 		depthStencilDesc2,
 		TopologyType::TriangleTopology,
+		1,
 		"CircleGaugeSprite");
 
 	// レンダーテクスチャ用
@@ -493,6 +497,7 @@ void RenderBase::GraphicsPipelineInit()
 		CullMode::None,
 		depthStencilDesc2,
 		TopologyType::TriangleTopology,
+		1,
 		"RenderTexture");
 
 	// シルエット用
@@ -502,6 +507,7 @@ void RenderBase::GraphicsPipelineInit()
 		CullMode::CullBack,
 		depthStencilDesc3,
 		TopologyType::TriangleTopology,
+		1,
 		"Silhouette");
 
 	// アウトライン用
@@ -511,6 +517,7 @@ void RenderBase::GraphicsPipelineInit()
 		CullMode::CullFront,
 		depthStencilDesc4,
 		TopologyType::TriangleTopology,
+		1,
 		"Outline");
 
 	// トゥーンレンダリング用
@@ -520,6 +527,7 @@ void RenderBase::GraphicsPipelineInit()
 		CullMode::CullBack,
 		depthStencilDesc1,
 		TopologyType::TriangleTopology,
+		1,
 		"ToonRendering");
 
 	// ライン用
@@ -529,5 +537,6 @@ void RenderBase::GraphicsPipelineInit()
 		CullMode::None,
 		depthStencilDesc1,
 		TopologyType::LineTopology,
+		1,
 		"Line");
 }

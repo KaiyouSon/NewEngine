@@ -24,10 +24,10 @@ public:
 	static Texture LoadMaterialTexture(const std::string& filePath);
 
 	static RenderTexture* GetRenderTexture(const std::string& textureTag);
-	static RenderTexture* CreateRenderTexture(const Vec2& size, const std::string& textureTag);
+	static RenderTexture* CreateRenderTexture(const Vec2& size, const size_t num, const std::string& textureTag);
 
 	static void CreateDescriptorHeap();
-	static void CreateSRV(Texture& texture);
+	static void CreateSRV(Texture& texture, ID3D12Resource* buffer);
 	static inline ID3D12DescriptorHeap* GetSrvDescHeap() { return srvDescHeap.Get(); }
 
 	static void ExcuteComandList();
