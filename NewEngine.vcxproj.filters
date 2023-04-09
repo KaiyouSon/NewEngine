@@ -312,6 +312,9 @@
     <ClCompile Include="Application\SourceCode\Scene\LogoScene.cpp">
       <Filter>Application\Source\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\Scene\TestScene.cpp">
+      <Filter>Application\Source\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -510,6 +513,9 @@
       <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Scene\LogoScene.h">
+      <Filter>Application\Header\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Scene\TestScene.h">
       <Filter>Application\Header\Scene</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,11 +1,13 @@
 #pragma once
 #include "NewEngine.h"
 
-class TitleScene : public IScene
+class TestScene : public IScene
 {
 private:
 
 public:
+	GameScene();
+	~GameScene();
 	void Init() override;
 	void Update() override;
 	void DrawRenderTexture() override;

@@ -1,4 +1,5 @@
 #include "SceneManager.h"
+#include "TestScene.h"
 #include "TitleScene.h"
 #include "GameScene.h"
 #include "LogoScene.h"
@@ -9,7 +10,7 @@ SceneManager::SceneManager()
 {
 	Object3D::isAllLighting = true;
 
-	currentScene = std::move(std::make_unique<TitleScene>());
+	currentScene = std::move(std::make_unique<TestScene>());
 }
 
 SceneManager::~SceneManager()
