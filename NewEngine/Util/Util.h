@@ -21,7 +21,6 @@ enum class BlendMode
 	Add,
 	Sub,
 	Inv,
-	Screen
 };
 
 enum class TimeUnit

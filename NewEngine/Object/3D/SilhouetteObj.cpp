@@ -87,10 +87,6 @@ void SilhouetteObj::SetBlendMode(const BlendMode& blendMode)
 		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetInvPipeline());
 		break;
 
-	case BlendMode::Screen:	// ”½“]
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetScreenPipeline());
-		break;
-
 	default:
 		break;
 	}

@@ -35,7 +35,6 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> addPipeline;	// 加算ブレンド
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> subPipeline;	// 減算ブレンド
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> invPipeline;	// 反転ブレンド
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> screenPipeline;	// 反転ブレンド
 
 private:
 	void CreatePipelineState(const BlendMode& blendMode);
@@ -58,6 +57,5 @@ public:
 	inline ID3D12PipelineState* GetAddPipeline() const { return addPipeline.Get(); }
 	inline ID3D12PipelineState* GetSubPipeline() const { return subPipeline.Get(); }
 	inline ID3D12PipelineState* GetInvPipeline() const { return invPipeline.Get(); }
-	inline ID3D12PipelineState* GetScreenPipeline() const { return screenPipeline.Get(); }
 };
 

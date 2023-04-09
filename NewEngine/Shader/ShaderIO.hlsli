@@ -1,4 +1,9 @@
 // --- 頂点シェーダー入力構造体 ----------------------------- //
+struct VSInputPos
+{
+    float4 pos : POSITION;
+};
+
 struct VSInputPosNormal
 {
     float4 pos : POSITION;

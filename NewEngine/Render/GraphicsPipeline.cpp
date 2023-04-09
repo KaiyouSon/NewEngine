@@ -19,7 +19,6 @@ void GraphicsPipeline::Create()
 	CreatePipelineState(BlendMode::Add);		// ‰ÁŽZƒuƒŒƒ“ƒh
 	CreatePipelineState(BlendMode::Sub);		// Œ¸ŽZƒuƒŒƒ“ƒh
 	CreatePipelineState(BlendMode::Inv);
-	CreatePipelineState(BlendMode::Screen);
 }
 
 void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
@@ -114,12 +113,6 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
 		blendDesc.DestBlend = D3D12_BLEND_ZERO;				// Žg‚í‚È‚¢
 		break;
 
-	case BlendMode::Screen:	// ”½“]
-		blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// ‰ÁŽZ
-		blendDesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;
-		blendDesc.DestBlend = D3D12_BLEND_ONE;
-		break;
-
 	default:
 		break;
 	}
@@ -172,10 +165,6 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode& blendMode)
 
 	case BlendMode::Inv:	// ”½“]
 		result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&invPipeline));
-		break;
-
-	case BlendMode::Screen:	// ”½“]
-		result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&screenPipeline));
 		break;
 
 	default:

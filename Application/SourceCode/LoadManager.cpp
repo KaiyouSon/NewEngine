@@ -27,7 +27,6 @@ void LoadManager::TextureLoad()
 
 void LoadManager::SoundLoad()
 {
-	SoundManager::LoadSound("Tutorial_BGM.wav", "BGM");
 }
 
 void LoadManager::Load()

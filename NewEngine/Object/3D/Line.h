@@ -7,17 +7,22 @@
 class Line
 {
 private:
-	VertexBuffer<VertexPosNormalUv>* vertexBuffer;
-	IndexBuffer* indexBuffer;
-	std::vector<VertexPosNormalUv> vertices;
-	std::vector<unsigned short> indices;
+	std::vector<VertexPos> vertices;
+	VertexBuffer<VertexPos>* vertexBuffer;
 	ConstantBuffer<ConstantBufferDataTransform3D>* constantBufferTransform;
 	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
+	GraphicsPipeline* graphicsPipeline;
+	Transform transform;
+
+public:
+	Vec3 pos;
+	float scale;
+	Vec3 rot;
+	Color color;
 
 public:
 	Line();
 	~Line();
-	void Initialize(const Vec3& startPos, const Vec3& endPos);
 	void Update();
 	void Draw();
 };

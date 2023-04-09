@@ -3,6 +3,7 @@
 #include "LightManager.h"
 #include "Camera.h"
 #include "FbxModel.h"
+#include "TextureManager.h"
 #include <DirectXMath.h>
 
 using namespace std;
@@ -16,6 +17,7 @@ Object3D::Object3D() :
 	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>),
 	constantBufferSkin(new ConstantBuffer<ConstantBufferDataSkin>),
 	graphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
+	texture(TextureManager::GetTexture("White")),
 	isLighting(false)
 {
 	// 定数バッファ初期化
@@ -24,7 +26,7 @@ Object3D::Object3D() :
 	constantBufferColor->Init();		// 色
 	constantBufferSkin->Init();
 
-	texture.isMaterial = true;
+	texture->isMaterial = true;
 
 	if (isAllLighting == true)
 	{
@@ -50,9 +52,9 @@ void Object3D::PlayAnimetion()
 
 void Object3D::Update(const Object3D* parent)
 {
-	if (texture.isMaterial == true)
+	if (texture->isMaterial == true)
 	{
-		texture = model->material.texture;
+		texture = &model->material.texture;
 		if (model->modelType == "OBJ")
 		{
 			graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("Object3D");
@@ -143,7 +145,7 @@ void Object3D::Draw(const BlendMode& blendMode)
 
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-		renderBase->GetObject3DRootSignature()->GetRootDescriptorTableIndex(), texture.GetGpuHandle());
+		renderBase->GetObject3DRootSignature()->GetRootDescriptorTableIndex(), texture->GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(unsigned short)model->mesh.GetIndexSize(), 1, 0, 0, 0);
@@ -169,10 +171,6 @@ void Object3D::SetBlendMode(const BlendMode& blendMode)
 
 	case BlendMode::Inv:	// 反転
 		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetInvPipeline());
-		break;
-
-	case BlendMode::Screen:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetScreenPipeline());
 		break;
 
 	default:

@@ -54,8 +54,6 @@ public:
 	inline RootSignature* GetObject3DRootSignature() const { return object3DRootSignature.get(); }
 	inline RootSignature* GetSpriteRootSignature() const { return spriteRootSignature.get(); }
 
-	inline GraphicsPipeline* GetLinePipeline() const { return linePipeline.get(); }
-
 	inline Viewport* GetViewport() const { return viewport.get(); }
 
 	inline void PreIncrimentFenceValue() { ++fenceVal; }
@@ -89,12 +87,6 @@ private:
 	ComPtr<ID3D12DescriptorHeap> dsvDescHeap;		// dsv用デスクリプタヒープ
 	UINT rtvIncrementIndex;
 	UINT dsvIncrementIndex;
-
-	// シェーダコンパイラー
-	std::unique_ptr<ShaderObject> lineShader;
-	
-	// グラフィックスパイプライン関連
-	std::unique_ptr<GraphicsPipeline> linePipeline;
 
 	// ルートシグネチャー関連
 	ComPtr <ID3DBlob> errorBlob;	// エラーオブジェクト

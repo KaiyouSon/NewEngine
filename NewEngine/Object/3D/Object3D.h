@@ -18,7 +18,7 @@ private:
 	void SetBlendMode(const BlendMode& blendMode);
 public:
 	Model* model;
-	Texture texture;
+	Texture* texture;
 	Vec3 pos;
 	Vec3 scale;
 	Vec3 rot;

@@ -5,76 +5,63 @@
 using namespace std;
 
 Line::Line() :
-	vertexBuffer(new VertexBuffer<VertexPosNormalUv>),
-	indexBuffer(new IndexBuffer),
+	vertexBuffer(new VertexBuffer<VertexPos>),
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform3D>),
-	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>)
+	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>),
+	graphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Line"))
 {
+	// 定数バッファ初期化
+	constantBufferTransform->Init();	// 3D行列
+	constantBufferColor->Init();		// 色
+
+	vertices.resize(2);
+	vertices[0] = { { 0.f,0.f,0.f} };
+	vertices[1] = { { 1.f,0.f,0.f} };
+	vertexBuffer->Create(vertices);
 }
 
 Line::~Line()
 {
 	delete vertexBuffer;
-	delete indexBuffer;
 	delete constantBufferTransform;
 	delete constantBufferColor;
 }
 
-void Line::Initialize(const Vec3& startPos, const Vec3& endPos)
-{
-	//componentManager->GetComponent<Texture>()->SetTexture(*TextureBuffer::GetDefaultTexture());
-
-	vertices.push_back({ startPos,{}, {0.0f, 1.0f} });	//左下
-	vertices.push_back({ endPos,  {}, {0.0f, 1.0f} });	//左下
-
-	indices.push_back(0);
-	indices.push_back(1);
-
-	vertexBuffer->Create(vertices);
-	indexBuffer->Create(indices);
-
-	// 定数バッファ
-	constantBufferTransform->Init();
-	constantBufferColor->Init();
-}
-
 void Line::Update()
 {
-	//componentManager->GetComponent<Transform>()->Update();
+	transform.pos = pos;
+	transform.scale = { scale,1,1 };
+	transform.rot = rot;
+	transform.Update();
 
-	//// 定数バッファに転送
-	//constantBuffer->constMapTransform->mat =
-	//	componentManager->GetComponent<Transform>()->GetWorldMat() *
-	//	Camera::current.GetViewProjectionMat() *
-	//	Camera::current.GetPerspectiveProjectionMat();
+	// マトリックス転送
+	constantBufferTransform->constantBufferMap->viewMat =
+		Camera::current.GetViewLookToMat() *
+		Camera::current.GetPerspectiveProjectionMat();
+	constantBufferTransform->constantBufferMap->worldMat = transform.worldMat;
+	constantBufferTransform->constantBufferMap->cameraPos = Camera::current.pos;
 
-	//constantBuffer->SetColor(color);
+	// 色転送
+	constantBufferColor->constantBufferMap->color = color / 255;
+	constantBufferColor->constantBufferMap->color.a = color.a / 255;
 }
 
 void Line::Draw()
 {
-	//RenderBase* renderBase = RenderBase::GetInstance().get();
+	RenderBase* renderBase = RenderBase::GetInstance();
 
-	//renderBase->GetCommandList()->SetPipelineState(renderBase->GetLinePipeline()->GetAlphaPipeline());
-	//renderBase->GetCommandList()->SetGraphicsRootSignature(renderBase->GetRootSignature());
-	//renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
+	renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetAlphaPipeline());
+	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);
 
-	//// VBVとIBVの設定コマンド
-	//renderBase->GetCommandList()->IASetVertexBuffers(0, 1, vertexBuffer->GetvbViewAddress());
-	//renderBase->GetCommandList()->IASetIndexBuffer(indexBuffer->GetibViewAddress());
+	// VBVとIBVの設定コマンド
+	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, vertexBuffer->GetvbViewAddress());
 
-	//// マテリアルとトランスフォームのCBVの設定コマンド
-	//renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-	//	0, constantBuffer->GetConstBuffMaterial()->GetGPUVirtualAddress());
-	//renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-	//	1, constantBuffer->GetConstBuffTransform()->GetGPUVirtualAddress());
+	// CBVの設定コマンド
+	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+		0, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
+	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+		2, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
 
-	//// SRVヒープの設定コマンド
-	//auto temp = renderBase->GetSrvDescHeap();
-	//renderBase->GetCommandList()->SetDescriptorHeaps(1, &temp);
-	//// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	//renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-	//	2, componentManager->GetComponent<Texture>()->GetGpuHandle());
-
-	//renderBase->GetCommandList()->DrawIndexedInstanced((unsigned short)indices.size(), 1, 0, 0, 0);
+	// 描画コマンド
+	renderBase->GetCommandList()->DrawInstanced((UINT)vertices.size(), 1, 0, 0);
 }

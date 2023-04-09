@@ -413,12 +413,10 @@ void RenderBase::ShaderCompilerInit()
 	ShaderObjectManager::GetShaderObject("ToonRender")->CompilePixelShader(path + "ToonRenderPS.hlsl", "main");
 
 	// ライン用
-	lineShader = std::move(std::make_unique<ShaderObject>());
-	lineShader->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	lineShader->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	lineShader->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	lineShader->CompileVertexShader(path + "LineVS.hlsl", "main");
-	lineShader->CompilePixelShader(path + "LinePS.hlsl", "main");
+	ShaderObjectManager::Create("Line");
+	ShaderObjectManager::GetShaderObject("Line")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("Line")->CompileVertexShader(path + "LineVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Line")->CompilePixelShader(path + "LinePS.hlsl", "main");
 }
 void RenderBase::RootSignatureInit()
 {
@@ -524,23 +522,12 @@ void RenderBase::GraphicsPipelineInit()
 		TopologyType::TriangleTopology,
 		"ToonRendering");
 
-	// コライダー用
+	// ライン用
 	GraphicsPipelineManager::Create(
-		lineShader.get(),
+		ShaderObjectManager::GetShaderObject("Line"),
 		object3DRootSignature->GetRootSignature(),
-		CullMode::CullBack,
+		CullMode::None,
 		depthStencilDesc1,
-		TopologyType::TriangleTopology,
-		"Collider");
-
-	// Line用
-	//linePipeline = std::move(std::make_unique<GraphicsPipeline>());
-	//linePipeline->SetShaderObject(object3DShader.get());
-	//linePipeline->SetCullMode(CullMode::None);
-	//linePipeline->SetDepthStencilDesc(depthStencilDesc1);
-	//linePipeline->SetTopologyType(TopologyType::LineTopology);
-	//linePipeline->SetRootSignature(object3DRootSignature->GetRootSignature());
-	//linePipeline->Create();
-
-
+		TopologyType::LineTopology,
+		"Line");
 }
