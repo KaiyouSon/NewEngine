@@ -6,7 +6,7 @@
 using namespace std;
 
 Sprite::Sprite() :
-	texture(*TextureManager::GetTexture("White")),
+	texture(TextureManager::GetTexture("White")),
 	pos(0), scale(1), size(0), rot(0), color(Color::white), anchorPoint(0.5f),
 	vertexBuffer(new VertexBuffer<VertexPosUv>),
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform2D>),
@@ -72,7 +72,7 @@ void Sprite::Draw(const BlendMode& blendMode)
 
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-		renderBase->GetSpriteRootSignature()->GetRootDescriptorTableIndex(), texture.GetGpuHandle());
+		renderBase->GetSpriteRootSignature()->GetRootDescriptorTableIndex(), texture->GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawInstanced((unsigned short)vertices.size(), 1, 0, 0);
 }
@@ -107,8 +107,8 @@ void Sprite::SetBlendMode(const BlendMode& blendMode)
 void Sprite::TransferTexturePos(const Vec2& size)
 {
 	// 新しいのサイズ
-	float width = size.x == 0 ? texture.size.x : size.x;
-	float height = size.y == 0 ? texture.size.y : size.y;
+	float width = size.x == 0 ? texture->size.x : size.x;
+	float height = size.y == 0 ? texture->size.y : size.y;
 
 	// 現在のサイズ
 	float width2 = vertices[0].pos.x - vertices[2].pos.x;
@@ -127,10 +127,10 @@ void Sprite::TransferTexturePos(const Vec2& size)
 
 void Sprite::SetTextureRect(const Vec2& leftTopPos, const Vec2 rightDownPos)
 {
-	float left = leftTopPos.x / texture.buffer->GetDesc().Width;
-	float right = rightDownPos.x / texture.buffer->GetDesc().Width;
-	float up = leftTopPos.y / texture.buffer->GetDesc().Height;
-	float down = rightDownPos.y / texture.buffer->GetDesc().Height;
+	float left = leftTopPos.x / texture->buffer->GetDesc().Width;
+	float right = rightDownPos.x / texture->buffer->GetDesc().Width;
+	float up = leftTopPos.y / texture->buffer->GetDesc().Height;
+	float down = rightDownPos.y / texture->buffer->GetDesc().Height;
 
 	vertices[0].uv = { left,down };
 	vertices[1].uv = { left,up };

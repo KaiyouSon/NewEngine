@@ -18,7 +18,7 @@ private:
 	Transform transform;
 
 public:
-	Texture texture;
+	Texture* texture;
 	Vec2 pos;
 	Vec2 scale;
 	Vec2 uvPos;

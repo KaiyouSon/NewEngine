@@ -78,7 +78,7 @@ void CircleGaugeSprite::Draw(const BlendMode& blendMode)
 
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-		renderBase->GetSpriteRootSignature()->GetRootDescriptorTableIndex(), texture.GetGpuHandle());
+		renderBase->GetSpriteRootSignature()->GetRootDescriptorTableIndex(), texture->GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawInstanced((unsigned short)vertices.size(), 1, 0, 0);
 }
@@ -113,8 +113,8 @@ void CircleGaugeSprite::SetBlendMode(const BlendMode& blendMode)
 void CircleGaugeSprite::TransferTexturePos()
 {
 	// 新しいのサイズ
-	float width = texture.size.x;
-	float height = texture.size.y;
+	float width = texture->size.x;
+	float height = texture->size.y;
 
 	// 現在のサイズ
 	float width2 = vertices[0].pos.x - vertices[2].pos.x;
