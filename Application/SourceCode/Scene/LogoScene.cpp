@@ -13,8 +13,11 @@ LogoScene::~LogoScene()
 
 void LogoScene::Init()
 {
-	logoSprite->texture = TextureManager::LoadTexture("LogoScene/NewEngineTitle.png");
-	backSprite->texture = TextureManager::CreateTexture(Color::black);
+	Texture tex1 = TextureManager::LoadTexture("LogoScene/NewEngineTitle.png");
+	Texture tex2 = TextureManager::CreateTexture(Color::black);
+
+	logoSprite->texture = &tex1;
+	backSprite->texture = &tex2;
 
 	logoSprite->pos = GetWindowHalfSize();
 	backSprite->pos = GetWindowHalfSize();

@@ -6,8 +6,8 @@ class TestScene : public IScene
 private:
 
 public:
-	GameScene();
-	~GameScene();
+	TestScene();
+	~TestScene();
 	void Init() override;
 	void Update() override;
 	void DrawRenderTexture() override;
