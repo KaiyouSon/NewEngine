@@ -57,44 +57,68 @@ void NewEngineInit()
 	InputManager::GetInstance()->Init();
 	GuiManager::GetInstance()->Init();
 	LoadManager::GetInstance()->Load();
-	SceneManager::GetInstance()->Init();
+
+	//　ロード終了チェック
+	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
+	if (isLoaded == true)
+	{
+		SceneManager::GetInstance()->Init();
+	}
 
 	// -------------------------------------------------------------------------------- //
 
 }
 void NewEngineUpda()
 {
-	InputManager::GetInstance()->Update();
-	LightManager::GetInstance()->Update();
-	SceneManager::GetInstance()->Update();
-
-	//DirectionalLight::current.Update();
+	//　ロード終了チェック
+	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
+	if (isLoaded == true)
+	{
+		InputManager::GetInstance()->Update();
+		LightManager::GetInstance()->Update();
+		SceneManager::GetInstance()->Update();
+	}
 }
 void NewEnginePreDraw()
 {
-	// SRVヒープの設定コマンド
-	auto temp = TextureManager::GetSrvDescHeap();
-	RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &temp);
-	SceneManager::GetInstance()->DrawRenderTexture();
+	//　ロード終了チェック
+	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
+	if (isLoaded == true)
+	{
+		// SRVヒープの設定コマンド
+		auto temp = TextureManager::GetSrvDescHeap();
+		RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &temp);
+		SceneManager::GetInstance()->DrawRenderTexture();
 
-	RenderBase::GetInstance()->PreDraw();
-	GuiManager::GetInstance()->PreDraw();
+		RenderBase::GetInstance()->PreDraw();
+		GuiManager::GetInstance()->PreDraw();
+	}
 }
 void NewEneineDraw()
 {
-	RenderBase::GetInstance()->SetSpriteDrawCommand();
-	SceneManager::GetInstance()->DrawBackSprite();
+	//　ロード終了チェック
+	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
+	if (isLoaded == true)
+	{
+		RenderBase::GetInstance()->SetSpriteDrawCommand();
+		SceneManager::GetInstance()->DrawBackSprite();
 
-	RenderBase::GetInstance()->SetObject3DDrawCommand();
-	SceneManager::GetInstance()->DrawModel();
+		RenderBase::GetInstance()->SetObject3DDrawCommand();
+		SceneManager::GetInstance()->DrawModel();
 
-	RenderBase::GetInstance()->SetSpriteDrawCommand();
-	SceneManager::GetInstance()->DrawFrontSprite();
+		RenderBase::GetInstance()->SetSpriteDrawCommand();
+		SceneManager::GetInstance()->DrawFrontSprite();
+	}
 }
 void NewEnginePostDraw()
 {
-	GuiManager::GetInstance()->PostDraw();
-	RenderBase::GetInstance()->PostDraw();
+	//　ロード終了チェック
+	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
+	if (isLoaded == true)
+	{
+		GuiManager::GetInstance()->PostDraw();
+		RenderBase::GetInstance()->PostDraw();
+	}
 }
 void NewEngineEnd()
 {

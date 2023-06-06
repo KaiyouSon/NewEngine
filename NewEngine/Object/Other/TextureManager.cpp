@@ -4,16 +4,34 @@
 #include <d3dx12.h>
 using namespace DirectX;
 
+#pragma region 静的メンバー変数
+
+// srv作成時にインクリメント用
 UINT TextureManager::srvIncrementIndex = 1;
+
+// srv用ディスクリプタヒープ
 Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> TextureManager::srvDescHeap;
+
+// テクスチャーのマップ
 std::map<std::string, std::unique_ptr<Texture>> TextureManager::textureMap;
+
+// レンダーテクスチャーのマップ
 std::map<std::string, std::unique_ptr<RenderTexture>> TextureManager::renderTextureMap;
 
+// 排他制御
+std::mutex TextureManager::mtx = std::mutex{};
+
+#pragma endregion
+
+#pragma region テクスチャー関連
+
+// テクスチャーの取得
 Texture* TextureManager::GetTexture(std::string textureTag)
 {
 	return textureMap[textureTag].get();
 }
 
+// 色を指定してテクスチャを生成する
 Texture TextureManager::CreateTexture(Color color)
 {
 	Texture tex;
@@ -98,8 +116,13 @@ Texture TextureManager::CreateTexture(Color color)
 
 	return tex;
 }
+
+// 色を指定してテクスチャを生成しマップに格納する
 Texture* TextureManager::CreateTexture(Color color, std::string textureTag)
 {
+	// 排他制御
+	std::lock_guard<std::mutex> lock(mtx);
+
 	textureMap.insert(std::make_pair(textureTag, std::move(std::make_unique<Texture>())));
 
 	HRESULT result;
@@ -179,6 +202,8 @@ Texture* TextureManager::CreateTexture(Color color, std::string textureTag)
 
 	return textureMap[textureTag].get();
 }
+
+// ファイルパスを指定してテクスチャを生成する
 Texture TextureManager::LoadTexture(std::string filePath)
 {
 	Texture tex;
@@ -302,8 +327,13 @@ Texture TextureManager::LoadTexture(std::string filePath)
 
 	return tex;
 }
+
+// ファイルパスを指定してテクスチャを生成しマップの格納する
 Texture* TextureManager::LoadTexture(std::string filePath, std::string textureTag)
 {
+	// 排他制御
+	std::lock_guard<std::mutex> lock(mtx);
+
 	textureMap.insert(std::make_pair(textureTag, std::move(std::make_unique<Texture>())));
 
 	std::string path = "Application/Resources/Texture/" + filePath;
@@ -421,6 +451,8 @@ Texture* TextureManager::LoadTexture(std::string filePath, std::string textureTa
 
 	return textureMap[textureTag].get();
 }
+
+// objファイルからロードしたテクスチャーをロードする専用関数
 Texture TextureManager::LoadMaterialTexture(std::string filePath)
 {
 	Texture tex;
@@ -539,12 +571,22 @@ Texture TextureManager::LoadMaterialTexture(std::string filePath)
 	return tex;
 }
 
+#pragma endregion
+
+#pragma region レンダーテクスチャー関連
+
+// レンダーテクスチャーの取得
 RenderTexture* TextureManager::GetRenderTexture(std::string textureTag)
 {
 	return renderTextureMap[textureTag].get();
 }
+
+// レンダーテクスチャーを生成しマップに格納する
 RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, size_t num, std::string textureTag)
 {
+	// 排他制御
+	std::lock_guard<std::mutex> lock(mtx);
+
 	std::unique_ptr<RenderTexture> renderTex = std::make_unique<RenderTexture>();
 	renderTex->buffers.resize(num);
 
@@ -610,6 +652,11 @@ RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, size_t num, std::s
 	return renderTextureMap[textureTag].get();
 }
 
+#pragma endregion
+
+#pragma region その他の処理
+
+// ディスクリプターヒープを作成する処理
 void TextureManager::CreateDescriptorHeap()
 {
 	HRESULT result;
@@ -629,6 +676,8 @@ void TextureManager::CreateDescriptorHeap()
 	assert(SUCCEEDED(result));
 
 }
+
+// SRVを作成する処理
 void TextureManager::CreateSRV(Texture& texture, ID3D12Resource* buffer)
 {
 	// SRVヒープの先頭ハンドルを取得
@@ -659,6 +708,7 @@ void TextureManager::CreateSRV(Texture& texture, ID3D12Resource* buffer)
 	srvIncrementIndex++;
 }
 
+// テクスチャーロード後のコマンドリストの実行
 void TextureManager::ExcuteComandList()
 {
 	ID3D12GraphicsCommandList* iCommandList = RenderBase::GetInstance()->GetCommandList();
@@ -693,3 +743,5 @@ void TextureManager::ExcuteComandList()
 	result = iCommandList->Reset(RenderBase::GetInstance()->GetCommandAllocator(), nullptr);
 	assert(SUCCEEDED(result));
 }
+
+#pragma endregion

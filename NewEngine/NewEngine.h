@@ -30,6 +30,8 @@
 #include <list>
 #include <array>
 #include <map>
+#include <future>
+#include <thread>
 
 void NewEngineInit();
 void NewEngineUpda();

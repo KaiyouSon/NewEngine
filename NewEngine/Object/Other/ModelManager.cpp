@@ -1,15 +1,28 @@
 #include "ModelManager.h"
 #include "FbxLoader.h"
 
-std::map<std::string, std::unique_ptr<Model>> ModelManager::modelMap;
+#pragma region 静的関数
 
+// モデルのマップ
+std::map<std::string, std::unique_ptr<Model>> ModelManager::modelMap;
+std::mutex ModelManager::mtx = std::mutex{};
+
+#pragma endregion
+
+#pragma region モデル関連
+
+// モデルの取得
 Model* ModelManager::GetModel(std::string modelTag)
 {
 	return modelMap[modelTag].get();
 }
 
+// objファイルからモデルをロードしマップの格納する
 Model* ModelManager::LoadObjModel(std::string filePath, std::string modelTag, bool isSmoothing)
 {
+	// 排他制御
+	std::lock_guard<std::mutex> lock(mtx);
+
 	std::unique_ptr<Model> model;
 	model.reset(new Model(filePath, isSmoothing));
 	modelMap.insert(std::make_pair(modelTag, std::move(model)));
@@ -17,8 +30,12 @@ Model* ModelManager::LoadObjModel(std::string filePath, std::string modelTag, bo
 	return modelMap[modelTag].get();
 }
 
+// fbxファイルからモデルをロードしマップの格納する
 Model* ModelManager::LoadFbxModel(std::string filePath, std::string modelTag)
 {
+	// 排他制御
+	std::lock_guard<std::mutex> lock(mtx);
+
 	// モデル生成
 	std::unique_ptr<FbxModel> model = std::make_unique<FbxModel>();
 
@@ -59,6 +76,10 @@ Model* ModelManager::LoadFbxModel(std::string filePath, std::string modelTag)
 	return modelMap[modelTag].get();
 }
 
+#pragma endregion
+
+#pragma region その他の処理
+
 void ModelManager::Destroy()
 {
 	for (auto& model : modelMap)
@@ -69,3 +90,5 @@ void ModelManager::Destroy()
 		}
 	}
 }
+
+#pragma endregion

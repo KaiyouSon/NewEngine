@@ -2,7 +2,7 @@
 #include "NewEngine.h"
 #include "FbxLoader.h"
 
-void LoadManager::ModelLoad()
+bool LoadManager::ModelLoad()
 {
 	ModelManager::LoadFbxModel("boneTest", "BoneTest");
 	ModelManager::LoadObjModel("Sphere", "Sphere");
@@ -14,26 +14,51 @@ void LoadManager::ModelLoad()
 	ModelManager::LoadObjModel("player", "Player", true);
 	ModelManager::LoadObjModel("Plane", "Plane");
 	ModelManager::LoadObjModel("Block1", "Block1");
+
+	// 処理が終わったのを教えるため、必ずtrueを返す
+	return true;
 }
 
-void LoadManager::TextureLoad()
+bool LoadManager::TextureLoad()
 {
-	TextureManager::CreateTexture(Color::white, "White");
 	TextureManager::LoadTexture("pic.png", "pic");
 	TextureManager::LoadTexture("number.png", "NumberSheet");
 
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 2, "Test");
 
-	TextureManager::ExcuteComandList();
+
+	// 処理が終わったのを教えるため、必ずtrueを返す
+	return true;
 }
 
-void LoadManager::SoundLoad()
+bool LoadManager::SoundLoad()
+{
+	// 処理が終わったのを教えるため、必ずtrueを返す
+	return true;
+}
+
+LoadManager::LoadManager() : isLoaded(false)
 {
 }
 
 void LoadManager::Load()
 {
-	TextureLoad();
-	ModelLoad();
-	SoundLoad();
+	// ロード前
+	TextureManager::CreateTexture(Color::white, "White");
+
+	// 非同期
+	std::future<bool> textureFtr = std::async(std::launch::async, [this] { return TextureLoad(); });
+	std::future<bool> modelFtr = std::async(std::launch::async, [this] { return ModelLoad(); });
+	std::future<bool> soundFtr = std::async(std::launch::async, [this] { return SoundLoad(); });
+
+	// ロード完了
+	if (textureFtr.get() == true &&	// テクスチャー
+		modelFtr.get() == true &&	// モデル
+		soundFtr.get() == true)		// サウンド
+	{
+		isLoaded = true;
+	}
+
+	// コマンド実行
+	TextureManager::ExcuteComandList();
 }
