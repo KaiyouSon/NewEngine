@@ -70,9 +70,14 @@ void Sprite::Draw(const BlendMode& blendMode)
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		1, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
 
-	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-		renderBase->GetSpriteRootSignature()->GetRootDescriptorTableIndex(), texture->GetGpuHandle());
+	size_t max = renderBase->GetSpriteRootSignature()->GetConstantBufferNum();
+
+	for (int i = 0; i < 1; i++)
+	{
+		// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+			UINT(max + i), texture->GetGpuHandle());
+	}
 
 	renderBase->GetCommandList()->DrawInstanced((unsigned short)vertices.size(), 1, 0, 0);
 }

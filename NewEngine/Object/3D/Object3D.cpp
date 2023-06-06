@@ -143,9 +143,10 @@ void Object3D::Draw(const BlendMode& blendMode)
 		5, constantBufferSkin->constantBuffer->GetGPUVirtualAddress());
 	LightManager::GetInstance()->Draw();
 
+	size_t index = renderBase->GetObject3DRootSignature()->GetConstantBufferNum();
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-		renderBase->GetObject3DRootSignature()->GetRootDescriptorTableIndex(), texture->GetGpuHandle());
+		UINT(index), texture->GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(unsigned short)model->mesh.GetIndexSize(), 1, 0, 0, 0);

@@ -423,12 +423,14 @@ void RenderBase::RootSignatureInit()
 	// 3Dオブジェクト用
 	object3DRootSignature = std::move(std::make_unique<RootSignature>());
 	object3DRootSignature->AddConstantBufferViewToRootRrameter(7);
-	object3DRootSignature->Create();
+	object3DRootSignature->AddDescriptorRangeToRootPrameter(1);
+	object3DRootSignature->Create(1);
 
 	// スプライト用
 	spriteRootSignature = std::move(std::make_unique<RootSignature>());
 	spriteRootSignature->AddConstantBufferViewToRootRrameter(3);
-	spriteRootSignature->Create();
+	spriteRootSignature->AddDescriptorRangeToRootPrameter(1);
+	spriteRootSignature->Create(2);
 }
 void RenderBase::GraphicsPipelineInit()
 {
