@@ -25,6 +25,33 @@ void TestScene::Update()
 {
 	Camera::DebugCameraUpdate();
 
+	if (Pad::GetButton(PadCode::ButtonA))
+	{
+		obj.scale += 0.005f;
+	}
+	else
+	{
+		//obj.scale -= 0.005f;
+	}
+
+	if (Pad::GetButtonDown(PadCode::ButtonA))
+	{
+		obj.scale.x = 2.f;
+	}
+
+	if (Pad::GetButtonUp(PadCode::ButtonA))
+	{
+		obj.scale.y = 2.f;
+	}
+
+	obj.pos.x = Pad::GetStick(PadCode::LeftStick).x * 0.001f;
+	obj.pos.y = -Pad::GetStick(PadCode::LeftStick).y * 0.001f;
+
+
+	obj.scale.x = Clamp(obj.scale.x, 1, 2);
+	obj.scale.y = Clamp(obj.scale.y, 1, 2);
+	obj.scale.z = Clamp(obj.scale.z, 1, 2);
+
 	obj.Update();
 	spr1.Update();
 	spr2.Update();
