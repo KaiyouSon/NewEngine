@@ -8,7 +8,6 @@ template<typename T> class Singleton;
 class KeyBoardInput : public Singleton<KeyBoardInput>
 {
 private:
-	friend Singleton<KeyBoardInput>;
 	Microsoft::WRL::ComPtr<IDirectInputDevice8> keyboard;
 	BYTE keys[256] = { 0 };
 	BYTE prevKeys[256] = { 0 };
@@ -24,6 +23,10 @@ public:
 
 	// ÉLÅ[Çó£ÇµÇΩèuä‘
 	static bool GetKeyUp(const unsigned int key);
+
+private:
+	friend Singleton<KeyBoardInput>;
+	KeyBoardInput();
 };
 
 typedef KeyBoardInput Key;

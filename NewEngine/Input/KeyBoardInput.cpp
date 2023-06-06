@@ -6,6 +6,10 @@
 
 #pragma region ‚»‚Ì‘¼‚Ìˆ—
 
+KeyBoardInput::KeyBoardInput()
+{
+}
+
 void KeyBoardInput::Init()
 {
 	HRESULT result;
