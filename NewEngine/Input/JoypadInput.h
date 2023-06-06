@@ -1,7 +1,7 @@
 #pragma once
 #include "MathUtil.h"
 #include "Singleton.h"
-#include <array>
+#include <vector>
 #include <dinput.h>
 #include <wrl.h>
 
@@ -40,38 +40,43 @@ private:
 		DIJOYSTATE2 prevPadInput;
 	};
 
-	std::array<JoypadObj, 2> jyopadObjs;
+	std::vector<JoypadObj> joypadObjs;
+	static bool isInsertPad;
 	static int padIndex;
 
 	static BOOL CALLBACK DeviceFindCallBack(const DIDEVICEINSTANCE* pdidInstance, VOID* pContext);
 private:
 	JoypadInput();
+	void SetJoyStick();
 
 public:
 	void Init();
 	void Update();
 
+	static void SetisInsertPad(const bool isInsertPad) { JoypadInput::isInsertPad = isInsertPad; }
+	static inline bool GetisInsertPad() { return JoypadInput::isInsertPad; }
+
 	static inline bool GetButton(const PadCodo& padCode, const int& padIndex = 0)
 	{
 		if (padCode == PadCodo::ButtonLeft)
 		{
-			return GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 27000;
+			return GetInstance()->joypadObjs[padIndex].padInput.rgdwPOV[0] == 27000;
 		}
 		else if (padCode == PadCodo::ButtonRight)
 		{
-			return GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 9000;
+			return GetInstance()->joypadObjs[padIndex].padInput.rgdwPOV[0] == 9000;
 		}
 		else if (padCode == PadCodo::ButtonUp)
 		{
-			return GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 0;
+			return GetInstance()->joypadObjs[padIndex].padInput.rgdwPOV[0] == 0;
 		}
 		else if (padCode == PadCodo::ButtonDown)
 		{
-			return GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 18000;
+			return GetInstance()->joypadObjs[padIndex].padInput.rgdwPOV[0] == 18000;
 		}
 		else
 		{
-			return GetInstance()->jyopadObjs[padIndex].padInput.rgbButtons[(int)padCode] & 0x80;
+			return GetInstance()->joypadObjs[padIndex].padInput.rgbButtons[(int)padCode] & 0x80;
 		}
 
 		return false;
@@ -80,28 +85,28 @@ public:
 	{
 		if (padCode == PadCodo::ButtonLeft)
 		{
-			return (GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 27000) &&
-				!(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgdwPOV[0] == 27000);
+			return (GetInstance()->joypadObjs[padIndex].padInput.rgdwPOV[0] == 27000) &&
+				!(GetInstance()->joypadObjs[padIndex].prevPadInput.rgdwPOV[0] == 27000);
 		}
 		else if (padCode == PadCodo::ButtonRight)
 		{
-			return (GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 9000) &&
-				!(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgdwPOV[0] == 9000);
+			return (GetInstance()->joypadObjs[padIndex].padInput.rgdwPOV[0] == 9000) &&
+				!(GetInstance()->joypadObjs[padIndex].prevPadInput.rgdwPOV[0] == 9000);
 		}
 		else if (padCode == PadCodo::ButtonUp)
 		{
-			return (GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 0) &&
-				!(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgdwPOV[0] == 0);
+			return (GetInstance()->joypadObjs[padIndex].padInput.rgdwPOV[0] == 0) &&
+				!(GetInstance()->joypadObjs[padIndex].prevPadInput.rgdwPOV[0] == 0);
 		}
 		else if (padCode == PadCodo::ButtonDown)
 		{
-			return (GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 18000) &&
-				!(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgdwPOV[0] == 18000);
+			return (GetInstance()->joypadObjs[padIndex].padInput.rgdwPOV[0] == 18000) &&
+				!(GetInstance()->joypadObjs[padIndex].prevPadInput.rgdwPOV[0] == 18000);
 		}
 		else
 		{
-			return (GetInstance()->jyopadObjs[padIndex].padInput.rgbButtons[(int)padCode] & 0x80) &&
-				!(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgbButtons[(int)padCode] & 0x80);
+			return (GetInstance()->joypadObjs[padIndex].padInput.rgbButtons[(int)padCode] & 0x80) &&
+				!(GetInstance()->joypadObjs[padIndex].prevPadInput.rgbButtons[(int)padCode] & 0x80);
 		}
 
 		return false;
@@ -110,28 +115,28 @@ public:
 	{
 		if (padCode == PadCodo::ButtonLeft)
 		{
-			return !(GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 27000) &&
-				(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgdwPOV[0] == 27000);
+			return !(GetInstance()->joypadObjs[padIndex].padInput.rgdwPOV[0] == 27000) &&
+				(GetInstance()->joypadObjs[padIndex].prevPadInput.rgdwPOV[0] == 27000);
 		}
 		else if (padCode == PadCodo::ButtonRight)
 		{
-			return !(GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 9000) &&
-				(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgdwPOV[0] == 9000);
+			return !(GetInstance()->joypadObjs[padIndex].padInput.rgdwPOV[0] == 9000) &&
+				(GetInstance()->joypadObjs[padIndex].prevPadInput.rgdwPOV[0] == 9000);
 		}
 		else if (padCode == PadCodo::ButtonUp)
 		{
-			return !(GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 0) &&
-				(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgdwPOV[0] == 0);
+			return !(GetInstance()->joypadObjs[padIndex].padInput.rgdwPOV[0] == 0) &&
+				(GetInstance()->joypadObjs[padIndex].prevPadInput.rgdwPOV[0] == 0);
 		}
 		else if (padCode == PadCodo::ButtonDown)
 		{
-			return !(GetInstance()->jyopadObjs[padIndex].padInput.rgdwPOV[0] == 18000) &&
-				(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgdwPOV[0] == 18000);
+			return !(GetInstance()->joypadObjs[padIndex].padInput.rgdwPOV[0] == 18000) &&
+				(GetInstance()->joypadObjs[padIndex].prevPadInput.rgdwPOV[0] == 18000);
 		}
 		else
 		{
-			return !(GetInstance()->jyopadObjs[padIndex].padInput.rgbButtons[(int)padCode] & 0x80) &&
-				(GetInstance()->jyopadObjs[padIndex].prevPadInput.rgbButtons[(int)padCode] & 0x80);
+			return !(GetInstance()->joypadObjs[padIndex].padInput.rgbButtons[(int)padCode] & 0x80) &&
+				(GetInstance()->joypadObjs[padIndex].prevPadInput.rgbButtons[(int)padCode] & 0x80);
 		}
 
 		return false;
@@ -142,13 +147,13 @@ public:
 		Vec2 stick = 0;
 		if (padCode == PadCodo::StickLeft)
 		{
-			stick.x = (float)GetInstance()->jyopadObjs[padIndex].padInput.lX;
-			stick.y = (float)GetInstance()->jyopadObjs[padIndex].padInput.lY;
+			stick.x = (float)GetInstance()->joypadObjs[padIndex].padInput.lX;
+			stick.y = (float)GetInstance()->joypadObjs[padIndex].padInput.lY;
 		}
 		else if (padCode == PadCodo::StickLeft)
 		{
-			stick.x = (float)GetInstance()->jyopadObjs[padIndex].padInput.lRx;
-			stick.y = (float)GetInstance()->jyopadObjs[padIndex].padInput.lRy;
+			stick.x = (float)GetInstance()->joypadObjs[padIndex].padInput.lRx;
+			stick.y = (float)GetInstance()->joypadObjs[padIndex].padInput.lRy;
 		}
 
 		if (stick.Length() > Length)
@@ -164,19 +169,19 @@ public:
 		Vec2 prevStick = 0;
 		if (padCode == PadCodo::StickLeft)
 		{
-			stick.x = (float)GetInstance()->jyopadObjs[padIndex].padInput.lX;
-			stick.y = (float)GetInstance()->jyopadObjs[padIndex].padInput.lY;
+			stick.x = (float)GetInstance()->joypadObjs[padIndex].padInput.lX;
+			stick.y = (float)GetInstance()->joypadObjs[padIndex].padInput.lY;
 
-			prevStick.x = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lX;
-			prevStick.y = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lY;
+			prevStick.x = (float)GetInstance()->joypadObjs[padIndex].prevPadInput.lX;
+			prevStick.y = (float)GetInstance()->joypadObjs[padIndex].prevPadInput.lY;
 		}
 		else if (padCode == PadCodo::StickRight)
 		{
-			stick.x = (float)GetInstance()->jyopadObjs[padIndex].padInput.lRx;
-			stick.y = (float)GetInstance()->jyopadObjs[padIndex].padInput.lRy;
+			stick.x = (float)GetInstance()->joypadObjs[padIndex].padInput.lRx;
+			stick.y = (float)GetInstance()->joypadObjs[padIndex].padInput.lRy;
 
-			prevStick.x = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRx;
-			prevStick.y = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRy;
+			prevStick.x = (float)GetInstance()->joypadObjs[padIndex].prevPadInput.lRx;
+			prevStick.y = (float)GetInstance()->joypadObjs[padIndex].prevPadInput.lRy;
 		}
 
 		if ((stick.Length() > fabsf(Length)) && !(prevStick.Length() > fabsf(Length)))
@@ -192,19 +197,19 @@ public:
 		Vec2 prevStick = 0;
 		if (padCode == PadCodo::StickLeft)
 		{
-			stick.x = (float)GetInstance()->jyopadObjs[padIndex].padInput.lX;
-			stick.y = (float)GetInstance()->jyopadObjs[padIndex].padInput.lY;
+			stick.x = (float)GetInstance()->joypadObjs[padIndex].padInput.lX;
+			stick.y = (float)GetInstance()->joypadObjs[padIndex].padInput.lY;
 
-			prevStick.x = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lX;
-			prevStick.y = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lY;
+			prevStick.x = (float)GetInstance()->joypadObjs[padIndex].prevPadInput.lX;
+			prevStick.y = (float)GetInstance()->joypadObjs[padIndex].prevPadInput.lY;
 		}
 		else if (padCode == PadCodo::StickRight)
 		{
-			stick.x = (float)GetInstance()->jyopadObjs[padIndex].padInput.lRx;
-			stick.y = (float)GetInstance()->jyopadObjs[padIndex].padInput.lRy;
+			stick.x = (float)GetInstance()->joypadObjs[padIndex].padInput.lRx;
+			stick.y = (float)GetInstance()->joypadObjs[padIndex].padInput.lRy;
 
-			prevStick.x = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRx;
-			prevStick.y = (float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lRy;
+			prevStick.x = (float)GetInstance()->joypadObjs[padIndex].prevPadInput.lRx;
+			prevStick.y = (float)GetInstance()->joypadObjs[padIndex].prevPadInput.lRy;
 		}
 
 		if (!(stick.Length() > fabsf(Length)) && (prevStick.Length() > fabsf(Length)))
@@ -219,16 +224,16 @@ public:
 	{
 		if (padCode == PadCodo::TriggerLeft)
 		{
-			if ((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ > num)
+			if ((float)GetInstance()->joypadObjs[padIndex].padInput.lZ > num)
 			{
-				return (float)GetInstance()->jyopadObjs[padIndex].padInput.lZ;
+				return (float)GetInstance()->joypadObjs[padIndex].padInput.lZ;
 			}
 		}
 		else if (padCode == PadCodo::TriggerRight)
 		{
-			if ((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ < -num)
+			if ((float)GetInstance()->joypadObjs[padIndex].padInput.lZ < -num)
 			{
-				return (float)GetInstance()->jyopadObjs[padIndex].padInput.lZ * -1;
+				return (float)GetInstance()->joypadObjs[padIndex].padInput.lZ * -1;
 			}
 		}
 
@@ -238,18 +243,18 @@ public:
 	{
 		if (padCode == PadCodo::TriggerLeft)
 		{
-			if (((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ > num) &&
-				!((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lZ > num))
+			if (((float)GetInstance()->joypadObjs[padIndex].padInput.lZ > num) &&
+				!((float)GetInstance()->joypadObjs[padIndex].prevPadInput.lZ > num))
 			{
-				return (float)GetInstance()->jyopadObjs[padIndex].padInput.lZ;
+				return (float)GetInstance()->joypadObjs[padIndex].padInput.lZ;
 			}
 		}
 		else if (padCode == PadCodo::TriggerRight)
 		{
-			if (((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ < -num) &&
-				!((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lZ < -num))
+			if (((float)GetInstance()->joypadObjs[padIndex].padInput.lZ < -num) &&
+				!((float)GetInstance()->joypadObjs[padIndex].prevPadInput.lZ < -num))
 			{
-				return (float)GetInstance()->jyopadObjs[padIndex].padInput.lZ * -1;
+				return (float)GetInstance()->joypadObjs[padIndex].padInput.lZ * -1;
 			}
 		}
 
@@ -259,18 +264,18 @@ public:
 	{
 		if (padCode == PadCodo::TriggerLeft)
 		{
-			if (!((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ > num) &&
-				((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lZ > num))
+			if (!((float)GetInstance()->joypadObjs[padIndex].padInput.lZ > num) &&
+				((float)GetInstance()->joypadObjs[padIndex].prevPadInput.lZ > num))
 			{
-				return (float)GetInstance()->jyopadObjs[padIndex].padInput.lZ;
+				return (float)GetInstance()->joypadObjs[padIndex].padInput.lZ;
 			}
 		}
 		else if (padCode == PadCodo::TriggerRight)
 		{
-			if (!((float)GetInstance()->jyopadObjs[padIndex].padInput.lZ < -num) &&
-				((float)GetInstance()->jyopadObjs[padIndex].prevPadInput.lZ < -num))
+			if (!((float)GetInstance()->joypadObjs[padIndex].padInput.lZ < -num) &&
+				((float)GetInstance()->joypadObjs[padIndex].prevPadInput.lZ < -num))
 			{
-				return (float)GetInstance()->jyopadObjs[padIndex].padInput.lZ * -1;
+				return (float)GetInstance()->joypadObjs[padIndex].padInput.lZ * -1;
 			}
 		}
 
@@ -279,7 +284,7 @@ public:
 
 	static inline bool GetisLinkPad(const int& padIndex = 0)
 	{
-		return GetInstance()->jyopadObjs[padIndex].joypad != nullptr;
+		return GetInstance()->joypadObjs[padIndex].joypad != nullptr;
 	}
 };
 

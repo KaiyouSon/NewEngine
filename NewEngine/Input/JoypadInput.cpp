@@ -2,15 +2,39 @@
 #include "JoypadInput.h"
 #include "RenderWindow.h"
 #include <cassert>
+#include <dbt.h>
 #pragma comment(lib, "xinput.lib")
 
+bool JoypadInput::isInsertPad = false;
 int JoypadInput::padIndex = 0;
+
+LRESULT SubWindowProc(int code, WPARAM wParam, LPARAM lParam)
+{
+	if (code < 0)
+	{
+		return CallNextHookEx(NULL, code, wParam, lParam);
+	}
+
+	PCWPSTRUCT msg = PCWPSTRUCT(lParam);
+	if (msg->message == WM_DEVICECHANGE)
+	{
+		switch (msg->wParam)
+		{
+		case DBT_DEVICEARRIVAL:
+		case DBT_DEVICEREMOVECOMPLETE:
+			Pad::GetInstance()->SetisInsertPad(true);
+			break;
+		}
+	}
+
+	return CallNextHookEx(NULL, code, wParam, lParam);
+}
 
 JoypadInput::JoypadInput() /*: joypad(nullptr), padInput({}), prevPadInput({})*/
 {
 }
 
-void JoypadInput::Init()
+void JoypadInput::SetJoyStick()
 {
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
 
@@ -25,20 +49,48 @@ void JoypadInput::Init()
 	assert(SUCCEEDED(result));
 }
 
+void JoypadInput::Init()
+{
+	SetJoyStick();
+
+	// 抜き差し検知
+	DEV_BROADCAST_DEVICEINTERFACE notificationFilter{};
+	notificationFilter.dbcc_devicetype = DBT_DEVTYP_DEVICEINTERFACE;
+	notificationFilter.dbcc_size = sizeof(notificationFilter);
+
+	HDEVNOTIFY notifyResult = RegisterDeviceNotification(
+		RenderWindow::GetInstance()->GetHwnd(), &notificationFilter,
+		DEVICE_NOTIFY_WINDOW_HANDLE | DEVICE_NOTIFY_ALL_INTERFACE_CLASSES);
+	assert(!!notifyResult);
+
+	SetWindowsHookExW(
+		WH_CALLWNDPROC, (HOOKPROC)&SubWindowProc, GetModuleHandleW(NULL), GetCurrentThreadId());
+}
+
 void JoypadInput::Update()
 {
-	for (int i = 0; i < jyopadObjs.size(); i++)
+	if (isInsertPad == true)
 	{
-		if (jyopadObjs[i].joypad == nullptr) continue;
+		joypadObjs.clear();
+		SetJoyStick();
+		isInsertPad = false;
+	}
+
+	for (int i = 0; i < joypadObjs.size(); i++)
+	{
+		if (joypadObjs[i].joypad == nullptr) continue;
 
 		// ジョイパット情報の取得開始
-		jyopadObjs[i].joypad->Acquire();
+		joypadObjs[i].joypad->Acquire();
+
+		// デバイスのポーリングを行う
+		joypadObjs[i].joypad->Poll();
 
 		// 最新のパット情報だったものは1フレーム前のキーボード情報として保存
-		jyopadObjs[i].prevPadInput = jyopadObjs[i].padInput;
+		joypadObjs[i].prevPadInput = joypadObjs[i].padInput;
 
 		// 最新のジョイパット情報を取得する
-		jyopadObjs[i].joypad->GetDeviceState(sizeof(jyopadObjs[i].padInput), &jyopadObjs[i].padInput);
+		joypadObjs[i].joypad->GetDeviceState(sizeof(joypadObjs[i].padInput), &joypadObjs[i].padInput);
 	}
 }
 
@@ -51,13 +103,12 @@ BOOL CALLBACK JoypadInput::DeviceFindCallBack(const DIDEVICEINSTANCE* pdidInstan
 	Microsoft::WRL::ComPtr<IDirectInputDevice8>  joypad;
 	result = InputManager::GetInstance()->GetDirectInput()->
 		CreateDevice(pdidInstance->guidInstance, &joypad, nullptr);
+
 	if (FAILED(result)) return DIENUM_CONTINUE;
 
 	DIDEVICEINSTANCE instance;
 	joypad->GetDeviceInfo(&instance);
-	joypadInput->jyopadObjs[padIndex].joypad = joypad;
-
-	//if (joypad == nullptr) return;
+	joypadInput->joypadObjs.emplace_back(joypad);
 
 	// 入力データ形式のセット
 	result = joypad->SetDataFormat(&c_dfDIJoystick2);
@@ -100,3 +151,4 @@ BOOL CALLBACK JoypadInput::DeviceFindCallBack(const DIDEVICEINSTANCE* pdidInstan
 
 	return DIENUM_CONTINUE;
 }
+
