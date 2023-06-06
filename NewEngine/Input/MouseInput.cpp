@@ -3,6 +3,8 @@
 #include "RenderWindow.h"
 #include <cassert>
 
+#pragma region その他の処理
+
 MouseInput::MouseInput() : mouse(nullptr), mouseInput({}), prevMouseInput({})
 {
 }
@@ -49,3 +51,53 @@ void MouseInput::Update()
 	mousePos.x = static_cast<float>(tempMousePos.x);
 	mousePos.y = static_cast<float>(tempMousePos.y);
 }
+
+#pragma endregion
+
+#pragma region マウスの処理
+
+// クリックしている間
+bool MouseInput::GetClick(const MouseCodo mouseCodo)
+{
+	bool isClick = (GetInstance()->mouseInput.rgbButtons[(int)mouseCodo] & 0x80) != 0;
+
+	return isClick;
+}
+
+// クリックした瞬間
+bool MouseInput::GetClickDown(const MouseCodo mouseCodo)
+{
+	bool isClick = (GetInstance()->mouseInput.rgbButtons[(int)mouseCodo] & 0x80) != 0;
+	bool isPrevClick = (GetInstance()->prevMouseInput.rgbButtons[(int)mouseCodo] & 0x80) != 0;
+
+	return isClick && !isPrevClick;
+}
+
+// クリックし終わった瞬間
+bool MouseInput::GetClickUp(const MouseCodo mouseCodo)
+{
+	bool isClick = (GetInstance()->mouseInput.rgbButtons[(int)mouseCodo] & 0x80) != 0;
+	bool isPrevClick = (GetInstance()->prevMouseInput.rgbButtons[(int)mouseCodo] & 0x80) != 0;
+
+	return !isClick && isPrevClick;
+}
+
+// マウスの座標
+Vec2 MouseInput::GetPos()
+{
+	return GetInstance()->mousePos;
+}
+
+// マウスの動いているベクトル
+Vec2 MouseInput::GetMoveVec()
+{
+	return { (float)GetInstance()->mouseInput.lX, (float)GetInstance()->mouseInput.lY };
+}
+
+// マウスホイルの動いているベクトル
+float MouseInput::GetWheelMoveVec()
+{
+	return (float)GetInstance()->mouseInput.lZ;
+}
+
+#pragma endregion

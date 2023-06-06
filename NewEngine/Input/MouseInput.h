@@ -16,51 +16,36 @@ template<typename T> class Singleton;
 class MouseInput : public Singleton<MouseInput>
 {
 private:
-	friend Singleton<MouseInput>;
 	Microsoft::WRL::ComPtr<IDirectInputDevice8> mouse;
 	Vec2 mousePos;
 	DIMOUSESTATE2 mouseInput;
 	DIMOUSESTATE2 prevMouseInput;
-
-private:
-	MouseInput();
 
 public:
 	void Init();
 	void Update();
 
 	// クリックしてる時
-	static inline bool GetClick(const MouseCodo& mouseCodo)
-	{
-		return (GetInstance()->mouseInput.rgbButtons[(int)mouseCodo] & 0x80) != 0;
-	}
+	static bool GetClick(const MouseCodo mouseCodo);
+
 	// クリックした瞬間
-	static inline bool GetClickDown(const MouseCodo& mouseCodo)
-	{
-		return (GetInstance()->mouseInput.rgbButtons[(int)mouseCodo] & 0x80) == 0 &&
-			(GetInstance()->prevMouseInput.rgbButtons[(int)mouseCodo] & 0x80) != 0;
-	}
+	static bool GetClickDown(const MouseCodo mouseCodo);
+
 	// クリックし終わった瞬間
-	static inline bool GetClickUp(const MouseCodo& mouseCodo)
-	{
-		return (GetInstance()->mouseInput.rgbButtons[(int)mouseCodo] & 0x80) != 0 &&
-			(GetInstance()->prevMouseInput.rgbButtons[(int)mouseCodo] & 0x80) == 0;
-	}
+	static bool GetClickUp(const MouseCodo mouseCodo);
+
 	// マウスの座標
-	static inline Vec2 GetMousePos()
-	{
-		return GetInstance()->mousePos;
-	}
+	static Vec2 GetPos();
+
 	// マウスの動いているベクトル
-	static inline Vec2 GetMouseMove()
-	{
-		return { (float)GetInstance()->mouseInput.lX, (float)GetInstance()->mouseInput.lY };
-	}
+	static Vec2 GetMoveVec();
+
 	// マウスホイルの動いているベクトル
-	static inline float GetWheelMove()
-	{
-		return (float)GetInstance()->mouseInput.lZ;
-	}
+	static float GetWheelMoveVec();
+
+private:
+	MouseInput();
+	friend Singleton<MouseInput>;
 };
 
 typedef MouseInput Mouse;
