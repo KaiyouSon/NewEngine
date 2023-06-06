@@ -47,7 +47,6 @@ void TestScene::Update()
 	obj.pos.x = Pad::GetStick(PadCode::LeftStick).x * 0.001f;
 	obj.pos.y = -Pad::GetStick(PadCode::LeftStick).y * 0.001f;
 
-
 	obj.scale.x = Clamp(obj.scale.x, 1, 2);
 	obj.scale.y = Clamp(obj.scale.y, 1, 2);
 	obj.scale.z = Clamp(obj.scale.z, 1, 2);

@@ -4,6 +4,8 @@
 #include <cassert>
 #include <memory>
 
+#pragma region その他の処理
+
 void KeyBoardInput::Init()
 {
 	HRESULT result;
@@ -39,3 +41,36 @@ void KeyBoardInput::Update()
 	// 最新のキーボード情報を取得する
 	keyboard->GetDeviceState(sizeof(keys), keys);
 }
+
+#pragma endregion
+
+#pragma region キーボードの処理
+
+// キーが押されてる時
+bool KeyBoardInput::GetKey(const unsigned int key)
+{
+	// 例外スローしないように
+	int index = Clamp(key, 0, 256);
+
+	return (bool)GetInstance()->keys[index];
+}
+
+// キーを押した瞬間
+bool KeyBoardInput::GetKeyDown(const unsigned int key)
+{
+	// 例外スローしないように
+	int index = Clamp(key, 0, 256);
+
+	return (bool)(GetInstance()->keys[key] && !GetInstance()->prevKeys[key]);
+}
+
+// キーを離した瞬間
+bool KeyBoardInput::GetKeyUp(const unsigned int key)
+{
+	// 例外スローしないように
+	int index = Clamp(key, 0, 256);
+
+	return (bool)(!GetInstance()->keys[key] && GetInstance()->prevKeys[key]);
+}
+
+#pragma endregion

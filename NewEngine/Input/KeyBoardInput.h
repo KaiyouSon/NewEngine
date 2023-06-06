@@ -17,23 +17,13 @@ public:
 	void Update();		// 更新処理
 
 	// キーが押されてる時
-	static inline bool GetKey(const unsigned int& key)
-	{
-		if (key >= 256 || key < 0) return false;
-		return (bool)GetInstance()->keys[key];
-	}
+	static bool GetKey(const unsigned int key);
+
 	// キーを押した瞬間
-	static inline bool GetKeyDown(const unsigned int& key)
-	{
-		if (key >= 256 || key < 0) return false;
-		return (bool)(GetInstance()->keys[key] && !GetInstance()->prevKeys[key]);
-	}
+	static bool GetKeyDown(const unsigned int key);
+
 	// キーを離した瞬間
-	static inline bool GetKeyUp(const unsigned int& key)
-	{
-		if (key >= 256 || key < 0) return false;
-		return (bool)(!GetInstance()->keys[key] && GetInstance()->prevKeys[key]);
-	}
+	static bool GetKeyUp(const unsigned int key);
 };
 
 typedef KeyBoardInput Key;
