@@ -9,12 +9,12 @@ Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> TextureManager::srvDescHeap;
 std::map<std::string, std::unique_ptr<Texture>> TextureManager::textureMap;
 std::map<std::string, std::unique_ptr<RenderTexture>> TextureManager::renderTextureMap;
 
-Texture* TextureManager::GetTexture(const std::string& textureTag)
+Texture* TextureManager::GetTexture(std::string textureTag)
 {
 	return textureMap[textureTag].get();
 }
 
-Texture TextureManager::CreateTexture(const Color& color)
+Texture TextureManager::CreateTexture(Color color)
 {
 	Texture tex;
 
@@ -98,7 +98,7 @@ Texture TextureManager::CreateTexture(const Color& color)
 
 	return tex;
 }
-Texture* TextureManager::CreateTexture(const Color& color, const std::string& textureTag)
+Texture* TextureManager::CreateTexture(Color color, std::string textureTag)
 {
 	textureMap.insert(std::make_pair(textureTag, std::move(std::make_unique<Texture>())));
 
@@ -179,7 +179,7 @@ Texture* TextureManager::CreateTexture(const Color& color, const std::string& te
 
 	return textureMap[textureTag].get();
 }
-Texture TextureManager::LoadTexture(const std::string& filePath)
+Texture TextureManager::LoadTexture(std::string filePath)
 {
 	Texture tex;
 
@@ -302,7 +302,7 @@ Texture TextureManager::LoadTexture(const std::string& filePath)
 
 	return tex;
 }
-Texture* TextureManager::LoadTexture(const std::string& filePath, const std::string& textureTag)
+Texture* TextureManager::LoadTexture(std::string filePath, std::string textureTag)
 {
 	textureMap.insert(std::make_pair(textureTag, std::move(std::make_unique<Texture>())));
 
@@ -421,7 +421,7 @@ Texture* TextureManager::LoadTexture(const std::string& filePath, const std::str
 
 	return textureMap[textureTag].get();
 }
-Texture TextureManager::LoadMaterialTexture(const std::string& filePath)
+Texture TextureManager::LoadMaterialTexture(std::string filePath)
 {
 	Texture tex;
 
@@ -539,11 +539,11 @@ Texture TextureManager::LoadMaterialTexture(const std::string& filePath)
 	return tex;
 }
 
-RenderTexture* TextureManager::GetRenderTexture(const std::string& textureTag)
+RenderTexture* TextureManager::GetRenderTexture(std::string textureTag)
 {
 	return renderTextureMap[textureTag].get();
 }
-RenderTexture* TextureManager::CreateRenderTexture(const Vec2& size, const size_t num, const std::string& textureTag)
+RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, size_t num, std::string textureTag)
 {
 	std::unique_ptr<RenderTexture> renderTex = std::make_unique<RenderTexture>();
 	renderTex->buffers.resize(num);
@@ -615,13 +615,13 @@ void TextureManager::CreateDescriptorHeap()
 	HRESULT result;
 
 	// --- SRV ------------------------------------------------------ //
-	const size_t maxSRVCount = 2056;	// SRVの最大個数
+	size_t maxSRVCount = 2056;	// SRVの最大個数
 
 	// SRV用デスクリプタヒープの設定
 	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
 	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;	// シェーダから見えるように
-	srvHeapDesc.NumDescriptors = maxSRVCount;
+	srvHeapDesc.NumDescriptors = (UINT)maxSRVCount;
 
 	// SRV用デスクリプタヒープを生成
 	result = RenderBase::GetInstance()->GetDevice()->

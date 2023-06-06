@@ -16,15 +16,15 @@ private:
 	static std::map<std::string, std::unique_ptr<RenderTexture>> renderTextureMap;
 
 public:
-	static Texture* GetTexture(const std::string& textureTag);
-	static Texture CreateTexture(const Color& color);
-	static Texture* CreateTexture(const Color& color, const std::string& textureTag);
-	static Texture LoadTexture(const std::string& filePath);
-	static Texture* LoadTexture(const std::string& filePath, const std::string& textureTag);
-	static Texture LoadMaterialTexture(const std::string& filePath);
+	static Texture* GetTexture(std::string textureTag);
+	static Texture CreateTexture(Color color);
+	static Texture* CreateTexture(Color color, std::string textureTag);
+	static Texture LoadTexture(std::string filePath);
+	static Texture* LoadTexture(std::string filePath, std::string textureTag);
+	static Texture LoadMaterialTexture(std::string filePath);
 
-	static RenderTexture* GetRenderTexture(const std::string& textureTag);
-	static RenderTexture* CreateRenderTexture(const Vec2& size, const size_t num, const std::string& textureTag);
+	static RenderTexture* GetRenderTexture(std::string textureTag);
+	static RenderTexture* CreateRenderTexture(Vec2 size, size_t num, std::string textureTag);
 
 	static void CreateDescriptorHeap();
 	static void CreateSRV(Texture& texture, ID3D12Resource* buffer);
