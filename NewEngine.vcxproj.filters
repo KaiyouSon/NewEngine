@@ -518,6 +518,9 @@
     <ClInclude Include="Application\SourceCode\Scene\TestScene.h">
       <Filter>Application\Header\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="NewEngine\Sound\WaveSound.h">
+      <Filter>NewEngine\Header\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">

@@ -13,12 +13,13 @@ private:
 	static std::map<std::string, std::unique_ptr<Sound>> soundMap;
 
 public:
-	static Sound* GetSound(const std::string& soundTag);
-	static Sound* LoadSound(const std::string& filePath, const std::string soundTag);
-	static void Play(const std::string soundTag, const bool& isRoop = false);
-	static void Stop(const std::string soundTag);
-	static bool GetIsPlaying(const std::string soundTag);
-	static void SetVolume(const std::string soundTag, const float& volume);
+	static Sound* GetSound(std::string soundTag);
+	static Sound* LoadSound(std::string filePath, std::string soundTag);
+	static void Play(std::string soundTag, bool isRoop = false);
+	static void Stop(std::string soundTag);
+	static bool GetIsPlaying(std::string soundTag);
+	static void SetVolume(std::string soundTag, float volume);
+	static void SetPitch( std::string soundTag,  float pitch);
 
 	static void Init();
 	static void Destroy();

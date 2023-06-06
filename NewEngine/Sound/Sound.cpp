@@ -1,14 +1,16 @@
 #include "Sound.h"
 #include "SoundManager.h"
+#include "Util.h"
 #include <cassert>
 using namespace std;
 
-Sound::Sound() : result(HRESULT()), soundData(SoundData()), volume(1)
+Sound::Sound() :
+	result(HRESULT()), waveData(WaveData()), volume(1), pitch(1)
 {
 }
 
-Sound::Sound(const std::string& filePath) :
-	result(HRESULT()), soundData(SoundData()), volume(1)
+Sound::Sound(std::string filePath) :
+	result(HRESULT()), waveData(WaveData()), volume(1), pitch(1)
 {
 	string path = "Application/Sound/" + filePath;
 
@@ -68,22 +70,22 @@ Sound::Sound(const std::string& filePath) :
 	// waveファイルを閉じる
 	file.close();
 
-	soundData.wfex = format.fmt;
-	soundData.pBuffer = reinterpret_cast<BYTE*>(pBuffer);
-	soundData.bufferSize = data.size;
+	waveData.wfex = format.fmt;
+	waveData.pBuffer = reinterpret_cast<BYTE*>(pBuffer);
+	waveData.bufferSize = data.size;
 }
 
-void Sound::Play(const bool& isRoop)
+void Sound::Play(bool isRoop)
 {
 	// 波形フォーマットを元にSourceVoiceの生成
 	result = SoundManager::GetXAudio2()->
-		CreateSourceVoice(&soundData.pSourceVoice, &soundData.wfex);
+		CreateSourceVoice(&waveData.pSourceVoice, &waveData.wfex);
 	assert(SUCCEEDED(result));
 
 	// 再生する波形データの設定
 	XAUDIO2_BUFFER buffer{};
-	buffer.pAudioData = soundData.pBuffer;
-	buffer.AudioBytes = soundData.bufferSize;
+	buffer.pAudioData = waveData.pBuffer;
+	buffer.AudioBytes = waveData.bufferSize;
 	buffer.Flags = XAUDIO2_END_OF_STREAM;
 	if (isRoop == true)
 	{
@@ -93,8 +95,8 @@ void Sound::Play(const bool& isRoop)
 	// 波形データの再生
 	if (buffer.LoopCount >= 0)
 	{
-		result = soundData.pSourceVoice->SubmitSourceBuffer(&buffer);
-		result = soundData.pSourceVoice->Start();
+		result = waveData.pSourceVoice->SubmitSourceBuffer(&buffer);
+		result = waveData.pSourceVoice->Start();
 	}
 
 	buffer.LoopCount--;
@@ -102,43 +104,50 @@ void Sound::Play(const bool& isRoop)
 
 void Sound::Stop()
 {
-	if (soundData.pSourceVoice == nullptr)	return;
-	soundData.pSourceVoice->Stop();
+	// nullチェック
+	if (waveData.pSourceVoice == nullptr) return;
+
+	waveData.pSourceVoice->Stop();
 }
 
 bool Sound::GetIsPlaying()
 {
-	if (soundData.pSourceVoice == nullptr) return false;
+	// nullチェック
+	if (waveData.pSourceVoice == nullptr) return false;
 
+	// 状態
 	XAUDIO2_VOICE_STATE xa2state{};
-	soundData.pSourceVoice->GetState(&xa2state);
+	waveData.pSourceVoice->GetState(&xa2state);
 
-	return xa2state.BuffersQueued != 0;
+	return (xa2state.BuffersQueued != 0);
 }
 
-void Sound::SetVolume(const float& volume)
+void Sound::SetVolume(float volume)
 {
-	this->volume = volume;
-	if (this->volume >= 1)
-	{
-		soundData.pSourceVoice->SetVolume(1);
-	}
-	else if (this->volume <= 0)
-	{
-		soundData.pSourceVoice->SetVolume(0);
-	}
-	else
-	{
-		soundData.pSourceVoice->SetVolume(volume);
-	}
+	// nullチェック
+	if (waveData.pSourceVoice == nullptr) return;
+
+	// clampしてセットする
+	this->volume = Clamp(volume);
+	waveData.pSourceVoice->SetVolume(this->volume);
+}
+
+void Sound::SetPitch(float pitch)
+{
+	// nullチェック
+	if (waveData.pSourceVoice == nullptr) return;
+
+	// clampしてセットする
+	this->pitch = Clamp(pitch, 0, 2);
+	waveData.pSourceVoice->SetFrequencyRatio(this->pitch);
 }
 
 void Sound::UnLoad()
 {
 	// バッファのメモリ解放
-	delete[] soundData.pBuffer;
+	delete[] waveData.pBuffer;
 
-	soundData.pBuffer = 0;
-	soundData.bufferSize = 0;
-	soundData.wfex = {};
+	waveData.pBuffer = 0;
+	waveData.bufferSize = 0;
+	waveData.wfex = {};
 }

@@ -10,9 +10,9 @@ private:
 	static std::map<std::string, std::unique_ptr<Model>> modelMap;
 
 public:
-	static Model* GetModel(const std::string& modelTag);
-	static Model* LoadObjModel(const std::string& filePath, const std::string& modelTag, const bool& isSmoothing = false);
-	static Model* LoadFbxModel(const std::string& filePath, const std::string& modelTag);
+	static Model* GetModel(std::string modelTag);
+	static Model* LoadObjModel(std::string filePath, std::string modelTag, bool isSmoothing = false);
+	static Model* LoadFbxModel(std::string filePath, std::string modelTag);
 
 	static void Destroy();
 };

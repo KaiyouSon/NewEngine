@@ -4,12 +4,12 @@ IXAudio2MasteringVoice* SoundManager::masterVoice = nullptr;
 Microsoft::WRL::ComPtr<IXAudio2> SoundManager::xAudio2 = nullptr;
 std::map<std::string, std::unique_ptr<Sound>> SoundManager::soundMap;
 
-Sound* SoundManager::GetSound(const std::string& soundTag)
+Sound* SoundManager::GetSound(std::string soundTag)
 {
 	return soundMap[soundTag].get();
 }
 
-Sound* SoundManager::LoadSound(const std::string& filePath, const std::string soundTag)
+Sound* SoundManager::LoadSound(std::string filePath, std::string soundTag)
 {
 	std::unique_ptr<Sound> sound = std::make_unique<Sound>(filePath);
 	soundMap.insert(std::make_pair(soundTag, std::move(sound)));
@@ -17,24 +17,29 @@ Sound* SoundManager::LoadSound(const std::string& filePath, const std::string so
 	return soundMap[soundTag].get();
 }
 
-void SoundManager::Play(const std::string soundTag, const bool& isRoop)
+void SoundManager::Play(std::string soundTag, bool isRoop)
 {
 	soundMap[soundTag]->Play(isRoop);
 }
 
-void SoundManager::Stop(const std::string soundTag)
+void SoundManager::Stop(std::string soundTag)
 {
 	soundMap[soundTag]->Stop();
 }
 
-bool SoundManager::GetIsPlaying(const std::string soundTag)
+bool SoundManager::GetIsPlaying(std::string soundTag)
 {
 	return soundMap[soundTag]->GetIsPlaying();
 }
 
-void SoundManager::SetVolume(const std::string soundTag, const float& volume)
+void SoundManager::SetVolume(std::string soundTag, float volume)
 {
 	soundMap[soundTag]->SetVolume(volume);
+}
+
+void SoundManager::SetPitch(std::string soundTag, float pitch)
+{
+	soundMap[soundTag]->SetPitch(pitch);
 }
 
 void SoundManager::Init()
@@ -52,7 +57,7 @@ void SoundManager::Destroy()
 {
 	xAudio2.Reset();
 
-	for (const auto& sound : soundMap)
+	for (auto& sound : soundMap)
 	{
 		soundMap[sound.first]->UnLoad();
 	}

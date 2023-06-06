@@ -282,6 +282,7 @@
     <ClInclude Include="NewEngine\Render\Viewport.h" />
     <ClInclude Include="NewEngine\Object\Other\TextureManager.h" />
     <ClInclude Include="NewEngine\Sound\SoundManager.h" />
+    <ClInclude Include="NewEngine\Sound\WaveSound.h" />
     <ClInclude Include="NewEngine\Util\BezierCurve.h" />
     <ClInclude Include="NewEngine\Util\Color.h" />
     <ClInclude Include="NewEngine\Util\Easing.h" />
