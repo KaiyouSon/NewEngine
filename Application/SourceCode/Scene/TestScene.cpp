@@ -12,7 +12,9 @@ void TestScene::Init()
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
-	obj.model = ModelManager::GetModel("Block1");
+	obj1.SetModel(ModelManager::GetModel("Block1"));
+	obj2.SetModel(ModelManager::GetModel("Block1"));
+	obj2.pos_.x = 3;
 
 	spr1.texture = TextureManager::GetTexture("pic");
 
@@ -25,33 +27,21 @@ void TestScene::Update()
 {
 	Camera::DebugCameraUpdate();
 
-	if (Pad::GetButton(PadCode::ButtonA))
-	{
-		obj.scale += 0.005f;
-	}
-	else
-	{
-		//obj.scale -= 0.005f;
-	}
+	const float speed = 0.05f;
+	obj1.pos_.x += (Key::GetKey(DIK_D) - Key::GetKey(DIK_A)) * speed;
+	obj1.pos_.y += (Key::GetKey(DIK_W) - Key::GetKey(DIK_S)) * speed;
 
-	if (Pad::GetButtonDown(PadCode::ButtonA))
+	if (Key::GetKeyDown(DIK_SPACE) == true)
 	{
-		obj.scale.x = 2.f;
+		obj2.SetTexture(TextureManager::GetTexture("NumberSheet"));
+
+		//obj2.SetModel(ModelManager::GetModel("Enemy"));
 	}
 
-	if (Pad::GetButtonUp(PadCode::ButtonA))
-	{
-		obj.scale.y = 2.f;
-	}
+	obj1.Update();
+	Transform tf = obj1.GetTransform();
 
-	obj.pos.x = Pad::GetStick(PadCode::LeftStick).x * 0.001f;
-	obj.pos.y = -Pad::GetStick(PadCode::LeftStick).y * 0.001f;
-
-	obj.scale.x = Clamp<float>(obj.scale.x, 1, 2);
-	obj.scale.y = Clamp<float>(obj.scale.y, 1, 2);
-	obj.scale.z = Clamp<float>(obj.scale.z, 1, 2);
-
-	obj.Update();
+	obj2.Update(&tf);
 	spr1.Update();
 	spr2.Update();
 }
@@ -59,17 +49,18 @@ void TestScene::Update()
 void TestScene::DrawRenderTexture()
 {
 	renderTex->PreDrawScene();
-	obj.Draw();
+	obj1.Draw();
 	renderTex->PostDrawScene();
 }
 void TestScene::DrawBackSprite()
 {
 	//spr1.Draw();
-	spr2.Draw();
+	//spr2.Draw();
 }
 void TestScene::DrawModel()
 {
-	//obj.Draw();
+	obj1.Draw();
+	obj2.Draw();
 }
 void TestScene::DrawFrontSprite()
 {

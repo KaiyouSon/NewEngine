@@ -78,9 +78,9 @@ void Camera::DebugCameraUpdate()
 	}
 
 	// âúçs
-	if (Mouse::GetMoveVec() != 0)
+	if (Mouse::GetWheelMoveVec() != 0)
 	{
 		const float moveSpeed = 0.025f;
-		current.pos += frontVec * Mouse::GetMoveVec() * 0.025f;
+		current.pos += frontVec * Mouse::GetWheelMoveVec() * 0.025f;
 	}
 }

@@ -21,9 +21,9 @@ void OutLineObj::Update(const OutLineObj* parent)
 {
 	obj->Update();
 
-	transform.pos = obj->pos;
-	transform.scale = obj->scale;
-	transform.rot = obj->rot;
+	transform.pos = obj->pos_;
+	transform.scale = obj->scale_;
+	transform.rot = obj->rot_;
 	transform.Update();
 	if (parent != nullptr)
 	{
@@ -51,8 +51,8 @@ void OutLineObj::Draw()
 	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// VBVとIBVの設定コマンド
-	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, obj->model->mesh.GetVertexBuffer().GetvbViewAddress());
-	renderBase->GetCommandList()->IASetIndexBuffer(obj->model->mesh.GetIndexBuffer().GetibViewAddress());
+	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, obj->GetModel()->mesh.GetVertexBuffer().GetvbViewAddress());
+	renderBase->GetCommandList()->IASetIndexBuffer(obj->GetModel()->mesh.GetIndexBuffer().GetibViewAddress());
 
 	// CBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
@@ -61,8 +61,8 @@ void OutLineObj::Draw()
 		1, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced(
-		(unsigned short)obj->model->mesh.GetIndexSize(), 1, 0, 0, 0);
+		(unsigned short)obj->GetModel()->mesh.GetIndexSize(), 1, 0, 0, 0);
 
-	obj->graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("ToonRendering");
+	obj->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("ToonRendering"));
 	obj->Draw(BlendMode::Alpha);
 }
