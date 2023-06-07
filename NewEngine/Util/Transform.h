@@ -17,7 +17,7 @@ public:
 	Vec3 pos;	// 座標
 	Vec3 scale;	// スケール
 	Vec3 rot;	// 回転
-	Mat4 worldMat;	// ワールド変換行列
+	Mat4 worldMat_;	// ワールド変換行列
 
 private:
 	Mat4 scaleMat;	// スケール行列
@@ -43,5 +43,18 @@ public:	// セッター
 	inline bool GetisUseBillboard() { return isUseBillboard; }
 	inline int GetBillboardType() { return billboardType; }
 
+#pragma region ゲッター
+
+	Mat4 GetTransMat();
+	Mat4 GetScaleMat();
+	Mat4 GetRotMat();
+	Mat4 GetWorldMat();
+
+#pragma endregion
+
+#pragma region セッター
+	void SetWorldMat(Mat4 worldMat);
+
+#pragma endregion
 };
 

@@ -38,11 +38,11 @@ void CircleGaugeSprite::Update()
 	transform.rot = { 0,0,rot };
 	transform.Update();
 
-	endRadian = Clamp(endRadian, 0, Radian(360));
+	endRadian = Clamp<float>(endRadian, 0, Radian(360));
 
 	// 定数バッファに転送
 	constantBufferTransform->constantBufferMap->mat =
-		transform.worldMat *
+		transform.worldMat_ *
 		Camera::current.GetOrthoGrphicProjectionMat();
 
 	// 色転送

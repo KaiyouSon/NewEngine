@@ -38,7 +38,7 @@ void Line::Update()
 	constantBufferTransform->constantBufferMap->viewMat =
 		Camera::current.GetViewLookToMat() *
 		Camera::current.GetPerspectiveProjectionMat();
-	constantBufferTransform->constantBufferMap->worldMat = transform.worldMat;
+	constantBufferTransform->constantBufferMap->worldMat = transform.worldMat_;
 	constantBufferTransform->constantBufferMap->cameraPos = Camera::current.pos;
 
 	// F“]‘—

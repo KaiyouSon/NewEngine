@@ -138,7 +138,7 @@ void Sound::SetPitch(float pitch)
 	if (waveData.pSourceVoice == nullptr) return;
 
 	// clamp‚µ‚ÄƒZƒbƒg‚·‚é
-	this->pitch = Clamp(pitch, 0, 2);
+	this->pitch = Clamp<float>(pitch, 0, 2);
 	waveData.pSourceVoice->SetFrequencyRatio(this->pitch);
 }
 

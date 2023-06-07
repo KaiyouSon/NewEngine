@@ -25,7 +25,8 @@ public:
 	Vec3 GetXAxis() const;
 	Vec3 GetYAxis() const;
 	Vec3 GetZAxis() const;
-	Vec3 GetTranslation() const;
+	Vec3 GetTrans() const;
+	Vec3 GetScale() const;
 
 	// 単項演算子オーバーロード
 	Mat4 operator*(const Mat4& other) const;

@@ -26,7 +26,6 @@ bool LoadManager::TextureLoad()
 
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 2, "Test");
 
-
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
 	return true;
 }

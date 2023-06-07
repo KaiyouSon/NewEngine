@@ -10,8 +10,8 @@ Camera::Camera() : pos(0, 0, 0), rot(0, 0, 0), fov(Radian(45)), nearZ(0.1f), far
 	transform.rot = rot;
 	transform.Update();
 	Vec3 v1 = pos;
-	Vec3 v2 = transform.worldMat.GetZAxis();
-	Vec3 v3 = transform.worldMat.GetYAxis();
+	Vec3 v2 = transform.worldMat_.GetZAxis();
+	Vec3 v3 = transform.worldMat_.GetYAxis();
 
 	// ビュー変換行列
 	viewLookToMat = ConvertViewProjectionMatLookTo(v1, v2, v3);
@@ -32,8 +32,8 @@ void Camera::Update()
 	transform.rot = rot;
 	transform.Update();
 	Vec3 v1 = pos;
-	Vec3 v2 = transform.worldMat.GetZAxis();
-	Vec3 v3 = transform.worldMat.GetYAxis();
+	Vec3 v2 = transform.worldMat_.GetZAxis();
+	Vec3 v3 = transform.worldMat_.GetYAxis();
 
 	// ビュー変換行列
 	viewLookToMat = ConvertViewProjectionMatLookTo(v1, v2, v3);
@@ -59,28 +59,28 @@ void Camera::DebugCameraUpdate()
 	// 回転
 	if (Mouse::GetClick(MouseCodo::Wheel) && !Key::GetKey(DIK_LSHIFT))
 	{
-		if (Mouse::GetMouseMove().x != 0 || Mouse::GetMouseMove().y != 0)
+		if (Mouse::GetMoveVec().x != 0 || Mouse::GetMoveVec().y != 0)
 		{
 			const float moveSpeed = 0.005f;
-			current.rot.x += Mouse::GetMouseMove().y * moveSpeed;
-			current.rot.y += Mouse::GetMouseMove().x * moveSpeed;
+			current.rot.x += Mouse::GetMoveVec().y * moveSpeed;
+			current.rot.y += Mouse::GetMoveVec().x * moveSpeed;
 		}
 	}
 
 	// 平行移動
 	if (Mouse::GetClick(MouseCodo::Wheel) && Key::GetKey(DIK_LSHIFT))
 	{
-		if (Mouse::GetMouseMove().x != 0 || Mouse::GetMouseMove().y != 0)
+		if (Mouse::GetMoveVec().x != 0 || Mouse::GetMoveVec().y != 0)
 		{
 			const Vec3 rightVec = Vec3::Cross(frontVec, { 0,1,0 });
-			current.pos += rightVec * Mouse::GetMouseMove().x * 0.1f;
+			current.pos += rightVec * Mouse::GetMoveVec().x * 0.1f;
 		}
 	}
 
 	// 奥行
-	if (Mouse::GetWheelMove() != 0)
+	if (Mouse::GetMoveVec() != 0)
 	{
 		const float moveSpeed = 0.025f;
-		current.pos += frontVec * Mouse::GetWheelMove() * 0.025f;
+		current.pos += frontVec * Mouse::GetMoveVec() * 0.025f;
 	}
 }

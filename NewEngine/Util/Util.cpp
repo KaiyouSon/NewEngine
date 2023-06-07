@@ -27,19 +27,6 @@ Vec3 Sign(const Vec3& a)
 	return { (float)Sign(a.x),(float)Sign(a.y),(float)Sign(a.z) };
 }
 
-float Clamp(const float& value, const float& min, const float& max)
-{
-	if (value < min)
-	{
-		return min;
-	}
-	if (value > max)
-	{
-		return max;
-	}
-	return value;
-}
-
 float Convergence(const float& value, const float& speed, const float& origin)
 {
 	float tValue = value;

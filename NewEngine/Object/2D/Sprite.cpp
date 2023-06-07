@@ -41,7 +41,7 @@ void Sprite::Update()
 
 	// 定数バッファに転送
 	constantBufferTransform->constantBufferMap->mat =
-		transform.worldMat *
+		transform.worldMat_ *
 		Camera::current.GetOrthoGrphicProjectionMat();
 
 	// 色転送

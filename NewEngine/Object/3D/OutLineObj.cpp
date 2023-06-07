@@ -27,14 +27,14 @@ void OutLineObj::Update(const OutLineObj* parent)
 	transform.Update();
 	if (parent != nullptr)
 	{
-		transform.worldMat *= parent->transform.worldMat;
+		transform.worldMat_ *= parent->transform.worldMat_;
 	}
 
 	// マトリックス転送
 	constantBufferTransform->constantBufferMap->viewMat =
 		Camera::current.GetViewLookToMat() *
 		Camera::current.GetPerspectiveProjectionMat();
-	constantBufferTransform->constantBufferMap->worldMat = transform.worldMat;
+	constantBufferTransform->constantBufferMap->worldMat = transform.worldMat_;
 	constantBufferTransform->constantBufferMap->cameraPos = Camera::current.pos;
 
 	// 色転送

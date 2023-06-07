@@ -6,9 +6,9 @@
 #include "TextureManager.h"
 #include <DirectXMath.h>
 
-using namespace std;
-
 bool Object3D::isAllLighting = false;
+
+#pragma region その他の処理
 
 Object3D::Object3D() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
@@ -49,8 +49,7 @@ void Object3D::PlayAnimetion()
 		fbxModel->PlayAnimetion();
 	}
 }
-
-void Object3D::Update(const Object3D* parent)
+void Object3D::Update()
 {
 	if (texture->isMaterial == true)
 	{
@@ -65,20 +64,16 @@ void Object3D::Update(const Object3D* parent)
 		}
 	}
 
-	transform.pos = pos;
-	transform.scale = scale;
-	transform.rot = rot;
-	transform.Update();
-	if (parent != nullptr)
-	{
-		transform.worldMat *= parent->transform.worldMat;
-	}
+	transform_.pos = pos;
+	transform_.scale = scale;
+	transform_.rot = rot;
+	transform_.Update();
 
 	// マトリックス転送
 	constantBufferTransform->constantBufferMap->viewMat =
 		Camera::current.GetViewLookToMat() *
 		Camera::current.GetPerspectiveProjectionMat();
-	constantBufferTransform->constantBufferMap->worldMat = transform.worldMat;
+	constantBufferTransform->constantBufferMap->worldMat = transform_.worldMat_;
 	constantBufferTransform->constantBufferMap->cameraPos = Camera::current.pos;
 
 	// マテリアルの転送
@@ -120,7 +115,7 @@ void Object3D::Update(const Object3D* parent)
 		}
 	}
 }
-void Object3D::Draw(const BlendMode& blendMode)
+void Object3D::Draw(const BlendMode blendMode)
 {
 	SetBlendMode(blendMode);
 
@@ -152,7 +147,41 @@ void Object3D::Draw(const BlendMode& blendMode)
 		(unsigned short)model->mesh.GetIndexSize(), 1, 0, 0, 0);
 }
 
-void Object3D::SetBlendMode(const BlendMode& blendMode)
+#pragma endregion
+
+#pragma region セッター
+
+// 親関係
+void Object3D::SetParent(Transform* transform)
+{
+	Mat4 mat = transform_.GetWorldMat();
+	mat *= transform->GetWorldMat();
+	transform_.SetWorldMat(mat);
+}
+
+#pragma endregion
+
+#pragma region ゲッター
+
+// ワールド座標
+Vec3 Object3D::GetWorldPos()
+{
+	Vec3 worldPos = transform_.GetWorldMat().GetTrans();
+	return worldPos;
+}
+
+// ワールドスケール
+Vec3 Object3D::GetWorldScale()
+{
+	Vec3 worldScale = transform_.GetWorldMat().GetScale();
+	return worldScale;
+}
+
+#pragma endregion
+
+
+// ブレンドモード
+void Object3D::SetBlendMode(const BlendMode blendMode)
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 

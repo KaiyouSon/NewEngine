@@ -42,7 +42,19 @@ Vec2 Sign(const Vec2& a);
 Vec3 Sign(const Vec3& a);
 
 // ’l‚ğMin‚ÆMax‚ÌŠÔ‚É§ŒÀ‚·‚éŠÖ”
-float Clamp(const float& value, const float& min = 0, const float& max = 1);
+template<typename T>
+T Clamp(const T value, const T min = 0, const T max = 1)
+{
+	if (value < min)
+	{
+		return min;
+	}
+	if (value > max)
+	{
+		return max;
+	}
+	return value;
+}
 
 // ’l‚ªû‘©‚·‚éŠÖ”
 float Convergence(const float& value, const float& speed, const float& origin = 0);

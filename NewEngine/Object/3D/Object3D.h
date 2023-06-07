@@ -13,15 +13,21 @@ private:
 	ConstantBuffer<ConstantBufferDataMaterial>* constantBufferMaterial;
 	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
 	ConstantBuffer<ConstantBufferDataSkin>* constantBufferSkin;
-	Transform transform;
+	Transform transform_;
 
-	void SetBlendMode(const BlendMode& blendMode);
+	void SetBlendMode(const BlendMode blendMode);
+
+private:
+	Vec3 worldPos_;
+	Vec3 worldScale_;
+
 public:
 	Model* model;
 	Texture* texture;
 	Vec3 pos;
 	Vec3 scale;
 	Vec3 rot;
+
 	Color color;
 	GraphicsPipeline* graphicsPipeline;
 	bool isLighting;
@@ -31,8 +37,20 @@ public:
 	Object3D();
 	~Object3D();
 	void PlayAnimetion();
-	void Update(const Object3D* parent = nullptr);
-	void Draw(const BlendMode& blendMode = BlendMode::Alpha);
+	void Update();
+	void Draw(const BlendMode blendMode = BlendMode::Alpha);
+
+public:
+	void SetParent(Transform* transform);
+
+#pragma region ゲッター
+
+	// ワールド座標
+	Vec3 GetWorldPos();
+	// ワールドスケール
+	Vec3 GetWorldScale();
+
+#pragma endregion
 
 };
 
