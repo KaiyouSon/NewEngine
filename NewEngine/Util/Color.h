@@ -1,9 +1,8 @@
 #pragma once
 #include <cstdint>
 
-class Color
+struct Color
 {
-public:
 	float r, g, b, a;
 
 	constexpr Color() : r(255.f), g(255.f), b(255.f), a(255.f) {}

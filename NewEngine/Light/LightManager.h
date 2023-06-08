@@ -6,7 +6,7 @@
 struct DirectionalLight
 {
 	Vec3 dirVec = Vec3::sUp;
-	Color color = Color::sWhite;
+	Color color = Color::white;
 	bool isActive = false;
 
 	DirectionalLight() {}
@@ -16,7 +16,7 @@ struct DirectionalLight
 struct PointLight
 {
 	Vec3 pos = Vec3::sUp;
-	Color color = Color::sWhite;
+	Color color = Color::white;
 	Vec3 atten = { 0.3f,0.1f,0.1f };
 	bool isActive = false;
 
@@ -28,7 +28,7 @@ struct SpotLight
 {
 	Vec3 vec = Vec3::sDown;
 	Vec3 pos = Vec3::sUp * 5;
-	Color color = Color::sWhite;
+	Color color = Color::white;
 	Vec3 atten = Vec3::sZero;
 	Vec2 factorAngle = { 20,30 };
 	bool isActive = false;

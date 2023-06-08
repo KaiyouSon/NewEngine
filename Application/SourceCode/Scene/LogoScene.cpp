@@ -14,7 +14,7 @@ LogoScene::~LogoScene()
 void LogoScene::Init()
 {
 	Texture tex1 = TextureManager::LoadTexture("LogoScene/NewEngineTitle.png");
-	Texture tex2 = TextureManager::CreateTexture(Color::sBlack);
+	Texture tex2 = TextureManager::CreateTexture(Color::black);
 
 	logoSprite->texture = &tex1;
 	backSprite->texture = &tex2;

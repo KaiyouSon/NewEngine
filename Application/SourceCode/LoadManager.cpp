@@ -43,7 +43,7 @@ LoadManager::LoadManager() : isLoaded(false)
 void LoadManager::Load()
 {
 	// ƒ[ƒh‘O
-	TextureManager::CreateTexture(Color::sWhite, "White");
+	TextureManager::CreateTexture(Color::white, "White");
 
 	// ”ñ“¯Šú
 	std::future<bool> textureFtr = std::async(std::launch::async, [this] { return TextureLoad(); });
