@@ -7,12 +7,12 @@ Easing::Easing() :
 	limitTimer_(0), powNum_(1), isEnd_(false)
 {
 }
-Easing::Easing(const int& easeTimer) :
+Easing::Easing(const int easeTimer) :
 	timer_(0), timeRate_(0),
 	limitTimer_(easeTimer), powNum_(1), isEnd_(false)
 {
 }
-Easing::Easing(const int& easeTimer, const float& powNum) :
+Easing::Easing(const int easeTimer, const float powNum) :
 	timer_(0), timeRate_(0),
 	limitTimer_(easeTimer), powNum_(powNum), isEnd_(false)
 {
@@ -46,41 +46,41 @@ void Easing::Update(const bool isRoop)
 }
 
 // ラープ
-float Easing::Lerp(const float& startPos, const float& endPos)
+float Easing::Lerp(const float startPos, const float endPos)
 {
 	float dis = endPos - startPos;
 	return dis * timeRate_ + startPos;
 }
-Vec2 Easing::Lerp(const Vec2& startPos, const Vec2& endPos)
+Vec2 Easing::Lerp(const Vec2 startPos, const Vec2 endPos)
 {
 	Vec2 dis = endPos - startPos;
 	return dis * timeRate_ + startPos;
 }
-Vec3 Easing::Lerp(const Vec3& startPos, const Vec3& endPos)
+Vec3 Easing::Lerp(const Vec3 startPos, const Vec3 endPos)
 {
 	Vec3 dis = endPos - startPos;
 	return dis * timeRate_ + startPos;
 }
 
 // イーズイン
-float Easing::In(const float& startPos, const float& endPos)
+float Easing::In(const float startPos, const float endPos)
 {
 	float dis = endPos - startPos;
 	return dis * powf(timeRate_, powNum_) + startPos;
 }
-Vec2 Easing::In(const Vec2& startPos, const Vec2& endPos)
+Vec2 Easing::In(const Vec2 startPos, const Vec2 endPos)
 {
 	Vec2 dis = endPos - startPos;
 	return dis * powf(timeRate_, powNum_) + startPos;
 }
-Vec3 Easing::In(const Vec3& startPos, const Vec3& endPos)
+Vec3 Easing::In(const Vec3 startPos, const Vec3 endPos)
 {
 	Vec3 dis = endPos - startPos;
 	return dis * powf(timeRate_, powNum_) + startPos;
 }
 
 // イーズアウト
-float Easing::Out(const float& startPos, const float& endPos)
+float Easing::Out(const float startPos, const float endPos)
 {
 	float dis = endPos - startPos;
 	if ((int)powNum_ % 2 == 1)
@@ -94,7 +94,7 @@ float Easing::Out(const float& startPos, const float& endPos)
 
 	return -1;
 }
-Vec2 Easing::Out(const Vec2& startPos, const Vec2& endPos)
+Vec2 Easing::Out(const Vec2 startPos, const Vec2 endPos)
 {
 	Vec2 dis = endPos - startPos;
 	if ((int)powNum_ % 2 == 1)
@@ -108,7 +108,7 @@ Vec2 Easing::Out(const Vec2& startPos, const Vec2& endPos)
 
 	return -1;
 }
-Vec3 Easing::Out(const Vec3& startPos, const Vec3& endPos)
+Vec3 Easing::Out(const Vec3 startPos, const Vec3 endPos)
 {
 	Vec3 dis = endPos - startPos;
 	if ((int)powNum_ % 2 == 1)
@@ -124,7 +124,7 @@ Vec3 Easing::Out(const Vec3& startPos, const Vec3& endPos)
 }
 
 // インアウト
-float Easing::InOut(const float& startPos, const float& endPos)
+float Easing::InOut(const float startPos, const float endPos)
 {
 	float dis1 = (endPos - startPos) / 2;
 	float dis2 = (endPos - dis1);
@@ -147,7 +147,7 @@ float Easing::InOut(const float& startPos, const float& endPos)
 
 	return -1;
 }
-Vec2 Easing::InOut(const Vec2& startPos, const Vec2& endPos)
+Vec2 Easing::InOut(const Vec2 startPos, const Vec2 endPos)
 {
 	Vec2 dis = (endPos - startPos) / 2;
 	if (timeRate_ < 0.5f)
@@ -161,7 +161,7 @@ Vec2 Easing::InOut(const Vec2& startPos, const Vec2& endPos)
 
 	return -1;
 }
-Vec3 Easing::InOut(const Vec3& startPos, const Vec3& endPos)
+Vec3 Easing::InOut(const Vec3 startPos, const Vec3 endPos)
 {
 	if (timeRate_ < 0.5f)
 	{
@@ -176,21 +176,21 @@ Vec3 Easing::InOut(const Vec3& startPos, const Vec3& endPos)
 }
 
 // インバック
-float Easing::InBack(const float& startPos, const float& endPos)
+float Easing::InBack(const float startPos, const float endPos)
 {
 	const float back1 = 1.70154f;
 
 	float dis = endPos - startPos;
 	return dis * powf(timeRate_, powNum_) * ((back1 + 1.0f) * timeRate_ - back1) + startPos;
 }
-Vec2 Easing::InBack(const Vec2& startPos, const Vec2& endPos)
+Vec2 Easing::InBack(const Vec2 startPos, const Vec2 endPos)
 {
 	const float back1 = 1.70154f;
 
 	Vec2 dis = endPos - startPos;
 	return dis * powf(timeRate_, powNum_) * ((back1 + 1.0f) * timeRate_ - back1) + startPos;
 }
-Vec3 Easing::InBack(const Vec3& startPos, const Vec3& endPos)
+Vec3 Easing::InBack(const Vec3 startPos, const Vec3 endPos)
 {
 	const float back1 = 1.70154f;
 
