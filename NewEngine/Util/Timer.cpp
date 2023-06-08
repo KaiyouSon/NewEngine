@@ -1,43 +1,39 @@
 #include "Timer.h"
 
-Timer::Timer() : timer(0), maxTimer(0), isTimeOut(false)
+Timer::Timer() : timer_(0), limitTimer_(0), isTimeOut_(false)
 {
 }
 
-Timer::Timer(const int& maxTimer) : timer(0), maxTimer(maxTimer), isTimeOut(false)
+Timer::Timer(const int maxTimer) : timer_(0), limitTimer_(maxTimer), isTimeOut_(false)
 {
 }
 
 void Timer::Reset()
 {
-	timer = 0;
-	isTimeOut = false;
+	timer_ = 0;
+	isTimeOut_ = false;
 }
 
-void Timer::AddTimer(const float& addTimer)
+void Timer::Update(const bool isRoop, const int addTimer)
 {
-	timer++;
-	if (timer >= maxTimer)
+	if (isTimeOut_ == true)
 	{
-		timer = maxTimer;
-		isTimeOut = true;
+		if (timer_ >= limitTimer_)
+		{
+			Reset();
+		}
 	}
 	else
 	{
-		isTimeOut = false;
-	}
-}
+		timer_ += addTimer;
 
-void Timer::SubTimer(const float& subTimer)
-{
-	timer++;
-	if (timer <= maxTimer)
-	{
-		timer = maxTimer;
-		isTimeOut = true;
-	}
-	else
-	{
-		isTimeOut = false;
+		if (timer_ >= limitTimer_)
+		{
+			isTimeOut_ = true;
+		}
+		else
+		{
+			isTimeOut_ = false;
+		}
 	}
 }

@@ -18,24 +18,24 @@ SilhouetteObj::~SilhouetteObj()
 	delete constantBufferTransform;
 	delete constantBufferColor;
 }
-void SilhouetteObj::Update(const SilhouetteObj* parent)
+void SilhouetteObj::Update(SilhouetteObj* parent)
 {
 	obj->Update();
 
-	transform.pos = obj->pos_;
-	transform.scale = obj->scale_;
-	transform.rot = obj->rot_;
+	transform.pos_ = obj->pos_;
+	transform.scale_ = obj->scale_;
+	transform.rot_ = obj->rot_;
 	transform.Update();
 	if (parent != nullptr)
 	{
-		transform.worldMat_ *= parent->transform.worldMat_;
+		transform.GetWorldMat() *= parent->transform.GetWorldMat();
 	}
 
 	// マトリックス転送
 	constantBufferTransform->constantBufferMap->viewMat =
 		Camera::current.GetViewLookToMat() *
 		Camera::current.GetPerspectiveProjectionMat();
-	constantBufferTransform->constantBufferMap->worldMat = transform.worldMat_;
+	constantBufferTransform->constantBufferMap->worldMat = transform.GetWorldMat();
 	constantBufferTransform->constantBufferMap->cameraPos = Camera::current.pos;
 
 	// 色転送

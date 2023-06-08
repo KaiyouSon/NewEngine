@@ -2,62 +2,22 @@
 #include "RenderBase.h"
 #include "Camera.h"
 
-float Max(const float& a, const float& b)
-{
-	return a >= b ? a : b;
-}
-
-float Min(const float& a, const float& b)
-{
-	return a <= b ? a : b;
-}
-
-int Sign(const float& a)
+int Sign(const float a)
 {
 	return a >= 0 ? 1 : -1;
 }
 
-Vec2 Sign(const Vec2& a)
+Vec2 Sign(const Vec2 a)
 {
 	return { (float)Sign(a.x),(float)Sign(a.y) };
 }
 
-Vec3 Sign(const Vec3& a)
+Vec3 Sign(const Vec3 a)
 {
 	return { (float)Sign(a.x),(float)Sign(a.y),(float)Sign(a.z) };
 }
 
-float Convergence(const float& value, const float& speed, const float& origin)
-{
-	float tValue = value;
-	if (value == origin)
-	{
-		return origin;
-	}
-	else if (value > origin)
-	{
-		tValue -= fabs(speed);
-		return Max(tValue, origin);
-	}
-	else if (value < origin)
-	{
-		tValue += fabs(speed);
-		return Min(tValue, origin);
-	}
-
-	return -1;
-}
-
-float Restore(const float& value, const float& limit, const float& origin)
-{
-	if (value >= limit)
-	{
-		return origin + value - limit;
-	}
-	return value;
-}
-
-int GetDight(const int& value)
+int GetDight(const int value)
 {
 	int tempValue = value;
 	int digit = 0;
@@ -69,7 +29,7 @@ int GetDight(const int& value)
 	return digit;
 }
 
-unsigned long GetNowTime(const TimeUnit& timeUnit)
+unsigned long GetNowTime(const TimeUnit timeUnit)
 {
 	switch (timeUnit)
 	{
@@ -88,7 +48,7 @@ unsigned long GetNowTime(const TimeUnit& timeUnit)
 
 	return -1;
 }
-Vec2 WorldToScreen(const Vec3& worldPos)
+Vec2 WorldToScreen(const Vec3 worldPos)
 {
 	Mat4 viewportMat =
 		ConvertViewportMat(*RenderBase::GetInstance()->GetViewport());
@@ -104,7 +64,7 @@ Vec2 WorldToScreen(const Vec3& worldPos)
 }
 
 // OŠpŒ`‚Ì–@ü‚ğ‹‚ß‚é
-Vec3 GetTriangleNormal(const Vec3& p0, const Vec3& p1, const Vec3& p2)
+Vec3 GetTriangleNormal(const Vec3 p0, const Vec3 p1, const Vec3 p2)
 {
 	Vec3 v1 = p1 - p0;
 	Vec3 v2 = p2 - p0;

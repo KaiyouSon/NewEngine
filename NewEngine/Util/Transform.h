@@ -14,34 +14,34 @@ enum BillBoardType
 class Transform
 {
 public:
-	Vec3 pos;	// 座標
-	Vec3 scale;	// スケール
-	Vec3 rot;	// 回転
-	Mat4 worldMat_;	// ワールド変換行列
+	Vec3 pos_;	// 座標
+	Vec3 scale_;	// スケール
+	Vec3 rot_;	// 回転
 
 private:
-	Mat4 scaleMat;	// スケール行列
-	Mat4 rotMat;	// 回転行列
-	Mat4 transMat;	// 平行移動行列
-	Mat4 billboardMat; // ビルボード行列
+	Mat4 scaleMat_;	// スケール行列
+	Mat4 rotMat_;	// 回転行列
+	Mat4 transMat_;	// 平行移動行列
+	Mat4 worldMat_;	// ワールド変換行列
+	Mat4 billboardMat_; // ビルボード行列
 
-	bool isUseBillboard;
-	int billboardType;
+	bool isUseBillboard_;
+	int billboardType_;
 
 private:
 	void BillBoardUpdate();
 
 public:
 	Transform();
-	Transform(const Vec3& pos, const Vec3& scale, const Vec3& rot);
+	Transform(const Vec3 pos, const Vec3 scale, const Vec3 rot);
 	void Update();
 
 public:	// セッター
-	inline void SetisUseBillboard(const bool& isUseBillboard) { this->isUseBillboard = isUseBillboard; }
-	inline void SetBillboardType(const int& billboardType) { this->billboardType = billboardType; }
+	inline void SetisUseBillboard(const bool isUseBillboard) { this->isUseBillboard_ = isUseBillboard; }
+	inline void SetBillboardType(const int billboardType) { this->billboardType_ = billboardType; }
 
-	inline bool GetisUseBillboard() { return isUseBillboard; }
-	inline int GetBillboardType() { return billboardType; }
+	inline bool GetisUseBillboard() { return isUseBillboard_; }
+	inline int GetBillboardType() { return billboardType_; }
 
 #pragma region ゲッター
 

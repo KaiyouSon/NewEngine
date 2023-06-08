@@ -7,6 +7,13 @@ public:
 	constexpr Color() : r(255), g(255), b(255), a(255) {}
 	constexpr Color(float r, float g, float b) : r(r), g(g), b(b), a(255) {}
 	constexpr Color(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {}
+	constexpr Color(const unsigned int& colorCodo)
+	{
+		r = (float)((colorCodo >> 16) & 0xff);
+		g = (float)((colorCodo >> 8) & 0xff);
+		b = (float)(colorCodo & 0xff);
+		a = 255;
+	}
 
 	const static Color red;
 	const static Color green;
@@ -17,16 +24,16 @@ public:
 
 	Color GetColorTo01() { return { r / 255,g / 255,b / 255 ,a / 255 }; }
 
-	Color operator=(const Color& other);
+	Color operator=(const Color other);
 
 	// ”äŠr‰‰Zq‚ÌƒI[ƒo[ƒ[ƒh
-	bool operator!=(const Color& other) const;
+	bool operator!=(const Color other) const;
 	Color& operator++();
 
-	Color operator+(float num) const;		 // ˆê‚Â‚Ì’l‚Æ‚Ì‘«‚µZ
-	Color operator-(float num) const;		 // ˆê‚Â‚Ì’l‚Æ‚Ìˆø‚«Z
-	Color operator*(float num) const;         // ˆê‚Â‚Ì’l‚Æ‚ÌŠ|‚¯Z
-	Color operator/(float num) const;         // ˆê‚Â‚Ì’l‚Æ‚ÌŠ„‚èZ
+	Color operator+(const float num) const;		 // ˆê‚Â‚Ì’l‚Æ‚Ì‘«‚µZ
+	Color operator-(const float num) const;		 // ˆê‚Â‚Ì’l‚Æ‚Ìˆø‚«Z
+	Color operator*(const float num) const;         // ˆê‚Â‚Ì’l‚Æ‚ÌŠ|‚¯Z
+	Color operator/(const float num) const;         // ˆê‚Â‚Ì’l‚Æ‚ÌŠ„‚èZ
 
 };
 

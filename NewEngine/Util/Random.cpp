@@ -9,12 +9,12 @@ void Random::Init()
 	srand((unsigned int)time(nullptr));
 }
 
-int Random::Range(const int& min, const int& max)
+int Random::Range(const int min, const int max)
 {
 	return rand() % ((max - min) + 1) + min;
 }
 
-float Random::RangeF(const float& min, const float& max)
+float Random::RangeF(const float min, const float max)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -23,7 +23,7 @@ float Random::RangeF(const float& min, const float& max)
 }
 
 
-Vec2 Random::RangeVec2(const float& min, const float& max, const bool& isSameValue)
+Vec2 Random::RangeVec2(const float min, const float max, const bool isSameValue)
 {
 	if (isSameValue == true)
 	{
@@ -36,7 +36,7 @@ Vec2 Random::RangeVec2(const float& min, const float& max, const bool& isSameVal
 	}
 }
 
-Vec3 Random::RangeVec3(const float& min, const float& max, const bool& isSameValue)
+Vec3 Random::RangeVec3(const float min, const float max, const bool isSameValue)
 {
 	if (isSameValue == true)
 	{
@@ -49,24 +49,24 @@ Vec3 Random::RangeVec3(const float& min, const float& max, const bool& isSameVal
 	}
 }
 
-bool Random::RangeB(const float& rate)
+bool Random::RangeB(const float rate)
 {
 	float num = RangeF(0, 100);
 	if (num < rate) return true;
 	return false;
 }
 
-float Random::RangeAngle(const float& min, const float& max)
+float Random::RangeAngle(const float min, const float max)
 {
 	return RangeF(min, max);
 }
 
-float Random::RangeRadian(const float& min, const float& max)
+float Random::RangeRadian(const float min, const float max)
 {
 	return RangeF(min, max);
 }
 
-Vec2 Random::RangeInCircle(const float& minRadius, const float& maxRadius)
+Vec2 Random::RangeInCircle(const float minRadius, const float maxRadius)
 {
 	const float randomRadian = RangeRadian();
 	const float radius = RangeF(minRadius, maxRadius);

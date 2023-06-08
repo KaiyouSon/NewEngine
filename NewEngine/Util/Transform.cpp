@@ -2,71 +2,71 @@
 #include "MathUtil.h"
 
 Transform::Transform() :
-	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
-	worldMat_(Mat4::Identity()), scaleMat(Mat4::Identity()),
-	rotMat(Mat4::Identity()), transMat(Mat4::Identity()),
-	billboardMat(Mat4::Identity()), isUseBillboard(false), billboardType(XAxisBillboard)
+	pos_(0, 0, 0), scale_(1, 1, 1), rot_(0, 0, 0),
+	worldMat_(Mat4::Identity()), scaleMat_(Mat4::Identity()),
+	rotMat_(Mat4::Identity()), transMat_(Mat4::Identity()),
+	billboardMat_(Mat4::Identity()), isUseBillboard_(false), billboardType_(XAxisBillboard)
 {
 }
 
-Transform::Transform(const Vec3& pos, const Vec3& scale, const Vec3& rot) :
-	pos(pos), scale(scale), rot(rot),
-	worldMat_(Mat4::Identity()), scaleMat(Mat4::Identity()),
-	rotMat(Mat4::Identity()), transMat(Mat4::Identity()),
-	billboardMat(Mat4::Identity()), isUseBillboard(false), billboardType(XAxisBillboard)
+Transform::Transform(const Vec3 pos, const Vec3 scale, const Vec3 rot) :
+	pos_(pos), scale_(scale), rot_(rot),
+	worldMat_(Mat4::Identity()), scaleMat_(Mat4::Identity()),
+	rotMat_(Mat4::Identity()), transMat_(Mat4::Identity()),
+	billboardMat_(Mat4::Identity()), isUseBillboard_(false), billboardType_(XAxisBillboard)
 {
 }
 
 void Transform::Update()
 {
-	scaleMat = ConvertScalingMat(scale);		 // スケーリング
-	rotMat = Mat4::Identity();
-	rotMat *= ConvertRotationZAxisMat(rot.z); // z軸回転
-	rotMat *= ConvertRotationXAxisMat(rot.x); // x軸回転
-	rotMat *= ConvertRotationYAxisMat(rot.y); // y軸回転
-	transMat = ConvertTranslationMat(pos);	 // 平行移動
+	scaleMat_ = ConvertScalingMat(scale_);		 // スケーリング
+	rotMat_ = Mat4::Identity();
+	rotMat_ *= ConvertRotationZAxisMat(rot_.z); // z軸回転
+	rotMat_ *= ConvertRotationXAxisMat(rot_.x); // x軸回転
+	rotMat_ *= ConvertRotationYAxisMat(rot_.y); // y軸回転
+	transMat_ = ConvertTranslationMat(pos_);	 // 平行移動
 
 	BillBoardUpdate();
 
 	worldMat_ = Mat4::Identity();
-	worldMat_ *= billboardMat;
-	worldMat_ *= scaleMat;
-	worldMat_ *= rotMat;
-	worldMat_ *= transMat;
+	worldMat_ *= billboardMat_;
+	worldMat_ *= scaleMat_;
+	worldMat_ *= rotMat_;
+	worldMat_ *= transMat_;
 }
 
 void Transform::BillBoardUpdate()
 {
-	if (isUseBillboard == false)
+	if (isUseBillboard_ == false)
 	{
-		billboardMat = Mat4::Identity();
+		billboardMat_ = Mat4::Identity();
 	}
 	else
 	{
-		switch (billboardType)
+		switch (billboardType_)
 		{
 		case XAxisBillboard:
 		{
-			billboardMat = Mat4::Identity();
-			billboardMat *= ConvertBillBoardXAxis();
+			billboardMat_ = Mat4::Identity();
+			billboardMat_ *= ConvertBillBoardXAxis();
 			break;
 		}
 		case YAxisBillboard:
 		{
-			billboardMat = Mat4::Identity();
-			billboardMat *= ConvertBillBoardYAxis();
+			billboardMat_ = Mat4::Identity();
+			billboardMat_ *= ConvertBillBoardYAxis();
 			break;
 		}
 		case ZAxisBillboard:
 		{
-			billboardMat = Mat4::Identity();
-			billboardMat *= ConvertBillBoardZAxis();
+			billboardMat_ = Mat4::Identity();
+			billboardMat_ *= ConvertBillBoardZAxis();
 			break;
 		}
 		case AllAxisBillboard:
 		{
-			billboardMat = Mat4::Identity();
-			billboardMat *= ConvertBillBoardAllAxis();
+			billboardMat_ = Mat4::Identity();
+			billboardMat_ *= ConvertBillBoardAllAxis();
 			break;
 		}
 		default:
@@ -77,9 +77,9 @@ void Transform::BillBoardUpdate()
 
 #pragma region セッター
 
-Mat4 Transform::GetTransMat() { return transMat; }	// 移動行列
-Mat4 Transform::GetScaleMat() { return scaleMat; }	// スケール行列
-Mat4 Transform::GetRotMat() { return rotMat; }		// 回転行列
+Mat4 Transform::GetTransMat() { return transMat_; }	// 移動行列
+Mat4 Transform::GetScaleMat() { return scaleMat_; }	// スケール行列
+Mat4 Transform::GetRotMat() { return rotMat_; }		// 回転行列
 Mat4 Transform::GetWorldMat() { return worldMat_; }	// ワールド行列
 
 #pragma endregion

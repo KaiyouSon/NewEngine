@@ -29,16 +29,16 @@ Line::~Line()
 
 void Line::Update()
 {
-	transform.pos = pos;
-	transform.scale = { scale,1,1 };
-	transform.rot = rot;
+	transform.pos_ = pos;
+	transform.scale_ = { scale,1,1 };
+	transform.rot_ = rot;
 	transform.Update();
 
 	// マトリックス転送
 	constantBufferTransform->constantBufferMap->viewMat =
 		Camera::current.GetViewLookToMat() *
 		Camera::current.GetPerspectiveProjectionMat();
-	constantBufferTransform->constantBufferMap->worldMat = transform.worldMat_;
+	constantBufferTransform->constantBufferMap->worldMat = transform.GetWorldMat();
 	constantBufferTransform->constantBufferMap->cameraPos = Camera::current.pos;
 
 	// 色転送

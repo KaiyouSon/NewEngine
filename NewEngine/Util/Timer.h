@@ -3,20 +3,23 @@
 class Timer
 {
 private:
-	int timer;
-	int maxTimer;
-	bool isTimeOut;
+	int timer_;
+	int limitTimer_;
+	bool isTimeOut_;
 
 public:
 	Timer();
-	Timer(const int& maxTimer);
+	Timer(const int maxTimer);
 
 	void Reset();
-	void AddTimer(const float& addTimer = 1);
-	void SubTimer(const float& subTimer = 1);
-	inline void SetisTimeOut(const bool& isTimeOut) { this->isTimeOut = isTimeOut; timer = maxTimer; }
-	inline void SetMaxTimer(const int& maxTimer) { this->maxTimer = maxTimer; }
-	inline bool GetisTimeOut() { return isTimeOut; }
-	inline float GetTimeRate() { return (float)timer / (float)maxTimer; }
+	void Update(const bool isRoop, const int addTimer = 1);
+
+public:	// セッター
+	inline void SetLimitTimer(const int maxTimer) { this->limitTimer_ = maxTimer; }
+
+public:	// ゲッター
+	inline int GetTimer() { return timer_; }
+	inline float GetTimeRate() { return (float)timer_ / (float)limitTimer_; }
+	inline bool GetisTimeOut() { return isTimeOut_; }
 };
 

@@ -4,25 +4,29 @@
 class Easing
 {
 private:
-	int timer;
-	int easeTimer;
-	float timeRate;
-	float powNum;
-	bool isEnd;
+	int timer_;
+	int limitTimer_;
+	float timeRate_;
+	float powNum_;
+	bool isEnd_;
 
 public:
 	Easing();
-	Easing(const int& easeTimer);
-	Easing(const int& easeTimer, const float& powNum);
+	Easing(const int& limitTimer);
+	Easing(const int& limitTimer, const float& powNum);
 	void Reset();		// リセット
-	void Update();		// 補間
+	void Update(const bool isRoop);		// 補間
 
 	// 補間時間をセットする
-	inline void SetEaseTimer(const int& easeTimer) { this->easeTimer = easeTimer; }
+	inline void SetEaseTimer(const int& limitTimer) { this->limitTimer_ = limitTimer; }
 	// N乗をセットする
-	inline void SetPowNum(const float& powNum) { this->powNum = powNum; }
+	inline void SetPowNum(const float& powNum) { this->powNum_ = powNum; }
 	// イージング終わり
-	inline bool GetisEnd() { return isEnd; }
+	inline bool GetisEnd() { return isEnd_; }
+	// タイマー取得
+	inline int GetTimer() { return timer_; }
+	// タイムレートを取得
+	inline float GetTimeRate() { return timeRate_; }
 
 	// ラープ
 	float Lerp(const float& startPos, const float& endPos);

@@ -25,7 +25,7 @@ void LogoScene::Init()
 	logoSprite->color.a = 0;
 	backSprite->size = GetWindowSize();
 
-	stayTimer.SetMaxTimer(30);
+	stayTimer.SetLimitTimer(30);
 
 	alphaEase.SetEaseTimer(60);
 	isRevercr = false;
@@ -36,10 +36,10 @@ void LogoScene::Init()
 
 void LogoScene::Update()
 {
-	stayTimer.AddTimer();
+	stayTimer.Update(true);
 	if (stayTimer.GetisTimeOut() == true && isEnd == false)
 	{
-		alphaEase.Update();
+		alphaEase.Update(true);
 
 		if (isRevercr == false)
 		{

@@ -16,7 +16,7 @@ public:
 	OutLineObj();
 	~OutLineObj();
 
-	void Update(const OutLineObj* parent = nullptr);
+	void Update(OutLineObj* parent = nullptr);
 	void Draw();
 };
 

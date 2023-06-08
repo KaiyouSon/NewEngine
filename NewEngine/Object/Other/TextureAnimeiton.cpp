@@ -32,8 +32,8 @@ void TextureAnimeiton::Play(const int& maxTimer, Sprite* sprite)
 	sprite->size = initRightDownPos;
 	sprite->SetTextureRect(leftTopPos, rightDownPos);
 
-	animetionTimer.SetMaxTimer(maxTimer);
-	animetionTimer.AddTimer();
+	animetionTimer.SetLimitTimer(maxTimer);
+	animetionTimer.Update(true);
 }
 
 void TextureAnimeiton::Reset()

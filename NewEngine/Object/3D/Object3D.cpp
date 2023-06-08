@@ -73,9 +73,9 @@ void Object3D::PlayAnimetion()
 }
 void Object3D::Update(Transform* parent)
 {
-	transform_.pos = pos_;
-	transform_.scale = scale_;
-	transform_.rot = rot_;
+	transform_.pos_ = pos_;
+	transform_.scale_ = scale_;
+	transform_.rot_ = rot_;
 	transform_.Update();
 
 	if (parent != nullptr)
@@ -130,7 +130,7 @@ void Object3D::TransferBuffer()
 	constantBufferTransform_->constantBufferMap->viewMat =
 		Camera::current.GetViewLookToMat() *
 		Camera::current.GetPerspectiveProjectionMat();
-	constantBufferTransform_->constantBufferMap->worldMat = transform_.worldMat_;
+	constantBufferTransform_->constantBufferMap->worldMat = transform_.GetWorldMat();
 	constantBufferTransform_->constantBufferMap->cameraPos = Camera::current.pos;
 
 	// ƒ}ƒeƒŠƒAƒ‹‚Ì“]‘—
