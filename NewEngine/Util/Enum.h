@@ -36,3 +36,19 @@ enum class BillBoardType
 	ZAxisBillboard,
 	AllAxisBillboard,
 };
+
+// トポロジータイプ
+enum class TopologyType
+{
+	Point,
+	Line,
+	Triangle,
+};
+
+// カーリングモード
+enum class CullMode
+{
+	None,
+	Front,
+	Back,
+};

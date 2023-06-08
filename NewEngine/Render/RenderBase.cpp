@@ -456,9 +456,9 @@ void RenderBase::GraphicsPipelineInit()
 	GraphicsPipelineManager::Create(
 		ShaderObjectManager::GetShaderObject("Object3D"),
 		object3DRootSignature->GetRootSignature(),
-		CullMode::CullBack,
+		CullMode::Back,
 		depthStencilDesc1,
-		TopologyType::TriangleTopology,
+		TopologyType::Triangle,
 		2,
 		"Object3D");
 
@@ -466,9 +466,9 @@ void RenderBase::GraphicsPipelineInit()
 	GraphicsPipelineManager::Create(
 		ShaderObjectManager::GetShaderObject("FbxModel"),
 		object3DRootSignature->GetRootSignature(),
-		CullMode::CullBack,
+		CullMode::Back,
 		depthStencilDesc1,
-		TopologyType::TriangleTopology,
+		TopologyType::Triangle,
 		1,
 		"FbxModel");
 
@@ -478,7 +478,7 @@ void RenderBase::GraphicsPipelineInit()
 		spriteRootSignature->GetRootSignature(),
 		CullMode::None,
 		depthStencilDesc2,
-		TopologyType::TriangleTopology,
+		TopologyType::Triangle,
 		1,
 		"Sprite");
 
@@ -488,7 +488,7 @@ void RenderBase::GraphicsPipelineInit()
 		spriteRootSignature->GetRootSignature(),
 		CullMode::None,
 		depthStencilDesc2,
-		TopologyType::TriangleTopology,
+		TopologyType::Triangle,
 		1,
 		"CircleGaugeSprite");
 
@@ -498,7 +498,7 @@ void RenderBase::GraphicsPipelineInit()
 		spriteRootSignature->GetRootSignature(),
 		CullMode::None,
 		depthStencilDesc2,
-		TopologyType::TriangleTopology,
+		TopologyType::Triangle,
 		1,
 		"RenderTexture");
 
@@ -506,9 +506,9 @@ void RenderBase::GraphicsPipelineInit()
 	GraphicsPipelineManager::Create(
 		ShaderObjectManager::GetShaderObject("Silhouette"),
 		object3DRootSignature->GetRootSignature(),
-		CullMode::CullBack,
+		CullMode::Back,
 		depthStencilDesc3,
-		TopologyType::TriangleTopology,
+		TopologyType::Triangle,
 		1,
 		"Silhouette");
 
@@ -516,9 +516,9 @@ void RenderBase::GraphicsPipelineInit()
 	GraphicsPipelineManager::Create(
 		ShaderObjectManager::GetShaderObject("Outline"),
 		object3DRootSignature->GetRootSignature(),
-		CullMode::CullFront,
+		CullMode::Front,
 		depthStencilDesc4,
-		TopologyType::TriangleTopology,
+		TopologyType::Triangle,
 		1,
 		"Outline");
 
@@ -526,9 +526,9 @@ void RenderBase::GraphicsPipelineInit()
 	GraphicsPipelineManager::Create(
 		ShaderObjectManager::GetShaderObject("ToonRender"),
 		object3DRootSignature->GetRootSignature(),
-		CullMode::CullBack,
+		CullMode::Back,
 		depthStencilDesc1,
-		TopologyType::TriangleTopology,
+		TopologyType::Triangle,
 		1,
 		"ToonRendering");
 
@@ -538,7 +538,7 @@ void RenderBase::GraphicsPipelineInit()
 		object3DRootSignature->GetRootSignature(),
 		CullMode::None,
 		depthStencilDesc1,
-		TopologyType::LineTopology,
+		TopologyType::Line,
 		1,
 		"Line");
 }

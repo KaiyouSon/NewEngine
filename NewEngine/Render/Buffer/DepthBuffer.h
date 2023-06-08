@@ -13,7 +13,7 @@ public:
 	void Create();
 
 public: // セッター
-	inline void SetCpuHandle(const D3D12_CPU_DESCRIPTOR_HANDLE& cpuHandle) { this->cpuHandle_ = cpuHandle; }
+	inline void SetCpuHandle(const D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle) { this->cpuHandle_ = cpuHandle; }
 
 public: // ゲッター
 	inline ID3D12Resource* GetBuffer() { return buffer_.Get(); }
