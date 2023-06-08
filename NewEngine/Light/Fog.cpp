@@ -2,7 +2,7 @@
 
 Fog::Fog() :
 	constantBufferFog(new ConstantBuffer<ConstantBufferDataFog>),
-	isActive(true), nearDis(0), farDis(50), color(Color::white)
+	isActive(true), nearDis(0), farDis(50), color(Color::sWhite)
 {
 	constantBufferFog->Init();
 }

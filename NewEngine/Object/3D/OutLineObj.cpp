@@ -2,7 +2,7 @@
 #include "RenderBase.h"
 
 OutLineObj::OutLineObj() :
-	color(Color::black),
+	color(Color::sBlack),
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform3D>),
 	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>)
 {

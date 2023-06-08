@@ -4,7 +4,7 @@
 using namespace std;
 
 SilhouetteObj::SilhouetteObj() :
-	color(Color::black),
+	color(Color::sBlack),
 	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform3D>),
 	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>),
 	graphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Silhouette"))
