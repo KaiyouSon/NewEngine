@@ -7,12 +7,12 @@ Easing::Easing() :
 	limitTimer_(0), powNum_(1), isEnd_(false)
 {
 }
-Easing::Easing(const int easeTimer) :
+Easing::Easing(const uint32_t easeTimer) :
 	timer_(0), timeRate_(0),
 	limitTimer_(easeTimer), powNum_(1), isEnd_(false)
 {
 }
-Easing::Easing(const int easeTimer, const float powNum) :
+Easing::Easing(const uint32_t easeTimer, const float powNum) :
 	timer_(0), timeRate_(0),
 	limitTimer_(easeTimer), powNum_(powNum), isEnd_(false)
 {
@@ -41,7 +41,7 @@ void Easing::Update(const bool isRoop)
 		isEnd_ = true;
 	}
 
-	timer_ = Min<int>(timer_, limitTimer_);
+	timer_ = Min<uint32_t>(timer_, limitTimer_);
 	timeRate_ = Min<float>((float)timer_ / limitTimer_, 1);
 }
 
@@ -83,11 +83,11 @@ Vec3 Easing::In(const Vec3 startPos, const Vec3 endPos)
 float Easing::Out(const float startPos, const float endPos)
 {
 	float dis = endPos - startPos;
-	if ((int)powNum_ % 2 == 1)
+	if ((uint32_t)powNum_ % 2 == 1)
 	{
 		return dis * (powf(timeRate_ - 1, powNum_) + 1) + startPos;
 	}
-	else if ((int)powNum_ % 2 == 0)
+	else if ((uint32_t)powNum_ % 2 == 0)
 	{
 		return dis * -1 * (powf(timeRate_ - 1, powNum_) - 1) + startPos;
 	}
@@ -97,11 +97,11 @@ float Easing::Out(const float startPos, const float endPos)
 Vec2 Easing::Out(const Vec2 startPos, const Vec2 endPos)
 {
 	Vec2 dis = endPos - startPos;
-	if ((int)powNum_ % 2 == 1)
+	if ((uint32_t)powNum_ % 2 == 1)
 	{
 		return dis * (powf(timeRate_ - 1, powNum_) + 1) + startPos;
 	}
-	else if ((int)powNum_ % 2 == 0)
+	else if ((uint32_t)powNum_ % 2 == 0)
 	{
 		return dis * -1 * (powf(timeRate_ - 1, powNum_) - 1) + startPos;
 	}
@@ -111,11 +111,11 @@ Vec2 Easing::Out(const Vec2 startPos, const Vec2 endPos)
 Vec3 Easing::Out(const Vec3 startPos, const Vec3 endPos)
 {
 	Vec3 dis = endPos - startPos;
-	if ((int)powNum_ % 2 == 1)
+	if ((uint32_t)powNum_ % 2 == 1)
 	{
 		return dis * (powf(timeRate_ - 1, powNum_) + 1) + startPos;
 	}
-	else if ((int)powNum_ % 2 == 0)
+	else if ((uint32_t)powNum_ % 2 == 0)
 	{
 		return dis * -1 * (powf(timeRate_ - 1, powNum_) - 1) + startPos;
 	}
@@ -135,11 +135,11 @@ float Easing::InOut(const float startPos, const float endPos)
 	}
 	else
 	{
-		if ((int)powNum_ % 2 == 1)
+		if ((uint32_t)powNum_ % 2 == 1)
 		{
 			return dis2 * (powf(timeRate_ - 1, powNum_) + 1) + startPos;
 		}
-		else if ((int)powNum_ % 2 == 0)
+		else if ((uint32_t)powNum_ % 2 == 0)
 		{
 			return dis2 * -1 * (powf(timeRate_ - 1, powNum_) - 1) + startPos;
 		}

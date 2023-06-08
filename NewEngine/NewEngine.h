@@ -32,6 +32,7 @@
 #include <map>
 #include <future>
 #include <thread>
+#include <cstdint>
 
 void NewEngineInit();
 void NewEngineUpda();

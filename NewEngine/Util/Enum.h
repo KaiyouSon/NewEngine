@@ -27,3 +27,12 @@ enum class BezierType
 	EaseIn,
 	EaseOut,
 };
+
+// ビルボードの種類
+enum class BillBoardType
+{
+	XAxisBillboard,
+	YAxisBillboard,
+	ZAxisBillboard,
+	AllAxisBillboard,
+};

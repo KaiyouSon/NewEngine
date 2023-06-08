@@ -1,4 +1,6 @@
 #pragma once
+#include <cstdint>
+
 class Color
 {
 public:
@@ -7,7 +9,7 @@ public:
 	constexpr Color() : r(255), g(255), b(255), a(255) {}
 	constexpr Color(float r, float g, float b) : r(r), g(g), b(b), a(255) {}
 	constexpr Color(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {}
-	constexpr Color(const unsigned int& colorCodo)
+	constexpr Color(const uint32_t colorCodo)
 	{
 		r = (float)((colorCodo >> 16) & 0xff);
 		g = (float)((colorCodo >> 8) & 0xff);

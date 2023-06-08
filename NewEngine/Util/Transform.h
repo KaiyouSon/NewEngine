@@ -1,15 +1,7 @@
 #pragma once
-#include "Util.h"
 #include "Vec3.h"
 #include "Mat4.h"
-
-enum BillBoardType
-{
-	XAxisBillboard,
-	YAxisBillboard,
-	ZAxisBillboard,
-	AllAxisBillboard,
-};
+#include "Enum.h"
 
 class Transform
 {
@@ -26,7 +18,7 @@ private:
 	Mat4 billboardMat_; // ビルボード行列
 
 	bool isUseBillboard_;
-	int billboardType_;
+	BillBoardType billboardType_;
 
 private:
 	void BillBoardUpdate();
@@ -37,11 +29,11 @@ public:
 	void Update();
 
 public:	// セッター
-	inline void SetisUseBillboard(const bool isUseBillboard) { this->isUseBillboard_ = isUseBillboard; }
-	inline void SetBillboardType(const int billboardType) { this->billboardType_ = billboardType; }
+	inline void SetisUseBillboard(const bool isUseBillboard) { isUseBillboard_ = isUseBillboard; }
+	inline void SetBillboardType(const BillBoardType billboardType) { billboardType_ = billboardType; }
 
 	inline bool GetisUseBillboard() { return isUseBillboard_; }
-	inline int GetBillboardType() { return billboardType_; }
+	inline BillBoardType GetBillboardType() { return billboardType_; }
 
 #pragma region ゲッター
 

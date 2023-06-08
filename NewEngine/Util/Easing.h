@@ -1,30 +1,31 @@
 #pragma once
 #include "Vec3.h"
+#include <cstdint>
 
 class Easing
 {
 private:
-	int timer_;
-	int limitTimer_;
+	uint32_t timer_;
+	uint32_t limitTimer_;
 	float timeRate_;
 	float powNum_;
 	bool isEnd_;
 
 public:
 	Easing();
-	Easing(const int limitTimer);
-	Easing(const int limitTimer, const float powNum);
+	Easing(const uint32_t limitTimer);
+	Easing(const uint32_t limitTimer, const float powNum);
 	void Reset();		// リセット
 	void Update(const bool isRoop);		// 補間
 
 	// 補間時間をセットする
-	inline void SetEaseTimer(const int limitTimer) { this->limitTimer_ = limitTimer; }
+	inline void SetEaseTimer(const uint32_t limitTimer) { this->limitTimer_ = limitTimer; }
 	// N乗をセットする
 	inline void SetPowNum(const float powNum) { this->powNum_ = powNum; }
 	// イージング終わり
 	inline bool GetisEnd() { return isEnd_; }
 	// タイマー取得
-	inline int GetTimer() { return timer_; }
+	inline uint32_t GetTimer() { return timer_; }
 	// タイムレートを取得
 	inline float GetTimeRate() { return timeRate_; }
 

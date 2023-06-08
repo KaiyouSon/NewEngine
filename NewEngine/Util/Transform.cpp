@@ -5,7 +5,8 @@ Transform::Transform() :
 	pos_(0, 0, 0), scale_(1, 1, 1), rot_(0, 0, 0),
 	worldMat_(Mat4::Identity()), scaleMat_(Mat4::Identity()),
 	rotMat_(Mat4::Identity()), transMat_(Mat4::Identity()),
-	billboardMat_(Mat4::Identity()), isUseBillboard_(false), billboardType_(XAxisBillboard)
+	billboardMat_(Mat4::Identity()), isUseBillboard_(false),
+	billboardType_(BillBoardType::XAxisBillboard)
 {
 }
 
@@ -13,7 +14,8 @@ Transform::Transform(const Vec3 pos, const Vec3 scale, const Vec3 rot) :
 	pos_(pos), scale_(scale), rot_(rot),
 	worldMat_(Mat4::Identity()), scaleMat_(Mat4::Identity()),
 	rotMat_(Mat4::Identity()), transMat_(Mat4::Identity()),
-	billboardMat_(Mat4::Identity()), isUseBillboard_(false), billboardType_(XAxisBillboard)
+	billboardMat_(Mat4::Identity()), isUseBillboard_(false),
+	billboardType_(BillBoardType::XAxisBillboard)
 {
 }
 
@@ -45,25 +47,25 @@ void Transform::BillBoardUpdate()
 	{
 		switch (billboardType_)
 		{
-		case XAxisBillboard:
+		case BillBoardType::XAxisBillboard:
 		{
 			billboardMat_ = Mat4::Identity();
 			billboardMat_ *= ConvertBillBoardXAxis();
 			break;
 		}
-		case YAxisBillboard:
+		case BillBoardType::YAxisBillboard:
 		{
 			billboardMat_ = Mat4::Identity();
 			billboardMat_ *= ConvertBillBoardYAxis();
 			break;
 		}
-		case ZAxisBillboard:
+		case BillBoardType::ZAxisBillboard:
 		{
 			billboardMat_ = Mat4::Identity();
 			billboardMat_ *= ConvertBillBoardZAxis();
 			break;
 		}
-		case AllAxisBillboard:
+		case BillBoardType::AllAxisBillboard:
 		{
 			billboardMat_ = Mat4::Identity();
 			billboardMat_ *= ConvertBillBoardAllAxis();

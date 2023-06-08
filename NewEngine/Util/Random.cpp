@@ -9,7 +9,7 @@ void Random::Init()
 	srand((unsigned int)time(nullptr));
 }
 
-int Random::Range(const int min, const int max)
+uint32_t Random::Range(const uint32_t min, const uint32_t max)
 {
 	return rand() % ((max - min) + 1) + min;
 }
@@ -21,7 +21,6 @@ float Random::RangeF(const float min, const float max)
 	std::uniform_real_distribution<> dist(min, max);
 	return float(dist(gen));
 }
-
 
 Vec2 Random::RangeVec2(const float min, const float max, const bool isSameValue)
 {

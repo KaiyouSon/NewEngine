@@ -9,14 +9,14 @@ BezierCurve::BezierCurve() :
 	ease_.SetPowNum(1);
 }
 
-BezierCurve::BezierCurve(const int ease_Timer) :
+BezierCurve::BezierCurve(const uint32_t ease_Timer) :
 	timer_(0), timeRate_(0), isEnd_(false), startIndex_(1)
 {
 	ease_.SetEaseTimer(ease_Timer);
 	ease_.SetPowNum(1);
 }
 
-BezierCurve::BezierCurve(const int ease_Timer, const float powNum) :
+BezierCurve::BezierCurve(const uint32_t ease_Timer, const float powNum) :
 	timer_(0), timeRate_(0), isEnd_(false), startIndex_(1)
 {
 	ease_.SetEaseTimer(ease_Timer);

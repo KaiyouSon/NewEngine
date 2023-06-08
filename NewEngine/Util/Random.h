@@ -1,13 +1,14 @@
 #pragma once
 #include "Vec3.h"
+#include <cstdint>
 
 class Random
 {
 public:
 	static void Init();
 
-	// intŒ^‚Ì—”‚ğæ“¾
-	static int Range(const int min, const int max);
+	// uint32_tŒ^‚Ì—”‚ğæ“¾
+	static uint32_t Range(const uint32_t min, const uint32_t max);
 
 	// floatŒ^‚Ì—”‚ğæ“¾
 	static float RangeF(const float min, const float max);
