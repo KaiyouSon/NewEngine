@@ -8,22 +8,22 @@ Vec3 Vec3MulMat4(const Vec3& v, const Mat4& m, const bool& isMulW)
 	Vec3 result = Vec3::zero;
 	if (isMulW == true)
 	{
-		float w = v.x * m.m[0][3] + v.y * m.m[1][3] + v.z * m.m[2][3] + m.m[3][3];
+		float w = v.x * m.m_[0][3] + v.y * m.m_[1][3] + v.z * m.m_[2][3] + m.m_[3][3];
 
 		result =
 		{
-		  (v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + m.m[3][0]) / w,
-		  (v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1] + m.m[3][1]) / w,
-		  (v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2] + m.m[3][2]) / w
+		  (v.x * m.m_[0][0] + v.y * m.m_[1][0] + v.z * m.m_[2][0] + m.m_[3][0]) / w,
+		  (v.x * m.m_[0][1] + v.y * m.m_[1][1] + v.z * m.m_[2][1] + m.m_[3][1]) / w,
+		  (v.x * m.m_[0][2] + v.y * m.m_[1][2] + v.z * m.m_[2][2] + m.m_[3][2]) / w
 		};
 	}
 	else
 	{
 		result =
 		{
-			 (v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + m.m[3][0]),
-			 (v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1] + m.m[3][1]),
-			 (v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2] + m.m[3][2])
+			 (v.x * m.m_[0][0] + v.y * m.m_[1][0] + v.z * m.m_[2][0] + m.m_[3][0]),
+			 (v.x * m.m_[0][1] + v.y * m.m_[1][1] + v.z * m.m_[2][1] + m.m_[3][1]),
+			 (v.x * m.m_[0][2] + v.y * m.m_[1][2] + v.z * m.m_[2][2] + m.m_[3][2])
 		};
 	}
 
@@ -36,7 +36,7 @@ void ConvertMat4FromFbx(Mat4* dst, const FbxAMatrix& src)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			dst->m[i][j] = (float)src.Get(i, j);
+			dst->m_[i][j] = (float)src.Get(i, j);
 		}
 	}
 }
@@ -97,17 +97,17 @@ Mat4 ConvertRotationMat(const Quaternion& q)
 {
 	Mat4 result = Mat4::Identity();
 
-	result.m[0][0] = (q.w * q.w) + (q.x * q.x) - (q.y * q.y) - (q.z * q.z);
-	result.m[0][1] = 2 * (q.x * q.y + q.w * q.z);
-	result.m[0][2] = 2 * (q.x * q.z - q.w * q.y);
+	result.m_[0][0] = (q.w * q.w) + (q.x * q.x) - (q.y * q.y) - (q.z * q.z);
+	result.m_[0][1] = 2 * (q.x * q.y + q.w * q.z);
+	result.m_[0][2] = 2 * (q.x * q.z - q.w * q.y);
 
-	result.m[1][0] = 2 * (q.x * q.y - q.w * q.z);
-	result.m[1][1] = (q.w * q.w) - (q.x * q.x) + (q.y * q.y) - (q.z * q.z);
-	result.m[1][2] = 2 * (q.y * q.z + q.w * q.x);
+	result.m_[1][0] = 2 * (q.x * q.y - q.w * q.z);
+	result.m_[1][1] = (q.w * q.w) - (q.x * q.x) + (q.y * q.y) - (q.z * q.z);
+	result.m_[1][2] = 2 * (q.y * q.z + q.w * q.x);
 
-	result.m[2][0] = 2 * (q.x * q.z + q.w * q.y);
-	result.m[2][1] = 2 * (q.y * q.z - q.w * q.x);
-	result.m[1][2] = (q.w * q.w) - (q.x * q.x) - (q.y * q.y) + (q.z * q.z);
+	result.m_[2][0] = 2 * (q.x * q.z + q.w * q.y);
+	result.m_[2][1] = 2 * (q.y * q.z - q.w * q.x);
+	result.m_[1][2] = (q.w * q.w) - (q.x * q.x) - (q.y * q.y) + (q.z * q.z);
 
 	return result;
 }
@@ -116,15 +116,15 @@ Mat4 ConvertBillBoardXAxis()
 {
 	Mat4 tempMat = Camera::current.GetViewLookToMat().Inverse();
 
-	tempMat.m[0][0] = 1;
-	tempMat.m[0][1] = 0;
-	tempMat.m[0][2] = 0;
-	tempMat.m[0][3] = 0;
+	tempMat.m_[0][0] = 1;
+	tempMat.m_[0][1] = 0;
+	tempMat.m_[0][2] = 0;
+	tempMat.m_[0][3] = 0;
 
-	tempMat.m[3][0] = 0;
-	tempMat.m[3][1] = 0;
-	tempMat.m[3][2] = 0;
-	tempMat.m[3][3] = 1;
+	tempMat.m_[3][0] = 0;
+	tempMat.m_[3][1] = 0;
+	tempMat.m_[3][2] = 0;
+	tempMat.m_[3][3] = 1;
 
 	return tempMat;
 }
@@ -132,15 +132,15 @@ Mat4 ConvertBillBoardYAxis()
 {
 	Mat4 tempMat = Camera::current.GetViewLookToMat().Inverse();
 
-	tempMat.m[1][0] = 0;
-	tempMat.m[1][1] = 1;
-	tempMat.m[1][2] = 0;
-	tempMat.m[1][3] = 0;
+	tempMat.m_[1][0] = 0;
+	tempMat.m_[1][1] = 1;
+	tempMat.m_[1][2] = 0;
+	tempMat.m_[1][3] = 0;
 
-	tempMat.m[3][0] = 0;
-	tempMat.m[3][1] = 0;
-	tempMat.m[3][2] = 0;
-	tempMat.m[3][3] = 1;
+	tempMat.m_[3][0] = 0;
+	tempMat.m_[3][1] = 0;
+	tempMat.m_[3][2] = 0;
+	tempMat.m_[3][3] = 1;
 
 	return tempMat;
 }
@@ -148,15 +148,15 @@ Mat4 ConvertBillBoardZAxis()
 {
 	Mat4 tempMat = Camera::current.GetViewLookToMat().Inverse();
 
-	tempMat.m[2][0] = 0;
-	tempMat.m[2][1] = 0;
-	tempMat.m[2][2] = 1;
-	tempMat.m[2][3] = 0;
+	tempMat.m_[2][0] = 0;
+	tempMat.m_[2][1] = 0;
+	tempMat.m_[2][2] = 1;
+	tempMat.m_[2][3] = 0;
 
-	tempMat.m[3][0] = 0;
-	tempMat.m[3][1] = 0;
-	tempMat.m[3][2] = 0;
-	tempMat.m[3][3] = 1;
+	tempMat.m_[3][0] = 0;
+	tempMat.m_[3][1] = 0;
+	tempMat.m_[3][2] = 0;
+	tempMat.m_[3][3] = 1;
 
 	return tempMat;
 }
@@ -164,10 +164,10 @@ Mat4 ConvertBillBoardAllAxis()
 {
 	Mat4 tempMat = Camera::current.GetViewLookToMat().Inverse();
 
-	tempMat.m[3][0] = 0;
-	tempMat.m[3][1] = 0;
-	tempMat.m[3][2] = 0;
-	tempMat.m[3][3] = 1;
+	tempMat.m_[3][0] = 0;
+	tempMat.m_[3][1] = 0;
+	tempMat.m_[3][2] = 0;
+	tempMat.m_[3][3] = 1;
 
 	return tempMat;
 }
@@ -179,26 +179,26 @@ Mat4 ConvertViewProjectionMatLookAt(const Vec3& pos, const Vec3& target, const V
 
 	// Çöé≤
 	Vec3 zAxis = target - pos;
-	view.m[2][0] = zAxis.Norm().x;
-	view.m[2][1] = zAxis.Norm().y;
-	view.m[2][2] = zAxis.Norm().z;
+	view.m_[2][0] = zAxis.Norm().x;
+	view.m_[2][1] = zAxis.Norm().y;
+	view.m_[2][2] = zAxis.Norm().z;
 
 	// Çòé≤
 	Vec3 xAxis = Vec3::Cross(up, zAxis);
-	view.m[0][0] = xAxis.Norm().x;
-	view.m[0][1] = xAxis.Norm().y;
-	view.m[0][2] = xAxis.Norm().z;
+	view.m_[0][0] = xAxis.Norm().x;
+	view.m_[0][1] = xAxis.Norm().y;
+	view.m_[0][2] = xAxis.Norm().z;
 
 	// Çôé≤
 	Vec3 yAxis = Vec3::Cross(zAxis, xAxis);
-	view.m[1][0] = yAxis.Norm().x;
-	view.m[1][1] = yAxis.Norm().y;
-	view.m[1][2] = yAxis.Norm().z;
+	view.m_[1][0] = yAxis.Norm().x;
+	view.m_[1][1] = yAxis.Norm().y;
+	view.m_[1][2] = yAxis.Norm().z;
 
 	// ïΩçsà⁄ìÆ
-	view.m[3][0] = Vec3::Dot(pos, xAxis.Norm());
-	view.m[3][1] = Vec3::Dot(pos, yAxis.Norm());
-	view.m[3][2] = -Vec3::Dot(pos, zAxis.Norm());
+	view.m_[3][0] = Vec3::Dot(pos, xAxis.Norm());
+	view.m_[3][1] = Vec3::Dot(pos, yAxis.Norm());
+	view.m_[3][2] = -Vec3::Dot(pos, zAxis.Norm());
 
 	return view;
 }
@@ -228,11 +228,11 @@ Mat4 ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, 
 	float scaleZ = 1 / (farZ - nearZ) * farZ;
 	float TransZ = -nearZ / (farZ - nearZ) * farZ;
 
-	perspective.m[1][1] = scaleY;
-	perspective.m[0][0] = scaleX;
-	perspective.m[2][2] = scaleZ;
-	perspective.m[3][2] = TransZ;
-	perspective.m[2][3] = 1;
+	perspective.m_[1][1] = scaleY;
+	perspective.m_[0][0] = scaleX;
+	perspective.m_[2][2] = scaleZ;
+	perspective.m_[3][2] = TransZ;
+	perspective.m_[2][3] = 1;
 
 	return perspective;
 }
@@ -250,12 +250,12 @@ Mat4 ConvertOrthoGrphicProjectionMat(float WIN_WIDTH, float WIN_HEIGHT)
 Mat4 ConvertViewportMat(Viewport& viewport)
 {
 	Mat4 viewportMat = Mat4::Identity();
-	viewportMat.m[0][0] = viewport.GetSize().x / 2;
-	viewportMat.m[1][1] = -viewport.GetSize().y / 2;
-	viewportMat.m[2][2] = viewport.GetMaxDepth() - viewport.GetMinDepth();
-	viewportMat.m[3][0] = viewport.GetLeftTopPos().x + viewport.GetSize().x / 2;
-	viewportMat.m[3][1] = viewport.GetLeftTopPos().y + viewport.GetSize().y / 2;
-	viewportMat.m[3][2] = viewport.GetMinDepth();
+	viewportMat.m_[0][0] = viewport.GetSize().x / 2;
+	viewportMat.m_[1][1] = -viewport.GetSize().y / 2;
+	viewportMat.m_[2][2] = viewport.GetMaxDepth() - viewport.GetMinDepth();
+	viewportMat.m_[3][0] = viewport.GetLeftTopPos().x + viewport.GetSize().x / 2;
+	viewportMat.m_[3][1] = viewport.GetLeftTopPos().y + viewport.GetSize().y / 2;
+	viewportMat.m_[3][2] = viewport.GetMinDepth();
 	return viewportMat;
 }
 

@@ -4,7 +4,7 @@
 class Mat4
 {
 public:
-	float m[4][4] = {};
+	float m_[4][4] = {};
 
 	Mat4();
 	Mat4(
@@ -17,10 +17,10 @@ public:
 	static Mat4 Identity();	// 単位行列を返す関数
 	Mat4 Inverse();			// 逆行列を返す関数
 
-	void SetXAxis(const Vec3& xAxis);
-	void SetYAxis(const Vec3& yAxis);
-	void SetZAxis(const Vec3& zAxis);
-	void SetTranslation(const Vec3& pos);
+	void SetXAxis(const Vec3 xAxis);
+	void SetYAxis(const Vec3 yAxis);
+	void SetZAxis(const Vec3 zAxis);
+	void SetTranslation(const Vec3 pos);
 
 	Vec3 GetXAxis() const;
 	Vec3 GetYAxis() const;
@@ -30,7 +30,7 @@ public:
 
 	// 単項演算子オーバーロード
 	Mat4 operator*(const Mat4& other) const;
-	Mat4 operator*(const float& num);
+	Mat4 operator*(const float num);
 
 	// 代入演算子オーバーロード
 	Mat4& operator*=(const Mat4& other);
