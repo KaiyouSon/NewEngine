@@ -33,9 +33,9 @@ CircleGaugeSprite::~CircleGaugeSprite()
 
 void CircleGaugeSprite::Update()
 {
-	transform.pos_ = pos;
-	transform.scale_ = { scale.x,scale.y,1 };
-	transform.rot_ = { 0,0,rot };
+	transform.pos = pos;
+	transform.scale = { scale.x,scale.y,1 };
+	transform.rot = { 0,0,rot };
 	transform.Update();
 
 	endRadian = Clamp<float>(endRadian, 0, Radian(360));

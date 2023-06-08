@@ -6,9 +6,9 @@
 class Transform
 {
 public:
-	Vec3 pos_;	// 座標
-	Vec3 scale_;	// スケール
-	Vec3 rot_;	// 回転
+	Vec3 pos;	// 座標
+	Vec3 scale;	// スケール
+	Vec3 rot;	// 回転
 
 private:
 	Mat4 scaleMat_;	// スケール行列

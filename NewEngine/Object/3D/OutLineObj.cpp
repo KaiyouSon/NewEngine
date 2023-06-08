@@ -21,9 +21,9 @@ void OutLineObj::Update(OutLineObj* parent)
 {
 	obj->Update();
 
-	transform.pos_ = obj->pos_;
-	transform.scale_ = obj->scale_;
-	transform.rot_ = obj->rot_;
+	transform.pos = obj->pos_;
+	transform.scale = obj->scale_;
+	transform.rot = obj->rot_;
 	transform.Update();
 	if (parent != nullptr)
 	{

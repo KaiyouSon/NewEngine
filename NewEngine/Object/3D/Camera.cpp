@@ -7,7 +7,7 @@ Camera::Camera() : pos(0, 0, 0), rot(0, 0, 0), fov(Radian(45)), nearZ(0.1f), far
 {
 	// ‰ñ“]ŠÖ˜A
 	Transform transform;
-	transform.rot_ = rot;
+	transform.rot = rot;
 	transform.Update();
 	Vec3 v1 = pos;
 	Vec3 v2 = transform.GetWorldMat().GetZAxis();
@@ -29,7 +29,7 @@ void Camera::Update()
 {
 	// ‰ñ“]ŠÖ˜A
 	Transform transform;
-	transform.rot_ = rot;
+	transform.rot = rot;
 	transform.Update();
 	Vec3 v1 = pos;
 	Vec3 v2 = transform.GetWorldMat().GetZAxis();

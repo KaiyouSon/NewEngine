@@ -73,9 +73,9 @@ void Object3D::PlayAnimetion()
 }
 void Object3D::Update(Transform* parent)
 {
-	transform_.pos_ = pos_;
-	transform_.scale_ = scale_;
-	transform_.rot_ = rot_;
+	transform_.pos = pos_;
+	transform_.scale = scale_;
+	transform_.rot = rot_;
 	transform_.Update();
 
 	if (parent != nullptr)

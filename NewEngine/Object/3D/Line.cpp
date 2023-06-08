@@ -29,9 +29,9 @@ Line::~Line()
 
 void Line::Update()
 {
-	transform.pos_ = pos;
-	transform.scale_ = { scale,1,1 };
-	transform.rot_ = rot;
+	transform.pos = pos;
+	transform.scale = { scale,1,1 };
+	transform.rot = rot;
 	transform.Update();
 
 	// マトリックス転送

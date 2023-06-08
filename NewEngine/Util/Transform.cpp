@@ -2,7 +2,7 @@
 #include "MathUtil.h"
 
 Transform::Transform() :
-	pos_(0, 0, 0), scale_(1, 1, 1), rot_(0, 0, 0),
+	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
 	worldMat_(Mat4::Identity()), scaleMat_(Mat4::Identity()),
 	rotMat_(Mat4::Identity()), transMat_(Mat4::Identity()),
 	billboardMat_(Mat4::Identity()), isUseBillboard_(false),
@@ -11,7 +11,7 @@ Transform::Transform() :
 }
 
 Transform::Transform(const Vec3 pos, const Vec3 scale, const Vec3 rot) :
-	pos_(pos), scale_(scale), rot_(rot),
+	pos(pos), scale(scale), rot(rot),
 	worldMat_(Mat4::Identity()), scaleMat_(Mat4::Identity()),
 	rotMat_(Mat4::Identity()), transMat_(Mat4::Identity()),
 	billboardMat_(Mat4::Identity()), isUseBillboard_(false),
@@ -21,12 +21,12 @@ Transform::Transform(const Vec3 pos, const Vec3 scale, const Vec3 rot) :
 
 void Transform::Update()
 {
-	scaleMat_ = ConvertScalingMat(scale_);		 // スケーリング
+	scaleMat_ = ConvertScalingMat(scale);		 // スケーリング
 	rotMat_ = Mat4::Identity();
-	rotMat_ *= ConvertRotationZAxisMat(rot_.z); // z軸回転
-	rotMat_ *= ConvertRotationXAxisMat(rot_.x); // x軸回転
-	rotMat_ *= ConvertRotationYAxisMat(rot_.y); // y軸回転
-	transMat_ = ConvertTranslationMat(pos_);	 // 平行移動
+	rotMat_ *= ConvertRotationZAxisMat(rot.z); // z軸回転
+	rotMat_ *= ConvertRotationXAxisMat(rot.x); // x軸回転
+	rotMat_ *= ConvertRotationYAxisMat(rot.y); // y軸回転
+	transMat_ = ConvertTranslationMat(pos);	 // 平行移動
 
 	BillBoardUpdate();
 
