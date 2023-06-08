@@ -12,7 +12,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff_;
 
 public:
-	void Create(std::vector<uint16_t> indices);
+	void Create(const std::vector<uint16_t>& indices);
 
 public:
 	// インデックスバッファビューを取得する関数

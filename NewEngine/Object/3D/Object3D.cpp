@@ -136,7 +136,7 @@ void Object3D::TransferBuffer()
 	// ƒ}ƒeƒŠƒAƒ‹‚Ì“]‘—
 	if (isLighting_ == true && isAllLighting_ == true)
 	{
-		constantBufferMaterial_->constantBufferMap->ambient = Vec3::sOne - 0.5f;
+		constantBufferMaterial_->constantBufferMap->ambient = Vec3::one - 0.5f;
 		//constantBufferMaterial_->constantBufferMap->ambient = model->material.ambient;
 
 		constantBufferMaterial_->constantBufferMap->diffuse = model_->material.diffuse;
@@ -144,9 +144,9 @@ void Object3D::TransferBuffer()
 	}
 	else
 	{
-		constantBufferMaterial_->constantBufferMap->ambient = Vec3::sOne;
-		constantBufferMaterial_->constantBufferMap->diffuse = Vec3::sZero;
-		constantBufferMaterial_->constantBufferMap->specular = Vec3::sZero;
+		constantBufferMaterial_->constantBufferMap->ambient = Vec3::one;
+		constantBufferMaterial_->constantBufferMap->diffuse = Vec3::zero;
+		constantBufferMaterial_->constantBufferMap->specular = Vec3::zero;
 	}
 	constantBufferMaterial_->constantBufferMap->alpha = model_->material.alpha;
 

@@ -1,10 +1,9 @@
 #pragma once
 #include "Vec3.h"
 
-class Mat4
+struct Mat4
 {
-public:
-	float m_[4][4] = {};
+	float m[4][4] = {};
 
 	Mat4();
 	Mat4(

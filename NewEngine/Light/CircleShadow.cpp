@@ -2,7 +2,7 @@
 
 CircleShadow::CircleShadow() :
 	constantBufferCircleShadow(new ConstantBuffer<ConstantBufferDataCircleShadow>),
-	vec(Vec3::sRight), pos(0), disCasterLight(100.f), atten(0.5f, 0.6f, 0.0f),
+	vec(Vec3::right), pos(0), disCasterLight(100.f), atten(0.5f, 0.6f, 0.0f),
 	factorAngleCos(0.2f, 0.5f), isActive(false)
 {
 	constantBufferCircleShadow->Init();

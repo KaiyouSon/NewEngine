@@ -18,10 +18,10 @@ private:
 	uint32_t rtvNum = 1;	// RTVの数
 
 	// 各ブレンドのパイプライン
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> alphaPipeline;	// αブレンド
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> addPipeline;	// 加算ブレンド
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> subPipeline;	// 減算ブレンド
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> invPipeline;	// 反転ブレンド
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> alphaPipeline_;	// αブレンド
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> addPipeline_;	// 加算ブレンド
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> subPipeline_;	// 減算ブレンド
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> invPipeline_;	// 反転ブレンド
 
 private:
 	void CreatePipelineState(const BlendMode blendMode);
@@ -41,9 +41,9 @@ public:
 
 public:
 	// ゲッター
-	inline ID3D12PipelineState* GetAlphaPipeline() const { return alphaPipeline.Get(); }
-	inline ID3D12PipelineState* GetAddPipeline() const { return addPipeline.Get(); }
-	inline ID3D12PipelineState* GetSubPipeline() const { return subPipeline.Get(); }
-	inline ID3D12PipelineState* GetInvPipeline() const { return invPipeline.Get(); }
+	inline ID3D12PipelineState* GetAlphaPipeline() const { return alphaPipeline_.Get(); }
+	inline ID3D12PipelineState* GetAddPipeline() const { return addPipeline_.Get(); }
+	inline ID3D12PipelineState* GetSubPipeline() const { return subPipeline_.Get(); }
+	inline ID3D12PipelineState* GetInvPipeline() const { return invPipeline_.Get(); }
 };
 

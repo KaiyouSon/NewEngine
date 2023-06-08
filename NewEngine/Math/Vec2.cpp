@@ -1,12 +1,12 @@
 #include "Vec2.h"
 #include <math.h>
 
-const Vec2 Vec2::sLeft(-1, 0);
-const Vec2 Vec2::sRight(1, 0);
-const Vec2 Vec2::sUp(0, 1);
-const Vec2 Vec2::sDown(0, -1);
-const Vec2 Vec2::sOne(1, 1);
-const Vec2 Vec2::sZero(0, 0);
+const Vec2 Vec2::left(-1.f, 0.f);
+const Vec2 Vec2::right(1.f, 0.f);
+const Vec2 Vec2::up(0.f, 1.f);
+const Vec2 Vec2::down(0.f, -1.f);
+const Vec2 Vec2::one(1.f, 1.f);
+const Vec2 Vec2::zero(0.f, 0.f);
 
 // ƒxƒNƒgƒ‹‚Ì‘å‚«‚³
 float Vec2::Length() const { return sqrtf(x * x + y * y); }

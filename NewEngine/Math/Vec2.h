@@ -1,22 +1,21 @@
 #pragma once
 #include "Vec3.h"
 
-class Vec3;
+struct Vec3;
 
-class Vec2
+struct Vec2
 {
-public:
 	// 変数
 	float x; // ベクトルの x 成分
 	float y; // ベクトルの y 成分
 
 	// static変数
-	const static Vec2 sLeft;		// Vector2(-1, 0) と同じ意味
-	const static Vec2 sRight;		// Vector2(1, 0) と同じ意味
-	const static Vec2 sUp;			// Vector2(0, 1) と同じ意味
-	const static Vec2 sDown;		// Vector2(0, -1) と同じ意味
-	const static Vec2 sOne;			// Vector2(1, 1) と同じ意味
-	const static Vec2 sZero;		// Vector2(0, 0) と同じ意味
+	const static Vec2 left;		// Vector2(-1, 0) と同じ意味
+	const static Vec2 right;	// Vector2(1, 0) と同じ意味
+	const static Vec2 up;		// Vector2(0, 1) と同じ意味
+	const static Vec2 down;		// Vector2(0, -1) と同じ意味
+	const static Vec2 one;		// Vector2(1, 1) と同じ意味
+	const static Vec2 zero;		// Vector2(0, 0) と同じ意味
 
 	// コンストラクタ
 	constexpr Vec2() : x(0), y(0) {};

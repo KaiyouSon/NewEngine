@@ -2,7 +2,7 @@
 #include "RenderBase.h"
 #include <cassert>
 
-void IndexBuffer::Create(std::vector<uint16_t> indices)
+void IndexBuffer::Create(const std::vector<uint16_t>& indices)
 {
 	// 頂点データ全体のサイズ
 	uint32_t sizeIB = static_cast<uint32_t>(sizeof(uint16_t) * indices.size());

@@ -160,19 +160,19 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode blendMode)
 	switch (blendMode)
 	{
 	case BlendMode::Alpha: // ƒ¿ƒuƒŒƒ“ƒh
-		result_ = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&alphaPipeline));
+		result_ = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&alphaPipeline_));
 		break;
 
 	case BlendMode::Add:	// ‰ÁŽZƒuƒŒƒ“ƒh
-		result_ = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&addPipeline));
+		result_ = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&addPipeline_));
 		break;
 
 	case BlendMode::Sub:	// Œ¸ŽZƒuƒŒƒ“ƒh
-		result_ = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&subPipeline));
+		result_ = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&subPipeline_));
 		break;
 
 	case BlendMode::Inv:	// ”½“]
-		result_ = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&invPipeline));
+		result_ = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&invPipeline_));
 		break;
 
 	default:

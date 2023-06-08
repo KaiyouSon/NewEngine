@@ -1,14 +1,14 @@
 #include "Vec3.h"
 #include <math.h>
 
-const Vec3 Vec3::sLeft(-1, 0, 0);
-const Vec3 Vec3::sRight(1, 0, 0);
-const Vec3 Vec3::sUp(0, 1, 0);
-const Vec3 Vec3::sDown(0, -1, 0);
-const Vec3 Vec3::sFront(0, 0, 1);
-const Vec3 Vec3::sBack(0, 0, -1);
-const Vec3 Vec3::sOne(1, 1, 1);
-const Vec3 Vec3::sZero(0, 0, 0);
+const Vec3 Vec3::left(-1.f, 0.f, 0.f);
+const Vec3 Vec3::right(1.f, 0.f, 0.f);
+const Vec3 Vec3::up(0.f, 1.f, 0.f);
+const Vec3 Vec3::down(0.f, -1.f, 0.f);
+const Vec3 Vec3::front(0.f, 0.f, 1.f);
+const Vec3 Vec3::back(0.f, 0.f, -1.f);
+const Vec3 Vec3::one(1.f, 1.f, 1.f);
+const Vec3 Vec3::zero(0.f, 0.f, 0.f);
 
 float Vec3::Length() const { return sqrtf(x * x + y * y + z * z); }
 

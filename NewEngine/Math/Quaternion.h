@@ -1,11 +1,10 @@
 #pragma once
 #include "Vec3.h"
 
-class Vec3;
+struct Vec3;
 
-class Quaternion
+struct Quaternion
 {
-public:
 	float x, y, z, w;
 
 	// コンストラクタ

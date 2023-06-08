@@ -2,12 +2,11 @@
 #include "Vec2.h"
 #include "Quaternion.h"
 
-class Vec2;
-class Quaternion;
+struct Vec2;
+struct Quaternion;
 
-class Vec3
+struct Vec3
 {
-public:
 	// 変数
 	float x; // ベクトルの x 成分
 	float y; // ベクトルの y 成分
@@ -19,14 +18,14 @@ public:
 	constexpr Vec3(const float x, const float y, const float z) : x(x), y(y), z(z) {};
 
 	// static変数
-	const static Vec3 sLeft;    // Vec3(-1,0,0) と同じ意味
-	const static Vec3 sRight;   // Vec3(1,0,0) と同じ意味
-	const static Vec3 sUp;      // Vec3(0,1,0) と同じ意味
-	const static Vec3 sDown;    // Vec3(0,-1,0) と同じ意味
-	const static Vec3 sFront;	// Vec3(0,0,1) と同じ意味
-	const static Vec3 sBack;    // Vec3(0,0,-1)と同じ意味
-	const static Vec3 sOne;     // Vec3(1,1,1) と同じ意味
-	const static Vec3 sZero;    // Vec3(0,0,0) と同じ意味
+	const static Vec3 left;    // Vec3(-1,0,0) と同じ意味
+	const static Vec3 right;   // Vec3(1,0,0) と同じ意味
+	const static Vec3 up;      // Vec3(0,1,0) と同じ意味
+	const static Vec3 down;    // Vec3(0,-1,0) と同じ意味
+	const static Vec3 front;	// Vec3(0,0,1) と同じ意味
+	const static Vec3 back;    // Vec3(0,0,-1)と同じ意味
+	const static Vec3 one;     // Vec3(1,1,1) と同じ意味
+	const static Vec3 zero;    // Vec3(0,0,0) と同じ意味
 
 	// 関数
 	float Length() const;    // ベクトルの大きさ
