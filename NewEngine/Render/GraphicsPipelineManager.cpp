@@ -1,6 +1,6 @@
 #include "GraphicsPipelineManager.h"
 
-std::map<std::string, std::unique_ptr<GraphicsPipeline>> GraphicsPipelineManager::graphicsPipelineMap;
+std::map<std::string, std::unique_ptr<GraphicsPipeline>> GraphicsPipelineManager::sGraphicsPipelineMap_;
 
 GraphicsPipeline* GraphicsPipelineManager::Create(
 	ShaderObject* shaderObject,
@@ -20,12 +20,12 @@ GraphicsPipeline* GraphicsPipelineManager::Create(
 	gp->SetRTVNum(rtvNum);
 	gp->Create();
 
-	graphicsPipelineMap.insert(std::make_pair(graphicsPipelineTag, std::move(gp)));
+	sGraphicsPipelineMap_.insert(std::make_pair(graphicsPipelineTag, std::move(gp)));
 
-	return graphicsPipelineMap[graphicsPipelineTag].get();
+	return sGraphicsPipelineMap_[graphicsPipelineTag].get();
 }
 
 GraphicsPipeline* GraphicsPipelineManager::GetGraphicsPipeline(const std::string graphicsPipelineTag)
 {
-	return graphicsPipelineMap[graphicsPipelineTag].get();
+	return sGraphicsPipelineMap_[graphicsPipelineTag].get();
 }

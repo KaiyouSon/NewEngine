@@ -9,7 +9,7 @@
 class GraphicsPipelineManager
 {
 private:
-	static std::map<std::string, std::unique_ptr<GraphicsPipeline>> graphicsPipelineMap;
+	static std::map<std::string, std::unique_ptr<GraphicsPipeline>> sGraphicsPipelineMap_;
 
 public:
 	static GraphicsPipeline* Create(
