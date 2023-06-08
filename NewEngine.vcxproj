@@ -229,6 +229,7 @@
     <ClInclude Include="NewEngine\Util\Color.h" />
     <ClInclude Include="NewEngine\Util\Easing.h" />
     <ClInclude Include="NewEngine\Light\Fog.h" />
+    <ClInclude Include="NewEngine\Util\Enum.h" />
     <ClInclude Include="NewEngine\Util\FrameRate.h" />
     <ClInclude Include="NewEngine\Util\Random.h" />
     <ClInclude Include="NewEngine\Util\Singleton.h" />

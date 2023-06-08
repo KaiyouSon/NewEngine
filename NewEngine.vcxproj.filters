@@ -521,6 +521,9 @@
     <ClInclude Include="NewEngine\Sound\WaveSound.h">
       <Filter>NewEngine\Header\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="NewEngine\Util\Enum.h">
+      <Filter>NewEngine\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">

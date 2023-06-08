@@ -7,23 +7,9 @@
 #include "Timer.h"
 #include "Easing.h"
 #include "BezierCurve.h"
+#include "Enum.h"
 
 static const int maxBoneIndices = 4;
-
-enum class BlendMode
-{
-	Alpha,
-	Add,
-	Sub,
-	Inv,
-};
-
-enum class TimeUnit
-{
-	MilliSecond,
-	Second,
-	Minute
-};
 
 // ”äŠr‚µ‚Ä‘å‚«‚¢•û‚ð•Ô‚·
 template<typename T>
