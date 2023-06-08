@@ -7,16 +7,12 @@
 class RenderWindow : public Singleton<RenderWindow>
 {
 private:
-	friend Singleton<RenderWindow>;
-	Vec2 size = { 1280 ,720 };		// サイズ
-	std::string title = "error";	// タイトル
+	Vec2 size_ = { 1920 ,1080 };	// サイズ
+	std::string title_ = "error";	// タイトル
 
-	WNDCLASSEX wndClass = {};	// ウィンドウクラス
-	HWND hwnd = {};				// ウィンドウハンドル
-	MSG msg = {};				//メッセージ
-public:
-	// ウィンドウプロシージャ
-
+	WNDCLASSEX wndClass_ = {};	// ウィンドウクラス
+	HWND hwnd_ = {};				// ウィンドウハンドル
+	MSG msg_ = {};				//メッセージ
 
 public:
 	// ゲームウィンドウの作成 
@@ -29,15 +25,20 @@ public:
 	unsigned int ProcessMessage();
 
 public: // セッター
-	inline void SetWindowTitle(const std::string& title) { this->title = title; }
-	inline void SetWindowSize(const Vec2 size) { this->size = size; }
+	inline void SetWindowTitle(const std::string& title) { this->title_ = title; }
+	inline void SetWindowSize(const Vec2 size) { this->size_ = size; }
 
 public: // ゲッター
-	inline Vec2 GetWindowSize() { return size; }
+	inline Vec2 GetWindowSize() { return size_; }
 
 	// ウィンドウハンドルの取得
-	inline HWND GetHwnd() { return hwnd; }
-	inline HINSTANCE GetHInstance() { return wndClass.hInstance; }
+	inline HWND GetHwnd() { return hwnd_; }
+	inline HINSTANCE GetHInstance() { return wndClass_.hInstance; }
+
+private:
+	friend Singleton<RenderWindow>;
+	RenderWindow() {};
 };
 
+// ウィンドウプロシージャ
 LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);

@@ -6,8 +6,8 @@ class Color
 public:
 	float r, g, b, a;
 
-	constexpr Color() : r(255), g(255), b(255), a(255) {}
-	constexpr Color(float r, float g, float b) : r(r), g(g), b(b), a(255) {}
+	constexpr Color() : r(255.f), g(255.f), b(255.f), a(255.f) {}
+	constexpr Color(float r, float g, float b) : r(r), g(g), b(b), a(255.f) {}
 	constexpr Color(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {}
 	constexpr Color(const uint32_t colorCodo)
 	{
@@ -17,12 +17,12 @@ public:
 		a = 255;
 	}
 
-	const static Color sRed;
-	const static Color sGreen;
-	const static Color sBlue;
-	const static Color sYellow;
-	const static Color sWhite;
-	const static Color sBlack;
+	const static Color red;
+	const static Color green;
+	const static Color blue;
+	const static Color yellow;
+	const static Color white;
+	const static Color black;
 
 	Color GetColorTo01() { return { r / 255,g / 255,b / 255 ,a / 255 }; }
 

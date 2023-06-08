@@ -1,12 +1,12 @@
 #include "Color.h"
 #include "Util.h"
 
-const Color Color::sRed(255, 0, 0);
-const Color Color::sGreen(0, 255, 0);
-const Color Color::sBlue(0, 0, 255);
-const Color Color::sYellow(255, 255, 0);
-const Color Color::sWhite(255, 255, 255);
-const Color Color::sBlack(0, 0, 0);
+const Color Color::red(255.f, 0.f, 0.f);
+const Color Color::green(0.f, 255.f, 0.f);
+const Color Color::blue(0.f, 0.f, 255.f);
+const Color Color::yellow(255.f, 255.f, 0.f);
+const Color Color::white(255.f, 255.f, 255.f);
+const Color Color::black(0.f, 0.f, 0.f);
 
 bool Color::operator!=(const Color other) const
 {

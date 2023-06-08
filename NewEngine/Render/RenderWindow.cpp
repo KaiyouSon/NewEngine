@@ -9,24 +9,24 @@ void RenderWindow::CreateGameWindow()
 	timeBeginPeriod(1);
 
 	// ウィンドウクラスの設定
-	wndClass.cbSize = sizeof(WNDCLASSEX);
-	wndClass.lpfnWndProc = (WNDPROC)WindowProc;		// ウインドウプロシージャを設定
-	wndClass.lpszClassName = L"DirectXGame";		// ウィンドウクラス名
-	wndClass.hInstance = GetModuleHandle(nullptr);	// ウィンドウハンドル
-	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);	// カーソル指定
+	wndClass_.cbSize = sizeof(WNDCLASSEX);
+	wndClass_.lpfnWndProc = (WNDPROC)WindowProc;		// ウインドウプロシージャを設定
+	wndClass_.lpszClassName = L"DirectXGame";		// ウィンドウクラス名
+	wndClass_.hInstance = GetModuleHandle(nullptr);	// ウィンドウハンドル
+	wndClass_.hCursor = LoadCursor(NULL, IDC_ARROW);	// カーソル指定
 
 	// ウィンドウクラスをOSに登録
-	RegisterClassEx(&wndClass);
+	RegisterClassEx(&wndClass_);
 	// ウィンドウサイズ{ X座標 Y座標 縦幅 横幅 }
-	RECT wrc = { 0,0,(LONG)size.x,(LONG)size.y };
+	RECT wrc = { 0,0,(LONG)size_.x,(LONG)size_.y };
 	// 自動でサイズ補正する
 	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
 
-	std::wstring wTITLE(title.begin(), title.end());
+	std::wstring wTITLE(title_.begin(), title_.end());
 
 	// ウィンドウオブジェクトの生成
-	hwnd = CreateWindow(
-		wndClass.lpszClassName, // クラス名
+	hwnd_ = CreateWindow(
+		wndClass_.lpszClassName, // クラス名
 		wTITLE.c_str(),			// タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,	// 標準的なウィンドウスタイル
 		wrc.left,				// 表示X座標(OSに任せる)
@@ -35,29 +35,29 @@ void RenderWindow::CreateGameWindow()
 		wrc.bottom - wrc.top,	// ウィンドウ縦幅
 		nullptr,				// 親ウィンドウハンドル
 		nullptr,				// メニューハンドル
-		wndClass.hInstance,		// 呼び出しアプリケーションハンドル
+		wndClass_.hInstance,		// 呼び出しアプリケーションハンドル
 		nullptr);				// オプション
 
 	// ウィンドウを表示状態にする
-	ShowWindow(hwnd, SW_SHOW);
+	ShowWindow(hwnd_, SW_SHOW);
 }
 
 void RenderWindow::TerminateGameWindow()
 {
 	// ウィンドウクラスを登録解除
-	UnregisterClass(wndClass.lpszClassName, wndClass.hInstance);
+	UnregisterClass(wndClass_.lpszClassName, wndClass_.hInstance);
 }
 
 unsigned int RenderWindow::ProcessMessage()
 {
 	// メッセージがある?
-	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+	if (PeekMessage(&msg_, nullptr, 0, 0, PM_REMOVE))
 	{
-		TranslateMessage(&msg);	// キー入力メッセージの処理
-		DispatchMessage(&msg);	// プロシージャにメッセージを送る
+		TranslateMessage(&msg_);	// キー入力メッセージの処理
+		DispatchMessage(&msg_);		// プロシージャにメッセージを送る
 	}
 
-	return msg.message;
+	return msg_.message;
 }
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
