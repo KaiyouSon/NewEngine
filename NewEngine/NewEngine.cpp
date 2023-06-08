@@ -158,9 +158,9 @@ void SetWindowSize(const Vec2& size)
 }
 void SetBackGroundColor(const float& r, const float& g, const float& b)
 {
-	RenderBase::clearColor[0] = r / 255;
-	RenderBase::clearColor[1] = g / 255;
-	RenderBase::clearColor[2] = b / 255;
+	RenderBase::sClearColor_[0] = r / 255;
+	RenderBase::sClearColor_[1] = g / 255;
+	RenderBase::sClearColor_[2] = b / 255;
 }
 Vec2 GetWindowSize()
 {

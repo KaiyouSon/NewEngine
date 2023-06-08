@@ -21,7 +21,7 @@ class RenderBase// : public Singleton<RenderBase>
 {
 public:
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr <T>;
-	static float clearColor[4];
+	static float sClearColor_[4];
 
 public:
 	void Init();
@@ -45,60 +45,59 @@ private:
 	void GraphicsPipelineInit();
 
 public:
-	inline ID3D12Device* GetDevice() const { return device.Get(); }
-	inline ID3D12GraphicsCommandList* GetCommandList() const { return commandList.Get(); }
-	inline ID3D12CommandQueue* GetCommandQueue() const { return commandQueue.Get(); }
-	inline ID3D12CommandAllocator* GetCommandAllocator() const { return commandAllocator.Get(); }
-	inline ID3D12Fence* GetFence() const { return fence.Get(); }
+	inline ID3D12Device* GetDevice() const { return device_.Get(); }
+	inline ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
+	inline ID3D12CommandQueue* GetCommandQueue() const { return commandQueue_.Get(); }
+	inline ID3D12CommandAllocator* GetCommandAllocator() const { return commandAllocator_.Get(); }
+	inline ID3D12Fence* GetFence() const { return fence_.Get(); }
 
-	inline RootSignature* GetObject3DRootSignature() const { return object3DRootSignature.get(); }
-	inline RootSignature* GetSpriteRootSignature() const { return spriteRootSignature.get(); }
+	inline RootSignature* GetObject3DRootSignature() const { return object3DRootSignature_.get(); }
+	inline RootSignature* GetSpriteRootSignature() const { return spriteRootSignature_.get(); }
 
-	inline Viewport* GetViewport() const { return viewport.get(); }
+	inline Viewport* GetViewport() const { return viewport_.get(); }
 
-	inline void PreIncrimentFenceValue() { ++fenceVal; }
-	inline UINT64 GetFenceValue() { return fenceVal; }
+	inline void PreIncrimentFenceValue() { ++fenceVal_; }
+	inline UINT64 GetFenceValue() { return fenceVal_; }
 private:
-	//friend Singleton<RenderBase>;
 
 	// デバイス関連
-	ComPtr<ID3D12Device> device;
-	ComPtr<IDXGIFactory7> dxgiFactory;
+	ComPtr<ID3D12Device> device_;
+	ComPtr<IDXGIFactory7> dxgiFactory_;
 
 	// コマンド関連
-	ComPtr<ID3D12CommandAllocator> commandAllocator;
-	ComPtr<ID3D12GraphicsCommandList> commandList;
-	ComPtr<ID3D12CommandQueue> commandQueue;
+	ComPtr<ID3D12CommandAllocator> commandAllocator_;
+	ComPtr<ID3D12GraphicsCommandList> commandList_;
+	ComPtr<ID3D12CommandQueue> commandQueue_;
 
 	// スワップチェーン
-	ComPtr<IDXGISwapChain4> swapChain;
-	D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc{};		 // rtv設定構造体
-	std::array<std::unique_ptr<RenderTarget>, 2> backBuffers;
+	ComPtr<IDXGISwapChain4> swapChain_;
+	D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc_;		 // rtv設定構造体
+	std::array<std::unique_ptr<RenderTarget>, 2> backBuffers_;
 
 	// フェンス
-	ComPtr<ID3D12Fence> fence;
-	UINT64 fenceVal = 0;
+	ComPtr<ID3D12Fence> fence_;
+	UINT64 fenceVal_ = 0;
 
 	// 深度バッファ
-	std::unique_ptr<DepthBuffer> depthBuffer;
+	std::unique_ptr<DepthBuffer> depthBuffer_;
 
 	// ティスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> rtvDescHeap;		// rtv用デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> dsvDescHeap;		// dsv用デスクリプタヒープ
-	UINT rtvIncrementIndex;
-	UINT dsvIncrementIndex;
+	ComPtr<ID3D12DescriptorHeap> rtvDescHeap_;		// rtv用デスクリプタヒープ
+	ComPtr<ID3D12DescriptorHeap> dsvDescHeap_;		// dsv用デスクリプタヒープ
+	UINT rtvIncrementIndex_;
+	UINT dsvIncrementIndex_;
 
 	// ルートシグネチャー関連
-	ComPtr <ID3DBlob> errorBlob;	// エラーオブジェクト
-	std::unique_ptr<RootSignature> object3DRootSignature;
-	std::unique_ptr<RootSignature> spriteRootSignature;
+	ComPtr <ID3DBlob> errorBlob_;	// エラーオブジェクト
+	std::unique_ptr<RootSignature> object3DRootSignature_;
+	std::unique_ptr<RootSignature> spriteRootSignature_;
 
 	// 描画処理関連
-	D3D12_RESOURCE_BARRIER barrierDesc{};	// リソースバリア
-	std::unique_ptr<Viewport> viewport;
-	std::unique_ptr<ScissorRectangle> scissorRectangle;
+	D3D12_RESOURCE_BARRIER barrierDesc_;	// リソースバリア
+	std::unique_ptr<Viewport> viewport_;
+	std::unique_ptr<ScissorRectangle> scissorRectangle_;
 
-	RenderWindow* renderWindow;
+	RenderWindow* renderWindow_;
 
 private:
 	RenderBase() {}
