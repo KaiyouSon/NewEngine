@@ -8,7 +8,7 @@ public:
 	static void Init();
 
 	// uint32_tŒ^‚Ì—”‚ğæ“¾
-	static uint32_t Range(const uint32_t min, const uint32_t max);
+	static int32_t Range(const int32_t min, const int32_t max);
 
 	// floatŒ^‚Ì—”‚ğæ“¾
 	static float RangeF(const float min, const float max);

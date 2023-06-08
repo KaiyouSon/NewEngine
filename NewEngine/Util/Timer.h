@@ -4,22 +4,22 @@
 class Timer
 {
 private:
-	uint32_t timer_;
-	uint32_t limitTimer_;
+	int32_t timer_;
+	int32_t limitTimer_;
 	bool isTimeOut_;
 
 public:
 	Timer();
-	Timer(const uint32_t maxTimer);
+	Timer(const int32_t maxTimer);
 
 	void Reset();
-	void Update(const bool isRoop, const uint32_t addTimer = 1);
+	void Update(const bool isRoop, const int32_t addTimer = 1);
 
 public:	// セッター
-	inline void SetLimitTimer(const uint32_t maxTimer) { limitTimer_ = maxTimer; }
+	inline void SetLimitTimer(const int32_t maxTimer) { limitTimer_ = maxTimer; }
 
 public:	// ゲッター
-	inline uint32_t GetTimer() { return timer_; }
+	inline int32_t GetTimer() { return timer_; }
 	inline float GetTimeRate() { return (float)(timer_ / limitTimer_); }
 	inline bool GetisTimeOut() { return isTimeOut_; }
 };

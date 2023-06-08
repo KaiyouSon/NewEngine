@@ -4,7 +4,7 @@ Timer::Timer() : timer_(0), limitTimer_(0), isTimeOut_(false)
 {
 }
 
-Timer::Timer(const uint32_t maxTimer) : timer_(0), limitTimer_(maxTimer), isTimeOut_(false)
+Timer::Timer(const int32_t maxTimer) : timer_(0), limitTimer_(maxTimer), isTimeOut_(false)
 {
 }
 
@@ -14,7 +14,7 @@ void Timer::Reset()
 	isTimeOut_ = false;
 }
 
-void Timer::Update(const bool isRoop, const uint32_t addTimer)
+void Timer::Update(const bool isRoop, const int32_t addTimer)
 {
 	if (isTimeOut_ == true)
 	{

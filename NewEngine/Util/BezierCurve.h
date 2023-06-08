@@ -9,8 +9,8 @@ class BezierCurve
 {
 private:
 	std::vector<Vec3> points_;
-	size_t startIndex_;
-	uint32_t timer_;
+	uint32_t startIndex_;
+	int32_t timer_;
 	float timeRate_;
 	bool isEnd_;
 
@@ -18,8 +18,8 @@ private:
 
 public:
 	BezierCurve();
-	BezierCurve(const uint32_t easeTimer);
-	BezierCurve(const uint32_t easeTimer, const float powNum);
+	BezierCurve(const int32_t easeTimer);
+	BezierCurve(const int32_t easeTimer, const float powNum);
 	void Reset();
 	void Update();
 	Vec3 InterPolation(const BezierType type = BezierType::Lerp);	// 補間
@@ -30,7 +30,7 @@ public:
 	inline void AddPoint(const Vec3& pos) { points_.push_back(pos); }
 
 	// 補間時間をセットする
-	inline void SetEaseTime(const uint32_t easeTime) { ease_.SetEaseTimer(easeTime); }
+	inline void SetEaseTime(const int32_t easeTime) { ease_.SetEaseTimer(easeTime); }
 
 	// N乗をセットする
 	inline void SetEasePowNum(const float pownum) { ease_.SetPowNum(pownum); }
