@@ -5,10 +5,10 @@
 class Sound
 {
 private:
-	HRESULT result;
-	WaveData waveData;
-	float volume;
-	float pitch;
+	HRESULT result_;
+	WaveData waveData_;
+	float volume_;
+	float pitch_;
 
 public:
 	Sound();
