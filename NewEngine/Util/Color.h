@@ -17,12 +17,12 @@ public:
 		a = 255;
 	}
 
-	const static Color red;
-	const static Color green;
-	const static Color blue;
-	const static Color yellow;
-	const static Color white;
-	const static Color black;
+	const static Color sRed;
+	const static Color sGreen;
+	const static Color sBlue;
+	const static Color sYellow;
+	const static Color sWhite;
+	const static Color sBlack;
 
 	Color GetColorTo01() { return { r / 255,g / 255,b / 255 ,a / 255 }; }
 
