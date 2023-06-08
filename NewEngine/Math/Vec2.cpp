@@ -1,12 +1,12 @@
 #include "Vec2.h"
 #include <math.h>
 
-const Vec2 Vec2::left(-1, 0);
-const Vec2 Vec2::right(1, 0);
-const Vec2 Vec2::up(0, 1);
-const Vec2 Vec2::down(0, -1);
-const Vec2 Vec2::one(1, 1);
-const Vec2 Vec2::zero(0, 0);
+const Vec2 Vec2::sLeft(-1, 0);
+const Vec2 Vec2::sRight(1, 0);
+const Vec2 Vec2::sUp(0, 1);
+const Vec2 Vec2::sDown(0, -1);
+const Vec2 Vec2::sOne(1, 1);
+const Vec2 Vec2::sZero(0, 0);
 
 // ベクトルの大きさ
 float Vec2::Length() const { return sqrtf(x * x + y * y); }
@@ -15,19 +15,19 @@ float Vec2::Length() const { return sqrtf(x * x + y * y); }
 Vec2 Vec2::Norm() const { return{ x / Length() , y / Length() }; }
 
 // 二つのベクトルの内積
-float Vec2::Dot(const Vec2& v1, const Vec2& v2) { return v1.x * v2.x + v1.y * v2.y; }
+float Vec2::Dot(const Vec2 v1, const Vec2 v2) { return v1.x * v2.x + v1.y * v2.y; }
 
 // 二つのベクトルの外積
-float Vec2::Cross(const Vec2& v1, const Vec2& v2) { return v1.x * v2.y - v1.y * v2.x; }
+float Vec2::Cross(const Vec2 v1, const Vec2 v2) { return v1.x * v2.y - v1.y * v2.x; }
 
 // 二つのベクトルの距離
-float Vec2::Distance(const Vec2& v1, const Vec2& v2)
+float Vec2::Distance(const Vec2 v1, const Vec2 v2)
 {
 	return sqrtf((v2.x - v1.x) * (v2.x - v1.x) + (v2.y - v1.y) * (v2.y - v1.y));
 }
 
 // 二つのベクトルで各成分の一番大きな値を使用してベクトルを作成する
-Vec2 Vec2::Max(const Vec2& v1, const Vec2& v2)
+Vec2 Vec2::Max(const Vec2 v1, const Vec2 v2)
 {
 	return Vec2(
 		v1.x >= v2.x ? v1.x : v2.x,
@@ -35,7 +35,7 @@ Vec2 Vec2::Max(const Vec2& v1, const Vec2& v2)
 }
 
 // 二つのベクトルで各成分の一番小さな値を使用してベクトルを作成する
-Vec2 Vec2::Min(const Vec2& v1, const Vec2& v2)
+Vec2 Vec2::Min(const Vec2 v1, const Vec2 v2)
 {
 	return Vec2(
 		v1.x <= v2.x ? v1.x : v2.x,
@@ -43,25 +43,25 @@ Vec2 Vec2::Min(const Vec2& v1, const Vec2& v2)
 }
 
 // もう一方のベクトルとの足し算
-Vec2 Vec2::operator+(const Vec2& other) const
+Vec2 Vec2::operator+(const Vec2 other) const
 {
 	return { x + other.x , y + other.y };
 }
 
 // もう一方のベクトルとの引き算
-Vec2 Vec2::operator-(const Vec2& other) const
+Vec2 Vec2::operator-(const Vec2 other) const
 {
 	return { x - other.x , y - other.y };
 }
 
 // もう一方のベクトルとの掛け算
-Vec2 Vec2::operator*(const Vec2& other) const
+Vec2 Vec2::operator*(const Vec2 other) const
 {
 	return { x * other.x , y * other.y };
 }
 
 // もう一方のベクトルとの割り算
-Vec2 Vec2::operator/(const Vec2& other) const
+Vec2 Vec2::operator/(const Vec2 other) const
 {
 	return { x / other.x , y / other.y };
 }
@@ -79,7 +79,7 @@ Vec2 Vec2::operator/(float num)const
 }
 
 // 複合代入演算 +=
-Vec2& Vec2::operator+=(const Vec2& other)
+Vec2& Vec2::operator+=(const Vec2 other)
 {
 	x += other.x;
 	y += other.y;
@@ -87,7 +87,7 @@ Vec2& Vec2::operator+=(const Vec2& other)
 }
 
 // 複合代入演算 -=
-Vec2& Vec2::operator-=(const Vec2& other)
+Vec2& Vec2::operator-=(const Vec2 other)
 {
 	x -= other.x;
 	y -= other.y;
@@ -131,7 +131,7 @@ Vec2& Vec2::operator=(float num)
 	return *this;
 }
 
-Vec2& Vec2::operator=(const Vec3& vec)
+Vec2& Vec2::operator=(const Vec3 vec)
 {
 	x = vec.x;
 	y = vec.y;
@@ -166,22 +166,22 @@ Vec2 Vec2::operator--(int)
 	return tmp;
 }
 
-bool Vec2::operator==(const Vec2& other)
+bool Vec2::operator==(const Vec2 other)
 {
 	return x == other.x && y == other.y;
 }
 
-bool Vec2::operator!=(const Vec2& other)
+bool Vec2::operator!=(const Vec2 other)
 {
 	return x != other.x || y != other.y;
 }
 
-bool Vec2::operator>=(const Vec2& other)
+bool Vec2::operator>=(const Vec2 other)
 {
 	return x >= other.x && y >= other.y;
 }
 
-bool Vec2::operator<=(const Vec2& other)
+bool Vec2::operator<=(const Vec2 other)
 {
 	return x <= other.x && y <= other.y;
 }

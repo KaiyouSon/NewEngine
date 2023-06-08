@@ -3,9 +3,9 @@
 #include "Camera.h"
 #include "Viewport.h"
 
-Vec3 Vec3MulMat4(const Vec3& v, const Mat4& m, const bool& isMulW)
+Vec3 Vec3MulMat4(const Vec3 v, const Mat4& m, const bool isMulW)
 {
-	Vec3 result = Vec3::zero;
+	Vec3 result = Vec3::sZero;
 	if (isMulW == true)
 	{
 		float w = v.x * m.m_[0][3] + v.y * m.m_[1][3] + v.z * m.m_[2][3] + m.m_[3][3];
@@ -82,7 +82,7 @@ Mat4 ConvertRotationZAxisMat(float angle)
 		0,0,0,1
 	};
 }
-Mat4 ConvertTranslationMat(const Vec3& pos)
+Mat4 ConvertTranslationMat(const Vec3 pos)
 {
 	return
 	{
@@ -93,7 +93,7 @@ Mat4 ConvertTranslationMat(const Vec3& pos)
 	};
 }
 
-Mat4 ConvertRotationMat(const Quaternion& q)
+Mat4 ConvertRotationMat(const Quaternion q)
 {
 	Mat4 result = Mat4::Identity();
 
@@ -172,7 +172,7 @@ Mat4 ConvertBillBoardAllAxis()
 	return tempMat;
 }
 
-Mat4 ConvertViewProjectionMatLookAt(const Vec3& pos, const Vec3& target, const Vec3& up)
+Mat4 ConvertViewProjectionMatLookAt(const Vec3 pos, const Vec3 target, const Vec3 up)
 {
 	// 単位行列で初期化
 	Mat4 view = Mat4::Identity();
@@ -202,7 +202,7 @@ Mat4 ConvertViewProjectionMatLookAt(const Vec3& pos, const Vec3& target, const V
 
 	return view;
 }
-Mat4 ConvertViewProjectionMatLookTo(const Vec3& pos, const Vec3& zAxis, const Vec3& yAxis)
+Mat4 ConvertViewProjectionMatLookTo(const Vec3 pos, const Vec3 zAxis, const Vec3 yAxis)
 {
 	// 単位行列で初期化
 	Mat4 view = Mat4::Identity();
@@ -259,7 +259,7 @@ Mat4 ConvertViewportMat(Viewport& viewport)
 	return viewportMat;
 }
 
-Vec3 operator+(const float& num, const Vec3& v) { return { num + v.x,num + v.y,num + v.z }; }
-Vec3 operator-(const float& num, const Vec3& v) { return { num - v.x,num - v.y,num - v.z }; }
-Vec3 operator*(const float& num, const Vec3& v) { return { num * v.x,num * v.y,num * v.z }; }
-Vec3 operator/(const float& num, const Vec3& v) { return { num / v.x,num / v.y,num / v.z }; }
+Vec3 operator+(const float num, const Vec3 v) { return { num + v.x,num + v.y,num + v.z }; }
+Vec3 operator-(const float num, const Vec3 v) { return { num - v.x,num - v.y,num - v.z }; }
+Vec3 operator*(const float num, const Vec3 v) { return { num * v.x,num * v.y,num * v.z }; }
+Vec3 operator/(const float num, const Vec3 v) { return { num / v.x,num / v.y,num / v.z }; }

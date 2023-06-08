@@ -19,9 +19,9 @@ struct FbxModelBone
 struct FbxModelNode
 {
 	std::string name;
-	Vec3 pos = Vec3::zero;
-	Vec3 scale = Vec3::one;
-	Vec3 rot = Vec3::zero;
+	Vec3 pos = Vec3::sZero;
+	Vec3 scale = Vec3::sOne;
+	Vec3 rot = Vec3::sZero;
 	Mat4 localTransformMat;
 	Mat4 globalTransformMat;
 	FbxModelNode* parent = nullptr;

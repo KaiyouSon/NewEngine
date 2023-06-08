@@ -59,7 +59,7 @@ Vec3 BezierCurve::InterPolation(const BezierType type)
 		return ease_.Out(RecursiveLerp(points_, type)[0], RecursiveLerp(points_, type)[1]);
 		break;
 	default:
-		return Vec3::zero;
+		return Vec3::sZero;
 		break;
 	}
 }

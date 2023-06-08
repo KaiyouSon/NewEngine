@@ -13,7 +13,7 @@ Quaternion Quaternion::Inverse() const
 	return Conjugate() / (Length() * Length());
 }
 
-Quaternion Quaternion::AnyAxisRotation(const Vec3& v, const float& radian)
+Quaternion Quaternion::AnyAxisRotation(const Vec3 v, const float radian)
 {
 	Quaternion result = { x,y,z,w };
 
@@ -35,14 +35,14 @@ Quaternion Quaternion::AnyAxisRotation(const Vec3& v, const float& radian)
 	return result;
 }
 
-float Quaternion::Dot(const Quaternion& q1, const Quaternion& q2)
+float Quaternion::Dot(const Quaternion q1, const Quaternion q2)
 {
 	return { (q1.x * q2.x) + (q1.y * q2.y) + (q1.z * q2.z) + (q1.w * q2.w) };
 }
 
 Quaternion Quaternion::Identity() { return { 0, 0, 0, 1 }; }
 
-Quaternion Quaternion::Slerp(const Quaternion& q1, const Quaternion& q2, float t)
+Quaternion Quaternion::Slerp(const Quaternion q1, const Quaternion q2, float t)
 {
 	float cos = Quaternion::Dot(q1, q2);
 	Quaternion t2 = q2;
@@ -71,7 +71,7 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, const Quaternion& q2, float t
 	return q1 * k0 + t2 * k1;
 }
 
-Quaternion Quaternion::MakeAxisAngle(const Vec3& v, const float& radian)
+Quaternion Quaternion::MakeAxisAngle(const Vec3 v, const float radian)
 {
 	// 回転クォータニオン作成
 	Quaternion q =
@@ -85,7 +85,7 @@ Quaternion Quaternion::MakeAxisAngle(const Vec3& v, const float& radian)
 	return q;
 }
 
-Quaternion Quaternion::DirectionToDirection(const Vec3& v1, const Vec3& v2)
+Quaternion Quaternion::DirectionToDirection(const Vec3 v1, const Vec3 v2)
 {
 	// uとvを正規化して内積を求める。u,vを単位ベクトル前提とするなら正規化は不要
 	Vec3 u = v1;
@@ -111,15 +111,15 @@ Quaternion Quaternion::DirectionToDirection(const Vec3& v1, const Vec3& v2)
 
 Quaternion Quaternion::operator-() const { return { -x,-y,-z,-w }; }
 
-Quaternion Quaternion::operator+(const Quaternion& other) const
+Quaternion Quaternion::operator+(const Quaternion other) const
 {
 	return { x + other.x, y + other.y, z + other.z, w + other.w };
 }
-Quaternion Quaternion::operator-(const Quaternion& other) const
+Quaternion Quaternion::operator-(const Quaternion other) const
 {
 	return { x - other.x,y - other.y,z - other.z,w - other.w };
 }
-Quaternion Quaternion::operator*(const Quaternion& other) const
+Quaternion Quaternion::operator*(const Quaternion other) const
 {
 	Quaternion result;
 	float num[4] = {};
@@ -150,21 +150,21 @@ Quaternion Quaternion::operator*(const Quaternion& other) const
 
 	return result;
 }
-Quaternion Quaternion::operator/(const Quaternion& other) const
+Quaternion Quaternion::operator/(const Quaternion other) const
 {
 	return Quaternion();
 }
 
-Quaternion Quaternion::operator*(const float& num) const
+Quaternion Quaternion::operator*(const float num) const
 {
 	return { x * num,y * num ,z * num ,w * num };
 }
-Quaternion Quaternion::operator/(const float& num) const
+Quaternion Quaternion::operator/(const float num) const
 {
 	return { x / num,y / num ,z / num ,w / num };
 }
 
-Quaternion& Quaternion::operator+=(const Quaternion& other)
+Quaternion& Quaternion::operator+=(const Quaternion other)
 {
 	x += other.x;
 	y += other.y;
@@ -172,7 +172,7 @@ Quaternion& Quaternion::operator+=(const Quaternion& other)
 	w += other.w;
 	return *this;
 }
-Quaternion& Quaternion::operator-=(const Quaternion& other)
+Quaternion& Quaternion::operator-=(const Quaternion other)
 {
 	x -= other.x;
 	y -= other.y;
@@ -180,7 +180,7 @@ Quaternion& Quaternion::operator-=(const Quaternion& other)
 	w -= other.w;
 	return *this;
 }
-Quaternion& Quaternion::operator*=(const Quaternion& other)
+Quaternion& Quaternion::operator*=(const Quaternion other)
 {
 	x *= other.x;
 	y *= other.y;
@@ -189,7 +189,7 @@ Quaternion& Quaternion::operator*=(const Quaternion& other)
 	return *this;
 }
 
-Quaternion& Quaternion::operator*=(const float& num)
+Quaternion& Quaternion::operator*=(const float num)
 {
 	x *= num;
 	y *= num;
@@ -197,7 +197,7 @@ Quaternion& Quaternion::operator*=(const float& num)
 	w *= num;
 	return *this;
 }
-Quaternion& Quaternion::operator/=(const float& num)
+Quaternion& Quaternion::operator/=(const float num)
 {
 	x /= num;
 	y /= num;
@@ -206,7 +206,7 @@ Quaternion& Quaternion::operator/=(const float& num)
 	return *this;
 }
 
-Quaternion operator*(const float& num, const Quaternion& q)
+Quaternion operator*(const float num, const Quaternion q)
 {
 	return { num * q.x,num * q.y ,num * q.z ,num * q.w };
 }
