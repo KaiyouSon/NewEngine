@@ -276,9 +276,6 @@
     <ClCompile Include="NewEngine\Render\Buffer\DepthBuffer.cpp">
       <Filter>NewEngine\Source\Render\Buffer</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Render\RenderTarget.cpp">
-      <Filter>NewEngine\Source\Render\Buffer</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\2D\CircleGaugeSprite.cpp">
       <Filter>NewEngine\Source\Object\2D</Filter>
     </ClCompile>

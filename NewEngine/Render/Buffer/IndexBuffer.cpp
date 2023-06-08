@@ -2,10 +2,10 @@
 #include "RenderBase.h"
 #include <cassert>
 
-void IndexBuffer::Create(std::vector<unsigned short> indices)
+void IndexBuffer::Create(std::vector<uint16_t> indices)
 {
 	// 頂点データ全体のサイズ
-	unsigned int sizeIB = static_cast<unsigned int>(sizeof(unsigned short) * indices.size());
+	uint32_t sizeIB = static_cast<uint32_t>(sizeof(uint16_t) * indices.size());
 
 	// 頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapProp{}; // ヒープ設定
@@ -30,12 +30,12 @@ void IndexBuffer::Create(std::vector<unsigned short> indices)
 			&resDesc, // リソース設定
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
-			IID_PPV_ARGS(&indexBuff));
+			IID_PPV_ARGS(&indexBuff_));
 	assert(SUCCEEDED(result));
 
 	//------------------- インデックスバッファへのデータ転送 -------------------//
 	uint16_t* indexMap = nullptr;
-	result = indexBuff->Map(0, nullptr, (void**)&indexMap);
+	result = indexBuff_->Map(0, nullptr, (void**)&indexMap);
 	assert(SUCCEEDED(result));
 	// 全頂点に対して
 	for (int i = 0; i < indices.size(); i++)
@@ -43,10 +43,10 @@ void IndexBuffer::Create(std::vector<unsigned short> indices)
 		indexMap[i] = indices[i]; // 座標をコピー
 	}
 	// 繋がりを解除
-	indexBuff->Unmap(0, nullptr);
+	indexBuff_->Unmap(0, nullptr);
 
 	// インデックスバッファビューの作成
-	ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
-	ibView.Format = DXGI_FORMAT_R16_UINT;
-	ibView.SizeInBytes = sizeIB;
+	ibView_.BufferLocation = indexBuff_->GetGPUVirtualAddress();
+	ibView_.Format = DXGI_FORMAT_R16_UINT;
+	ibView_.SizeInBytes = sizeIB;
 }

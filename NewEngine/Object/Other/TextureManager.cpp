@@ -639,7 +639,7 @@ RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, size_t num, std::s
 		CreateSRV(*renderTex, renderTex->buffers[i].Get());
 
 		// RTVì¬
-		renderTex->renderTargets[i].buffer = renderTex->buffers[i];
+		renderTex->renderTargets[i].buffer_ = renderTex->buffers[i];
 		renderBase->CreateRTV(renderTex->renderTargets[i], &rtvDesc);
 	}
 

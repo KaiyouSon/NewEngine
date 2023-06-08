@@ -24,15 +24,15 @@ void DepthBuffer::Create()
 	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	// 深度値フォーマット
 
 	// リソースの生成
-	result = RenderBase::GetInstance()->GetDevice()->
+	result_ = RenderBase::GetInstance()->GetDevice()->
 		CreateCommittedResource(
 			&depthHeapProp,
 			D3D12_HEAP_FLAG_NONE,
 			&depthResourceDesc,
 			D3D12_RESOURCE_STATE_DEPTH_WRITE, // 深度値書き込みに使用
 			&depthClearValue,
-			IID_PPV_ARGS(&buffer));
-	assert(SUCCEEDED(result));
+			IID_PPV_ARGS(&buffer_));
+	assert(SUCCEEDED(result_));
 
 	RenderBase::GetInstance()->CreateDSV(*this);
 }
