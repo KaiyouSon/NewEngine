@@ -1,7 +1,8 @@
 #include "Fog.h"
+using namespace ConstantBufferData;
 
 Fog::Fog() :
-	constantBufferFog_(std::make_unique<ConstantBuffer<ConstantBufferDataFog>>()),
+	constantBufferFog_(std::make_unique<ConstantBuffer<CFog>>()),
 	isActive(true), nearDis(0), farDis(50), color(Color::white)
 {
 	constantBufferFog_->Init();

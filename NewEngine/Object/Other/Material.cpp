@@ -61,25 +61,25 @@ Material::Material(std::string filePath) :
 		// 先頭文字列がKaならアンビエント色
 		if (key == "Ka")
 		{
-			lineStream >> ambient.x;
-			lineStream >> ambient.y;
-			lineStream >> ambient.z;
+			lineStream >> ambient.r;
+			lineStream >> ambient.g;
+			lineStream >> ambient.b;
 		}
 
 		// 先頭文字列がKaならディフーズ色
 		if (key == "Kd")
 		{
-			lineStream >> diffuse.x;
-			lineStream >> diffuse.y;
-			lineStream >> diffuse.z;
+			lineStream >> diffuse.r;
+			lineStream >> diffuse.g;
+			lineStream >> diffuse.b;
 		}
 
 		// 先頭文字列がKaならスペキュラー色
 		if (key == "Ks")
 		{
-			lineStream >> specular.x;
-			lineStream >> specular.y;
-			lineStream >> specular.z;
+			lineStream >> specular.r;
+			lineStream >> specular.g;
+			lineStream >> specular.b;
 		}
 
 		// 先頭文字列がmap_Kdならテクスチャファイル名

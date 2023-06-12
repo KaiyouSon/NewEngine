@@ -6,7 +6,7 @@
 class CircleShadow
 {
 private:
-	std::unique_ptr<ConstantBuffer<ConstantBufferDataCircleShadow>> constantBufferCircleShadow_;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CCircleShadow>> constantBufferCircleShadow_;
 
 public:
 	Vec3 vec;

@@ -47,9 +47,9 @@ private:
 
 	struct ConstantBufferDataLightManager
 	{
-		std::array<ConstantBufferDataDirectionalLight, sDirectionalLightNum_> constantBufferDirectionalLights;
-		std::array<ConstantBufferDataPointLight, sPointLightNum_> constantBufferPointLights;
-		std::array<ConstantBufferDataSpotLight, sSpotLightNum_> constantBufferSpotLights;
+		std::array<ConstantBufferData::CDirectionalLight, sDirectionalLightNum_> constantBufferDirectionalLights;
+		std::array<ConstantBufferData::CPointLight, sPointLightNum_> constantBufferPointLights;
+		std::array<ConstantBufferData::CSpotLight, sSpotLightNum_> constantBufferSpotLights;
 	};
 
 	std::unique_ptr<ConstantBuffer<ConstantBufferDataLightManager>> constantBufferLightManager_;

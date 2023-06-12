@@ -3,14 +3,14 @@
 #include "RenderBase.h"
 #include "TextureManager.h"
 #include "Camera.h"
-using namespace std;
+using namespace ConstantBufferData;
 
 Sprite::Sprite() :
 	texture(TextureManager::GetTexture("White")),
 	pos(0), scale(1), size(0), rot(0), color(Color::white), anchorPoint(0.5f),
 	vertexBuffer(new VertexBuffer<VertexPosUv>),
-	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform2D>),
-	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>),
+	constantBufferTransform(new ConstantBuffer<CTransform2D>),
+	constantBufferColor(new ConstantBuffer<CColor>),
 	graphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Sprite"))
 {
 	vertices.resize(4);

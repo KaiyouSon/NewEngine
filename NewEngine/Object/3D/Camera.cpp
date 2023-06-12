@@ -14,14 +14,14 @@ Camera::Camera() : pos(0, 0, 0), rot(0, 0, 0), fov(Radian(45)), nearZ(0.1f), far
 	Vec3 v3 = transform.GetWorldMat().GetYAxis();
 
 	// ビュー変換行列
-	viewLookToMat = ConvertViewProjectionMatLookTo(v1, v2, v3);
-	viewLookAtMat = ConvertViewProjectionMatLookAt(v1, v1 * 10, { 0,1,0 });
+	viewLookToMat_ = ConvertViewProjectionMatLookTo(v1, v2, v3);
+	viewLookAtMat_ = ConvertViewProjectionMatLookAt(v1, v1 * 10, { 0,1,0 });
 
 	// 並行投影行列の計算
-	orthoGrphicProjectionMat = ConvertOrthoGrphicProjectionMat(GetWindowSize().x, GetWindowSize().y);
+	orthoGrphicProjectionMat_ = ConvertOrthoGrphicProjectionMat(GetWindowSize().x, GetWindowSize().y);
 
 	// 透視投影行列の計算
-	perspectiveProjectionMat = ConvertPerspectiveProjectionMat(
+	perspectiveProjectionMat_ = ConvertPerspectiveProjectionMat(
 		fov, (float)GetWindowSize().x / GetWindowSize().y, nearZ, farZ);
 }
 
@@ -36,14 +36,14 @@ void Camera::Update()
 	Vec3 v3 = transform.GetWorldMat().GetYAxis();
 
 	// ビュー変換行列
-	viewLookToMat = ConvertViewProjectionMatLookTo(v1, v2, v3);
-	viewLookAtMat = ConvertViewProjectionMatLookAt(v1, v1 * 10, { 0,1,0 });
+	viewLookToMat_ = ConvertViewProjectionMatLookTo(v1, v2, v3);
+	viewLookAtMat_ = ConvertViewProjectionMatLookAt(v1, v1 * 10, { 0,1,0 });
 
 	// 平行投影行列の計算
-	orthoGrphicProjectionMat = ConvertOrthoGrphicProjectionMat(GetWindowSize().x, GetWindowSize().y);
+	orthoGrphicProjectionMat_ = ConvertOrthoGrphicProjectionMat(GetWindowSize().x, GetWindowSize().y);
 
 	// 透視投影行列の計算
-	perspectiveProjectionMat = ConvertPerspectiveProjectionMat(
+	perspectiveProjectionMat_ = ConvertPerspectiveProjectionMat(
 		fov, (float)GetWindowSize().x / GetWindowSize().y, nearZ, farZ);
 }
 

@@ -1,12 +1,12 @@
 #include "SilhouetteObj.h"
 #include "RenderBase.h"
 #include "Camera.h"
-using namespace std;
+using namespace ConstantBufferData;
 
 SilhouetteObj::SilhouetteObj() :
 	color(Color::black),
-	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform3D>),
-	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>),
+	constantBufferTransform(new ConstantBuffer<CTransform3D>),
+	constantBufferColor(new ConstantBuffer<CColor>),
 	graphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Silhouette"))
 {
 	// 定数バッファ初期化
@@ -22,9 +22,9 @@ void SilhouetteObj::Update(SilhouetteObj* parent)
 {
 	obj->Update();
 
-	transform.pos = obj->pos_;
-	transform.scale = obj->scale_;
-	transform.rot = obj->rot_;
+	transform.pos = obj->pos;
+	transform.scale = obj->scale;
+	transform.rot = obj->rot;
 	transform.Update();
 	if (parent != nullptr)
 	{

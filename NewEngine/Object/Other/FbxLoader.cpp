@@ -164,15 +164,15 @@ void FbxLoader::ParseMaterial(FbxModel* fbxModel, FbxNode* fbxNode)
 
 				// 環境光
 				FbxPropertyT<FbxDouble3> ambient = lambert->Ambient;
-				fbxModel->material.ambient.x = (float)ambient.Get()[0];
-				fbxModel->material.ambient.y = (float)ambient.Get()[1];
-				fbxModel->material.ambient.z = (float)ambient.Get()[2];
+				fbxModel->material.ambient.r = (float)ambient.Get()[0];
+				fbxModel->material.ambient.g = (float)ambient.Get()[1];
+				fbxModel->material.ambient.b = (float)ambient.Get()[2];
 
 				// 拡散反射光
 				FbxPropertyT<FbxDouble3> diffuse = lambert->Diffuse;
-				fbxModel->material.diffuse.x = (float)diffuse.Get()[0];
-				fbxModel->material.diffuse.y = (float)diffuse.Get()[1];
-				fbxModel->material.diffuse.z = (float)diffuse.Get()[2];
+				fbxModel->material.diffuse.r = (float)diffuse.Get()[0];
+				fbxModel->material.diffuse.g = (float)diffuse.Get()[1];
+				fbxModel->material.diffuse.b = (float)diffuse.Get()[2];
 			}
 		}
 

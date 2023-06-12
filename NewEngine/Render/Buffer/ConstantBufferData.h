@@ -1,97 +1,86 @@
 #pragma once
 #include "Util.h"
 
-struct ConstantBufferDataTransform3D
+namespace ConstantBufferData
 {
-	Mat4 viewMat;
-	Mat4 worldMat;
-	Vec3 cameraPos;
-};
+	struct CTransform3D
+	{
+		Mat4 viewMat;
+		Mat4 worldMat;
+		Vec3 cameraPos;
+	};
 
-struct ConstantBufferDataTransform2D
-{
-	Mat4 mat;	//3D変換行列
-};
+	struct CTransform2D
+	{
+		Mat4 mat;	//3D変換行列
+	};
 
-struct ConstantBufferDataCircleGauge
-{
-	float startRadian;
-	float endRadian;
-	Vec2 pad;
-};
+	struct CCircleGauge
+	{
+		float startRadian;
+		float endRadian;
+	};
 
-struct ConstantBufferDataColor
-{
-	Color color;// 色
-};
+	struct CColor
+	{
+		Color color;// 色
+	};
 
-struct ConstantBufferDataMaterial
-{
-	Vec3 ambient;	// アンビエント係数
-	float pad1;
-	Vec3 diffuse;	// ディフューズ係数
-	float pad2;
-	Vec3 specular;	// スペキュラー係数
-	float alpha;	// アルファ
-};
+	struct CMaterial
+	{
+		Color ambient;	// アンビエント係数
+		Color diffuse;	// ディフューズ係数
+		Color specular;	// スペキュラー係数
+		float alpha;	// アルファ
+	};
 
-struct ConstantBufferDataDirectionalLight
-{
-	Vec3 dir;
-	float pad1;
-	Vec3 color;
-	unsigned int isActive;
-};
+	struct CDirectionalLight
+	{
+		Vec3 dir;		float pad1;
+		Vec3 color;
+		uint32_t isActive;
+	};
 
-struct ConstantBufferDataPointLight
-{
-	Vec3 pos;
-	float pad1;
-	Vec3 color;
-	float pad2;
-	Vec3 atten;
-	unsigned int isActive;
-};
+	struct CPointLight
+	{
+		Vec3 pos;		float pad1;
+		Vec3 color;		float pad2;
+		Vec3 atten;
+		uint32_t isActive;
+	};
 
-struct ConstantBufferDataSpotLight
-{
-	Vec3 vec;
-	float pad1;
-	Vec3 pos;
-	float pad2;
-	Vec3 color;
-	float pad3;
-	Vec3 atten;
-	float pad4;
-	Vec2 factorAngleCos;
-	unsigned int isActive;
-	float pad5;
-};
+	struct CSpotLight
+	{
+		Vec3 vec;		float pad1;
+		Vec3 pos;		float pad2;
+		Vec3 color;		float pad3;
+		Vec3 atten;		float pad4;
+		Vec2 factorAngleCos;
+		uint32_t isActive;	float pad5;
+	};
 
-struct ConstantBufferDataCircleShadow
-{
-	Vec3 vec;
-	float pad1;
-	Vec3 pos;
-	float disCasterLight;
-	Vec3 atten;
-	float pad2;
-	Vec2 factorAngleCos;
-	unsigned int isActive;
-	float pad3;
-};
+	struct CCircleShadow
+	{
+		Vec3 vec;		float pad1;
+		Vec3 pos;
+		float disCasterLight;
+		Vec3 atten;		float pad2;
+		Vec2 factorAngleCos;
+		uint32_t isActive;	float pad3;
+	};
 
-struct ConstantBufferDataFog
-{
-	unsigned int isActive;
-	float nearDis;
-	float farDis;
-	float pad;
-	Color color;
-};
+	struct CFog
+	{
+		uint32_t isActive;
+		float nearDis;
+		float farDis;	float pad;
+		Color color;
+	};
 
-static const int maxBones = 32;
-struct ConstantBufferDataSkin
-{
-	Mat4 bones[maxBones];
-};
+	static const int maxBones = 32;
+	struct CSkin
+	{
+		Mat4 bones[maxBones];
+	};
+
+}

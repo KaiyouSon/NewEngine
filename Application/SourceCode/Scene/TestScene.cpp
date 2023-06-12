@@ -14,7 +14,7 @@ void TestScene::Init()
 
 	obj1.SetModel(ModelManager::GetModel("Block1"));
 	obj2.SetModel(ModelManager::GetModel("Block1"));
-	obj2.pos_.x = 3;
+	obj2.pos.x = 3;
 
 	spr1.texture = TextureManager::GetTexture("pic");
 
@@ -28,8 +28,8 @@ void TestScene::Update()
 	Camera::DebugCameraUpdate();
 
 	const float speed = 0.05f;
-	obj1.pos_.x += (Key::GetKey(DIK_D) - Key::GetKey(DIK_A)) * speed;
-	obj1.pos_.y += (Key::GetKey(DIK_W) - Key::GetKey(DIK_S)) * speed;
+	obj1.pos.x += (Key::GetKey(DIK_D) - Key::GetKey(DIK_A)) * speed;
+	obj1.pos.y += (Key::GetKey(DIK_W) - Key::GetKey(DIK_S)) * speed;
 
 	if (Key::GetKeyDown(DIK_SPACE) == true)
 	{

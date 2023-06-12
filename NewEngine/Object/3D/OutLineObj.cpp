@@ -1,45 +1,41 @@
 #include "OutLineObj.h"
 #include "RenderBase.h"
 
+using namespace ConstantBufferData;
+
 OutLineObj::OutLineObj() :
 	color(Color::black),
-	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform3D>),
-	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>)
+	constantBufferTransform_(new ConstantBuffer<CTransform3D>),
+	constantBufferColor_(new ConstantBuffer<CColor>)
 {
 	// 定数バッファ初期化
-	constantBufferTransform->Init();	// 3D行列
-	constantBufferColor->Init();		// 色
-}
-
-OutLineObj::~OutLineObj()
-{
-	delete constantBufferTransform;
-	delete constantBufferColor;
+	constantBufferTransform_->Init();	// 3D行列
+	constantBufferColor_->Init();		// 色
 }
 
 void OutLineObj::Update(OutLineObj* parent)
 {
 	obj->Update();
 
-	transform.pos = obj->pos_;
-	transform.scale = obj->scale_;
-	transform.rot = obj->rot_;
-	transform.Update();
+	transform_.pos = obj->pos;
+	transform_.scale = obj->scale;
+	transform_.rot = obj->rot;
+	transform_.Update();
 	if (parent != nullptr)
 	{
-		transform.GetWorldMat() *= parent->transform.GetWorldMat();
+		transform_.GetWorldMat() *= parent->transform_.GetWorldMat();
 	}
 
 	// マトリックス転送
-	constantBufferTransform->constantBufferMap->viewMat =
+	constantBufferTransform_->constantBufferMap->viewMat =
 		Camera::current.GetViewLookToMat() *
 		Camera::current.GetPerspectiveProjectionMat();
-	constantBufferTransform->constantBufferMap->worldMat = transform.GetWorldMat();
-	constantBufferTransform->constantBufferMap->cameraPos = Camera::current.pos;
+	constantBufferTransform_->constantBufferMap->worldMat = transform_.GetWorldMat();
+	constantBufferTransform_->constantBufferMap->cameraPos = Camera::current.pos;
 
 	// 色転送
-	constantBufferColor->constantBufferMap->color = color / 255;
-	constantBufferColor->constantBufferMap->color.a = color.a / 255;
+	constantBufferColor_->constantBufferMap->color = color / 255;
+	constantBufferColor_->constantBufferMap->color.a = color.a / 255;
 }
 
 void OutLineObj::Draw()
@@ -56,9 +52,9 @@ void OutLineObj::Draw()
 
 	// CBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
+		0, constantBufferTransform_->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
+		1, constantBufferColor_->constantBuffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(unsigned short)obj->GetModel()->mesh.GetIndexSize(), 1, 0, 0, 0);

@@ -1,6 +1,5 @@
 #include "Collision.h"
 #include "Util.h"
-using namespace std;
 
 // ‰~‚Æ‰~
 bool Collision::CircleHitCircle(const CircleCollider& circle1, const CircleCollider& circle2)

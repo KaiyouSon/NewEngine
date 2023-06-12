@@ -3,16 +3,17 @@
 #include "IndexBuffer.h"
 #include "ConstantBuffer.h"
 #include <vector>
+#include <memory>
 
 class Line
 {
 private:
-	std::vector<VertexPos> vertices;
-	VertexBuffer<VertexPos>* vertexBuffer;
-	ConstantBuffer<ConstantBufferDataTransform3D>* constantBufferTransform;
-	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
-	GraphicsPipeline* graphicsPipeline;
-	Transform transform;
+	std::vector<VertexPos> vertices_;
+	std::unique_ptr<VertexBuffer<VertexPos>> vertexBuffer_;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform3D>> constantBufferTransform_;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> constantBufferColor_;
+	GraphicsPipeline* graphicsPipeline_;
+	Transform transform_;
 
 public:
 	Vec3 pos;
@@ -22,7 +23,6 @@ public:
 
 public:
 	Line();
-	~Line();
 	void Update();
 	void Draw();
 };

@@ -11,9 +11,9 @@ class CircleGaugeSprite
 private:
 	VertexBuffer<VertexPosUv>* vertexBuffer;
 	std::vector<VertexPosUv> vertices;
-	ConstantBuffer<ConstantBufferDataTransform2D>* constantBufferTransform;
-	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
-	ConstantBuffer<ConstantBufferDataCircleGauge>* constantBufferCircleGauge;
+	ConstantBuffer<ConstantBufferData::CTransform2D>* constantBufferTransform;
+	ConstantBuffer<ConstantBufferData::CColor>* constantBufferColor;
+	ConstantBuffer<ConstantBufferData::CCircleGauge>* constantBufferCircleGauge;
 	GraphicsPipeline* graphicsPipeline;
 	Transform transform;
 

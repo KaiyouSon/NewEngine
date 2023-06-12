@@ -1,13 +1,15 @@
 #include "CircleGaugeSprite.h"
 #include "Camera.h"
 
+using namespace ConstantBufferData;
+
 CircleGaugeSprite::CircleGaugeSprite() :
 	pos(0), scale(1), rot(0), anchorPoint(0.5f),
 	startRadian(0), endRadian(0),
 	vertexBuffer(new VertexBuffer<VertexPosUv>),
-	constantBufferTransform(new ConstantBuffer<ConstantBufferDataTransform2D>),
-	constantBufferColor(new ConstantBuffer<ConstantBufferDataColor>),
-	constantBufferCircleGauge(new ConstantBuffer<ConstantBufferDataCircleGauge>),
+	constantBufferTransform(new ConstantBuffer<CTransform2D>),
+	constantBufferColor(new ConstantBuffer<CColor>),
+	constantBufferCircleGauge(new ConstantBuffer<CCircleGauge>),
 	graphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("CircleGaugeSprite"))
 {
 	vertices.resize(4);

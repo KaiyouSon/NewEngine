@@ -5,20 +5,21 @@
 #include "FbxModel.h"
 #include "TextureManager.h"
 #include <DirectXMath.h>
+using namespace ConstantBufferData;
 
-bool Object3D::isAllLighting_ = false;
+bool Object3D::isAllLighting = false;
 
 #pragma region コンストラクタ
 
 Object3D::Object3D() :
-	pos_(0, 0, 0), scale_(1, 1, 1), rot_(0, 0, 0),
-	constantBufferTransform_(std::make_unique<ConstantBuffer<ConstantBufferDataTransform3D>>()),
-	constantBufferMaterial_(std::make_unique<ConstantBuffer<ConstantBufferDataMaterial>>()),
-	constantBufferColor_(std::make_unique<ConstantBuffer<ConstantBufferDataColor>>()),
-	constantBufferSkin_(std::make_unique<ConstantBuffer<ConstantBufferDataSkin>>()),
+	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
+	constantBufferTransform_(std::make_unique<ConstantBuffer<CTransform3D>>()),
+	constantBufferMaterial_(std::make_unique<ConstantBuffer<CMaterial>>()),
+	constantBufferColor_(std::make_unique<ConstantBuffer<CColor>>()),
+	constantBufferSkin_(std::make_unique<ConstantBuffer<CSkin>>()),
 	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
 	texture_(TextureManager::GetTexture("White")),
-	isLighting_(false)
+	isLighting(false)
 {
 	// 定数バッファ初期化
 	constantBufferTransform_->Init();	// 3D行列
@@ -28,21 +29,21 @@ Object3D::Object3D() :
 
 	texture_->isMaterial = true;
 
-	if (isAllLighting_ == true)
+	if (isAllLighting == true)
 	{
-		isLighting_ = true;
+		isLighting = true;
 	}
 }
 
 Object3D::Object3D(Model* model) :
-	pos_(0), scale_(1), rot_(0),
-	constantBufferTransform_(std::make_unique<ConstantBuffer<ConstantBufferDataTransform3D>>()),
-	constantBufferMaterial_(std::make_unique<ConstantBuffer<ConstantBufferDataMaterial>>()),
-	constantBufferColor_(std::make_unique<ConstantBuffer<ConstantBufferDataColor>>()),
-	constantBufferSkin_(std::make_unique<ConstantBuffer<ConstantBufferDataSkin>>()),
+	pos(0), scale(1), rot(0),
+	constantBufferTransform_(std::make_unique<ConstantBuffer<CTransform3D>>()),
+	constantBufferMaterial_(std::make_unique<ConstantBuffer<CMaterial>>()),
+	constantBufferColor_(std::make_unique<ConstantBuffer<CColor>>()),
+	constantBufferSkin_(std::make_unique<ConstantBuffer<CSkin>>()),
 	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
 	texture_(TextureManager::GetTexture("White")),
-	isLighting_(false), model_(model)
+	isLighting(false), model_(model)
 {
 	// 定数バッファ初期化
 	constantBufferTransform_->Init();	// 3D行列
@@ -52,9 +53,9 @@ Object3D::Object3D(Model* model) :
 
 	texture_->isMaterial = true;
 
-	if (isAllLighting_ == true)
+	if (isAllLighting == true)
 	{
-		isLighting_ = true;
+		isLighting = true;
 	}
 }
 
@@ -73,9 +74,9 @@ void Object3D::PlayAnimetion()
 }
 void Object3D::Update(Transform* parent)
 {
-	transform_.pos = pos_;
-	transform_.scale = scale_;
-	transform_.rot = rot_;
+	transform_.pos = pos;
+	transform_.scale = scale;
+	transform_.rot = rot;
 	transform_.Update();
 
 	if (parent != nullptr)
@@ -134,9 +135,9 @@ void Object3D::TransferBuffer()
 	constantBufferTransform_->constantBufferMap->cameraPos = Camera::current.pos;
 
 	// マテリアルの転送
-	if (isLighting_ == true && isAllLighting_ == true)
+	if (isLighting == true && isAllLighting == true)
 	{
-		constantBufferMaterial_->constantBufferMap->ambient = Vec3::one - 0.5f;
+		constantBufferMaterial_->constantBufferMap->ambient = Color(1, 1, 1) - 0.5f;
 		//constantBufferMaterial_->constantBufferMap->ambient = model->material.ambient;
 
 		constantBufferMaterial_->constantBufferMap->diffuse = model_->material.diffuse;
@@ -144,9 +145,9 @@ void Object3D::TransferBuffer()
 	}
 	else
 	{
-		constantBufferMaterial_->constantBufferMap->ambient = Vec3::one;
-		constantBufferMaterial_->constantBufferMap->diffuse = Vec3::zero;
-		constantBufferMaterial_->constantBufferMap->specular = Vec3::zero;
+		constantBufferMaterial_->constantBufferMap->ambient = Color(1, 1, 1);
+		constantBufferMaterial_->constantBufferMap->diffuse = Color(0, 0, 0);
+		constantBufferMaterial_->constantBufferMap->specular = Color(0, 0, 0);
 	}
 	constantBufferMaterial_->constantBufferMap->alpha = model_->material.alpha;
 

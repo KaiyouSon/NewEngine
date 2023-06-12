@@ -5,7 +5,7 @@
 class Fog
 {
 private:
-	std::unique_ptr<ConstantBuffer<ConstantBufferDataFog>> constantBufferFog_;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CFog>> constantBufferFog_;
 
 public:
 	bool isActive;

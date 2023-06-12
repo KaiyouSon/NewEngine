@@ -9,8 +9,8 @@
 class SilhouetteObj
 {
 private:
-	ConstantBuffer<ConstantBufferDataTransform3D>* constantBufferTransform;
-	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
+	ConstantBuffer<ConstantBufferData::CTransform3D>* constantBufferTransform;
+	ConstantBuffer<ConstantBufferData::CColor>* constantBufferColor;
 	GraphicsPipeline* graphicsPipeline;
 	Transform transform;
 

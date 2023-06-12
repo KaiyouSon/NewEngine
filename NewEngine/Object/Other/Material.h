@@ -9,9 +9,9 @@ class Material
 {
 public:
 	std::string name;
-	Vec3 ambient;		// アンビエント
-	Vec3 diffuse;		// ディフューズ
-	Vec3 specular;		// スペキュラー
+	Color ambient;		// アンビエント
+	Color diffuse;		// ディフューズ
+	Color specular;		// スペキュラー
 	float alpha;		// アルファ
 	Texture texture;
 

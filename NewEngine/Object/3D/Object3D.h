@@ -10,10 +10,10 @@
 class Object3D
 {
 private:
-	std::unique_ptr<ConstantBuffer<ConstantBufferDataTransform3D>> constantBufferTransform_;
-	std::unique_ptr<ConstantBuffer<ConstantBufferDataMaterial>> constantBufferMaterial_;
-	std::unique_ptr<ConstantBuffer<ConstantBufferDataColor>> constantBufferColor_;
-	std::unique_ptr<ConstantBuffer<ConstantBufferDataSkin>> constantBufferSkin_;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform3D>> constantBufferTransform_;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CMaterial>> constantBufferMaterial_;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> constantBufferColor_;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CSkin>> constantBufferSkin_;
 
 private:
 	// バッファ転送
@@ -33,12 +33,12 @@ private:
 	GraphicsPipeline* graphicsPipeline_;
 
 public:
-	Vec3 pos_;
-	Vec3 scale_;
-	Vec3 rot_;
+	Vec3 pos;
+	Vec3 scale;
+	Vec3 rot;
 
-	bool isLighting_;
-	static bool isAllLighting_;
+	bool isLighting;
+	static bool isAllLighting;
 
 public:
 	Object3D();

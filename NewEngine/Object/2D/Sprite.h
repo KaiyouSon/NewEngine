@@ -11,8 +11,8 @@ class Sprite
 private:
 	VertexBuffer<VertexPosUv>* vertexBuffer;
 	std::vector<VertexPosUv> vertices;
-	ConstantBuffer<ConstantBufferDataTransform2D>* constantBufferTransform;
-	ConstantBuffer<ConstantBufferDataColor>* constantBufferColor;
+	ConstantBuffer<ConstantBufferData::CTransform2D>* constantBufferTransform;
+	ConstantBuffer<ConstantBufferData::CColor>* constantBufferColor;
 	Transform transform;
 
 public:
