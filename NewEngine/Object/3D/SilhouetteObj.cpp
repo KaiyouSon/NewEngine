@@ -5,42 +5,42 @@ using namespace ConstantBufferData;
 
 SilhouetteObj::SilhouetteObj() :
 	color(Color::black),
-	constantBufferTransform(new ConstantBuffer<CTransform3D>),
-	constantBufferColor(new ConstantBuffer<CColor>),
-	graphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Silhouette"))
+	constantBufferTransform_(std::make_unique<ConstantBuffer<CTransform3D>>()),
+	constantBufferColor_(std::make_unique<ConstantBuffer<CColor>>()),
+	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("Silhouette"))
 {
 	// 定数バッファ初期化
-	constantBufferTransform->Init();	// 3D行列
-	constantBufferColor->Init();		// 色
+	constantBufferTransform_->Init();	// 3D行列
+	constantBufferColor_->Init();		// 色
 }
-SilhouetteObj::~SilhouetteObj()
-{
-	delete constantBufferTransform;
-	delete constantBufferColor;
-}
-void SilhouetteObj::Update(SilhouetteObj* parent)
+
+void SilhouetteObj::Update(Transform* parent)
 {
 	obj->Update();
 
-	transform.pos = obj->pos;
-	transform.scale = obj->scale;
-	transform.rot = obj->rot;
-	transform.Update();
+	transform_.pos = obj->pos;
+	transform_.scale = obj->scale;
+	transform_.rot = obj->rot;
+	transform_.Update();
 	if (parent != nullptr)
 	{
-		transform.GetWorldMat() *= parent->transform.GetWorldMat();
+		parent_ = parent;
+
+		Mat4 mat = transform_.GetWorldMat();
+		mat *= parent_->GetWorldMat();
+		transform_.SetWorldMat(mat);
 	}
 
 	// マトリックス転送
-	constantBufferTransform->constantBufferMap->viewMat =
+	constantBufferTransform_->constantBufferMap->viewMat =
 		Camera::current.GetViewLookToMat() *
 		Camera::current.GetPerspectiveProjectionMat();
-	constantBufferTransform->constantBufferMap->worldMat = transform.GetWorldMat();
-	constantBufferTransform->constantBufferMap->cameraPos = Camera::current.pos;
+	constantBufferTransform_->constantBufferMap->worldMat = transform_.GetWorldMat();
+	constantBufferTransform_->constantBufferMap->cameraPos = Camera::current.pos;
 
 	// 色転送
-	constantBufferColor->constantBufferMap->color = color / 255;
-	constantBufferColor->constantBufferMap->color.a = color.a / 255;
+	constantBufferColor_->constantBufferMap->color = color / 255;
+	constantBufferColor_->constantBufferMap->color.a = color.a / 255;
 }
 void SilhouetteObj::Draw(const BlendMode& blendMode)
 {
@@ -55,9 +55,9 @@ void SilhouetteObj::Draw(const BlendMode& blendMode)
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
+		0, constantBufferTransform_->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
+		1, constantBufferColor_->constantBuffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(unsigned short)obj->GetModel()->mesh.GetIndexSize(), 1, 0, 0, 0);
@@ -72,19 +72,19 @@ void SilhouetteObj::SetBlendMode(const BlendMode& blendMode)
 	switch (blendMode)
 	{
 	case BlendMode::Alpha: // αブレンド
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetAlphaPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetAlphaPipeline());
 		break;
 
 	case BlendMode::Add:	// 加算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetAddPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetAddPipeline());
 		break;
 
 	case BlendMode::Sub:	// 減算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetSubPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetSubPipeline());
 		break;
 
 	case BlendMode::Inv:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline->GetInvPipeline());
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetInvPipeline());
 		break;
 
 	default:

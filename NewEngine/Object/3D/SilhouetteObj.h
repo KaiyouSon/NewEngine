@@ -9,10 +9,11 @@
 class SilhouetteObj
 {
 private:
-	ConstantBuffer<ConstantBufferData::CTransform3D>* constantBufferTransform;
-	ConstantBuffer<ConstantBufferData::CColor>* constantBufferColor;
-	GraphicsPipeline* graphicsPipeline;
-	Transform transform;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform3D>> constantBufferTransform_;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> constantBufferColor_;
+	GraphicsPipeline* graphicsPipeline_;
+	Transform transform_;
+	Transform* parent_;
 
 public:
 	Object3D* obj;
@@ -20,8 +21,7 @@ public:
 
 public:
 	SilhouetteObj();
-	~SilhouetteObj();
-	void Update(SilhouetteObj* parent = nullptr);
+	void Update(Transform* parent = nullptr);
 	void Draw(const BlendMode& blendMode = BlendMode::Alpha);
 
 	void SetBlendMode(const BlendMode& blendMode);

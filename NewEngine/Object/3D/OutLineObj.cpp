@@ -5,15 +5,15 @@ using namespace ConstantBufferData;
 
 OutLineObj::OutLineObj() :
 	color(Color::black),
-	constantBufferTransform_(new ConstantBuffer<CTransform3D>),
-	constantBufferColor_(new ConstantBuffer<CColor>)
+	constantBufferTransform_(std::make_unique<ConstantBuffer<CTransform3D>>()),
+	constantBufferColor_(std::make_unique<ConstantBuffer<CColor>>())
 {
 	// 定数バッファ初期化
 	constantBufferTransform_->Init();	// 3D行列
 	constantBufferColor_->Init();		// 色
 }
 
-void OutLineObj::Update(OutLineObj* parent)
+void OutLineObj::Update(Transform* parent)
 {
 	obj->Update();
 
@@ -21,11 +21,15 @@ void OutLineObj::Update(OutLineObj* parent)
 	transform_.scale = obj->scale;
 	transform_.rot = obj->rot;
 	transform_.Update();
+
 	if (parent != nullptr)
 	{
-		transform_.GetWorldMat() *= parent->transform_.GetWorldMat();
-	}
+		parent_ = parent;
 
+		Mat4 mat = transform_.GetWorldMat();
+		mat *= parent_->GetWorldMat();
+		transform_.SetWorldMat(mat);
+	}
 	// マトリックス転送
 	constantBufferTransform_->constantBufferMap->viewMat =
 		Camera::current.GetViewLookToMat() *
