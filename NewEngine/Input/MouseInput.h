@@ -16,10 +16,10 @@ template<typename T> class Singleton;
 class MouseInput : public Singleton<MouseInput>
 {
 private:
-	Microsoft::WRL::ComPtr<IDirectInputDevice8> mouse;
-	Vec2 mousePos;
-	DIMOUSESTATE2 mouseInput;
-	DIMOUSESTATE2 prevMouseInput;
+	Microsoft::WRL::ComPtr<IDirectInputDevice8> mouse_;
+	Vec2 mousePos_;
+	DIMOUSESTATE2 mouseInput_;
+	DIMOUSESTATE2 prevMouseInput_;
 
 public:
 	void Init();

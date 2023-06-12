@@ -14,7 +14,7 @@ void InputManager::Init()
 		renderWindow->GetHInstance(),
 		DIRECTINPUT_VERSION,
 		IID_IDirectInput8,
-		(void**)&directInput, nullptr);
+		(void**)&directInput_, nullptr);
 	assert(SUCCEEDED(result));
 
 	JoypadInput::GetInstance()->Init();

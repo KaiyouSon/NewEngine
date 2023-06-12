@@ -12,12 +12,12 @@ class InputManager : public Singleton<InputManager>
 {
 private:
 	friend Singleton<InputManager>;
-	Microsoft::WRL::ComPtr<IDirectInput8> directInput;
+	Microsoft::WRL::ComPtr<IDirectInput8> directInput_;
 
 public:
 	void Init();
 	void Update();
 
 public: // ÉQÉbÉ^Å[
-	inline Microsoft::WRL::ComPtr<IDirectInput8> GetDirectInput() { return directInput; }
+	inline Microsoft::WRL::ComPtr<IDirectInput8> GetDirectInput() { return directInput_; }
 };

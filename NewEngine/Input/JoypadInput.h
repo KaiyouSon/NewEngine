@@ -40,13 +40,13 @@ private:
 	};
 
 private: // 添え字関連
-	int minButton;
-	int maxButton;
+	int minButton_;
+	int maxButton_;
 
 private:// ボタン関連
-	std::vector<JoypadObj> joypadObjs;
-	static bool isInsertPad;
-	static int padIndex;
+	std::vector<JoypadObj> joypadObjs_;
+	static bool sIsInsertPad_;
+	static uint32_t sPadIndex_;
 
 private:
 	// コントローラー接続した時のコールバック
@@ -78,8 +78,8 @@ public: // その他取得関連
 	static bool GetisLinkPad(const int padIndex = 0);
 
 public: // アサット
-	static inline void SetisInsertPad(const bool isInsertPad) { JoypadInput::isInsertPad = isInsertPad; }
-	static inline bool GetisInsertPad() { return JoypadInput::isInsertPad; }
+	static inline void SetisInsertPad(const bool isInsertPad) { JoypadInput::sIsInsertPad_ = isInsertPad; }
+	static inline bool GetisInsertPad() { return JoypadInput::sIsInsertPad_; }
 
 private:
 	friend Singleton<JoypadInput>;
