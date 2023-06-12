@@ -1,11 +1,12 @@
 #pragma once
 #include "ConstantBuffer.h"
 #include "Util.h"
+#include <memory>
 
 class CircleShadow
 {
 private:
-	ConstantBuffer<ConstantBufferDataCircleShadow>* constantBufferCircleShadow;
+	std::unique_ptr<ConstantBuffer<ConstantBufferDataCircleShadow>> constantBufferCircleShadow_;
 
 public:
 	Vec3 vec;
@@ -17,7 +18,6 @@ public:
 
 public:
 	CircleShadow();
-	~CircleShadow();
 	void Update();
 	void Draw();
 };

@@ -1,25 +1,20 @@
 #include "Fog.h"
 
 Fog::Fog() :
-	constantBufferFog(new ConstantBuffer<ConstantBufferDataFog>),
+	constantBufferFog_(std::make_unique<ConstantBuffer<ConstantBufferDataFog>>()),
 	isActive(true), nearDis(0), farDis(50), color(Color::white)
 {
-	constantBufferFog->Init();
-}
-
-Fog::~Fog()
-{
-	delete constantBufferFog;
+	constantBufferFog_->Init();
 }
 
 void Fog::Update()
 {
-	constantBufferFog->constantBufferMap->isActive = isActive;
+	constantBufferFog_->constantBufferMap->isActive = isActive;
 	if (isActive == false) return;
-	constantBufferFog->constantBufferMap->nearDis = nearDis;
-	constantBufferFog->constantBufferMap->farDis = farDis;
-	constantBufferFog->constantBufferMap->color = color / 255;
-	constantBufferFog->constantBufferMap->color.a = color.a / 255;
+	constantBufferFog_->constantBufferMap->nearDis = nearDis;
+	constantBufferFog_->constantBufferMap->farDis = farDis;
+	constantBufferFog_->constantBufferMap->color = color / 255;
+	constantBufferFog_->constantBufferMap->color.a = color.a / 255;
 }
 
 void Fog::Draw()
@@ -28,5 +23,5 @@ void Fog::Draw()
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		4, constantBufferFog->constantBuffer->GetGPUVirtualAddress());
+		4, constantBufferFog_->constantBuffer->GetGPUVirtualAddress());
 }

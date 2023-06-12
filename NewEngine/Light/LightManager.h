@@ -41,39 +41,41 @@ template<typename T> class Singleton;
 class LightManager : public Singleton<LightManager>
 {
 private:
-	static const int directionalLightNum = 1;
-	static const int pointLightNum = 3;
-	static const int spotLightNum = 3;
-
+	static const uint32_t sDirectionalLightNum_ = 1;
+	static const uint32_t sPointLightNum_ = 3;
+	static const uint32_t sSpotLightNum_ = 3;
 
 	struct ConstantBufferDataLightManager
 	{
-		std::array<ConstantBufferDataDirectionalLight, directionalLightNum> constantBufferDirectionalLights;
-		std::array<ConstantBufferDataPointLight, pointLightNum> constantBufferPointLights;
-		std::array<ConstantBufferDataSpotLight, spotLightNum> constantBufferSpotLights;
+		std::array<ConstantBufferDataDirectionalLight, sDirectionalLightNum_> constantBufferDirectionalLights;
+		std::array<ConstantBufferDataPointLight, sPointLightNum_> constantBufferPointLights;
+		std::array<ConstantBufferDataSpotLight, sSpotLightNum_> constantBufferSpotLights;
 	};
 
-	ConstantBuffer<ConstantBufferDataLightManager>* constantBufferLightManager;
+	std::unique_ptr<ConstantBuffer<ConstantBufferDataLightManager>> constantBufferLightManager_;
 
 public:
-	std::array<DirectionalLight, directionalLightNum> directionalLights;
-	std::array<PointLight, pointLightNum> pointLights;
-	std::array<SpotLight, spotLightNum> spotLights;
+	std::array<DirectionalLight, sDirectionalLightNum_> directionalLights;
+	std::array<PointLight, sPointLightNum_> pointLights;
+	std::array<SpotLight, sSpotLightNum_> spotLights;
 	CircleShadow circleShadow;
 	Fog fog;
 
 	static bool isPointLighting;
 	static bool isSpotLighting;
 
+private:
+	void DirectionalLightUpdate();	// ディレクションナルライト
+	void PointLightUpdate();		// ポイントライト
+	void SpotLightUpdate();			// スポットライト
+
+public:
+	void Init();
+	void Update();
+	void Draw();
 
 private:
 	friend Singleton<LightManager>;
 	LightManager();
-
-public:
-	~LightManager();
-	void Init();
-	void Update();
-	void Draw();
 };
 

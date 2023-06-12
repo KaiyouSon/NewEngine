@@ -1,27 +1,22 @@
 #include "CircleShadow.h"
 
 CircleShadow::CircleShadow() :
-	constantBufferCircleShadow(new ConstantBuffer<ConstantBufferDataCircleShadow>),
+	constantBufferCircleShadow_(std::make_unique<ConstantBuffer<ConstantBufferDataCircleShadow>>()),
 	vec(Vec3::right), pos(0), disCasterLight(100.f), atten(0.5f, 0.6f, 0.0f),
 	factorAngleCos(0.2f, 0.5f), isActive(false)
 {
-	constantBufferCircleShadow->Init();
-}
-
-CircleShadow::~CircleShadow()
-{
-	delete constantBufferCircleShadow;
+	constantBufferCircleShadow_->Init();
 }
 
 void CircleShadow::Update()
 {
-	constantBufferCircleShadow->constantBufferMap->vec = -vec;
-	constantBufferCircleShadow->constantBufferMap->pos = pos;
-	constantBufferCircleShadow->constantBufferMap->disCasterLight = disCasterLight;
-	constantBufferCircleShadow->constantBufferMap->atten = atten;
-	constantBufferCircleShadow->constantBufferMap->factorAngleCos.x = cosf(Radian(factorAngleCos.x));
-	constantBufferCircleShadow->constantBufferMap->factorAngleCos.y = cosf(Radian(factorAngleCos.y));
-	constantBufferCircleShadow->constantBufferMap->isActive = isActive;
+	constantBufferCircleShadow_->constantBufferMap->vec = -vec;
+	constantBufferCircleShadow_->constantBufferMap->pos = pos;
+	constantBufferCircleShadow_->constantBufferMap->disCasterLight = disCasterLight;
+	constantBufferCircleShadow_->constantBufferMap->atten = atten;
+	constantBufferCircleShadow_->constantBufferMap->factorAngleCos.x = cosf(Radian(factorAngleCos.x));
+	constantBufferCircleShadow_->constantBufferMap->factorAngleCos.y = cosf(Radian(factorAngleCos.y));
+	constantBufferCircleShadow_->constantBufferMap->isActive = isActive;
 }
 
 void CircleShadow::Draw()
@@ -30,5 +25,5 @@ void CircleShadow::Draw()
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		6, constantBufferCircleShadow->constantBuffer->GetGPUVirtualAddress());
+		6, constantBufferCircleShadow_->constantBuffer->GetGPUVirtualAddress());
 }

@@ -1,10 +1,11 @@
 #pragma once
 #include "ConstantBuffer.h"
+#include <memory>
 
 class Fog
 {
 private:
-	ConstantBuffer<ConstantBufferDataFog>* constantBufferFog;
+	std::unique_ptr<ConstantBuffer<ConstantBufferDataFog>> constantBufferFog_;
 
 public:
 	bool isActive;
@@ -15,7 +16,6 @@ public:
 
 public:
 	Fog();
-	~Fog();
 	void Update();
 	void Draw();
 };
