@@ -5,12 +5,10 @@
 
 template<typename T> class Singleton;
 
-class GuiManager :
-	public Singleton<GuiManager>
+class GuiManager : public Singleton<GuiManager>
 {
 private:
-	friend Singleton<GuiManager>;
-	static const int NumFramesInFlight;
+	static const int sNumFramesInFlight_;
 
 public:
 	void Init();
@@ -54,4 +52,8 @@ public:
 	static void DrawImage(Texture* texture, const Vec2& size);
 	static bool DrawImageButton(Texture* texture, const Vec2& size);
 
+
+private:
+	friend Singleton<GuiManager>;
+	GuiManager() {};
 };

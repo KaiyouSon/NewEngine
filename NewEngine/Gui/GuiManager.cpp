@@ -7,7 +7,7 @@
 #include <imgui_impl_dx12.h>
 #include <imgui_impl_win32.h>
 
-const int GuiManager::NumFramesInFlight = 3;
+const int GuiManager::sNumFramesInFlight_ = 3;
 
 void GuiManager::Init()
 {
@@ -22,7 +22,7 @@ void GuiManager::Init()
 	ImGui_ImplWin32_Init(RenderWindow::GetInstance()->GetHwnd());
 	ImGui_ImplDX12_Init(
 		renderBase->GetDevice(),
-		NumFramesInFlight,
+		sNumFramesInFlight_,
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 		TextureManager::GetSrvDescHeap(),
 		TextureManager::GetSrvDescHeap()->GetCPUDescriptorHandleForHeapStart(),
