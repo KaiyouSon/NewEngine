@@ -8,51 +8,53 @@ using namespace ConstantBufferData;
 Sprite::Sprite() :
 	texture(TextureManager::GetTexture("White")),
 	pos(0), scale(1), size(0), rot(0), color(Color::white), anchorPoint(0.5f),
-	vertexBuffer(new VertexBuffer<VertexPosUv>),
-	constantBufferTransform(new ConstantBuffer<CTransform2D>),
-	constantBufferColor(new ConstantBuffer<CColor>),
+	vertexBuffer_(std::make_unique<VertexBuffer<VertexPosUv>>()),
+	constantBufferTransform_(std::make_unique<ConstantBuffer<CTransform2D>>()),
+	constantBufferColor_(std::make_unique<ConstantBuffer<CColor>>()),
 	graphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Sprite"))
 {
-	vertices.resize(4);
-	vertices[0].uv = { 0.0f,1.0f };
-	vertices[1].uv = { 0.0f,0.0f };
-	vertices[2].uv = { 1.0f,1.0f };
-	vertices[3].uv = { 1.0f,0.0f };
-	vertexBuffer->Create(vertices);
+	vertices_.resize(4);
+	vertices_[0].uv = { 0.0f,1.0f };
+	vertices_[1].uv = { 0.0f,0.0f };
+	vertices_[2].uv = { 1.0f,1.0f };
+	vertices_[3].uv = { 1.0f,0.0f };
+	vertexBuffer_->Create(vertices_);
 
 	// 定数バッファ
-	constantBufferTransform->Init();
-	constantBufferColor->Init();
+	constantBufferTransform_->Init();
+	constantBufferColor_->Init();
 }
 
-Sprite::~Sprite()
+void Sprite::Update(Transform* parent)
 {
-	delete vertexBuffer;
-	delete constantBufferTransform;
-	delete constantBufferColor;
-}
+	transform_.pos = pos;
+	transform_.scale = { scale.x,scale.y,1 };
+	transform_.rot = { 0,0,rot };
+	transform_.Update();
 
-void Sprite::Update()
-{
-	transform.pos = pos;
-	transform.scale = { scale.x,scale.y,1 };
-	transform.rot = { 0,0,rot };
-	transform.Update();
+	if (parent != nullptr)
+	{
+		parent_ = parent;
+
+		Mat4 mat = transform_.GetWorldMat();
+		mat *= parent_->GetWorldMat();
+		transform_.SetWorldMat(mat);
+	}
 
 	// 定数バッファに転送
-	constantBufferTransform->constantBufferMap->mat =
-		transform.GetWorldMat() *
+	constantBufferTransform_->constantBufferMap->mat =
+		transform_.GetWorldMat() *
 		Camera::current.GetOrthoGrphicProjectionMat();
 
 	// 色転送
-	constantBufferColor->constantBufferMap->color = color / 255;
-	constantBufferColor->constantBufferMap->color.a = color.a / 255;
+	constantBufferColor_->constantBufferMap->color = color / 255;
+	constantBufferColor_->constantBufferMap->color.a = color.a / 255;
 
 	// 頂点バッファーに頂点を転送
 	TransferTexturePos(size);
 }
 
-void Sprite::Draw(const BlendMode& blendMode)
+void Sprite::Draw(const BlendMode blendMode)
 {
 	SetBlendMode(blendMode);
 
@@ -62,13 +64,13 @@ void Sprite::Draw(const BlendMode& blendMode)
 	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	// VBVとIBVの設定コマンド
-	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, vertexBuffer->GetvbViewAddress());
+	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, vertexBuffer_->GetvbViewAddress());
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, constantBufferTransform->constantBuffer->GetGPUVirtualAddress());
+		0, constantBufferTransform_->constantBuffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, constantBufferColor->constantBuffer->GetGPUVirtualAddress());
+		1, constantBufferColor_->constantBuffer->GetGPUVirtualAddress());
 
 	size_t max = renderBase->GetSpriteRootSignature()->GetConstantBufferNum();
 
@@ -79,10 +81,10 @@ void Sprite::Draw(const BlendMode& blendMode)
 			UINT(max + i), texture->GetGpuHandle());
 	}
 
-	renderBase->GetCommandList()->DrawInstanced((unsigned short)vertices.size(), 1, 0, 0);
+	renderBase->GetCommandList()->DrawInstanced((unsigned short)vertices_.size(), 1, 0, 0);
 }
 
-void Sprite::SetBlendMode(const BlendMode& blendMode)
+void Sprite::SetBlendMode(const BlendMode blendMode)
 {
 	RenderBase* renderBase = RenderBase::GetInstance();//.get();
 
@@ -116,31 +118,31 @@ void Sprite::TransferTexturePos(const Vec2& size)
 	float height = size.y == 0 ? texture->size.y : size.y;
 
 	// 現在のサイズ
-	float width2 = vertices[0].pos.x - vertices[2].pos.x;
-	float height2 = vertices[1].pos.x - vertices[3].pos.x;
+	float width2 = vertices_[0].pos.x - vertices_[2].pos.x;
+	float height2 = vertices_[1].pos.x - vertices_[3].pos.x;
 
 	if (width != fabsf(width2) || width != fabsf(height2))
 	{
-		vertices[0].pos = { (0.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f }; //左下
-		vertices[1].pos = { (0.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f }; //左上
-		vertices[2].pos = { (1.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f }; //右下
-		vertices[3].pos = { (1.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f }; //右上
+		vertices_[0].pos = { (0.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f }; //左下
+		vertices_[1].pos = { (0.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f }; //左上
+		vertices_[2].pos = { (1.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f }; //右下
+		vertices_[3].pos = { (1.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f }; //右上
 
-		vertexBuffer->TransferToBuffer(vertices);
+		vertexBuffer_->TransferToBuffer(vertices_);
 	}
 }
 
-void Sprite::SetTextureRect(const Vec2& leftTopPos, const Vec2 rightDownPos)
+void Sprite::SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos)
 {
 	float left = leftTopPos.x / texture->buffer->GetDesc().Width;
 	float right = rightDownPos.x / texture->buffer->GetDesc().Width;
 	float up = leftTopPos.y / texture->buffer->GetDesc().Height;
 	float down = rightDownPos.y / texture->buffer->GetDesc().Height;
 
-	vertices[0].uv = { left,down };
-	vertices[1].uv = { left,up };
-	vertices[2].uv = { right,down };
-	vertices[3].uv = { right,up };
+	vertices_[0].uv = { left,down };
+	vertices_[1].uv = { left,up };
+	vertices_[2].uv = { right,down };
+	vertices_[3].uv = { right,up };
 
-	vertexBuffer->TransferToBuffer(vertices);
+	vertexBuffer_->TransferToBuffer(vertices_);
 }

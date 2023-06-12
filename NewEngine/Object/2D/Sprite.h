@@ -9,11 +9,12 @@
 class Sprite
 {
 private:
-	VertexBuffer<VertexPosUv>* vertexBuffer;
-	std::vector<VertexPosUv> vertices;
-	ConstantBuffer<ConstantBufferData::CTransform2D>* constantBufferTransform;
-	ConstantBuffer<ConstantBufferData::CColor>* constantBufferColor;
-	Transform transform;
+	std::vector<VertexPosUv> vertices_;
+	std::unique_ptr<VertexBuffer<VertexPosUv>> vertexBuffer_;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform2D>> constantBufferTransform_;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> constantBufferColor_;
+	Transform transform_;
+	Transform* parent_;
 
 public:
 	Texture* texture;
@@ -28,15 +29,14 @@ public:
 
 private:
 	void TransferTexturePos(const Vec2& size = 0);
-	void SetBlendMode(const BlendMode& blendMode);
+	void SetBlendMode(const BlendMode blendMode);
 
 public:
 	Sprite();
-	~Sprite();
-	void Update();
-	void Draw(const BlendMode& blendMode = BlendMode::Alpha);
+	void Update(Transform* parent = nullptr);
+	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 
-	void SetTextureRect(const Vec2& leftTopPos, const Vec2 rightDownPos);
+	void SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos);
 
 };
 

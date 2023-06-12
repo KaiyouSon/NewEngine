@@ -9,13 +9,13 @@
 class CircleGaugeSprite
 {
 private:
-	VertexBuffer<VertexPosUv>* vertexBuffer;
-	std::vector<VertexPosUv> vertices;
-	ConstantBuffer<ConstantBufferData::CTransform2D>* constantBufferTransform;
-	ConstantBuffer<ConstantBufferData::CColor>* constantBufferColor;
-	ConstantBuffer<ConstantBufferData::CCircleGauge>* constantBufferCircleGauge;
-	GraphicsPipeline* graphicsPipeline;
-	Transform transform;
+	std::vector<VertexPosUv> vertices_;
+	std::unique_ptr<VertexBuffer<VertexPosUv>> vertexBuffer_;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform2D>> constantBufferTransform_;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> constantBufferColor_;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CCircleGauge>> constantBufferCircleGauge_;
+	GraphicsPipeline* graphicsPipeline_;
+	Transform transform_;
 
 public:
 	Texture* texture;
@@ -31,11 +31,10 @@ public:
 
 private:
 	void TransferTexturePos();
-	void SetBlendMode(const BlendMode& blendMode);
+	void SetBlendMode(const BlendMode blendMode);
 
 public:
 	CircleGaugeSprite();
-	~CircleGaugeSprite();
 	void Update();
-	void Draw(const BlendMode& blendMode = BlendMode::Alpha);
+	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 };
