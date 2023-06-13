@@ -4,7 +4,7 @@
 #include <d3dcompiler.h>
 #include <cassert>
 
-void RootSignature::Create(size_t number)
+void RootSignature::Create(const uint32_t number)
 {
 	//// デスクリプタレンジの設定
 	//CD3DX12_DESCRIPTOR_RANGE descriptorRange{};
@@ -31,9 +31,9 @@ void RootSignature::Create(size_t number)
 
 		CD3DX12_ROOT_PARAMETER rootParam;
 		rootParam.InitAsDescriptorTable(1, &descriptorRange1, D3D12_SHADER_VISIBILITY_ALL);
-		rootParameters.emplace_back(rootParam);
+		rootParameters_.emplace_back(rootParam);
 
-		descriptorRangeNum = 1;
+		descriptorRangeNum_ = 1;
 	}
 	else if (number == 2)
 	{
@@ -43,7 +43,7 @@ void RootSignature::Create(size_t number)
 
 		CD3DX12_ROOT_PARAMETER rootParam1;
 		rootParam1.InitAsDescriptorTable(1, &descriptorRange1, D3D12_SHADER_VISIBILITY_ALL);
-		rootParameters.emplace_back(rootParam1);
+		rootParameters_.emplace_back(rootParam1);
 
 		// デスクリプタレンジの設定
 		CD3DX12_DESCRIPTOR_RANGE descriptorRange2{};
@@ -51,9 +51,9 @@ void RootSignature::Create(size_t number)
 
 		CD3DX12_ROOT_PARAMETER rootParam2;
 		rootParam2.InitAsDescriptorTable(1, &descriptorRange2, D3D12_SHADER_VISIBILITY_ALL);
-		rootParameters.emplace_back(rootParam2);
+		rootParameters_.emplace_back(rootParam2);
 
-		descriptorRangeNum = 2;
+		descriptorRangeNum_ = 2;
 	}
 
 	// テクスチャサンプラーの設定
@@ -71,46 +71,46 @@ void RootSignature::Create(size_t number)
 	// ルートシグネチャの設定
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
 	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-	rootSignatureDesc.pParameters = rootParameters.data();	// ルートパラメータの先頭アドレス
-	rootSignatureDesc.NumParameters = (UINT)rootParameters.size();		// ルートパラメータ数
+	rootSignatureDesc.pParameters = rootParameters_.data();	// ルートパラメータの先頭アドレス
+	rootSignatureDesc.NumParameters = (UINT)rootParameters_.size();		// ルートパラメータ数
 	rootSignatureDesc.pStaticSamplers = &samplerDesc;
 	rootSignatureDesc.NumStaticSamplers = 1;
 
 	// ルートシグネチャのシリアライズ
 	auto errorBlob = ShaderObject::GetErrorBlob();
 	Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob;
-	result = D3D12SerializeRootSignature(
+	result_ = D3D12SerializeRootSignature(
 		&rootSignatureDesc,
 		D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob,
 		&errorBlob);
-	assert(SUCCEEDED(result));
+	assert(SUCCEEDED(result_));
 
-	result = RenderBase::GetInstance()->GetDevice()->CreateRootSignature(
+	result_ = RenderBase::GetInstance()->GetDevice()->CreateRootSignature(
 		0,
 		rootSigBlob->GetBufferPointer(),
 		rootSigBlob->GetBufferSize(),
-		IID_PPV_ARGS(&rootSignature));
+		IID_PPV_ARGS(&rootSignature_));
 
-	assert(SUCCEEDED(result));
+	assert(SUCCEEDED(result_));
 }
 
-void RootSignature::AddConstantBufferViewToRootRrameter(const size_t& number)
+void RootSignature::AddConstantBufferViewToRootRrameter(const uint32_t number)
 {
 	for (int i = 0; i < number; i++)
 	{
 		D3D12_ROOT_PARAMETER rootParam;
 		rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
-		rootParam.Descriptor.ShaderRegister = (UINT)rootParameters.size();	// 定数バッファ番号
+		rootParam.Descriptor.ShaderRegister = (UINT)rootParameters_.size();	// 定数バッファ番号
 		rootParam.Descriptor.RegisterSpace = 0;						// デフォルト値
 		rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
 
-		rootParameters.emplace_back(rootParam);
-		constantBufferNum++;
+		rootParameters_.emplace_back(rootParam);
+		constantBufferNum_++;
 	}
 }
 
-void RootSignature::AddDescriptorRangeToRootPrameter(size_t number)
+void RootSignature::AddDescriptorRangeToRootPrameter(const uint32_t number)
 {
 	//for (int i = 0; i < number; i++)
 	//{

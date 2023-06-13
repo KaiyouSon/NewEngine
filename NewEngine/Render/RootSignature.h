@@ -8,20 +8,20 @@
 class RootSignature
 {
 private:
-	std::vector<D3D12_ROOT_PARAMETER> rootParameters;	// ルートパラメーターの設定
-	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+	std::vector<D3D12_ROOT_PARAMETER> rootParameters_;	// ルートパラメーターの設定
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_;
 	//std::vector<CD3DX12_DESCRIPTOR_RANGE> descriptorRanges;
-	HRESULT result;
-	size_t constantBufferNum;
-	size_t descriptorRangeNum;
+	HRESULT result_;
+	uint32_t constantBufferNum_;
+	uint32_t descriptorRangeNum_;
 
 public:
-	void Create(size_t number);
-	void AddConstantBufferViewToRootRrameter(const size_t& number);
-	void AddDescriptorRangeToRootPrameter(size_t number);
+	void Create(const uint32_t number);
+	void AddConstantBufferViewToRootRrameter(const uint32_t number);
+	void AddDescriptorRangeToRootPrameter(const uint32_t number);
 
-	inline ID3D12RootSignature* GetRootSignature() { return rootSignature.Get(); }
-	inline size_t GetConstantBufferNum() { return constantBufferNum; }
-	inline UINT GetRootDescriptorTableIndex() { return (UINT)(rootParameters.size() - 1); }
+	inline ID3D12RootSignature* GetRootSignature() { return rootSignature_.Get(); }
+	inline uint32_t GetConstantBufferNum() { return constantBufferNum_; }
+	inline uint32_t GetRootDescriptorTableIndex() { return rootParameters_.size() - 1; }
 };
 
