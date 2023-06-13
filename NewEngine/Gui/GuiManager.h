@@ -8,7 +8,7 @@ template<typename T> class Singleton;
 class GuiManager : public Singleton<GuiManager>
 {
 private:
-	static const int sNumFramesInFlight_;
+	static const uint32_t sNumFramesInFlight_;
 
 public:
 	void Init();
@@ -33,7 +33,7 @@ public:
 	static void DrawTab();
 	static void DrawLine();
 
-	static void DrawColumns(int space = 1, const bool& isBorder = false);
+	static void DrawColumns(uint32_t space = 1, const bool& isBorder = false);
 	static void NextColumn();
 
 	static void DrawString(const char* fmt, ...);

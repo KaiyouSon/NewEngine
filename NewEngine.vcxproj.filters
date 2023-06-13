@@ -313,6 +313,9 @@
       <Filter>Application\Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\Billboard.cpp">
+      <Filter>NewEngine\Source\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\AssimpLoader.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -525,6 +528,9 @@
       <Filter>NewEngine\Header</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\Billboard.h">
+      <Filter>NewEngine\Header\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\AssimpLoader.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>

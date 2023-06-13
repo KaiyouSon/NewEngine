@@ -32,6 +32,8 @@ bool LoadManager::TextureLoad()
 
 bool LoadManager::SoundLoad()
 {
+	SoundManager::LoadSound("GameBGM.wav", "GameBGM");
+
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
 	return true;
 }

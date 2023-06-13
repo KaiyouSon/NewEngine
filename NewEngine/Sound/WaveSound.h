@@ -33,7 +33,7 @@ struct WaveData
 	// バッファの先頭アドレス
 	BYTE* pBuffer;
 	// バッファのサイズ
-	unsigned int bufferSize;
+	uint32_t bufferSize;
 
 	IXAudio2SourceVoice* pSourceVoice;
 };

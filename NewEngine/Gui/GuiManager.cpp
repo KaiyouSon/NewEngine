@@ -7,7 +7,7 @@
 #include <imgui_impl_dx12.h>
 #include <imgui_impl_win32.h>
 
-const int GuiManager::sNumFramesInFlight_ = 3;
+const uint32_t GuiManager::sNumFramesInFlight_ = 3;
 
 void GuiManager::Init()
 {
@@ -148,7 +148,7 @@ void GuiManager::DrawTab()
 	ImGui::SameLine();
 }
 
-void GuiManager::DrawColumns(int space, const bool& isBorder)
+void GuiManager::DrawColumns(uint32_t space, const bool& isBorder)
 {
 	ImGui::Columns(space, 0, isBorder);
 }

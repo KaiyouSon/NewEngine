@@ -24,7 +24,7 @@ Model* ModelManager::LoadObjModel(std::string filePath, std::string modelTag, bo
 	std::lock_guard<std::mutex> lock(sMtx_);
 
 	std::unique_ptr<Model> model;
-	model.reset(new Model(filePath, isSmoothing));
+	model = std::make_unique<Model>(filePath, isSmoothing);
 	sModelMap_.insert(std::make_pair(modelTag, std::move(model)));
 
 	return sModelMap_[modelTag].get();

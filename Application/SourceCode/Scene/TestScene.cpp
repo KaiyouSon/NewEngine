@@ -22,6 +22,9 @@ void TestScene::Init()
 	spr2.texture = renderTex;
 	spr2.pos = GetWindowHalfSize();
 	spr2.graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture");
+
+	SoundManager::Play("GameBGM");
+
 }
 void TestScene::Update()
 {
