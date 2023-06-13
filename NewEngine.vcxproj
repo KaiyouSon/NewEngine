@@ -358,6 +358,12 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="External\Assmip\assimp.vcxproj">
+      <Project>{330df3d6-babc-3828-82c5-f7e4af741a4d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="External\Assmip\zlibstatic.vcxproj">
+      <Project>{04dd64c3-42b4-317f-88e1-e512fa5b475d}</Project>
+    </ProjectReference>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
       <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
     </ProjectReference>
