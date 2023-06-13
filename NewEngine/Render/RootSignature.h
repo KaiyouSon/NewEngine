@@ -22,6 +22,6 @@ public:
 
 	inline ID3D12RootSignature* GetRootSignature() { return rootSignature_.Get(); }
 	inline uint32_t GetConstantBufferNum() { return constantBufferNum_; }
-	inline uint32_t GetRootDescriptorTableIndex() { return rootParameters_.size() - 1; }
+	inline uint32_t GetRootDescriptorTableIndex() { return (uint32_t)(rootParameters_.size() - 1); }
 };
 

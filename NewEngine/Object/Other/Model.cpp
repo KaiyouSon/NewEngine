@@ -21,7 +21,7 @@ Model::Model(const std::string modelName, const bool isSmoothing)
 	vector<Vec3> positions;
 	vector<Vec3> normals;
 	vector<Vec2> texcoords;
-
+	
 	// 1s‚¸‚Â“Ç‚İ‚Ş
 	string line;
 	while (getline(file, line))

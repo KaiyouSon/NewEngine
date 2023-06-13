@@ -8,12 +8,12 @@
 class ShaderObject
 {
 private:
-	HRESULT result;
-	Microsoft::WRL::ComPtr<ID3DBlob> vsBlob;			// 頂点シェーダオブジェクト
-	Microsoft::WRL::ComPtr<ID3DBlob> gsBlob;			// ジオメトリシェーダオブジェクト
-	Microsoft::WRL::ComPtr<ID3DBlob> psBlob;			// ピクセルシェーダオブジェクト
-	static Microsoft::WRL::ComPtr <ID3DBlob> errorBlob;	// エラーオブジェクト
-	std::vector<D3D12_INPUT_ELEMENT_DESC> inputLayout;	// 頂点レイアウト
+	HRESULT result_;
+	Microsoft::WRL::ComPtr<ID3DBlob> vsBlob_;			// 頂点シェーダオブジェクト
+	Microsoft::WRL::ComPtr<ID3DBlob> gsBlob_;			// ジオメトリシェーダオブジェクト
+	Microsoft::WRL::ComPtr<ID3DBlob> psBlob_;			// ピクセルシェーダオブジェクト
+	static Microsoft::WRL::ComPtr <ID3DBlob> sErrorBlob_;	// エラーオブジェクト
+	std::vector<D3D12_INPUT_ELEMENT_DESC> inputLayout_;	// 頂点レイアウト
 
 private:
 	// シェーダのエラー内容を表示する関数
@@ -38,14 +38,14 @@ public:
 		const std::string& entryPointName);
 
 public:
-	inline ID3DBlob* GetVSBlob() { return  vsBlob.Get(); }
-	inline ID3DBlob* GetGSBlob() { return  gsBlob.Get(); }
-	inline ID3DBlob* GetPSBlob() { return  psBlob.Get(); }
-	inline static ID3DBlob* GetErrorBlob() { return  errorBlob.Get(); }
-	inline const std::vector <D3D12_INPUT_ELEMENT_DESC>& GetInputLayout() { return inputLayout; }
+	inline ID3DBlob* GetVSBlob() { return  vsBlob_.Get(); }
+	inline ID3DBlob* GetGSBlob() { return  gsBlob_.Get(); }
+	inline ID3DBlob* GetPSBlob() { return  psBlob_.Get(); }
+	inline static ID3DBlob* GetErrorBlob() { return  sErrorBlob_.Get(); }
+	inline const std::vector <D3D12_INPUT_ELEMENT_DESC>& GetInputLayout() { return inputLayout_; }
 	inline void AddInputLayout(const LPCSTR& semanticName, const DXGI_FORMAT& format)
 	{
-		inputLayout.push_back(
+		inputLayout_.push_back(
 			{	// xyz座標
 				semanticName, 0, format, 0,
 				D3D12_APPEND_ALIGNED_ELEMENT,

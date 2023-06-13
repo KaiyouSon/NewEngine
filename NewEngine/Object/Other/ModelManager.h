@@ -1,13 +1,13 @@
 #pragma once
 #include "Model.h"
 #include "FbxModel.h"
-#include <map>
+#include <unordered_map>
 
 class ModelManager
 {
 private:
-	static std::map<std::string, std::unique_ptr<Model>> modelMap_;	// モデルのマップ
-	static std::mutex mtx_;	// 排他制御
+	static std::unordered_map<std::string, std::unique_ptr<Model>> sModelMap_;	// モデルのマップ
+	static std::mutex sMtx_;	// 排他制御
 
 public:	// モデル関連
 	// モデルの取得

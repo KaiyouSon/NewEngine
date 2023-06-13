@@ -4,22 +4,22 @@
 #include <cassert>
 #pragma comment(lib,"d3dcompiler.lib")
 
-Microsoft::WRL::ComPtr <ID3DBlob> ShaderObject::errorBlob = nullptr;
+Microsoft::WRL::ComPtr <ID3DBlob> ShaderObject::sErrorBlob_ = nullptr;
 
-ShaderObject::ShaderObject() : result(HRESULT())
+ShaderObject::ShaderObject() : result_(HRESULT())
 {
 }
 
 void ShaderObject::ShowErrorDetails()
 {
 	// シェーダのエラー内容を表示
-	if (FAILED(result))
+	if (FAILED(result_))
 	{
-		// errorBlobからエラー内容をstring型にコピー
+		// sErrorBlob_からエラー内容をstring型にコピー
 		std::string error;
-		error.resize(errorBlob->GetBufferSize());
-		std::copy_n((char*)errorBlob->GetBufferPointer(),
-			errorBlob->GetBufferSize(),
+		error.resize(sErrorBlob_->GetBufferSize());
+		std::copy_n((char*)sErrorBlob_->GetBufferPointer(),
+			sErrorBlob_->GetBufferSize(),
 			error.begin());
 		error += "\n";
 		// エラー内容を出力ウィンドウに表示
@@ -36,14 +36,14 @@ void ShaderObject::CompileVertexShader(
 	std::wstring wFilePath(filePath.begin(), filePath.end());
 
 	// シェーダの読み込みとコンパイル
-	result = D3DCompileFromFile(
+	result_ = D3DCompileFromFile(
 		wFilePath.c_str(), // シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		entryPointName.c_str(), "vs_5_0", // エントリーポイント名、シェーダーモデル指定
 		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
 		0,
-		&vsBlob, &errorBlob);
+		&vsBlob_, &sErrorBlob_);
 
 	// シェーダのエラー内容を表示
 	ShowErrorDetails();
@@ -57,14 +57,14 @@ void ShaderObject::CompileGeometryShader(
 	std::wstring wFilePath(filePath.begin(), filePath.end());
 
 	// シェーダの読み込みとコンパイル
-	result = D3DCompileFromFile(
+	result_ = D3DCompileFromFile(
 		wFilePath.c_str(), // シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		entryPointName.c_str(), "gs_5_0", // エントリーポイント名、シェーダーモデル指定
 		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
 		0,
-		&gsBlob, &errorBlob);
+		&gsBlob_, &sErrorBlob_);
 
 	// シェーダのエラー内容を表示
 	ShowErrorDetails();
@@ -78,14 +78,14 @@ void ShaderObject::CompilePixelShader(
 	std::wstring wFilePath(filePath.begin(), filePath.end());
 
 	// シェーダの読み込みとコンパイル
-	result = D3DCompileFromFile(
+	result_ = D3DCompileFromFile(
 		wFilePath.c_str(), // シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		entryPointName.c_str(), "ps_5_0", // エントリーポイント名、シェーダーモデル指定
 		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
 		0,
-		&psBlob, &errorBlob);
+		&psBlob_, &sErrorBlob_);
 
 	// シェーダのエラー内容を表示
 	ShowErrorDetails();

@@ -97,7 +97,7 @@ void RootSignature::Create(const uint32_t number)
 
 void RootSignature::AddConstantBufferViewToRootRrameter(const uint32_t number)
 {
-	for (int i = 0; i < number; i++)
+	for (uint32_t i = 0; i < number; i++)
 	{
 		D3D12_ROOT_PARAMETER rootParam;
 		rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// Ží—Þ

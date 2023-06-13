@@ -1,6 +1,6 @@
 #include "GraphicsPipelineManager.h"
 
-std::map<std::string, std::unique_ptr<GraphicsPipeline>> GraphicsPipelineManager::sGraphicsPipelineMap_;
+std::unordered_map<std::string, std::unique_ptr<GraphicsPipeline>> GraphicsPipelineManager::sGraphicsPipelineMap_;
 
 GraphicsPipeline* GraphicsPipelineManager::Create(
 	ShaderObject* shaderObject,

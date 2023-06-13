@@ -3,13 +3,13 @@
 #include <d3d12.h>
 #include <string>
 #include <memory>
-#include <map>
+#include <unordered_map>
 #include <cstdint>
 
 class GraphicsPipelineManager
 {
 private:
-	static std::map<std::string, std::unique_ptr<GraphicsPipeline>> sGraphicsPipelineMap_;
+	static std::unordered_map<std::string, std::unique_ptr<GraphicsPipeline>> sGraphicsPipelineMap_;
 
 public:
 	static GraphicsPipeline* Create(
