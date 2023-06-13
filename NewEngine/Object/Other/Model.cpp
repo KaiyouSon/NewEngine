@@ -3,7 +3,7 @@
 #include <sstream>
 using namespace std;
 
-Model::Model(const std::string& modelName, const bool& isSmoothing)
+Model::Model(const std::string modelName, const bool isSmoothing)
 {
 	string path = "Application/Resources/Model/" + modelName + "/";
 	string objfile = modelName + ".obj";

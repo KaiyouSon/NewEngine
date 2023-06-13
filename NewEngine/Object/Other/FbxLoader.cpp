@@ -5,27 +5,24 @@
 #include <cassert>
 #include <DirectXTex.h>
 
-const std::string FbxLoader::baseDirectory = "Application/Resources/Model/";
-const std::string FbxLoader::defaultTextureFileName = "white1x1.png";
-
 void FbxLoader::Init()
 {
-	assert(fbxManager == nullptr);
+	assert(fbxManager_ == nullptr);
 
 	// 生成
-	fbxManager = FbxManager::Create();
+	fbxManager_ = FbxManager::Create();
 
 	// 入出力設定
-	FbxIOSettings* ios = FbxIOSettings::Create(fbxManager, IOSROOT);
-	fbxManager->SetIOSettings(ios);
+	FbxIOSettings* ios = FbxIOSettings::Create(fbxManager_, IOSROOT);
+	fbxManager_->SetIOSettings(ios);
 
 	// インポーターの生成
-	fbxImporter = FbxImporter::Create(fbxManager, "");
+	fbxImporter_ = FbxImporter::Create(fbxManager_, "");
 }
 void FbxLoader::Destroy()
 {
-	fbxImporter->Destroy();
-	fbxManager->Destroy();
+	fbxImporter_->Destroy();
+	fbxManager_->Destroy();
 }
 
 void FbxLoader::ParseMesh(FbxModel* fbxModel, FbxNode* fbxNode)
@@ -77,7 +74,6 @@ void FbxLoader::ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh)
 
 	// 1ファイルに複数メッシュのモデルは否対応
 	if (indices.size() > 0)
-		//if (indices.size() == 0)
 	{
 		assert(0 && "1ファイルに複数メッシュのモデルは否対応");
 	}
@@ -187,6 +183,7 @@ void FbxLoader::ParseMaterial(FbxModel* fbxModel, FbxNode* fbxNode)
 				// ファイルパスからファイル名を抽出
 				std::string pathStr(filePath);
 				std::string name = ExractFileName(pathStr);
+				std::string baseDirectory = "Application/Resources/Model/";
 				std::string fullPath = baseDirectory + fbxModel->name + "/" + name;
 				// テクスチャ読み込み
 				fbxModel->material.texture =

@@ -4,8 +4,8 @@
 #pragma region 静的関数
 
 // モデルのマップ
-std::map<std::string, std::unique_ptr<Model>> ModelManager::modelMap;
-std::mutex ModelManager::mtx = std::mutex{};
+std::map<std::string, std::unique_ptr<Model>> ModelManager::modelMap_;
+std::mutex ModelManager::mtx_ = std::mutex{};
 
 #pragma endregion
 
@@ -14,27 +14,27 @@ std::mutex ModelManager::mtx = std::mutex{};
 // モデルの取得
 Model* ModelManager::GetModel(std::string modelTag)
 {
-	return modelMap[modelTag].get();
+	return modelMap_[modelTag].get();
 }
 
 // objファイルからモデルをロードしマップの格納する
 Model* ModelManager::LoadObjModel(std::string filePath, std::string modelTag, bool isSmoothing)
 {
 	// 排他制御
-	std::lock_guard<std::mutex> lock(mtx);
+	std::lock_guard<std::mutex> lock(mtx_);
 
 	std::unique_ptr<Model> model;
 	model.reset(new Model(filePath, isSmoothing));
-	modelMap.insert(std::make_pair(modelTag, std::move(model)));
+	modelMap_.insert(std::make_pair(modelTag, std::move(model)));
 
-	return modelMap[modelTag].get();
+	return modelMap_[modelTag].get();
 }
 
 // fbxファイルからモデルをロードしマップの格納する
 Model* ModelManager::LoadFbxModel(std::string filePath, std::string modelTag)
 {
 	// 排他制御
-	std::lock_guard<std::mutex> lock(mtx);
+	std::lock_guard<std::mutex> lock(mtx_);
 
 	// モデル生成
 	std::unique_ptr<FbxModel> model = std::make_unique<FbxModel>();
@@ -71,9 +71,9 @@ Model* ModelManager::LoadFbxModel(std::string filePath, std::string modelTag)
 	model->mesh.vertexBuffer.Create(model->mesh.vertices);
 	model->mesh.indexBuffer.Create(model->mesh.indices);
 
-	modelMap.insert(std::make_pair(modelTag, std::move(model)));
+	modelMap_.insert(std::make_pair(modelTag, std::move(model)));
 
-	return modelMap[modelTag].get();
+	return modelMap_[modelTag].get();
 }
 
 #pragma endregion
@@ -82,7 +82,7 @@ Model* ModelManager::LoadFbxModel(std::string filePath, std::string modelTag)
 
 void ModelManager::Destroy()
 {
-	for (auto& model : modelMap)
+	for (auto& model : modelMap_)
 	{
 		if (model.second->modelType == "FBX")
 		{

@@ -2,11 +2,11 @@
 
 void TextureAnimeiton::Init(const Vec2& leftTopPos, const Vec2& rightDownPos)
 {
-	initLeftTopPos = leftTopPos;
-	initRightDownPos = rightDownPos;
-	this->leftTopPos = leftTopPos;
-	this->rightDownPos = rightDownPos;
-	width = initRightDownPos.x - initLeftTopPos.x;
+	initLeftTopPos_ = leftTopPos;
+	initRightDownPos_ = rightDownPos;
+	leftTopPos_ = leftTopPos;
+	rightDownPos_ = rightDownPos;
+	width_ = initRightDownPos_.x - initLeftTopPos_.x;
 	isPlay = true;
 }
 
@@ -17,26 +17,26 @@ void TextureAnimeiton::Play(const int& maxTimer, Sprite* sprite)
 		return;
 	}
 
-	if (animetionTimer.GetisTimeOut())
+	if (animetionTimer_.GetisTimeOut())
 	{
-		leftTopPos.x += width;
-		rightDownPos.x += width;
-		if (rightDownPos.x > sprite->texture->buffer->GetDesc().Width)
+		leftTopPos_.x += width_;
+		rightDownPos_.x += width_;
+		if (rightDownPos_.x > sprite->texture->buffer->GetDesc().Width)
 		{
-			leftTopPos = initLeftTopPos;
-			rightDownPos = initRightDownPos;
+			leftTopPos_ = initLeftTopPos_;
+			rightDownPos_ = initRightDownPos_;
 		}
-		animetionTimer.Reset();
+		animetionTimer_.Reset();
 	}
 
-	sprite->size = initRightDownPos;
-	sprite->SetTextureRect(leftTopPos, rightDownPos);
+	sprite->size = initRightDownPos_;
+	sprite->SetTextureRect(leftTopPos_, rightDownPos_);
 
-	animetionTimer.SetLimitTimer(maxTimer);
-	animetionTimer.Update(true);
+	animetionTimer_.SetLimitTimer(maxTimer);
+	animetionTimer_.Update(true);
 }
 
 void TextureAnimeiton::Reset()
 {
-	animetionTimer.Reset();
+	animetionTimer_.Reset();
 }

@@ -5,12 +5,12 @@
 class TextureAnimeiton
 {
 private:
-	Timer animetionTimer;
-	Vec2 initLeftTopPos;
-	Vec2 initRightDownPos;
-	Vec2 leftTopPos;
-	Vec2 rightDownPos;
-	float width;
+	Timer animetionTimer_;
+	Vec2 initLeftTopPos_;
+	Vec2 initRightDownPos_;
+	Vec2 leftTopPos_;
+	Vec2 rightDownPos_;
+	float width_;
 
 public:
 	bool isPlay;

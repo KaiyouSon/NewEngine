@@ -12,12 +12,8 @@ template<typename T> class Singleton;
 class FbxLoader : public Singleton<FbxLoader>
 {
 private:
-	FbxManager* fbxManager = nullptr;
-	FbxImporter* fbxImporter = nullptr;
-
-private:
-	static const std::string baseDirectory;
-	static const std::string defaultTextureFileName;
+	FbxManager* fbxManager_ = nullptr;
+	FbxImporter* fbxImporter_ = nullptr;
 
 private:
 	void ParseMesh(FbxModel* fbxModel, FbxNode* fbxNode);
@@ -35,8 +31,8 @@ public:
 	// ディレクトリーを含んだファイルパスからファイル名を抽出する
 	std::string ExractFileName(const std::string& path);
 
-	inline FbxManager* GetFbxManager() { return fbxManager; }
-	inline FbxImporter* GetFbxImporter() { return fbxImporter; }
+	inline FbxManager* GetFbxManager() { return fbxManager_; }
+	inline FbxImporter* GetFbxImporter() { return fbxImporter_; }
 private:
 	friend Singleton<FbxLoader>;
 };

@@ -16,7 +16,7 @@ public:
 	std::string modelType = "OBJ";
 public:
 	Model() {}
-	Model(const std::string& modelName, const bool& isSmoothing = false);
+	Model(const std::string modelName, const bool isSmoothing = false);
 	virtual ~Model() {}
 };
 

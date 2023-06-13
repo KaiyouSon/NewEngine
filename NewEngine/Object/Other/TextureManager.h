@@ -4,18 +4,18 @@
 #include "RenderTexture.h"
 #include <DirectXTex.h>
 #include <mutex>
-#include <map>
+#include <unordered_map>
 
 class TextureManager
 {
 private:
-	static UINT srvIncrementIndex;	// srv作成時にインクリメント用
-	static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvDescHeap;	// srv用ディスクリプタヒープ
+	static UINT srvIncrementIndex_;	// srv作成時にインクリメント用
+	static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvDescHeap_;	// srv用ディスクリプタヒープ
 
-	static std::map<std::string, std::unique_ptr<Texture>> textureMap;					// テクスチャーのマップ
-	static std::map<std::string, std::unique_ptr<RenderTexture>> renderTextureMap;		// レンダーテクスチャーのマップ
+	static std::unordered_map<std::string, std::unique_ptr<Texture>> textureMap_;					// テクスチャーのマップ
+	static std::unordered_map<std::string, std::unique_ptr<RenderTexture>> renderTextureMap_;		// レンダーテクスチャーのマップ
 
-	static std::mutex mtx;	// 排他制御
+	static std::mutex mtx_;	// 排他制御
 
 public:	// テクスチャー関連
 
@@ -57,7 +57,7 @@ public:	// その他の処理
 
 public:
 	// SRV用のディスクリプターヒープを取得
-	static inline ID3D12DescriptorHeap* GetSrvDescHeap() { return srvDescHeap.Get(); }
+	static inline ID3D12DescriptorHeap* GetSrvDescHeap() { return srvDescHeap_.Get(); }
 
 };
 

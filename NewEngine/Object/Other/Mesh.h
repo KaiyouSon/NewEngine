@@ -7,24 +7,24 @@ class Mesh
 {
 private:
 	// 頂点法線スムージング用データ
-	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothData;
+	std::unordered_map<uint16_t, std::vector<uint16_t>> smoothData;
 
 public:
 	VertexBuffer<VertexPosNormalUvBone> vertexBuffer;
 	IndexBuffer indexBuffer;
 	std::vector<VertexPosNormalUvBone> vertices;
-	std::vector<unsigned short> indices;
+	std::vector<uint16_t> indices;
 
 public:
 
 	// スムージングデータの追加
-	void AddSmoothData(const unsigned short& indexPos, const unsigned short& indexVertex);
+	void AddSmoothData(const uint16_t indexPos, const uint16_t indexVertex);
 
 	// Vertexの追加
-	void AddVertex(const VertexPosNormalUvBone& vertex);
+	void AddVertex(const VertexPosNormalUvBone vertex);
 
 	// Indexの追加
-	void AddIndex(const unsigned short& index);
+	void AddIndex(const uint16_t index);
 
 	// バッファーの生成
 	void CreateBuffer();
