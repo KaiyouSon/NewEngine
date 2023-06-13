@@ -30,9 +30,12 @@
 #include <list>
 #include <array>
 #include <map>
+#include <unordered_map>
 #include <future>
 #include <thread>
 #include <cstdint>
+#include <algorithm>
+#include <queue>
 
 void NewEngineInit();
 void NewEngineUpda();

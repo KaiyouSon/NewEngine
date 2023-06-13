@@ -1,6 +1,5 @@
 #pragma once
 #include "Vec2.h"
-#include <memory>
 
 class Viewport
 {
@@ -19,6 +18,7 @@ public: // セッター
 	{
 		leftTopPos_ = leftTopPos;
 		size_ = size;
+
 		minDepth_ = MinDepth;
 		maxDepth_ = MaxDepth;
 	}

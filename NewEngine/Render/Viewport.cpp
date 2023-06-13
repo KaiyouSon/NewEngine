@@ -1,8 +1,6 @@
 #include "Viewport.h"
 #include "RenderBase.h"
 #include "RenderWindow.h"
-#include <memory>
-using namespace std;
 
 Viewport::Viewport() :
 	leftTopPos_(0), size_(0), minDepth_(0), maxDepth_(0)

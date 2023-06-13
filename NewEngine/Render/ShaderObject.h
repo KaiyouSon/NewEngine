@@ -43,11 +43,11 @@ public:
 	inline ID3DBlob* GetPSBlob() { return  psBlob_.Get(); }
 	inline static ID3DBlob* GetErrorBlob() { return  sErrorBlob_.Get(); }
 	inline const std::vector <D3D12_INPUT_ELEMENT_DESC>& GetInputLayout() { return inputLayout_; }
-	inline void AddInputLayout(const LPCSTR& semanticName, const DXGI_FORMAT& format)
+	inline void AddInputLayout(const LPCSTR& semanticName, const DXGI_FORMAT& format, const UINT& index = 0)
 	{
 		inputLayout_.push_back(
 			{	// xyzç¿ïW
-				semanticName, 0, format, 0,
+				semanticName, index, format, 0,
 				D3D12_APPEND_ALIGNED_ELEMENT,
 				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
 			});
