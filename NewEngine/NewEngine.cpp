@@ -50,7 +50,6 @@ void NewEngineInit()
 
 	// -------------------------------------------------------------------------------- //
 
-
 	Random::Init();
 	SoundManager::Init();
 	FbxLoader::GetInstance()->Init();

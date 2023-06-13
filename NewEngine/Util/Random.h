@@ -2,32 +2,31 @@
 #include "Vec3.h"
 #include <cstdint>
 
-class Random
+namespace Random
 {
-public:
-	static void Init();
+	void Init();
 
 	// uint32_tŒ^‚Ì—”‚ğæ“¾
-	static int32_t Range(const int32_t min, const int32_t max);
+	int32_t Range(const int32_t min, const int32_t max);
 
 	// floatŒ^‚Ì—”‚ğæ“¾
-	static float RangeF(const float min, const float max);
+	float RangeF(const float min, const float max);
 
 	// Vec2Œ^‚Ì—”‚ğæ“¾
-	static Vec2 RangeVec2(const float min, const float max, const bool isSameValue = false);
+	Vec2 RangeVec2(const float min, const float max, const bool isSameValue = false);
 
 	// Vec3Œ^‚Ì—”‚ğæ“¾
-	static Vec3 RangeVec3(const float min, const float max, const bool isSameValue = false);
+	Vec3 RangeVec3(const float min, const float max, const bool isSameValue = false);
 
 	// Šm—¦‚Åtrue‚ğ•Ô‚·
-	static bool RangeB(const float rate);
+	bool RangeB(const float rate);
 
 	// ƒ‰ƒ“ƒ_ƒ€‚ÌŠp“x‚ğ•Ô‚·
-	static float RangeAngle(const float min = 1.f, const float max = 360.f);
+	float RangeAngle(const float min = 1.f, const float max = 360.f);
 
 	// ƒ‰ƒ“ƒ_ƒ€‚Ìƒ‰ƒWƒAƒ“‚ğ•Ô‚·
-	static float RangeRadian(const float min = 0.01745f, const float max = 6.28319f);
+	float RangeRadian(const float min = 0.01745f, const float max = 6.28319f);
 
 	// ƒ‰ƒ“ƒ_ƒ€‚Å‰~“à‚Ì“_‚ğ•Ô‚·
-	static Vec2 RangeInCircle(const float minRadius, const float maxRadius);
-};
+	Vec2 RangeInCircle(const float minRadius, const float maxRadius);
+}
