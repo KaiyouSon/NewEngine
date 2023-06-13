@@ -312,6 +312,9 @@
     <ClCompile Include="Application\SourceCode\Scene\TestScene.cpp">
       <Filter>Application\Source\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\Billboard.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -520,6 +523,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Util\Enum.h">
       <Filter>NewEngine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\Billboard.h">
+      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

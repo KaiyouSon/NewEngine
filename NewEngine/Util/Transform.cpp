@@ -4,18 +4,14 @@
 Transform::Transform() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
 	worldMat_(Mat4::Identity()), scaleMat_(Mat4::Identity()),
-	rotMat_(Mat4::Identity()), transMat_(Mat4::Identity()),
-	billboardMat_(Mat4::Identity()), isUseBillboard_(false),
-	billboardType_(BillBoardType::XAxisBillboard)
+	rotMat_(Mat4::Identity()), transMat_(Mat4::Identity())
 {
 }
 
 Transform::Transform(const Vec3 pos, const Vec3 scale, const Vec3 rot) :
 	pos(pos), scale(scale), rot(rot),
 	worldMat_(Mat4::Identity()), scaleMat_(Mat4::Identity()),
-	rotMat_(Mat4::Identity()), transMat_(Mat4::Identity()),
-	billboardMat_(Mat4::Identity()), isUseBillboard_(false),
-	billboardType_(BillBoardType::XAxisBillboard)
+	rotMat_(Mat4::Identity()), transMat_(Mat4::Identity())
 {
 }
 
@@ -28,53 +24,20 @@ void Transform::Update()
 	rotMat_ *= ConvertRotationYAxisMat(rot.y); // y軸回転
 	transMat_ = ConvertTranslationMat(pos);	 // 平行移動
 
-	BillBoardUpdate();
+	// ビルボード行列計算
+	billboard_.CalculateBillboardMat();
 
+	// ワールド行列計算
 	worldMat_ = Mat4::Identity();
-	worldMat_ *= billboardMat_;
+
+	if (billboard_.GetBillboardType() != BillboardType::None)
+	{
+		worldMat_ *= billboard_.GetMat();
+	}
+
 	worldMat_ *= scaleMat_;
 	worldMat_ *= rotMat_;
 	worldMat_ *= transMat_;
-}
-
-void Transform::BillBoardUpdate()
-{
-	if (isUseBillboard_ == false)
-	{
-		billboardMat_ = Mat4::Identity();
-	}
-	else
-	{
-		switch (billboardType_)
-		{
-		case BillBoardType::XAxisBillboard:
-		{
-			billboardMat_ = Mat4::Identity();
-			billboardMat_ *= ConvertBillBoardXAxis();
-			break;
-		}
-		case BillBoardType::YAxisBillboard:
-		{
-			billboardMat_ = Mat4::Identity();
-			billboardMat_ *= ConvertBillBoardYAxis();
-			break;
-		}
-		case BillBoardType::ZAxisBillboard:
-		{
-			billboardMat_ = Mat4::Identity();
-			billboardMat_ *= ConvertBillBoardZAxis();
-			break;
-		}
-		case BillBoardType::AllAxisBillboard:
-		{
-			billboardMat_ = Mat4::Identity();
-			billboardMat_ *= ConvertBillBoardAllAxis();
-			break;
-		}
-		default:
-			break;
-		}
-	}
 }
 
 #pragma region セッター
@@ -89,6 +52,8 @@ Mat4 Transform::GetWorldMat() { return worldMat_; }	// ワールド行列
 #pragma region セッター
 
 void Transform::SetWorldMat(Mat4 worldMat) { worldMat_ = worldMat; }
+
+void Transform::SetBillboardType(const BillboardType type) { billboard_.SetBillboardType(type); }
 
 #pragma endregion
 

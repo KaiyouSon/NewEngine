@@ -29,8 +29,9 @@ enum class BezierType
 };
 
 // ビルボードの種類
-enum class BillBoardType
+enum class BillboardType
 {
+	None,
 	XAxisBillboard,
 	YAxisBillboard,
 	ZAxisBillboard,
