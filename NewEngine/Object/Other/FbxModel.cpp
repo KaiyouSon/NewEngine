@@ -44,13 +44,13 @@ void FbxAnimetion::Play(const FbxScene& fbxScene)
 	isPlay = true;
 }
 
-FbxModel::FbxModel()
+FbxModel1::FbxModel1()
 {
 	modelType = "FBX";
 	fbxAnimetion.Init();
 }
 
-void FbxModel::PlayAnimetion()
+void FbxModel1::PlayAnimetion()
 {
 	fbxAnimetion.Play(*fbxScene);
 	fbxAnimetion.Update();

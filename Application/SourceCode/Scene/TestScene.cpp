@@ -13,7 +13,7 @@ void TestScene::Init()
 	Camera::current.rot = { Radian(0),0,0 };
 
 	obj1.SetModel(ModelManager::GetModel("Block1"));
-	obj2.SetModel(ModelManager::GetModel("Block1"));
+	obj2.SetModel(ModelManager::GetModel("Cube2"));
 	obj2.pos.x = 3;
 
 	spr1.texture = TextureManager::GetTexture("pic");
@@ -23,8 +23,7 @@ void TestScene::Init()
 	spr2.pos = GetWindowHalfSize();
 	spr2.graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture");
 
-	SoundManager::Play("GameBGM");
-
+	//SoundManager::Play("GameBGM");
 }
 void TestScene::Update()
 {
@@ -36,7 +35,7 @@ void TestScene::Update()
 
 	if (Key::GetKeyDown(DIK_SPACE) == true)
 	{
-		obj2.SetTexture(TextureManager::GetTexture("NumberSheet"));
+		obj2.scale = 0.01f;
 
 		//obj2.SetModel(ModelManager::GetModel("Enemy"));
 	}

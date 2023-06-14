@@ -25,7 +25,7 @@ void RenderWindow::CreateGameWindow()
 	std::wstring wTITLE(title_.begin(), title_.end());
 
 	// ウィンドウオブジェクトの生成
-	hwnd_ = CreateWindow(
+	hwnd_ = (HWND)CreateWindow(
 		wndClass_.lpszClassName, // クラス名
 		wTITLE.c_str(),			// タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,	// 標準的なウィンドウスタイル

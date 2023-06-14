@@ -6,7 +6,7 @@
 #include <vector>
 #include <string>
 
-class FbxModel;
+class FbxModel1;
 
 class Model
 {
@@ -20,3 +20,15 @@ public:
 	virtual ~Model() {}
 };
 
+struct FbxModel : public Model
+{
+	std::string name;
+	//Material material;
+	//Mesh mesh;
+
+	//std::vector<FbxModelNode> nodes;
+	//std::vector<FbxModelBone> bones;
+	//FbxModelNode* meshNode = nullptr;
+	//FbxScene* fbxScene = nullptr;
+	//FbxAnimetion fbxAnimetion;
+};

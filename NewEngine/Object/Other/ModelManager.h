@@ -7,6 +7,7 @@ class ModelManager
 {
 private:
 	static std::unordered_map<std::string, std::unique_ptr<Model>> sModelMap_;	// モデルのマップ
+	static std::unordered_map<std::string, std::unique_ptr<FbxModel>> sFbxModelMap_;	// モデルのマップ
 	static std::mutex sMtx_;	// 排他制御
 
 public:	// モデル関連
@@ -18,6 +19,7 @@ public:	// モデル関連
 
 	// fbxファイルからモデルをロードしマップの格納する
 	static Model* LoadFbxModel(std::string filePath, std::string modelTag);
+	static Model* LoadFbxModel2(std::string filePath, std::string modelTag);
 
 public:	// その他の処理
 	// 破棄

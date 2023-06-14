@@ -44,7 +44,7 @@ public:
 	void Play(const FbxScene& fbxScene);
 };
 
-class FbxModel : public Model
+class FbxModel1 : public Model
 {
 public:
 	std::string name;
@@ -54,7 +54,7 @@ public:
 	FbxScene* fbxScene = nullptr;
 	FbxAnimetion fbxAnimetion;
 
-	FbxModel();
+	FbxModel1();
 	void PlayAnimetion();
 
 public:

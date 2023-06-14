@@ -16,17 +16,17 @@ private:
 	FbxImporter* fbxImporter_ = nullptr;
 
 private:
-	void ParseMesh(FbxModel* fbxModel, FbxNode* fbxNode);
-	void ParseMeshVertices(FbxModel* fbxModel, FbxMesh* fbxMesh);
-	void ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh);
-	void ParseMaterial(FbxModel* fbxModel, FbxNode* fbxNode);
-	void ParseSkin(FbxModel* fbxModel, FbxMesh* fbxMesh);
+	void ParseMesh(FbxModel1* fbxModel, FbxNode* fbxNode);
+	void ParseMeshVertices(FbxModel1* fbxModel, FbxMesh* fbxMesh);
+	void ParseMeshFaces(FbxModel1* fbxModel, FbxMesh* fbxMesh);
+	void ParseMaterial(FbxModel1* fbxModel, FbxNode* fbxNode);
+	void ParseSkin(FbxModel1* fbxModel, FbxMesh* fbxMesh);
 
 public:
 	void Init();
 	void Destroy();
 
-	void ParseNodeRecursive(FbxModel* fbxModel, FbxNode* fbxNode, FbxModelNode* parent = nullptr);
+	void ParseNodeRecursive(FbxModel1* fbxModel, FbxNode* fbxNode, FbxModelNode* parent = nullptr);
 
 	// ディレクトリーを含んだファイルパスからファイル名を抽出する
 	std::string ExractFileName(const std::string& path);

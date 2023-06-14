@@ -68,7 +68,7 @@ void Object3D::PlayAnimetion()
 	if (model_->modelType == "FBX")
 	{
 		// ボーン配列
-		auto fbxModel = static_cast<FbxModel*>(model_);
+		auto fbxModel = static_cast<FbxModel1*>(model_);
 		fbxModel->PlayAnimetion();
 	}
 }
@@ -157,7 +157,7 @@ void Object3D::TransferBuffer()
 	if (model_->modelType == "FBX")
 	{
 		// ボーン配列
-		auto fbxModel = static_cast<FbxModel*>(model_);
+		auto fbxModel = static_cast<FbxModel1*>(model_);
 		std::vector<FbxModelBone>& bones = fbxModel->bones;
 
 		// 転送

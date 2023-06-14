@@ -6,7 +6,7 @@
 
 void Random::Init()
 {
-	srand((unsigned int)time(nullptr));
+	srand((uint32_t)time(nullptr));
 }
 
 int32_t Random::Range(const int32_t min, const int32_t max)

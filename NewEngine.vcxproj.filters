@@ -8,63 +8,6 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{ebea575b-6f4d-4e6e-b893-a47bace55e10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="NewEngine">
-      <UniqueIdentifier>{1cb946a9-b40c-4db0-b91b-7eaad5137338}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header">
-      <UniqueIdentifier>{02c56b0b-d499-41e5-ab27-513a6dd69739}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source">
-      <UniqueIdentifier>{c4bc0090-2eda-4495-888b-c14817b54d79}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header\Render">
-      <UniqueIdentifier>{1edb732b-13ca-4c1b-ac35-75dc673cdede}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header\Render\Buffer">
-      <UniqueIdentifier>{b7bd0bb9-118e-4ba2-acc1-de14edef096b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Render">
-      <UniqueIdentifier>{0cd6b8a8-b44a-41d8-98cd-686e7f36ec4f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Render\Buffer">
-      <UniqueIdentifier>{d2a9d334-35c1-4264-9900-6d58bd7e450b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Object">
-      <UniqueIdentifier>{cd92289e-f889-407f-bfad-74adf7942696}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Object\3D">
-      <UniqueIdentifier>{a0695b39-eff6-4e74-9fc2-4b4022aa935e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header\Object">
-      <UniqueIdentifier>{43122723-d83e-49bb-856b-479583eeb5de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header\Object\3D">
-      <UniqueIdentifier>{595114dc-e3c0-442d-98e7-5e3aa5140a07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Object\2D">
-      <UniqueIdentifier>{58dfdb2c-2035-4a63-b87f-edadb925c616}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header\Object\2D">
-      <UniqueIdentifier>{af739827-4b00-4818-ad5a-e73cc687b7a9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Util">
-      <UniqueIdentifier>{05acc0a5-2e3c-4e6c-ae62-b2401ee4f0bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header\Util">
-      <UniqueIdentifier>{c114a9f0-fd56-40e7-9188-5a7ec45f430e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header\Math">
-      <UniqueIdentifier>{590935c1-a828-435e-8837-a3f876a738f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Math">
-      <UniqueIdentifier>{1372c687-48b5-4467-9b55-0b4b24d494db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Input">
-      <UniqueIdentifier>{3bf80bd3-9b30-4f5b-8de2-f6e3f60626c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header\Input">
-      <UniqueIdentifier>{bd90a779-2263-4b95-9523-3cf86543769f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application">
       <UniqueIdentifier>{7b67c8d0-4c10-4f8a-bb34-b52e248a8ed7}</UniqueIdentifier>
     </Filter>
@@ -79,36 +22,6 @@
     </Filter>
     <Filter Include="Application\Source\Scene">
       <UniqueIdentifier>{4549da2c-25e5-4c54-a0d3-93f008c91093}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Collision">
-      <UniqueIdentifier>{1562e754-1226-417c-beb2-375650af80bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header\Collision">
-      <UniqueIdentifier>{83e19682-79a0-43d8-8575-d4adfaf103c0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Gui">
-      <UniqueIdentifier>{83bfc96f-f374-408f-b1f1-74847e2cfb31}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header\Gui">
-      <UniqueIdentifier>{5bc23d66-9f43-496b-91af-4305d090a2bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Light">
-      <UniqueIdentifier>{723b8732-9770-4eb3-b3b6-b67e8efb9d57}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header\Light">
-      <UniqueIdentifier>{2e138d45-a1d0-4dde-97af-e473ac0908db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Object\Other">
-      <UniqueIdentifier>{d7b10524-188d-4511-b7e3-7bba22bb0c24}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header\Object\Other">
-      <UniqueIdentifier>{1d799c42-18cb-46b5-83c2-5b012a786d2d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Sound">
-      <UniqueIdentifier>{85d7aaa5-e8a8-4a6d-9861-cefb5831292f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header\Sound">
-      <UniqueIdentifier>{924c731e-5f51-4001-a0dc-7fdcdb05bee1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Uncategorized">
       <UniqueIdentifier>{a0e509e1-416c-4df2-a204-ba1f23432926}</UniqueIdentifier>
@@ -129,6 +42,93 @@
     </Filter>
     <Filter Include="Shader\Application">
       <UniqueIdentifier>{a6427656-65d8-448f-a149-1d8ea1006296}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine">
+      <UniqueIdentifier>{1cb946a9-b40c-4db0-b91b-7eaad5137338}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header">
+      <UniqueIdentifier>{02c56b0b-d499-41e5-ab27-513a6dd69739}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Render">
+      <UniqueIdentifier>{1edb732b-13ca-4c1b-ac35-75dc673cdede}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Render\Buffer">
+      <UniqueIdentifier>{b7bd0bb9-118e-4ba2-acc1-de14edef096b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Object">
+      <UniqueIdentifier>{43122723-d83e-49bb-856b-479583eeb5de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Object\3D">
+      <UniqueIdentifier>{595114dc-e3c0-442d-98e7-5e3aa5140a07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Object\2D">
+      <UniqueIdentifier>{af739827-4b00-4818-ad5a-e73cc687b7a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Object\Other">
+      <UniqueIdentifier>{1d799c42-18cb-46b5-83c2-5b012a786d2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Util">
+      <UniqueIdentifier>{c114a9f0-fd56-40e7-9188-5a7ec45f430e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Math">
+      <UniqueIdentifier>{590935c1-a828-435e-8837-a3f876a738f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Input">
+      <UniqueIdentifier>{bd90a779-2263-4b95-9523-3cf86543769f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Collision">
+      <UniqueIdentifier>{83e19682-79a0-43d8-8575-d4adfaf103c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Gui">
+      <UniqueIdentifier>{5bc23d66-9f43-496b-91af-4305d090a2bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Light">
+      <UniqueIdentifier>{2e138d45-a1d0-4dde-97af-e473ac0908db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Sound">
+      <UniqueIdentifier>{924c731e-5f51-4001-a0dc-7fdcdb05bee1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source">
+      <UniqueIdentifier>{c4bc0090-2eda-4495-888b-c14817b54d79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Render">
+      <UniqueIdentifier>{0cd6b8a8-b44a-41d8-98cd-686e7f36ec4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Render\Buffer">
+      <UniqueIdentifier>{d2a9d334-35c1-4264-9900-6d58bd7e450b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Object">
+      <UniqueIdentifier>{cd92289e-f889-407f-bfad-74adf7942696}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Object\3D">
+      <UniqueIdentifier>{a0695b39-eff6-4e74-9fc2-4b4022aa935e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Object\2D">
+      <UniqueIdentifier>{58dfdb2c-2035-4a63-b87f-edadb925c616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Object\Other">
+      <UniqueIdentifier>{d7b10524-188d-4511-b7e3-7bba22bb0c24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Util">
+      <UniqueIdentifier>{05acc0a5-2e3c-4e6c-ae62-b2401ee4f0bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Math">
+      <UniqueIdentifier>{1372c687-48b5-4467-9b55-0b4b24d494db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Input">
+      <UniqueIdentifier>{3bf80bd3-9b30-4f5b-8de2-f6e3f60626c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Collision">
+      <UniqueIdentifier>{1562e754-1226-417c-beb2-375650af80bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Gui">
+      <UniqueIdentifier>{83bfc96f-f374-408f-b1f1-74847e2cfb31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Light">
+      <UniqueIdentifier>{723b8732-9770-4eb3-b3b6-b67e8efb9d57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Sound">
+      <UniqueIdentifier>{85d7aaa5-e8a8-4a6d-9861-cefb5831292f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

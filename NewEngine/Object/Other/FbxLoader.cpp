@@ -25,7 +25,7 @@ void FbxLoader::Destroy()
 	fbxManager_->Destroy();
 }
 
-void FbxLoader::ParseMesh(FbxModel* fbxModel, FbxNode* fbxNode)
+void FbxLoader::ParseMesh(FbxModel1* fbxModel, FbxNode* fbxNode)
 {
 	// ノードのメッシュを取得
 	FbxMesh* fbxMesh = fbxNode->GetMesh();
@@ -42,7 +42,7 @@ void FbxLoader::ParseMesh(FbxModel* fbxModel, FbxNode* fbxNode)
 	// スキニング情報の読み取り
 	ParseSkin(fbxModel, fbxMesh);
 }
-void FbxLoader::ParseMeshVertices(FbxModel* fbxModel, FbxMesh* fbxMesh)
+void FbxLoader::ParseMeshVertices(FbxModel1* fbxModel, FbxMesh* fbxMesh)
 {
 	std::vector<VertexPosNormalUvBone>& vertices = fbxModel->mesh.vertices;
 
@@ -67,7 +67,7 @@ void FbxLoader::ParseMeshVertices(FbxModel* fbxModel, FbxMesh* fbxMesh)
 		vertex.pos.z = (float)pCoord[i][2];
 	}
 }
-void FbxLoader::ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh)
+void FbxLoader::ParseMeshFaces(FbxModel1* fbxModel, FbxMesh* fbxMesh)
 {
 	std::vector<VertexPosNormalUvBone>& vertices = fbxModel->mesh.vertices;
 	std::vector<unsigned short>& indices = fbxModel->mesh.indices;
@@ -143,7 +143,7 @@ void FbxLoader::ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh)
 		}
 	}
 }
-void FbxLoader::ParseMaterial(FbxModel* fbxModel, FbxNode* fbxNode)
+void FbxLoader::ParseMaterial(FbxModel1* fbxModel, FbxNode* fbxNode)
 {
 	const int materialCount = fbxNode->GetMaterialCount();
 	if (materialCount > 0)
@@ -192,7 +192,7 @@ void FbxLoader::ParseMaterial(FbxModel* fbxModel, FbxNode* fbxNode)
 		}
 	}
 }
-void FbxLoader::ParseSkin(FbxModel* fbxModel, FbxMesh* fbxMesh)
+void FbxLoader::ParseSkin(FbxModel1* fbxModel, FbxMesh* fbxMesh)
 {
 	// スキニング情報
 	FbxSkin* fbxSkin = static_cast<FbxSkin*>(fbxMesh->GetDeformer(0, FbxDeformer::eSkin));
@@ -310,7 +310,7 @@ void FbxLoader::ParseSkin(FbxModel* fbxModel, FbxMesh* fbxMesh)
 		}
 	}
 }
-void FbxLoader::ParseNodeRecursive(FbxModel* fbxModel, FbxNode* fbxNode, FbxModelNode* parent)
+void FbxLoader::ParseNodeRecursive(FbxModel1* fbxModel, FbxNode* fbxNode, FbxModelNode* parent)
 {
 	// ノード名を取得
 	std::string nodeName = fbxNode->GetName();

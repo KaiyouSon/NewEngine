@@ -1,19 +1,22 @@
 #include "LoadManager.h"
 #include "NewEngine.h"
 #include "FbxLoader.h"
+#include "AssimpLoader.h"
 
 bool LoadManager::ModelLoad()
 {
-	ModelManager::LoadFbxModel("boneTest", "BoneTest");
-	ModelManager::LoadObjModel("Sphere", "Sphere");
-	ModelManager::LoadObjModel("SkyDome", "SkyDome");
-	ModelManager::LoadObjModel("Ground", "Ground");
-	ModelManager::LoadObjModel("Enemy", "Enemy", true);
-	ModelManager::LoadObjModel("SphereCollider", "SphereCollider");
-	ModelManager::LoadFbxModel("AttackEnemy", "AttackEnemy");
-	ModelManager::LoadObjModel("player", "Player", true);
-	ModelManager::LoadObjModel("Plane", "Plane");
+	//ModelManager::LoadFbxModel("boneTest", "BoneTest");
+	//ModelManager::LoadObjModel("Sphere", "Sphere");
+	//ModelManager::LoadObjModel("SkyDome", "SkyDome");
+	//ModelManager::LoadObjModel("Ground", "Ground");
+	//ModelManager::LoadObjModel("Enemy", "Enemy", true);
+	//ModelManager::LoadObjModel("SphereCollider", "SphereCollider");
+	//ModelManager::LoadFbxModel("AttackEnemy", "AttackEnemy");
+	//ModelManager::LoadObjModel("player", "Player", true);
+	//ModelManager::LoadObjModel("Plane", "Plane");
 	ModelManager::LoadObjModel("Block1", "Block1");
+	ModelManager::LoadFbxModel("Cube", "Cube");
+	ModelManager::LoadFbxModel2("Cube", "Cube2");
 
 	// 処理が終わったのを教えるため、必ずtrueを返す
 	return true;
@@ -32,7 +35,7 @@ bool LoadManager::TextureLoad()
 
 bool LoadManager::SoundLoad()
 {
-	SoundManager::LoadSound("GameBGM.wav", "GameBGM");
+	//SoundManager::LoadSound("GameBGM.wav", "GameBGM");
 
 	// 処理が終わったのを教えるため、必ずtrueを返す
 	return true;
