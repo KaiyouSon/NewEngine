@@ -318,6 +318,9 @@
     <ClCompile Include="NewEngine\Object\Other\AssimpLoader.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\MaterialColor.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -531,6 +534,9 @@
       <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\AssimpLoader.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\MaterialColor.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>

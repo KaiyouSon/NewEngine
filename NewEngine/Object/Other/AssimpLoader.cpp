@@ -1,7 +1,7 @@
 #include "AssimpLoader.h"
 #include "TextureManager.h"
+#include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
-#include <assimp/cimport.h>
 
 std::string ExractFileName(const std::string& path)
 {
@@ -22,7 +22,7 @@ std::string ExractFileName(const std::string& path)
 	return path;
 }
 
-void AssimpLoader::LoadFbxModel(std::string filePath, FbxModel* model)
+void AssimpLoader::LoadFbxModel(const std::string filePath, FbxModel* model)
 {
 	// インポーター
 	Assimp::Importer importer;
@@ -30,6 +30,7 @@ void AssimpLoader::LoadFbxModel(std::string filePath, FbxModel* model)
 	// フラグ
 	uint32_t flags = aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs;
 
+	// シーンの読み込み
 	const aiScene* scene = importer.ReadFile(filePath, flags);
 
 	if (scene == nullptr)
@@ -42,9 +43,6 @@ void AssimpLoader::LoadFbxModel(std::string filePath, FbxModel* model)
 
 	// マテリアルの解析
 	ParseMaterial(model, scene);
-
-	// シーン解放
-	//aiReleaseImport(scene);
 }
 
 void AssimpLoader::ParseMesh(FbxModel* model, const aiScene* scene)
@@ -168,7 +166,7 @@ void AssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 				std::string fullPath = baseDirectory + model->name + "/" + name;
 
 				// テクスチャ読み込み
-				model->material.texture = TextureManager::LoadMaterialTexture(fullPath);
+				model->texture = TextureManager::LoadMaterialTexture(fullPath);
 
 				//std::cout << "Diffuse Texture " << i << ": " << texturePath.C_Str() << std::endl;
 				//std::cout << "  Mapping: " << textureMapping << std::endl;

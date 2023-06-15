@@ -2,7 +2,6 @@
 #include "Model.h"
 #include "Singleton.h"
 #include <string>
-#include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 
 class AssimpLoader : public Singleton<AssimpLoader>
@@ -14,7 +13,7 @@ private:
 	void ParseMaterial(FbxModel* model, const aiScene* scene);
 
 public:
-	void LoadFbxModel(std::string filePath, FbxModel* model);
+	void LoadFbxModel(const std::string filePath, FbxModel* model);
 
 private:
 	friend Singleton<AssimpLoader>;

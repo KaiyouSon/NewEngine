@@ -137,6 +137,7 @@
     <ClCompile Include="NewEngine\Object\Other\FbxLoader.cpp" />
     <ClCompile Include="NewEngine\Object\Other\FbxModel.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Material.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\MaterialColor.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Mesh.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Model.cpp" />
     <ClCompile Include="NewEngine\Object\Other\ModelManager.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="NewEngine\Object\Other\Billboard.h" />
     <ClInclude Include="NewEngine\Object\Other\FbxLoader.h" />
     <ClInclude Include="NewEngine\Object\Other\FbxModel.h" />
+    <ClInclude Include="NewEngine\Object\Other\MaterialColor.h" />
     <ClInclude Include="NewEngine\Object\Other\TextureAnimeiton.h" />
     <ClInclude Include="NewEngine\Object\Other\Texture.h" />
     <ClInclude Include="NewEngine\Object\3D\Camera.h" />

@@ -65,12 +65,12 @@ Object3D::Object3D(Model* model) :
 
 void Object3D::PlayAnimetion()
 {
-	if (model_->modelType == "FBX")
-	{
-		// ボーン配列
-		auto fbxModel = static_cast<FbxModel1*>(model_);
-		fbxModel->PlayAnimetion();
-	}
+	//if (model_->modelType == "FBX")
+	//{
+	//	// ボーン配列
+	//	auto fbxModel = static_cast<FbxModel1*>(model_);
+	//	fbxModel->PlayAnimetion();
+	//}
 }
 void Object3D::Update(Transform* parent)
 {
@@ -153,23 +153,23 @@ void Object3D::TransferBuffer()
 	// 色転送
 	constantBufferColor_->constantBufferMap->color = color_ / 255;
 
-	if (model_->modelType == "FBX")
-	{
-		// ボーン配列
-		auto fbxModel = static_cast<FbxModel1*>(model_);
-		std::vector<FbxModelBone>& bones = fbxModel->bones;
+	//if (model_->modelType == "FBX")
+	//{
+	//	// ボーン配列
+	//	auto fbxModel = static_cast<FbxModel1*>(model_);
+	//	std::vector<FbxModelBone>& bones = fbxModel->bones;
 
-		// 転送
-		for (size_t i = 0; i < bones.size(); i++)
-		{
-			Mat4 currentPoseMat;
-			FbxAMatrix currentPoseFbxMat =
-				bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(fbxModel->fbxAnimetion.currentTime);
-			ConvertMat4FromFbx(&currentPoseMat, currentPoseFbxMat);
+	//	// 転送
+	//	for (size_t i = 0; i < bones.size(); i++)
+	//	{
+	//		Mat4 currentPoseMat;
+	//		FbxAMatrix currentPoseFbxMat =
+	//			bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(fbxModel->fbxAnimetion.currentTime);
+	//		ConvertMat4FromFbx(&currentPoseMat, currentPoseFbxMat);
 
-			constantBufferSkin_->constantBufferMap->bones[i] = bones[i].invInitPoseMat * currentPoseMat;
-		}
-	}
+	//		constantBufferSkin_->constantBufferMap->bones[i] = bones[i].invInitPoseMat * currentPoseMat;
+	//	}
+	//}
 }
 
 //  ブレンド設定
@@ -208,17 +208,19 @@ void Object3D::SetBlendMode(const BlendMode blendMode)
 void Object3D::SetModel(Model* model)
 {
 	model_ = model;
-	texture_ = &model_->material.texture;
+	texture_ = &model_->texture;
 
 	// パイプライン変更
-	if (model_->modelType == "OBJ")
+	if (model_->format == ModelFormat::Obj)
 	{
 		graphicsPipeline_ = GraphicsPipelineManager::GetGraphicsPipeline("Object3D");
 	}
-	if (model_->modelType == "FBX")
-	{
-		graphicsPipeline_ = GraphicsPipelineManager::GetGraphicsPipeline("FbxModel");
-	}
+	// 一回Objの方のパイプラインを使う
+
+	//if (model_->format == ModelFormat::Fbx)
+	//{
+	//	graphicsPipeline_ = GraphicsPipelineManager::GetGraphicsPipeline("FbxModel");
+	//}
 }
 
 // テクスチャー

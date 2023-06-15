@@ -329,8 +329,8 @@ void ModelManager::LoadMaterialColor(std::string filePath, Model* model)
 			lineStream >> textureName;
 
 			// テクスチャ読み込み
-			model->material.texture = TextureManager::LoadMaterialTexture(directoryPath + textureName);
-			model->material.texture.isMaterial = true;
+			model->texture = TextureManager::LoadMaterialTexture(directoryPath + textureName);
+			model->texture.isMaterial = true;
 		}
 	}
 
@@ -344,13 +344,13 @@ void ModelManager::LoadMaterialColor(std::string filePath, Model* model)
 
 void ModelManager::Destroy()
 {
-	for (auto& model : sModelMap_)
-	{
-		if (model.second->modelType == "FBX")
+	/*for (auto& model : sModelMap_)
 		{
-			static_cast<FbxModel1*>(model.second.get())->fbxScene->Destroy();
-		}
-	}
+			if (model.second->modelType == "FBX")
+			{
+				static_cast<FbxModel1*>(model.second.get())->fbxScene->Destroy();
+			}
+		}*/
 }
 
 #pragma endregion

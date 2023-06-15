@@ -186,7 +186,7 @@ void FbxLoader::ParseMaterial(FbxModel1* fbxModel, FbxNode* fbxNode)
 				std::string baseDirectory = "Application/Resources/Model/";
 				std::string fullPath = baseDirectory + fbxModel->name + "/" + name;
 				// テクスチャ読み込み
-				fbxModel->material.texture =
+				fbxModel->texture =
 					TextureManager::LoadMaterialTexture(fullPath);
 			}
 		}

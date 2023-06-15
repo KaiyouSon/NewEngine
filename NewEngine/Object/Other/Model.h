@@ -1,7 +1,7 @@
 #pragma once
-#include "Material.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "MaterialColor.h"
 #include "Mesh.h"
 #include "Enum.h"
 #include <vector>
@@ -11,14 +11,11 @@ class FbxModel1;
 
 struct Model
 {
-public:
 	Mesh mesh;
 	MaterialColor material;
 	ModelFormat format;
+	Texture texture;
 
-	std::string modelType = "OBJ";
-public:
-	//Model(const std::string modelName, const bool isSmoothing = false);
 	virtual ~Model() {}
 };
 
@@ -40,13 +37,4 @@ struct FbxModel : public Model
 	{
 		format = ModelFormat::Fbx;
 	}
-
-	//Material material;
-	//Mesh mesh;
-
-	//std::vector<FbxModelNode> nodes;
-	//std::vector<FbxModelBone> bones;
-	//FbxModelNode* meshNode = nullptr;
-	//FbxScene* fbxScene = nullptr;
-	//FbxAnimetion fbxAnimetion;
 };
