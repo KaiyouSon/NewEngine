@@ -22,6 +22,8 @@ struct Color
 	const static Color yellow;
 	const static Color white;
 	const static Color black;
+	const static Color one;
+	const static Color zero;
 
 	Color GetColorTo01() { return { r / 255,g / 255,b / 255 ,a / 255 }; }
 

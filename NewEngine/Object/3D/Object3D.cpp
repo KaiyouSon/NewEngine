@@ -161,42 +161,36 @@ void Object3D::MaterialInit()
 }
 void Object3D::MaterialTransfer()
 {
-	// 子クラスの型に変換
-	ConstantBuffer<CTransform3D>* cTransform3D =
-		dynamic_cast<ConstantBuffer<CTransform3D>*>(material_.constantBuffers[0].get());
+	// マトリックス
+	CTransform3D transform3DData =
+	{
+		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
+		transform_.GetWorldMat(),
+		Camera::current.pos
+	};
+	TransferDataToConstantBuffer(material_.constantBuffers[0].get(), transform3DData);
 
-	// マトリックス転送
-	cTransform3D->constantBufferMap->viewMat =
-		Camera::current.GetViewLookToMat() *
-		Camera::current.GetPerspectiveProjectionMat();
-	cTransform3D->constantBufferMap->worldMat = transform_.GetWorldMat();
-	cTransform3D->constantBufferMap->cameraPos = Camera::current.pos;
-
-	// 子クラスの型に変換
-	ConstantBuffer<CMaterialColor>* cMaterialColor =
-		dynamic_cast<ConstantBuffer<CMaterialColor>*>(material_.constantBuffers[1].get());
-
-	// マテリアルカラーの転送
+	// マテリアルカラー
+	CMaterialColor materialColorData;
 	if (isLighting == true && isAllLighting == true)
 	{
-		cMaterialColor->constantBufferMap->ambient = Color(1, 1, 1) - 0.5f;
-		//materialColor->constantBufferMap->ambient = model->material.ambient;
-		cMaterialColor->constantBufferMap->diffuse = model_->material.diffuse;
-		cMaterialColor->constantBufferMap->specular = model_->material.specular;
+		materialColorData =
+		{
+			Color(1, 1, 1) - 0.5f,
+			//model_->material.ambient,
+			model_->material.diffuse,
+			model_->material.specular,
+		};
 	}
 	else
 	{
-		cMaterialColor->constantBufferMap->ambient = Color(1, 1, 1);
-		cMaterialColor->constantBufferMap->diffuse = Color(0, 0, 0);
-		cMaterialColor->constantBufferMap->specular = Color(0, 0, 0);
+		materialColorData = { Color::one, Color::zero, Color::zero };
 	}
+	TransferDataToConstantBuffer(material_.constantBuffers[1].get(), materialColorData);
 
-	// 子クラスの型に変換
-	ConstantBuffer<CColor>* cColor =
-		dynamic_cast<ConstantBuffer<CColor>*>(material_.constantBuffers[2].get());
-
-	// 色転送
-	cColor->constantBufferMap->color = color_ / 255;
+	// 色データ
+	CColor colorData = { color_ / 255 };
+	TransferDataToConstantBuffer(material_.constantBuffers[2].get(), colorData);
 }
 void Object3D::MaterialDrawCommands()
 {

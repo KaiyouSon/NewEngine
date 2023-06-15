@@ -7,6 +7,8 @@ const Color Color::blue(0.f, 0.f, 255.f);
 const Color Color::yellow(255.f, 255.f, 0.f);
 const Color Color::white(255.f, 255.f, 255.f);
 const Color Color::black(0.f, 0.f, 0.f);
+const Color Color::one(1.f, 1.f, 1.f);
+const Color Color::zero(0.f, 0.f, 0.f);
 
 bool Color::operator!=(const Color other) const
 {

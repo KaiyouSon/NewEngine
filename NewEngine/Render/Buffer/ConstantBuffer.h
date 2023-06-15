@@ -63,3 +63,13 @@ public:
 		assert(SUCCEEDED(result));
 	}
 };
+
+template<typename T>
+void TransferDataToConstantBuffer(IConstantBuffer* iCBuffer, const T& data)
+{
+	// ƒLƒƒƒXƒg
+	auto buffer = dynamic_cast<ConstantBuffer<T>*>(iCBuffer);
+
+	// “]‘—
+	*(buffer->constantBufferMap) = data;
+}
