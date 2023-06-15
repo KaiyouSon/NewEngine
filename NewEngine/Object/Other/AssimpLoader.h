@@ -1,21 +1,20 @@
 #pragma once
-#include <assimp/scene.h>
 #include "Model.h"
 #include "Singleton.h"
+#include <string>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
 
 class AssimpLoader : public Singleton<AssimpLoader>
 {
 private:
-	const aiScene* scene;
-
-private:
-	void ParseMesh(FbxModel* model, aiMesh* mesh);	// メッシュの解析
+	void ParseMesh(FbxModel* model, const aiScene* scene);	// メッシュの解析
 	void ParseMeshVertices(FbxModel* model, aiMesh* mesh);	// 頂点データの解析
 	void ParseMeshFaces(FbxModel* model, aiMesh* mesh);		// フェンスの解析
-	void ParseMaterial(FbxModel* model);
+	void ParseMaterial(FbxModel* model, const aiScene* scene);
 
 public:
-	void LoadFbxModel(FbxModel* model);
+	void LoadFbxModel(std::string filePath, FbxModel* model);
 
 private:
 	friend Singleton<AssimpLoader>;

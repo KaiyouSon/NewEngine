@@ -7,19 +7,21 @@ class ModelManager
 {
 private:
 	static std::unordered_map<std::string, std::unique_ptr<Model>> sModelMap_;	// モデルのマップ
-	static std::unordered_map<std::string, std::unique_ptr<FbxModel>> sFbxModelMap_;	// モデルのマップ
 	static std::mutex sMtx_;	// 排他制御
+	static std::string sDirectoryPath_;
 
 public:	// モデル関連
 	// モデルの取得
-	static Model* GetModel(std::string modelTag);
+	static Model* GetModel(const std::string modelTag);
 
 	// objファイルからモデルをロードしマップの格納する
-	static Model* LoadObjModel(std::string filePath, std::string modelTag, bool isSmoothing = false);
+	static Model* LoadObjModel(const std::string fileName, const std::string modelTag, const bool isSmoothing = false);
 
 	// fbxファイルからモデルをロードしマップの格納する
-	static Model* LoadFbxModel(std::string filePath, std::string modelTag);
-	static Model* LoadFbxModel2(std::string filePath, std::string modelTag);
+	static Model* LoadFbxModel(const std::string fileName, const std::string modelTag);
+	static Model* LoadFbxModelDebug(std::string filePath, std::string modelTag);
+
+	static void LoadMaterialColor(std::string filePath, Model* model);
 
 public:	// その他の処理
 	// 破棄

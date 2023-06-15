@@ -1,7 +1,7 @@
 #include "AssimpLoader.h"
 #include "TextureManager.h"
-#include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
+#include <assimp/cimport.h>
 
 std::string ExractFileName(const std::string& path)
 {
@@ -22,36 +22,35 @@ std::string ExractFileName(const std::string& path)
 	return path;
 }
 
-void AssimpLoader::LoadFbxModel(FbxModel* model)
+void AssimpLoader::LoadFbxModel(std::string filePath, FbxModel* model)
 {
-	// インスタンス生成
-	//std::unique_ptr<FbxModel> model = std::make_unique<FbxModel>();
-
-	std::string filePath = "cube";
-
-	model->name = filePath;
-
-	// モデルと同じ名前のフォルダーから読み込む
-	std::string path = "Application/Resources/Model/" + filePath + "/";
-	std::string fbxfile = filePath + ".fbx";
-	std::string fullPath = path + fbxfile;
-
-
 	// インポーター
 	Assimp::Importer importer;
 
 	// フラグ
 	uint32_t flags = aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs;
-	scene = importer.ReadFile(fullPath, flags);
 
-	ParseMesh(model, *scene->mMeshes);
-	ParseMaterial(model);
+	const aiScene* scene = importer.ReadFile(filePath, flags);
+
+	if (scene == nullptr)
+	{
+		assert(0 && "モデルの読み込みが失敗しました");
+	}
+
+	// メッシュの解析
+	ParseMesh(model, scene);
+
+	// マテリアルの解析
+	ParseMaterial(model, scene);
+
+	// シーン解放
+	//aiReleaseImport(scene);
 }
 
-void AssimpLoader::ParseMesh(FbxModel* model, aiMesh* mesh)
+void AssimpLoader::ParseMesh(FbxModel* model, const aiScene* scene)
 {
-	ParseMeshVertices(model, mesh);
-	ParseMeshFaces(model, mesh);
+	ParseMeshVertices(model, *scene->mMeshes);
+	ParseMeshFaces(model, *scene->mMeshes);
 }
 void AssimpLoader::ParseMeshVertices(FbxModel* model, aiMesh* mesh)
 {
@@ -117,7 +116,7 @@ void AssimpLoader::ParseMeshFaces(FbxModel* model, aiMesh* mesh)
 		}
 	}
 }
-void AssimpLoader::ParseMaterial(FbxModel* model)
+void AssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 {
 	for (uint32_t i = 0; i < scene->mNumMaterials; i++)
 	{

@@ -149,7 +149,6 @@ void Object3D::TransferBuffer()
 		constantBufferMaterial_->constantBufferMap->diffuse = Color(0, 0, 0);
 		constantBufferMaterial_->constantBufferMap->specular = Color(0, 0, 0);
 	}
-	constantBufferMaterial_->constantBufferMap->alpha = model_->material.alpha;
 
 	// F“]‘—
 	constantBufferColor_->constantBufferMap->color = color_ / 255;

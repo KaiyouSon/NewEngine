@@ -3,26 +3,44 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "Mesh.h"
+#include "Enum.h"
 #include <vector>
 #include <string>
 
 class FbxModel1;
 
-class Model
+struct Model
 {
 public:
-	Material material;
 	Mesh mesh;
+	MaterialColor material;
+	ModelFormat format;
+
 	std::string modelType = "OBJ";
 public:
-	Model() {}
-	Model(const std::string modelName, const bool isSmoothing = false);
+	//Model(const std::string modelName, const bool isSmoothing = false);
 	virtual ~Model() {}
+};
+
+struct ObjModel : public Model
+{
+	std::string name;
+
+	ObjModel()
+	{
+		format = ModelFormat::Obj;
+	}
 };
 
 struct FbxModel : public Model
 {
 	std::string name;
+
+	FbxModel()
+	{
+		format = ModelFormat::Fbx;
+	}
+
 	//Material material;
 	//Mesh mesh;
 

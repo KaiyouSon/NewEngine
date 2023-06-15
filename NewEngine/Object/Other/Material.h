@@ -5,17 +5,31 @@
 #include <memory>
 #include <list>
 
-class Material
+struct MaterialColor
 {
 public:
 	std::string name;
 	Color ambient;		// アンビエント
 	Color diffuse;		// ディフューズ
 	Color specular;		// スペキュラー
-	float alpha;		// アルファ
 	Texture texture;
 
-public:
-	Material();
-	Material(std::string filePath);
+//public:
+//	MaterialColor();
+//	MaterialColor(std::string filePath);
 };
+
+//class Material
+//{
+//public:
+//	std::string name;
+//	Color ambient;		// アンビエント
+//	Color diffuse;		// ディフューズ
+//	Color specular;		// スペキュラー
+//	float alpha;		// アルファ
+//	Texture texture;
+//
+//public:
+//	//Material();
+//	//Material(std::string filePath);
+//};

@@ -53,3 +53,10 @@ enum class CullMode
 	Front,
 	Back,
 };
+
+// モデルのフォーマット
+enum class ModelFormat
+{
+	Obj,
+	Fbx,
+};

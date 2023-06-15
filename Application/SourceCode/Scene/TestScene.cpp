@@ -13,7 +13,7 @@ void TestScene::Init()
 	Camera::current.rot = { Radian(0),0,0 };
 
 	obj1.SetModel(ModelManager::GetModel("Block1"));
-	obj2.SetModel(ModelManager::GetModel("Cube2"));
+	obj2.SetModel(ModelManager::GetModel("Cube"));
 	obj2.pos.x = 3;
 
 	spr1.texture = TextureManager::GetTexture("pic");
