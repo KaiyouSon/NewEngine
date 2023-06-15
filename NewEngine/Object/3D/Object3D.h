@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "Model.h"
 #include "Texture.h"
+#include "Material.h"
 #include "Util.h"
 #include "GraphicsPipeline.h"
 #include <memory>
@@ -10,9 +11,6 @@
 class Object3D
 {
 private:
-	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform3D>> constantBufferTransform_;
-	std::unique_ptr<ConstantBuffer<ConstantBufferData::CMaterial>> constantBufferMaterial_;
-	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> constantBufferColor_;
 	std::unique_ptr<ConstantBuffer<ConstantBufferData::CSkin>> constantBufferSkin_;
 
 private:
@@ -29,6 +27,7 @@ private:
 	Transform* parent_;
 	Model* model_;
 	Texture* texture_;
+	Material material_;
 	Color color_;
 	GraphicsPipeline* graphicsPipeline_;
 
@@ -40,14 +39,18 @@ public:
 	bool isLighting;
 	static bool isAllLighting;
 
+private:
+	void MaterialInit();
+	void MaterialTransfer();
+	void MaterialDrawCommands();
+
 public:
 	Object3D();
-	Object3D(Model* model);
 	void PlayAnimetion();
 	void Update(Transform* parent = nullptr);
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 
-#pragma region セッター
+public: //セッター
 
 	// モデル
 	void SetModel(Model* model);
@@ -61,9 +64,7 @@ public:
 	// 色
 	void SetColor(const Color color);
 
-#pragma endregion
-
-#pragma region ゲッター
+public: // ゲッター
 
 	// ワールド座標
 	Vec3 GetWorldPos();
@@ -77,7 +78,6 @@ public:
 	// モデル
 	Model* GetModel();
 
-#pragma endregion
 
 };
 

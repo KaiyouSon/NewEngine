@@ -6,7 +6,7 @@ bool LightManager::isSpotLighting = false;
 LightManager::LightManager() :
 	constantBufferLightManager_(std::make_unique<ConstantBuffer<ConstantBufferDataLightManager>>())
 {
-	constantBufferLightManager_->Init();
+	constantBufferLightManager_->Create();
 }
 
 void LightManager::Init()

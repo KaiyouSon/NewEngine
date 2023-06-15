@@ -11,8 +11,8 @@ Line::Line() :
 	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("Line"))
 {
 	// 定数バッファ初期化
-	constantBufferTransform_->Init();	// 3D行列
-	constantBufferColor_->Init();		// 色
+	constantBufferTransform_->Create();	// 3D行列
+	constantBufferColor_->Create();		// 色
 
 	vertices_.resize(2);
 	vertices_[0] = { { 0.f,0.f,0.f} };

@@ -21,8 +21,8 @@ Sprite::Sprite() :
 	vertexBuffer_->Create(vertices_);
 
 	// 定数バッファ
-	constantBufferTransform_->Init();
-	constantBufferColor_->Init();
+	constantBufferTransform_->Create();
+	constantBufferColor_->Create();
 }
 
 void Sprite::Update(Transform* parent)

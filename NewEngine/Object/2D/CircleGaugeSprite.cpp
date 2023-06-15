@@ -20,9 +20,9 @@ CircleGaugeSprite::CircleGaugeSprite() :
 	vertexBuffer_->Create(vertices_);
 
 	// 定数バッファ
-	constantBufferTransform_->Init();
-	constantBufferColor_->Init();
-	constantBufferCircleGauge_->Init();
+	constantBufferTransform_->Create();
+	constantBufferColor_->Create();
+	constantBufferCircleGauge_->Create();
 }
 
 void CircleGaugeSprite::Update()

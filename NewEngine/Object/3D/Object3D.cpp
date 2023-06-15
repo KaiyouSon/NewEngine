@@ -9,23 +9,18 @@ using namespace ConstantBufferData;
 
 bool Object3D::isAllLighting = false;
 
-#pragma region コンストラクタ
-
 Object3D::Object3D() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
-	constantBufferTransform_(std::make_unique<ConstantBuffer<CTransform3D>>()),
-	constantBufferMaterial_(std::make_unique<ConstantBuffer<CMaterial>>()),
-	constantBufferColor_(std::make_unique<ConstantBuffer<CColor>>()),
 	constantBufferSkin_(std::make_unique<ConstantBuffer<CSkin>>()),
 	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
 	texture_(TextureManager::GetTexture("White")),
 	isLighting(false)
 {
 	// 定数バッファ初期化
-	constantBufferTransform_->Init();	// 3D行列
-	constantBufferMaterial_->Init();		// マテリアル
-	constantBufferColor_->Init();		// 色
-	constantBufferSkin_->Init();
+	constantBufferSkin_->Create();
+
+	// マテリアルの初期化
+	MaterialInit();
 
 	texture_->isMaterial = true;
 
@@ -34,34 +29,6 @@ Object3D::Object3D() :
 		isLighting = true;
 	}
 }
-
-Object3D::Object3D(Model* model) :
-	pos(0), scale(1), rot(0),
-	constantBufferTransform_(std::make_unique<ConstantBuffer<CTransform3D>>()),
-	constantBufferMaterial_(std::make_unique<ConstantBuffer<CMaterial>>()),
-	constantBufferColor_(std::make_unique<ConstantBuffer<CColor>>()),
-	constantBufferSkin_(std::make_unique<ConstantBuffer<CSkin>>()),
-	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
-	texture_(TextureManager::GetTexture("White")),
-	isLighting(false), model_(model)
-{
-	// 定数バッファ初期化
-	constantBufferTransform_->Init();	// 3D行列
-	constantBufferMaterial_->Init();		// マテリアル
-	constantBufferColor_->Init();		// 色
-	constantBufferSkin_->Init();
-
-	texture_->isMaterial = true;
-
-	if (isAllLighting == true)
-	{
-		isLighting = true;
-	}
-}
-
-#pragma endregion
-
-#pragma region その他の処理
 
 void Object3D::PlayAnimetion()
 {
@@ -88,6 +55,8 @@ void Object3D::Update(Transform* parent)
 		transform_.SetWorldMat(mat);
 	}
 
+	MaterialTransfer();
+
 	TransferBuffer();
 }
 void Object3D::Draw(const BlendMode blendMode)
@@ -104,13 +73,8 @@ void Object3D::Draw(const BlendMode blendMode)
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, model_->mesh.GetVertexBuffer().GetvbViewAddress());
 	renderBase->GetCommandList()->IASetIndexBuffer(model_->mesh.GetIndexBuffer().GetibViewAddress());
 
-	// CBVの設定コマンド
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, constantBufferTransform_->constantBuffer->GetGPUVirtualAddress());
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, constantBufferMaterial_->constantBuffer->GetGPUVirtualAddress());
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		2, constantBufferColor_->constantBuffer->GetGPUVirtualAddress());
+	MaterialDrawCommands();
+
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		5, constantBufferSkin_->constantBuffer->GetGPUVirtualAddress());
 	LightManager::GetInstance()->Draw();
@@ -127,32 +91,6 @@ void Object3D::Draw(const BlendMode blendMode)
 // バッファ転送
 void Object3D::TransferBuffer()
 {
-	// マトリックス転送
-	constantBufferTransform_->constantBufferMap->viewMat =
-		Camera::current.GetViewLookToMat() *
-		Camera::current.GetPerspectiveProjectionMat();
-	constantBufferTransform_->constantBufferMap->worldMat = transform_.GetWorldMat();
-	constantBufferTransform_->constantBufferMap->cameraPos = Camera::current.pos;
-
-	// マテリアルの転送
-	if (isLighting == true && isAllLighting == true)
-	{
-		constantBufferMaterial_->constantBufferMap->ambient = Color(1, 1, 1) - 0.5f;
-		//constantBufferMaterial_->constantBufferMap->ambient = model->material.ambient;
-
-		constantBufferMaterial_->constantBufferMap->diffuse = model_->material.diffuse;
-		constantBufferMaterial_->constantBufferMap->specular = model_->material.specular;
-	}
-	else
-	{
-		constantBufferMaterial_->constantBufferMap->ambient = Color(1, 1, 1);
-		constantBufferMaterial_->constantBufferMap->diffuse = Color(0, 0, 0);
-		constantBufferMaterial_->constantBufferMap->specular = Color(0, 0, 0);
-	}
-
-	// 色転送
-	constantBufferColor_->constantBufferMap->color = color_ / 255;
-
 	//if (model_->modelType == "FBX")
 	//{
 	//	// ボーン配列
@@ -200,9 +138,85 @@ void Object3D::SetBlendMode(const BlendMode blendMode)
 	}
 }
 
-#pragma endregion
+// --- マテリアル関連 --------------------------------------------------- //
+void Object3D::MaterialInit()
+{
+	// インスタンス生成
+	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-#pragma region セッター
+	// 3D行列
+	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform3D>>();
+	material_.constantBuffers.push_back(std::move(iConstantBuffer));
+
+	// マテリアルカラー
+	iConstantBuffer = std::make_unique<ConstantBuffer<CMaterialColor>>();
+	material_.constantBuffers.push_back(std::move(iConstantBuffer));
+
+	// 色
+	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
+	material_.constantBuffers.push_back(std::move(iConstantBuffer));
+
+	// 初期化
+	material_.Init();
+}
+void Object3D::MaterialTransfer()
+{
+	// 子クラスの型に変換
+	ConstantBuffer<CTransform3D>* cTransform3D =
+		dynamic_cast<ConstantBuffer<CTransform3D>*>(material_.constantBuffers[0].get());
+
+	// マトリックス転送
+	cTransform3D->constantBufferMap->viewMat =
+		Camera::current.GetViewLookToMat() *
+		Camera::current.GetPerspectiveProjectionMat();
+	cTransform3D->constantBufferMap->worldMat = transform_.GetWorldMat();
+	cTransform3D->constantBufferMap->cameraPos = Camera::current.pos;
+
+	// 子クラスの型に変換
+	ConstantBuffer<CMaterialColor>* cMaterialColor =
+		dynamic_cast<ConstantBuffer<CMaterialColor>*>(material_.constantBuffers[1].get());
+
+	// マテリアルカラーの転送
+	if (isLighting == true && isAllLighting == true)
+	{
+		cMaterialColor->constantBufferMap->ambient = Color(1, 1, 1) - 0.5f;
+		//materialColor->constantBufferMap->ambient = model->material.ambient;
+		cMaterialColor->constantBufferMap->diffuse = model_->material.diffuse;
+		cMaterialColor->constantBufferMap->specular = model_->material.specular;
+	}
+	else
+	{
+		cMaterialColor->constantBufferMap->ambient = Color(1, 1, 1);
+		cMaterialColor->constantBufferMap->diffuse = Color(0, 0, 0);
+		cMaterialColor->constantBufferMap->specular = Color(0, 0, 0);
+	}
+
+	// 子クラスの型に変換
+	ConstantBuffer<CColor>* cColor =
+		dynamic_cast<ConstantBuffer<CColor>*>(material_.constantBuffers[2].get());
+
+	// 色転送
+	cColor->constantBufferMap->color = color_ / 255;
+}
+void Object3D::MaterialDrawCommands()
+{
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
+
+	// CBVの設定コマンド
+	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+		0, material_.constantBuffers[0]->constantBuffer->GetGPUVirtualAddress());
+
+	// CBVの設定コマンド
+	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+		1, material_.constantBuffers[1]->constantBuffer->GetGPUVirtualAddress());
+
+	// CBVの設定コマンド
+	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+		2, material_.constantBuffers[2]->constantBuffer->GetGPUVirtualAddress());
+
+}
+
+// --- セッター -------------------------------------------------------- //
 
 // モデル
 void Object3D::SetModel(Model* model)
@@ -232,9 +246,7 @@ void Object3D::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline) { graphic
 // 色
 void Object3D::SetColor(const Color color) { color_ = color; }
 
-#pragma endregion
-
-#pragma region ゲッター
+// --- ゲッター -------------------------------------------------------- //
 
 // ワールド座標
 Vec3 Object3D::GetWorldPos()
@@ -255,5 +267,3 @@ Transform Object3D::GetTransform() { return transform_; }
 
 // モデル
 Model* Object3D::GetModel() { return model_; }
-
-#pragma endregion

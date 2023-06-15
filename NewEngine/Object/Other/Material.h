@@ -1,19 +1,12 @@
 #pragma once
-#include <string>
+#include "ConstantBuffer.h"
+#include "ConstantBufferData.h"
+#include <vector>
 #include <memory>
-#include <list>
 
-//class Material
-//{
-//public:
-//	std::string name;
-//	Color ambient;		// アンビエント
-//	Color diffuse;		// ディフューズ
-//	Color specular;		// スペキュラー
-//	float alpha;		// アルファ
-//	Texture texture;
-//
-//public:
-//	//Material();
-//	//Material(std::string filePath);
-//};
+struct Material
+{
+	std::vector<std::unique_ptr<IConstantBuffer>> constantBuffers;
+
+	void Init();
+};

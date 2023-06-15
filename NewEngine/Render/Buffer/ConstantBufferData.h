@@ -26,12 +26,11 @@ namespace ConstantBufferData
 		Color color;// 色
 	};
 
-	struct CMaterial
+	struct CMaterialColor
 	{
 		Color ambient;	// アンビエント係数
 		Color diffuse;	// ディフューズ係数
 		Color specular;	// スペキュラー係数
-		float alpha;	// アルファ
 	};
 
 	struct CDirectionalLight

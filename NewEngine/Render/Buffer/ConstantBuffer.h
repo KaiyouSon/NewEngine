@@ -5,11 +5,20 @@
 #include <cassert>
 #include <wrl.h>
 
-template<typename T>
-class ConstantBuffer
+class IConstantBuffer
 {
 public:
-	Microsoft::WRL::ComPtr<ID3D12Resource> constantBuffer;//	定数バッファ
+	Microsoft::WRL::ComPtr<ID3D12Resource> constantBuffer;	//	定数バッファ
+
+public:
+	virtual void Create() = 0;
+	virtual ~IConstantBuffer() {}
+};
+
+template<typename T>
+class ConstantBuffer : public IConstantBuffer
+{
+public:
 	T* constantBufferMap;	// マッピング用
 
 public:
@@ -19,7 +28,7 @@ public:
 		constantBuffer->Unmap(0, nullptr);
 	}
 
-	void Init()
+	void Create() override
 	{
 		HRESULT result;
 

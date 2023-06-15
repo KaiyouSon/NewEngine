@@ -9,8 +9,8 @@ OutLineObj::OutLineObj() :
 	constantBufferColor_(std::make_unique<ConstantBuffer<CColor>>())
 {
 	// 定数バッファ初期化
-	constantBufferTransform_->Init();	// 3D行列
-	constantBufferColor_->Init();		// 色
+	constantBufferTransform_->Create();	// 3D行列
+	constantBufferColor_->Create();		// 色
 }
 
 void OutLineObj::Update(Transform* parent)
