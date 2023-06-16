@@ -87,7 +87,7 @@ void NewEnginePreDraw()
 		// SRVヒープの設定コマンド
 		auto temp = TextureManager::GetSrvDescHeap();
 		RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &temp);
-		SceneManager::GetInstance()->DrawRenderTexture();
+		SceneManager::GetInstance()->RenderTextureSetting();
 
 		RenderBase::GetInstance()->PreDraw();
 		GuiManager::GetInstance()->PreDraw();
@@ -107,6 +107,9 @@ void NewEneineDraw()
 
 		RenderBase::GetInstance()->SetSpriteDrawCommand();
 		SceneManager::GetInstance()->DrawFrontSprite();
+
+		RenderBase::GetInstance()->SetRenderTextureDrawCommand();
+		SceneManager::GetInstance()->DrawRenderTexture();
 	}
 }
 void NewEnginePostDraw()

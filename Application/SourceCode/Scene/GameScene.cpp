@@ -17,6 +17,10 @@ void GameScene::Update()
 	Camera::DebugCameraUpdate();
 }
 
+void GameScene::RenderTextureSetting()
+{
+}
+
 void GameScene::DrawRenderTexture()
 {
 }

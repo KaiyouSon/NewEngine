@@ -22,6 +22,7 @@
 #include "SilhouetteObj.h"
 #include "OutLineObj.h"
 #include "Fog.h"
+#include "PostEffect.h"
 
 // c++
 #include <memory>

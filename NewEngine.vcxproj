@@ -108,6 +108,7 @@
     <ClCompile Include="Application\SourceCode\Scene\SceneManager.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\TestScene.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\TitleScene.cpp" />
+    <ClCompile Include="Application\SourceCode\Vignette.cpp" />
     <ClCompile Include="NewEngine\Collision\Collider.cpp" />
     <ClCompile Include="NewEngine\Collision\Collision.cpp" />
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp" />
@@ -128,6 +129,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\2D\CircleGaugeSprite.cpp" />
+    <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp" />
     <ClCompile Include="NewEngine\Object\2D\RenderTexture.cpp" />
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Camera.cpp" />
@@ -137,9 +139,7 @@
     <ClCompile Include="NewEngine\Object\Other\FbxLoader.cpp" />
     <ClCompile Include="NewEngine\Object\Other\FbxModel.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Material.cpp" />
-    <ClCompile Include="NewEngine\Object\Other\MaterialColor.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Mesh.cpp" />
-    <ClCompile Include="NewEngine\Object\Other\Model.cpp" />
     <ClCompile Include="NewEngine\Object\Other\ModelManager.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Object3D.cpp" />
     <ClCompile Include="NewEngine\Object\3D\OutLineObj.cpp" />
@@ -177,6 +177,7 @@
     <ClInclude Include="Application\SourceCode\Scene\SceneManager.h" />
     <ClInclude Include="Application\SourceCode\Scene\TestScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\TitleScene.h" />
+    <ClInclude Include="Application\SourceCode\Vignette.h" />
     <ClInclude Include="NewEngine\Collision\Collider.h" />
     <ClInclude Include="NewEngine\Collision\Collision.h" />
     <ClInclude Include="NewEngine\Gui\GuiManager.h" />
@@ -193,6 +194,7 @@
     <ClInclude Include="NewEngine\Math\Vec3.h" />
     <ClInclude Include="NewEngine\NewEngine.h" />
     <ClInclude Include="NewEngine\Object\2D\CircleGaugeSprite.h" />
+    <ClInclude Include="NewEngine\Object\2D\PostEffect.h" />
     <ClInclude Include="NewEngine\Object\2D\RenderTexture.h" />
     <ClInclude Include="NewEngine\Object\2D\Sprite.h" />
     <ClInclude Include="NewEngine\Object\Other\AssimpLoader.h" />

@@ -2,6 +2,8 @@
 #include "Sprite.h"
 #include "Timer.h"
 
+class Sprite;
+
 class TextureAnimeiton
 {
 private:

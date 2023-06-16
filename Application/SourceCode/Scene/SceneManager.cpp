@@ -28,10 +28,10 @@ void SceneManager::Update()
 	Camera::current.Update();
 }
 
-void SceneManager::DrawRenderTexture()
+void SceneManager::RenderTextureSetting()
 {
 	RenderBase::GetInstance()->SetObject3DDrawCommand();
-	currentScene->DrawRenderTexture();
+	currentScene->RenderTextureSetting();
 }
 
 void SceneManager::DrawBackSprite()
@@ -51,4 +51,9 @@ void SceneManager::DrawFrontSprite()
 #ifdef _DEBUG
 	currentScene->DrawDebugGui();
 #endif
+}
+
+void SceneManager::DrawRenderTexture()
+{
+	currentScene->DrawRenderTexture();
 }

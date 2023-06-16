@@ -130,6 +130,12 @@
     <Filter Include="NewEngine\Source\Sound">
       <UniqueIdentifier>{85d7aaa5-e8a8-4a6d-9861-cefb5831292f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Source\PostEffect">
+      <UniqueIdentifier>{5d4b1f23-4c25-4c90-9b2e-fefb7391dfaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\PostEffect">
+      <UniqueIdentifier>{d4bdd35e-3485-492b-b0f5-9608b3369d84}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -258,9 +264,6 @@
     <ClCompile Include="NewEngine\Object\Other\ModelManager.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\Other\Model.cpp">
-      <Filter>NewEngine\Source\Object\Other</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\Mesh.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
@@ -316,10 +319,13 @@
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\AssimpLoader.cpp">
+      <Filter>NewEngine\Source\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\Other\MaterialColor.cpp">
-      <Filter>Uncategorized\Source</Filter>
+    <ClCompile Include="Application\SourceCode\Vignette.cpp">
+      <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -534,9 +540,15 @@
       <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\AssimpLoader.h">
-      <Filter>Uncategorized\Header</Filter>
+      <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\MaterialColor.h">
+      <Filter>NewEngine\Header\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Vignette.h">
+      <Filter>Application\Header\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\2D\PostEffect.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>

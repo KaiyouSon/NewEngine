@@ -125,6 +125,10 @@ void RenderBase::SetSpriteDrawCommand()
 {
 	commandList_->SetGraphicsRootSignature(spriteRootSignature_->GetRootSignature());
 }
+void RenderBase::SetRenderTextureDrawCommand()
+{
+	commandList_->SetGraphicsRootSignature(renderTextureRootSignature_->GetRootSignature());
+}
 
 void RenderBase::CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC* rtvDesc)
 {
@@ -430,7 +434,13 @@ void RenderBase::RootSignatureInit()
 	spriteRootSignature_ = std::make_unique<RootSignature>();
 	spriteRootSignature_->AddConstantBufferViewToRootRrameter(3);
 	spriteRootSignature_->AddDescriptorRangeToRootPrameter(1);
-	spriteRootSignature_->Create(2);
+	spriteRootSignature_->Create(1);
+
+	// スプライト用
+	renderTextureRootSignature_ = std::make_unique<RootSignature>();
+	renderTextureRootSignature_->AddConstantBufferViewToRootRrameter(3);
+	renderTextureRootSignature_->AddDescriptorRangeToRootPrameter(1);
+	renderTextureRootSignature_->Create(2);
 }
 void RenderBase::GraphicsPipelineInit()
 {
@@ -495,7 +505,7 @@ void RenderBase::GraphicsPipelineInit()
 	// レンダーテクスチャ用
 	GraphicsPipelineManager::Create(
 		ShaderObjectManager::GetShaderObject("RenderTexture"),
-		spriteRootSignature_->GetRootSignature(),
+		renderTextureRootSignature_->GetRootSignature(),
 		CullMode::None,
 		depthStencilDesc2,
 		TopologyType::Triangle,

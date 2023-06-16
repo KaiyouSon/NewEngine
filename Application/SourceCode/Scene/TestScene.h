@@ -1,5 +1,6 @@
 #pragma once
 #include "NewEngine.h"
+#include "Vignette.h"
 
 class TestScene : public IScene
 {
@@ -10,17 +11,19 @@ private:
 	Sprite spr1;
 	Sprite spr2;
 
-	RenderTexture* renderTex;
+
+	Vignette vignette;
 
 public:
 	TestScene();
 	~TestScene();
 	void Init() override;
 	void Update() override;
-	void DrawRenderTexture() override;
+	void RenderTextureSetting() override;
 	void DrawBackSprite() override;
 	void DrawModel() override;
 	void DrawFrontSprite() override;
+	void DrawRenderTexture() override;
 	void DrawDebugGui() override;
 };
 

@@ -10,7 +10,7 @@ float4 main(VSOutputSvposUv vsOutput) : SV_TARGET
 {
     // テクスチャーマッピング
     float4 texColor = tex.Sample(smp, vsOutput.uv);
-    return texColor;
+    //return texColor;
     
     //PSOutput output;
     
@@ -18,7 +18,7 @@ float4 main(VSOutputSvposUv vsOutput) : SV_TARGET
     //output.target1 = float4(1 - texColor.rgb, 1);
     //return output;
     
-    //return Monochrome(tex, smp, vsOutput.uv);
+    return Monochrome(tex, smp, vsOutput.uv);
     //return AverageBlur(float2(1920, 1080), 4, tex, smp, vsOutput.uv);
     //return HorizontalBlur(1920, tex, smp, input.uv);
     //return VerticalBlur(1080, tex, smp, input.uv);

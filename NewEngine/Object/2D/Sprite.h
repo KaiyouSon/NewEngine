@@ -4,7 +4,11 @@
 #include "ConstantBuffer.h"
 #include "Transform.h"
 #include "Texture.h"
+#include "Material.h"
+#include "TextureAnimeiton.h"
 #include <vector>
+
+class TextureAnimeiton;
 
 class Sprite
 {
@@ -15,12 +19,12 @@ private:
 	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> constantBufferColor_;
 	Transform transform_;
 	Transform* parent_;
+	Texture* texture_;
+	Material* material_;
 
 public:
-	Texture* texture;
 	Vec2 pos;
 	Vec2 scale;
-	Vec2 uvPos;
 	Vec2 size;
 	float rot;
 	Color color;
@@ -37,6 +41,9 @@ public:
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 
 	void SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos);
+	void SetTexture(Texture* texture);
 
+private:
+	friend TextureAnimeiton;
 };
 

@@ -21,7 +21,7 @@ void TextureAnimeiton::Play(const int& maxTimer, Sprite* sprite)
 	{
 		leftTopPos_.x += width_;
 		rightDownPos_.x += width_;
-		if (rightDownPos_.x > sprite->texture->buffer->GetDesc().Width)
+		if (rightDownPos_.x > sprite->texture_->buffer->GetDesc().Width)
 		{
 			leftTopPos_ = initLeftTopPos_;
 			rightDownPos_ = initRightDownPos_;

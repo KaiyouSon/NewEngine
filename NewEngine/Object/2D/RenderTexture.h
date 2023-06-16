@@ -26,6 +26,6 @@ public:
 	DepthBuffer depthBuffer;
 
 public:
-	void PreDrawScene();
+	void PrevDrawScene();
 	void PostDrawScene();
 };

@@ -16,12 +16,12 @@ void TestScene::Init()
 	obj2.SetModel(ModelManager::GetModel("Cube"));
 	obj2.pos.x = 3;
 
-	spr1.texture = TextureManager::GetTexture("pic");
+	spr1.SetTexture(TextureManager::GetTexture("pic"));
 
-	renderTex = TextureManager::GetRenderTexture("Test");
-	spr2.texture = renderTex;
-	spr2.pos = GetWindowHalfSize();
-	spr2.graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture");
+	//renderTex = TextureManager::GetRenderTexture("Test");
+	//spr2.texture = renderTex;
+	//spr2.pos = GetWindowHalfSize();
+	//spr2.graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture");
 
 	//SoundManager::Play("GameBGM");
 }
@@ -46,13 +46,15 @@ void TestScene::Update()
 	obj2.Update(&tf);
 	spr1.Update();
 	spr2.Update();
+
+	vignette.Update();
 }
 
-void TestScene::DrawRenderTexture()
+void TestScene::RenderTextureSetting()
 {
-	renderTex->PreDrawScene();
+	vignette.PrevSceneDraw();
 	obj1.Draw();
-	renderTex->PostDrawScene();
+	vignette.PostSceneDraw();
 }
 void TestScene::DrawBackSprite()
 {
@@ -66,6 +68,10 @@ void TestScene::DrawModel()
 }
 void TestScene::DrawFrontSprite()
 {
+}
+void TestScene::DrawRenderTexture()
+{
+	vignette.DrawPostEffect();
 
 }
 void TestScene::DrawDebugGui()

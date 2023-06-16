@@ -8,7 +8,7 @@ using namespace std;
 
 const float RenderTexture::sClearColor_[4] = { 0.0f,0.0f,0.0f,1.0f };
 
-void RenderTexture::PreDrawScene()
+void RenderTexture::PrevDrawScene()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();

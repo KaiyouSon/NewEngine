@@ -17,10 +17,11 @@ public:
 public:
 	void Init();
 	void Update();
-	void DrawRenderTexture();
+	void RenderTextureSetting();
 	void DrawBackSprite();
 	void DrawModel();
 	void DrawFrontSprite();
+	void DrawRenderTexture();
 
 	template<typename T>
 	static void ChangeScene()

@@ -28,13 +28,13 @@ private:
 	Model* model_;
 	Texture* texture_;
 	Material material_;
-	Color color_;
 	GraphicsPipeline* graphicsPipeline_;
 
 public:
 	Vec3 pos;
 	Vec3 scale;
 	Vec3 rot;
+	Color color;
 
 	bool isLighting;
 	static bool isAllLighting;

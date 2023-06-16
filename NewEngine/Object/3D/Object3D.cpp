@@ -4,7 +4,7 @@
 #include "Camera.h"
 #include "FbxModel.h"
 #include "TextureManager.h"
-#include <DirectXMath.h>
+
 using namespace ConstantBufferData;
 
 bool Object3D::isAllLighting = false;
@@ -189,7 +189,7 @@ void Object3D::MaterialTransfer()
 	TransferDataToConstantBuffer(material_.constantBuffers[1].get(), materialColorData);
 
 	// 色データ
-	CColor colorData = { color_ / 255 };
+	CColor colorData = { color / 255 };
 	TransferDataToConstantBuffer(material_.constantBuffers[2].get(), colorData);
 }
 void Object3D::MaterialDrawCommands()
@@ -236,9 +236,6 @@ void Object3D::SetTexture(Texture* texture) { texture_ = texture; }
 
 // グラフィックスパイプライン
 void Object3D::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline) { graphicsPipeline_ = graphicsPipeline; }
-
-// 色
-void Object3D::SetColor(const Color color) { color_ = color; }
 
 // --- ゲッター -------------------------------------------------------- //
 

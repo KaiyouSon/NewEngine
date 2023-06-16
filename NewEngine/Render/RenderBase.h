@@ -29,6 +29,7 @@ public:
 	void PostDraw();
 	void SetObject3DDrawCommand();
 	void SetSpriteDrawCommand();
+	void SetRenderTextureDrawCommand();
 	void CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC* rtvDesc);
 	void CreateDSV(DepthBuffer& depthBuffer);
 
@@ -53,6 +54,7 @@ public:
 
 	inline RootSignature* GetObject3DRootSignature() const { return object3DRootSignature_.get(); }
 	inline RootSignature* GetSpriteRootSignature() const { return spriteRootSignature_.get(); }
+	inline RootSignature* GetRenderTextureRootSignature() const { return renderTextureRootSignature_.get(); }
 
 	inline Viewport* GetViewport() const { return viewport_.get(); }
 
@@ -91,6 +93,7 @@ private:
 	ComPtr <ID3DBlob> errorBlob_;	// エラーオブジェクト
 	std::unique_ptr<RootSignature> object3DRootSignature_;
 	std::unique_ptr<RootSignature> spriteRootSignature_;
+	std::unique_ptr<RootSignature> renderTextureRootSignature_;
 
 	// 描画処理関連
 	D3D12_RESOURCE_BARRIER barrierDesc_;	// リソースバリア

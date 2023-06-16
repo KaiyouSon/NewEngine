@@ -6,8 +6,8 @@
 using namespace ConstantBufferData;
 
 Sprite::Sprite() :
-	texture(TextureManager::GetTexture("White")),
-	pos(0), scale(1), size(0), rot(0), color(Color::white), anchorPoint(0.5f),
+	texture_(TextureManager::GetTexture("White")),
+	pos(0), scale(1), rot(0), color(Color::white), anchorPoint(0.5f), size(0),
 	vertexBuffer_(std::make_unique<VertexBuffer<VertexPosUv>>()),
 	constantBufferTransform_(std::make_unique<ConstantBuffer<CTransform2D>>()),
 	constantBufferColor_(std::make_unique<ConstantBuffer<CColor>>()),
@@ -78,7 +78,7 @@ void Sprite::Draw(const BlendMode blendMode)
 	{
 		// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			UINT(max + i), texture->GetGpuHandle());
+			UINT(max + i), texture_->GetGpuHandle());
 	}
 
 	renderBase->GetCommandList()->DrawInstanced((unsigned short)vertices_.size(), 1, 0, 0);
@@ -114,8 +114,8 @@ void Sprite::SetBlendMode(const BlendMode blendMode)
 void Sprite::TransferTexturePos(const Vec2& size)
 {
 	// 新しいのサイズ
-	float width = size.x == 0 ? texture->size.x : size.x;
-	float height = size.y == 0 ? texture->size.y : size.y;
+	float width = size.x == 0 ? texture_->size.x : size.x;
+	float height = size.y == 0 ? texture_->size.y : size.y;
 
 	// 現在のサイズ
 	float width2 = vertices_[0].pos.x - vertices_[2].pos.x;
@@ -134,10 +134,10 @@ void Sprite::TransferTexturePos(const Vec2& size)
 
 void Sprite::SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos)
 {
-	float left = leftTopPos.x / texture->buffer->GetDesc().Width;
-	float right = rightDownPos.x / texture->buffer->GetDesc().Width;
-	float up = leftTopPos.y / texture->buffer->GetDesc().Height;
-	float down = rightDownPos.y / texture->buffer->GetDesc().Height;
+	float left = leftTopPos.x / texture_->buffer->GetDesc().Width;
+	float right = rightDownPos.x / texture_->buffer->GetDesc().Width;
+	float up = leftTopPos.y / texture_->buffer->GetDesc().Height;
+	float down = rightDownPos.y / texture_->buffer->GetDesc().Height;
 
 	vertices_[0].uv = { left,down };
 	vertices_[1].uv = { left,up };
@@ -146,3 +146,5 @@ void Sprite::SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos)
 
 	vertexBuffer_->TransferToBuffer(vertices_);
 }
+
+void Sprite::SetTexture(Texture* texture) { texture_ = texture; size = texture->size; }

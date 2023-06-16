@@ -11,6 +11,10 @@ void TitleScene::Update()
 	Camera::DebugCameraUpdate();
 }
 
+void TitleScene::RenderTextureSetting()
+{
+}
+
 void TitleScene::DrawRenderTexture()
 {
 }

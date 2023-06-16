@@ -16,8 +16,8 @@ void LogoScene::Init()
 	Texture tex1 = TextureManager::LoadTexture("LogoScene/NewEngineTitle.png");
 	Texture tex2 = TextureManager::CreateTexture(Color::black);
 
-	logoSprite->texture = &tex1;
-	backSprite->texture = &tex2;
+	logoSprite->SetTexture(&tex1);
+	backSprite->SetTexture(&tex2);
 
 	logoSprite->pos = GetWindowHalfSize();
 	backSprite->pos = GetWindowHalfSize();
@@ -72,6 +72,10 @@ void LogoScene::Update()
 	{
 		SceneManager::ChangeScene<TitleScene>();
 	}
+}
+
+void LogoScene::RenderTextureSetting()
+{
 }
 
 void LogoScene::DrawRenderTexture()
