@@ -24,6 +24,8 @@ void TestScene::Init()
 	//spr2.graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture");
 
 	//SoundManager::Play("GameBGM");
+
+	postEffectType = 0;
 }
 void TestScene::Update()
 {
@@ -36,8 +38,6 @@ void TestScene::Update()
 	if (Key::GetKeyDown(DIK_SPACE) == true)
 	{
 		obj2.scale = 0.01f;
-
-		//obj2.SetModel(ModelManager::GetModel("Enemy"));
 	}
 
 	obj1.Update();
@@ -47,14 +47,21 @@ void TestScene::Update()
 	spr1.Update();
 	spr2.Update();
 
-	vignette.Update();
+	task.Update();
+	//vignette.Update();
 }
 
 void TestScene::RenderTextureSetting()
 {
-	vignette.PrevSceneDraw();
-	obj1.Draw();
-	vignette.PostSceneDraw();
+	//vignette.PrevSceneDraw();
+
+	if (postEffectType == 0)
+	{
+		task.PrevSceneDraw();
+		obj1.Draw();
+		task.PostSceneDraw();
+	}
+	//vignette.PostSceneDraw();
 }
 void TestScene::DrawBackSprite()
 {
@@ -63,17 +70,31 @@ void TestScene::DrawBackSprite()
 }
 void TestScene::DrawModel()
 {
-	obj1.Draw();
-	obj2.Draw();
+	//obj1.Draw();
+	//obj2.Draw();
 }
 void TestScene::DrawFrontSprite()
 {
 }
 void TestScene::DrawRenderTexture()
 {
-	vignette.DrawPostEffect();
+	if (postEffectType == 0)
+	{
+		task.DrawPostEffect();
+	}
+	else if (postEffectType == 1)
+	{
 
+	}
+
+
+	//vignette.DrawPostEffect();
 }
 void TestScene::DrawDebugGui()
 {
+	GuiManager::BeginWindow("PostEffect");
+
+	GuiManager::DrawInputInt("PostEffectType", (int&)postEffectType);
+
+	GuiManager::EndWindow();
 }

@@ -1,18 +1,17 @@
 #pragma once
 #include "NewEngine.h"
 
-class Vignette
+class Bloom
 {
 private:
 	std::unique_ptr<PostEffect> postEffect_;
 	RenderTexture* tex_;
 
 public:
-	Vignette();
+	Bloom();
 	void Update();
 	void DrawPostEffect();
 	void PrevSceneDraw();
 	void PostSceneDraw();
-
 };
 

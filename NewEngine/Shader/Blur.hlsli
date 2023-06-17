@@ -13,42 +13,21 @@ float4 Monochrome(Texture2D<float4> tex, SamplerState smp, float2 uv)
 }
 
 // 平均ブラー
-float4 AverageBlur(float2 size, float texelSpace, Texture2D<float4> tex, SamplerState smp, float2 uv)
+float4 ShiftBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float shiftNum, float shiftWidth)
 {
-    // texelSpaceずらすためのUV値を求める
-    const float offSetU = texelSpace / size.x;
-    const float offSetV = texelSpace / size.y;
-        
-    float3 blurColor = 0;
+    float4 result = float4(0, 0, 0, 0);
+    float num;
     
-    // 基準テクセルから右のテクセルのカラーをサンプリングする
-    blurColor += tex.Sample(smp, uv + float2(+offSetU, 0.0f)).rgb;
-        
-    // 基準テクセルから左のテクセルのカラーをサンプリングする
-    blurColor += tex.Sample(smp, uv + float2(-offSetU, 0.0f)).rgb;
-        
-    // 基準テクセルから下のテクセルのカラーをサンプリングする
-    blurColor += tex.Sample(smp, uv + float2(0.0f, +offSetV)).rgb;
-        
-    // 基準テクセルから上のテクセルのカラーをサンプリングする
-    blurColor += tex.Sample(smp, uv + float2(0.0f, -offSetV)).rgb;
-        
-    // 基準テクセルから右下のテクセルのカラーをサンプリングする
-    blurColor += tex.Sample(smp, uv + float2(+offSetU, +offSetV)).rgb;
-        
-    // 基準テクセルから右上のテクセルのカラーをサンプリングする
-    blurColor += tex.Sample(smp, uv + float2(+offSetU, -offSetV)).rgb;
-        
-    // 基準テクセルから左下のテクセルのカラーをサンプリングする
-    blurColor += tex.Sample(smp, uv + float2(-offSetU, +offSetV)).rgb;
-        
-    // 基準テクセルから左上のテクセルのカラーをサンプリングする
-    blurColor += tex.Sample(smp, uv + float2(-offSetU, -offSetV)).rgb;
-        
-    //  基準テクセルと近傍8テクセルの平均なので9で割る
-    blurColor /= 9.0f;
-        
-    return float4(blurColor.rgb, 1);
+    for (float py = -shiftNum / 2; py <= shiftNum / 2; py++)
+    {
+        for (float px = -shiftNum / 2; px <= shiftNum / 2; px++)
+        {
+            result += tex.Sample(smp, uv + float2(px, py) * shiftWidth);
+            num++;
+        }
+    }
+    result.rgb = result.rgb / num;
+    return float4(result.rgb, 1);
 }
 
 // 横ブラー
@@ -90,3 +69,4 @@ float4 VerticalBlur(float height, Texture2D<float4> tex, SamplerState smp, float
         
     return float4(blurColor, 1);
 }
+

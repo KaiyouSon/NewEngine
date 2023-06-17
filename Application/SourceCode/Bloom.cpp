@@ -1,30 +1,30 @@
-#include "Vignette.h"
+#include "Bloom.h"
 
-Vignette::Vignette() :
+Bloom::Bloom() :
 	postEffect_(std::make_unique<PostEffect>())
 {
-	tex_ = TextureManager::GetRenderTexture("Vignette");
+	tex_ = TextureManager::GetRenderTexture("Bloom");
 
 	postEffect_->pos = GetWindowHalfSize();
 	postEffect_->SetRenderTexture(tex_);
 }
 
-void Vignette::Update()
+void Bloom::Update()
 {
 	postEffect_->Update();
 }
 
-void Vignette::DrawPostEffect()
+void Bloom::DrawPostEffect()
 {
 	postEffect_->Draw();
 }
 
-void Vignette::PrevSceneDraw()
+void Bloom::PrevSceneDraw()
 {
 	tex_->PrevDrawScene();
 }
 
-void Vignette::PostSceneDraw()
+void Bloom::PostSceneDraw()
 {
 	tex_->PostDrawScene();
 }

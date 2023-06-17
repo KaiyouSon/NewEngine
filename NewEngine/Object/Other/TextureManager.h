@@ -43,7 +43,7 @@ public: // レンダーテクスチャー関連
 	static RenderTexture* GetRenderTexture(std::string textureTag);
 
 	// レンダーテクスチャーを生成しマップに格納する
-	static RenderTexture* CreateRenderTexture(Vec2 size, size_t num, std::string textureTag);
+	static RenderTexture* CreateRenderTexture(Vec2 size, uint32_t num, std::string textureTag);
 
 public:	// その他の処理
 	// ディスクリプターヒープを作成する処理
@@ -51,6 +51,7 @@ public:	// その他の処理
 
 	// SRVを作成する処理
 	static void CreateSRV(Texture& texture, ID3D12Resource* buffer);
+	static void CreateSRV(RenderTexture& texture, ID3D12Resource* buffer, uint32_t index);
 
 	// テクスチャーロード後のコマンドリストの実行
 	static void ExcuteComandList();

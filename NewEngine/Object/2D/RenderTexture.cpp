@@ -6,7 +6,7 @@
 #include <memory>
 using namespace std;
 
-const float RenderTexture::sClearColor_[4] = { 0.0f,0.0f,0.0f,1.0f };
+const float RenderTexture::sClearColor[4] = { 0.25f,0.5f,0.1f,1.0f };
 
 void RenderTexture::PrevDrawScene()
 {
@@ -49,7 +49,7 @@ void RenderTexture::PrevDrawScene()
 	}
 	renderBase->GetCommandList()->RSSetViewports((UINT)viewports_.size(), viewports_.data());
 
-	// シザリング矩形の設定
+	// シザー矩形の設定
 	scissorRects_.resize(buffers.size());
 	for (int i = 0; i < buffers.size(); i++)
 	{
@@ -64,7 +64,7 @@ void RenderTexture::PrevDrawScene()
 	// 全画面クリア
 	for (int i = 0; i < rtvCpuHandle.size(); i++)
 	{
-		renderBase->GetCommandList()->ClearRenderTargetView(rtvCpuHandle[i], sClearColor_, 0, nullptr);
+		renderBase->GetCommandList()->ClearRenderTargetView(rtvCpuHandle[i], sClearColor, 0, nullptr);
 	}
 
 	// 深度バッファのクリア

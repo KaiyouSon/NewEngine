@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 #include "Vignette.h"
+#include "Task.h"
 
 class TestScene : public IScene
 {
@@ -11,8 +12,10 @@ private:
 	Sprite spr1;
 	Sprite spr2;
 
-
+	Task task;
 	Vignette vignette;
+
+	uint32_t postEffectType;
 
 public:
 	TestScene();

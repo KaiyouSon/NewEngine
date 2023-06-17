@@ -102,12 +102,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\SourceCode\Bloom.cpp" />
     <ClCompile Include="Application\SourceCode\LoadManager.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\GameScene.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\LogoScene.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\SceneManager.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\TestScene.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\TitleScene.cpp" />
+    <ClCompile Include="Application\SourceCode\Task.cpp" />
     <ClCompile Include="Application\SourceCode\Vignette.cpp" />
     <ClCompile Include="NewEngine\Collision\Collider.cpp" />
     <ClCompile Include="NewEngine\Collision\Collision.cpp" />
@@ -170,6 +172,7 @@
     <ClCompile Include="NewEngine\Util\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\SourceCode\Bloom.h" />
     <ClInclude Include="Application\SourceCode\LoadManager.h" />
     <ClInclude Include="Application\SourceCode\Scene\GameScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\IScene.h" />
@@ -177,6 +180,7 @@
     <ClInclude Include="Application\SourceCode\Scene\SceneManager.h" />
     <ClInclude Include="Application\SourceCode\Scene\TestScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\TitleScene.h" />
+    <ClInclude Include="Application\SourceCode\Task.h" />
     <ClInclude Include="Application\SourceCode\Vignette.h" />
     <ClInclude Include="NewEngine\Collision\Collider.h" />
     <ClInclude Include="NewEngine\Collision\Collision.h" />

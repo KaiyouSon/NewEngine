@@ -1,30 +1,30 @@
-#include "Vignette.h"
+#include "Task.h"
 
-Vignette::Vignette() :
+Task::Task() :
 	postEffect_(std::make_unique<PostEffect>())
 {
-	tex_ = TextureManager::GetRenderTexture("Vignette");
+	tex_ = TextureManager::GetRenderTexture("Task");
 
 	postEffect_->pos = GetWindowHalfSize();
 	postEffect_->SetRenderTexture(tex_);
 }
 
-void Vignette::Update()
+void Task::Update()
 {
 	postEffect_->Update();
 }
 
-void Vignette::DrawPostEffect()
+void Task::DrawPostEffect()
 {
 	postEffect_->Draw();
 }
 
-void Vignette::PrevSceneDraw()
+void Task::PrevSceneDraw()
 {
 	tex_->PrevDrawScene();
 }
 
-void Vignette::PostSceneDraw()
+void Task::PostSceneDraw()
 {
 	tex_->PostDrawScene();
 }

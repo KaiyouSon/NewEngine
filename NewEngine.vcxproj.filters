@@ -327,6 +327,12 @@
     <ClCompile Include="Application\SourceCode\Vignette.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\Task.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Bloom.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -549,6 +555,12 @@
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Task.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Bloom.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>

@@ -582,15 +582,15 @@ RenderTexture* TextureManager::GetRenderTexture(std::string textureTag)
 }
 
 // レンダーテクスチャーを生成しマップに格納する
-RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, size_t num, std::string textureTag)
+RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, uint32_t num, std::string textureTag)
 {
 	// 排他制御
 	std::lock_guard<std::mutex> lock(mtx_);
 
 	std::unique_ptr<RenderTexture> renderTex = std::make_unique<RenderTexture>();
 	renderTex->buffers.resize(num);
-
-	float clearColor[4] = { 0.0f,0.0f,0.0f,1.0f };
+	renderTex->cpuHandles.resize(num);
+	renderTex->gpuHandles.resize(num);
 
 	HRESULT result;
 	RenderBase* renderBase = RenderBase::GetInstance();
@@ -609,11 +609,11 @@ RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, size_t num, std::s
 	CD3DX12_CLEAR_VALUE textureResourceClearValue =
 		CD3DX12_CLEAR_VALUE(
 			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
-			clearColor);
+			RenderTexture::sClearColor);
 
 	renderTex->size = size;
 
-	for (int i = 0; i < num; i++)
+	for (uint32_t i = 0; i < num; i++)
 	{
 		result = renderBase->GetDevice()->
 			CreateCommittedResource(
@@ -633,10 +633,10 @@ RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, size_t num, std::s
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
 	renderTex->renderTargets.resize(num);
-	for (int i = 0; i < num; i++)
+	for (uint32_t i = 0; i < num; i++)
 	{
 		// SRV作成
-		CreateSRV(*renderTex, renderTex->buffers[i].Get());
+		CreateSRV(*renderTex, renderTex->buffers[i].Get(), i);
 
 		// RTV作成
 		renderTex->renderTargets[i].buffer_ = renderTex->buffers[i];
@@ -699,6 +699,34 @@ void TextureManager::CreateSRV(Texture& texture, ID3D12Resource* buffer)
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	// 2Dテクスチャ
 	//srvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;	// 2Dテクスチャ
+	srvDesc.Texture2D.MipLevels = buffer->GetDesc().MipLevels;
+
+	// ハンドルの指す位置にシェーダーリソースビュー作成
+	RenderBase::GetInstance()->GetDevice()->
+		CreateShaderResourceView(buffer, &srvDesc, srvCpuHandle);
+
+	srvIncrementIndex_++;
+}
+void TextureManager::CreateSRV(RenderTexture& texture, ID3D12Resource* buffer, uint32_t index)
+{
+	// SRVヒープの先頭ハンドルを取得
+	D3D12_CPU_DESCRIPTOR_HANDLE srvCpuHandle = srvDescHeap_->GetCPUDescriptorHandleForHeapStart();
+	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvDescHeap_->GetGPUDescriptorHandleForHeapStart();
+
+	uint32_t descriptorSize = RenderBase::GetInstance()->GetDevice()->
+		GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+	srvCpuHandle.ptr += (SIZE_T)(descriptorSize * srvIncrementIndex_);
+	srvGpuHandle.ptr += (SIZE_T)(descriptorSize * srvIncrementIndex_);
+
+	texture.cpuHandles[index] = srvCpuHandle;
+	texture.gpuHandles[index] = srvGpuHandle;
+
+	// シェーダーリソースビュー設定
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	// srv設定構造体
+	srvDesc.Format = buffer->GetDesc().Format;
+	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	// 2Dテクスチャ
 	srvDesc.Texture2D.MipLevels = buffer->GetDesc().MipLevels;
 
 	// ハンドルの指す位置にシェーダーリソースビュー作成

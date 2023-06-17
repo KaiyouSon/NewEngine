@@ -26,7 +26,9 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("pic.png", "pic");
 	TextureManager::LoadTexture("number.png", "NumberSheet");
 
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 2, "Test");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 2, "Task");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Vignette");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 2, "Bloom");
 
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
 	return true;
