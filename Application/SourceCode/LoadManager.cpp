@@ -28,7 +28,9 @@ bool LoadManager::TextureLoad()
 
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 2, "Task");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Vignette");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 2, "Bloom");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "HighLumi");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "GaussainBlur");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
 
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
 	return true;

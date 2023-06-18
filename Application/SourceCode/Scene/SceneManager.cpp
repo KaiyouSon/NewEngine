@@ -3,6 +3,7 @@
 #include "TitleScene.h"
 #include "GameScene.h"
 #include "LogoScene.h"
+#include "Bloom.h"
 
 std::unique_ptr<IScene> SceneManager::currentScene = nullptr;
 
@@ -10,6 +11,7 @@ SceneManager::SceneManager()
 {
 	Object3D::isAllLighting = true;
 
+	Bloom::CreateGraphicsPipeline();
 	currentScene = std::move(std::make_unique<TestScene>());
 }
 
@@ -30,7 +32,6 @@ void SceneManager::Update()
 
 void SceneManager::RenderTextureSetting()
 {
-	RenderBase::GetInstance()->SetObject3DDrawCommand();
 	currentScene->RenderTextureSetting();
 }
 

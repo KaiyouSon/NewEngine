@@ -589,8 +589,6 @@ RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, uint32_t num, std:
 
 	std::unique_ptr<RenderTexture> renderTex = std::make_unique<RenderTexture>();
 	renderTex->buffers.resize(num);
-	renderTex->cpuHandles.resize(num);
-	renderTex->gpuHandles.resize(num);
 
 	HRESULT result;
 	RenderBase* renderBase = RenderBase::GetInstance();
@@ -713,20 +711,21 @@ void TextureManager::CreateSRV(RenderTexture& texture, ID3D12Resource* buffer, u
 	D3D12_CPU_DESCRIPTOR_HANDLE srvCpuHandle = srvDescHeap_->GetCPUDescriptorHandleForHeapStart();
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvDescHeap_->GetGPUDescriptorHandleForHeapStart();
 
-	uint32_t descriptorSize = RenderBase::GetInstance()->GetDevice()->
+	UINT descriptorSize = RenderBase::GetInstance()->GetDevice()->
 		GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	srvCpuHandle.ptr += (SIZE_T)(descriptorSize * srvIncrementIndex_);
 	srvGpuHandle.ptr += (SIZE_T)(descriptorSize * srvIncrementIndex_);
 
-	texture.cpuHandles[index] = srvCpuHandle;
-	texture.gpuHandles[index] = srvGpuHandle;
+	texture.cpuHandle = srvCpuHandle;
+	texture.gpuHandle = srvGpuHandle;
 
 	// シェーダーリソースビュー設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	// srv設定構造体
 	srvDesc.Format = buffer->GetDesc().Format;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	// 2Dテクスチャ
+	//srvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;	// 2Dテクスチャ
 	srvDesc.Texture2D.MipLevels = buffer->GetDesc().MipLevels;
 
 	// ハンドルの指す位置にシェーダーリソースビュー作成

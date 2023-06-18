@@ -136,6 +136,9 @@
     <Filter Include="Application\Header\PostEffect">
       <UniqueIdentifier>{d4bdd35e-3485-492b-b0f5-9608b3369d84}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\Bloom">
+      <UniqueIdentifier>{7062c03f-aed0-498f-9f48-67d18ffe2c05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -601,6 +604,15 @@
     <None Include="NewEngine\Shader\ToonRender.hlsli">
       <Filter>Shader\Engine</Filter>
     </None>
+    <None Include="Application\Shader\Bloom.hlsli">
+      <Filter>Shader\Application\Bloom</Filter>
+    </None>
+    <None Include="Application\Shader\GaussainBlur.hlsli">
+      <Filter>Shader\Application\Bloom</Filter>
+    </None>
+    <None Include="Application\Shader\HighLumi.hlsli">
+      <Filter>Shader\Application\Bloom</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="NewEngine\Shader\CircleGaugeSpritePS.hlsl">
@@ -656,6 +668,24 @@
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\ToonRenderVS.hlsl">
       <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\BloomPS.hlsl">
+      <Filter>Shader\Application\Bloom</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\BloomVS.hlsl">
+      <Filter>Shader\Application\Bloom</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\GaussainBlurPS.hlsl">
+      <Filter>Shader\Application\Bloom</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\GaussainBlurVS.hlsl">
+      <Filter>Shader\Application\Bloom</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\HighLumiPS.hlsl">
+      <Filter>Shader\Application\Bloom</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\HighLumiVS.hlsl">
+      <Filter>Shader\Application\Bloom</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

@@ -6,7 +6,8 @@
 #include <memory>
 using namespace std;
 
-const float RenderTexture::sClearColor[4] = { 0.25f,0.5f,0.1f,1.0f };
+//const float RenderTexture::sClearColor[4] = { 0.25f,0.5f,0.1f,1.0f };
+const float RenderTexture::sClearColor[4] = { 0.f,0.f,0.f,1.0f };
 
 void RenderTexture::PrevDrawScene()
 {

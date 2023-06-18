@@ -15,7 +15,9 @@ float4 main(VSOutputSvposUv vsOutput) : SV_TARGET
     
     float4 result = fmod(vsOutput.uv.y, 0.1f) < 0.05f ? texColor1 : texColor2;
     
-    return float4(texColor2.rgb, 1);
+    return float4(result.rgb, 1);
+    
+    
     
     //return Monochrome(tex, smp, vsOutput.uv);
     //return AverageBlur(float2(1920, 1080), 4, tex, smp, vsOutput.uv);

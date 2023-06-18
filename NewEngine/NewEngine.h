@@ -16,6 +16,7 @@
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "LightManager.h"
+#include "ShaderObjectManager.h"
 #include "GraphicsPipelineManager.h"
 
 #include "CircleGaugeSprite.h"

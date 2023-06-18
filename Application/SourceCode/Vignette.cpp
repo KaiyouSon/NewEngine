@@ -6,7 +6,7 @@ Vignette::Vignette() :
 	tex_ = TextureManager::GetRenderTexture("Vignette");
 
 	postEffect_->pos = GetWindowHalfSize();
-	postEffect_->SetRenderTexture(tex_);
+	postEffect_->AddRenderTexture(tex_);
 }
 
 void Vignette::Update()
@@ -21,10 +21,10 @@ void Vignette::DrawPostEffect()
 
 void Vignette::PrevSceneDraw()
 {
-	tex_->PrevDrawScene();
+	//tex_->PrevDrawScene();
 }
 
 void Vignette::PostSceneDraw()
 {
-	tex_->PostDrawScene();
+	//tex_->PostDrawScene();
 }

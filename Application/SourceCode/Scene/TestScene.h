@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 #include "Vignette.h"
+#include "Bloom.h"
 #include "Task.h"
 
 class TestScene : public IScene
@@ -14,6 +15,7 @@ private:
 
 	Task task;
 	Vignette vignette;
+	Bloom bloom;
 
 	uint32_t postEffectType;
 

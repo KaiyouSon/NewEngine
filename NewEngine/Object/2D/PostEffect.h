@@ -12,7 +12,7 @@ class PostEffect
 private:
 	std::vector<VertexPosUv> vertices_;
 	std::unique_ptr<VertexBuffer<VertexPosUv>> vertexBuffer_;
-	RenderTexture* renderTexture_;
+	std::vector<RenderTexture*> renderTextures_;
 	GraphicsPipeline* graphicsPipeline_;
 	Material material_;
 	Transform transform_;
@@ -36,7 +36,8 @@ public:
 	void Update();
 	void Draw();
 
-	void SetRenderTexture(RenderTexture* renderTexture);
+	void AddRenderTexture(RenderTexture* renderTexture);
+	//void SetRenderTexture(RenderTexture* renderTexture);
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 };
 

@@ -6,7 +6,8 @@ Task::Task() :
 	tex_ = TextureManager::GetRenderTexture("Task");
 
 	postEffect_->pos = GetWindowHalfSize();
-	postEffect_->SetRenderTexture(tex_);
+	postEffect_->AddRenderTexture(tex_);
+	postEffect_->AddRenderTexture(tex_);
 }
 
 void Task::Update()

@@ -16,6 +16,8 @@ void TestScene::Init()
 	obj2.SetModel(ModelManager::GetModel("Cube"));
 	obj2.pos.x = 3;
 
+	obj1.SetTexture(TextureManager::GetTexture("pic"));
+
 	spr1.SetTexture(TextureManager::GetTexture("pic"));
 
 	//renderTex = TextureManager::GetRenderTexture("Test");
@@ -25,7 +27,7 @@ void TestScene::Init()
 
 	//SoundManager::Play("GameBGM");
 
-	postEffectType = 0;
+	postEffectType = 1;
 }
 void TestScene::Update()
 {
@@ -48,6 +50,7 @@ void TestScene::Update()
 	spr2.Update();
 
 	task.Update();
+	bloom.Update();
 	//vignette.Update();
 }
 
@@ -57,10 +60,31 @@ void TestScene::RenderTextureSetting()
 
 	if (postEffectType == 0)
 	{
+		RenderBase::GetInstance()->SetObject3DDrawCommand();
 		task.PrevSceneDraw();
 		obj1.Draw();
 		task.PostSceneDraw();
 	}
+	else if (postEffectType == 1/*|| postEffectType == 2*/)
+	{
+		// 現在のシーンを描画
+		RenderBase::GetInstance()->SetObject3DDrawCommand();
+		bloom.PrevSceneDraw(0);
+		obj1.Draw();
+		bloom.PostSceneDraw(0);
+
+		// 現在のシーンの高輝度抽出して描画
+		RenderBase::GetInstance()->SetRenderTextureDrawCommand();
+		bloom.PrevSceneDraw(1);
+		bloom.DrawPostEffect(0);
+		bloom.PostSceneDraw(1);
+
+		// 高輝度部分にブラーをかけて描画
+		bloom.PrevSceneDraw(2);
+		bloom.DrawPostEffect(1);
+		bloom.PostSceneDraw(2);
+	}
+
 	//vignette.PostSceneDraw();
 }
 void TestScene::DrawBackSprite()
@@ -70,7 +94,7 @@ void TestScene::DrawBackSprite()
 }
 void TestScene::DrawModel()
 {
-	//obj1.Draw();
+	obj1.Draw();
 	//obj2.Draw();
 }
 void TestScene::DrawFrontSprite()
@@ -84,8 +108,12 @@ void TestScene::DrawRenderTexture()
 	}
 	else if (postEffectType == 1)
 	{
-
+		bloom.DrawPostEffect(2);
 	}
+	//else if (postEffectType == 2)
+	//{
+	//	bloom.DrawPostEffect(1);
+	//}
 
 
 	//vignette.DrawPostEffect();

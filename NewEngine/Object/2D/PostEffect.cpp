@@ -32,7 +32,7 @@ void PostEffect::Update()
 
 void PostEffect::Draw()
 {
-	if (renderTexture_ == nullptr) return;
+	if (renderTextures_.empty() == true) return;
 
 	//SetBlendMode(blendMode);
 
@@ -49,11 +49,11 @@ void PostEffect::Draw()
 	MaterialDrawCommands();
 
 	// SRV設定コマンド
-	for (uint32_t i = 0; i < renderTexture_->gpuHandles.size(); i++)
+	for (uint32_t i = 0; i < renderTextures_.size(); i++)
 	{
 		uint32_t index = renderBase->GetRenderTextureRootSignature()->GetConstantBufferNum();
 
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(index + i, renderTexture_->gpuHandles[i]);
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(index + i, renderTextures_[i]->gpuHandle);
 	}
 
 	renderBase->GetCommandList()->DrawInstanced((uint16_t)vertices_.size(), 1, 0, 0);
@@ -103,12 +103,23 @@ void PostEffect::MaterialDrawCommands()
 }
 
 // --- その他の関数 ----------------------------------------------------- //
-void PostEffect::SetRenderTexture(RenderTexture* renderTexture)
+//void PostEffect::SetRenderTexture(RenderTexture* renderTexture)
+//{
+//	renderTexture_ = renderTexture;
+//
+//	// テクスチャーが一枚の時にしか頂点座標変えない
+//	TransferTexturePos();
+//}
+
+void PostEffect::AddRenderTexture(RenderTexture* renderTexture)
 {
-	renderTexture_ = renderTexture;
+	renderTextures_.push_back(renderTexture);
 
 	// テクスチャーが一枚の時にしか頂点座標変えない
-	TransferTexturePos();
+	if (renderTextures_.size() == 1)
+	{
+		TransferTexturePos();
+	}
 }
 
 void PostEffect::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
@@ -119,8 +130,8 @@ void PostEffect::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 void PostEffect::TransferTexturePos()
 {
 	// テクスチャーのサイズ
-	float width = renderTexture_->size.x;
-	float height = renderTexture_->size.y;
+	float width = renderTextures_.front()->size.x;
+	float height = renderTextures_.front()->size.y;
 
 	vertices_[0].pos = { (0.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f }; //左下
 	vertices_[1].pos = { (0.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f }; //左上
