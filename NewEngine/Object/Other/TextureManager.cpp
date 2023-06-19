@@ -83,8 +83,6 @@ Texture TextureManager::CreateTexture(Color color)
 	CD3DX12_RESOURCE_DESC textureResourceDesc1 =
 		CD3DX12_RESOURCE_DESC::Buffer(uploadSize);
 
-	Microsoft::WRL::ComPtr<ID3D12Resource> uploadBuffer;
-
 	// テクスチャバッファの生成
 	result = RenderBase::GetInstance()->GetDevice()->
 		CreateCommittedResource(
@@ -93,13 +91,13 @@ Texture TextureManager::CreateTexture(Color color)
 			&textureResourceDesc1,
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
-			IID_PPV_ARGS(&uploadBuffer));
+			IID_PPV_ARGS(&tex.uploadBuffer));
 	assert(SUCCEEDED(result));
 
 	UpdateSubresources(
 		RenderBase::GetInstance()->GetCommandList(),
 		tex.buffer.Get(),
-		uploadBuffer.Get(),
+		tex.uploadBuffer.Get(),
 		0,
 		0,
 		1,

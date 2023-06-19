@@ -10,8 +10,7 @@ private:
 	Object3D obj1;
 	Object3D obj2;
 
-	Sprite spr1;
-	Sprite spr2;
+	Sprite spr;
 
 	Task task;
 	Vignette vignette;

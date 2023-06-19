@@ -21,10 +21,10 @@ void Vignette::DrawPostEffect()
 
 void Vignette::PrevSceneDraw()
 {
-	//tex_->PrevDrawScene();
+	tex_->PrevDrawScene();
 }
 
 void Vignette::PostSceneDraw()
 {
-	//tex_->PostDrawScene();
+	tex_->PostDrawScene();
 }

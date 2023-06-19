@@ -324,17 +324,17 @@
     <ClCompile Include="NewEngine\Object\Other\AssimpLoader.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\Vignette.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Task.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\Bloom.cpp">
-      <Filter>Uncategorized\Source</Filter>
+      <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp">
+      <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Task.cpp">
+      <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -557,14 +557,14 @@
     <ClInclude Include="Application\SourceCode\Vignette.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SourceCode\Bloom.h">
+      <Filter>Application\Header\PostEffect</Filter>
+    </ClInclude>
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h">
-      <Filter>Uncategorized\Header</Filter>
+      <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Task.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Bloom.h">
-      <Filter>Uncategorized\Header</Filter>
+      <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -612,6 +612,9 @@
     </None>
     <None Include="Application\Shader\HighLumi.hlsli">
       <Filter>Shader\Application\Bloom</Filter>
+    </None>
+    <None Include="Application\Shader\Vignette.hlsli">
+      <Filter>Shader\Application</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -686,6 +689,12 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\HighLumiVS.hlsl">
       <Filter>Shader\Application\Bloom</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\VignettePS.hlsl">
+      <Filter>Shader\Application</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\VignetteVS.hlsl">
+      <Filter>Shader\Application</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

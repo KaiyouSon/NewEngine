@@ -18,12 +18,8 @@ void TestScene::Init()
 
 	obj1.SetTexture(TextureManager::GetTexture("pic"));
 
-	spr1.SetTexture(TextureManager::GetTexture("pic"));
-
-	//renderTex = TextureManager::GetRenderTexture("Test");
-	//spr2.texture = renderTex;
-	//spr2.pos = GetWindowHalfSize();
-	//spr2.graphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture");
+	spr.SetTexture(TextureManager::GetTexture("BackGround"));
+	spr.pos = GetWindowHalfSize();
 
 	//SoundManager::Play("GameBGM");
 
@@ -46,8 +42,7 @@ void TestScene::Update()
 	Transform tf = obj1.GetTransform();
 
 	obj2.Update(&tf);
-	spr1.Update();
-	spr2.Update();
+	spr.Update();
 
 	task.Update();
 	bloom.Update();
@@ -56,20 +51,24 @@ void TestScene::Update()
 
 void TestScene::RenderTextureSetting()
 {
-	//vignette.PrevSceneDraw();
-
 	if (postEffectType == 0)
 	{
-		RenderBase::GetInstance()->SetObject3DDrawCommand();
 		task.PrevSceneDraw();
+		RenderBase::GetInstance()->SetSpriteDrawCommand();
+		spr.Draw();
+
+		RenderBase::GetInstance()->SetObject3DDrawCommand();
 		obj1.Draw();
 		task.PostSceneDraw();
 	}
-	else if (postEffectType == 1/*|| postEffectType == 2*/)
+	else if (postEffectType == 1)
 	{
 		// Œ»Ý‚ÌƒV[ƒ“‚ð•`‰æ
-		RenderBase::GetInstance()->SetObject3DDrawCommand();
 		bloom.PrevSceneDraw(0);
+		RenderBase::GetInstance()->SetSpriteDrawCommand();
+		spr.Draw();
+
+		RenderBase::GetInstance()->SetObject3DDrawCommand();
 		obj1.Draw();
 		bloom.PostSceneDraw(0);
 
@@ -84,13 +83,19 @@ void TestScene::RenderTextureSetting()
 		bloom.DrawPostEffect(1);
 		bloom.PostSceneDraw(2);
 	}
+	else if (postEffectType == 2)
+	{
+		vignette.PrevSceneDraw();
+		RenderBase::GetInstance()->SetSpriteDrawCommand();
+		spr.Draw();
 
-	//vignette.PostSceneDraw();
+		RenderBase::GetInstance()->SetObject3DDrawCommand();
+		obj1.Draw();
+		vignette.PostSceneDraw();
+	}
 }
 void TestScene::DrawBackSprite()
 {
-	//spr1.Draw();
-	//spr2.Draw();
 }
 void TestScene::DrawModel()
 {
@@ -110,13 +115,11 @@ void TestScene::DrawRenderTexture()
 	{
 		bloom.DrawPostEffect(2);
 	}
-	//else if (postEffectType == 2)
-	//{
-	//	bloom.DrawPostEffect(1);
-	//}
-
-
-	//vignette.DrawPostEffect();
+	else if (postEffectType == 2)
+	{
+		//bloom.DrawPostEffect(1);
+		vignette.DrawPostEffect();
+	}
 }
 void TestScene::DrawDebugGui()
 {
