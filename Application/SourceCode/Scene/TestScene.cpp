@@ -65,9 +65,6 @@ void TestScene::RenderTextureSetting()
 	{
 		// Œ»Ý‚ÌƒV[ƒ“‚ð•`‰æ
 		bloom.PrevSceneDraw(0);
-		RenderBase::GetInstance()->SetSpriteDrawCommand();
-		spr.Draw();
-
 		RenderBase::GetInstance()->SetObject3DDrawCommand();
 		obj1.Draw();
 		bloom.PostSceneDraw(0);
@@ -82,6 +79,11 @@ void TestScene::RenderTextureSetting()
 		bloom.PrevSceneDraw(2);
 		bloom.DrawPostEffect(1);
 		bloom.PostSceneDraw(2);
+
+		bloom.PrevSceneDraw(3);
+		RenderBase::GetInstance()->SetSpriteDrawCommand();
+		spr.Draw();	
+		bloom.PostSceneDraw(3);
 	}
 	else if (postEffectType == 2)
 	{

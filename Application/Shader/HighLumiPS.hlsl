@@ -8,8 +8,8 @@ float4 main(V2P i) : SV_TARGET
     float4 texColor = tex1.Sample(smp, i.uv);
     
     float grayScale = texColor.r * 0.299 + texColor.g * 0.587 + texColor.b * 0.114;
-    float extract = smoothstep(0.6, 0.9, grayScale);
-    float power = 1.f;
+    float extract = smoothstep(0, 0.3, grayScale);
+    float power = 2.f;
     
     float4 result = float4(texColor.rgb * extract * power, 1);
     return result;

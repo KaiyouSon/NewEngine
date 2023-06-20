@@ -20,13 +20,15 @@ float4 GaussianBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float si
 
     for (float py = -sigma * 2; py <= sigma * 2; py += stepWidth)
     {
-				[loop]
         for (float px = -sigma * 2; px <= sigma * 2; px += stepWidth)
         {
-					// 色取得するUV座標
+		    // 色取得するUV座標
             float2 pickUV = uv + float2(px, py);
+            
+            // 画面外の色を取得しないように
+            pickUV = clamp(pickUV, 0.001, 0.999);
 
-					// ウェイト
+			// ウェイト
             float weight = Gaussian(uv, pickUV, sigma);
             totalWeight += weight;
 

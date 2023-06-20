@@ -7,7 +7,7 @@ private:
 	std::unique_ptr<PostEffect> highLumi_;
 	std::unique_ptr<PostEffect> blur_;
 	std::unique_ptr<PostEffect> bloom_;
-	std::array<RenderTexture*, 3> texs_;
+	std::array<RenderTexture*, 4> texs_;
 
 public:
 	Bloom();

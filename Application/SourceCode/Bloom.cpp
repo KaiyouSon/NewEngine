@@ -9,6 +9,7 @@ Bloom::Bloom() :
 	texs_[0] = TextureManager::GetRenderTexture("HighLumi");
 	texs_[1] = TextureManager::GetRenderTexture("GaussainBlur");
 	texs_[2] = TextureManager::GetRenderTexture("Bloom");
+	texs_[3] = TextureManager::GetRenderTexture("BackGround");
 
 	auto test = GraphicsPipelineManager::GetGraphicsPipeline("HighLumi");
 
@@ -21,10 +22,9 @@ Bloom::Bloom() :
 	blur_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("GaussainBlur"));
 
 	bloom_->pos = GetWindowHalfSize();
-	bloom_->AddRenderTexture(texs_[0]);
 	bloom_->AddRenderTexture(texs_[2]);
+	bloom_->AddRenderTexture(texs_[3]);
 	bloom_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Bloom"));
-
 }
 
 void Bloom::CreateGraphicsPipeline()

@@ -598,7 +598,7 @@ RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, uint32_t num, std:
 	// ÉäÉ\Å[ÉXê›íË
 	CD3DX12_RESOURCE_DESC texturenResourceDesc =
 		CD3DX12_RESOURCE_DESC::Tex2D(
-			DXGI_FORMAT_R8G8B8A8_UNORM,
+			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 			(UINT64)size.x, (UINT)size.y,
 			1, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
 
