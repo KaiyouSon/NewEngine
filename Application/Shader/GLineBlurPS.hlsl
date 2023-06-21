@@ -41,7 +41,7 @@ float4 LineBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float sigma,
 
 float4 main(V2P i) : SV_TARGET
 {
-    float4 lineBlur = LineBlur(tex1, smp, i.uv, 0.05f, 30);
+    float4 lineBlur = LineBlur(tex1, smp, i.uv, 0.2f, 60);
     float4 result = lineBlur;
     
     return float4(result.rgb, 1);

@@ -9,7 +9,7 @@ float4 DotFilter(float2 uv)
     st = frac(st * float2(1920, 1080));
     float l = distance(st, float2(0.5, 0.5));
 
-    return float4(1, 1, 1, 1) * 1 - step(0.05, l);
+    return float4(1, 1, 1, 1) * 1 - step(0.1, l);
 }
 
 float4 main(V2P i) : SV_TARGET
