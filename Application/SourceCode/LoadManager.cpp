@@ -29,12 +29,31 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("BackGround.png", "BackGround");
 
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 2, "Task");
+
+	// 高輝度抽出
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "HighLumi");
+
+	// 背景
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BackGround");
+
+	// ドッドフィルター
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "DotFilter");
+
+	// ビネット
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Vignette");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BHighLumi");
+
+	// ブルーム
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BGaussainBlur");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BBackGround");
+
+	// ガウシアンブラー
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "GaussainBlur");
+
+	// グレア
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "GLineBlur");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Glare1");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Glare2");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Glare3");
 
 
 	// 処理が終わったのを教えるため、必ずtrueを返す

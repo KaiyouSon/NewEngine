@@ -1,4 +1,4 @@
-#include "BHighLumi.hlsli"
+#include "Glare.hlsli"
 
 V2P main(AppData i)
 {

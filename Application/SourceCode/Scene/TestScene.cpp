@@ -21,9 +21,11 @@ void TestScene::Init()
 	spr_.SetTexture(TextureManager::GetTexture("BackGround"));
 	spr_.pos = GetWindowHalfSize();
 
+	backGround_ = TextureManager::GetRenderTexture("BackGround");
+
 	//SoundManager::Play("GameBGM");
 
-	postEffectType_ = 1;
+	postEffectType_ = 3;
 }
 void TestScene::Update()
 {
@@ -44,14 +46,35 @@ void TestScene::Update()
 	obj2_.Update(&tf);
 	spr_.Update();
 
-	task_.Update();
-	bloom_.Update();
-	gaussainBlur_.Update();
+	if (postEffectType_ == 0)
+	{
+		task_.Update();
+	}
+	else if (postEffectType_ == 1)
+	{
+		bloom_.Update();
+	}
+	else if (postEffectType_ == 2)
+	{
+		gaussainBlur_.Update();
+	}
+	else if (postEffectType_ == 3)
+	{
+		glare_.Update();
+	}
 	//vignette_.Update();
 }
 
 void TestScene::RenderTextureSetting()
 {
+	backGround_->PrevDrawScene();
+	RenderBase::GetInstance()->SetSpriteDrawCommand();
+	spr_.Draw();
+
+	RenderBase::GetInstance()->SetObject3DDrawCommand();
+	obj1_.Draw();
+	backGround_->PostDrawScene();
+
 	if (postEffectType_ == 0)
 	{
 		task_.PrevSceneDraw();
@@ -81,14 +104,13 @@ void TestScene::RenderTextureSetting()
 		bloom_.DrawPostEffect(1);
 		bloom_.PostSceneDraw(2);
 
-		bloom_.PrevSceneDraw(3);
-		RenderBase::GetInstance()->SetSpriteDrawCommand();
-		spr_.Draw();
+		//bloom_.PrevSceneDraw(3);
+		//RenderBase::GetInstance()->SetSpriteDrawCommand();
+		//spr_.Draw();
 
-		RenderBase::GetInstance()->SetObject3DDrawCommand();
-		obj1_.Draw();
-
-		bloom_.PostSceneDraw(3);
+		//RenderBase::GetInstance()->SetObject3DDrawCommand();
+		//obj1_.Draw();
+		//bloom_.PostSceneDraw(3);
 	}
 	else if (postEffectType_ == 2)
 	{
@@ -100,6 +122,53 @@ void TestScene::RenderTextureSetting()
 		obj1_.Draw();
 		gaussainBlur_.PostSceneDraw();
 	}
+	else if (postEffectType_ == 3)
+	{
+		// 現在のシーンを描画
+		glare_.PrevSceneDraw(0);
+		RenderBase::GetInstance()->SetObject3DDrawCommand();
+		obj1_.Draw();
+		glare_.PostSceneDraw(0);
+
+		// 現在のシーンの高輝度抽出して描画
+		RenderBase::GetInstance()->SetRenderTextureDrawCommand();
+		glare_.PrevSceneDraw(1);
+		glare_.DrawPostEffect(0);
+		glare_.PostSceneDraw(1);
+
+		glare_.PrevSceneDraw(2);
+		glare_.DrawPostEffect(1);
+		glare_.PostSceneDraw(2);
+
+		// 45度ラインブラー
+		glare_.PrevSceneDraw(3);
+		glare_.DrawPostEffect(2);
+		glare_.PostSceneDraw(3);
+
+		// 135度ラインブラー
+		glare_.PrevSceneDraw(4);
+		glare_.DrawPostEffect(3);
+		glare_.PostSceneDraw(4);
+
+		// 背景と合成
+		glare_.PrevSceneDraw(5);
+		glare_.DrawPostEffect(4);
+		glare_.PostSceneDraw(5);
+
+		//// 高輝度部分にブラーをかけて描画
+		//bloom_.PrevSceneDraw(2);
+		//bloom_.DrawPostEffect(1);
+		//bloom_.PostSceneDraw(2);
+		//
+		//bloom_.PrevSceneDraw(3);
+		//RenderBase::GetInstance()->SetSpriteDrawCommand();
+		//spr_.Draw();
+		//
+		//RenderBase::GetInstance()->SetObject3DDrawCommand();
+		//obj1_.Draw();
+		//
+		//bloom_.PostSceneDraw(3);
+	}	//
 }
 void TestScene::DrawBackSprite()
 {
@@ -125,6 +194,10 @@ void TestScene::DrawRenderTexture()
 	else if (postEffectType_ == 2)
 	{
 		gaussainBlur_.DrawPostEffect();
+	}
+	else if (postEffectType_ == 3)
+	{
+		glare_.DrawPostEffect(5);
 	}
 }
 void TestScene::DrawDebugGui()

@@ -25,6 +25,10 @@ public:
 	ConstantBuffer() :constantBufferMap(nullptr) {}
 	~ConstantBuffer()
 	{
+		if (constantBuffer == nullptr)
+		{
+			return;
+		}
 		constantBuffer->Unmap(0, nullptr);
 	}
 

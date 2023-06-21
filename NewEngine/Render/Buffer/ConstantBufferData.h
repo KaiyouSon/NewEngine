@@ -82,4 +82,8 @@ namespace ConstantBufferData
 		Mat4 bones[maxBones];
 	};
 
+	struct CLineBlur
+	{
+		float angle;
+	};
 }

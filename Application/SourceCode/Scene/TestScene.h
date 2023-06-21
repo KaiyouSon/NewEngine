@@ -4,6 +4,7 @@
 #include "Vignette.h"
 #include "Bloom.h"
 #include "GaussainBlur.h"
+#include "Glare.h"
 
 class TestScene : public IScene
 {
@@ -17,6 +18,9 @@ private:
 	Vignette vignette_;
 	Bloom bloom_;
 	GaussainBlur gaussainBlur_;
+	Glare glare_;
+
+	RenderTexture* backGround_;
 
 	uint32_t postEffectType_;
 

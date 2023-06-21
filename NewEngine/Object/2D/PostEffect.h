@@ -36,8 +36,26 @@ public:
 	void Update();
 	void Draw();
 
+public: // í«â¡
 	void AddRenderTexture(RenderTexture* renderTexture);
-	//void SetRenderTexture(RenderTexture* renderTexture);
+
+	template<typename T>
+	void AddMaterial(const T& constantBuffer)
+	{
+		std::unique_ptr<IConstantBuffer> iConstatnBuffer = std::make_unique<T>();
+		iConstatnBuffer->Create();
+		material_.constantBuffers.push_back(std::move(iConstatnBuffer));
+	}
+
+public: 	// ÉQÉbÉ^Å[
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
+	void SetDrawCommands(const uint32_t registerNum, const uint32_t bufferNum);
+
+	template<typename T>
+	void SetTransferBuffer(const uint32_t bufferNum, const T& data)
+	{
+		uint32_t bNum = Min<uint32_t>(bufferNum, (uint32_t)material_.constantBuffers.size());
+		TransferDataToConstantBuffer(material_.constantBuffers[bNum].get(), data);
+	}
 };
 

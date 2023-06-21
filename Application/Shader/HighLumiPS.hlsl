@@ -1,4 +1,4 @@
-#include "BHighLumi.hlsli"
+#include "HighLumi.hlsli"
 
 Texture2D<float4> tex1 : register(t0); // 0番スロットに設定されたテクスチャ
 SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー

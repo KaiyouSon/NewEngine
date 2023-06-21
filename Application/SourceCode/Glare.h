@@ -1,16 +1,20 @@
 #pragma once
 #include "NewEngine.h"
 
-class Bloom
+class Glare
 {
 private:
 	std::unique_ptr<PostEffect> highLumi_;
-	std::unique_ptr<PostEffect> blur_;
-	std::unique_ptr<PostEffect> bloom_;
-	std::array<RenderTexture*, 3> texs_;
+	std::unique_ptr<PostEffect> dotFilter_;
+	std::unique_ptr<PostEffect> blur45_;
+	std::unique_ptr<PostEffect> blur135_;
+	std::unique_ptr<PostEffect> glare_;
+	std::unique_ptr<PostEffect> result_;
+	std::array<RenderTexture*, 6> texs_;
+
 
 public:
-	Bloom();
+	Glare();
 	static void CreateGraphicsPipeline();
 	void Update();
 	void DrawPostEffect(const uint32_t index);

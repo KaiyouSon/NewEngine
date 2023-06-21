@@ -103,14 +103,6 @@ void PostEffect::MaterialDrawCommands()
 }
 
 // --- その他の関数 ----------------------------------------------------- //
-//void PostEffect::SetRenderTexture(RenderTexture* renderTexture)
-//{
-//	renderTexture_ = renderTexture;
-//
-//	// テクスチャーが一枚の時にしか頂点座標変えない
-//	TransferTexturePos();
-//}
-
 void PostEffect::AddRenderTexture(RenderTexture* renderTexture)
 {
 	renderTextures_.push_back(renderTexture);
@@ -125,6 +117,17 @@ void PostEffect::AddRenderTexture(RenderTexture* renderTexture)
 void PostEffect::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
 	graphicsPipeline_ = graphicsPipeline;
+}
+
+void PostEffect::SetDrawCommands(const uint32_t registerNum, const uint32_t bufferNum)
+{
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
+
+	uint32_t bNum = Min<uint32_t>(bufferNum, (uint32_t)material_.constantBuffers.size());
+
+	// CBVの設定コマンド
+	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+		registerNum, material_.constantBuffers[bNum]->constantBuffer->GetGPUVirtualAddress());
 }
 
 void PostEffect::TransferTexturePos()
