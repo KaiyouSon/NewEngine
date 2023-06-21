@@ -43,10 +43,7 @@ float4 GaussianBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float si
 
 float4 main(V2P i) : SV_TARGET
 {
-    float4 texColor1 = tex1.Sample(smp, i.uv);
-    float4 texColor2 = GaussianBlur(tex1, smp, i.uv, 0.01f, 10);
+    float4 texColor1 = GaussianBlur(tex1, smp, i.uv, 0.01f, 10);
     
-    float4 result = texColor1 + texColor2;
-    
-    return float4(result.rgb, 1);
+    return float4(texColor1.rgb, 1);
 }

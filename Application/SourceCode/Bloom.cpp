@@ -6,20 +6,18 @@ Bloom::Bloom() :
 	blur_(std::make_unique<PostEffect>()),
 	bloom_(std::make_unique<PostEffect>())
 {
-	texs_[0] = TextureManager::GetRenderTexture("HighLumi");
-	texs_[1] = TextureManager::GetRenderTexture("GaussainBlur");
+	texs_[0] = TextureManager::GetRenderTexture("BHighLumi");
+	texs_[1] = TextureManager::GetRenderTexture("BGaussainBlur");
 	texs_[2] = TextureManager::GetRenderTexture("Bloom");
-	texs_[3] = TextureManager::GetRenderTexture("BackGround");
-
-	auto test = GraphicsPipelineManager::GetGraphicsPipeline("HighLumi");
+	texs_[3] = TextureManager::GetRenderTexture("BBackGround");
 
 	highLumi_->pos = GetWindowHalfSize();
 	highLumi_->AddRenderTexture(texs_[0]);
-	highLumi_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("HighLumi"));
+	highLumi_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("BHighLumi"));
 
 	blur_->pos = GetWindowHalfSize();
 	blur_->AddRenderTexture(texs_[1]);
-	blur_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("GaussainBlur"));
+	blur_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("BGaussainBlur"));
 
 	bloom_->pos = GetWindowHalfSize();
 	bloom_->AddRenderTexture(texs_[2]);
@@ -35,36 +33,36 @@ void Bloom::CreateGraphicsPipeline()
 	std::string path = "Application/Shader/";
 
 	// 高輝度抽出用
-	ShaderObjectManager::Create("HighLumi");
-	ShaderObjectManager::GetShaderObject("HighLumi")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("HighLumi")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("HighLumi")->CompileVertexShader(path + "HighLumiVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("HighLumi")->CompilePixelShader(path + "HighLumiPS.hlsl", "main");
+	ShaderObjectManager::Create("BHighLumi");
+	ShaderObjectManager::GetShaderObject("BHighLumi")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("BHighLumi")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderObjectManager::GetShaderObject("BHighLumi")->CompileVertexShader(path + "BHighLumiVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("BHighLumi")->CompilePixelShader(path + "BHighLumiPS.hlsl", "main");
 
 	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("HighLumi"),
+		ShaderObjectManager::GetShaderObject("BHighLumi"),
 		RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
 		CullMode::None,
 		depthStencilDesc,
 		TopologyType::Triangle,
 		1,
-		"HighLumi");
+		"BHighLumi");
 
 	// ガウシアンブラー用
-	ShaderObjectManager::Create("GaussainBlur");
-	ShaderObjectManager::GetShaderObject("GaussainBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("GaussainBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("GaussainBlur")->CompileVertexShader(path + "GaussainBlurVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("GaussainBlur")->CompilePixelShader(path + "GaussainBlurPS.hlsl", "main");
+	ShaderObjectManager::Create("BGaussainBlur");
+	ShaderObjectManager::GetShaderObject("BGaussainBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("BGaussainBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderObjectManager::GetShaderObject("BGaussainBlur")->CompileVertexShader(path + "BGaussainBlurVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("BGaussainBlur")->CompilePixelShader(path + "BGaussainBlurPS.hlsl", "main");
 
 	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("GaussainBlur"),
+		ShaderObjectManager::GetShaderObject("BGaussainBlur"),
 		RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
 		CullMode::None,
 		depthStencilDesc,
 		TopologyType::Triangle,
 		1,
-		"GaussainBlur");
+		"BGaussainBlur");
 
 	// ブルーム用
 	ShaderObjectManager::Create("Bloom");

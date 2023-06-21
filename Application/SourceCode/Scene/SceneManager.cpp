@@ -4,6 +4,7 @@
 #include "GameScene.h"
 #include "LogoScene.h"
 #include "Bloom.h"
+#include "GaussainBlur.h"
 
 std::unique_ptr<IScene> SceneManager::currentScene = nullptr;
 
@@ -12,6 +13,7 @@ SceneManager::SceneManager()
 	Object3D::isAllLighting = true;
 
 	Bloom::CreateGraphicsPipeline();
+	GaussainBlur::CreateGraphicsPipeline();
 	currentScene = std::move(std::make_unique<TestScene>());
 }
 

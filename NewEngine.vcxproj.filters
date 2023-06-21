@@ -336,6 +336,9 @@
     <ClCompile Include="Application\SourceCode\Task.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\GaussainBlur.cpp">
+      <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -566,6 +569,9 @@
     <ClInclude Include="Application\SourceCode\Task.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SourceCode\GaussainBlur.h">
+      <Filter>Application\Header\PostEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -607,13 +613,16 @@
     <None Include="Application\Shader\Bloom.hlsli">
       <Filter>Shader\Application\Bloom</Filter>
     </None>
-    <None Include="Application\Shader\GaussainBlur.hlsli">
+    <None Include="Application\Shader\BGaussainBlur.hlsli">
       <Filter>Shader\Application\Bloom</Filter>
     </None>
-    <None Include="Application\Shader\HighLumi.hlsli">
+    <None Include="Application\Shader\BHighLumi.hlsli">
       <Filter>Shader\Application\Bloom</Filter>
     </None>
     <None Include="Application\Shader\Vignette.hlsli">
+      <Filter>Shader\Application</Filter>
+    </None>
+    <None Include="Application\Shader\GaussainBlur.hlsli">
       <Filter>Shader\Application</Filter>
     </None>
   </ItemGroup>
@@ -678,22 +687,28 @@
     <FxCompile Include="Application\Shader\BloomVS.hlsl">
       <Filter>Shader\Application\Bloom</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\GaussainBlurPS.hlsl">
+    <FxCompile Include="Application\Shader\BGaussainBlurPS.hlsl">
       <Filter>Shader\Application\Bloom</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\GaussainBlurVS.hlsl">
+    <FxCompile Include="Application\Shader\BGaussainBlurVS.hlsl">
       <Filter>Shader\Application\Bloom</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\HighLumiPS.hlsl">
+    <FxCompile Include="Application\Shader\BHighLumiPS.hlsl">
       <Filter>Shader\Application\Bloom</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\HighLumiVS.hlsl">
+    <FxCompile Include="Application\Shader\BHighLumiVS.hlsl">
       <Filter>Shader\Application\Bloom</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\VignettePS.hlsl">
       <Filter>Shader\Application</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\VignetteVS.hlsl">
+      <Filter>Shader\Application</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\GaussainBlurPS.hlsl">
+      <Filter>Shader\Application</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\GaussainBlurVS.hlsl">
       <Filter>Shader\Application</Filter>
     </FxCompile>
   </ItemGroup>

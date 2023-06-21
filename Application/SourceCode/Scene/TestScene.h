@@ -1,22 +1,24 @@
 #pragma once
 #include "NewEngine.h"
+#include "Task.h"
 #include "Vignette.h"
 #include "Bloom.h"
-#include "Task.h"
+#include "GaussainBlur.h"
 
 class TestScene : public IScene
 {
 private:
-	Object3D obj1;
-	Object3D obj2;
+	Object3D obj1_;
+	Object3D obj2_;
 
-	Sprite spr;
+	Sprite spr_;
 
-	Task task;
-	Vignette vignette;
-	Bloom bloom;
+	Task task_;
+	Vignette vignette_;
+	Bloom bloom_;
+	GaussainBlur gaussainBlur_;
 
-	uint32_t postEffectType;
+	uint32_t postEffectType_;
 
 public:
 	TestScene();
