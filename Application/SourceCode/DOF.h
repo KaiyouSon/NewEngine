@@ -6,10 +6,7 @@ class DOF
 private:
 	std::unique_ptr<PostEffect> dof_;
 	RenderTexture* tex_;
-
-public:
-	float focusWidth;
-	float focusDepth;
+	ConstantBufferData::CDOF dofData_;
 
 public:
 	DOF();
@@ -18,5 +15,6 @@ public:
 	void DrawPostEffect();
 	void PrevSceneDraw();
 	void PostSceneDraw();
+	void DrawDebugGui();
 };
 

@@ -13,6 +13,7 @@ private:
 	std::vector<Object3D> objs_;
 	Object3D obj1_;
 	Object3D obj2_;
+	Object3D skyDome_;
 
 	Sprite spr_;
 

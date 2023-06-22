@@ -2,7 +2,7 @@
 using namespace ConstantBufferData;
 
 DOF::DOF() :
-	focusWidth(0.05f), focusDepth(0.99f),
+	dofData_({ 0.99f, false }),
 	dof_(std::make_unique<PostEffect>())
 {
 	tex_ = TextureManager::GetRenderTexture("DOF");
@@ -40,11 +40,7 @@ void DOF::CreateGraphicsPipeline()
 
 void DOF::Update()
 {
-	CDOF dofData;
-
-	dofData = { focusWidth,focusDepth };
-	dof_->SetTransferBuffer(2, dofData);
-
+	dof_->SetTransferBuffer(2, dofData_);
 	dof_->Update();
 }
 
@@ -62,4 +58,14 @@ void DOF::PrevSceneDraw()
 void DOF::PostSceneDraw()
 {
 	tex_->PostDrawScene();
+}
+
+void DOF::DrawDebugGui()
+{
+	GuiManager::DrawSlider1("FocusDepth", dofData_.focusDepth, 0.0001f);
+	dofData_.focusDepth = Clamp<float>(dofData_.focusDepth, 0.9f, 0.999f);
+
+	bool flag = dofData_.isRGB;
+	GuiManager::DrawCheckBox("isRGB", &flag);
+	dofData_.isRGB = flag;
 }

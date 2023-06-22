@@ -89,7 +89,7 @@ namespace ConstantBufferData
 
 	struct CDOF
 	{
-		float focusWidth;
 		float focusDepth;
+		uint32_t isRGB;
 	};
 }

@@ -13,8 +13,8 @@ cbuffer ConstBufferDataMaterial : register(b1)
 // êF
 cbuffer ConstBufferDataDOF : register(b2)
 {
-    float focusWidth;
     float focusDepth;
+    uint isRGB;
 };
 
 struct AppData

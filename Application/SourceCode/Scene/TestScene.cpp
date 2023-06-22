@@ -18,6 +18,8 @@ void TestScene::Init()
 
 	obj1_.SetTexture(TextureManager::GetTexture("pic"));
 
+	skyDome_.SetModel(ModelManager::GetModel("SkyDome"));
+
 	spr_.SetTexture(TextureManager::GetTexture("BackGround"));
 	spr_.pos = GetWindowHalfSize();
 
@@ -30,9 +32,9 @@ void TestScene::Init()
 		objs_[i].SetTexture(TextureManager::GetTexture("pic"));
 		objs_[i].pos =
 		{
+			Random::RangeF(-10, +10),
 			Random::RangeF(-5, +5),
-			Random::RangeF(-5, +5),
-			Random::RangeF(-5, +5)
+			Random::RangeF(-10, +50)
 		};
 		objs_[i].scale = Random::RangeF(0.1f, 1.f);
 	}
@@ -84,6 +86,7 @@ void TestScene::Update()
 		}
 
 		dof_.Update();
+		skyDome_.Update();
 	}
 	//vignette_.Update();
 }
@@ -201,6 +204,7 @@ void TestScene::RenderTextureSetting()
 		{
 			objs_[i].Draw();
 		}
+		skyDome_.Draw();
 		dof_.PostSceneDraw();
 	}
 }
@@ -241,14 +245,18 @@ void TestScene::DrawRenderTexture()
 void TestScene::DrawDebugGui()
 {
 	GuiManager::BeginWindow("PostEffect");
-
 	GuiManager::DrawInputInt("PostEffectType", (int&)postEffectType_);
+	GuiManager::EndWindow();
+
+
+	// É}ÉeÉäÉAÉãèÓïÒ
+	GuiManager::BeginWindow("Parameter");
 
 	if (postEffectType_ == 4)
 	{
-		GuiManager::DrawSlider1("FocusWidth", dof_.focusWidth, 0.01f);
-		GuiManager::DrawSlider1("FocusDepth", dof_.focusDepth, 0.01f);
+		dof_.DrawDebugGui();
 	}
 
 	GuiManager::EndWindow();
+
 }
