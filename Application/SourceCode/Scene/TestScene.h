@@ -3,7 +3,7 @@
 #include "Task.h"
 #include "Vignette.h"
 #include "Bloom.h"
-#include "GaussainBlur.h"
+#include "GaussianBlur.h"
 #include "Glare.h"
 #include "DOF.h"
 
@@ -20,7 +20,7 @@ private:
 	Task task_;
 	Vignette vignette_;
 	Bloom bloom_;
-	GaussainBlur gaussainBlur_;
+	GaussianBlur gaussianBlur_;
 	Glare glare_;
 	DOF dof_;
 

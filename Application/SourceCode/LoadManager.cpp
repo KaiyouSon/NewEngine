@@ -47,7 +47,7 @@ bool LoadManager::TextureLoad()
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
 
 	// ガウシアンブラー
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "GaussainBlur");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "GaussianBlur");
 
 	// グレア
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "GLineBlur");

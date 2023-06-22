@@ -339,7 +339,7 @@
     <ClCompile Include="Application\SourceCode\Task.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\GaussainBlur.cpp">
+    <ClCompile Include="Application\SourceCode\GaussianBlur.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Glare.cpp">
@@ -578,13 +578,13 @@
     <ClInclude Include="Application\SourceCode\Task.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\GaussainBlur.h">
-      <Filter>Application\Header\PostEffect</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\Glare.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\DOF.h">
+      <Filter>Application\Header\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\GaussianBlur.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
   </ItemGroup>
@@ -634,7 +634,7 @@
     <None Include="Application\Shader\Vignette.hlsli">
       <Filter>Shader\Application</Filter>
     </None>
-    <None Include="Application\Shader\GaussainBlur.hlsli">
+    <None Include="Application\Shader\GaussianBlur.hlsli">
       <Filter>Shader\Application</Filter>
     </None>
     <None Include="Application\Shader\HighLumi.hlsli">
@@ -726,10 +726,10 @@
     <FxCompile Include="Application\Shader\VignetteVS.hlsl">
       <Filter>Shader\Application</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\GaussainBlurPS.hlsl">
+    <FxCompile Include="Application\Shader\GaussianBlurPS.hlsl">
       <Filter>Shader\Application</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\GaussainBlurVS.hlsl">
+    <FxCompile Include="Application\Shader\GaussianBlurVS.hlsl">
       <Filter>Shader\Application</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\HighLumiPS.hlsl">

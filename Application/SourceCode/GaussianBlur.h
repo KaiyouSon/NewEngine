@@ -1,14 +1,14 @@
 #pragma once
 #include "NewEngine.h"
 
-class GaussainBlur
+class GaussianBlur
 {
 private:
 	std::unique_ptr<PostEffect> postEffect_;
 	RenderTexture* tex_;
 
 public:
-	GaussainBlur();
+	GaussianBlur();
 	static void CreateGraphicsPipeline();
 	void Update();
 	void DrawPostEffect();

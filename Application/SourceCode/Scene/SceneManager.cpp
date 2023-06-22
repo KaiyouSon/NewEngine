@@ -4,7 +4,7 @@
 #include "GameScene.h"
 #include "LogoScene.h"
 #include "Bloom.h"
-#include "GaussainBlur.h"
+#include "GaussianBlur.h"
 #include "Glare.h"
 #include "DOF.h"
 
@@ -15,7 +15,7 @@ SceneManager::SceneManager()
 	Object3D::isAllLighting = true;
 
 	Bloom::CreateGraphicsPipeline();
-	GaussainBlur::CreateGraphicsPipeline();
+	GaussianBlur::CreateGraphicsPipeline();
 	Glare::CreateGraphicsPipeline();
 	DOF::CreateGraphicsPipeline();
 	currentScene = std::move(std::make_unique<TestScene>());

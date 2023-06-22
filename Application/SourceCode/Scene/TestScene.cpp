@@ -72,7 +72,7 @@ void TestScene::Update()
 	}
 	else if (postEffectType_ == 2)
 	{
-		gaussainBlur_.Update();
+		gaussianBlur_.Update();
 	}
 	else if (postEffectType_ == 3)
 	{
@@ -140,13 +140,13 @@ void TestScene::RenderTextureSetting()
 	}
 	else if (postEffectType_ == 2)
 	{
-		gaussainBlur_.PrevSceneDraw();
+		gaussianBlur_.PrevSceneDraw();
 		RenderBase::GetInstance()->SetSpriteDrawCommand();
 		spr_.Draw();
 
 		RenderBase::GetInstance()->SetObject3DDrawCommand();
 		obj1_.Draw();
-		gaussainBlur_.PostSceneDraw();
+		gaussianBlur_.PostSceneDraw();
 	}
 	else if (postEffectType_ == 3)
 	{
@@ -231,7 +231,7 @@ void TestScene::DrawRenderTexture()
 	}
 	else if (postEffectType_ == 2)
 	{
-		gaussainBlur_.DrawPostEffect();
+		gaussianBlur_.DrawPostEffect();
 	}
 	else if (postEffectType_ == 3)
 	{

@@ -1,4 +1,4 @@
-#include "GaussainBlur.hlsli"
+#include "GaussianBlur.hlsli"
 
 V2P main(AppData i)
 {

@@ -104,7 +104,7 @@
   <ItemGroup>
     <ClCompile Include="Application\SourceCode\Bloom.cpp" />
     <ClCompile Include="Application\SourceCode\DOF.cpp" />
-    <ClCompile Include="Application\SourceCode\GaussainBlur.cpp" />
+    <ClCompile Include="Application\SourceCode\GaussianBlur.cpp" />
     <ClCompile Include="Application\SourceCode\Glare.cpp" />
     <ClCompile Include="Application\SourceCode\LoadManager.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\GameScene.cpp" />
@@ -177,7 +177,7 @@
   <ItemGroup>
     <ClInclude Include="Application\SourceCode\Bloom.h" />
     <ClInclude Include="Application\SourceCode\DOF.h" />
-    <ClInclude Include="Application\SourceCode\GaussainBlur.h" />
+    <ClInclude Include="Application\SourceCode\GaussianBlur.h" />
     <ClInclude Include="Application\SourceCode\Glare.h" />
     <ClInclude Include="Application\SourceCode\LoadManager.h" />
     <ClInclude Include="Application\SourceCode\Scene\GameScene.h" />
@@ -263,7 +263,7 @@
     <None Include="Application\Shader\Glare.hlsli" />
     <None Include="Application\Shader\GLineBlur.hlsli" />
     <None Include="Application\Shader\HighLumi.hlsli" />
-    <None Include="Application\Shader\GaussainBlur.hlsli" />
+    <None Include="Application\Shader\GaussianBlur.hlsli" />
     <None Include="Application\Shader\Vignette.hlsli" />
     <None Include="NewEngine\Shader\Blur.hlsli" />
     <None Include="NewEngine\Shader\CircleGaugeSprite.hlsli" />
@@ -355,13 +355,13 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Application\Shader\GaussainBlurPS.hlsl">
+    <FxCompile Include="Application\Shader\GaussianBlurPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Application\Shader\GaussainBlurVS.hlsl">
+    <FxCompile Include="Application\Shader\GaussianBlurVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
