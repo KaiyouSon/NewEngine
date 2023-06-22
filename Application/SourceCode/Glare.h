@@ -12,6 +12,8 @@ private:
 	std::unique_ptr<PostEffect> result_;
 	std::array<RenderTexture*, 6> texs_;
 
+	ConstantBufferData::CLineBlur lineBlurData1_;
+	ConstantBufferData::CLineBlur lineBlurData2_;
 
 public:
 	Glare();
@@ -20,5 +22,6 @@ public:
 	void DrawPostEffect(const uint32_t index);
 	void PrevSceneDraw(const uint32_t index);
 	void PostSceneDraw(const uint32_t index);
+	void DrawDebugGui();
 };
 

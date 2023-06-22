@@ -7,7 +7,8 @@ Glare::Glare() :
 	blur45_(std::make_unique<PostEffect>()),
 	blur135_(std::make_unique<PostEffect>()),
 	glare_(std::make_unique<PostEffect>()),
-	result_(std::make_unique<PostEffect>())
+	result_(std::make_unique<PostEffect>()),
+	lineBlurData1_({ 45 }), lineBlurData2_({ 135 })
 {
 	texs_[0] = TextureManager::GetRenderTexture("HighLumi");
 	texs_[1] = TextureManager::GetRenderTexture("DotFilter");
@@ -103,13 +104,8 @@ void Glare::CreateGraphicsPipeline()
 
 void Glare::Update()
 {
-	CLineBlur lineBlurData;
-
-	lineBlurData = { 45 };
-	blur45_->SetTransferBuffer(2, lineBlurData);
-
-	lineBlurData = { 135 };
-	blur135_->SetTransferBuffer(2, lineBlurData);
+	blur45_->SetTransferBuffer(2, lineBlurData1_);
+	blur135_->SetTransferBuffer(2, lineBlurData2_);
 
 	highLumi_->Update();
 	dotFilter_->Update();
@@ -157,4 +153,10 @@ void Glare::PrevSceneDraw(const uint32_t index)
 void Glare::PostSceneDraw(const uint32_t index)
 {
 	texs_[index]->PostDrawScene();
+}
+
+void Glare::DrawDebugGui()
+{
+	GuiManager::DrawSlider1("LineBlur1 Angle", lineBlurData1_.angle, 1.f);
+	GuiManager::DrawSlider1("LineBlur2 Angle", lineBlurData2_.angle, 1.f);
 }

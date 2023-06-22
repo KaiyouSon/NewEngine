@@ -246,13 +246,23 @@ void TestScene::DrawDebugGui()
 {
 	GuiManager::BeginWindow("PostEffect");
 	GuiManager::DrawInputInt("PostEffectType", (int&)postEffectType_);
-	GuiManager::EndWindow();
 
+	GuiManager::DrawString("PostEffectType 0 : CG4Task");
+	GuiManager::DrawString("PostEffectType 1 : Bloom");
+	GuiManager::DrawString("PostEffectType 2 : GaussianBlur");
+	GuiManager::DrawString("PostEffectType 3 : Glare");
+	GuiManager::DrawString("PostEffectType 4 : Depth Of Field");
+
+	GuiManager::EndWindow();
 
 	// ƒ}ƒeƒŠƒAƒ‹î•ñ
 	GuiManager::BeginWindow("Parameter");
 
-	if (postEffectType_ == 4)
+	if (postEffectType_ == 3)
+	{
+		glare_.DrawDebugGui();
+	}
+	else if (postEffectType_ == 4)
 	{
 		dof_.DrawDebugGui();
 	}

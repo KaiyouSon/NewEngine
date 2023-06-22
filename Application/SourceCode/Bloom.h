@@ -16,5 +16,6 @@ public:
 	void DrawPostEffect(const uint32_t index);
 	void PrevSceneDraw(const uint32_t index);
 	void PostSceneDraw(const uint32_t index);
+	void DrawDebugGui();
 };
 
