@@ -3,11 +3,18 @@
 #include "IndexBuffer.h"
 #include "MaterialColor.h"
 #include "Mesh.h"
+#include "Mat4.h"
 #include "Enum.h"
 #include <vector>
 #include <string>
 
 class FbxModel1;
+
+struct Bone
+{
+	std::string name;
+	Mat4 invInitalPose;
+};
 
 struct Model
 {
@@ -32,6 +39,7 @@ struct ObjModel : public Model
 struct FbxModel : public Model
 {
 	std::string name;
+	std::vector<Bone> bones;
 
 	FbxModel()
 	{

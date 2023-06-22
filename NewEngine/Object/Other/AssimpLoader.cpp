@@ -3,25 +3,6 @@
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 
-std::string ExractFileName(const std::string& path)
-{
-	size_t pos1;
-	// 区切り文字 '\\' が出てくる一番最後の部分を検索
-	pos1 = path.rfind('\\');
-	if (pos1 != std::string::npos)
-	{
-		return path.substr(pos1 + 1, path.size() - pos1 - 1);
-	}
-	// 区切り文字 '/' が出てくる一番最後の部分を検索
-	pos1 = path.rfind('/');
-	if (pos1 != std::string::npos)
-	{
-		return path.substr(pos1 + 1, path.size() - pos1 - 1);
-	}
-
-	return path;
-}
-
 void AssimpLoader::LoadFbxModel(const std::string filePath, FbxModel* model)
 {
 	// インポーター
@@ -47,8 +28,14 @@ void AssimpLoader::LoadFbxModel(const std::string filePath, FbxModel* model)
 
 void AssimpLoader::ParseMesh(FbxModel* model, const aiScene* scene)
 {
-	ParseMeshVertices(model, *scene->mMeshes);
-	ParseMeshFaces(model, *scene->mMeshes);
+	for (uint32_t i = 0; i < scene->mNumMeshes; i++)
+	{
+		aiMesh* mesh = scene->mMeshes[i];
+
+		ParseMeshVertices(model, mesh);
+		ParseMeshFaces(model, mesh);
+		ParseSkin(model, mesh);
+	}
 }
 void AssimpLoader::ParseMeshVertices(FbxModel* model, aiMesh* mesh)
 {
@@ -77,15 +64,15 @@ void AssimpLoader::ParseMeshFaces(FbxModel* model, aiMesh* mesh)
 	std::vector<uint16_t>& indices = model->mesh.indices;
 
 	// フェンス
-	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+	for (uint32_t i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
 
 		if (face.mNumIndices == 3) // 三角形の場合
 		{
-			unsigned int index1 = face.mIndices[0];
-			unsigned int index2 = face.mIndices[1];
-			unsigned int index3 = face.mIndices[2];
+			uint32_t index1 = face.mIndices[0];
+			uint32_t index2 = face.mIndices[1];
+			uint32_t index3 = face.mIndices[2];
 
 			if (i % 2 == 0)
 			{
@@ -102,15 +89,94 @@ void AssimpLoader::ParseMeshFaces(FbxModel* model, aiMesh* mesh)
 		}
 		else if (face.mNumIndices == 4) // 四角形の場合
 		{
-			unsigned int index1 = face.mIndices[0];
-			unsigned int index2 = face.mIndices[1];
-			unsigned int index3 = face.mIndices[2];
-			unsigned int index4 = face.mIndices[3];
+			uint32_t index1 = face.mIndices[0];
+			uint32_t index2 = face.mIndices[1];
+			uint32_t index3 = face.mIndices[2];
+			uint32_t index4 = face.mIndices[3];
 
 			indices.push_back(index2);
 			indices.push_back(index3);
 			indices.push_back(index4);
 			indices.push_back(index1);
+		}
+	}
+}
+void AssimpLoader::ParseSkin(FbxModel* model, aiMesh* mesh)
+{
+	// スキニング情報を持つメッシュかどうかを確認します
+	if (mesh->HasBones() == true)
+	{
+		// ボーン番号とスキンウェイトのペア
+		struct WeightSet
+		{
+			UINT index;
+			float weight;
+		};
+
+		// 二次元配列（ジャグ配列）
+		// list:頂点が影響を受けるボーンの全リスト
+		// vector:それを全頂点分
+		std::vector<std::list<WeightSet>> weightLists(model->mesh.vertices.size());
+
+		// ボーンの最大数設定
+		model->bones.resize(mesh->mNumBones);
+
+		// スキニング情報の処理
+		for (uint32_t i = 0; i < mesh->mNumBones; i++)
+		{
+			aiBone* bone = mesh->mBones[i];
+
+			// ボーンの初期姿勢行列(バインドポーズ行列)
+			Mat4 initalMat = ConvertMat4FromAssimpMat(bone->mOffsetMatrix);
+			model->bones[i].invInitalPose = initalMat.Inverse();
+
+			// ウェイトの読み取り
+			for (uint32_t j = 0; j < bone->mNumWeights; j++)
+			{
+				// 頂点番号
+				int vertexIndex = bone->mWeights[j].mVertexId;
+				// スキンウェイト
+				float weight = bone->mWeights[j].mWeight;
+				// その頂点の影響を受けるボーンリストに、ボーンとウェイトのペアを追加
+				weightLists[vertexIndex].emplace_back(WeightSet{ (UINT)i,weight });
+			}
+		}
+
+		// ウェイトの整理
+		auto& vertices = model->mesh.vertices;
+		// 各頂点について処理
+		for (uint32_t i = 0; i < mesh->mNumBones; i++)
+		{
+			// 頂点のウェイトから最も大きい4つを選択
+			auto& weightList = weightLists[i];
+			// 大小比較用のラムダ式を指定して降順にソート
+			weightList.sort(
+				[](auto const& lhs, auto const& rhs)
+				{
+					return lhs.weight > rhs.weight;
+				});
+
+			int weightArrayIndex = 0;
+			// 降順ソート済みのウェイトリストから
+			for (auto& weightSet : weightList)
+			{
+				// 頂点データに書き込み
+				vertices[i].boneIndex[weightArrayIndex] = weightSet.index;
+				vertices[i].boneWeight[weightArrayIndex] = weightSet.weight;
+				// 4つに達したら終了
+				if (++weightArrayIndex >= maxBoneIndices)
+				{
+					float weight = 0.f;
+					// 2番目以降のウェイトを合計
+					for (size_t j = 1; j < maxBoneIndices; j++)
+					{
+						weight += vertices[i].boneWeight[j];
+					}
+					// 合計で1,f(100%)になるように調整
+					vertices[i].boneWeight[0] = 1.f - weight;
+					break;
+				}
+			}
 		}
 	}
 }
@@ -150,11 +216,6 @@ void AssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 		for (int i = 0; i < textureCount; i++)
 		{
 			aiString texturePath;
-			//aiTextureMapping textureMapping;
-			//unsigned int uvIndex;
-			//float blendFactor;
-			//aiTextureOp textureOp;
-			//aiTextureMapMode mapModeU, mapModeV;
 
 			if (material->GetTexture(aiTextureType_DIFFUSE, i, &texturePath) == AI_SUCCESS)
 			{
@@ -167,15 +228,40 @@ void AssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 
 				// テクスチャ読み込み
 				model->texture = TextureManager::LoadMaterialTexture(fullPath);
-
-				//std::cout << "Diffuse Texture " << i << ": " << texturePath.C_Str() << std::endl;
-				//std::cout << "  Mapping: " << textureMapping << std::endl;
-				//std::cout << "  UV Index: " << uvIndex << std::endl;
-				//std::cout << "  Blend Factor: " << blendFactor << std::endl;
-				//std::cout << "  Texture Operation: " << textureOp << std::endl;
-				//std::cout << "  Map Mode U: " << mapModeU << std::endl;
-				//std::cout << "  Map Mode V: " << mapModeV << std::endl;
 			}
 		}
 	}
+}
+
+Mat4 AssimpLoader::ConvertMat4FromAssimpMat(const aiMatrix4x4& mat)
+{
+	Mat4 result;
+
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			result.m[i][j] = (float)mat[i][j];
+		}
+	}
+
+	return result;
+}
+std::string AssimpLoader::ExractFileName(const std::string& path)
+{
+	size_t pos1;
+	// 区切り文字 '\\' が出てくる一番最後の部分を検索
+	pos1 = path.rfind('\\');
+	if (pos1 != std::string::npos)
+	{
+		return path.substr(pos1 + 1, path.size() - pos1 - 1);
+	}
+	// 区切り文字 '/' が出てくる一番最後の部分を検索
+	pos1 = path.rfind('/');
+	if (pos1 != std::string::npos)
+	{
+		return path.substr(pos1 + 1, path.size() - pos1 - 1);
+	}
+
+	return path;
 }
