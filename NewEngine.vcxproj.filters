@@ -348,6 +348,9 @@
     <ClCompile Include="Application\SourceCode\DOF.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\RadialBlur.cpp">
+      <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -587,6 +590,9 @@
     <ClInclude Include="Application\SourceCode\GaussianBlur.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SourceCode\RadialBlur.h">
+      <Filter>Application\Header\PostEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -650,6 +656,9 @@
       <Filter>Shader\Application\Glare</Filter>
     </None>
     <None Include="Application\Shader\DOF.hlsli">
+      <Filter>Shader\Application</Filter>
+    </None>
+    <None Include="Application\Shader\RadialBlur.hlsli">
       <Filter>Shader\Application</Filter>
     </None>
   </ItemGroup>
@@ -760,6 +769,12 @@
       <Filter>Shader\Application</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\DOFVS.hlsl">
+      <Filter>Shader\Application</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RadialBlurPS.hlsl">
+      <Filter>Shader\Application</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RadialBlurVS.hlsl">
       <Filter>Shader\Application</Filter>
     </FxCompile>
   </ItemGroup>

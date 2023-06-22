@@ -55,7 +55,11 @@ bool LoadManager::TextureLoad()
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Glare2");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Glare3");
 
+	// 被写界深度
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "DOF");
+
+	// ラジアルブラー
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "RadialBlur");
 
 
 	TextureManager::CreateDepthTexture(Vec2(1920, 1080));

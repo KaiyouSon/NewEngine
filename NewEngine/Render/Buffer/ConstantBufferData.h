@@ -92,4 +92,10 @@ namespace ConstantBufferData
 		float focusDepth;
 		uint32_t isRGB;
 	};
+
+	struct CRadialBlur
+	{
+		float strength = 0.5f;
+		float loopNum = 8.f;
+	};
 }

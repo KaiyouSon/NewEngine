@@ -17,7 +17,6 @@ void GaussianBlur::CreateGraphicsPipeline()
 
 	std::string path = "Application/Shader/";
 
-	// ‚‹P“x’Šo—p
 	ShaderObjectManager::Create("GaussianBlur");
 	ShaderObjectManager::GetShaderObject("GaussianBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("GaussianBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);

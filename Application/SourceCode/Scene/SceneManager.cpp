@@ -7,6 +7,7 @@
 #include "GaussianBlur.h"
 #include "Glare.h"
 #include "DOF.h"
+#include "RadialBlur.h"
 
 std::unique_ptr<IScene> SceneManager::currentScene = nullptr;
 
@@ -18,6 +19,7 @@ SceneManager::SceneManager()
 	GaussianBlur::CreateGraphicsPipeline();
 	Glare::CreateGraphicsPipeline();
 	DOF::CreateGraphicsPipeline();
+	RadialBlur::CreateGraphicsPipeline();
 	currentScene = std::move(std::make_unique<TestScene>());
 }
 

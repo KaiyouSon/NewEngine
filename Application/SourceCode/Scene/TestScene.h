@@ -6,6 +6,7 @@
 #include "GaussianBlur.h"
 #include "Glare.h"
 #include "DOF.h"
+#include "RadialBlur.h"
 
 class TestScene : public IScene
 {
@@ -23,6 +24,7 @@ private:
 	GaussianBlur gaussianBlur_;
 	Glare glare_;
 	DOF dof_;
+	RadialBlur radialBlur_;
 
 	RenderTexture* backGround_;
 

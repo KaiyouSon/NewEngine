@@ -41,7 +41,7 @@ void TestScene::Init()
 
 	//SoundManager::Play("GameBGM");
 
-	postEffectType_ = 4;
+	postEffectType_ = 5;
 }
 void TestScene::Update()
 {
@@ -86,6 +86,11 @@ void TestScene::Update()
 		}
 
 		dof_.Update();
+		skyDome_.Update();
+	}
+	else if (postEffectType_ == 5)
+	{
+		radialBlur_.Update();
 		skyDome_.Update();
 	}
 	//vignette_.Update();
@@ -180,20 +185,6 @@ void TestScene::RenderTextureSetting()
 		glare_.PrevSceneDraw(5);
 		glare_.DrawPostEffect(4);
 		glare_.PostSceneDraw(5);
-
-		//// ‚‹P“x•”•ª‚Éƒuƒ‰[‚ð‚©‚¯‚Ä•`‰æ
-		//bloom_.PrevSceneDraw(2);
-		//bloom_.DrawPostEffect(1);
-		//bloom_.PostSceneDraw(2);
-		//
-		//bloom_.PrevSceneDraw(3);
-		//RenderBase::GetInstance()->SetSpriteDrawCommand();
-		//spr_.Draw();
-		//
-		//RenderBase::GetInstance()->SetObject3DDrawCommand();
-		//obj1_.Draw();
-		//
-		//bloom_.PostSceneDraw(3);
 	}
 	else if (postEffectType_ == 4)
 	{
@@ -206,6 +197,14 @@ void TestScene::RenderTextureSetting()
 		}
 		skyDome_.Draw();
 		dof_.PostSceneDraw();
+	}
+	else if (postEffectType_ == 5)
+	{
+		radialBlur_.PrevSceneDraw();
+		RenderBase::GetInstance()->SetObject3DDrawCommand();
+		skyDome_.Draw();
+		obj1_.Draw();
+		radialBlur_.PostSceneDraw();
 	}
 }
 void TestScene::DrawBackSprite()
@@ -241,6 +240,10 @@ void TestScene::DrawRenderTexture()
 	{
 		dof_.DrawPostEffect();
 	}
+	else if (postEffectType_ == 5)
+	{
+		radialBlur_.DrawPostEffect();
+	}
 }
 void TestScene::DrawDebugGui()
 {
@@ -265,6 +268,10 @@ void TestScene::DrawDebugGui()
 	else if (postEffectType_ == 4)
 	{
 		dof_.DrawDebugGui();
+	}
+	else if (postEffectType_ == 5)
+	{
+		radialBlur_.DrawDebugGui();
 	}
 
 	GuiManager::EndWindow();
