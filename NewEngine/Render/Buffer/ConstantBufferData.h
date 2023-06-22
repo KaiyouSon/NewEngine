@@ -86,4 +86,10 @@ namespace ConstantBufferData
 	{
 		float angle;
 	};
+
+	struct CDOF
+	{
+		float focusWidth;
+		float focusDepth;
+	};
 }

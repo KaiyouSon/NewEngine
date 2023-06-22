@@ -345,6 +345,9 @@
     <ClCompile Include="Application\SourceCode\Glare.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\DOF.cpp">
+      <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -581,6 +584,9 @@
     <ClInclude Include="Application\SourceCode\Glare.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SourceCode\DOF.h">
+      <Filter>Application\Header\PostEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -642,6 +648,9 @@
     </None>
     <None Include="Application\Shader\DotFilter.hlsli">
       <Filter>Shader\Application\Glare</Filter>
+    </None>
+    <None Include="Application\Shader\DOF.hlsli">
+      <Filter>Shader\Application</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -746,6 +755,12 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\DotFilterVS.hlsl">
       <Filter>Shader\Application\Glare</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\DOFPS.hlsl">
+      <Filter>Shader\Application</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\DOFVS.hlsl">
+      <Filter>Shader\Application</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

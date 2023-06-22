@@ -569,6 +569,25 @@ Texture TextureManager::LoadMaterialTexture(std::string filePath)
 	return tex;
 }
 
+// 深度テクスチャーを生成
+Texture* TextureManager::CreateDepthTexture(Vec2 size)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(mtx_);
+
+	std::string tag = "DepthTexture";
+	textureMap_.insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
+
+	// 深度バッファのリソース
+	textureMap_[tag]->buffer = RenderBase::GetInstance()->GetDepthBuffer()->GetBuffer();
+
+	// SRV作成
+	CreateSRV(*textureMap_[tag], textureMap_[tag]->buffer.Get());
+
+	return textureMap_[tag].get();
+}
+
+
 #pragma endregion
 
 #pragma region レンダーテクスチャー関連
@@ -645,6 +664,10 @@ RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, uint32_t num, std:
 	renderTex->depthBuffer.Create();
 	renderBase->CreateDSV(renderTex->depthBuffer);
 
+	renderTex->depthTexture = std::make_unique<Texture>();
+	renderTex->depthTexture->buffer = renderTex->depthBuffer.GetBuffer();
+	CreateSRV(*renderTex->depthTexture, renderTex->depthTexture->buffer.Get());
+
 	renderTextureMap_.insert(std::make_pair(textureTag, std::move(renderTex)));
 
 	return renderTextureMap_[textureTag].get();
@@ -693,7 +716,14 @@ void TextureManager::CreateSRV(Texture& texture, ID3D12Resource* buffer)
 
 	// シェーダーリソースビュー設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	// srv設定構造体
-	srvDesc.Format = buffer->GetDesc().Format;
+	if (buffer->GetDesc().Format == DXGI_FORMAT_D32_FLOAT)
+	{
+		srvDesc.Format = DXGI_FORMAT_R32_FLOAT;
+	}
+	else
+	{
+		srvDesc.Format = buffer->GetDesc().Format;
+	}
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	// 2Dテクスチャ
 	//srvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;	// 2Dテクスチャ

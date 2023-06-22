@@ -103,6 +103,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\SourceCode\Bloom.cpp" />
+    <ClCompile Include="Application\SourceCode\DOF.cpp" />
     <ClCompile Include="Application\SourceCode\GaussainBlur.cpp" />
     <ClCompile Include="Application\SourceCode\Glare.cpp" />
     <ClCompile Include="Application\SourceCode\LoadManager.cpp" />
@@ -175,6 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\SourceCode\Bloom.h" />
+    <ClInclude Include="Application\SourceCode\DOF.h" />
     <ClInclude Include="Application\SourceCode\GaussainBlur.h" />
     <ClInclude Include="Application\SourceCode\Glare.h" />
     <ClInclude Include="Application\SourceCode\LoadManager.h" />
@@ -256,6 +258,7 @@
   <ItemGroup>
     <None Include="Application\Shader\Bloom.hlsli" />
     <None Include="Application\Shader\BGaussainBlur.hlsli" />
+    <None Include="Application\Shader\DOF.hlsli" />
     <None Include="Application\Shader\DotFilter.hlsli" />
     <None Include="Application\Shader\Glare.hlsli" />
     <None Include="Application\Shader\GLineBlur.hlsli" />
@@ -295,6 +298,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\DOFPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\DOFVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Application\Shader\DotFilterPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

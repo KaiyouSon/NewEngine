@@ -14,6 +14,7 @@ private:
 	std::unique_ptr<VertexBuffer<VertexPosUv>> vertexBuffer_;
 	std::vector<RenderTexture*> renderTextures_;
 	GraphicsPipeline* graphicsPipeline_;
+	Texture* depthTexture_;
 	Material material_;
 	Transform transform_;
 	Vec2 size_;
@@ -37,7 +38,7 @@ public:
 	void Update();
 	void Draw();
 
-public: // í«â¡
+public: // ÇªÇÃëº
 	void AddRenderTexture(RenderTexture* renderTexture);
 
 	template<typename T>
@@ -47,6 +48,8 @@ public: // í«â¡
 		iConstatnBuffer->Create();
 		material_.constantBuffers.push_back(std::move(iConstatnBuffer));
 	}
+
+	void UseDepthTexture();
 
 public: 	// ÉQÉbÉ^Å[
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);

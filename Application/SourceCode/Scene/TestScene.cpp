@@ -23,9 +23,23 @@ void TestScene::Init()
 
 	backGround_ = TextureManager::GetRenderTexture("BackGround");
 
+	objs_.resize(10);
+	for (uint32_t i = 0; i < objs_.size(); i++)
+	{
+		objs_[i].SetModel(ModelManager::GetModel("Block1"));
+		objs_[i].SetTexture(TextureManager::GetTexture("pic"));
+		objs_[i].pos =
+		{
+			Random::RangeF(-5, +5),
+			Random::RangeF(-5, +5),
+			Random::RangeF(-5, +5)
+		};
+		objs_[i].scale = Random::RangeF(0.1f, 1.f);
+	}
+
 	//SoundManager::Play("GameBGM");
 
-	postEffectType_ = 0;
+	postEffectType_ = 4;
 }
 void TestScene::Update()
 {
@@ -61,6 +75,15 @@ void TestScene::Update()
 	else if (postEffectType_ == 3)
 	{
 		glare_.Update();
+	}
+	else if (postEffectType_ == 4)
+	{
+		for (uint32_t i = 0; i < objs_.size(); i++)
+		{
+			objs_[i].Update();
+		}
+
+		dof_.Update();
 	}
 	//vignette_.Update();
 }
@@ -168,7 +191,18 @@ void TestScene::RenderTextureSetting()
 		//obj1_.Draw();
 		//
 		//bloom_.PostSceneDraw(3);
-	}	//
+	}
+	else if (postEffectType_ == 4)
+	{
+		dof_.PrevSceneDraw();
+		RenderBase::GetInstance()->SetObject3DDrawCommand();
+		obj1_.Draw();
+		for (uint32_t i = 0; i < objs_.size(); i++)
+		{
+			objs_[i].Draw();
+		}
+		dof_.PostSceneDraw();
+	}
 }
 void TestScene::DrawBackSprite()
 {
@@ -199,12 +233,22 @@ void TestScene::DrawRenderTexture()
 	{
 		glare_.DrawPostEffect(5);
 	}
+	else if (postEffectType_ == 4)
+	{
+		dof_.DrawPostEffect();
+	}
 }
 void TestScene::DrawDebugGui()
 {
 	GuiManager::BeginWindow("PostEffect");
 
 	GuiManager::DrawInputInt("PostEffectType", (int&)postEffectType_);
+
+	if (postEffectType_ == 4)
+	{
+		GuiManager::DrawSlider1("FocusWidth", dof_.focusWidth, 0.01f);
+		GuiManager::DrawSlider1("FocusDepth", dof_.focusDepth, 0.01f);
+	}
 
 	GuiManager::EndWindow();
 }

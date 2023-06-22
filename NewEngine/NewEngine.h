@@ -24,6 +24,7 @@
 #include "OutLineObj.h"
 #include "Fog.h"
 #include "PostEffect.h"
+#include "ConstantBufferData.h"
 
 // c++
 #include <memory>

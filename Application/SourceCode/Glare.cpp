@@ -1,5 +1,6 @@
 #include "Glare.h"
 using namespace ConstantBufferData;
+
 Glare::Glare() :
 	highLumi_(std::make_unique<PostEffect>()),
 	dotFilter_(std::make_unique<PostEffect>()),

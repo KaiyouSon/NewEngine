@@ -56,6 +56,8 @@ public:
 	inline RootSignature* GetSpriteRootSignature() const { return spriteRootSignature_.get(); }
 	inline RootSignature* GetRenderTextureRootSignature() const { return renderTextureRootSignature_.get(); }
 
+	inline DepthBuffer* GetDepthBuffer() const { return depthBuffer_.get(); }
+
 	inline Viewport* GetViewport() const { return viewport_.get(); }
 
 	inline void PreIncrimentFenceValue() { ++fenceVal_; }

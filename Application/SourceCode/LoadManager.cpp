@@ -55,6 +55,11 @@ bool LoadManager::TextureLoad()
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Glare2");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Glare3");
 
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "DOF");
+
+
+	TextureManager::CreateDepthTexture(Vec2(1920, 1080));
+
 
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
 	return true;

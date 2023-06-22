@@ -6,6 +6,7 @@
 #include "Bloom.h"
 #include "GaussainBlur.h"
 #include "Glare.h"
+#include "DOF.h"
 
 std::unique_ptr<IScene> SceneManager::currentScene = nullptr;
 
@@ -16,6 +17,7 @@ SceneManager::SceneManager()
 	Bloom::CreateGraphicsPipeline();
 	GaussainBlur::CreateGraphicsPipeline();
 	Glare::CreateGraphicsPipeline();
+	DOF::CreateGraphicsPipeline();
 	currentScene = std::move(std::make_unique<TestScene>());
 }
 

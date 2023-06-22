@@ -5,10 +5,12 @@
 #include "Bloom.h"
 #include "GaussainBlur.h"
 #include "Glare.h"
+#include "DOF.h"
 
 class TestScene : public IScene
 {
 private:
+	std::vector<Object3D> objs_;
 	Object3D obj1_;
 	Object3D obj2_;
 
@@ -19,6 +21,7 @@ private:
 	Bloom bloom_;
 	GaussainBlur gaussainBlur_;
 	Glare glare_;
+	DOF dof_;
 
 	RenderTexture* backGround_;
 

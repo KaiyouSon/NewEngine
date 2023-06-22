@@ -47,6 +47,10 @@ public: // レンダーテクスチャー関連
 	// レンダーテクスチャーを生成しマップに格納する
 	static RenderTexture* CreateRenderTexture(Vec2 size, uint32_t num, std::string textureTag);
 
+public:
+	// 深度テクスチャーを生成
+	static Texture* CreateDepthTexture(Vec2 size);
+
 public:	// その他の処理
 	// ディスクリプターヒープを作成する処理
 	static void CreateDescriptorHeap();

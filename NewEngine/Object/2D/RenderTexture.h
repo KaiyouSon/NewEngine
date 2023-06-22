@@ -22,7 +22,9 @@ public:
 	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> buffers; //テクスチャのリソース
 	std::vector<RenderTarget> renderTargets;
 	DepthBuffer depthBuffer;
+	std::unique_ptr<Texture> depthTexture;
 	Vec2 size;
+	bool useDepth = false;
 
 public:
 	void PrevDrawScene();
