@@ -629,6 +629,8 @@ RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, uint32_t num, std:
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
 	renderTex->renderTargets.resize(num);
+	renderTex->cpuHandles.resize(num);
+	renderTex->gpuHandles.resize(num);
 	for (uint32_t i = 0; i < num; i++)
 	{
 		// SRV作成
@@ -715,15 +717,14 @@ void TextureManager::CreateSRV(RenderTexture& texture, ID3D12Resource* buffer, u
 	srvCpuHandle.ptr += (SIZE_T)(descriptorSize * srvIncrementIndex_);
 	srvGpuHandle.ptr += (SIZE_T)(descriptorSize * srvIncrementIndex_);
 
-	texture.cpuHandle = srvCpuHandle;
-	texture.gpuHandle = srvGpuHandle;
+	texture.cpuHandles[index] = srvCpuHandle;
+	texture.gpuHandles[index] = srvGpuHandle;
 
 	// シェーダーリソースビュー設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	// srv設定構造体
 	srvDesc.Format = buffer->GetDesc().Format;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	// 2Dテクスチャ
-	//srvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;	// 2Dテクスチャ
 	srvDesc.Texture2D.MipLevels = buffer->GetDesc().MipLevels;
 
 	// ハンドルの指す位置にシェーダーリソースビュー作成

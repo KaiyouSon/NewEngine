@@ -4,7 +4,7 @@
 Texture2D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
 SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
 
-PSOutput main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
+PSOutput main(VSOutputSvposPosNormalUv vsOutput)// : SV_TARGET
 {
 	// テクスチャーマッピング
     float4 texColor = tex.Sample(smp, vsOutput.uv);
@@ -84,11 +84,11 @@ PSOutput main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
     //float4 outputColor = CalculateFog(fog, dis, currentColor);
     //return outputColor;
     
-    PSOutput output;
+    float4 resultColor = shaderColor * texColor * color;
     
-    output.target0 = shaderColor * texColor * color;
-    output.target1 = shaderColor * texColor * color;
-    //output.target1 = float4(1 - output.target0.rgb, 1);
+    PSOutput output;
+    output.target0 = resultColor;
+    output.target1 = float4(1 - resultColor.rgb, color.a);
     return output;
     
     //return shaderColor * texColor * color;

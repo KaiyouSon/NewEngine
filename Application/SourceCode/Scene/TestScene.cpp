@@ -25,7 +25,7 @@ void TestScene::Init()
 
 	//SoundManager::Play("GameBGM");
 
-	postEffectType_ = 3;
+	postEffectType_ = 0;
 }
 void TestScene::Update()
 {

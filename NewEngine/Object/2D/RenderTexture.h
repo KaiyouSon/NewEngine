@@ -17,8 +17,8 @@ private:
 
 public:
 	static const float sClearColor[4];
-	D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle; //SRVのハンドル(CPU側)
-	D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle; //SRVのハンドル(GPU側)
+	std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> cpuHandles; //SRVのハンドル(CPU側)
+	std::vector<D3D12_GPU_DESCRIPTOR_HANDLE> gpuHandles; //SRVのハンドル(GPU側)
 	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> buffers; //テクスチャのリソース
 	std::vector<RenderTarget> renderTargets;
 	DepthBuffer depthBuffer;

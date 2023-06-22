@@ -9,8 +9,6 @@
 class TextureManager
 {
 private:
-	static UINT srvIncrementIndex_;	// srv作成時にインクリメント用
-	static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvDescHeap_;	// srv用ディスクリプタヒープ
 
 	static std::unordered_map<std::string, std::unique_ptr<Texture>> textureMap_;					// テクスチャーのマップ
 	static std::unordered_map<std::string, std::unique_ptr<RenderTexture>> renderTextureMap_;		// レンダーテクスチャーのマップ
@@ -18,6 +16,10 @@ private:
 	static std::mutex mtx_;	// 排他制御
 
 public:	// テクスチャー関連
+
+	static UINT srvIncrementIndex_;	// srv作成時にインクリメント用
+	static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvDescHeap_;	// srv用ディスクリプタヒープ
+
 
 	// テクスチャーの取得
 	static Texture* GetTexture(std::string textureTag);

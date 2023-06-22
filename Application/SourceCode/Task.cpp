@@ -7,11 +7,24 @@ Task::Task() :
 
 	postEffect_->pos = GetWindowHalfSize();
 	postEffect_->AddRenderTexture(tex_);
-	postEffect_->AddRenderTexture(tex_);
+	//postEffect_->AddRenderTexture(tex_);
+	postEffect_->rtvIndex = 0;
 }
 
 void Task::Update()
 {
+	if (Key::GetKeyDown(DIK_SPACE))
+	{
+		if (postEffect_->rtvIndex == 0)
+		{
+ 			postEffect_->rtvIndex = 1;
+		}
+		else if (postEffect_->rtvIndex == 1)
+		{
+			postEffect_->rtvIndex = 0;
+		}
+	}
+
 	postEffect_->Update();
 }
 

@@ -24,6 +24,7 @@ public:
 	Vec2 anchorPoint;
 	float rot;
 	Color color;
+	uint32_t rtvIndex;
 
 private:
 	void MaterialInit();

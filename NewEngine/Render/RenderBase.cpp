@@ -489,7 +489,7 @@ void RenderBase::GraphicsPipelineInit()
 		CullMode::None,
 		depthStencilDesc2,
 		TopologyType::Triangle,
-		1,
+		2,
 		"Sprite");
 
 	// 円形ゲージスプライト用
@@ -509,7 +509,7 @@ void RenderBase::GraphicsPipelineInit()
 		CullMode::None,
 		depthStencilDesc2,
 		TopologyType::Triangle,
-		1,
+		2,
 		"RenderTexture");
 
 	// シルエット用

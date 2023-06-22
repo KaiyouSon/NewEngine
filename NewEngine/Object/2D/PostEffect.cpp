@@ -2,10 +2,14 @@
 #include "Camera.h"
 using namespace ConstantBufferData;
 
+#include "InputManager.h"
+#include "TextureManager.h"
+#include <d3d12.h>
+
 PostEffect::PostEffect() :
 	vertexBuffer_(std::make_unique<VertexBuffer<VertexPosUv>>()),
 	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture")),
-	pos(0), scale(1), rot(0), anchorPoint(0.5f)
+	pos(0), scale(1), rot(0), anchorPoint(0.5f), rtvIndex(0)
 {
 	// 頂点バッファの生成
 	vertices_.resize(4);
@@ -48,12 +52,44 @@ void PostEffect::Draw()
 	// マテリアルの設定コマンド
 	MaterialDrawCommands();
 
+	//if (Key::GetKeyDown(DIK_0))
+	//{
+	//	static int tex = 0;
+	//	tex = (tex + 1) % 2;
+
+	//	// SRVヒープの先頭ハンドルを取得
+	//	D3D12_CPU_DESCRIPTOR_HANDLE srvCpuHandle = TextureManager::srvDescHeap_->GetCPUDescriptorHandleForHeapStart();
+	//	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = TextureManager::srvDescHeap_->GetGPUDescriptorHandleForHeapStart();
+
+	//	UINT descriptorSize = RenderBase::GetInstance()->GetDevice()->
+	//		GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+	//	srvCpuHandle.ptr += (SIZE_T)(descriptorSize * TextureManager::srvIncrementIndex_);
+	//	srvGpuHandle.ptr += (SIZE_T)(descriptorSize * TextureManager::srvIncrementIndex_);
+
+	//	renderTextures_[0]->cpuHandle = srvCpuHandle;
+	//	renderTextures_[0]->gpuHandle = srvGpuHandle;
+
+	//	// シェーダーリソースビュー設定
+	//	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	// srv設定構造体
+	//	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	//	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	//	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	// 2Dテクスチャ
+	//	srvDesc.Texture2D.MipLevels = 1;
+
+	//	// ハンドルの指す位置にシェーダーリソースビュー作成
+	//	RenderBase::GetInstance()->GetDevice()->
+	//		CreateShaderResourceView(renderTextures_[0]->buffers[tex].Get(), &srvDesc, srvCpuHandle);
+
+	//	TextureManager::srvIncrementIndex_++;
+
+	//}
+
 	// SRV設定コマンド
 	for (uint32_t i = 0; i < renderTextures_.size(); i++)
 	{
 		uint32_t index = renderBase->GetRenderTextureRootSignature()->GetConstantBufferNum();
-
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(index + i, renderTextures_[i]->gpuHandle);
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(index + i, renderTextures_[i]->gpuHandles[rtvIndex]);
 	}
 
 	renderBase->GetCommandList()->DrawInstanced((uint16_t)vertices_.size(), 1, 0, 0);
