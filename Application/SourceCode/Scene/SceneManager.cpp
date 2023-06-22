@@ -8,6 +8,7 @@
 #include "Glare.h"
 #include "DOF.h"
 #include "RadialBlur.h"
+#include "Vignette.h"
 
 std::unique_ptr<IScene> SceneManager::currentScene = nullptr;
 
@@ -20,6 +21,7 @@ SceneManager::SceneManager()
 	Glare::CreateGraphicsPipeline();
 	DOF::CreateGraphicsPipeline();
 	RadialBlur::CreateGraphicsPipeline();
+	Vignette::CreateGraphicsPipeline();
 	currentScene = std::move(std::make_unique<TestScene>());
 }
 

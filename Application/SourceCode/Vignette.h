@@ -9,6 +9,7 @@ private:
 
 public:
 	Vignette();
+	static void CreateGraphicsPipeline();
 	void Update();
 	void DrawPostEffect();
 	void PrevSceneDraw();

@@ -93,7 +93,11 @@ void TestScene::Update()
 		radialBlur_.Update();
 		skyDome_.Update();
 	}
-	//vignette_.Update();
+	else if (postEffectType_ == 6)
+	{
+		radialBlur_.Update();
+		vignette_.Update();
+	}
 }
 
 void TestScene::RenderTextureSetting()
@@ -134,14 +138,6 @@ void TestScene::RenderTextureSetting()
 		bloom_.PrevSceneDraw(2);
 		bloom_.DrawPostEffect(1);
 		bloom_.PostSceneDraw(2);
-
-		//bloom_.PrevSceneDraw(3);
-		//RenderBase::GetInstance()->SetSpriteDrawCommand();
-		//spr_.Draw();
-
-		//RenderBase::GetInstance()->SetObject3DDrawCommand();
-		//obj1_.Draw();
-		//bloom_.PostSceneDraw(3);
 	}
 	else if (postEffectType_ == 2)
 	{
@@ -206,6 +202,14 @@ void TestScene::RenderTextureSetting()
 		obj1_.Draw();
 		radialBlur_.PostSceneDraw();
 	}
+	else if (postEffectType_ == 6)
+	{
+		vignette_.PrevSceneDraw();
+		RenderBase::GetInstance()->SetObject3DDrawCommand();
+		skyDome_.Draw();
+		obj1_.Draw();
+		vignette_.PostSceneDraw();
+	}
 }
 void TestScene::DrawBackSprite()
 {
@@ -243,6 +247,10 @@ void TestScene::DrawRenderTexture()
 	else if (postEffectType_ == 5)
 	{
 		radialBlur_.DrawPostEffect();
+	}
+	else if (postEffectType_ == 6)
+	{
+		vignette_.DrawPostEffect();
 	}
 }
 void TestScene::DrawDebugGui()
