@@ -41,7 +41,7 @@ void TestScene::Init()
 
 	//SoundManager::Play("GameBGM");
 
-	postEffectType_ = 5;
+	postEffectType_ = 6;
 }
 void TestScene::Update()
 {
@@ -57,9 +57,7 @@ void TestScene::Update()
 	}
 
 	obj1_.Update();
-	Transform tf = obj1_.GetTransform();
-
-	obj2_.Update(&tf);
+	obj2_.Update();
 	spr_.Update();
 
 	if (postEffectType_ == 0)
@@ -95,7 +93,7 @@ void TestScene::Update()
 	}
 	else if (postEffectType_ == 6)
 	{
-		radialBlur_.Update();
+		skyDome_.Update();
 		vignette_.Update();
 	}
 }
@@ -217,7 +215,7 @@ void TestScene::DrawBackSprite()
 void TestScene::DrawModel()
 {
 	//obj1_.Draw();
-	//obj2_.Draw();
+	obj2_.Draw();
 }
 void TestScene::DrawFrontSprite()
 {

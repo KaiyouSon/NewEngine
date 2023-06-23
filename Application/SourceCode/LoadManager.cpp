@@ -23,7 +23,7 @@ bool LoadManager::ModelLoad()
 
 bool LoadManager::TextureLoad()
 {
-	//TextureManager::CreateTexture(Color::white, "White");
+	TextureManager::CreateTexture(Color::white, "White");
 
 	TextureManager::LoadTexture("pic.png", "pic");
 	TextureManager::LoadTexture("BackGround.png", "BackGround");
@@ -97,8 +97,8 @@ void LoadManager::Load()
 		soundFtr.get() == true)		// サウンド
 	{
 		isLoaded = true;
+		// コマンド実行
+		TextureManager::ExcuteComandList();
 	}
 
-	// コマンド実行
-	TextureManager::ExcuteComandList();
 }

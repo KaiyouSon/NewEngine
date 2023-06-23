@@ -30,7 +30,7 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 
 	// インスタンス生成
 	std::unique_ptr<Model> model = std::make_unique<ObjModel>();
-	//model = std::make_unique<Model>(filePath, isSmoothing);
+	model->name = fileName;
 
 	std::string path = sDirectoryPath_ + fileName + "/";
 	std::string objfile = fileName + ".obj";
@@ -328,9 +328,10 @@ void ModelManager::LoadMaterialColor(std::string filePath, Model* model)
 			std::string textureName;
 			lineStream >> textureName;
 
+			std::string textureTag = model->name + "Texture";
+
 			// テクスチャ読み込み
-			model->texture = TextureManager::LoadMaterialTexture(directoryPath + textureName);
-			model->texture.isMaterial = true;
+			model->texture = TextureManager::LoadMaterialTexture(directoryPath + textureName, textureTag);
 		}
 	}
 

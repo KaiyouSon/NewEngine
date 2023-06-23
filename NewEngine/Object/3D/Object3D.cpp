@@ -216,7 +216,7 @@ void Object3D::MaterialDrawCommands()
 void Object3D::SetModel(Model* model)
 {
 	model_ = model;
-	texture_ = &model_->texture;
+	texture_ = model_->texture;
 
 	// パイプライン変更
 	if (model_->format == ModelFormat::Obj)

@@ -2,6 +2,7 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "MaterialColor.h"
+#include "TextureManager.h"
 #include "Mesh.h"
 #include "Mat4.h"
 #include "Enum.h"
@@ -18,31 +19,32 @@ struct Bone
 
 struct Model
 {
+	std::string name;
 	Mesh mesh;
 	MaterialColor material;
 	ModelFormat format;
-	Texture texture;
+	Texture* texture;
 
 	virtual ~Model() {}
 };
 
 struct ObjModel : public Model
 {
-	std::string name;
 
 	ObjModel()
 	{
 		format = ModelFormat::Obj;
+		texture = TextureManager::GetTexture("White");
 	}
 };
 
 struct FbxModel : public Model
 {
-	std::string name;
 	std::vector<Bone> bones;
 
 	FbxModel()
 	{
 		format = ModelFormat::Fbx;
+		texture = TextureManager::GetTexture("White");
 	}
 };

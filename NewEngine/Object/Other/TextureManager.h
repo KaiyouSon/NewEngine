@@ -37,7 +37,7 @@ public:	// テクスチャー関連
 	static Texture* LoadTexture(std::string filePath, std::string textureTag);
 
 	// objファイルからロードしたテクスチャーをロードする専用関数
-	static Texture LoadMaterialTexture(std::string filePath);
+	static Texture* LoadMaterialTexture(std::string filePath, std::string textureTag);
 
 public: // レンダーテクスチャー関連
 

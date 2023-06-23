@@ -225,9 +225,10 @@ void AssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 				std::string name = ExractFileName(pathStr);
 				std::string baseDirectory = "Application/Resources/Model/";
 				std::string fullPath = baseDirectory + model->name + "/" + name;
+				std::string textureTag = model->name + "Texture";
 
 				// テクスチャ読み込み
-				model->texture = TextureManager::LoadMaterialTexture(fullPath);
+				model->texture = TextureManager::LoadMaterialTexture(fullPath, textureTag);
 			}
 		}
 	}
