@@ -28,7 +28,7 @@ void Mesh::CalculateSmoothedVertexNormals()
 	}
 }
 
-void Mesh::AddVertex(const VertexPosNormalUvBone vertex)
+void Mesh::AddVertex(const VertexBufferData::VFbxModel vertex)
 {
 	vertices.emplace_back(vertex);
 }

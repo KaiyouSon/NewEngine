@@ -41,7 +41,7 @@ void TestScene::Init()
 
 	//SoundManager::Play("GameBGM");
 
-	postEffectType_ = 6;
+	postEffectType_ = 7;
 }
 void TestScene::Update()
 {
@@ -53,7 +53,7 @@ void TestScene::Update()
 
 	if (Key::GetKeyDown(DIK_SPACE) == true)
 	{
-		obj2_.scale = 0.01f;
+		//obj2_.scale = 0.01f;
 	}
 
 	obj1_.Update();

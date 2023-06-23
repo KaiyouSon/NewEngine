@@ -3,9 +3,8 @@
 #include "IndexBuffer.h"
 #include "ConstantBuffer.h"
 #include "Transform.h"
-#include "Texture.h"
 #include "Material.h"
-#include "TextureAnimeiton.h"
+#include "TextureManager.h"
 #include <vector>
 
 class TextureAnimeiton;
@@ -13,8 +12,8 @@ class TextureAnimeiton;
 class Sprite
 {
 private:
-	std::vector<VertexPosUv> vertices_;
-	std::unique_ptr<VertexBuffer<VertexPosUv>> vertexBuffer_;
+	std::vector<VertexBufferData::VSprite> vertices_;
+	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> vertexBuffer_;
 	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform2D>> constantBufferTransform_;
 	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> constantBufferColor_;
 	Transform transform_;

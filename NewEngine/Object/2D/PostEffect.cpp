@@ -1,13 +1,12 @@
 #include "PostEffect.h"
+#include "TextureManager.h"
 #include "Camera.h"
+
+using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
-#include "InputManager.h"
-#include "TextureManager.h"
-#include <d3d12.h>
-
 PostEffect::PostEffect() :
-	vertexBuffer_(std::make_unique<VertexBuffer<VertexPosUv>>()),
+	vertexBuffer_(std::make_unique<VertexBuffer<VSprite>>()),
 	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture")),
 	pos(0), scale(1), rot(0), anchorPoint(0.5f), rtvIndex(0)
 {

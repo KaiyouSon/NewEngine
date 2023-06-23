@@ -5,16 +5,12 @@
 #include <fstream>
 #include <sstream>
 
-#pragma region 静的関数
+using namespace VertexBufferData;
 
 // モデルのマップ
 std::unordered_map<std::string, std::unique_ptr<Model>> ModelManager::sModelMap_;
 std::mutex ModelManager::sMtx_ = std::mutex{};
 std::string ModelManager::sDirectoryPath_ = "Application/Resources/Model/";
-
-#pragma endregion
-
-#pragma region モデル関連
 
 // モデルの取得
 Model* ModelManager::GetModel(const std::string modelTag)
@@ -128,7 +124,7 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 
 				indexStream >> indexNormal;
 				// 頂点データの追加
-				VertexPosNormalUvBone vertex{};
+				VFbxModel vertex{};
 				vertex.pos = positions[indexPos - 1];
 				vertex.normal = normals[indexNormal - 1];
 				vertex.uv = texcoords[indexTexcoord - 1];
@@ -137,21 +133,21 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 
 				if (isSmoothing == true)
 				{
-					model->mesh.AddSmoothData(indexPos, (uint16_t)model->mesh.GetVertexSize() - 1);
+					model->mesh.AddSmoothData(indexPos, (uint16_t)model->mesh.indices.size() - 1);
 				}
 
 				// 頂点インデックスに追加
 				if (count % 3 == 0)
 				{
-					model->mesh.AddIndex((uint16_t)model->mesh.GetIndexSize());
+					model->mesh.AddIndex((uint16_t)model->mesh.indices.size());
 				}
 				if (count % 3 == 1)
 				{
-					model->mesh.AddIndex((uint16_t)model->mesh.GetIndexSize() + 1);
+					model->mesh.AddIndex((uint16_t)model->mesh.indices.size() + 1);
 				}
 				if (count % 3 == 2)
 				{
-					model->mesh.AddIndex((uint16_t)model->mesh.GetIndexSize() - 1);
+					model->mesh.AddIndex((uint16_t)model->mesh.indices.size() - 1);
 				}
 
 				count++;
@@ -186,7 +182,7 @@ Model* ModelManager::LoadFbxModel(const std::string fileName, const std::string 
 	model->name = fileName;
 
 	// モデルと同じ名前のフォルダーから読み込む
-	std::string path = "Application/Resources/Model/" + fileName + "/";
+	std::string path = sDirectoryPath_ + fileName + "/";
 	std::string fbxfile = fileName + ".fbx";
 	std::string fullPath = path + fbxfile;
 
@@ -339,9 +335,6 @@ void ModelManager::LoadMaterialColor(std::string filePath, Model* model)
 	file.close();
 }
 
-#pragma endregion
-
-#pragma region その他の処理
 
 void ModelManager::Destroy()
 {
@@ -354,4 +347,3 @@ void ModelManager::Destroy()
 		}*/
 }
 
-#pragma endregion

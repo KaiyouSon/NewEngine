@@ -70,8 +70,8 @@ void Object3D::Draw(const BlendMode blendMode)
 	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// VBVとIBVの設定コマンド
-	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, model_->mesh.GetVertexBuffer().GetvbViewAddress());
-	renderBase->GetCommandList()->IASetIndexBuffer(model_->mesh.GetIndexBuffer().GetibViewAddress());
+	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, model_->mesh.vertexBuffer.GetvbViewAddress());
+	renderBase->GetCommandList()->IASetIndexBuffer(model_->mesh.indexBuffer.GetibViewAddress());
 
 	MaterialDrawCommands();
 
@@ -81,11 +81,9 @@ void Object3D::Draw(const BlendMode blendMode)
 
 	size_t index = renderBase->GetObject3DRootSignature()->GetConstantBufferNum();
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-		UINT(index), texture_->GetGpuHandle());
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)index, texture_->GetGpuHandle());
 
-	renderBase->GetCommandList()->DrawIndexedInstanced(
-		(unsigned short)model_->mesh.GetIndexSize(), 1, 0, 0, 0);
+	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)model_->mesh.indices.size(), 1, 0, 0, 0);
 }
 
 // バッファ転送

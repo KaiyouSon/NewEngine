@@ -8,8 +8,8 @@
 class Line
 {
 private:
-	std::vector<VertexPos> vertices_;
-	std::unique_ptr<VertexBuffer<VertexPos>> vertexBuffer_;
+	std::vector<VertexBufferData::VLine> vertices_;
+	std::unique_ptr<VertexBuffer<VertexBufferData::VLine>> vertexBuffer_;
 	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform3D>> constantBufferTransform_;
 	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> constantBufferColor_;
 	GraphicsPipeline* graphicsPipeline_;

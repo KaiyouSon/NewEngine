@@ -1,12 +1,13 @@
 #include "CircleGaugeSprite.h"
 #include "Camera.h"
 
+using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
 CircleGaugeSprite::CircleGaugeSprite() :
 	pos(0), scale(1), rot(0), anchorPoint(0.5f),
 	startRadian(0), endRadian(0),
-	vertexBuffer_(std::make_unique<VertexBuffer<VertexPosUv>>()),
+	vertexBuffer_(std::make_unique<VertexBuffer<VSprite>>()),
 	constantBufferTransform_(std::make_unique<ConstantBuffer<CTransform2D>>()),
 	constantBufferColor_(std::make_unique<ConstantBuffer<CColor>>()),
 	constantBufferCircleGauge_(std::make_unique<ConstantBuffer<CCircleGauge>>()),

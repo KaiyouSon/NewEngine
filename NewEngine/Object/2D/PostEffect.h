@@ -10,8 +10,8 @@
 class PostEffect
 {
 private:
-	std::vector<VertexPosUv> vertices_;
-	std::unique_ptr<VertexBuffer<VertexPosUv>> vertexBuffer_;
+	std::vector<VertexBufferData::VSprite> vertices_;
+	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> vertexBuffer_;
 	std::vector<RenderTexture*> renderTextures_;
 	GraphicsPipeline* graphicsPipeline_;
 	Texture* depthTexture_;

@@ -2,37 +2,40 @@
 #include "MathUtil.h"
 #include "Util.h"
 
-// 頂点データクラス
-struct VertexPosNormalUv
+namespace VertexBufferData
 {
-	Vec3 pos;	 // xyz座標
-	Vec3 normal; // 法線ベクトル
-	Vec2 uv;	 // uv座標
-};
+	// 頂点データクラス
+	struct VObjModel
+	{
+		Vec3 pos;	 // xyz座標
+		Vec3 normal; // 法線ベクトル
+		Vec2 uv;	 // uv座標
+	};
 
-struct VertexPosNormalUvBone
-{
-	Vec3 pos;	 // xyz座標
-	Vec3 normal; // 法線ベクトル
-	Vec2 uv;	 // uv座標
-	unsigned int boneIndex[maxBoneIndices];
-	float boneWeight[maxBoneIndices];
-};
+	struct VFbxModel
+	{
+		Vec3 pos;	 // xyz座標
+		Vec3 normal; // 法線ベクトル
+		Vec2 uv;	 // uv座標
+		unsigned int boneIndex[maxBoneIndices];
+		float boneWeight[maxBoneIndices];
+	};
 
-struct VertexPosUv
-{
-	Vec3 pos;	 // xyz座標
-	Vec2 uv;	 // uv座標
-};
+	struct VSprite
+	{
+		Vec3 pos;	 // xyz座標
+		Vec2 uv;	 // uv座標
+	};
 
-struct VertexPos
-{
-	Vec3 pos;	 // xyz座標
-};
+	struct VLine
+	{
+		Vec3 pos;	 // xyz座標
+	};
 
-struct VertexParticle
-{
-	Vec3 pos;
-	float scale;
-	Color color;
-};
+	struct VParticle
+	{
+		Vec3 pos;
+		float scale;
+		Color color;
+	};
+}

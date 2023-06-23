@@ -50,8 +50,8 @@ void SilhouetteObj::Draw(const BlendMode& blendMode)
 	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// VBVとIBVの設定コマンド
-	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, obj->GetModel()->mesh.GetVertexBuffer().GetvbViewAddress());
-	renderBase->GetCommandList()->IASetIndexBuffer(obj->GetModel()->mesh.GetIndexBuffer().GetibViewAddress());
+	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, obj->GetModel()->mesh.vertexBuffer.GetvbViewAddress());
+	renderBase->GetCommandList()->IASetIndexBuffer(obj->GetModel()->mesh.indexBuffer.GetibViewAddress());
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
@@ -60,7 +60,7 @@ void SilhouetteObj::Draw(const BlendMode& blendMode)
 		1, constantBufferColor_->constantBuffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced(
-		(unsigned short)obj->GetModel()->mesh.GetIndexSize(), 1, 0, 0, 0);
+		(uint16_t)obj->GetModel()->mesh.indices.size(), 1, 0, 0, 0);
 
 	obj->Draw(BlendMode::Alpha);
 }

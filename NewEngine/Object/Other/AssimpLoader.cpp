@@ -3,6 +3,8 @@
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 
+using namespace VertexBufferData;
+
 void AssimpLoader::LoadFbxModel(const std::string filePath, FbxModel* model)
 {
 	// インポーター
@@ -39,7 +41,7 @@ void AssimpLoader::ParseMesh(FbxModel* model, const aiScene* scene)
 }
 void AssimpLoader::ParseMeshVertices(FbxModel* model, aiMesh* mesh)
 {
-	std::vector<VertexPosNormalUvBone>& vertex = model->mesh.vertices;
+	std::vector<VFbxModel>& vertex = model->mesh.vertices;
 	vertex.resize(mesh->mNumVertices);
 
 	for (uint32_t i = 0; i < mesh->mNumVertices; i++)

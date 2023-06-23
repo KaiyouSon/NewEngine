@@ -1,14 +1,15 @@
 #include "Sprite.h"
 #include "MathUtil.h"
 #include "RenderBase.h"
-#include "TextureManager.h"
 #include "Camera.h"
+
+using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
 Sprite::Sprite() :
 	texture_(TextureManager::GetTexture("White")),
 	pos(0), scale(1), rot(0), color(Color::white), anchorPoint(0.5f), size(0),
-	vertexBuffer_(std::make_unique<VertexBuffer<VertexPosUv>>()),
+	vertexBuffer_(std::make_unique<VertexBuffer<VSprite>>()),
 	constantBufferTransform_(std::make_unique<ConstantBuffer<CTransform2D>>()),
 	constantBufferColor_(std::make_unique<ConstantBuffer<CColor>>()),
 	graphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Sprite"))

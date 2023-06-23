@@ -2,10 +2,11 @@
 #include "Camera.h"
 #include "RenderBase.h"
 
+using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
 Line::Line() :
-	vertexBuffer_(std::make_unique<VertexBuffer<VertexPos>>()),
+	vertexBuffer_(std::make_unique<VertexBuffer<VLine>>()),
 	constantBufferTransform_(std::make_unique<ConstantBuffer<CTransform3D>>()),
 	constantBufferColor_(std::make_unique<ConstantBuffer<CColor>>()),
 	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("Line"))

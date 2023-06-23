@@ -5,6 +5,8 @@
 #include <cassert>
 #include <DirectXTex.h>
 
+using namespace VertexBufferData;
+
 void FbxLoader::Init()
 {
 	assert(fbxManager_ == nullptr);
@@ -44,13 +46,13 @@ void FbxLoader::ParseMesh(FbxModel1* fbxModel, FbxNode* fbxNode)
 }
 void FbxLoader::ParseMeshVertices(FbxModel1* fbxModel, FbxMesh* fbxMesh)
 {
-	std::vector<VertexPosNormalUvBone>& vertices = fbxModel->mesh.vertices;
+	std::vector<VFbxModel>& vertices = fbxModel->mesh.vertices;
 
 	// 頂点座標データの数
 	const size_t controlPointsCount = fbxMesh->GetControlPointsCount();
 
 	// 必要の数分メモリを確保
-	VertexPosNormalUvBone vertex{};
+	VFbxModel vertex{};
 	fbxModel->mesh.vertices.resize(controlPointsCount, vertex);
 
 	// FBXメッシュの頂点座標配列を取得
@@ -59,7 +61,7 @@ void FbxLoader::ParseMeshVertices(FbxModel1* fbxModel, FbxMesh* fbxMesh)
 	// FBXメッシュの全頂点座標をモデル内の配列にコピーする
 	for (size_t i = 0; i < controlPointsCount; i++)
 	{
-		VertexPosNormalUvBone& vertex = vertices[i];
+		VFbxModel& vertex = vertices[i];
 
 		// 座標のコピー
 		vertex.pos.x = (float)pCoord[i][0];
@@ -69,7 +71,7 @@ void FbxLoader::ParseMeshVertices(FbxModel1* fbxModel, FbxMesh* fbxMesh)
 }
 void FbxLoader::ParseMeshFaces(FbxModel1* fbxModel, FbxMesh* fbxMesh)
 {
-	std::vector<VertexPosNormalUvBone>& vertices = fbxModel->mesh.vertices;
+	std::vector<VFbxModel>& vertices = fbxModel->mesh.vertices;
 	std::vector<unsigned short>& indices = fbxModel->mesh.indices;
 
 	// 1ファイルに複数メッシュのモデルは否対応
@@ -100,7 +102,7 @@ void FbxLoader::ParseMeshFaces(FbxModel1* fbxModel, FbxMesh* fbxMesh)
 			int index = fbxMesh->GetPolygonVertex(i, j);
 			assert(index >= 0);
 
-			VertexPosNormalUvBone& vertex = vertices[index];
+			VFbxModel& vertex = vertices[index];
 
 			// 頂点法線の読み込み
 			FbxVector4 normal;

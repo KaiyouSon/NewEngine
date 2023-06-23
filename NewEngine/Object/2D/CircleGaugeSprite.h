@@ -9,8 +9,8 @@
 class CircleGaugeSprite
 {
 private:
-	std::vector<VertexPosUv> vertices_;
-	std::unique_ptr<VertexBuffer<VertexPosUv>> vertexBuffer_;
+	std::vector<VertexBufferData::VSprite> vertices_;
+	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> vertexBuffer_;
 	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform2D>> constantBufferTransform_;
 	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> constantBufferColor_;
 	std::unique_ptr<ConstantBuffer<ConstantBufferData::CCircleGauge>> constantBufferCircleGauge_;

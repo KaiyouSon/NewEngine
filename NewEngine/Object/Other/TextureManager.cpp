@@ -595,7 +595,6 @@ Texture* TextureManager::CreateDepthTexture(Vec2 size)
 	return textureMap_[tag].get();
 }
 
-
 #pragma endregion
 
 #pragma region レンダーテクスチャー関連
