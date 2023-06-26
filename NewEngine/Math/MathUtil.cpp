@@ -41,7 +41,6 @@ void ConvertMat4FromFbx(Mat4* dst, const FbxAMatrix& src)
 	}
 }
 
-
 Mat4 ConvertScalingMat(Vec3 scale)
 {
 	return
@@ -97,17 +96,35 @@ Mat4 ConvertRotationMat(const Quaternion q)
 {
 	Mat4 result = Mat4::Identity();
 
-	result.m[0][0] = (q.w * q.w) + (q.x * q.x) - (q.y * q.y) - (q.z * q.z);
-	result.m[0][1] = 2 * (q.x * q.y + q.w * q.z);
-	result.m[0][2] = 2 * (q.x * q.z - q.w * q.y);
+	//result.m[0][0] = (q.w * q.w) + (q.x * q.x) - (q.y * q.y) - (q.z * q.z);
+	//result.m[0][1] = 2 * (q.x * q.y + q.w * q.z);
+	//result.m[0][2] = 2 * (q.x * q.z - q.w * q.y);
 
-	result.m[1][0] = 2 * (q.x * q.y - q.w * q.z);
-	result.m[1][1] = (q.w * q.w) - (q.x * q.x) + (q.y * q.y) - (q.z * q.z);
-	result.m[1][2] = 2 * (q.y * q.z + q.w * q.x);
+	//result.m[1][0] = 2 * (q.x * q.y - q.w * q.z);
+	//result.m[1][1] = (q.w * q.w) - (q.x * q.x) + (q.y * q.y) - (q.z * q.z);
+	//result.m[1][2] = 2 * (q.y * q.z + q.w * q.x);
 
-	result.m[2][0] = 2 * (q.x * q.z + q.w * q.y);
-	result.m[2][1] = 2 * (q.y * q.z - q.w * q.x);
-	result.m[1][2] = (q.w * q.w) - (q.x * q.x) - (q.y * q.y) + (q.z * q.z);
+	//result.m[2][0] = 2 * (q.x * q.z + q.w * q.y);
+	//result.m[2][1] = 2 * (q.y * q.z - q.w * q.x);
+	//result.m[2][2] = (q.w * q.w) - (q.x * q.x) - (q.y * q.y) + (q.z * q.z);
+
+	float xx = q.x * q.x * 2.f;
+	float yy = q.y * q.y * 2.f;
+	float zz = q.z * q.z * 2.f;
+	float xy = q.x * q.y * 2.f;
+	float xz = q.x * q.z * 2.f;
+	float yz = q.y * q.z * 2.f;
+	float wx = q.w * q.x * 2.f;
+	float wy = q.w * q.y * 2.f;
+	float wz = q.w * q.z * 2.f;
+
+	result =
+	{
+		1.f - yy - zz,	xy + wz,		xz - wy,		0.f,
+		xy - wz,		1.f - xx - zz,	yz + wx,		0.f,
+		xz + wy,		yz + wx,		1.f - xx - yy,	0.f,
+		0.f,			0.f,			0.f,			1.f,
+	};
 
 	return result;
 }
@@ -257,6 +274,43 @@ Mat4 ConvertViewportMat(Viewport& viewport)
 	viewportMat.m[3][1] = viewport.GetLeftTopPos().y + viewport.GetSize().y / 2;
 	viewportMat.m[3][2] = viewport.GetMinDepth();
 	return viewportMat;
+}
+
+Mat4 CalculateWorldMat(const Vec3 pos, const Vec3 scale, const Vec3 rot)
+{
+	Mat4 result = Mat4::Identity();
+
+	// 平行移動、スケーリング、回転行列作成
+	Mat4 transMat = Mat4::Identity();
+	Mat4 scaleMat = Mat4::Identity();
+	Mat4 rotMat = Mat4::Identity();
+
+	transMat = ConvertTranslationMat(pos);	// 平行移動
+	scaleMat = ConvertScalingMat(scale);		// スケーリング
+	rotMat *= ConvertRotationZAxisMat(rot.z);	// z軸回転
+	rotMat *= ConvertRotationXAxisMat(rot.x);	// x軸回転
+	rotMat *= ConvertRotationYAxisMat(rot.y);	// y軸回転
+
+	result = scaleMat * rotMat * transMat;
+
+	return result;
+}
+Mat4 CalculateWorldMat(const Vec3 pos, const Vec3 scale, const Quaternion rot)
+{
+	Mat4 result = Mat4::Identity();
+
+	// 平行移動、スケーリング、回転行列作成
+	Mat4 transMat = Mat4::Identity();
+	Mat4 scaleMat = Mat4::Identity();
+	Mat4 rotMat = Mat4::Identity();
+
+	transMat = ConvertTranslationMat(pos);	// 平行移動
+	scaleMat = ConvertScalingMat(scale);	// スケーリング
+	rotMat = ConvertRotationMat(rot);		// 回転
+
+	result = scaleMat * rotMat * transMat;
+
+	return result;
 }
 
 Vec3 operator+(const float num, const Vec3 v) { return { num + v.x,num + v.y,num + v.z }; }

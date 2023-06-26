@@ -60,8 +60,8 @@ void SceneManager::DrawFrontSprite()
 	currentScene->DrawFrontSprite();
 
 #ifdef _DEBUG
-	currentScene->DrawDebugGui();
 #endif
+	currentScene->DrawDebugGui();
 }
 
 void SceneManager::DrawRenderTexture()

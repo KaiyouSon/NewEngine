@@ -23,31 +23,8 @@ cbuffer ConstantBufferDataColor : register(b2)
     float4 color; // 色
 }
 
-static const int directionalLightNum = 1;
-static const int pointLightNum = 3;
-static const int spotLightNum = 3;
-cbuffer ConstantBufferDataLightManager : register(b3)
-{
-    DirectionalLight directionalLights[directionalLightNum];
-    PointLight pointLights[pointLightNum];
-    SpotLight spotLights[spotLightNum];
-};
-
-// --- フォグ ---------------------- //
-cbuffer ConstantBufferDataFog : register(b4)
-{
-    Fog fog;
-};
-
-
-static const int circleShadowNum = 1;
-cbuffer ConstantBufferDataCircleShadow : register(b6)
-{
-    CircleShadow circleShadows[circleShadowNum];
-}
-
 static const int maxBones = 32;
-cbuffer ConstantBufferDataSkinning : register(b5)
+cbuffer ConstantBufferDataSkinning : register(b3)
 {
     matrix skinningMat[maxBones];
 }

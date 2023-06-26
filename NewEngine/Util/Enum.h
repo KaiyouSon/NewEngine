@@ -59,4 +59,5 @@ enum class ModelFormat
 {
 	Obj,
 	Fbx,
+	DFbx,
 };

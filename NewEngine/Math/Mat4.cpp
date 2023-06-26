@@ -113,6 +113,19 @@ Mat4 Mat4::Inverse()
 	return inverseMat;
 }
 
+Mat4 Mat4::Transpose()
+{
+	Mat4 result;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			result.m[i][j] = m[j][i];
+		}
+	}
+	return result;
+}
+
 void Mat4::SetXAxis(const Vec3 xAxis) { m[0][0] = xAxis.x; m[0][1] = xAxis.y; m[0][2] = xAxis.z; }
 void Mat4::SetYAxis(const Vec3 yAxis) { m[1][0] = yAxis.x;	m[1][1] = yAxis.y; m[1][2] = yAxis.z; }
 void Mat4::SetZAxis(const Vec3 zAxis) { m[2][0] = zAxis.x;	m[2][1] = zAxis.y; m[2][2] = zAxis.z; }

@@ -46,6 +46,9 @@ Mat4 ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, 
 Mat4 ConvertOrthoGrphicProjectionMat(float WIN_WIDTH, float WIN_HEIGHT);						// ïΩçséÀâeïœä∑
 Mat4 ConvertViewportMat(Viewport& viewport);
 
+Mat4 CalculateWorldMat(const Vec3 pos, const Vec3 scale, const Vec3 rot);
+Mat4 CalculateWorldMat(const Vec3 pos, const Vec3 scale, const Quaternion rot);
+
 Vec3 operator+(const float num, const Vec3 v);
 Vec3 operator-(const float num, const Vec3 v);
 Vec3 operator*(const float num, const Vec3 v);

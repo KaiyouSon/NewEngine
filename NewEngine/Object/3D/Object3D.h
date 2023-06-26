@@ -11,9 +11,6 @@
 class Object3D
 {
 private:
-	std::unique_ptr<ConstantBuffer<ConstantBufferData::CSkin>> constantBufferSkin_;
-
-private:
 	// バッファ転送
 	void TransferBuffer();
 

@@ -54,7 +54,10 @@ public:
 	FbxScene* fbxScene = nullptr;
 	FbxAnimetion fbxAnimetion;
 
-	FbxModel1();
+	FbxModel1()
+	{
+		format = ModelFormat::DFbx;
+	}
 	void PlayAnimetion();
 
 public:

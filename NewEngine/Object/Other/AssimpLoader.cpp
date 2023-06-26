@@ -1,31 +1,29 @@
 #include "AssimpLoader.h"
 #include "TextureManager.h"
-#include <assimp/Importer.hpp>
-#include <assimp/postprocess.h>
 
 using namespace VertexBufferData;
 
 void AssimpLoader::LoadFbxModel(const std::string filePath, FbxModel* model)
 {
-	// インポーター
-	Assimp::Importer importer;
-
 	// フラグ
 	uint32_t flags = aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs;
 
 	// シーンの読み込み
-	const aiScene* scene = importer.ReadFile(filePath, flags);
+	model->scene = model->importer.ReadFile(filePath, flags);
 
-	if (scene == nullptr)
+	if (model->scene == nullptr)
 	{
 		assert(0 && "モデルの読み込みが失敗しました");
 	}
 
 	// メッシュの解析
-	ParseMesh(model, scene);
+	ParseMesh(model, model->scene);
 
 	// マテリアルの解析
-	ParseMaterial(model, scene);
+	ParseMaterial(model, model->scene);
+
+	ParseNodeRecursive(model, nullptr, model->scene->mRootNode);
+
 }
 
 void AssimpLoader::ParseMesh(FbxModel* model, const aiScene* scene)
@@ -115,9 +113,7 @@ void AssimpLoader::ParseSkin(FbxModel* model, aiMesh* mesh)
 			float weight;
 		};
 
-		// 二次元配列（ジャグ配列）
-		// list:頂点が影響を受けるボーンの全リスト
-		// vector:それを全頂点分
+		// 二次元配列（ジャグ配列） list:頂点が影響を受けるボーンの全リスト vector:それを全頂点分
 		std::vector<std::list<WeightSet>> weightLists(model->mesh.vertices.size());
 
 		// ボーンの最大数設定
@@ -128,8 +124,11 @@ void AssimpLoader::ParseSkin(FbxModel* model, aiMesh* mesh)
 		{
 			aiBone* bone = mesh->mBones[i];
 
+			model->bones[i].name = bone->mName.C_Str();
+
 			// ボーンの初期姿勢行列(バインドポーズ行列)
 			Mat4 initalMat = ConvertMat4FromAssimpMat(bone->mOffsetMatrix);
+			model->bones[i].initalPose = initalMat;
 			model->bones[i].invInitalPose = initalMat.Inverse();
 
 			// ウェイトの読み取り
@@ -233,6 +232,102 @@ void AssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 				model->texture = TextureManager::LoadMaterialTexture(fullPath, textureTag);
 			}
 		}
+	}
+}
+void AssimpLoader::ParseNodeRecursive(FbxModel* model, Node* parent, const aiNode* node)
+{
+	aiString nodeName = node->mName;
+
+	// モデルにノードを追加
+	model->nodes.emplace_back();
+	Node& modelNode = model->nodes.back();
+
+	// ノード名を取得
+	modelNode.name = node->mName.C_Str();
+
+	// ノードのローカル情報
+	aiVector3D scale;
+	aiQuaternion rot;
+	aiVector3D pos;
+	node->mTransformation.Decompose(scale, rot, pos);
+
+	modelNode.scale = { scale.x,scale.y,scale.z };
+	modelNode.rot = { rot.x,rot.y,rot.z };
+	modelNode.pos = { pos.x,pos.y,pos.z };
+
+	// 平行移動、スケーリング、回転行列作成
+	Mat4 transMat = Mat4::Identity();
+	Mat4 scaleMat = Mat4::Identity();
+	Mat4 rotMat = Mat4::Identity();
+
+	transMat = ConvertTranslationMat(modelNode.pos);	// 平行移動
+	scaleMat = ConvertScalingMat(modelNode.scale);		// スケーリング
+	rotMat *= ConvertRotationZAxisMat(modelNode.rot.z);	// z軸回転
+	rotMat *= ConvertRotationXAxisMat(modelNode.rot.x);	// x軸回転
+	rotMat *= ConvertRotationYAxisMat(modelNode.rot.y);	// y軸回転
+
+	// ローカル行列
+	modelNode.localTransformMat = scaleMat * rotMat * transMat;
+
+	// グローバル行列
+	modelNode.globalTransformMat = modelNode.localTransformMat;
+	if (parent)
+	{
+		modelNode.parent = parent;
+		// 親の変形を乗算
+		modelNode.globalTransformMat *= parent->globalTransformMat;
+	}
+
+	// 再帰
+	for (uint32_t i = 0; i < node->mNumChildren; i++)
+	{
+		ParseNodeRecursive(model, &modelNode, node->mChildren[i]);
+	}
+
+}
+void AssimpLoader::ParseAnimetion(FbxModel* model, const aiScene* scene)
+{
+	for (uint32_t i = 0; i < scene->mNumAnimations; i++)
+	{
+		aiAnimation* animation = scene->mAnimations[i];
+
+		// 開始時間と終了時間
+		//model->anime.startTime = 0.f;
+		//model->anime.endTime = animation->mDuration / animation->mTicksPerSecond;
+		//model->anime.frameTime = 1.f / 60.f;
+
+
+		//for (uint32_t j = 0; j < animation->mNumChannels; j++)
+		//{
+		//	aiNodeAnim* nodeAnim = animation->mChannels[j];
+		//	// ノード名
+		//	std::string nodeName = nodeAnim->mNodeName.data;
+
+		//	// 各キーフレームの処理
+		//	for (uint32_t j = 0; j < nodeAnim->mNumPositionKeys; j++)
+		//	{
+		//		// 位置キーフレームの処理
+		//		aiVector3D position = nodeAnim->mPositionKeys[j].mValue;
+		//		float timeStamp = nodeAnim->mPositionKeys[j].mTime;
+		//		// ...
+		//	}
+
+		//	for (uint32_t j = 0; j < nodeAnim->mNumRotationKeys; j++)
+		//	{
+		//		// 回転キーフレームの処理
+		//		aiQuaternion rotation = nodeAnim->mRotationKeys[j].mValue;
+		//		float timeStamp = nodeAnim->mRotationKeys[j].mTime;
+		//		// ...
+		//	}
+
+		//	for (uint32_t j = 0; j < nodeAnim->mNumScalingKeys; j++)
+		//	{
+		//		// スケーリングキーフレームの処理
+		//		aiVector3D scaling = nodeAnim->mScalingKeys[j].mValue;
+		//		float timeStamp = nodeAnim->mScalingKeys[j].mTime;
+		//		// ...
+		//	}
+		//}
 	}
 }
 

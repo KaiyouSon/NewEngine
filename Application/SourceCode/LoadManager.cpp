@@ -15,7 +15,10 @@ bool LoadManager::ModelLoad()
 	//ModelManager::LoadObjModel("Plane", "Plane");
 	ModelManager::LoadObjModel("SkyDome", "SkyDome");
 	ModelManager::LoadObjModel("Block1", "Block1");
-	ModelManager::LoadFbxModel("boneTest", "Cube");
+	ModelManager::LoadFbxModel("boneTest", "BoneTest");
+	ModelManager::LoadFbxModelDebug("boneTest", "Debug");
+	ModelManager::LoadFbxModel("NeruStand", "NeruStand");
+	//ModelManager::LoadFbxModelDebug("NeruStand", "DebugNeruStand");
 
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
 	return true;

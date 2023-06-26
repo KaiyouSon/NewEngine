@@ -12,11 +12,13 @@ void TestScene::Init()
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
+	//obj1_.SetModel(ModelManager::GetModel("Block1"));
 	obj1_.SetModel(ModelManager::GetModel("Block1"));
-	obj2_.SetModel(ModelManager::GetModel("Cube"));
+	obj2_.SetModel(ModelManager::GetModel("BoneTest"));
 	obj2_.pos.x = 3;
 
 	obj1_.SetTexture(TextureManager::GetTexture("pic"));
+	//obj2_.SetTexture(TextureManager::GetTexture("pic"));
 
 	skyDome_.SetModel(ModelManager::GetModel("SkyDome"));
 
@@ -41,7 +43,7 @@ void TestScene::Init()
 
 	//SoundManager::Play("GameBGM");
 
-	postEffectType_ = 7;
+	postEffectType_ = 0;
 }
 void TestScene::Update()
 {
@@ -189,7 +191,6 @@ void TestScene::RenderTextureSetting()
 		{
 			objs_[i].Draw();
 		}
-		skyDome_.Draw();
 		dof_.PostSceneDraw();
 	}
 	else if (postEffectType_ == 5)
@@ -215,7 +216,7 @@ void TestScene::DrawBackSprite()
 void TestScene::DrawModel()
 {
 	//obj1_.Draw();
-	obj2_.Draw();
+	//obj2_.Draw();
 }
 void TestScene::DrawFrontSprite()
 {
@@ -255,12 +256,15 @@ void TestScene::DrawDebugGui()
 {
 	GuiManager::BeginWindow("PostEffect");
 	GuiManager::DrawInputInt("PostEffectType", (int&)postEffectType_);
+	postEffectType_ = Clamp<uint32_t>(postEffectType_, 0, 6);
 
 	GuiManager::DrawString("PostEffectType 0 : CG4Task");
 	GuiManager::DrawString("PostEffectType 1 : Bloom");
-	GuiManager::DrawString("PostEffectType 2 : GaussianBlur");
+	GuiManager::DrawString("PostEffectType 2 : Gaussian Blur");
 	GuiManager::DrawString("PostEffectType 3 : Glare");
 	GuiManager::DrawString("PostEffectType 4 : Depth Of Field");
+	GuiManager::DrawString("PostEffectType 5 : Radial Blur");
+	GuiManager::DrawString("PostEffectType 6 : Vignette");
 
 	GuiManager::EndWindow();
 

@@ -574,6 +574,8 @@ Texture* TextureManager::LoadMaterialTexture(std::string filePath, std::string t
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
 
+	ExcuteComandList();
+
 	return textureMap_[textureTag].get();
 }
 

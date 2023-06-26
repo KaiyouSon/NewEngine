@@ -351,6 +351,9 @@
     <ClCompile Include="Application\SourceCode\RadialBlur.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\Model.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">

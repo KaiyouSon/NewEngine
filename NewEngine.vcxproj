@@ -146,6 +146,7 @@
     <ClCompile Include="NewEngine\Object\Other\FbxModel.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Material.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Mesh.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\Model.cpp" />
     <ClCompile Include="NewEngine\Object\Other\ModelManager.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Object3D.cpp" />
     <ClCompile Include="NewEngine\Object\3D\OutLineObj.cpp" />

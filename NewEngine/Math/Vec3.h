@@ -31,6 +31,8 @@ struct Vec3
 	float Length() const;    // ベクトルの大きさ
 	Vec3 Norm() const;    // 正規化にしたベクトル
 
+	static Vec3 Lerp(const Vec3 s, const Vec3 e, const float f);
+
 	// static関数
 	static float Dot(const Vec3 v1, const Vec3 v2);		// 二つのベクトルの内積
 	static Vec3 Cross(const Vec3 v1, const Vec3 v2);		// 二つのベクトルの外積

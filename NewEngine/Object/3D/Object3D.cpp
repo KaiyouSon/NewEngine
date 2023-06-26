@@ -11,14 +11,10 @@ bool Object3D::isAllLighting = false;
 
 Object3D::Object3D() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
-	constantBufferSkin_(std::make_unique<ConstantBuffer<CSkin>>()),
 	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
 	texture_(TextureManager::GetTexture("White")),
 	isLighting(false)
 {
-	// 定数バッファ初期化
-	constantBufferSkin_->Create();
-
 	// マテリアルの初期化
 	MaterialInit();
 
@@ -75,9 +71,9 @@ void Object3D::Draw(const BlendMode blendMode)
 
 	MaterialDrawCommands();
 
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		5, constantBufferSkin_->constantBuffer->GetGPUVirtualAddress());
-	LightManager::GetInstance()->Draw();
+	//renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+	//	5, constantBufferSkin_->constantBuffer->GetGPUVirtualAddress());
+	//LightManager::GetInstance()->Draw();
 
 	size_t index = renderBase->GetObject3DRootSignature()->GetConstantBufferNum();
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
@@ -154,6 +150,10 @@ void Object3D::MaterialInit()
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
 	material_.constantBuffers.push_back(std::move(iConstantBuffer));
 
+	// スキニング
+	iConstantBuffer = std::make_unique<ConstantBuffer<CSkin>>();
+	material_.constantBuffers.push_back(std::move(iConstantBuffer));
+
 	// 初期化
 	material_.Init();
 }
@@ -189,6 +189,40 @@ void Object3D::MaterialTransfer()
 	// 色データ
 	CColor colorData = { color / 255 };
 	TransferDataToConstantBuffer(material_.constantBuffers[2].get(), colorData);
+
+	// スキン情報
+	if (model_->format == ModelFormat::Fbx)
+	{
+		auto fbxModel = static_cast<FbxModel*>(model_);
+
+		CSkin skinData{};
+		for (uint32_t i = 0; i < fbxModel->bones.size(); i++)
+		{
+			Mat4 currentPoseMat = fbxModel->GetCurrentMatrix(i);
+			Mat4 initalPoseMat = fbxModel->bones[i].initalPose.Transpose();
+			//skinData.bones[i] = fbxModel->bones[i].currentMat * initalPoseMat;
+			//skinData.bones[i] = fbxModel->bones[i].currentMat;
+			skinData.bones[i] = Mat4::Identity();
+			int a = 0;
+		}
+		TransferDataToConstantBuffer(material_.constantBuffers[3].get(), skinData);
+	}
+	if (model_->format == ModelFormat::DFbx)
+	{
+		auto fbxModel = static_cast<FbxModel1*>(model_);
+
+		CSkin skinData{};
+		for (size_t i = 0; i < fbxModel->bones.size(); i++)
+		{
+			Mat4 currentPoseMat;
+			FbxAMatrix currentPoseFbxMat =
+				fbxModel->bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(0);
+			ConvertMat4FromFbx(&currentPoseMat, currentPoseFbxMat);
+
+			skinData.bones[i] = fbxModel->bones[i].invInitPoseMat * currentPoseMat;
+		}
+		TransferDataToConstantBuffer(material_.constantBuffers[3].get(), skinData);
+	}
 }
 void Object3D::MaterialDrawCommands()
 {
@@ -198,13 +232,14 @@ void Object3D::MaterialDrawCommands()
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		0, material_.constantBuffers[0]->constantBuffer->GetGPUVirtualAddress());
 
-	// CBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		1, material_.constantBuffers[1]->constantBuffer->GetGPUVirtualAddress());
 
-	// CBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		2, material_.constantBuffers[2]->constantBuffer->GetGPUVirtualAddress());
+
+	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+		3, material_.constantBuffers[3]->constantBuffer->GetGPUVirtualAddress());
 
 }
 
@@ -221,12 +256,12 @@ void Object3D::SetModel(Model* model)
 	{
 		graphicsPipeline_ = GraphicsPipelineManager::GetGraphicsPipeline("Object3D");
 	}
-	// 一回Objの方のパイプラインを使う
-
-	//if (model_->format == ModelFormat::Fbx)
-	//{
-	//	graphicsPipeline_ = GraphicsPipelineManager::GetGraphicsPipeline("FbxModel");
-	//}
+	if (model_->format == ModelFormat::Fbx ||
+		model_->format == ModelFormat::DFbx)
+	{
+		graphicsPipeline_ = GraphicsPipelineManager::GetGraphicsPipeline("Object3D");
+		//graphicsPipeline_ = GraphicsPipelineManager::GetGraphicsPipeline("FbxModel");
+	}
 }
 
 // テクスチャー

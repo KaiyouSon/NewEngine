@@ -14,6 +14,12 @@ float Vec3::Length() const { return sqrtf(x * x + y * y + z * z); }
 
 Vec3 Vec3::Norm() const { return { x / Length(), y / Length(), z / Length() }; }
 
+Vec3 Vec3::Lerp(const Vec3 s, const Vec3 e, const float f)
+{
+	Vec3 dis = e - s;
+	return dis * f + s;
+}
+
 float Vec3::Dot(const Vec3 v1, const Vec3 v2) { return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z; }
 
 Vec3 Vec3::Cross(const Vec3 v1, const Vec3 v2)
