@@ -16,9 +16,6 @@ void AssimpLoader::LoadFbxModel(const std::string filePath, FbxModel* model)
 		assert(0 && "モデルの読み込みが失敗しました");
 	}
 
-	// メッシュの解析
-	//ParseMesh(model, model->scene);
-
 	// マテリアルの解析
 	ParseMaterial(model, model->scene);
 
@@ -51,48 +48,22 @@ void AssimpLoader::ParseMeshVertices(FbxModel* model, aiMesh* mesh)
 
 		// uv座標
 		vertex[i].uv.x = mesh->mTextureCoords[0][i].x;
-		vertex[i].uv.y = mesh->mTextureCoords[0][i].y;
+		vertex[i].uv.y = -mesh->mTextureCoords[0][i].y;
 	}
 }
 void AssimpLoader::ParseMeshFaces(FbxModel* model, aiMesh* mesh)
 {
 	std::vector<uint16_t>& indices = model->mesh.indices;
+	indices.resize(mesh->mNumFaces * 3);
 
 	// フェンス
 	for (uint32_t i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
 
-		if (face.mNumIndices == 3) // 三角形の場合
+		for (uint32_t j = 0; j < face.mNumIndices; j++)
 		{
-			uint32_t index1 = face.mIndices[0];
-			uint32_t index2 = face.mIndices[1];
-			uint32_t index3 = face.mIndices[2];
-
-			if (i % 2 == 0)
-			{
-				indices.push_back(index1);
-				indices.push_back(index2);
-				indices.push_back(index3);
-			}
-			else
-			{
-				indices.push_back(index2);
-				indices.push_back(index3);
-				indices.push_back(index1);
-			}
-		}
-		else if (face.mNumIndices == 4) // 四角形の場合
-		{
-			uint32_t index1 = face.mIndices[0];
-			uint32_t index2 = face.mIndices[1];
-			uint32_t index3 = face.mIndices[2];
-			uint32_t index4 = face.mIndices[3];
-
-			indices.push_back(index2);
-			indices.push_back(index3);
-			indices.push_back(index4);
-			indices.push_back(index1);
+			indices[i * 3 + j] = face.mIndices[j];
 		}
 	}
 }
@@ -104,7 +75,7 @@ void AssimpLoader::ParseSkin(FbxModel* model, aiMesh* mesh)
 		// ボーン番号とスキンウェイトのペア
 		struct WeightSet
 		{
-			UINT index;
+			uint32_t index;
 			float weight;
 		};
 
@@ -119,12 +90,12 @@ void AssimpLoader::ParseSkin(FbxModel* model, aiMesh* mesh)
 		{
 			aiBone* bone = mesh->mBones[i];
 
+			// ボーンの名前
 			model->bones[i].name = bone->mName.C_Str();
 
 			// ボーンの初期姿勢行列(バインドポーズ行列)
 			Mat4 initalMat = ConvertMat4FromAssimpMat(bone->mOffsetMatrix);
-			model->bones[i].initalPose = initalMat;
-			model->bones[i].invInitalPose = initalMat.Inverse();
+			model->bones[i].offsetMat = initalMat.Transpose();
 
 			// ウェイトの読み取り
 			for (uint32_t j = 0; j < bone->mNumWeights; j++)
@@ -134,14 +105,14 @@ void AssimpLoader::ParseSkin(FbxModel* model, aiMesh* mesh)
 				// スキンウェイト
 				float weight = bone->mWeights[j].mWeight;
 				// その頂点の影響を受けるボーンリストに、ボーンとウェイトのペアを追加
-				weightLists[vertexIndex].emplace_back(WeightSet{ (UINT)i,weight });
+				weightLists[vertexIndex].emplace_back(WeightSet{ i,weight });
 			}
 		}
 
 		// ウェイトの整理
 		auto& vertices = model->mesh.vertices;
 		// 各頂点について処理
-		for (uint32_t i = 0; i < mesh->mNumBones; i++)
+		for (uint32_t i = 0; i < vertices.size(); i++)
 		{
 			// 頂点のウェイトから最も大きい4つを選択
 			auto& weightList = weightLists[i];
@@ -240,29 +211,8 @@ void AssimpLoader::ParseNodeRecursive(FbxModel* model, Node* parent, const aiNod
 	// ノード名を取得
 	modelNode.name = node->mName.C_Str();
 
-	// ノードのローカル情報
-	aiVector3D scale;
-	aiQuaternion rot;
-	aiVector3D pos;
-	node->mTransformation.Decompose(scale, rot, pos);
-
-	modelNode.scale = { scale.x,scale.y,scale.z };
-	modelNode.rot = { rot.x,rot.y,rot.z };
-	modelNode.pos = { pos.x,pos.y,pos.z };
-
-	// 平行移動、スケーリング、回転行列作成
-	Mat4 transMat = Mat4::Identity();
-	Mat4 scaleMat = Mat4::Identity();
-	Mat4 rotMat = Mat4::Identity();
-
-	transMat = ConvertTranslationMat(modelNode.pos);	// 平行移動
-	scaleMat = ConvertScalingMat(modelNode.scale);		// スケーリング
-	rotMat *= ConvertRotationZAxisMat(modelNode.rot.z);	// z軸回転
-	rotMat *= ConvertRotationXAxisMat(modelNode.rot.x);	// x軸回転
-	rotMat *= ConvertRotationYAxisMat(modelNode.rot.y);	// y軸回転
-
 	// ローカル行列
-	modelNode.localTransformMat = scaleMat * rotMat * transMat;
+	modelNode.localTransformMat = ConvertMat4FromAssimpMat(node->mTransformation);
 
 	// グローバル行列
 	modelNode.globalTransformMat = modelNode.localTransformMat;

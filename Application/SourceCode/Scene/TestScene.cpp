@@ -99,6 +99,10 @@ void TestScene::Update()
 		skyDome_.Update();
 		vignette_.Update();
 	}
+	if (postEffectType_ == 7)
+	{
+		obj2_.SetAnimation(0, (uint32_t)animationTime_);
+	}
 }
 
 void TestScene::RenderTextureSetting()
@@ -216,8 +220,10 @@ void TestScene::DrawBackSprite()
 }
 void TestScene::DrawModel()
 {
-	obj1_.Draw();
-	//obj2_.Draw();
+	if (postEffectType_ == 7)
+	{
+		obj2_.Draw();
+	}
 }
 void TestScene::DrawFrontSprite()
 {
@@ -265,6 +271,7 @@ void TestScene::DrawDebugGui()
 	GuiManager::DrawString("PostEffectType 4 : Depth Of Field");
 	GuiManager::DrawString("PostEffectType 5 : Radial Blur");
 	GuiManager::DrawString("PostEffectType 6 : Vignette");
+	GuiManager::DrawString("PostEffectType 7 : Skin Animation");
 
 	GuiManager::EndWindow();
 
@@ -286,6 +293,11 @@ void TestScene::DrawDebugGui()
 	else if (postEffectType_ == 6)
 	{
 		vignette_.DrawDebugGui();
+	}
+	else if (postEffectType_ == 7)
+	{
+		GuiManager::DrawSlider1("Animation Time", animationTime_);
+		animationTime_ = Max<float>(animationTime_, 60.f);
 	}
 
 	GuiManager::EndWindow();

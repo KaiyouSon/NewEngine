@@ -26,15 +26,6 @@ Object3D::Object3D() :
 	}
 }
 
-void Object3D::PlayAnimetion()
-{
-	//if (model_->modelType == "FBX")
-	//{
-	//	// ボーン配列
-	//	auto fbxModel = static_cast<FbxModel1*>(model_);
-	//	fbxModel->PlayAnimetion();
-	//}
-}
 void Object3D::Update(Transform* parent)
 {
 	transform_.pos = pos;
@@ -194,16 +185,12 @@ void Object3D::MaterialTransfer()
 	if (model_->format == ModelFormat::Fbx)
 	{
 		auto fbxModel = static_cast<FbxModel*>(model_);
+		fbxModel->PlayAnimetion();
 
 		CSkin skinData{};
 		for (uint32_t i = 0; i < fbxModel->bones.size(); i++)
 		{
-			Mat4 currentPoseMat = fbxModel->GetCurrentMatrix(i);
-			Mat4 initalPoseMat = fbxModel->bones[i].initalPose.Transpose();
-			//skinData.bones[i] = fbxModel->bones[i].currentMat * initalPoseMat;
-			skinData.bones[i] = fbxModel->bones[i].currentMat.Transpose();
-			//skinData.bones[i] = Mat4::Identity();
-			int a = 0;
+			skinData.bones[i] = fbxModel->bones[i].currentMat;
 		}
 		TransferDataToConstantBuffer(material_.constantBuffers[3].get(), skinData);
 	}
@@ -241,6 +228,19 @@ void Object3D::MaterialDrawCommands()
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		3, material_.constantBuffers[3]->constantBuffer->GetGPUVirtualAddress());
 
+}
+
+void Object3D::SetAnimation(const uint32_t animationIndex, const uint32_t maxFrame, const bool isPlay)
+{
+	// スキン情報
+	if (model_->format == ModelFormat::Fbx)
+	{
+		auto fbxModel = static_cast<FbxModel*>(model_);
+
+		fbxModel->animation.index = animationIndex;
+		fbxModel->animation.timer.SetLimitTimer(maxFrame);
+		fbxModel->animation.isPlay = isPlay;
+	}
 }
 
 // --- セッター -------------------------------------------------------- //

@@ -15,6 +15,7 @@ private:
 	Object3D obj1_;
 	Object3D obj2_;
 	Object3D skyDome_;
+	float animationTime_;
 
 	Sprite spr_;
 

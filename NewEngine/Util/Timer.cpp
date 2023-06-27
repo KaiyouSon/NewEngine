@@ -16,24 +16,18 @@ void Timer::Reset()
 
 void Timer::Update(const bool isRoop, const int32_t addTimer)
 {
-	if (isTimeOut_ == true)
+	timer_ += addTimer;
+
+	if (timer_ >= limitTimer_)
 	{
-		if (timer_ >= limitTimer_)
-		{
-			Reset();
-		}
+		isTimeOut_ = true;
+		Reset();
+
 	}
 	else
 	{
-		timer_ += addTimer;
-
-		if (timer_ >= limitTimer_)
-		{
-			isTimeOut_ = true;
-		}
-		else
-		{
-			isTimeOut_ = false;
-		}
+		isTimeOut_ = false;
 	}
+
+	timeRate_ = (float)(timer_) / (float)limitTimer_;
 }

@@ -6,6 +6,7 @@ class Timer
 private:
 	int32_t timer_;
 	int32_t limitTimer_;
+	float timeRate_;
 	bool isTimeOut_;
 
 public:
@@ -20,7 +21,7 @@ public:	// セッター
 
 public:	// ゲッター
 	inline int32_t GetTimer() { return timer_; }
-	inline float GetTimeRate() { return (float)(timer_ / limitTimer_); }
+	inline float GetTimeRate() { return timeRate_; }
 	inline bool GetisTimeOut() { return isTimeOut_; }
 };
 

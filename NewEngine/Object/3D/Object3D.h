@@ -27,6 +27,8 @@ private:
 	Material material_;
 	GraphicsPipeline* graphicsPipeline_;
 
+	FbxAnimation animation;
+
 public:
 	Vec3 pos;
 	Vec3 scale;
@@ -43,7 +45,6 @@ private:
 
 public:
 	Object3D();
-	void PlayAnimetion();
 	void Update(Transform* parent = nullptr);
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 
@@ -58,8 +59,8 @@ public: //セッター
 	// グラフィックスパイプライン
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
-	// 色
-	void SetColor(const Color color);
+	// アニメーション
+	void SetAnimation(const uint32_t animationIndex, const uint32_t maxFrame, const bool isPlay = true);
 
 public: // ゲッター
 

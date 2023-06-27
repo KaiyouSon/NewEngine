@@ -17,8 +17,7 @@ class FbxModel1;
 struct Bone
 {
 	std::string name;
-	Mat4 initalPose;
-	Mat4 invInitalPose;
+	Mat4 offsetMat;
 	Mat4 currentMat;
 };
 
@@ -33,7 +32,6 @@ struct Node
 	Node* parent = nullptr;
 };
 
-
 struct Model
 {
 	std::string name;
@@ -47,26 +45,35 @@ struct Model
 
 struct ObjModel : public Model
 {
-
 	ObjModel()
 	{
 		format = ModelFormat::Obj;
 	}
 };
 
+struct FbxAnimation
+{
+	uint32_t index = 0;
+	Timer timer;
+	bool isPlay = false;
+};
+
 struct FbxModel : public Model
 {
 	std::vector<Bone> bones;
 	std::vector<Node> nodes;
-	float animeDuration;
 
 	Assimp::Importer importer;
 	const aiScene* scene;
+	FbxAnimation animation;
 
 	FbxModel()
 	{
 		format = ModelFormat::Fbx;
 	}
+
+	void PlayAnimetion();
+
 	aiNodeAnim* FindNodeAnim(const std::string& nodeName, aiAnimation* animation);
 
 	uint32_t FindScaleIndex(const aiNodeAnim* nodeAnim, const float currentTime);
@@ -77,7 +84,5 @@ struct FbxModel : public Model
 	Quaternion CalcCurrentRot(const aiNodeAnim* nodeAnim, const float currentTime);
 	Vec3 CalcCurrentPos(const aiNodeAnim* nodeAnim, const float currentTime);
 
-	void ParseNodeHeirarchy(const float currentTime, const Mat4& parentMat, const aiNode* rootNode);
-
-	Mat4 GetCurrentMatrix(const uint32_t index);
+	void ParseNodeHeirarchy(const float currentTime, const uint32_t index, const Mat4& parentMat, const aiNode* rootNode);
 };
