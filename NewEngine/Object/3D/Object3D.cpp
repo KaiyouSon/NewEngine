@@ -201,8 +201,8 @@ void Object3D::MaterialTransfer()
 			Mat4 currentPoseMat = fbxModel->GetCurrentMatrix(i);
 			Mat4 initalPoseMat = fbxModel->bones[i].initalPose.Transpose();
 			//skinData.bones[i] = fbxModel->bones[i].currentMat * initalPoseMat;
-			//skinData.bones[i] = fbxModel->bones[i].currentMat;
-			skinData.bones[i] = Mat4::Identity();
+			skinData.bones[i] = fbxModel->bones[i].currentMat.Transpose();
+			//skinData.bones[i] = Mat4::Identity();
 			int a = 0;
 		}
 		TransferDataToConstantBuffer(material_.constantBuffers[3].get(), skinData);
@@ -259,8 +259,8 @@ void Object3D::SetModel(Model* model)
 	if (model_->format == ModelFormat::Fbx ||
 		model_->format == ModelFormat::DFbx)
 	{
-		graphicsPipeline_ = GraphicsPipelineManager::GetGraphicsPipeline("Object3D");
-		//graphicsPipeline_ = GraphicsPipelineManager::GetGraphicsPipeline("FbxModel");
+		//graphicsPipeline_ = GraphicsPipelineManager::GetGraphicsPipeline("Object3D");
+		graphicsPipeline_ = GraphicsPipelineManager::GetGraphicsPipeline("FbxModel");
 	}
 }
 

@@ -74,7 +74,7 @@ struct FbxModel : public Model
 	uint32_t FindPosIndex(const aiNodeAnim* nodeAnim, const float currentTime);
 
 	Vec3 CalcCurrentScale(const aiNodeAnim* nodeAnim, const float currentTime);
-	Vec3 CalcCurrentRot(const aiNodeAnim* nodeAnim, const float currentTime);
+	Quaternion CalcCurrentRot(const aiNodeAnim* nodeAnim, const float currentTime);
 	Vec3 CalcCurrentPos(const aiNodeAnim* nodeAnim, const float currentTime);
 
 	void ParseNodeHeirarchy(const float currentTime, const Mat4& parentMat, const aiNode* rootNode);

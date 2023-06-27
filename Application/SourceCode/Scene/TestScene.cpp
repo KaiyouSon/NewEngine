@@ -16,6 +16,7 @@ void TestScene::Init()
 	obj1_.SetModel(ModelManager::GetModel("Block1"));
 	obj2_.SetModel(ModelManager::GetModel("BoneTest"));
 	obj2_.pos.x = 3;
+	obj2_.scale = 0.01f;
 
 	obj1_.SetTexture(TextureManager::GetTexture("pic"));
 	//obj2_.SetTexture(TextureManager::GetTexture("pic"));
@@ -215,7 +216,7 @@ void TestScene::DrawBackSprite()
 }
 void TestScene::DrawModel()
 {
-	//obj1_.Draw();
+	obj1_.Draw();
 	//obj2_.Draw();
 }
 void TestScene::DrawFrontSprite()

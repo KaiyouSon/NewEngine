@@ -109,6 +109,12 @@ Quaternion Quaternion::DirectionToDirection(const Vec3 v1, const Vec3 v2)
 	return MakeAxisAngle(axis, theta);
 }
 
+Quaternion Quaternion::Lerp(const Quaternion s, const Quaternion e, const float f)
+{
+	Quaternion dis = e - s;
+	return dis * f + s;
+}
+
 Quaternion Quaternion::operator-() const { return { -x,-y,-z,-w }; }
 
 Quaternion Quaternion::operator+(const Quaternion other) const

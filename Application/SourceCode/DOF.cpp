@@ -2,7 +2,7 @@
 using namespace ConstantBufferData;
 
 DOF::DOF() :
-	dofData_({ 0.99f, false }),
+	dofData_({ 0.99f,0.995f, false }),
 	dof_(std::make_unique<PostEffect>())
 {
 	tex_ = TextureManager::GetRenderTexture("DOF");
@@ -63,7 +63,7 @@ void DOF::PostSceneDraw()
 void DOF::DrawDebugGui()
 {
 	GuiManager::DrawSlider1("FocusDepth", dofData_.focusDepth, 0.0001f);
-	dofData_.focusDepth = Clamp<float>(dofData_.focusDepth, 0.9f, 0.999f);
+	GuiManager::DrawSlider1("MiddleDepth", dofData_.middleDepth, 0.0001f);
 
 	bool flag = dofData_.isRGB;
 	GuiManager::DrawCheckBox("isRGB", &flag);

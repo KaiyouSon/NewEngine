@@ -14,6 +14,7 @@ cbuffer ConstBufferDataMaterial : register(b1)
 cbuffer ConstBufferDataDOF : register(b2)
 {
     float focusDepth;
+    float middleDepth;
     uint isRGB;
 };
 

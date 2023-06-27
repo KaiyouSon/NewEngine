@@ -34,14 +34,13 @@ void FbxModel::ParseNodeHeirarchy(const float currentTime, const  Mat4& parentMa
 		Vec3 scale = CalcCurrentScale(nodeAnim, currentTime);
 
 		// ‰ñ“]‚ð•âŠ®
-		Vec3 rot = CalcCurrentRot(nodeAnim, currentTime);
-		Quaternion qRot = { rot.x,rot.y,rot.z };
+		Quaternion rot = CalcCurrentRot(nodeAnim, currentTime);
 
 		// À•W‚ð•âŠ®
 		Vec3 pos = CalcCurrentPos(nodeAnim, currentTime);
 
 		// s—ñ‚Ì‡¬
-		currentPoseMat = CalculateWorldMat(pos, scale, qRot);
+		currentPoseMat = CalculateWorldMat(pos, scale, rot);
 	}
 
 	Mat4 globalTransformMat = currentPoseMat * parentMat;
@@ -52,8 +51,8 @@ void FbxModel::ParseNodeHeirarchy(const float currentTime, const  Mat4& parentMa
 		{
 			Mat4 initalMat = bones[i].initalPose;
 			Mat4 invWorldMat = AssimpLoader::ConvertMat4FromAssimpMat(scene->mRootNode->mTransformation);
-			//bones[i].currentMat = initalMat.Inverse() * globalTransformMat * invWorldMat;
-			bones[i].currentMat = initalMat * globalTransformMat;
+			bones[i].currentMat = initalMat * globalTransformMat * invWorldMat;
+			//bones[i].currentMat = initalMat * globalTransformMat;
 
 			//bones[i].currentMat = initalMat * initalMat.Inverse();
 
@@ -241,14 +240,15 @@ Vec3 FbxModel::CalcCurrentScale(const aiNodeAnim* nodeAnim, const float currentT
 
 	return Vec3::zero;
 }
-Vec3 FbxModel::CalcCurrentRot(const aiNodeAnim* nodeAnim, const float currentTime)
+Quaternion FbxModel::CalcCurrentRot(const aiNodeAnim* nodeAnim, const float currentTime)
 {
-	Vec3 result;
+	Quaternion result;
 	if (nodeAnim->mNumRotationKeys == 1)
 	{
 		result.x = (float)nodeAnim->mRotationKeys[0].mValue.x;
 		result.y = (float)nodeAnim->mRotationKeys[0].mValue.y;
 		result.z = (float)nodeAnim->mRotationKeys[0].mValue.z;
+		result.w = (float)nodeAnim->mRotationKeys[0].mValue.w;
 
 		return result;
 	}
@@ -263,25 +263,27 @@ Vec3 FbxModel::CalcCurrentRot(const aiNodeAnim* nodeAnim, const float currentTim
 		float deltaTime = (float)(nextKey.mTime - curKey.mTime);
 		float factor = (float)(currentTime - curKey.mTime) / deltaTime;
 
-		Vec3 s =
+		Quaternion s =
 		{
 			nodeAnim->mRotationKeys[rotIndex].mValue.x,
 			nodeAnim->mRotationKeys[rotIndex].mValue.y,
 			nodeAnim->mRotationKeys[rotIndex].mValue.z,
+			nodeAnim->mRotationKeys[rotIndex].mValue.w,
 		};
 
-		Vec3 e =
+		Quaternion e =
 		{
 			nodeAnim->mRotationKeys[rotNextIndex].mValue.x,
 			nodeAnim->mRotationKeys[rotNextIndex].mValue.y,
 			nodeAnim->mRotationKeys[rotNextIndex].mValue.z,
+			nodeAnim->mRotationKeys[rotNextIndex].mValue.w,
 		};
 
-		result = Vec3::Lerp(s, e, factor);
+		result = Quaternion::Slerp(s, e, factor);
 		return result;
 	}
 
-	return Vec3::zero;
+	return Quaternion{};
 }
 Vec3 FbxModel::CalcCurrentPos(const aiNodeAnim* nodeAnim, const float currentTime)
 {

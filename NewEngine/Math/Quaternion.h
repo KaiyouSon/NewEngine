@@ -26,6 +26,7 @@ struct Quaternion
 	static Quaternion Slerp(const Quaternion q1, const Quaternion q2, float t);
 	static Quaternion MakeAxisAngle(const Vec3 v, const float radian);
 	static Quaternion DirectionToDirection(const Vec3 v1, const Vec3 v2);
+	static Quaternion Lerp(const Quaternion s, const Quaternion e, const float f);
 
 	Quaternion operator-() const;
 

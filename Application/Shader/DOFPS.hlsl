@@ -53,15 +53,10 @@ float4 main(V2P i) : SV_TARGET
     float4 texColor1 = tex1.Sample(smp, i.uv);
     
     float depth = depthTex.Sample(smp, i.uv).r;
-    float middleDepth = depth + (1 - depth) / 2;
     float inFocus = 1 - smoothstep(focusDepth, middleDepth, depth);
     float outFocus = smoothstep(middleDepth, 1, depth);
     float middleFocus = 1 - inFocus - outFocus;
-    
-    //float4 inFocusColor = float4(1, 0, 0, 1);
-    //float4 middleFocusColor = float4(0, 1, 0, 1);
-    //float4 outFocusColor = float4(0, 0, 1, 1);
-    
+   
     float4 inFocusColor = (isRGB == true) ? float4(1, 0, 0, 1) : tex1.Sample(smp, i.uv);
     float4 middleFocusColor = (isRGB == true) ? float4(0, 1, 0, 1) : GaussianBlur(tex1, smp, i.uv, 0.005f, 5);
     float4 outFocusColor = (isRGB == true) ? float4(0, 0, 1, 1) : GaussianBlur(tex1, smp, i.uv, 0.05f, 5);
