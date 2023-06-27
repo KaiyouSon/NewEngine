@@ -10,6 +10,7 @@ using namespace Microsoft::WRL;
 void NewEngineInit()
 {
 #ifdef _DEBUG 
+#endif
 	//デバッグレイヤーをオンに
 	ComPtr<ID3D12Debug1> debugController;
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(debugController.GetAddressOf()))))
@@ -17,12 +18,12 @@ void NewEngineInit()
 		debugController->EnableDebugLayer();
 		debugController->SetEnableGPUBasedValidation(false);
 	}
-#endif
 
 	RenderWindow::GetInstance()->CreateGameWindow();
 	RenderBase::GetInstance()->Init();
 
 #ifdef _DEBUG
+#endif
 	ComPtr<ID3D12InfoQueue> infoQueue;
 	if (SUCCEEDED(RenderBase::GetInstance()->
 		GetDevice()->QueryInterface(IID_PPV_ARGS(&infoQueue))))
@@ -46,7 +47,6 @@ void NewEngineInit()
 	filter.DenyList.pSeverityList = severities;
 	//指定したエラーの表示を抑制する
 	infoQueue->PushStorageFilter(&filter);
-#endif
 
 	// -------------------------------------------------------------------------------- //
 

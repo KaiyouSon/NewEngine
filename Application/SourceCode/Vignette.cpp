@@ -1,4 +1,5 @@
 #include "Vignette.h"
+using namespace ConstantBufferData;
 
 Vignette::Vignette() :
 	postEffect_(std::make_unique<PostEffect>())
@@ -8,6 +9,9 @@ Vignette::Vignette() :
 	postEffect_->pos = GetWindowHalfSize();
 	postEffect_->AddRenderTexture(tex_);
 	postEffect_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Vignette"));
+	postEffect_->AddMaterial(ConstantBuffer<CVignette>{});
+
+	vignetteData.range = Vec2(0.6f, 1.3f);
 }
 
 void Vignette::CreateGraphicsPipeline()
@@ -35,11 +39,13 @@ void Vignette::CreateGraphicsPipeline()
 
 void Vignette::Update()
 {
+	postEffect_->SetTransferBuffer(2, vignetteData);
 	postEffect_->Update();
 }
 
 void Vignette::DrawPostEffect()
 {
+	postEffect_->SetDrawCommands(2, 2);
 	postEffect_->Draw();
 }
 
@@ -51,4 +57,11 @@ void Vignette::PrevSceneDraw()
 void Vignette::PostSceneDraw()
 {
 	tex_->PostDrawScene();
+}
+
+void Vignette::DrawDebugGui()
+{
+	GuiManager::DrawColorEdit("Vignette Color", vignetteData.color);
+	vignetteData.color = vignetteData.color.GetColorTo01();
+	GuiManager::DrawSlider2("Vignette Range", vignetteData.range, 0.01f);
 }

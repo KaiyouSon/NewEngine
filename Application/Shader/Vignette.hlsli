@@ -10,6 +10,12 @@ cbuffer ConstBufferDataMaterial : register(b1)
     float4 color; // êF(RGBA)
 };
 
+cbuffer ConstBufferDataVignette : register(b2)
+{
+    float4 vignetteColor; // êF(RGBA)
+    float2 vignetteRange;
+};
+
 struct AppData
 {
     float4 pos : POSITION;

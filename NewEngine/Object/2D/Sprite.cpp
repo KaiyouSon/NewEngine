@@ -82,7 +82,7 @@ void Sprite::Draw(const BlendMode blendMode)
 			UINT(max + i), texture_->GetGpuHandle());
 	}
 
-	renderBase->GetCommandList()->DrawInstanced((unsigned short)vertices_.size(), 1, 0, 0);
+	renderBase->GetCommandList()->DrawInstanced((uint16_t)vertices_.size(), 1, 0, 0);
 }
 
 void Sprite::SetBlendMode(const BlendMode blendMode)

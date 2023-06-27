@@ -256,7 +256,6 @@ void TestScene::DrawDebugGui()
 {
 	GuiManager::BeginWindow("PostEffect");
 	GuiManager::DrawInputInt("PostEffectType", (int&)postEffectType_);
-	postEffectType_ = Clamp<uint32_t>(postEffectType_, 0, 6);
 
 	GuiManager::DrawString("PostEffectType 0 : CG4Task");
 	GuiManager::DrawString("PostEffectType 1 : Bloom");
@@ -282,6 +281,10 @@ void TestScene::DrawDebugGui()
 	else if (postEffectType_ == 5)
 	{
 		radialBlur_.DrawDebugGui();
+	}
+	else if (postEffectType_ == 6)
+	{
+		vignette_.DrawDebugGui();
 	}
 
 	GuiManager::EndWindow();

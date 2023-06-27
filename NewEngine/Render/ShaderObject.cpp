@@ -49,17 +49,17 @@ void ShaderObject::CompileVertexShader(
 
 #endif
 
-#ifdef _NDEBUG
+#ifdef NDEBUG
 
 	// シェーダの読み込みとコンパイル
 	result_ = D3DCompileFromFile(
 		wFilePath.c_str(), // シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
-		entryPointName.c_str(), "ps_5_0", // エントリーポイント名、シェーダーモデル指定
+		entryPointName.c_str(), "vs_5_0", // エントリーポイント名、シェーダーモデル指定
 		D3DCOMPILE_OPTIMIZATION_LEVEL3, // デバッグ用設定
 		0,
-		&psBlob_, &sErrorBlob_);
+		&vsBlob_, &sErrorBlob_);
 
 #endif
 
@@ -88,17 +88,17 @@ void ShaderObject::CompileGeometryShader(
 
 #endif
 
-#ifdef _NDEBUG
+#ifdef NDEBUG
 
 	// シェーダの読み込みとコンパイル
 	result_ = D3DCompileFromFile(
 		wFilePath.c_str(), // シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
-		entryPointName.c_str(), "ps_5_0", // エントリーポイント名、シェーダーモデル指定
+		entryPointName.c_str(), "gs_5_0", // エントリーポイント名、シェーダーモデル指定
 		D3DCOMPILE_OPTIMIZATION_LEVEL3, // デバッグ用設定
 		0,
-		&psBlob_, &sErrorBlob_);
+		&gsBlob_, &sErrorBlob_);
 
 #endif
 

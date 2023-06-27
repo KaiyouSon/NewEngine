@@ -98,4 +98,10 @@ namespace ConstantBufferData
 		float strength = 0.5f;
 		float loopNum = 8.f;
 	};
+
+	struct CVignette
+	{
+		Color color;
+		Vec2 range;
+	};
 }

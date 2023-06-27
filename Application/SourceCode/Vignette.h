@@ -6,6 +6,8 @@ class Vignette
 private:
 	std::unique_ptr<PostEffect> postEffect_;
 	RenderTexture* tex_;
+	ConstantBufferData::CVignette vignetteData;
+
 
 public:
 	Vignette();
@@ -14,6 +16,6 @@ public:
 	void DrawPostEffect();
 	void PrevSceneDraw();
 	void PostSceneDraw();
-
+	void DrawDebugGui();
 };
 
