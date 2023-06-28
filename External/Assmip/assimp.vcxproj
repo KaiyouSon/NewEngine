@@ -184,7 +184,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>copy /y $(SolutionDir)..\Generated\Outputs\$(ProjectName)\$(Configuration)\assimp-vc143-mtd.dll $(SolutionDir)..\Generated\Outputs\NewEngine\$(Configuration)\</Command>
+      <Command>copy /y $(SolutionDir)..\Generated\Outputs\$(ProjectName)\$(Configuration)\assimp-vc143-mt.dll $(SolutionDir)..\Generated\Outputs\NewEngine\$(Configuration)\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
