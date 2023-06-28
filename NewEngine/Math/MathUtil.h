@@ -1,6 +1,5 @@
 #pragma once
 #include <math.h>
-#include <fbxsdk.h>
 #include "Vec2.h"
 #include "Vec3.h"
 #include "Mat4.h"
@@ -24,7 +23,6 @@ inline Vec3 Radian(const Vec3 angle) { return { Radian(angle.x),Radian(angle.y),
 
 // 3次元ベクトルと4x4行列の掛け算
 Vec3 Vec3MulMat4(const Vec3 v, const Mat4& m, const bool isMulW = false);
-void ConvertMat4FromFbx(Mat4* dst, const FbxAMatrix& src);
 
 Mat4 ConvertScalingMat(Vec3 scale);		// スケーリング行列を返す関数
 Mat4 ConvertRotationXAxisMat(float angle);	// 回転行列ｘ軸を返す関数

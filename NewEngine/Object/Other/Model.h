@@ -43,14 +43,6 @@ struct Model
 	virtual ~Model() {}
 };
 
-struct ObjModel : public Model
-{
-	ObjModel()
-	{
-		format = ModelFormat::Obj;
-	}
-};
-
 struct FbxAnimation
 {
 	uint32_t index = 0;

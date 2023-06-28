@@ -1,6 +1,5 @@
 #include "LoadManager.h"
 #include "NewEngine.h"
-#include "FbxLoader.h"
 #include "AssimpLoader.h"
 
 bool LoadManager::ModelLoad()
@@ -16,7 +15,6 @@ bool LoadManager::ModelLoad()
 	ModelManager::LoadObjModel("SkyDome", "SkyDome");
 	ModelManager::LoadObjModel("Block1", "Block1");
 	ModelManager::LoadFbxModel("boneTest", "BoneTest");
-	ModelManager::LoadFbxModelDebug("boneTest", "Debug");
 	//ModelManager::LoadFbxModelDebug("NeruStand", "DebugNeruStand");
 
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·

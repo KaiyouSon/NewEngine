@@ -142,6 +142,12 @@
     <Filter Include="Shader\Application\Glare">
       <UniqueIdentifier>{4166cf33-29d2-4eb6-9be3-a430bda43dc5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NewEngine\Header\Object\Other\Model">
+      <UniqueIdentifier>{ddb62283-b17e-457e-b475-903e72ca8b92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Object\Other\Model">
+      <UniqueIdentifier>{7c8e69d5-a283-4d47-aea3-ce1813da0e12}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -303,12 +309,6 @@
     <ClCompile Include="NewEngine\Sound\Sound.cpp">
       <Filter>NewEngine\Source\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\Other\FbxLoader.cpp">
-      <Filter>NewEngine\Source\Object\Other</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Object\Other\FbxModel.cpp">
-      <Filter>NewEngine\Source\Object\Other</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Render\ShaderObjectManager.cpp">
       <Filter>NewEngine\Source\Render</Filter>
     </ClCompile>
@@ -351,8 +351,14 @@
     <ClCompile Include="Application\SourceCode\RadialBlur.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\Model\ObjModel.cpp">
+      <Filter>NewEngine\Source\Object\Other\Model</Filter>
+    </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\Model.cpp">
-      <Filter>Uncategorized\Source</Filter>
+      <Filter>NewEngine\Source\Object\Other\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\FbxModel.cpp">
+      <Filter>NewEngine\Source\Object\Other\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -494,9 +500,6 @@
     <ClInclude Include="NewEngine\Object\Other\ModelManager.h">
       <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\Other\Model.h">
-      <Filter>NewEngine\Header\Object\Other</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\Mesh.h">
       <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
@@ -532,9 +535,6 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Sound\Sound.h">
       <Filter>NewEngine\Header\Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Object\Other\FbxLoader.h">
-      <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Render\RenderTarget.h">
       <Filter>NewEngine\Header\Render\Buffer</Filter>
@@ -595,6 +595,12 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\RadialBlur.h">
       <Filter>Application\Header\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\Model.h">
+      <Filter>NewEngine\Header\Object\Other\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\Model\ObjModel.h">
+      <Filter>NewEngine\Header\Object\Other\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

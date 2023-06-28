@@ -194,22 +194,6 @@ void Object3D::MaterialTransfer()
 		}
 		TransferDataToConstantBuffer(material_.constantBuffers[3].get(), skinData);
 	}
-	if (model_->format == ModelFormat::DFbx)
-	{
-		auto fbxModel = static_cast<FbxModel1*>(model_);
-
-		CSkin skinData{};
-		for (size_t i = 0; i < fbxModel->bones.size(); i++)
-		{
-			Mat4 currentPoseMat;
-			FbxAMatrix currentPoseFbxMat =
-				fbxModel->bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(0);
-			ConvertMat4FromFbx(&currentPoseMat, currentPoseFbxMat);
-
-			skinData.bones[i] = fbxModel->bones[i].invInitPoseMat * currentPoseMat;
-		}
-		TransferDataToConstantBuffer(material_.constantBuffers[3].get(), skinData);
-	}
 }
 void Object3D::MaterialDrawCommands()
 {

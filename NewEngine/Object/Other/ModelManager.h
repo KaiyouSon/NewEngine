@@ -1,5 +1,6 @@
 #pragma once
 #include "Model.h"
+#include "ObjModel.h"
 #include "FbxModel.h"
 #include <unordered_map>
 
@@ -19,11 +20,6 @@ public:	// モデル関連
 
 	// fbxファイルからモデルをロードしマップの格納する
 	static Model* LoadFbxModel(const std::string fileName, const std::string modelTag);
-	static Model* LoadFbxModelDebug(std::string filePath, std::string modelTag);
 
 	static void LoadMaterialColor(std::string filePath, Model* model);
-
-public:	// その他の処理
-	// 破棄
-	static void Destroy();
 };
