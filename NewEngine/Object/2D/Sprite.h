@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include "Material.h"
 #include "TextureManager.h"
+#include "Enum.h"
 #include <vector>
 
 class TextureAnimeiton;
@@ -14,33 +15,53 @@ class Sprite
 private:
 	std::vector<VertexBufferData::VSprite> vertices_;
 	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> vertexBuffer_;
-	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform2D>> constantBufferTransform_;
-	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> constantBufferColor_;
+	std::unique_ptr<Material> material_;
+	GraphicsPipeline* graphicsPipeline_;
 	Transform transform_;
 	Transform* parent_;
 	Texture* texture_;
-	Material* material_;
+	Vec2 anchorPoint_;
+	Vec2 size_;
 
 public:
 	Vec2 pos;
 	Vec2 scale;
-	Vec2 size;
 	float rot;
 	Color color;
-	Vec2 anchorPoint;
-	GraphicsPipeline* graphicsPipeline;
+
+private: // マテリアル関連
+	void MaterialInit();
+	void MaterialTransfer();
+	void MaterialDrawCommands();
 
 private:
-	void TransferTexturePos(const Vec2& size = 0);
-	void SetBlendMode(const BlendMode blendMode);
+	void TransferVertexCoord();
+	void TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightDownPos);
 
 public:
 	Sprite();
 	void Update(Transform* parent = nullptr);
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 
-	void SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos);
+public: //セッター
+
+	// テクスチャー
 	void SetTexture(Texture* texture);
+
+	// 描画範囲
+	void SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos);
+
+	//　サイズ
+	void SetSize(const Vec2 size);
+
+	// アンカーポイント
+	void SetAnchorPoint(const Vec2 anchorPoint);
+
+	// グラフィックスパイプライン
+	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
+
+	// ブレンド
+	void SetBlendMode(const BlendMode blendMode);
 
 private:
 	friend TextureAnimeiton;

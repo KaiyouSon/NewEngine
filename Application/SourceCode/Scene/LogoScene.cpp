@@ -23,7 +23,7 @@ void LogoScene::Init()
 	backSprite->pos = GetWindowHalfSize();
 
 	logoSprite->color.a = 0;
-	backSprite->size = GetWindowSize();
+	//backSprite->size = GetWindowSize();
 
 	stayTimer.SetLimitTimer(30);
 

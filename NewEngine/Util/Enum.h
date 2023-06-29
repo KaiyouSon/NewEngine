@@ -61,3 +61,9 @@ enum class ModelFormat
 	Fbx,
 	DFbx,
 };
+
+// ”½“]ƒtƒ‰ƒO
+enum class Flip
+{
+
+};

@@ -8,8 +8,10 @@ PSOutput main(VSOutputSvposUv vsInput) //: SV_TARGET
 {
     //return float4(tex.Sample(smp, vsInput.uv)) * color;
     
+    float4 texColor = float4(tex.Sample(smp, vsInput.uv));
+    
     PSOutput output;
-    output.target0 = float4(tex.Sample(smp, vsInput.uv)) * color;
-    output.target1 = float4(tex.Sample(smp, vsInput.uv)) * color;
+    output.target0 = texColor * color;
+    output.target1 = texColor * color;
     return output;
 }

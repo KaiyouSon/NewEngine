@@ -41,9 +41,8 @@ void Object3D::Update(Transform* parent)
 		transform_.SetWorldMat(mat);
 	}
 
+	// マテリアルの転送
 	MaterialTransfer();
-
-	TransferBuffer();
 }
 void Object3D::Draw(const BlendMode blendMode)
 {
@@ -70,56 +69,6 @@ void Object3D::Draw(const BlendMode blendMode)
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)index, texture_->GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)model_->mesh.indices.size(), 1, 0, 0, 0);
-}
-
-// バッファ転送
-void Object3D::TransferBuffer()
-{
-	//if (model_->modelType == "FBX")
-	//{
-	//	// ボーン配列
-	//	auto fbxModel = static_cast<FbxModel1*>(model_);
-	//	std::vector<FbxModelBone>& bones = fbxModel->bones;
-
-	//	// 転送
-	//	for (size_t i = 0; i < bones.size(); i++)
-	//	{
-	//		Mat4 currentPoseMat;
-	//		FbxAMatrix currentPoseFbxMat =
-	//			bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(fbxModel->fbxAnimetion.currentTime);
-	//		ConvertMat4FromFbx(&currentPoseMat, currentPoseFbxMat);
-
-	//		constantBufferSkin_->constantBufferMap->bones[i] = bones[i].invInitPoseMat * currentPoseMat;
-	//	}
-	//}
-}
-
-//  ブレンド設定
-void Object3D::SetBlendMode(const BlendMode blendMode)
-{
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
-
-	switch (blendMode)
-	{
-	case BlendMode::Alpha: // αブレンド
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetAlphaPipeline());
-		break;
-
-	case BlendMode::Add:	// 加算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetAddPipeline());
-		break;
-
-	case BlendMode::Sub:	// 減算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetSubPipeline());
-		break;
-
-	case BlendMode::Inv:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetInvPipeline());
-		break;
-
-	default:
-		break;
-	}
 }
 
 // --- マテリアル関連 --------------------------------------------------- //
@@ -213,20 +162,35 @@ void Object3D::MaterialDrawCommands()
 
 }
 
-void Object3D::SetAnimation(const uint32_t animationIndex, const uint32_t maxFrame, const bool isPlay)
-{
-	// スキン情報
-	if (model_->format == ModelFormat::Fbx)
-	{
-		auto fbxModel = static_cast<FbxModel*>(model_);
+// --- セッター -------------------------------------------------------- //
 
-		fbxModel->animation.index = animationIndex;
-		fbxModel->animation.timer.SetLimitTimer(maxFrame);
-		fbxModel->animation.isPlay = isPlay;
+//  ブレンド
+void Object3D::SetBlendMode(const BlendMode blendMode)
+{
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
+
+	switch (blendMode)
+	{
+	case BlendMode::Alpha: // αブレンド
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetAlphaPipeline());
+		break;
+
+	case BlendMode::Add:	// 加算ブレンド
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetAddPipeline());
+		break;
+
+	case BlendMode::Sub:	// 減算ブレンド
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetSubPipeline());
+		break;
+
+	case BlendMode::Inv:	// 反転
+		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetInvPipeline());
+		break;
+
+	default:
+		break;
 	}
 }
-
-// --- セッター -------------------------------------------------------- //
 
 // モデル
 void Object3D::SetModel(Model* model)
@@ -252,6 +216,20 @@ void Object3D::SetTexture(Texture* texture) { texture_ = texture; }
 
 // グラフィックスパイプライン
 void Object3D::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline) { graphicsPipeline_ = graphicsPipeline; }
+
+// アニメーション
+void Object3D::SetAnimation(const uint32_t animationIndex, const uint32_t maxFrame, const bool isPlay)
+{
+	// スキン情報
+	if (model_->format == ModelFormat::Fbx)
+	{
+		auto fbxModel = static_cast<FbxModel*>(model_);
+
+		fbxModel->animation.index = animationIndex;
+		fbxModel->animation.timer.SetLimitTimer(maxFrame);
+		fbxModel->animation.isPlay = isPlay;
+	}
+}
 
 // --- ゲッター -------------------------------------------------------- //
 

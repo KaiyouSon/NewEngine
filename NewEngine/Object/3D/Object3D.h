@@ -9,13 +9,6 @@
 class Object3D
 {
 private:
-	// バッファ転送
-	void TransferBuffer();
-
-	//  ブレンド設定
-	void SetBlendMode(const BlendMode blendMode);
-
-private:
 	Vec3 worldPos_;
 	Vec3 worldScale_;
 	Transform transform_;
@@ -40,6 +33,10 @@ private:
 	void MaterialInit();
 	void MaterialTransfer();
 	void MaterialDrawCommands();
+
+private:
+	//  ブレンド設定
+	void SetBlendMode(const BlendMode blendMode);
 
 public:
 	Object3D();
