@@ -92,7 +92,6 @@ void JoypadInput::Update()
 BOOL CALLBACK JoypadInput::DeviceFindCallBack(const DIDEVICEINSTANCE* pdidInstance, VOID* pContext)
 {
 	HRESULT result;
-	//Input* input = static_cast<Input*>(pContext);
 	JoypadInput* joypadInput = static_cast<JoypadInput*>(pContext);
 	Microsoft::WRL::ComPtr<IDirectInputDevice8>  joypad;
 	result = InputManager::GetInstance()->GetDirectInput()->
