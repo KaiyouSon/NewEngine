@@ -78,7 +78,7 @@ StyleCopReport.xml
 # x64/*/*.obj
 *.iobj
 *.pch
-# *.pdb
+*.pdb
 *.ipdb
 *.pgc
 *.pgd
@@ -97,6 +97,8 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
+*.exp
+*.lib
 
 # Chutzpah Test files
 _Chutzpah*
