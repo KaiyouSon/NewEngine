@@ -3,7 +3,6 @@
 #include "LightManager.h"
 #include "Camera.h"
 #include "FbxModel.h"
-#include "TextureManager.h"
 
 using namespace ConstantBufferData;
 

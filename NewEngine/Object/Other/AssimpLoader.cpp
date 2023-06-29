@@ -200,13 +200,13 @@ void AssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 		}
 	}
 }
-void AssimpLoader::ParseNodeRecursive(FbxModel* model, Node* parent, const aiNode* node)
+void AssimpLoader::ParseNodeRecursive(FbxModel* model, FbxNode* parent, const aiNode* node)
 {
 	aiString nodeName = node->mName;
 
 	// モデルにノードを追加
 	model->nodes.emplace_back();
-	Node& modelNode = model->nodes.back();
+	FbxNode& modelNode = model->nodes.back();
 
 	// ノード名を取得
 	modelNode.name = node->mName.C_Str();

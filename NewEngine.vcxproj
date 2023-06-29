@@ -64,7 +64,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/3D/Model;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -89,7 +89,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/3D/Model;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -148,7 +148,7 @@
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Camera.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Line.cpp" />
-    <ClCompile Include="NewEngine\Object\3D\Model\ObjModel.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\Model\ObjModel.cpp" />
     <ClCompile Include="NewEngine\Object\Other\AssimpLoader.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Billboard.cpp" />
     <ClCompile Include="NewEngine\Object\Other\FbxModel.cpp" />
@@ -218,7 +218,7 @@
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h" />
     <ClInclude Include="NewEngine\Object\2D\RenderTexture.h" />
     <ClInclude Include="NewEngine\Object\2D\Sprite.h" />
-    <ClInclude Include="NewEngine\Object\3D\Model\ObjModel.h" />
+    <ClInclude Include="NewEngine\Object\Other\Model\ObjModel.h" />
     <ClInclude Include="NewEngine\Object\Other\AssimpLoader.h" />
     <ClInclude Include="NewEngine\Object\Other\Billboard.h" />
     <ClInclude Include="NewEngine\Object\Other\FbxModel.h" />

@@ -1,12 +1,10 @@
 #pragma once
-#include "ConstantBuffer.h"
 #include "Transform.h"
-#include "Model.h"
-#include "Texture.h"
+#include "ModelManager.h"
+#include "TextureManager.h"
 #include "Material.h"
 #include "Util.h"
 #include "GraphicsPipeline.h"
-#include <memory>
 
 class Object3D
 {
