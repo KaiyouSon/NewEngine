@@ -63,7 +63,10 @@ enum class ModelFormat
 };
 
 // ”½“]ƒtƒ‰ƒO
-enum class Flip
+enum class FlipType
 {
-
+	None,
+	X,
+	Y,
+	XY
 };

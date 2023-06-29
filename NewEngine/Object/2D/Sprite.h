@@ -22,6 +22,7 @@ private:
 	Texture* texture_;
 	Vec2 anchorPoint_;
 	Vec2 size_;
+	FlipType flipType_;
 
 public:
 	Vec2 pos;
@@ -56,6 +57,9 @@ public: //セッター
 
 	// アンカーポイント
 	void SetAnchorPoint(const Vec2 anchorPoint);
+
+	// 画像反転
+	void SetFlipType(const FlipType flipType);
 
 	// グラフィックスパイプライン
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);

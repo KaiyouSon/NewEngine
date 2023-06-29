@@ -25,6 +25,7 @@ void TestScene::Init()
 
 	spr_.SetTexture(TextureManager::GetTexture("BackGround"));
 	spr_.pos = GetWindowHalfSize();
+	spr_.SetFlipType(FlipType::Y);
 
 	backGround_ = TextureManager::GetRenderTexture("BackGround");
 

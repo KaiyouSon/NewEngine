@@ -8,7 +8,8 @@ using namespace ConstantBufferData;
 
 Sprite::Sprite() :
 	texture_(TextureManager::GetTexture("White")),
-	pos(0), scale(1), rot(0), color(Color::white), anchorPoint_(0.5f),
+	pos(0), scale(1), rot(0), color(Color::white),
+	anchorPoint_(0.5f), flipType_(FlipType::None),
 	vertexBuffer_(std::make_unique<VertexBuffer<VSprite>>()),
 	material_(std::make_unique<Material>()),
 	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("Sprite"))
@@ -125,6 +126,29 @@ void Sprite::TransferVertexCoord()
 	float up = (0.f - anchorPoint_.y) * size_.y;
 	float down = (1.f - anchorPoint_.y) * size_.y;
 
+	switch (flipType_)
+	{
+	case FlipType::X:
+		left = -left;
+		right = -right;
+		break;
+
+	case FlipType::Y:
+		up = -up;
+		down = -down;
+		break;
+
+	case FlipType::XY:
+		left = -left;
+		right = -right;
+		up = -up;
+		down = -down;
+		break;
+
+	default:
+		break;
+	}
+
 	// 頂点座標
 	vertices_[(uint32_t)Point::LD].pos = Vec3(left, down, 0.f);	  //左下
 	vertices_[(uint32_t)Point::LU].pos = Vec3(left, up, 0.f);	  //左上
@@ -151,7 +175,11 @@ void Sprite::TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightDownPos)
 // --- セッター -------------------------------------------------------- //
 
 // テクスチャー
-void Sprite::SetTexture(Texture* texture) { texture_ = texture; SetSize(texture->size); }
+void Sprite::SetTexture(Texture* texture)
+{
+	texture_ = texture;
+	SetSize(texture->size);
+}
 
 // 描画範囲
 void Sprite::SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos)
@@ -173,6 +201,15 @@ void Sprite::SetSize(const Vec2 size)
 void Sprite::SetAnchorPoint(const Vec2 anchorPoint)
 {
 	anchorPoint_ = anchorPoint;
+
+	TransferVertexCoord();
+	vertexBuffer_->TransferToBuffer(vertices_);
+}
+
+// 画像反転
+void Sprite::SetFlipType(const FlipType flipType)
+{
+	flipType_ = flipType;
 
 	TransferVertexCoord();
 	vertexBuffer_->TransferToBuffer(vertices_);
