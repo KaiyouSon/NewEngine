@@ -1,9 +1,13 @@
 #pragma once
 #include "NewEngine.h"
+#include "Player.h"
+#include "UIManager.h"
 
 class GameScene : public IScene
 {
 private:
+	std::unique_ptr<Player> player;
+	std::unique_ptr<UIManager> uiManager;
 
 public:
 	GameScene();

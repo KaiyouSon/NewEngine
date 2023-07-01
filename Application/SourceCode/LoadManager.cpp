@@ -4,18 +4,14 @@
 
 bool LoadManager::ModelLoad()
 {
-	//ModelManager::LoadFbxModel("boneTest", "BoneTest");
-	//ModelManager::LoadObjModel("Sphere", "Sphere");
-	//ModelManager::LoadObjModel("Ground", "Ground");
-	//ModelManager::LoadObjModel("Enemy", "Enemy", true);
-	//ModelManager::LoadObjModel("SphereCollider", "SphereCollider");
-	//ModelManager::LoadFbxModel("AttackEnemy", "AttackEnemy");
-	//ModelManager::LoadObjModel("player", "Player", true);
-	//ModelManager::LoadObjModel("Plane", "Plane");
 	ModelManager::LoadObjModel("SkyDome", "SkyDome");
 	ModelManager::LoadObjModel("Block1", "Block1");
 	ModelManager::LoadFbxModel("boneTest", "BoneTest");
-	//ModelManager::LoadFbxModelDebug("NeruStand", "DebugNeruStand");
+	ModelManager::LoadObjModel("Cube", "Cube");
+
+	ModelManager::LoadObjModel("HumanoidBody/Body", "Body");
+	ModelManager::LoadObjModel("HumanoidBody/Head", "Head");
+	ModelManager::LoadObjModel("HumanoidBody/Limbs", "Limbs");
 
 	// 処理が終わったのを教えるため、必ずtrueを返す
 	return true;
@@ -27,6 +23,7 @@ bool LoadManager::TextureLoad()
 
 	TextureManager::LoadTexture("pic.png", "pic");
 	TextureManager::LoadTexture("BackGround.png", "BackGround");
+	TextureManager::LoadTexture("Gauge.png", "Gauge");
 
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 2, "Task");
 
@@ -63,7 +60,6 @@ bool LoadManager::TextureLoad()
 
 
 	TextureManager::CreateDepthTexture(Vec2(1920, 1080));
-
 
 	// 処理が終わったのを教えるため、必ずtrueを返す
 	return true;

@@ -46,7 +46,7 @@ void Object3D::Update(Transform* parent)
 }
 void Object3D::Draw(const BlendMode blendMode)
 {
-	if (texture_ == nullptr) return;
+	if (texture_ == nullptr || model_ == nullptr) return;
 
 	SetBlendMode(blendMode);
 
@@ -106,6 +106,11 @@ void Object3D::MaterialTransfer()
 		Camera::current.pos
 	};
 	TransferDataToConstantBuffer(material_.constantBuffers[0].get(), transform3DData);
+
+	if (model_ == nullptr)
+	{
+		return;
+	}
 
 	// マテリアルカラー
 	CMaterialColor materialColorData;

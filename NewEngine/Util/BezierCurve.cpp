@@ -35,9 +35,10 @@ void BezierCurve::Update()
 {
 	if (points_.size() < 2) return;
 
-	ease_.Update(true);
+	ease_.Update();
 	if (ease_.GetisEnd() == true)
 	{
+		ease_.Reset();
 		isEnd_ = true;
 	}
 }

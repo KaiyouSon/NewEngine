@@ -163,7 +163,7 @@ void Sprite::TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightDownPos)
 	float left = leftTopPos.x / texture_->size.x;
 	float right = rightDownPos.x / texture_->size.x;
 	float up = leftTopPos.y / texture_->size.y;
-	float down = rightDownPos.x / texture_->size.y;
+	float down = rightDownPos.y / texture_->size.y;
 
 	// uvç¿ïW
 	vertices_[(uint32_t)Point::LD].uv = Vec2(left, down);	 //ç∂â∫

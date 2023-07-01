@@ -126,18 +126,14 @@ Texture* TextureManager::CreateTexture(Color color, std::string textureTag)
 	HRESULT result;
 
 	// ヒープの設定
-	D3D12_HEAP_PROPERTIES textureHeapProp{};
-	textureHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
+	CD3DX12_HEAP_PROPERTIES textureHeapProp =
+		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 
 	// リソース設定
-	D3D12_RESOURCE_DESC textureResourceDesc{};
-	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	textureResourceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	textureResourceDesc.Width = 1; // 幅
-	textureResourceDesc.Height = 1; // 高さ
-	textureResourceDesc.DepthOrArraySize = 1;
-	textureResourceDesc.MipLevels = 1;
-	textureResourceDesc.SampleDesc.Count = 1;
+	CD3DX12_RESOURCE_DESC textureResourceDesc =
+		CD3DX12_RESOURCE_DESC::Tex2D(
+			DXGI_FORMAT_R32G32B32A32_FLOAT,
+			1, 1, 1, 1, 1);
 
 	// テクスチャのサイズをセット
 	textureMap_[textureTag]->size = { (float)textureResourceDesc.Width, (float)textureResourceDesc.Height };
@@ -155,7 +151,7 @@ Texture* TextureManager::CreateTexture(Color color, std::string textureTag)
 
 	CreateSRV(*textureMap_[textureTag], textureMap_[textureTag]->buffer.Get());
 
-	Color col = Color::one;
+	Color col = Color(color.r / 255, color.g / 255, color.b / 255, color.a / 255);
 
 	D3D12_SUBRESOURCE_DATA subResourcesData{};
 	subResourcesData.pData = (void**)&col;

@@ -25,16 +25,8 @@ void Easing::Reset()
 	isEnd_ = false;
 }
 
-void Easing::Update(const bool isRoop)
+void Easing::Update()
 {
-	if (isEnd_ == true)
-	{
-		if (timer_ >= limitTimer_)
-		{
-			Reset();
-		}
-	}
-
 	timer_++;
 	if (timeRate_ >= 1)
 	{
@@ -126,23 +118,15 @@ Vec3 Easing::Out(const Vec3 startPos, const Vec3 endPos)
 // インアウト
 float Easing::InOut(const float startPos, const float endPos)
 {
-	float dis1 = (endPos - startPos) / 2;
-	float dis2 = (endPos - dis1);
+	float dis = (endPos - startPos);
 
-	if (timeRate_ <= 0.5f)
+	if (timeRate_ < 0.5f)
 	{
-		return dis1 * powf(timeRate_, powNum_) + startPos;
+		return dis / 2.f * powf(timeRate_ * 2.f, powNum_) + startPos;
 	}
 	else
 	{
-		if ((int32_t)powNum_ % 2 == 1)
-		{
-			return dis2 * (powf(timeRate_ - 1, powNum_) + 1) + startPos;
-		}
-		else if ((int32_t)powNum_ % 2 == 0)
-		{
-			return dis2 * -1 * (powf(timeRate_ - 1, powNum_) - 1) + startPos;
-		}
+		return -dis / 2.f * (powf((1.f - (timeRate_ - 0.5f) * 2.f), powNum_) - 2.f) + startPos;
 	}
 
 	return -1;

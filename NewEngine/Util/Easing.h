@@ -16,7 +16,7 @@ public:
 	Easing(const int32_t limitTimer);
 	Easing(const int32_t limitTimer, const float powNum);
 	void Reset();		// リセット
-	void Update(const bool isRoop);		// 補間
+	void Update();		// 補間
 
 public: // セッター
 	

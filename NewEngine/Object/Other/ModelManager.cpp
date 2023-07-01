@@ -27,8 +27,16 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 	std::unique_ptr<Model> model = std::make_unique<ObjModel>();
 	model->name = fileName;
 
-	std::string path = sDirectoryPath_ + fileName + "/";
 	std::string objfile = fileName + ".obj";
+	size_t pos;
+	// 区切り文字 '/' が出てくる一番最後の部分を検索
+	pos = fileName.rfind('/');
+	if (pos < fileName.size())
+	{
+		objfile = fileName.substr(pos + 1, fileName.size() - pos - 1) + ".obj";
+	}
+
+	std::string path = sDirectoryPath_ + fileName + "/";
 
 	// ファイルストリーム
 	std::ifstream file;

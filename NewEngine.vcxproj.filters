@@ -148,6 +148,12 @@
     <Filter Include="NewEngine\Source\Object\Other\Model">
       <UniqueIdentifier>{7c8e69d5-a283-4d47-aea3-ce1813da0e12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Source\UI">
+      <UniqueIdentifier>{dde48fdf-5b24-4364-ab79-3b32c78b406b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\UI">
+      <UniqueIdentifier>{3883a1ae-ad71-40ac-a4f3-1a9d6454ad73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -359,6 +365,21 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\FbxModel.cpp">
       <Filter>NewEngine\Source\Object\Other\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\UIManager.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Player.cpp">
+      <Filter>Application\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\GaugeUI.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\GaugeParam.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\HumanoidBody.cpp">
+      <Filter>Uncategorized\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -601,6 +622,24 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\FbxModel.h">
       <Filter>NewEngine\Header\Object\Other\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UIManager.h">
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Player.h">
+      <Filter>Application\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\GaugeUI.h">
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\GaugeParam.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\GaugeType.h">
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\HumanoidBody.h">
+      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

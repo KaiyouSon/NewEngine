@@ -39,7 +39,7 @@ void LogoScene::Update()
 	stayTimer.Update(true);
 	if (stayTimer.GetisTimeOut() == true && isEnd == false)
 	{
-		alphaEase.Update(true);
+		alphaEase.Update();
 
 		if (isRevercr == false)
 		{
