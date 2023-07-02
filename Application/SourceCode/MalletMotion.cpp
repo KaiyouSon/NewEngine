@@ -5,6 +5,7 @@ void MalletMotion::Init()
 {
 	isInit_ = false;
 	isPlay_ = false;
+	isCalcCollider_ = false;
 	step_ = 0;
 	ease_.Reset();
 	curRots_.clear();
@@ -64,10 +65,6 @@ void MalletMotion::Step0MotionInit(HumanoidBody* human)
 }
 void MalletMotion::Step0MotionUpdate(HumanoidBody* human)
 {
-	// Œ»Ý‚ÌzŽ²‚ÌÀ•W‚©‚ç2æ‚ÉˆÚ“®‚·‚é‚Æƒ‚[ƒVƒ‡ƒ“‚ª‚æ‚­Œ©‚¦‚é
-
-	//human->GetWorldPos()
-
 	// ‘Ì
 	Vec3 bodyMove
 	{
@@ -176,18 +173,28 @@ void MalletMotion::Step1MotionInit(HumanoidBody* human)
 	ease_.SetPowNum(5);
 	ease_.Reset();
 
+	// ‘OƒxƒNƒgƒ‹‚ÌŒvŽZ
+	human->CalcFrontVec();
+
 	// Œ»Ý‚ÌÀ•W‚ðŽæ“¾
-	curPos_ = human->GetPos();
+	curPos_ = human->pos;
+
+	// “ü—Í‚µ‚½Œã‚Ì‰ñ“]Šp‚ðŽæ“¾
+	curRotY_ = atan2f(human->frontVec.x, human->frontVec.z);
 
 	// Œ»Ý‚Ì‰ñ“]Šp‚ðŽæ“¾
 	CalcCurrentRot(human);
+
+	// “–‚½‚è”»’è—LŒø
+	isCalcCollider_ = true;
 }
 void MalletMotion::Step1MotionUpdate(HumanoidBody* human)
 {
-	const float length = 2.f;
-	const Vec3 nextPos = curPos_ + Pad::GetStickVec3(PadCode::LeftStick, 300).Norm() * length;
+	const float length = 10.f;
+	const Vec3 nextPos = curPos_ + human->frontVec.Norm() * length;
 
-	human->GetPos() = ease_.InOut(curPos_, nextPos);
+	human->pos = ease_.InOut(curPos_, nextPos);
+	human->rot.y = curRotY_;
 
 	// ‘Ì
 	Vec3 bodyMove
@@ -286,6 +293,9 @@ void MalletMotion::Step1MotionUpdate(HumanoidBody* human)
 	{
 		step_ = 2;
 		isInit_ = false;
+
+		// “–‚½‚è”»’è–³Œø
+		isCalcCollider_ = false;
 	}
 }
 

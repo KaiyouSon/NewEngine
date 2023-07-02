@@ -44,60 +44,23 @@ void Player::DrawDebugGui()
 void Player::GaugeParamInit()
 {
 	// HPゲージ
-	gaugePrames_[(uint32_t)GaugeType::Hp].max = 256.f;
-	gaugePrames_[(uint32_t)GaugeType::Hp].value = gaugePrames_[(uint32_t)GaugeType::Hp].max;
-	gaugePrames_[(uint32_t)GaugeType::Hp].rate =
-		gaugePrames_[(uint32_t)GaugeType::Hp].value /
-		gaugePrames_[(uint32_t)GaugeType::Hp].max;
+	gaugePrames_[(uint32_t)GaugeType::Hp].CalcRate(256.f, 256.f);
 
 	// MPゲージ
-	gaugePrames_[(uint32_t)GaugeType::Mp].max = 64.f;
-	gaugePrames_[(uint32_t)GaugeType::Mp].value = gaugePrames_[(uint32_t)GaugeType::Mp].max;
-	gaugePrames_[(uint32_t)GaugeType::Mp].rate =
-		gaugePrames_[(uint32_t)GaugeType::Mp].value /
-		gaugePrames_[(uint32_t)GaugeType::Mp].max;
+	gaugePrames_[(uint32_t)GaugeType::Mp].CalcRate(64.f, 64.f);
 
 	// スタミナゲージ
-	gaugePrames_[(uint32_t)GaugeType::Stamina].max = 128.f;
-	gaugePrames_[(uint32_t)GaugeType::Stamina].value = gaugePrames_[(uint32_t)GaugeType::Stamina].max;
-	gaugePrames_[(uint32_t)GaugeType::Stamina].rate =
-		gaugePrames_[(uint32_t)GaugeType::Stamina].value /
-		gaugePrames_[(uint32_t)GaugeType::Stamina].max;
+	gaugePrames_[(uint32_t)GaugeType::Stamina].CalcRate(128.f, 128.f);
 }
 
 void Player::MoveUpdate()
 {
-	Vec3 moveVec = 0;
+	player_->CalcFrontVec();
 
-	// カメラの前ベクトル
-	Vec3 cameForward = player_->pos - Camera::current.pos;
-	cameForward.y = 0.f;
-
-	// カメラの右ベクトル
-	Vec3 cameRight = Vec3::Cross(cameForward, Vec3::up);
-
-	Vec3 stick =
+	if (player_->frontVec != 0)
 	{
-		Pad::GetStick(PadCode::LeftStick).x,
-		0,
-		Pad::GetStick(PadCode::LeftStick).y,
-	};
-	if (stick != 0)
-	{
-		moveVec.x = -stick.Norm().x;
-		moveVec.z = -stick.Norm().z;
-
-		frontVec = cameForward * moveVec.z + cameRight * moveVec.x;
-	}
-	else
-	{
-		frontVec = 0;
-	}
-
-	if (frontVec != 0)
-	{
-		player_->pos += frontVec.Norm() * moveSpeed;
-		player_->rot.y = atan2f(frontVec.Norm().x, frontVec.Norm().z);
+		player_->pos += player_->frontVec.Norm() * moveSpeed;
+		player_->rot.y = atan2f(player_->frontVec.x, player_->frontVec.z);
 	}
 }
 void Player::IdleUpdate()
@@ -155,8 +118,16 @@ GaugeParam Player::GetGaugeParam(const uint32_t index)
 {
 	return gaugePrames_[index];
 }
-
+Weapon* Player::GetWeapon()
+{
+	return weapon_.get();
+}
 Vec3 Player::GetHeadPos()
 {
 	return player_->GetWorldPos(PartID::Head);
+}
+
+Player::State Player::GetState()
+{
+	return state_;
 }

@@ -25,6 +25,7 @@ private:
 	Vec2 basePos_;
 	Vec2 gaugeSize_;
 	Vec2 constGaugeSize_;
+	float gaugeWidthMax_;
 
 
 private:

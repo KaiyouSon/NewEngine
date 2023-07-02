@@ -8,6 +8,7 @@ class IWeaponMotion
 protected:
 	bool isPlay_;
 	bool isInit_;
+	bool isCalcCollider_;
 	uint32_t step_;
 	Easing ease_;
 	std::vector<Vec3> curRots_;
@@ -22,5 +23,6 @@ public:
 
 public:
 	bool GetisPlay();
+	bool GetisCalcCollider();
 };
 

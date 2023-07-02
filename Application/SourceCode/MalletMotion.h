@@ -6,6 +6,7 @@ class MalletMotion : public IWeaponMotion
 {
 private:
 	Vec3 curPos_;
+	float curRotY_;
 
 private:
 	// Žè‚ªŒã‚ë‚Éˆø‚­Žž

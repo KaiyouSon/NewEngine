@@ -27,7 +27,7 @@ void CameraManager::DefaultCameraUpdate()
 		pitch_ -= stick.Norm().y * moveSpeed / 2.f;
 	}
 
-	const float length = 30.f;
+	const float length = 25.f;
 	Vec3 v =
 	{
 		-sinf(Radian(yaw_)) * cosf(Radian(pitch_)),

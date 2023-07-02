@@ -12,6 +12,9 @@ public:
 	std::unique_ptr<IWeaponMotion> motion;
 	CapsuleCollider collider;
 
+private:
+	virtual void ColliderUpdate(bool isCalc) = 0;
+
 public:
 	virtual ~Weapon() {}
 	virtual void Init() = 0;

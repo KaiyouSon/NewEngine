@@ -393,9 +393,6 @@
     <ClCompile Include="Application\SourceCode\HumanoidBody.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\CameraManager.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\Weapon.cpp">
       <Filter>Application\Source\Weapon</Filter>
     </ClCompile>
@@ -407,6 +404,15 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\IWeaponMotion.cpp">
       <Filter>Application\Source\Weapon\Motion</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Boss.cpp">
+      <Filter>Application\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\CameraManager.cpp">
+      <Filter>Application\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\CollisionManager.cpp">
+      <Filter>Application\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -668,9 +674,6 @@
     <ClInclude Include="Application\SourceCode\HumanoidBody.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\CameraManager.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\Weapon.h">
       <Filter>Application\Header\Weapon</Filter>
     </ClInclude>
@@ -682,6 +685,15 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\IWeaponMotion.h">
       <Filter>Application\Header\Weapon\Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Boss.h">
+      <Filter>Application\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\CameraManager.h">
+      <Filter>Application\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\CollisionManager.h">
+      <Filter>Application\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

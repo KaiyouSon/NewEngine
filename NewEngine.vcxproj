@@ -111,8 +111,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\SourceCode\Bloom.cpp" />
+    <ClCompile Include="Application\SourceCode\Boss.cpp" />
     <ClCompile Include="Application\SourceCode\CameraManager.cpp" />
     <ClCompile Include="Application\SourceCode\Club.cpp" />
+    <ClCompile Include="Application\SourceCode\CollisionManager.cpp" />
     <ClCompile Include="Application\SourceCode\DOF.cpp" />
     <ClCompile Include="Application\SourceCode\GaugeParam.cpp" />
     <ClCompile Include="Application\SourceCode\GaugeUI.cpp" />
@@ -196,8 +198,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\SourceCode\Bloom.h" />
+    <ClInclude Include="Application\SourceCode\Boss.h" />
     <ClInclude Include="Application\SourceCode\CameraManager.h" />
     <ClInclude Include="Application\SourceCode\Club.h" />
+    <ClInclude Include="Application\SourceCode\CollisionManager.h" />
     <ClInclude Include="Application\SourceCode\DOF.h" />
     <ClInclude Include="Application\SourceCode\GaugeParam.h" />
     <ClInclude Include="Application\SourceCode\GaugeType.h" />

@@ -1,6 +1,7 @@
 #include "HumanoidBody.h"
 
-HumanoidBody::HumanoidBody()
+HumanoidBody::HumanoidBody() :
+	frontVec(Vec3::front)
 {
 	for (uint32_t i = 0; i < parts_.size(); i++)
 	{
@@ -280,6 +281,32 @@ void HumanoidBody::AttackMotion()
 	weapons_[0]->motion->AttackMotion(this);
 }
 
+void HumanoidBody::CalcFrontVec()
+{
+	// カメラの前ベクトル
+	Vec3 cameForward = pos - Camera::current.pos;
+	cameForward.y = 0.f;
+
+	// カメラの右ベクトル
+	Vec3 cameRight = Vec3::Cross(cameForward, Vec3::up);
+
+	Vec3 stick =
+	{
+		Pad::GetStick(PadCode::LeftStick, 300).x,
+		0,
+		Pad::GetStick(PadCode::LeftStick, 300).y,
+	};
+	if (stick != 0)
+	{
+		Vec3 stickMoveVec = 0;
+
+		stickMoveVec.x = -stick.Norm().x;
+		stickMoveVec.z = -stick.Norm().z;
+
+		frontVec = cameForward * stickMoveVec.z + cameRight * stickMoveVec.x;
+	}
+}
+
 void HumanoidBody::SetWeapon(Weapon* weapon, const uint32_t index)
 {
 	weapons_[index] = weapon;
@@ -290,11 +317,6 @@ void HumanoidBody::SetWeapon(Weapon* weapon, const uint32_t index)
 bool HumanoidBody::GetisPlayAttackMotion(const uint32_t index)
 {
 	return weapons_[index]->motion->GetisPlay();
-}
-
-Vec3 HumanoidBody::GetPos()
-{
-	return pos;
 }
 
 Vec3 HumanoidBody::GetWorldPos(const PartID partID)

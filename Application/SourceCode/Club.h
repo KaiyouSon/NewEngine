@@ -3,6 +3,9 @@
 
 struct Club : public Weapon
 {
+private:
+	void ColliderUpdate(bool isCalc) override;
+
 public:
 	Club();
 	void Init() override;

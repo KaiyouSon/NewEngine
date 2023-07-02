@@ -1,22 +1,18 @@
 #pragma once
-#include "GaugeUI.h"
 #include "Player.h"
 #include "Boss.h"
 
-class UIManager
+class CollisionManager
 {
 private:
-	std::array<std::unique_ptr<GaugeUI>, 3> gauges_;
-	std::unique_ptr<GaugeUI> bossHPGauge_;
-
 	Player* player_;
 	Boss* boss_;
 
+private:
+	void PlayerHitBoss();
+
 public:
-	UIManager();
-	void Init();
 	void Update();
-	void DrawFrontSprite();
 
 public:
 	void SetPlayer(Player* player);

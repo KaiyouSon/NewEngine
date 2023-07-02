@@ -44,6 +44,8 @@ public:
 
 public:
 	GaugeParam GetGaugeParam(const uint32_t index);
+	Weapon* GetWeapon();
 	Vec3 GetHeadPos();
+	State GetState();
 };
 

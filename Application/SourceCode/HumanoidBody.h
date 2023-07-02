@@ -38,6 +38,7 @@ private:
 public:
 	Vec3 pos;
 	Vec3 rot;
+	Vec3 frontVec;
 
 public:
 	HumanoidBody();
@@ -51,13 +52,15 @@ public:
 	void JoggingMotion();
 	void AttackMotion();
 
+	void CalcFrontVec();
+
 public:
 	void SetWeapon(Weapon* weapon, const uint32_t index);
-	bool GetisPlayAttackMotion(const uint32_t index);
+
 public:
-	Vec3 GetPos();
 	Vec3 GetWorldPos(const PartID partID);
 	Object3D* GetPart(const PartID partID);
 	uint32_t GetPartsSize();
+	bool GetisPlayAttackMotion(const uint32_t index);
 };
 

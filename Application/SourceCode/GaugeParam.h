@@ -2,7 +2,9 @@
 
 struct GaugeParam
 {
-	float value;
-	float max;
-	float rate;
+	float value_;
+	float max_;
+	float rate_;
+
+	void CalcRate(const float value, const float max);
 };
