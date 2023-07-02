@@ -14,6 +14,30 @@ void CollisionManager::PlayerHitBoss()
 			boss_->Damage(10.f);
 		}
 	}
+
+	bool isBodyTouch =
+		Collision::CubeHitCube(
+			player_->GetHumanoidBody()->GetBodyCollider(),
+			boss_->GetBodyCollider());
+
+	if (isBodyTouch == true)
+	{
+		Vec3 pos = player_->GetPos();
+		while (isBodyTouch)
+		{
+			isBodyTouch =
+				Collision::CubeHitCube(
+					player_->GetHumanoidBody()->GetBodyCollider(),
+					boss_->GetBodyCollider());
+
+			const float check = 0.01f;
+			Vec3 v = pos - boss_->GetPos();
+			Vec3 nextPos = player_->GetPos() + v.Norm() * check;
+			player_->SetPos(nextPos);
+
+			player_->CalcBodyCollider();
+		}
+	}
 }
 
 void CollisionManager::Update()

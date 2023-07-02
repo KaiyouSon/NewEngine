@@ -30,6 +30,8 @@ void Player::Update()
 	// ŽÀs
 	(this->*pFunc[(int)state_])();
 
+	player_->pos.y = 4.5f;
+
 	player_->Update();
 }
 void Player::DrawModel()
@@ -39,6 +41,11 @@ void Player::DrawModel()
 void Player::DrawDebugGui()
 {
 	player_->DrawDebugGui();
+}
+
+void Player::CalcBodyCollider()
+{
+	player_->ColliderUpdate();
 }
 
 void Player::GaugeParamInit()
@@ -114,19 +121,31 @@ void Player::AttackR1Update()
 	}
 }
 
+void Player::SetPos(const Vec3 pos)
+{
+	player_->pos = pos;
+}
+
 GaugeParam Player::GetGaugeParam(const uint32_t index)
 {
 	return gaugePrames_[index];
+}
+HumanoidBody* Player::GetHumanoidBody()
+{
+	return player_.get();
 }
 Weapon* Player::GetWeapon()
 {
 	return weapon_.get();
 }
+Vec3 Player::GetPos()
+{
+	return player_->pos;
+}
 Vec3 Player::GetHeadPos()
 {
 	return player_->GetWorldPos(PartID::Head);
 }
-
 Player::State Player::GetState()
 {
 	return state_;

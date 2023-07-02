@@ -42,9 +42,16 @@ public:
 	void DrawModel();
 	void DrawDebugGui();
 
+	void CalcBodyCollider();
+
+public:
+	void SetPos(const Vec3 pos);
+
 public:
 	GaugeParam GetGaugeParam(const uint32_t index);
+	HumanoidBody* GetHumanoidBody();
 	Weapon* GetWeapon();
+	Vec3 GetPos();
 	Vec3 GetHeadPos();
 	State GetState();
 };

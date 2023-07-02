@@ -31,6 +31,32 @@ bool Collision::SphereHitSphere(const SphereCollider& sphere1, const SphereColli
 	};
 }
 
+bool Collision::CubeHitCube(const CubeCollider& cube1, const CubeCollider& cube2)
+{
+	// d‚È‚è”»’è
+	for (int i = 0; i < 8; ++i)
+	{
+		for (int j = 0; j < 8; ++j)
+		{
+			bool isXHit =
+				std::fabs(cube1.points[i].x - cube2.points[j].x) <= (cube1.size.x + cube2.size.x) / 2.0;
+
+			bool isYHit =
+				std::fabs(cube1.points[i].y - cube2.points[j].y) <= (cube1.size.y + cube2.size.y) / 2.0;
+
+			bool isZHit =
+				std::fabs(cube1.points[i].z - cube2.points[j].z) <= (cube1.size.z + cube2.size.z) / 2.0;
+
+			if (isXHit && isYHit && isZHit)
+			{
+				return true;  // d‚È‚è‚ª‚ ‚éê‡‚Í“–‚½‚è‚Æ‚·‚é
+			}
+		}
+	}
+
+	return false;  // d‚È‚è‚ª‚È‚¢ê‡‚Í“–‚½‚è‚Æ‚µ‚È‚¢
+}
+
 // ‹…‚Æ•½–Ê
 bool Collision::SphereHitPlane(const SphereCollider& sphere, const PlaneCollider& plane, Vec3* hitPos)
 {

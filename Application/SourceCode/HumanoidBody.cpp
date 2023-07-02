@@ -1,7 +1,7 @@
 #include "HumanoidBody.h"
 
 HumanoidBody::HumanoidBody() :
-	frontVec(Vec3::front)
+	frontVec(Vec3::front), scale(1)
 {
 	for (uint32_t i = 0; i < parts_.size(); i++)
 	{
@@ -53,8 +53,12 @@ void HumanoidBody::Update()
 		}
 	}
 
+	// コライダーの処理
+	ColliderUpdate();
+
 	parts_[(uint32_t)PartID::Transform]->pos = pos;
 	parts_[(uint32_t)PartID::Transform]->rot = rot;
+	parts_[(uint32_t)PartID::Transform]->scale = scale;
 
 	parts_[(uint32_t)PartID::Transform]->Update();
 	Transform transform = parts_[(uint32_t)PartID::Transform]->GetTransform();
@@ -281,6 +285,13 @@ void HumanoidBody::AttackMotion()
 	weapons_[0]->motion->AttackMotion(this);
 }
 
+void HumanoidBody::ColliderUpdate()
+{
+	bodyCollider_.centerPos = pos;
+	bodyCollider_.size = Vec3(2, 4, 2);
+	bodyCollider_.CalcPoints();
+}
+
 void HumanoidBody::CalcFrontVec()
 {
 	// カメラの前ベクトル
@@ -317,6 +328,11 @@ void HumanoidBody::SetWeapon(Weapon* weapon, const uint32_t index)
 bool HumanoidBody::GetisPlayAttackMotion(const uint32_t index)
 {
 	return weapons_[index]->motion->GetisPlay();
+}
+
+CubeCollider HumanoidBody::GetBodyCollider()
+{
+	return bodyCollider_;
 }
 
 Vec3 HumanoidBody::GetWorldPos(const PartID partID)

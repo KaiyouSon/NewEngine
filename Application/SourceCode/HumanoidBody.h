@@ -30,6 +30,7 @@ class HumanoidBody
 private:
 	std::array<std::unique_ptr<Object3D>, 11> parts_;
 	std::array<Weapon*, 2> weapons_;
+	CubeCollider bodyCollider_;
 
 private:
 	bool isReverce;
@@ -38,7 +39,11 @@ private:
 public:
 	Vec3 pos;
 	Vec3 rot;
+	Vec3 scale;
 	Vec3 frontVec;
+
+public:
+	void ColliderUpdate();
 
 public:
 	HumanoidBody();
@@ -58,6 +63,7 @@ public:
 	void SetWeapon(Weapon* weapon, const uint32_t index);
 
 public:
+	CubeCollider GetBodyCollider();
 	Vec3 GetWorldPos(const PartID partID);
 	Object3D* GetPart(const PartID partID);
 	uint32_t GetPartsSize();

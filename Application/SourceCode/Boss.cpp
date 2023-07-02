@@ -35,6 +35,10 @@ void Boss::ColliderUpdate()
 	collider_.startPos = boss_->pos - Vec3(0.f, 2.5f, 0.f);
 	collider_.endPos = boss_->pos + Vec3(0.f, 2.5f, 0.f);
 	collider_.radius = 2.5f;
+
+	bodyCollider_.centerPos = boss_->pos;
+	bodyCollider_.size = Vec3(2, 4, 2);
+	bodyCollider_.CalcPoints();
 }
 
 void Boss::Damage(const float damage)
@@ -47,7 +51,17 @@ CapsuleCollider Boss::GetCollider()
 	return collider_;
 }
 
+CubeCollider Boss::GetBodyCollider()
+{
+	return bodyCollider_;
+}
+
 GaugeParam Boss::GetHpGaugeParam()
 {
 	return hpGaugeParam_;
+}
+
+Vec3 Boss::GetPos()
+{
+	return boss_->pos;
 }

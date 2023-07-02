@@ -1,5 +1,6 @@
 #pragma once
 #include "MathUtil.h"
+#include <array>
 
 // ----- 円コライダー ------------------- //
 struct CircleCollider
@@ -23,6 +24,15 @@ struct SquareCollider
 
 	SquareCollider();
 	SquareCollider(const Vec2& centerPos, const Vec2& size);
+};
+
+struct CubeCollider
+{
+	Vec3 centerPos;
+	Vec3 size;
+	std::array<Vec3, 8> points;
+
+	void CalcPoints();
 };
 
 // ----- 球コライダー ------------------- //

@@ -14,6 +14,11 @@ public:
 		const SphereCollider& sphere1,
 		const SphereCollider& sphere2);
 
+	// キューブとキューブ
+	static bool CubeHitCube(
+		const CubeCollider& cube1,
+		const CubeCollider& cube2);
+
 	// 球と平面
 	static bool SphereHitPlane(
 		const SphereCollider& sphere,

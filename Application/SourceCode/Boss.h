@@ -10,6 +10,7 @@ private:
 	GaugeParam hpGaugeParam_;
 
 	CapsuleCollider collider_;
+	CubeCollider bodyCollider_;
 
 private:
 	void ColliderUpdate();
@@ -25,6 +26,9 @@ public:
 
 public:
 	CapsuleCollider GetCollider();
+	CubeCollider GetBodyCollider();
 	GaugeParam GetHpGaugeParam();
+	Vec3 GetPos();
+
 };
 

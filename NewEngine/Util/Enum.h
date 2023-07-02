@@ -70,3 +70,11 @@ enum class FlipType
 	Y,
 	XY
 };
+
+enum class CubePoints
+{
+	FLT, FLD,
+	FRT, FRD,
+	BLT, BLD,
+	BRT, BRD
+};

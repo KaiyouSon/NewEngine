@@ -78,3 +78,70 @@ CapsuleCollider::CapsuleCollider(const Vec3& startPos, const Vec3& endPos, const
 	startPos(startPos), endPos(endPos), radius(radius)
 {
 }
+
+void CubeCollider::CalcPoints()
+{
+	// 左上前
+	points[(uint32_t)CubePoints::FLT] =
+	{
+		centerPos.x - size.x,
+		centerPos.y + size.y,
+		centerPos.z + size.z,
+	};
+
+	// 左下前
+	points[(uint32_t)CubePoints::FLD] =
+	{
+		centerPos.x - size.x,
+		centerPos.y - size.y,
+		centerPos.z + size.z,
+	};
+
+	// 右上前
+	points[(uint32_t)CubePoints::FRT] =
+	{
+		centerPos.x + size.x,
+		centerPos.y + size.y,
+		centerPos.z + size.z,
+	};
+
+	// 右下前
+	points[(uint32_t)CubePoints::FRD] =
+	{
+		centerPos.x + size.x,
+		centerPos.y - size.y,
+		centerPos.z + size.z,
+	};
+
+	// 左上後
+	points[(uint32_t)CubePoints::BLT] =
+	{
+		centerPos.x - size.x,
+		centerPos.y + size.y,
+		centerPos.z - size.z,
+	};
+
+	// 左下後
+	points[(uint32_t)CubePoints::BLD] =
+	{
+		centerPos.x - size.x,
+		centerPos.y - size.y,
+		centerPos.z - size.z,
+	};
+
+	// 右上後
+	points[(uint32_t)CubePoints::BRT] =
+	{
+		centerPos.x + size.x,
+		centerPos.y + size.y,
+		centerPos.z - size.z,
+	};
+
+	// 右下後
+	points[(uint32_t)CubePoints::BRD] =
+	{
+		centerPos.x + size.x,
+		centerPos.y - size.y,
+		centerPos.z - size.z,
+	};
+}
