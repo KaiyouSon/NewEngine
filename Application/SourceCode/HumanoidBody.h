@@ -2,6 +2,8 @@
 #include "NewEngine.h"
 #include "Weapon.h"
 
+struct Weapon;
+
 enum class PartID
 {
 	Transform,
@@ -63,5 +65,7 @@ public:
 
 public:
 	Vec3 GetWorldPos(const PartID partID);
+	Object3D* GetPart(const PartID partID);
+	uint32_t GetPartsSize();
 };
 

@@ -283,226 +283,12 @@ void HumanoidBody::JoggingMotion()
 
 void HumanoidBody::AttackMotion()
 {
-	if (isPlay_ == false)
+	if (Pad::GetButtonDown(PadCode::ButtonR1))
 	{
-		return;
+		weapons_[0]->motion->SetisPlay(true);
 	}
 
-	//step_ = 1;
-	if (step_ == 0)
-	{
-		// Œ»Ý‚ÌzŽ²‚ÌÀ•W‚©‚ç2æ‚ÉˆÚ“®‚·‚é‚Æƒ‚[ƒVƒ‡ƒ“‚ª‚æ‚­Œ©‚¦‚é
-
-		// ‘Ì
-		Vec3 bodyMove
-		{
-			attackEase_.Out(curRots_[(uint32_t)PartID::Body].x, Radian(10)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::Body].y, Radian(55)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::Body].z, Radian(10)),
-		};
-		parts_[(uint32_t)PartID::Body]->rot = bodyMove;
-
-		// “ª
-		Vec3 headMove
-		{
-			attackEase_.Out(curRots_[(uint32_t)PartID::Head].x, Radian(-5)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::Head].y, Radian(-55)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::Head].z, Radian(+0)),
-		};
-		parts_[(uint32_t)PartID::Head]->rot = headMove;
-
-		// ‰E˜r
-		Vec3 rightArmMove =
-		{
-			attackEase_.Out(curRots_[(uint32_t)PartID::RightArm].x, Radian(-60)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::RightArm].y, Radian(+45)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::RightArm].z, Radian(+70)),
-		};
-		parts_[(uint32_t)PartID::RightArm]->rot = rightArmMove;
-
-		// ‰EŽè
-		Vec3 rightHandMove =
-		{
-			attackEase_.Out(curRots_[(uint32_t)PartID::RightHand].x, Radian(-20)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::RightHand].x, Radian(+65)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::RightHand].z, Radian(-90)),
-		};
-		parts_[(uint32_t)PartID::RightHand]->rot = rightHandMove;
-
-		// ¶˜r
-		Vec3 leftArmMove =
-		{
-			attackEase_.Out(curRots_[(uint32_t)PartID::LeftArm].x, Radian(-20)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::LeftArm].y, Radian(+15)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::LeftArm].z, Radian(-20)),
-		};
-		parts_[(uint32_t)PartID::LeftArm]->rot = leftArmMove;
-
-		// ¶Žè
-		Vec3 leftHandMove =
-		{
-			attackEase_.Out(curRots_[(uint32_t)PartID::LeftHand].x, Radian(-20)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::LeftHand].y, Radian(+15)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::LeftHand].z, Radian(+0)),
-		};
-		parts_[(uint32_t)PartID::LeftHand]->rot = leftHandMove;
-
-		// ‰E‘¾‚à‚à
-		Vec3 rightThighMove =
-		{
-			attackEase_.Out(curRots_[(uint32_t)PartID::RightThigh].x, Radian(-15)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::RightThigh].y, Radian(+0)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::RightThigh].z, Radian(+20)),
-		};
-		parts_[(uint32_t)PartID::RightThigh]->rot = rightThighMove;
-
-		// ‰E‘«
-		Vec3 rightLegMove =
-		{
-			attackEase_.Out(curRots_[(uint32_t)PartID::RightLeg].x, Radian(+30)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::RightLeg].y, Radian(+15)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::RightLeg].z, Radian(+0)),
-		};
-		parts_[(uint32_t)PartID::RightLeg]->rot = rightLegMove;
-
-		// ¶‘¾‚à‚à
-		Vec3 leftThighMove =
-		{
-			attackEase_.Out(curRots_[(uint32_t)PartID::LeftThigh].x, Radian(-70)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::LeftThigh].y, Radian(-30)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::LeftThigh].z, Radian(-15)),
-		};
-		parts_[(uint32_t)PartID::LeftThigh]->rot = leftThighMove;
-
-		// ¶‘«
-		Vec3 leftLegMove =
-		{
-			attackEase_.Out(curRots_[(uint32_t)PartID::LeftLeg].x, Radian(+50)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::LeftLeg].y, Radian(+0)),
-			attackEase_.Out(curRots_[(uint32_t)PartID::LeftLeg].z, Radian(+0)),
-		};
-		parts_[(uint32_t)PartID::LeftLeg]->rot = leftLegMove;
-
-		// •âŠÔ
-		attackEase_.Update();
-
-		if (attackEase_.GetisEnd() == true)
-		{
-			//isPlay_ = false;
-
-			step_ = 1;
-			
-			// I—¹Žž‚Ì‰ñ“]Šp‚ðŽæ“¾
- 			CalcCurrentRot();
-			
-			attackEase_.SetEaseTimer(25);
-			attackEase_.SetPowNum(5);
-			attackEase_.Reset();
-		}
-	}
-
-	if (step_ == 1)
-	{
-		// ‘Ì
-		Vec3 bodyMove
-		{
-			attackEase_.InOut(curRots_[(uint32_t)PartID::Body].x, Radian(+20)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::Body].y, Radian(-55)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::Body].z, Radian(-20)),
-		};
-		parts_[(uint32_t)PartID::Body]->rot = bodyMove;
-
-		// “ª
-		Vec3 headMove
-		{
-			attackEase_.InOut(curRots_[(uint32_t)PartID::Head].x, Radian(-10)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::Head].y, Radian(+55)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::Head].z, Radian(+0)),
-		};
-		parts_[(uint32_t)PartID::Head]->rot = headMove;
-
-		// ‰E˜r
-		Vec3 rightArmMove
-		{
-			attackEase_.InOut(curRots_[(uint32_t)PartID::RightArm].x, Radian(-20)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::RightArm].y, Radian(+40)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::RightArm].z, Radian(+0)),
-		};
-		parts_[(uint32_t)PartID::RightArm]->rot = rightArmMove;
-
-		// ‰EŽè
-		Vec3 rightHandMove
-		{
-			attackEase_.InOut(curRots_[(uint32_t)PartID::RightHand].x, Radian(-40)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::RightHand].y, Radian(+0)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::RightHand].z, Radian(+0)),
-		};
-		parts_[(uint32_t)PartID::RightHand]->rot = rightHandMove;
-
-		// ‰E˜r
-		Vec3 leftArmMove
-		{
-			attackEase_.InOut(curRots_[(uint32_t)PartID::LeftArm].x, Radian(+30)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::LeftArm].y, Radian(+0)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::LeftArm].z, Radian(-20)),
-		};
-		parts_[(uint32_t)PartID::LeftArm]->rot = leftArmMove;
-
-		// ‰EŽè
-		Vec3 leftHandMove
-		{
-			attackEase_.InOut(curRots_[(uint32_t)PartID::LeftHand].x, Radian(-60)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::LeftHand].y, Radian(+0)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::LeftHand].z, Radian(+0)),
-		};
-		parts_[(uint32_t)PartID::LeftHand]->rot = leftHandMove;
-
-		// ‰E˜r
-		Vec3 rightThighMove
-		{
-			attackEase_.InOut(curRots_[(uint32_t)PartID::RightThigh].x, Radian(-0)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::RightThigh].y, Radian(-45)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::RightThigh].z, Radian(+70)),
-		};
-		parts_[(uint32_t)PartID::RightThigh]->rot = rightThighMove;
-
-		// ‰EŽè
-		Vec3 rightLegMove
-		{
-			attackEase_.InOut(curRots_[(uint32_t)PartID::RightLeg].x, Radian(+0)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::RightLeg].y, Radian(+0)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::RightLeg].z, Radian(-40)),
-		};
-		parts_[(uint32_t)PartID::RightLeg]->rot = rightLegMove;
-
-		// ‰E˜r
-		Vec3 leftThighMove
-		{
-			attackEase_.InOut(curRots_[(uint32_t)PartID::LeftThigh].x, Radian(-5)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::LeftThigh].y, Radian(+0)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::LeftThigh].z, Radian(+0)),
-		};
-		parts_[(uint32_t)PartID::LeftThigh]->rot = leftThighMove;
-
-		// ‰EŽè
-		Vec3 leftLegMove
-		{
-			attackEase_.InOut(curRots_[(uint32_t)PartID::LeftLeg].x, Radian(+15)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::LeftLeg].y, Radian(+0)),
-			attackEase_.InOut(curRots_[(uint32_t)PartID::LeftLeg].z, Radian(+0)),
-		};
-		parts_[(uint32_t)PartID::LeftLeg]->rot = leftLegMove;
-
-		// •âŠÔ
-		attackEase_.Update();
-
-		if (attackEase_.GetisEnd() == true)
-		{
-			isPlay_ = false;
-		}
-	}
-
-
+	weapons_[0]->motion->AttackMotion(this);
 }
 
 void HumanoidBody::CalcCurrentRot()
@@ -523,4 +309,14 @@ void HumanoidBody::SetWeapon(Weapon* weapon, const uint32_t index)
 Vec3 HumanoidBody::GetWorldPos(const PartID partID)
 {
 	return parts_[(uint32_t)partID]->GetWorldPos();
+}
+
+Object3D* HumanoidBody::GetPart(const PartID partID)
+{
+	return parts_[(uint32_t)partID].get();
+}
+
+uint32_t HumanoidBody::GetPartsSize()
+{
+	return (uint32_t)parts_.size();
 }

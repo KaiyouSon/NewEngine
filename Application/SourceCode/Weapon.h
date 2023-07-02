@@ -1,5 +1,5 @@
 #pragma once
-#include "NewEngine.h"
+#include "IWeaponMotion.h"
 
 struct Weapon
 {
@@ -9,6 +9,7 @@ protected:
 
 public:
 	std::unique_ptr<Object3D> weapon;
+	std::unique_ptr<IWeaponMotion> motion;
 
 public:
 	virtual ~Weapon() {}

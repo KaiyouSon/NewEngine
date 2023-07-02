@@ -2,7 +2,6 @@
 #include "NewEngine.h"
 #include "GaugeParam.h"
 #include "HumanoidBody.h"
-#include "Weapon.h"
 
 class Player
 {

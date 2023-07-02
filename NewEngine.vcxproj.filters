@@ -405,6 +405,9 @@
     <ClCompile Include="Application\SourceCode\MalletMotion.cpp">
       <Filter>Application\Source\Weapon\Motion</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\IWeaponMotion.cpp">
+      <Filter>Application\Source\Weapon\Motion</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -675,6 +678,9 @@
       <Filter>Application\Header\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\MalletMotion.h">
+      <Filter>Application\Header\Weapon\Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\IWeaponMotion.h">
       <Filter>Application\Header\Weapon\Motion</Filter>
     </ClInclude>
   </ItemGroup>
