@@ -180,7 +180,8 @@ void MalletMotion::Step1MotionInit(HumanoidBody* human)
 	curPos_ = human->pos;
 
 	// “ü—Í‚µ‚½Œã‚Ì‰ñ“]Šp‚ðŽæ“¾
-	curRotY_ = atan2f(human->frontVec.x, human->frontVec.z);
+	curRotY_ = human->rot.y;
+	nextRotY_ = atan2f(human->frontVec.x, human->frontVec.z);
 
 	// Œ»Ý‚Ì‰ñ“]Šp‚ðŽæ“¾
 	CalcCurrentRot(human);
@@ -194,7 +195,7 @@ void MalletMotion::Step1MotionUpdate(HumanoidBody* human)
 	const Vec3 nextPos = curPos_ + human->frontVec.Norm() * length;
 
 	human->pos = ease_.InOut(curPos_, nextPos);
-	human->rot.y = curRotY_;
+	human->rot.y = ease_.InOut(curRotY_, nextRotY_);
 
 	// ‘Ì
 	Vec3 bodyMove
