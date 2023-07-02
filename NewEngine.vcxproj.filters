@@ -154,6 +154,18 @@
     <Filter Include="Application\Header\UI">
       <UniqueIdentifier>{3883a1ae-ad71-40ac-a4f3-1a9d6454ad73}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Source\Weapon">
+      <UniqueIdentifier>{850f4087-dcbc-4e0c-80fd-70aa989a097d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\Weapon">
+      <UniqueIdentifier>{d735dc30-6d52-4a2f-ba0a-eaf5b28b0bb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\Weapon\Motion">
+      <UniqueIdentifier>{0989b207-3403-4731-9de5-48a6edf5dfea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\Weapon\Motion">
+      <UniqueIdentifier>{198f432a-07a7-40b2-97f8-115d759c5dd5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -380,6 +392,18 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\HumanoidBody.cpp">
       <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\CameraManager.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Weapon.cpp">
+      <Filter>Application\Source\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Club.cpp">
+      <Filter>Application\Source\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\MalletMotion.cpp">
+      <Filter>Application\Source\Weapon\Motion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -640,6 +664,18 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\HumanoidBody.h">
       <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\CameraManager.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Weapon.h">
+      <Filter>Application\Header\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Club.h">
+      <Filter>Application\Header\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\MalletMotion.h">
+      <Filter>Application\Header\Weapon\Motion</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

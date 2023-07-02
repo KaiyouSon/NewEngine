@@ -1,5 +1,6 @@
 #pragma once
 #include "NewEngine.h"
+#include "Weapon.h"
 
 enum class PartID
 {
@@ -17,17 +18,33 @@ enum class PartID
 	RightLeg,	 // âEë´
 	LeftThigh,	 // ç∂ëæÇ‡Ç‡
 	LeftLeg,	 // ç∂ë´
+
+	RightWeapon,
+	LeftWeapon,
 };
 
 class HumanoidBody
 {
 private:
 	std::array<std::unique_ptr<Object3D>, 11> parts_;
+	std::array<Weapon*, 2> weapons_;
 
 private:
-	float rotSpped;
 	bool isReverce;
 	Easing joggingEase;
+
+private:
+	Easing attackEase_;
+	uint32_t step_;
+	bool isPlay_;
+	std::array<Vec3, 11> curRots_;
+
+private:
+	void CalcCurrentRot();
+
+public:
+	Vec3 pos;
+	Vec3 rot;
 
 public:
 	HumanoidBody();
@@ -39,5 +56,12 @@ public:
 public:
 	void IdleMotion();
 	void JoggingMotion();
+	void AttackMotion();
+
+public:
+	void SetWeapon(Weapon* weapon, const uint32_t index);
+
+public:
+	Vec3 GetWorldPos(const PartID partID);
 };
 

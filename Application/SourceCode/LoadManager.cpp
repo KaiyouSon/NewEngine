@@ -9,9 +9,14 @@ bool LoadManager::ModelLoad()
 	ModelManager::LoadFbxModel("boneTest", "BoneTest");
 	ModelManager::LoadObjModel("Cube", "Cube");
 
+	ModelManager::LoadObjModel("Ground", "Ground");
+
 	ModelManager::LoadObjModel("HumanoidBody/Body", "Body");
 	ModelManager::LoadObjModel("HumanoidBody/Head", "Head");
 	ModelManager::LoadObjModel("HumanoidBody/Limbs", "Limbs");
+
+	ModelManager::LoadObjModel("Weapon/Club", "Club");
+
 
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
 	return true;

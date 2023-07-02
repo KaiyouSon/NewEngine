@@ -241,7 +241,7 @@ void Object3D::SetAnimation(const uint32_t animationIndex, const uint32_t maxFra
 // ƒ[ƒ‹ƒhÀ•W
 Vec3 Object3D::GetWorldPos()
 {
-	Vec3 worldPos = transform_.GetWorldMat().GetTrans();
+	Vec3 worldPos = Vec3MulMat4(pos, transform_.GetWorldMat(), true);
 	return worldPos;
 }
 

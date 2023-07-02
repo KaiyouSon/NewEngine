@@ -3,7 +3,7 @@
 
 Camera Camera::current = {};
 
-Camera::Camera() : pos(0, 0, 0), rot(0, 0, 0), fov(Radian(45)), nearZ(0.1f), farZ(1000.0f)
+Camera::Camera() : pos(0, 0, 0), rot(0, 0, 0), fov(Radian(45)), nearZ(0.1f), farZ(10000.0f)
 {
 	// ‰ñ“]ŠÖ˜A
 	Transform transform;

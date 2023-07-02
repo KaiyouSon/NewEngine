@@ -111,6 +111,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\SourceCode\Bloom.cpp" />
+    <ClCompile Include="Application\SourceCode\CameraManager.cpp" />
+    <ClCompile Include="Application\SourceCode\Club.cpp" />
     <ClCompile Include="Application\SourceCode\DOF.cpp" />
     <ClCompile Include="Application\SourceCode\GaugeParam.cpp" />
     <ClCompile Include="Application\SourceCode\GaugeUI.cpp" />
@@ -118,6 +120,7 @@
     <ClCompile Include="Application\SourceCode\Glare.cpp" />
     <ClCompile Include="Application\SourceCode\HumanoidBody.cpp" />
     <ClCompile Include="Application\SourceCode\LoadManager.cpp" />
+    <ClCompile Include="Application\SourceCode\MalletMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Player.cpp" />
     <ClCompile Include="Application\SourceCode\RadialBlur.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\GameScene.cpp" />
@@ -128,6 +131,7 @@
     <ClCompile Include="Application\SourceCode\Task.cpp" />
     <ClCompile Include="Application\SourceCode\UIManager.cpp" />
     <ClCompile Include="Application\SourceCode\Vignette.cpp" />
+    <ClCompile Include="Application\SourceCode\Weapon.cpp" />
     <ClCompile Include="NewEngine\Collision\Collider.cpp" />
     <ClCompile Include="NewEngine\Collision\Collision.cpp" />
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp" />
@@ -191,6 +195,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\SourceCode\Bloom.h" />
+    <ClInclude Include="Application\SourceCode\CameraManager.h" />
+    <ClInclude Include="Application\SourceCode\Club.h" />
     <ClInclude Include="Application\SourceCode\DOF.h" />
     <ClInclude Include="Application\SourceCode\GaugeParam.h" />
     <ClInclude Include="Application\SourceCode\GaugeType.h" />
@@ -199,6 +205,7 @@
     <ClInclude Include="Application\SourceCode\Glare.h" />
     <ClInclude Include="Application\SourceCode\HumanoidBody.h" />
     <ClInclude Include="Application\SourceCode\LoadManager.h" />
+    <ClInclude Include="Application\SourceCode\MalletMotion.h" />
     <ClInclude Include="Application\SourceCode\Player.h" />
     <ClInclude Include="Application\SourceCode\RadialBlur.h" />
     <ClInclude Include="Application\SourceCode\Scene\GameScene.h" />
@@ -210,6 +217,7 @@
     <ClInclude Include="Application\SourceCode\Task.h" />
     <ClInclude Include="Application\SourceCode\UIManager.h" />
     <ClInclude Include="Application\SourceCode\Vignette.h" />
+    <ClInclude Include="Application\SourceCode\Weapon.h" />
     <ClInclude Include="NewEngine\Collision\Collider.h" />
     <ClInclude Include="NewEngine\Collision\Collision.h" />
     <ClInclude Include="NewEngine\Gui\GuiManager.h" />
