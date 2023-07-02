@@ -25,6 +25,8 @@ public:
 	Vec3 scale;
 	Vec3 rot;
 	Color color;
+	Vec2 tiling;
+	Vec2 offset;
 
 	bool isLighting;
 	static bool isAllLighting;

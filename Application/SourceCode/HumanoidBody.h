@@ -55,6 +55,7 @@ public:
 	void SetWeapon(Weapon* weapon, const uint32_t index);
 	bool GetisPlayAttackMotion(const uint32_t index);
 public:
+	Vec3 GetPos();
 	Vec3 GetWorldPos(const PartID partID);
 	Object3D* GetPart(const PartID partID);
 	uint32_t GetPartsSize();

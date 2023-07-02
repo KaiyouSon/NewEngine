@@ -292,6 +292,11 @@ bool HumanoidBody::GetisPlayAttackMotion(const uint32_t index)
 	return weapons_[index]->motion->GetisPlay();
 }
 
+Vec3 HumanoidBody::GetPos()
+{
+	return pos;
+}
+
 Vec3 HumanoidBody::GetWorldPos(const PartID partID)
 {
 	return parts_[(uint32_t)partID]->GetWorldPos();

@@ -60,10 +60,13 @@ void MalletMotion::Step0MotionInit(HumanoidBody* human)
 	CalcCurrentRot(human);
 
 	step_ = 0;
+
 }
 void MalletMotion::Step0MotionUpdate(HumanoidBody* human)
 {
 	// Œ»Ý‚ÌzŽ²‚ÌÀ•W‚©‚ç2æ‚ÉˆÚ“®‚·‚é‚Æƒ‚[ƒVƒ‡ƒ“‚ª‚æ‚­Œ©‚¦‚é
+
+	//human->GetWorldPos()
 
 	// ‘Ì
 	Vec3 bodyMove
@@ -173,11 +176,19 @@ void MalletMotion::Step1MotionInit(HumanoidBody* human)
 	ease_.SetPowNum(5);
 	ease_.Reset();
 
+	// Œ»Ý‚ÌÀ•W‚ðŽæ“¾
+	curPos_ = human->GetPos();
+
 	// Œ»Ý‚Ì‰ñ“]Šp‚ðŽæ“¾
 	CalcCurrentRot(human);
 }
 void MalletMotion::Step1MotionUpdate(HumanoidBody* human)
 {
+	const float length = 2.f;
+	const Vec3 nextPos = curPos_ + Pad::GetStickVec3(PadCode::LeftStick, 300).Norm() * length;
+
+	human->GetPos() = ease_.InOut(curPos_, nextPos);
+
 	// ‘Ì
 	Vec3 bodyMove
 	{

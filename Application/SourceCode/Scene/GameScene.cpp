@@ -8,6 +8,7 @@ GameScene::GameScene() :
 {
 	ground->SetModel(ModelManager::GetModel("Ground"));
 	ground->scale = 1000.f;
+	ground->tiling = 100;
 }
 GameScene::~GameScene()
 {

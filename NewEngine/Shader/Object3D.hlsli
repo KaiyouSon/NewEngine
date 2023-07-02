@@ -34,9 +34,10 @@ cbuffer ConstantBufferDataLightManager : register(b3)
 };
 
 // --- ÉtÉHÉO ---------------------- //
-cbuffer ConstantBufferDataFog : register(b4)
+cbuffer ConstantBufferDataUVParameter : register(b4)
 {
-    Fog fog;
+    float2 offset;
+    float2 tiling;
 };
 
 

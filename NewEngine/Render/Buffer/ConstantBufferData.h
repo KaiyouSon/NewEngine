@@ -21,6 +21,12 @@ namespace ConstantBufferData
 		float endRadian;
 	};
 
+	struct CUVParameter
+	{
+		Vec2 offset;
+		Vec2 tiling;
+	};
+
 	struct CColor
 	{
 		Color color;// êF

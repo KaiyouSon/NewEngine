@@ -328,6 +328,32 @@ Vec2 JoypadInput::GetStickUp(const PadCode padCode, const float length, const in
 	return 0;
 }
 
+Vec3 JoypadInput::GetStickVec3(const PadCode padCode, const float length, const int padIndex)
+{
+	// 接続しているか
+	if (GetisLinkPad() == false) return 0;
+
+	Vec3 stick = 0;
+	if (padCode == PadCode::LeftStick)
+	{
+		stick.x = (float)GetInstance()->joypadObjs_[padIndex].padInput.lX;
+		stick.z = (float)GetInstance()->joypadObjs_[padIndex].padInput.lY;
+	}
+	else if (padCode == PadCode::RightStick)
+	{
+		stick.x = (float)GetInstance()->joypadObjs_[padIndex].padInput.lRx;
+		stick.z = (float)GetInstance()->joypadObjs_[padIndex].padInput.lRy;
+	}
+
+	// 指定した長さを超えた場合にしか返さない
+	if (stick.Length() > fabsf(length))
+	{
+		return stick;
+	}
+
+	return 0;
+}
+
 #pragma endregion
 
 #pragma region トリガー関連

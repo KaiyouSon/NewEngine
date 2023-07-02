@@ -5,6 +5,9 @@
 class MalletMotion : public IWeaponMotion
 {
 private:
+	Vec3 curPos_;
+
+private:
 	// Žè‚ªŒã‚ë‚Éˆø‚­Žž
 	void Step0MotionInit(HumanoidBody* human);
 	void Step0MotionUpdate(HumanoidBody* human);

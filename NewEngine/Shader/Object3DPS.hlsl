@@ -6,8 +6,10 @@ SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
 
 PSOutput main(VSOutputSvposPosNormalUv vsOutput)// : SV_TARGET
 {
+    float2 newUV = (vsOutput.uv + offset) * tiling;
+    
 	// テクスチャーマッピング
-    float4 texColor = tex.Sample(smp, vsOutput.uv);
+    float4 texColor = tex.Sample(smp, newUV);
     
 	// 光沢度
     const float shininess = 4.0f;

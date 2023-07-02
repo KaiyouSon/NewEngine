@@ -68,6 +68,8 @@ public: // スティック関連
 	static Vec2 GetStick(const PadCode padCode, const float length = 0, const int padIndex = 0);
 	static Vec2 GetStickDown(const PadCode padCode, const float length = 0, const int padIndex = 0);
 	static Vec2 GetStickUp(const PadCode padCode, const float length = 0, const int padIndex = 0);
+	static Vec3 GetStickVec3(const PadCode padCode, const float length = 0, const int padIndex = 0);
+
 
 public:	// トリガー関連
 	static float GetTrigger(const PadCode padCode, const int padIndex = 0);

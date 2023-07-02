@@ -9,7 +9,7 @@ using namespace ConstantBufferData;
 bool Object3D::isAllLighting = false;
 
 Object3D::Object3D() :
-	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
+	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0), offset(0, 0), tiling(1, 1),
 	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
 	texture_(TextureManager::GetTexture("White")),
 	isLighting(false)
@@ -93,6 +93,10 @@ void Object3D::MaterialInit()
 	iConstantBuffer = std::make_unique<ConstantBuffer<CSkin>>();
 	material_.constantBuffers.push_back(std::move(iConstantBuffer));
 
+	// UV情報
+	iConstantBuffer = std::make_unique<ConstantBuffer<CUVParameter>>();
+	material_.constantBuffers.push_back(std::move(iConstantBuffer));
+
 	// 初期化
 	material_.Init();
 }
@@ -147,6 +151,10 @@ void Object3D::MaterialTransfer()
 		}
 		TransferDataToConstantBuffer(material_.constantBuffers[3].get(), skinData);
 	}
+
+	// 色データ
+	CUVParameter uvData = { offset,tiling };
+	TransferDataToConstantBuffer(material_.constantBuffers[4].get(), uvData);
 }
 void Object3D::MaterialDrawCommands()
 {
@@ -164,6 +172,9 @@ void Object3D::MaterialDrawCommands()
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		3, material_.constantBuffers[3]->constantBuffer->GetGPUVirtualAddress());
+
+	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+		4, material_.constantBuffers[4]->constantBuffer->GetGPUVirtualAddress());
 
 }
 
