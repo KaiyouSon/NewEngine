@@ -17,6 +17,7 @@ bool LoadManager::ModelLoad()
 
 	ModelManager::LoadObjModel("Weapon/Club", "Club");
 
+	ModelManager::LoadObjModel("Collider/CapsuleCollider", "CapsuleCollider");
 
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
 	return true;

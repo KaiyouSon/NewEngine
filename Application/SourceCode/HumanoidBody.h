@@ -35,15 +35,6 @@ private:
 	bool isReverce;
 	Easing joggingEase;
 
-private:
-	Easing attackEase_;
-	uint32_t step_;
-	bool isPlay_;
-	std::array<Vec3, 11> curRots_;
-
-private:
-	void CalcCurrentRot();
-
 public:
 	Vec3 pos;
 	Vec3 rot;
@@ -62,7 +53,7 @@ public:
 
 public:
 	void SetWeapon(Weapon* weapon, const uint32_t index);
-
+	bool GetisPlayAttackMotion(const uint32_t index);
 public:
 	Vec3 GetWorldPos(const PartID partID);
 	Object3D* GetPart(const PartID partID);

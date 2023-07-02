@@ -36,24 +36,13 @@ void HumanoidBody::Init()
 	joggingEase.SetEaseTimer(15);
 	joggingEase.SetPowNum(2);
 	isReverce = false;
-
-
-	isPlay_ = false;
 }
 
 void HumanoidBody::Update()
 {
 	if (Key::GetKeyDown(DIK_SPACE))
 	{
-		CalcCurrentRot();
-
-		attackEase_.SetEaseTimer(15);
-		attackEase_.SetPowNum(2);
-		step_ = 0;
-		attackEase_.Reset();
-		isPlay_ = true;
 	}
-	AttackMotion();
 
 	if (Key::GetKeyDown(DIK_R))
 	{
@@ -214,10 +203,10 @@ void HumanoidBody::DrawDebugGui()
 
 void HumanoidBody::IdleMotion()
 {
-	//for (uint32_t i = 1; i < parts_.size(); i++)
-	//{
-	//	parts_[i]->rot = 0;
-	//}
+	for (uint32_t i = 1; i < parts_.size(); i++)
+	{
+		parts_[i]->rot = 0;
+	}
 }
 
 void HumanoidBody::JoggingMotion()
@@ -283,7 +272,7 @@ void HumanoidBody::JoggingMotion()
 
 void HumanoidBody::AttackMotion()
 {
-	if (Pad::GetButtonDown(PadCode::ButtonR1))
+	if (weapons_[0]->motion->GetisPlay() == false)
 	{
 		weapons_[0]->motion->SetisPlay(true);
 	}
@@ -291,19 +280,16 @@ void HumanoidBody::AttackMotion()
 	weapons_[0]->motion->AttackMotion(this);
 }
 
-void HumanoidBody::CalcCurrentRot()
-{
-	for (uint32_t i = 0; i < parts_.size(); i++)
-	{
-		curRots_[i] = parts_[i]->rot;
-	}
-}
-
 void HumanoidBody::SetWeapon(Weapon* weapon, const uint32_t index)
 {
 	weapons_[index] = weapon;
 	weapons_[index]->weapon->pos.y = -1.5f;
 	weapons_[index]->weapon->rot.x = Radian(90);
+}
+
+bool HumanoidBody::GetisPlayAttackMotion(const uint32_t index)
+{
+	return weapons_[index]->motion->GetisPlay();
 }
 
 Vec3 HumanoidBody::GetWorldPos(const PartID partID)

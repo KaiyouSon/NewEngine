@@ -16,28 +16,26 @@ void Player::Init()
 
 	player_->SetWeapon(weapon_.get(), 0);
 }
-
 void Player::Update()
 {
-	Vec2 stick = Pad::GetStick(PadCode::LeftStick);
-	if (stick.x > 300 || stick.x < -300 || stick.y >= 300 || stick.y <= -300)
+	// ŠÖ”ƒ|ƒCƒ“ƒ^
+	void (Player:: * pFunc[])() =
 	{
-		player_->JoggingMotion();
-	}
-	else
-	{
-		player_->IdleMotion();
-	}
+		// “o˜^
+		&Player::IdleUpdate,
+		&Player::JoggingUpdate,
+		&Player::AttackR1Update,
+	};
 
-	MoveUpdate();
+	// ŽÀs
+	(this->*pFunc[(int)state_])();
+
 	player_->Update();
 }
-
 void Player::DrawModel()
 {
 	player_->DrawModel();
 }
-
 void Player::DrawDebugGui()
 {
 	player_->DrawDebugGui();
@@ -84,7 +82,7 @@ void Player::MoveUpdate()
 		0,
 		Pad::GetStick(PadCode::LeftStick).y,
 	};
-	if (stick.x > 300 || stick.x < -300 || stick.z >300 || stick.z < -300)
+	if (stick != 0)
 	{
 		moveVec.x = -stick.Norm().x;
 		moveVec.z = -stick.Norm().z;
@@ -98,8 +96,58 @@ void Player::MoveUpdate()
 
 	if (frontVec != 0)
 	{
-		player_->pos += frontVec.Norm() * 1.f;
+		player_->pos += frontVec.Norm() * moveSpeed;
 		player_->rot.y = atan2f(frontVec.Norm().x, frontVec.Norm().z);
+	}
+}
+void Player::IdleUpdate()
+{
+	player_->IdleMotion();
+
+	if (Pad::GetButtonDown(PadCode::ButtonR1))
+	{
+		state_ = State::AttackR1;
+	}
+	else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
+	{
+		state_ = State::Jogging;
+	}
+}
+void Player::JoggingUpdate()
+{
+	player_->JoggingMotion();
+
+	moveSpeed = 1.f;
+	MoveUpdate();
+
+	if (Pad::GetButtonDown(PadCode::ButtonR1))
+	{
+		state_ = State::AttackR1;
+	}
+	else if (Pad::GetStick(PadCode::LeftStick, 300) == 0)
+	{
+		state_ = State::Idle;
+	}
+}
+void Player::RunUpdate()
+{
+	player_->JoggingMotion();
+
+	moveSpeed = 2.f;
+	MoveUpdate();
+
+	if (Pad::GetStick(PadCode::LeftStick, 300) == 0)
+	{
+		state_ = State::Idle;
+	}
+}
+void Player::AttackR1Update()
+{
+	player_->AttackMotion();
+
+	if (player_->GetisPlayAttackMotion(0) == false)
+	{
+		state_ = State::Idle;
 	}
 }
 

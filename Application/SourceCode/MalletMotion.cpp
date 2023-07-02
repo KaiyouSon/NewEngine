@@ -316,8 +316,3 @@ void MalletMotion::CalcCurrentRot(HumanoidBody* human)
 		curRots_[i] = human->GetPart((PartID)i)->rot;
 	}
 }
-
-void MalletMotion::SetisPlay(const bool isPlay)
-{
-	isPlay_ = isPlay;
-}

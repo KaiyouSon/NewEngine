@@ -24,8 +24,5 @@ public:
 	void Init() override;
 	void AttackMotion(HumanoidBody* human) override;
 
-public:
-	void SetisPlay(const bool isPlay) override;
-
 };
 

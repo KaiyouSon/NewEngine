@@ -21,6 +21,8 @@ void Club::Init()
 void Club::Update(Transform* parent)
 {
 	weapon->Update(parent);
+
+	collider.startPos;
 }
 
 void Club::DrawModel()

@@ -20,14 +20,11 @@ void CameraManager::DefaultCameraUpdate()
 {
 	const float moveSpeed = 2.f;
 
-	Vec2 stick = Pad::GetStick(PadCode::RightStick);
-	if (stick.x > 300 || stick.x < -300)
+	Vec2 stick = Pad::GetStick(PadCode::RightStick, 300);
+	if (stick != 0)
 	{
 		yaw_ -= stick.Norm().x * moveSpeed;
-	}
-	if (stick.y > 300 || stick.y < -300)
-	{
-		pitch_ -= stick.Norm().y * moveSpeed;
+		pitch_ -= stick.Norm().y * moveSpeed / 2.f;
 	}
 
 	const float length = 30.f;

@@ -65,7 +65,7 @@ public: // ボタン関連
 	static bool GetButtonUp(const PadCode padCode, const int padIndex = 0);
 
 public: // スティック関連
-	static Vec2 GetStick(const PadCode padCode, const int padIndex = 0);
+	static Vec2 GetStick(const PadCode padCode, const float length = 0, const int padIndex = 0);
 	static Vec2 GetStickDown(const PadCode padCode, const float length = 0, const int padIndex = 0);
 	static Vec2 GetStickUp(const PadCode padCode, const float length = 0, const int padIndex = 0);
 

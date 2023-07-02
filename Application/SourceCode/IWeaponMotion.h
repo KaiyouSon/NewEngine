@@ -18,6 +18,9 @@ public:
 	virtual void AttackMotion(HumanoidBody* human) = 0;
 
 public:
-	virtual void SetisPlay(const bool isPlay) = 0;
+	void SetisPlay(const bool isPlay);
+
+public:
+	bool GetisPlay();
 };
 

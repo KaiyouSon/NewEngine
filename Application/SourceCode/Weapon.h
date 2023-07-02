@@ -10,6 +10,7 @@ protected:
 public:
 	std::unique_ptr<Object3D> weapon;
 	std::unique_ptr<IWeaponMotion> motion;
+	CapsuleCollider collider;
 
 public:
 	virtual ~Weapon() {}
