@@ -230,69 +230,71 @@ void HumanoidBody::JoggingMotionUpdate()
 
 void HumanoidBody::RunMotion()
 {
-	parts_[(uint32_t)PartID::Body]->rot.x = Radian(10);
-	parts_[(uint32_t)PartID::RightArm]->rot.z = Radian(10);
-	parts_[(uint32_t)PartID::LeftArm]->rot.z = Radian(-10);
+	moveMotion_->RunMotion(this);
 
-	if (isReverce_ == true)
-	{
-		// ‘Ì
-		parts_[(uint32_t)PartID::Body]->rot.y = runEase_.InOut(Radian(15), Radian(-15));
-		parts_[(uint32_t)PartID::Head]->rot.y = runEase_.InOut(Radian(-10), Radian(10));
+	//parts_[(uint32_t)PartID::Body]->rot.x = Radian(10);
+	//parts_[(uint32_t)PartID::RightArm]->rot.z = Radian(10);
+	//parts_[(uint32_t)PartID::LeftArm]->rot.z = Radian(-10);
 
-		// ‰E˜r
-		parts_[(uint32_t)PartID::RightArm]->rot.x = runEase_.InOut(Radian(60), Radian(-40));
-		parts_[(uint32_t)PartID::RightHand]->rot.x = runEase_.InOut(Radian(-80), Radian(-50));
+	//if (isReverce_ == true)
+	//{
+	//	// ‘Ì
+	//	parts_[(uint32_t)PartID::Body]->rot.y = runEase_.InOut(Radian(15), Radian(-15));
+	//	parts_[(uint32_t)PartID::Head]->rot.y = runEase_.InOut(Radian(-10), Radian(10));
 
-		// ¶˜r
-		parts_[(uint32_t)PartID::LeftArm]->rot.x = runEase_.InOut(Radian(-40), Radian(60));
-		parts_[(uint32_t)PartID::LeftHand]->rot.x = runEase_.InOut(Radian(-50), Radian(-80));
+	//	// ‰E˜r
+	//	parts_[(uint32_t)PartID::RightArm]->rot.x = runEase_.InOut(Radian(60), Radian(-40));
+	//	parts_[(uint32_t)PartID::RightHand]->rot.x = runEase_.InOut(Radian(-80), Radian(-50));
 
-		// ‰E‘«
-		parts_[(uint32_t)PartID::RightThigh]->rot.x = runEase_.InOut(Radian(-80), Radian(50));
-		parts_[(uint32_t)PartID::RightLeg]->rot.x = runEase_.InOut(Radian(15), Radian(30));
-		// ¶‘«
-		parts_[(uint32_t)PartID::LeftThigh]->rot.x = runEase_.InOut(Radian(50), Radian(-80));
-		parts_[(uint32_t)PartID::LeftLeg]->rot.x = runEase_.InOut(Radian(30), Radian(15));
+	//	// ¶˜r
+	//	parts_[(uint32_t)PartID::LeftArm]->rot.x = runEase_.InOut(Radian(-40), Radian(60));
+	//	parts_[(uint32_t)PartID::LeftHand]->rot.x = runEase_.InOut(Radian(-50), Radian(-80));
 
-
-		if (runEase_.GetisEnd() == true)
-		{
-			runEase_.Reset();
-			isReverce_ = false;
-		}
-	}
-	else if (isReverce_ == false)
-	{
-		// ‘Ì
-		parts_[(uint32_t)PartID::Body]->rot.y = runEase_.InOut(Radian(-15), Radian(15));
-		parts_[(uint32_t)PartID::Head]->rot.y = runEase_.InOut(Radian(10), Radian(-10));
-
-		// ‰E˜r
-		parts_[(uint32_t)PartID::RightArm]->rot.x = runEase_.InOut(Radian(-40), Radian(60));
-		parts_[(uint32_t)PartID::RightHand]->rot.x = runEase_.InOut(Radian(-50), Radian(-80));
-
-		// ¶˜r
-		parts_[(uint32_t)PartID::LeftArm]->rot.x = runEase_.InOut(Radian(60), Radian(-40));
-		parts_[(uint32_t)PartID::LeftHand]->rot.x = runEase_.InOut(Radian(-80), Radian(-50));
+	//	// ‰E‘«
+	//	parts_[(uint32_t)PartID::RightThigh]->rot.x = runEase_.InOut(Radian(-80), Radian(50));
+	//	parts_[(uint32_t)PartID::RightLeg]->rot.x = runEase_.InOut(Radian(15), Radian(30));
+	//	// ¶‘«
+	//	parts_[(uint32_t)PartID::LeftThigh]->rot.x = runEase_.InOut(Radian(50), Radian(-80));
+	//	parts_[(uint32_t)PartID::LeftLeg]->rot.x = runEase_.InOut(Radian(30), Radian(15));
 
 
-		// ‰E‘«
-		parts_[(uint32_t)PartID::RightThigh]->rot.x = runEase_.InOut(Radian(50), Radian(-80));
-		parts_[(uint32_t)PartID::RightLeg]->rot.x = runEase_.InOut(Radian(30), Radian(15));
-		// ¶‘«
-		parts_[(uint32_t)PartID::LeftThigh]->rot.x = runEase_.InOut(Radian(-80), Radian(50));
-		parts_[(uint32_t)PartID::LeftLeg]->rot.x = runEase_.InOut(Radian(15), Radian(30));
+	//	if (runEase_.GetisEnd() == true)
+	//	{
+	//		runEase_.Reset();
+	//		isReverce_ = false;
+	//	}
+	//}
+	//else if (isReverce_ == false)
+	//{
+	//	// ‘Ì
+	//	parts_[(uint32_t)PartID::Body]->rot.y = runEase_.InOut(Radian(-15), Radian(15));
+	//	parts_[(uint32_t)PartID::Head]->rot.y = runEase_.InOut(Radian(10), Radian(-10));
+
+	//	// ‰E˜r
+	//	parts_[(uint32_t)PartID::RightArm]->rot.x = runEase_.InOut(Radian(-40), Radian(60));
+	//	parts_[(uint32_t)PartID::RightHand]->rot.x = runEase_.InOut(Radian(-50), Radian(-80));
+
+	//	// ¶˜r
+	//	parts_[(uint32_t)PartID::LeftArm]->rot.x = runEase_.InOut(Radian(60), Radian(-40));
+	//	parts_[(uint32_t)PartID::LeftHand]->rot.x = runEase_.InOut(Radian(-80), Radian(-50));
 
 
-		if (runEase_.GetisEnd() == true)
-		{
-			runEase_.Reset();
-			isReverce_ = true;
-		}
-	}
+	//	// ‰E‘«
+	//	parts_[(uint32_t)PartID::RightThigh]->rot.x = runEase_.InOut(Radian(50), Radian(-80));
+	//	parts_[(uint32_t)PartID::RightLeg]->rot.x = runEase_.InOut(Radian(30), Radian(15));
+	//	// ¶‘«
+	//	parts_[(uint32_t)PartID::LeftThigh]->rot.x = runEase_.InOut(Radian(-80), Radian(50));
+	//	parts_[(uint32_t)PartID::LeftLeg]->rot.x = runEase_.InOut(Radian(15), Radian(30));
 
-	runEase_.Update();
+
+	//	if (runEase_.GetisEnd() == true)
+	//	{
+	//		runEase_.Reset();
+	//		isReverce_ = true;
+	//	}
+	//}
+
+	//runEase_.Update();
 
 	//parts_[(uint32_t)PartID::RightHand]->rot.x = Radian(-50);
 	//parts_[(uint32_t)PartID::LeftHand]->rot.x = Radian(-50);
