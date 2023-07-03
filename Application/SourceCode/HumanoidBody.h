@@ -1,7 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 #include "Weapon.h"
-#include "JoggingMotion.h"
+#include "MoveMotion.h"
 
 struct Weapon;
 
@@ -30,7 +30,7 @@ class HumanoidBody
 {
 private:
 	std::array<std::unique_ptr<Object3D>, 11> parts_;
-	std::unique_ptr<JoggingMotion> joggingMotion_;
+	std::unique_ptr<MoveMotion> moveMotion_;
 	std::array<Weapon*, 2> weapons_;
 	CapsuleCollider bodyCollider_;
 
@@ -74,6 +74,7 @@ public:
 	Vec3 GetWorldPos(const PartID partID);
 	Object3D* GetPart(const PartID partID);
 	uint32_t GetPartsSize();
+	bool GetisEndMoveMotion();
 	bool GetisPlayAttackMotion(const uint32_t index);
 };
 

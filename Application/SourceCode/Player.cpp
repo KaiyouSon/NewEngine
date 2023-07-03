@@ -103,7 +103,7 @@ void Player::JoggingUpdate()
 	{
 		state_ = State::AttackR1;
 	}
-	else if (Pad::GetStick(PadCode::LeftStick, 300) == 0)
+	else if (player_->GetisEndMoveMotion() == true)
 	{
 		state_ = State::Idle;
 	}

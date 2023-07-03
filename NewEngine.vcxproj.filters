@@ -417,10 +417,7 @@
     <ClCompile Include="Application\SourceCode\MalletMotion.cpp">
       <Filter>Application\Source\Motion\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\JoggingMotion.cpp">
-      <Filter>Application\Source\Motion</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\RunMotion.cpp">
+    <ClCompile Include="Application\SourceCode\MoveMotion.cpp">
       <Filter>Application\Source\Motion</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\HumanoidBody.cpp">
@@ -707,10 +704,7 @@
     <ClInclude Include="Application\SourceCode\HumanoidBody.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\JoggingMotion.h">
-      <Filter>Application\Header\Motion</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\RunMotion.h">
+    <ClInclude Include="Application\SourceCode\MoveMotion.h">
       <Filter>Application\Header\Motion</Filter>
     </ClInclude>
   </ItemGroup>
