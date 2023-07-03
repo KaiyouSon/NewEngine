@@ -3,7 +3,13 @@
 
 void GaugeParam::CalcRate(const float value, const float max)
 {
-	max_ = max;
-	value_ = value;
-	rate_ = Max<float>(value / max, 0.f);
+	this->max = max;
+	this->value = value;
+	this->rate = Max<float>(value / max, 0.f);
+}
+
+void GaugeParam::Update()
+{
+	value = Clamp<float>(value, 0.f, max);
+	rate = Clamp<float>(value / max);
 }

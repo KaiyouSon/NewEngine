@@ -103,12 +103,12 @@ void GaugeUI::SetColor(const uint32_t index, const Color color)
 
 void GaugeUI::SetGaugePrame(const GaugeParam gaugeParam)
 {
-	gaugeWidthMax_ = Min<float>(gaugeParam.max_, 1080.f);
+	gaugeWidthMax_ = Min<float>(gaugeParam.max, 1080.f);
 
 	constGaugeSize_ = Vec2(gaugeWidthMax_, gaugeSize_.y);
 
 	// CurrentPosの画像のサイズは不変、座標を可変
-	gaugeSize_.x = gaugeParam.rate_ * gaugeWidthMax_;
+	gaugeSize_.x = gaugeParam.rate * gaugeWidthMax_;
 	sprites_[FrontColor]->SetSize(gaugeSize_);
 	sprites_[BackColor]->SetSize(gaugeSize_);
 }

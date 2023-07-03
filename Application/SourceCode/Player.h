@@ -30,6 +30,7 @@ private:
 
 private:
 	void GaugeParamInit();
+	void GaugeParamUpdate();
 
 private:
 	void MoveUpdate();

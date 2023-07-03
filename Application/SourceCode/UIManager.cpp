@@ -32,6 +32,7 @@ void UIManager::Update()
 {
 	for (uint32_t i = 0; i < gauges_.size(); i++)
 	{
+		gauges_[i]->SetGaugePrame(player_->GetGaugeParam(i));
 		gauges_[i]->Update();
 	}
 

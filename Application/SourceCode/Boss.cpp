@@ -20,7 +20,7 @@ void Boss::Update()
 	ColliderUpdate();
 
 	// HPƒQ[ƒW
-	hpGaugeParam_.CalcRate(hpGaugeParam_.value_, 2560.f);
+	hpGaugeParam_.CalcRate(hpGaugeParam_.value, 2560.f);
 
 	boss_->Update();
 }
@@ -43,7 +43,7 @@ void Boss::ColliderUpdate()
 
 void Boss::Damage(const float damage)
 {
-	hpGaugeParam_.value_ -= damage;
+	hpGaugeParam_.value -= damage;
 }
 
 CapsuleCollider Boss::GetCollider()

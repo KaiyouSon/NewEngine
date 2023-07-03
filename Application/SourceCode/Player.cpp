@@ -39,8 +39,9 @@ void Player::PrevUpdate()
 	// 実行
 	(this->*pFunc[(int)state_])();
 
-	player_->pos.y = 4.5f;
+	GaugeParamUpdate();
 
+	player_->pos.y = 4.5f;
 	player_->PrevUpdate();
 }
 void Player::PostUpdate()
@@ -71,6 +72,18 @@ void Player::GaugeParamInit()
 
 	// スタミナゲージ
 	gaugePrames_[(uint32_t)GaugeType::Stamina].CalcRate(128.f, 128.f);
+}
+void Player::GaugeParamUpdate()
+{
+	if (state_ != State::AttackR1 && state_ != State::Run)
+	{
+		gaugePrames_[(uint32_t)GaugeType::Stamina].value++;
+	}
+
+	for (uint32_t i = 0; i < gaugePrames_.size(); i++)
+	{
+		gaugePrames_[i].Update();
+	}
 }
 
 void Player::MoveUpdate()
@@ -122,7 +135,7 @@ void Player::JoggingUpdate()
 	{
 		state_ = State::Idle;
 	}
-	else if (Pad::GetButton(PadCode::ButtonB))
+	else if (Pad::GetButtonDown(PadCode::ButtonB))
 	{
 		if (pushCoolTimer.GetisTimeOut() == true)
 		{
@@ -139,9 +152,12 @@ void Player::RunUpdate()
 
 	player_->RunMotion();
 
+	gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 1.f;
+
 	MoveUpdate();
 
-	if (!Pad::GetButton(PadCode::ButtonB))
+	if (!Pad::GetButton(PadCode::ButtonB) ||
+		gaugePrames_[(uint32_t)GaugeType::Stamina].value <= 0.f)
 	{
 		if (pushCoolTimer.GetisTimeOut() == true)
 		{
