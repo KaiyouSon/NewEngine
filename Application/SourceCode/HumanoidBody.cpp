@@ -1,4 +1,5 @@
 #include "HumanoidBody.h"
+#include "Player.h"
 
 HumanoidBody::HumanoidBody() :
 	frontVec(Vec3::front), scale(1),
@@ -34,12 +35,6 @@ void HumanoidBody::Init()
 	parts_[(uint32_t)PartID::RightLeg]->pos = Vec3(0.f, -1.5f, 0.f);
 	parts_[(uint32_t)PartID::LeftThigh]->pos = Vec3(-0.5f, -1.5f, 0.f);
 	parts_[(uint32_t)PartID::LeftLeg]->pos = Vec3(0.f, -1.5f, 0.f);
-
-	joggingEase_.SetEaseTimer(20);
-	joggingEase_.SetPowNum(2);
-	runEase_.SetEaseTimer(15);
-	runEase_.SetPowNum(2);
-	isReverce_ = false;
 
 	moveMotion_->Init(this);
 }
@@ -215,15 +210,13 @@ void HumanoidBody::DrawDebugGui()
 
 void HumanoidBody::IdleMotion()
 {
-	//for (uint32_t i = 1; i < parts_.size(); i++)
-	//{
-	//	parts_[i]->rot = 0;
-	//}
-
-	//moveMotion_->Init(this);
+	for (uint32_t i = 1; i < parts_.size(); i++)
+	{
+		parts_[i]->rot = 0;
+	}
 }
 
-void HumanoidBody::JoggingMotionUpdate()
+void HumanoidBody::JoggingMotion()
 {
 	moveMotion_->JoggingMotion(this);
 }
@@ -231,73 +224,6 @@ void HumanoidBody::JoggingMotionUpdate()
 void HumanoidBody::RunMotion()
 {
 	moveMotion_->RunMotion(this);
-
-	//parts_[(uint32_t)PartID::Body]->rot.x = Radian(10);
-	//parts_[(uint32_t)PartID::RightArm]->rot.z = Radian(10);
-	//parts_[(uint32_t)PartID::LeftArm]->rot.z = Radian(-10);
-
-	//if (isReverce_ == true)
-	//{
-	//	// ‘Ì
-	//	parts_[(uint32_t)PartID::Body]->rot.y = runEase_.InOut(Radian(15), Radian(-15));
-	//	parts_[(uint32_t)PartID::Head]->rot.y = runEase_.InOut(Radian(-10), Radian(10));
-
-	//	// ‰E˜r
-	//	parts_[(uint32_t)PartID::RightArm]->rot.x = runEase_.InOut(Radian(60), Radian(-40));
-	//	parts_[(uint32_t)PartID::RightHand]->rot.x = runEase_.InOut(Radian(-80), Radian(-50));
-
-	//	// ¶˜r
-	//	parts_[(uint32_t)PartID::LeftArm]->rot.x = runEase_.InOut(Radian(-40), Radian(60));
-	//	parts_[(uint32_t)PartID::LeftHand]->rot.x = runEase_.InOut(Radian(-50), Radian(-80));
-
-	//	// ‰E‘«
-	//	parts_[(uint32_t)PartID::RightThigh]->rot.x = runEase_.InOut(Radian(-80), Radian(50));
-	//	parts_[(uint32_t)PartID::RightLeg]->rot.x = runEase_.InOut(Radian(15), Radian(30));
-	//	// ¶‘«
-	//	parts_[(uint32_t)PartID::LeftThigh]->rot.x = runEase_.InOut(Radian(50), Radian(-80));
-	//	parts_[(uint32_t)PartID::LeftLeg]->rot.x = runEase_.InOut(Radian(30), Radian(15));
-
-
-	//	if (runEase_.GetisEnd() == true)
-	//	{
-	//		runEase_.Reset();
-	//		isReverce_ = false;
-	//	}
-	//}
-	//else if (isReverce_ == false)
-	//{
-	//	// ‘Ì
-	//	parts_[(uint32_t)PartID::Body]->rot.y = runEase_.InOut(Radian(-15), Radian(15));
-	//	parts_[(uint32_t)PartID::Head]->rot.y = runEase_.InOut(Radian(10), Radian(-10));
-
-	//	// ‰E˜r
-	//	parts_[(uint32_t)PartID::RightArm]->rot.x = runEase_.InOut(Radian(-40), Radian(60));
-	//	parts_[(uint32_t)PartID::RightHand]->rot.x = runEase_.InOut(Radian(-50), Radian(-80));
-
-	//	// ¶˜r
-	//	parts_[(uint32_t)PartID::LeftArm]->rot.x = runEase_.InOut(Radian(60), Radian(-40));
-	//	parts_[(uint32_t)PartID::LeftHand]->rot.x = runEase_.InOut(Radian(-80), Radian(-50));
-
-
-	//	// ‰E‘«
-	//	parts_[(uint32_t)PartID::RightThigh]->rot.x = runEase_.InOut(Radian(50), Radian(-80));
-	//	parts_[(uint32_t)PartID::RightLeg]->rot.x = runEase_.InOut(Radian(30), Radian(15));
-	//	// ¶‘«
-	//	parts_[(uint32_t)PartID::LeftThigh]->rot.x = runEase_.InOut(Radian(-80), Radian(50));
-	//	parts_[(uint32_t)PartID::LeftLeg]->rot.x = runEase_.InOut(Radian(15), Radian(30));
-
-
-	//	if (runEase_.GetisEnd() == true)
-	//	{
-	//		runEase_.Reset();
-	//		isReverce_ = true;
-	//	}
-	//}
-
-	//runEase_.Update();
-
-	//parts_[(uint32_t)PartID::RightHand]->rot.x = Radian(-50);
-	//parts_[(uint32_t)PartID::LeftHand]->rot.x = Radian(-50);
 }
 
 void HumanoidBody::AttackMotion()
@@ -356,11 +282,40 @@ void HumanoidBody::CalcFrontVec()
 	}
 }
 
+std::vector<Vec3> HumanoidBody::CalcCurRots()
+{
+	std::vector<Vec3> result;
+	result.resize(parts_.size());
+
+	for (uint32_t i = 0; i < parts_.size(); i++)
+	{
+		result[i] = parts_[i]->rot;
+	}
+	return result;
+}
+
+void HumanoidBody::ChangeMoveMotionInit()
+{
+	if (parent->state_ == Player::State::Jogging)
+	{
+		moveMotion_->JoggingInit(this);
+	}
+	else if (parent->state_ == Player::State::Run)
+	{
+		moveMotion_->RunInit(this);
+	}
+}
+
 void HumanoidBody::SetWeapon(Weapon* weapon, const uint32_t index)
 {
 	weapons_[index] = weapon;
 	weapons_[index]->weapon->pos.y = -1.5f;
 	weapons_[index]->weapon->rot.x = Radian(90);
+}
+
+bool HumanoidBody::GetisPlayMoveMotion()
+{
+	return moveMotion_->GetisPlay();
 }
 
 bool HumanoidBody::GetisPlayAttackMotion(const uint32_t index)
@@ -386,9 +341,4 @@ Object3D* HumanoidBody::GetPart(const PartID partID)
 uint32_t HumanoidBody::GetPartsSize()
 {
 	return (uint32_t)parts_.size();
-}
-
-bool HumanoidBody::GetisEndMoveMotion()
-{
-	return moveMotion_->GetisEnd();
 }

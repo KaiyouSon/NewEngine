@@ -22,7 +22,9 @@ private:
 
 	State state_;
 
-	float moveSpeed;
+	float moveSpeed_;
+	float joggingSpeed_;
+	float runSpeed_;
 
 private:
 	void GaugeParamInit();
@@ -57,5 +59,8 @@ public:
 	Vec3 GetHeadPos();
 	Vec3 GetVel();
 	State GetState();
+
+	friend HumanoidBody;
+	friend MoveMotion;
 };
 

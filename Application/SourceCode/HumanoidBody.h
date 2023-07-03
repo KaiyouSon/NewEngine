@@ -4,6 +4,7 @@
 #include "MoveMotion.h"
 
 struct Weapon;
+class Player;
 
 enum class PartID
 {
@@ -33,11 +34,7 @@ private:
 	std::unique_ptr<MoveMotion> moveMotion_;
 	std::array<Weapon*, 2> weapons_;
 	CapsuleCollider bodyCollider_;
-
-private:
-	bool isReverce_;
-	Easing joggingEase_;
-	Easing runEase_;
+	std::array<Vec3, 11> curRots_;
 
 public:
 	Vec3 pos;
@@ -46,6 +43,7 @@ public:
 	Vec3 scale;
 	Vec3 frontVec;
 	Vec3 vel;
+	Player* parent;
 
 public:
 	void ColliderUpdate();
@@ -60,11 +58,13 @@ public:
 
 public:
 	void IdleMotion();
-	void JoggingMotionUpdate();
+	void JoggingMotion();
 	void RunMotion();
 	void AttackMotion();
 
 	void CalcFrontVec();
+	std::vector<Vec3> CalcCurRots();
+	void ChangeMoveMotionInit();
 
 public:
 	void SetWeapon(Weapon* weapon, const uint32_t index);
@@ -74,7 +74,7 @@ public:
 	Vec3 GetWorldPos(const PartID partID);
 	Object3D* GetPart(const PartID partID);
 	uint32_t GetPartsSize();
-	bool GetisEndMoveMotion();
+	bool GetisPlayMoveMotion();
 	bool GetisPlayAttackMotion(const uint32_t index);
 };
 

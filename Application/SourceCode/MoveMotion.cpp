@@ -1,5 +1,6 @@
 #include "MoveMotion.h"
 #include "HumanoidBody.h"
+#include "Player.h"
 
 MoveMotion::MoveMotion()
 {
@@ -14,18 +15,23 @@ void MoveMotion::Init(HumanoidBody* human)
 	step_ = 0;
 
 	isInit_ = false;
+	isPlay_ = false;
 
 	startRots_.resize(human->GetPartsSize());
 	endRots_.resize(human->GetPartsSize());
 
-	RotsInit(human);
+	//RotsInit(human);
 }
 
 // ジョギングモーション
 void MoveMotion::JoggingMotion(HumanoidBody* human)
 {
-	prevMoveType_ = moveType_;
-	moveType_ = MoveType::Jogging;
+	// 最初の一回しか通らない初期化
+	if (isPlay_ == false)
+	{
+		JoggingInit(human);
+		isPlay_ = true;
+	}
 
 	if (step_ == 0)
 	{
@@ -68,8 +74,14 @@ void MoveMotion::JoggingMotion(HumanoidBody* human)
 // 走りモーション
 void MoveMotion::RunMotion(HumanoidBody* human)
 {
-	prevMoveType_ = moveType_;
-	moveType_ = MoveType::Run;
+	// 最初の一回しか通らない初期化
+	if (isPlay_ == false)
+	{
+		// 各部位の角度の初期化
+		RunInit(human);
+
+		isPlay_ = true;
+	}
 
 	if (step_ == 0)
 	{
@@ -115,11 +127,6 @@ void MoveMotion::Step0Init(HumanoidBody* human)
 	ease_.SetEaseTimer(10);
 	ease_.SetPowNum(2);
 	ease_.Reset();
-	isEnd_ = false;
-
-	RotsInit(human);
-
-	CalcCurrentRot(human);
 }
 void MoveMotion::Step0Update(HumanoidBody* human)
 {
@@ -127,15 +134,23 @@ void MoveMotion::Step0Update(HumanoidBody* human)
 	{
 		human->GetPart((PartID)i)->rot = ease_.InOut(curRots_[i], startRots_[i]);
 	}
+
+	human->parent->moveSpeed_ = ease_.Lerp(0, endSpeed_);
+
 	ease_.Update();
 
 	if (ease_.GetisEnd() == true)
 	{
 		step_ = 1;
-
-		ease_.Reset();
-
 		isInit_ = false;
+		ease_.Reset();
+	}
+
+	if (Pad::GetStick(PadCode::LeftStick, 300) == 0)
+	{
+		step_ = 2;
+		isInit_ = false;
+		ease_.Reset();
 	}
 }
 
@@ -147,15 +162,6 @@ void MoveMotion::Step1Init(HumanoidBody* human)
 }
 void MoveMotion::Step1Update(HumanoidBody* human)
 {
-	if (Pad::GetButton(PadCode::ButtonB))
-	{
-		moveType_ = MoveType::Run;
-	}
-	else
-	{
-		moveType_ = MoveType::Jogging;
-	}
-
 	for (uint32_t i = (uint32_t)PartID::Head; i < startRots_.size(); i++)
 	{
 		human->GetPart((PartID)i)->rot = ease_.InOut(startRots_[i], endRots_[i]);
@@ -171,18 +177,11 @@ void MoveMotion::Step1Update(HumanoidBody* human)
 		count_ = (count_ == 0) ? 1 : 0;
 	}
 
-	if (prevMoveType_ != moveType_)
-	{
-		step_ = 3;
-		isInit_ = false;
-	}
-	else if (Pad::GetStick(PadCode::LeftStick, 300) == 0)
+	if (Pad::GetStick(PadCode::LeftStick, 300) == 0)
 	{
 		step_ = 2;
-
-		ease_.Reset();
-
 		isInit_ = false;
+		ease_.Reset();
 	}
 }
 
@@ -192,6 +191,8 @@ void MoveMotion::Step2Init(HumanoidBody* human)
 	ease_.SetEaseTimer(10);
 	ease_.SetPowNum(2);
 
+	curSpeed_ = human->parent->moveSpeed_;
+
 	CalcCurrentRot(human);
 }
 void MoveMotion::Step2Update(HumanoidBody* human)
@@ -200,12 +201,13 @@ void MoveMotion::Step2Update(HumanoidBody* human)
 	{
 		human->GetPart((PartID)i)->rot = ease_.InOut(curRots_[i], 0);
 	}
+	human->parent->moveSpeed_ = ease_.Lerp(curSpeed_, 0);
 	ease_.Update();
 
 	if (ease_.GetisEnd() == true)
 	{
-		Init(human);
-		isEnd_ = true;
+		isInit_ = false;
+		isPlay_ = false;
 		ease_.Reset();
 	}
 }
@@ -217,9 +219,7 @@ void MoveMotion::Step3Init(HumanoidBody* human)
 	ease_.SetPowNum(2);
 	ease_.Reset();
 
-	RotsInit(human);
-
-	CalcCurrentRot(human);
+	curSpeed_ = human->parent->moveSpeed_;
 
 	if (count_ == 1)
 	{
@@ -232,6 +232,9 @@ void MoveMotion::Step3Update(HumanoidBody* human)
 	{
 		human->GetPart((PartID)i)->rot = ease_.InOut(curRots_[i], endRots_[i]);
 	}
+
+	human->parent->moveSpeed_ = ease_.Lerp(curSpeed_, endSpeed_);
+
 	ease_.Update();
 
 	if (ease_.GetisEnd() == true)
@@ -247,8 +250,18 @@ void MoveMotion::Step3Update(HumanoidBody* human)
 }
 
 // ジョギングの初期化
-void MoveMotion::JoggingInit()
+void MoveMotion::JoggingInit(HumanoidBody* human)
 {
+	isInit_ = false;
+
+	step_ = isPlay_ ? 3 : 0;
+
+	// 現在の角度を計算
+	curRots_ = human->CalcCurRots();
+	// 終了速度の取得
+	endSpeed_ = human->parent->joggingSpeed_;
+
+	// 各部位の角度の初期化
 	startRots_[(uint32_t)PartID::Head] = Radian(Vec3(0, -2, 0));
 	startRots_[(uint32_t)PartID::Body] = Radian(Vec3(5, 10, 0));
 	startRots_[(uint32_t)PartID::RightArm] = Radian(Vec3(35, 0, 5));
@@ -273,8 +286,18 @@ void MoveMotion::JoggingInit()
 }
 
 // 走りの初期化
-void MoveMotion::RunInit()
+void MoveMotion::RunInit(HumanoidBody* human)
 {
+	isInit_ = false;
+
+	step_ = isPlay_ ? 3 : 0;
+
+	// 現在の角度を計算
+	curRots_ = human->CalcCurRots();
+	// 終了速度の取得
+	endSpeed_ = human->parent->runSpeed_;
+
+	// 各部位の角度の初期化
 	startRots_[(uint32_t)PartID::Head] = Radian(Vec3(0, -10, 0));
 	startRots_[(uint32_t)PartID::Body] = Radian(Vec3(15, 10, 0));
 	startRots_[(uint32_t)PartID::RightArm] = Radian(Vec3(60, 0, 10));
@@ -296,19 +319,6 @@ void MoveMotion::RunInit()
 	endRots_[(uint32_t)PartID::RightLeg] = Radian(Vec3(30, 0, 0));
 	endRots_[(uint32_t)PartID::LeftThigh] = Radian(Vec3(-80, 0, 0));
 	endRots_[(uint32_t)PartID::LeftLeg] = Radian(Vec3(15, 0, 0));
-}
-
-// 角度の初期化
-void MoveMotion::RotsInit(HumanoidBody* human)
-{
-	if (moveType_ == MoveType::Jogging)
-	{
-		JoggingInit();
-	}
-	else
-	{
-		RunInit();
-	}
 }
 
 // 現在の角度を計算する
@@ -341,7 +351,7 @@ void MoveMotion::ReverceRots()
 	}
 }
 
-bool MoveMotion::GetisEnd()
+bool MoveMotion::GetisPlay()
 {
-	return isEnd_;
+	return isPlay_;
 }

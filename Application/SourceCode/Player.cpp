@@ -15,6 +15,10 @@ void Player::Init()
 	player_->pos.y = 4.5f;
 
 	player_->SetWeapon(weapon_.get(), 0);
+	player_->parent = this;
+
+	joggingSpeed_ = 0.7f;
+	runSpeed_ = 1.2f;
 }
 void Player::PrevUpdate()
 {
@@ -73,7 +77,7 @@ void Player::MoveUpdate()
 
 	if (player_->frontVec != 0)
 	{
-		player_->vel = player_->frontVec.Norm() * moveSpeed;
+		player_->vel = player_->frontVec.Norm() * moveSpeed_;
 
 		player_->pos += player_->vel;
 		player_->rot.y = atan2f(player_->frontVec.x, player_->frontVec.z);
@@ -89,41 +93,49 @@ void Player::IdleUpdate()
 	}
 	else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 	{
-		state_ = State::Jogging;
+		if (Pad::GetButton(PadCode::ButtonB))
+		{
+			state_ = State::Run;
+		}
+		else
+		{
+			state_ = State::Jogging;
+		}
 	}
 }
 void Player::JoggingUpdate()
 {
-	player_->JoggingMotionUpdate();
+	player_->JoggingMotion();
 
-	moveSpeed = 0.7f;
 	MoveUpdate();
 
 	if (Pad::GetButtonDown(PadCode::ButtonR1))
 	{
 		state_ = State::AttackR1;
 	}
-	else if (player_->GetisEndMoveMotion() == true)
+	else if (player_->GetisPlayMoveMotion() == false)
 	{
 		state_ = State::Idle;
 	}
 	else if (Pad::GetButton(PadCode::ButtonB))
 	{
 		state_ = State::Run;
+		player_->ChangeMoveMotionInit();
+
 	}
 }
 void Player::RunUpdate()
 {
 	player_->RunMotion();
 
-	moveSpeed = 1.2f;
 	MoveUpdate();
 
 	if (!Pad::GetButton(PadCode::ButtonB))
 	{
 		state_ = State::Jogging;
+		player_->ChangeMoveMotionInit();
 	}
-	else if (Pad::GetStick(PadCode::LeftStick, 300) == 0)
+	else if (player_->GetisPlayMoveMotion() == false)
 	{
 		state_ = State::Idle;
 	}
