@@ -94,8 +94,7 @@ void Player::IdleUpdate()
 }
 void Player::JoggingUpdate()
 {
-	player_->JoggingMotion();
-	//player_->RunMotion();
+	player_->JoggingMotionUpdate();
 
 	moveSpeed = 0.7f;
 	MoveUpdate();

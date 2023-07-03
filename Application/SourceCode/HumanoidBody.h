@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 #include "Weapon.h"
+#include "JoggingMotion.h"
 
 struct Weapon;
 
@@ -29,6 +30,7 @@ class HumanoidBody
 {
 private:
 	std::array<std::unique_ptr<Object3D>, 11> parts_;
+	std::unique_ptr<JoggingMotion> joggingMotion_;
 	std::array<Weapon*, 2> weapons_;
 	CapsuleCollider bodyCollider_;
 
@@ -58,7 +60,7 @@ public:
 
 public:
 	void IdleMotion();
-	void JoggingMotion();
+	void JoggingMotionUpdate();
 	void RunMotion();
 	void AttackMotion();
 
