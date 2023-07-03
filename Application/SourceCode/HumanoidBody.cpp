@@ -125,13 +125,6 @@ void HumanoidBody::DrawDebugGui()
 	GuiManager::DrawSlider3("Scale", scale, move);
 	GuiManager::DrawLine();
 
-	angle = Angle(parts_[(uint32_t)PartID::Body]->rot);
-	GuiManager::DrawSlider3("Body Pos", parts_[(uint32_t)PartID::Body]->pos, move);
-	GuiManager::DrawSlider3("Body Rot", angle, move);
-	GuiManager::DrawSlider3("Body Scale", parts_[(uint32_t)PartID::Body]->scale, move);
-	parts_[(uint32_t)PartID::Body]->rot = Radian(angle);
-	GuiManager::DrawLine();
-
 	angle = Angle(parts_[(uint32_t)PartID::Head]->rot);
 	GuiManager::DrawSlider3("Head Pos", parts_[(uint32_t)PartID::Head]->pos, move);
 	GuiManager::DrawSlider3("Head Rot", angle, move);
@@ -139,6 +132,12 @@ void HumanoidBody::DrawDebugGui()
 	parts_[(uint32_t)PartID::Head]->rot = Radian(angle);
 	GuiManager::DrawLine();
 
+	angle = Angle(parts_[(uint32_t)PartID::Body]->rot);
+	GuiManager::DrawSlider3("Body Pos", parts_[(uint32_t)PartID::Body]->pos, move);
+	GuiManager::DrawSlider3("Body Rot", angle, move);
+	GuiManager::DrawSlider3("Body Scale", parts_[(uint32_t)PartID::Body]->scale, move);
+	parts_[(uint32_t)PartID::Body]->rot = Radian(angle);
+	GuiManager::DrawLine();
 
 	angle = Angle(parts_[(uint32_t)PartID::RightArm]->rot);
 	GuiManager::DrawSlider3("RightArm Pos", parts_[(uint32_t)PartID::RightArm]->pos, move);
@@ -211,10 +210,10 @@ void HumanoidBody::DrawDebugGui()
 
 void HumanoidBody::IdleMotion()
 {
-	for (uint32_t i = 1; i < parts_.size(); i++)
-	{
-		parts_[i]->rot = 0;
-	}
+	//for (uint32_t i = 1; i < parts_.size(); i++)
+	//{
+	//	parts_[i]->rot = 0;
+	//}
 }
 
 void HumanoidBody::JoggingMotion()
@@ -288,6 +287,7 @@ void HumanoidBody::AttackMotion()
 	{
 		if (weapons_[0]->motion->GetisCanCombo() == true)
 		{
+			// ƒRƒ“ƒ{‚Å‚«‚é‚½‚ß
 			if (Pad::GetButton(PadCode::ButtonR1))
 			{
 				weapons_[0]->motion->Init();
