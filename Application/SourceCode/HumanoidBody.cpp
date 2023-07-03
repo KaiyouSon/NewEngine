@@ -34,9 +34,11 @@ void HumanoidBody::Init()
 	parts_[(uint32_t)PartID::LeftThigh]->pos = Vec3(-0.5f, -1.5f, 0.f);
 	parts_[(uint32_t)PartID::LeftLeg]->pos = Vec3(0.f, -1.5f, 0.f);
 
-	joggingEase.SetEaseTimer(20);
-	joggingEase.SetPowNum(2);
-	isReverce = false;
+	joggingEase_.SetEaseTimer(20);
+	joggingEase_.SetPowNum(2);
+	runEase_.SetEaseTimer(15);
+	runEase_.SetPowNum(2);
+	isReverce_ = false;
 }
 
 void HumanoidBody::PrevUpdate()
@@ -218,63 +220,136 @@ void HumanoidBody::IdleMotion()
 
 void HumanoidBody::JoggingMotion()
 {
+	parts_[(uint32_t)PartID::Body]->rot.x = Radian(5);
 	parts_[(uint32_t)PartID::RightArm]->rot.z = Radian(5);
 	parts_[(uint32_t)PartID::LeftArm]->rot.z = Radian(-5);
 
-	if (isReverce == true)
+	if (isReverce_ == true)
 	{
 		// ‘Ì
-		parts_[(uint32_t)PartID::Body]->rot.y = joggingEase.InOut(Radian(10), Radian(-10));
+		parts_[(uint32_t)PartID::Body]->rot.y = joggingEase_.InOut(Radian(10), Radian(-10));
+		parts_[(uint32_t)PartID::Head]->rot.y = joggingEase_.InOut(Radian(-2), Radian(2));
 
 		// ‰E˜r
-		parts_[(uint32_t)PartID::RightArm]->rot.x = joggingEase.InOut(Radian(35), Radian(-15));
+		parts_[(uint32_t)PartID::RightArm]->rot.x = joggingEase_.InOut(Radian(35), Radian(-15));
+		parts_[(uint32_t)PartID::RightHand]->rot.x = joggingEase_.InOut(Radian(-70), Radian(-50));
 		// ¶˜r
-		parts_[(uint32_t)PartID::LeftArm]->rot.x = joggingEase.InOut(Radian(-15), Radian(35));
+		parts_[(uint32_t)PartID::LeftArm]->rot.x = joggingEase_.InOut(Radian(-15), Radian(35));
+		parts_[(uint32_t)PartID::LeftHand]->rot.x = joggingEase_.InOut(Radian(-50), Radian(-70));
 
 		// ‰E‘«
-		parts_[(uint32_t)PartID::RightThigh]->rot.x = joggingEase.InOut(Radian(-50), Radian(30));
-		parts_[(uint32_t)PartID::RightLeg]->rot.x = joggingEase.InOut(Radian(30), Radian(10));
+		parts_[(uint32_t)PartID::RightThigh]->rot.x = joggingEase_.InOut(Radian(-50), Radian(30));
+		parts_[(uint32_t)PartID::RightLeg]->rot.x = joggingEase_.InOut(Radian(30), Radian(10));
 		// ¶‘«
-		parts_[(uint32_t)PartID::LeftThigh]->rot.x = joggingEase.InOut(Radian(30), Radian(-50));
-		parts_[(uint32_t)PartID::LeftLeg]->rot.x = joggingEase.InOut(Radian(30), Radian(10));
+		parts_[(uint32_t)PartID::LeftThigh]->rot.x = joggingEase_.InOut(Radian(30), Radian(-50));
+		parts_[(uint32_t)PartID::LeftLeg]->rot.x = joggingEase_.InOut(Radian(30), Radian(10));
 
 
-		if (joggingEase.GetisEnd() == true)
+		if (joggingEase_.GetisEnd() == true)
 		{
-			joggingEase.Reset();
-			isReverce = false;
+			joggingEase_.Reset();
+			isReverce_ = false;
 		}
 	}
-	else if (isReverce == false)
+	else if (isReverce_ == false)
 	{
 		// ‘Ì
-		parts_[(uint32_t)PartID::Body]->rot.y = joggingEase.InOut(Radian(-10), Radian(10));
-		parts_[(uint32_t)PartID::Head]->rot.y = joggingEase.InOut(Radian(-2), Radian(2));
+		parts_[(uint32_t)PartID::Body]->rot.y = joggingEase_.InOut(Radian(-10), Radian(10));
+		parts_[(uint32_t)PartID::Head]->rot.y = joggingEase_.InOut(Radian(2), Radian(-2));
 
 		// ‰E˜r
-		parts_[(uint32_t)PartID::RightArm]->rot.x = joggingEase.InOut(Radian(-15), Radian(35));
+		parts_[(uint32_t)PartID::RightArm]->rot.x = joggingEase_.InOut(Radian(-15), Radian(35));
+		parts_[(uint32_t)PartID::RightHand]->rot.x = joggingEase_.InOut(Radian(-50), Radian(-70));
 		// ¶˜r
-		parts_[(uint32_t)PartID::LeftArm]->rot.x = joggingEase.InOut(Radian(35), Radian(-15));
+		parts_[(uint32_t)PartID::LeftArm]->rot.x = joggingEase_.InOut(Radian(35), Radian(-15));
+		parts_[(uint32_t)PartID::LeftHand]->rot.x = joggingEase_.InOut(Radian(-70), Radian(-50));
 
 		// ‰E‘«
-		parts_[(uint32_t)PartID::RightThigh]->rot.x = joggingEase.InOut(Radian(30), Radian(-50));
-		parts_[(uint32_t)PartID::RightLeg]->rot.x = joggingEase.InOut(Radian(10), Radian(30));
+		parts_[(uint32_t)PartID::RightThigh]->rot.x = joggingEase_.InOut(Radian(30), Radian(-50));
+		parts_[(uint32_t)PartID::RightLeg]->rot.x = joggingEase_.InOut(Radian(10), Radian(30));
 		// ¶‘«
-		parts_[(uint32_t)PartID::LeftThigh]->rot.x = joggingEase.InOut(Radian(-50), Radian(30));
-		parts_[(uint32_t)PartID::LeftLeg]->rot.x = joggingEase.InOut(Radian(10), Radian(30));
+		parts_[(uint32_t)PartID::LeftThigh]->rot.x = joggingEase_.InOut(Radian(-50), Radian(30));
+		parts_[(uint32_t)PartID::LeftLeg]->rot.x = joggingEase_.InOut(Radian(10), Radian(30));
 
 
-		if (joggingEase.GetisEnd() == true)
+		if (joggingEase_.GetisEnd() == true)
 		{
-			joggingEase.Reset();
-			isReverce = true;
+			joggingEase_.Reset();
+			isReverce_ = true;
 		}
 	}
 
-	joggingEase.Update();
+	joggingEase_.Update();
+}
 
-	parts_[(uint32_t)PartID::RightHand]->rot.x = Radian(-50);
-	parts_[(uint32_t)PartID::LeftHand]->rot.x = Radian(-50);
+void HumanoidBody::RunMotion()
+{
+	parts_[(uint32_t)PartID::Body]->rot.x = Radian(10);
+	parts_[(uint32_t)PartID::RightArm]->rot.z = Radian(10);
+	parts_[(uint32_t)PartID::LeftArm]->rot.z = Radian(-10);
+
+	if (isReverce_ == true)
+	{
+		// ‘Ì
+		parts_[(uint32_t)PartID::Body]->rot.y = runEase_.InOut(Radian(15), Radian(-15));
+		parts_[(uint32_t)PartID::Head]->rot.y = runEase_.InOut(Radian(-10), Radian(10));
+
+		// ‰E˜r
+		parts_[(uint32_t)PartID::RightArm]->rot.x = runEase_.InOut(Radian(60), Radian(-40));
+		parts_[(uint32_t)PartID::RightHand]->rot.x = runEase_.InOut(Radian(-80), Radian(-50));
+
+		// ¶˜r
+		parts_[(uint32_t)PartID::LeftArm]->rot.x = runEase_.InOut(Radian(-40), Radian(60));
+		parts_[(uint32_t)PartID::LeftHand]->rot.x = runEase_.InOut(Radian(-50), Radian(-80));
+
+		// ‰E‘«
+		parts_[(uint32_t)PartID::RightThigh]->rot.x = runEase_.InOut(Radian(-70), Radian(40));
+		parts_[(uint32_t)PartID::RightLeg]->rot.x = runEase_.InOut(Radian(15), Radian(30));
+		// ¶‘«
+		parts_[(uint32_t)PartID::LeftThigh]->rot.x = runEase_.InOut(Radian(40), Radian(-70));
+		parts_[(uint32_t)PartID::LeftLeg]->rot.x = runEase_.InOut(Radian(30), Radian(15));
+
+
+		if (runEase_.GetisEnd() == true)
+		{
+			runEase_.Reset();
+			isReverce_ = false;
+		}
+	}
+	else if (isReverce_ == false)
+	{
+		// ‘Ì
+		parts_[(uint32_t)PartID::Body]->rot.y = runEase_.InOut(Radian(-15), Radian(15));
+		parts_[(uint32_t)PartID::Head]->rot.y = runEase_.InOut(Radian(10), Radian(-10));
+
+		// ‰E˜r
+		parts_[(uint32_t)PartID::RightArm]->rot.x = runEase_.InOut(Radian(-40), Radian(60));
+		parts_[(uint32_t)PartID::RightHand]->rot.x = runEase_.InOut(Radian(-50), Radian(-80));
+
+		// ¶˜r
+		parts_[(uint32_t)PartID::LeftArm]->rot.x = runEase_.InOut(Radian(60), Radian(-40));
+		parts_[(uint32_t)PartID::LeftHand]->rot.x = runEase_.InOut(Radian(-80), Radian(-50));
+
+
+		// ‰E‘«
+		parts_[(uint32_t)PartID::RightThigh]->rot.x = runEase_.InOut(Radian(40), Radian(-70));
+		parts_[(uint32_t)PartID::RightLeg]->rot.x = runEase_.InOut(Radian(30), Radian(15));
+		// ¶‘«
+		parts_[(uint32_t)PartID::LeftThigh]->rot.x = runEase_.InOut(Radian(-70), Radian(40));
+		parts_[(uint32_t)PartID::LeftLeg]->rot.x = runEase_.InOut(Radian(15), Radian(30));
+
+
+		if (runEase_.GetisEnd() == true)
+		{
+			runEase_.Reset();
+			isReverce_ = true;
+		}
+	}
+
+	runEase_.Update();
+
+	//parts_[(uint32_t)PartID::RightHand]->rot.x = Radian(-50);
+	//parts_[(uint32_t)PartID::LeftHand]->rot.x = Radian(-50);
 }
 
 void HumanoidBody::AttackMotion()

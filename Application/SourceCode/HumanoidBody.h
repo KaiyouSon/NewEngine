@@ -33,8 +33,9 @@ private:
 	CapsuleCollider bodyCollider_;
 
 private:
-	bool isReverce;
-	Easing joggingEase;
+	bool isReverce_;
+	Easing joggingEase_;
+	Easing runEase_;
 
 public:
 	Vec3 pos;
@@ -58,6 +59,7 @@ public:
 public:
 	void IdleMotion();
 	void JoggingMotion();
+	void RunMotion();
 	void AttackMotion();
 
 	void CalcFrontVec();

@@ -10,6 +10,7 @@ public:
 	{
 		Idle,
 		Jogging,
+		Run,
 		AttackR1,
 	};
 

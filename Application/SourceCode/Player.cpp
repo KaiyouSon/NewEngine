@@ -26,6 +26,7 @@ void Player::PrevUpdate()
 		// “o˜^
 		&Player::IdleUpdate,
 		&Player::JoggingUpdate,
+		&Player::RunUpdate,
 		&Player::AttackR1Update,
 	};
 
@@ -35,7 +36,6 @@ void Player::PrevUpdate()
 	player_->pos.y = 4.5f;
 
 	player_->PrevUpdate();
-	//player_->PostUpdate();
 }
 void Player::PostUpdate()
 {
@@ -95,8 +95,9 @@ void Player::IdleUpdate()
 void Player::JoggingUpdate()
 {
 	player_->JoggingMotion();
+	//player_->RunMotion();
 
-	moveSpeed = 0.75f;
+	moveSpeed = 0.7f;
 	MoveUpdate();
 
 	if (Pad::GetButtonDown(PadCode::ButtonR1))
@@ -107,15 +108,23 @@ void Player::JoggingUpdate()
 	{
 		state_ = State::Idle;
 	}
+	else if (Pad::GetButton(PadCode::ButtonB))
+	{
+		state_ = State::Run;
+	}
 }
 void Player::RunUpdate()
 {
-	player_->JoggingMotion();
+	player_->RunMotion();
 
-	moveSpeed = 2.f;
+	moveSpeed = 1.2f;
 	MoveUpdate();
 
-	if (Pad::GetStick(PadCode::LeftStick, 300) == 0)
+	if (!Pad::GetButton(PadCode::ButtonB))
+	{
+		state_ = State::Jogging;
+	}
+	else if (Pad::GetStick(PadCode::LeftStick, 300) == 0)
 	{
 		state_ = State::Idle;
 	}
