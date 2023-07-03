@@ -20,6 +20,8 @@ private:
 
 	std::unique_ptr<HumanoidBody> player_;
 
+	Timer pushCoolTimer; //ƒ{ƒ^ƒ“˜A‘Å‚³‚¹‚È‚¢‚æ‚¤‚É
+
 	State state_;
 
 	float moveSpeed_;

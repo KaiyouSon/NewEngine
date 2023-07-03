@@ -20,8 +20,12 @@ void Timer::Update(const bool isRoop, const int32_t addTimer)
 
 	if (timer_ >= limitTimer_)
 	{
+		timer_ = limitTimer_;
 		isTimeOut_ = true;
-		Reset();
+		if (isRoop == true)
+		{
+			Reset();
+		}
 
 	}
 	else

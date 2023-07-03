@@ -19,6 +19,8 @@ void Player::Init()
 
 	joggingSpeed_ = 0.7f;
 	runSpeed_ = 1.2f;
+
+	pushCoolTimer.SetLimitTimer(10);
 }
 void Player::PrevUpdate()
 {
@@ -105,6 +107,9 @@ void Player::IdleUpdate()
 }
 void Player::JoggingUpdate()
 {
+	// 連打防止用のタイマー
+	pushCoolTimer.Update(false);
+
 	player_->JoggingMotion();
 
 	MoveUpdate();
@@ -119,21 +124,31 @@ void Player::JoggingUpdate()
 	}
 	else if (Pad::GetButton(PadCode::ButtonB))
 	{
-		state_ = State::Run;
-		player_->ChangeMoveMotionInit();
-
+		if (pushCoolTimer.GetisTimeOut() == true)
+		{
+			state_ = State::Run;
+			player_->ChangeMoveMotionInit();
+			pushCoolTimer.Reset();
+		}
 	}
 }
 void Player::RunUpdate()
 {
+	// 連打防止用のタイマー
+	pushCoolTimer.Update(false);
+
 	player_->RunMotion();
 
 	MoveUpdate();
 
 	if (!Pad::GetButton(PadCode::ButtonB))
 	{
-		state_ = State::Jogging;
-		player_->ChangeMoveMotionInit();
+		if (pushCoolTimer.GetisTimeOut() == true)
+		{
+			state_ = State::Jogging;
+			player_->ChangeMoveMotionInit();
+			pushCoolTimer.Reset();
+		}
 	}
 	else if (player_->GetisPlayMoveMotion() == false)
 	{

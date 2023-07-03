@@ -230,7 +230,7 @@ void MoveMotion::Step3Update(HumanoidBody* human)
 {
 	for (uint32_t i = (uint32_t)PartID::Head; i < endRots_.size(); i++)
 	{
-		human->GetPart((PartID)i)->rot = ease_.InOut(curRots_[i], endRots_[i]);
+		human->GetPart((PartID)i)->rot = ease_.Lerp(curRots_[i], endRots_[i]);
 	}
 
 	human->parent->moveSpeed_ = ease_.Lerp(curSpeed_, endSpeed_);
