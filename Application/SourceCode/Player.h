@@ -18,7 +18,6 @@ private:
 	std::unique_ptr<Weapon> weapon_;
 
 	std::unique_ptr<HumanoidBody> player_;
-	Vec3 frontVec;
 
 	State state_;
 
@@ -38,7 +37,8 @@ private:
 public:
 	Player();
 	void Init();
-	void Update();
+	void PrevUpdate();
+	void PostUpdate();
 	void DrawModel();
 	void DrawDebugGui();
 
@@ -52,7 +52,9 @@ public:
 	HumanoidBody* GetHumanoidBody();
 	Weapon* GetWeapon();
 	Vec3 GetPos();
+	Vec3 GetAttackPos();
 	Vec3 GetHeadPos();
+	Vec3 GetVel();
 	State GetState();
 };
 

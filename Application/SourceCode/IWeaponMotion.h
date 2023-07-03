@@ -9,6 +9,9 @@ protected:
 	bool isPlay_;
 	bool isInit_;
 	bool isCalcCollider_;
+	bool isCanCombo_;
+	uint32_t comboCount_;
+	uint32_t comboMaxCount_;
 	uint32_t step_;
 	Easing ease_;
 	std::vector<Vec3> curRots_;
@@ -19,10 +22,14 @@ public:
 	virtual void AttackMotion(HumanoidBody* human) = 0;
 
 public:
+	void IncreComboCount();
+
+public:
 	void SetisPlay(const bool isPlay);
 
 public:
 	bool GetisPlay();
 	bool GetisCalcCollider();
+	bool GetisCanCombo();
 };
 

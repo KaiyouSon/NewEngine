@@ -34,12 +34,12 @@ void HumanoidBody::Init()
 	parts_[(uint32_t)PartID::LeftThigh]->pos = Vec3(-0.5f, -1.5f, 0.f);
 	parts_[(uint32_t)PartID::LeftLeg]->pos = Vec3(0.f, -1.5f, 0.f);
 
-	joggingEase.SetEaseTimer(15);
+	joggingEase.SetEaseTimer(20);
 	joggingEase.SetPowNum(2);
 	isReverce = false;
 }
 
-void HumanoidBody::Update()
+void HumanoidBody::PrevUpdate()
 {
 	if (Key::GetKeyDown(DIK_SPACE))
 	{
@@ -55,7 +55,10 @@ void HumanoidBody::Update()
 
 	// コライダーの処理
 	ColliderUpdate();
+}
 
+void HumanoidBody::PostUpdate()
+{
 	parts_[(uint32_t)PartID::Transform]->pos = pos;
 	parts_[(uint32_t)PartID::Transform]->rot = rot;
 	parts_[(uint32_t)PartID::Transform]->scale = scale;
@@ -117,9 +120,9 @@ void HumanoidBody::DrawDebugGui()
 
 	GuiManager::BeginWindow("HumanoidBody");
 
-	GuiManager::DrawSlider3("Transform Pos", parts_[(uint32_t)PartID::Transform]->pos, move);
-	GuiManager::DrawSlider3("Transform Rot", parts_[(uint32_t)PartID::Transform]->rot, move);
-	GuiManager::DrawSlider3("Transform Scale", parts_[(uint32_t)PartID::Transform]->scale, move);
+	GuiManager::DrawSlider3("Pos", pos, move);
+	GuiManager::DrawSlider3("Rot", rot, move);
+	GuiManager::DrawSlider3("Scale", scale, move);
 	GuiManager::DrawLine();
 
 	angle = Angle(parts_[(uint32_t)PartID::Body]->rot);
@@ -281,15 +284,27 @@ void HumanoidBody::AttackMotion()
 	{
 		weapons_[0]->motion->SetisPlay(true);
 	}
+	else
+	{
+		if (weapons_[0]->motion->GetisCanCombo() == true)
+		{
+			if (Pad::GetButton(PadCode::ButtonR1))
+			{
+				weapons_[0]->motion->Init();
+				weapons_[0]->motion->SetisPlay(true);
+				weapons_[0]->motion->IncreComboCount();
+			}
+		}
+	}
 
 	weapons_[0]->motion->AttackMotion(this);
 }
 
 void HumanoidBody::ColliderUpdate()
 {
-	bodyCollider_.centerPos = pos;
-	bodyCollider_.size = Vec3(2, 4, 2);
-	bodyCollider_.CalcPoints();
+	bodyCollider_.startPos = pos - Vec3(0.f, 2.5f, 0.f);
+	bodyCollider_.endPos = pos + Vec3(0.f, 2.5f, 0.f);
+	bodyCollider_.radius = 2.5f;
 }
 
 void HumanoidBody::CalcFrontVec()
@@ -330,7 +345,7 @@ bool HumanoidBody::GetisPlayAttackMotion(const uint32_t index)
 	return weapons_[index]->motion->GetisPlay();
 }
 
-CubeCollider HumanoidBody::GetBodyCollider()
+CapsuleCollider HumanoidBody::GetBodyCollider()
 {
 	return bodyCollider_;
 }

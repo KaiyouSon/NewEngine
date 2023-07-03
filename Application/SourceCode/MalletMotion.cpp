@@ -1,15 +1,30 @@
 #include "MalletMotion.h"
 #include "HumanoidBody.h"
+#include "CollisionManager.h"
+
+MalletMotion::MalletMotion()
+{
+	Init();
+}
 
 void MalletMotion::Init()
 {
 	isInit_ = false;
-	isPlay_ = false;
+	isCanCombo_ = false;
 	isCalcCollider_ = false;
 	step_ = 0;
 	ease_.Reset();
 	curRots_.clear();
+	comboMaxCount_ = 5;
+
+	// 再生終わった時の初期化
+	if (isPlay_ == false)
+	{
+		// コンボ中の初期化しないため
+		comboCount_ = 1;
+	}
 }
+
 void MalletMotion::AttackMotion(HumanoidBody* human)
 {
 	if (isPlay_ == false)
@@ -62,6 +77,7 @@ void MalletMotion::Step0MotionInit(HumanoidBody* human)
 
 	step_ = 0;
 
+	isCanCombo_ = false;
 }
 void MalletMotion::Step0MotionUpdate(HumanoidBody* human)
 {
@@ -176,12 +192,16 @@ void MalletMotion::Step1MotionInit(HumanoidBody* human)
 	// 前ベクトルの計算
 	human->CalcFrontVec();
 
+	// 攻撃モーションで進む距離の計算
+	length_ = 10;
+	CollisionManager::GetInstance()->IsCheckPlayerMove(&length_);
+
 	// 現在の座標を取得
-	curPos_ = human->pos;
+	startPos_ = human->pos;
 
 	// 入力した後の回転角を取得
-	curRotY_ = human->rot.y;
-	nextRotY_ = atan2f(human->frontVec.x, human->frontVec.z);
+	startRotY_ = human->rot.y;
+	endRotY_ = atan2f(human->frontVec.x, human->frontVec.z);
 
 	// 現在の回転角を取得
 	CalcCurrentRot(human);
@@ -191,11 +211,13 @@ void MalletMotion::Step1MotionInit(HumanoidBody* human)
 }
 void MalletMotion::Step1MotionUpdate(HumanoidBody* human)
 {
-	const float length = 10.f;
-	const Vec3 nextPos = curPos_ + human->frontVec.Norm() * length;
+	prevPos_ = human->pos;
 
-	human->pos = ease_.InOut(curPos_, nextPos);
-	human->rot.y = ease_.InOut(curRotY_, nextRotY_);
+	const Vec3 endPos = startPos_ + human->frontVec.Norm() * length_;
+
+	human->pos = ease_.InOut(startPos_, endPos);;
+	human->rot.y = ease_.InOut(startRotY_, endRotY_);
+	human->vel = endPos - startPos_;
 
 	// 体
 	Vec3 bodyMove
@@ -310,6 +332,11 @@ void MalletMotion::Step2MotionInit(HumanoidBody* human)
 
 	// 現在の回転角を取得
 	CalcCurrentRot(human);
+
+	if (comboCount_ < comboMaxCount_)
+	{
+		isCanCombo_ = true;
+	}
 }
 void MalletMotion::Step2MotionUpdate(HumanoidBody* human)
 {
@@ -327,9 +354,22 @@ void MalletMotion::Step2MotionUpdate(HumanoidBody* human)
 
 		isPlay_ = false;
 		isInit_ = false;
+		isCanCombo_ = false;
+
+		Init();
 	}
 }
 
+// 各コンボの設定
+void MalletMotion::ComboSetting()
+{
+	if (comboCount_)
+	{
+
+	}
+}
+
+// 現在の回転角を取得
 void MalletMotion::CalcCurrentRot(HumanoidBody* human)
 {
 	curRots_.resize(human->GetPartsSize());

@@ -2,7 +2,9 @@
 #include "Player.h"
 #include "Boss.h"
 
-class CollisionManager
+template<typename T> class Singleton;
+
+class CollisionManager : public Singleton<CollisionManager>
 {
 private:
 	Player* player_;
@@ -13,9 +15,14 @@ private:
 
 public:
 	void Update();
+	bool IsCheckFrontBoss(const Vec3 pos, const Vec3 front);
+	bool IsCheckPlayerMove(float* dis);
 
 public:
 	void SetPlayer(Player* player);
 	void SetBoss(Boss* boss);
+
+private:
+	friend Singleton<CollisionManager>;
 };
 

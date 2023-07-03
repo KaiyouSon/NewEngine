@@ -16,8 +16,10 @@ void Player::Init()
 
 	player_->SetWeapon(weapon_.get(), 0);
 }
-void Player::Update()
+void Player::PrevUpdate()
 {
+	player_->vel = 0;
+
 	// ŠÖ”ƒ|ƒCƒ“ƒ^
 	void (Player:: * pFunc[])() =
 	{
@@ -32,7 +34,12 @@ void Player::Update()
 
 	player_->pos.y = 4.5f;
 
-	player_->Update();
+	player_->PrevUpdate();
+	//player_->PostUpdate();
+}
+void Player::PostUpdate()
+{
+	player_->PostUpdate();
 }
 void Player::DrawModel()
 {
@@ -66,7 +73,9 @@ void Player::MoveUpdate()
 
 	if (player_->frontVec != 0)
 	{
-		player_->pos += player_->frontVec.Norm() * moveSpeed;
+		player_->vel = player_->frontVec.Norm() * moveSpeed;
+
+		player_->pos += player_->vel;
 		player_->rot.y = atan2f(player_->frontVec.x, player_->frontVec.z);
 	}
 }
@@ -87,7 +96,7 @@ void Player::JoggingUpdate()
 {
 	player_->JoggingMotion();
 
-	moveSpeed = 1.f;
+	moveSpeed = 0.75f;
 	MoveUpdate();
 
 	if (Pad::GetButtonDown(PadCode::ButtonR1))
@@ -142,9 +151,17 @@ Vec3 Player::GetPos()
 {
 	return player_->pos;
 }
+Vec3 Player::GetAttackPos()
+{
+	return player_->attackPos;
+}
 Vec3 Player::GetHeadPos()
 {
 	return player_->GetWorldPos(PartID::Head);
+}
+Vec3 Player::GetVel()
+{
+	return player_->vel;
 }
 Player::State Player::GetState()
 {

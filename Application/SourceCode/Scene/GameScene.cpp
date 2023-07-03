@@ -1,11 +1,11 @@
 #include "GameScene.h"
+#include "CollisionManager.h"
 
 GameScene::GameScene() :
 	player_(std::make_unique<Player>()),
 	boss_(std::make_unique<Boss>()),
 	uiManager_(std::make_unique<UIManager>()),
 	cameraManager_(std::make_unique<CameraManager>()),
-	collisionManager_(std::make_unique<CollisionManager>()),
 	ground_(std::make_unique<Object3D>())
 {
 	ground_->SetModel(ModelManager::GetModel("Ground"));
@@ -32,18 +32,20 @@ void GameScene::Init()
 	cameraManager_->SetPlayer(player_.get());
 	cameraManager_->Init();
 
-	collisionManager_->SetPlayer(player_.get());
-	collisionManager_->SetBoss(boss_.get());
+	CollisionManager::GetInstance()->SetPlayer(player_.get());
+	CollisionManager::GetInstance()->SetBoss(boss_.get());
 }
 void GameScene::Update()
 {
-	player_->Update();
+	player_->PrevUpdate();
 	boss_->Update();
 	uiManager_->Update();
 	ground_->Update();
 
+	CollisionManager::GetInstance()->Update();
+	player_->PostUpdate();
+
 	cameraManager_->Update();
-	collisionManager_->Update();
 
 	Camera::DebugCameraUpdate();
 }

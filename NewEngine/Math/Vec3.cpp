@@ -12,7 +12,15 @@ const Vec3 Vec3::zero(0.f, 0.f, 0.f);
 
 float Vec3::Length() const { return sqrtf(x * x + y * y + z * z); }
 
-Vec3 Vec3::Norm() const { return { x / Length(), y / Length(), z / Length() }; }
+Vec3 Vec3::Norm() const
+{
+	if (x == 0 && y == 0 && z == 0)
+	{
+		return 0;
+	}
+
+	return{ x / Length(), y / Length(), z / Length() };
+}
 
 Vec3 Vec3::Lerp(const Vec3 s, const Vec3 e, const float f)
 {
