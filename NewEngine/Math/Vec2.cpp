@@ -12,7 +12,15 @@ const Vec2 Vec2::zero(0.f, 0.f);
 float Vec2::Length() const { return sqrtf(x * x + y * y); }
 
 // 正規化（長さを１にした）ベクトル
-Vec2 Vec2::Norm() const { return{ x / Length() , y / Length() }; }
+Vec2 Vec2::Norm() const
+{
+	if (x == 0 && y == 0)
+	{
+		return 0;
+	}
+
+	return{ x / Length() , y / Length() };
+}
 
 // 二つのベクトルの内積
 float Vec2::Dot(const Vec2 v1, const Vec2 v2) { return v1.x * v2.x + v1.y * v2.y; }

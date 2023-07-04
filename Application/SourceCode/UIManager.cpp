@@ -23,7 +23,7 @@ void UIManager::Init()
 	gauges_[(uint32_t)GaugeType::Stamina]->SetColor(GaugeUI::FrontColor, Color::green);
 
 	bossHPGauge_->SetGaugePrame(boss_->GetHpGaugeParam());
-	bossHPGauge_->SetPos(Vec2(GetWindowHalfSize().x - 540.f, 928.f));
+	bossHPGauge_->SetPos(Vec2(GetWindowHalfSize().x - 540.f, 880.f));
 	bossHPGauge_->SetColor(GaugeUI::FrontColor, Color::red);
 	bossHPGauge_->Init();
 }
