@@ -28,7 +28,6 @@ x86/
 [Aa][Rr][Mm]64/
 bld/
 [Bb]in/
-# [Oo]bj/
 [Oo]ut/
 [Ll]og/
 [Ll]ogs/
@@ -75,7 +74,6 @@ StyleCopReport.xml
 *_h.h
 *.ilk
 *.meta
-# x64/*/*.obj
 *.iobj
 *.pch
 *.pdb
@@ -363,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Generated Folder
+Generated/
