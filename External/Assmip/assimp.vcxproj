@@ -862,18 +862,6 @@
     <ClInclude Include="$(ProjectDir)\include\assimp\Compiler\poppack1.h" />
     <ClInclude Include="$(ProjectDir)\include\assimp\Compiler\pstdint.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="$(ProjectDir)\ZERO_CHECK.vcxproj">
-      <Project>{9BEAE83B-A7BC-39B6-BD1A-46B161457C4B}</Project>
-      <Name>ZERO_CHECK</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </ProjectReference>
-    <ProjectReference Include="$(ProjectDir)\contrib\zlib\zlibstatic.vcxproj">
-      <Project>{04DD64C3-42B4-317F-88E1-E512FA5B475D}</Project>
-      <Name>zlibstatic</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
