@@ -1,4 +1,3 @@
 # NewEngine
 
-
-![Engine Title logo](Project\Application\Resources\Texture\LogoScene\NewEngineTitle.png)
+<img src="NewEngineTitle.png" width="400" alt="NewEngine Title Logo">
