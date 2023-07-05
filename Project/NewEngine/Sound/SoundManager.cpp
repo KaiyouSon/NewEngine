@@ -1,4 +1,5 @@
 #include "SoundManager.h"
+#pragma comment(lib,"xaudio2.lib")
 
 IXAudio2MasteringVoice* SoundManager::sMasterVoice_ = nullptr;
 Microsoft::WRL::ComPtr<IXAudio2> SoundManager::sXAudio2_ = nullptr;

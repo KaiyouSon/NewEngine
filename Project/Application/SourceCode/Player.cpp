@@ -6,7 +6,6 @@ Player::Player() :
 	player_(std::make_unique<HumanoidBody>()),
 	weapon_(std::make_unique<Club>())
 {
-
 }
 
 void Player::Init()
