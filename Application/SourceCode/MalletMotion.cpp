@@ -9,6 +9,7 @@ MalletMotion::MalletMotion()
 
 void MalletMotion::Init()
 {
+	isPlay_ = false;
 	isInit_ = false;
 	isCanChangeMotion_ = false;
 	isCalcCollider_ = false;
@@ -18,11 +19,10 @@ void MalletMotion::Init()
 	comboMaxCount_ = 5;
 
 	// 再生終わった時の初期化
-	if (isPlay_ == false)
+	if (comboCount_ > comboMaxCount_)
 	{
 		// コンボ中の初期化しないため
-		comboCount_ = 1;
-
+		ResetComboCount();
 	}
 }
 void MalletMotion::AttackMotion(HumanoidBody* human)
@@ -68,11 +68,6 @@ void MalletMotion::AttackMotion(HumanoidBody* human)
 // 手が後ろに引く時
 void MalletMotion::Step0MotionInit(HumanoidBody* human)
 {
-	//// step0 時のイージングのパラメーター
-	//ease_.SetEaseTimer(15);
-	//ease_.SetPowNum(2);
-	//ease_.Reset();
-
 	// 現在の回転角を取得
 	CalcCurrentRot(human);
 
@@ -149,6 +144,8 @@ void MalletMotion::Step1MotionUpdate(HumanoidBody* human)
 		step_ = 2;
 		isInit_ = false;
 
+		isCanChangeMotion_ = true;
+
 		// 当たり判定無効
 		isCalcCollider_ = false;
 	}
@@ -157,18 +154,8 @@ void MalletMotion::Step1MotionUpdate(HumanoidBody* human)
 // 待機に戻る時
 void MalletMotion::Step2MotionInit(HumanoidBody* human)
 {
-	// step1 時のイージングのパラメーター
-	//ease_.SetEaseTimer(40);
-	//ease_.SetPowNum(2);
-	//ease_.Reset();
-
 	// 現在の回転角を取得
 	CalcCurrentRot(human);
-
-	if (comboCount_ < comboMaxCount_)
-	{
-		isCanChangeMotion_ = true;
-	}
 
 	ComboSetting();
 }

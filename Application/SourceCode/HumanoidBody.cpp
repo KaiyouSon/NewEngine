@@ -346,6 +346,7 @@ bool HumanoidBody::GetisAttackMotionCanChange(const uint32_t index)
 void HumanoidBody::AttackMotionInit(const uint32_t index)
 {
 	weapons_[index]->motion->Init();
+	weapons_[index]->motion->ResetComboCount();
 }
 
 CapsuleCollider HumanoidBody::GetBodyCollider()

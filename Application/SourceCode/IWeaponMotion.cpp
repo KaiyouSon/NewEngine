@@ -5,6 +5,11 @@ void IWeaponMotion::IncreComboCount()
 	comboCount_++;
 }
 
+void IWeaponMotion::ResetComboCount()
+{
+	comboCount_ = 1;
+}
+
 void IWeaponMotion::SetisPlay(const bool isPlay)
 {
 	isPlay_ = isPlay;

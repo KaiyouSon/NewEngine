@@ -179,17 +179,17 @@ void Player::AttackR1Update()
 {
 	player_->AttackMotion();
 
-	if (player_->GetisAttackMotionCanChange(0) == true)
+	if (Pad::GetButtonDown(PadCode::ButtonB))
 	{
-		if (Pad::GetButtonDown(PadCode::ButtonB))
+		if (player_->GetisAttackMotionCanChange(0) == true)
 		{
 			player_->AttackMotionInit(0);
 			state_ = State::Backstep;
 		}
 	}
-
-	if (player_->GetisPlayAttackMotion(0) == false)
+	else if (player_->GetisPlayAttackMotion(0) == false)
 	{
+		player_->AttackMotionInit(0);
 		state_ = State::Idle;
 	}
 

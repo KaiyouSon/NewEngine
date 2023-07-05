@@ -24,6 +24,7 @@ public:
 
 public:
 	void IncreComboCount();
+	void ResetComboCount();
 
 public:
 	void SetisPlay(const bool isPlay);
