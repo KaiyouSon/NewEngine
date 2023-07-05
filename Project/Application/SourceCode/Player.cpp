@@ -130,17 +130,6 @@ void Player::JoggingUpdate()
 
 	MoveUpdate();
 
-	// —£‚µ‚½Žž
-	if (Pad::GetButtonUp(PadCode::ButtonB))
-	{
-		if (pushTimer.GetisTimeOut() == false)
-		{
-			state_ = State::Roll;
-			player_->ChangeMoveMotionInit();
-			pushTimer.Reset();
-		}
-	}
-
 	if (Pad::GetButtonDown(PadCode::ButtonR1))
 	{
 		state_ = State::AttackR1;
@@ -149,6 +138,7 @@ void Player::JoggingUpdate()
 	{
 		// ‰½ƒtƒŒ[ƒ€‰Ÿ‚µ‚½‚©‚ð‹L˜^‚·‚é
 		pushTimer.Update(false);
+		if (pushTimer.GetisTimeOut() == true)
 		{
 			state_ = State::Run;
 			player_->ChangeMoveMotionInit();
@@ -160,7 +150,16 @@ void Player::JoggingUpdate()
 		state_ = State::Idle;
 	}
 
-
+	// —£‚µ‚½Žž
+	if (Pad::GetButtonUp(PadCode::ButtonB))
+	{
+		if (pushTimer.GetisTimeOut() == false)
+		{
+			state_ = State::Roll;
+			player_->ChangeMoveMotionInit();
+		}
+		pushTimer.Reset();
+	}
 }
 void Player::RunUpdate()
 {
