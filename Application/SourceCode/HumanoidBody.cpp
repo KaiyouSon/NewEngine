@@ -37,6 +37,13 @@ void HumanoidBody::Init()
 	parts_[(uint32_t)PartID::LeftThigh]->pos = Vec3(-0.5f, -1.5f, 0.f);
 	parts_[(uint32_t)PartID::LeftLeg]->pos = Vec3(0.f, -1.5f, 0.f);
 
+	parts_[(uint32_t)PartID::RightArm]->color = Color::black;
+	parts_[(uint32_t)PartID::RightHand]->color = Color::blue;
+	parts_[(uint32_t)PartID::RightLeg]->color = Color::green;
+	parts_[(uint32_t)PartID::LeftThigh]->color = Color::black;
+	parts_[(uint32_t)PartID::LeftHand]->color = Color::green;
+	parts_[(uint32_t)PartID::LeftLeg]->color = Color::blue;
+
 	moveMotion_->Init(this);
 	backstepMotion_->Init(this);
 }

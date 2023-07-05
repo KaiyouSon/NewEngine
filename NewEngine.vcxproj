@@ -129,6 +129,7 @@
     <ClCompile Include="Application\SourceCode\MalletMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Player.cpp" />
     <ClCompile Include="Application\SourceCode\RadialBlur.cpp" />
+    <ClCompile Include="Application\SourceCode\RollMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\GameScene.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\LogoScene.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\SceneManager.cpp" />
@@ -220,6 +221,7 @@
     <ClInclude Include="Application\SourceCode\MalletMotion.h" />
     <ClInclude Include="Application\SourceCode\Player.h" />
     <ClInclude Include="Application\SourceCode\RadialBlur.h" />
+    <ClInclude Include="Application\SourceCode\RollMotion.h" />
     <ClInclude Include="Application\SourceCode\Scene\GameScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\IScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\LogoScene.h" />

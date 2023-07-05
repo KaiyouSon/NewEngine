@@ -12,7 +12,6 @@ private:
 	float up_;
 	float down_;
 
-
 private:
 	void Step0Init(HumanoidBody* human);
 	void Step0RotsInit(HumanoidBody* human);
@@ -27,7 +26,7 @@ private:
 	void Step2Update(HumanoidBody* human);
 
 public:
-	void Init(HumanoidBody* human);
-	void Update(HumanoidBody* human);
+	void Init(HumanoidBody* human) override;
+	void Update(HumanoidBody* human) override;
 };
 
