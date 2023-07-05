@@ -3,6 +3,7 @@
 #include "Weapon.h"
 #include "MoveMotion.h"
 #include "BackstepMotion.h"
+#include "RollMotion.h"
 
 struct Weapon;
 class Player;
@@ -34,6 +35,7 @@ private:
 	std::array<std::unique_ptr<Object3D>, 11> parts_;
 	std::unique_ptr<MoveMotion> moveMotion_;
 	std::unique_ptr<BackstepMotion> backstepMotion_;
+	std::unique_ptr<RollMotion> rollMotion_;
 	std::array<Weapon*, 2> weapons_;
 	CapsuleCollider bodyCollider_;
 	std::array<Vec3, 11> curRots_;
@@ -63,6 +65,7 @@ public:
 	void RunMotion();
 	void AttackMotion();
 	void BackstepMotionUpdate();
+	void RollMotionUpdate();
 
 	void CalcFrontVec();
 	std::vector<Vec3> CalcCurRots();
@@ -78,8 +81,13 @@ public:
 	uint32_t GetPartsSize();
 	bool GetisPlayMoveMotion();
 	bool GetisPlayBackStepMotion();
+	bool GetisPlayRollMotion();
 	bool GetisPlayAttackMotion(const uint32_t index);
 	bool GetisAttackMotionCanChange(const uint32_t index);
+	bool GetisBackStepMotionCanChange();
+	bool GetisRollMotionCanChange();
+	void BackstepMotionInit();
+	void RollMotionInit();
 	void AttackMotionInit(const uint32_t index);
 };
 

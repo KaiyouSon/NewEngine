@@ -13,8 +13,9 @@ public:
 		Idle,
 		Jogging,
 		Run,
-		AttackR1,
 		Backstep,
+		Roll,
+		AttackR1,
 	};
 
 private:
@@ -42,8 +43,9 @@ private:
 	void IdleUpdate();
 	void JoggingUpdate();
 	void RunUpdate();
-	void AttackR1Update();
 	void BackstepUpdate();
+	void RollUpdate();
+	void AttackR1Update();
 
 public:
 	Player();
@@ -73,5 +75,6 @@ public:
 	friend MoveMotion;
 	friend MalletMotion;
 	friend BackstepMotion;
+	friend RollMotion;
 };
 

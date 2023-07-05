@@ -4,7 +4,8 @@
 HumanoidBody::HumanoidBody() :
 	frontVec(Vec3::front), scale(1),
 	moveMotion_(std::make_unique<MoveMotion>()),
-	backstepMotion_(std::make_unique<BackstepMotion>())
+	backstepMotion_(std::make_unique<BackstepMotion>()),
+	rollMotion_(std::make_unique<RollMotion>())
 {
 	for (uint32_t i = 0; i < parts_.size(); i++)
 	{
@@ -46,6 +47,7 @@ void HumanoidBody::Init()
 
 	moveMotion_->Init(this);
 	backstepMotion_->Init(this);
+	rollMotion_->Init(this);
 }
 
 void HumanoidBody::PrevUpdate()
@@ -53,12 +55,12 @@ void HumanoidBody::PrevUpdate()
 	static bool flag = false;
 	if (Key::GetKeyDown(DIK_SPACE))
 	{
-		backstepMotion_->Init(this);
+		rollMotion_->Init(this);
 		flag = true;
 	}
 	if (flag == true)
 	{
-		backstepMotion_->Update(this);
+		rollMotion_->Update(this);
 	}
 
 	if (Key::GetKeyDown(DIK_R))
@@ -266,6 +268,11 @@ void HumanoidBody::BackstepMotionUpdate()
 	backstepMotion_->Update(this);
 }
 
+void HumanoidBody::RollMotionUpdate()
+{
+	rollMotion_->Update(this);
+}
+
 void HumanoidBody::ColliderUpdate()
 {
 	bodyCollider_.startPos = pos - Vec3(0.f, 2.5f, 0.f);
@@ -340,6 +347,11 @@ bool HumanoidBody::GetisPlayBackStepMotion()
 	return backstepMotion_->GetisPlay();
 }
 
+bool HumanoidBody::GetisPlayRollMotion()
+{
+	return rollMotion_->GetisPlay();
+}
+
 bool HumanoidBody::GetisPlayAttackMotion(const uint32_t index)
 {
 	return weapons_[index]->motion->GetisPlay();
@@ -348,6 +360,26 @@ bool HumanoidBody::GetisPlayAttackMotion(const uint32_t index)
 bool HumanoidBody::GetisAttackMotionCanChange(const uint32_t index)
 {
 	return weapons_[index]->motion->GetisCanChangeMotion();
+}
+
+bool HumanoidBody::GetisBackStepMotionCanChange()
+{
+	return backstepMotion_->GetisCanChangeMotion();
+}
+
+bool HumanoidBody::GetisRollMotionCanChange()
+{
+	return rollMotion_->GetisCanChangeMotion();
+}
+
+void HumanoidBody::BackstepMotionInit()
+{
+	backstepMotion_->Init(this);
+}
+
+void HumanoidBody::RollMotionInit()
+{
+	rollMotion_->Init(this);
 }
 
 void HumanoidBody::AttackMotionInit(const uint32_t index)

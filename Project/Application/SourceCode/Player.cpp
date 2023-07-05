@@ -33,8 +33,9 @@ void Player::PrevUpdate()
 		&Player::IdleUpdate,
 		&Player::JoggingUpdate,
 		&Player::RunUpdate,
-		&Player::AttackR1Update,
 		&Player::BackstepUpdate,
+		&Player::RollUpdate,
+		&Player::AttackR1Update,
 	};
 
 	// 実行
@@ -129,6 +130,17 @@ void Player::JoggingUpdate()
 
 	MoveUpdate();
 
+	// 離した時
+	if (Pad::GetButtonUp(PadCode::ButtonB))
+	{
+		if (pushTimer.GetisTimeOut() == false)
+		{
+			state_ = State::Roll;
+			player_->ChangeMoveMotionInit();
+			pushTimer.Reset();
+		}
+	}
+
 	if (Pad::GetButtonDown(PadCode::ButtonR1))
 	{
 		state_ = State::AttackR1;
@@ -137,8 +149,6 @@ void Player::JoggingUpdate()
 	{
 		// 何フレーム押したかを記録する
 		pushTimer.Update(false);
-
-		if (pushTimer.GetisTimeOut() == true)
 		{
 			state_ = State::Run;
 			player_->ChangeMoveMotionInit();
@@ -150,11 +160,7 @@ void Player::JoggingUpdate()
 		state_ = State::Idle;
 	}
 
-	// 離した時
-	if (Pad::GetButtonUp(PadCode::ButtonB))
-	{
-		pushTimer.Reset();
-	}
+
 }
 void Player::RunUpdate()
 {
@@ -171,6 +177,57 @@ void Player::RunUpdate()
 		player_->ChangeMoveMotionInit();
 	}
 	else if (player_->GetisPlayMoveMotion() == false)
+	{
+		state_ = State::Idle;
+	}
+}
+void Player::BackstepUpdate()
+{
+	player_->BackstepMotionUpdate();
+
+	if (player_->GetisBackStepMotionCanChange() == true)
+	{
+		if (Pad::GetButtonDown(PadCode::ButtonB))
+		{
+			player_->BackstepMotionInit();
+		}
+		else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
+		{
+			player_->BackstepMotionInit();
+
+			if (Pad::GetButton(PadCode::ButtonB))
+			{
+				state_ = State::Roll;
+			}
+			else
+			{
+				state_ = State::Jogging;
+			}
+		}
+	}
+	else if (player_->GetisPlayBackStepMotion() == false)
+	{
+		state_ = State::Idle;
+	}
+}
+void Player::RollUpdate()
+{
+	player_->RollMotionUpdate();
+
+	if (player_->GetisRollMotionCanChange() == true)
+	{
+		if (Pad::GetButtonDown(PadCode::ButtonB))
+		{
+			player_->RollMotionInit();
+			state_ = State::Backstep;
+		}
+		else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
+		{
+			player_->RollMotionInit();
+			state_ = State::Jogging;
+		}
+	}
+	else if (player_->GetisPlayRollMotion() == false)
 	{
 		state_ = State::Idle;
 	}
@@ -193,15 +250,6 @@ void Player::AttackR1Update()
 		state_ = State::Idle;
 	}
 
-}
-void Player::BackstepUpdate()
-{
-	player_->BackstepMotionUpdate();
-
-	if (player_->GetisPlayBackStepMotion() == false)
-	{
-		state_ = State::Idle;
-	}
 }
 
 void Player::SetPos(const Vec3 pos)

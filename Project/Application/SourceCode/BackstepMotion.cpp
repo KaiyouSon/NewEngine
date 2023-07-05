@@ -7,6 +7,7 @@ void BackstepMotion::Init(HumanoidBody* human)
 {
 	isInit_ = false;
 	isPlay_ = false;
+	isCanChangeMotion_ = false;
 	step_ = 0;
 
 	curRots_.resize(human->GetPartsSize());
@@ -71,6 +72,9 @@ void BackstepMotion::Step0Init(HumanoidBody* human)
 
 	Step0RotsInit(human);
 	curRots_ = human->CalcCurRots();
+
+	up_ = 1;
+	down_ = -0.5;
 }
 void BackstepMotion::Step0RotsInit(HumanoidBody* human)
 {
@@ -150,14 +154,15 @@ void BackstepMotion::Step1Update(HumanoidBody* human)
 	{
 		step_ = 2;
 		isInit_ = false;
+		isCanChangeMotion_ = true;
 		ease_.Reset();
 	}
 }
 
 void BackstepMotion::Step2Init(HumanoidBody* human)
 {
-	ease_.SetEaseTimer(30);
-	ease_.SetPowNum(2);
+	ease_.SetEaseTimer(40);
+	ease_.SetPowNum(3);
 	ease_.Reset();
 
 	Step2RotsInit(human);
@@ -168,7 +173,7 @@ void BackstepMotion::Step2RotsInit(HumanoidBody* human)
 }
 void BackstepMotion::Step2Update(HumanoidBody* human)
 {
-	human->GetPart(PartID::Body)->pos.y = ease_.InOut(down_, 0.f);
+	human->GetPart(PartID::Body)->pos.y = ease_.Out(down_, 0.f);
 	for (uint32_t i = (uint32_t)PartID::Head; i < curRots_.size(); i++)
 	{
 		human->GetPart((PartID)i)->rot = ease_.Out(curRots_[i], 0);
@@ -181,6 +186,7 @@ void BackstepMotion::Step2Update(HumanoidBody* human)
 		step_ = 0;
 		isInit_ = false;
 		isPlay_ = false;
+		isCanChangeMotion_ = false;
 		ease_.Reset();
 	}
 }

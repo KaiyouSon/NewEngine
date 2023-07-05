@@ -8,6 +8,7 @@ class IMotion
 protected:
 	bool isInit_;
 	bool isPlay_;
+	bool isCanChangeMotion_;
 
 	uint32_t step_;
 	Easing ease_;
@@ -21,5 +22,6 @@ public:
 
 public:
 	bool GetisPlay();
+	bool GetisCanChangeMotion();
 };
 
