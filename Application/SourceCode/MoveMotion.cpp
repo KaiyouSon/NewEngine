@@ -264,24 +264,24 @@ void MoveMotion::JoggingInit(HumanoidBody* human)
 	// äeïîà ÇÃäpìxÇÃèâä˙âª
 	startRots_[(uint32_t)PartID::Head] = Radian(Vec3(0, -2, 0));
 	startRots_[(uint32_t)PartID::Body] = Radian(Vec3(5, 10, 0));
-	startRots_[(uint32_t)PartID::RightArm] = Radian(Vec3(35, 0, 5));
+	startRots_[(uint32_t)PartID::RightArm] = Radian(Vec3(45, 0, 5));
 	startRots_[(uint32_t)PartID::RightHand] = Radian(Vec3(-70, 0, 0));
-	startRots_[(uint32_t)PartID::LeftArm] = Radian(Vec3(-15, 0, -5));
+	startRots_[(uint32_t)PartID::LeftArm] = Radian(Vec3(-25, 0, -5));
 	startRots_[(uint32_t)PartID::LeftHand] = Radian(Vec3(-50, 0, 0));
-	startRots_[(uint32_t)PartID::RightThigh] = Radian(Vec3(-50, 0, 0));
+	startRots_[(uint32_t)PartID::RightThigh] = Radian(Vec3(-60, 0, 0));
 	startRots_[(uint32_t)PartID::RightLeg] = Radian(Vec3(30, 0, 0));
-	startRots_[(uint32_t)PartID::LeftThigh] = Radian(Vec3(30, 0, 0));
+	startRots_[(uint32_t)PartID::LeftThigh] = Radian(Vec3(40, 0, 0));
 	startRots_[(uint32_t)PartID::LeftLeg] = Radian(Vec3(30, 0, 0));
 
 	endRots_[(uint32_t)PartID::Head] = Radian(Vec3(0, 2, 0));
 	endRots_[(uint32_t)PartID::Body] = Radian(Vec3(5, -10, 0));
-	endRots_[(uint32_t)PartID::RightArm] = Radian(Vec3(-15, 0, 5));
+	endRots_[(uint32_t)PartID::RightArm] = Radian(Vec3(-25, 0, 5));
 	endRots_[(uint32_t)PartID::RightHand] = Radian(Vec3(-50, 0, 0));
-	endRots_[(uint32_t)PartID::LeftArm] = Radian(Vec3(35, 0, -5));
+	endRots_[(uint32_t)PartID::LeftArm] = Radian(Vec3(45, 0, -5));
 	endRots_[(uint32_t)PartID::LeftHand] = Radian(Vec3(-70, 0, 0));
-	endRots_[(uint32_t)PartID::RightThigh] = Radian(Vec3(30, 0, 0));
+	endRots_[(uint32_t)PartID::RightThigh] = Radian(Vec3(40, 0, 0));
 	endRots_[(uint32_t)PartID::RightLeg] = Radian(Vec3(10, 0, 0));
-	endRots_[(uint32_t)PartID::LeftThigh] = Radian(Vec3(-50, 0, 0));
+	endRots_[(uint32_t)PartID::LeftThigh] = Radian(Vec3(-60, 0, 0));
 	endRots_[(uint32_t)PartID::LeftLeg] = Radian(Vec3(10, 0, 0));
 }
 

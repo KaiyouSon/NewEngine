@@ -3,7 +3,8 @@
 
 HumanoidBody::HumanoidBody() :
 	frontVec(Vec3::front), scale(1),
-	moveMotion_(std::make_unique<MoveMotion>())
+	moveMotion_(std::make_unique<MoveMotion>()),
+	backstepMotion_(std::make_unique<BackstepMotion>())
 {
 	for (uint32_t i = 0; i < parts_.size(); i++)
 	{
@@ -37,16 +38,25 @@ void HumanoidBody::Init()
 	parts_[(uint32_t)PartID::LeftLeg]->pos = Vec3(0.f, -1.5f, 0.f);
 
 	moveMotion_->Init(this);
+	backstepMotion_->Init(this);
 }
 
 void HumanoidBody::PrevUpdate()
 {
+	static bool flag = false;
 	if (Key::GetKeyDown(DIK_SPACE))
 	{
+		backstepMotion_->Init(this);
+		flag = true;
+	}
+	if (flag == true)
+	{
+		backstepMotion_->Update(this);
 	}
 
 	if (Key::GetKeyDown(DIK_R))
 	{
+		flag = false;
 		for (uint32_t i = 1; i < parts_.size(); i++)
 		{
 			parts_[i]->rot = 0;
@@ -210,10 +220,10 @@ void HumanoidBody::DrawDebugGui()
 
 void HumanoidBody::IdleMotion()
 {
-	for (uint32_t i = 1; i < parts_.size(); i++)
-	{
-		parts_[i]->rot = 0;
-	}
+	//for (uint32_t i = 1; i < parts_.size(); i++)
+	//{
+	//	parts_[i]->rot = 0;
+	//}
 }
 
 void HumanoidBody::JoggingMotion()
@@ -228,25 +238,25 @@ void HumanoidBody::RunMotion()
 
 void HumanoidBody::AttackMotion()
 {
-	if (weapons_[0]->motion->GetisPlay() == false)
+	if (weapons_[0]->motion->GetisPlay() == true)
 	{
-		weapons_[0]->motion->SetisPlay(true);
-	}
-	else
-	{
-		if (weapons_[0]->motion->GetisCanCombo() == true)
+		if (weapons_[0]->motion->GetisCanChangeMotion() == true)
 		{
 			// ƒRƒ“ƒ{‚Å‚«‚é‚½‚ß
-			if (Pad::GetButton(PadCode::ButtonR1))
+			if (Pad::GetButtonDown(PadCode::ButtonR1))
 			{
 				weapons_[0]->motion->Init();
-				weapons_[0]->motion->SetisPlay(true);
 				weapons_[0]->motion->IncreComboCount();
 			}
 		}
 	}
 
 	weapons_[0]->motion->AttackMotion(this);
+}
+
+void HumanoidBody::BackstepMotionUpdate()
+{
+	backstepMotion_->Update(this);
 }
 
 void HumanoidBody::ColliderUpdate()
@@ -318,9 +328,24 @@ bool HumanoidBody::GetisPlayMoveMotion()
 	return moveMotion_->GetisPlay();
 }
 
+bool HumanoidBody::GetisPlayBackStepMotion()
+{
+	return backstepMotion_->GetisPlay();
+}
+
 bool HumanoidBody::GetisPlayAttackMotion(const uint32_t index)
 {
 	return weapons_[index]->motion->GetisPlay();
+}
+
+bool HumanoidBody::GetisAttackMotionCanChange(const uint32_t index)
+{
+	return weapons_[index]->motion->GetisCanChangeMotion();
+}
+
+void HumanoidBody::AttackMotionInit(const uint32_t index)
+{
+	weapons_[index]->motion->Init();
 }
 
 CapsuleCollider HumanoidBody::GetBodyCollider()

@@ -3,6 +3,8 @@
 #include "GaugeParam.h"
 #include "HumanoidBody.h"
 
+class MalletMotion;
+
 class Player
 {
 public:
@@ -12,6 +14,7 @@ public:
 		Jogging,
 		Run,
 		AttackR1,
+		Backstep,
 	};
 
 private:
@@ -20,13 +23,14 @@ private:
 
 	std::unique_ptr<HumanoidBody> player_;
 
-	Timer pushCoolTimer; //ボタン連打させないように
+	Timer pushTimer; //ボタン連打させないように
 
 	State state_;
 
 	float moveSpeed_;
 	float joggingSpeed_;
 	float runSpeed_;
+	Vec3 moveVel;
 
 private:
 	void GaugeParamInit();
@@ -39,6 +43,7 @@ private:
 	void JoggingUpdate();
 	void RunUpdate();
 	void AttackR1Update();
+	void BackstepUpdate();
 
 public:
 	Player();
@@ -60,10 +65,13 @@ public:
 	Vec3 GetPos();
 	Vec3 GetAttackPos();
 	Vec3 GetHeadPos();
-	Vec3 GetVel();
+	Vec3 GetMoveVel();
+	Vec3 GetFrontVec();
 	State GetState();
 
 	friend HumanoidBody;
 	friend MoveMotion;
+	friend MalletMotion;
+	friend BackstepMotion;
 };
 

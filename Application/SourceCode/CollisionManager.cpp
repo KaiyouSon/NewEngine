@@ -72,24 +72,19 @@ bool CollisionManager::IsCheckFrontBoss(const Vec3 pos, const Vec3 front)
 	return isHit;
 }
 
-bool CollisionManager::IsCheckPlayerMove(float* dis)
+float CollisionManager::CalcPlayerDisToFront(const Vec3 frontVec, const float max)
 {
-	// 前ベクトルの計算
-	player_->GetHumanoidBody()->CalcFrontVec();
-
-	// y軸無視
-	Vec3 offset = player_->GetHumanoidBody()->frontVec * *dis;
-
-	SphereCollider playerFront;
-	playerFront.centerPos = player_->GetPos();
-	playerFront.radius = *dis;
+	RayCollider playerFront;
+	playerFront.startPos = player_->GetPos();
+	playerFront.dirVec = frontVec;
 
 	SphereCollider bossCollider;
 	bossCollider.centerPos = boss_->GetPos();
 	bossCollider.radius = 1.f;
 
-	bool isHit = Collision::SphereHitSphere(playerFront, bossCollider);
+	bool isHit = Collision::RayHitSphere(playerFront, bossCollider);
 
+	float dis = max;
 	if (isHit == true)
 	{
 		// y軸を無視する
@@ -99,11 +94,39 @@ bool CollisionManager::IsCheckPlayerMove(float* dis)
 		float radius =
 			player_->GetHumanoidBody()->GetBodyCollider().radius +
 			boss_->GetCollider().radius;
-		*dis = Vec3::Distance(pos1, pos2) - radius;
+		dis = Vec3::Distance(pos1, pos2) - radius;
+		dis = Min<float>(dis, max);
 	}
 
-	return isHit;
+	return dis;
 }
+
+//bool CollisionManager::IsCheckPlayerMove(const Vec3 frontVec, float* dis)
+//{
+//	RayCollider playerFront;
+//	playerFront.startPos = player_->GetPos();
+//	playerFront.dirVec = frontVec;
+//
+//	SphereCollider bossCollider;
+//	bossCollider.centerPos = boss_->GetPos();
+//	bossCollider.radius = 1.f;
+//
+//	bool isHit = Collision::RayHitSphere(playerFront, bossCollider);
+//
+//	if (isHit == true)
+//	{
+//		// y軸を無視する
+//		Vec3 pos1 = player_->GetPos() * Vec3(1, 0, 1);
+//		Vec3 pos2 = boss_->GetPos() * Vec3(1, 0, 1);
+//
+//		float radius =
+//			player_->GetHumanoidBody()->GetBodyCollider().radius +
+//			boss_->GetCollider().radius;
+//		*dis = Vec3::Distance(pos1, pos2) - radius;
+//	}
+//
+//	return isHit;
+//}
 
 void CollisionManager::SetPlayer(Player* player)
 {

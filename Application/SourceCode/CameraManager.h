@@ -16,6 +16,10 @@ private:
 	std::unique_ptr<Camera> defCame_;
 	float yaw_;
 	float pitch_;
+	float assistYaw_;
+	float targetYaw_;
+
+	Vec3 target_;
 
 private:
 	void DefaultCameraUpdate();

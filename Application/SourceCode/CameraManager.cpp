@@ -43,7 +43,7 @@ void CameraManager::DefaultCameraUpdate()
 		-cosf(Radian(yaw_)) * cosf(Radian(pitch_)),
 	};
 
-	defCame_->pos = player_->GetHeadPos() + v.Norm() * length;
+		defCame_->pos = player_->GetHeadPos() + v.Norm() * length;
 
 	Vec3 rot = { Radian(pitch_),Radian(yaw_),0.f };
 	defCame_->rot = rot;

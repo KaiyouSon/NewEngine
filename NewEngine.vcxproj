@@ -110,6 +110,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\SourceCode\BackstepMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Bloom.cpp" />
     <ClCompile Include="Application\SourceCode\Boss.cpp" />
     <ClCompile Include="Application\SourceCode\CameraManager.cpp" />
@@ -121,6 +122,7 @@
     <ClCompile Include="Application\SourceCode\GaussianBlur.cpp" />
     <ClCompile Include="Application\SourceCode\Glare.cpp" />
     <ClCompile Include="Application\SourceCode\HumanoidBody.cpp" />
+    <ClCompile Include="Application\SourceCode\IMotion.cpp" />
     <ClCompile Include="Application\SourceCode\IWeaponMotion.cpp" />
     <ClCompile Include="Application\SourceCode\MoveMotion.cpp" />
     <ClCompile Include="Application\SourceCode\LoadManager.cpp" />
@@ -198,6 +200,7 @@
     <ClCompile Include="NewEngine\Util\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\SourceCode\BackstepMotion.h" />
     <ClInclude Include="Application\SourceCode\Bloom.h" />
     <ClInclude Include="Application\SourceCode\Boss.h" />
     <ClInclude Include="Application\SourceCode\CameraManager.h" />
@@ -210,6 +213,7 @@
     <ClInclude Include="Application\SourceCode\GaussianBlur.h" />
     <ClInclude Include="Application\SourceCode\Glare.h" />
     <ClInclude Include="Application\SourceCode\HumanoidBody.h" />
+    <ClInclude Include="Application\SourceCode\IMotion.h" />
     <ClInclude Include="Application\SourceCode\IWeaponMotion.h" />
     <ClInclude Include="Application\SourceCode\MoveMotion.h" />
     <ClInclude Include="Application\SourceCode\LoadManager.h" />

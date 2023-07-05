@@ -153,7 +153,7 @@ bool Collision::RayHitSphere(const RayCollider& ray, const SphereCollider& spher
 	float dot1 = Vec3::Dot(v, ray.dirVec);
 	float dot2 = Vec3::Dot(v, v) - (sphere.radius * sphere.radius);
 
-	// レイが球から離れていく方向を差している場合(b > 0)、レイの始点がsphereの外側にあり(c > 0)
+	// レイが球から離れていく方向を指している場合(b > 0)、レイの始点がsphereの外側にあり(c > 0)
 	if (dot1 > 0.f && dot2 > 0.f)
 	{
 		return false;

@@ -15,8 +15,9 @@ private:
 
 public:
 	void Update();
+
+	float CalcPlayerDisToFront(const Vec3 frontVec, const float max);
 	bool IsCheckFrontBoss(const Vec3 pos, const Vec3 front);
-	bool IsCheckPlayerMove(float* dis);
 
 public:
 	void SetPlayer(Player* player);

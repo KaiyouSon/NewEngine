@@ -20,7 +20,7 @@ bool IWeaponMotion::GetisCalcCollider()
 	return isCalcCollider_;
 }
 
-bool IWeaponMotion::GetisCanCombo()
+bool IWeaponMotion::GetisCanChangeMotion()
 {
-	return isCanCombo_;
+	return isCanChangeMotion_;
 }

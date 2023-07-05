@@ -2,6 +2,7 @@
 #include "NewEngine.h"
 #include "Weapon.h"
 #include "MoveMotion.h"
+#include "BackstepMotion.h"
 
 struct Weapon;
 class Player;
@@ -32,6 +33,7 @@ class HumanoidBody
 private:
 	std::array<std::unique_ptr<Object3D>, 11> parts_;
 	std::unique_ptr<MoveMotion> moveMotion_;
+	std::unique_ptr<BackstepMotion> backstepMotion_;
 	std::array<Weapon*, 2> weapons_;
 	CapsuleCollider bodyCollider_;
 	std::array<Vec3, 11> curRots_;
@@ -42,7 +44,6 @@ public:
 	Vec3 rot;
 	Vec3 scale;
 	Vec3 frontVec;
-	Vec3 vel;
 	Player* parent;
 
 public:
@@ -61,6 +62,7 @@ public:
 	void JoggingMotion();
 	void RunMotion();
 	void AttackMotion();
+	void BackstepMotionUpdate();
 
 	void CalcFrontVec();
 	std::vector<Vec3> CalcCurRots();
@@ -75,6 +77,9 @@ public:
 	Object3D* GetPart(const PartID partID);
 	uint32_t GetPartsSize();
 	bool GetisPlayMoveMotion();
+	bool GetisPlayBackStepMotion();
 	bool GetisPlayAttackMotion(const uint32_t index);
+	bool GetisAttackMotionCanChange(const uint32_t index);
+	void AttackMotionInit(const uint32_t index);
 };
 

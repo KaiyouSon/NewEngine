@@ -20,11 +20,11 @@ void Player::Init()
 	joggingSpeed_ = 0.7f;
 	runSpeed_ = 1.2f;
 
-	pushCoolTimer.SetLimitTimer(10);
+	pushTimer.SetLimitTimer(20);
 }
 void Player::PrevUpdate()
 {
-	player_->vel = 0;
+	moveVel = 0;
 
 	// 関数ポインタ
 	void (Player:: * pFunc[])() =
@@ -34,6 +34,7 @@ void Player::PrevUpdate()
 		&Player::JoggingUpdate,
 		&Player::RunUpdate,
 		&Player::AttackR1Update,
+		&Player::BackstepUpdate,
 	};
 
 	// 実行
@@ -41,7 +42,7 @@ void Player::PrevUpdate()
 
 	GaugeParamUpdate();
 
-	player_->pos.y = 4.5f;
+	//player_->pos.y = 4.5f;
 	player_->PrevUpdate();
 }
 void Player::PostUpdate()
@@ -92,9 +93,9 @@ void Player::MoveUpdate()
 
 	if (player_->frontVec != 0)
 	{
-		player_->vel = player_->frontVec.Norm() * moveSpeed_;
+		moveVel = player_->frontVec.Norm() * moveSpeed_;
 
-		player_->pos += player_->vel;
+		player_->pos += moveVel;
 		player_->rot.y = atan2f(player_->frontVec.x, player_->frontVec.z);
 	}
 }
@@ -117,12 +118,13 @@ void Player::IdleUpdate()
 			state_ = State::Jogging;
 		}
 	}
+	else if (Pad::GetButtonDown(PadCode::ButtonB))
+	{
+		state_ = State::Backstep;
+	}
 }
 void Player::JoggingUpdate()
 {
-	// 連打防止用のタイマー
-	pushCoolTimer.Update(false);
-
 	player_->JoggingMotion();
 
 	MoveUpdate();
@@ -131,25 +133,31 @@ void Player::JoggingUpdate()
 	{
 		state_ = State::AttackR1;
 	}
+	else if (Pad::GetButton(PadCode::ButtonB))
+	{
+		// 何フレーム押したかを記録する
+		pushTimer.Update(false);
+
+		if (pushTimer.GetisTimeOut() == true)
+		{
+			state_ = State::Run;
+			player_->ChangeMoveMotionInit();
+			pushTimer.Reset();
+		}
+	}
 	else if (player_->GetisPlayMoveMotion() == false)
 	{
 		state_ = State::Idle;
 	}
-	else if (Pad::GetButtonDown(PadCode::ButtonB))
+
+	// 離した時
+	if (Pad::GetButtonUp(PadCode::ButtonB))
 	{
-		if (pushCoolTimer.GetisTimeOut() == true)
-		{
-			state_ = State::Run;
-			player_->ChangeMoveMotionInit();
-			pushCoolTimer.Reset();
-		}
+		pushTimer.Reset();
 	}
 }
 void Player::RunUpdate()
 {
-	// 連打防止用のタイマー
-	pushCoolTimer.Update(false);
-
 	player_->RunMotion();
 
 	gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 1.f;
@@ -159,12 +167,8 @@ void Player::RunUpdate()
 	if (!Pad::GetButton(PadCode::ButtonB) ||
 		gaugePrames_[(uint32_t)GaugeType::Stamina].value <= 0.f)
 	{
-		if (pushCoolTimer.GetisTimeOut() == true)
-		{
-			state_ = State::Jogging;
-			player_->ChangeMoveMotionInit();
-			pushCoolTimer.Reset();
-		}
+		state_ = State::Jogging;
+		player_->ChangeMoveMotionInit();
 	}
 	else if (player_->GetisPlayMoveMotion() == false)
 	{
@@ -175,7 +179,26 @@ void Player::AttackR1Update()
 {
 	player_->AttackMotion();
 
+	if (player_->GetisAttackMotionCanChange(0) == true)
+	{
+		if (Pad::GetButtonDown(PadCode::ButtonB))
+		{
+			player_->AttackMotionInit(0);
+			state_ = State::Backstep;
+		}
+	}
+
 	if (player_->GetisPlayAttackMotion(0) == false)
+	{
+		state_ = State::Idle;
+	}
+
+}
+void Player::BackstepUpdate()
+{
+	player_->BackstepMotionUpdate();
+
+	if (player_->GetisPlayBackStepMotion() == false)
 	{
 		state_ = State::Idle;
 	}
@@ -210,9 +233,13 @@ Vec3 Player::GetHeadPos()
 {
 	return player_->GetWorldPos(PartID::Head);
 }
-Vec3 Player::GetVel()
+Vec3 Player::GetMoveVel()
 {
-	return player_->vel;
+	return moveVel;
+}
+Vec3 Player::GetFrontVec()
+{
+	return player_->frontVec;
 }
 Player::State Player::GetState()
 {

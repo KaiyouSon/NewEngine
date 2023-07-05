@@ -172,6 +172,12 @@
     <Filter Include="Application\Header\Motion\Weapon">
       <UniqueIdentifier>{9d596a25-0aa2-4b97-9519-08c94b2fcd82}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Source\Motion\Human">
+      <UniqueIdentifier>{b40eae28-5076-49a3-8ff1-a9360c5a9642}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\Motion\Human">
+      <UniqueIdentifier>{1d57f7e9-95ce-47f4-8e7b-a310d7ff9a6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -417,11 +423,17 @@
     <ClCompile Include="Application\SourceCode\MalletMotion.cpp">
       <Filter>Application\Source\Motion\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\MoveMotion.cpp">
-      <Filter>Application\Source\Motion</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\HumanoidBody.cpp">
       <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\MoveMotion.cpp">
+      <Filter>Application\Source\Motion\Human</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\BackstepMotion.cpp">
+      <Filter>Application\Source\Motion\Human</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\IMotion.cpp">
+      <Filter>Application\Source\Motion\Human</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -704,8 +716,14 @@
     <ClInclude Include="Application\SourceCode\HumanoidBody.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SourceCode\BackstepMotion.h">
+      <Filter>Application\Header\Motion\Human</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\IMotion.h">
+      <Filter>Application\Header\Motion\Human</Filter>
+    </ClInclude>
     <ClInclude Include="Application\SourceCode\MoveMotion.h">
-      <Filter>Application\Header\Motion</Filter>
+      <Filter>Application\Header\Motion\Human</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

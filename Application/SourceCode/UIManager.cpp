@@ -46,7 +46,7 @@ void UIManager::DrawFrontSprite()
 	{
 		gauges_[i]->DrawFrontSprite();
 	}
-	bossHPGauge_->DrawFrontSprite();
+	//bossHPGauge_->DrawFrontSprite();
 }
 
 void UIManager::SetPlayer(Player* player)

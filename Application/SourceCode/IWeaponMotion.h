@@ -9,7 +9,7 @@ protected:
 	bool isPlay_;
 	bool isInit_;
 	bool isCalcCollider_;
-	bool isCanCombo_;
+	bool isCanChangeMotion_;
 	uint32_t comboCount_;
 	uint32_t comboMaxCount_;
 	uint32_t step_;
@@ -31,6 +31,6 @@ public:
 public:
 	bool GetisPlay();
 	bool GetisCalcCollider();
-	bool GetisCanCombo();
+	bool GetisCanChangeMotion();
 };
 

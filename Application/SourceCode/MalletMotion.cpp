@@ -10,7 +10,7 @@ MalletMotion::MalletMotion()
 void MalletMotion::Init()
 {
 	isInit_ = false;
-	isCanCombo_ = false;
+	isCanChangeMotion_ = false;
 	isCalcCollider_ = false;
 	step_ = 0;
 	ease_.Reset();
@@ -24,19 +24,13 @@ void MalletMotion::Init()
 		comboCount_ = 1;
 
 	}
-
-	// コンボ中の時
-	if (comboCount_ != 1)
-	{
-		isPlay_ = true;
-	}
 }
-
 void MalletMotion::AttackMotion(HumanoidBody* human)
 {
 	if (isPlay_ == false)
 	{
-		return;
+		Init();
+		isPlay_ = true;
 	}
 
 	// 手が後ろに引く時
@@ -84,7 +78,7 @@ void MalletMotion::Step0MotionInit(HumanoidBody* human)
 
 	step_ = 0;
 
-	isCanCombo_ = false;
+	isCanChangeMotion_ = false;
 
 	ComboSetting();
 
@@ -110,17 +104,11 @@ void MalletMotion::Step0MotionUpdate(HumanoidBody* human)
 // 手が前に倒す時（攻撃するとき）
 void MalletMotion::Step1MotionInit(HumanoidBody* human)
 {
-	// step1 時のイージングのパラメーター
-	//ease_.SetEaseTimer(25);
-	//ease_.SetPowNum(5);
-	//ease_.Reset();
-
 	// 前ベクトルの計算
 	human->CalcFrontVec();
 
 	// 攻撃モーションで進む距離の計算
-	length_ = 10;
-	CollisionManager::GetInstance()->IsCheckPlayerMove(&length_);
+	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(human->frontVec, 10);
 
 	// 現在の座標を取得
 	startPos_ = human->pos;
@@ -145,7 +133,7 @@ void MalletMotion::Step1MotionUpdate(HumanoidBody* human)
 
 	human->pos = ease_.InOut(startPos_, endPos);
 	human->rot.y = ease_.InOut(startRotY_, endRotY_);
-	human->vel = endPos - startPos_;
+	human->parent->moveVel = endPos - startPos_;
 
 	for (uint32_t i = (uint32_t)PartID::Head; i < startRots_.size(); i++)
 	{
@@ -179,7 +167,7 @@ void MalletMotion::Step2MotionInit(HumanoidBody* human)
 
 	if (comboCount_ < comboMaxCount_)
 	{
-		isCanCombo_ = true;
+		isCanChangeMotion_ = true;
 	}
 
 	ComboSetting();
@@ -200,7 +188,7 @@ void MalletMotion::Step2MotionUpdate(HumanoidBody* human)
 
 		isPlay_ = false;
 		isInit_ = false;
-		isCanCombo_ = false;
+		isCanChangeMotion_ = false;
 
 		Init();
 	}
@@ -214,7 +202,14 @@ void MalletMotion::ComboSetting()
 		if (step_ == 0)
 		{
 			// step0 時のイージングのパラメーター
-			ease_.SetEaseTimer(15);
+			if (comboCount_ == 0)
+			{
+				ease_.SetEaseTimer(15);
+			}
+			else
+			{
+				ease_.SetEaseTimer(10);
+			}
 			ease_.SetPowNum(2);
 			ease_.Reset();
 
@@ -232,7 +227,14 @@ void MalletMotion::ComboSetting()
 		else if (step_ == 1)
 		{
 			// step1 時のイージングのパラメーター
-			ease_.SetEaseTimer(25);
+			if (comboCount_ == 0)
+			{
+				ease_.SetEaseTimer(25);
+			}
+			else
+			{
+				ease_.SetEaseTimer(20);
+			}
 			ease_.SetPowNum(5);
 			ease_.Reset();
 
