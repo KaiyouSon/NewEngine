@@ -11,7 +11,7 @@
 
 ## ビルド
 **[NewEngine](https://github.com/KaiyouSon/NewEngine)**
-クローンもしくはzipをダウンロードする
+でクローンもしくはzipをダウンロードする
 
 
 ## リファレンス
