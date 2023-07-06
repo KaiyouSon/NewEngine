@@ -130,12 +130,6 @@
     <Filter Include="NewEngine\Source\Sound">
       <UniqueIdentifier>{85d7aaa5-e8a8-4a6d-9861-cefb5831292f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Source\PostEffect">
-      <UniqueIdentifier>{5d4b1f23-4c25-4c90-9b2e-fefb7391dfaa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Header\PostEffect">
-      <UniqueIdentifier>{d4bdd35e-3485-492b-b0f5-9608b3369d84}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader\Application\Bloom">
       <UniqueIdentifier>{7062c03f-aed0-498f-9f48-67d18ffe2c05}</UniqueIdentifier>
     </Filter>
@@ -147,36 +141,6 @@
     </Filter>
     <Filter Include="NewEngine\Source\Object\Other\Model">
       <UniqueIdentifier>{7c8e69d5-a283-4d47-aea3-ce1813da0e12}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Source\UI">
-      <UniqueIdentifier>{dde48fdf-5b24-4364-ab79-3b32c78b406b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Header\UI">
-      <UniqueIdentifier>{3883a1ae-ad71-40ac-a4f3-1a9d6454ad73}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Source\Weapon">
-      <UniqueIdentifier>{850f4087-dcbc-4e0c-80fd-70aa989a097d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Header\Weapon">
-      <UniqueIdentifier>{d735dc30-6d52-4a2f-ba0a-eaf5b28b0bb6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Source\Motion">
-      <UniqueIdentifier>{0989b207-3403-4731-9de5-48a6edf5dfea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Source\Motion\Weapon">
-      <UniqueIdentifier>{cb853e0c-c40b-4f6d-8745-2caab13a93d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Header\Motion">
-      <UniqueIdentifier>{198f432a-07a7-40b2-97f8-115d759c5dd5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Header\Motion\Weapon">
-      <UniqueIdentifier>{9d596a25-0aa2-4b97-9519-08c94b2fcd82}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Source\Motion\Human">
-      <UniqueIdentifier>{b40eae28-5076-49a3-8ff1-a9360c5a9642}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Header\Motion\Human">
-      <UniqueIdentifier>{1d57f7e9-95ce-47f4-8e7b-a310d7ff9a6e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -348,38 +312,11 @@
     <ClCompile Include="Application\SourceCode\Scene\LogoScene.cpp">
       <Filter>Application\Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Scene\TestScene.cpp">
-      <Filter>Application\Source\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\Billboard.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\AssimpLoader.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\Vignette.cpp">
-      <Filter>Application\Source\PostEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\Bloom.cpp">
-      <Filter>Application\Source\PostEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp">
-      <Filter>Application\Source\PostEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\Task.cpp">
-      <Filter>Application\Source\PostEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\GaussianBlur.cpp">
-      <Filter>Application\Source\PostEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\Glare.cpp">
-      <Filter>Application\Source\PostEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\DOF.cpp">
-      <Filter>Application\Source\PostEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\RadialBlur.cpp">
-      <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\Model\ObjModel.cpp">
       <Filter>NewEngine\Source\Object\Other\Model</Filter>
@@ -390,53 +327,8 @@
     <ClCompile Include="NewEngine\Object\Other\FbxModel.cpp">
       <Filter>NewEngine\Source\Object\Other\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\UIManager.cpp">
-      <Filter>Application\Source\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\Player.cpp">
-      <Filter>Application\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\GaugeUI.cpp">
-      <Filter>Application\Source\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\GaugeParam.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\Weapon.cpp">
-      <Filter>Application\Source\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\Club.cpp">
-      <Filter>Application\Source\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\Boss.cpp">
-      <Filter>Application\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\CameraManager.cpp">
-      <Filter>Application\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\CollisionManager.cpp">
-      <Filter>Application\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\IWeaponMotion.cpp">
-      <Filter>Application\Source\Motion\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\MalletMotion.cpp">
-      <Filter>Application\Source\Motion\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\HumanoidBody.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\MoveMotion.cpp">
-      <Filter>Application\Source\Motion\Human</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\BackstepMotion.cpp">
-      <Filter>Application\Source\Motion\Human</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\IMotion.cpp">
-      <Filter>Application\Source\Motion\Human</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\RollMotion.cpp">
-      <Filter>Application\Source\Motion\Human</Filter>
+    <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp">
+      <Filter>NewEngine\Source\Object\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -629,9 +521,6 @@
     <ClInclude Include="Application\SourceCode\Scene\LogoScene.h">
       <Filter>Application\Header\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Scene\TestScene.h">
-      <Filter>Application\Header\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Sound\WaveSound.h">
       <Filter>NewEngine\Header\Sound</Filter>
     </ClInclude>
@@ -643,30 +532,6 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\MaterialColor.h">
       <Filter>NewEngine\Header\Object\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Vignette.h">
-      <Filter>Application\Header\PostEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Bloom.h">
-      <Filter>Application\Header\PostEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Object\2D\PostEffect.h">
-      <Filter>Application\Header\PostEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Task.h">
-      <Filter>Application\Header\PostEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Glare.h">
-      <Filter>Application\Header\PostEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\DOF.h">
-      <Filter>Application\Header\PostEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\GaussianBlur.h">
-      <Filter>Application\Header\PostEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\RadialBlur.h">
-      <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\Model.h">
       <Filter>NewEngine\Header\Object\Other\Model</Filter>
@@ -680,56 +545,8 @@
     <ClInclude Include="NewEngine\Object\Other\FbxModel.h">
       <Filter>NewEngine\Header\Object\Other\Model</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\UIManager.h">
-      <Filter>Application\Header\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Player.h">
-      <Filter>Application\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\GaugeUI.h">
-      <Filter>Application\Header\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\GaugeParam.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\GaugeType.h">
-      <Filter>Application\Header\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Weapon.h">
-      <Filter>Application\Header\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Club.h">
-      <Filter>Application\Header\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Boss.h">
-      <Filter>Application\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\CameraManager.h">
-      <Filter>Application\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\CollisionManager.h">
-      <Filter>Application\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\IWeaponMotion.h">
-      <Filter>Application\Header\Motion\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\MalletMotion.h">
-      <Filter>Application\Header\Motion\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\BackstepMotion.h">
-      <Filter>Application\Header\Motion\Human</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\IMotion.h">
-      <Filter>Application\Header\Motion\Human</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\MoveMotion.h">
-      <Filter>Application\Header\Motion\Human</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\RollMotion.h">
-      <Filter>Application\Header\Motion\Human</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\HumanoidBody.h">
-      <Filter>Uncategorized\Header</Filter>
+    <ClInclude Include="NewEngine\Object\2D\PostEffect.h">
+      <Filter>NewEngine\Header\Object\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
