@@ -1,0 +1,254 @@
+{
+    "name": "scene",
+    "object": [
+        {
+            "type": "EMPTY",
+            "name": "Transform",
+            "transform": {
+                "translation": [
+                    0.0,
+                    4.5,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "parameter": {
+                "step": 0,
+                "ease_type": "Out",
+                "ease_pow": 1,
+                "ease_time": 10
+            },
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Body",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "children": [
+                        {
+                            "type": "MESH",
+                            "name": "Head",
+                            "transform": {
+                                "translation": [
+                                    0.0,
+                                    2.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "LeftArm",
+                            "transform": {
+                                "translation": [
+                                    -1.5,
+                                    1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    45.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "LeftHand",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5000004768371582,
+                                            4.76837158203125e-07
+                                        ],
+                                        "rotation": [
+                                            0.0,
+                                            -0.0,
+                                            0.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "LeftThigh",
+                            "transform": {
+                                "translation": [
+                                    -0.5,
+                                    -1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "LeftLeg",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            0.0,
+                                            -0.0,
+                                            0.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "RightArm",
+                            "transform": {
+                                "translation": [
+                                    1.5,
+                                    1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    -45.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    0.9999999403953552,
+                                    0.9999999403953552
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "RightHand",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5000007152557373,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            0.0,
+                                            -0.0,
+                                            0.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "RightThigh",
+                            "transform": {
+                                "translation": [
+                                    0.5,
+                                    -1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "RightLeg",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            0.0,
+                                            -0.0,
+                                            0.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
