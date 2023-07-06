@@ -1,5 +1,6 @@
 #pragma once
 #include "Vec3.h"
+#include "Enum.h"
 #include <cstdint>
 
 class Easing
@@ -10,6 +11,7 @@ private:
 	float timeRate_;
 	float powNum_;
 	bool isEnd_;
+	EaseType easeType_;
 
 public:
 	Easing();
@@ -19,11 +21,12 @@ public:
 	void Update();		// 補間
 
 public: // セッター
-	
+
 	// 補間時間をセットする
 	inline void SetEaseTimer(const int32_t limitTimer) { limitTimer_ = limitTimer; }
 	// N乗をセットする
 	inline void SetPowNum(const float powNum) { powNum_ = powNum; }
+	inline void SetEaseType(const EaseType easeType) { easeType_ = easeType; }
 
 public: // ゲッター
 
@@ -35,6 +38,10 @@ public: // ゲッター
 	inline float GetTimeRate() { return timeRate_; }
 
 public:
+
+	float Interpolation(const float startPos, const float endPos);
+	Vec2 Interpolation(const Vec2 startPos, const Vec2 endPos);
+	Vec3 Interpolation(const Vec3 startPos, const Vec3 endPos);
 
 	// ラープ
 	float Lerp(const float startPos, const float endPos);

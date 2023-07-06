@@ -28,6 +28,15 @@ enum class BezierType
 	EaseOut,
 };
 
+// イージング種類
+enum class EaseType
+{
+	Lerp,
+	In,
+	Out,
+	InOut,
+};
+
 // ビルボードの種類
 enum class BillboardType
 {

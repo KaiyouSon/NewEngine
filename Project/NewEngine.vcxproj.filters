@@ -441,6 +441,9 @@
     <ClCompile Include="Application\SourceCode\RollMotion.cpp">
       <Filter>Application\Source\Motion\Human</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\MotionManager.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -736,6 +739,9 @@
     </ClInclude>
     <ClInclude Include="..\..\1.School\3.3年前期\TL1\CG5_Task01\Project\External\nlohmann\json.hpp">
       <Filter>nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\MotionManager.h">
+      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

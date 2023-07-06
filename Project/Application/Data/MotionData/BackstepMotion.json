@@ -23,9 +23,9 @@
             },
             "parameter": {
                 "step": 0,
-                "ease_type": "Out",
-                "ease_pow": 1,
-                "ease_time": 10
+                "ease_type": "InOut",
+                "ease_pow": 2,
+                "ease_time": 5
             },
             "children": [
                 {
@@ -272,8 +272,8 @@
             },
             "parameter": {
                 "step": 0,
-                "ease_type": "Out",
-                "ease_pow": 1,
+                "ease_type": "InOut",
+                "ease_pow": 2,
                 "ease_time": 10
             },
             "children": [
@@ -522,8 +522,8 @@
             "parameter": {
                 "step": 0,
                 "ease_type": "Out",
-                "ease_pow": 1,
-                "ease_time": 10
+                "ease_pow": 3,
+                "ease_time": 40
             },
             "children": [
                 {

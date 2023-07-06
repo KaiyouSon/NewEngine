@@ -12,6 +12,7 @@ private:
 	bool ModelLoad();
 	bool TextureLoad();
 	bool SoundLoad();
+	bool MotionLoad();
 
 public:
 	void Load();

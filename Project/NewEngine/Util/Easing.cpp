@@ -37,6 +37,75 @@ void Easing::Update()
 	timeRate_ = Min<float>((float)timer_ / limitTimer_, 1);
 }
 
+float Easing::Interpolation(const float startPos, const float endPos)
+{
+	switch (easeType_)
+	{
+	case EaseType::Lerp:
+		return Lerp(startPos, endPos);
+
+	case EaseType::In:
+		return In(startPos, endPos);
+
+	case EaseType::Out:
+		return Out(startPos, endPos);
+
+	case EaseType::InOut:
+		return InOut(startPos, endPos);
+
+	default:
+		return 0;
+	}
+
+	return 0;
+}
+
+Vec2 Easing::Interpolation(const Vec2 startPos, const Vec2 endPos)
+{
+	switch (easeType_)
+	{
+	case EaseType::Lerp:
+		return Lerp(startPos, endPos);
+
+	case EaseType::In:
+		return In(startPos, endPos);
+
+	case EaseType::Out:
+		return Out(startPos, endPos);
+
+	case EaseType::InOut:
+		return InOut(startPos, endPos);
+
+	default:
+		return 0;
+	}
+
+	return 0;
+}
+
+Vec3 Easing::Interpolation(const Vec3 startPos, const Vec3 endPos)
+{
+	switch (easeType_)
+	{
+	case EaseType::Lerp:
+		return Lerp(startPos, endPos);
+
+	case EaseType::In:
+		return In(startPos, endPos);
+
+	case EaseType::Out:
+		return Out(startPos, endPos);
+
+	case EaseType::InOut:
+		return InOut(startPos, endPos);
+
+	default:
+		return 0;
+	}
+
+	return 0;
+}
+
 // ÉâÅ[Év
 float Easing::Lerp(const float startPos, const float endPos)
 {

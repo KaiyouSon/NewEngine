@@ -124,6 +124,7 @@
     <ClCompile Include="Application\SourceCode\HumanoidBody.cpp" />
     <ClCompile Include="Application\SourceCode\IMotion.cpp" />
     <ClCompile Include="Application\SourceCode\IWeaponMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\MotionManager.cpp" />
     <ClCompile Include="Application\SourceCode\MoveMotion.cpp" />
     <ClCompile Include="Application\SourceCode\LoadManager.cpp" />
     <ClCompile Include="Application\SourceCode\MalletMotion.cpp" />
@@ -217,6 +218,7 @@
     <ClInclude Include="Application\SourceCode\HumanoidBody.h" />
     <ClInclude Include="Application\SourceCode\IMotion.h" />
     <ClInclude Include="Application\SourceCode\IWeaponMotion.h" />
+    <ClInclude Include="Application\SourceCode\MotionManager.h" />
     <ClInclude Include="Application\SourceCode\MoveMotion.h" />
     <ClInclude Include="Application\SourceCode\LoadManager.h" />
     <ClInclude Include="Application\SourceCode\MalletMotion.h" />

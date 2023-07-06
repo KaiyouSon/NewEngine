@@ -1,6 +1,7 @@
 #include "LoadManager.h"
 #include "NewEngine.h"
 #include "AssimpLoader.h"
+#include "MotionManager.h"
 
 bool LoadManager::ModelLoad()
 {
@@ -81,24 +82,30 @@ bool LoadManager::SoundLoad()
 	return true;
 }
 
+bool LoadManager::MotionLoad()
+{
+	MotionManager::Load("BackstepMotion", "Backstep");
+
+	return true;
+}
+
 LoadManager::LoadManager() : isLoaded(false)
 {
 }
 
 void LoadManager::Load()
 {
-	// ロード前
-	TextureManager::CreateTexture(Color::white, "White");
-
 	// 非同期
 	std::future<bool> textureFtr = std::async(std::launch::async, [this] { return TextureLoad(); });
 	std::future<bool> modelFtr = std::async(std::launch::async, [this] { return ModelLoad(); });
 	std::future<bool> soundFtr = std::async(std::launch::async, [this] { return SoundLoad(); });
+	std::future<bool> motionFtr = std::async(std::launch::async, [this] { return MotionLoad(); });
 
 	// ロード完了
 	if (textureFtr.get() == true &&	// テクスチャー
 		modelFtr.get() == true &&	// モデル
-		soundFtr.get() == true)		// サウンド
+		soundFtr.get() == true &&
+		motionFtr.get() == true)	// サウンド
 	{
 		isLoaded = true;
 		// コマンド実行

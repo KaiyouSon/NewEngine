@@ -12,18 +12,18 @@ enum class PartID
 {
 	Transform,
 
-	Head,	// 頭
 	Body,	// 体
+	Head,	// 頭
+
+	LeftArm,	// 左腕
+	LeftHand,	// 左手
+	LeftThigh,	 // 左太もも
+	LeftLeg,	 // 左足
 
 	RightArm,	// 右腕
 	RightHand,	// 右手
-	LeftArm,	// 左腕
-	LeftHand,	// 左手
-
 	RightThigh,	 // 右太もも
 	RightLeg,	 // 右足
-	LeftThigh,	 // 左太もも
-	LeftLeg,	 // 左足
 
 	RightWeapon,
 	LeftWeapon,

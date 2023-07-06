@@ -55,12 +55,16 @@ void HumanoidBody::PrevUpdate()
 	static bool flag = false;
 	if (Key::GetKeyDown(DIK_SPACE))
 	{
-		rollMotion_->Init(this);
+		backstepMotion_->Init(this);
 		flag = true;
 	}
 	if (flag == true)
 	{
-		rollMotion_->Update(this);
+		backstepMotion_->Update(this);
+		if (backstepMotion_->GetisPlay() == false)
+		{
+			flag = false;
+		}
 	}
 
 	if (Key::GetKeyDown(DIK_R))
