@@ -46,14 +46,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)External/Assmip/include;$(SolutionDir)External/ImGUI;$(SolutionDir)External/DirectXTex</IncludePath>
+    <IncludePath>$(SolutionDir)External/nlohmann;$(SolutionDir)External/Assmip/include;$(SolutionDir)External/ImGUI;$(SolutionDir)External/DirectXTex</IncludePath>
     <IntDir>$(SolutionDir)../Generated/Obj/$(ProjectName)/$(Configuration)/</IntDir>
     <OutDir>$(SolutionDir)../Generated/Outputs/$(ProjectName)/$(Configuration)/</OutDir>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)External/Assmip/include;$(SolutionDir)External/ImGUI;$(SolutionDir)External/DirectXTex</IncludePath>
+    <IncludePath>$(SolutionDir)External/nlohmann;$(SolutionDir)External/Assmip/include;$(SolutionDir)External/ImGUI;$(SolutionDir)External/DirectXTex</IncludePath>
     <IntDir>$(SolutionDir)../Generated/Obj/$(ProjectName)/$(Configuration)/</IntDir>
     <OutDir>$(SolutionDir)../Generated/Outputs/$(ProjectName)/$(Configuration)/</OutDir>
     <LibraryPath>$(LibraryPath)</LibraryPath>
@@ -183,6 +183,7 @@
     <ClInclude Include="Application\SourceCode\Scene\LogoScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\SceneManager.h" />
     <ClInclude Include="Application\SourceCode\Scene\TitleScene.h" />
+    <ClInclude Include="External\nlohmann\json.hpp" />
     <ClInclude Include="NewEngine\Collision\Collider.h" />
     <ClInclude Include="NewEngine\Collision\Collision.h" />
     <ClInclude Include="NewEngine\Gui\GuiManager.h" />

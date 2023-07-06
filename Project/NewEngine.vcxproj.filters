@@ -142,6 +142,9 @@
     <Filter Include="NewEngine\Source\Object\Other\Model">
       <UniqueIdentifier>{7c8e69d5-a283-4d47-aea3-ce1813da0e12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="nlohmann">
+      <UniqueIdentifier>{4289d550-3e4c-461f-be76-0d871098ec96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -547,6 +550,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h">
       <Filter>NewEngine\Header\Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="External\nlohmann\json.hpp">
+      <Filter>nlohmann</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
