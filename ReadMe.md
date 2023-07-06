@@ -9,6 +9,11 @@
 **[Assimp](https://github.com/assimp/assimp)**
 等のライブラリもエンジン内に取り組んでいます。
 
+## ビルド
+**[NewEngine](https://github.com/KaiyouSon/NewEngine)**
+クローンもしくはzipをダウンロードする
+
+
 ## リファレンス
 
 **[NewEngine リファレンス](https://scrapbox.io/NewEngineNV-Reference/NewEngine_-_Reference)**
