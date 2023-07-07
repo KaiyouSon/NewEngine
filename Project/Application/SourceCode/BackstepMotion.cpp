@@ -28,53 +28,18 @@ void BackstepMotion::Update(HumanoidBody* human)
 		isPlay_ = true;
 	}
 
+	BaseUpdate(human);
+
 	if (isInit_ == false)
 	{
 		CurrentMotionInit(human);
 		isInit_ = true;
 	}
 	CurrentMotionUpdate(human);
-
-	/*if (step_ == 0)
-	{
-		if (isInit_ == false)
-		{
-			Step0Init(human);
-			isInit_ = true;
-		}
-		Step0Update(human);
-	}
-	else if (step_ == 1)
-	{
-		if (isInit_ == false)
-		{
-			Step1Init(human);
-			isInit_ = true;
-		}
-		Step1Update(human);
-	}
-	else if (step_ == 2)
-	{
-		if (isInit_ == false)
-		{
-			Step2Init(human);
-			isInit_ = true;
-		}
-		Step2Update(human);
-	}*/
 }
 
 void BackstepMotion::CurrentMotionInit(HumanoidBody* human)
 {
-	curRots_ = human->CalcCurRots();
-	MotionData current = motion_->data[step_];
-	for (uint32_t i = 0; i < current.endRots.size(); i++)
-	{
-		endRots_[i] = current.endRots[i];
-	}
-	ease_ = current.ease;
-
-
 	if (step_ == 0)
 	{
 		Step0Init(human);
@@ -90,12 +55,6 @@ void BackstepMotion::CurrentMotionInit(HumanoidBody* human)
 }
 void BackstepMotion::CurrentMotionUpdate(HumanoidBody* human)
 {
-	for (uint32_t i = (uint32_t)PartID::Body; i < curRots_.size(); i++)
-	{
-		human->GetPart((PartID)i)->rot = ease_.Interpolation(curRots_[i], endRots_[i]);
-	}
-	ease_.Update();
-
 	if (step_ == 0)
 	{
 		Step0Update(human);
@@ -123,7 +82,6 @@ void BackstepMotion::Step0Init(HumanoidBody* human)
 	// Œ»Ý‚ÌÀ•W‚ðŽæ“¾
 	startPos_ = human->pos;
 	endPos_ = startPos_ - human->frontVec.Norm() * length_;
-	curRots_ = human->CalcCurRots();
 
 	up_ = 1;
 	down_ = -0.5;
@@ -133,7 +91,6 @@ void BackstepMotion::Step0Update(HumanoidBody* human)
 	human->GetPart(PartID::Body)->pos.y = ease_.Interpolation(0.f, up_);
 	human->pos = moveEase_.InOut(startPos_, endPos_);
 	human->parent->moveVel = endPos_ - startPos_;
-
 
 	moveEase_.Update();
 
@@ -155,7 +112,7 @@ void BackstepMotion::Step1Init(HumanoidBody* human)
 
 
 	//Step1RotsInit(human);
-	curRots_ = human->CalcCurRots();
+
 }
 void BackstepMotion::Step1Update(HumanoidBody* human)
 {

@@ -13,7 +13,6 @@ private:
 	float up_;
 	float down_;
 
-	Motion* motion_;
 
 private:
 	void CurrentMotionInit(HumanoidBody* human);

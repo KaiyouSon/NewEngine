@@ -1,5 +1,6 @@
 #pragma once
 #include "NewEngine.h"
+#include "MotionManager.h"
 
 class HumanoidBody;
 
@@ -15,6 +16,10 @@ protected:
 
 	std::vector<Vec3> curRots_;
 	std::vector<Vec3> endRots_;
+	Motion* motion_;
+
+protected:
+	void BaseUpdate(HumanoidBody* human);
 
 public:
 	virtual void Init(HumanoidBody* human) = 0;
