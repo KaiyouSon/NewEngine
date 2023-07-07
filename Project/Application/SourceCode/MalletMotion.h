@@ -31,10 +31,11 @@ private:// ƒRƒ“ƒ{ 1 ` 4
 	// Œ»İ‚Ì‰ñ“]Šp‚ğæ“¾
 	void CalcCurrentRot(HumanoidBody* human);
 
+
 public:
 	MalletMotion();
-	void Init() override;
+	void Init(HumanoidBody* human) override;
 	void AttackMotion(HumanoidBody* human) override;
-
+	void HeavyAttackMotion(HumanoidBody* human) override;
 };
 

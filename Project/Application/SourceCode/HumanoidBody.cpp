@@ -53,15 +53,15 @@ void HumanoidBody::Init()
 void HumanoidBody::PrevUpdate()
 {
 	static bool flag = false;
-	if (Key::GetKeyDown(DIK_SPACE))
+	if (Key::GetKeyDown(DIK_1))
 	{
-		backstepMotion_->Init(this);
+		weapons_[0]->motion->Init(this);
 		flag = true;
 	}
 	if (flag == true)
 	{
-		backstepMotion_->Update(this);
-		if (backstepMotion_->GetisPlay() == false)
+		weapons_[0]->motion->HeavyAttackMotion(this);
+		if (weapons_[0]->motion->GetisPlay() == false)
 		{
 			flag = false;
 		}
@@ -258,7 +258,7 @@ void HumanoidBody::AttackMotion()
 			// ƒRƒ“ƒ{‚Å‚«‚é‚½‚ß
 			if (Pad::GetButtonDown(PadCode::ButtonR1))
 			{
-				weapons_[0]->motion->Init();
+				weapons_[0]->motion->Init(this);
 				weapons_[0]->motion->IncreComboCount();
 			}
 		}
@@ -388,7 +388,7 @@ void HumanoidBody::RollMotionInit()
 
 void HumanoidBody::AttackMotionInit(const uint32_t index)
 {
-	weapons_[index]->motion->Init();
+	weapons_[index]->motion->Init(this);
 	weapons_[index]->motion->ResetComboCount();
 }
 

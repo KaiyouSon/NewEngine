@@ -85,6 +85,7 @@ bool LoadManager::SoundLoad()
 bool LoadManager::MotionLoad()
 {
 	MotionManager::Load("BackstepMotion", "Backstep");
+	MotionManager::Load("Weapon/Mallet/HeavyAttackMotion", "MalletHeavyAttack");
 
 	return true;
 }

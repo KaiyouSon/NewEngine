@@ -15,7 +15,6 @@ Club::Club()
 
 void Club::Init()
 {
-	motion->Init();
 }
 
 void Club::Update(Transform* parent)

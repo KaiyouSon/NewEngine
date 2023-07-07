@@ -1,7 +1,7 @@
 # メモ
 
 ## 正面
-(-x,y,z)の時が正面
+(y,z,-x)の時が正面
 
 ## 回転角
 |Blender|NewEngine|

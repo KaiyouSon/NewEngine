@@ -4,10 +4,11 @@
 
 MalletMotion::MalletMotion()
 {
-	Init();
+	motions_.emplace_back(MotionManager::GetMotion("MalletHeavyAttack"));
+	motions_.emplace_back(MotionManager::GetMotion("MalletHeavyAttack"));
 }
 
-void MalletMotion::Init()
+void MalletMotion::Init(HumanoidBody* human)
 {
 	isPlay_ = false;
 	isInit_ = false;
@@ -15,8 +16,11 @@ void MalletMotion::Init()
 	isCalcCollider_ = false;
 	step_ = 0;
 	ease_.Reset();
-	startRots_.clear();
+	curRots_.clear();
 	comboMaxCount_ = 5;
+
+	curRots_.resize(human->GetPartsSize());
+	endRots_.resize(human->GetPartsSize());
 
 	// Ä¶I‚í‚Á‚½Žž‚Ì‰Šú‰»
 	if (comboCount_ > comboMaxCount_)
@@ -29,7 +33,7 @@ void MalletMotion::AttackMotion(HumanoidBody* human)
 {
 	if (isPlay_ == false)
 	{
-		Init();
+		Init(human);
 		isPlay_ = true;
 	}
 
@@ -64,6 +68,21 @@ void MalletMotion::AttackMotion(HumanoidBody* human)
 		Step2MotionUpdate(human);
 	}
 }
+void MalletMotion::HeavyAttackMotion(HumanoidBody* human)
+{
+	if (isPlay_ == false)
+	{
+		isPlay_ = true;
+	}
+	BaseUpdate(human, AttackType::Heavy);
+
+	//if (isInit_ == false)
+	//{
+	//	CurrentMotionInit(human);
+	//	isInit_ = true;
+	//}
+	//CurrentMotionUpdate(human);
+}
 
 // Žè‚ªŒã‚ë‚Éˆø‚­Žž
 void MalletMotion::Step0MotionInit(HumanoidBody* human)
@@ -80,10 +99,10 @@ void MalletMotion::Step0MotionInit(HumanoidBody* human)
 }
 void MalletMotion::Step0MotionUpdate(HumanoidBody* human)
 {
-	for (uint32_t i = (uint32_t)PartID::Head; i < startRots_.size(); i++)
+	for (uint32_t i = (uint32_t)PartID::Head; i < curRots_.size(); i++)
 	{
 		// Še•”ˆÊ‚±‚Æ‚Ì‰ñ“]‚ð•âŠÔ‚·‚é
-		human->GetPart((PartID)i)->rot = ease_.Out(startRots_[i], endRots_[i]);
+		human->GetPart((PartID)i)->rot = ease_.Out(curRots_[i], endRots_[i]);
 	}
 
 	// •âŠÔ
@@ -130,10 +149,10 @@ void MalletMotion::Step1MotionUpdate(HumanoidBody* human)
 	human->rot.y = ease_.InOut(startRotY_, endRotY_);
 	human->parent->moveVel = endPos - startPos_;
 
-	for (uint32_t i = (uint32_t)PartID::Head; i < startRots_.size(); i++)
+	for (uint32_t i = (uint32_t)PartID::Head; i < curRots_.size(); i++)
 	{
 		// Še•”ˆÊ‚±‚Æ‚Ì‰ñ“]‚ð•âŠÔ‚·‚é
-		human->GetPart((PartID)i)->rot = ease_.InOut(startRots_[i], endRots_[i]);
+		human->GetPart((PartID)i)->rot = ease_.InOut(curRots_[i], endRots_[i]);
 	}
 
 	// •âŠÔ
@@ -161,9 +180,9 @@ void MalletMotion::Step2MotionInit(HumanoidBody* human)
 }
 void MalletMotion::Step2MotionUpdate(HumanoidBody* human)
 {
-	for (uint32_t i = 0; i < startRots_.size(); i++)
+	for (uint32_t i = 0; i < curRots_.size(); i++)
 	{
-		human->GetPart((PartID)i)->rot = ease_.InOut(startRots_[i], endRots_[i]);
+		human->GetPart((PartID)i)->rot = ease_.InOut(curRots_[i], endRots_[i]);
 	}
 
 	// •âŠÔ
@@ -177,7 +196,7 @@ void MalletMotion::Step2MotionUpdate(HumanoidBody* human)
 		isInit_ = false;
 		isCanChangeMotion_ = false;
 
-		Init();
+		Init(human);
 	}
 }
 
@@ -244,7 +263,7 @@ void MalletMotion::ComboSetting()
 			ease_.SetPowNum(2);
 			ease_.Reset();
 
-			for (uint32_t i = 0; i < startRots_.size(); i++)
+			for (uint32_t i = 0; i < curRots_.size(); i++)
 			{
 				endRots_[i] = 0;
 			}
@@ -295,7 +314,7 @@ void MalletMotion::ComboSetting()
 			ease_.SetPowNum(2);
 			ease_.Reset();
 
-			for (uint32_t i = 0; i < startRots_.size(); i++)
+			for (uint32_t i = 0; i < curRots_.size(); i++)
 			{
 				endRots_[i] = 0;
 			}
@@ -306,10 +325,10 @@ void MalletMotion::ComboSetting()
 // Œ»Ý‚Ì‰ñ“]Šp‚ðŽæ“¾
 void MalletMotion::CalcCurrentRot(HumanoidBody* human)
 {
-	startRots_.resize(human->GetPartsSize());
+	curRots_.resize(human->GetPartsSize());
 	endRots_.resize(human->GetPartsSize());
 	for (uint32_t i = 0; i < human->GetPartsSize(); i++)
 	{
-		startRots_[i] = human->GetPart((PartID)i)->rot;
+		curRots_[i] = human->GetPart((PartID)i)->rot;
 	}
 }
