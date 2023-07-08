@@ -444,6 +444,9 @@
     <ClCompile Include="Application\SourceCode\MotionManager.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\TitleUI.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -742,6 +745,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\MotionManager.h">
       <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\TitleUI.h">
+      <Filter>Application\Header\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

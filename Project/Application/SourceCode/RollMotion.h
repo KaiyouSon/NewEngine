@@ -10,23 +10,17 @@ private:
 	float length_;
 
 private:
+	void CurrentStepInit(HumanoidBody* human);
+	void CurrentStepUpdate(HumanoidBody* human);
+
 	void Step0Init(HumanoidBody* human);
-	void Step0RotsInit(HumanoidBody* human);
 	void Step0Update(HumanoidBody* human);
-
-	void Step1Init(HumanoidBody* human);
-	void Step1RotsInit(HumanoidBody* human);
 	void Step1Update(HumanoidBody* human);
-
-	void Step2Init(HumanoidBody* human);
-	void Step2RotsInit(HumanoidBody* human);
 	void Step2Update(HumanoidBody* human);
-
-	void Step3Init(HumanoidBody* human);
-	void Step3RotsInit(HumanoidBody* human);
 	void Step3Update(HumanoidBody* human);
 
 public:
+	RollMotion();
 	void Init(HumanoidBody* human) override;
 	void Update(HumanoidBody* human) override;
 

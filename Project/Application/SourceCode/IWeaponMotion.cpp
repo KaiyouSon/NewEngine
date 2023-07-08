@@ -1,13 +1,13 @@
 #include "IWeaponMotion.h"
 #include "HumanoidBody.h"
 
-void IWeaponMotion::BaseUpdate(HumanoidBody* human, const AttackType type)
+void IWeaponMotion::BaseInit(HumanoidBody* human, const uint32_t index)
 {
 	if (isInit_ == false)
 	{
 		// Œ»“_‚Ìƒ‚[ƒVƒ‡ƒ“‚Ì‰Šú‰»
 		curRots_ = human->CalcCurRots();
-		MotionData current = motions_[(uint32_t)type]->data[step_];
+		MotionData current = motions_[(uint32_t)index]->data[step_];
 		for (uint32_t i = 0; i < current.endRots.size(); i++)
 		{
 			endRots_[i] = current.endRots[i];
@@ -15,18 +15,27 @@ void IWeaponMotion::BaseUpdate(HumanoidBody* human, const AttackType type)
 		ease_ = current.ease;
 		isInit_ = true;
 	}
+}
+
+void IWeaponMotion::BaseUpdate(HumanoidBody* human, const uint32_t index)
+{
 	for (uint32_t i = (uint32_t)PartID::Body; i < curRots_.size(); i++)
 	{
 		human->GetPart((PartID)i)->rot = ease_.Interpolation(curRots_[i], endRots_[i]);
 	}
-	ease_.Update();
 
 	if (ease_.GetisEnd() == true)
 	{
 		step_++;
-		if (step_ >= motions_[(uint32_t)type]->data.size())
+		//if (step_ == 1)
+		//{
+		//	step_ = 10;
+		//}
+
+		if (step_ >= motions_[(uint32_t)index]->data.size())
 		{
 			step_ = 0;
+			isPlay_ = false;
 		}
 		isInit_ = false;
 		ease_.Reset();

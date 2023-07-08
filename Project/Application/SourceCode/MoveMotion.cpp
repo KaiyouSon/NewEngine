@@ -79,7 +79,6 @@ void MoveMotion::RunMotion(HumanoidBody* human)
 	{
 		// äeïîà ÇÃäpìxÇÃèâä˙âª
 		RunInit(human);
-
 		isPlay_ = true;
 	}
 
@@ -130,7 +129,7 @@ void MoveMotion::Step0Init(HumanoidBody* human)
 }
 void MoveMotion::Step0Update(HumanoidBody* human)
 {
-	for (uint32_t i = (uint32_t)PartID::Head; i < startRots_.size(); i++)
+	for (uint32_t i = (uint32_t)PartID::Body; i < startRots_.size(); i++)
 	{
 		human->GetPart((PartID)i)->rot = ease_.InOut(curRots_[i], startRots_[i]);
 	}
@@ -162,7 +161,7 @@ void MoveMotion::Step1Init(HumanoidBody* human)
 }
 void MoveMotion::Step1Update(HumanoidBody* human)
 {
-	for (uint32_t i = (uint32_t)PartID::Head; i < startRots_.size(); i++)
+	for (uint32_t i = (uint32_t)PartID::Body; i < startRots_.size(); i++)
 	{
 		human->GetPart((PartID)i)->rot = ease_.InOut(startRots_[i], endRots_[i]);
 	}
@@ -197,7 +196,7 @@ void MoveMotion::Step2Init(HumanoidBody* human)
 }
 void MoveMotion::Step2Update(HumanoidBody* human)
 {
-	for (uint32_t i = (uint32_t)PartID::Head; i < startRots_.size(); i++)
+	for (uint32_t i = (uint32_t)PartID::Body; i < startRots_.size(); i++)
 	{
 		human->GetPart((PartID)i)->rot = ease_.InOut(curRots_[i], 0);
 	}
@@ -228,7 +227,7 @@ void MoveMotion::Step3Init(HumanoidBody* human)
 }
 void MoveMotion::Step3Update(HumanoidBody* human)
 {
-	for (uint32_t i = (uint32_t)PartID::Head; i < endRots_.size(); i++)
+	for (uint32_t i = (uint32_t)PartID::Body; i < endRots_.size(); i++)
 	{
 		human->GetPart((PartID)i)->rot = ease_.Lerp(curRots_[i], endRots_[i]);
 	}

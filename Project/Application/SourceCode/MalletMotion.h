@@ -5,7 +5,6 @@
 class MalletMotion : public IWeaponMotion
 {
 private:
-	Vec3 prevPos_;
 	Vec3 startPos_;
 	float startRotY_;
 	float endRotY_;
@@ -13,29 +12,24 @@ private:
 
 private:// ƒRƒ“ƒ{ 1 ` 4
 
-	// è‚ªŒã‚ë‚Éˆø‚­
-	void Step0MotionInit(HumanoidBody* human);
-	void Step0MotionUpdate(HumanoidBody* human);
+	void CurrentStepInit(HumanoidBody* human);
+	void CurrentStepUpdate(HumanoidBody* human);
 
-	// è‚ª‘O‚É“|‚·iUŒ‚‚·‚é‚Æ‚«j
-	void Step1MotionInit(HumanoidBody* human);
-	void Step1MotionUpdate(HumanoidBody* human);
+	// ãUŒ‚
+	void WeakStep1Init(HumanoidBody* human);
+	void WeakStep1Update(HumanoidBody* human);
+	void WeakStep2Update(HumanoidBody* human);
 
-	// ‘Ò‹@‚É–ß‚é
-	void Step2MotionInit(HumanoidBody* human);
-	void Step2MotionUpdate(HumanoidBody* human);
-
-	// ŠeƒRƒ“ƒ{‚Ìİ’è
-	void ComboSetting();
-
-	// Œ»İ‚Ì‰ñ“]Šp‚ğæ“¾
-	void CalcCurrentRot(HumanoidBody* human);
+	// ‹­UŒ‚
+	void HeavyStep1Update(HumanoidBody* human);
+	void HeavyStep2Init(HumanoidBody* human);
+	void HeavyStep2Update(HumanoidBody* human);
 
 
 public:
 	MalletMotion();
 	void Init(HumanoidBody* human) override;
-	void AttackMotion(HumanoidBody* human) override;
-	void HeavyAttackMotion(HumanoidBody* human) override;
+	void WeakMotion(HumanoidBody* human) override;
+	void HeavyMotion(HumanoidBody* human) override;
 };
 

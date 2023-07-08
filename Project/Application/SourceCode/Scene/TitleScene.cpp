@@ -1,14 +1,23 @@
 #include "TitleScene.h"
+#include "GameScene.h"
 
 void TitleScene::Init()
 {
 	Camera::current.pos = { 0,10,-10 };
 	Camera::current.rot = { Radian(45),0,0 };
+
+	titleUI_ = std::make_unique<TitleUI>();
+	titleUI_->Init();
 }
 
 void TitleScene::Update()
 {
-	Camera::DebugCameraUpdate();
+	titleUI_->Update();
+
+	if (Pad::GetButtonDown(PadCode::ButtonA))
+	{
+		SceneManager::ChangeScene<GameScene>();
+	}
 }
 
 void TitleScene::RenderTextureSetting()
@@ -29,6 +38,7 @@ void TitleScene::DrawModel()
 
 void TitleScene::DrawFrontSprite()
 {
+	titleUI_->DrawFrontSprite();
 }
 
 void TitleScene::DrawDebugGui()

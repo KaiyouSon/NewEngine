@@ -28,32 +28,27 @@ void BackstepMotion::Update(HumanoidBody* human)
 		isPlay_ = true;
 	}
 
-	BaseUpdate(human);
+	ease_.Update();
 
 	if (isInit_ == false)
 	{
-		CurrentMotionInit(human);
+		BaseInit(human);
+		CurrentStepInit(human);
 		isInit_ = true;
 	}
-	CurrentMotionUpdate(human);
+	BasePrevUpdate(human);
+	CurrentStepUpdate(human);
+	BasePostUpdate(human);
 }
 
-void BackstepMotion::CurrentMotionInit(HumanoidBody* human)
+void BackstepMotion::CurrentStepInit(HumanoidBody* human)
 {
 	if (step_ == 0)
 	{
 		Step0Init(human);
 	}
-	else if (step_ == 1)
-	{
-		Step1Init(human);
-	}
-	else if (step_ == 2)
-	{
-		Step2Init(human);
-	}
 }
-void BackstepMotion::CurrentMotionUpdate(HumanoidBody* human)
+void BackstepMotion::CurrentStepUpdate(HumanoidBody* human)
 {
 	if (step_ == 0)
 	{
@@ -96,23 +91,7 @@ void BackstepMotion::Step0Update(HumanoidBody* human)
 
 	if (ease_.GetisEnd() == true)
 	{
-		step_ = 1;
-		isInit_ = false;
 	}
-}
-
-void BackstepMotion::Step1Init(HumanoidBody* human)
-{
-	//ease_.SetEaseTimer(10);
-	//ease_.SetPowNum(2);
-	//
-
-	endPos_ = startPos_ - human->frontVec.Norm() * length_;
-
-
-
-	//Step1RotsInit(human);
-
 }
 void BackstepMotion::Step1Update(HumanoidBody* human)
 {
@@ -120,20 +99,12 @@ void BackstepMotion::Step1Update(HumanoidBody* human)
 	human->pos = moveEase_.InOut(startPos_, endPos_);
 	human->parent->moveVel = endPos_ - startPos_;
 
-
 	moveEase_.Update();
 
 	if (ease_.GetisEnd() == true)
 	{
-		step_ = 2;
-		isInit_ = false;
 		isCanChangeMotion_ = true;
-
 	}
-}
-
-void BackstepMotion::Step2Init(HumanoidBody* human)
-{
 }
 void BackstepMotion::Step2Update(HumanoidBody* human)
 {
@@ -141,9 +112,6 @@ void BackstepMotion::Step2Update(HumanoidBody* human)
 
 	if (ease_.GetisEnd() == true)
 	{
-		step_ = 0;
-		isInit_ = false;
-		isPlay_ = false;
 		isCanChangeMotion_ = false;
 	}
 }

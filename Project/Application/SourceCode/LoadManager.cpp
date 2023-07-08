@@ -29,46 +29,16 @@ bool LoadManager::ModelLoad()
 bool LoadManager::TextureLoad()
 {
 	TextureManager::CreateTexture(Color::white, "White");
+	TextureManager::CreateDepthTexture(Vec2(1920, 1080));
 
-	TextureManager::LoadTexture("pic.png", "pic");
-	TextureManager::LoadTexture("BackGround.png", "BackGround");
+	// タイトル
+	TextureManager::LoadTexture("Title/GameTitle.png", "GameTitle");
+	TextureManager::LoadTexture("Title/PressButton.png", "PressButton");
+
+
 	TextureManager::LoadTexture("Gauge.png", "Gauge");
 
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 2, "Task");
 
-	// 高輝度抽出
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "HighLumi");
-
-	// 背景
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BackGround");
-
-	// ドッドフィルター
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "DotFilter");
-
-	// ビネット
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Vignette");
-
-	// ブルーム
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BGaussainBlur");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
-
-	// ガウシアンブラー
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "GaussianBlur");
-
-	// グレア
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "GLineBlur");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Glare1");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Glare2");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Glare3");
-
-	// 被写界深度
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "DOF");
-
-	// ラジアルブラー
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "RadialBlur");
-
-
-	TextureManager::CreateDepthTexture(Vec2(1920, 1080));
 
 	// 処理が終わったのを教えるため、必ずtrueを返す
 	return true;
@@ -85,6 +55,10 @@ bool LoadManager::SoundLoad()
 bool LoadManager::MotionLoad()
 {
 	MotionManager::Load("BackstepMotion", "Backstep");
+	MotionManager::Load("RollMotion", "Roll");
+	MotionManager::Load("Weapon/Mallet/WeakAttackMotion1", "MalletWeakAttack1");
+	MotionManager::Load("Weapon/Mallet/WeakAttackMotion2", "MalletWeakAttack2");
+	MotionManager::Load("Weapon/Mallet/WeakAttackMotion3", "MalletWeakAttack3");
 	MotionManager::Load("Weapon/Mallet/HeavyAttackMotion", "MalletHeavyAttack");
 
 	return true;

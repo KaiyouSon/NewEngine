@@ -27,6 +27,7 @@ public: // セッター
 	// N乗をセットする
 	inline void SetPowNum(const float powNum) { powNum_ = powNum; }
 	inline void SetEaseType(const EaseType easeType) { easeType_ = easeType; }
+	inline void SetisEnd(const bool isEnd) { isEnd_ = isEnd; }
 
 public: // ゲッター
 

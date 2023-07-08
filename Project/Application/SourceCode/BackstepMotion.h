@@ -15,16 +15,12 @@ private:
 
 
 private:
-	void CurrentMotionInit(HumanoidBody* human);
-	void CurrentMotionUpdate(HumanoidBody* human);
+	void CurrentStepInit(HumanoidBody* human);
+	void CurrentStepUpdate(HumanoidBody* human);
 
 	void Step0Init(HumanoidBody* human);
 	void Step0Update(HumanoidBody* human);
-
-	void Step1Init(HumanoidBody* human);
 	void Step1Update(HumanoidBody* human);
-
-	void Step2Init(HumanoidBody* human);
 	void Step2Update(HumanoidBody* human);
 
 public:

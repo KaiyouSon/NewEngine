@@ -156,6 +156,7 @@ void Player::JoggingUpdate()
 		if (pushTimer.GetisTimeOut() == false)
 		{
 			state_ = State::Roll;
+			player_->RollMotionInit();
 			player_->ChangeMoveMotionInit();
 		}
 		pushTimer.Reset();
@@ -193,6 +194,7 @@ void Player::BackstepUpdate()
 		else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 		{
 			player_->BackstepMotionInit();
+			player_->ChangeMoveMotionInit();
 
 			if (Pad::GetButton(PadCode::ButtonB))
 			{
@@ -222,12 +224,22 @@ void Player::RollUpdate()
 		}
 		else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 		{
-			player_->RollMotionInit();
-			state_ = State::Jogging;
+			if (Pad::GetButtonDown(PadCode::ButtonB))
+			{
+				state_ = State::Roll;
+				player_->RollMotionInit();
+			}
+			else
+			{
+				state_ = State::Jogging;
+				player_->RollMotionInit();
+			}
 		}
 	}
-	else if (player_->GetisPlayRollMotion() == false)
+
+	if (player_->GetisPlayRollMotion() == false)
 	{
+		player_->RollMotionInit();
 		state_ = State::Idle;
 	}
 }

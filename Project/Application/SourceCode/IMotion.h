@@ -19,7 +19,9 @@ protected:
 	Motion* motion_;
 
 protected:
-	void BaseUpdate(HumanoidBody* human);
+	void BaseInit(HumanoidBody* human);
+	void BasePrevUpdate(HumanoidBody* human);
+	void BasePostUpdate(HumanoidBody* human);
 
 public:
 	virtual void Init(HumanoidBody* human) = 0;

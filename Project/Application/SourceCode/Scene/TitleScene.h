@@ -1,9 +1,11 @@
 #pragma once
 #include "NewEngine.h"
+#include "TitleUI.h"
 
 class TitleScene : public IScene
 {
 private:
+	std::unique_ptr<TitleUI> titleUI_;
 
 public:
 	void Init() override;

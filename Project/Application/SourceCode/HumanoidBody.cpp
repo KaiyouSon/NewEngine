@@ -53,14 +53,14 @@ void HumanoidBody::Init()
 void HumanoidBody::PrevUpdate()
 {
 	static bool flag = false;
-	if (Key::GetKeyDown(DIK_1))
+	if (Key::GetKeyDown(DIK_F5))
 	{
 		weapons_[0]->motion->Init(this);
 		flag = true;
 	}
 	if (flag == true)
 	{
-		weapons_[0]->motion->HeavyAttackMotion(this);
+		weapons_[0]->motion->HeavyMotion(this);
 		if (weapons_[0]->motion->GetisPlay() == false)
 		{
 			flag = false;
@@ -264,7 +264,7 @@ void HumanoidBody::AttackMotion()
 		}
 	}
 
-	weapons_[0]->motion->AttackMotion(this);
+	weapons_[0]->motion->WeakMotion(this);
 }
 
 void HumanoidBody::BackstepMotionUpdate()
@@ -339,6 +339,9 @@ void HumanoidBody::SetWeapon(Weapon* weapon, const uint32_t index)
 	weapons_[index] = weapon;
 	weapons_[index]->weapon->pos.y = -1.5f;
 	weapons_[index]->weapon->rot.x = Radian(90);
+
+	weapons_[index]->motion->Init(this);
+	weapons_[index]->motion->ResetComboCount();
 }
 
 bool HumanoidBody::GetisPlayMoveMotion()

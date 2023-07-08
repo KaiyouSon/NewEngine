@@ -137,6 +137,7 @@
     <ClCompile Include="Application\SourceCode\Scene\TestScene.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\TitleScene.cpp" />
     <ClCompile Include="Application\SourceCode\Task.cpp" />
+    <ClCompile Include="Application\SourceCode\TitleUI.cpp" />
     <ClCompile Include="Application\SourceCode\UIManager.cpp" />
     <ClCompile Include="Application\SourceCode\Vignette.cpp" />
     <ClCompile Include="Application\SourceCode\Weapon.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="Application\SourceCode\Scene\TestScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\TitleScene.h" />
     <ClInclude Include="Application\SourceCode\Task.h" />
+    <ClInclude Include="Application\SourceCode\TitleUI.h" />
     <ClInclude Include="Application\SourceCode\UIManager.h" />
     <ClInclude Include="Application\SourceCode\Vignette.h" />
     <ClInclude Include="Application\SourceCode\Weapon.h" />

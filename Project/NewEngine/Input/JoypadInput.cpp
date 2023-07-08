@@ -359,15 +359,27 @@ Vec3 JoypadInput::GetStickVec3(const PadCode padCode, const float length, const 
 #pragma region トリガー関連
 
 // トリガーを押したる間
-float JoypadInput::GetTrigger(const PadCode padCode, const int sPadIndex_)
+float JoypadInput::GetTrigger(const PadCode padCode, const float length, const int sPadIndex_)
 {
+	// 接続しているか
+	if (GetisLinkPad() == false) return 0;
+
+	float trigger = 0;
 	if (padCode == PadCode::LeftTrigger)
 	{
-		return (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ;
+		trigger = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ;
+		if (trigger > length)
+		{
+			return trigger;
+		}
 	}
 	else if (padCode == PadCode::RightTrigger)
 	{
-		return -(float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ;
+		trigger = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ;
+		if (trigger < -length)
+		{
+			return trigger;
+		}
 	}
 
 	return 0;

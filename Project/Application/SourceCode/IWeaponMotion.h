@@ -24,15 +24,17 @@ protected:
 	std::vector<Vec3> curRots_;
 	std::vector<Vec3> endRots_;
 	std::vector<Motion*> motions_;
+	AttackType attackType_;
 
 protected:
-	void BaseUpdate(HumanoidBody* human, const AttackType type);
+	void BaseInit(HumanoidBody* human, const uint32_t index);
+	void BaseUpdate(HumanoidBody* human, const uint32_t index);
 
 public:
 	virtual ~IWeaponMotion() {}
 	virtual void Init(HumanoidBody* human) = 0;
-	virtual void AttackMotion(HumanoidBody* human) = 0;
-	virtual void HeavyAttackMotion(HumanoidBody* human) = 0;
+	virtual void WeakMotion(HumanoidBody* human) = 0;
+	virtual void HeavyMotion(HumanoidBody* human) = 0;
 
 public:
 	void IncreComboCount();
