@@ -1,5 +1,6 @@
 #include "TitleScene.h"
 #include "GameScene.h"
+#include "SceneChanger.h"
 
 void TitleScene::Init()
 {
@@ -16,7 +17,21 @@ void TitleScene::Update()
 
 	if (Pad::GetAnyButtonDown())
 	{
-		SceneManager::ChangeScene<GameScene>();
+		titleUI_->SetisAfterImage(true);
+	}
+
+	if (titleUI_->GetisEnd() == true)
+	{
+		if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
+		{
+			SceneChanger::GetInstance()->StartSceneChange();
+		}
+
+		if (SceneChanger::GetInstance()->GetisChange() == true)
+		{
+			SceneManager::ChangeScene<GameScene>();
+			SceneChanger::GetInstance()->SetisChange(false);
+		}
 	}
 }
 

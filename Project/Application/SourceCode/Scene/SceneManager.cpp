@@ -1,4 +1,5 @@
 #include "SceneManager.h"
+#include "SceneChanger.h"
 #include "TestScene.h"
 #include "TitleScene.h"
 #include "GameScene.h"
@@ -22,7 +23,7 @@ SceneManager::SceneManager()
 	DOF::CreateGraphicsPipeline();
 	RadialBlur::CreateGraphicsPipeline();
 	Vignette::CreateGraphicsPipeline();
-	currentScene = std::move(std::make_unique<GameScene>());
+	currentScene = std::move(std::make_unique<TitleScene>());
 }
 
 SceneManager::~SceneManager()
@@ -38,6 +39,7 @@ void SceneManager::Update()
 {
 	currentScene->Update();
 	Camera::current.Update();
+	SceneChanger::GetInstance()->Update();
 }
 
 void SceneManager::RenderTextureSetting()
@@ -58,6 +60,7 @@ void SceneManager::DrawModel()
 void SceneManager::DrawFrontSprite()
 {
 	currentScene->DrawFrontSprite();
+	SceneChanger::GetInstance()->Draw();
 
 #ifdef _DEBUG
 #endif

@@ -34,6 +34,7 @@ bool LoadManager::TextureLoad()
 	// ƒ^ƒCƒgƒ‹
 	TextureManager::LoadTexture("Title/GameTitle.png", "GameTitle");
 	TextureManager::LoadTexture("Title/PressButton.png", "PressButton");
+	TextureManager::LoadTexture("Title/PressButtonBack.png", "PressButtonBack");
 
 
 	TextureManager::LoadTexture("Gauge.png", "Gauge");

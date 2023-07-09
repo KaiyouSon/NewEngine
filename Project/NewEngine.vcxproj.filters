@@ -447,6 +447,9 @@
     <ClCompile Include="Application\SourceCode\TitleUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\Scene\SceneChanger.cpp">
+      <Filter>Application\Source\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -748,6 +751,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\TitleUI.h">
       <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Scene\SceneChanger.h">
+      <Filter>Application\Header\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
