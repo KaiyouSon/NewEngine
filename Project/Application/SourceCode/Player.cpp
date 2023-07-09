@@ -219,8 +219,8 @@ void Player::RollUpdate()
 	{
 		if (Pad::GetButtonDown(PadCode::ButtonB))
 		{
-			player_->RollMotionInit();
 			state_ = State::Backstep;
+			player_->RollMotionInit();
 		}
 		else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 		{
@@ -239,8 +239,11 @@ void Player::RollUpdate()
 
 	if (player_->GetisPlayRollMotion() == false)
 	{
-		player_->RollMotionInit();
-		state_ = State::Idle;
+		if (state_ == State::Roll)
+		{
+			state_ = State::Idle;
+			player_->RollMotionInit();
+		}
 	}
 }
 void Player::AttackR1Update()

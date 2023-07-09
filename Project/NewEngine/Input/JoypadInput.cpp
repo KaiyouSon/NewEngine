@@ -3,7 +3,6 @@
 #include "RenderWindow.h"
 #include <cassert>
 #include <dbt.h>
-#pragma comment(lib, "xinput.lib")
 
 #pragma region 静的メンバ変数
 
@@ -227,6 +226,27 @@ bool JoypadInput::GetButtonUp(const PadCode padCode, const int sPadIndex_)
 
 	return !(GetInstance()->joypadObjs_[sPadIndex_].padInput.rgbButtons[(int)codo] & 0x80) &&
 		(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgbButtons[(int)codo] & 0x80);
+}
+
+// 何かのボタンを押した瞬間
+bool JoypadInput::GetAnyButtonDown(const int padIndex)
+{
+	// 接続しているか
+	if (GetisLinkPad() == false) return false;
+
+	// ボタンの状態を更新
+	for (uint32_t i = 0; i < 16; ++i)
+	{
+		bool down = (GetInstance()->joypadObjs_[padIndex].padInput.rgbButtons[i] & 0x80);
+		bool up = !(GetInstance()->joypadObjs_[padIndex].prevPadInput.rgbButtons[i] & 0x80);
+
+		if (down == true && up == true)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 #pragma endregion

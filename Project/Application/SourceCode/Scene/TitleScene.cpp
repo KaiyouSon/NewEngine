@@ -14,7 +14,7 @@ void TitleScene::Update()
 {
 	titleUI_->Update();
 
-	if (Pad::GetButtonDown(PadCode::ButtonA))
+	if (Pad::GetAnyButtonDown())
 	{
 		SceneManager::ChangeScene<GameScene>();
 	}
