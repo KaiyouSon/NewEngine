@@ -4,7 +4,8 @@
 
 Player::Player() :
 	player_(std::make_unique<HumanoidBody>()),
-	weapon_(std::make_unique<Club>())
+	weapon_(std::make_unique<Club>()),
+	frontVec_(Vec3::front)
 {
 }
 
@@ -14,7 +15,7 @@ void Player::Init()
 	player_->Init();
 	player_->pos.y = 4.5f;
 
-	player_->SetWeapon(weapon_.get(), 0);
+	player_->SetWeapon(weapon_.get(), WeaponPartID::Right);
 	player_->parent = this;
 
 	joggingSpeed_ = 0.7f;
@@ -36,6 +37,7 @@ void Player::PrevUpdate()
 		&Player::BackstepUpdate,
 		&Player::RollUpdate,
 		&Player::AttackR1Update,
+		&Player::AttackR2Update,
 	};
 
 	// 実行
@@ -59,11 +61,44 @@ void Player::DrawDebugGui()
 	player_->DrawDebugGui();
 }
 
+// コライダー関連
+void Player::CalcFrontVec()
+{
+	// カメラの前ベクトル
+	Vec3 cameForward = player_->pos - Camera::current.pos;
+	cameForward.y = 0.f;
+
+	// カメラの右ベクトル
+	Vec3 cameRight = Vec3::Cross(cameForward, Vec3::up);
+
+	Vec3 stick =
+	{
+		Pad::GetStick(PadCode::LeftStick, 300).x,
+		0,
+		Pad::GetStick(PadCode::LeftStick, 300).y,
+	};
+	if (stick != 0)
+	{
+		Vec3 stickMoveVec = 0;
+
+		stickMoveVec.x = -stick.Norm().x;
+		stickMoveVec.z = -stick.Norm().z;
+
+		frontVec_ = cameForward * stickMoveVec.z + cameRight * stickMoveVec.x;
+	}
+}
 void Player::CalcBodyCollider()
 {
-	player_->ColliderUpdate();
+	ColliderUpdate();
+}
+void Player::ColliderUpdate()
+{
+	bodyCollider_.startPos = player_->pos - Vec3(0.f, 2.5f, 0.f);
+	bodyCollider_.endPos = player_->pos + Vec3(0.f, 2.5f, 0.f);
+	bodyCollider_.radius = 2.5f;
 }
 
+// ゲージ関連
 void Player::GaugeParamInit()
 {
 	// HPゲージ
@@ -88,16 +123,17 @@ void Player::GaugeParamUpdate()
 	}
 }
 
+// ステート関連
 void Player::MoveUpdate()
 {
-	player_->CalcFrontVec();
+	CalcFrontVec();
 
-	if (player_->frontVec != 0)
+	if (frontVec_ != 0)
 	{
-		moveVel = player_->frontVec.Norm() * moveSpeed_;
+		moveVel = frontVec_.Norm() * moveSpeed_;
 
 		player_->pos += moveVel;
-		player_->rot.y = atan2f(player_->frontVec.x, player_->frontVec.z);
+		player_->rot.y = atan2f(frontVec_.x, frontVec_.z);
 	}
 }
 void Player::IdleUpdate()
@@ -107,6 +143,14 @@ void Player::IdleUpdate()
 	if (Pad::GetButtonDown(PadCode::ButtonR1))
 	{
 		state_ = State::AttackR1;
+	}
+	else if (Pad::GetTrigger(PadCode::RightTrigger))
+	{
+		state_ = State::AttackR2;
+	}
+	else if (Pad::GetButtonDown(PadCode::ButtonB))
+	{
+		state_ = State::Backstep;
 	}
 	else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 	{
@@ -119,10 +163,6 @@ void Player::IdleUpdate()
 			state_ = State::Jogging;
 		}
 	}
-	else if (Pad::GetButtonDown(PadCode::ButtonB))
-	{
-		state_ = State::Backstep;
-	}
 }
 void Player::JoggingUpdate()
 {
@@ -133,6 +173,10 @@ void Player::JoggingUpdate()
 	if (Pad::GetButtonDown(PadCode::ButtonR1))
 	{
 		state_ = State::AttackR1;
+	}
+	else if (Pad::GetTrigger(PadCode::RightTrigger))
+	{
+		state_ = State::AttackR2;
 	}
 	else if (Pad::GetButton(PadCode::ButtonB))
 	{
@@ -248,29 +292,72 @@ void Player::RollUpdate()
 }
 void Player::AttackR1Update()
 {
-	player_->AttackMotion();
+	player_->AttackR1MotionUpdate();
 
 	if (Pad::GetButtonDown(PadCode::ButtonB))
 	{
-		if (player_->GetisAttackMotionCanChange(0) == true)
+		if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 		{
 			player_->AttackMotionInit(0);
-			state_ = State::Backstep;
+			state_ = State::Roll;
+		}
+		else
+		{
+			if (player_->GetisAttackMotionCanChange(0) == true)
+			{
+				player_->AttackMotionInit(0);
+				state_ = State::Backstep;
+			}
 		}
 	}
-	else if (player_->GetisPlayAttackMotion(0) == false)
+
+	if (player_->GetisPlayAttackMotion(0) == false)
 	{
-		player_->AttackMotionInit(0);
-		state_ = State::Idle;
+		if (state_ == State::AttackR1)
+		{
+			player_->AttackMotionInit(0);
+			state_ = State::Idle;
+		}
+	}
+}
+void Player::AttackR2Update()
+{
+	player_->AttackR2MotionUpdate();
+
+	if (Pad::GetButtonDown(PadCode::ButtonB))
+	{
+		if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
+		{
+			player_->AttackMotionInit(0);
+			state_ = State::Roll;
+		}
+		else
+		{
+			if (player_->GetisAttackMotionCanChange(0) == true)
+			{
+				player_->AttackMotionInit(0);
+				state_ = State::Backstep;
+			}
+		}
 	}
 
+	if (player_->GetisPlayAttackMotion(0) == false)
+	{
+		if (state_ == State::AttackR2)
+		{
+			player_->AttackMotionInit(0);
+			state_ = State::Idle;
+		}
+	}
 }
 
+// セッター
 void Player::SetPos(const Vec3 pos)
 {
 	player_->pos = pos;
 }
 
+// ゲッター
 GaugeParam Player::GetGaugeParam(const uint32_t index)
 {
 	return gaugePrames_[index];
@@ -301,9 +388,13 @@ Vec3 Player::GetMoveVel()
 }
 Vec3 Player::GetFrontVec()
 {
-	return player_->frontVec;
+	return frontVec_;
 }
 Player::State Player::GetState()
 {
 	return state_;
+}
+CapsuleCollider Player::GetBodyCollider()
+{
+	return bodyCollider_;
 }

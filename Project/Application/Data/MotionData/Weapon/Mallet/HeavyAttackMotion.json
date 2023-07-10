@@ -25,7 +25,7 @@
                 "step": 0,
                 "ease_type": "In",
                 "ease_pow": 2,
-                "ease_time": 30
+                "ease_time": 20
             },
             "children": [
                 {

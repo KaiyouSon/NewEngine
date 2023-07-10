@@ -36,10 +36,7 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Title/PressButton.png", "PressButton");
 	TextureManager::LoadTexture("Title/PressButtonBack.png", "PressButtonBack");
 
-
 	TextureManager::LoadTexture("Gauge.png", "Gauge");
-
-
 
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
 	return true;
@@ -61,6 +58,8 @@ bool LoadManager::MotionLoad()
 	MotionManager::Load("Weapon/Mallet/WeakAttackMotion2", "MalletWeakAttack2");
 	MotionManager::Load("Weapon/Mallet/WeakAttackMotion3", "MalletWeakAttack3");
 	MotionManager::Load("Weapon/Mallet/HeavyAttackMotion", "MalletHeavyAttack");
+	MotionManager::Load("Weapon/Mallet/BackAttackMotion", "MalletBackAttack");
+	MotionManager::Load("Weapon/Mallet/RollAttackMotion", "MalletRollAttack");
 
 	return true;
 }

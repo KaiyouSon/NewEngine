@@ -31,7 +31,7 @@ void SceneChanger::Update()
 
 	if (changeStep_ == ChangeStep::In)
 	{
-		sprite->color.a = moveEase.In(0, 255);
+		sprite->color.a = moveEase.Lerp(0, 255);
 		moveEase.Update();
 		if (moveEase.GetisEnd() == true)
 		{

@@ -8,6 +8,7 @@ private:
 	Vec3 startPos_;
 	Vec3 endPos_;
 	float length_;
+	float rotY_;
 
 private:
 	void CurrentStepInit(HumanoidBody* human);

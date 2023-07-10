@@ -17,14 +17,14 @@ void CollisionManager::PlayerHitBoss()
 
 	bool isBodyTouch =
 		Collision::CapsuleHitCapsule(
-			player_->GetHumanoidBody()->GetBodyCollider(),
+			player_->GetBodyCollider(),
 			boss_->GetCollider());
 
 	if (isBodyTouch == true)
 	{
 		// ”¼Œa‚ð‘«‚µ‚ÄŽÀÛ‚Ì’·‚³‚ð‹‚ß‚é
 		float checkLength =
-			player_->GetHumanoidBody()->GetBodyCollider().radius +
+			player_->GetBodyCollider().radius +
 			boss_->GetCollider().radius;
 
 		// yŽ²‚ð–³Ž‹‚·‚é
@@ -92,7 +92,7 @@ float CollisionManager::CalcPlayerDisToFront(const Vec3 frontVec, const float ma
 		Vec3 pos2 = boss_->GetPos() * Vec3(1, 0, 1);
 
 		float radius =
-			player_->GetHumanoidBody()->GetBodyCollider().radius +
+			player_->GetBodyCollider().radius +
 			boss_->GetCollider().radius;
 		dis = Vec3::Distance(pos1, pos2) - radius;
 		dis = Min<float>(dis, max);
@@ -101,38 +101,10 @@ float CollisionManager::CalcPlayerDisToFront(const Vec3 frontVec, const float ma
 	return dis;
 }
 
-//bool CollisionManager::IsCheckPlayerMove(const Vec3 frontVec, float* dis)
-//{
-//	RayCollider playerFront;
-//	playerFront.startPos = player_->GetPos();
-//	playerFront.dirVec = frontVec;
-//
-//	SphereCollider bossCollider;
-//	bossCollider.centerPos = boss_->GetPos();
-//	bossCollider.radius = 1.f;
-//
-//	bool isHit = Collision::RayHitSphere(playerFront, bossCollider);
-//
-//	if (isHit == true)
-//	{
-//		// yŽ²‚ð–³Ž‹‚·‚é
-//		Vec3 pos1 = player_->GetPos() * Vec3(1, 0, 1);
-//		Vec3 pos2 = boss_->GetPos() * Vec3(1, 0, 1);
-//
-//		float radius =
-//			player_->GetHumanoidBody()->GetBodyCollider().radius +
-//			boss_->GetCollider().radius;
-//		*dis = Vec3::Distance(pos1, pos2) - radius;
-//	}
-//
-//	return isHit;
-//}
-
 void CollisionManager::SetPlayer(Player* player)
 {
 	player_ = player;
 }
-
 void CollisionManager::SetBoss(Boss* boss)
 {
 	boss_ = boss;

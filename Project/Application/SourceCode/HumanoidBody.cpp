@@ -2,7 +2,7 @@
 #include "Player.h"
 
 HumanoidBody::HumanoidBody() :
-	frontVec(Vec3::front), scale(1),
+	scale(1),
 	moveMotion_(std::make_unique<MoveMotion>()),
 	backstepMotion_(std::make_unique<BackstepMotion>()),
 	rollMotion_(std::make_unique<RollMotion>())
@@ -17,11 +17,6 @@ HumanoidBody::HumanoidBody() :
 	}
 	parts_[(uint32_t)PartID::Body]->SetModel(ModelManager::GetModel("Body"));
 	parts_[(uint32_t)PartID::Head]->SetModel(ModelManager::GetModel("Head"));
-
-	for (uint32_t i = 0; i < weapons_.size(); i++)
-	{
-		weapons_[i] = nullptr;
-	}
 }
 
 void HumanoidBody::Init()
@@ -49,7 +44,6 @@ void HumanoidBody::Init()
 	backstepMotion_->Init(this);
 	rollMotion_->Init(this);
 }
-
 void HumanoidBody::PrevUpdate()
 {
 	static bool flag = false;
@@ -60,7 +54,7 @@ void HumanoidBody::PrevUpdate()
 	}
 	if (flag == true)
 	{
-		weapons_[0]->motion->HeavyMotion(this);
+		weapons_[0]->motion->BackMotion(this);
 		if (weapons_[0]->motion->GetisPlay() == false)
 		{
 			flag = false;
@@ -75,11 +69,7 @@ void HumanoidBody::PrevUpdate()
 			parts_[i]->rot = 0;
 		}
 	}
-
-	// コライダーの処理
-	ColliderUpdate();
 }
-
 void HumanoidBody::PostUpdate()
 {
 	parts_[(uint32_t)PartID::Transform]->pos = pos;
@@ -89,37 +79,42 @@ void HumanoidBody::PostUpdate()
 	parts_[(uint32_t)PartID::Transform]->Update();
 	Transform transform = parts_[(uint32_t)PartID::Transform]->GetTransform();
 
+	// 体
 	parts_[(uint32_t)PartID::Body]->Update(&transform);
 	Transform body = parts_[(uint32_t)PartID::Body]->GetTransform();
 
+	// 頭
 	parts_[(uint32_t)PartID::Head]->Update(&body);
 
-	parts_[(uint32_t)PartID::RightArm]->Update(&body);
-	Transform rightArm = parts_[(uint32_t)PartID::RightArm]->GetTransform();
-	parts_[(uint32_t)PartID::RightHand]->Update(&rightArm);
-
+	// 左手
 	parts_[(uint32_t)PartID::LeftArm]->Update(&body);
 	Transform leftArm = parts_[(uint32_t)PartID::LeftArm]->GetTransform();
 	parts_[(uint32_t)PartID::LeftHand]->Update(&leftArm);
-
-	parts_[(uint32_t)PartID::RightThigh]->Update(&body);
-	Transform rightThigh = parts_[(uint32_t)PartID::RightThigh]->GetTransform();
-	parts_[(uint32_t)PartID::RightLeg]->Update(&rightThigh);
-
+	if (weapons_[0] != nullptr)
+	{
+		Transform leftHand = parts_[(uint32_t)PartID::LeftHand]->GetTransform();
+		weapons_[0]->Update(&leftHand);
+	}
+	// 左足
 	parts_[(uint32_t)PartID::LeftThigh]->Update(&body);
 	Transform leftThigh = parts_[(uint32_t)PartID::LeftThigh]->GetTransform();
 	parts_[(uint32_t)PartID::LeftLeg]->Update(&leftThigh);
 
-	for (uint32_t i = 0; i < weapons_.size(); i++)
+	// 右手
+	parts_[(uint32_t)PartID::RightArm]->Update(&body);
+	Transform rightArm = parts_[(uint32_t)PartID::RightArm]->GetTransform();
+	parts_[(uint32_t)PartID::RightHand]->Update(&rightArm);
+	if (weapons_[1] != nullptr)
 	{
-		if (weapons_[i] != nullptr)
-		{
-			Transform rightHand = parts_[(uint32_t)PartID::RightHand]->GetTransform();
-			weapons_[i]->Update(&rightHand);
-		}
+		Transform rightHand = parts_[(uint32_t)PartID::RightHand]->GetTransform();
+		weapons_[1]->Update(&rightHand);
 	}
-}
 
+	// 右足
+	parts_[(uint32_t)PartID::RightThigh]->Update(&body);
+	Transform rightThigh = parts_[(uint32_t)PartID::RightThigh]->GetTransform();
+	parts_[(uint32_t)PartID::RightLeg]->Update(&rightThigh);
+}
 void HumanoidBody::DrawModel()
 {
 	for (uint32_t i = 1; i < parts_.size(); i++)
@@ -135,7 +130,6 @@ void HumanoidBody::DrawModel()
 		}
 	}
 }
-
 void HumanoidBody::DrawDebugGui()
 {
 	const float move = 0.05f;
@@ -231,6 +225,7 @@ void HumanoidBody::DrawDebugGui()
 	GuiManager::EndWindow();
 }
 
+// モーション関連
 void HumanoidBody::IdleMotion()
 {
 	//for (uint32_t i = 1; i < parts_.size(); i++)
@@ -238,78 +233,58 @@ void HumanoidBody::IdleMotion()
 	//	parts_[i]->rot = 0;
 	//}
 }
-
 void HumanoidBody::JoggingMotion()
 {
 	moveMotion_->JoggingMotion(this);
 }
-
 void HumanoidBody::RunMotion()
 {
 	moveMotion_->RunMotion(this);
 }
-
-void HumanoidBody::AttackMotion()
+void HumanoidBody::AttackR1MotionUpdate()
 {
-	if (weapons_[0]->motion->GetisPlay() == true)
+	if (weapons_[(uint32_t)WeaponPartID::Right]->motion->GetisPlay() == true)
 	{
-		if (weapons_[0]->motion->GetisCanChangeMotion() == true)
+		if (weapons_[(uint32_t)WeaponPartID::Right]->motion->GetisCanChangeMotion() == true)
 		{
 			// コンボできるため
 			if (Pad::GetButtonDown(PadCode::ButtonR1))
 			{
-				weapons_[0]->motion->Init(this);
-				weapons_[0]->motion->IncreComboCount();
+				weapons_[(uint32_t)WeaponPartID::Right]->motion->Init(this);
+				weapons_[(uint32_t)WeaponPartID::Right]->motion->IncreComboCount();
 			}
 		}
 	}
 
-	weapons_[0]->motion->WeakMotion(this);
+	weapons_[(uint32_t)WeaponPartID::Right]->motion->WeakMotion(this);
 }
+void HumanoidBody::AttackR2MotionUpdate()
+{
+	if (weapons_[(uint32_t)WeaponPartID::Right]->motion->GetisPlay() == true)
+	{
+		//if (weapons_[0]->motion->GetisCanChangeMotion() == true)
+		//{
+		//	// コンボできるため
+		//	if (Pad::GetButtonDown(PadCode::Butto))
+		//	{
+		//		weapons_[0]->motion->Init(this);
+		//		weapons_[0]->motion->IncreComboCount();
+		//	}
+		//}
+	}
 
+	weapons_[(uint32_t)WeaponPartID::Right]->motion->HeavyMotion(this);
+}
+void HumanoidBody::RollMotionUpdate()
+{
+	rollMotion_->Update(this);
+}
 void HumanoidBody::BackstepMotionUpdate()
 {
 	backstepMotion_->Update(this);
 }
 
-void HumanoidBody::RollMotionUpdate()
-{
-	rollMotion_->Update(this);
-}
-
-void HumanoidBody::ColliderUpdate()
-{
-	bodyCollider_.startPos = pos - Vec3(0.f, 2.5f, 0.f);
-	bodyCollider_.endPos = pos + Vec3(0.f, 2.5f, 0.f);
-	bodyCollider_.radius = 2.5f;
-}
-
-void HumanoidBody::CalcFrontVec()
-{
-	// カメラの前ベクトル
-	Vec3 cameForward = pos - Camera::current.pos;
-	cameForward.y = 0.f;
-
-	// カメラの右ベクトル
-	Vec3 cameRight = Vec3::Cross(cameForward, Vec3::up);
-
-	Vec3 stick =
-	{
-		Pad::GetStick(PadCode::LeftStick, 300).x,
-		0,
-		Pad::GetStick(PadCode::LeftStick, 300).y,
-	};
-	if (stick != 0)
-	{
-		Vec3 stickMoveVec = 0;
-
-		stickMoveVec.x = -stick.Norm().x;
-		stickMoveVec.z = -stick.Norm().z;
-
-		frontVec = cameForward * stickMoveVec.z + cameRight * stickMoveVec.x;
-	}
-}
-
+// 現在の角度
 std::vector<Vec3> HumanoidBody::CalcCurRots()
 {
 	std::vector<Vec3> result;
@@ -333,83 +308,67 @@ void HumanoidBody::ChangeMoveMotionInit()
 		moveMotion_->RunInit(this);
 	}
 }
-
-void HumanoidBody::SetWeapon(Weapon* weapon, const uint32_t index)
-{
-	weapons_[index] = weapon;
-	weapons_[index]->weapon->pos.y = -1.5f;
-	weapons_[index]->weapon->rot.x = Radian(90);
-
-	weapons_[index]->motion->Init(this);
-	weapons_[index]->motion->ResetComboCount();
-}
-
-bool HumanoidBody::GetisPlayMoveMotion()
-{
-	return moveMotion_->GetisPlay();
-}
-
-bool HumanoidBody::GetisPlayBackStepMotion()
-{
-	return backstepMotion_->GetisPlay();
-}
-
-bool HumanoidBody::GetisPlayRollMotion()
-{
-	return rollMotion_->GetisPlay();
-}
-
-bool HumanoidBody::GetisPlayAttackMotion(const uint32_t index)
-{
-	return weapons_[index]->motion->GetisPlay();
-}
-
-bool HumanoidBody::GetisAttackMotionCanChange(const uint32_t index)
-{
-	return weapons_[index]->motion->GetisCanChangeMotion();
-}
-
-bool HumanoidBody::GetisBackStepMotionCanChange()
-{
-	return backstepMotion_->GetisCanChangeMotion();
-}
-
-bool HumanoidBody::GetisRollMotionCanChange()
-{
-	return rollMotion_->GetisCanChangeMotion();
-}
-
 void HumanoidBody::BackstepMotionInit()
 {
 	backstepMotion_->Init(this);
 }
-
 void HumanoidBody::RollMotionInit()
 {
 	rollMotion_->Init(this);
 }
-
 void HumanoidBody::AttackMotionInit(const uint32_t index)
 {
 	weapons_[index]->motion->Init(this);
 	weapons_[index]->motion->ResetComboCount();
 }
 
-CapsuleCollider HumanoidBody::GetBodyCollider()
+void HumanoidBody::SetWeapon(Weapon* weapon, const WeaponPartID partID)
 {
-	return bodyCollider_;
+	weapons_[(uint32_t)partID] = weapon;
+	weapons_[(uint32_t)partID]->weapon->pos.y = -1.5f;
+	weapons_[(uint32_t)partID]->weapon->rot.x = Radian(90);
+
+	weapons_[(uint32_t)partID]->motion->Init(this);
+	weapons_[(uint32_t)partID]->motion->ResetComboCount();
+}
+
+bool HumanoidBody::GetisPlayMoveMotion()
+{
+	return moveMotion_->GetisPlay();
+}
+bool HumanoidBody::GetisPlayBackStepMotion()
+{
+	return backstepMotion_->GetisPlay();
+}
+bool HumanoidBody::GetisPlayRollMotion()
+{
+	return rollMotion_->GetisPlay();
+}
+bool HumanoidBody::GetisPlayAttackMotion(const uint32_t index)
+{
+	return weapons_[index]->motion->GetisPlay();
+}
+bool HumanoidBody::GetisAttackMotionCanChange(const uint32_t index)
+{
+	return weapons_[index]->motion->GetisCanChangeMotion();
+}
+bool HumanoidBody::GetisBackStepMotionCanChange()
+{
+	return backstepMotion_->GetisCanChangeMotion();
+}
+bool HumanoidBody::GetisRollMotionCanChange()
+{
+	return rollMotion_->GetisCanChangeMotion();
 }
 
 Vec3 HumanoidBody::GetWorldPos(const PartID partID)
 {
 	return parts_[(uint32_t)partID]->GetWorldPos();
 }
-
 Object3D* HumanoidBody::GetPart(const PartID partID)
 {
 	return parts_[(uint32_t)partID].get();
 }
-
 uint32_t HumanoidBody::GetPartsSize()
 {
 	return (uint32_t)parts_.size();

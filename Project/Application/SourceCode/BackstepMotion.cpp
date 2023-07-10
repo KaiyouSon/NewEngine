@@ -71,12 +71,12 @@ void BackstepMotion::Step0Init(HumanoidBody* human)
 	step_ = 0;
 
 	// 攻撃モーションで進む距離の計算
-	human->CalcFrontVec();
-	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(-human->frontVec, 15);
+	human->parent->CalcFrontVec();
+	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(-human->parent->frontVec_, 15);
 
 	// 現在の座標を取得
 	startPos_ = human->pos;
-	endPos_ = startPos_ - human->frontVec.Norm() * length_;
+	endPos_ = startPos_ - human->parent->frontVec_.Norm() * length_;
 
 	up_ = 1;
 	down_ = -0.5;

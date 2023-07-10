@@ -8,6 +8,8 @@ MalletMotion::MalletMotion()
 	motions_.emplace_back(MotionManager::GetMotion("MalletWeakAttack2"));
 	motions_.emplace_back(MotionManager::GetMotion("MalletWeakAttack3"));
 	motions_.emplace_back(MotionManager::GetMotion("MalletHeavyAttack"));
+	motions_.emplace_back(MotionManager::GetMotion("MalletBackAttack"));
+	motions_.emplace_back(MotionManager::GetMotion("MalletRollAttack"));
 }
 
 void MalletMotion::Init(HumanoidBody* human)
@@ -89,6 +91,40 @@ void MalletMotion::HeavyMotion(HumanoidBody* human)
 	CurrentStepUpdate(human);
 	BaseUpdate(human, 3);
 }
+void MalletMotion::BackMotion(HumanoidBody* human)
+{
+	if (isPlay_ == false)
+	{
+		isPlay_ = true;
+		attackType_ = AttackType::Back;
+	}
+	ease_.Update();
+
+	if (isInit_ == false)
+	{
+		CurrentStepInit(human);
+		BaseInit(human, 4);
+	}
+	CurrentStepUpdate(human);
+	BaseUpdate(human, 4);
+}
+void MalletMotion::RollMotion(HumanoidBody* human)
+{
+	if (isPlay_ == false)
+	{
+		isPlay_ = true;
+		attackType_ = AttackType::Roll;
+	}
+	ease_.Update();
+
+	if (isInit_ == false)
+	{
+		CurrentStepInit(human);
+		BaseInit(human, 5);
+	}
+	CurrentStepUpdate(human);
+	BaseUpdate(human, 5);
+}
 
 void MalletMotion::CurrentStepInit(HumanoidBody* human)
 {
@@ -130,6 +166,10 @@ void MalletMotion::CurrentStepUpdate(HumanoidBody* human)
 		{
 			HeavyStep2Update(human);
 		}
+		else if (step_ == 5)
+		{
+			HeavyStep5Update(human);
+		}
 	}
 }
 
@@ -137,17 +177,17 @@ void MalletMotion::CurrentStepUpdate(HumanoidBody* human)
 void MalletMotion::WeakStep1Init(HumanoidBody* human)
 {
 	// 前ベクトルの計算
-	human->CalcFrontVec();
+	human->parent->CalcFrontVec();
 
 	// 攻撃モーションで進む距離の計算
-	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(human->frontVec, 8);
+	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->frontVec_, 8);
 
 	// 現在の座標を取得
 	startPos_ = human->pos;
 
 	// 入力した後の回転角を取得
 	startRotY_ = human->rot.y;
-	endRotY_ = atan2f(human->frontVec.x, human->frontVec.z);
+	endRotY_ = atan2f(human->parent->frontVec_.x, human->parent->frontVec_.z);
 
 	// 当たり判定有効
 	isCalcCollider_ = true;
@@ -155,7 +195,7 @@ void MalletMotion::WeakStep1Init(HumanoidBody* human)
 void MalletMotion::WeakStep1Update(HumanoidBody* human)
 {
 	// 少し前に移動する処理
-	const Vec3 endPos = startPos_ + human->frontVec.Norm() * length_;
+	const Vec3 endPos = startPos_ + human->parent->frontVec_.Norm() * length_;
 	human->pos = ease_.InOut(startPos_, endPos);
 	human->rot.y = ease_.InOut(startRotY_, endRotY_);
 	human->parent->moveVel = endPos - startPos_;
@@ -194,17 +234,17 @@ void MalletMotion::HeavyStep1Update(HumanoidBody* human)
 void MalletMotion::HeavyStep2Init(HumanoidBody* human)
 {
 	// 前ベクトルの計算
-	human->CalcFrontVec();
+	human->parent->CalcFrontVec();
 
 	// 攻撃モーションで進む距離の計算
-	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(human->frontVec, 10);
+	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->frontVec_, 10);
 
 	// 現在の座標を取得
 	startPos_ = human->pos;
 
 	// 入力した後の回転角を取得
 	startRotY_ = human->rot.y;
-	endRotY_ = atan2f(human->frontVec.x, human->frontVec.z);
+	endRotY_ = atan2f(human->parent->frontVec_.x, human->parent->frontVec_.z);
 
 	// 当たり判定有効
 	isCalcCollider_ = true;
@@ -212,7 +252,7 @@ void MalletMotion::HeavyStep2Init(HumanoidBody* human)
 void MalletMotion::HeavyStep2Update(HumanoidBody* human)
 {
 	// 少し前に移動する処理
-	const Vec3 endPos = startPos_ + human->frontVec.Norm() * length_;
+	const Vec3 endPos = startPos_ + human->parent->frontVec_.Norm() * length_;
 	human->pos = ease_.InOut(startPos_, endPos);
 	human->rot.y = ease_.InOut(startRotY_, endRotY_);
 	human->parent->moveVel = endPos - startPos_;
@@ -224,5 +264,12 @@ void MalletMotion::HeavyStep2Update(HumanoidBody* human)
 		//	// コンボできるフラフ
 		//	isCanChangeMotion_ = true;
 		//}
+	}
+}
+void MalletMotion::HeavyStep5Update(HumanoidBody* human)
+{
+	if (ease_.GetisEnd() == true)
+	{
+		isCanChangeMotion_ = true;
 	}
 }

@@ -23,7 +23,7 @@ SceneManager::SceneManager()
 	DOF::CreateGraphicsPipeline();
 	RadialBlur::CreateGraphicsPipeline();
 	Vignette::CreateGraphicsPipeline();
-	currentScene = std::move(std::make_unique<TitleScene>());
+	currentScene = std::move(std::make_unique<GameScene>());
 }
 
 SceneManager::~SceneManager()

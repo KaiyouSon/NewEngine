@@ -73,16 +73,20 @@ void RollMotion::Step0Init(HumanoidBody* human)
 	moveEase_.Reset();
 
 	// UŒ‚ƒ‚[ƒVƒ‡ƒ“‚Åi‚Þ‹——£‚ÌŒvŽZ
-	human->CalcFrontVec();
-	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(-human->frontVec, 30);
+	human->parent->CalcFrontVec();
+	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(-human->parent->frontVec_, 30);
 
 	// Œ»Ý‚ÌÀ•W‚ðŽæ“¾
 	startPos_ = human->pos;
-	endPos_ = startPos_ + human->frontVec.Norm() * length_;
+	endPos_ = startPos_ + human->parent->frontVec_.Norm() * length_;
+
+	// “ü—Í‚µ‚½Œã‚Ì‰ñ“]Šp‚ðŽæ“¾
+	rotY_ = atan2f(human->parent->frontVec_.x, human->parent->frontVec_.z);
 }
 void RollMotion::Step0Update(HumanoidBody* human)
 {
 	human->pos = moveEase_.InOut(startPos_, endPos_);
+	human->rot.y = rotY_;
 	human->parent->moveVel = endPos_ - startPos_;
 
 	moveEase_.Update();

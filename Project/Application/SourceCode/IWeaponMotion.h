@@ -8,6 +8,8 @@ enum class AttackType
 {
 	Weak,
 	Heavy,
+	Back,
+	Roll,
 };
 
 class IWeaponMotion
@@ -35,6 +37,8 @@ public:
 	virtual void Init(HumanoidBody* human) = 0;
 	virtual void WeakMotion(HumanoidBody* human) = 0;
 	virtual void HeavyMotion(HumanoidBody* human) = 0;
+	virtual void BackMotion(HumanoidBody* human) = 0;
+	virtual void RollMotion(HumanoidBody* human) = 0;
 
 public:
 	void IncreComboCount();

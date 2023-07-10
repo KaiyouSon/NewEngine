@@ -16,22 +16,37 @@ public:
 		Backstep,
 		Roll,
 		AttackR1,
+		AttackR2,
 	};
 
 private:
 	std::array<GaugeParam, 3> gaugePrames_;
 	std::unique_ptr<Weapon> weapon_;
-
 	std::unique_ptr<HumanoidBody> player_;
 
+private:
 	Timer pushTimer; //ボタン連打させないように
 
+private:
+	// 状態
 	State state_;
 
+private:
+	// 移動関連
 	float moveSpeed_;
 	float joggingSpeed_;
 	float runSpeed_;
 	Vec3 moveVel;
+
+private:
+	// 当たりあ判定関連
+	Vec3 frontVec_;
+	CapsuleCollider bodyCollider_;
+
+private:
+	void CalcFrontVec();
+	void CalcBodyCollider();
+	void ColliderUpdate();
 
 private:
 	void GaugeParamInit();
@@ -46,6 +61,7 @@ private:
 	void BackstepUpdate();
 	void RollUpdate();
 	void AttackR1Update();
+	void AttackR2Update();
 
 public:
 	Player();
@@ -55,7 +71,6 @@ public:
 	void DrawModel();
 	void DrawDebugGui();
 
-	void CalcBodyCollider();
 
 public:
 	void SetPos(const Vec3 pos);
@@ -70,7 +85,9 @@ public:
 	Vec3 GetMoveVel();
 	Vec3 GetFrontVec();
 	State GetState();
+	CapsuleCollider GetBodyCollider();
 
+private:
 	friend HumanoidBody;
 	friend MoveMotion;
 	friend MalletMotion;

@@ -47,16 +47,6 @@ void GameScene::Update()
 	player_->PostUpdate();
 
 	cameraManager_->Update();
-
-	if (Key::GetKeyDown(DIK_SPACE))
-	{
-
-		if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
-		{
-			SceneChanger::GetInstance()->StartSceneChange();
-		}
-	}
-
 	Camera::DebugCameraUpdate();
 }
 

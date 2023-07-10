@@ -24,12 +24,14 @@ private:// ÉRÉìÉ{ 1 Å` 4
 	void HeavyStep1Update(HumanoidBody* human);
 	void HeavyStep2Init(HumanoidBody* human);
 	void HeavyStep2Update(HumanoidBody* human);
-
+	void HeavyStep5Update(HumanoidBody* human);
 
 public:
 	MalletMotion();
 	void Init(HumanoidBody* human) override;
 	void WeakMotion(HumanoidBody* human) override;
 	void HeavyMotion(HumanoidBody* human) override;
+	void BackMotion(HumanoidBody* human) override;
+	void RollMotion(HumanoidBody* human) override;
 };
 

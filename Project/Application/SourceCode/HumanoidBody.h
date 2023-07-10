@@ -24,32 +24,31 @@ enum class PartID
 	RightHand,	// ‰EŽè
 	RightThigh,	 // ‰E‘¾‚à‚à
 	RightLeg,	 // ‰E‘«
+};
 
-	RightWeapon,
-	LeftWeapon,
+enum class WeaponPartID
+{
+	Left, Right
 };
 
 class HumanoidBody
 {
 private:
 	std::array<std::unique_ptr<Object3D>, 11> parts_;
-	std::unique_ptr<MoveMotion> moveMotion_;
-	std::unique_ptr<BackstepMotion> backstepMotion_;
-	std::unique_ptr<RollMotion> rollMotion_;
 	std::array<Weapon*, 2> weapons_;
-	CapsuleCollider bodyCollider_;
-	std::array<Vec3, 11> curRots_;
+	std::array<Vec3, 13> curRots_;
+
+private:
+	std::unique_ptr<MoveMotion> moveMotion_;
+	std::unique_ptr<RollMotion> rollMotion_;
+	std::unique_ptr<BackstepMotion> backstepMotion_;
 
 public:
 	Vec3 pos;
 	Vec3 attackPos;
 	Vec3 rot;
 	Vec3 scale;
-	Vec3 frontVec;
 	Player* parent;
-
-public:
-	void ColliderUpdate();
 
 public:
 	HumanoidBody();
@@ -63,7 +62,8 @@ public:
 	void IdleMotion();
 	void JoggingMotion();
 	void RunMotion();
-	void AttackMotion();
+	void AttackR1MotionUpdate();
+	void AttackR2MotionUpdate();
 	void BackstepMotionUpdate();
 	void RollMotionUpdate();
 
@@ -72,7 +72,7 @@ public:
 	void ChangeMoveMotionInit();
 
 public:
-	void SetWeapon(Weapon* weapon, const uint32_t index);
+	void SetWeapon(Weapon* weapon, const WeaponPartID partID);
 
 public:
 	CapsuleCollider GetBodyCollider();
