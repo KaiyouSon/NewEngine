@@ -64,11 +64,14 @@ public:
 	void RunMotion();
 	void AttackR1MotionUpdate();
 	void AttackR2MotionUpdate();
+	void AttackBackMotionUpdate();
+	void AttackRollMotionUpdate();
 	void BackstepMotionUpdate();
 	void RollMotionUpdate();
 
 	void CalcFrontVec();
 	std::vector<Vec3> CalcCurRots();
+	std::vector<Vec3> CalcCurWeaponRots();
 	void ChangeMoveMotionInit();
 
 public:
@@ -78,16 +81,18 @@ public:
 	CapsuleCollider GetBodyCollider();
 	Vec3 GetWorldPos(const PartID partID);
 	Object3D* GetPart(const PartID partID);
+	Object3D* GetWeaponPart(const WeaponPartID partID);
 	uint32_t GetPartsSize();
+	uint32_t GetWeaponPartsSize();
 	bool GetisPlayMoveMotion();
 	bool GetisPlayBackStepMotion();
 	bool GetisPlayRollMotion();
-	bool GetisPlayAttackMotion(const uint32_t index);
-	bool GetisAttackMotionCanChange(const uint32_t index);
+	bool GetisPlayAttackMotion(const WeaponPartID partID);
+	bool GetisAttackMotionCanChange(const WeaponPartID partID);
 	bool GetisBackStepMotionCanChange();
 	bool GetisRollMotionCanChange();
 	void BackstepMotionInit();
 	void RollMotionInit();
-	void AttackMotionInit(const uint32_t index);
+	void AttackMotionInit(const WeaponPartID partID);
 };
 

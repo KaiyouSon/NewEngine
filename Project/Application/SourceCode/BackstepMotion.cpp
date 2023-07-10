@@ -17,6 +17,8 @@ void BackstepMotion::Init(HumanoidBody* human)
 
 	curRots_.resize(human->GetPartsSize());
 	endRots_.resize(human->GetPartsSize());
+	curWeaponRots_.resize(human->GetWeaponPartsSize());
+	endWeaponRots_.resize(human->GetWeaponPartsSize());
 
 	moveEase_.SetEaseTimer(15);
 	moveEase_.SetPowNum(2);

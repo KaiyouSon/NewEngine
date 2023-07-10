@@ -17,6 +17,8 @@ public:
 		Roll,
 		AttackR1,
 		AttackR2,
+		AttackBack,
+		AttackRoll,
 	};
 
 private:
@@ -62,6 +64,8 @@ private:
 	void RollUpdate();
 	void AttackR1Update();
 	void AttackR2Update();
+	void AttackBackUpdate();
+	void AttackRollUpdate();
 
 public:
 	Player();

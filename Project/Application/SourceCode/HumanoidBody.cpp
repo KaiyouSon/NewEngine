@@ -275,6 +275,14 @@ void HumanoidBody::AttackR2MotionUpdate()
 
 	weapons_[(uint32_t)WeaponPartID::Right]->motion->HeavyMotion(this);
 }
+void HumanoidBody::AttackBackMotionUpdate()
+{
+	weapons_[(uint32_t)WeaponPartID::Right]->motion->BackMotion(this);
+}
+void HumanoidBody::AttackRollMotionUpdate()
+{
+	weapons_[(uint32_t)WeaponPartID::Right]->motion->RollMotion(this);
+}
 void HumanoidBody::RollMotionUpdate()
 {
 	rollMotion_->Update(this);
@@ -293,6 +301,20 @@ std::vector<Vec3> HumanoidBody::CalcCurRots()
 	for (uint32_t i = 0; i < parts_.size(); i++)
 	{
 		result[i] = parts_[i]->rot;
+	}
+	return result;
+}
+std::vector<Vec3> HumanoidBody::CalcCurWeaponRots()
+{
+	std::vector<Vec3> result;
+	result.resize(weapons_.size());
+
+	for (uint32_t i = 0; i < weapons_.size(); i++)
+	{
+		if (weapons_[i] != nullptr)
+		{
+			result[i] = weapons_[i]->weapon->rot;
+		}
 	}
 	return result;
 }
@@ -316,17 +338,16 @@ void HumanoidBody::RollMotionInit()
 {
 	rollMotion_->Init(this);
 }
-void HumanoidBody::AttackMotionInit(const uint32_t index)
+void HumanoidBody::AttackMotionInit(const WeaponPartID partID)
 {
-	weapons_[index]->motion->Init(this);
-	weapons_[index]->motion->ResetComboCount();
+	weapons_[(uint32_t)partID]->motion->Init(this);
+	weapons_[(uint32_t)partID]->motion->ResetComboCount();
 }
 
 void HumanoidBody::SetWeapon(Weapon* weapon, const WeaponPartID partID)
 {
 	weapons_[(uint32_t)partID] = weapon;
 	weapons_[(uint32_t)partID]->weapon->pos.y = -1.5f;
-	weapons_[(uint32_t)partID]->weapon->rot.x = Radian(90);
 
 	weapons_[(uint32_t)partID]->motion->Init(this);
 	weapons_[(uint32_t)partID]->motion->ResetComboCount();
@@ -344,13 +365,13 @@ bool HumanoidBody::GetisPlayRollMotion()
 {
 	return rollMotion_->GetisPlay();
 }
-bool HumanoidBody::GetisPlayAttackMotion(const uint32_t index)
+bool HumanoidBody::GetisPlayAttackMotion(const WeaponPartID partID)
 {
-	return weapons_[index]->motion->GetisPlay();
+	return weapons_[(uint32_t)partID]->motion->GetisPlay();
 }
-bool HumanoidBody::GetisAttackMotionCanChange(const uint32_t index)
+bool HumanoidBody::GetisAttackMotionCanChange(const WeaponPartID partID)
 {
-	return weapons_[index]->motion->GetisCanChangeMotion();
+	return weapons_[(uint32_t)partID]->motion->GetisCanChangeMotion();
 }
 bool HumanoidBody::GetisBackStepMotionCanChange()
 {
@@ -369,7 +390,21 @@ Object3D* HumanoidBody::GetPart(const PartID partID)
 {
 	return parts_[(uint32_t)partID].get();
 }
+Object3D* HumanoidBody::GetWeaponPart(const WeaponPartID partID)
+{
+	if (weapons_[(uint32_t)partID] == nullptr)
+	{
+		return nullptr;
+	}
+
+	return weapons_[(uint32_t)partID]->weapon.get();
+}
 uint32_t HumanoidBody::GetPartsSize()
 {
 	return (uint32_t)parts_.size();
 }
+uint32_t HumanoidBody::GetWeaponPartsSize()
+{
+	return (uint32_t)weapons_.size();
+}
+

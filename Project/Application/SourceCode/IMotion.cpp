@@ -12,6 +12,11 @@ void IMotion::BaseInit(HumanoidBody* human)
 		{
 			endRots_[i] = current.endRots[i];
 		}
+		curWeaponRots_ = human->CalcCurWeaponRots();
+		for (uint32_t i = 0; i < current.endWeaponRots.size(); i++)
+		{
+			endWeaponRots_[i] = current.endWeaponRots[i];
+		}
 		ease_ = current.ease;
 	}
 }
@@ -21,6 +26,15 @@ void IMotion::BasePrevUpdate(HumanoidBody* human)
 	for (uint32_t i = (uint32_t)PartID::Body; i < curRots_.size(); i++)
 	{
 		human->GetPart((PartID)i)->rot = ease_.Interpolation(curRots_[i], endRots_[i]);
+	}
+	for (uint32_t i = 0; i < curWeaponRots_.size(); i++)
+	{
+		if (human->GetWeaponPart((WeaponPartID)i) == nullptr)
+		{
+			continue;
+		}
+
+		human->GetWeaponPart((WeaponPartID)i)->rot = ease_.Interpolation(curWeaponRots_[i], endWeaponRots_[i]);
 	}
 }
 

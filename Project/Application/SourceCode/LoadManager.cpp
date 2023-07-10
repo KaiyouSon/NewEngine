@@ -29,7 +29,6 @@ bool LoadManager::ModelLoad()
 bool LoadManager::TextureLoad()
 {
 	TextureManager::CreateTexture(Color::white, "White");
-	TextureManager::CreateDepthTexture(Vec2(1920, 1080));
 
 	// タイトル
 	TextureManager::LoadTexture("Title/GameTitle.png", "GameTitle");
@@ -82,6 +81,8 @@ void LoadManager::Load()
 		soundFtr.get() == true &&
 		motionFtr.get() == true)	// サウンド
 	{
+		TextureManager::CreateDepthTexture(Vec2(1920, 1080));
+
 		isLoaded = true;
 		// コマンド実行
 		TextureManager::ExcuteComandList();

@@ -25,6 +25,8 @@ protected:
 	Easing ease_;
 	std::vector<Vec3> curRots_;
 	std::vector<Vec3> endRots_;
+	std::vector<Vec3> curWeaponRots_;
+	std::vector<Vec3> endWeaponRots_;
 	std::vector<Motion*> motions_;
 	AttackType attackType_;
 

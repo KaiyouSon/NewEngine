@@ -9,6 +9,7 @@ private:
 	float startRotY_;
 	float endRotY_;
 	float length_;
+	Easing moveEase_;
 
 private:// ƒRƒ“ƒ{ 1 ` 4
 
@@ -25,6 +26,18 @@ private:// ƒRƒ“ƒ{ 1 ` 4
 	void HeavyStep2Init(HumanoidBody* human);
 	void HeavyStep2Update(HumanoidBody* human);
 	void HeavyStep5Update(HumanoidBody* human);
+
+	// ƒoƒbƒNUŒ‚
+	void BackStep0Init(HumanoidBody* human);
+	void BackStep0Update(HumanoidBody* human);
+	void BackStep2Init(HumanoidBody* human);
+	void BackStep2Update(HumanoidBody* human);
+	void BackStep3Update(HumanoidBody* human);
+
+	// ‰ñ“]UŒ‚
+	void RollStep0Init(HumanoidBody* human);
+	void RollStep0Update(HumanoidBody* human);
+	void RollStep1Update(HumanoidBody* human);
 
 public:
 	MalletMotion();

@@ -38,6 +38,8 @@ void Player::PrevUpdate()
 		&Player::RollUpdate,
 		&Player::AttackR1Update,
 		&Player::AttackR2Update,
+		&Player::AttackBackUpdate,
+		&Player::AttackRollUpdate,
 	};
 
 	// ŽÀs
@@ -235,6 +237,11 @@ void Player::BackstepUpdate()
 		{
 			player_->BackstepMotionInit();
 		}
+		else if (Pad::GetButtonDown(PadCode::ButtonR1))
+		{
+			player_->BackstepMotionInit();
+			state_ = State::AttackBack;
+		}
 		else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 		{
 			player_->BackstepMotionInit();
@@ -264,6 +271,11 @@ void Player::RollUpdate()
 		if (Pad::GetButtonDown(PadCode::ButtonB))
 		{
 			state_ = State::Backstep;
+			player_->RollMotionInit();
+		}
+		else if (Pad::GetButtonDown(PadCode::ButtonR1))
+		{
+			state_ = State::AttackRoll;
 			player_->RollMotionInit();
 		}
 		else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
@@ -298,24 +310,24 @@ void Player::AttackR1Update()
 	{
 		if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 		{
-			player_->AttackMotionInit(0);
+			player_->AttackMotionInit(WeaponPartID::Right);
 			state_ = State::Roll;
 		}
 		else
 		{
-			if (player_->GetisAttackMotionCanChange(0) == true)
+			if (player_->GetisAttackMotionCanChange(WeaponPartID::Right) == true)
 			{
-				player_->AttackMotionInit(0);
+				player_->AttackMotionInit(WeaponPartID::Right);
 				state_ = State::Backstep;
 			}
 		}
 	}
 
-	if (player_->GetisPlayAttackMotion(0) == false)
+	if (player_->GetisPlayAttackMotion(WeaponPartID::Right) == false)
 	{
 		if (state_ == State::AttackR1)
 		{
-			player_->AttackMotionInit(0);
+			player_->AttackMotionInit(WeaponPartID::Right);
 			state_ = State::Idle;
 		}
 	}
@@ -328,24 +340,50 @@ void Player::AttackR2Update()
 	{
 		if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 		{
-			player_->AttackMotionInit(0);
+			player_->AttackMotionInit(WeaponPartID::Right);
 			state_ = State::Roll;
 		}
 		else
 		{
-			if (player_->GetisAttackMotionCanChange(0) == true)
+			if (player_->GetisAttackMotionCanChange(WeaponPartID::Right) == true)
 			{
-				player_->AttackMotionInit(0);
+				player_->AttackMotionInit(WeaponPartID::Right);
 				state_ = State::Backstep;
 			}
 		}
 	}
 
-	if (player_->GetisPlayAttackMotion(0) == false)
+	if (player_->GetisPlayAttackMotion(WeaponPartID::Right) == false)
 	{
 		if (state_ == State::AttackR2)
 		{
-			player_->AttackMotionInit(0);
+			player_->AttackMotionInit(WeaponPartID::Right);
+			state_ = State::Idle;
+		}
+	}
+}
+void Player::AttackBackUpdate()
+{
+	player_->AttackBackMotionUpdate();
+
+	if (player_->GetisPlayAttackMotion(WeaponPartID::Right) == false)
+	{
+		if (state_ == State::AttackBack)
+		{
+			player_->AttackMotionInit(WeaponPartID::Right);
+			state_ = State::Idle;
+		}
+	}
+}
+void Player::AttackRollUpdate()
+{
+	player_->AttackRollMotionUpdate();
+
+	if (player_->GetisPlayAttackMotion(WeaponPartID::Right) == false)
+	{
+		if (state_ == State::AttackRoll)
+		{
+			player_->AttackMotionInit(WeaponPartID::Right);
 			state_ = State::Idle;
 		}
 	}

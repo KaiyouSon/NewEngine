@@ -9,6 +9,7 @@ struct MotionData
 	Easing ease;
 	std::vector<std::string> name;
 	std::vector<Vec3> endRots;
+	std::vector<Vec3> endWeaponRots;
 };
 
 struct Motion

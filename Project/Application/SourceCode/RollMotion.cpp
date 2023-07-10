@@ -17,9 +17,16 @@ void RollMotion::Init(HumanoidBody* human)
 	human->pos.y = 4.5f;
 	curRots_.resize(human->GetPartsSize());
 	endRots_.resize(human->GetPartsSize());
+	curWeaponRots_.resize(human->GetWeaponPartsSize());
+	endWeaponRots_.resize(human->GetWeaponPartsSize());
 
 	moveEase_.SetEaseTimer(35);
 	moveEase_.SetPowNum(3);
+
+	if (human->GetPart(PartID::Body)->rot.x >= Radian(360))
+	{
+		human->GetPart(PartID::Body)->rot.x -= Radian(360);
+	}
 }
 void RollMotion::Update(HumanoidBody* human)
 {
