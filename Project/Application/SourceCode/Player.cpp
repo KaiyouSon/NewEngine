@@ -412,6 +412,10 @@ Vec3 Player::GetPos()
 {
 	return player_->pos;
 }
+Vec3 Player::GetRot()
+{
+	return player_->rot;
+}
 Vec3 Player::GetAttackPos()
 {
 	return player_->attackPos;

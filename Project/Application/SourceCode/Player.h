@@ -84,6 +84,7 @@ public:
 	HumanoidBody* GetHumanoidBody();
 	Weapon* GetWeapon();
 	Vec3 GetPos();
+	Vec3 GetRot();
 	Vec3 GetAttackPos();
 	Vec3 GetHeadPos();
 	Vec3 GetMoveVel();
