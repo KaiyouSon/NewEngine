@@ -1,15 +1,16 @@
 #include "Boss.h"
 
 Boss::Boss() :
-	boss_(std::make_unique<Object3D>())
+	boss_(std::make_unique<BossBody>())
 {
-	boss_->SetModel(ModelManager::GetModel("Capsule"));
 }
 
 void Boss::Init()
 {
-	boss_->pos = Vec3(0, 5.f, 20.f);
-	boss_->scale = 2.5f;
+	boss_->Init();
+	boss_->pos = Vec3(0, 7.125f, 20.f);
+	boss_->scale = 1.5f;
+	boss_->rot.y = Radian(180);
 
 	// HPƒQ[ƒW
 	hpGaugeParam_.CalcRate(2560.f, 2560.f);
@@ -27,7 +28,7 @@ void Boss::Update()
 
 void Boss::DrawModel()
 {
-	boss_->Draw();
+	boss_->DrawModel();
 }
 
 void Boss::ColliderUpdate()

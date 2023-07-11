@@ -187,6 +187,12 @@
     <Filter Include="Application\Header\Body">
       <UniqueIdentifier>{04339e44-f388-4e66-9c70-2483adb6e65a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Header\Camera">
+      <UniqueIdentifier>{94f089b1-a7d8-41c4-a208-ab4db7056d3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\Camera">
+      <UniqueIdentifier>{b27e49ec-07dc-4345-ab82-83feb6753eb8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -420,9 +426,6 @@
     <ClCompile Include="Application\SourceCode\Boss.cpp">
       <Filter>Application\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\CameraManager.cpp">
-      <Filter>Application\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\CollisionManager.cpp">
       <Filter>Application\Source</Filter>
     </ClCompile>
@@ -467,6 +470,15 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\BossBody.cpp">
       <Filter>Application\Source\Body</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\CameraManager.cpp">
+      <Filter>Application\Source\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\ICamera.cpp">
+      <Filter>Application\Source\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\DefaultCamera.cpp">
+      <Filter>Application\Source\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -734,9 +746,6 @@
     <ClInclude Include="Application\SourceCode\Boss.h">
       <Filter>Application\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\CameraManager.h">
-      <Filter>Application\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\CollisionManager.h">
       <Filter>Application\Header</Filter>
     </ClInclude>
@@ -784,6 +793,15 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\BossBody.h">
       <Filter>Application\Header\Body</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\CameraManager.h">
+      <Filter>Application\Header\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\ICamera.h">
+      <Filter>Application\Header\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\DefaultCamera.h">
+      <Filter>Application\Header\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

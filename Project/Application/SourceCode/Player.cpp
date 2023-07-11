@@ -13,7 +13,7 @@ void Player::Init()
 {
 	GaugeParamInit();
 	player_->Init();
-	player_->pos.y = 4.5f;
+	player_->pos.y = 4.75f;
 
 	player_->SetWeapon(weapon_.get(), WeaponPartID::Right);
 	player_->parent = this;

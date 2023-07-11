@@ -1,11 +1,12 @@
 #pragma once
 #include "NewEngine.h"
 #include "GaugeParam.h"
+#include "BossBody.h"
 
 class Boss
 {
 private:
-	std::unique_ptr<Object3D> boss_;
+	std::unique_ptr<BossBody> boss_;
 
 	GaugeParam hpGaugeParam_;
 

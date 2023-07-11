@@ -3,9 +3,11 @@
 
 class BossBody : public HumanoidBody
 {
+private:
 
-	//void Update();
-	//void DrawModel();
-
+public:
+	void Init();
+	void Update();
+	void DrawModel();
 };
 

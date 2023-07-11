@@ -1,6 +1,6 @@
 #pragma once
 #include "NewEngine.h"
-#include "Player.h"
+#include "ICamera.h"
 
 class CameraManager
 {
@@ -10,26 +10,10 @@ public:
 		Default
 	};
 private:
-	Player* player_;
+	std::unique_ptr<ICamera> currentCamera_;
 
-private:
 	std::unique_ptr<Camera> defCame_;
-	float yaw_;
-	float pitch_;
-	float targetYaw_;
-	float assistYaw_;
-	Vec3 vec_;
-
-	float controlYaw_;
-	float controlPitch_;
-
-	Vec3 finalVec_;
-	Vec3 finalRot_;
-
-	Vec3 target_;
-
-private:
-	void DefaultCameraUpdate();
+	Player* player_;
 
 public:
 	CameraManager();
