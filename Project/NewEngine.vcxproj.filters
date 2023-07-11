@@ -456,6 +456,9 @@
     <ClCompile Include="Application\SourceCode\MessegeSign.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\Scene\PlayerBody.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -765,6 +768,9 @@
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\MessegeSign.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\PlayerBody.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,6 @@
 #include "MalletMotion.h"
 #include "HumanoidBody.h"
+#include "PlayerBody.h"
 #include "CollisionManager.h"
 
 MalletMotion::MalletMotion()
@@ -12,7 +13,7 @@ MalletMotion::MalletMotion()
 	motions_.emplace_back(MotionManager::GetMotion("MalletRollAttack"));
 }
 
-void MalletMotion::Init(HumanoidBody* human)
+void MalletMotion::Init(PlayerBody* human)
 {
 	isPlay_ = false;
 	isInit_ = false;
@@ -35,7 +36,7 @@ void MalletMotion::Init(HumanoidBody* human)
 		ResetComboCount();
 	}
 }
-void MalletMotion::WeakMotion(HumanoidBody* human)
+void MalletMotion::WeakMotion(PlayerBody* human)
 {
 	if (isPlay_ == false)
 	{
@@ -76,7 +77,7 @@ void MalletMotion::WeakMotion(HumanoidBody* human)
 		BaseUpdate(human, 2);
 	}
 }
-void MalletMotion::HeavyMotion(HumanoidBody* human)
+void MalletMotion::HeavyMotion(PlayerBody* human)
 {
 	if (isPlay_ == false)
 	{
@@ -93,7 +94,7 @@ void MalletMotion::HeavyMotion(HumanoidBody* human)
 	CurrentStepUpdate(human);
 	BaseUpdate(human, 3);
 }
-void MalletMotion::BackMotion(HumanoidBody* human)
+void MalletMotion::BackMotion(PlayerBody* human)
 {
 	if (isPlay_ == false)
 	{
@@ -110,7 +111,7 @@ void MalletMotion::BackMotion(HumanoidBody* human)
 	CurrentStepUpdate(human);
 	BaseUpdate(human, 4);
 }
-void MalletMotion::RollMotion(HumanoidBody* human)
+void MalletMotion::RollMotion(PlayerBody* human)
 {
 	if (isPlay_ == false)
 	{
@@ -128,7 +129,7 @@ void MalletMotion::RollMotion(HumanoidBody* human)
 	BaseUpdate(human, 5);
 }
 
-void MalletMotion::CurrentStepInit(HumanoidBody* human)
+void MalletMotion::CurrentStepInit(PlayerBody* human)
 {
 	if (attackType_ == AttackType::Weak)
 	{
@@ -163,7 +164,7 @@ void MalletMotion::CurrentStepInit(HumanoidBody* human)
 		}
 	}
 }
-void MalletMotion::CurrentStepUpdate(HumanoidBody* human)
+void MalletMotion::CurrentStepUpdate(PlayerBody* human)
 {
 	if (attackType_ == AttackType::Weak)
 	{
@@ -220,7 +221,7 @@ void MalletMotion::CurrentStepUpdate(HumanoidBody* human)
 }
 
 // 弱攻撃
-void MalletMotion::WeakStep1Init(HumanoidBody* human)
+void MalletMotion::WeakStep1Init(PlayerBody* human)
 {
 	// 前ベクトルの計算
 	human->parent->CalcFrontVec();
@@ -238,7 +239,7 @@ void MalletMotion::WeakStep1Init(HumanoidBody* human)
 	// 当たり判定有効
 	isCalcCollider_ = true;
 }
-void MalletMotion::WeakStep1Update(HumanoidBody* human)
+void MalletMotion::WeakStep1Update(PlayerBody* human)
 {
 	// 少し前に移動する処理
 	const Vec3 endPos = startPos_ + human->parent->frontVec_.Norm() * length_;
@@ -258,7 +259,7 @@ void MalletMotion::WeakStep1Update(HumanoidBody* human)
 		isCalcCollider_ = false;
 	}
 }
-void MalletMotion::WeakStep2Update(HumanoidBody* human)
+void MalletMotion::WeakStep2Update(PlayerBody* human)
 {
 	if (ease_.GetisEnd() == true)
 	{
@@ -270,14 +271,14 @@ void MalletMotion::WeakStep2Update(HumanoidBody* human)
 }
 
 // 強攻撃
-void MalletMotion::HeavyStep1Update(HumanoidBody* human)
+void MalletMotion::HeavyStep1Update(PlayerBody* human)
 {
 	if (!Pad::GetTrigger(PadCode::RightTrigger, 300))
 	{
 		ease_.SetisEnd(true);
 	}
 }
-void MalletMotion::HeavyStep2Init(HumanoidBody* human)
+void MalletMotion::HeavyStep2Init(PlayerBody* human)
 {
 	// 前ベクトルの計算
 	human->parent->CalcFrontVec();
@@ -295,7 +296,7 @@ void MalletMotion::HeavyStep2Init(HumanoidBody* human)
 	// 当たり判定有効
 	isCalcCollider_ = true;
 }
-void MalletMotion::HeavyStep2Update(HumanoidBody* human)
+void MalletMotion::HeavyStep2Update(PlayerBody* human)
 {
 	// 少し前に移動する処理
 	const Vec3 endPos = startPos_ + human->parent->frontVec_.Norm() * length_;
@@ -312,7 +313,7 @@ void MalletMotion::HeavyStep2Update(HumanoidBody* human)
 		//}
 	}
 }
-void MalletMotion::HeavyStep5Update(HumanoidBody* human)
+void MalletMotion::HeavyStep5Update(PlayerBody* human)
 {
 	if (ease_.GetisEnd() == true)
 	{
@@ -321,7 +322,7 @@ void MalletMotion::HeavyStep5Update(HumanoidBody* human)
 }
 
 // バック攻撃
-void MalletMotion::BackStep0Init(HumanoidBody* human)
+void MalletMotion::BackStep0Init(PlayerBody* human)
 {
 	// 前ベクトルの計算
 	human->parent->CalcFrontVec();
@@ -343,7 +344,7 @@ void MalletMotion::BackStep0Init(HumanoidBody* human)
 	moveEase_.SetPowNum(2);
 	moveEase_.Reset();
 }
-void MalletMotion::BackStep0Update(HumanoidBody* human)
+void MalletMotion::BackStep0Update(PlayerBody* human)
 {
 	moveEase_.Update();
 
@@ -352,7 +353,7 @@ void MalletMotion::BackStep0Update(HumanoidBody* human)
 	human->pos = moveEase_.InOut(startPos_, endPos);
 	human->parent->moveVel = endPos - startPos_;
 }
-void MalletMotion::BackStep2Init(HumanoidBody* human)
+void MalletMotion::BackStep2Init(PlayerBody* human)
 {
 	// 前ベクトルの計算
 	human->parent->CalcFrontVec();
@@ -374,7 +375,7 @@ void MalletMotion::BackStep2Init(HumanoidBody* human)
 	moveEase_.SetPowNum(2);
 	moveEase_.Reset();
 }
-void MalletMotion::BackStep2Update(HumanoidBody* human)
+void MalletMotion::BackStep2Update(PlayerBody* human)
 {
 	moveEase_.Update();
 
@@ -383,7 +384,7 @@ void MalletMotion::BackStep2Update(HumanoidBody* human)
 	human->pos = moveEase_.InOut(startPos_, endPos);
 	human->parent->moveVel = endPos - startPos_;
 }
-void MalletMotion::BackStep3Update(HumanoidBody* human)
+void MalletMotion::BackStep3Update(PlayerBody* human)
 {
 	moveEase_.Update();
 
@@ -394,7 +395,7 @@ void MalletMotion::BackStep3Update(HumanoidBody* human)
 }
 
 // 回転攻撃
-void MalletMotion::RollStep0Init(HumanoidBody* human)
+void MalletMotion::RollStep0Init(PlayerBody* human)
 {
 	// 前ベクトルの計算
 	human->parent->CalcFrontVec();
@@ -416,7 +417,7 @@ void MalletMotion::RollStep0Init(HumanoidBody* human)
 	moveEase_.SetPowNum(2);
 	moveEase_.Reset();
 }
-void MalletMotion::RollStep0Update(HumanoidBody* human)
+void MalletMotion::RollStep0Update(PlayerBody* human)
 {
 	moveEase_.Update();
 
@@ -425,7 +426,7 @@ void MalletMotion::RollStep0Update(HumanoidBody* human)
 	human->pos = moveEase_.InOut(startPos_, endPos);
 	human->parent->moveVel = endPos - startPos_;
 }
-void MalletMotion::RollStep1Update(HumanoidBody* human)
+void MalletMotion::RollStep1Update(PlayerBody* human)
 {
 	moveEase_.Update();
 

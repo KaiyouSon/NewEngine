@@ -45,7 +45,6 @@ void GameScene::Update()
 	boss_->Update();
 	uiManager_->Update();
 	ground_->Update();
-
 	CollisionManager::GetInstance()->Update();
 	player_->PostUpdate();
 
@@ -75,6 +74,7 @@ void GameScene::DrawModel()
 void GameScene::DrawFrontSprite()
 {
 	uiManager_->DrawFrontSprite();
+
 }
 void GameScene::DrawDebugGui()
 {

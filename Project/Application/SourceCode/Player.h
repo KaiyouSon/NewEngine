@@ -2,6 +2,7 @@
 #include "NewEngine.h"
 #include "GaugeParam.h"
 #include "HumanoidBody.h"
+#include "PlayerBody.h"
 
 class MalletMotion;
 
@@ -24,7 +25,7 @@ public:
 private:
 	std::array<GaugeParam, 3> gaugePrames_;
 	std::unique_ptr<Weapon> weapon_;
-	std::unique_ptr<HumanoidBody> player_;
+	std::unique_ptr<PlayerBody> player_;
 
 private:
 	Timer pushTimer; //ƒ{ƒ^ƒ“˜A‘Å‚³‚¹‚È‚¢‚æ‚¤‚É
@@ -81,7 +82,7 @@ public:
 
 public:
 	GaugeParam GetGaugeParam(const uint32_t index);
-	HumanoidBody* GetHumanoidBody();
+	PlayerBody* GetPlayerBody();
 	Weapon* GetWeapon();
 	Vec3 GetPos();
 	Vec3 GetRot();
@@ -93,7 +94,7 @@ public:
 	CapsuleCollider GetBodyCollider();
 
 private:
-	friend HumanoidBody;
+	friend PlayerBody;
 	friend MoveMotion;
 	friend MalletMotion;
 	friend BackstepMotion;

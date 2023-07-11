@@ -19,7 +19,7 @@ Bloom::Bloom() :
 
 	bloom_->pos = GetWindowHalfSize();
 	bloom_->AddRenderTexture(texs_[2]);
-	bloom_->AddRenderTexture(TextureManager::GetRenderTexture("BackGround"));
+	bloom_->AddRenderTexture(TextureManager::GetRenderTexture("CurrentScene"));
 	bloom_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Bloom"));
 }
 
@@ -86,13 +86,13 @@ void Bloom::Update()
 	bloom_->Update();
 }
 
-void Bloom::DrawPostEffect(const uint32_t index)
+void Bloom::DrawPostEffect(const TexType texType)
 {
-	if (index == 0)
+	if (texType == TexType::HighLumi)
 	{
 		highLumi_->Draw();
 	}
-	else if (index == 1)
+	else if (texType == TexType::Blur)
 	{
 		blur_->Draw();
 	}
@@ -102,12 +102,12 @@ void Bloom::DrawPostEffect(const uint32_t index)
 	}
 }
 
-void Bloom::PrevSceneDraw(const uint32_t index)
+void Bloom::PrevSceneDraw(const TexType texType)
 {
-	texs_[index]->PrevDrawScene();
+	texs_[(uint32_t)texType]->PrevDrawScene();
 }
 
-void Bloom::PostSceneDraw(const uint32_t index)
+void Bloom::PostSceneDraw(const TexType texType)
 {
-	texs_[index]->PostDrawScene();
+	texs_[(uint32_t)texType]->PostDrawScene();
 }

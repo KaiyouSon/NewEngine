@@ -15,17 +15,17 @@ private:
 
 
 private:
-	void CurrentStepInit(HumanoidBody* human);
-	void CurrentStepUpdate(HumanoidBody* human);
+	void CurrentStepInit(PlayerBody* human);
+	void CurrentStepUpdate(PlayerBody* human);
 
-	void Step0Init(HumanoidBody* human);
-	void Step0Update(HumanoidBody* human);
-	void Step1Update(HumanoidBody* human);
-	void Step2Update(HumanoidBody* human);
+	void Step0Init(PlayerBody* human);
+	void Step0Update(PlayerBody* human);
+	void Step1Update(PlayerBody* human);
+	void Step2Update(PlayerBody* human);
 
 public:
 	BackstepMotion();
-	void Init(HumanoidBody* human) override;
-	void Update(HumanoidBody* human) override;
+	void Init(PlayerBody* human) override;
+	void Update(PlayerBody* human) override;
 };
 

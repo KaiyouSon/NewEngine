@@ -1,7 +1,8 @@
 #include "IMotion.h"
 #include "HumanoidBody.h"
+#include "PlayerBody.h"
 
-void IMotion::BaseInit(HumanoidBody* human)
+void IMotion::BaseInit(PlayerBody* human)
 {
 	if (isInit_ == false)
 	{
@@ -21,7 +22,7 @@ void IMotion::BaseInit(HumanoidBody* human)
 	}
 }
 
-void IMotion::BasePrevUpdate(HumanoidBody* human)
+void IMotion::BasePrevUpdate(PlayerBody* human)
 {
 	for (uint32_t i = (uint32_t)PartID::Body; i < curRots_.size(); i++)
 	{
@@ -38,7 +39,7 @@ void IMotion::BasePrevUpdate(HumanoidBody* human)
 	}
 }
 
-void IMotion::BasePostUpdate(HumanoidBody* human)
+void IMotion::BasePostUpdate(PlayerBody* human)
 {
 	if (ease_.GetisEnd() == true)
 	{

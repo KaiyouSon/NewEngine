@@ -2,7 +2,7 @@
 #include "NewEngine.h"
 #include "MotionManager.h"
 
-class HumanoidBody;
+class PlayerBody;
 
 enum class AttackType
 {
@@ -31,16 +31,16 @@ protected:
 	AttackType attackType_;
 
 protected:
-	void BaseInit(HumanoidBody* human, const uint32_t index);
-	void BaseUpdate(HumanoidBody* human, const uint32_t index);
+	void BaseInit(PlayerBody* human, const uint32_t index);
+	void BaseUpdate(PlayerBody* human, const uint32_t index);
 
 public:
 	virtual ~IWeaponMotion() {}
-	virtual void Init(HumanoidBody* human) = 0;
-	virtual void WeakMotion(HumanoidBody* human) = 0;
-	virtual void HeavyMotion(HumanoidBody* human) = 0;
-	virtual void BackMotion(HumanoidBody* human) = 0;
-	virtual void RollMotion(HumanoidBody* human) = 0;
+	virtual void Init(PlayerBody* human) = 0;
+	virtual void WeakMotion(PlayerBody* human) = 0;
+	virtual void HeavyMotion(PlayerBody* human) = 0;
+	virtual void BackMotion(PlayerBody* human) = 0;
+	virtual void RollMotion(PlayerBody* human) = 0;
 
 public:
 	void IncreComboCount();

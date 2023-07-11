@@ -134,6 +134,7 @@
     <ClCompile Include="Application\SourceCode\RollMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\GameScene.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\LogoScene.cpp" />
+    <ClCompile Include="Application\SourceCode\Scene\PlayerBody.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\SceneChanger.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\SceneManager.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\TestScene.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="Application\SourceCode\LoadManager.h" />
     <ClInclude Include="Application\SourceCode\MalletMotion.h" />
     <ClInclude Include="Application\SourceCode\Player.h" />
+    <ClInclude Include="Application\SourceCode\PlayerBody.h" />
     <ClInclude Include="Application\SourceCode\RadialBlur.h" />
     <ClInclude Include="Application\SourceCode\RollMotion.h" />
     <ClInclude Include="Application\SourceCode\Scene\GameScene.h" />

@@ -1,7 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
-class HumanoidBody;
+class PlayerBody;
 
 class MoveMotion
 {
@@ -19,28 +19,28 @@ private:
 	uint32_t count_;
 private:
 
-	void CalcCurrentRot(HumanoidBody* human);
+	void CalcCurrentRot(PlayerBody* human);
 	void ReverceRots();
 
-	void Step0Init(HumanoidBody* human);
-	void Step0Update(HumanoidBody* human);
-	void Step1Init(HumanoidBody* human);
-	void Step1Update(HumanoidBody* human);
-	void Step2Init(HumanoidBody* human);
-	void Step2Update(HumanoidBody* human);
-	void Step3Init(HumanoidBody* human);
-	void Step3Update(HumanoidBody* human);
+	void Step0Init(PlayerBody* human);
+	void Step0Update(PlayerBody* human);
+	void Step1Init(PlayerBody* human);
+	void Step1Update(PlayerBody* human);
+	void Step2Init(PlayerBody* human);
+	void Step2Update(PlayerBody* human);
+	void Step3Init(PlayerBody* human);
+	void Step3Update(PlayerBody* human);
 
 
 
 public:
 	MoveMotion();
-	void Init(HumanoidBody* human);
-	void JoggingMotion(HumanoidBody* human);
-	void RunMotion(HumanoidBody* human);
+	void Init(PlayerBody* human);
+	void JoggingMotion(PlayerBody* human);
+	void RunMotion(PlayerBody* human);
 
-	void JoggingInit(HumanoidBody* human);
-	void RunInit(HumanoidBody* human);
+	void JoggingInit(PlayerBody* human);
+	void RunInit(PlayerBody* human);
 
 public:
 	bool GetisPlay();

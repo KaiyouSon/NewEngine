@@ -29,6 +29,7 @@ bool LoadManager::ModelLoad()
 bool LoadManager::TextureLoad()
 {
 	TextureManager::CreateTexture(Color::white, "White");
+	TextureManager::CreateDepthTexture(Vec2(1920, 1080));
 
 	// タイトル
 	TextureManager::LoadTexture("Title/GameTitle.png", "GameTitle");
@@ -36,6 +37,17 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Title/PressButtonBack.png", "PressButtonBack");
 
 	TextureManager::LoadTexture("Gauge.png", "Gauge");
+
+	// レンダーテクスチャー
+
+	// 現在のシーン描画情報
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "CurrentScene");
+
+	// ブルーム
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "HighLumi");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BGaussainBlur");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
+
 
 	// 処理が終わったのを教えるため、必ずtrueを返す
 	return true;
@@ -81,8 +93,6 @@ void LoadManager::Load()
 		soundFtr.get() == true &&
 		motionFtr.get() == true)	// サウンド
 	{
-		TextureManager::CreateDepthTexture(Vec2(1920, 1080));
-
 		isLoaded = true;
 		// コマンド実行
 		TextureManager::ExcuteComandList();

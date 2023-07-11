@@ -3,7 +3,7 @@
 #include "Club.h"
 
 Player::Player() :
-	player_(std::make_unique<HumanoidBody>()),
+	player_(std::make_unique<PlayerBody>()),
 	weapon_(std::make_unique<Club>()),
 	frontVec_(Vec3::front)
 {
@@ -46,8 +46,8 @@ void Player::PrevUpdate()
 	(this->*pFunc[(int)state_])();
 
 	GaugeParamUpdate();
+	ColliderUpdate();
 
-	//player_->pos.y = 4.5f;
 	player_->PrevUpdate();
 }
 void Player::PostUpdate()
@@ -400,7 +400,7 @@ GaugeParam Player::GetGaugeParam(const uint32_t index)
 {
 	return gaugePrames_[index];
 }
-HumanoidBody* Player::GetHumanoidBody()
+PlayerBody* Player::GetPlayerBody()
 {
 	return player_.get();
 }

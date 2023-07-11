@@ -1,5 +1,6 @@
 #include "BackstepMotion.h"
 #include "HumanoidBody.h"
+#include "PlayerBody.h"
 #include "Player.h"
 #include "CollisionManager.h"
 
@@ -8,7 +9,7 @@ BackstepMotion::BackstepMotion()
 	motion_ = MotionManager::GetMotion("Backstep");
 }
 
-void BackstepMotion::Init(HumanoidBody* human)
+void BackstepMotion::Init(PlayerBody* human)
 {
 	isInit_ = false;
 	isPlay_ = false;
@@ -23,7 +24,7 @@ void BackstepMotion::Init(HumanoidBody* human)
 	moveEase_.SetEaseTimer(15);
 	moveEase_.SetPowNum(2);
 }
-void BackstepMotion::Update(HumanoidBody* human)
+void BackstepMotion::Update(PlayerBody* human)
 {
 	if (isPlay_ == false)
 	{
@@ -43,14 +44,14 @@ void BackstepMotion::Update(HumanoidBody* human)
 	BasePostUpdate(human);
 }
 
-void BackstepMotion::CurrentStepInit(HumanoidBody* human)
+void BackstepMotion::CurrentStepInit(PlayerBody* human)
 {
 	if (step_ == 0)
 	{
 		Step0Init(human);
 	}
 }
-void BackstepMotion::CurrentStepUpdate(HumanoidBody* human)
+void BackstepMotion::CurrentStepUpdate(PlayerBody* human)
 {
 	if (step_ == 0)
 	{
@@ -66,7 +67,7 @@ void BackstepMotion::CurrentStepUpdate(HumanoidBody* human)
 	}
 }
 
-void BackstepMotion::Step0Init(HumanoidBody* human)
+void BackstepMotion::Step0Init(PlayerBody* human)
 {
 	moveEase_.Reset();
 
@@ -83,7 +84,7 @@ void BackstepMotion::Step0Init(HumanoidBody* human)
 	up_ = 1;
 	down_ = -0.5;
 }
-void BackstepMotion::Step0Update(HumanoidBody* human)
+void BackstepMotion::Step0Update(PlayerBody* human)
 {
 	human->GetPart(PartID::Body)->pos.y = ease_.Interpolation(0.f, up_);
 	human->pos = moveEase_.InOut(startPos_, endPos_);
@@ -95,7 +96,7 @@ void BackstepMotion::Step0Update(HumanoidBody* human)
 	{
 	}
 }
-void BackstepMotion::Step1Update(HumanoidBody* human)
+void BackstepMotion::Step1Update(PlayerBody* human)
 {
 	human->GetPart(PartID::Body)->pos.y = ease_.Interpolation(up_, down_);
 	human->pos = moveEase_.InOut(startPos_, endPos_);
@@ -108,7 +109,7 @@ void BackstepMotion::Step1Update(HumanoidBody* human)
 		isCanChangeMotion_ = true;
 	}
 }
-void BackstepMotion::Step2Update(HumanoidBody* human)
+void BackstepMotion::Step2Update(PlayerBody* human)
 {
 	human->GetPart(PartID::Body)->pos.y = ease_.Interpolation(down_, 0.f);
 

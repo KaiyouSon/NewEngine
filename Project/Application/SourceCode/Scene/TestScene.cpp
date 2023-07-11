@@ -128,22 +128,22 @@ void TestScene::RenderTextureSetting()
 	}
 	else if (postEffectType_ == 1)
 	{
-		// 現在のシーンを描画
-		bloom_.PrevSceneDraw(0);
-		RenderBase::GetInstance()->SetObject3DDrawCommand();
-		obj1_.Draw();
-		bloom_.PostSceneDraw(0);
+		//// 現在のシーンを描画
+		//bloom_.PrevSceneDraw(0);
+		//RenderBase::GetInstance()->SetObject3DDrawCommand();
+		//obj1_.Draw();
+		//bloom_.PostSceneDraw(0);
 
-		// 現在のシーンの高輝度抽出して描画
-		RenderBase::GetInstance()->SetRenderTextureDrawCommand();
-		bloom_.PrevSceneDraw(1);
-		bloom_.DrawPostEffect(0);
-		bloom_.PostSceneDraw(1);
+		//// 現在のシーンの高輝度抽出して描画
+		//RenderBase::GetInstance()->SetRenderTextureDrawCommand();
+		//bloom_.PrevSceneDraw(1);
+		//bloom_.DrawPostEffect(0);
+		//bloom_.PostSceneDraw(1);
 
-		// 高輝度部分にブラーをかけて描画
-		bloom_.PrevSceneDraw(2);
-		bloom_.DrawPostEffect(1);
-		bloom_.PostSceneDraw(2);
+		//// 高輝度部分にブラーをかけて描画
+		//bloom_.PrevSceneDraw(2);
+		//bloom_.DrawPostEffect(1);
+		//bloom_.PostSceneDraw(2);
 	}
 	else if (postEffectType_ == 2)
 	{
@@ -237,7 +237,7 @@ void TestScene::DrawRenderTexture()
 	}
 	else if (postEffectType_ == 1)
 	{
-		bloom_.DrawPostEffect(2);
+		//bloom_.DrawPostEffect(2);
 	}
 	else if (postEffectType_ == 2)
 	{

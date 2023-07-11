@@ -6,7 +6,7 @@ MoveMotion::MoveMotion()
 {
 }
 
-void MoveMotion::Init(HumanoidBody* human)
+void MoveMotion::Init(PlayerBody* human)
 {
 	ease_.SetEaseTimer(20);
 	ease_.SetPowNum(2);
@@ -24,7 +24,7 @@ void MoveMotion::Init(HumanoidBody* human)
 }
 
 // ジョギングモーション
-void MoveMotion::JoggingMotion(HumanoidBody* human)
+void MoveMotion::JoggingMotion(PlayerBody* human)
 {
 	// 最初の一回しか通らない初期化
 	if (isPlay_ == false)
@@ -72,7 +72,7 @@ void MoveMotion::JoggingMotion(HumanoidBody* human)
 }
 
 // 走りモーション
-void MoveMotion::RunMotion(HumanoidBody* human)
+void MoveMotion::RunMotion(PlayerBody* human)
 {
 	// 最初の一回しか通らない初期化
 	if (isPlay_ == false)
@@ -121,13 +121,13 @@ void MoveMotion::RunMotion(HumanoidBody* human)
 }
 
 // 現在の姿勢から走りモーションに補間
-void MoveMotion::Step0Init(HumanoidBody* human)
+void MoveMotion::Step0Init(PlayerBody* human)
 {
 	ease_.SetEaseTimer(10);
 	ease_.SetPowNum(2);
 	ease_.Reset();
 }
-void MoveMotion::Step0Update(HumanoidBody* human)
+void MoveMotion::Step0Update(PlayerBody* human)
 {
 	for (uint32_t i = (uint32_t)PartID::Body; i < startRots_.size(); i++)
 	{
@@ -154,12 +154,12 @@ void MoveMotion::Step0Update(HumanoidBody* human)
 }
 
 // 走りモーション
-void MoveMotion::Step1Init(HumanoidBody* human)
+void MoveMotion::Step1Init(PlayerBody* human)
 {
 	ease_.SetEaseTimer(20);
 	ease_.SetPowNum(2);
 }
-void MoveMotion::Step1Update(HumanoidBody* human)
+void MoveMotion::Step1Update(PlayerBody* human)
 {
 	for (uint32_t i = (uint32_t)PartID::Body; i < startRots_.size(); i++)
 	{
@@ -185,7 +185,7 @@ void MoveMotion::Step1Update(HumanoidBody* human)
 }
 
 // 待機姿勢に戻る
-void MoveMotion::Step2Init(HumanoidBody* human)
+void MoveMotion::Step2Init(PlayerBody* human)
 {
 	ease_.SetEaseTimer(10);
 	ease_.SetPowNum(2);
@@ -194,7 +194,7 @@ void MoveMotion::Step2Init(HumanoidBody* human)
 
 	CalcCurrentRot(human);
 }
-void MoveMotion::Step2Update(HumanoidBody* human)
+void MoveMotion::Step2Update(PlayerBody* human)
 {
 	for (uint32_t i = (uint32_t)PartID::Body; i < startRots_.size(); i++)
 	{
@@ -212,7 +212,7 @@ void MoveMotion::Step2Update(HumanoidBody* human)
 }
 
 // ムーブモーションが変わった時に補間する
-void MoveMotion::Step3Init(HumanoidBody* human)
+void MoveMotion::Step3Init(PlayerBody* human)
 {
 	ease_.SetEaseTimer(10);
 	ease_.SetPowNum(2);
@@ -225,7 +225,7 @@ void MoveMotion::Step3Init(HumanoidBody* human)
 		ReverceRots();
 	}
 }
-void MoveMotion::Step3Update(HumanoidBody* human)
+void MoveMotion::Step3Update(PlayerBody* human)
 {
 	for (uint32_t i = (uint32_t)PartID::Body; i < endRots_.size(); i++)
 	{
@@ -249,7 +249,7 @@ void MoveMotion::Step3Update(HumanoidBody* human)
 }
 
 // ジョギングの初期化
-void MoveMotion::JoggingInit(HumanoidBody* human)
+void MoveMotion::JoggingInit(PlayerBody* human)
 {
 	isInit_ = false;
 
@@ -285,7 +285,7 @@ void MoveMotion::JoggingInit(HumanoidBody* human)
 }
 
 // 走りの初期化
-void MoveMotion::RunInit(HumanoidBody* human)
+void MoveMotion::RunInit(PlayerBody* human)
 {
 	isInit_ = false;
 
@@ -321,7 +321,7 @@ void MoveMotion::RunInit(HumanoidBody* human)
 }
 
 // 現在の角度を計算する
-void MoveMotion::CalcCurrentRot(HumanoidBody* human)
+void MoveMotion::CalcCurrentRot(PlayerBody* human)
 {
 	curRots_.resize(human->GetPartsSize());
 

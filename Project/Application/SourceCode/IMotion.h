@@ -2,7 +2,7 @@
 #include "NewEngine.h"
 #include "MotionManager.h"
 
-class HumanoidBody;
+class PlayerBody;
 
 class IMotion
 {
@@ -22,13 +22,13 @@ protected:
 	Motion* motion_;
 
 protected:
-	void BaseInit(HumanoidBody* human);
-	void BasePrevUpdate(HumanoidBody* human);
-	void BasePostUpdate(HumanoidBody* human);
+	void BaseInit(PlayerBody* human);
+	void BasePrevUpdate(PlayerBody* human);
+	void BasePostUpdate(PlayerBody* human);
 
 public:
-	virtual void Init(HumanoidBody* human) = 0;
-	virtual void Update(HumanoidBody* human) = 0;
+	virtual void Init(PlayerBody* human) = 0;
+	virtual void Update(PlayerBody* human) = 0;
 
 public:
 	bool GetisPlay();

@@ -13,38 +13,38 @@ private:
 
 private:// ÉRÉìÉ{ 1 Å` 4
 
-	void CurrentStepInit(HumanoidBody* human);
-	void CurrentStepUpdate(HumanoidBody* human);
+	void CurrentStepInit(PlayerBody* human);
+	void CurrentStepUpdate(PlayerBody* human);
 
 	// é„çUåÇ
-	void WeakStep1Init(HumanoidBody* human);
-	void WeakStep1Update(HumanoidBody* human);
-	void WeakStep2Update(HumanoidBody* human);
+	void WeakStep1Init(PlayerBody* human);
+	void WeakStep1Update(PlayerBody* human);
+	void WeakStep2Update(PlayerBody* human);
 
 	// ã≠çUåÇ
-	void HeavyStep1Update(HumanoidBody* human);
-	void HeavyStep2Init(HumanoidBody* human);
-	void HeavyStep2Update(HumanoidBody* human);
-	void HeavyStep5Update(HumanoidBody* human);
+	void HeavyStep1Update(PlayerBody* human);
+	void HeavyStep2Init(PlayerBody* human);
+	void HeavyStep2Update(PlayerBody* human);
+	void HeavyStep5Update(PlayerBody* human);
 
 	// ÉoÉbÉNçUåÇ
-	void BackStep0Init(HumanoidBody* human);
-	void BackStep0Update(HumanoidBody* human);
-	void BackStep2Init(HumanoidBody* human);
-	void BackStep2Update(HumanoidBody* human);
-	void BackStep3Update(HumanoidBody* human);
+	void BackStep0Init(PlayerBody* human);
+	void BackStep0Update(PlayerBody* human);
+	void BackStep2Init(PlayerBody* human);
+	void BackStep2Update(PlayerBody* human);
+	void BackStep3Update(PlayerBody* human);
 
 	// âÒì]çUåÇ
-	void RollStep0Init(HumanoidBody* human);
-	void RollStep0Update(HumanoidBody* human);
-	void RollStep1Update(HumanoidBody* human);
+	void RollStep0Init(PlayerBody* human);
+	void RollStep0Update(PlayerBody* human);
+	void RollStep1Update(PlayerBody* human);
 
 public:
 	MalletMotion();
-	void Init(HumanoidBody* human) override;
-	void WeakMotion(HumanoidBody* human) override;
-	void HeavyMotion(HumanoidBody* human) override;
-	void BackMotion(HumanoidBody* human) override;
-	void RollMotion(HumanoidBody* human) override;
+	void Init(PlayerBody* human) override;
+	void WeakMotion(PlayerBody* human) override;
+	void HeavyMotion(PlayerBody* human) override;
+	void BackMotion(PlayerBody* human) override;
+	void RollMotion(PlayerBody* human) override;
 };
 

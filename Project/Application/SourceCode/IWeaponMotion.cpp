@@ -1,7 +1,8 @@
 #include "IWeaponMotion.h"
 #include "HumanoidBody.h"
+#include "PlayerBody.h"
 
-void IWeaponMotion::BaseInit(HumanoidBody* human, const uint32_t index)
+void IWeaponMotion::BaseInit(PlayerBody* human, const uint32_t index)
 {
 	if (isInit_ == false)
 	{
@@ -23,7 +24,7 @@ void IWeaponMotion::BaseInit(HumanoidBody* human, const uint32_t index)
 	}
 }
 
-void IWeaponMotion::BaseUpdate(HumanoidBody* human, const uint32_t index)
+void IWeaponMotion::BaseUpdate(PlayerBody* human, const uint32_t index)
 {
 	for (uint32_t i = (uint32_t)PartID::Body; i < curRots_.size(); i++)
 	{
