@@ -66,7 +66,7 @@ void CameraManager::DefaultCameraUpdate()
 		-cosf(Radian(controlYaw_ + assistYaw_)) * cosf(Radian(controlPitch_)),
 	};
 
-	const float length = 25.f;
+	const float length = 30.f;
 	Vec3 curPos = player_->GetPos();
 	curPos.y = 9.5f;
 	defCame_->pos = curPos + finalVec_.Norm() * length;

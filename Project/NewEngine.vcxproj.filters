@@ -450,6 +450,12 @@
     <ClCompile Include="Application\SourceCode\Scene\SceneChanger.cpp">
       <Filter>Application\Source\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\MenuManager.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\MessegeSign.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -754,6 +760,12 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Scene\SceneChanger.h">
       <Filter>Application\Header\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\MenuManager.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\MessegeSign.h">
+      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

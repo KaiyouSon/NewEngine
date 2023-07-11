@@ -4,6 +4,7 @@
 #include "Boss.h"
 #include "UIManager.h"
 #include "CameraManager.h"
+#include "MessegeSign.h"
 
 class GameScene : public IScene
 {
@@ -14,6 +15,7 @@ private:
 	std::unique_ptr<CameraManager> cameraManager_;
 
 	std::unique_ptr<Object3D> ground_;
+	std::unique_ptr<MessegeSign> messegeSign_;
 
 public:
 	GameScene();

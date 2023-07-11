@@ -124,6 +124,7 @@
     <ClCompile Include="Application\SourceCode\HumanoidBody.cpp" />
     <ClCompile Include="Application\SourceCode\IMotion.cpp" />
     <ClCompile Include="Application\SourceCode\IWeaponMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\MenuManager.cpp" />
     <ClCompile Include="Application\SourceCode\MotionManager.cpp" />
     <ClCompile Include="Application\SourceCode\MoveMotion.cpp" />
     <ClCompile Include="Application\SourceCode\LoadManager.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="Application\SourceCode\Scene\SceneManager.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\TestScene.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\TitleScene.cpp" />
+    <ClCompile Include="Application\SourceCode\MessegeSign.cpp" />
     <ClCompile Include="Application\SourceCode\Task.cpp" />
     <ClCompile Include="Application\SourceCode\TitleUI.cpp" />
     <ClCompile Include="Application\SourceCode\UIManager.cpp" />
@@ -220,6 +222,7 @@
     <ClInclude Include="Application\SourceCode\HumanoidBody.h" />
     <ClInclude Include="Application\SourceCode\IMotion.h" />
     <ClInclude Include="Application\SourceCode\IWeaponMotion.h" />
+    <ClInclude Include="Application\SourceCode\MenuManager.h" />
     <ClInclude Include="Application\SourceCode\MotionManager.h" />
     <ClInclude Include="Application\SourceCode\MoveMotion.h" />
     <ClInclude Include="Application\SourceCode\LoadManager.h" />
@@ -234,6 +237,7 @@
     <ClInclude Include="Application\SourceCode\Scene\SceneManager.h" />
     <ClInclude Include="Application\SourceCode\Scene\TestScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\TitleScene.h" />
+    <ClInclude Include="Application\SourceCode\MessegeSign.h" />
     <ClInclude Include="Application\SourceCode\Task.h" />
     <ClInclude Include="Application\SourceCode\TitleUI.h" />
     <ClInclude Include="Application\SourceCode\UIManager.h" />

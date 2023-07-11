@@ -12,14 +12,14 @@ bool LoadManager::ModelLoad()
 
 	ModelManager::LoadObjModel("Ground", "Ground");
 
+	ModelManager::LoadObjModel("MessegeSign", "MessegeSign");
+
 	ModelManager::LoadObjModel("HumanoidBody/Body", "Body");
 	ModelManager::LoadObjModel("HumanoidBody/Head", "Head");
 	ModelManager::LoadObjModel("HumanoidBody/Limbs", "Limbs");
 
 	ModelManager::LoadObjModel("Weapon/Club", "Club");
-
 	ModelManager::LoadObjModel("Capsule", "Capsule");
-
 	ModelManager::LoadObjModel("Collider/CapsuleCollider", "CapsuleCollider");
 
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
