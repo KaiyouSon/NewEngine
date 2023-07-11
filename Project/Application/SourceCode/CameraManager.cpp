@@ -39,13 +39,13 @@ void CameraManager::DefaultCameraUpdate()
 	pitch_ = Clamp<float>(pitch_, -35, 80);
 
 	// À•W
-	const float angleOffset = 30.f;
+	const float angleOffset = 10.f;
 	bool frontRange =
 		player_->GetRot().y <= defCame_->rot.y + Radian(angleOffset) &&
 		player_->GetRot().y >= defCame_->rot.y - Radian(angleOffset);
 	bool backRange =
-		fabsf(player_->GetRot().y) <= fabsf(defCame_->rot.y + Radian(180) + Radian(angleOffset)) &&
-		fabsf(player_->GetRot().y) >= fabsf(defCame_->rot.y + Radian(180) - Radian(angleOffset));
+		player_->GetRot().y <= defCame_->rot.y + Radian(180) + Radian(angleOffset) &&
+		player_->GetRot().y >= defCame_->rot.y + Radian(180) - Radian(angleOffset);
 
 	if (!frontRange && !backRange)
 	{
