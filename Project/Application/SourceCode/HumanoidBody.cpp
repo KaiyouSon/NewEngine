@@ -16,7 +16,7 @@ HumanoidBody::HumanoidBody() :
 	parts_[(uint32_t)PartID::Head]->SetModel(ModelManager::GetModel("Head"));
 }
 
-void HumanoidBody::Init()
+void HumanoidBody::BaseInit()
 {
 	parts_[(uint32_t)PartID::Head]->pos = Vec3(0.f, 2.5f, 0.f);
 
@@ -38,33 +38,7 @@ void HumanoidBody::Init()
 	parts_[(uint32_t)PartID::LeftLeg]->color = Color::blue;
 
 }
-void HumanoidBody::PrevUpdate()
-{
-	//static bool flag = false;
-	//if (Key::GetKeyDown(DIK_F5))
-	//{
-	//	weapons_[0]->motion->Init(this);
-	//	flag = true;
-	//}
-	//if (flag == true)
-	//{
-	//	weapons_[0]->motion->BackMotion(this);
-	//	if (weapons_[0]->motion->GetisPlay() == false)
-	//	{
-	//		flag = false;
-	//	}
-	//}
-
-	//if (Key::GetKeyDown(DIK_R))
-	//{
-	//	flag = false;
-	//	for (uint32_t i = 1; i < parts_.size(); i++)
-	//	{
-	//		parts_[i]->rot = 0;
-	//	}
-	//}
-}
-void HumanoidBody::PostUpdate()
+void HumanoidBody::BaseUpdate()
 {
 	parts_[(uint32_t)PartID::Transform]->pos = pos;
 	parts_[(uint32_t)PartID::Transform]->rot = rot;
@@ -109,7 +83,7 @@ void HumanoidBody::PostUpdate()
 	Transform rightThigh = parts_[(uint32_t)PartID::RightThigh]->GetTransform();
 	parts_[(uint32_t)PartID::RightLeg]->Update(&rightThigh);
 }
-void HumanoidBody::DrawModel()
+void HumanoidBody::BaseDrawModel()
 {
 	for (uint32_t i = 1; i < parts_.size(); i++)
 	{
@@ -124,7 +98,7 @@ void HumanoidBody::DrawModel()
 		}
 	}
 }
-void HumanoidBody::DrawDebugGui()
+void HumanoidBody::BaseDrawDebugGui()
 {
 	const float move = 0.05f;
 	Vec3 angle;
@@ -244,6 +218,15 @@ std::vector<Vec3> HumanoidBody::CalcCurWeaponRots()
 		}
 	}
 	return result;
+}
+
+void HumanoidBody::SetWeapon(Weapon* weapon, const WeaponPartID partID)
+{
+	weapons_[(uint32_t)partID] = weapon;
+	weapons_[(uint32_t)partID]->weapon->pos.y = -1.5f;
+
+	weapons_[(uint32_t)partID]->motion->Init(this);
+	weapons_[(uint32_t)partID]->motion->ResetComboCount();
 }
 
 Vec3 HumanoidBody::GetWorldPos(const PartID partID)

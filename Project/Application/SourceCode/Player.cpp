@@ -47,12 +47,10 @@ void Player::PrevUpdate()
 
 	GaugeParamUpdate();
 	ColliderUpdate();
-
-	player_->PrevUpdate();
 }
 void Player::PostUpdate()
 {
-	player_->PostUpdate();
+	player_->Update();
 }
 void Player::DrawModel()
 {

@@ -1,5 +1,4 @@
 #include "MalletMotion.h"
-#include "HumanoidBody.h"
 #include "PlayerBody.h"
 #include "CollisionManager.h"
 
@@ -13,7 +12,7 @@ MalletMotion::MalletMotion()
 	motions_.emplace_back(MotionManager::GetMotion("MalletRollAttack"));
 }
 
-void MalletMotion::Init(PlayerBody* human)
+void MalletMotion::Init(HumanoidBody* human)
 {
 	isPlay_ = false;
 	isInit_ = false;

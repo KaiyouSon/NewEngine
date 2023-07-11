@@ -29,7 +29,7 @@ enum class WeaponPartID
 
 class HumanoidBody
 {
-private:
+protected:
 	std::array<std::unique_ptr<Object3D>, 11> parts_;
 	std::array<Weapon*, 2> weapons_;
 	std::array<Vec3, 13> curRots_;
@@ -43,11 +43,10 @@ public:
 public:
 	HumanoidBody();
 	virtual ~HumanoidBody() {}
-	void Init();
-	void PrevUpdate();
-	void PostUpdate();
-	void DrawModel();
-	void DrawDebugGui();
+	void BaseInit();
+	void BaseUpdate();
+	void BaseDrawModel();
+	void BaseDrawDebugGui();
 
 public:
 	std::vector<Vec3> CalcCurRots();

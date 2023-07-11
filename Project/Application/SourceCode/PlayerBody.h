@@ -7,30 +7,21 @@
 struct Weapon;
 class Player;
 
-class PlayerBody
+class PlayerBody : public HumanoidBody
 {
-private:
-	std::array<std::unique_ptr<Object3D>, 11> parts_;
-	std::array<Weapon*, 2> weapons_;
-	std::array<Vec3, 13> curRots_;
-
 private:
 	std::unique_ptr<MoveMotion> moveMotion_;
 	std::unique_ptr<RollMotion> rollMotion_;
 	std::unique_ptr<BackstepMotion> backstepMotion_;
 
 public:
-	Vec3 pos;
-	Vec3 attackPos;
-	Vec3 rot;
-	Vec3 scale;
 	Player* parent;
 
 public:
 	PlayerBody();
 	void Init();
-	void PrevUpdate();
-	void PostUpdate();
+	void DebugUpdate();
+	void Update();
 	void DrawModel();
 	void DrawDebugGui();
 
@@ -45,16 +36,9 @@ public:
 	void BackstepMotionUpdate();
 	void RollMotionUpdate();
 
-	void CalcFrontVec();
-	std::vector<Vec3> CalcCurRots();
-	std::vector<Vec3> CalcCurWeaponRots();
 	void ChangeMoveMotionInit();
 
 public:
-	void SetWeapon(Weapon* weapon, const WeaponPartID partID);
-
-public:
-	CapsuleCollider GetBodyCollider();
 	Vec3 GetWorldPos(const PartID partID);
 	Object3D* GetPart(const PartID partID);
 	Object3D* GetWeaponPart(const WeaponPartID partID);

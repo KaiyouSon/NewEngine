@@ -8,6 +8,7 @@ MessegeSign::MessegeSign() :
 void MessegeSign::Init()
 {
 	messegeSign_->SetModel(ModelManager::GetModel("MessegeSign"));
+	messegeSign_->pos = Vec3(10, 0, 5);
 	messegeSign_->scale = 1.5f;
 }
 

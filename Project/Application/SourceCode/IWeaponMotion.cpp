@@ -2,7 +2,8 @@
 #include "HumanoidBody.h"
 #include "PlayerBody.h"
 
-void IWeaponMotion::BaseInit(PlayerBody* human, const uint32_t index)
+
+void IWeaponMotion::BaseInit(HumanoidBody* human, const uint32_t index)
 {
 	if (isInit_ == false)
 	{
