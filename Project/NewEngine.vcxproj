@@ -133,6 +133,7 @@
     <ClCompile Include="Application\SourceCode\MoveMotion.cpp" />
     <ClCompile Include="Application\SourceCode\LoadManager.cpp" />
     <ClCompile Include="Application\SourceCode\MalletMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\NegotiationUI.cpp" />
     <ClCompile Include="Application\SourceCode\Player.cpp" />
     <ClCompile Include="Application\SourceCode\RadialBlur.cpp" />
     <ClCompile Include="Application\SourceCode\RollMotion.cpp" />
@@ -237,6 +238,7 @@
     <ClInclude Include="Application\SourceCode\MoveMotion.h" />
     <ClInclude Include="Application\SourceCode\LoadManager.h" />
     <ClInclude Include="Application\SourceCode\MalletMotion.h" />
+    <ClInclude Include="Application\SourceCode\NegotiationUI.h" />
     <ClInclude Include="Application\SourceCode\Player.h" />
     <ClInclude Include="Application\SourceCode\PlayerBody.h" />
     <ClInclude Include="Application\SourceCode\RadialBlur.h" />

@@ -37,7 +37,14 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Title/PressButton.png", "PressButton");
 	TextureManager::LoadTexture("Title/PressButtonBack.png", "PressButtonBack");
 
-	TextureManager::LoadTexture("Gauge.png", "Gauge");
+	// UI
+	TextureManager::LoadTexture("UI/Gauge.png", "Gauge");
+	TextureManager::LoadTexture("UI/Buttons.png", "Buttons");
+	TextureManager::LoadTexture("UI/Negotiation/NegotiationBackFrame.png", "NegotiationBackFrame");
+
+	// テキスト
+	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");
+	TextureManager::LoadTexture("Text/ReadMessageStr.png", "ReadMessageStr");
 
 	// レンダーテクスチャー
 

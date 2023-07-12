@@ -104,16 +104,45 @@ bool Collision::SphereHitTriangle(const SphereCollider& sphere, const TriangleCo
 // 球とカプセル
 bool Collision::SphereHitCapsule(const SphereCollider& sphere, const CapsuleCollider& capsule)
 {
-	Vec3 d1 = capsule.endPos - capsule.startPos;
+	// カプセルの軸ベクトルと球の中心位置ベクトルの差を計算
+	Vec3 capsuleAxis = capsule.endPos - capsule.startPos;
+	Vec3 sphereToCapsule = sphere.centerPos - capsule.startPos;
 
-	Vec3 n = d1.Norm();
+	Vec3 n = capsuleAxis.Norm();
 
-	Vec3 v = sphere.centerPos - capsule.startPos;
+	// カプセルの軸ベクトル上の最近接点を計算
+	float t =
+		(sphereToCapsule.x * n.x) +
+		(sphereToCapsule.y * n.y) +
+		(sphereToCapsule.z * n.z);
 
-	float t = Vec3::Dot(v, n);
+	Vec3 closestPoint;
+	if (t <= 0.0f)
+	{
+		closestPoint = capsule.startPos;
+	}
+	else if (t >= capsuleAxis.Length())
+	{
+		closestPoint = capsule.endPos;
+	}
+	else
+	{
+		closestPoint = capsule.startPos + capsuleAxis * t;
+	}
 
-	Vec3 v2 = n * t;
-	//Vec3 v3 =
+	// 最近接点と球の中心位置の距離を計算
+	float distance =
+		(closestPoint.x - sphere.centerPos.x) * (closestPoint.x - sphere.centerPos.x) +
+		(closestPoint.y - sphere.centerPos.y) * (closestPoint.y - sphere.centerPos.y) +
+		(closestPoint.z - sphere.centerPos.z) * (closestPoint.z - sphere.centerPos.z);
+
+	// 距離が半径の合計よりも小さい場合は衝突しているとみなす
+	float totalRadius = sphere.radius + sphere.radius;
+
+	if (distance <= (totalRadius * totalRadius))
+	{
+		return true;
+	}
 
 	return false;
 }

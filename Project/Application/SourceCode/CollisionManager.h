@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Boss.h"
 #include "Field.h"
+#include "UIManager.h"
 
 template<typename T> class Singleton;
 
@@ -11,6 +12,7 @@ private:
 	Player* player_;
 	Boss* boss_;
 	Field* field_;
+	UIManager* uiManager_;
 
 private:
 	void PlayerHitBoss();
@@ -26,6 +28,7 @@ public:
 	void SetPlayer(Player* player);
 	void SetBoss(Boss* boss);
 	void SetField(Field* field);
+	void SetUIManager(UIManager* uiManager);
 
 private:
 	friend Singleton<CollisionManager>;

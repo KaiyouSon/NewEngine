@@ -1,5 +1,6 @@
 #pragma once
 #include "GaugeUI.h"
+#include "NegotiationUI.h"
 #include "Player.h"
 #include "Boss.h"
 
@@ -8,6 +9,7 @@ class UIManager
 private:
 	std::array<std::unique_ptr<GaugeUI>, 3> gauges_;
 	std::unique_ptr<GaugeUI> bossHPGauge_;
+	std::unique_ptr<NegotiationUI> negotiationUI_;
 
 	Player* player_;
 	Boss* boss_;
@@ -21,5 +23,8 @@ public:
 public:
 	void SetPlayer(Player* player);
 	void SetBoss(Boss* boss);
+
+public:
+	NegotiationUI* GetNegotiationUI();
 };
 

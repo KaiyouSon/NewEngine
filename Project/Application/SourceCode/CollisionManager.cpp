@@ -69,6 +69,11 @@ void CollisionManager::PlayerHitMessageSign()
 	if (Collision::SphereHitCapsule(
 		cur->GetCollider(), player_->GetBodyCollider()))
 	{
+		uiManager_->GetNegotiationUI()->SetisActive(true);
+	}
+	else
+	{
+		uiManager_->GetNegotiationUI()->SetisActive(false);
 	}
 }
 
@@ -126,4 +131,8 @@ void CollisionManager::SetBoss(Boss* boss)
 void CollisionManager::SetField(Field* field)
 {
 	field_ = field;
+}
+void CollisionManager::SetUIManager(UIManager* uiManager)
+{
+	uiManager_ = uiManager;
 }

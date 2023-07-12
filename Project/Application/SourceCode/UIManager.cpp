@@ -1,7 +1,8 @@
 #include "UIManager.h"
 
 UIManager::UIManager() :
-	bossHPGauge_(std::make_unique<GaugeUI>())
+	bossHPGauge_(std::make_unique<GaugeUI>()),
+	negotiationUI_(std::make_unique<NegotiationUI>())
 {
 	for (uint32_t i = 0; i < gauges_.size(); i++)
 	{
@@ -26,6 +27,8 @@ void UIManager::Init()
 	bossHPGauge_->SetPos(Vec2(GetWindowHalfSize().x - 540.f, 880.f));
 	bossHPGauge_->SetColor(GaugeUI::FrontColor, Color::red);
 	bossHPGauge_->Init();
+
+	negotiationUI_->Init();
 }
 
 void UIManager::Update()
@@ -38,6 +41,8 @@ void UIManager::Update()
 
 	bossHPGauge_->SetGaugePrame(boss_->GetHpGaugeParam());
 	bossHPGauge_->Update();
+
+	negotiationUI_->Update();
 }
 
 void UIManager::DrawFrontSprite()
@@ -46,6 +51,9 @@ void UIManager::DrawFrontSprite()
 	{
 		gauges_[i]->DrawFrontSprite();
 	}
+
+	negotiationUI_->DrawFrontSprite();
+
 	//bossHPGauge_->DrawFrontSprite();
 }
 
@@ -57,4 +65,9 @@ void UIManager::SetPlayer(Player* player)
 void UIManager::SetBoss(Boss* boss)
 {
 	boss_ = boss;
+}
+
+NegotiationUI* UIManager::GetNegotiationUI()
+{
+	return negotiationUI_.get();
 }
