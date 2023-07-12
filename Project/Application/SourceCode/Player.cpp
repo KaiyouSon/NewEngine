@@ -93,8 +93,8 @@ void Player::CalcBodyCollider()
 }
 void Player::ColliderUpdate()
 {
-	bodyCollider_.startPos = player_->pos - Vec3(0.f, 2.5f, 0.f);
-	bodyCollider_.endPos = player_->pos + Vec3(0.f, 2.5f, 0.f);
+	bodyCollider_.startPos = player_->pos - Vec3(0.f, 4.75f, 0.f);
+	bodyCollider_.endPos = player_->pos + Vec3(0.f, 4.75f, 0.f);
 	bodyCollider_.radius = 2.5f;
 }
 

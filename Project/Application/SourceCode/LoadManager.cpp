@@ -13,7 +13,7 @@ bool LoadManager::ModelLoad()
 
 	ModelManager::LoadObjModel("Ground", "Ground");
 
-	ModelManager::LoadObjModel("MessegeSign", "MessegeSign");
+	ModelManager::LoadObjModel("MessageSign", "MessageSign");
 
 	ModelManager::LoadObjModel("HumanoidBody/Body", "Body");
 	ModelManager::LoadObjModel("HumanoidBody/Head", "Head");

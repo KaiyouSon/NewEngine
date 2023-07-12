@@ -11,6 +11,10 @@ private:
 	float length_;
 	Easing moveEase_;
 
+	float startPosY;
+	float endPosY;
+
+
 private:// コンボ 1 ～ 4
 
 	void CurrentStepInit(PlayerBody* human);
@@ -22,10 +26,20 @@ private:// コンボ 1 ～ 4
 	void WeakStep2Update(PlayerBody* human);
 
 	// 強攻撃
+	void HeavyStep0Init(PlayerBody* human);
+	void HeavyStep0Update(PlayerBody* human);
+	void HeavyStep1Init(PlayerBody* human);
 	void HeavyStep1Update(PlayerBody* human);
 	void HeavyStep2Init(PlayerBody* human);
 	void HeavyStep2Update(PlayerBody* human);
+	void HeavyStep3Init(PlayerBody* human);
+	void HeavyStep3Update(PlayerBody* human);
+	void HeavyStep4Init(PlayerBody* human);
+	void HeavyStep4Update(PlayerBody* human);
+	void HeavyStep5Init(PlayerBody* human);
 	void HeavyStep5Update(PlayerBody* human);
+	void HeavyStep6Init(PlayerBody* human);
+	void HeavyStep6Update(PlayerBody* human);
 
 	// バック攻撃
 	void BackStep0Init(PlayerBody* human);

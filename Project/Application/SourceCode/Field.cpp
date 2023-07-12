@@ -3,7 +3,7 @@
 Field::Field() :
 	ground_(std::make_unique<Object3D>()),
 	sphere_(std::make_unique<Object3D>()),
-	messegeSign_(std::make_unique<MessegeSign>())
+	messageSign_(std::make_unique<MessageSign>())
 {
 	ground_->SetModel(ModelManager::GetModel("Ground"));
 	sphere_->SetModel(ModelManager::GetModel("Sphere"));
@@ -18,23 +18,28 @@ void Field::Init()
 
 	sphere_->pos = { -4,4,0 };
 	sphere_->scale = 4.f;
-	messegeSign_->Init();
+	messageSign_->Init();
 }
 
 void Field::Update()
 {
 	sphere_->Update();
 	ground_->Update();
-	messegeSign_->Update();
+	messageSign_->Update();
 }
 
 void Field::DrawModel()
 {
 	sphere_->Draw();
 	ground_->Draw();
-	messegeSign_->DrawModel();
+	messageSign_->DrawModel();
 }
 
 void Field::DrawFrontSprite()
 {
+}
+
+MessageSign* Field::GetMessageSign()
+{
+	return messageSign_.get();
 }

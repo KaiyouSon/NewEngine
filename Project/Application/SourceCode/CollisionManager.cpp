@@ -64,6 +64,12 @@ void CollisionManager::PlayerHitBoss()
 
 void CollisionManager::PlayerHitMessageSign()
 {
+	MessageSign* cur = field_->GetMessageSign();
+
+	if (Collision::SphereHitCapsule(
+		cur->GetCollider(), player_->GetBodyCollider()))
+	{
+	}
 }
 
 bool CollisionManager::IsCheckFrontBoss(const Vec3 pos, const Vec3 front)
@@ -116,4 +122,8 @@ void CollisionManager::SetPlayer(Player* player)
 void CollisionManager::SetBoss(Boss* boss)
 {
 	boss_ = boss;
+}
+void CollisionManager::SetField(Field* field)
+{
+	field_ = field;
 }

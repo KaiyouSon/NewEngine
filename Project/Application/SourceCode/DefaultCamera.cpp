@@ -12,8 +12,8 @@ void DefaultCamera::Init(Player* player)
 	pitch_ = 0;		// è„â∫ÇÃâÒì]äpìx
 
 	assistYaw_ = 0;
-	controlYaw_ = 0;
-	controlPitch_ = 0;
+	controlPitch_ = Angle(Camera::current.rot.x);
+	controlYaw_ = Angle(Camera::current.rot.y);
 
 	vec_ = Vec3::back;
 	rot_ = 0;

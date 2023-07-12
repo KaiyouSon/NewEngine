@@ -35,6 +35,7 @@ void GameScene::Init()
 
 	CollisionManager::GetInstance()->SetPlayer(player_.get());
 	CollisionManager::GetInstance()->SetBoss(boss_.get());
+	CollisionManager::GetInstance()->SetField(field_.get());
 
 	LightManager::GetInstance()->directionalLight.isActive = true;
 	LightManager::GetInstance()->directionalLight.pos = Vec3(1, 1, 0);

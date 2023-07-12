@@ -139,9 +139,33 @@ void MalletMotion::CurrentStepInit(PlayerBody* human)
 	}
 	else if (attackType_ == AttackType::Heavy)
 	{
-		if (step_ == 2)
+		if (step_ == 0)
+		{
+			HeavyStep0Init(human);
+		}
+		else if (step_ == 1)
+		{
+			HeavyStep1Init(human);
+		}
+		else if (step_ == 2)
 		{
 			HeavyStep2Init(human);
+		}
+		else if (step_ == 3)
+		{
+			HeavyStep3Init(human);
+		}
+		else if (step_ == 4)
+		{
+			HeavyStep4Init(human);
+		}
+		else if (step_ == 5)
+		{
+			HeavyStep5Init(human);
+		}
+		else if (step_ == 6)
+		{
+			HeavyStep6Init(human);
 		}
 	}
 	else if (attackType_ == AttackType::Back)
@@ -178,7 +202,11 @@ void MalletMotion::CurrentStepUpdate(PlayerBody* human)
 	}
 	else if (attackType_ == AttackType::Heavy)
 	{
-		if (step_ == 1)
+		if (step_ == 0)
+		{
+			HeavyStep0Update(human);
+		}
+		else if (step_ == 1)
 		{
 			HeavyStep1Update(human);
 		}
@@ -186,9 +214,21 @@ void MalletMotion::CurrentStepUpdate(PlayerBody* human)
 		{
 			HeavyStep2Update(human);
 		}
+		else if (step_ == 3)
+		{
+			HeavyStep3Update(human);
+		}
+		else if (step_ == 3)
+		{
+			HeavyStep4Update(human);
+		}
 		else if (step_ == 5)
 		{
 			HeavyStep5Update(human);
+		}
+		else if (step_ == 6)
+		{
+			HeavyStep6Update(human);
 		}
 	}
 	else if (attackType_ == AttackType::Back)
@@ -270,8 +310,24 @@ void MalletMotion::WeakStep2Update(PlayerBody* human)
 }
 
 // 強攻撃
+void MalletMotion::HeavyStep0Init(PlayerBody* human)
+{
+	startPosY = human->GetPart(PartID::Body)->pos.y;
+	endPosY = -0.62f;
+}
+void MalletMotion::HeavyStep0Update(PlayerBody* human)
+{
+	human->GetPart(PartID::Body)->pos.y = ease_.In(startPosY, endPosY);
+}
+void MalletMotion::HeavyStep1Init(PlayerBody* human)
+{
+	startPosY = endPosY;
+	endPosY = -1.04f;
+}
 void MalletMotion::HeavyStep1Update(PlayerBody* human)
 {
+	human->GetPart(PartID::Body)->pos.y = ease_.In(startPosY, endPosY);
+
 	if (!Pad::GetTrigger(PadCode::RightTrigger, 300))
 	{
 		ease_.SetisEnd(true);
@@ -292,11 +348,16 @@ void MalletMotion::HeavyStep2Init(PlayerBody* human)
 	startRotY_ = human->rot.y;
 	endRotY_ = atan2f(human->parent->frontVec_.x, human->parent->frontVec_.z);
 
+	startPosY = endPosY;
+	endPosY = -1.3f;
+
 	// 当たり判定有効
 	isCalcCollider_ = true;
 }
 void MalletMotion::HeavyStep2Update(PlayerBody* human)
 {
+	human->GetPart(PartID::Body)->pos.y = ease_.In(startPosY, endPosY);
+
 	// 少し前に移動する処理
 	const Vec3 endPos = startPos_ + human->parent->frontVec_.Norm() * length_;
 	human->pos = ease_.InOut(startPos_, endPos);
@@ -312,12 +373,46 @@ void MalletMotion::HeavyStep2Update(PlayerBody* human)
 		//}
 	}
 }
+void MalletMotion::HeavyStep3Init(PlayerBody* human)
+{
+	startPosY = endPosY;
+	endPosY = -1.85f;
+}
+void MalletMotion::HeavyStep3Update(PlayerBody* human)
+{
+	human->GetPart(PartID::Body)->pos.y = ease_.In(startPosY, endPosY);
+}
+void MalletMotion::HeavyStep4Init(PlayerBody* human)
+{
+	startPosY = endPosY;
+	endPosY = -1.2f;
+}
+void MalletMotion::HeavyStep4Update(PlayerBody* human)
+{
+	human->GetPart(PartID::Body)->pos.y = ease_.In(startPosY, endPosY);
+}
+void MalletMotion::HeavyStep5Init(PlayerBody* human)
+{
+	startPosY = endPosY;
+	endPosY = -0.32f;
+}
 void MalletMotion::HeavyStep5Update(PlayerBody* human)
 {
+	human->GetPart(PartID::Body)->pos.y = ease_.In(startPosY, endPosY);
+
 	if (ease_.GetisEnd() == true)
 	{
 		isCanChangeMotion_ = true;
 	}
+}
+void MalletMotion::HeavyStep6Init(PlayerBody* human)
+{
+	startPosY = endPosY;
+	endPosY = 0.f;
+}
+void MalletMotion::HeavyStep6Update(PlayerBody* human)
+{
+	human->GetPart(PartID::Body)->pos.y = ease_.In(startPosY, endPosY);
 }
 
 // バック攻撃
