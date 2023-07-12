@@ -148,13 +148,13 @@ void Player::IdleUpdate()
 	{
 		state_ = State::AttackR2;
 	}
-	else if (Pad::GetButtonDown(PadCode::ButtonB))
+	else if (Pad::GetButtonDown(PadCode::ButtonA))
 	{
 		state_ = State::Backstep;
 	}
 	else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 	{
-		if (Pad::GetButton(PadCode::ButtonB))
+		if (Pad::GetButton(PadCode::ButtonA))
 		{
 			state_ = State::Run;
 		}
@@ -178,7 +178,7 @@ void Player::JoggingUpdate()
 	{
 		state_ = State::AttackR2;
 	}
-	else if (Pad::GetButton(PadCode::ButtonB))
+	else if (Pad::GetButton(PadCode::ButtonA))
 	{
 		// âΩÉtÉåÅ[ÉÄâüÇµÇΩÇ©ÇãLò^Ç∑ÇÈ
 		pushTimer.Update(false);
@@ -195,7 +195,7 @@ void Player::JoggingUpdate()
 	}
 
 	// ó£ÇµÇΩéû
-	if (Pad::GetButtonUp(PadCode::ButtonB))
+	if (Pad::GetButtonUp(PadCode::ButtonA))
 	{
 		if (pushTimer.GetisTimeOut() == false)
 		{
@@ -214,7 +214,7 @@ void Player::RunUpdate()
 
 	MoveUpdate();
 
-	if (!Pad::GetButton(PadCode::ButtonB) ||
+	if (!Pad::GetButton(PadCode::ButtonA) ||
 		gaugePrames_[(uint32_t)GaugeType::Stamina].value <= 0.f)
 	{
 		state_ = State::Jogging;
@@ -231,7 +231,7 @@ void Player::BackstepUpdate()
 
 	if (player_->GetisBackStepMotionCanChange() == true)
 	{
-		if (Pad::GetButtonDown(PadCode::ButtonB))
+		if (Pad::GetButtonDown(PadCode::ButtonA))
 		{
 			player_->BackstepMotionInit();
 		}
@@ -245,7 +245,7 @@ void Player::BackstepUpdate()
 			player_->BackstepMotionInit();
 			player_->ChangeMoveMotionInit();
 
-			if (Pad::GetButton(PadCode::ButtonB))
+			if (Pad::GetButton(PadCode::ButtonA))
 			{
 				state_ = State::Roll;
 			}
@@ -266,7 +266,7 @@ void Player::RollUpdate()
 
 	if (player_->GetisRollMotionCanChange() == true)
 	{
-		if (Pad::GetButtonDown(PadCode::ButtonB))
+		if (Pad::GetButtonDown(PadCode::ButtonA))
 		{
 			state_ = State::Backstep;
 			player_->RollMotionInit();
@@ -278,7 +278,7 @@ void Player::RollUpdate()
 		}
 		else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 		{
-			if (Pad::GetButtonDown(PadCode::ButtonB))
+			if (Pad::GetButtonDown(PadCode::ButtonA))
 			{
 				state_ = State::Roll;
 				player_->RollMotionInit();
@@ -304,7 +304,7 @@ void Player::AttackR1Update()
 {
 	player_->AttackR1MotionUpdate();
 
-	if (Pad::GetButtonDown(PadCode::ButtonB))
+	if (Pad::GetButtonDown(PadCode::ButtonA))
 	{
 		if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 		{
@@ -334,7 +334,7 @@ void Player::AttackR2Update()
 {
 	player_->AttackR2MotionUpdate();
 
-	if (Pad::GetButtonDown(PadCode::ButtonB))
+	if (Pad::GetButtonDown(PadCode::ButtonA))
 	{
 		if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 		{
