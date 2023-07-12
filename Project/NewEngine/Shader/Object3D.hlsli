@@ -23,15 +23,11 @@ cbuffer ConstantBufferDataColor : register(b2)
     float4 color; // 色
 }
 
-static const int directionalLightNum = 1;
-static const int pointLightNum = 3;
-static const int spotLightNum = 3;
-cbuffer ConstantBufferDataLightManager : register(b3)
+static const int maxBones = 32;
+cbuffer ConstantBufferDataSkinning : register(b3)
 {
-    DirectionalLight directionalLights[directionalLightNum];
-    PointLight pointLights[pointLightNum];
-    SpotLight spotLights[spotLightNum];
-};
+    matrix skinningMat[maxBones];
+}
 
 // --- フォグ ---------------------- //
 cbuffer ConstantBufferDataUVParameter : register(b4)
@@ -40,18 +36,21 @@ cbuffer ConstantBufferDataUVParameter : register(b4)
     float2 tiling;
 };
 
-
-static const int circleShadowNum = 1;
-cbuffer ConstantBufferDataCircleShadow : register(b6)
+// 平行光源
+cbuffer ConstantBufferDirectionalLight : register(b5)
 {
-    CircleShadow circleShadows[circleShadowNum];
+    float4 dirLightColor; // 色
+    float3 dirLightVec; // 方向
+    uint isActiveDirLight;
 }
 
-static const int maxBones = 32;
-cbuffer ConstantBufferDataSkinning : register(b5)
+struct V2P
 {
-    matrix skinningMat[maxBones];
-}
+    float4 svpos : SV_POSITION; // システム用頂点座標
+    float4 worldPos : POSITION; // ワールド座標
+    float3 normal : NORMAL; // 法線ベクトル
+    float2 uv : TEXCOORD; // uv値
+};
 
 struct PSOutput
 {

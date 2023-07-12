@@ -1,0 +1,40 @@
+#include "Field.h"
+
+Field::Field() :
+	ground_(std::make_unique<Object3D>()),
+	sphere_(std::make_unique<Object3D>()),
+	messegeSign_(std::make_unique<MessegeSign>())
+{
+	ground_->SetModel(ModelManager::GetModel("Ground"));
+	sphere_->SetModel(ModelManager::GetModel("Sphere"));
+
+	Init();
+}
+
+void Field::Init()
+{
+	ground_->scale = 1000.f;
+	ground_->tiling = 100;
+
+	sphere_->pos = { -4,4,0 };
+	sphere_->scale = 4.f;
+	messegeSign_->Init();
+}
+
+void Field::Update()
+{
+	sphere_->Update();
+	ground_->Update();
+	messegeSign_->Update();
+}
+
+void Field::DrawModel()
+{
+	sphere_->Draw();
+	ground_->Draw();
+	messegeSign_->DrawModel();
+}
+
+void Field::DrawFrontSprite()
+{
+}

@@ -138,6 +138,8 @@ BOOL CALLBACK JoypadInput::DeviceFindCallBack(const DIDEVICEINSTANCE* pdidInstan
 	joypad->SetProperty(DIPROP_RANGE, &diprg.diph);
 	diprg.diph.dwObj = DIJOFS_RY;
 	joypad->SetProperty(DIPROP_RANGE, &diprg.diph);
+	diprg.diph.dwObj = DIJOFS_RZ;
+	joypad->SetProperty(DIPROP_RANGE, &diprg.diph);
 
 	sPadIndex_++;
 
@@ -203,6 +205,12 @@ bool JoypadInput::GetButtonDown(const PadCode padCode, const int sPadIndex_)
 {
 	// Ú‘±‚µ‚Ä‚¢‚é‚©
 	if (GetisLinkPad() == false) return false;
+
+	if (padCode == PadCode::RightStick)
+	{
+		return (GetInstance()->joypadObjs_[sPadIndex_].padInput.rgbButtons[9] & 0x80) &&
+			!(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgbButtons[9] & 0x80);
+	}
 
 	// “Y‚¦Žš‚ÌƒNƒ‰ƒ“ƒvˆ—
 	int min = GetInstance()->minButton_;

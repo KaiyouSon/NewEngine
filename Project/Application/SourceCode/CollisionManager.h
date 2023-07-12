@@ -12,6 +12,7 @@ private:
 
 private:
 	void PlayerHitBoss();
+	void PlayerHitMessageSign();
 
 public:
 	void Update();

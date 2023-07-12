@@ -1,5 +1,14 @@
 #include "CollisionManager.h"
 
+void CollisionManager::Update()
+{
+	// プレイヤーとボス
+	PlayerHitBoss();
+
+	// プレイヤーとメッセージサイン
+	PlayerHitMessageSign();
+}
+
 void CollisionManager::PlayerHitBoss()
 {
 	bool isAttackBoss =
@@ -53,9 +62,8 @@ void CollisionManager::PlayerHitBoss()
 	}
 }
 
-void CollisionManager::Update()
+void CollisionManager::PlayerHitMessageSign()
 {
-	PlayerHitBoss();
 }
 
 bool CollisionManager::IsCheckFrontBoss(const Vec3 pos, const Vec3 front)

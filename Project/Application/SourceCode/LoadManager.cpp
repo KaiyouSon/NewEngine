@@ -9,6 +9,7 @@ bool LoadManager::ModelLoad()
 	ModelManager::LoadObjModel("Block1", "Block1");
 	ModelManager::LoadFbxModel("boneTest", "BoneTest");
 	ModelManager::LoadObjModel("Cube", "Cube");
+	ModelManager::LoadObjModel("Sphere", "Sphere");
 
 	ModelManager::LoadObjModel("Ground", "Ground");
 

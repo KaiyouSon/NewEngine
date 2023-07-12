@@ -82,9 +82,6 @@
     <Filter Include="NewEngine\Header\Gui">
       <UniqueIdentifier>{5bc23d66-9f43-496b-91af-4305d090a2bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="NewEngine\Header\Light">
-      <UniqueIdentifier>{2e138d45-a1d0-4dde-97af-e473ac0908db}</UniqueIdentifier>
-    </Filter>
     <Filter Include="NewEngine\Header\Sound">
       <UniqueIdentifier>{924c731e-5f51-4001-a0dc-7fdcdb05bee1}</UniqueIdentifier>
     </Filter>
@@ -123,9 +120,6 @@
     </Filter>
     <Filter Include="NewEngine\Source\Gui">
       <UniqueIdentifier>{83bfc96f-f374-408f-b1f1-74847e2cfb31}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Source\Light">
-      <UniqueIdentifier>{723b8732-9770-4eb3-b3b6-b67e8efb9d57}</UniqueIdentifier>
     </Filter>
     <Filter Include="NewEngine\Source\Sound">
       <UniqueIdentifier>{85d7aaa5-e8a8-4a6d-9861-cefb5831292f}</UniqueIdentifier>
@@ -192,6 +186,18 @@
     </Filter>
     <Filter Include="Application\Source\Camera">
       <UniqueIdentifier>{b27e49ec-07dc-4345-ab82-83feb6753eb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\Field">
+      <UniqueIdentifier>{85d50bc3-aebf-40d6-8e61-02f507c81dc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\Field">
+      <UniqueIdentifier>{26f52e60-b22b-4649-bb79-497d5bbcbda3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Lighting">
+      <UniqueIdentifier>{723b8732-9770-4eb3-b3b6-b67e8efb9d57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Lighting">
+      <UniqueIdentifier>{2e138d45-a1d0-4dde-97af-e473ac0908db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -304,10 +310,10 @@
       <Filter>NewEngine\Source\Math</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Light\LightManager.cpp">
-      <Filter>NewEngine\Source\Light</Filter>
+      <Filter>NewEngine\Source\Lighting</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Light\CircleShadow.cpp">
-      <Filter>NewEngine\Source\Light</Filter>
+      <Filter>NewEngine\Source\Lighting</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Render\RootSignature.cpp">
       <Filter>NewEngine\Source\Render</Filter>
@@ -331,7 +337,7 @@
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Light\Fog.cpp">
-      <Filter>NewEngine\Source\Light</Filter>
+      <Filter>NewEngine\Source\Lighting</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Render\Buffer\DepthBuffer.cpp">
       <Filter>NewEngine\Source\Render\Buffer</Filter>
@@ -447,9 +453,6 @@
     <ClCompile Include="Application\SourceCode\RollMotion.cpp">
       <Filter>Application\Source\Motion\Human</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\MotionManager.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\TitleUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
@@ -457,9 +460,6 @@
       <Filter>Application\Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\MenuManager.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\MessegeSign.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Scene\PlayerBody.cpp">
@@ -479,6 +479,18 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\DefaultCamera.cpp">
       <Filter>Application\Source\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\TargetCamera.cpp">
+      <Filter>Application\Source\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\MotionManager.cpp">
+      <Filter>Application\Source\Motion</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Field.cpp">
+      <Filter>Application\Source\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\MessegeSign.cpp">
+      <Filter>Application\Source\Field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -603,10 +615,10 @@
       <Filter>NewEngine\Header\Math</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Light\LightManager.h">
-      <Filter>NewEngine\Header\Light</Filter>
+      <Filter>NewEngine\Header\Lighting</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Light\CircleShadow.h">
-      <Filter>NewEngine\Header\Light</Filter>
+      <Filter>NewEngine\Header\Lighting</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Render\RootSignature.h">
       <Filter>NewEngine\Header\Render</Filter>
@@ -633,7 +645,7 @@
       <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Light\Fog.h">
-      <Filter>NewEngine\Header\Light</Filter>
+      <Filter>NewEngine\Header\Lighting</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\LoadManager.h">
       <Filter>Application\Header</Filter>
@@ -779,12 +791,6 @@
     <ClInclude Include="Application\SourceCode\Scene\SceneChanger.h">
       <Filter>Application\Header\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\MenuManager.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\MessegeSign.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\HumanoidBody.h">
       <Filter>Application\Header\Body</Filter>
     </ClInclude>
@@ -802,6 +808,18 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\DefaultCamera.h">
       <Filter>Application\Header\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\TargetCamera.h">
+      <Filter>Application\Header\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\MenuManager.h">
+      <Filter>Application\Header\Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Field.h">
+      <Filter>Application\Header\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\MessegeSign.h">
+      <Filter>Application\Header\Field</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

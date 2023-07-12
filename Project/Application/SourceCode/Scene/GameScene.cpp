@@ -7,12 +7,9 @@ GameScene::GameScene() :
 	boss_(std::make_unique<Boss>()),
 	uiManager_(std::make_unique<UIManager>()),
 	cameraManager_(std::make_unique<CameraManager>()),
-	ground_(std::make_unique<Object3D>()),
-	messegeSign_(std::make_unique<MessegeSign>())
+	field_(std::make_unique<Field>())
 {
-	ground_->SetModel(ModelManager::GetModel("Ground"));
-	ground_->scale = 1000.f;
-	ground_->tiling = 100;
+
 }
 GameScene::~GameScene()
 {
@@ -34,21 +31,22 @@ void GameScene::Init()
 	cameraManager_->SetPlayer(player_.get());
 	cameraManager_->Init();
 
-	messegeSign_->Init();
+	field_->Init();
 
 	CollisionManager::GetInstance()->SetPlayer(player_.get());
 	CollisionManager::GetInstance()->SetBoss(boss_.get());
+
+	LightManager::GetInstance()->directionalLight.isActive = true;
+	LightManager::GetInstance()->directionalLight.pos = Vec3(1, 1, 0);
 }
 void GameScene::Update()
 {
 	player_->PrevUpdate();
 	boss_->Update();
 	uiManager_->Update();
-	ground_->Update();
 	CollisionManager::GetInstance()->Update();
 	player_->PostUpdate();
-
-	messegeSign_->Update();
+	field_->Update();
 
 	cameraManager_->Update();
 	Camera::DebugCameraUpdate();
@@ -66,10 +64,9 @@ void GameScene::DrawBackSprite()
 }
 void GameScene::DrawModel()
 {
-	messegeSign_->DrawModel();
 	player_->DrawModel();
 	boss_->DrawModel();
-	ground_->Draw();
+	field_->DrawModel();
 }
 void GameScene::DrawFrontSprite()
 {
@@ -78,5 +75,11 @@ void GameScene::DrawFrontSprite()
 }
 void GameScene::DrawDebugGui()
 {
-	player_->DrawDebugGui();
+	GuiManager::BeginWindow("Lighting");
+	GuiManager::DrawCheckBox("isActive", &LightManager::GetInstance()->directionalLight.isActive);
+	GuiManager::DrawSlider3("dirVec", LightManager::GetInstance()->directionalLight.pos, 0.01f);
+	GuiManager::DrawColorEdit("color", LightManager::GetInstance()->directionalLight.color);
+	GuiManager::EndWindow();
+
+	//player_->DrawDebugGui();
 }

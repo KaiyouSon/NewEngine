@@ -1,11 +1,10 @@
 #pragma once
-#include "CircleShadow.h"
-#include "Fog.h"
+#include "Material.h"
 #include <array>
 
 struct DirectionalLight
 {
-	Vec3 dirVec = Vec3::up;
+	Vec3 pos = Vec3::up;
 	Color color = Color::white;
 	bool isActive = false;
 
@@ -41,38 +40,15 @@ template<typename T> class Singleton;
 class LightManager : public Singleton<LightManager>
 {
 private:
-	static const uint32_t sDirectionalLightNum_ = 1;
-	static const uint32_t sPointLightNum_ = 3;
-	static const uint32_t sSpotLightNum_ = 3;
-
-	struct ConstantBufferDataLightManager
-	{
-		std::array<ConstantBufferData::CDirectionalLight, sDirectionalLightNum_> constantBufferDirectionalLights;
-		std::array<ConstantBufferData::CPointLight, sPointLightNum_> constantBufferPointLights;
-		std::array<ConstantBufferData::CSpotLight, sSpotLightNum_> constantBufferSpotLights;
-	};
-
-	std::unique_ptr<ConstantBuffer<ConstantBufferDataLightManager>> constantBufferLightManager_;
+	Material material_;
 
 public:
-	std::array<DirectionalLight, sDirectionalLightNum_> directionalLights;
-	std::array<PointLight, sPointLightNum_> pointLights;
-	std::array<SpotLight, sSpotLightNum_> spotLights;
-	CircleShadow circleShadow;
-	Fog fog;
-
-	static bool isPointLighting;
-	static bool isSpotLighting;
-
-private:
-	void DirectionalLightUpdate();	// ディレクションナルライト
-	void PointLightUpdate();		// ポイントライト
-	void SpotLightUpdate();			// スポットライト
+	DirectionalLight directionalLight;
 
 public:
 	void Init();
 	void Update();
-	void Draw();
+	void DrawCommand(const uint32_t index);
 
 private:
 	friend Singleton<LightManager>;

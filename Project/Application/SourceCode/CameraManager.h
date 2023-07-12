@@ -2,17 +2,20 @@
 #include "NewEngine.h"
 #include "ICamera.h"
 
-class CameraManager
+template<typename> class Singleton;
+
+class CameraManager : public Singleton<CameraManager>
 {
 public:
 	enum class CameraType
 	{
-		Default
+		Default,
+		Target,
 	};
+
 private:
 	std::unique_ptr<ICamera> currentCamera_;
-
-	std::unique_ptr<Camera> defCame_;
+	CameraType cameraType_;
 	Player* player_;
 
 public:
@@ -20,7 +23,15 @@ public:
 	void Init();
 	void Update();
 
+	void ChangeCamera(const CameraType cameraType);
+
+public:
+	CameraType GetCameraType();
+
 public:
 	void SetPlayer(Player* player);
+
+private:
+	friend Singleton<CameraManager>;
 };
 

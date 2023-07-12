@@ -2,7 +2,6 @@
 
 DefaultCamera::DefaultCamera()
 {
-	camera_ = std::make_unique<Camera>();
 }
 
 void DefaultCamera::Init(Player* player)
@@ -18,6 +17,8 @@ void DefaultCamera::Init(Player* player)
 
 	vec_ = Vec3::back;
 	rot_ = 0;
+
+	camera_->pos = Camera::current.pos;
 }
 
 void DefaultCamera::Update()

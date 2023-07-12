@@ -7,8 +7,15 @@ class ICamera
 protected:
 	std::unique_ptr<Camera> camera_;
 	Player* player_;
+	Vec3 targetPos_;
+	Vec3 targetRot_;
+	bool isEaseEnd;
+
+protected:
+	void EaseCamera();
 
 public:
+	ICamera();
 	virtual ~ICamera() {}
 	virtual void Init(Player* player) = 0;
 	virtual void Update() = 0;

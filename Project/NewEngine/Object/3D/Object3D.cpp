@@ -59,10 +59,7 @@ void Object3D::Draw(const BlendMode blendMode)
 	renderBase->GetCommandList()->IASetIndexBuffer(model_->mesh.indexBuffer.GetibViewAddress());
 
 	MaterialDrawCommands();
-
-	//renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-	//	5, constantBufferSkin_->constantBuffer->GetGPUVirtualAddress());
-	//LightManager::GetInstance()->Draw();
+	LightManager::GetInstance()->DrawCommand(5);
 
 	size_t index = renderBase->GetObject3DRootSignature()->GetConstantBufferNum();
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
@@ -105,7 +102,8 @@ void Object3D::MaterialTransfer()
 	// マトリックス
 	CTransform3D transform3DData =
 	{
-		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
+		Camera::current.GetViewLookToMat()* Camera::current.GetPerspectiveProjectionMat(),
+		//Camera::current.GetViewLookAtMat() * Camera::current.GetPerspectiveProjectionMat(),
 		transform_.GetWorldMat(),
 		Camera::current.pos
 	};

@@ -41,8 +41,8 @@ namespace ConstantBufferData
 
 	struct CDirectionalLight
 	{
-		Vec3 dir;		float pad1;
-		Vec3 color;
+		Color color;
+		Vec3 dir;
 		uint32_t isActive;
 	};
 
