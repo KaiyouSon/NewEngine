@@ -1,36 +1,31 @@
 #pragma once
 #include "NewEngine.h"
 
-class UIManager;
-
-class NegotiationUI
+class TutorialUI
 {
 private:
-	UIManager* uiManager_;
-	std::unique_ptr<Sprite> backFrame_;
+	std::unique_ptr<Sprite> back_;
 	std::unique_ptr<Sprite> button_;
-	std::unique_ptr<Sprite> text_;
 	std::unique_ptr<Sprite> colon_;
+	std::unique_ptr<Sprite> text_;
+
+	std::unique_ptr<Sprite> message_;
+	Transform parent_;
 
 	float alpha_;
 	bool isActive_;
 
-
-private:
-	void AlphaUpdate();
-	void TutorialMessageUpdate();
-
 public:
-	NegotiationUI();
+	TutorialUI();
 	void Init();
 	void Update();
 	void DrawFrontSprite();
 
 public:
-	void SetUIManager(UIManager* uiManager);
 	void SetisActive(const bool isActive);
 
 public:
 	bool GetisActive();
+
 };
 

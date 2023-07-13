@@ -39,12 +39,14 @@ bool LoadManager::TextureLoad()
 	// UI
 	TextureManager::LoadTexture("UI/Gauge.png", "Gauge");
 	TextureManager::LoadTexture("UI/Buttons.png", "Buttons");
-	TextureManager::LoadTexture("UI/Negotiation/NegotiationBackFrame.png", "NegotiationBackFrame");
+	TextureManager::LoadTexture("UI/Negotiation/NegotiationBack.png", "NegotiationBack");
 	TextureManager::LoadTexture("UI/ItemBoxFrame.png", "ItemBoxFrame");
+	TextureManager::LoadTexture("UI/MessageBack.png", "MessageBack");
 
 	// テキスト
 	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");
 	TextureManager::LoadTexture("Text/ReadMessageStr.png", "ReadMessageStr");
+	TextureManager::LoadTexture("Text/ExitStr.png", "ExitStr");
 
 	// レンダーテクスチャー
 

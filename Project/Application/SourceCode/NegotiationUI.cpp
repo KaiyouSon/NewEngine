@@ -1,4 +1,5 @@
 #include "NegotiationUI.h"
+#include "UIManager.h"
 
 NegotiationUI::NegotiationUI() :
 	backFrame_(std::make_unique<Sprite>()),
@@ -7,7 +8,7 @@ NegotiationUI::NegotiationUI() :
 	text_(std::make_unique<Sprite>()),
 	isActive_(false)
 {
-	backFrame_->SetTexture(TextureManager::GetTexture("NegotiationBackFrame"));
+	backFrame_->SetTexture(TextureManager::GetTexture("NegotiationBack"));
 
 	button_->SetTexture(TextureManager::GetTexture("Buttons"));
 	button_->SetTextureRect(Vec2(96, 96), Vec2(192, 192));
@@ -38,17 +39,8 @@ void NegotiationUI::Init()
 
 void NegotiationUI::Update()
 {
-	const float add = 20.f;
-
-	if (isActive_ == false)
-	{
-		alpha_ -= add;
-	}
-	else
-	{
-		alpha_ += add;
-	}
-	alpha_ = Clamp<float>(alpha_, 0.f, 255.f);
+	AlphaUpdate();
+	TutorialMessageUpdate();
 
 	backFrame_->color.a = alpha_ - 10.f;
 	button_->color.a = alpha_;
@@ -72,6 +64,53 @@ void NegotiationUI::DrawFrontSprite()
 	button_->Draw();
 	colon_->Draw();
 	text_->Draw();
+}
+
+void NegotiationUI::AlphaUpdate()
+{
+	const float add = 20.f;
+
+	if (isActive_ == false)
+	{
+		alpha_ -= add;
+	}
+	else
+	{
+		alpha_ += add;
+	}
+	alpha_ = Clamp<float>(alpha_, 0.f, 255.f);
+}
+
+void NegotiationUI::TutorialMessageUpdate()
+{
+	if (alpha_ == 0)
+	{
+		return;
+	}
+
+	TutorialUI* tutorialUI = uiManager_->GetTutorialUI();
+
+	if (isActive_ == false)
+	{
+		tutorialUI->SetisActive(false);
+	}
+
+	if (Pad::GetButtonDown(PadCode::ButtonB))
+	{
+		if (tutorialUI->GetisActive() == true)
+		{
+			tutorialUI->SetisActive(false);
+		}
+		else
+		{
+			tutorialUI->SetisActive(true);
+		}
+	}
+}
+
+void NegotiationUI::SetUIManager(UIManager* uiManager)
+{
+	uiManager_ = uiManager;
 }
 
 void NegotiationUI::SetisActive(const bool isActive)

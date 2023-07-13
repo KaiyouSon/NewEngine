@@ -2,6 +2,7 @@
 #include "GaugeUI.h"
 #include "NegotiationUI.h"
 #include "ItemBoxUI.h"
+#include "TutorialUI.h"
 #include "Player.h"
 #include "Boss.h"
 
@@ -12,6 +13,7 @@ private:
 	std::array<std::unique_ptr<ItemBoxUI>, 4> itemBoxUIs_;
 	std::unique_ptr<GaugeUI> bossHPGauge_;
 	std::unique_ptr<NegotiationUI> negotiationUI_;
+	std::unique_ptr<TutorialUI> tutorialUI_;
 
 private:
 	Transform itemBoxUIParent;
@@ -31,5 +33,6 @@ public:
 
 public:
 	NegotiationUI* GetNegotiationUI();
+	TutorialUI* GetTutorialUI();
 };
 

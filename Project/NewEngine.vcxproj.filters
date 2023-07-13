@@ -498,6 +498,9 @@
     <ClCompile Include="Application\SourceCode\ItemBoxUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\TutorialUI.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -831,6 +834,9 @@
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\ItemBoxUI.h">
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\TutorialUI.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
   </ItemGroup>

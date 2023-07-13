@@ -2,7 +2,8 @@
 
 UIManager::UIManager() :
 	bossHPGauge_(std::make_unique<GaugeUI>()),
-	negotiationUI_(std::make_unique<NegotiationUI>())
+	negotiationUI_(std::make_unique<NegotiationUI>()),
+	tutorialUI_(std::make_unique<TutorialUI>())
 {
 	for (uint32_t i = 0; i < gauges_.size(); i++)
 	{
@@ -42,6 +43,9 @@ void UIManager::Init()
 	bossHPGauge_->Init();
 
 	negotiationUI_->Init();
+	negotiationUI_->SetUIManager(this);
+
+	tutorialUI_->Init();
 }
 
 void UIManager::Update()
@@ -68,6 +72,8 @@ void UIManager::Update()
 	bossHPGauge_->Update();
 
 	negotiationUI_->Update();
+
+	tutorialUI_->Update();
 }
 
 void UIManager::DrawFrontSprite()
@@ -83,6 +89,8 @@ void UIManager::DrawFrontSprite()
 	}
 
 	negotiationUI_->DrawFrontSprite();
+
+	tutorialUI_->DrawFrontSprite();
 
 	//bossHPGauge_->DrawFrontSprite();
 }
@@ -100,4 +108,9 @@ void UIManager::SetBoss(Boss* boss)
 NegotiationUI* UIManager::GetNegotiationUI()
 {
 	return negotiationUI_.get();
+}
+
+TutorialUI* UIManager::GetTutorialUI()
+{
+	return tutorialUI_.get();
 }
