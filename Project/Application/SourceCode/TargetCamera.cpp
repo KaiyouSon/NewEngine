@@ -8,7 +8,7 @@ TargetCamera::TargetCamera()
 void TargetCamera::Init(Player* player)
 {
 	player_ = player;
-	isEaseEnd = false;
+	isEase_ = false;
 }
 
 void TargetCamera::Update()

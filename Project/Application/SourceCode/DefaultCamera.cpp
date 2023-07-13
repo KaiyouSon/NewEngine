@@ -67,8 +67,7 @@ void DefaultCamera::Update()
 	};
 
 	const float length = 30.f;
-	Vec3 curPos = player_->GetPos();
-	curPos.y = 9.5f;
+	Vec3 curPos = player_->GetPos() * Vec3(1.f, 0.f, 1.f) + Vec3(0.f, 9.5f, 0.f);
 	camera_->pos = curPos + vec_.Norm() * length;
 
 	// 回転の処理
@@ -82,6 +81,43 @@ void DefaultCamera::Update()
 	// 角度の設定
 	camera_->rot = rot_;
 
-	// 現在いのカメラに代入
-	Camera::current = *camera_;
+
+	if (isEase_ == true)
+	{
+		// 切り替えるときにイージングするための処理
+		camera_->pos = Camera::current.pos;
+		camera_->rot = Camera::current.rot;
+		// 現在の座標 (y座標固定)
+		Vec3 targetPos = curPos + -player_->GetFrontVec() * length;
+		Vec3 targetRot = { 0,player_->GetRot().y,0 };
+
+		// 一回転しないようにするための処理
+		if (Camera::current.rot.y - targetRot.y >= Radian(180))
+		{
+			float diff = Radian(360) - camera_->rot.y;
+			camera_->rot.y = -diff;
+		}
+		else if (Camera::current.rot.y - targetRot.y <= -Radian(180))
+		{
+			float diff = Radian(360) + camera_->rot.y;
+			camera_->rot.y = diff;
+		}
+
+		targetPos_ = targetPos;
+		targetRot_ = targetRot;
+
+		EaseCamera();
+
+		// 現在いのカメラに代入
+		Camera::current = *camera_;
+		targetYaw_ = 0;
+		assistYaw_ = 0;
+		controlPitch_ = Angle(Camera::current.rot.x);
+		controlYaw_ = Angle(Camera::current.rot.y);
+	}
+	else
+	{
+		// 現在いのカメラに代入
+		Camera::current = *camera_;
+	}
 }

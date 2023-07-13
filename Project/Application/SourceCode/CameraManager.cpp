@@ -41,6 +41,13 @@ void CameraManager::Update()
 			{
 				ChangeCamera(CameraType::Target);
 			}
+			else
+			{
+				if (Pad::GetStick(PadCode::LeftStick, 300) == 0)
+				{
+					currentCamera_->SetisEase(true);
+				}
+			}
 		}
 	}
 	else if (cameraType_ == CameraType::Target)

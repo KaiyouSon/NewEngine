@@ -428,7 +428,7 @@ Vec3 Player::GetMoveVel()
 }
 Vec3 Player::GetFrontVec()
 {
-	return frontVec_;
+	return frontVec_.Norm();
 }
 Player::State Player::GetState()
 {
