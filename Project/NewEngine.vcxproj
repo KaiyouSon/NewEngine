@@ -127,6 +127,7 @@
     <ClCompile Include="Application\SourceCode\HumanoidBody.cpp" />
     <ClCompile Include="Application\SourceCode\ICamera.cpp" />
     <ClCompile Include="Application\SourceCode\IMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\ItemBoxUI.cpp" />
     <ClCompile Include="Application\SourceCode\IWeaponMotion.cpp" />
     <ClCompile Include="Application\SourceCode\MenuManager.cpp" />
     <ClCompile Include="Application\SourceCode\MotionManager.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="Application\SourceCode\HumanoidBody.h" />
     <ClInclude Include="Application\SourceCode\ICamera.h" />
     <ClInclude Include="Application\SourceCode\IMotion.h" />
+    <ClInclude Include="Application\SourceCode\ItemBoxUI.h" />
     <ClInclude Include="Application\SourceCode\IWeaponMotion.h" />
     <ClInclude Include="Application\SourceCode\MenuManager.h" />
     <ClInclude Include="Application\SourceCode\MotionManager.h" />

@@ -39,7 +39,7 @@ void DefaultCamera::Update()
 	controlPitch_ = Clamp<float>(controlPitch_, -35, 80);
 
 	// À•W
-	const float angleOffset = 10.f;
+	const float angleOffset = 20.f;
 	bool frontRange =
 		player_->GetRot().y <= camera_->rot.y + Radian(angleOffset) &&
 		player_->GetRot().y >= camera_->rot.y - Radian(angleOffset);

@@ -1,4 +1,5 @@
 #include "TargetCamera.h"
+#include "CameraManager.h"
 
 TargetCamera::TargetCamera()
 {
@@ -39,17 +40,29 @@ void TargetCamera::Update()
 
 	camera_->pos = Camera::current.pos;
 	camera_->rot = Camera::current.rot;
-	// ˆê‰ñ“]‚µ‚È‚¢‚æ‚¤‚É‚·‚é‚½‚ß‚Ìˆ—
-	if (camera_->rot.y >= Radian(180))
+
+	if (Camera::current.rot.y - rot.y >= Radian(180))
 	{
 		float diff = Radian(360) - camera_->rot.y;
 		camera_->rot.y = -diff;
 	}
-	else if (camera_->rot.y <= -Radian(180))
+	else if (Camera::current.rot.y - rot.y <= -Radian(180))
 	{
 		float diff = Radian(360) + camera_->rot.y;
 		camera_->rot.y = diff;
 	}
+
+	// ˆê‰ñ“]‚µ‚È‚¢‚æ‚¤‚É‚·‚é‚½‚ß‚Ìˆ—
+	//if (camera_->rot.y >= Radian(180))
+	//{
+	//	float diff = Radian(360) - camera_->rot.y;
+	//	camera_->rot.y = -diff;
+	//}
+	//else if (camera_->rot.y <= -Radian(180))
+	//{
+	//	float diff = Radian(360) + camera_->rot.y;
+	//	camera_->rot.y = diff;
+	//}
 	targetPos_ = targetCamePos_;
 	targetRot_ = rot;
 	EaseCamera();

@@ -9,7 +9,7 @@ template<typename> class Singleton;
 class CameraManager : public Singleton<CameraManager>
 {
 public:
-	enum class CameraType
+	enum CameraType
 	{
 		Default,
 		Target,

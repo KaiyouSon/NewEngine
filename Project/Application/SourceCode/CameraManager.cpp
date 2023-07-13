@@ -4,6 +4,7 @@
 
 CameraManager::CameraManager()
 {
+	cameraType_ = CameraType::Default;
 }
 
 void CameraManager::Init()
@@ -11,7 +12,7 @@ void CameraManager::Init()
 	currentCamera_ = std::make_unique<DefaultCamera>();
 	currentCamera_->Init(player_);
 
-	cameraType_ = CameraType::Default;
+
 }
 
 void CameraManager::Update()
@@ -19,26 +20,46 @@ void CameraManager::Update()
 	currentCamera_->SetLockonPos(boss_->GetPos());
 	currentCamera_->Update();
 
-	if (Pad::GetButtonDown(PadCode::RightStick))
+	if (Camera::current.rot.y >= Radian(360))
 	{
-		if (cameraType_ == CameraType::Default)
+		Camera::current.rot.y -= Radian(360);
+	}
+	else if (Camera::current.rot.y <= -Radian(360))
+	{
+		Camera::current.rot.y += Radian(360);
+	}
+
+
+	bool isRightStickDown = Pad::GetButtonDown(PadCode::RightStick);
+
+	if (cameraType_ == CameraType::Default)
+	{
+		if (isRightStickDown)
 		{
 			Vec3 v1 = player_->GetPos() - Camera::current.pos;
 			Vec3 v2 = currentCamera_->GetLockonPos() - player_->GetPos();
 
 			float dot = Vec3::Dot(v1.Norm(), v2.Norm());
-			if (dot >= cosf(Radian(80)))
+			if (dot >= cosf(Radian(80)) &&
+				v2.Length() <= 100)
 			{
 				ChangeCamera(CameraType::Target);
 			}
 		}
-		else if (cameraType_ == CameraType::Target)
+	}
+	else if (cameraType_ == CameraType::Target)
+	{
+		if (isRightStickDown)
 		{
 			ChangeCamera(CameraType::Default);
 		}
+
+		float dis = Vec3(boss_->GetPos() - player_->GetPos()).Length();
+		if (dis >= 100)
+		{
+			ChangeCamera(CameraManager::Default);
+		}
 	}
-
-
 }
 
 void CameraManager::ChangeCamera(const CameraType cameraType)
@@ -46,7 +67,7 @@ void CameraManager::ChangeCamera(const CameraType cameraType)
 	cameraType_ = cameraType;
 
 	std::unique_ptr<ICamera> nextCamera;
-	switch (cameraType)
+	switch (cameraType_)
 	{
 	case CameraType::Default:
 		nextCamera = std::make_unique<DefaultCamera>();

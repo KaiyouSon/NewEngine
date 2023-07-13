@@ -29,7 +29,6 @@ bool LoadManager::ModelLoad()
 
 bool LoadManager::TextureLoad()
 {
-	TextureManager::CreateTexture(Color::white, "White");
 	TextureManager::CreateDepthTexture(Vec2(1920, 1080));
 
 	// タイトル
@@ -89,6 +88,9 @@ LoadManager::LoadManager() : isLoaded(false)
 
 void LoadManager::Load()
 {
+	// マルチスレッドに入る前に作っとく
+	TextureManager::CreateTexture(Color::white, "White");
+
 	// 非同期
 	std::future<bool> textureFtr = std::async(std::launch::async, [this] { return TextureLoad(); });
 	std::future<bool> modelFtr = std::async(std::launch::async, [this] { return ModelLoad(); });
