@@ -146,6 +146,7 @@
     <ClCompile Include="Application\SourceCode\Scene\TestScene.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\TitleScene.cpp" />
     <ClCompile Include="Application\SourceCode\MessageSign.cpp" />
+    <ClCompile Include="Application\SourceCode\Skydome.cpp" />
     <ClCompile Include="Application\SourceCode\TargetCamera.cpp" />
     <ClCompile Include="Application\SourceCode\Task.cpp" />
     <ClCompile Include="Application\SourceCode\TitleUI.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="Application\SourceCode\Scene\TestScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\TitleScene.h" />
     <ClInclude Include="Application\SourceCode\MessageSign.h" />
+    <ClInclude Include="Application\SourceCode\Skydome.h" />
     <ClInclude Include="Application\SourceCode\TargetCamera.h" />
     <ClInclude Include="Application\SourceCode\Task.h" />
     <ClInclude Include="Application\SourceCode\TitleUI.h" />

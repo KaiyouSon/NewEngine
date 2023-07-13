@@ -5,13 +5,13 @@
 
 bool LoadManager::ModelLoad()
 {
-	ModelManager::LoadObjModel("SkyDome", "SkyDome");
 	ModelManager::LoadObjModel("Block1", "Block1");
 	ModelManager::LoadFbxModel("boneTest", "BoneTest");
 	ModelManager::LoadObjModel("Cube", "Cube");
 	ModelManager::LoadObjModel("Sphere", "Sphere");
 
 	ModelManager::LoadObjModel("Ground", "Ground");
+	ModelManager::LoadObjModel("Skydome", "Skydome", true);
 
 	ModelManager::LoadObjModel("MessageSign", "MessageSign");
 

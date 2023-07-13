@@ -138,11 +138,6 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 
 				model->mesh.AddVertex(vertex);
 
-				if (isSmoothing == true)
-				{
-					model->mesh.AddSmoothData(indexPos, (uint16_t)model->mesh.indices.size() - 1);
-				}
-
 				// 頂点インデックスに追加
 				if (count % 3 == 0)
 				{
@@ -155,6 +150,11 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 				if (count % 3 == 2)
 				{
 					model->mesh.AddIndex((uint16_t)model->mesh.indices.size() - 1);
+				}
+
+				if (isSmoothing == true)
+				{
+					model->mesh.AddSmoothData(indexPos, (uint16_t)model->mesh.indices.size() - 1);
 				}
 
 				count++;

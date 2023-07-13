@@ -46,7 +46,7 @@ void TutorialUI::Update()
 	}
 	alpha_ = Clamp<float>(alpha_, 0.f, 255.f);
 
-	back_->color.a = alpha_ - 10.f;
+	back_->color.a = alpha_;
 	button_->color.a = alpha_;
 	colon_->color.a = alpha_;
 	text_->color.a = alpha_;
