@@ -40,6 +40,7 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("UI/Gauge.png", "Gauge");
 	TextureManager::LoadTexture("UI/Buttons.png", "Buttons");
 	TextureManager::LoadTexture("UI/Negotiation/NegotiationBackFrame.png", "NegotiationBackFrame");
+	TextureManager::LoadTexture("UI/ItemBoxFrame.png", "ItemBoxFrame");
 
 	// テキスト
 	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");

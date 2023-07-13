@@ -496,7 +496,7 @@
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\ItemBoxUI.cpp">
-      <Filter>Uncategorized\Source</Filter>
+      <Filter>Application\Source\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -831,7 +831,7 @@
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\ItemBoxUI.h">
-      <Filter>Uncategorized\Header</Filter>
+      <Filter>Application\Header\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

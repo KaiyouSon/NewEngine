@@ -9,8 +9,11 @@ private:
 public:
 	ItemBoxUI();
 	void Init();
-	void Update();
+	void Update(Transform* parent);
 	void DrawFrontSprite();
 
+public:
+	void SetPos(const Vec2 pos);
+	void SetScale(const Vec2 scale);
 };
 

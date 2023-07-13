@@ -196,7 +196,7 @@ Texture* TextureManager::CreateTexture(Color color, std::string textureTag)
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
 
-	ExcuteComandList();
+	//ExcuteComandList();
 
 	return textureMap_[textureTag].get();
 }
@@ -321,7 +321,7 @@ Texture TextureManager::LoadTexture(std::string filePath)
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
 
-	ExcuteComandList();
+	//ExcuteComandList();
 
 	return tex;
 }

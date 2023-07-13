@@ -11,8 +11,6 @@ void CameraManager::Init()
 {
 	currentCamera_ = std::make_unique<DefaultCamera>();
 	currentCamera_->Init(player_);
-
-
 }
 
 void CameraManager::Update()
@@ -29,9 +27,7 @@ void CameraManager::Update()
 		Camera::current.rot.y += Radian(360);
 	}
 
-
 	bool isRightStickDown = Pad::GetButtonDown(PadCode::RightStick);
-
 	if (cameraType_ == CameraType::Default)
 	{
 		if (isRightStickDown)
