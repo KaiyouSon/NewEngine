@@ -2,7 +2,6 @@
 #include "DefaultCamera.h"
 #include "TargetCamera.h"
 
-
 CameraManager::CameraManager()
 {
 }
@@ -17,11 +16,21 @@ void CameraManager::Init()
 
 void CameraManager::Update()
 {
+	currentCamera_->SetLockonPos(boss_->GetPos());
+	currentCamera_->Update();
+
 	if (Pad::GetButtonDown(PadCode::RightStick))
 	{
 		if (cameraType_ == CameraType::Default)
 		{
-			ChangeCamera(CameraType::Target);
+			Vec3 v1 = player_->GetPos() - Camera::current.pos;
+			Vec3 v2 = currentCamera_->GetLockonPos() - player_->GetPos();
+
+			float dot = Vec3::Dot(v1.Norm(), v2.Norm());
+			if (dot >= cosf(Radian(80)))
+			{
+				ChangeCamera(CameraType::Target);
+			}
 		}
 		else if (cameraType_ == CameraType::Target)
 		{
@@ -29,7 +38,7 @@ void CameraManager::Update()
 		}
 	}
 
-	currentCamera_->Update();
+
 }
 
 void CameraManager::ChangeCamera(const CameraType cameraType)
@@ -63,4 +72,9 @@ CameraManager::CameraType CameraManager::GetCameraType()
 void CameraManager::SetPlayer(Player* player)
 {
 	player_ = player;
+}
+
+void CameraManager::SetBoss(Boss* boss)
+{
+	boss_ = boss;
 }

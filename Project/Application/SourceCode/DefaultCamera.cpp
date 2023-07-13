@@ -7,10 +7,6 @@ DefaultCamera::DefaultCamera()
 void DefaultCamera::Init(Player* player)
 {
 	player_ = player;
-
-	yaw_ = 0;		// ¶‰E‚Ì‰ñ“]Šp“x
-	pitch_ = 0;		// ã‰º‚Ì‰ñ“]Šp“x
-
 	assistYaw_ = 0;
 	controlPitch_ = Angle(Camera::current.rot.x);
 	controlYaw_ = Angle(Camera::current.rot.y);
@@ -40,7 +36,7 @@ void DefaultCamera::Update()
 		controlYaw_ += stick.Norm().x * moveSpeed * rate.x;
 		controlPitch_ += stick.Norm().y * moveSpeed * rate.y * 0.5f;
 	}
-	pitch_ = Clamp<float>(pitch_, -35, 80);
+	controlPitch_ = Clamp<float>(controlPitch_, -35, 80);
 
 	// À•W
 	const float angleOffset = 10.f;
@@ -74,7 +70,6 @@ void DefaultCamera::Update()
 	Vec3 curPos = player_->GetPos();
 	curPos.y = 9.5f;
 	camera_->pos = curPos + vec_.Norm() * length;
-
 
 	// ‰ñ“]‚Ìˆ—
 	rot_ =

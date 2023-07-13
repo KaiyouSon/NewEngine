@@ -29,6 +29,7 @@ void GameScene::Init()
 	uiManager_->Init();
 
 	cameraManager_->SetPlayer(player_.get());
+	cameraManager_->SetBoss(boss_.get());
 	cameraManager_->Init();
 
 	field_->Init();

@@ -13,5 +13,14 @@ void ICamera::EaseCamera()
 	{
 		isEaseEnd = true;
 	}
+}
 
+void ICamera::SetLockonPos(const Vec3 pos)
+{
+	lockonPos_ = pos;
+}
+
+Vec3 ICamera::GetLockonPos()
+{
+	return lockonPos_;
 }

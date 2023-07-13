@@ -1,6 +1,8 @@
 #pragma once
 #include "NewEngine.h"
 #include "ICamera.h"
+#include "Player.h"
+#include "Boss.h"
 
 template<typename> class Singleton;
 
@@ -17,6 +19,7 @@ private:
 	std::unique_ptr<ICamera> currentCamera_;
 	CameraType cameraType_;
 	Player* player_;
+	Boss* boss_;
 
 public:
 	CameraManager();
@@ -30,6 +33,7 @@ public:
 
 public:
 	void SetPlayer(Player* player);
+	void SetBoss(Boss* boss);
 
 private:
 	friend Singleton<CameraManager>;
