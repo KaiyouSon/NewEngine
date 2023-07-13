@@ -1,6 +1,4 @@
 #pragma once
-#include "Vec3.h"
-
 struct Vec3;
 
 struct Quaternion
@@ -9,6 +7,7 @@ struct Quaternion
 
 	// コンストラクタ
 	Quaternion() : x(0), y(0), z(0), w(0) {}
+	Quaternion(const Vec3 v);
 	Quaternion(const float x, const float y, const float z) : x(x), y(y), z(z), w(0) {}
 	Quaternion(const float x, const float y, const float z, const float w) : x(x), y(y), z(z), w(w) {}
 

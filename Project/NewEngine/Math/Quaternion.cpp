@@ -2,6 +2,10 @@
 #include "MathUtil.h"
 #include <math.h>
 
+Quaternion::Quaternion(const Vec3 v) : x(v.x), y(v.y), z(v.z), w(0)
+{
+}
+
 float Quaternion::Length() const { return sqrtf(x * x + y * y + z * z + w * w); }
 
 Quaternion Quaternion::Norm() const { return { x / Length(),y / Length(),z / Length() ,w / Length() }; }
