@@ -115,6 +115,7 @@
     <ClCompile Include="Application\SourceCode\Boss.cpp" />
     <ClCompile Include="Application\SourceCode\BossBody.cpp" />
     <ClCompile Include="Application\SourceCode\CameraManager.cpp" />
+    <ClCompile Include="Application\SourceCode\Cloud.cpp" />
     <ClCompile Include="Application\SourceCode\Club.cpp" />
     <ClCompile Include="Application\SourceCode\CollisionManager.cpp" />
     <ClCompile Include="Application\SourceCode\DefaultCamera.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="Application\SourceCode\Boss.h" />
     <ClInclude Include="Application\SourceCode\BossBody.h" />
     <ClInclude Include="Application\SourceCode\CameraManager.h" />
+    <ClInclude Include="Application\SourceCode\Cloud.h" />
     <ClInclude Include="Application\SourceCode\Club.h" />
     <ClInclude Include="Application\SourceCode\CollisionManager.h" />
     <ClInclude Include="Application\SourceCode\DefaultCamera.h" />
@@ -333,6 +335,7 @@
   <ItemGroup>
     <None Include="Application\Shader\Bloom.hlsli" />
     <None Include="Application\Shader\BGaussainBlur.hlsli" />
+    <None Include="Application\Shader\Cloud.hlsli" />
     <None Include="Application\Shader\DOF.hlsli" />
     <None Include="Application\Shader\DotFilter.hlsli" />
     <None Include="Application\Shader\Glare.hlsli" />
@@ -370,6 +373,18 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Application\Shader\BGaussainBlurVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\CloudPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\CloudVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>

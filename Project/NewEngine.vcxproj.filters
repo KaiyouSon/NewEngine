@@ -504,6 +504,9 @@
     <ClCompile Include="Application\SourceCode\Skydome.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\Cloud.cpp">
+      <Filter>Application\Source\Field</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -845,6 +848,9 @@
     <ClInclude Include="Application\SourceCode\Skydome.h">
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SourceCode\Cloud.h">
+      <Filter>Application\Header\Field</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -911,6 +917,9 @@
       <Filter>Shader\Application</Filter>
     </None>
     <None Include="Application\Shader\RadialBlur.hlsli">
+      <Filter>Shader\Application</Filter>
+    </None>
+    <None Include="Application\Shader\Cloud.hlsli">
       <Filter>Shader\Application</Filter>
     </None>
   </ItemGroup>
@@ -1027,6 +1036,12 @@
       <Filter>Shader\Application</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\RadialBlurVS.hlsl">
+      <Filter>Shader\Application</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\CloudPS.hlsl">
+      <Filter>Shader\Application</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\CloudVS.hlsl">
       <Filter>Shader\Application</Filter>
     </FxCompile>
   </ItemGroup>

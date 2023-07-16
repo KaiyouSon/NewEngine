@@ -10,12 +10,14 @@
 #include "DOF.h"
 #include "RadialBlur.h"
 #include "Vignette.h"
+#include "Cloud.h"
 
 std::unique_ptr<IScene> SceneManager::currentScene = nullptr;
 
 SceneManager::SceneManager()
 {
 	Object3D::isAllLighting = true;
+	Cloud::CreateGraphicsPipeline();
 
 	Bloom::CreateGraphicsPipeline();
 	GaussianBlur::CreateGraphicsPipeline();

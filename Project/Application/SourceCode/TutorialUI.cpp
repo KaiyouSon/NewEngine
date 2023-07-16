@@ -4,17 +4,17 @@ TutorialUI::TutorialUI() :
 	back_(std::make_unique<Sprite>()),
 	button_(std::make_unique<Sprite>()),
 	colon_(std::make_unique<Sprite>()),
-	text_(std::make_unique<Sprite>())
+	text_(std::make_unique<Sprite>()),
+	messageSignUI_(std::make_unique<Sprite>())
 {
 	back_->SetTexture(TextureManager::GetTexture("MessageBack"));
-
 	button_->SetTexture(TextureManager::GetTexture("Buttons"));
+	colon_->SetTexture(TextureManager::GetTexture("ColonStr"));
+	text_->SetTexture(TextureManager::GetTexture("ExitStr"));
+	messageSignUI_->SetTexture(TextureManager::GetTexture("MessageSignUI"));
+
 	button_->SetTextureRect(Vec2(96, 96), Vec2(192, 192));
 	button_->SetSize(96);
-
-	colon_->SetTexture(TextureManager::GetTexture("ColonStr"));
-
-	text_->SetTexture(TextureManager::GetTexture("ExitStr"));
 }
 
 void TutorialUI::Init()
@@ -46,6 +46,9 @@ void TutorialUI::Update()
 	}
 	alpha_ = Clamp<float>(alpha_, 0.f, 255.f);
 
+	messageSignUI_->scale = 0.4f;
+	messageSignUI_->pos.x = -350.f;
+
 	back_->color.a = alpha_;
 	button_->color.a = alpha_;
 	colon_->color.a = alpha_;
@@ -55,6 +58,7 @@ void TutorialUI::Update()
 	button_->Update(&parent_);
 	colon_->Update(&parent_);
 	text_->Update(&parent_);
+	messageSignUI_->Update(&parent_);
 }
 
 void TutorialUI::DrawFrontSprite()
@@ -68,6 +72,7 @@ void TutorialUI::DrawFrontSprite()
 	button_->Draw();
 	colon_->Draw();
 	text_->Draw();
+	messageSignUI_->Draw();
 }
 
 void TutorialUI::SetisActive(const bool isActive)

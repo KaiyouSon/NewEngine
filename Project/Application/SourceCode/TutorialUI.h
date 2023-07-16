@@ -10,6 +10,7 @@ private:
 	std::unique_ptr<Sprite> text_;
 
 	std::unique_ptr<Sprite> message_;
+	std::unique_ptr<Sprite> messageSignUI_;
 	Transform parent_;
 
 	float alpha_;

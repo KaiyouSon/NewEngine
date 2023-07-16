@@ -12,6 +12,7 @@ bool LoadManager::ModelLoad()
 
 	ModelManager::LoadObjModel("Ground", "Ground");
 	ModelManager::LoadObjModel("Skydome", "Skydome", true);
+	ModelManager::LoadObjModel("Cloud", "Cloud");
 
 	ModelManager::LoadObjModel("MessageSign", "MessageSign");
 
@@ -41,7 +42,8 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("UI/Buttons.png", "Buttons");
 	TextureManager::LoadTexture("UI/Negotiation/NegotiationBack.png", "NegotiationBack");
 	TextureManager::LoadTexture("UI/ItemBoxFrame.png", "ItemBoxFrame");
-	TextureManager::LoadTexture("UI/MessageBack.png", "MessageBack");
+	TextureManager::LoadTexture("UI/MessageSign/MessageBack.png", "MessageBack");
+	TextureManager::LoadTexture("UI/MessageSign/MessageSignUI.png", "MessageSignUI");
 
 	// テキスト
 	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");

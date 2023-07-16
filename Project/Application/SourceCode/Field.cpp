@@ -9,7 +9,6 @@ Field::Field() :
 	ground_->SetModel(ModelManager::GetModel("Ground"));
 	sphere_->SetModel(ModelManager::GetModel("Sphere"));
 
-
 	Init();
 }
 
