@@ -31,6 +31,7 @@ bool Collision::SphereHitSphere(const SphereCollider& sphere1, const SphereColli
 	};
 }
 
+// キューブとキューブ
 bool Collision::CubeHitCube(const CubeCollider& cube1, const CubeCollider& cube2)
 {
 	// 重なり判定

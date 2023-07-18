@@ -507,6 +507,9 @@
     <ClCompile Include="Application\SourceCode\Cloud.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Collision\ICollider.cpp">
+      <Filter>NewEngine\Source\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -850,6 +853,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Cloud.h">
       <Filter>Application\Header\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Collision\ICollider.h">
+      <Filter>NewEngine\Header\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

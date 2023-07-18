@@ -80,6 +80,22 @@ enum class FlipType
 	XY
 };
 
+// コライダーの種類
+enum class ColliderPrimitive
+{
+	// 2D
+	Circle,
+	Square,
+
+	// 3D
+	Sphere,
+	Cube,
+	Ray,
+	Plane,
+	Triangle,
+	Capsule,
+};
+
 enum class CubePoints
 {
 	FLT, FLD,
