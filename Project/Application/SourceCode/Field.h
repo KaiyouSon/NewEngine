@@ -19,6 +19,7 @@ public:
 	void Update();
 	void DrawModel();
 	void DrawFrontSprite();
+	void DrawDebugGui();
 
 public:
 	MessageSign* GetMessageSign();

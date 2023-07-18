@@ -75,6 +75,7 @@ void GameScene::DrawFrontSprite()
 {
 	uiManager_->DrawFrontSprite();
 
+
 }
 void GameScene::DrawDebugGui()
 {
@@ -84,5 +85,7 @@ void GameScene::DrawDebugGui()
 	GuiManager::DrawColorEdit("color", LightManager::GetInstance()->directionalLight.color);
 	GuiManager::EndWindow();
 
+
+	field_->DrawDebugGui();
 	//player_->DrawDebugGui();
 }

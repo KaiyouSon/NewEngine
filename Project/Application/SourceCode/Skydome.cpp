@@ -4,18 +4,18 @@ Skydome::Skydome() :
 	skydome_(std::make_unique<Object3D>())
 {
 	skydome_->SetModel(ModelManager::GetModel("Skydome"));
-	//skydome_->color = Color(0xc4c178);
+	skydome_->color = Color(0xa49e07);
 	skydome_->isLighting = false;
 
-	for (uint32_t i = 0; i < 10; i++)
+	for (uint32_t i = 0; i < 20; i++)
 	{
 		clouds_.emplace_back(std::move(std::make_unique<Cloud>()));
 
-		const float range = 150.f;
+		const float range = 200.f;
 		const Vec3 randomPos =
 		{
 			Random::RangeF(-range, range),
-			150.f + i,
+			150.f,
 			Random::RangeF(-range, range),
 		};
 		clouds_.back()->SetPos(randomPos);
@@ -43,4 +43,11 @@ void Skydome::DrawModel()
 	{
 		clouds_[i]->DrawModel();
 	}
+}
+
+void Skydome::DrawDebugGui()
+{
+	GuiManager::BeginWindow("Skydome");
+	GuiManager::DrawColorEdit("Skydome Color", skydome_->color);
+	GuiManager::EndWindow();
 }

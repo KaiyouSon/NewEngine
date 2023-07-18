@@ -46,7 +46,7 @@ void Cloud::Init()
 
 void Cloud::Update()
 {
-	cloud_->offset.x += 0.001f;
+	cloud_->offset.x += 0.0005f;
 
 	cloud_->Update();
 }

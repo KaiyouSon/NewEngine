@@ -5,12 +5,12 @@ SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
 
 float4 main(V2P i) : SV_TARGET
 {
-    float radius = 0.4;
+    float radius = 0.5;
     float r = distance(i.uv, float2(0.5, 0.5));
     
-    float s = smoothstep(0.05, 0.5, r);
+    float dis = 1 - smoothstep(0.05, radius, r);
     
-    clip(1 - s);
+    //clip(1 - dis);
     
     float2 newUV = (i.uv + offset) * tiling;
     // テクスチャーマッピング
@@ -19,7 +19,7 @@ float4 main(V2P i) : SV_TARGET
     float c = texColor.r;
     float rate = smoothstep(0.2f, 0.8f, c);
 
-    float a = rate * (1 - s);
+    float a = rate * dis;
     
     float4 result = float4(c, c, c, a);
     return result * color;

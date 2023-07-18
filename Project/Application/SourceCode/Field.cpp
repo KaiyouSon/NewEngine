@@ -44,6 +44,11 @@ void Field::DrawFrontSprite()
 {
 }
 
+void Field::DrawDebugGui()
+{
+	skydome_->DrawDebugGui();
+}
+
 MessageSign* Field::GetMessageSign()
 {
 	return messageSign_.get();
