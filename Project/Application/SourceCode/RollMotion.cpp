@@ -82,7 +82,7 @@ void RollMotion::Step0Init(PlayerBody* human)
 
 	// 攻撃モーションで進む距離の計算
 	human->parent->CalcFrontVec();
-	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(-human->parent->frontVec_, 30);
+	length_ = 30;// CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->frontVec_, 30);
 
 	// 現在の座標を取得
 	startPos_ = human->pos;
@@ -98,10 +98,6 @@ void RollMotion::Step0Update(PlayerBody* human)
 	human->parent->moveVel = endPos_ - startPos_;
 
 	moveEase_.Update();
-
-	if (ease_.GetisEnd() == true)
-	{
-	}
 }
 void RollMotion::Step1Update(PlayerBody* human)
 {

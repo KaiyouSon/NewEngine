@@ -5,7 +5,6 @@ UIManager::UIManager() :
 	negotiationUI_(std::make_unique<NegotiationUI>()),
 	tutorialUI_(std::make_unique<TutorialUI>()),
 	itemBoxUIManager_(std::make_unique<ItemBoxUIManager>())
-
 {
 	for (uint32_t i = 0; i < gauges_.size(); i++)
 	{
@@ -27,7 +26,7 @@ void UIManager::Init()
 	gauges_[(uint32_t)GaugeType::Stamina]->SetColor(GaugeUI::FrontColor, Color::green);
 
 	bossHPGauge_->SetGaugePrame(boss_->GetHpGaugeParam());
-	bossHPGauge_->SetPos(Vec2(GetWindowHalfSize().x - 540.f, 880.f));
+	bossHPGauge_->SetPos(Vec2(GetWindowHalfSize().x - 448.f, 880.f));
 	bossHPGauge_->SetColor(GaugeUI::FrontColor, Color::red);
 	bossHPGauge_->Init();
 
@@ -103,7 +102,7 @@ void UIManager::DrawFrontSprite()
 
 	itemBoxUIManager_->DrawFrontSprite();
 
-	//bossHPGauge_->DrawFrontSprite();
+	bossHPGauge_->DrawFrontSprite();
 }
 
 void UIManager::SetPlayer(Player* player)

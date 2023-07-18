@@ -103,7 +103,7 @@ void GaugeUI::SetColor(const uint32_t index, const Color color)
 
 void GaugeUI::SetGaugePrame(const GaugeParam gaugeParam)
 {
-	gaugeWidthMax_ = Min<float>(gaugeParam.max, 1080.f);
+	gaugeWidthMax_ = Min<float>(gaugeParam.max, 896.f);
 
 	constGaugeSize_ = Vec2(gaugeWidthMax_, gaugeSize_.y);
 
