@@ -1,8 +1,8 @@
 #pragma once
 #include "GaugeUI.h"
 #include "NegotiationUI.h"
-#include "ItemBoxUI.h"
 #include "TutorialUI.h"
+#include "ItemBoxUIManager.h"
 #include "Player.h"
 #include "Boss.h"
 
@@ -10,7 +10,8 @@ class UIManager
 {
 private:
 	std::array<std::unique_ptr<GaugeUI>, 3> gauges_;
-	std::array<std::unique_ptr<ItemBoxUI>, 4> itemBoxUIs_;
+
+	std::unique_ptr<ItemBoxUIManager> itemBoxUIManager_;
 	std::unique_ptr<GaugeUI> bossHPGauge_;
 	std::unique_ptr<NegotiationUI> negotiationUI_;
 	std::unique_ptr<TutorialUI> tutorialUI_;

@@ -3,17 +3,16 @@
 UIManager::UIManager() :
 	bossHPGauge_(std::make_unique<GaugeUI>()),
 	negotiationUI_(std::make_unique<NegotiationUI>()),
-	tutorialUI_(std::make_unique<TutorialUI>())
+	tutorialUI_(std::make_unique<TutorialUI>()),
+	itemBoxUIManager_(std::make_unique<ItemBoxUIManager>())
+
 {
 	for (uint32_t i = 0; i < gauges_.size(); i++)
 	{
 		gauges_[i] = std::make_unique<GaugeUI>();
 	}
 
-	for (uint32_t i = 0; i < itemBoxUIs_.size(); i++)
-	{
-		itemBoxUIs_[i] = std::make_unique<ItemBoxUI>();
-	}
+
 }
 
 void UIManager::Init()
@@ -23,14 +22,6 @@ void UIManager::Init()
 		gauges_[i]->SetGaugePrame(player_->GetGaugeParam(i));
 		gauges_[i]->SetPos(Vec2(144.f, (float)(48.f + i * 18.f)));
 		gauges_[i]->Init();
-	}
-
-	// íÜêSç¿ïW
-	itemBoxUIParent.pos = Vec2(192, GetWindowSize().y - 160);
-	itemBoxUIParent.Update();
-	for (uint32_t i = 0; i < gauges_.size(); i++)
-	{
-		itemBoxUIs_[i]->Init();
 	}
 
 	gauges_[(uint32_t)GaugeType::Hp]->SetColor(GaugeUI::FrontColor, Color::red);
@@ -46,6 +37,8 @@ void UIManager::Init()
 	negotiationUI_->SetUIManager(this);
 
 	tutorialUI_->Init();
+
+	itemBoxUIManager_->Init();
 }
 
 void UIManager::Update()
@@ -56,24 +49,14 @@ void UIManager::Update()
 		gauges_[i]->Update();
 	}
 
-	float width = 92.f;
-	float height = 56.f;
-	itemBoxUIs_[0]->SetPos(Vec2(width, 0));	// ç∂
-	itemBoxUIs_[1]->SetPos(Vec2(-width, 0));
-	itemBoxUIs_[2]->SetPos(Vec2(0, height));
-	itemBoxUIs_[3]->SetPos(Vec2(0, -height));
-
-	for (uint32_t i = 0; i < itemBoxUIs_.size(); i++)
-	{
-		itemBoxUIs_[i]->Update(&itemBoxUIParent);
-	}
-
 	bossHPGauge_->SetGaugePrame(boss_->GetHpGaugeParam());
 	bossHPGauge_->Update();
 
 	negotiationUI_->Update();
 
 	tutorialUI_->Update();
+
+	itemBoxUIManager_->Update();
 }
 
 void UIManager::DrawFrontSprite()
@@ -83,14 +66,11 @@ void UIManager::DrawFrontSprite()
 		gauges_[i]->DrawFrontSprite();
 	}
 
-	for (uint32_t i = 0; i < itemBoxUIs_.size(); i++)
-	{
-		itemBoxUIs_[i]->DrawFrontSprite();
-	}
-
 	negotiationUI_->DrawFrontSprite();
 
 	tutorialUI_->DrawFrontSprite();
+
+	itemBoxUIManager_->DrawFrontSprite();
 
 	//bossHPGauge_->DrawFrontSprite();
 }

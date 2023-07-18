@@ -44,6 +44,7 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("UI/ItemBoxFrame.png", "ItemBoxFrame");
 	TextureManager::LoadTexture("UI/MessageSign/MessageBack.png", "MessageBack");
 	TextureManager::LoadTexture("UI/MessageSign/MessageSignUI.png", "MessageSignUI");
+	TextureManager::LoadTexture("UI/ItemUI/BottleUI.png", "BottleUI");
 
 	// テキスト
 	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");
