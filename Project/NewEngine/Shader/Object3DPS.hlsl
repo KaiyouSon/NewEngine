@@ -26,16 +26,16 @@ PSOutput main(V2P i)// : SV_TARGET
     if (isActiveDirLight == true)
     {
         // アンビエント
-        float4 ambient = texColor * 0.1f * dirLightColor;
+        float4 ambient = texColor * 0.1f * dirLightColor * float4(material.ambient.rgb, 1);
      
         // ディフューズ
         float intensity = saturate(dot(normalize(i.normal), dirLightVec));
-        float4 diffuse = intensity * dirLightColor;
+        float4 diffuse = intensity * dirLightColor * float4(material.diffuse.rgb, 1);;
     
         // スペキュラー
         float3 eyeDir = normalize(cameraPos - i.svpos.xyz); // 頂点から視点へのベクトル
         float3 reflectDir = -dirLightVec + 2 * i.normal * dot(i.normal, dirLightVec);
-        float4 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * dirLightColor;
+        float4 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * dirLightColor * float4(material.specular.rgb, 1);
     
         adsColor = ambient + diffuse + specular;
         adsColor.a = 1;

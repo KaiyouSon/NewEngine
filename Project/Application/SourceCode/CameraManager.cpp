@@ -15,54 +15,57 @@ void CameraManager::Init()
 
 void CameraManager::Update()
 {
-	currentCamera_->SetLockonPos(boss_->GetPos());
-	currentCamera_->Update();
+	//currentCamera_->SetLockonPos(boss_->GetPos());
+	//currentCamera_->Update();
 
-	if (Camera::current.rot.y >= Radian(360))
-	{
-		Camera::current.rot.y -= Radian(360);
-	}
-	else if (Camera::current.rot.y <= -Radian(360))
-	{
-		Camera::current.rot.y += Radian(360);
-	}
+	//if (Camera::current.rot.y >= Radian(360))
+	//{
+	//	Camera::current.rot.y -= Radian(360);
+	//}
+	//else if (Camera::current.rot.y <= -Radian(360))
+	//{
+	//	Camera::current.rot.y += Radian(360);
+	//}
 
-	bool isRightStickDown = Pad::GetButtonDown(PadCode::RightStick);
-	if (cameraType_ == CameraType::Default)
-	{
-		if (isRightStickDown)
-		{
-			Vec3 v1 = player_->GetPos() - Camera::current.pos;
-			Vec3 v2 = currentCamera_->GetLockonPos() - player_->GetPos();
+	//// ƒJƒƒ‰Ø‚è‘Ö‚¦‚éˆ—
+	//bool isRightStickDown = Pad::GetButtonDown(PadCode::RightStick);
+	//if (cameraType_ == CameraType::Default)
+	//{
+	//	if (isRightStickDown)
+	//	{
+	//		Vec3 v1 = player_->GetPos() - Camera::current.pos;
+	//		Vec3 v2 = currentCamera_->GetLockonPos() - player_->GetPos();
 
-			float dot = Vec3::Dot(v1.Norm(), v2.Norm());
-			if (dot >= cosf(Radian(80)) &&
-				v2.Length() <= 100)
-			{
-				ChangeCamera(CameraType::Target);
-			}
-			else
-			{
-				if (Pad::GetStick(PadCode::LeftStick, 300) == 0)
-				{
-					currentCamera_->SetisEase(true);
-				}
-			}
-		}
-	}
-	else if (cameraType_ == CameraType::Target)
-	{
-		if (isRightStickDown)
-		{
-			ChangeCamera(CameraType::Default);
-		}
+	//		float dot = Vec3::Dot(v1.Norm(), v2.Norm());
+	//		if (dot >= cosf(Radian(80)) &&
+	//			v2.Length() <= 100)
+	//		{
+	//			ChangeCamera(CameraType::Target);
+	//		}
+	//		else
+	//		{
+	//			if (Pad::GetStick(PadCode::LeftStick, 300) == 0)
+	//			{
+	//				currentCamera_->SetisEase(true);
+	//			}
+	//		}
+	//	}
+	//}
+	//else if (cameraType_ == CameraType::Target)
+	//{
+	//	if (isRightStickDown)
+	//	{
+	//		ChangeCamera(CameraType::Default);
+	//	}
 
-		float dis = Vec3(boss_->GetPos() - player_->GetPos()).Length();
-		if (dis >= 100)
-		{
-			ChangeCamera(CameraManager::Default);
-		}
-	}
+	//	float dis = Vec3(boss_->GetPos() - player_->GetPos()).Length();
+	//	if (dis >= 100)
+	//	{
+	//		ChangeCamera(CameraManager::Default);
+	//	}
+	//}
+
+	Camera::DebugCameraUpdate();
 }
 
 void CameraManager::ChangeCamera(const CameraType cameraType)

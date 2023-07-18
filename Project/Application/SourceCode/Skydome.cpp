@@ -4,7 +4,7 @@ Skydome::Skydome() :
 	skydome_(std::make_unique<Object3D>())
 {
 	skydome_->SetModel(ModelManager::GetModel("Skydome"));
-	skydome_->color = Color(0xc4c178);
+	//skydome_->color = Color(0xc4c178);
 	skydome_->isLighting = false;
 
 	for (uint32_t i = 0; i < 10; i++)
@@ -30,7 +30,6 @@ void Skydome::Init()
 void Skydome::Update()
 {
 	skydome_->Update();
-
 	for (uint32_t i = 0; i < clouds_.size(); i++)
 	{
 		clouds_[i]->Update();
