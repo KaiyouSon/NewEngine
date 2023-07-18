@@ -41,16 +41,17 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("UI/Gauge.png", "Gauge");
 	TextureManager::LoadTexture("UI/Buttons.png", "Buttons");
 	TextureManager::LoadTexture("UI/Negotiation/NegotiationBack.png", "NegotiationBack");
-	TextureManager::LoadTexture("UI/ItemBoxFrame.png", "ItemBoxFrame");
 	TextureManager::LoadTexture("UI/MessageSign/MessageBack.png", "MessageBack");
 	TextureManager::LoadTexture("UI/MessageSign/MessageSignUI.png", "MessageSignUI");
+	TextureManager::LoadTexture("UI/ItemBoxFrame.png", "ItemBoxFrame");
 	TextureManager::LoadTexture("UI/ItemUI/BottleUI.png", "BottleUI");
-	TextureManager::LoadTexture("UI/WeaponUI/ClubUI.png", "ClubUI");
+	TextureManager::LoadTexture("UI/ItemUI/ClubUI.png", "ClubUI");
 
 	// テキスト
 	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");
 	TextureManager::LoadTexture("Text/ReadMessageStr.png", "ReadMessageStr");
 	TextureManager::LoadTexture("Text/ExitStr.png", "ExitStr");
+	TextureManager::LoadTexture("Text/TutorialStr1.png", "TutorialStr1");
 
 	// レンダーテクスチャー
 
