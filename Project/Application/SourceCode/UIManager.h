@@ -22,6 +22,11 @@ private:
 	Player* player_;
 	Boss* boss_;
 
+private:
+	Timer notActiveTimer_;
+	bool isActive_;
+	float alpha_;
+
 public:
 	UIManager();
 	void Init();
@@ -35,5 +40,6 @@ public:
 public:
 	NegotiationUI* GetNegotiationUI();
 	TutorialUI* GetTutorialUI();
+	bool GetisActive();
 };
 

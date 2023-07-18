@@ -7,7 +7,7 @@ ItemUI::ItemUI() :
 
 void ItemUI::Init()
 {
-	itemUI_->scale = 0.35f;
+	itemUI_->scale = 0.325f;
 }
 
 void ItemUI::Update(Transform* parent)
@@ -24,7 +24,6 @@ void ItemUI::SettingsByType()
 {
 	switch (itemType_)
 	{
-
 		// HPボトル
 	case ItemType::HPBottle:
 	{
@@ -39,6 +38,15 @@ void ItemUI::SettingsByType()
 	{
 		itemUI_->SetTexture(TextureManager::GetTexture("BottleUI"));
 		itemUI_->SetTextureRect(Vec2(256, 0), Vec2(512, 256));
+		itemUI_->SetSize(256);
+	}
+	break;
+
+	// MPボトル
+	case ItemType::Club:
+	{
+		itemUI_->SetTexture(TextureManager::GetTexture("ClubUI"));
+		itemUI_->SetTextureRect(Vec2(0, 0), Vec2(256, 256));
 		itemUI_->SetSize(256);
 	}
 	break;
@@ -58,4 +66,9 @@ void ItemUI::SetType(const ItemType itemType)
 {
 	itemType_ = itemType;
 	SettingsByType();
+}
+
+void ItemUI::SetAlpha(const float alpha)
+{
+	itemUI_->color.a = alpha;
 }

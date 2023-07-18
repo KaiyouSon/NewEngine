@@ -15,5 +15,7 @@ public:
 public:
 	void SetPos(const Vec2 pos);
 	void SetScale(const Vec2 scale);
+
+	void SetAlpha(const float alpha);
 };
 

@@ -510,11 +510,11 @@
     <ClCompile Include="NewEngine\Collision\ICollider.cpp">
       <Filter>NewEngine\Source\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\ItemUI.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\ItemBoxUIManager.cpp">
-      <Filter>Uncategorized\Source</Filter>
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\ItemUI.cpp">
+      <Filter>Application\Source\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -863,11 +863,11 @@
     <ClInclude Include="NewEngine\Collision\ICollider.h">
       <Filter>NewEngine\Header\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\ItemUI.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\ItemBoxUIManager.h">
-      <Filter>Uncategorized\Header</Filter>
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\ItemUI.h">
+      <Filter>Application\Header\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,11 +1,11 @@
 #include "ItemBoxUIManager.h"
 
-ItemBoxUIManager::ItemBoxUIManager():
-	itemUI_(std::make_unique<ItemUI>())
+ItemBoxUIManager::ItemBoxUIManager()
 {
 	for (uint32_t i = 0; i < itemBoxUIs_.size(); i++)
 	{
 		itemBoxUIs_[i] = std::make_unique<ItemBoxUI>();
+		itemUIs_[i] = std::make_unique<ItemUI>();
 	}
 }
 
@@ -19,25 +19,34 @@ void ItemBoxUIManager::Init()
 	for (uint32_t i = 0; i < itemBoxUIs_.size(); i++)
 	{
 		itemBoxUIs_[i]->Init();
+		itemUIs_[i]->Init();
 	}
-	itemUI_->Init();
-	itemUI_->SetType(ItemType::HPBottle);
+	itemUIs_[Position::Down]->SetType(ItemType::HPBottle);
+	itemUIs_[Position::Right]->SetType(ItemType::Club);
 }
 
 void ItemBoxUIManager::Update()
 {
+
 	float width = 92.f;
 	float height = 56.f;
-	itemBoxUIs_[0]->SetPos(Vec2(width, 0));	// ¶
-	itemBoxUIs_[1]->SetPos(Vec2(-width, 0));
-	itemBoxUIs_[2]->SetPos(Vec2(0, height));
-	itemBoxUIs_[3]->SetPos(Vec2(0, -height));
+	itemBoxUIs_[Position::Left]->SetPos(Vec2(-width, 0));
+	itemBoxUIs_[Position::Right]->SetPos(Vec2(width, 0));
+	itemBoxUIs_[Position::Up]->SetPos(Vec2(0, -height));
+	itemBoxUIs_[Position::Down]->SetPos(Vec2(0, height));
+
+	itemUIs_[Position::Right]->SetPos(Vec2(width, 0));
+	itemUIs_[Position::Down]->SetPos(Vec2(0, height));
+
 	for (uint32_t i = 0; i < itemBoxUIs_.size(); i++)
 	{
+		itemBoxUIs_[i]->SetAlpha(alpha_);
+		itemUIs_[i]->SetAlpha(alpha_);
+
 		itemBoxUIs_[i]->Update(&parent);
+		itemUIs_[i]->Update(&parent);
 	}
-	itemUI_->SetPos(Vec2(0, height));
-	itemUI_->Update(&parent);
+
 }
 
 void ItemBoxUIManager::DrawFrontSprite()
@@ -45,6 +54,11 @@ void ItemBoxUIManager::DrawFrontSprite()
 	for (uint32_t i = 0; i < itemBoxUIs_.size(); i++)
 	{
 		itemBoxUIs_[i]->DrawFrontSprite();
+		itemUIs_[i]->DrawFrontSprite();
 	}
-	itemUI_->DrawFrontSprite();
+}
+
+void ItemBoxUIManager::SetAlpha(const float alpha)
+{
+	alpha_ = alpha;
 }

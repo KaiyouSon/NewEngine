@@ -42,5 +42,4 @@ public:
 	void SetPos(const Vec2 pos);
 	void SetColor(const uint32_t index, const Color color);
 	void SetGaugePrame(const GaugeParam gaugeParam);
-	void SetRate(const float rate);
 };

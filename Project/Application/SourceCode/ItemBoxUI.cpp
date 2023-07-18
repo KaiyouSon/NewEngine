@@ -32,3 +32,8 @@ void ItemBoxUI::SetScale(const Vec2 scale)
 {
 	frame_->scale = scale;
 }
+
+void ItemBoxUI::SetAlpha(const float alpha)
+{
+	frame_->color.a = alpha;
+}
