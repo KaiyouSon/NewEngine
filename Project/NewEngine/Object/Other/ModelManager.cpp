@@ -107,6 +107,7 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 			lineStream >> normal.x;
 			lineStream >> normal.y;
 			lineStream >> normal.z;
+			normal.z *= -1;
 			// 法線ベクトルデータに追加
 			normals.emplace_back(normal);
 		}

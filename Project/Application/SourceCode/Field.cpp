@@ -17,7 +17,7 @@ void Field::Init()
 	ground_->scale = 1000.f;
 	ground_->tiling = 100;
 
-	sphere_->pos = { -4,4,0 };
+	sphere_->pos = { 0,0,0 };
 	sphere_->scale = 4.f;
 	messageSign_->Init();
 	skydome_->Init();

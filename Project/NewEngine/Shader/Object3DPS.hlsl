@@ -23,20 +23,23 @@ PSOutput main(V2P i)// : SV_TARGET
     float4 adsColor = float4(0, 0, 0, 1);
     if (isActiveDirLight == true)
     {
+        // ライトに向かうベクトルと法線の内積
+        float dotLightNormal = dot(dirLightVec, i.normal);
+        
         // アンビエント
-        float4 ambient = texColor * 0.1f * dirLightColor * float4(material.ambient.rgb, 1);
+        float3 ambient = /*texColor.rgb * 0.1f **/material.ambient.rgb;
      
         // ディフューズ
-        float intensity = saturate(dot(normalize(i.normal), dirLightVec));
-        float4 diffuse = intensity * dirLightColor * float4(material.diffuse.rgb, 1);;
+        //float intensity = saturate(dot(normalize(i.normal), dirLightVec));
+        //float4 diffuse = intensity * dirLightColor * float4(material.diffuse.rgb, 1);
+        float3 diffuse = dotLightNormal * material.diffuse.rgb;
     
         // スペキュラー
         float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // 頂点から視点へのベクトル
         float3 reflectDir = -dirLightVec + 2 * i.normal * dot(i.normal, dirLightVec);
-        float4 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * dirLightColor * float4(material.specular.rgb, 1);
+        float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
     
-        adsColor = ambient + diffuse; //     +specular;
-        adsColor.a = 1;
+        adsColor.rgb = ambient + diffuse + specular * dirLightColor;
     }
 
     float4 resultColor = adsColor * texColor * color;
