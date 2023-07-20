@@ -28,26 +28,18 @@ void TutorialUI::Init()
 	button_->pos = Vec2(-40, height);
 	colon_->pos = Vec2(-20, height);
 	text_->pos = Vec2(20, height);
+	message_->pos = Vec2(-150.f, -20.f);
 
 	button_->scale = 0.4f;
 	colon_->scale = 0.3f;
 	text_->scale = 0.3f;
+	message_->scale = 0.35f;
 }
 
 void TutorialUI::Update()
 {
-	message_->pos = Vec2(-150.f, 0.f);
-	message_->scale = 0.4f;
-	const float add = 35.f;
-
-	if (isActive_ == false)
-	{
-		alpha_ -= add;
-	}
-	else
-	{
-		alpha_ += add;
-	}
+	const float add = isActive_ ? 35.f : -35.f;
+	alpha_ += add;
 	alpha_ = Clamp<float>(alpha_, 0.f, 255.f);
 
 	messageSignUI_->scale = 0.4f;

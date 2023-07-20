@@ -4,7 +4,7 @@ Skydome::Skydome() :
 	skydome_(std::make_unique<Object3D>())
 {
 	skydome_->SetModel(ModelManager::GetModel("Skydome"));
-	skydome_->color = Color(0xa49e07);
+	skydome_->color = Color(0xc4c178);
 	skydome_->isLighting = false;
 
 	for (uint32_t i = 0; i < 20; i++)

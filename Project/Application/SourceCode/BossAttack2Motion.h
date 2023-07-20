@@ -15,6 +15,7 @@ private:
 	void CurrentStepInit(HumanoidBody* human);
 	void CurrentStepUpdate(HumanoidBody* human);
 
+	void SettingMovePrame(HumanoidBody* human, const float dis, const uint32_t easeTimer, const float powNum);
 public:
 	BossAttack2Motion();
 	void Init(HumanoidBody* human) override;

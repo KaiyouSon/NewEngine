@@ -38,83 +38,63 @@ void BossAttack2Motion::Update(HumanoidBody* human)
 
 void BossAttack2Motion::CurrentStepInit(HumanoidBody* human)
 {
-	Boss* boss = static_cast<Boss*>(human->iParent);
-
 	startBodyY_ = human->GetPart(PartID::Body)->pos.y;
 	switch (step_)
 	{
 	case 0:
-		endBodyY_ = -0.45f;
+		endBodyY_ = -0.9f;
 		break;
 	case 1:
-		endBodyY_ = -0.42f;
+		endBodyY_ = -1.1f;
 		break;
 	case 2:
-		endBodyY_ = -1.8f;
+		SettingMovePrame(human, 5, 30, 2);
+		endBodyY_ = -0.85f;
 		break;
 	case 3:
-		moveEase_.SetEaseTimer(15);
-		moveEase_.SetPowNum(2);
-		moveEase_.Reset();
-		boss->CalcFrontVec();
-
-		// 攻撃モーションで進む距離の計算
-		length_ = 5;
-
-		// 現在の座標を取得
-		startPos_ = human->pos;
-		endPos_ = startPos_ + boss->frontVec_.Norm() * length_;
-
-		endBodyY_ = -1.1f;
-		break;
-	case 4:
 		endBodyY_ = -1.0f;
 		break;
-	case 5:
+	case 4:
 		endBodyY_ = -1.3f;
 		break;
+	case 5:
+		endBodyY_ = -0.55f;
+		break;
 	case 6:
-		moveEase_.SetEaseTimer(15);
-		moveEase_.SetPowNum(2);
-		moveEase_.Reset();
-		boss->CalcFrontVec();
-
-		// 攻撃モーションで進む距離の計算
-		length_ = 5;
-
-		// 現在の座標を取得
-		startPos_ = human->pos;
-		endPos_ = startPos_ + boss->frontVec_.Norm() * length_;
-
-		endBodyY_ = -0.37f;
+		endBodyY_ = -0.5f;
 		break;
 	case 7:
-		endBodyY_ = -1.1f;
-		break;
 	case 8:
+		endBodyY_ = -0.6f;
+		break;
 	case 9:
-		endBodyY_ = -0.95f;
+		endBodyY_ = -0.55f;
 		break;
 	case 10:
-		moveEase_.SetEaseTimer(10);
-		moveEase_.SetPowNum(2);
-		moveEase_.Reset();
-		boss->CalcFrontVec();
-
-		// 攻撃モーションで進む距離の計算
-		length_ = 8;
-
-		// 現在の座標を取得
-		startPos_ = human->pos;
-		endPos_ = startPos_ + boss->frontVec_.Norm() * length_;
-
-		endBodyY_ = -1.5f;
+		endBodyY_ = -0.85f;
 		break;
 	case 11:
-		endBodyY_ = -0.95f;
+		SettingMovePrame(human, 5, 30, 2);
+		endBodyY_ = -1.3f;
 		break;
 	case 12:
-		endBodyY_ = 0.f;
+		endBodyY_ = -1.25f;
+		break;
+	case 13:
+		endBodyY_ = -1.3f;
+		break;
+	case 14:
+		endBodyY_ = -0.6f;
+		break;
+	case 15:
+		endBodyY_ = 0.0f;
+		break;
+	case 16:
+		SettingMovePrame(human, 8, 20, 2);
+		endBodyY_ = -1.75f;
+		break;
+	case 17:
+		endBodyY_ = -0.7f;
 		break;
 	default:
 		endBodyY_ = 0;
@@ -124,11 +104,30 @@ void BossAttack2Motion::CurrentStepUpdate(HumanoidBody* human)
 {
 	human->GetPart(PartID::Body)->pos.y = ease_.Interpolation(startBodyY_, endBodyY_);
 
-	//Boss* boss = static_cast<Boss*>(human->iParent);
-	//if (step_ == 3 || step_ == 6 || step_ == 10)
-	//{
-	//	human->pos = moveEase_.InOut(startPos_, endPos_);
-	//	moveEase_.Update();
-	//}
+	Boss* boss = static_cast<Boss*>(human->iParent);
+	if ((step_ >= 2 && step_ <= 4) ||
+		(step_ >= 11 && step_ <= 13) ||
+		(step_ == 16))
+	{
+		human->pos = moveEase_.InOut(startPos_, endPos_);
+		moveEase_.Update();
+	}
+}
+
+void BossAttack2Motion::SettingMovePrame(HumanoidBody* human, const float dis, const uint32_t easeTimer, const float powNum)
+{
+	Boss* boss = static_cast<Boss*>(human->iParent);
+
+	moveEase_.SetEaseTimer(easeTimer);
+	moveEase_.SetPowNum(powNum);
+	moveEase_.Reset();
+	boss->CalcFrontVec();
+
+	// 攻撃モーションで進む距離の計算
+	//length_ = 5;
+
+	// 現在の座標を取得
+	startPos_ = human->pos;
+	endPos_ = startPos_ + boss->frontVec_.Norm() * dis;
 }
 

@@ -2,7 +2,9 @@
 #include "Boss.h"
 
 BossBody::BossBody() :
-	attack2Motion_(std::make_unique<BossAttack2Motion>())
+	grabAttackMotion_(std::make_unique<BossGrabAttackMotion>()),
+	attack2Motion_(std::make_unique<BossAttack2Motion>()),
+	attack3Motion_(std::make_unique<BossAttack3Motion>())
 {
 	//
 }
@@ -10,13 +12,17 @@ BossBody::BossBody() :
 void BossBody::Init()
 {
 	BaseInit();
+	grabAttackMotion_->Init(this);
 	attack2Motion_->Init(this);
+	attack3Motion_->Init(this);
 }
 
 void BossBody::Update()
 {
 	BaseUpdate();
+	grabAttackMotion_->Update(this);
 	//attack2Motion_->Update(this);
+	//attack3Motion_->Update(this);
 }
 
 void BossBody::DrawModel()

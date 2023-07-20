@@ -30,9 +30,8 @@ PSOutput main(V2P i)// : SV_TARGET
         float3 ambient = /*texColor.rgb * 0.1f **/material.ambient.rgb;
      
         // ディフューズ
-        //float intensity = saturate(dot(normalize(i.normal), dirLightVec));
-        //float4 diffuse = intensity * dirLightColor * float4(material.diffuse.rgb, 1);
-        float3 diffuse = dotLightNormal * material.diffuse.rgb;
+        float intensity = saturate(dot(normalize(i.normal), dirLightVec));
+        float4 diffuse = intensity * dirLightColor * float4(material.diffuse.rgb, 1);
     
         // スペキュラー
         float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // 頂点から視点へのベクトル

@@ -4,7 +4,9 @@
 #include "BossBody.h"
 
 class Player;
+class BossGrabAttackMotion;
 class BossAttack2Motion;
+class BossAttack3Motion;
 
 class Boss : public Character
 {
@@ -45,7 +47,9 @@ public:
 	Vec3 GetPos();
 
 private:
+	friend BossGrabAttackMotion;
 	friend BossAttack2Motion;
+	friend BossAttack3Motion;
 
 };
 
