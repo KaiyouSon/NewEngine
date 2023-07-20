@@ -1,7 +1,9 @@
 #include "Boss.h"
+#include "Sword.h"
 
 Boss::Boss() :
-	boss_(std::make_unique<BossBody>())
+	boss_(std::make_unique<BossBody>()),
+	weapon(std::make_unique<Sword>())
 {
 }
 
@@ -11,6 +13,8 @@ void Boss::Init()
 	boss_->pos = Vec3(0, 7.125f, 20.f);
 	boss_->scale = 1.5f;
 	boss_->rot.y = Radian(180);
+
+	boss_->SetWeapon(weapon.get(), WeaponPartID::Right);
 
 	// HPÉQÅ[ÉW
 	hpGaugeParam_.CalcRate(2560.f, 2560.f);

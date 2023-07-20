@@ -21,6 +21,9 @@ bool LoadManager::ModelLoad()
 	ModelManager::LoadObjModel("HumanoidBody/Limbs", "Limbs");
 
 	ModelManager::LoadObjModel("Weapon/Club", "Club");
+	ModelManager::LoadObjModel("Weapon/Sword", "Sword");
+
+
 	ModelManager::LoadObjModel("Capsule", "Capsule");
 	ModelManager::LoadObjModel("Collider/CapsuleCollider", "CapsuleCollider");
 
@@ -78,8 +81,8 @@ bool LoadManager::SoundLoad()
 
 bool LoadManager::MotionLoad()
 {
-	MotionManager::Load("BackstepMotion", "Backstep");
-	MotionManager::Load("RollMotion", "Roll");
+	MotionManager::Load("Player/BackstepMotion", "Backstep");
+	MotionManager::Load("Player/RollMotion", "Roll");
 	MotionManager::Load("Weapon/Mallet/WeakAttackMotion1", "MalletWeakAttack1");
 	MotionManager::Load("Weapon/Mallet/WeakAttackMotion2", "MalletWeakAttack2");
 	MotionManager::Load("Weapon/Mallet/WeakAttackMotion3", "MalletWeakAttack3");

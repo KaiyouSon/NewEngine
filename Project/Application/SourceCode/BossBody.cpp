@@ -8,6 +8,7 @@ void BossBody::Init()
 void BossBody::Update()
 {
 	BaseUpdate();
+
 }
 
 void BossBody::DrawModel()

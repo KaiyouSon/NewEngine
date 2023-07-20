@@ -113,6 +113,7 @@
     <ClCompile Include="Application\SourceCode\BackstepMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Bloom.cpp" />
     <ClCompile Include="Application\SourceCode\Boss.cpp" />
+    <ClCompile Include="Application\SourceCode\BossAttackMotion.cpp" />
     <ClCompile Include="Application\SourceCode\BossBody.cpp" />
     <ClCompile Include="Application\SourceCode\CameraManager.cpp" />
     <ClCompile Include="Application\SourceCode\Cloud.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="Application\SourceCode\Scene\TitleScene.cpp" />
     <ClCompile Include="Application\SourceCode\MessageSign.cpp" />
     <ClCompile Include="Application\SourceCode\Skydome.cpp" />
+    <ClCompile Include="Application\SourceCode\Sword.cpp" />
     <ClCompile Include="Application\SourceCode\TargetCamera.cpp" />
     <ClCompile Include="Application\SourceCode\Task.cpp" />
     <ClCompile Include="Application\SourceCode\TitleUI.cpp" />
@@ -224,6 +226,7 @@
     <ClInclude Include="Application\SourceCode\BackstepMotion.h" />
     <ClInclude Include="Application\SourceCode\Bloom.h" />
     <ClInclude Include="Application\SourceCode\Boss.h" />
+    <ClInclude Include="Application\SourceCode\BossAttackMotion.h" />
     <ClInclude Include="Application\SourceCode\BossBody.h" />
     <ClInclude Include="Application\SourceCode\CameraManager.h" />
     <ClInclude Include="Application\SourceCode\Cloud.h" />
@@ -263,6 +266,7 @@
     <ClInclude Include="Application\SourceCode\Scene\TitleScene.h" />
     <ClInclude Include="Application\SourceCode\MessageSign.h" />
     <ClInclude Include="Application\SourceCode\Skydome.h" />
+    <ClInclude Include="Application\SourceCode\Sword.h" />
     <ClInclude Include="Application\SourceCode\TargetCamera.h" />
     <ClInclude Include="Application\SourceCode\Task.h" />
     <ClInclude Include="Application\SourceCode\TitleUI.h" />

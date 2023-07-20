@@ -7,6 +7,7 @@ class Boss
 {
 private:
 	std::unique_ptr<BossBody> boss_;
+	std::unique_ptr<Weapon> weapon;
 
 	GaugeParam hpGaugeParam_;
 

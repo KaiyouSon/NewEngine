@@ -199,6 +199,12 @@
     <Filter Include="NewEngine\Header\Lighting">
       <UniqueIdentifier>{2e138d45-a1d0-4dde-97af-e473ac0908db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Source\Motion\Boss">
+      <UniqueIdentifier>{c64273da-c4de-474f-aea5-9d19a375b309}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\Motion\Boss">
+      <UniqueIdentifier>{82854429-bc3b-45c3-867e-30ea50635982}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -447,9 +453,6 @@
     <ClCompile Include="Application\SourceCode\BackstepMotion.cpp">
       <Filter>Application\Source\Motion\Human</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\IMotion.cpp">
-      <Filter>Application\Source\Motion\Human</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\RollMotion.cpp">
       <Filter>Application\Source\Motion\Human</Filter>
     </ClCompile>
@@ -515,6 +518,15 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\ItemUI.cpp">
       <Filter>Application\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Sword.cpp">
+      <Filter>Application\Source\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\BossAttackMotion.cpp">
+      <Filter>Application\Source\Motion\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\IMotion.cpp">
+      <Filter>Application\Source\Motion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -794,9 +806,6 @@
     <ClInclude Include="Application\SourceCode\BackstepMotion.h">
       <Filter>Application\Header\Motion\Human</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\IMotion.h">
-      <Filter>Application\Header\Motion\Human</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\MoveMotion.h">
       <Filter>Application\Header\Motion\Human</Filter>
     </ClInclude>
@@ -867,6 +876,15 @@
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\MotionManager.h">
+      <Filter>Application\Header\Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Sword.h">
+      <Filter>Application\Header\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\BossAttackMotion.h">
+      <Filter>Application\Header\Motion\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\IMotion.h">
       <Filter>Application\Header\Motion</Filter>
     </ClInclude>
   </ItemGroup>

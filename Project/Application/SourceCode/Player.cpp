@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "GaugeType.h"
 #include "Club.h"
+#include "Sword.h"
 
 Player::Player() :
 	player_(std::make_unique<PlayerBody>()),
