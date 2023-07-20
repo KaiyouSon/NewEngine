@@ -17,7 +17,8 @@ void Player::Init()
 	player_->pos.y = 4.75f;
 
 	player_->SetWeapon(weapon_.get(), WeaponPartID::Right);
-	player_->parent = this;
+	player_->iParent = this;
+	player_->parent = static_cast<Player*>(player_->iParent);
 
 	joggingSpeed_ = 0.7f;
 	runSpeed_ = 1.2f;

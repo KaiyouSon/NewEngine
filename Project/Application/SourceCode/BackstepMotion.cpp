@@ -1,6 +1,6 @@
 #include "BackstepMotion.h"
 #include "HumanoidBody.h"
-#include "PlayerBody.h"
+#include "HumanoidBody.h"
 #include "Player.h"
 #include "CollisionManager.h"
 
@@ -9,7 +9,7 @@ BackstepMotion::BackstepMotion()
 	motion_ = MotionManager::GetMotion("Backstep");
 }
 
-void BackstepMotion::Init(PlayerBody* human)
+void BackstepMotion::Init(HumanoidBody* human)
 {
 	isInit_ = false;
 	isPlay_ = false;
@@ -18,13 +18,15 @@ void BackstepMotion::Init(PlayerBody* human)
 
 	curRots_.resize(human->GetPartsSize());
 	endRots_.resize(human->GetPartsSize());
+	curWeaponPoses_.resize(human->GetWeaponPartsSize());
+	endWeaponPoses_.resize(human->GetWeaponPartsSize());
 	curWeaponRots_.resize(human->GetWeaponPartsSize());
 	endWeaponRots_.resize(human->GetWeaponPartsSize());
 
 	moveEase_.SetEaseTimer(15);
 	moveEase_.SetPowNum(2);
 }
-void BackstepMotion::Update(PlayerBody* human)
+void BackstepMotion::Update(HumanoidBody* human)
 {
 	if (isPlay_ == false)
 	{
@@ -44,14 +46,14 @@ void BackstepMotion::Update(PlayerBody* human)
 	BasePostUpdate(human);
 }
 
-void BackstepMotion::CurrentStepInit(PlayerBody* human)
+void BackstepMotion::CurrentStepInit(HumanoidBody* human)
 {
 	if (step_ == 0)
 	{
 		Step0Init(human);
 	}
 }
-void BackstepMotion::CurrentStepUpdate(PlayerBody* human)
+void BackstepMotion::CurrentStepUpdate(HumanoidBody* human)
 {
 	if (step_ == 0)
 	{
@@ -67,40 +69,42 @@ void BackstepMotion::CurrentStepUpdate(PlayerBody* human)
 	}
 }
 
-void BackstepMotion::Step0Init(PlayerBody* human)
+void BackstepMotion::Step0Init(HumanoidBody* human)
 {
+	Player* player = static_cast<Player*>(human->iParent);
+
 	moveEase_.Reset();
 
 	step_ = 0;
 
 	// 攻撃モーションで進む距離の計算
-	human->parent->CalcFrontVec();
-	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(-human->parent->frontVec_, 15);
+	player->CalcFrontVec();
+	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(-player->frontVec_, 15);
 
 	// 現在の座標を取得
 	startPos_ = human->pos;
-	endPos_ = startPos_ - human->parent->frontVec_.Norm() * length_;
+	endPos_ = startPos_ - player->frontVec_.Norm() * length_;
 
 	up_ = 1;
 	down_ = -0.5;
 }
-void BackstepMotion::Step0Update(PlayerBody* human)
+void BackstepMotion::Step0Update(HumanoidBody* human)
 {
+	Player* player = static_cast<Player*>(human->iParent);
+
 	human->GetPart(PartID::Body)->pos.y = ease_.Interpolation(0.f, up_);
 	human->pos = moveEase_.InOut(startPos_, endPos_);
-	human->parent->moveVel = endPos_ - startPos_;
+	player->moveVel = endPos_ - startPos_;
 
 	moveEase_.Update();
-
-	if (ease_.GetisEnd() == true)
-	{
-	}
 }
-void BackstepMotion::Step1Update(PlayerBody* human)
+void BackstepMotion::Step1Update(HumanoidBody* human)
 {
+	Player* player = static_cast<Player*>(human->iParent);
+
 	human->GetPart(PartID::Body)->pos.y = ease_.Interpolation(up_, down_);
 	human->pos = moveEase_.InOut(startPos_, endPos_);
-	human->parent->moveVel = endPos_ - startPos_;
+	player->moveVel = endPos_ - startPos_;
 
 	moveEase_.Update();
 
@@ -109,7 +113,7 @@ void BackstepMotion::Step1Update(PlayerBody* human)
 		isCanChangeMotion_ = true;
 	}
 }
-void BackstepMotion::Step2Update(PlayerBody* human)
+void BackstepMotion::Step2Update(HumanoidBody* human)
 {
 	human->GetPart(PartID::Body)->pos.y = ease_.Interpolation(down_, 0.f);
 

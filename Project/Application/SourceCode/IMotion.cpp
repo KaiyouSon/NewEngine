@@ -1,8 +1,7 @@
 #include "IMotion.h"
 #include "HumanoidBody.h"
-#include "PlayerBody.h"
 
-void IMotion::BaseInit(PlayerBody* human)
+void IMotion::BaseInit(HumanoidBody* human)
 {
 	if (isInit_ == false)
 	{
@@ -13,16 +12,19 @@ void IMotion::BaseInit(PlayerBody* human)
 		{
 			endRots_[i] = current.endRots[i];
 		}
+
+		curWeaponPoses_ = human->CalcCurWeaponPoses();
 		curWeaponRots_ = human->CalcCurWeaponRots();
-		for (uint32_t i = 0; i < current.endWeaponRots.size(); i++)
+		for (uint32_t i = 0; i < current.endWeaponPoses.size(); i++)
 		{
+			endWeaponPoses_[i] = current.endWeaponPoses[i];
 			endWeaponRots_[i] = current.endWeaponRots[i];
 		}
 		ease_ = current.ease;
 	}
 }
 
-void IMotion::BasePrevUpdate(PlayerBody* human)
+void IMotion::BasePrevUpdate(HumanoidBody* human)
 {
 	for (uint32_t i = (uint32_t)PartID::Body; i < curRots_.size(); i++)
 	{
@@ -35,11 +37,12 @@ void IMotion::BasePrevUpdate(PlayerBody* human)
 			continue;
 		}
 
+		human->GetWeaponPart((WeaponPartID)i)->pos = ease_.Interpolation(curWeaponPoses_[i], endWeaponPoses_[i]);
 		human->GetWeaponPart((WeaponPartID)i)->rot = ease_.Interpolation(curWeaponRots_[i], endWeaponRots_[i]);
 	}
 }
 
-void IMotion::BasePostUpdate(PlayerBody* human)
+void IMotion::BasePostUpdate(HumanoidBody* human)
 {
 	if (ease_.GetisEnd() == true)
 	{

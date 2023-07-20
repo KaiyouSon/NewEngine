@@ -522,11 +522,14 @@
     <ClCompile Include="Application\SourceCode\Sword.cpp">
       <Filter>Application\Source\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\BossAttackMotion.cpp">
+    <ClCompile Include="Application\SourceCode\BossAttack2Motion.cpp">
       <Filter>Application\Source\Motion\Boss</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\IMotion.cpp">
       <Filter>Application\Source\Motion</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Character.cpp">
+      <Filter>Uncategorized\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -881,11 +884,14 @@
     <ClInclude Include="Application\SourceCode\Sword.h">
       <Filter>Application\Header\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\BossAttackMotion.h">
+    <ClInclude Include="Application\SourceCode\BossAttack2Motion.h">
       <Filter>Application\Header\Motion\Boss</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\IMotion.h">
       <Filter>Application\Header\Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Character.h">
+      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -205,6 +205,20 @@ std::vector<Vec3> HumanoidBody::CalcCurRots()
 	}
 	return result;
 }
+std::vector<Vec3> HumanoidBody::CalcCurWeaponPoses()
+{
+	std::vector<Vec3> result;
+	result.resize(weapons_.size());
+
+	for (uint32_t i = 0; i < weapons_.size(); i++)
+	{
+		if (weapons_[i] != nullptr)
+		{
+			result[i] = weapons_[i]->weapon->pos;
+		}
+	}
+	return result;
+}
 std::vector<Vec3> HumanoidBody::CalcCurWeaponRots()
 {
 	std::vector<Vec3> result;

@@ -63,6 +63,11 @@ void MotionManager::ParseRecursive(MotionData* data, nlohmann::json jsonObj)
 	nlohmann::json transform = jsonObj["transform"];
 	if (jsonObj.contains("is_weapon"))
 	{
+		data->endWeaponPoses.emplace_back();
+		data->endWeaponPoses.back().x = (float)transform["translation"][0];
+		data->endWeaponPoses.back().y = (float)transform["translation"][1];
+		data->endWeaponPoses.back().z = (float)transform["translation"][2];
+
 		data->endWeaponRots.emplace_back();
 		data->endWeaponRots.back().x = Radian((float)transform["rotation"][0]);
 		data->endWeaponRots.back().y = Radian((float)transform["rotation"][1]);

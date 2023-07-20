@@ -6,7 +6,7 @@
 
 class MalletMotion;
 
-class Player
+class Player : public Character
 {
 public:
 	enum class State

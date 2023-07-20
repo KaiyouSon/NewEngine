@@ -20,8 +20,6 @@ PSOutput main(V2P i)// : SV_TARGET
     // シェーダーカラー
     float4 shaderColor = 0;
     
-    // フォーン
-    
     float4 adsColor = float4(0, 0, 0, 1);
     if (isActiveDirLight == true)
     {
@@ -33,11 +31,11 @@ PSOutput main(V2P i)// : SV_TARGET
         float4 diffuse = intensity * dirLightColor * float4(material.diffuse.rgb, 1);;
     
         // スペキュラー
-        float3 eyeDir = normalize(cameraPos - i.svpos.xyz); // 頂点から視点へのベクトル
+        float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // 頂点から視点へのベクトル
         float3 reflectDir = -dirLightVec + 2 * i.normal * dot(i.normal, dirLightVec);
         float4 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * dirLightColor * float4(material.specular.rgb, 1);
     
-        adsColor = ambient + diffuse + specular;
+        adsColor = ambient + diffuse; //     +specular;
         adsColor.a = 1;
     }
 

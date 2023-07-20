@@ -113,9 +113,10 @@
     <ClCompile Include="Application\SourceCode\BackstepMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Bloom.cpp" />
     <ClCompile Include="Application\SourceCode\Boss.cpp" />
-    <ClCompile Include="Application\SourceCode\BossAttackMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\BossAttack2Motion.cpp" />
     <ClCompile Include="Application\SourceCode\BossBody.cpp" />
     <ClCompile Include="Application\SourceCode\CameraManager.cpp" />
+    <ClCompile Include="Application\SourceCode\Character.cpp" />
     <ClCompile Include="Application\SourceCode\Cloud.cpp" />
     <ClCompile Include="Application\SourceCode\Club.cpp" />
     <ClCompile Include="Application\SourceCode\CollisionManager.cpp" />
@@ -226,9 +227,10 @@
     <ClInclude Include="Application\SourceCode\BackstepMotion.h" />
     <ClInclude Include="Application\SourceCode\Bloom.h" />
     <ClInclude Include="Application\SourceCode\Boss.h" />
-    <ClInclude Include="Application\SourceCode\BossAttackMotion.h" />
+    <ClInclude Include="Application\SourceCode\BossAttack2Motion.h" />
     <ClInclude Include="Application\SourceCode\BossBody.h" />
     <ClInclude Include="Application\SourceCode\CameraManager.h" />
+    <ClInclude Include="Application\SourceCode\Character.h" />
     <ClInclude Include="Application\SourceCode\Cloud.h" />
     <ClInclude Include="Application\SourceCode\Club.h" />
     <ClInclude Include="Application\SourceCode\CollisionManager.h" />

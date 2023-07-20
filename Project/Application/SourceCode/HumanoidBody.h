@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 #include "Weapon.h"
+#include "Character.h"
 
 struct Weapon;
 
@@ -35,6 +36,8 @@ protected:
 	std::array<Vec3, 13> curRots_;
 
 public:
+	Character* iParent;
+
 	Vec3 pos;
 	Vec3 attackPos;
 	Vec3 rot;
@@ -50,6 +53,7 @@ public:
 
 public:
 	std::vector<Vec3> CalcCurRots();
+	std::vector<Vec3> CalcCurWeaponPoses();
 	std::vector<Vec3> CalcCurWeaponRots();
 	void SetWeapon(Weapon* weapon, const WeaponPartID partID);
 	Vec3 GetWorldPos(const PartID partID);

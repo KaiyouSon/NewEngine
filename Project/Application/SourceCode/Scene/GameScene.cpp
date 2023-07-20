@@ -23,6 +23,7 @@ void GameScene::Init()
 	player_->Init();
 
 	boss_->Init();
+	boss_->SetPlayer(player_.get());
 
 	uiManager_->SetPlayer(player_.get());
 	uiManager_->SetBoss(boss_.get());

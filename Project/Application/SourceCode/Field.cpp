@@ -26,7 +26,9 @@ void Field::Init()
 
 void Field::Update()
 {
+	sphere_->rot.y += Radian(1);
 	sphere_->Update();
+
 	ground_->Update();
 	skydome_->Update();
 	messageSign_->Update();
@@ -34,7 +36,7 @@ void Field::Update()
 
 void Field::DrawModel()
 {
-	//sphere_->Draw();
+	sphere_->Draw();
 	ground_->Draw();
 	skydome_->DrawModel();
 	messageSign_->DrawModel();
