@@ -21,25 +21,25 @@ void TitleUI::Init()
 
 	gameTitle_->SetTexture(TextureManager::GetTexture("GameTitle"));
 	gameTitle_->pos = Vec2(GetWindowHalfSize().x, 320);
-	gameTitle_->scale = 1.5f;
+	gameTitle_->scale = 1.75f;
 
 	pressButton_->SetTexture(TextureManager::GetTexture("PressButton"));
 	pressButton_->pos = Vec2(GetWindowHalfSize().x, 880);
-	pressButton_->scale = 0.25f;
+	pressButton_->scale = 0.3f;
 
 	for (uint32_t i = 0; i < pressButtonBacks_.size(); i++)
 	{
 		pressButtonBacks_[i]->SetTexture(TextureManager::GetTexture("PressButtonBack"));
 		pressButtonBacks_[i]->pos = Vec2(GetWindowHalfSize().x, 880);
 	}
-	pressButtonBacks_[0]->scale = Vec2(1.25f, 0.75f);
+	pressButtonBacks_[0]->scale = Vec2(1.25f, 0.8f);
 	pressButtonBacks_[0]->color = Color(0xf79e0f);
-	pressButtonBacks_[1]->scale = Vec2(0.75f, 0.25f);
+	pressButtonBacks_[1]->scale = Vec2(0.75f, 0.3f);
 	pressButtonBacks_[1]->color = Color::white;
 
 	pressButtonAfterImage_->SetTexture(TextureManager::GetTexture("PressButton"));
 	pressButtonAfterImage_->pos = Vec2(GetWindowHalfSize().x, 880);
-	pressButtonAfterImage_->scale = 0.25f;
+	pressButtonAfterImage_->scale = 0.3f;
 
 	alphaEase_.SetEaseTimer(60);
 	alphaEase_.SetPowNum(2);

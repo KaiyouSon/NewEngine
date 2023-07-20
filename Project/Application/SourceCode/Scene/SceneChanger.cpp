@@ -18,8 +18,8 @@ void SceneChanger::Init()
 
 	changeStep_ = ChangeStep::In;
 
-	moveEase.SetEaseTimer(90);
-	moveEase.SetPowNum(5);
+	moveEase.SetEaseTimer(80);
+	moveEase.SetPowNum(2);
 }
 
 void SceneChanger::Update()
@@ -31,7 +31,7 @@ void SceneChanger::Update()
 
 	if (changeStep_ == ChangeStep::In)
 	{
-		sprite->color.a = moveEase.Lerp(0, 255);
+		sprite->color.a = moveEase.InOut(0, 255);
 		moveEase.Update();
 		if (moveEase.GetisEnd() == true)
 		{
@@ -43,7 +43,7 @@ void SceneChanger::Update()
 	}
 	else if (changeStep_ == ChangeStep::Out)
 	{
-		sprite->color.a = moveEase.In(255, 0);
+		sprite->color.a = moveEase.InOut(255, 0);
 		moveEase.Update();
 		if (moveEase.GetisEnd() == true)
 		{

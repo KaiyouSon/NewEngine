@@ -4,7 +4,8 @@
 
 MalletMotion::MalletMotion()
 {
-	motions_.emplace_back(MotionManager::GetMotion("MalletWeakAttack1"));
+	motions_.emplace_back(MotionManager::GetMotion("BossAttack3"));
+	//motions_.emplace_back(MotionManager::GetMotion("MalletWeakAttack1"));
 	motions_.emplace_back(MotionManager::GetMotion("MalletWeakAttack2"));
 	motions_.emplace_back(MotionManager::GetMotion("MalletWeakAttack3"));
 	motions_.emplace_back(MotionManager::GetMotion("MalletHeavyAttack"));
@@ -281,10 +282,10 @@ void MalletMotion::WeakStep1Init(PlayerBody* human)
 void MalletMotion::WeakStep1Update(PlayerBody* human)
 {
 	// è≠ÇµëOÇ…à⁄ìÆÇ∑ÇÈèàóù
-	const Vec3 endPos = startPos_ + human->parent->frontVec_.Norm() * length_;
-	human->pos = ease_.InOut(startPos_, endPos);
-	human->rot.y = ease_.InOut(startRotY_, endRotY_);
-	human->parent->moveVel = endPos - startPos_;
+	//const Vec3 endPos = startPos_ + human->parent->frontVec_.Norm() * length_;
+	//human->pos = ease_.InOut(startPos_, endPos);
+	//human->rot.y = ease_.InOut(startRotY_, endRotY_);
+	//human->parent->moveVel = endPos - startPos_;
 
 	if (ease_.GetisEnd() == true)
 	{
@@ -300,13 +301,13 @@ void MalletMotion::WeakStep1Update(PlayerBody* human)
 }
 void MalletMotion::WeakStep2Update(PlayerBody* human)
 {
-	if (ease_.GetisEnd() == true)
-	{
-		step_ = 0;
-		isInit_ = false;
-		isPlay_ = false;
-		isCanChangeMotion_ = false;
-	}
+	//if (ease_.GetisEnd() == true)
+	//{
+	//	step_ = 0;
+	//	isInit_ = false;
+	//	isPlay_ = false;
+	//	isCanChangeMotion_ = false;
+	//}
 }
 
 // ã≠çUåÇ

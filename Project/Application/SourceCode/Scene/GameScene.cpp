@@ -74,18 +74,16 @@ void GameScene::DrawModel()
 void GameScene::DrawFrontSprite()
 {
 	uiManager_->DrawFrontSprite();
-
-
 }
 void GameScene::DrawDebugGui()
 {
-	GuiManager::BeginWindow("Lighting");
-	GuiManager::DrawCheckBox("isActive", &LightManager::GetInstance()->directionalLight.isActive);
-	GuiManager::DrawSlider3("dirVec", LightManager::GetInstance()->directionalLight.pos, 0.01f);
-	GuiManager::DrawColorEdit("color", LightManager::GetInstance()->directionalLight.color);
-	GuiManager::EndWindow();
+	//GuiManager::BeginWindow("Lighting");
+	//GuiManager::DrawCheckBox("isActive", &LightManager::GetInstance()->directionalLight.isActive);
+	//GuiManager::DrawSlider3("dirVec", LightManager::GetInstance()->directionalLight.pos, 0.01f);
+	//GuiManager::DrawColorEdit("color", LightManager::GetInstance()->directionalLight.color);
+	//GuiManager::EndWindow();
+	//
+	//field_->DrawDebugGui();
 
-
-	field_->DrawDebugGui();
-	//player_->DrawDebugGui();
+	player_->DrawDebugGui();
 }

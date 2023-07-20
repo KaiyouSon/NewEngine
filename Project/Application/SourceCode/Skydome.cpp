@@ -11,7 +11,7 @@ Skydome::Skydome() :
 	{
 		clouds_.emplace_back(std::move(std::make_unique<Cloud>()));
 
-		const float range = 200.f;
+		const float range = 100.f;
 		const Vec3 randomPos =
 		{
 			Random::RangeF(-range, range),

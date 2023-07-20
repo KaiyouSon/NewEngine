@@ -34,7 +34,7 @@ void Field::Update()
 
 void Field::DrawModel()
 {
-	sphere_->Draw();
+	//sphere_->Draw();
 	ground_->Draw();
 	skydome_->DrawModel();
 	messageSign_->DrawModel();

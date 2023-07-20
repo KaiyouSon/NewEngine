@@ -87,6 +87,9 @@ bool LoadManager::MotionLoad()
 	MotionManager::Load("Weapon/Mallet/BackAttackMotion", "MalletBackAttack");
 	MotionManager::Load("Weapon/Mallet/RollAttackMotion", "MalletRollAttack");
 
+	MotionManager::Load("Boss/Attack2", "BossAttack2");
+	MotionManager::Load("Boss/Attack3", "BossAttack3");
+
 	return true;
 }
 

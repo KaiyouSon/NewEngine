@@ -31,13 +31,13 @@ void PlayerBody::DebugUpdate()
 	static bool flag = false;
 	if (Key::GetKeyDown(DIK_F5))
 	{
-		weapons_[0]->motion->Init(this);
+		weapons_[1]->motion->Init(this);
 		flag = true;
 	}
 	if (flag == true)
 	{
-		weapons_[0]->motion->BackMotion(this);
-		if (weapons_[0]->motion->GetisPlay() == false)
+		weapons_[1]->motion->WeakMotion(this);
+		if (weapons_[1]->motion->GetisPlay() == false)
 		{
 			flag = false;
 		}

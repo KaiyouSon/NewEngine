@@ -50,6 +50,7 @@ void Player::PrevUpdate()
 }
 void Player::PostUpdate()
 {
+	player_->DebugUpdate();
 	player_->Update();
 }
 void Player::DrawModel()
