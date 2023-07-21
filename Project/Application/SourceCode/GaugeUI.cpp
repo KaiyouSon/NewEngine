@@ -11,6 +11,11 @@ GaugeUI::GaugeUI()
 	}
 	sprites_[BackFrame]->SetTexture(TextureManager::GetTexture("White"));
 	sprites_[BackFrame]->color = Color(0.f, 0.f, 0.f, 155.f);
+
+	sprites_[BackColor]->SetTexture(TextureManager::GetTexture("White"));
+	sprites_[BackColor]->color = Color(0x776116);
+
+	stayTimer.SetLimitTimer(60);
 }
 
 void GaugeUI::Init()
@@ -21,12 +26,29 @@ void GaugeUI::Init()
 	sprites_[FrontFrame]->SetTextureRect(Vec2(64, 0), Vec2(95, 31));
 	sprites_[FrontLeftFrame]->SetTextureRect(Vec2(0, 0), Vec2(63, 31));
 	sprites_[FrontRightFrame]->SetTextureRect(Vec2(96, 0), Vec2(159, 31));
+
+	backGaugeSize_ = gaugeSize_;
 }
 
 void GaugeUI::Update()
 {
 	CalcPosUpdate();
 	CalcSizeUpdate();
+
+	if (backGaugeSize_.x > gaugeSize_.x)
+	{
+		stayTimer.Update(false);
+		if (stayTimer.GetisTimeOut() == true)
+		{
+			backGaugeSize_.x -= 25.f;
+		}
+	}
+	else
+	{
+		stayTimer.Reset();
+	}
+	backGaugeSize_.x = Max<float>(gaugeSize_.x, backGaugeSize_.x);
+	sprites_[BackColor]->SetSize(backGaugeSize_);
 
 	for (uint32_t i = 0; i < sprites_.size(); i++)
 	{
@@ -37,7 +59,7 @@ void GaugeUI::Update()
 void GaugeUI::DrawFrontSprite()
 {
 	sprites_[BackFrame]->Draw();
-	//sprites_[BackColor]->Draw();
+	sprites_[BackColor]->Draw();
 	sprites_[FrontColor]->Draw();
 	sprites_[CurrentPos]->Draw();
 	sprites_[FrontFrame]->Draw();
@@ -110,5 +132,4 @@ void GaugeUI::SetGaugePrame(const GaugeParam gaugeParam)
 	// CurrentPosの画像のサイズは不変、座標を可変
 	gaugeSize_.x = gaugeParam.rate * gaugeWidthMax_;
 	sprites_[FrontColor]->SetSize(gaugeSize_);
-	sprites_[BackColor]->SetSize(gaugeSize_);
 }
