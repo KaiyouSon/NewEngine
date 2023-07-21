@@ -20,8 +20,8 @@ bool LoadManager::ModelLoad()
 	ModelManager::LoadObjModel("HumanoidBody/Head", "Head");
 	ModelManager::LoadObjModel("HumanoidBody/Limbs", "Limbs");
 
-	ModelManager::LoadObjModel("Weapon/Club", "Club");
-	ModelManager::LoadObjModel("Weapon/Sword", "Sword");
+	ModelManager::LoadObjModel("Weapon/Club", "Club", true);
+	ModelManager::LoadObjModel("Weapon/Sword", "Sword", true);
 
 
 	ModelManager::LoadObjModel("Capsule", "Capsule");
@@ -37,6 +37,7 @@ bool LoadManager::TextureLoad()
 
 	// ƒ^ƒCƒgƒ‹
 	TextureManager::LoadTexture("Title/GameTitle.png", "GameTitle");
+	TextureManager::LoadTexture("Title/TitleLogo.png", "TitleLogo");
 	TextureManager::LoadTexture("Title/PressButton.png", "PressButton");
 	TextureManager::LoadTexture("Title/PressButtonBack.png", "PressButtonBack");
 

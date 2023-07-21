@@ -6,6 +6,7 @@ class TitleUI
 private:
 	std::unique_ptr<Sprite> backColor_;
 	std::unique_ptr<Sprite> gameTitle_;
+	std::unique_ptr<Sprite> titleLogo_;
 	std::unique_ptr<Sprite> pressButton_;
 	std::array<std::unique_ptr<Sprite>, 2> pressButtonBacks_;
 	std::unique_ptr<Sprite> pressButtonAfterImage_;
