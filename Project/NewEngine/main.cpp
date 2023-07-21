@@ -3,7 +3,7 @@
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-	SetWindowTitle("NewEngine");
+	SetWindowTitle("PONDERING");
 	SetWindowSize({ 1920, 1080 });
 	SetBackGroundColor(25.5, 63.75, 127.5);
 	SetFrameRate(60);

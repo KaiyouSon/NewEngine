@@ -7,11 +7,11 @@ Skydome::Skydome() :
 	skydome_->color = Color(0xc4c178);
 	skydome_->isLighting = false;
 
-	for (uint32_t i = 0; i < 20; i++)
+	for (uint32_t i = 0; i < 50; i++)
 	{
 		clouds_.emplace_back(std::move(std::make_unique<Cloud>()));
 
-		const float range = 100.f;
+		const float range = 500.f;
 		const Vec3 randomPos =
 		{
 			Random::RangeF(-range, range),
@@ -24,7 +24,7 @@ Skydome::Skydome() :
 
 void Skydome::Init()
 {
-	skydome_->scale = 500.f;
+	skydome_->scale = 800.f;
 }
 
 void Skydome::Update()
