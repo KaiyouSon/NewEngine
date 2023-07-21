@@ -24,9 +24,15 @@ private:
 	float rotY_;
 
 private:
+	// ƒ‚[ƒVƒ‡ƒ“Ø‚è‘Ö‚¦ŠÖ˜A
+	Timer coolTimer_;
+	uint32_t motionNum_;
+
+private:
 	void CalcFrontVec();
-	void CalcRotY();
 	void ColliderUpdate();
+
+	void MotionUpdate();
 
 public:
 	Boss();

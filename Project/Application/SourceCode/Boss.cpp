@@ -20,17 +20,19 @@ void Boss::Init()
 
 	// HPƒQ[ƒW
 	hpGaugeParam_.CalcRate(2560.f, 2560.f);
+
+	coolTimer_.SetLimitTimer(120);
 }
 void Boss::Update()
 {
-	CalcFrontVec();
-	CalcRotY();
 	ColliderUpdate();
+
+	MotionUpdate();
 
 	// HPƒQ[ƒW
 	hpGaugeParam_.CalcRate(hpGaugeParam_.value, 2560.f);
 
-	//boss_->rot.y = rotY_;
+	boss_->rot.y = rotY_;
 	boss_->Update();
 }
 void Boss::DrawModel()
@@ -44,15 +46,11 @@ void Boss::CalcFrontVec()
 	v.y = 0;
 
 	frontVec_ = v.Norm();
-
-	frontVec_ = Vec3::back;
-
-	int a = 0;
-}
-void Boss::CalcRotY()
-{
 	rotY_ = atan2f(frontVec_.x, frontVec_.z);
+
+	//frontVec_ = Vec3::back;
 }
+
 void Boss::ColliderUpdate()
 {
 	collider_.startPos = boss_->pos - Vec3(0.f, 2.5f, 0.f);
@@ -62,6 +60,38 @@ void Boss::ColliderUpdate()
 	bodyCollider_.centerPos = boss_->pos;
 	bodyCollider_.size = Vec3(2, 4, 2);
 	bodyCollider_.CalcPoints();
+}
+
+void Boss::MotionUpdate()
+{
+	if (boss_->GetisPlayMotion() == false)
+	{
+		CalcFrontVec();
+
+		motionNum_ = 0;
+		coolTimer_.Update(false);
+		if (coolTimer_.GetisTimeOut() == true)
+		{
+			motionNum_ = Random::Range(1, 3);
+			//motionNum_ = 3;
+		}
+	}
+	if (motionNum_ != 0)
+	{
+		coolTimer_.Reset();
+
+		switch (motionNum_)
+		{
+		case 1:
+			boss_->GrabAttackMotion();
+			break;
+		case 2:
+			boss_->Attack2Motion();
+			break;
+		case 3:
+			boss_->Attack3Motion();
+		}
+	}
 }
 
 void Boss::Damage(const float damage)

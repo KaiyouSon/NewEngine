@@ -1,6 +1,13 @@
 #include "IMotion.h"
 #include "HumanoidBody.h"
 
+IMotion::IMotion() :
+	isInit_(false), isPlay_(false),
+	isCanChangeMotion_(false),
+	step_(0), motion_(nullptr)
+{
+}
+
 void IMotion::BaseInit(HumanoidBody* human)
 {
 	if (isInit_ == false)
@@ -47,11 +54,6 @@ void IMotion::BasePostUpdate(HumanoidBody* human)
 	if (ease_.GetisEnd() == true)
 	{
 		step_++;
-		//if (step_ == 2)
-		//{
-		//	step_ = 10;
-		//}
-
 		if (step_ >= motion_->data.size())
 		{
 			step_ = 0;

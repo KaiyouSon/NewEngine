@@ -30,6 +30,7 @@ public:
 	void BasePostUpdate(HumanoidBody* human);
 
 public:
+	IMotion();
 	virtual void Init(HumanoidBody* human) = 0;
 	virtual void Update(HumanoidBody* human) = 0;
 

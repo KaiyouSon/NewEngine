@@ -18,10 +18,7 @@ void CollisionManager::PlayerHitBoss()
 
 	if (isAttackBoss)
 	{
-		if (player_->GetState() == Player::State::AttackR1)
-		{
-			boss_->Damage(10.f);
-		}
+		boss_->Damage(10.f);
 	}
 
 	bool isBodyTouch =
@@ -61,7 +58,6 @@ void CollisionManager::PlayerHitBoss()
 		player_->SetPos(nextPos);
 	}
 }
-
 void CollisionManager::PlayerHitMessageSign()
 {
 	MessageSign* cur = field_->GetMessageSign();
@@ -90,7 +86,6 @@ bool CollisionManager::IsCheckFrontBoss(const Vec3 pos, const Vec3 front)
 	bool isHit = Collision::SphereHitSphere(frontCollider, bossCollider);
 	return isHit;
 }
-
 float CollisionManager::CalcPlayerDisToFront(const Vec3 frontVec, const float max)
 {
 	RayCollider playerFront;

@@ -6,7 +6,6 @@ BossBody::BossBody() :
 	attack2Motion_(std::make_unique<BossAttack2Motion>()),
 	attack3Motion_(std::make_unique<BossAttack3Motion>())
 {
-	//
 }
 
 void BossBody::Init()
@@ -20,12 +19,30 @@ void BossBody::Init()
 void BossBody::Update()
 {
 	BaseUpdate();
-	grabAttackMotion_->Update(this);
-	//attack2Motion_->Update(this);
-	//attack3Motion_->Update(this);
 }
 
 void BossBody::DrawModel()
 {
 	BaseDrawModel();
+}
+
+void BossBody::GrabAttackMotion()
+{
+	grabAttackMotion_->Update(this);
+	isPlayMotion_ = grabAttackMotion_->GetisPlay();
+}
+void BossBody::Attack2Motion()
+{
+	attack2Motion_->Update(this);
+	isPlayMotion_ = attack2Motion_->GetisPlay();
+}
+void BossBody::Attack3Motion()
+{
+	attack3Motion_->Update(this);
+	isPlayMotion_ = attack3Motion_->GetisPlay();
+}
+
+bool BossBody::GetisPlayMotion()
+{
+	return isPlayMotion_;
 }
