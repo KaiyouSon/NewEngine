@@ -24,7 +24,7 @@ void Boss::Init()
 	coolTimer_.SetLimitTimer(120);
 
 	isDamage_ = false;
-	damageCoolTimer_.SetLimitTimer(20);
+	damageCoolTimer_.SetLimitTimer(30);
 }
 void Boss::Update()
 {

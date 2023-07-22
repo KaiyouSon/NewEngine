@@ -44,11 +44,11 @@ void Club::ColliderUpdate()
 	}
 	else
 	{
-		Vec3 upVec = weapon->GetTransform().GetWorldMat().GetYAxis();
+		Vec3 upVec = weapon->GetTransform().GetWorldMat().GetYAxis().Norm();
 
-		collider.startPos = weapon->GetWorldPos();
-		collider.endPos = weapon->GetWorldPos() + upVec.Norm() * 4.f;
-		collider.radius = 0.5f;
+		collider.startPos = weapon->GetWorldPos() - upVec * 1.5f;
+		collider.endPos = weapon->GetWorldPos() + upVec * 6.5f;
+		collider.radius = 1.5f;
 
 		CalcDamage();
 	}
