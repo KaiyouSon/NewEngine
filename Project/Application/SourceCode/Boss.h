@@ -24,6 +24,11 @@ private:
 	float rotY_;
 
 private:
+	// ダメージ関連
+	bool isDamage_;
+	Timer damageCoolTimer_;
+
+private:
 	// モーション切り替え関連
 	Timer coolTimer_;
 	uint32_t motionNum_;

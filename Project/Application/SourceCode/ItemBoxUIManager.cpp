@@ -13,7 +13,7 @@ void ItemBoxUIManager::Init()
 {
 	// ’†SÀ•W
 	parent.pos = Vec2(288, GetWindowSize().y - 256);
-	parent.scale = 1.5f;
+	parent.scale = 1.25f;
 	parent.Update();
 
 	for (uint32_t i = 0; i < itemBoxUIs_.size(); i++)
@@ -27,6 +27,8 @@ void ItemBoxUIManager::Init()
 
 void ItemBoxUIManager::Update()
 {
+	parent.pos = Vec2(224, GetWindowSize().y - 196);
+	parent.Update();
 
 	float width = 92.f;
 	float height = 56.f;

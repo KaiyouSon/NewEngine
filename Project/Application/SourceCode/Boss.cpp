@@ -22,12 +22,25 @@ void Boss::Init()
 	hpGaugeParam_.CalcRate(2560.f, 2560.f);
 
 	coolTimer_.SetLimitTimer(120);
+
+	isDamage_ = false;
+	damageCoolTimer_.SetLimitTimer(20);
 }
 void Boss::Update()
 {
 	ColliderUpdate();
 
 	MotionUpdate();
+
+	if (isDamage_ == true)
+	{
+		damageCoolTimer_.Update(false);
+		if (damageCoolTimer_.GetisTimeOut() == true)
+		{
+			damageCoolTimer_.Reset();
+			isDamage_ = false;
+		}
+	}
 
 	// HPÉQÅ[ÉW
 	hpGaugeParam_.CalcRate(hpGaugeParam_.value, 2560.f);
@@ -96,7 +109,11 @@ void Boss::MotionUpdate()
 
 void Boss::Damage(const float damage)
 {
-	hpGaugeParam_.value -= damage;
+	if (isDamage_ == false)
+	{
+		hpGaugeParam_.value -= damage;
+		isDamage_ = true;
+	}
 }
 
 void Boss::SetPlayer(Player* player)
