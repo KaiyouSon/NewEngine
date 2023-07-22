@@ -40,7 +40,7 @@ void GaugeUI::Update()
 		stayTimer.Update(false);
 		if (stayTimer.GetisTimeOut() == true)
 		{
-			backGaugeSize_.x -= 25.f;
+			backGaugeSize_.x -= 5.f;
 		}
 	}
 	else
