@@ -53,9 +53,9 @@ void Boss::CalcFrontVec()
 
 void Boss::ColliderUpdate()
 {
-	collider_.startPos = boss_->pos - Vec3(0.f, 2.5f, 0.f);
-	collider_.endPos = boss_->pos + Vec3(0.f, 2.5f, 0.f);
-	collider_.radius = 2.5f;
+	collider_.startPos = boss_->pos - Vec3(0.f, 7.f, 0.f);
+	collider_.endPos = boss_->pos + Vec3(0.f, 7.f, 0.f);
+	collider_.radius = 5.f;
 
 	bodyCollider_.centerPos = boss_->pos;
 	bodyCollider_.size = Vec3(2, 4, 2);
