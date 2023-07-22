@@ -4,7 +4,8 @@
 class Sword : public Weapon
 {
 private:
-	void ColliderUpdate(bool isCalc) override;
+	void ColliderUpdate() override;
+	void CalcDamage() override;
 
 public:
 	Sword();

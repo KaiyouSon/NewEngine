@@ -54,5 +54,6 @@ public:
 	bool GetisPlay();
 	bool GetisCalcCollider();
 	bool GetisCanChangeMotion();
+	AttackType GetAttackType();
 };
 

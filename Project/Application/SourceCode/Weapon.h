@@ -7,18 +7,31 @@ protected:
 	Vec3 localPos_;
 	Vec3 localRot_;
 
+protected:
+	float weakAttackDamage_;
+	float heavyAttackDamage_;
+	float backAttackDamage_;
+	float rollAttackDamage_;
+	float damage_;
+
 public:
 	std::unique_ptr<Object3D> weapon;
 	std::unique_ptr<IWeaponMotion> motion;
 	CapsuleCollider collider;
 
 private:
-	virtual void ColliderUpdate(bool isCalc) = 0;
+	virtual void CalcDamage() = 0;
 
 public:
 	virtual ~Weapon() {}
 	virtual void Init() = 0;
 	virtual void Update(Transform* parent = nullptr) = 0;
 	virtual void DrawModel() = 0;
+
+public:
+	virtual void ColliderUpdate() = 0;
+
+public:
+	float GetDamage();
 };
 

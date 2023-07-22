@@ -88,3 +88,8 @@ bool IWeaponMotion::GetisCanChangeMotion()
 {
 	return isCanChangeMotion_;
 }
+
+AttackType IWeaponMotion::GetAttackType()
+{
+	return attackType_;
+}

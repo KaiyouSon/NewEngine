@@ -18,7 +18,7 @@ void CollisionManager::PlayerHitBoss()
 
 	if (isAttackBoss)
 	{
-		boss_->Damage(100.f);
+		boss_->Damage(player_->GetWeapon()->GetDamage());
 	}
 
 	bool isBodyTouch =

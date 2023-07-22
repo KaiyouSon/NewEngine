@@ -20,8 +20,6 @@ void Sword::Update(Transform* parent)
 {
 	weapon->Update(parent);
 
-	ColliderUpdate(motion->GetisCalcCollider());
-
 	collider.startPos;
 }
 
@@ -30,9 +28,9 @@ void Sword::DrawModel()
 	weapon->Draw();
 }
 
-void Sword::ColliderUpdate(bool isCalc)
+void Sword::ColliderUpdate()
 {
-	if (isCalc == false)
+	if (motion->GetisCalcCollider() == false)
 	{
 		collider.startPos = Vec3(0, -10000, 0);
 		collider.endPos = Vec3(0, -10000, 0);
@@ -46,4 +44,8 @@ void Sword::ColliderUpdate(bool isCalc)
 		collider.endPos = weapon->GetWorldPos() + upVec.Norm() * 4.f;
 		collider.radius = 0.5f;
 	}
+}
+
+void Sword::CalcDamage()
+{
 }
