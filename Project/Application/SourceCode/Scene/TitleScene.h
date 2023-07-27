@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 #include "TitleUI.h"
+#include "Emitter.h"
 
 class TitleScene : public IScene
 {

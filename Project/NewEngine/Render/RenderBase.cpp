@@ -421,6 +421,16 @@ void RenderBase::ShaderCompilerInit()
 	ShaderObjectManager::GetShaderObject("Line")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Line")->CompileVertexShader(path + "LineVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Line")->CompilePixelShader(path + "LinePS.hlsl", "main");
+
+	// エミッター用
+	ShaderObjectManager::Create("Emitter");
+	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);	// 座標
+	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);		// スケール
+	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 1);		// 回転
+	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);	// 色
+	ShaderObjectManager::GetShaderObject("Emitter")->CompileVertexShader(path + "EmitterVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Emitter")->CompileGeometryShader(path + "EmitterGS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Emitter")->CompilePixelShader(path + "EmitterPS.hlsl", "main");
 }
 void RenderBase::RootSignatureInit()
 {
@@ -551,4 +561,14 @@ void RenderBase::GraphicsPipelineInit()
 		TopologyType::Line,
 		1,
 		"Line");
+
+	// エミッター用
+	GraphicsPipelineManager::Create(
+		ShaderObjectManager::GetShaderObject("Emitter"),
+		object3DRootSignature_->GetRootSignature(),
+		CullMode::None,
+		depthStencilDesc1,
+		TopologyType::Point,
+		1,
+		"Emitter");
 }

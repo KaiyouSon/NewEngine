@@ -63,7 +63,6 @@ void Boss::CalcFrontVec()
 
 	//frontVec_ = Vec3::back;
 }
-
 void Boss::ColliderUpdate()
 {
 	collider_.startPos = boss_->pos - Vec3(0.f, 7.f, 0.f);
@@ -109,16 +108,17 @@ void Boss::MotionUpdate()
 
 void Boss::Damage(const float damage)
 {
-	if (isDamage_ == false)
-	{
-		hpGaugeParam_.value -= damage;
-		isDamage_ = true;
-	}
+	hpGaugeParam_.value -= damage;
+	isDamage_ = true;
 }
 
 void Boss::SetPlayer(Player* player)
 {
 	player_ = player;
+}
+void Boss::SetisDamage(const bool isDamage)
+{
+	isDamage_ = isDamage;
 }
 
 CapsuleCollider Boss::GetCollider()
@@ -136,4 +136,8 @@ GaugeParam Boss::GetHpGaugeParam()
 Vec3 Boss::GetPos()
 {
 	return boss_->pos;
+}
+bool Boss::GetisDamage()
+{
+	return isDamage_;
 }

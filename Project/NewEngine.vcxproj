@@ -124,6 +124,7 @@
     <ClCompile Include="Application\SourceCode\CollisionManager.cpp" />
     <ClCompile Include="Application\SourceCode\DefaultCamera.cpp" />
     <ClCompile Include="Application\SourceCode\DOF.cpp" />
+    <ClCompile Include="Application\SourceCode\EffectManager.cpp" />
     <ClCompile Include="Application\SourceCode\Field.cpp" />
     <ClCompile Include="Application\SourceCode\GaugeParam.cpp" />
     <ClCompile Include="Application\SourceCode\GaugeUI.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="Application\SourceCode\UIManager.cpp" />
     <ClCompile Include="Application\SourceCode\Vignette.cpp" />
     <ClCompile Include="Application\SourceCode\Weapon.cpp" />
+    <ClCompile Include="BloodSpray.cpp" />
     <ClCompile Include="NewEngine\Collision\Collider.cpp" />
     <ClCompile Include="NewEngine\Collision\Collision.cpp" />
     <ClCompile Include="NewEngine\Collision\ICollider.cpp" />
@@ -187,7 +189,9 @@
     <ClCompile Include="NewEngine\Object\2D\RenderTexture.cpp" />
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Camera.cpp" />
+    <ClCompile Include="NewEngine\Object\3D\Emitter.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Line.cpp" />
+    <ClCompile Include="NewEngine\Object\3D\ParticleParam.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Model\ObjModel.cpp" />
     <ClCompile Include="NewEngine\Object\Other\AssimpLoader.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Billboard.cpp" />
@@ -227,6 +231,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\1.School\3.3年前期\TL1\CG5_Task01\Project\External\nlohmann\json.hpp" />
     <ClInclude Include="Application\SourceCode\BackstepMotion.h" />
+    <ClInclude Include="Application\SourceCode\BloodSpray.h" />
     <ClInclude Include="Application\SourceCode\Bloom.h" />
     <ClInclude Include="Application\SourceCode\Boss.h" />
     <ClInclude Include="Application\SourceCode\BossAttack3Motion.h" />
@@ -240,6 +245,7 @@
     <ClInclude Include="Application\SourceCode\CollisionManager.h" />
     <ClInclude Include="Application\SourceCode\DefaultCamera.h" />
     <ClInclude Include="Application\SourceCode\DOF.h" />
+    <ClInclude Include="Application\SourceCode\EffectManager.h" />
     <ClInclude Include="Application\SourceCode\Field.h" />
     <ClInclude Include="Application\SourceCode\GaugeParam.h" />
     <ClInclude Include="Application\SourceCode\GaugeType.h" />
@@ -300,6 +306,8 @@
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h" />
     <ClInclude Include="NewEngine\Object\2D\RenderTexture.h" />
     <ClInclude Include="NewEngine\Object\2D\Sprite.h" />
+    <ClInclude Include="NewEngine\Object\3D\Emitter.h" />
+    <ClInclude Include="NewEngine\Object\3D\ParticleParam.h" />
     <ClInclude Include="NewEngine\Object\Other\Model\ObjModel.h" />
     <ClInclude Include="NewEngine\Object\Other\AssimpLoader.h" />
     <ClInclude Include="NewEngine\Object\Other\Billboard.h" />
@@ -362,6 +370,7 @@
     <None Include="Application\Shader\Vignette.hlsli" />
     <None Include="NewEngine\Shader\Blur.hlsli" />
     <None Include="NewEngine\Shader\CircleGaugeSprite.hlsli" />
+    <None Include="NewEngine\Shader\Emitter.hlsli" />
     <None Include="NewEngine\Shader\FbxModel.hlsli" />
     <None Include="NewEngine\Shader\Lighting.hlsli" />
     <None Include="NewEngine\Shader\Line.hlsli" />
@@ -505,6 +514,24 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\EmitterGS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\EmitterPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\EmitterVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\FbxModelPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

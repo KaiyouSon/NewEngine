@@ -3,6 +3,13 @@
 
 namespace ConstantBufferData
 {
+	struct CTransformP
+	{
+		Mat4 viewMat;
+		Mat4 worldMat;
+		Mat4 billboardMat;
+	};
+
 	struct CTransform3D
 	{
 		Mat4 viewMat;

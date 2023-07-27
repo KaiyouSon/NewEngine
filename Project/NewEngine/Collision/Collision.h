@@ -50,6 +50,11 @@ namespace Collision
 		const CapsuleCollider& capsule1,
 		const CapsuleCollider& capsule2);
 
+	bool CapsuleHitCapsule(
+		const CapsuleCollider& capsule1,
+		const CapsuleCollider& capsule2,
+		Vec3& hitPoint);
+
 	// 点と三角形の最近接点
 	Vec3 ClosestPointOfPointAndTriangle(
 		const Vec3 point,

@@ -50,12 +50,14 @@ public:
 
 public:
 	void SetPlayer(Player* player);
+	void SetisDamage(const bool isDamage);
 
 public:
 	CapsuleCollider GetCollider();
 	CubeCollider GetBodyCollider();
 	GaugeParam GetHpGaugeParam();
 	Vec3 GetPos();
+	bool GetisDamage();
 
 private:
 	friend BossGrabAttackMotion;

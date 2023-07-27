@@ -35,7 +35,8 @@ namespace VertexBufferData
 	struct VParticle
 	{
 		Vec3 pos;
-		float scale;
-		Color color;
+		Vec2 scale;
+		float rot;
+		Color color = Color::zero;
 	};
 }

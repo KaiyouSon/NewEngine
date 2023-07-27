@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "SceneChanger.h"
 #include "CollisionManager.h"
+#include "EffectManager.h"
 
 GameScene::GameScene() :
 	player_(std::make_unique<Player>()),
@@ -40,6 +41,8 @@ void GameScene::Init()
 	CollisionManager::GetInstance()->SetField(field_.get());
 	CollisionManager::GetInstance()->SetUIManager(uiManager_.get());
 
+	EffectManager::GetInstance()->Init();
+
 	LightManager::GetInstance()->directionalLight.isActive = true;
 	LightManager::GetInstance()->directionalLight.pos = Vec3(-1, 1, -1);
 }
@@ -52,8 +55,9 @@ void GameScene::Update()
 	player_->PostUpdate();
 	field_->Update();
 
+	EffectManager::GetInstance()->Update();
+
 	cameraManager_->Update();
-	Camera::DebugCameraUpdate();
 }
 
 void GameScene::RenderTextureSetting()
@@ -71,6 +75,8 @@ void GameScene::DrawModel()
 	player_->DrawModel();
 	boss_->DrawModel();
 	field_->DrawModel();
+
+	EffectManager::GetInstance()->DrawModel();
 }
 void GameScene::DrawFrontSprite()
 {

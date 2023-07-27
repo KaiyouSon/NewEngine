@@ -199,8 +199,14 @@ bool Collision::RayHitSphere(const RayCollider& ray, const SphereCollider& spher
 	return true;
 }
 
-// カプセルとカプセル
 bool Collision::CapsuleHitCapsule(const CapsuleCollider& capsule1, const CapsuleCollider& capsule2)
+{
+	Vec3 empty = 0;
+	return CapsuleHitCapsule(capsule1, capsule2, empty);
+}
+
+// カプセルとカプセル
+bool Collision::CapsuleHitCapsule(const CapsuleCollider& capsule1, const CapsuleCollider& capsule2, Vec3& hitPoint)
 {
 	Vec3 d1 = capsule1.endPos - capsule1.startPos;
 	Vec3 d2 = capsule2.endPos - capsule2.startPos;
@@ -255,6 +261,19 @@ bool Collision::CapsuleHitCapsule(const CapsuleCollider& capsule1, const Capsule
 
 	// 二つのカプセルの半径の和
 	float radius = capsule1.radius + capsule2.radius;
+
+	if (disPow2 < radius * radius)
+	{
+		// Calculate the collision point
+		float distance = sqrt(disPow2);
+		float penetration = radius - distance;
+
+		Vec3 direction = (c2 - c1) / distance;
+		hitPoint = c1 + direction * (capsule1.radius - 0.5f * penetration);
+
+		return true;
+	}
+
 
 	if (disPow2 < radius * radius)
 	{

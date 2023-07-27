@@ -57,6 +57,8 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Text/ExitStr.png", "ExitStr");
 	TextureManager::LoadTexture("Text/TutorialStr1.png", "TutorialStr1");
 
+	TextureManager::LoadTexture("Particle/Particle.png", "Particle");
+
 	// レンダーテクスチャー
 
 	// 現在のシーン描画情報

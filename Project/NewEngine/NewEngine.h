@@ -3,6 +3,7 @@
 #include "Object3D.h"
 #include "Sprite.h"
 #include "Camera.h"
+#include "Emitter.h"
 
 #include "TextureManager.h"
 #include "ModelManager.h"	

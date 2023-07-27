@@ -1,4 +1,5 @@
 #include "CollisionManager.h"
+#include "EffectManager.h"
 
 void CollisionManager::Update()
 {
@@ -11,14 +12,28 @@ void CollisionManager::Update()
 
 void CollisionManager::PlayerHitBoss()
 {
+	static Vec3 hitPoint = {};
+
 	bool isAttackBoss =
 		Collision::CapsuleHitCapsule(
 			player_->GetWeapon()->collider,
-			boss_->GetCollider());
+			boss_->GetCollider(),
+			hitPoint);
 
 	if (isAttackBoss)
 	{
-		boss_->Damage(player_->GetWeapon()->GetDamage());
+		bool test = Collision::CapsuleHitCapsule(
+			player_->GetWeapon()->collider,
+			boss_->GetCollider(),
+			hitPoint);
+
+		if (boss_->GetisDamage() == false)
+		{
+			boss_->Damage(player_->GetWeapon()->GetDamage());
+			EffectManager::GetInstance()->GenerateBloodSprayEffect(hitPoint);
+
+			boss_->SetisDamage(true);
+		}
 	}
 
 	bool isBodyTouch =

@@ -4,8 +4,8 @@
 
 void TitleScene::Init()
 {
-	Camera::current.pos = { 0,10,-10 };
-	Camera::current.rot = { Radian(45),0,0 };
+	Camera::current.pos = { 0,0,-10 };
+	Camera::current.rot = { 0,0,0 };
 
 	titleUI_ = std::make_unique<TitleUI>();
 	titleUI_->Init();
