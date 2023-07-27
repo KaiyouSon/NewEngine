@@ -8,7 +8,7 @@ BloodSpray::BloodSpray() :
 
 void BloodSpray::Generate(const Vec3 pos)
 {
-	for (uint32_t i = 0; i < 128; i++)
+	for (uint32_t i = 0; i < 256; i++)
 	{
 		pParam.emplace_back();
 		float radian = Radian(Random::RangeAngle(1, 360));
@@ -34,7 +34,7 @@ void BloodSpray::Update()
 		pParam[i].startPos += pParam[i].moveVec * pParam[i].moveAccel;
 		emitter_->pParam[i].curPos = pParam[i].startPos;
 
-		emitter_->pParam[i].curScale = 0.5f;
+		emitter_->pParam[i].curScale = 0.25f;
 		//emitter_->pParam[i].curScale = 1.25f;
 
 		pParam[i].startColor.a -= 5.f;

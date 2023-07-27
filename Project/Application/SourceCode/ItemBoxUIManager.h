@@ -16,7 +16,10 @@ private:
 	std::array<std::unique_ptr<ItemBoxUI>, 4> itemBoxUIs_;
 	std::array<std::unique_ptr<ItemUI>, 4> itemUIs_;
 
+	Timer notActiveTimer_;
+	bool isActive_;
 	float alpha_;
+	float lightAlpha_;
 
 public:
 	ItemBoxUIManager();

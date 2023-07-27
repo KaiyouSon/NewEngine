@@ -36,41 +36,12 @@ void UIManager::Init()
 	tutorialUI_->Init();
 
 	itemBoxUIManager_->Init();
-	notActiveTimer_.SetLimitTimer(180);
 }
 
 void UIManager::Update()
 {
-	bool isLeftStickMove = Pad::GetStick(PadCode::LeftStick, 300) != 0;
-	bool isAnyButtonDown = Pad::GetAnyButtonDown();
-
-	if (isLeftStickMove || isAnyButtonDown)
-	{
-		notActiveTimer_.Reset();
-		isActive_ = true;
-	}
-	else
-	{
-		notActiveTimer_.Update(false);
-		if (notActiveTimer_.GetisTimeOut() == true)
-		{
-			isActive_ = false;
-		}
-	}
-
-	float speed = 15;
-	if (isActive_ == true)
-	{
-		alpha_ += speed;
-	}
-	else
-	{
-		alpha_ -= speed;
-	}
-	alpha_ = Clamp<float>(alpha_, 0, 255);
-
 	// アイテムボックス(左下のやつ)
-	itemBoxUIManager_->SetAlpha(alpha_);
+	//itemBoxUIManager_->SetAlpha(alpha_);
 	itemBoxUIManager_->Update();
 
 	// プレイヤーのゲージ
@@ -123,13 +94,4 @@ NegotiationUI* UIManager::GetNegotiationUI()
 TutorialUI* UIManager::GetTutorialUI()
 {
 	return tutorialUI_.get();
-}
-
-bool UIManager::GetisActive()
-{
-	isActive_ = false;
-
-
-
-	return isActive_;
 }

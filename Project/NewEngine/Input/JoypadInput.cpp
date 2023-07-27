@@ -172,32 +172,29 @@ bool JoypadInput::GetButton(const PadCode padCode, const int sPadIndex_)
 	// Ú‘±‚µ‚Ä‚¢‚é‚©
 	if (GetisLinkPad() == false) return false;
 
+	if (padCode == PadCode::ButtonLeft)
+	{
+		return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 27000;
+	}
+	else if (padCode == PadCode::ButtonRight)
+	{
+		return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 9000;
+	}
+	else if (padCode == PadCode::ButtonUp)
+	{
+		return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 0;
+	}
+	else if (padCode == PadCode::ButtonDown)
+	{
+		return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 18000;
+	}
+
 	// “Y‚¦Žš‚ÌƒNƒ‰ƒ“ƒvˆ—
 	int min = GetInstance()->minButton_;
 	int max = GetInstance()->maxButton_;
 	PadCode codo = (PadCode)Clamp((float)padCode, (float)min, (float)max);
 
 	return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgbButtons[(int)codo] & 0x80;
-
-	//if (padCode == PadCodo::ButtonLeft)
-	//{
-	//	return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 27000;
-	//}
-	//else if (padCode == PadCodo::ButtonRight)
-	//{
-	//	return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 9000;
-	//}
-	//else if (padCode == PadCodo::ButtonUp)
-	//{
-	//	return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 0;
-	//}
-	//else if (padCode == PadCodo::ButtonDown)
-	//{
-	//	return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 18000;
-	//}
-	//else
-	//{
-	//}
 }
 
 // ƒ{ƒ^ƒ“‚ð‰Ÿ‚µ‚½uŠÔ
@@ -205,6 +202,27 @@ bool JoypadInput::GetButtonDown(const PadCode padCode, const int sPadIndex_)
 {
 	// Ú‘±‚µ‚Ä‚¢‚é‚©
 	if (GetisLinkPad() == false) return false;
+
+	if (padCode == PadCode::ButtonLeft)
+	{
+		return (GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 27000) &&
+			!(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgdwPOV[0] == 27000);
+	}
+	else if (padCode == PadCode::ButtonRight)
+	{
+		return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 9000 &&
+			!(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgdwPOV[0] == 9000);
+	}
+	else if (padCode == PadCode::ButtonUp)
+	{
+		return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 0 &&
+			!(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgdwPOV[0] == 0);
+	}
+	else if (padCode == PadCode::ButtonDown)
+	{
+		return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 18000 &&
+			!(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgdwPOV[0] == 18000);
+	}
 
 	if (padCode == PadCode::RightStick)
 	{
@@ -247,6 +265,17 @@ bool JoypadInput::GetAnyButtonDown(const int padIndex)
 	{
 		bool down = (GetInstance()->joypadObjs_[padIndex].padInput.rgbButtons[i] & 0x80);
 		bool up = !(GetInstance()->joypadObjs_[padIndex].prevPadInput.rgbButtons[i] & 0x80);
+
+		if (down == true && up == true)
+		{
+			return true;
+		}
+	}
+
+	for (uint32_t i = 1; i < 5; i++)
+	{
+		bool down = (GetInstance()->joypadObjs_[padIndex].padInput.rgdwPOV[0] == i * 9000);
+		bool up = !(GetInstance()->joypadObjs_[padIndex].prevPadInput.rgdwPOV[0] == i * 9000);
 
 		if (down == true && up == true)
 		{

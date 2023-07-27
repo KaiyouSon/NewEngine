@@ -48,6 +48,7 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("UI/MessageSign/MessageBack.png", "MessageBack");
 	TextureManager::LoadTexture("UI/MessageSign/MessageSignUI.png", "MessageSignUI");
 	TextureManager::LoadTexture("UI/ItemBoxFrame.png", "ItemBoxFrame");
+	TextureManager::LoadTexture("UI/ItemBoxLight.png", "ItemBoxLight");
 	TextureManager::LoadTexture("UI/ItemUI/BottleUI.png", "BottleUI");
 	TextureManager::LoadTexture("UI/ItemUI/ClubUI.png", "ClubUI");
 
