@@ -48,6 +48,11 @@ void GameScene::Init()
 }
 void GameScene::Update()
 {
+	if (Key::GetKeyDown(DIK_SPACE))
+	{
+		EffectManager::GetInstance()->GenerateBloodSprayEffect(Vec3::up);
+	}
+
 	player_->PrevUpdate();
 	boss_->Update();
 	uiManager_->Update();
