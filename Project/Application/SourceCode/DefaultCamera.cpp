@@ -50,6 +50,11 @@ void DefaultCamera::Update()
 	if (!frontRange && !backRange)
 	{
 		Vec2 leftStick = Pad::GetStick(PadCode::LeftStick, 300);
+		if (player_->GetMoveVel() == 0)
+		{
+			leftStick = 0;
+		}
+
 		if (leftStick != 0)
 		{
 			targetYaw_ += leftStick.Norm().x;
@@ -80,7 +85,6 @@ void DefaultCamera::Update()
 
 	// Šp“x‚ÌÝ’è
 	camera_->rot = rot_;
-
 
 	if (isEase_ == true)
 	{
