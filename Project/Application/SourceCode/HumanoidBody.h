@@ -51,6 +51,7 @@ public:
 	void BaseDrawModel();
 	void BaseDrawDebugGui();
 
+	void DrawWeapon(const WeaponPartID partID);
 public:
 	std::vector<Vec3> CalcCurRots();
 	std::vector<Vec3> CalcCurWeaponPoses();

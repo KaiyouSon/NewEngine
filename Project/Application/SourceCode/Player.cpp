@@ -65,6 +65,11 @@ void Player::DrawDebugGui()
 	player_->DrawDebugGui();
 }
 
+void Player::AddHP()
+{
+	gaugePrames_[(uint32_t)GaugeType::Hp].value += 96.f;
+}
+
 // コライダー関連
 void Player::CalcFrontVec()
 {

@@ -12,6 +12,8 @@ void IMotion::BaseInit(HumanoidBody* human)
 {
 	if (isInit_ == false)
 	{
+		human->pos.y = 4.75f;
+
 		// Œ»“_‚Ìƒ‚[ƒVƒ‡ƒ“‚Ì‰Šú‰»
 		curRots_ = human->CalcCurRots();
 		MotionData current = motion_->data[step_];

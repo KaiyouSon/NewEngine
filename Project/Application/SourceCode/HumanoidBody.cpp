@@ -89,14 +89,6 @@ void HumanoidBody::BaseDrawModel()
 	{
 		parts_[i]->Draw();
 	}
-
-	for (uint32_t i = 0; i < weapons_.size(); i++)
-	{
-		if (weapons_[i] != nullptr)
-		{
-			weapons_[i]->DrawModel();
-		}
-	}
 }
 void HumanoidBody::BaseDrawDebugGui()
 {
@@ -191,6 +183,14 @@ void HumanoidBody::BaseDrawDebugGui()
 	}
 
 	GuiManager::EndWindow();
+}
+
+void HumanoidBody::DrawWeapon(const WeaponPartID partID)
+{
+	if (weapons_[(uint32_t)partID] != nullptr)
+	{
+		weapons_[(uint32_t)partID]->DrawModel();
+	}
 }
 
 // åªç›ÇÃäpìx

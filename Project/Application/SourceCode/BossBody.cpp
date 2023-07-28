@@ -24,6 +24,7 @@ void BossBody::Update()
 void BossBody::DrawModel()
 {
 	BaseDrawModel();
+	DrawWeapon(WeaponPartID::Right);
 }
 
 void BossBody::GrabAttackMotion()

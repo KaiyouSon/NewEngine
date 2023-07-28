@@ -78,6 +78,8 @@ public:
 	void DrawModel();
 	void DrawDebugGui();
 
+public:
+	void AddHP();
 
 public:
 	void SetPos(const Vec3 pos);

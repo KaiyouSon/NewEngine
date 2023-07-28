@@ -15,7 +15,6 @@ void RollMotion::Init(HumanoidBody* human)
 	isCanChangeMotion_ = false;
 	step_ = 0;
 
-	human->pos.y = 4.5f;
 	curRots_.resize(human->GetPartsSize());
 	endRots_.resize(human->GetPartsSize());
 	curWeaponPoses_.resize(human->GetWeaponPartsSize());

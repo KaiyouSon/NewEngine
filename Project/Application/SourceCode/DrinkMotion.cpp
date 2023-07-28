@@ -16,7 +16,6 @@ void DrinkMotion::Init(HumanoidBody* human)
 	isCanChangeMotion_ = false;
 	step_ = 0;
 
-	human->pos.y = 4.5f;
 	curRots_.resize(human->GetPartsSize());
 	endRots_.resize(human->GetPartsSize());
 	curWeaponPoses_.resize(human->GetWeaponPartsSize());
@@ -61,6 +60,7 @@ void DrinkMotion::CurrentStepUpdate(HumanoidBody* human)
 			Player* player = static_cast<Player*>(human->iParent);
 			Vec3 pos = player->GetPos() + Vec3::down * 2;
 
+			player->AddHP();
 			EffectManager::GetInstance()->GeneratePlayerRecoveryEffect(pos);
 		}
 	}

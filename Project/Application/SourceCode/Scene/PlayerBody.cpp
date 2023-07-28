@@ -61,6 +61,11 @@ void PlayerBody::Update()
 void PlayerBody::DrawModel()
 {
 	BaseDrawModel();
+
+	if (parent->state_ != Player::State::Drink)
+	{
+		DrawWeapon(WeaponPartID::Right);
+	}
 }
 void PlayerBody::DrawDebugGui()
 {
