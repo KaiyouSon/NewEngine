@@ -81,12 +81,6 @@ void GameScene::Update()
 	currentScene_->pos.y += y;
 	currentScene_->Update();
 
-
-
-
-
-
-
 	player_->PrevUpdate();
 	boss_->Update();
 	uiManager_->Update();

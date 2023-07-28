@@ -4,14 +4,8 @@
 class DrinkMotion : public IMotion
 {
 private:
-	//void CurrentStepInit(HumanoidBody* human);
-	//void CurrentStepUpdate(HumanoidBody* human);
-
-	//void Step0Init(HumanoidBody* human);
-	//void Step0Update(HumanoidBody* human);
-	//void Step1Update(HumanoidBody* human);
-	//void Step2Update(HumanoidBody* human);
-	//void Step3Update(HumanoidBody* human);
+	void CurrentStepInit(HumanoidBody* human);
+	void CurrentStepUpdate(HumanoidBody* human);
 
 public:
 	DrinkMotion();

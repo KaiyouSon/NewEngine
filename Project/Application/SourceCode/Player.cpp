@@ -203,6 +203,10 @@ void Player::JoggingUpdate()
 	{
 		state_ = State::Idle;
 	}
+	else if (Pad::GetButtonDown(PadCode::ButtonX))
+	{
+		state_ = State::Drink;
+	}
 
 	// —£‚µ‚½Žž
 	if (Pad::GetButtonUp(PadCode::ButtonA))
@@ -234,6 +238,10 @@ void Player::RunUpdate()
 	{
 		state_ = State::Idle;
 	}
+	else if (Pad::GetButtonDown(PadCode::ButtonX))
+	{
+		state_ = State::Drink;
+	}
 }
 void Player::BackstepUpdate()
 {
@@ -263,6 +271,11 @@ void Player::BackstepUpdate()
 			{
 				state_ = State::Jogging;
 			}
+		}
+		else if (Pad::GetButtonDown(PadCode::ButtonX))
+		{
+			player_->BackstepMotionInit();
+			state_ = State::Drink;
 		}
 	}
 	else if (player_->GetisPlayBackStepMotion() == false)
@@ -298,6 +311,11 @@ void Player::RollUpdate()
 				state_ = State::Jogging;
 				player_->RollMotionInit();
 			}
+		}
+		else if (Pad::GetButtonDown(PadCode::ButtonX))
+		{
+			state_ = State::Drink;
+			player_->RollMotionInit();
 		}
 	}
 

@@ -205,6 +205,12 @@
     <Filter Include="Application\Header\Motion\Boss">
       <UniqueIdentifier>{82854429-bc3b-45c3-867e-30ea50635982}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Header\Effect">
+      <UniqueIdentifier>{c1960994-367b-4f8a-9914-a99c29738979}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\Effect">
+      <UniqueIdentifier>{4966c37e-d23c-4e57-b704-9638841c2c9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -537,20 +543,23 @@
     <ClCompile Include="Application\SourceCode\BossGrabAttackMotion.cpp">
       <Filter>Application\Source\Motion\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\3D\Emitter.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\ParticleParam.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\BloodSpray.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\EffectManager.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\DrinkMotion.cpp">
       <Filter>Application\Source\Motion\Human</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\EffectManager.cpp">
+      <Filter>Application\Source\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\BloodSpray.cpp">
+      <Filter>Application\Source\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\Emitter.cpp">
+      <Filter>NewEngine\Source\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\PlayerRecoveryEffect.cpp">
+      <Filter>Application\Source\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -920,20 +929,23 @@
     <ClInclude Include="Application\SourceCode\BossGrabAttackMotion.h">
       <Filter>Application\Header\Motion\Boss</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\3D\Emitter.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\ParticleParam.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\BloodSpray.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\EffectManager.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\DrinkMotion.h">
       <Filter>Application\Header\Motion\Human</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\BloodSpray.h">
+      <Filter>Application\Header\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\EffectManager.h">
+      <Filter>Application\Header\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\Emitter.h">
+      <Filter>NewEngine\Header\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\PlayerRecoveryEffect.h">
+      <Filter>Application\Header\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

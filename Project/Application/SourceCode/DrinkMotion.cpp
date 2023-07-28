@@ -2,6 +2,7 @@
 #include "HumanoidBody.h"
 #include "PlayerBody.h"
 #include "CollisionManager.h"
+#include "EffectManager.h"
 
 DrinkMotion::DrinkMotion()
 {
@@ -44,106 +45,24 @@ void DrinkMotion::Update(HumanoidBody* human)
 		isInit_ = true;
 	}
 	BasePrevUpdate(human);
-	//CurrentStepUpdate(human);
+	CurrentStepUpdate(human);
 	BasePostUpdate(human);
 }
 
-//void DrinkMotion::CurrentStepInit(HumanoidBody* human)
-//{
-//	if (step_ == 0)
-//	{
-//		Step0Init(human);
-//	}
-//}
-//void DrinkMotion::CurrentStepUpdate(HumanoidBody* human)
-//{
-//	if (step_ == 0)
-//	{
-//		Step0Update(human);
-//	}
-//	else if (step_ == 1)
-//	{
-//		Step1Update(human);
-//	}
-//	else if (step_ == 2)
-//	{
-//		Step2Update(human);
-//	}
-//	else if (step_ == 3)
-//	{
-//		Step3Update(human);
-//	}
-//}
+void DrinkMotion::CurrentStepInit(HumanoidBody* human)
+{
+}
+void DrinkMotion::CurrentStepUpdate(HumanoidBody* human)
+{
+	if (step_ == 2)
+	{
+		if (ease_.GetisEnd() == true)
+		{
+			Player* player = static_cast<Player*>(human->iParent);
+			Vec3 pos = player->GetPos() + Vec3::down * 2;
 
-//void DrinkMotion::Step0Init(HumanoidBody* human)
-//{
-//	Player* player = static_cast<Player*>(human->iParent);
-//
-//	moveEase_.Reset();
-//
-//	// UŒ‚ƒ‚[ƒVƒ‡ƒ“‚Åi‚Þ‹——£‚ÌŒvŽZ
-//	player->CalcFrontVec();
-//	length_ = 30;// CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->frontVec_, 30);
-//
-//	// Œ»Ý‚ÌÀ•W‚ðŽæ“¾
-//	startPos_ = human->pos;
-//	endPos_ = startPos_ + player->frontVec_.Norm() * length_;
-//
-//	// “ü—Í‚µ‚½Œã‚Ì‰ñ“]Šp‚ðŽæ“¾
-//	rotY_ = atan2f(player->frontVec_.x, player->frontVec_.z);
-//}
-//void DrinkMotion::Step0Update(HumanoidBody* human)
-//{
-//	Player* player = static_cast<Player*>(human->iParent);
-//
-//	human->pos = moveEase_.InOut(startPos_, endPos_);
-//	human->rot.y = rotY_;
-//	player->moveVel = endPos_ - startPos_;
-//
-//	moveEase_.Update();
-//}
-//void DrinkMotion::Step1Update(HumanoidBody* human)
-//{
-//	Player* player = static_cast<Player*>(human->iParent);
-//
-//	human->GetPart(PartID::Body)->pos.y = ease_.In(0, -3);
-//	human->pos = moveEase_.InOut(startPos_, endPos_);
-//	player->moveVel = endPos_ - startPos_;
-//
-//	moveEase_.Update();
-//
-//	if (ease_.GetisEnd() == true)
-//	{
-//		//human->GetPart(PartID::Body)->rot.x = 30;
-//	}
-//}
-//void DrinkMotion::Step2Update(HumanoidBody* human)
-//{
-//	Player* player = static_cast<Player*>(human->iParent);
-//
-//	human->GetPart(PartID::Body)->pos.y = ease_.Lerp(-3.f, -0.7f);
-//	human->pos = moveEase_.InOut(startPos_, endPos_);
-//	player->moveVel = endPos_ - startPos_;
-//
-//	moveEase_.Update();
-//
-//	if (ease_.GetisEnd() == true)
-//	{
-//		isCanChangeMotion_ = true;
-//	}
-//}
-//void DrinkMotion::Step3Update(HumanoidBody* human)
-//{
-//	Player* player = static_cast<Player*>(human->iParent);
-//
-//	human->GetPart(PartID::Body)->pos.y = ease_.Out(-0.7f, 0.f);
-//	human->pos = moveEase_.InOut(startPos_, endPos_);
-//	player->moveVel = endPos_ - startPos_;
-//
-//	moveEase_.Update();
-//
-//	if (ease_.GetisEnd() == true)
-//	{
-//		human->GetPart(PartID::Body)->rot.x = 0;
-//	}
-//}
+			EffectManager::GetInstance()->GeneratePlayerRecoveryEffect(pos);
+		}
+	}
+
+}

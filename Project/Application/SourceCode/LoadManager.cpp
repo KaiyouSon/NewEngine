@@ -60,7 +60,9 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Text/Tutorial/TutorialStr2.png", "TutorialStr2");
 	TextureManager::LoadTexture("Text/Tutorial/TutorialStr3.png", "TutorialStr3");
 
+	// パーティクル
 	TextureManager::LoadTexture("Particle/Particle.png", "Particle");
+	TextureManager::LoadTexture("Particle/Line.png", "Line");
 
 	// レンダーテクスチャー
 
