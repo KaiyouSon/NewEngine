@@ -75,16 +75,19 @@ void CollisionManager::PlayerHitBoss()
 }
 void CollisionManager::PlayerHitMessageSign()
 {
-	MessageSign* cur = field_->GetMessageSign();
-
-	if (Collision::SphereHitCapsule(
-		cur->GetCollider(), player_->GetBodyCollider()))
+	for (const auto& messageSign : *field_->GetMessageSigns())
 	{
-		uiManager_->GetNegotiationUI()->SetisActive(true);
-	}
-	else
-	{
-		uiManager_->GetNegotiationUI()->SetisActive(false);
+		if (Collision::SphereHitCapsule(
+			messageSign->GetCollider(), player_->GetBodyCollider()))
+		{
+			uiManager_->GetNegotiationUI()->SetisActive(true);
+			uiManager_->GetMessageUI()->SetTexture(messageSign->GetMessageTexture());
+			break;
+		}
+		else
+		{
+			uiManager_->GetNegotiationUI()->SetisActive(false);
+		}
 	}
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
-class TutorialUI
+class MessageUI
 {
 private:
 	std::unique_ptr<Sprite> back_;
@@ -17,16 +17,16 @@ private:
 	bool isActive_;
 
 public:
-	TutorialUI();
+	MessageUI();
 	void Init();
 	void Update();
 	void DrawFrontSprite();
 
 public:
 	void SetisActive(const bool isActive);
+	void SetTexture(Texture* texture);
 
 public:
 	bool GetisActive();
-
 };
 

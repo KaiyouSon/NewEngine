@@ -56,7 +56,9 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");
 	TextureManager::LoadTexture("Text/ReadMessageStr.png", "ReadMessageStr");
 	TextureManager::LoadTexture("Text/ExitStr.png", "ExitStr");
-	TextureManager::LoadTexture("Text/TutorialStr1.png", "TutorialStr1");
+	TextureManager::LoadTexture("Text/Tutorial/TutorialStr1.png", "TutorialStr1");
+	TextureManager::LoadTexture("Text/Tutorial/TutorialStr2.png", "TutorialStr2");
+	TextureManager::LoadTexture("Text/Tutorial/TutorialStr3.png", "TutorialStr3");
 
 	TextureManager::LoadTexture("Particle/Particle.png", "Particle");
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "GaugeUI.h"
 #include "NegotiationUI.h"
-#include "TutorialUI.h"
+#include "MessageUI.h"
 #include "ItemBoxUIManager.h"
 #include "Player.h"
 #include "Boss.h"
@@ -14,7 +14,7 @@ private:
 	std::unique_ptr<ItemBoxUIManager> itemBoxUIManager_;
 	std::unique_ptr<GaugeUI> bossHPGauge_;
 	std::unique_ptr<NegotiationUI> negotiationUI_;
-	std::unique_ptr<TutorialUI> tutorialUI_;
+	std::unique_ptr<MessageUI> messageUI_;
 
 private:
 	Transform itemBoxUIParent;
@@ -34,6 +34,6 @@ public:
 
 public:
 	NegotiationUI* GetNegotiationUI();
-	TutorialUI* GetTutorialUI();
+	MessageUI* GetMessageUI();
 };
 

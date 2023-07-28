@@ -6,8 +6,8 @@ class Field
 {
 private:
 	std::unique_ptr<Object3D> ground_;
-	std::unique_ptr<MessageSign> messageSign_;
 	std::unique_ptr<Skydome> skydome_;
+	std::array<std::unique_ptr<MessageSign>, 3> messageSigns_;
 
 private:
 	// デバッグ用
@@ -22,7 +22,6 @@ public:
 	void DrawDebugGui();
 
 public:
-	MessageSign* GetMessageSign();
-
+	std::array<std::unique_ptr<MessageSign>, 3>* GetMessageSigns();
 };
 

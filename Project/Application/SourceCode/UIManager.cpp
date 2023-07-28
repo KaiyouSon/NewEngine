@@ -3,7 +3,7 @@
 UIManager::UIManager() :
 	bossHPGauge_(std::make_unique<GaugeUI>()),
 	negotiationUI_(std::make_unique<NegotiationUI>()),
-	tutorialUI_(std::make_unique<TutorialUI>()),
+	messageUI_(std::make_unique<MessageUI>()),
 	itemBoxUIManager_(std::make_unique<ItemBoxUIManager>())
 {
 	for (uint32_t i = 0; i < gauges_.size(); i++)
@@ -33,7 +33,7 @@ void UIManager::Init()
 	negotiationUI_->Init();
 	negotiationUI_->SetUIManager(this);
 
-	tutorialUI_->Init();
+	messageUI_->Init();
 
 	itemBoxUIManager_->Init();
 }
@@ -56,7 +56,7 @@ void UIManager::Update()
 
 	negotiationUI_->Update();
 
-	tutorialUI_->Update();
+	messageUI_->Update();
 
 }
 
@@ -69,7 +69,7 @@ void UIManager::DrawFrontSprite()
 
 	negotiationUI_->DrawFrontSprite();
 
-	tutorialUI_->DrawFrontSprite();
+	messageUI_->DrawFrontSprite();
 
 	itemBoxUIManager_->DrawFrontSprite();
 
@@ -91,7 +91,7 @@ NegotiationUI* UIManager::GetNegotiationUI()
 	return negotiationUI_.get();
 }
 
-TutorialUI* UIManager::GetTutorialUI()
+MessageUI* UIManager::GetMessageUI()
 {
-	return tutorialUI_.get();
+	return messageUI_.get();
 }

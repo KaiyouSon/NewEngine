@@ -1,6 +1,6 @@
-#include "TutorialUI.h"
+#include "MessageUI.h"
 
-TutorialUI::TutorialUI() :
+MessageUI::MessageUI() :
 	back_(std::make_unique<Sprite>()),
 	button_(std::make_unique<Sprite>()),
 	colon_(std::make_unique<Sprite>()),
@@ -19,7 +19,7 @@ TutorialUI::TutorialUI() :
 	button_->SetSize(96);
 }
 
-void TutorialUI::Init()
+void MessageUI::Init()
 {
 	parent_.pos = Vec2(GetWindowHalfSize().x, 224);
 	parent_.Update();
@@ -36,7 +36,7 @@ void TutorialUI::Init()
 	message_->scale = 0.35f;
 }
 
-void TutorialUI::Update()
+void MessageUI::Update()
 {
 	const float add = isActive_ ? 35.f : -35.f;
 	alpha_ += add;
@@ -58,7 +58,7 @@ void TutorialUI::Update()
 	message_->Update(&parent_);
 }
 
-void TutorialUI::DrawFrontSprite()
+void MessageUI::DrawFrontSprite()
 {
 	if (alpha_ == 0)
 	{
@@ -73,12 +73,17 @@ void TutorialUI::DrawFrontSprite()
 	message_->Draw();
 }
 
-void TutorialUI::SetisActive(const bool isActive)
+void MessageUI::SetisActive(const bool isActive)
 {
 	isActive_ = isActive;
 }
 
-bool TutorialUI::GetisActive()
+void MessageUI::SetTexture(Texture* texture)
+{
+	message_->SetTexture(texture);
+}
+
+bool MessageUI::GetisActive()
 {
 	return isActive_;
 }

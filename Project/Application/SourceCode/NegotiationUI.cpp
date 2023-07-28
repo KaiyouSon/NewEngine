@@ -88,22 +88,22 @@ void NegotiationUI::TutorialMessageUpdate()
 		return;
 	}
 
-	TutorialUI* tutorialUI = uiManager_->GetTutorialUI();
+	MessageUI* messageUI = uiManager_->GetMessageUI();
 
 	if (isActive_ == false)
 	{
-		tutorialUI->SetisActive(false);
+		messageUI->SetisActive(false);
 	}
 
 	if (Pad::GetButtonDown(PadCode::ButtonB))
 	{
-		if (tutorialUI->GetisActive() == true)
+		if (messageUI->GetisActive() == true)
 		{
-			tutorialUI->SetisActive(false);
+			messageUI->SetisActive(false);
 		}
 		else
 		{
-			tutorialUI->SetisActive(true);
+			messageUI->SetisActive(true);
 		}
 	}
 }

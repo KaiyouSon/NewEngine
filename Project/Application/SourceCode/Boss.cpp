@@ -30,7 +30,7 @@ void Boss::Update()
 {
 	ColliderUpdate();
 
-	MotionUpdate();
+	//MotionUpdate();
 
 	if (isDamage_ == true)
 	{

@@ -5,6 +5,7 @@ class MessageSign
 {
 private:
 	std::unique_ptr<Object3D> messageSign_;
+	Texture* messageTex_;
 
 private:
 	SphereCollider collider_;
@@ -19,5 +20,10 @@ public:
 	void DrawModel();
 
 public:
+	void SetMessageTexture(Texture* texture);
+	void SetPos(const Vec3 pos);
+
+public:
+	Texture* GetMessageTexture();
 	SphereCollider GetCollider();
 };

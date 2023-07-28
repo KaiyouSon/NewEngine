@@ -501,7 +501,7 @@
     <ClCompile Include="Application\SourceCode\ItemBoxUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\TutorialUI.cpp">
+    <ClCompile Include="Application\SourceCode\MessageUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Skydome.cpp">
@@ -875,7 +875,7 @@
     <ClInclude Include="Application\SourceCode\ItemBoxUI.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\TutorialUI.h">
+    <ClInclude Include="Application\SourceCode\MessageUI.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Skydome.h">

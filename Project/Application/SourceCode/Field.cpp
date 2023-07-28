@@ -3,11 +3,20 @@
 Field::Field() :
 	ground_(std::make_unique<Object3D>()),
 	sphere_(std::make_unique<Object3D>()),
-	messageSign_(std::make_unique<MessageSign>()),
 	skydome_(std::make_unique<Skydome>())
 {
 	ground_->SetModel(ModelManager::GetModel("Ground"));
 	sphere_->SetModel(ModelManager::GetModel("Sphere"));
+
+	for (uint32_t i = 0; i < messageSigns_.size(); i++)
+	{
+		messageSigns_[i] = std::make_unique<MessageSign>();
+		messageSigns_[i]->SetPos(Vec3(10, 0, (float)(i * 20)));
+	}
+
+	messageSigns_[0]->SetMessageTexture(TextureManager::GetTexture("TutorialStr1"));
+	messageSigns_[1]->SetMessageTexture(TextureManager::GetTexture("TutorialStr2"));
+	messageSigns_[2]->SetMessageTexture(TextureManager::GetTexture("TutorialStr3"));
 
 	Init();
 }
@@ -19,9 +28,12 @@ void Field::Init()
 
 	sphere_->pos = { 0,0,0 };
 	sphere_->scale = 4.f;
-	messageSign_->Init();
-	skydome_->Init();
 
+	for (uint32_t i = 0; i < messageSigns_.size(); i++)
+	{
+		messageSigns_[i]->Init();
+	}
+	skydome_->Init();
 }
 
 void Field::Update()
@@ -31,15 +43,21 @@ void Field::Update()
 
 	ground_->Update();
 	skydome_->Update();
-	messageSign_->Update();
+	for (uint32_t i = 0; i < messageSigns_.size(); i++)
+	{
+		messageSigns_[i]->Update();
+	}
 }
 
 void Field::DrawModel()
 {
-	sphere_->Draw();
+	//sphere_->Draw();
 	ground_->Draw();
 	skydome_->DrawModel();
-	messageSign_->DrawModel();
+	for (uint32_t i = 0; i < messageSigns_.size(); i++)
+	{
+		messageSigns_[i]->DrawModel();
+	}
 }
 
 void Field::DrawFrontSprite()
@@ -51,7 +69,7 @@ void Field::DrawDebugGui()
 	skydome_->DrawDebugGui();
 }
 
-MessageSign* Field::GetMessageSign()
+std::array<std::unique_ptr<MessageSign>, 3>* Field::GetMessageSigns()
 {
-	return messageSign_.get();
+	return &messageSigns_;
 }

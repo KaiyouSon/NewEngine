@@ -10,7 +10,6 @@ MessageSign::MessageSign() :
 
 void MessageSign::Init()
 {
-	messageSign_->pos = Vec3(10, 0, 5);
 	messageSign_->scale = 1.5f;
 }
 
@@ -26,9 +25,24 @@ void MessageSign::DrawModel()
 	messageSign_->Draw();
 }
 
+Texture* MessageSign::GetMessageTexture()
+{
+	return messageTex_;
+}
+
 SphereCollider MessageSign::GetCollider()
 {
 	return collider_;
+}
+
+void MessageSign::SetMessageTexture(Texture* texture)
+{
+	messageTex_ = texture;
+}
+
+void MessageSign::SetPos(const Vec3 pos)
+{
+	messageSign_->pos = pos;
 }
 
 void MessageSign::ColliderUpdate()
