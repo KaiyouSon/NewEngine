@@ -105,7 +105,7 @@ void GameScene::RenderTextureSetting()
 
 void GameScene::DrawRenderTexture()
 {
-	currentScene_->Draw();
+	//currentScene_->Draw();
 }
 void GameScene::DrawBackSprite()
 {

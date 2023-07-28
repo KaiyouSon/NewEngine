@@ -543,11 +543,14 @@
     <ClCompile Include="NewEngine\Object\3D\ParticleParam.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
-    <ClCompile Include="BloodSpray.cpp">
+    <ClCompile Include="Application\SourceCode\BloodSpray.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\EffectManager.cpp">
       <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\DrinkMotion.cpp">
+      <Filter>Application\Source\Motion\Human</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -928,6 +931,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\EffectManager.h">
       <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\DrinkMotion.h">
+      <Filter>Application\Header\Motion\Human</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

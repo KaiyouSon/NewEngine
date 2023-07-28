@@ -42,6 +42,7 @@ void Player::PrevUpdate()
 		&Player::AttackR2Update,
 		&Player::AttackBackUpdate,
 		&Player::AttackRollUpdate,
+		&Player::DrinkUpdate,
 	};
 
 	// Às
@@ -49,7 +50,6 @@ void Player::PrevUpdate()
 
 	GaugeParamUpdate();
 	ColliderUpdate();
-
 }
 void Player::PostUpdate()
 {
@@ -168,6 +168,10 @@ void Player::IdleUpdate()
 		{
 			state_ = State::Jogging;
 		}
+	}
+	else if (Pad::GetButtonDown(PadCode::ButtonX))
+	{
+		state_ = State::Drink;
 	}
 }
 void Player::JoggingUpdate()
@@ -388,6 +392,21 @@ void Player::AttackRollUpdate()
 		if (state_ == State::AttackRoll)
 		{
 			player_->AttackMotionInit(WeaponPartID::Right);
+			state_ = State::Idle;
+		}
+	}
+}
+void Player::DrinkUpdate()
+{
+	auto motion = player_->drinkMotion_.get();
+
+	motion->Update(player_.get());
+
+	if (motion->GetisPlay() == false)
+	{
+		if (state_ == State::Drink)
+		{
+			motion->Init(player_.get());
 			state_ = State::Idle;
 		}
 	}

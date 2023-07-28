@@ -3,6 +3,7 @@
 #include "MoveMotion.h"
 #include "BackstepMotion.h"
 #include "RollMotion.h"
+#include "DrinkMotion.h"
 
 struct Weapon;
 class Player;
@@ -13,6 +14,7 @@ private:
 	std::unique_ptr<MoveMotion> moveMotion_;
 	std::unique_ptr<RollMotion> rollMotion_;
 	std::unique_ptr<BackstepMotion> backstepMotion_;
+	std::unique_ptr<DrinkMotion> drinkMotion_;
 
 public:
 	Player* parent;
@@ -54,5 +56,8 @@ public:
 	void BackstepMotionInit();
 	void RollMotionInit();
 	void AttackMotionInit(const WeaponPartID partID);
+
+private:
+	friend Player;
 };
 

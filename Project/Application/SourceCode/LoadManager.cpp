@@ -89,6 +89,7 @@ bool LoadManager::MotionLoad()
 {
 	MotionManager::Load("Player/BackstepMotion", "Backstep");
 	MotionManager::Load("Player/RollMotion", "Roll");
+	MotionManager::Load("Player/DrinkMotion", "Drink");
 	MotionManager::Load("Weapon/Mallet/WeakAttackMotion1", "MalletWeakAttack1");
 	MotionManager::Load("Weapon/Mallet/WeakAttackMotion2", "MalletWeakAttack2");
 	MotionManager::Load("Weapon/Mallet/WeakAttackMotion3", "MalletWeakAttack3");

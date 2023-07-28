@@ -322,7 +322,7 @@
                 "step": 0,
                 "ease_type": "Lerp",
                 "ease_pow": 2,
-                "ease_time": 10
+                "ease_time": 5
             },
             "children": [
                 {

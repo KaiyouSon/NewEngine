@@ -20,6 +20,7 @@ public:
 		AttackR2,
 		AttackBack,
 		AttackRoll,
+		Drink,
 	};
 
 private:
@@ -67,6 +68,7 @@ private:
 	void AttackR2Update();
 	void AttackBackUpdate();
 	void AttackRollUpdate();
+	void DrinkUpdate();
 
 public:
 	Player();

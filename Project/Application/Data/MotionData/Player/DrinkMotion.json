@@ -1,0 +1,1490 @@
+{
+    "name": "scene",
+    "object": [
+        {
+            "type": "EMPTY",
+            "name": "Transform.078",
+            "transform": {
+                "translation": [
+                    0.0,
+                    4.75,
+                    -20.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "parameter": {
+                "step": 0,
+                "ease_type": "Lerp",
+                "ease_pow": 1,
+                "ease_time": 0
+            },
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Body.078",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            -0.0,
+                            5.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "children": [
+                        {
+                            "type": "MESH",
+                            "name": "Head.078",
+                            "transform": {
+                                "translation": [
+                                    0.0,
+                                    2.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "LeftArm.078",
+                            "transform": {
+                                "translation": [
+                                    -1.5,
+                                    1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    -10.000000953674316,
+                                    -4.552082089048781e-08,
+                                    -10.000000953674316
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "LeftHand.078",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -3.814697265625e-06
+                                        ],
+                                        "rotation": [
+                                            -20.000001907348633,
+                                            8.68832472633585e-08,
+                                            5.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            0.9999999403953552
+                                        ]
+                                    },
+                                    "children": [
+                                        {
+                                            "type": "EMPTY",
+                                            "name": "Fist.077",
+                                            "transform": {
+                                                "translation": [
+                                                    -5.960464477539063e-08,
+                                                    -1.5,
+                                                    -0.0
+                                                ],
+                                                "rotation": [
+                                                    1.987846699118444e-16,
+                                                    1.0672170702719086e-07,
+                                                    -2.1344341405438172e-07
+                                                ],
+                                                "scaling": [
+                                                    1.0,
+                                                    1.0,
+                                                    1.0
+                                                ]
+                                            },
+                                            "is_weapon": 1
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "LeftThigh.078",
+                            "transform": {
+                                "translation": [
+                                    -0.5,
+                                    -1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "LeftLeg.078",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            0.0,
+                                            -0.0,
+                                            0.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "RightArm.078",
+                            "transform": {
+                                "translation": [
+                                    1.500000238418579,
+                                    1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    50.0,
+                                    -29.999998092651367,
+                                    -9.999996185302734
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    0.9999999403953552,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "RightHand.078",
+                                    "transform": {
+                                        "translation": [
+                                            -4.76837158203125e-07,
+                                            -1.5000019073486328,
+                                            -1.9073486328125e-06
+                                        ],
+                                        "rotation": [
+                                            -70.0,
+                                            -15.00001049041748,
+                                            -4.9999918937683105
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            0.9999999403953552
+                                        ]
+                                    },
+                                    "children": [
+                                        {
+                                            "type": "MESH",
+                                            "name": "Clab.039",
+                                            "transform": {
+                                                "translation": [
+                                                    0.0,
+                                                    -1.5000004768371582,
+                                                    -0.0
+                                                ],
+                                                "rotation": [
+                                                    -8.537734288438514e-07,
+                                                    -2.5613205707486486e-06,
+                                                    1.9083320264724063e-14
+                                                ],
+                                                "scaling": [
+                                                    1.0000001192092896,
+                                                    1.0000001192092896,
+                                                    1.000000238418579
+                                                ]
+                                            },
+                                            "is_weapon": 1
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "RightThigh.078",
+                            "transform": {
+                                "translation": [
+                                    0.5,
+                                    -1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "RightLeg.078",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            0.0,
+                                            -0.0,
+                                            0.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "EMPTY",
+            "name": "Transform.077",
+            "transform": {
+                "translation": [
+                    0.0,
+                    4.75,
+                    -10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "parameter": {
+                "step": 0,
+                "ease_type": "In",
+                "ease_pow": 2,
+                "ease_time": 5
+            },
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Body.077",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            -0.0,
+                            5.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "children": [
+                        {
+                            "type": "MESH",
+                            "name": "Head.077",
+                            "transform": {
+                                "translation": [
+                                    0.0,
+                                    2.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    -5.0,
+                                    -5.846711448320718e-10,
+                                    1.3391170838872313e-08
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "LeftArm.077",
+                            "transform": {
+                                "translation": [
+                                    -1.5,
+                                    1.5,
+                                    9.5367431640625e-07
+                                ],
+                                "rotation": [
+                                    -0.0,
+                                    -0.0,
+                                    -10.000000953674316
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    0.9999999403953552,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "LeftHand.077",
+                                    "transform": {
+                                        "translation": [
+                                            1.1920928955078125e-07,
+                                            -1.5,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            -20.000003814697266,
+                                            -1.2510245994690194e-07,
+                                            5.000000476837158
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            0.9999999403953552
+                                        ]
+                                    },
+                                    "children": [
+                                        {
+                                            "type": "EMPTY",
+                                            "name": "Fist.076",
+                                            "transform": {
+                                                "translation": [
+                                                    2.384185791015625e-07,
+                                                    -1.499999761581421,
+                                                    -9.5367431640625e-07
+                                                ],
+                                                "rotation": [
+                                                    -1.0217532115525119e-13,
+                                                    -1.067216999217635e-07,
+                                                    -4.2688682810876344e-07
+                                                ],
+                                                "scaling": [
+                                                    1.0,
+                                                    1.0,
+                                                    0.9999999403953552
+                                                ]
+                                            },
+                                            "is_weapon": 1
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "LeftThigh.077",
+                            "transform": {
+                                "translation": [
+                                    -0.5,
+                                    -1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "LeftLeg.077",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            0.0,
+                                            -0.0,
+                                            0.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "RightArm.077",
+                            "transform": {
+                                "translation": [
+                                    1.5000001192092896,
+                                    1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    20.000001907348633,
+                                    -15.000003814697266,
+                                    15.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    0.9999999403953552,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "RightHand.077",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.500000238418579,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            -89.99999237060547,
+                                            -0.0,
+                                            -4.268868849521823e-07
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    },
+                                    "children": [
+                                        {
+                                            "type": "MESH",
+                                            "name": "Clab.038",
+                                            "transform": {
+                                                "translation": [
+                                                    2.980232238769531e-07,
+                                                    -1.5000009536743164,
+                                                    -0.0
+                                                ],
+                                                "rotation": [
+                                                    -8.537736562175269e-07,
+                                                    4.770832183763384e-15,
+                                                    -6.403302563739999e-07
+                                                ],
+                                                "scaling": [
+                                                    1.0,
+                                                    1.0,
+                                                    1.0
+                                                ]
+                                            },
+                                            "is_weapon": 1
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "RightThigh.077",
+                            "transform": {
+                                "translation": [
+                                    0.5000001192092896,
+                                    -1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "RightLeg.077",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            0.0,
+                                            -0.0,
+                                            0.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "EMPTY",
+            "name": "Transform.075",
+            "transform": {
+                "translation": [
+                    0.0,
+                    4.75,
+                    -0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "parameter": {
+                "step": 0,
+                "ease_type": "Out",
+                "ease_pow": 2,
+                "ease_time": 10
+            },
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Body.075",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            -0.0,
+                            5.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "children": [
+                        {
+                            "type": "MESH",
+                            "name": "Head.075",
+                            "transform": {
+                                "translation": [
+                                    0.0,
+                                    2.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    -20.000001907348633,
+                                    2.2714172587257053e-07,
+                                    -4.005121923000843e-08
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    0.9999999403953552
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "LeftArm.075",
+                            "transform": {
+                                "translation": [
+                                    -1.5,
+                                    1.5,
+                                    1.4901161193847656e-08
+                                ],
+                                "rotation": [
+                                    20.0,
+                                    2.0487252072598494e-07,
+                                    -10.000000953674316
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    0.9999999403953552
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "LeftHand.075",
+                                    "transform": {
+                                        "translation": [
+                                            4.76837158203125e-07,
+                                            -1.499999761581421,
+                                            2.980232238769531e-07
+                                        ],
+                                        "rotation": [
+                                            -20.000001907348633,
+                                            -7.411717319882882e-07,
+                                            5.000000476837158
+                                        ],
+                                        "scaling": [
+                                            1.0000001192092896,
+                                            1.0,
+                                            0.9999999403953552
+                                        ]
+                                    },
+                                    "children": [
+                                        {
+                                            "type": "EMPTY",
+                                            "name": "Fist.074",
+                                            "transform": {
+                                                "translation": [
+                                                    -2.384185791015625e-07,
+                                                    -1.4999995231628418,
+                                                    5.960464477539063e-08
+                                                ],
+                                                "rotation": [
+                                                    1.3340215154755697e-08,
+                                                    -4.25219432997892e-08,
+                                                    2.1344344247609115e-07
+                                                ],
+                                                "scaling": [
+                                                    0.9999999403953552,
+                                                    0.9999999403953552,
+                                                    0.9999999403953552
+                                                ]
+                                            },
+                                            "is_weapon": 1
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "LeftThigh.075",
+                            "transform": {
+                                "translation": [
+                                    -0.5,
+                                    -1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "LeftLeg.075",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            0.0,
+                                            -0.0,
+                                            0.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "RightArm.075",
+                            "transform": {
+                                "translation": [
+                                    1.5,
+                                    1.5,
+                                    -1.4901161193847656e-08
+                                ],
+                                "rotation": [
+                                    -50.000003814697266,
+                                    -80.00000762939453,
+                                    75.00000762939453
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    0.9999999403953552
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "RightHand.075",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            -85.0,
+                                            -69.99993896484375,
+                                            59.999935150146484
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    },
+                                    "children": [
+                                        {
+                                            "type": "MESH",
+                                            "name": "Clab.036",
+                                            "transform": {
+                                                "translation": [
+                                                    -2.384185791015625e-07,
+                                                    -1.499999761581421,
+                                                    -1.1920928955078125e-07
+                                                ],
+                                                "rotation": [
+                                                    8.537736562175269e-07,
+                                                    -4.2688682810876344e-07,
+                                                    -8.537736562175269e-07
+                                                ],
+                                                "scaling": [
+                                                    1.0,
+                                                    1.0,
+                                                    1.0
+                                                ]
+                                            },
+                                            "is_weapon": 1
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "RightThigh.075",
+                            "transform": {
+                                "translation": [
+                                    0.5,
+                                    -1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "RightLeg.075",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            0.0,
+                                            -0.0,
+                                            0.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "EMPTY",
+            "name": "Transform.076",
+            "transform": {
+                "translation": [
+                    0.0,
+                    4.75,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "parameter": {
+                "step": 0,
+                "ease_type": "InOut",
+                "ease_pow": 2,
+                "ease_time": 15
+            },
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Body.076",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            -0.0,
+                            5.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "children": [
+                        {
+                            "type": "MESH",
+                            "name": "Head.076",
+                            "transform": {
+                                "translation": [
+                                    0.0,
+                                    2.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    10.000000953674316,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    0.9999999403953552,
+                                    1.0
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "LeftArm.076",
+                            "transform": {
+                                "translation": [
+                                    -1.5000001192092896,
+                                    1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    -10.000000953674316,
+                                    -4.552082089048781e-08,
+                                    -10.000000953674316
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "LeftHand.076",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -1.9073486328125e-06
+                                        ],
+                                        "rotation": [
+                                            -20.000001907348633,
+                                            8.68832472633585e-08,
+                                            5.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            0.9999999403953552
+                                        ]
+                                    },
+                                    "children": [
+                                        {
+                                            "type": "EMPTY",
+                                            "name": "Fist.075",
+                                            "transform": {
+                                                "translation": [
+                                                    0.0,
+                                                    -1.5,
+                                                    -0.0
+                                                ],
+                                                "rotation": [
+                                                    1.987846699118444e-16,
+                                                    1.0672170702719086e-07,
+                                                    -2.1344341405438172e-07
+                                                ],
+                                                "scaling": [
+                                                    1.0,
+                                                    1.0,
+                                                    1.0
+                                                ]
+                                            },
+                                            "is_weapon": 1
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "LeftThigh.076",
+                            "transform": {
+                                "translation": [
+                                    -0.5000001192092896,
+                                    -1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "LeftLeg.076",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            0.0,
+                                            -0.0,
+                                            0.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "RightArm.076",
+                            "transform": {
+                                "translation": [
+                                    1.5,
+                                    1.5,
+                                    -9.5367431640625e-07
+                                ],
+                                "rotation": [
+                                    50.0,
+                                    -29.999998092651367,
+                                    -9.999996185302734
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    0.9999999403953552,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "RightHand.076",
+                                    "transform": {
+                                        "translation": [
+                                            -4.76837158203125e-07,
+                                            -1.5000004768371582,
+                                            -4.76837158203125e-07
+                                        ],
+                                        "rotation": [
+                                            -70.0,
+                                            -15.00001049041748,
+                                            -4.9999918937683105
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            0.9999999403953552
+                                        ]
+                                    },
+                                    "children": [
+                                        {
+                                            "type": "MESH",
+                                            "name": "Clab.037",
+                                            "transform": {
+                                                "translation": [
+                                                    9.5367431640625e-07,
+                                                    -1.5,
+                                                    9.5367431640625e-07
+                                                ],
+                                                "rotation": [
+                                                    -8.537734288438514e-07,
+                                                    -2.5613205707486486e-06,
+                                                    1.9083320264724063e-14
+                                                ],
+                                                "scaling": [
+                                                    1.0000001192092896,
+                                                    1.0000001192092896,
+                                                    1.000000238418579
+                                                ]
+                                            },
+                                            "is_weapon": 1
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "RightThigh.076",
+                            "transform": {
+                                "translation": [
+                                    0.5,
+                                    -1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "RightLeg.076",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            0.0,
+                                            -0.0,
+                                            0.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "EMPTY",
+            "name": "Transform.079",
+            "transform": {
+                "translation": [
+                    0.0,
+                    4.75,
+                    20.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "parameter": {
+                "step": 0,
+                "ease_type": "InOut",
+                "ease_pow": 2,
+                "ease_time": 10
+            },
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Body.079",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "children": [
+                        {
+                            "type": "MESH",
+                            "name": "Head.079",
+                            "transform": {
+                                "translation": [
+                                    0.0,
+                                    2.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "LeftArm.079",
+                            "transform": {
+                                "translation": [
+                                    -1.5,
+                                    1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "LeftHand.079",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            0.0,
+                                            -0.0,
+                                            0.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    },
+                                    "children": [
+                                        {
+                                            "type": "EMPTY",
+                                            "name": "Fist.078",
+                                            "transform": {
+                                                "translation": [
+                                                    0.0,
+                                                    -1.5,
+                                                    -0.0
+                                                ],
+                                                "rotation": [
+                                                    0.0,
+                                                    -0.0,
+                                                    0.0
+                                                ],
+                                                "scaling": [
+                                                    1.0,
+                                                    1.0,
+                                                    1.0
+                                                ]
+                                            },
+                                            "is_weapon": 1
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "LeftThigh.079",
+                            "transform": {
+                                "translation": [
+                                    -0.5,
+                                    -1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "LeftLeg.079",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            0.0,
+                                            -0.0,
+                                            0.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "RightArm.079",
+                            "transform": {
+                                "translation": [
+                                    1.5,
+                                    1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "RightHand.079",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            0.0,
+                                            -0.0,
+                                            0.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    },
+                                    "children": [
+                                        {
+                                            "type": "MESH",
+                                            "name": "Clab.040",
+                                            "transform": {
+                                                "translation": [
+                                                    0.0,
+                                                    -1.5,
+                                                    -0.0
+                                                ],
+                                                "rotation": [
+                                                    0.0,
+                                                    -0.0,
+                                                    0.0
+                                                ],
+                                                "scaling": [
+                                                    1.0,
+                                                    1.0,
+                                                    1.0
+                                                ]
+                                            },
+                                            "is_weapon": 1
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "MESH",
+                            "name": "RightThigh.079",
+                            "transform": {
+                                "translation": [
+                                    0.5,
+                                    -1.5,
+                                    -0.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    -0.0,
+                                    0.0
+                                ],
+                                "scaling": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "children": [
+                                {
+                                    "type": "MESH",
+                                    "name": "RightLeg.079",
+                                    "transform": {
+                                        "translation": [
+                                            0.0,
+                                            -1.5,
+                                            -0.0
+                                        ],
+                                        "rotation": [
+                                            0.0,
+                                            -0.0,
+                                            0.0
+                                        ],
+                                        "scaling": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

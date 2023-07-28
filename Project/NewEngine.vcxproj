@@ -124,6 +124,7 @@
     <ClCompile Include="Application\SourceCode\CollisionManager.cpp" />
     <ClCompile Include="Application\SourceCode\DefaultCamera.cpp" />
     <ClCompile Include="Application\SourceCode\DOF.cpp" />
+    <ClCompile Include="Application\SourceCode\DrinkMotion.cpp" />
     <ClCompile Include="Application\SourceCode\EffectManager.cpp" />
     <ClCompile Include="Application\SourceCode\Field.cpp" />
     <ClCompile Include="Application\SourceCode\GaugeParam.cpp" />
@@ -163,7 +164,7 @@
     <ClCompile Include="Application\SourceCode\UIManager.cpp" />
     <ClCompile Include="Application\SourceCode\Vignette.cpp" />
     <ClCompile Include="Application\SourceCode\Weapon.cpp" />
-    <ClCompile Include="BloodSpray.cpp" />
+    <ClCompile Include="Application\SourceCode\BloodSpray.cpp" />
     <ClCompile Include="NewEngine\Collision\Collider.cpp" />
     <ClCompile Include="NewEngine\Collision\Collision.cpp" />
     <ClCompile Include="NewEngine\Collision\ICollider.cpp" />
@@ -245,6 +246,7 @@
     <ClInclude Include="Application\SourceCode\CollisionManager.h" />
     <ClInclude Include="Application\SourceCode\DefaultCamera.h" />
     <ClInclude Include="Application\SourceCode\DOF.h" />
+    <ClInclude Include="Application\SourceCode\DrinkMotion.h" />
     <ClInclude Include="Application\SourceCode\EffectManager.h" />
     <ClInclude Include="Application\SourceCode\Field.h" />
     <ClInclude Include="Application\SourceCode\GaugeParam.h" />
