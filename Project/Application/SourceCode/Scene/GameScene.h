@@ -15,6 +15,9 @@ private:
 	std::unique_ptr<CameraManager> cameraManager_;
 	std::unique_ptr<Field> field_;
 
+	std::unique_ptr<PostEffect> currentScene_;
+	RenderTexture* tex_;
+
 public:
 	GameScene();
 	~GameScene();
