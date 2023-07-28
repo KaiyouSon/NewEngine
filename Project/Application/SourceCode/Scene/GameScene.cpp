@@ -59,13 +59,13 @@ void GameScene::Update()
 	Camera::current.pos = LightManager::GetInstance()->directionalLight.pos;
 	Camera::current.rot = Vec3(Radian(90), 0, 0);
 	Camera::current.Update();
+	player_->PostUpdate();
+	boss_->Update();
 
 	// SRVヒープの設定コマンド
 	auto temp = TextureManager::GetSrvDescHeap();
 	RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &temp);
 	tex_->PrevDrawScene();
-	player_->PostUpdate();
-	boss_->Update();
 
 	RenderBase::GetInstance()->SetObject3DDrawCommand();
 	player_->DrawModel();
