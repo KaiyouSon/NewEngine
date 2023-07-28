@@ -457,7 +457,7 @@ void MalletMotion::BackStep2Init(PlayerBody* human)
 	human->parent->CalcFrontVec();
 
 	// UŒ‚ƒ‚[ƒVƒ‡ƒ“‚Åi‚Ş‹——£‚ÌŒvZ
-	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->frontVec_, 15);
+	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->frontVec_, 17.5);
 
 	// Œ»İ‚ÌÀ•W‚ğæ“¾
 	startPos_ = human->pos;
@@ -482,11 +482,6 @@ void MalletMotion::BackStep2Update(PlayerBody* human)
 	human->pos = moveEase_.InOut(startPos_, endPos);
 	human->parent->moveVel = endPos - startPos_;
 
-	if (ease_.GetisEnd() == true)
-	{
-		// “–‚½‚è”»’è–³Œø
-		isCalcCollider_ = false;
-	}
 }
 void MalletMotion::BackStep3Update(PlayerBody* human)
 {
@@ -496,6 +491,13 @@ void MalletMotion::BackStep3Update(PlayerBody* human)
 	const Vec3 endPos = startPos_ + human->parent->frontVec_.Norm() * length_;
 	human->pos = moveEase_.InOut(startPos_, endPos);
 	human->parent->moveVel = endPos - startPos_;
+
+	if (ease_.GetisEnd() == true)
+	{
+		// “–‚½‚è”»’è–³Œø
+		isCalcCollider_ = false;
+	}
+
 }
 
 // ‰ñ“]UŒ‚
