@@ -23,6 +23,8 @@ private:
 	Vec3 frontVec_;
 	float rotY_;
 
+	float damage_;
+
 private:
 	// ダメージ関連
 	bool isDamage_;
@@ -59,11 +61,11 @@ public:
 	Vec3 GetPos();
 	bool GetisDamage();
 	Weapon* GetWeapon();
+	float GetDamage();
 
 private:
 	friend BossGrabAttackMotion;
 	friend BossAttack2Motion;
 	friend BossAttack3Motion;
-
 };
 

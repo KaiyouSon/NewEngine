@@ -23,7 +23,6 @@ bool LoadManager::ModelLoad()
 	ModelManager::LoadObjModel("Weapon/Club", "Club", true);
 	ModelManager::LoadObjModel("Weapon/Sword", "Sword", true);
 
-
 	ModelManager::LoadObjModel("Capsule", "Capsule");
 	ModelManager::LoadObjModel("Collider/CapsuleCollider", "CapsuleCollider");
 

@@ -101,13 +101,16 @@ void CollisionManager::BossHitPlayer()
 
 	if (isAttackBoss)
 	{
-		if (player_->GetisDamage() == false)
+		if (player_->GetState() != Player::State::Roll &&
+			player_->GetState() != Player::State::Backstep)
 		{
-			//player_->Damage(boss_->GetWeapon()->GetDamage());
-			player_->Damage(10.f);
-			EffectManager::GetInstance()->GenerateBloodSprayEffect(hitPoint);
+			if (player_->GetisDamage() == false)
+			{
+				player_->Damage(boss_->GetDamage() * 1.5f);
+				EffectManager::GetInstance()->GenerateBloodSprayEffect(hitPoint);
 
-			player_->SetisDamage(true);
+				player_->SetisDamage(true);
+			}
 		}
 	}
 }

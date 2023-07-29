@@ -24,7 +24,7 @@ void Boss::Init()
 	coolTimer_.SetLimitTimer(120);
 
 	isDamage_ = false;
-	damageCoolTimer_.SetLimitTimer(60);
+	damageCoolTimer_.SetLimitTimer(40);
 }
 void Boss::Update()
 {
@@ -87,8 +87,8 @@ void Boss::MotionUpdate()
 		coolTimer_.Update(false);
 		if (coolTimer_.GetisTimeOut() == true)
 		{
-			motionNum_ = Random::Range(1, 3);
-			motionNum_ = 2;
+			motionNum_ = Random::Range(2, 3);
+			//motionNum_ = 2;
 		}
 	}
 	if (motionNum_ != 0)
@@ -147,4 +147,9 @@ bool Boss::GetisDamage()
 Weapon* Boss::GetWeapon()
 {
 	return weapon.get();
+}
+
+float Boss::GetDamage()
+{
+	return damage_;
 }
