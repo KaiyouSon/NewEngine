@@ -22,6 +22,9 @@ private:
 	bool isChange;
 
 private:
+	bool isEaseTitleBGM_;
+
+private:
 	void Init();
 public:
 	SceneChanger();
@@ -29,7 +32,9 @@ public:
 	void Draw();
 
 	void StartSceneChange();
+	void SetisEaseTitleBGM(const bool isEaseTitleBGM);
 
+public:
 	inline bool GetisChange() { return isChange; }
 	inline void SetisChange(bool isChange) { this->isChange = isChange; }
 	inline bool GetisSceneChanging() { return isSceneChanging; }

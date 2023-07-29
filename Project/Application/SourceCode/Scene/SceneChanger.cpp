@@ -32,6 +32,12 @@ void SceneChanger::Update()
 	if (changeStep_ == ChangeStep::In)
 	{
 		sprite->color.a = moveEase.InOut(0, 255);
+		if (isEaseTitleBGM_ == true)
+		{
+			float volume = moveEase.InOut(1, 0);
+			SoundManager::SetVolume("TitleBGM", volume);
+		}
+
 		moveEase.Update();
 		if (moveEase.GetisEnd() == true)
 		{
@@ -72,4 +78,9 @@ void SceneChanger::StartSceneChange()
 		Init();
 		isSceneChanging = true;
 	}
+}
+
+void SceneChanger::SetisEaseTitleBGM(const bool isEaseTitleBGM)
+{
+	isEaseTitleBGM_ = isEaseTitleBGM;
 }

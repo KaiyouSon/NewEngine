@@ -28,6 +28,8 @@ void CollisionManager::PlayerHitBoss()
 		if (boss_->GetisDamage() == false)
 		{
 			boss_->Damage(player_->GetWeapon()->GetDamage());
+
+			SoundManager::Play("WeakHitSE");
 			EffectManager::GetInstance()->GenerateBloodSprayEffect(hitPoint);
 
 			boss_->SetisDamage(true);

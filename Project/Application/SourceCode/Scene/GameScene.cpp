@@ -53,6 +53,9 @@ void GameScene::Init()
 
 	LightManager::GetInstance()->directionalLight.isActive = true;
 	LightManager::GetInstance()->directionalLight.pos = Vec3(-1, 1, -1);
+
+	SceneChanger::GetInstance()->SetisEaseTitleBGM(false);
+
 }
 void GameScene::Update()
 {

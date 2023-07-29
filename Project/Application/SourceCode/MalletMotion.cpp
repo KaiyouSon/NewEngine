@@ -312,6 +312,11 @@ void MalletMotion::WeakStep1Update(PlayerBody* human)
 	human->rot.y = ease_.InOut(startRotY_, endRotY_);
 	human->parent->moveVel = endPos - startPos_;
 
+	if (ease_.GetTimer() == 15)
+	{
+		SoundManager::Play("WeakAttackSE");
+	}
+
 	if (ease_.GetisEnd() == true)
 	{
 		if (comboCount_ < comboMaxCount_)

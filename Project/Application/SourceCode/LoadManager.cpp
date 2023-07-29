@@ -85,7 +85,12 @@ bool LoadManager::TextureLoad()
 
 bool LoadManager::SoundLoad()
 {
-	//SoundManager::LoadSound("GameBGM.wav", "GameBGM");
+	// BGM
+	SoundManager::LoadSound("BGM/TitleBGM.wav", "TitleBGM");
+
+	// SE
+	SoundManager::LoadSound("SE/WeakHitSE.wav", "WeakHitSE");
+	SoundManager::LoadSound("SE/WeakAttackSE.wav", "WeakAttackSE");
 
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
 	return true;
