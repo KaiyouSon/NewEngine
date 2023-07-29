@@ -133,11 +133,13 @@
     <ClCompile Include="Application\SourceCode\Glare.cpp" />
     <ClCompile Include="Application\SourceCode\HumanoidBody.cpp" />
     <ClCompile Include="Application\SourceCode\ICamera.cpp" />
+    <ClCompile Include="Application\SourceCode\IMenu.cpp" />
     <ClCompile Include="Application\SourceCode\IMotion.cpp" />
     <ClCompile Include="Application\SourceCode\ItemBoxUI.cpp" />
     <ClCompile Include="Application\SourceCode\ItemBoxUIManager.cpp" />
     <ClCompile Include="Application\SourceCode\ItemUI.cpp" />
     <ClCompile Include="Application\SourceCode\IWeaponMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\LogoutMenu.cpp" />
     <ClCompile Include="Application\SourceCode\MenuManager.cpp" />
     <ClCompile Include="Application\SourceCode\MotionManager.cpp" />
     <ClCompile Include="Application\SourceCode\MoveMotion.cpp" />
@@ -257,11 +259,13 @@
     <ClInclude Include="Application\SourceCode\Glare.h" />
     <ClInclude Include="Application\SourceCode\HumanoidBody.h" />
     <ClInclude Include="Application\SourceCode\ICamera.h" />
+    <ClInclude Include="Application\SourceCode\IMenu.h" />
     <ClInclude Include="Application\SourceCode\IMotion.h" />
     <ClInclude Include="Application\SourceCode\ItemBoxUI.h" />
     <ClInclude Include="Application\SourceCode\ItemBoxUIManager.h" />
     <ClInclude Include="Application\SourceCode\ItemUI.h" />
     <ClInclude Include="Application\SourceCode\IWeaponMotion.h" />
+    <ClInclude Include="Application\SourceCode\LogoutMenu.h" />
     <ClInclude Include="Application\SourceCode\MenuManager.h" />
     <ClInclude Include="Application\SourceCode\MotionManager.h" />
     <ClInclude Include="Application\SourceCode\MoveMotion.h" />

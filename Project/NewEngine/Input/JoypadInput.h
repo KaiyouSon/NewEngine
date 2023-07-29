@@ -13,6 +13,7 @@ enum class PadCode
 	ButtonY = 3,
 	ButtonL1 = 4,
 	ButtonR1 = 5,
+	ButtonStart = 7,
 
 	ButtonLeft = 20,
 	ButtonRight = 21,
@@ -38,10 +39,6 @@ private:
 		DIJOYSTATE2 padInput;
 		DIJOYSTATE2 prevPadInput;
 	};
-
-private: // 添え字関連
-	int minButton_;
-	int maxButton_;
 
 private:// ボタン関連
 	std::vector<JoypadObj> joypadObjs_;

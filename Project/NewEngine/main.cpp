@@ -1,9 +1,10 @@
 #include "NewEngine.h"
+#include "LogoutMenu.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-	SetWindowTitle("PONDERING");
+	SetWindowTitle("PON_DE_RING");
 	SetWindowSize({ 1920, 1080 });
 	SetBackGroundColor(25.5, 63.75, 127.5);
 	SetFrameRate(60);
@@ -17,11 +18,27 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		NewEneineDraw();		// エンジンの描画処理
 		NewEnginePostDraw();	// エンジン描画後処理
 
-		// XボタンもしくはESCキーでゲームループを抜ける
-		if (ProcessMessage() || Key::GetKey(DIK_ESCAPE))
+		bool isCloseGame =
+			LogoutMenu::GetisEnd() == true &&
+			LogoutMenu::GetSelect() == LogoutMenu::Select::CloseGame;
+
+		if (isCloseGame == true)
 		{
 			break;
 		}
+
+		if (ProcessMessage())
+		{
+			break;
+		}
+
+#ifdef _DEBUG
+		// ESCキーでゲームループを抜ける
+		if (Key::GetKey(DIK_ESCAPE))
+		{
+			break;
+		}
+#endif // DEBUG
 
 		FrameRateUpdate();
 	}

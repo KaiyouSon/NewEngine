@@ -2,12 +2,15 @@
 #include "SceneChanger.h"
 #include "CollisionManager.h"
 #include "EffectManager.h"
+#include "LogoutMenu.h"
+#include "TitleScene.h"
 
 GameScene::GameScene() :
 	player_(std::make_unique<Player>()),
 	boss_(std::make_unique<Boss>()),
 	uiManager_(std::make_unique<UIManager>()),
 	cameraManager_(std::make_unique<CameraManager>()),
+	menuManager_(std::make_unique<MenuManager>()),
 	field_(std::make_unique<Field>())
 {
 	currentScene_ = std::make_unique<PostEffect>();
@@ -53,37 +56,38 @@ void GameScene::Init()
 }
 void GameScene::Update()
 {
-	// 仮のここに書いた
-	Camera prevCamera = Camera::current;
+	//// 仮のここに書いた
+	//Camera prevCamera = Camera::current;
 
-	Camera::current.pos = LightManager::GetInstance()->directionalLight.pos;
-	Camera::current.rot = Vec3(Radian(90), 0, 0);
-	Camera::current.Update();
-	player_->PostUpdate();
-	boss_->Update();
+	//Camera::current.pos = LightManager::GetInstance()->directionalLight.pos;
+	//Camera::current.rot = Vec3(Radian(90), 0, 0);
+	//Camera::current.Update();
+	//player_->PostUpdate();
+	//boss_->Update();
 
-	// SRVヒープの設定コマンド
-	auto temp = TextureManager::GetSrvDescHeap();
-	RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &temp);
-	tex_->PrevDrawScene();
+	//// SRVヒープの設定コマンド
+	//auto temp = TextureManager::GetSrvDescHeap();
+	//RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &temp);
+	//tex_->PrevDrawScene();
 
-	RenderBase::GetInstance()->SetObject3DDrawCommand();
-	player_->DrawModel();
-	boss_->DrawModel();
-	tex_->PostDrawScene();
+	//RenderBase::GetInstance()->SetObject3DDrawCommand();
+	//player_->DrawModel();
+	//boss_->DrawModel();
+	//tex_->PostDrawScene();
 
-	Camera::current = prevCamera;
-	Camera::current.Update();
+	//Camera::current = prevCamera;
+	//Camera::current.Update();
 
-	float x = (float)(Key::GetKey(DIK_RIGHT) - Key::GetKey(DIK_LEFT));
-	float y = (float)(Key::GetKey(DIK_DOWN) - Key::GetKey(DIK_UP));
-	currentScene_->pos.x += x;
-	currentScene_->pos.y += y;
-	currentScene_->Update();
+	//float x = (float)(Key::GetKey(DIK_RIGHT) - Key::GetKey(DIK_LEFT));
+	//float y = (float)(Key::GetKey(DIK_DOWN) - Key::GetKey(DIK_UP));
+	//currentScene_->pos.x += x;
+	//currentScene_->pos.y += y;
+	//currentScene_->Update();
 
 	player_->PrevUpdate();
 	boss_->Update();
 	uiManager_->Update();
+	menuManager_->Update();
 	CollisionManager::GetInstance()->Update();
 	player_->PostUpdate();
 	field_->Update();
@@ -91,6 +95,24 @@ void GameScene::Update()
 	EffectManager::GetInstance()->Update();
 
 	cameraManager_->Update();
+
+	bool isBackToTitle =
+		LogoutMenu::GetisEnd() == true &&
+		LogoutMenu::GetSelect() == LogoutMenu::Select::BackToTitle;
+
+	if (isBackToTitle == true)
+	{
+		if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
+		{
+			SceneChanger::GetInstance()->StartSceneChange();
+		}
+
+		if (SceneChanger::GetInstance()->GetisChange() == true)
+		{
+			SceneManager::ChangeScene<TitleScene>();
+			SceneChanger::GetInstance()->SetisChange(false);
+		}
+	}
 }
 
 void GameScene::RenderTextureSetting()
@@ -115,6 +137,8 @@ void GameScene::DrawModel()
 void GameScene::DrawFrontSprite()
 {
 	uiManager_->DrawFrontSprite();
+
+	menuManager_->DrawFrontSprite();
 }
 void GameScene::DrawDebugGui()
 {

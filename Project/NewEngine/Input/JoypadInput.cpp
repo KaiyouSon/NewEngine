@@ -39,8 +39,7 @@ LRESULT SubWindowProc(int code, WPARAM wParam, LPARAM lParam)
 
 #pragma region その他の処理
 
-JoypadInput::JoypadInput() :
-	minButton_((int)PadCode::ButtonA), maxButton_((int)PadCode::ButtonR1)
+JoypadInput::JoypadInput()
 {
 }
 void JoypadInput::Init()
@@ -189,12 +188,7 @@ bool JoypadInput::GetButton(const PadCode padCode, const int sPadIndex_)
 		return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 18000;
 	}
 
-	// 添え字のクランプ処理
-	int min = GetInstance()->minButton_;
-	int max = GetInstance()->maxButton_;
-	PadCode codo = (PadCode)Clamp((float)padCode, (float)min, (float)max);
-
-	return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgbButtons[(int)codo] & 0x80;
+	return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgbButtons[(uint32_t)padCode] & 0x80;
 }
 
 // ボタンを押した瞬間
@@ -230,13 +224,9 @@ bool JoypadInput::GetButtonDown(const PadCode padCode, const int sPadIndex_)
 			!(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgbButtons[9] & 0x80);
 	}
 
-	// 添え字のクランプ処理
-	int min = GetInstance()->minButton_;
-	int max = GetInstance()->maxButton_;
-	PadCode codo = (PadCode)Clamp((float)padCode, (float)min, (float)max);
 
-	return (GetInstance()->joypadObjs_[sPadIndex_].padInput.rgbButtons[(int)codo] & 0x80) &&
-		!(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgbButtons[(int)codo] & 0x80);
+	return (GetInstance()->joypadObjs_[sPadIndex_].padInput.rgbButtons[(uint32_t)padCode] & 0x80) &&
+		!(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgbButtons[(uint32_t)padCode] & 0x80);
 }
 
 // ボタンを離した瞬間
@@ -245,13 +235,8 @@ bool JoypadInput::GetButtonUp(const PadCode padCode, const int sPadIndex_)
 	// 接続しているか
 	if (GetisLinkPad() == false) return false;
 
-	// 添え字のクランプ処理
-	int min = GetInstance()->minButton_;
-	int max = GetInstance()->maxButton_;
-	PadCode codo = (PadCode)Clamp((float)padCode, (float)min, (float)max);
-
-	return !(GetInstance()->joypadObjs_[sPadIndex_].padInput.rgbButtons[(int)codo] & 0x80) &&
-		(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgbButtons[(int)codo] & 0x80);
+	return !(GetInstance()->joypadObjs_[sPadIndex_].padInput.rgbButtons[(uint32_t)padCode] & 0x80) &&
+		(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgbButtons[(uint32_t)padCode] & 0x80);
 }
 
 // 何かのボタンを押した瞬間

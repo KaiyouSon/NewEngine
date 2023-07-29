@@ -51,6 +51,9 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("UI/ItemBoxLight.png", "ItemBoxLight");
 	TextureManager::LoadTexture("UI/ItemUI/BottleUI.png", "BottleUI");
 	TextureManager::LoadTexture("UI/ItemUI/ClubUI.png", "ClubUI");
+	TextureManager::LoadTexture("UI/Menu/TempMenuBack.png", "MenuBack");
+	TextureManager::LoadTexture("UI/Menu/MenuTextFrame.png", "MenuTextFrame");
+	TextureManager::LoadTexture("UI/Menu/MenuTextLight.png", "MenuTextLight");
 
 	// テキスト
 	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");
@@ -59,6 +62,8 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Text/Tutorial/TutorialStr1.png", "TutorialStr1");
 	TextureManager::LoadTexture("Text/Tutorial/TutorialStr2.png", "TutorialStr2");
 	TextureManager::LoadTexture("Text/Tutorial/TutorialStr3.png", "TutorialStr3");
+	TextureManager::LoadTexture("Text/Menu/BackToTitleStr.png", "BackToTitleStr");
+	TextureManager::LoadTexture("Text/Menu/CloseGameStr.png", "CloseGameStr");
 
 	// パーティクル
 	TextureManager::LoadTexture("Particle/Particle.png", "Particle");

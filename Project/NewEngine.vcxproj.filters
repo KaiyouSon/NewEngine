@@ -211,6 +211,18 @@
     <Filter Include="Application\Source\Effect">
       <UniqueIdentifier>{4966c37e-d23c-4e57-b704-9638841c2c9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Header\Character">
+      <UniqueIdentifier>{b96ad4a7-c2af-4c38-ae40-5f6223ff1c18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\Character">
+      <UniqueIdentifier>{03abe5dc-9c57-4a16-86a0-4fddd32d787c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\Menu">
+      <UniqueIdentifier>{12e90a67-6dd7-4004-92d7-29a688c33550}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\Menu">
+      <UniqueIdentifier>{e293f399-1977-442e-815f-9586e9c468cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -426,9 +438,6 @@
     <ClCompile Include="Application\SourceCode\UIManager.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Player.cpp">
-      <Filter>Application\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\GaugeUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
@@ -440,9 +449,6 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Club.cpp">
       <Filter>Application\Source\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\Boss.cpp">
-      <Filter>Application\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\CollisionManager.cpp">
       <Filter>Application\Source</Filter>
@@ -467,9 +473,6 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Scene\SceneChanger.cpp">
       <Filter>Application\Source\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\MenuManager.cpp">
-      <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Scene\PlayerBody.cpp">
       <Filter>Application\Source\Body</Filter>
@@ -534,9 +537,6 @@
     <ClCompile Include="Application\SourceCode\IMotion.cpp">
       <Filter>Application\Source\Motion</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Character.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\BossAttack3Motion.cpp">
       <Filter>Application\Source\Motion\Boss</Filter>
     </ClCompile>
@@ -560,6 +560,24 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\PlayerRecoveryEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Character.cpp">
+      <Filter>Application\Source\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Player.cpp">
+      <Filter>Application\Source\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Boss.cpp">
+      <Filter>Application\Source\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\MenuManager.cpp">
+      <Filter>Application\Source\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\IMenu.cpp">
+      <Filter>Application\Source\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\LogoutMenu.cpp">
+      <Filter>Application\Source\Menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -806,9 +824,6 @@
     <ClInclude Include="Application\SourceCode\UIManager.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Player.h">
-      <Filter>Application\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\GaugeUI.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
@@ -823,9 +838,6 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Club.h">
       <Filter>Application\Header\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Boss.h">
-      <Filter>Application\Header</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\CollisionManager.h">
       <Filter>Application\Header</Filter>
@@ -905,9 +917,6 @@
     <ClInclude Include="Application\SourceCode\ItemUI.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\MenuManager.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\MotionManager.h">
       <Filter>Application\Header\Motion</Filter>
     </ClInclude>
@@ -919,9 +928,6 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\IMotion.h">
       <Filter>Application\Header\Motion</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Character.h">
-      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\BossAttack3Motion.h">
       <Filter>Application\Header\Motion\Boss</Filter>
@@ -946,6 +952,24 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\PlayerRecoveryEffect.h">
       <Filter>Application\Header\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Boss.h">
+      <Filter>Application\Header\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Player.h">
+      <Filter>Application\Header\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Character.h">
+      <Filter>Application\Header\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\MenuManager.h">
+      <Filter>Application\Header\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\IMenu.h">
+      <Filter>Application\Header\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\LogoutMenu.h">
+      <Filter>Application\Header\Menu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
