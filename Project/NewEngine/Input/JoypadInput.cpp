@@ -330,7 +330,7 @@ Vec2 JoypadInput::GetStickDown(const PadCode padCode, const float length, const 
 	// w’è‚µ‚½’·‚³‚ğ’´‚¦‚½ê‡‚É‚µ‚©•Ô‚³‚È‚¢
 	if (!(stick.Length() > fabsf(length)) && (prevStick.Length() > fabsf(length)))
 	{
-		return stick;
+		return prevStick;
 	}
 
 	return 0;

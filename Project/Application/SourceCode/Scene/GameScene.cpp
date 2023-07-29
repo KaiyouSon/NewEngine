@@ -84,17 +84,23 @@ void GameScene::Update()
 	//currentScene_->pos.y += y;
 	//currentScene_->Update();
 
-	player_->PrevUpdate();
-	boss_->Update();
-	uiManager_->Update();
-	menuManager_->Update();
-	CollisionManager::GetInstance()->Update();
-	player_->PostUpdate();
-	field_->Update();
+	if (menuManager_->GetisActive() == false)
+	{
+		player_->PrevUpdate();
+		boss_->Update();
+		uiManager_->Update();
+		CollisionManager::GetInstance()->Update();
+		player_->PostUpdate();
+	}
 
+	menuManager_->Update();
+	field_->Update();
 	EffectManager::GetInstance()->Update();
 
-	cameraManager_->Update();
+	if (menuManager_->GetisActive() == false)
+	{
+		cameraManager_->Update();
+	}
 
 	bool isBackToTitle =
 		LogoutMenu::GetisEnd() == true &&

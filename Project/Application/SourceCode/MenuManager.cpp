@@ -30,3 +30,8 @@ void MenuManager::DrawFrontSprite()
 		cur->DrawFrontSprite();
 	}
 }
+
+bool MenuManager::GetisActive()
+{
+	return isActive_;
+}

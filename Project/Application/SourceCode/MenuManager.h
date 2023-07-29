@@ -10,5 +10,8 @@ private:
 public:
 	void Update();
 	void DrawFrontSprite();
+
+public:
+	bool GetisActive();
 };
 

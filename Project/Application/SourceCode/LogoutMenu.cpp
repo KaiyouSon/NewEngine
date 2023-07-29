@@ -41,12 +41,15 @@ void LogoutMenu::Init()
 
 void LogoutMenu::Update()
 {
+	const float deadZoneY = 300;
+
 	switch (select_)
 	{
 	case Select::BackToTitle:
 		textLight_->pos = textFrames_[(uint32_t)Select::BackToTitle]->pos;
 
-		if (Pad::GetButtonDown(PadCode::ButtonDown))
+		if (Pad::GetButtonDown(PadCode::ButtonDown) ||
+			Pad::GetStickDown(PadCode::LeftStick, deadZoneY).y > 0)
 		{
 			select_ = Select::CloseGame;
 		}
@@ -61,7 +64,8 @@ void LogoutMenu::Update()
 	case Select::CloseGame:
 		textLight_->pos = textFrames_[(uint32_t)Select::CloseGame]->pos;
 
-		if (Pad::GetButtonDown(PadCode::ButtonUp))
+		if (Pad::GetButtonDown(PadCode::ButtonUp) ||
+			Pad::GetStickDown(PadCode::LeftStick, deadZoneY).y < 0)
 		{
 			select_ = Select::BackToTitle;
 		}
