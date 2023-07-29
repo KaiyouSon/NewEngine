@@ -7,6 +7,9 @@ void IWeaponMotion::BaseInit(HumanoidBody* human, const uint32_t index)
 {
 	if (isInit_ == false)
 	{
+		human->pos.y = 4.75f;
+		human->GetPart(PartID::Body)->pos.y = 0.f;
+
 		// Œ»“_‚Ìƒ‚[ƒVƒ‡ƒ“‚Ì‰Šú‰»
 		curRots_ = human->CalcCurRots();
 		MotionData current = motions_[(uint32_t)index]->data[step_];
