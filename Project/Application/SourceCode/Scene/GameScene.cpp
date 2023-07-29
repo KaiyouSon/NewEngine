@@ -42,6 +42,8 @@ void GameScene::Init()
 	cameraManager_->SetBoss(boss_.get());
 	cameraManager_->Init();
 
+	menuManager_->Init();
+
 	field_->Init();
 
 	CollisionManager::GetInstance()->SetPlayer(player_.get());

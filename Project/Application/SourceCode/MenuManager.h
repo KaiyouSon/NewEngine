@@ -8,6 +8,7 @@ private:
 	std::vector<std::unique_ptr<IMenu>> menus_;
 
 public:
+	void Init();
 	void Update();
 	void DrawFrontSprite();
 

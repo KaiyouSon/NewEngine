@@ -49,6 +49,9 @@ void TitleUI::Init()
 	alphaEase_.SetEaseTimer(60);
 	alphaEase_.SetPowNum(2);
 	isReverce_ = false;
+
+	isAfterImage_ = false;
+	afterImageStep_ = 0;
 }
 
 void TitleUI::Update()
@@ -95,6 +98,11 @@ void TitleUI::DrawFrontSprite()
 bool TitleUI::GetisEnd()
 {
 	return isEnd_;
+}
+
+bool TitleUI::GetisAfterImage()
+{
+	return isAfterImage_;
 }
 
 void TitleUI::BackAlphaUpdate()
@@ -154,14 +162,12 @@ void TitleUI::AfterImagaUpdate()
 			afterImageStep_ = 2;
 		}
 
-		if (afterImageEase_.GetisEnd() == true)
-		{
-			afterImageStep_ = 1;
-			afterImageEase_.Reset();
-
-			isAfterImage_ = false;
-			isEnd_ = true;
-		}
+		//if (afterImageEase_.GetisEnd() == true)
+		//{
+		//	afterImageStep_ = 1;
+		//	afterImageEase_.Reset();
+		//	isEnd_ = true;
+		//}
 
 	}
 	else if (afterImageStep_ == 2)
@@ -171,9 +177,8 @@ void TitleUI::AfterImagaUpdate()
 		if (pressButtonAfterImage_->color.a <= 0)
 		{
 			//pressButtonAfterImage_->scale = 0.425f;
-			pressButtonAfterImage_->color.a = 255.f;
-			afterImageStep_ = 0;
-			isAfterImage_ = false;
+			//pressButtonAfterImage_->color.a = 255.f;
+			afterImageStep_ = 2;
 			isEnd_ = true;
 		}
 	}

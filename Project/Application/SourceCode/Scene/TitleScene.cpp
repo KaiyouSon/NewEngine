@@ -19,7 +19,11 @@ void TitleScene::Update()
 
 	if (Pad::GetAnyButtonDown())
 	{
-		titleUI_->SetisAfterImage(true);
+		if (titleUI_->GetisAfterImage() == false)
+		{
+			SoundManager::Play("SelectSE");
+			titleUI_->SetisAfterImage(true);
+		}
 	}
 
 	if (titleUI_->GetisEnd() == true)

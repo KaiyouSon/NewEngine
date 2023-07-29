@@ -1,10 +1,16 @@
 #include "MenuManager.h"
 #include "LogoutMenu.h"
 
+void MenuManager::Init()
+{
+	LogoutMenu::SetisEnd(false);
+}
+
 void MenuManager::Update()
 {
 	if (Pad::GetButtonDown(PadCode::ButtonStart))
 	{
+		SoundManager::Play("SelectSE");
 		if (isActive_ == false)
 		{
 			menus_.emplace_back(std::move(std::make_unique<LogoutMenu>()));

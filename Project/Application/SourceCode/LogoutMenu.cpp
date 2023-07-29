@@ -51,6 +51,7 @@ void LogoutMenu::Update()
 		if (Pad::GetButtonDown(PadCode::ButtonDown) ||
 			Pad::GetStickDown(PadCode::LeftStick, deadZoneY).y > 0)
 		{
+			SoundManager::Play("SelectSE");
 			select_ = Select::CloseGame;
 		}
 
@@ -67,6 +68,7 @@ void LogoutMenu::Update()
 		if (Pad::GetButtonDown(PadCode::ButtonUp) ||
 			Pad::GetStickDown(PadCode::LeftStick, deadZoneY).y < 0)
 		{
+			SoundManager::Play("SelectSE");
 			select_ = Select::BackToTitle;
 		}
 
@@ -75,6 +77,7 @@ void LogoutMenu::Update()
 
 	if (Pad::GetButtonDown(PadCode::ButtonA))
 	{
+		SoundManager::Play("SelectSE");
 		isEnd_ = true;
 	}
 
@@ -106,4 +109,9 @@ LogoutMenu::Select LogoutMenu::GetSelect()
 bool LogoutMenu::GetisEnd()
 {
 	return isEnd_;
+}
+
+void LogoutMenu::SetisEnd(const bool isEnd)
+{
+	isEnd_ = isEnd;
 }

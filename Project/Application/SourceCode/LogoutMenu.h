@@ -29,5 +29,7 @@ public:
 public:
 	static Select GetSelect();
 	static bool GetisEnd();
+
+	static void SetisEnd(const bool isEnd);
 };
 

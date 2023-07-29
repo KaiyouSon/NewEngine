@@ -33,6 +33,7 @@ public:
 
 public:
 	bool GetisEnd();
+	bool GetisAfterImage();
 
 public:
 	void SetisAfterImage(const bool isAfterImage);

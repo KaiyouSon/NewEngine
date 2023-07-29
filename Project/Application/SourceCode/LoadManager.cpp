@@ -91,6 +91,7 @@ bool LoadManager::SoundLoad()
 	// SE
 	SoundManager::LoadSound("SE/WeakHitSE.wav", "WeakHitSE");
 	SoundManager::LoadSound("SE/WeakAttackSE.wav", "WeakAttackSE");
+	SoundManager::LoadSound("SE/SelectSE.wav", "SelectSE");
 
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
 	return true;
