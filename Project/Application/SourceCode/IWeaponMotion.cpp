@@ -8,7 +8,6 @@ void IWeaponMotion::BaseInit(HumanoidBody* human, const uint32_t index)
 	if (isInit_ == false)
 	{
 		human->pos.y = 4.75f;
-		human->GetPart(PartID::Body)->pos.y = 0.f;
 
 		// Œ»Žž“_‚Ìƒ‚[ƒVƒ‡ƒ“‚Ì‰Šú‰»
 		curRots_ = human->CalcCurRots();
@@ -23,12 +22,10 @@ void IWeaponMotion::BaseInit(HumanoidBody* human, const uint32_t index)
 			endWeaponRots_[i] = current.endWeaponRots[i];
 		}
 		ease_ = current.ease;
-
-		isInit_ = true;
 	}
 }
 
-void IWeaponMotion::BaseUpdate(PlayerBody* human, const uint32_t index)
+void IWeaponMotion::BasePrevUpdate(PlayerBody* human, const uint32_t index)
 {
 	for (uint32_t i = (uint32_t)PartID::Body; i < curRots_.size(); i++)
 	{
@@ -43,7 +40,10 @@ void IWeaponMotion::BaseUpdate(PlayerBody* human, const uint32_t index)
 
 		human->GetWeaponPart((WeaponPartID)i)->rot = ease_.Interpolation(curWeaponRots_[i], endWeaponRots_[i]);
 	}
+}
 
+void IWeaponMotion::BasePostUpdate(PlayerBody* human, const uint32_t index)
+{
 	if (ease_.GetisEnd() == true)
 	{
 		step_++;

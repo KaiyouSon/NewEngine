@@ -33,7 +33,8 @@ protected:
 
 protected:
 	void BaseInit(HumanoidBody* human, const uint32_t index);
-	void BaseUpdate(PlayerBody* human, const uint32_t index);
+	void BasePrevUpdate(PlayerBody* human, const uint32_t index);
+	void BasePostUpdate(PlayerBody* human, const uint32_t index);
 
 public:
 	virtual ~IWeaponMotion() {}

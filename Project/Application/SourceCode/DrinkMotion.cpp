@@ -60,7 +60,7 @@ void DrinkMotion::CurrentStepUpdate(HumanoidBody* human)
 			Player* player = static_cast<Player*>(human->iParent);
 			Vec3 pos = player->GetPos() + Vec3::down * 2;
 
-			player->AddHP();
+			player->Recovery();
 			EffectManager::GetInstance()->GeneratePlayerRecoveryEffect(pos);
 		}
 	}

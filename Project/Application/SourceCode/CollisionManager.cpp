@@ -22,11 +22,6 @@ void CollisionManager::PlayerHitBoss()
 
 	if (isAttackBoss)
 	{
-		bool test = Collision::CapsuleHitCapsule(
-			player_->GetWeapon()->collider,
-			boss_->GetCollider(),
-			hitPoint);
-
 		if (boss_->GetisDamage() == false)
 		{
 			boss_->Damage(player_->GetWeapon()->GetDamage());
@@ -87,6 +82,28 @@ void CollisionManager::PlayerHitMessageSign()
 		else
 		{
 			uiManager_->GetNegotiationUI()->SetisActive(false);
+		}
+	}
+}
+
+void CollisionManager::BossHitPlayer()
+{
+	static Vec3 hitPoint = {};
+
+	bool isAttackBoss =
+		Collision::CapsuleHitCapsule(
+			boss_->GetWeapon()->collider,
+			player_->GetBodyCollider(),
+			hitPoint);
+
+	if (isAttackBoss)
+	{
+		if (player_->GetisDamage() == false)
+		{
+			player_->Damage(boss_->GetWeapon()->GetDamage());
+			EffectManager::GetInstance()->GenerateBloodSprayEffect(hitPoint);
+
+			player_->SetisDamage(true);
 		}
 	}
 }

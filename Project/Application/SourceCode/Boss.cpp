@@ -24,7 +24,7 @@ void Boss::Init()
 	coolTimer_.SetLimitTimer(120);
 
 	isDamage_ = false;
-	damageCoolTimer_.SetLimitTimer(30);
+	damageCoolTimer_.SetLimitTimer(60);
 }
 void Boss::Update()
 {
@@ -140,4 +140,8 @@ Vec3 Boss::GetPos()
 bool Boss::GetisDamage()
 {
 	return isDamage_;
+}
+Weapon* Boss::GetWeapon()
+{
+	return weapon.get();
 }

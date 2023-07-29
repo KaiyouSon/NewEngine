@@ -18,6 +18,8 @@ private:
 	void PlayerHitBoss();
 	void PlayerHitMessageSign();
 
+	void BossHitPlayer();
+
 public:
 	void Update();
 

@@ -24,6 +24,7 @@ void Player::Init()
 	runSpeed_ = 1.2f;
 
 	pushTimer.SetLimitTimer(20);
+	damageCoolTimer_.SetLimitTimer(120);
 }
 void Player::PrevUpdate()
 {
@@ -50,6 +51,7 @@ void Player::PrevUpdate()
 
 	GaugeParamUpdate();
 	ColliderUpdate();
+	DamageUpdate();
 }
 void Player::PostUpdate()
 {
@@ -65,9 +67,14 @@ void Player::DrawDebugGui()
 	player_->DrawDebugGui();
 }
 
-void Player::AddHP()
+void Player::Recovery()
 {
 	gaugePrames_[(uint32_t)GaugeType::Hp].value += 96.f;
+}
+void Player::Damage(const float damage)
+{
+	damageCoolTimer_.Reset();
+	gaugePrames_[(uint32_t)GaugeType::Hp].value -= damage;
 }
 
 // コライダー関連
@@ -435,10 +442,29 @@ void Player::DrinkUpdate()
 	}
 }
 
+void Player::DamageUpdate()
+{
+	if (isDamage_ == false)
+	{
+		return;
+	}
+
+	damageCoolTimer_.Update(false);
+	if (damageCoolTimer_.GetisTimeOut() == true)
+	{
+		damageCoolTimer_.Reset();
+		isDamage_ = false;
+	}
+}
+
 // セッター
 void Player::SetPos(const Vec3 pos)
 {
 	player_->pos = pos;
+}
+void Player::SetisDamage(const bool isDamage)
+{
+	isDamage_ = isDamage;
 }
 
 // ゲッター
@@ -485,4 +511,8 @@ Player::State Player::GetState()
 CapsuleCollider Player::GetBodyCollider()
 {
 	return bodyCollider_;
+}
+bool Player::GetisDamage()
+{
+	return isDamage_;
 }

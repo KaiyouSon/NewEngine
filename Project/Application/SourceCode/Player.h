@@ -48,6 +48,11 @@ private:
 	CapsuleCollider bodyCollider_;
 
 private:
+	// ダメージ関連
+	bool isDamage_;
+	Timer damageCoolTimer_;
+
+private:
 	void CalcFrontVec();
 	void CalcBodyCollider();
 	void ColliderUpdate();
@@ -70,6 +75,9 @@ private:
 	void AttackRollUpdate();
 	void DrinkUpdate();
 
+private:
+	void DamageUpdate();
+
 public:
 	Player();
 	void Init();
@@ -79,10 +87,12 @@ public:
 	void DrawDebugGui();
 
 public:
-	void AddHP();
+	void Recovery();
+	void Damage(const float damage);
 
 public:
 	void SetPos(const Vec3 pos);
+	void SetisDamage(const bool isDamage);
 
 public:
 	GaugeParam GetGaugeParam(const uint32_t index);
@@ -96,6 +106,7 @@ public:
 	Vec3 GetFrontVec();
 	State GetState();
 	CapsuleCollider GetBodyCollider();
+	bool GetisDamage();
 
 private:
 	friend PlayerBody;

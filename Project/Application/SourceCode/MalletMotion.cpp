@@ -35,6 +35,9 @@ void MalletMotion::Init(HumanoidBody* human)
 		// ƒRƒ“ƒ{’†‚Ì‰Šú‰»‚µ‚È‚¢‚½‚ß
 		ResetComboCount();
 	}
+
+	human->GetPart(PartID::Body)->pos.y = 0.f;
+
 }
 void MalletMotion::WeakMotion(PlayerBody* human)
 {
@@ -61,20 +64,35 @@ void MalletMotion::WeakMotion(PlayerBody* human)
 		{
 			BaseInit(human, 2);
 		}
+		isInit_ = true;
 	}
+
+	if (comboCount_ == 1)
+	{
+		BasePrevUpdate(human, 0);
+	}
+	else if (comboCount_ < comboMaxCount_)
+	{
+		BasePrevUpdate(human, 1);
+	}
+	else
+	{
+		BasePrevUpdate(human, 2);
+	}
+
 	CurrentStepUpdate(human);
 
 	if (comboCount_ == 1)
 	{
-		BaseUpdate(human, 0);
+		BasePostUpdate(human, 0);
 	}
 	else if (comboCount_ < comboMaxCount_)
 	{
-		BaseUpdate(human, 1);
+		BasePostUpdate(human, 1);
 	}
 	else
 	{
-		BaseUpdate(human, 2);
+		BasePostUpdate(human, 2);
 	}
 }
 void MalletMotion::HeavyMotion(PlayerBody* human)
@@ -90,9 +108,11 @@ void MalletMotion::HeavyMotion(PlayerBody* human)
 	{
 		CurrentStepInit(human);
 		BaseInit(human, 3);
+		isInit_ = true;
 	}
+	BasePrevUpdate(human, 3);
 	CurrentStepUpdate(human);
-	BaseUpdate(human, 3);
+	BasePostUpdate(human, 3);
 }
 void MalletMotion::BackMotion(PlayerBody* human)
 {
@@ -107,9 +127,11 @@ void MalletMotion::BackMotion(PlayerBody* human)
 	{
 		CurrentStepInit(human);
 		BaseInit(human, 4);
+		isInit_ = true;
 	}
+	BasePrevUpdate(human, 4);
 	CurrentStepUpdate(human);
-	BaseUpdate(human, 4);
+	BasePostUpdate(human, 4);
 }
 void MalletMotion::RollMotion(PlayerBody* human)
 {
@@ -125,8 +147,9 @@ void MalletMotion::RollMotion(PlayerBody* human)
 		CurrentStepInit(human);
 		BaseInit(human, 5);
 	}
+	BasePrevUpdate(human, 5);
 	CurrentStepUpdate(human);
-	BaseUpdate(human, 5);
+	BasePostUpdate(human, 5);
 }
 
 void MalletMotion::CurrentStepInit(PlayerBody* human)

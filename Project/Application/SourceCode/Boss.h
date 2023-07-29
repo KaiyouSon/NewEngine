@@ -58,6 +58,7 @@ public:
 	GaugeParam GetHpGaugeParam();
 	Vec3 GetPos();
 	bool GetisDamage();
+	Weapon* GetWeapon();
 
 private:
 	friend BossGrabAttackMotion;
