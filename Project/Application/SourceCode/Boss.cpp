@@ -28,8 +28,6 @@ void Boss::Init()
 }
 void Boss::Update()
 {
-	ColliderUpdate();
-
 	MotionUpdate();
 
 	if (isDamage_ == true)
@@ -47,6 +45,9 @@ void Boss::Update()
 
 	boss_->rot.y = rotY_;
 	boss_->Update();
+
+	ColliderUpdate();
+
 }
 void Boss::DrawModel()
 {
@@ -87,7 +88,7 @@ void Boss::MotionUpdate()
 		if (coolTimer_.GetisTimeOut() == true)
 		{
 			motionNum_ = Random::Range(1, 3);
-			motionNum_ = 3;
+			motionNum_ = 2;
 		}
 	}
 	if (motionNum_ != 0)

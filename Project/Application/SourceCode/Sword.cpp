@@ -10,6 +10,8 @@ Sword::Sword()
 	motion = std::make_unique<MalletMotion>();
 
 	localPos_ = Vec3(0.f, -1.5f, 0.f);
+
+	isCalcCollider_ = false;
 }
 
 void Sword::Init()
@@ -40,9 +42,9 @@ void Sword::ColliderUpdate()
 	{
 		Vec3 zAxis = weapon->GetTransform().GetWorldMat().GetZAxis();
 
-		collider.startPos = weapon->GetWorldPos();
+		collider.startPos = weapon->GetWorldPos() - zAxis.Norm() * 8.f;
 		collider.endPos = weapon->GetWorldPos() + zAxis.Norm() * 8.f;
-		collider.radius = 0.5f;
+		collider.radius = 3.f;
 	}
 }
 

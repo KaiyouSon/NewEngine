@@ -38,6 +38,7 @@ void BossAttack2Motion::Update(HumanoidBody* human)
 
 void BossAttack2Motion::CurrentStepInit(HumanoidBody* human)
 {
+	Boss* boss = static_cast<Boss*>(human->iParent);
 	startBodyY_ = human->GetPart(PartID::Body)->pos.y;
 	switch (step_)
 	{
@@ -49,6 +50,7 @@ void BossAttack2Motion::CurrentStepInit(HumanoidBody* human)
 		break;
 	case 2:
 		SettingMovePrame(human, 5, 30, 2);
+		boss->GetWeapon()->SetisCalcCollider(true);
 		endBodyY_ = -0.85f;
 		break;
 	case 3:
@@ -59,6 +61,7 @@ void BossAttack2Motion::CurrentStepInit(HumanoidBody* human)
 		break;
 	case 5:
 		endBodyY_ = -0.55f;
+		boss->GetWeapon()->SetisCalcCollider(false);
 		break;
 	case 6:
 		endBodyY_ = -0.5f;
@@ -75,6 +78,7 @@ void BossAttack2Motion::CurrentStepInit(HumanoidBody* human)
 		break;
 	case 11:
 		SettingMovePrame(human, 5, 30, 2);
+		boss->GetWeapon()->SetisCalcCollider(true);
 		endBodyY_ = -1.3f;
 		break;
 	case 12:
@@ -85,15 +89,18 @@ void BossAttack2Motion::CurrentStepInit(HumanoidBody* human)
 		break;
 	case 14:
 		endBodyY_ = -0.6f;
+		boss->GetWeapon()->SetisCalcCollider(false);
 		break;
 	case 15:
 		endBodyY_ = 0.0f;
+		boss->GetWeapon()->SetisCalcCollider(true);
 		break;
 	case 16:
 		SettingMovePrame(human, 8, 20, 2);
 		endBodyY_ = -1.75f;
 		break;
 	case 17:
+		boss->GetWeapon()->SetisCalcCollider(false);
 		endBodyY_ = -0.7f;
 		break;
 	default:
