@@ -24,7 +24,7 @@ void Player::Init()
 	runSpeed_ = 1.2f;
 
 	pushTimer.SetLimitTimer(20);
-	damageCoolTimer_.SetLimitTimer(120);
+	damageCoolTimer_.SetLimitTimer(30);
 }
 void Player::PrevUpdate()
 {

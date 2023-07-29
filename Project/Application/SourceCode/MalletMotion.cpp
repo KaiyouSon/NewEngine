@@ -4,7 +4,6 @@
 
 MalletMotion::MalletMotion()
 {
-	//motions_.emplace_back(MotionManager::GetMotion("BossAttack3"));
 	motions_.emplace_back(MotionManager::GetMotion("MalletWeakAttack1"));
 	motions_.emplace_back(MotionManager::GetMotion("MalletWeakAttack2"));
 	motions_.emplace_back(MotionManager::GetMotion("MalletWeakAttack3"));
@@ -38,6 +37,9 @@ void MalletMotion::Init(HumanoidBody* human)
 
 	human->GetPart(PartID::Body)->pos.y = 0.f;
 
+}
+void MalletMotion::Update(HumanoidBody* human)
+{
 }
 void MalletMotion::WeakMotion(PlayerBody* human)
 {

@@ -8,6 +8,9 @@ void CollisionManager::Update()
 
 	// プレイヤーとメッセージサイン
 	PlayerHitMessageSign();
+
+	// ボスとプレイヤー
+	BossHitPlayer();
 }
 
 void CollisionManager::PlayerHitBoss()
@@ -100,7 +103,8 @@ void CollisionManager::BossHitPlayer()
 	{
 		if (player_->GetisDamage() == false)
 		{
-			player_->Damage(boss_->GetWeapon()->GetDamage());
+			//player_->Damage(boss_->GetWeapon()->GetDamage());
+			player_->Damage(10.f);
 			EffectManager::GetInstance()->GenerateBloodSprayEffect(hitPoint);
 
 			player_->SetisDamage(true);

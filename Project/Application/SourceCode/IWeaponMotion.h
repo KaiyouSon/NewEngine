@@ -39,6 +39,7 @@ protected:
 public:
 	virtual ~IWeaponMotion() {}
 	virtual void Init(HumanoidBody* human) = 0;
+	virtual void Update(HumanoidBody* human) = 0;
 	virtual void WeakMotion(PlayerBody* human) = 0;
 	virtual void HeavyMotion(PlayerBody* human) = 0;
 	virtual void BackMotion(PlayerBody* human) = 0;

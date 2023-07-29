@@ -30,7 +30,7 @@ void Sword::DrawModel()
 
 void Sword::ColliderUpdate()
 {
-	if (motion->GetisCalcCollider() == false)
+	if (isCalcCollider_ == false)
 	{
 		collider.startPos = Vec3(0, -10000, 0);
 		collider.endPos = Vec3(0, -10000, 0);
@@ -38,10 +38,10 @@ void Sword::ColliderUpdate()
 	}
 	else
 	{
-		Vec3 upVec = weapon->GetTransform().GetWorldMat().GetYAxis();
+		Vec3 zAxis = weapon->GetTransform().GetWorldMat().GetZAxis();
 
 		collider.startPos = weapon->GetWorldPos();
-		collider.endPos = weapon->GetWorldPos() + upVec.Norm() * 4.f;
+		collider.endPos = weapon->GetWorldPos() + zAxis.Norm() * 8.f;
 		collider.radius = 0.5f;
 	}
 }

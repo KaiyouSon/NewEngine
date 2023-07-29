@@ -56,6 +56,7 @@ private:// ÉRÉìÉ{ 1 Å` 4
 public:
 	MalletMotion();
 	void Init(HumanoidBody* human) override;
+	void Update(HumanoidBody* human) override;
 	void WeakMotion(PlayerBody* human) override;
 	void HeavyMotion(PlayerBody* human) override;
 	void BackMotion(PlayerBody* human) override;

@@ -12,8 +12,8 @@ void IMotion::BaseInit(HumanoidBody* human)
 {
 	if (isInit_ == false)
 	{
-		human->pos.y = 4.75f;
-		human->GetPart(PartID::Body)->pos.y = 0.f;
+		//human->pos.y = 4.75f;
+		//human->GetPart(PartID::Body)->pos.y = 0.f;
 
 		// Œ»Žž“_‚Ìƒ‚[ƒVƒ‡ƒ“‚Ì‰Šú‰»
 		curRots_ = human->CalcCurRots();

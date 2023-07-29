@@ -6,6 +6,7 @@ struct Weapon
 protected:
 	Vec3 localPos_;
 	Vec3 localRot_;
+	bool isCalcCollider_;
 
 protected:
 	float weakAttackDamage_;
@@ -33,5 +34,8 @@ public:
 
 public:
 	float GetDamage();
+
+public:
+	void SetisCalcCollider(const bool isCalcCollide);
 };
 

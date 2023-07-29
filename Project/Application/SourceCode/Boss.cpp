@@ -30,7 +30,7 @@ void Boss::Update()
 {
 	ColliderUpdate();
 
-	//MotionUpdate();
+	MotionUpdate();
 
 	if (isDamage_ == true)
 	{
@@ -72,6 +72,8 @@ void Boss::ColliderUpdate()
 	bodyCollider_.centerPos = boss_->pos;
 	bodyCollider_.size = Vec3(2, 4, 2);
 	bodyCollider_.CalcPoints();
+
+	weapon->ColliderUpdate();
 }
 
 void Boss::MotionUpdate()
@@ -85,7 +87,7 @@ void Boss::MotionUpdate()
 		if (coolTimer_.GetisTimeOut() == true)
 		{
 			motionNum_ = Random::Range(1, 3);
-			//motionNum_ = 3;
+			motionNum_ = 3;
 		}
 	}
 	if (motionNum_ != 0)
