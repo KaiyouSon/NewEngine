@@ -59,7 +59,8 @@ void CameraManager::Update()
 		}
 
 		float dis = Vec3(boss_->GetPos() - player_->GetPos()).Length();
-		if (dis >= 200)
+		if (player_->GetisAlive() == false ||
+			boss_->GetisAlive() == false || dis >= 200)
 		{
 			ChangeCamera(CameraManager::Default);
 		}
