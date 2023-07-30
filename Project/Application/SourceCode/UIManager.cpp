@@ -37,6 +37,7 @@ void UIManager::Init()
 	messageUI_->Init();
 
 	itemBoxUIManager_->Init();
+	itemBoxUIManager_->SetPlayer(player_);
 
 	resultUI_->Init();
 }
@@ -63,7 +64,7 @@ void UIManager::Update()
 		resultUI_->SetisActive(true);
 		resultUI_->SetResultType(ResultUI::ResultType::YouDiedStr);
 	}
-	else if(boss_->GetisDissolve() == true)
+	else if (boss_->GetisDissolve() == true)
 	{
 		resultUI_->SetisActive(true);
 		resultUI_->SetResultType(ResultUI::ResultType::EnemyFelledStr);

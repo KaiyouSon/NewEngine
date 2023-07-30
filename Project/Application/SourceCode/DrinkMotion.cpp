@@ -54,7 +54,7 @@ void DrinkMotion::CurrentStepInit(HumanoidBody* human)
 void DrinkMotion::CurrentStepUpdate(HumanoidBody* human)
 {
 	Player* player = static_cast<Player*>(human->iParent);
-	if (player->GetButtonNum() <= 0)
+	if (player->GetBottleNum() <= 0)
 	{
 		return;
 	}

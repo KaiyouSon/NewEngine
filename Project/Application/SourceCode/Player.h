@@ -113,7 +113,7 @@ public:
 	bool GetisDamage();
 	bool GetisAlive();
 	bool GetisDissolve();
-	uint32_t GetButtonNum();
+	uint32_t GetBottleNum();
 
 private:
 	friend PlayerBody;

@@ -69,6 +69,7 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Text/Menu/CloseGameStr.png", "CloseGameStr");
 	TextureManager::LoadTexture("Text/Result/EnemyFelledStr.png", "EnemyFelledStr");
 	TextureManager::LoadTexture("Text/Result/YouDiedStr.png", "YouDiedStr");
+	TextureManager::LoadTexture("Text/NumberSheets.png", "NumberSheets");
 
 	// パーティクル
 	TextureManager::LoadTexture("Particle/Particle.png", "Particle");

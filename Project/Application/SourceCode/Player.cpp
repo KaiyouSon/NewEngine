@@ -664,7 +664,7 @@ bool Player::GetisDissolve()
 {
 	return isDissolve_;
 }
-uint32_t Player::GetButtonNum()
+uint32_t Player::GetBottleNum()
 {
 	return bottleNum_;
 }

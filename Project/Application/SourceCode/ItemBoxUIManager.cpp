@@ -1,12 +1,16 @@
 #include "ItemBoxUIManager.h"
 
-ItemBoxUIManager::ItemBoxUIManager()
+ItemBoxUIManager::ItemBoxUIManager() :
+	num_(std::make_unique<Sprite>())
 {
 	for (uint32_t i = 0; i < itemBoxUIs_.size(); i++)
 	{
 		itemBoxUIs_[i] = std::make_unique<ItemBoxUI>();
 		itemUIs_[i] = std::make_unique<ItemUI>();
 	}
+
+	num_->SetTexture(TextureManager::GetTexture("NumberSheets"));
+	num_->SetSize(96);
 }
 
 void ItemBoxUIManager::Init()
@@ -29,6 +33,9 @@ void ItemBoxUIManager::Init()
 
 void ItemBoxUIManager::Update()
 {
+	num_->scale = 0.4f;
+	num_->pos = Vec2(28, 86);
+
 	bool isLeftStickMove = Pad::GetStick(PadCode::LeftStick, 300) != 0;
 	bool isAnyButtonDown = Pad::GetAnyButtonDown();
 
@@ -99,6 +106,13 @@ void ItemBoxUIManager::Update()
 		itemBoxUIs_[i]->Update(&parent);
 		itemUIs_[i]->Update(&parent);
 	}
+
+	num_->color.a = alpha_;
+	Vec2 leftUp = { 0 + (float)player_->GetBottleNum() * 96,0 };
+	Vec2 rightDown = { 96 + (float)player_->GetBottleNum() * 96,96 };
+	num_->SetTextureRect(leftUp, rightDown);
+
+	num_->Update(&parent);
 }
 
 void ItemBoxUIManager::DrawFrontSprite()
@@ -109,9 +123,16 @@ void ItemBoxUIManager::DrawFrontSprite()
 		itemUIs_[i]->DrawFrontSprite();
 		itemBoxUIs_[i]->DrawLight();
 	}
+
+	num_->Draw();
 }
 
 void ItemBoxUIManager::SetAlpha(const float alpha)
 {
 	alpha_ = alpha;
+}
+
+void ItemBoxUIManager::SetPlayer(Player* player)
+{
+	player_ = player;
 }

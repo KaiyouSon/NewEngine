@@ -1,6 +1,7 @@
 #pragma once
 #include "ItemUI.h"
 #include "ItemBoxUI.h"
+#include "Player.h"
 
 class ItemBoxUIManager
 {
@@ -15,11 +16,13 @@ private:
 
 	std::array<std::unique_ptr<ItemBoxUI>, 4> itemBoxUIs_;
 	std::array<std::unique_ptr<ItemUI>, 4> itemUIs_;
+	std::unique_ptr<Sprite> num_;
 
 	Timer notActiveTimer_;
 	bool isActive_;
 	float alpha_;
 	float lightAlpha_;
+	Player* player_;
 
 public:
 	ItemBoxUIManager();
@@ -29,5 +32,6 @@ public:
 
 public:
 	void SetAlpha(const float alpha);
+	void SetPlayer(Player* player);
 };
 
