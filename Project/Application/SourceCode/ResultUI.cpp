@@ -1,5 +1,7 @@
 #include "ResultUI.h"
 
+bool ResultUI::isEnd_ = false;
+
 ResultUI::ResultUI() :
 	back_(std::make_unique<Sprite>()),
 	text_(std::make_unique<Sprite>()),
@@ -23,6 +25,8 @@ void ResultUI::Init()
 
 	isAfterImage_ = false;
 	textAfterImage_->color.a = 0.f;
+
+	isEnd_ = false;
 }
 void ResultUI::Update()
 {
@@ -69,6 +73,11 @@ void ResultUI::DrawFrontSprite()
 
 void ResultUI::EnemyFelledUpdate()
 {
+	if (isEnd_ == true)
+	{
+		return;
+	}
+
 	if (isWait_ == true)
 	{
 		waitTimer_.Update(false);
@@ -122,6 +131,7 @@ void ResultUI::EnemyFelledUpdate()
 		timer_.Reset();
 		isActive_ = false;
 		isAfterImage_ = false;
+		isEnd_ = true;
 	}
 }
 void ResultUI::EnemyFelledDraw()
@@ -132,6 +142,11 @@ void ResultUI::EnemyFelledDraw()
 
 void ResultUI::YouDiedUpdate()
 {
+	if (isEnd_ == true)
+	{
+		return;
+	}
+
 	if (isWait_ == true)
 	{
 		waitTimer_.Update(false);
@@ -166,6 +181,7 @@ void ResultUI::YouDiedUpdate()
 
 		timer_.Reset();
 		isActive_ = false;
+		isEnd_ = true;
 	}
 }
 void ResultUI::YouDiedDraw()
@@ -194,4 +210,9 @@ void ResultUI::SetResultType(const ResultType resultType)
 	default:
 		break;
 	}
+}
+
+bool ResultUI::GetisEnd()
+{
+	return isEnd_;
 }

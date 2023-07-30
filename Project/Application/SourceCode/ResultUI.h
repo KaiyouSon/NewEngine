@@ -23,6 +23,8 @@ private:
 
 	bool isAfterImage_;
 
+	static bool isEnd_;
+
 private:
 	void EnemyFelledUpdate();
 	void YouDiedUpdate();
@@ -39,5 +41,7 @@ public:
 public:
 	void SetisActive(const bool isActive);
 	void SetResultType(const ResultType resultType);
+
+	static bool GetisEnd();
 };
 

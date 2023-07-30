@@ -124,6 +124,19 @@ void GameScene::Update()
 			SceneChanger::GetInstance()->SetisChange(false);
 		}
 	}
+	else if (ResultUI::GetisEnd() == true)
+	{
+		if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
+		{
+			SceneChanger::GetInstance()->StartSceneChange();
+		}
+
+		if (SceneChanger::GetInstance()->GetisChange() == true)
+		{
+			SceneManager::ChangeScene<GameScene>();
+			SceneChanger::GetInstance()->SetisChange(false);
+		}
+	}
 }
 
 void GameScene::RenderTextureSetting()

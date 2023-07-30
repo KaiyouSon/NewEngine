@@ -25,54 +25,87 @@ void Player::Init()
 
 	pushTimer.SetLimitTimer(20);
 	damageCoolTimer_.SetLimitTimer(30);
+
+	isAlive_ = true;
+	isDissolve = false;
+
+	weapon_->weapon->isUseDissolve = true;
+	weapon_->weapon->colorPower = 5;
+	weapon_->weapon->dissolveColor = Color(255, 30, 0, 255);
 }
 void Player::PrevUpdate()
 {
 	moveVel = 0;
 
-	// 関数ポインタ
-	void (Player:: * pFunc[])() =
+	if (isAlive_ == true)
 	{
-		// 登録
-		&Player::IdleUpdate,
-		&Player::JoggingUpdate,
-		&Player::RunUpdate,
-		&Player::BackstepUpdate,
-		&Player::RollUpdate,
-		&Player::AttackR1Update,
-		&Player::AttackR2Update,
-		&Player::AttackBackUpdate,
-		&Player::AttackRollUpdate,
-		&Player::DrinkUpdate,
-	};
+		// 関数ポインタ
+		void (Player:: * pFunc[])() =
+		{
+			// 登録
+			&Player::IdleUpdate,
+			&Player::JoggingUpdate,
+			&Player::RunUpdate,
+			&Player::BackstepUpdate,
+			&Player::RollUpdate,
+			&Player::AttackR1Update,
+			&Player::AttackR2Update,
+			&Player::AttackBackUpdate,
+			&Player::AttackRollUpdate,
+			&Player::DrinkUpdate,
+		};
 
-	// 実行
-	(this->*pFunc[(int)state_])();
+		// 実行
+		(this->*pFunc[(int)state_])();
+	}
 
 	GaugeParamUpdate();
 	ColliderUpdate();
 	DamageUpdate();
-}
-void Player::PostUpdate()
-{
-	static bool flag = false;
-	if (Key::GetKeyDown(DIK_SPACE))
-	{
-		flag = true;
-		for (uint32_t i = 0; i < player_->parts_.size(); i++)
-		{
-			player_->parts_[i]->dissolve = 0.f;
-		}
 
-	}
-	if (flag == true)
+	if (isAlive_ == false)
 	{
-		for (uint32_t i = 0; i < player_->parts_.size(); i++)
+		for (uint32_t i = 1; i < player_->parts_.size(); i++)
 		{
 			player_->parts_[i]->dissolve += 0.005f;
 			player_->parts_[i]->dissolve = Min(player_->parts_[i]->dissolve, 2.f);
 		}
+
+		weapon_->weapon->dissolve += 0.005f;
+		weapon_->weapon->dissolve = Min(weapon_->weapon->dissolve, 2.f);
+
+		if (player_->parts_[1]->dissolve >= 0.5f)
+		{
+			if (isDissolve == false)
+			{
+				isDissolve = true;
+			}
+		}
 	}
+}
+void Player::PostUpdate()
+{
+	ProcessAtDebugBulid([&]()
+		{
+			static bool flag = false;
+			if (Key::GetKeyDown(DIK_SPACE))
+			{
+				flag = true;
+				for (uint32_t i = 0; i < player_->parts_.size(); i++)
+				{
+					player_->parts_[i]->dissolve = 0.f;
+				}
+
+			}
+			if (flag == true)
+			{
+				for (uint32_t i = 0; i < player_->parts_.size(); i++)
+				{
+					player_->parts_[i]->dissolve += 0.005f;
+					player_->parts_[i]->dissolve = Min(player_->parts_[i]->dissolve, 2.f);
+				}
+			}
+		});
 
 	player_->DebugUpdate();
 	player_->Update();
@@ -107,6 +140,11 @@ void Player::Damage(const float damage)
 {
 	damageCoolTimer_.Reset();
 	gaugePrames_[(uint32_t)GaugeType::Hp].value -= damage;
+
+	if (gaugePrames_[(uint32_t)GaugeType::Hp].value <= 0)
+	{
+		isAlive_ = false;
+	}
 }
 
 // コライダー関連
@@ -547,4 +585,12 @@ CapsuleCollider Player::GetBodyCollider()
 bool Player::GetisDamage()
 {
 	return isDamage_;
+}
+bool Player::GetisAlive()
+{
+	return isAlive_;
+}
+bool Player::GetisDissolve()
+{
+	return isDissolve;
 }

@@ -28,6 +28,9 @@ private:
 	std::unique_ptr<Weapon> weapon_;
 	std::unique_ptr<PlayerBody> player_;
 
+	bool isAlive_;
+	bool isDissolve;
+
 private:
 	Timer pushTimer; //ƒ{ƒ^ƒ“˜A‘Å‚³‚¹‚È‚¢‚æ‚¤‚É
 
@@ -107,6 +110,8 @@ public:
 	State GetState();
 	CapsuleCollider GetBodyCollider();
 	bool GetisDamage();
+	bool GetisAlive();
+	bool GetisDissolve();
 
 private:
 	friend PlayerBody;

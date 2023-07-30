@@ -93,6 +93,11 @@ void CollisionManager::PlayerHitMessageSign()
 
 void CollisionManager::BossHitPlayer()
 {
+	if (player_->GetisAlive() == false)
+	{
+		return;
+	}
+
 	static Vec3 hitPoint = {};
 
 	bool isAttackBoss =

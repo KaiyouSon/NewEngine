@@ -58,6 +58,12 @@ void UIManager::Update()
 			}
 		});
 
+	if (player_->GetisDissolve() == true)
+	{
+		resultUI_->SetisActive(true);
+		resultUI_->SetResultType(ResultUI::ResultType::YouDiedStr);
+	}
+
 	// アイテムボックス(左下のやつ)
 	itemBoxUIManager_->Update();
 

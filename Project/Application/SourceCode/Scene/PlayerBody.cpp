@@ -27,7 +27,7 @@ void PlayerBody::Init()
 	{
 		parts_[i]->isUseDissolve = true;
 		parts_[i]->colorPower = 5;
-		parts_[i]->dissolveColor = Color(255,30,0,255);
+		parts_[i]->dissolveColor = Color(255, 30, 0, 255);
 	}
 
 	moveMotion_->Init(this);
