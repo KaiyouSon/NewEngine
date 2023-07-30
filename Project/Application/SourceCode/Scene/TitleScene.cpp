@@ -12,14 +12,14 @@ void TitleScene::Init()
 
 	SoundManager::Play("TitleBGM", true);
 	SoundManager::SetVolume("TitleBGM", 0);
-	bgmVolume = 0;
+	bgmVolume_ = 0;
 }
 
 void TitleScene::Update()
 {
-	SoundManager::SetVolume("TitleBGM", bgmVolume);
-	bgmVolume += 0.01f;
-	bgmVolume = Min<float>(bgmVolume, 1.f);
+	SoundManager::SetVolume("TitleBGM", bgmVolume_);
+	bgmVolume_ += 0.01f;
+	bgmVolume_ = Min<float>(bgmVolume_, 1.f);
 
 	titleUI_->Update();
 

@@ -37,6 +37,11 @@ void SceneChanger::Update()
 			float volume = moveEase.InOut(1, 0);
 			SoundManager::SetVolume("TitleBGM", volume);
 		}
+		else if (isEaseGameBGM_ == true)
+		{
+			float volume = moveEase.InOut(1, 0);
+			SoundManager::SetVolume("BattleBGM", volume);
+		}
 
 		moveEase.Update();
 		if (moveEase.GetisEnd() == true)
@@ -47,6 +52,10 @@ void SceneChanger::Update()
 			if (isEaseTitleBGM_ == true)
 			{
 				SoundManager::Stop("TitleBGM");
+			}
+			else if (isEaseGameBGM_ == true)
+			{
+				SoundManager::Stop("BattleBGM");
 			}
 
 			moveEase.Reset();
@@ -61,6 +70,9 @@ void SceneChanger::Update()
 			changeStep_ = ChangeStep::End;
 			isChange = false;
 			isSceneChanging = false;
+
+			isEaseTitleBGM_ = false;
+			isEaseGameBGM_ = false;
 
 			moveEase.Reset();
 		}
@@ -88,4 +100,9 @@ void SceneChanger::StartSceneChange()
 void SceneChanger::SetisEaseTitleBGM(const bool isEaseTitleBGM)
 {
 	isEaseTitleBGM_ = isEaseTitleBGM;
+}
+
+void SceneChanger::SetisEaseGameBGM(const bool isEaseGameBGM)
+{
+	isEaseGameBGM_ = isEaseGameBGM;
 }

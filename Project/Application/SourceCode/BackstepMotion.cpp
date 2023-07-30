@@ -111,6 +111,7 @@ void BackstepMotion::Step1Update(HumanoidBody* human)
 	if (ease_.GetisEnd() == true)
 	{
 		isCanChangeMotion_ = true;
+		SoundManager::Play("BackstepSE");
 	}
 }
 void BackstepMotion::Step2Update(HumanoidBody* human)

@@ -91,11 +91,18 @@ bool LoadManager::SoundLoad()
 {
 	// BGM
 	SoundManager::LoadSound("BGM/TitleBGM.wav", "TitleBGM");
+	SoundManager::LoadSound("BGM/BattleBGM.wav", "BattleBGM");
 
 	// SE
-	SoundManager::LoadSound("SE/WeakHitSE.wav", "WeakHitSE");
+	SoundManager::LoadSound("SE/HitSE.wav", "HitSE");
 	SoundManager::LoadSound("SE/WeakAttackSE.wav", "WeakAttackSE");
 	SoundManager::LoadSound("SE/SelectSE.wav", "SelectSE");
+	SoundManager::LoadSound("SE/BackstepSE.wav", "BackstepSE");
+	SoundManager::LoadSound("SE/RollSE.wav", "RollSE");
+	SoundManager::LoadSound("SE/RecoverySE.wav", "RecoverySE");
+
+	SoundManager::LoadSound("SE/BossAttackSE.wav", "BossAttackSE");
+
 
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
 	return true;

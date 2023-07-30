@@ -148,6 +148,8 @@ void MalletMotion::RollMotion(PlayerBody* human)
 	{
 		CurrentStepInit(human);
 		BaseInit(human, 5);
+
+		isInit_ = true;
 	}
 	BasePrevUpdate(human, 5);
 	CurrentStepUpdate(human);
@@ -381,9 +383,6 @@ void MalletMotion::HeavyStep2Init(PlayerBody* human)
 
 	startPosY = endPosY;
 	endPosY = -1.3f;
-
-	// 当たり判定有効
-	isCalcCollider_ = true;
 }
 void MalletMotion::HeavyStep2Update(PlayerBody* human)
 {
@@ -397,6 +396,9 @@ void MalletMotion::HeavyStep2Update(PlayerBody* human)
 
 	if (ease_.GetisEnd() == true)
 	{
+		SoundManager::Play("WeakAttackSE");
+		// 当たり判定有効
+		isCalcCollider_ = true;
 		//if (comboCount_ < comboMaxCount_)
 		//{
 		//	// コンボできるフラフ
@@ -412,6 +414,11 @@ void MalletMotion::HeavyStep3Init(PlayerBody* human)
 void MalletMotion::HeavyStep3Update(PlayerBody* human)
 {
 	human->GetPart(PartID::Body)->pos.y = ease_.In(startPosY, endPosY);
+
+	if (ease_.GetTimer() == 0)
+	{
+
+	}
 
 	if (ease_.GetisEnd() == true)
 	{
@@ -512,6 +519,10 @@ void MalletMotion::BackStep2Update(PlayerBody* human)
 	human->pos = moveEase_.InOut(startPos_, endPos);
 	human->parent->moveVel = endPos - startPos_;
 
+	if (ease_.GetisEnd() == true)
+	{
+		SoundManager::Play("WeakAttackSE");
+	}
 }
 void MalletMotion::BackStep3Update(PlayerBody* human)
 {
@@ -561,6 +572,11 @@ void MalletMotion::RollStep0Update(PlayerBody* human)
 	const Vec3 endPos = startPos_ + human->parent->frontVec_.Norm() * length_;
 	human->pos = moveEase_.InOut(startPos_, endPos);
 	human->parent->moveVel = endPos - startPos_;
+
+	if (ease_.GetisEnd() == true)
+	{
+		SoundManager::Play("WeakAttackSE");
+	}
 }
 void MalletMotion::RollStep1Update(PlayerBody* human)
 {

@@ -23,6 +23,7 @@ private:
 
 private:
 	bool isEaseTitleBGM_;
+	bool isEaseGameBGM_;
 
 private:
 	void Init();
@@ -33,6 +34,7 @@ public:
 
 	void StartSceneChange();
 	void SetisEaseTitleBGM(const bool isEaseTitleBGM);
+	void SetisEaseGameBGM(const bool isEaseGameBGM);
 
 public:
 	inline bool GetisChange() { return isChange; }

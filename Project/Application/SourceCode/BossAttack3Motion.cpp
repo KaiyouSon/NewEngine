@@ -108,6 +108,21 @@ void BossAttack3Motion::CurrentStepUpdate(HumanoidBody* human)
 		human->pos = moveEase_.InOut(startPos_, endPos_);
 		moveEase_.Update();
 	}
+
+	if (step_ == 3 || step_ == 6)
+	{
+		if (ease_.GetTimer() == 4)
+		{
+			SoundManager::Play("BossAttackSE");
+		}
+	}
+	else if (step_ == 9)
+	{
+		if (ease_.GetisEnd() == true)
+		{
+			SoundManager::Play("BossAttackSE");
+		}
+	}
 }
 
 void BossAttack3Motion::SettingMovePrame(HumanoidBody* human, const float dis, const uint32_t easeTimer, const float powNum)

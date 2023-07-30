@@ -125,6 +125,28 @@ void BossAttack2Motion::CurrentStepUpdate(HumanoidBody* human)
 		human->pos = moveEase_.InOut(startPos_, endPos_);
 		moveEase_.Update();
 	}
+
+	if (step_ == 2)
+	{
+		if (ease_.GetisEnd() == true)
+		{
+			SoundManager::Play("BossAttackSE");
+		}
+	}
+	else if (step_ == 11)
+	{
+		if (ease_.GetisEnd() == true)
+		{
+			SoundManager::Play("BossAttackSE");
+		}
+	}
+	else if (step_ == 16)
+	{
+		if (ease_.GetTimer() == 10)
+		{
+			SoundManager::Play("BossAttackSE");
+		}
+	}
 }
 
 void BossAttack2Motion::SettingMovePrame(HumanoidBody* human, const float dis, const uint32_t easeTimer, const float powNum)

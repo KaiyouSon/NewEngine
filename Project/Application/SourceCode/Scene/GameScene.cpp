@@ -58,9 +58,18 @@ void GameScene::Init()
 
 	SceneChanger::GetInstance()->SetisEaseTitleBGM(false);
 
+	SoundManager::Play("BattleBGM", true);
+	SoundManager::SetVolume("BattleBGM", 0);
+	bgmVolume_ = 0;
 }
 void GameScene::Update()
 {
+	if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
+	{
+		SoundManager::SetVolume("BattleBGM", bgmVolume_);
+		bgmVolume_ += 0.01f;
+		bgmVolume_ = Min<float>(bgmVolume_, 1.f);
+	}
 	//// ‰¼‚Ì‚±‚±‚É‘‚¢‚½
 	//Camera prevCamera = Camera::current;
 
@@ -116,6 +125,7 @@ void GameScene::Update()
 		if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
 		{
 			SceneChanger::GetInstance()->StartSceneChange();
+			SceneChanger::GetInstance()->SetisEaseGameBGM(true);
 		}
 
 		if (SceneChanger::GetInstance()->GetisChange() == true)
@@ -129,6 +139,7 @@ void GameScene::Update()
 		if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
 		{
 			SceneChanger::GetInstance()->StartSceneChange();
+			SceneChanger::GetInstance()->SetisEaseGameBGM(true);
 		}
 
 		if (SceneChanger::GetInstance()->GetisChange() == true)

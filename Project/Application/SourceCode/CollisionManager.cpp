@@ -31,7 +31,7 @@ void CollisionManager::PlayerHitBoss()
 			{
 				boss_->Damage(player_->GetWeapon()->GetDamage());
 
-				SoundManager::Play("WeakHitSE");
+				SoundManager::Play("HitSE");
 				EffectManager::GetInstance()->GenerateBloodSprayEffect(hitPoint);
 
 				boss_->SetisDamage(true);
@@ -117,6 +117,7 @@ void CollisionManager::BossHitPlayer()
 		{
 			if (player_->GetisDamage() == false)
 			{
+				SoundManager::Play("HitSE");
 				player_->Damage(boss_->GetDamage() * 1.5f);
 				EffectManager::GetInstance()->GenerateBloodSprayEffect(hitPoint);
 

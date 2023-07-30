@@ -103,6 +103,11 @@ void RollMotion::Step0Update(HumanoidBody* human)
 	player->moveVel = endPos_ - startPos_;
 
 	moveEase_.Update();
+
+	if (ease_.GetisEnd() == true)
+	{
+		SoundManager::Play("RollSE");
+	}
 }
 void RollMotion::Step1Update(HumanoidBody* human)
 {

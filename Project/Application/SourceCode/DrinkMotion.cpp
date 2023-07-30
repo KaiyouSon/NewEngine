@@ -61,6 +61,7 @@ void DrinkMotion::CurrentStepUpdate(HumanoidBody* human)
 			Vec3 pos = player->GetPos() + Vec3::down * 2;
 
 			player->Recovery();
+			SoundManager::Play("RecoverySE");
 			EffectManager::GetInstance()->GeneratePlayerRecoveryEffect(pos);
 		}
 	}

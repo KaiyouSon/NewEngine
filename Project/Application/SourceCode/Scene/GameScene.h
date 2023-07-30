@@ -20,6 +20,8 @@ private:
 	std::unique_ptr<PostEffect> currentScene_;
 	RenderTexture* tex_;
 
+	float bgmVolume_;
+
 public:
 	GameScene();
 	~GameScene();
