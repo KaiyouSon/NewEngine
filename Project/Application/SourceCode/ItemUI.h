@@ -8,6 +8,7 @@ enum class ItemType
 	// “¹‹ï
 	HPBottle,
 	MPBottle,
+	EmptyBottle,
 
 	// •Ší
 	Club,

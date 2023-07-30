@@ -97,6 +97,11 @@ void ItemBoxUIManager::Update()
 	itemUIs_[Position::Right]->SetPos(Vec2(width, 0));
 	itemUIs_[Position::Down]->SetPos(Vec2(0, height));
 
+	if (player_->GetBottleNum() <= 0)
+	{
+		itemUIs_[Position::Down]->SetType(ItemType::EmptyBottle);
+	}
+
 	for (uint32_t i = 0; i < itemBoxUIs_.size(); i++)
 	{
 		itemBoxUIs_[i]->SetFrameAlpha(alpha_);

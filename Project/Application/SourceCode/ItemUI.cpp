@@ -43,6 +43,15 @@ void ItemUI::SettingsByType()
 	break;
 
 	// MPボトル
+	case ItemType::EmptyBottle:
+	{
+		itemUI_->SetTexture(TextureManager::GetTexture("BottleUI"));
+		itemUI_->SetTextureRect(Vec2(512, 0), Vec2(768, 256));
+		itemUI_->SetSize(256);
+	}
+	break;
+
+	// MPボトル
 	case ItemType::Club:
 	{
 		itemUI_->SetTexture(TextureManager::GetTexture("ClubUI"));
