@@ -25,14 +25,17 @@ void CollisionManager::PlayerHitBoss()
 
 	if (isAttackBoss)
 	{
-		if (boss_->GetisDamage() == false)
+		if (boss_->GetisAlive() == true)
 		{
-			boss_->Damage(player_->GetWeapon()->GetDamage());
+			if (boss_->GetisDamage() == false)
+			{
+				boss_->Damage(player_->GetWeapon()->GetDamage());
 
-			SoundManager::Play("WeakHitSE");
-			EffectManager::GetInstance()->GenerateBloodSprayEffect(hitPoint);
+				SoundManager::Play("WeakHitSE");
+				EffectManager::GetInstance()->GenerateBloodSprayEffect(hitPoint);
 
-			boss_->SetisDamage(true);
+				boss_->SetisDamage(true);
+			}
 		}
 	}
 
@@ -93,7 +96,8 @@ void CollisionManager::PlayerHitMessageSign()
 
 void CollisionManager::BossHitPlayer()
 {
-	if (player_->GetisAlive() == false)
+	if (player_->GetisAlive() == false ||
+		boss_->GetisAlive() == false)
 	{
 		return;
 	}

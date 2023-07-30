@@ -44,6 +44,11 @@ void SceneChanger::Update()
 			changeStep_ = ChangeStep::Out;
 			isChange = true;
 
+			if (isEaseTitleBGM_ == true)
+			{
+				SoundManager::Stop("TitleBGM");
+			}
+
 			moveEase.Reset();
 		}
 	}

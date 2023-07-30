@@ -4,7 +4,7 @@
 
 Boss::Boss() :
 	boss_(std::make_unique<BossBody>()),
-	weapon(std::make_unique<Sword>())
+	weapon_(std::make_unique<Sword>())
 {
 }
 void Boss::Init()
@@ -14,7 +14,7 @@ void Boss::Init()
 	boss_->scale = 1.5f;
 	boss_->rot.y = Radian(180);
 
-	boss_->SetWeapon(weapon.get(), WeaponPartID::Right);
+	boss_->SetWeapon(weapon_.get(), WeaponPartID::Right);
 	boss_->iParent = this;
 	boss_->parent = static_cast<Boss*>(boss_->iParent);
 
@@ -25,10 +25,40 @@ void Boss::Init()
 
 	isDamage_ = false;
 	damageCoolTimer_.SetLimitTimer(40);
+
+	weapon_->weapon->isUseDissolve = true;
+	weapon_->weapon->colorPower = 5;
+	weapon_->weapon->dissolveColor = Color(255, 30, 0, 255);
+
+	isAlive_ = true;
+	isDissolve_ = false;
 }
 void Boss::Update()
 {
-	MotionUpdate();
+	if (isAlive_ == false)
+	{
+		for (uint32_t i = 1; i < boss_->parts_.size(); i++)
+		{
+			boss_->parts_[i]->dissolve += 0.005f;
+			boss_->parts_[i]->dissolve = Min(boss_->parts_[i]->dissolve, 2.f);
+		}
+
+		weapon_->weapon->dissolve += 0.005f;
+		weapon_->weapon->dissolve = Min(weapon_->weapon->dissolve, 2.f);
+
+		if (boss_->parts_[1]->dissolve >= 0.5f)
+		{
+			if (isDissolve_ == false)
+			{
+				isDissolve_ = true;
+			}
+		}
+	}
+	else
+	{
+		MotionUpdate();
+	}
+
 
 	if (isDamage_ == true)
 	{
@@ -74,7 +104,7 @@ void Boss::ColliderUpdate()
 	bodyCollider_.size = Vec3(2, 4, 2);
 	bodyCollider_.CalcPoints();
 
-	weapon->ColliderUpdate();
+	weapon_->ColliderUpdate();
 }
 
 void Boss::MotionUpdate()
@@ -113,6 +143,11 @@ void Boss::Damage(const float damage)
 {
 	hpGaugeParam_.value -= damage;
 	isDamage_ = true;
+
+	if (hpGaugeParam_.value <= 0)
+	{
+		isAlive_ = false;
+	}
 }
 
 void Boss::SetPlayer(Player* player)
@@ -146,10 +181,17 @@ bool Boss::GetisDamage()
 }
 Weapon* Boss::GetWeapon()
 {
-	return weapon.get();
+	return weapon_.get();
 }
-
 float Boss::GetDamage()
 {
 	return damage_;
+}
+bool Boss::GetisAlive()
+{
+	return isAlive_;
+}
+bool Boss::GetisDissolve()
+{
+	return isDissolve_;
 }

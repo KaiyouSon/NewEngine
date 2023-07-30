@@ -7,6 +7,7 @@ class TitleScene : public IScene
 {
 private:
 	std::unique_ptr<TitleUI> titleUI_;
+	float bgmVolume;
 
 public:
 	void Init() override;

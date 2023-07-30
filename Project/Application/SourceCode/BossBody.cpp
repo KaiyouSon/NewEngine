@@ -14,6 +14,13 @@ void BossBody::Init()
 	grabAttackMotion_->Init(this);
 	attack2Motion_->Init(this);
 	attack3Motion_->Init(this);
+
+	for (uint32_t i = 1; i < parts_.size(); i++)
+	{
+		parts_[i]->isUseDissolve = true;
+		parts_[i]->colorPower = 5;
+		parts_[i]->dissolveColor = Color(255, 30, 0, 255);
+	}
 }
 
 void BossBody::Update()

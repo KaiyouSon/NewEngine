@@ -30,5 +30,7 @@ public:
 public:
 	bool GetisPlayMotion();
 
+private:
+	friend Boss;
 };
 

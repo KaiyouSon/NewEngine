@@ -11,10 +11,16 @@ void TitleScene::Init()
 	titleUI_->Init();
 
 	SoundManager::Play("TitleBGM", true);
+	SoundManager::SetVolume("TitleBGM", 0);
+	bgmVolume = 0;
 }
 
 void TitleScene::Update()
 {
+	SoundManager::SetVolume("TitleBGM", bgmVolume);
+	bgmVolume += 0.01f;
+	bgmVolume = Min<float>(bgmVolume, 1.f);
+
 	titleUI_->Update();
 
 	if (Pad::GetAnyButtonDown())

@@ -12,8 +12,10 @@ class Boss : public Character
 {
 private:
 	std::unique_ptr<BossBody> boss_;
-	std::unique_ptr<Weapon> weapon;
+	std::unique_ptr<Weapon> weapon_;
 	Player* player_;
+	bool isAlive_;
+	bool isDissolve_;
 
 	GaugeParam hpGaugeParam_;
 
@@ -62,6 +64,8 @@ public:
 	bool GetisDamage();
 	Weapon* GetWeapon();
 	float GetDamage();
+	bool GetisAlive();
+	bool GetisDissolve();
 
 private:
 	friend BossGrabAttackMotion;

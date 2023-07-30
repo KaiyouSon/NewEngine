@@ -21,7 +21,6 @@ void ResultUI::Init()
 	parent_.Update();
 
 	timer_.SetLimitTimer(180);
-	waitTimer_.SetLimitTimer(60);
 
 	isAfterImage_ = false;
 	textAfterImage_->color.a = 0.f;
@@ -77,6 +76,7 @@ void ResultUI::EnemyFelledUpdate()
 	{
 		return;
 	}
+	waitTimer_.SetLimitTimer(120);
 
 	if (isWait_ == true)
 	{
@@ -146,6 +146,8 @@ void ResultUI::YouDiedUpdate()
 	{
 		return;
 	}
+
+	waitTimer_.SetLimitTimer(60);
 
 	if (isWait_ == true)
 	{

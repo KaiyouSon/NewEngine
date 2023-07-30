@@ -133,7 +133,16 @@ void GameScene::Update()
 
 		if (SceneChanger::GetInstance()->GetisChange() == true)
 		{
-			SceneManager::ChangeScene<GameScene>();
+			// ƒvƒŒƒCƒ„[‚ªŽ€‚ñ‚¾ê‡
+			if (player_->GetisDissolve() == true)
+			{
+				SceneManager::ChangeScene<GameScene>();
+			}
+			else
+			{
+				SceneManager::ChangeScene<TitleScene>();
+			}
+
 			SceneChanger::GetInstance()->SetisChange(false);
 		}
 	}

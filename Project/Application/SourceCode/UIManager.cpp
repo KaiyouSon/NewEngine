@@ -63,6 +63,11 @@ void UIManager::Update()
 		resultUI_->SetisActive(true);
 		resultUI_->SetResultType(ResultUI::ResultType::YouDiedStr);
 	}
+	else if(boss_->GetisDissolve() == true)
+	{
+		resultUI_->SetisActive(true);
+		resultUI_->SetResultType(ResultUI::ResultType::EnemyFelledStr);
+	}
 
 	// アイテムボックス(左下のやつ)
 	itemBoxUIManager_->Update();
