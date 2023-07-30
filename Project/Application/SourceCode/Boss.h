@@ -16,6 +16,7 @@ private:
 	Player* player_;
 	bool isAlive_;
 	bool isDissolve_;
+	bool isFight_;
 
 	GaugeParam hpGaugeParam_;
 

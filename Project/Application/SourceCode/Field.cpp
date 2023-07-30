@@ -11,11 +11,12 @@ Field::Field() :
 	for (uint32_t i = 0; i < messageSigns_.size(); i++)
 	{
 		messageSigns_[i] = std::make_unique<MessageSign>();
-		messageSigns_[i]->SetPos(Vec3(10, 0, (float)(i * 20)));
+		messageSigns_[i]->SetPos(Vec3(-20 + (float)(i * 20), 0, 50));
+		messageSigns_[i]->SetRot(Vec3(0, Radian(90), 0));
 	}
 
-	messageSigns_[0]->SetMessageTexture(TextureManager::GetTexture("TutorialStr1"));
-	messageSigns_[1]->SetMessageTexture(TextureManager::GetTexture("TutorialStr2"));
+	messageSigns_[0]->SetMessageTexture(TextureManager::GetTexture("TutorialStr2"));
+	messageSigns_[1]->SetMessageTexture(TextureManager::GetTexture("TutorialStr1"));
 	messageSigns_[2]->SetMessageTexture(TextureManager::GetTexture("TutorialStr3"));
 
 	Init();

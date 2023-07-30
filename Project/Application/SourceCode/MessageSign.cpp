@@ -45,6 +45,11 @@ void MessageSign::SetPos(const Vec3 pos)
 	messageSign_->pos = pos;
 }
 
+void MessageSign::SetRot(const Vec3 rot)
+{
+	messageSign_->rot = rot;
+}
+
 void MessageSign::ColliderUpdate()
 {
 	collider_.centerPos = messageSign_->pos;

@@ -10,9 +10,9 @@ Boss::Boss() :
 void Boss::Init()
 {
 	boss_->Init();
-	boss_->pos = Vec3(0, 7.125f, 20.f);
+	boss_->pos = Vec3(0, 7.125f, 400.f);
 	boss_->scale = 1.5f;
-	boss_->rot.y = Radian(180);
+	rotY_ = Radian(180);
 
 	boss_->SetWeapon(weapon_.get(), WeaponPartID::Right);
 	boss_->iParent = this;
@@ -32,9 +32,21 @@ void Boss::Init()
 
 	isAlive_ = true;
 	isDissolve_ = false;
+	isFight_ = false;
 }
 void Boss::Update()
 {
+	float disToPlayer = Vec3::Distance(player_->GetPos(), boss_->pos);
+	if (disToPlayer <= 150.f)
+	{
+		if (isFight_ == false)
+		{
+			SoundManager::Play("BattleBGM", true);
+			SoundManager::SetVolume("BattleBGM", 0);
+			isFight_ = true;
+		}
+	}
+
 	if (isAlive_ == false)
 	{
 		for (uint32_t i = 1; i < boss_->parts_.size(); i++)
@@ -56,9 +68,11 @@ void Boss::Update()
 	}
 	else
 	{
-		MotionUpdate();
+		if (isFight_ == true)
+		{
+			MotionUpdate();
+		}
 	}
-
 
 	if (isDamage_ == true)
 	{

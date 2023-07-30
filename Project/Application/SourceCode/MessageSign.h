@@ -22,6 +22,7 @@ public:
 public:
 	void SetMessageTexture(Texture* texture);
 	void SetPos(const Vec3 pos);
+	void SetRot(const Vec3 rot);
 
 public:
 	Texture* GetMessageTexture();
