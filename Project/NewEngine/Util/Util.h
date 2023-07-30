@@ -92,4 +92,8 @@ Vec2 WorldToScreen(const Vec3 worldPos);
 // 三角形の法線を求める
 Vec3 GetTriangleNormal(const Vec3 p0, const Vec3 p1, const Vec3 p2);
 
-void DebuggingProcess(std::function<void()> lambdaFunc);
+// Debugビルドのみ実行する
+void ProcessAtDebugBulid(std::function<void()> lambdaFunc);
+
+// Releaseビルド身の実行する
+void ProcessAtReleaseBulid(std::function<void()> lambdaFunc);

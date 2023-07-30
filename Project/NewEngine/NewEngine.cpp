@@ -8,44 +8,46 @@ using namespace Microsoft::WRL;
 
 void NewEngineInit()
 {
-#ifdef _DEBUG 
-#endif
-	//デバッグレイヤーをオンに
-	ComPtr<ID3D12Debug1> debugController;
-	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(debugController.GetAddressOf()))))
-	{
-		debugController->EnableDebugLayer();
-		debugController->SetEnableGPUBasedValidation(false);
-	}
+	ProcessAtDebugBulid([]()
+		{
+			//デバッグレイヤーをオンに
+			ComPtr<ID3D12Debug1> debugController;
+			if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(debugController.GetAddressOf()))))
+			{
+				debugController->EnableDebugLayer();
+				debugController->SetEnableGPUBasedValidation(false);
+			}
+		});
 
 	RenderWindow::GetInstance()->CreateGameWindow();
 	RenderBase::GetInstance()->Init();
 
-#ifdef _DEBUG
-#endif
-	ComPtr<ID3D12InfoQueue> infoQueue;
-	if (SUCCEEDED(RenderBase::GetInstance()->
-		GetDevice()->QueryInterface(IID_PPV_ARGS(&infoQueue))))
-	{
-		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);	// やばいエラー一時に止まる
-		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);		// エラー時に止まる
-		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);	// ワーニング時に止まる
-	}
+	ProcessAtDebugBulid([]()
+		{
+			ComPtr<ID3D12InfoQueue> infoQueue;
+			if (SUCCEEDED(RenderBase::GetInstance()->
+				GetDevice()->QueryInterface(IID_PPV_ARGS(&infoQueue))))
+			{
+				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);	// やばいエラー一時に止まる
+				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);		// エラー時に止まる
+				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);	// ワーニング時に止まる
+			}
 
-	//抑制するエラー
-	D3D12_MESSAGE_ID denyIds[] = {
-		D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE
-	};
+			//抑制するエラー
+			D3D12_MESSAGE_ID denyIds[] = {
+				D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE
+			};
 
-	//抑制される表示レベル
-	D3D12_MESSAGE_SEVERITY severities[] = { D3D12_MESSAGE_SEVERITY_INFO };
-	D3D12_INFO_QUEUE_FILTER filter{};
-	filter.DenyList.NumIDs = _countof(denyIds);
-	filter.DenyList.pIDList = denyIds;
-	filter.DenyList.NumSeverities = _countof(severities);
-	filter.DenyList.pSeverityList = severities;
-	//指定したエラーの表示を抑制する
-	infoQueue->PushStorageFilter(&filter);
+			//抑制される表示レベル
+			D3D12_MESSAGE_SEVERITY severities[] = { D3D12_MESSAGE_SEVERITY_INFO };
+			D3D12_INFO_QUEUE_FILTER filter{};
+			filter.DenyList.NumIDs = _countof(denyIds);
+			filter.DenyList.pIDList = denyIds;
+			filter.DenyList.NumSeverities = _countof(severities);
+			filter.DenyList.pSeverityList = severities;
+			//指定したエラーの表示を抑制する
+			infoQueue->PushStorageFilter(&filter);
+		});
 
 	// -------------------------------------------------------------------------------- //
 

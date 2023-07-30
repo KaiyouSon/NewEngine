@@ -74,9 +74,20 @@ Vec3 GetTriangleNormal(const Vec3 p0, const Vec3 p1, const Vec3 p2)
 	return normal.Norm();
 }
 
-void DebuggingProcess(std::function<void()> lambdaFunc)
+// Debugビルドのみ実行する
+void ProcessAtDebugBulid(std::function<void()> lambdaFunc)
 {
 #ifdef _DEBUG
+
+	lambdaFunc();
+
+#endif
+}
+
+// Releaseビルド身の実行する
+void ProcessAtReleaseBulid(std::function<void()> lambdaFunc)
+{
+#ifdef NDEBUG
 
 	lambdaFunc();
 
