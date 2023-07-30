@@ -204,9 +204,9 @@ void Player::GaugeParamInit()
 }
 void Player::GaugeParamUpdate()
 {
-	if (state_ != State::AttackR1 && state_ != State::Run)
+	if (state_ == State::Idle || state_ == State::Jogging || state_ == State::Drink)
 	{
-		gaugePrames_[(uint32_t)GaugeType::Stamina].value++;
+		gaugePrames_[(uint32_t)GaugeType::Stamina].value += 0.75f;
 	}
 
 	for (uint32_t i = 0; i < gaugePrames_.size(); i++)
@@ -234,15 +234,27 @@ void Player::IdleUpdate()
 
 	if (Pad::GetButtonDown(PadCode::ButtonR1))
 	{
-		state_ = State::AttackR1;
+		if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 20 >= 0)
+		{
+			gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 20;
+			state_ = State::AttackR1;
+		}
 	}
 	else if (Pad::GetTrigger(PadCode::RightTrigger))
 	{
-		state_ = State::AttackR2;
+		if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 40 >= 0)
+		{
+			gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 40;
+			state_ = State::AttackR2;
+		}
 	}
 	else if (Pad::GetButtonDown(PadCode::ButtonA))
 	{
-		state_ = State::Backstep;
+		if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 30 >= 0)
+		{
+			gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
+			state_ = State::Backstep;
+		}
 	}
 	else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 	{
@@ -268,11 +280,19 @@ void Player::JoggingUpdate()
 
 	if (Pad::GetButtonDown(PadCode::ButtonR1))
 	{
-		state_ = State::AttackR1;
+		if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 20 >= 0)
+		{
+			gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 20;
+			state_ = State::AttackR1;
+		}
 	}
 	else if (Pad::GetTrigger(PadCode::RightTrigger))
 	{
-		state_ = State::AttackR2;
+		if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 40 >= 0)
+		{
+			gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 40;
+			state_ = State::AttackR2;
+		}
 	}
 	else if (Pad::GetButton(PadCode::ButtonA))
 	{
@@ -299,9 +319,14 @@ void Player::JoggingUpdate()
 	{
 		if (pushTimer.GetisTimeOut() == false)
 		{
-			state_ = State::Roll;
-			player_->RollMotionInit();
-			player_->ChangeMoveMotionInit();
+			if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 30 >= 0)
+			{
+				gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
+				state_ = State::Roll;
+
+				player_->RollMotionInit();
+				player_->ChangeMoveMotionInit();
+			}
 		}
 		pushTimer.Reset();
 	}
@@ -337,12 +362,21 @@ void Player::BackstepUpdate()
 	{
 		if (Pad::GetButtonDown(PadCode::ButtonA))
 		{
-			player_->BackstepMotionInit();
+			if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 30 >= 0)
+			{
+				gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
+				state_ = State::Backstep;
+				player_->BackstepMotionInit();
+			}
 		}
 		else if (Pad::GetButtonDown(PadCode::ButtonR1))
 		{
-			player_->BackstepMotionInit();
-			state_ = State::AttackBack;
+			if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 20 >= 0)
+			{
+				gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 20;
+				player_->BackstepMotionInit();
+				state_ = State::AttackBack;
+			}
 		}
 		else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 		{
@@ -351,7 +385,11 @@ void Player::BackstepUpdate()
 
 			if (Pad::GetButton(PadCode::ButtonA))
 			{
-				state_ = State::Roll;
+				if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 30 >= 0)
+				{
+					gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
+					state_ = State::Roll;
+				}
 			}
 			else
 			{
@@ -377,20 +415,32 @@ void Player::RollUpdate()
 	{
 		if (Pad::GetButtonDown(PadCode::ButtonA))
 		{
-			state_ = State::Backstep;
-			player_->RollMotionInit();
+			if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 30 >= 0)
+			{
+				gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
+				state_ = State::Backstep;
+				player_->RollMotionInit();
+			}
 		}
 		else if (Pad::GetButtonDown(PadCode::ButtonR1))
 		{
-			state_ = State::AttackRoll;
-			player_->RollMotionInit();
+			if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 20 >= 0)
+			{
+				gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 20;
+				state_ = State::AttackRoll;
+				player_->RollMotionInit();
+			}
 		}
 		else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 		{
 			if (Pad::GetButtonDown(PadCode::ButtonA))
 			{
-				state_ = State::Roll;
-				player_->RollMotionInit();
+				if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 30 >= 0)
+				{
+					gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
+					state_ = State::Roll;
+					player_->RollMotionInit();
+				}
 			}
 			else
 			{
@@ -422,15 +472,23 @@ void Player::AttackR1Update()
 	{
 		if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 		{
-			player_->AttackMotionInit(WeaponPartID::Right);
-			state_ = State::Roll;
+			if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 30 >= 0)
+			{
+				gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
+				state_ = State::Roll;
+				player_->AttackMotionInit(WeaponPartID::Right);
+			}
 		}
 		else
 		{
 			if (player_->GetisAttackMotionCanChange(WeaponPartID::Right) == true)
 			{
-				player_->AttackMotionInit(WeaponPartID::Right);
-				state_ = State::Backstep;
+				if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 30 >= 0)
+				{
+					gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
+					player_->AttackMotionInit(WeaponPartID::Right);
+					state_ = State::Backstep;
+				}
 			}
 		}
 	}
@@ -452,15 +510,23 @@ void Player::AttackR2Update()
 	{
 		if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 		{
-			player_->AttackMotionInit(WeaponPartID::Right);
-			state_ = State::Roll;
+			if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 30 >= 0)
+			{
+				gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
+				state_ = State::Roll;
+				player_->AttackMotionInit(WeaponPartID::Right);
+			}
 		}
 		else
 		{
 			if (player_->GetisAttackMotionCanChange(WeaponPartID::Right) == true)
 			{
-				player_->AttackMotionInit(WeaponPartID::Right);
-				state_ = State::Backstep;
+				if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 30 >= 0)
+				{
+					gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
+					player_->AttackMotionInit(WeaponPartID::Right);
+					state_ = State::Backstep;
+				}
 			}
 		}
 	}

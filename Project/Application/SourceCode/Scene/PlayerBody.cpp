@@ -1,5 +1,6 @@
 #include "PlayerBody.h"
 #include "Player.h"
+#include "GaugeType.h"
 
 PlayerBody::PlayerBody() :
 	moveMotion_(std::make_unique<MoveMotion>()),
@@ -97,6 +98,7 @@ void PlayerBody::RunMotion()
 }
 void PlayerBody::AttackR1MotionUpdate()
 {
+	// ŒãPlayer.cpp‚ÉˆÚ‚·
 	if (weapons_[(uint32_t)WeaponPartID::Right]->motion->GetisPlay() == true)
 	{
 		if (weapons_[(uint32_t)WeaponPartID::Right]->motion->GetisCanChangeMotion() == true)
@@ -104,8 +106,12 @@ void PlayerBody::AttackR1MotionUpdate()
 			// ƒRƒ“ƒ{‚Å‚«‚é‚½‚ß
 			if (Pad::GetButtonDown(PadCode::ButtonR1))
 			{
-				weapons_[(uint32_t)WeaponPartID::Right]->motion->Init(this);
-				weapons_[(uint32_t)WeaponPartID::Right]->motion->IncreComboCount();
+				if (parent->gaugePrames_[(uint32_t)GaugeType::Stamina].value - 20 >= 0)
+				{
+					parent->gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 20;
+					weapons_[(uint32_t)WeaponPartID::Right]->motion->Init(this);
+					weapons_[(uint32_t)WeaponPartID::Right]->motion->IncreComboCount();
+				}
 			}
 		}
 	}
