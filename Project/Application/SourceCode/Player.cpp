@@ -200,7 +200,7 @@ void Player::GaugeParamInit()
 	gaugePrames_[(uint32_t)GaugeType::Mp].CalcRate(64.f, 64.f);
 
 	// スタミナゲージ
-	gaugePrames_[(uint32_t)GaugeType::Stamina].CalcRate(128.f, 128.f);
+	gaugePrames_[(uint32_t)GaugeType::Stamina].CalcRate(160.f, 160.f);
 }
 void Player::GaugeParamUpdate()
 {

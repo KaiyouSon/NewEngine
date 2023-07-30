@@ -14,6 +14,7 @@ protected:
 	float backAttackDamage_;
 	float rollAttackDamage_;
 	float damage_;
+	float chargeRate_;
 
 public:
 	std::unique_ptr<Object3D> weapon;
@@ -34,8 +35,11 @@ public:
 
 public:
 	float GetDamage();
+	float GetChargeRate();
 
 public:
 	void SetisCalcCollider(const bool isCalcCollide);
+	void SetChargeRate(const float chargeRate);
+
 };
 

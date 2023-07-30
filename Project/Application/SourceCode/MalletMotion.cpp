@@ -365,6 +365,12 @@ void MalletMotion::HeavyStep1Update(PlayerBody* human)
 	{
 		ease_.SetisEnd(true);
 	}
+
+	if (ease_.GetisEnd())
+	{
+		Player* player = static_cast<Player*>(human->iParent);
+		player->weapon_->SetChargeRate(1.f + ease_.GetTimeRate());
+	}
 }
 void MalletMotion::HeavyStep2Init(PlayerBody* human)
 {

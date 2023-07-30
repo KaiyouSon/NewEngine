@@ -66,7 +66,7 @@ void Club::CalcDamage()
 
 	case AttackType::Heavy:
 		range = 10.f;
-		damage_ = Random::RangeF(heavyAttackDamage_ - range, heavyAttackDamage_ + range);
+		damage_ = Random::RangeF(heavyAttackDamage_ - range, heavyAttackDamage_ + range) * chargeRate_;
 		break;
 
 	case AttackType::Back:
