@@ -53,6 +53,7 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("UI/Menu/TempMenuBack.png", "MenuBack");
 	TextureManager::LoadTexture("UI/Menu/MenuTextFrame.png", "MenuTextFrame");
 	TextureManager::LoadTexture("UI/Menu/MenuTextLight.png", "MenuTextLight");
+	TextureManager::LoadTexture("UI/Result/ResultBack.png", "ResultBack");
 
 	// テキスト
 	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");
@@ -63,6 +64,8 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Text/Tutorial/TutorialStr3.png", "TutorialStr3");
 	TextureManager::LoadTexture("Text/Menu/BackToTitleStr.png", "BackToTitleStr");
 	TextureManager::LoadTexture("Text/Menu/CloseGameStr.png", "CloseGameStr");
+	TextureManager::LoadTexture("Text/Result/EnemyFelledStr.png", "EnemyFelledStr");
+	TextureManager::LoadTexture("Text/Result/YouDiedStr.png", "YouDiedStr");
 
 	// パーティクル
 	TextureManager::LoadTexture("Particle/Particle.png", "Particle");

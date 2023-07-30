@@ -4,7 +4,8 @@ UIManager::UIManager() :
 	bossHPGauge_(std::make_unique<GaugeUI>()),
 	negotiationUI_(std::make_unique<NegotiationUI>()),
 	messageUI_(std::make_unique<MessageUI>()),
-	itemBoxUIManager_(std::make_unique<ItemBoxUIManager>())
+	itemBoxUIManager_(std::make_unique<ItemBoxUIManager>()),
+	resultUI_(std::make_unique<ResultUI>())
 {
 	for (uint32_t i = 0; i < gauges_.size(); i++)
 	{
@@ -36,12 +37,28 @@ void UIManager::Init()
 	messageUI_->Init();
 
 	itemBoxUIManager_->Init();
+
+	resultUI_->Init();
 }
 
 void UIManager::Update()
 {
+	// デバッグ時のみ実行
+	DebuggingProcess([&]()
+		{
+			if (Key::GetKeyDown(DIK_1))
+			{
+				resultUI_->SetisActive(true);
+				resultUI_->SetResultType(ResultUI::ResultType::EnemyFelledStr);
+			}
+			else if (Key::GetKeyDown(DIK_2))
+			{
+				resultUI_->SetisActive(true);
+				resultUI_->SetResultType(ResultUI::ResultType::YouDiedStr);
+			}
+		});
+
 	// アイテムボックス(左下のやつ)
-	//itemBoxUIManager_->SetAlpha(alpha_);
 	itemBoxUIManager_->Update();
 
 	// プレイヤーのゲージ
@@ -58,6 +75,7 @@ void UIManager::Update()
 
 	messageUI_->Update();
 
+	resultUI_->Update();
 }
 
 void UIManager::DrawFrontSprite()
@@ -74,6 +92,8 @@ void UIManager::DrawFrontSprite()
 	itemBoxUIManager_->DrawFrontSprite();
 
 	bossHPGauge_->DrawFrontSprite();
+
+	resultUI_->DrawFrontSprite();
 }
 
 void UIManager::SetPlayer(Player* player)

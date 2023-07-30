@@ -579,6 +579,9 @@
     <ClCompile Include="Application\SourceCode\LogoutMenu.cpp">
       <Filter>Application\Source\Menu</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\ResultUI.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -970,6 +973,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\LogoutMenu.h">
       <Filter>Application\Header\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\ResultUI.h">
+      <Filter>Application\Header\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

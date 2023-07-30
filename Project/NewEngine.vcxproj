@@ -149,6 +149,7 @@
     <ClCompile Include="Application\SourceCode\Player.cpp" />
     <ClCompile Include="Application\SourceCode\PlayerRecoveryEffect.cpp" />
     <ClCompile Include="Application\SourceCode\RadialBlur.cpp" />
+    <ClCompile Include="Application\SourceCode\ResultUI.cpp" />
     <ClCompile Include="Application\SourceCode\RollMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\GameScene.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\LogoScene.cpp" />
@@ -276,6 +277,7 @@
     <ClInclude Include="Application\SourceCode\PlayerBody.h" />
     <ClInclude Include="Application\SourceCode\PlayerRecoveryEffect.h" />
     <ClInclude Include="Application\SourceCode\RadialBlur.h" />
+    <ClInclude Include="Application\SourceCode\ResultUI.h" />
     <ClInclude Include="Application\SourceCode\RollMotion.h" />
     <ClInclude Include="Application\SourceCode\Scene\GameScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\IScene.h" />

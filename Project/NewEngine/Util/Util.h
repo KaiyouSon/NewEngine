@@ -8,6 +8,7 @@
 #include "Easing.h"
 #include "BezierCurve.h"
 #include "Enum.h"
+#include <functional>
 
 static const int maxBoneIndices = 4;
 
@@ -90,3 +91,5 @@ Vec2 WorldToScreen(const Vec3 worldPos);
 
 // OŠpŒ`‚Ì–@ü‚ğ‹‚ß‚é
 Vec3 GetTriangleNormal(const Vec3 p0, const Vec3 p1, const Vec3 p2);
+
+void DebuggingProcess(std::function<void()> lambdaFunc);
