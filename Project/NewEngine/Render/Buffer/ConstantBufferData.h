@@ -118,4 +118,12 @@ namespace ConstantBufferData
 		Color color;
 		Vec2 range;
 	};
+
+	struct CDissolve
+	{
+		float dissolve;
+		float colorPower;
+		Vec2 pad;
+		Color dissolveColor;
+	};
 }

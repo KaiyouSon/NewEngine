@@ -2,6 +2,7 @@
 #include "ShaderIO.hlsli"
 
 Texture2D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
+Texture2D<float4> dissolveTex : register(t1); // 0番スロットに設定されたテクスチャ
 SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
 
 PSOutput main(V2P i)// : SV_TARGET
@@ -10,6 +11,10 @@ PSOutput main(V2P i)// : SV_TARGET
     
 	// テクスチャーマッピング
     float4 texColor = tex.Sample(smp, newUV);
+    float4 mask = dissolveTex.Sample(smp, newUV);
+    
+    float maskIntensity = smoothstep(0.1, 0.25, (0.5f + mask.r) - dissolve);
+    clip(maskIntensity - 0.01f);
     
 	// 光沢度
     const float shininess = 4.0f;
@@ -44,7 +49,8 @@ PSOutput main(V2P i)// : SV_TARGET
     float4 resultColor = adsColor * texColor * color;
     
     PSOutput output;
-    output.target0 = resultColor;
+    output.target0 = resultColor * maskIntensity + dissolveColor * colorPower * (1 - maskIntensity);
+   // output.target0 = resultColor * maskIntensity + float4(1, 0, 0, 1) * (1 - maskIntensity);
     output.target1 = float4(1 - resultColor.rgb, color.a);
     return output;
     

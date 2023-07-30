@@ -44,7 +44,7 @@ void UIManager::Init()
 void UIManager::Update()
 {
 	// デバッグ時のみ実行
-	DebuggingProcess([&]()
+	ProcessAtDebugBulid([&]()
 		{
 			if (Key::GetKeyDown(DIK_1))
 			{

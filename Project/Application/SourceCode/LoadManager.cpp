@@ -33,6 +33,7 @@ bool LoadManager::ModelLoad()
 bool LoadManager::TextureLoad()
 {
 	TextureManager::CreateDepthTexture(Vec2(1920, 1080));
+	TextureManager::LoadTexture("DissolveTexture.png", "DissolveTexture");
 
 	// ƒ^ƒCƒgƒ‹
 	TextureManager::LoadTexture("Title/GameTitle.png", "GameTitle");

@@ -44,6 +44,13 @@ cbuffer ConstantBufferDirectionalLight : register(b5)
     uint isActiveDirLight;
 }
 
+cbuffer ConstantBufferDissolve : register(b6)
+{
+    float dissolve;
+    float colorPower;
+    float4 dissolveColor;
+}
+
 struct Appdata
 {
     float4 pos : POSITION;

@@ -55,6 +55,25 @@ void Player::PrevUpdate()
 }
 void Player::PostUpdate()
 {
+	static bool flag = false;
+	if (Key::GetKeyDown(DIK_SPACE))
+	{
+		flag = true;
+		for (uint32_t i = 0; i < player_->parts_.size(); i++)
+		{
+			player_->parts_[i]->dissolve = 0.f;
+		}
+
+	}
+	if (flag == true)
+	{
+		for (uint32_t i = 0; i < player_->parts_.size(); i++)
+		{
+			player_->parts_[i]->dissolve += 0.005f;
+			player_->parts_[i]->dissolve = Min(player_->parts_[i]->dissolve, 2.f);
+		}
+	}
+
 	player_->DebugUpdate();
 	player_->Update();
 }
@@ -64,6 +83,19 @@ void Player::DrawModel()
 }
 void Player::DrawDebugGui()
 {
+	//static float power = 1;
+	//static Color color = Color::red;
+	//GuiManager::BeginWindow("Player Alpha");
+	//GuiManager::DrawSlider1("D power", power, 0.01f);
+	//GuiManager::DrawColorEdit("D color", color);
+	//GuiManager::EndWindow();
+
+	//for (uint32_t i = 1; i < player_->parts_.size(); i++)
+	//{
+	//	player_->parts_[i]->colorPower = power;
+	//	player_->parts_[i]->dissolveColor = color;
+	//}
+
 	player_->DrawDebugGui();
 }
 

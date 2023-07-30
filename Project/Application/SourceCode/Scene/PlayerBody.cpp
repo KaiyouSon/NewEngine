@@ -23,6 +23,13 @@ void PlayerBody::Init()
 {
 	BaseInit();
 
+	for (uint32_t i = 1; i < parts_.size(); i++)
+	{
+		parts_[i]->isUseDissolve = true;
+		parts_[i]->colorPower = 5;
+		parts_[i]->dissolveColor = Color(255,30,0,255);
+	}
+
 	moveMotion_->Init(this);
 	backstepMotion_->Init(this);
 	rollMotion_->Init(this);

@@ -36,7 +36,6 @@ void HumanoidBody::BaseInit()
 	parts_[(uint32_t)PartID::LeftThigh]->color = Color::black;
 	parts_[(uint32_t)PartID::LeftHand]->color = Color::green;
 	parts_[(uint32_t)PartID::LeftLeg]->color = Color::blue;
-
 }
 void HumanoidBody::BaseUpdate()
 {

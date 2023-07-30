@@ -12,7 +12,9 @@ Object3D::Object3D() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0), offset(0, 0), tiling(1, 1),
 	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
 	texture_(TextureManager::GetTexture("White")),
-	isLighting(false)
+	dissolveTex_(TextureManager::GetTexture("DissolveTexture")),
+	isLighting(false),
+	isUseDissolve(false), dissolve(0.f), colorPower(1), dissolveColor(Color::red)
 {
 	// マテリアルの初期化
 	MaterialInit();
@@ -65,6 +67,11 @@ void Object3D::Draw(const BlendMode blendMode)
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)index, texture_->GetGpuHandle());
 
+	if (isUseDissolve == true)
+	{
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)index + 1, dissolveTex_->GetGpuHandle());
+	}
+
 	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)model_->mesh.indices.size(), 1, 0, 0, 0);
 }
 
@@ -94,6 +101,10 @@ void Object3D::MaterialInit()
 	iConstantBuffer = std::make_unique<ConstantBuffer<CUVParameter>>();
 	material_.constantBuffers.push_back(std::move(iConstantBuffer));
 
+	// UV情報
+	iConstantBuffer = std::make_unique<ConstantBuffer<CDissolve>>();
+	material_.constantBuffers.push_back(std::move(iConstantBuffer));
+
 	// 初期化
 	material_.Init();
 }
@@ -102,7 +113,7 @@ void Object3D::MaterialTransfer()
 	// マトリックス
 	CTransform3D transform3DData =
 	{
-		Camera::current.GetViewLookToMat()* Camera::current.GetPerspectiveProjectionMat(),
+		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
 		//Camera::current.GetViewLookAtMat() * Camera::current.GetPerspectiveProjectionMat(),
 		transform_.GetWorldMat(),
 		Camera::current.pos
@@ -150,9 +161,13 @@ void Object3D::MaterialTransfer()
 		TransferDataToConstantBuffer(material_.constantBuffers[3].get(), skinData);
 	}
 
-	// 色データ
+	// UVデータ
 	CUVParameter uvData = { offset,tiling };
 	TransferDataToConstantBuffer(material_.constantBuffers[4].get(), uvData);
+
+	// ディゾルブ
+	CDissolve dissolveData = { dissolve,colorPower,Vec2(0,0), dissolveColor.GetColorTo01() };
+	TransferDataToConstantBuffer(material_.constantBuffers[5].get(), dissolveData);
 }
 void Object3D::MaterialDrawCommands()
 {
@@ -174,6 +189,8 @@ void Object3D::MaterialDrawCommands()
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		4, material_.constantBuffers[4]->constantBuffer->GetGPUVirtualAddress());
 
+	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+		6, material_.constantBuffers[5]->constantBuffer->GetGPUVirtualAddress());
 }
 
 // --- セッター -------------------------------------------------------- //

@@ -438,7 +438,7 @@ void RenderBase::RootSignatureInit()
 	object3DRootSignature_ = std::make_unique<RootSignature>();
 	object3DRootSignature_->AddConstantBufferViewToRootRrameter(7);
 	object3DRootSignature_->AddDescriptorRangeToRootPrameter(1);
-	object3DRootSignature_->Create(1);
+	object3DRootSignature_->Create(2);
 
 	// スプライト用
 	spriteRootSignature_ = std::make_unique<RootSignature>();

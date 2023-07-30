@@ -15,6 +15,7 @@ private:
 	Transform* parent_;
 	Model* model_;
 	Texture* texture_;
+	Texture* dissolveTex_;
 	Material material_;
 	GraphicsPipeline* graphicsPipeline_;
 
@@ -28,7 +29,12 @@ public:
 	Vec2 tiling;
 	Vec2 offset;
 
+	float dissolve;
+	float colorPower;
+	Color dissolveColor;
+
 	bool isLighting;
+	bool isUseDissolve;
 	static bool isAllLighting;
 
 private:
