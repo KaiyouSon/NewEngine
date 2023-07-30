@@ -53,11 +53,16 @@ void DrinkMotion::CurrentStepInit(HumanoidBody* human)
 }
 void DrinkMotion::CurrentStepUpdate(HumanoidBody* human)
 {
+	Player* player = static_cast<Player*>(human->iParent);
+	if (player->GetButtonNum() <= 0)
+	{
+		return;
+	}
+
 	if (step_ == 2)
 	{
 		if (ease_.GetisEnd() == true)
 		{
-			Player* player = static_cast<Player*>(human->iParent);
 			Vec3 pos = player->GetPos() + Vec3::down * 2;
 
 			player->Recovery();

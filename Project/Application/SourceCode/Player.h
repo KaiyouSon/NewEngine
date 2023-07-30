@@ -27,9 +27,10 @@ private:
 	std::array<GaugeParam, 3> gaugePrames_;
 	std::unique_ptr<Weapon> weapon_;
 	std::unique_ptr<PlayerBody> player_;
+	uint32_t bottleNum_;
 
 	bool isAlive_;
-	bool isDissolve;
+	bool isDissolve_;
 
 private:
 	Timer pushTimer; //ƒ{ƒ^ƒ“˜A‘Å‚³‚¹‚È‚¢‚æ‚¤‚É
@@ -112,6 +113,7 @@ public:
 	bool GetisDamage();
 	bool GetisAlive();
 	bool GetisDissolve();
+	uint32_t GetButtonNum();
 
 private:
 	friend PlayerBody;

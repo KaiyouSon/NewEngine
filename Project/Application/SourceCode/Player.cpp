@@ -27,11 +27,13 @@ void Player::Init()
 	damageCoolTimer_.SetLimitTimer(30);
 
 	isAlive_ = true;
-	isDissolve = false;
+	isDissolve_ = false;
 
 	weapon_->weapon->isUseDissolve = true;
 	weapon_->weapon->colorPower = 5;
 	weapon_->weapon->dissolveColor = Color(255, 30, 0, 255);
+
+	bottleNum_ = 4;
 }
 void Player::PrevUpdate()
 {
@@ -76,9 +78,9 @@ void Player::PrevUpdate()
 
 		if (player_->parts_[1]->dissolve >= 0.5f)
 		{
-			if (isDissolve == false)
+			if (isDissolve_ == false)
 			{
-				isDissolve = true;
+				isDissolve_ = true;
 			}
 		}
 	}
@@ -135,6 +137,8 @@ void Player::DrawDebugGui()
 void Player::Recovery()
 {
 	gaugePrames_[(uint32_t)GaugeType::Hp].value += 96.f;
+	bottleNum_--;
+	bottleNum_ = Max<uint32_t>(bottleNum_, 0);
 }
 void Player::Damage(const float damage)
 {
@@ -592,5 +596,9 @@ bool Player::GetisAlive()
 }
 bool Player::GetisDissolve()
 {
-	return isDissolve;
+	return isDissolve_;
+}
+uint32_t Player::GetButtonNum()
+{
+	return bottleNum_;
 }
