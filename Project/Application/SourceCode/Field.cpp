@@ -11,13 +11,23 @@ Field::Field() :
 	for (uint32_t i = 0; i < messageSigns_.size(); i++)
 	{
 		messageSigns_[i] = std::make_unique<MessageSign>();
-		messageSigns_[i]->SetPos(Vec3(-20 + (float)(i * 20), 0, 50));
 		messageSigns_[i]->SetRot(Vec3(0, Radian(90), 0));
+
+		if (i < 3)
+		{
+			messageSigns_[i]->SetPos(Vec3(-20 + (float)(i * 20), 0, 50));
+		}
+		else
+		{
+			messageSigns_[i]->SetPos(Vec3(0, 0, 75 + (float)(i - 3) * 25));
+		}
 	}
 
 	messageSigns_[0]->SetMessageTexture(TextureManager::GetTexture("TutorialStr2"));
 	messageSigns_[1]->SetMessageTexture(TextureManager::GetTexture("TutorialStr1"));
 	messageSigns_[2]->SetMessageTexture(TextureManager::GetTexture("TutorialStr3"));
+	messageSigns_[3]->SetMessageTexture(TextureManager::GetTexture("TutorialStr4"));
+	messageSigns_[4]->SetMessageTexture(TextureManager::GetTexture("TutorialStr5"));
 
 	Init();
 }
@@ -70,7 +80,7 @@ void Field::DrawDebugGui()
 	skydome_->DrawDebugGui();
 }
 
-std::array<std::unique_ptr<MessageSign>, 3>* Field::GetMessageSigns()
+std::array<std::unique_ptr<MessageSign>, 5>* Field::GetMessageSigns()
 {
 	return &messageSigns_;
 }

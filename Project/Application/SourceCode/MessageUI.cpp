@@ -15,6 +15,8 @@ MessageUI::MessageUI() :
 	messageSignUI_->SetTexture(TextureManager::GetTexture("MessageSignUI"));
 	message_->SetTexture(TextureManager::GetTexture("TutorialStr1"));
 
+	message_->SetAnchorPoint(Vec2(0.0f, 0.5f));
+
 	button_->SetTextureRect(Vec2(96, 96), Vec2(192, 192));
 	button_->SetSize(96);
 }
@@ -41,6 +43,8 @@ void MessageUI::Update()
 	const float add = isActive_ ? 35.f : -35.f;
 	alpha_ += add;
 	alpha_ = Clamp<float>(alpha_, 0.f, 255.f);
+
+	message_->pos = Vec2(-250.f, -20.f);
 
 	messageSignUI_->scale = 0.4f;
 	messageSignUI_->pos.x = -350.f;

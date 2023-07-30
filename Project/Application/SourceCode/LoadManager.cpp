@@ -63,6 +63,8 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Text/Tutorial/TutorialStr1.png", "TutorialStr1");
 	TextureManager::LoadTexture("Text/Tutorial/TutorialStr2.png", "TutorialStr2");
 	TextureManager::LoadTexture("Text/Tutorial/TutorialStr3.png", "TutorialStr3");
+	TextureManager::LoadTexture("Text/Tutorial/TutorialStr4.png", "TutorialStr4");
+	TextureManager::LoadTexture("Text/Tutorial/TutorialStr5.png", "TutorialStr5");
 	TextureManager::LoadTexture("Text/Menu/BackToTitleStr.png", "BackToTitleStr");
 	TextureManager::LoadTexture("Text/Menu/CloseGameStr.png", "CloseGameStr");
 	TextureManager::LoadTexture("Text/Result/EnemyFelledStr.png", "EnemyFelledStr");
