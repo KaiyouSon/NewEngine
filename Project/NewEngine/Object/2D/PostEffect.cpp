@@ -129,11 +129,6 @@ void PostEffect::AddRenderTexture(RenderTexture* renderTexture)
 	}
 }
 
-void PostEffect::UseDepthTexture()
-{
-	depthTexture_ = TextureManager::GetTexture("DepthTexture");
-}
-
 void PostEffect::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
 	graphicsPipeline_ = graphicsPipeline;

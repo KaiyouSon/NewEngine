@@ -49,9 +49,7 @@ public: // その他
 		material_.constantBuffers.push_back(std::move(iConstatnBuffer));
 	}
 
-	void UseDepthTexture();
-
-public: 	// ゲッター
+public: // ゲッター
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 	void SetDrawCommands(const uint32_t registerNum, const uint32_t bufferNum);
 
