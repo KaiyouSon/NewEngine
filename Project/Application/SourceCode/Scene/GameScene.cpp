@@ -13,12 +13,7 @@ GameScene::GameScene() :
 	menuManager_(std::make_unique<MenuManager>()),
 	field_(std::make_unique<Field>())
 {
-	currentScene_ = std::make_unique<PostEffect>();
-	tex_ = TextureManager::GetRenderTexture("CurrentScene");
-	currentScene_->AddRenderTexture(tex_);
-	currentScene_->anchorPoint = 0;
-	currentScene_->scale = 0.5f;
-	currentScene_->pos = GetWindowHalfSize() / 2;
+
 }
 GameScene::~GameScene()
 {
@@ -54,7 +49,7 @@ void GameScene::Init()
 	EffectManager::GetInstance()->Init();
 
 	LightManager::GetInstance()->directionalLight.isActive = true;
-	LightManager::GetInstance()->directionalLight.pos = Vec3(-1, 1, -1);
+	LightManager::GetInstance()->directionalLight.pos = Vec3(-1, 10, -1);
 
 	SceneChanger::GetInstance()->SetisEaseTitleBGM(false);
 
@@ -108,8 +103,10 @@ void GameScene::Update()
 		player_->PostUpdate();
 	}
 
+
 	menuManager_->Update();
 	field_->Update();
+	shadowMap_.Update();
 	EffectManager::GetInstance()->Update();
 
 	if (menuManager_->GetisActive() == false)
@@ -162,10 +159,14 @@ void GameScene::Update()
 
 void GameScene::RenderTextureSetting()
 {
+	shadowMap_.RenderTextureSetting();
 }
 
 void GameScene::DrawRenderTexture()
 {
+	shadowMap_.DrawPostEffect();
+
+
 	//currentScene_->Draw();
 }
 void GameScene::DrawBackSprite()
@@ -193,7 +194,7 @@ void GameScene::DrawDebugGui()
 	GuiManager::DrawColorEdit("color", LightManager::GetInstance()->directionalLight.color);
 	GuiManager::EndWindow();
 
-	field_->DrawDebugGui();
+	//field_->DrawDebugGui();
 
-	player_->DrawDebugGui();
+	//player_->DrawDebugGui();
 }

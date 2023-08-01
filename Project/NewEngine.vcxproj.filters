@@ -582,6 +582,9 @@
     <ClCompile Include="Application\SourceCode\ResultUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\ShadowMap.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -976,6 +979,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\ResultUI.h">
       <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\ShadowMap.h">
+      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

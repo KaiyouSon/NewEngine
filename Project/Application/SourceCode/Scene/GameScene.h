@@ -6,6 +6,7 @@
 #include "CameraManager.h"
 #include "MenuManager.h"
 #include "Field.h"
+#include "ShadowMap.h"
 
 class GameScene : public IScene
 {
@@ -17,8 +18,7 @@ private:
 	std::unique_ptr<MenuManager> menuManager_;
 	std::unique_ptr<Field> field_;
 
-	std::unique_ptr<PostEffect> currentScene_;
-	RenderTexture* tex_;
+	ShadowMap shadowMap_;
 
 	float bgmVolume_;
 

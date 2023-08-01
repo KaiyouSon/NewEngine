@@ -5,6 +5,7 @@
 #include "Material.h"
 #include "Util.h"
 #include "GraphicsPipeline.h"
+#include "Camera.h"
 
 class Object3D
 {
@@ -18,6 +19,8 @@ private:
 	Texture* dissolveTex_;
 	Material material_;
 	GraphicsPipeline* graphicsPipeline_;
+	Camera* camera_;
+	bool isShadow_;
 
 	FbxAnimation animation;
 
@@ -64,6 +67,12 @@ public: //セッター
 
 	// アニメーション
 	void SetAnimation(const uint32_t animationIndex, const uint32_t maxFrame, const bool isPlay = true);
+
+	// カメラ
+	void SetCamera(Camera* camera = nullptr);
+
+	// 影
+	void SetisShadow(const bool isShadow);
 
 public: // ゲッター
 

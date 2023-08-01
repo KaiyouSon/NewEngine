@@ -106,7 +106,6 @@ bool LoadManager::SoundLoad()
 
 	SoundManager::LoadSound("SE/BossAttackSE.wav", "BossAttackSE");
 
-
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
 	return true;
 }

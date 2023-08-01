@@ -3,6 +3,7 @@
 #include "LightManager.h"
 #include "Camera.h"
 #include "FbxModel.h"
+#include "ShadowMap.h"
 
 using namespace ConstantBufferData;
 
@@ -13,7 +14,7 @@ Object3D::Object3D() :
 	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
 	texture_(TextureManager::GetTexture("White")),
 	dissolveTex_(TextureManager::GetTexture("DissolveTexture")),
-	isLighting(false),
+	isLighting(false), isShadow_(false), camera_(&Camera::current),
 	isUseDissolve(false), dissolve(0.f), colorPower(1), dissolveColor(Color::red)
 {
 	// マテリアルの初期化
@@ -29,6 +30,12 @@ Object3D::Object3D() :
 
 void Object3D::Update(Transform* parent)
 {
+	// カメラが設定してない場合
+	if (camera_ == nullptr || camera_ == &Camera::current)
+	{
+		camera_ = &Camera::current;
+	}
+
 	transform_.pos = pos;
 	transform_.scale = scale;
 	transform_.rot = rot;
@@ -41,6 +48,11 @@ void Object3D::Update(Transform* parent)
 		Mat4 mat = transform_.GetWorldMat();
 		mat *= parent_->GetWorldMat();
 		transform_.SetWorldMat(mat);
+	}
+
+	if (isShadow_ == true)
+	{
+		ShadowMap::Bind(*this);
 	}
 
 	// マテリアルの転送
@@ -113,10 +125,9 @@ void Object3D::MaterialTransfer()
 	// マトリックス
 	CTransform3D transform3DData =
 	{
-		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
-		//Camera::current.GetViewLookAtMat() * Camera::current.GetPerspectiveProjectionMat(),
+		camera_->GetViewLookToMat() * camera_->GetPerspectiveProjectionMat(),
 		transform_.GetWorldMat(),
-		Camera::current.pos
+		camera_->pos
 	};
 	TransferDataToConstantBuffer(material_.constantBuffers[0].get(), transform3DData);
 
@@ -132,7 +143,6 @@ void Object3D::MaterialTransfer()
 		materialColorData =
 		{
 			Color(1, 1, 1) - 0.5f,
-			//model_->material.ambient,
 			model_->material.diffuse,
 			model_->material.specular,
 		};
@@ -259,6 +269,22 @@ void Object3D::SetAnimation(const uint32_t animationIndex, const uint32_t maxFra
 		fbxModel->animation.index = animationIndex;
 		fbxModel->animation.timer.SetLimitTimer(maxFrame);
 		fbxModel->animation.isPlay = isPlay;
+	}
+}
+
+// カメラ
+void Object3D::SetCamera(Camera* camera)
+{
+	camera_ = camera;
+}
+
+void Object3D::SetisShadow(const bool isShadow)
+{
+	isShadow_ = isShadow;
+
+	if (isShadow_ == true)
+	{
+		ShadowMap::Register();
 	}
 }
 

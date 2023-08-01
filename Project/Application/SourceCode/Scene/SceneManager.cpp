@@ -25,7 +25,7 @@ SceneManager::SceneManager()
 	DOF::CreateGraphicsPipeline();
 	RadialBlur::CreateGraphicsPipeline();
 	Vignette::CreateGraphicsPipeline();
-	currentScene = std::make_unique<TitleScene>();
+	currentScene = std::make_unique<GameScene>();
 }
 
 SceneManager::~SceneManager()
