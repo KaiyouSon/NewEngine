@@ -1,10 +1,10 @@
 #pragma once
 #include "Enum.h"
 
-class ICollider
+struct ICollider
 {
-protected:
-	ColliderPrimitive primitive_;
+public:
+	ColliderPrimitive primitive;
 	bool isActive = true;
 
 public:

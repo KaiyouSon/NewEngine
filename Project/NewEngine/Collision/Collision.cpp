@@ -4,6 +4,11 @@
 // 円と円
 bool Collision::CircleHitCircle(const CircleCollider& circle1, const CircleCollider& circle2)
 {
+	if (circle1.isActive == false || circle2.isActive == false)
+	{
+		return false;
+	}
+
 	return
 	{
 		(circle2.centerPos.x - circle1.centerPos.x) *
@@ -18,6 +23,11 @@ bool Collision::CircleHitCircle(const CircleCollider& circle1, const CircleColli
 // 球と球
 bool Collision::SphereHitSphere(const SphereCollider& sphere1, const SphereCollider& sphere2)
 {
+	if (sphere1.isActive == false || sphere2.isActive == false)
+	{
+		return false;
+	}
+
 	return
 	{
 		(sphere2.centerPos.x - sphere1.centerPos.x) *
@@ -34,6 +44,11 @@ bool Collision::SphereHitSphere(const SphereCollider& sphere1, const SphereColli
 // キューブとキューブ
 bool Collision::CubeHitCube(const CubeCollider& cube1, const CubeCollider& cube2)
 {
+	if (cube1.isActive == false || cube2.isActive == false)
+	{
+		return false;
+	}
+
 	// 重なり判定
 	for (int i = 0; i < 8; ++i)
 	{
@@ -61,6 +76,11 @@ bool Collision::CubeHitCube(const CubeCollider& cube1, const CubeCollider& cube2
 // 球と平面
 bool Collision::SphereHitPlane(const SphereCollider& sphere, const PlaneCollider& plane, Vec3* hitPos)
 {
+	if (sphere.isActive == false || plane.isActive == false)
+	{
+		return false;
+	}
+
 	// 座標系の原点から球の中心座標への距離
 	float dot1 = Vec3::Dot(sphere.centerPos, plane.normal);
 	// 平面の原点距離
@@ -83,6 +103,11 @@ bool Collision::SphereHitPlane(const SphereCollider& sphere, const PlaneCollider
 // 球と三角形
 bool Collision::SphereHitTriangle(const SphereCollider& sphere, const TriangleCollider& triangle, Vec3* hitPos)
 {
+	if (sphere.isActive == false || triangle.isActive == false)
+	{
+		return false;
+	}
+
 	Vec3 p = ClosestPointOfPointAndTriangle(sphere.centerPos, triangle);
 
 	Vec3 v = p - sphere.centerPos;
@@ -105,6 +130,11 @@ bool Collision::SphereHitTriangle(const SphereCollider& sphere, const TriangleCo
 // 球とカプセル
 bool Collision::SphereHitCapsule(const SphereCollider& sphere, const CapsuleCollider& capsule)
 {
+	if (sphere.isActive == false || capsule.isActive == false)
+	{
+		return false;
+	}
+
 	// カプセルの軸ベクトルと球の中心位置ベクトルの差を計算
 	Vec3 capsuleAxis = capsule.endPos - capsule.startPos;
 	Vec3 sphereToCapsule = sphere.centerPos - capsule.startPos;
@@ -151,6 +181,11 @@ bool Collision::SphereHitCapsule(const SphereCollider& sphere, const CapsuleColl
 // レイと平面
 bool Collision::RayHitPlane(const RayCollider& ray, const PlaneCollider& plane)
 {
+	if (ray.isActive == false || plane.isActive == false)
+	{
+		return false;
+	}
+
 	const float epsilon = 1.0e-5f;
 
 	// 座標系の原点からレイの始点座標への距離
@@ -179,6 +214,11 @@ bool Collision::RayHitPlane(const RayCollider& ray, const PlaneCollider& plane)
 // レイと球
 bool Collision::RayHitSphere(const RayCollider& ray, const SphereCollider& sphere)
 {
+	if (ray.isActive == false || sphere.isActive == false)
+	{
+		return false;
+	}
+
 	Vec3 v = ray.startPos - sphere.centerPos;
 	float dot1 = Vec3::Dot(v, ray.dirVec);
 	float dot2 = Vec3::Dot(v, v) - (sphere.radius * sphere.radius);
@@ -199,8 +239,14 @@ bool Collision::RayHitSphere(const RayCollider& ray, const SphereCollider& spher
 	return true;
 }
 
+// カプセルとカプセルの当たり判定
 bool Collision::CapsuleHitCapsule(const CapsuleCollider& capsule1, const CapsuleCollider& capsule2)
 {
+	if (capsule1.isActive == false || capsule2.isActive == false)
+	{
+		return false;
+	}
+
 	Vec3 empty = 0;
 	return CapsuleHitCapsule(capsule1, capsule2, empty);
 }
@@ -208,6 +254,11 @@ bool Collision::CapsuleHitCapsule(const CapsuleCollider& capsule1, const Capsule
 // カプセルとカプセル
 bool Collision::CapsuleHitCapsule(const CapsuleCollider& capsule1, const CapsuleCollider& capsule2, Vec3& hitPoint)
 {
+	if (capsule1.isActive == false || capsule2.isActive == false)
+	{
+		return false;
+	}
+
 	Vec3 d1 = capsule1.endPos - capsule1.startPos;
 	Vec3 d2 = capsule2.endPos - capsule2.startPos;
 
@@ -286,6 +337,11 @@ bool Collision::CapsuleHitCapsule(const CapsuleCollider& capsule1, const Capsule
 // 点と三角形の最近接点
 Vec3 Collision::ClosestPointOfPointAndTriangle(const Vec3 point, const TriangleCollider& triangle)
 {
+	if (triangle.isActive == false)
+	{
+		return false;
+	}
+
 	// pointがp0の外側の頂点領域の中にあるかどうかチェック
 	Vec3 p0_p1 = triangle.p1 - triangle.p0;
 	Vec3 p0_p2 = triangle.p2 - triangle.p0;
