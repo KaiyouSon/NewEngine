@@ -653,8 +653,7 @@ RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, uint32_t num, std:
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
 	renderTex->renderTargets.resize(num);
-	renderTex->cpuHandles.resize(num);
-	renderTex->gpuHandles.resize(num);
+	renderTex->SetHandleNum(num);
 	for (uint32_t i = 0; i < num; i++)
 	{
 		// SRV作成
@@ -713,8 +712,8 @@ void TextureManager::CreateSRV(Texture& texture, ID3D12Resource* buffer)
 	UINT descriptorSize = RenderBase::GetInstance()->GetDevice()->
 		GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-	srvCpuHandle.ptr += (SIZE_T)(descriptorSize * srvIncrementIndex_);
-	srvGpuHandle.ptr += (SIZE_T)(descriptorSize * srvIncrementIndex_);
+	srvCpuHandle.ptr += (int32_t)(descriptorSize * srvIncrementIndex_);
+	srvGpuHandle.ptr += (int32_t)(descriptorSize * srvIncrementIndex_);
 
 	texture.SetCpuHandle(srvCpuHandle);
 	texture.SetGpuHandle(srvGpuHandle);
@@ -749,11 +748,11 @@ void TextureManager::CreateSRV(RenderTexture& texture, ID3D12Resource* buffer, u
 	UINT descriptorSize = RenderBase::GetInstance()->GetDevice()->
 		GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-	srvCpuHandle.ptr += (SIZE_T)(descriptorSize * srvIncrementIndex_);
-	srvGpuHandle.ptr += (SIZE_T)(descriptorSize * srvIncrementIndex_);
+	srvCpuHandle.ptr += (int32_t)(descriptorSize * srvIncrementIndex_);
+	srvGpuHandle.ptr += (int32_t)(descriptorSize * srvIncrementIndex_);
 
-	texture.cpuHandles[index] = srvCpuHandle;
-	texture.gpuHandles[index] = srvGpuHandle;
+	texture.SetCpuHandle(index, srvCpuHandle);
+	texture.SetGpuHandle(index, srvGpuHandle);
 
 	// シェーダーリソースビュー設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	// srv設定構造体

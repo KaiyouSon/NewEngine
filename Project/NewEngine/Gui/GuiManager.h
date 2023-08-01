@@ -8,7 +8,7 @@ template<typename T> class Singleton;
 class GuiManager : public Singleton<GuiManager>
 {
 private:
-	static const uint32_t sNumFramesInFlight_;
+	static const uint32_t sNumFramesInFlight;
 
 public:
 	void Init();

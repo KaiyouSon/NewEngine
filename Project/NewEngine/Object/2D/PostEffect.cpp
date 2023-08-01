@@ -56,7 +56,7 @@ void PostEffect::Draw()
 	for (uint32_t i = 0; i < renderTextures_.size(); i++)
 	{
 		renderBase->GetCommandList()->
-			SetGraphicsRootDescriptorTable(index + i, renderTextures_[i]->gpuHandles[rtvIndex]);
+			SetGraphicsRootDescriptorTable(index + i, renderTextures_[i]->GetGpuHandle(rtvIndex));
 		if (renderTextures_[i]->useDepth == true)
 		{
 			renderBase->GetCommandList()->

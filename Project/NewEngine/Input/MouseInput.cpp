@@ -3,13 +3,10 @@
 #include "RenderWindow.h"
 #include <cassert>
 
-#pragma region その他の処理
-
 MouseInput::MouseInput() :
 	mouse_(nullptr), mouseInput_({}), prevMouseInput_({})
 {
 }
-
 void MouseInput::Init()
 {
 	HRESULT result;
@@ -30,7 +27,6 @@ void MouseInput::Init()
 		DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	assert(SUCCEEDED(result));
 }
-
 void MouseInput::Update()
 {
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
@@ -53,32 +49,28 @@ void MouseInput::Update()
 	mousePos_.y = static_cast<float>(tempMousePos.y);
 }
 
-#pragma endregion
-
-#pragma region マウスの処理
-
 // クリックしている間
-bool MouseInput::GetClick(const MouseCodo mouseCodo)
+bool MouseInput::GetClick(const MouseCode mouseCode)
 {
-	bool isClick = (GetInstance()->mouseInput_.rgbButtons[(int)mouseCodo] & 0x80) != 0;
+	bool isClick = (GetInstance()->mouseInput_.rgbButtons[(int)mouseCode] & 0x80) != 0;
 
 	return isClick;
 }
 
 // クリックした瞬間
-bool MouseInput::GetClickDown(const MouseCodo mouseCodo)
+bool MouseInput::GetClickDown(const MouseCode mouseCode)
 {
-	bool isClick = (GetInstance()->mouseInput_.rgbButtons[(int)mouseCodo] & 0x80) != 0;
-	bool isPrevClick = (GetInstance()->prevMouseInput_.rgbButtons[(int)mouseCodo] & 0x80) != 0;
+	bool isClick = (GetInstance()->mouseInput_.rgbButtons[(int)mouseCode] & 0x80) != 0;
+	bool isPrevClick = (GetInstance()->prevMouseInput_.rgbButtons[(int)mouseCode] & 0x80) != 0;
 
 	return isClick && !isPrevClick;
 }
 
 // クリックし終わった瞬間
-bool MouseInput::GetClickUp(const MouseCodo mouseCodo)
+bool MouseInput::GetClickUp(const MouseCode mouseCode)
 {
-	bool isClick = (GetInstance()->mouseInput_.rgbButtons[(int)mouseCodo] & 0x80) != 0;
-	bool isPrevClick = (GetInstance()->prevMouseInput_.rgbButtons[(int)mouseCodo] & 0x80) != 0;
+	bool isClick = (GetInstance()->mouseInput_.rgbButtons[(int)mouseCode] & 0x80) != 0;
+	bool isPrevClick = (GetInstance()->prevMouseInput_.rgbButtons[(int)mouseCode] & 0x80) != 0;
 
 	return !isClick && isPrevClick;
 }
@@ -100,5 +92,3 @@ float MouseInput::GetWheelMoveVec()
 {
 	return (float)GetInstance()->mouseInput_.lZ;
 }
-
-#pragma endregion

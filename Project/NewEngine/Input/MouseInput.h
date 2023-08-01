@@ -1,15 +1,9 @@
 #pragma once
 #include "MathUtil.h"
 #include "Singleton.h"
+#include "Enum.h"
 #include <dinput.h>
 #include <wrl.h>
-
-enum class MouseCodo
-{
-	Left = 0,
-	Right = 1,
-	Wheel = 2,
-};
 
 template<typename T> class Singleton;
 
@@ -26,13 +20,13 @@ public:
 	void Update();
 
 	// クリックしてる時
-	static bool GetClick(const MouseCodo mouseCodo);
+	static bool GetClick(const MouseCode mouseCode);
 
 	// クリックした瞬間
-	static bool GetClickDown(const MouseCodo mouseCodo);
+	static bool GetClickDown(const MouseCode mouseCode);
 
 	// クリックし終わった瞬間
-	static bool GetClickUp(const MouseCodo mouseCodo);
+	static bool GetClickUp(const MouseCode mouseCode);
 
 	// マウスの座標
 	static Vec2 GetPos();

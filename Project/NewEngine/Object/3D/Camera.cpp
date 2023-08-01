@@ -57,7 +57,7 @@ void Camera::DebugCameraUpdate()
 	};
 
 	// âÒì]
-	if (Mouse::GetClick(MouseCodo::Wheel) && !Key::GetKey(DIK_LSHIFT))
+	if (Mouse::GetClick(MouseCode::Wheel) && !Key::GetKey(DIK_LSHIFT))
 	{
 		if (Mouse::GetMoveVec().x != 0 || Mouse::GetMoveVec().y != 0)
 		{
@@ -68,7 +68,7 @@ void Camera::DebugCameraUpdate()
 	}
 
 	// ïΩçsà⁄ìÆ
-	if (Mouse::GetClick(MouseCodo::Wheel) && Key::GetKey(DIK_LSHIFT))
+	if (Mouse::GetClick(MouseCode::Wheel) && Key::GetKey(DIK_LSHIFT))
 	{
 		if (Mouse::GetMoveVec().x != 0 || Mouse::GetMoveVec().y != 0)
 		{

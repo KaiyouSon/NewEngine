@@ -4,15 +4,10 @@
 #include <cassert>
 #include <dbt.h>
 
-#pragma region 静的メンバ変数
+bool JoypadInput::sIsInsertPad = false;
+uint32_t JoypadInput::sPadIndex = 0;
 
-bool JoypadInput::sIsInsertPad_ = false;
-uint32_t JoypadInput::sPadIndex_ = 0;
-
-#pragma endregion
-
-#pragma region ウィンドウプロシージャ
-
+// ウィンドウプロシージャ
 LRESULT SubWindowProc(int code, WPARAM wParam, LPARAM lParam)
 {
 	if (code < 0)
@@ -34,10 +29,6 @@ LRESULT SubWindowProc(int code, WPARAM wParam, LPARAM lParam)
 
 	return CallNextHookEx(NULL, code, wParam, lParam);
 }
-
-#pragma endregion
-
-#pragma region その他の処理
 
 JoypadInput::JoypadInput()
 {
@@ -61,11 +52,11 @@ void JoypadInput::Init()
 }
 void JoypadInput::Update()
 {
-	if (sIsInsertPad_ == true)
+	if (sIsInsertPad == true)
 	{
 		joypadObjs_.clear();
 		SetJoyStick();
-		sIsInsertPad_ = false;
+		sIsInsertPad = false;
 	}
 
 	for (int i = 0; i < joypadObjs_.size(); i++)
@@ -140,7 +131,7 @@ BOOL CALLBACK JoypadInput::DeviceFindCallBack(const DIDEVICEINSTANCE* pdidInstan
 	diprg.diph.dwObj = DIJOFS_RZ;
 	joypad->SetProperty(DIPROP_RANGE, &diprg.diph);
 
-	sPadIndex_++;
+	sPadIndex++;
 
 	return DIENUM_CONTINUE;
 }
@@ -161,82 +152,77 @@ void JoypadInput::SetJoyStick()
 	assert(SUCCEEDED(result));
 }
 
-#pragma endregion
-
-#pragma region ボタン関連
-
 // ボタンを押してる間
-bool JoypadInput::GetButton(const PadCode padCode, const int sPadIndex_)
+bool JoypadInput::GetButton(const PadCode padCode, const int padIndex)
 {
 	// 接続しているか
 	if (GetisLinkPad() == false) return false;
 
 	if (padCode == PadCode::ButtonLeft)
 	{
-		return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 27000;
+		return GetInstance()->joypadObjs_[padIndex].padInput.rgdwPOV[0] == 27000;
 	}
 	else if (padCode == PadCode::ButtonRight)
 	{
-		return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 9000;
+		return GetInstance()->joypadObjs_[padIndex].padInput.rgdwPOV[0] == 9000;
 	}
 	else if (padCode == PadCode::ButtonUp)
 	{
-		return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 0;
+		return GetInstance()->joypadObjs_[padIndex].padInput.rgdwPOV[0] == 0;
 	}
 	else if (padCode == PadCode::ButtonDown)
 	{
-		return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 18000;
+		return GetInstance()->joypadObjs_[padIndex].padInput.rgdwPOV[0] == 18000;
 	}
 
-	return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgbButtons[(uint32_t)padCode] & 0x80;
+	return GetInstance()->joypadObjs_[padIndex].padInput.rgbButtons[(uint32_t)padCode] & 0x80;
 }
 
 // ボタンを押した瞬間
-bool JoypadInput::GetButtonDown(const PadCode padCode, const int sPadIndex_)
+bool JoypadInput::GetButtonDown(const PadCode padCode, const int padIndex)
 {
 	// 接続しているか
 	if (GetisLinkPad() == false) return false;
 
 	if (padCode == PadCode::ButtonLeft)
 	{
-		return (GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 27000) &&
-			!(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgdwPOV[0] == 27000);
+		return (GetInstance()->joypadObjs_[padIndex].padInput.rgdwPOV[0] == 27000) &&
+			!(GetInstance()->joypadObjs_[padIndex].prevPadInput.rgdwPOV[0] == 27000);
 	}
 	else if (padCode == PadCode::ButtonRight)
 	{
-		return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 9000 &&
-			!(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgdwPOV[0] == 9000);
+		return GetInstance()->joypadObjs_[padIndex].padInput.rgdwPOV[0] == 9000 &&
+			!(GetInstance()->joypadObjs_[padIndex].prevPadInput.rgdwPOV[0] == 9000);
 	}
 	else if (padCode == PadCode::ButtonUp)
 	{
-		return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 0 &&
-			!(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgdwPOV[0] == 0);
+		return GetInstance()->joypadObjs_[padIndex].padInput.rgdwPOV[0] == 0 &&
+			!(GetInstance()->joypadObjs_[padIndex].prevPadInput.rgdwPOV[0] == 0);
 	}
 	else if (padCode == PadCode::ButtonDown)
 	{
-		return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 18000 &&
-			!(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgdwPOV[0] == 18000);
+		return GetInstance()->joypadObjs_[padIndex].padInput.rgdwPOV[0] == 18000 &&
+			!(GetInstance()->joypadObjs_[padIndex].prevPadInput.rgdwPOV[0] == 18000);
 	}
 
 	if (padCode == PadCode::RightStick)
 	{
-		return (GetInstance()->joypadObjs_[sPadIndex_].padInput.rgbButtons[9] & 0x80) &&
-			!(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgbButtons[9] & 0x80);
+		return (GetInstance()->joypadObjs_[padIndex].padInput.rgbButtons[9] & 0x80) &&
+			!(GetInstance()->joypadObjs_[padIndex].prevPadInput.rgbButtons[9] & 0x80);
 	}
 
-
-	return (GetInstance()->joypadObjs_[sPadIndex_].padInput.rgbButtons[(uint32_t)padCode] & 0x80) &&
-		!(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgbButtons[(uint32_t)padCode] & 0x80);
+	return (GetInstance()->joypadObjs_[padIndex].padInput.rgbButtons[(uint32_t)padCode] & 0x80) &&
+		!(GetInstance()->joypadObjs_[padIndex].prevPadInput.rgbButtons[(uint32_t)padCode] & 0x80);
 }
 
 // ボタンを離した瞬間
-bool JoypadInput::GetButtonUp(const PadCode padCode, const int sPadIndex_)
+bool JoypadInput::GetButtonUp(const PadCode padCode, const int padIndex)
 {
 	// 接続しているか
 	if (GetisLinkPad() == false) return false;
 
-	return !(GetInstance()->joypadObjs_[sPadIndex_].padInput.rgbButtons[(uint32_t)padCode] & 0x80) &&
-		(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgbButtons[(uint32_t)padCode] & 0x80);
+	return !(GetInstance()->joypadObjs_[padIndex].padInput.rgbButtons[(uint32_t)padCode] & 0x80) &&
+		(GetInstance()->joypadObjs_[padIndex].prevPadInput.rgbButtons[(uint32_t)padCode] & 0x80);
 }
 
 // 何かのボタンを押した瞬間
@@ -271,12 +257,8 @@ bool JoypadInput::GetAnyButtonDown(const int padIndex)
 	return false;
 }
 
-#pragma endregion
-
-#pragma region スティック関連
-
 // スティックを倒している間
-Vec2 JoypadInput::GetStick(const PadCode padCode, const float length, const int sPadIndex_)
+Vec2 JoypadInput::GetStick(const PadCode padCode, const float length, const int padIndex)
 {
 	// 接続しているか
 	if (GetisLinkPad() == false) return 0;
@@ -284,13 +266,13 @@ Vec2 JoypadInput::GetStick(const PadCode padCode, const float length, const int 
 	Vec2 stick = 0;
 	if (padCode == PadCode::LeftStick)
 	{
-		stick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lX;
-		stick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lY;
+		stick.x = (float)GetInstance()->joypadObjs_[padIndex].padInput.lX;
+		stick.y = (float)GetInstance()->joypadObjs_[padIndex].padInput.lY;
 	}
 	else if (padCode == PadCode::RightStick)
 	{
-		stick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lRx;
-		stick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lRy;
+		stick.x = (float)GetInstance()->joypadObjs_[padIndex].padInput.lRx;
+		stick.y = (float)GetInstance()->joypadObjs_[padIndex].padInput.lRy;
 	}
 
 	// 指定した長さを超えた場合にしか返さない
@@ -301,75 +283,6 @@ Vec2 JoypadInput::GetStick(const PadCode padCode, const float length, const int 
 
 	return 0;
 }
-
-// スティックを倒した瞬間
-Vec2 JoypadInput::GetStickDown(const PadCode padCode, const float length, const int sPadIndex_)
-{
-	// 接続しているか
-	if (GetisLinkPad() == false) return 0;
-
-	Vec2 stick = 0;
-	Vec2 prevStick = 0;
-	if (padCode == PadCode::LeftStick)
-	{
-		stick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lX;
-		stick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lY;
-
-		prevStick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lX;
-		prevStick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lY;
-	}
-	else if (padCode == PadCode::RightStick)
-	{
-		stick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lRx;
-		stick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lRy;
-
-		prevStick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lRx;
-		prevStick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lRy;
-	}
-
-	// 指定した長さを超えた場合にしか返さない
-	if (!(stick.Length() > fabsf(length)) && (prevStick.Length() > fabsf(length)))
-	{
-		return prevStick;
-	}
-
-	return 0;
-}
-
-// スティックを離した瞬間
-Vec2 JoypadInput::GetStickUp(const PadCode padCode, const float length, const int sPadIndex_)
-{
-	// 接続しているか
-	if (GetisLinkPad() == false) return 0;
-
-	Vec2 stick = 0;
-	Vec2 prevStick = 0;
-	if (padCode == PadCode::LeftStick)
-	{
-		stick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lX;
-		stick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lY;
-
-		prevStick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lX;
-		prevStick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lY;
-	}
-	else if (padCode == PadCode::RightStick)
-	{
-		stick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lRx;
-		stick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lRy;
-
-		prevStick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lRx;
-		prevStick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lRy;
-	}
-
-	// 指定した長さを超えた場合にしか返さない
-	if (!(stick.Length() > fabsf(length)) && (prevStick.Length() > fabsf(length)))
-	{
-		return stick;
-	}
-
-	return 0;
-}
-
 Vec3 JoypadInput::GetStickVec3(const PadCode padCode, const float length, const int padIndex)
 {
 	// 接続しているか
@@ -396,12 +309,76 @@ Vec3 JoypadInput::GetStickVec3(const PadCode padCode, const float length, const 
 	return 0;
 }
 
-#pragma endregion
+// スティックを倒した瞬間
+Vec2 JoypadInput::GetStickDown(const PadCode padCode, const float length, const int padIndex)
+{
+	// 接続しているか
+	if (GetisLinkPad() == false) return 0;
 
-#pragma region トリガー関連
+	Vec2 stick = 0;
+	Vec2 prevStick = 0;
+	if (padCode == PadCode::LeftStick)
+	{
+		stick.x = (float)GetInstance()->joypadObjs_[padIndex].padInput.lX;
+		stick.y = (float)GetInstance()->joypadObjs_[padIndex].padInput.lY;
+
+		prevStick.x = (float)GetInstance()->joypadObjs_[padIndex].prevPadInput.lX;
+		prevStick.y = (float)GetInstance()->joypadObjs_[padIndex].prevPadInput.lY;
+	}
+	else if (padCode == PadCode::RightStick)
+	{
+		stick.x = (float)GetInstance()->joypadObjs_[padIndex].padInput.lRx;
+		stick.y = (float)GetInstance()->joypadObjs_[padIndex].padInput.lRy;
+
+		prevStick.x = (float)GetInstance()->joypadObjs_[padIndex].prevPadInput.lRx;
+		prevStick.y = (float)GetInstance()->joypadObjs_[padIndex].prevPadInput.lRy;
+	}
+
+	// 指定した長さを超えた場合にしか返さない
+	if (!(stick.Length() > fabsf(length)) && (prevStick.Length() > fabsf(length)))
+	{
+		return prevStick;
+	}
+
+	return 0;
+}
+
+// スティックを離した瞬間
+Vec2 JoypadInput::GetStickUp(const PadCode padCode, const float length, const int padIndex)
+{
+	// 接続しているか
+	if (GetisLinkPad() == false) return 0;
+
+	Vec2 stick = 0;
+	Vec2 prevStick = 0;
+	if (padCode == PadCode::LeftStick)
+	{
+		stick.x = (float)GetInstance()->joypadObjs_[padIndex].padInput.lX;
+		stick.y = (float)GetInstance()->joypadObjs_[padIndex].padInput.lY;
+
+		prevStick.x = (float)GetInstance()->joypadObjs_[padIndex].prevPadInput.lX;
+		prevStick.y = (float)GetInstance()->joypadObjs_[padIndex].prevPadInput.lY;
+	}
+	else if (padCode == PadCode::RightStick)
+	{
+		stick.x = (float)GetInstance()->joypadObjs_[padIndex].padInput.lRx;
+		stick.y = (float)GetInstance()->joypadObjs_[padIndex].padInput.lRy;
+
+		prevStick.x = (float)GetInstance()->joypadObjs_[padIndex].prevPadInput.lRx;
+		prevStick.y = (float)GetInstance()->joypadObjs_[padIndex].prevPadInput.lRy;
+	}
+
+	// 指定した長さを超えた場合にしか返さない
+	if (!(stick.Length() > fabsf(length)) && (prevStick.Length() > fabsf(length)))
+	{
+		return stick;
+	}
+
+	return 0;
+}
 
 // トリガーを押したる間
-float JoypadInput::GetTrigger(const PadCode padCode, const float length, const int sPadIndex_)
+float JoypadInput::GetTrigger(const PadCode padCode, const float length, const int padIndex)
 {
 	// 接続しているか
 	if (GetisLinkPad() == false) return 0;
@@ -409,7 +386,7 @@ float JoypadInput::GetTrigger(const PadCode padCode, const float length, const i
 	float trigger = 0;
 	if (padCode == PadCode::LeftTrigger)
 	{
-		trigger = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ;
+		trigger = (float)GetInstance()->joypadObjs_[padIndex].padInput.lZ;
 		if (trigger > length)
 		{
 			return trigger;
@@ -417,7 +394,7 @@ float JoypadInput::GetTrigger(const PadCode padCode, const float length, const i
 	}
 	else if (padCode == PadCode::RightTrigger)
 	{
-		trigger = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ;
+		trigger = (float)GetInstance()->joypadObjs_[padIndex].padInput.lZ;
 		if (trigger < -length)
 		{
 			return trigger;
@@ -428,12 +405,12 @@ float JoypadInput::GetTrigger(const PadCode padCode, const float length, const i
 }
 
 // トリガーを押した瞬間
-bool JoypadInput::GetTriggerDown(const PadCode padCode, const float length, const int sPadIndex_)
+bool JoypadInput::GetTriggerDown(const PadCode padCode, const float length, const int padIndex)
 {
 	if (padCode == PadCode::LeftTrigger)
 	{
-		bool isGreater = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ > length;
-		bool isPrevGreater = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lZ > length;
+		bool isGreater = (float)GetInstance()->joypadObjs_[padIndex].padInput.lZ > length;
+		bool isPrevGreater = (float)GetInstance()->joypadObjs_[padIndex].prevPadInput.lZ > length;
 
 		if (isGreater && !isPrevGreater)
 		{
@@ -442,8 +419,8 @@ bool JoypadInput::GetTriggerDown(const PadCode padCode, const float length, cons
 	}
 	else if (padCode == PadCode::RightTrigger)
 	{
-		bool isLess = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ < -length;
-		bool isPrevLess = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ < -length;
+		bool isLess = (float)GetInstance()->joypadObjs_[padIndex].padInput.lZ < -length;
+		bool isPrevLess = (float)GetInstance()->joypadObjs_[padIndex].padInput.lZ < -length;
 
 		if (isLess && !isPrevLess)
 		{
@@ -455,12 +432,12 @@ bool JoypadInput::GetTriggerDown(const PadCode padCode, const float length, cons
 }
 
 // トリガーを離した瞬間
-bool JoypadInput::GetTriggerUp(const PadCode padCode, const float length, const int sPadIndex_)
+bool JoypadInput::GetTriggerUp(const PadCode padCode, const float length, const int padIndex)
 {
 	if (padCode == PadCode::LeftTrigger)
 	{
-		bool isGreater = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ > length;
-		bool isPrevGreater = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lZ > length;
+		bool isGreater = (float)GetInstance()->joypadObjs_[padIndex].padInput.lZ > length;
+		bool isPrevGreater = (float)GetInstance()->joypadObjs_[padIndex].prevPadInput.lZ > length;
 
 		if (!isGreater && isPrevGreater)
 		{
@@ -469,8 +446,8 @@ bool JoypadInput::GetTriggerUp(const PadCode padCode, const float length, const 
 	}
 	else if (padCode == PadCode::RightTrigger)
 	{
-		bool isLess = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ < -length;
-		bool isPrevLess = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ < -length;
+		bool isLess = (float)GetInstance()->joypadObjs_[padIndex].padInput.lZ < -length;
+		bool isPrevLess = (float)GetInstance()->joypadObjs_[padIndex].padInput.lZ < -length;
 
 		if (!isLess && isPrevLess)
 		{
@@ -481,15 +458,9 @@ bool JoypadInput::GetTriggerUp(const PadCode padCode, const float length, const 
 	return false;
 }
 
-#pragma endregion
-
-#pragma region その他取得関連
-
 // コントローラー接続しているか
-bool JoypadInput::GetisLinkPad(const int sPadIndex_)
+bool JoypadInput::GetisLinkPad(const int padIndex)
 {
 	// 仮
 	return GetInstance()->joypadObjs_.size() > 0;
 }
-
-#pragma endregion

@@ -4,12 +4,9 @@
 #include <cassert>
 #include <memory>
 
-#pragma region その他の処理
-
 KeyBoardInput::KeyBoardInput()
 {
 }
-
 void KeyBoardInput::Init()
 {
 	HRESULT result;
@@ -30,7 +27,6 @@ void KeyBoardInput::Init()
 		DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
 }
-
 void KeyBoardInput::Update()
 {
 	// キーボート情報の取得開始
@@ -46,12 +42,8 @@ void KeyBoardInput::Update()
 	keyboard_->GetDeviceState(sizeof(keys_), keys_.data());
 }
 
-#pragma endregion
-
-#pragma region キーボードの処理
-
 // キーが押されてる時
-bool KeyBoardInput::GetKey(const unsigned int key)
+bool KeyBoardInput::GetKey(const uint32_t key)
 {
 	// 例外スローしないように
 	int index = Clamp<int>(key, 0, 256);
@@ -60,7 +52,7 @@ bool KeyBoardInput::GetKey(const unsigned int key)
 }
 
 // キーを押した瞬間
-bool KeyBoardInput::GetKeyDown(const unsigned int key)
+bool KeyBoardInput::GetKeyDown(const uint32_t key)
 {
 	// 例外スローしないように
 	int index = Clamp<int>(key, 0, 256);
@@ -69,12 +61,10 @@ bool KeyBoardInput::GetKeyDown(const unsigned int key)
 }
 
 // キーを離した瞬間
-bool KeyBoardInput::GetKeyUp(const unsigned int key)
+bool KeyBoardInput::GetKeyUp(const uint32_t key)
 {
 	// 例外スローしないように
 	int index = Clamp<int>(key, 0, 256);
 
 	return (bool)(!GetInstance()->keys_[key] && GetInstance()->prevKeys_[key]);
 }
-
-#pragma endregion

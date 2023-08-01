@@ -7,22 +7,20 @@
 #include <imgui_impl_dx12.h>
 #include <imgui_impl_win32.h>
 
-const uint32_t GuiManager::sNumFramesInFlight_ = 3;
+const uint32_t GuiManager::sNumFramesInFlight = 3;
 
 void GuiManager::Init()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
 
-	// Setup Platform/Renderer backends
 	ImGui_ImplWin32_Init(RenderWindow::GetInstance()->GetHwnd());
 	ImGui_ImplDX12_Init(
 		renderBase->GetDevice(),
-		sNumFramesInFlight_,
+		sNumFramesInFlight,
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 		TextureManager::GetSrvDescHeap(),
 		TextureManager::GetSrvDescHeap()->GetCPUDescriptorHandleForHeapStart(),
@@ -31,7 +29,6 @@ void GuiManager::Init()
 
 void GuiManager::PreDraw()
 {
-	// Start the Dear ImGui frame
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGuiIO& io = ImGui::GetIO();

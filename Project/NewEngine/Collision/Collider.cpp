@@ -5,19 +5,19 @@
 CircleCollider::CircleCollider() :
 	centerPos(0), radius(1)
 {
-	primitive_ = ColliderPrimitive::Sphere;
+	primitive = ColliderPrimitive::Sphere;
 }
 CircleCollider::CircleCollider(const Vec2 centerPos, const float radius) :
 	centerPos(centerPos), radius(radius)
 {
-	primitive_ = ColliderPrimitive::Sphere;
+	primitive = ColliderPrimitive::Sphere;
 }
 
 // ----- 矩形コライダー ----------------- //
 SquareCollider::SquareCollider() :
 	centerPos(0), size(0), leftTop(0), leftDown(0), rightTop(0), rightDown(0)
 {
-	primitive_ = ColliderPrimitive::Square;
+	primitive = ColliderPrimitive::Square;
 }
 SquareCollider::SquareCollider(const Vec2 centerPos, const Vec2 size) :
 	centerPos(centerPos), size(size),
@@ -26,7 +26,7 @@ SquareCollider::SquareCollider(const Vec2 centerPos, const Vec2 size) :
 	rightTop({ centerPos.x + size.x, centerPos.y - size.y }),
 	rightDown({ centerPos.x + size.x, centerPos.y + size.y })
 {
-	primitive_ = ColliderPrimitive::Square;
+	primitive = ColliderPrimitive::Square;
 }
 
 // ----- キューブコライダー ------------- //
@@ -109,58 +109,58 @@ void CubeCollider::CalcPoints()
 SphereCollider::SphereCollider() :
 	centerPos(0), radius(0)
 {
-	primitive_ = ColliderPrimitive::Sphere;
+	primitive = ColliderPrimitive::Sphere;
 }
 SphereCollider::SphereCollider(const Vec3 centerPos, const float radius) :
 	centerPos(centerPos), radius(radius)
 {
-	primitive_ = ColliderPrimitive::Sphere;
+	primitive = ColliderPrimitive::Sphere;
 }
 
 // ----- レイコライダー ----------------- //
 RayCollider::RayCollider() :
 	startPos(0, 0, 0), dirVec(0, 0, 1)
 {
-	primitive_ = ColliderPrimitive::Ray;
+	primitive = ColliderPrimitive::Ray;
 }
 RayCollider::RayCollider(const Vec3 startPos, const Vec3 dirVec) :
 	startPos(startPos), dirVec(dirVec)
 {
-	primitive_ = ColliderPrimitive::Ray;
+	primitive = ColliderPrimitive::Ray;
 }
 
 // ----- 平面コライダー ----------------- //
 PlaneCollider::PlaneCollider() :
 	centerPos(0, 0, 0), normal(0, 0, 0)
 {
-	primitive_ = ColliderPrimitive::Plane;
+	primitive = ColliderPrimitive::Plane;
 }
 PlaneCollider::PlaneCollider(const Vec3 centerPos, const Vec3 normal) :
 	centerPos(centerPos), normal(normal)
 {
-	primitive_ = ColliderPrimitive::Plane;
+	primitive = ColliderPrimitive::Plane;
 }
 
 // ----- 三角形コライダー --------------- //
 TriangleCollider::TriangleCollider() :
 	p0(0), p1(0), p2(0), normal(0)
 {
-	primitive_ = ColliderPrimitive::Triangle;
+	primitive = ColliderPrimitive::Triangle;
 }
 TriangleCollider::TriangleCollider(const Vec3 p0, const Vec3 p1, const Vec3 p2) :
 	p0(p0), p1(p1), p2(p2), normal(GetTriangleNormal(p0, p1, p2))
 {
-	primitive_ = ColliderPrimitive::Triangle;
+	primitive = ColliderPrimitive::Triangle;
 }
 
 // ----- カプセルコライダー ------------- //
 CapsuleCollider::CapsuleCollider() :
 	startPos(0), endPos(0), radius(0)
 {
-	primitive_ = ColliderPrimitive::Capsule;
+	primitive = ColliderPrimitive::Capsule;
 }
 CapsuleCollider::CapsuleCollider(const Vec3 startPos, const Vec3 endPos, const float radius) :
 	startPos(startPos), endPos(endPos), radius(radius)
 {
-	primitive_ = ColliderPrimitive::Capsule;
+	primitive = ColliderPrimitive::Capsule;
 }

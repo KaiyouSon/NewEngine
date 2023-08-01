@@ -42,8 +42,8 @@ private:
 
 private:// ボタン関連
 	std::vector<JoypadObj> joypadObjs_;
-	static bool sIsInsertPad_;
-	static uint32_t sPadIndex_;
+	static bool sIsInsertPad;
+	static uint32_t sPadIndex;
 
 private:
 	// コントローラー接続した時のコールバック
@@ -79,8 +79,8 @@ public: // その他取得関連
 	static bool GetisLinkPad(const int padIndex = 0);
 
 public: // アサット
-	static inline void SetisInsertPad(const bool isInsertPad) { JoypadInput::sIsInsertPad_ = isInsertPad; }
-	static inline bool GetisInsertPad() { return JoypadInput::sIsInsertPad_; }
+	static inline void SetisInsertPad(const bool isInsertPad) { JoypadInput::sIsInsertPad = isInsertPad; }
+	static inline bool GetisInsertPad() { return JoypadInput::sIsInsertPad; }
 
 private:
 	friend Singleton<JoypadInput>;

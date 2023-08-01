@@ -96,10 +96,18 @@ enum class ColliderPrimitive
 	Capsule,
 };
 
+// キューブの八頂点
 enum class CubePoints
 {
 	FLT, FLD,
 	FRT, FRD,
 	BLT, BLD,
 	BRT, BRD
+};
+
+enum class MouseCode
+{
+	Left = 0,
+	Right = 1,
+	Wheel = 2,
 };

@@ -6,7 +6,6 @@
 #include <memory>
 using namespace std;
 
-//const float RenderTexture::sClearColor[4] = { 0.25f,0.5f,0.1f,1.0f };
 const float RenderTexture::sClearColor[4] = { 0.f,0.f,0.f,1.0f };
 
 void RenderTexture::PrevDrawScene()
@@ -36,31 +35,31 @@ void RenderTexture::PrevDrawScene()
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvCpuHandle = depthBuffer.GetCpuHandle();
 
 	// レンダーターゲットをセット
-	renderBase->GetCommandList()->OMSetRenderTargets((UINT)renderTargets.size(), rtvCpuHandle.data(), false, &dsvCpuHandle);
+	renderBase->GetCommandList()->OMSetRenderTargets((uint32_t)renderTargets.size(), rtvCpuHandle.data(), false, &dsvCpuHandle);
 
 	// ビューポートの設定
-	viewports_.resize(buffers.size());
+	mViewports.resize(buffers.size());
 	for (int i = 0; i < buffers.size(); i++)
 	{
-		viewports_[i] =
+		mViewports[i] =
 			CD3DX12_VIEWPORT(
 				0.f, 0.f,
 				renderWindow->GetWindowSize().x,
 				renderWindow->GetWindowSize().y);
 	}
-	renderBase->GetCommandList()->RSSetViewports((UINT)viewports_.size(), viewports_.data());
+	renderBase->GetCommandList()->RSSetViewports((uint32_t)mViewports.size(), mViewports.data());
 
 	// シザー矩形の設定
-	scissorRects_.resize(buffers.size());
+	mScissorRects.resize(buffers.size());
 	for (int i = 0; i < buffers.size(); i++)
 	{
-		scissorRects_[i] =
+		mScissorRects[i] =
 			CD3DX12_RECT(
 				0, 0,
 				(LONG)renderWindow->GetWindowSize().x,
 				(LONG)renderWindow->GetWindowSize().y);
 	}
-	renderBase->GetCommandList()->RSSetScissorRects((UINT)scissorRects_.size(), scissorRects_.data());
+	renderBase->GetCommandList()->RSSetScissorRects((uint32_t)mScissorRects.size(), mScissorRects.data());
 
 	// 全画面クリア
 	for (int i = 0; i < rtvCpuHandle.size(); i++)
@@ -85,4 +84,37 @@ void RenderTexture::PostDrawScene()
 				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 		renderBase->GetCommandList()->ResourceBarrier(1, &resourceBarrier);
 	}
+}
+
+// セッター
+void RenderTexture::SetHandleNum(const uint32_t num)
+{
+	mCpuHandles.resize(num);
+	mGpuHandles.resize(num);
+}
+void RenderTexture::SetCpuHandle(const uint32_t index, const D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle)
+{
+	mCpuHandles[index] = cpuHandle;
+}
+void RenderTexture::SetGpuHandle(const uint32_t index, const D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle)
+{
+	mGpuHandles[index] = gpuHandle;
+}
+
+// ゲッター
+D3D12_CPU_DESCRIPTOR_HANDLE RenderTexture::GetCpuHandle(const uint32_t index)
+{
+	uint32_t min = 0;
+	uint32_t max = (uint32_t)(mCpuHandles.size() - 1);
+	uint32_t i = Clamp<uint32_t>(index, min, max);
+
+	return mCpuHandles[i];
+}
+D3D12_GPU_DESCRIPTOR_HANDLE RenderTexture::GetGpuHandle(const uint32_t index)
+{
+	uint32_t min = 0;
+	uint32_t max = (uint32_t)(mGpuHandles.size() - 1);
+	uint32_t i = Clamp<uint32_t>(index, min, max);
+
+	return mGpuHandles[i];
 }

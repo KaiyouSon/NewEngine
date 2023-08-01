@@ -14,20 +14,18 @@ private:
 	std::array<unsigned char, 256> keys_;
 	std::array<unsigned char, 256> prevKeys_;
 
-	//BYTE keys[256] = { 0 };
-	//BYTE prevKeys[256] = { 0 };
 public:
 	void Init();	// 初期化
 	void Update();	// 更新処理
 
 	// キーが押されてる時
-	static bool GetKey(const unsigned int key);
+	static bool GetKey(const uint32_t key);
 
 	// キーを押した瞬間
-	static bool GetKeyDown(const unsigned int key);
+	static bool GetKeyDown(const uint32_t key);
 
 	// キーを離した瞬間
-	static bool GetKeyUp(const unsigned int key);
+	static bool GetKeyUp(const uint32_t key);
 
 private:
 	friend Singleton<KeyBoardInput>;
