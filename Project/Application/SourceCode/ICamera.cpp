@@ -1,31 +1,31 @@
 #include "ICamera.h"
 
-ICamera::ICamera() :camera_(std::make_unique<Camera>())
+ICamera::ICamera() : mCamera(std::make_unique<Camera>())
 {
 }
 
 void ICamera::EaseCamera()
 {
-	camera_->pos += (targetPos_ - camera_->pos) * 0.2f;
-	camera_->rot += (targetRot_ - camera_->rot) * 0.2f;
+	mCamera->pos += (mTargetPos - mCamera->pos) * 0.2f;
+	mCamera->rot += (mTargetRot - mCamera->rot) * 0.2f;
 
-	if (Absolut(targetPos_ - camera_->pos) <= 0.1f)
+	if (Absolut(mTargetPos - mCamera->pos) <= 0.1f)
 	{
-		isEase_ = false;
+		mIsEase = false;
 	}
 }
 
 void ICamera::SetLockonPos(const Vec3 pos)
 {
-	lockonPos_ = pos;
+	mLockonPos = pos;
 }
 
 void ICamera::SetisEase(const bool isEase)
 {
-	isEase_ = isEase;
+	mIsEase = isEase;
 }
 
 Vec3 ICamera::GetLockonPos()
 {
-	return lockonPos_;
+	return mLockonPos;
 }

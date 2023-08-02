@@ -8,12 +8,12 @@ TargetCamera::TargetCamera()
 void TargetCamera::Init(Player* player)
 {
 	mPlayer = player;
-	isEase_ = false;
+	mIsEase = false;
 }
 
 void TargetCamera::Update()
 {
-	Vec3 target = lockonPos_;
+	Vec3 target = mLockonPos;
 
 	// 座標の設定
 	const float length = 30.f;	// 長さ
@@ -29,9 +29,9 @@ void TargetCamera::Update()
 	Vec3 rightVec = Vec3::Cross(vec, Vec3::up);
 	vec = q.AnyAxisRotation(rightVec, pitchRad);
 
-	targetCamePos_ = curPos + vec.Norm() * length;
-	curCamePos_ += (targetCamePos_ - camera_->pos) * 0.25f;
-	camera_->pos = curCamePos_;
+	mTargetCamePos = curPos + vec.Norm() * length;
+	mCurCamePos += (mTargetCamePos - mCamera->pos) * 0.25f;
+	mCamera->pos = mCurCamePos;
 
 	Vec3 disToCamera = target - curPos;
 	float yawRad = atan2f(disToCamera.x, disToCamera.z);
@@ -44,28 +44,28 @@ void TargetCamera::Update()
 		0.f,
 	};
 	// 角度の設定
-	camera_->rot = rot;
+	mCamera->rot = rot;
 
 	// 切り替えるときにイージングするための処理
-	camera_->pos = Camera::current.pos;
-	camera_->rot = Camera::current.rot;
+	mCamera->pos = Camera::current.pos;
+	mCamera->rot = Camera::current.rot;
 
 	// 一回転しないようにするための処理
 	if (Camera::current.rot.y - rot.y >= Radian(180))
 	{
-		float diff = Radian(360) - camera_->rot.y;
-		camera_->rot.y = -diff;
+		float diff = Radian(360) - mCamera->rot.y;
+		mCamera->rot.y = -diff;
 	}
 	else if (Camera::current.rot.y - rot.y <= -Radian(180))
 	{
-		float diff = Radian(360) + camera_->rot.y;
-		camera_->rot.y = diff;
+		float diff = Radian(360) + mCamera->rot.y;
+		mCamera->rot.y = diff;
 	}
 
-	targetPos_ = targetCamePos_;
-	targetRot_ = rot;
+	mTargetPos = mTargetCamePos;
+	mTargetRot = rot;
 	EaseCamera();
 
 	// 現在いのカメラに代入
-	Camera::current = *camera_;
+	Camera::current = *mCamera;
 }

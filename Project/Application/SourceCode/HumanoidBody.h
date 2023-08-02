@@ -31,9 +31,9 @@ enum class WeaponPartID
 class HumanoidBody
 {
 protected:
-	std::array<std::unique_ptr<Object3D>, 11> parts_;
-	std::array<Weapon*, 2> weapons_;
-	std::array<Vec3, 13> curRots_;
+	std::array<std::unique_ptr<Object3D>, 11> mParts;
+	std::array<Weapon*, 2> mWeapons;
+	std::array<Vec3, 13> mCurRots;
 
 public:
 	Character* iParent;

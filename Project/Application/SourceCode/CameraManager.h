@@ -16,8 +16,8 @@ public:
 	};
 
 private:
-	std::unique_ptr<ICamera> currentCamera_;
-	CameraType cameraType_;
+	std::unique_ptr<ICamera> mCurrentCamera;
+	CameraType mCameraType;
 	Player* mPlayer;
 	Boss* mBoss;
 

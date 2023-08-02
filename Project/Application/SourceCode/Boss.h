@@ -12,31 +12,31 @@ class Boss : public Character
 {
 private:
 	std::unique_ptr<BossBody> mBoss;
-	std::unique_ptr<Weapon> weapon_;
+	std::unique_ptr<Weapon> mWeapon;
 	Player* mPlayer;
-	bool isAlive_;
-	bool isDissolve_;
-	bool isFight_;
+	bool mIsAlive;
+	bool mIsDissolve;
+	bool mIsFight;
 
-	GaugeParam hpGaugeParam_;
+	GaugeParam mHpGaugeParam;
 
-	CapsuleCollider collider_;
-	CubeCollider bodyCollider_;
+	CapsuleCollider mCollider;
+	CubeCollider mBodyCollider;
 
-	Vec3 frontVec_;
-	float rotY_;
+	Vec3 mFrontVec;
+	float mRotY;
 
 	float mDamage;
 
 private:
 	// ダメージ関連
-	bool ismDamage;
-	Timer damageCoolTimer_;
+	bool mIsDamage;
+	Timer mDamageCoolTimer;
 
 private:
 	// モーション切り替え関連
-	Timer coolTimer_;
-	uint32_t motionNum_;
+	Timer mCoolTimer;
+	uint32_t mMotionNum;
 
 private:
 	void CalcFrontVec();

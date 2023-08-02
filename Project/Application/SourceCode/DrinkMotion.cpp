@@ -6,22 +6,22 @@
 
 DrinkMotion::DrinkMotion()
 {
-	motion_ = MotionManager::GetMotion("Drink");
+	mMotion = MotionManager::GetMotion("Drink");
 }
 
 void DrinkMotion::Init(HumanoidBody* human)
 {
-	isInit_ = false;
-	isPlay_ = false;
-	isCanChangeMotion_ = false;
-	step_ = 0;
+	mIsInit = false;
+	mIsPlay = false;
+	mIsCanChangeMotion = false;
+	mStep = 0;
 
-	curRots_.resize(human->GetPartsSize());
-	endRots_.resize(human->GetPartsSize());
-	curWeaponPoses_.resize(human->GetWeaponPartsSize());
-	endWeaponPoses_.resize(human->GetWeaponPartsSize());
-	curWeaponRots_.resize(human->GetWeaponPartsSize());
-	endWeaponRots_.resize(human->GetWeaponPartsSize());
+	mCurRots.resize(human->GetPartsSize());
+	mEndRots.resize(human->GetPartsSize());
+	mCurWeaponPoses.resize(human->GetWeaponPartsSize());
+	mEndWeaponPoses.resize(human->GetWeaponPartsSize());
+	mCurWeaponRots.resize(human->GetWeaponPartsSize());
+	mEndWeaponRots.resize(human->GetWeaponPartsSize());
 
 	if (human->GetPart(PartID::Body)->rot.x >= Radian(360))
 	{
@@ -30,18 +30,18 @@ void DrinkMotion::Init(HumanoidBody* human)
 }
 void DrinkMotion::Update(HumanoidBody* human)
 {
-	if (isPlay_ == false)
+	if (mIsPlay == false)
 	{
-		isPlay_ = true;
+		mIsPlay = true;
 	}
 
-	ease_.Update();
+	mEase.Update();
 
-	if (isInit_ == false)
+	if (mIsInit == false)
 	{
 		BaseInit(human);
 		//CurrentStepInit(human);
-		isInit_ = true;
+		mIsInit = true;
 	}
 	BasePrevUpdate(human);
 	CurrentStepUpdate(human);
@@ -59,9 +59,9 @@ void DrinkMotion::CurrentStepUpdate(HumanoidBody* human)
 		return;
 	}
 
-	if (step_ == 2)
+	if (mStep == 2)
 	{
-		if (ease_.GetisEnd() == true)
+		if (mEase.GetisEnd() == true)
 		{
 			Vec3 pos = player->GetPos() + Vec3::down * 2;
 

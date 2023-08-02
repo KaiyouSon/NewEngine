@@ -2,24 +2,24 @@
 #include "Boss.h"
 
 BossBody::BossBody() :
-	grabAttackMotion_(std::make_unique<BossGrabAttackMotion>()),
-	attack2Motion_(std::make_unique<BossAttack2Motion>()),
-	attack3Motion_(std::make_unique<BossAttack3Motion>())
+	mGrabAttackMotion(std::make_unique<BossGrabAttackMotion>()),
+	mAttack2Motion(std::make_unique<BossAttack2Motion>()),
+	mAttack3Motion(std::make_unique<BossAttack3Motion>())
 {
 }
 
 void BossBody::Init()
 {
 	BaseInit();
-	grabAttackMotion_->Init(this);
-	attack2Motion_->Init(this);
-	attack3Motion_->Init(this);
+	mGrabAttackMotion->Init(this);
+	mAttack2Motion->Init(this);
+	mAttack3Motion->Init(this);
 
-	for (uint32_t i = 1; i < parts_.size(); i++)
+	for (uint32_t i = 1; i < mParts.size(); i++)
 	{
-		parts_[i]->isUseDissolve = true;
-		parts_[i]->colorPower = 5;
-		parts_[i]->dissolveColor = Color(255, 30, 0, 255);
+		mParts[i]->isUseDissolve = true;
+		mParts[i]->colorPower = 5;
+		mParts[i]->dissolveColor = Color(255, 30, 0, 255);
 	}
 }
 
@@ -36,21 +36,21 @@ void BossBody::DrawModel()
 
 void BossBody::GrabAttackMotion()
 {
-	grabAttackMotion_->Update(this);
-	isPlayMotion_ = grabAttackMotion_->GetisPlay();
+	mGrabAttackMotion->Update(this);
+	mIsPlayMotion = mGrabAttackMotion->GetisPlay();
 }
 void BossBody::Attack2Motion()
 {
-	attack2Motion_->Update(this);
-	isPlayMotion_ = attack2Motion_->GetisPlay();
+	mAttack2Motion->Update(this);
+	mIsPlayMotion = mAttack2Motion->GetisPlay();
 }
 void BossBody::Attack3Motion()
 {
-	attack3Motion_->Update(this);
-	isPlayMotion_ = attack3Motion_->GetisPlay();
+	mAttack3Motion->Update(this);
+	mIsPlayMotion = mAttack3Motion->GetisPlay();
 }
 
 bool BossBody::GetisPlayMotion()
 {
-	return isPlayMotion_;
+	return mIsPlayMotion;
 }

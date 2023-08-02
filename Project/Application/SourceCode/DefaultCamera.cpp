@@ -7,14 +7,14 @@ DefaultCamera::DefaultCamera()
 void DefaultCamera::Init(Player* player)
 {
 	mPlayer = player;
-	assistYaw_ = 0;
-	controlPitch_ = Angle(Camera::current.rot.x);
-	controlYaw_ = Angle(Camera::current.rot.y);
+	mAssistYaw = 0;
+	mControlPitch = Angle(Camera::current.rot.x);
+	mControlYaw = Angle(Camera::current.rot.y);
 
-	vec_ = Vec3::back;
-	rot_ = 0;
+	mVec = Vec3::back;
+	mRot = 0;
 
-	camera_->pos = Camera::current.pos;
+	mCamera->pos = Camera::current.pos;
 }
 
 void DefaultCamera::Update()
@@ -33,19 +33,19 @@ void DefaultCamera::Update()
 	// スティックで倒すと回転する処理
 	if (stick != 0)
 	{
-		controlYaw_ += stick.Norm().x * moveSpeed * rate.x;
-		controlPitch_ += stick.Norm().y * moveSpeed * rate.y * 0.5f;
+		mControlYaw += stick.Norm().x * moveSpeed * rate.x;
+		mControlPitch += stick.Norm().y * moveSpeed * rate.y * 0.5f;
 	}
-	controlPitch_ = Clamp<float>(controlPitch_, -35, 80);
+	mControlPitch = Clamp<float>(mControlPitch, -35, 80);
 
 	// 座標
 	const float angleOffset = 20.f;
 	bool frontRange =
-		mPlayer->GetRot().y <= camera_->rot.y + Radian(angleOffset) &&
-		mPlayer->GetRot().y >= camera_->rot.y - Radian(angleOffset);
+		mPlayer->GetRot().y <= mCamera->rot.y + Radian(angleOffset) &&
+		mPlayer->GetRot().y >= mCamera->rot.y - Radian(angleOffset);
 	bool backRange =
-		mPlayer->GetRot().y <= camera_->rot.y + Radian(180) + Radian(angleOffset) &&
-		mPlayer->GetRot().y >= camera_->rot.y + Radian(180) - Radian(angleOffset);
+		mPlayer->GetRot().y <= mCamera->rot.y + Radian(180) + Radian(angleOffset) &&
+		mPlayer->GetRot().y >= mCamera->rot.y + Radian(180) - Radian(angleOffset);
 
 	if (!frontRange && !backRange)
 	{
@@ -57,40 +57,40 @@ void DefaultCamera::Update()
 
 		if (leftStick != 0)
 		{
-			targetYaw_ += leftStick.Norm().x;
+			mTargetYaw += leftStick.Norm().x;
 		}
 
-		assistYaw_ += (targetYaw_ - assistYaw_) * 0.05f;
+		mAssistYaw += (mTargetYaw - mAssistYaw) * 0.05f;
 	}
 
 	// 座標の設定
-	vec_ =
+	mVec =
 	{
-		-sinf(Radian(controlYaw_ + assistYaw_)) * cosf(Radian(controlPitch_)),
-		+sinf(Radian(controlPitch_)),
-		-cosf(Radian(controlYaw_ + assistYaw_)) * cosf(Radian(controlPitch_)),
+		-sinf(Radian(mControlYaw + mAssistYaw)) * cosf(Radian(mControlPitch)),
+		+sinf(Radian(mControlPitch)),
+		-cosf(Radian(mControlYaw + mAssistYaw)) * cosf(Radian(mControlPitch)),
 	};
 
 	const float length = 30.f;
 	Vec3 curPos = mPlayer->GetPos() * Vec3(1.f, 0.f, 1.f) + Vec3(0.f, 9.5f, 0.f);
-	camera_->pos = curPos + vec_.Norm() * length;
+	mCamera->pos = curPos + mVec.Norm() * length;
 
 	// 回転の処理
-	rot_ =
+	mRot =
 	{
-		Radian(controlPitch_),
-		Radian(controlYaw_ + assistYaw_),
+		Radian(mControlPitch),
+		Radian(mControlYaw + mAssistYaw),
 		0.f
 	};
 
 	// 角度の設定
-	camera_->rot = rot_;
+	mCamera->rot = mRot;
 
-	if (isEase_ == true)
+	if (mIsEase == true)
 	{
 		// 切り替えるときにイージングするための処理
-		camera_->pos = Camera::current.pos;
-		camera_->rot = Camera::current.rot;
+		mCamera->pos = Camera::current.pos;
+		mCamera->rot = Camera::current.rot;
 		// 現在の座標 (y座標固定)
 		Vec3 targetPos = curPos + -mPlayer->GetFrontVec() * length;
 		Vec3 targetRot = { 0,mPlayer->GetRot().y,0 };
@@ -98,30 +98,30 @@ void DefaultCamera::Update()
 		// 一回転しないようにするための処理
 		if (Camera::current.rot.y - targetRot.y >= Radian(180))
 		{
-			float diff = Radian(360) - camera_->rot.y;
-			camera_->rot.y = -diff;
+			float diff = Radian(360) - mCamera->rot.y;
+			mCamera->rot.y = -diff;
 		}
 		else if (Camera::current.rot.y - targetRot.y <= -Radian(180))
 		{
-			float diff = Radian(360) + camera_->rot.y;
-			camera_->rot.y = diff;
+			float diff = Radian(360) + mCamera->rot.y;
+			mCamera->rot.y = diff;
 		}
 
-		targetPos_ = targetPos;
-		targetRot_ = targetRot;
+		mTargetPos = targetPos;
+		mTargetRot = targetRot;
 
 		EaseCamera();
 
 		// 現在いのカメラに代入
-		Camera::current = *camera_;
-		targetYaw_ = 0;
-		assistYaw_ = 0;
-		controlPitch_ = Angle(Camera::current.rot.x);
-		controlYaw_ = Angle(Camera::current.rot.y);
+		Camera::current = *mCamera;
+		mTargetYaw = 0;
+		mAssistYaw = 0;
+		mControlPitch = Angle(Camera::current.rot.x);
+		mControlYaw = Angle(Camera::current.rot.y);
 	}
 	else
 	{
 		// 現在いのカメラに代入
-		Camera::current = *camera_;
+		Camera::current = *mCamera;
 	}
 }

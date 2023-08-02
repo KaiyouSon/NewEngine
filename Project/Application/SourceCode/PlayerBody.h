@@ -11,10 +11,10 @@ class Player;
 class PlayerBody : public HumanoidBody
 {
 private:
-	std::unique_ptr<MoveMotion> moveMotion_;
-	std::unique_ptr<RollMotion> rollMotion_;
-	std::unique_ptr<BackstepMotion> backstepMotion_;
-	std::unique_ptr<DrinkMotion> drinkMotion_;
+	std::unique_ptr<MoveMotion> mMoveMotion;
+	std::unique_ptr<RollMotion> mRollMotion;
+	std::unique_ptr<BackstepMotion> mBackstepMotion;
+	std::unique_ptr<DrinkMotion> mDrinkMotion;
 
 public:
 	Player* parent;

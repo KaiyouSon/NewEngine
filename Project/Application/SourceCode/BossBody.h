@@ -9,10 +9,10 @@ class Boss;
 class BossBody : public HumanoidBody
 {
 private:
-	std::unique_ptr<BossGrabAttackMotion> grabAttackMotion_;
-	std::unique_ptr<BossAttack2Motion> attack2Motion_;
-	std::unique_ptr<BossAttack3Motion> attack3Motion_;
-	bool isPlayMotion_;
+	std::unique_ptr<BossGrabAttackMotion> mGrabAttackMotion;
+	std::unique_ptr<BossAttack2Motion> mAttack2Motion;
+	std::unique_ptr<BossAttack3Motion> mAttack3Motion;
+	bool mIsPlayMotion;
 
 public:
 	Boss* parent;

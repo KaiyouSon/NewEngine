@@ -4,19 +4,19 @@
 
 CameraManager::CameraManager()
 {
-	cameraType_ = CameraType::Default;
+	mCameraType = CameraType::Default;
 }
 
 void CameraManager::Init()
 {
-	currentCamera_ = std::make_unique<DefaultCamera>();
-	currentCamera_->Init(mPlayer);
+	mCurrentCamera = std::make_unique<DefaultCamera>();
+	mCurrentCamera->Init(mPlayer);
 }
 
 void CameraManager::Update()
 {
-	currentCamera_->SetLockonPos(mBoss->GetPos());
-	currentCamera_->Update();
+	mCurrentCamera->SetLockonPos(mBoss->GetPos());
+	mCurrentCamera->Update();
 
 	if (Camera::current.rot.y >= Radian(360))
 	{
@@ -29,12 +29,12 @@ void CameraManager::Update()
 
 	// ƒJƒƒ‰Ø‚è‘Ö‚¦‚éˆ—
 	bool isRightStickDown = Pad::GetButtonDown(PadCode::RightStick);
-	if (cameraType_ == CameraType::Default)
+	if (mCameraType == CameraType::Default)
 	{
 		if (isRightStickDown)
 		{
 			Vec3 v1 = mPlayer->GetPos() - Camera::current.pos;
-			Vec3 v2 = currentCamera_->GetLockonPos() - mPlayer->GetPos();
+			Vec3 v2 = mCurrentCamera->GetLockonPos() - mPlayer->GetPos();
 
 			float dot = Vec3::Dot(v1.Norm(), v2.Norm());
 			if (dot >= cosf(Radian(80)) &&
@@ -46,12 +46,12 @@ void CameraManager::Update()
 			{
 				if (Pad::GetStick(PadCode::LeftStick, 300) == 0)
 				{
-					currentCamera_->SetisEase(true);
+					mCurrentCamera->SetisEase(true);
 				}
 			}
 		}
 	}
-	else if (cameraType_ == CameraType::Target)
+	else if (mCameraType == CameraType::Target)
 	{
 		if (isRightStickDown)
 		{
@@ -71,10 +71,10 @@ void CameraManager::Update()
 
 void CameraManager::ChangeCamera(const CameraType cameraType)
 {
-	cameraType_ = cameraType;
+	mCameraType = cameraType;
 
 	std::unique_ptr<ICamera> nextCamera;
-	switch (cameraType_)
+	switch (mCameraType)
 	{
 	case CameraType::Default:
 		nextCamera = std::make_unique<DefaultCamera>();
@@ -89,12 +89,12 @@ void CameraManager::ChangeCamera(const CameraType cameraType)
 	}
 
 	nextCamera->Init(mPlayer);
-	currentCamera_ = std::move(nextCamera);
+	mCurrentCamera = std::move(nextCamera);
 }
 
 CameraManager::CameraType CameraManager::GetCameraType()
 {
-	return cameraType_;
+	return mCameraType;
 }
 
 void CameraManager::SetPlayer(Player* player)

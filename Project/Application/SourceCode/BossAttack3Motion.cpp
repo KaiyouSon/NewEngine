@@ -4,32 +4,32 @@
 
 BossAttack3Motion::BossAttack3Motion()
 {
-	motion_ = MotionManager::GetMotion("BossAttack3");
+	mMotion = MotionManager::GetMotion("BossAttack3");
 }
 
 void BossAttack3Motion::Init(HumanoidBody* human)
 {
-	curRots_.resize(human->GetPartsSize());
-	endRots_.resize(human->GetPartsSize());
-	curWeaponPoses_.resize(human->GetWeaponPartsSize());
-	endWeaponPoses_.resize(human->GetWeaponPartsSize());
-	curWeaponRots_.resize(human->GetWeaponPartsSize());
-	endWeaponRots_.resize(human->GetWeaponPartsSize());
+	mCurRots.resize(human->GetPartsSize());
+	mEndRots.resize(human->GetPartsSize());
+	mCurWeaponPoses.resize(human->GetWeaponPartsSize());
+	mEndWeaponPoses.resize(human->GetWeaponPartsSize());
+	mCurWeaponRots.resize(human->GetWeaponPartsSize());
+	mEndWeaponRots.resize(human->GetWeaponPartsSize());
 }
 void BossAttack3Motion::Update(HumanoidBody* human)
 {
-	if (isPlay_ == false)
+	if (mIsPlay == false)
 	{
-		isPlay_ = true;
+		mIsPlay = true;
 	}
 
-	ease_.Update();
+	mEase.Update();
 
-	if (isInit_ == false)
+	if (mIsInit == false)
 	{
 		BaseInit(human);
 		CurrentStepInit(human);
-		isInit_ = true;
+		mIsInit = true;
 	}
 	BasePrevUpdate(human);
 	CurrentStepUpdate(human);
@@ -41,7 +41,7 @@ void BossAttack3Motion::CurrentStepInit(HumanoidBody* human)
 	Boss* boss = static_cast<Boss*>(human->iParent);
 
 	startBodyY_ = human->GetPart(PartID::Body)->pos.y;
-	switch (step_)
+	switch (mStep)
 	{
 	case 0:
 		endBodyY_ = -0.3f;
@@ -100,25 +100,25 @@ void BossAttack3Motion::CurrentStepInit(HumanoidBody* human)
 }
 void BossAttack3Motion::CurrentStepUpdate(HumanoidBody* human)
 {
-	human->GetPart(PartID::Body)->pos.y = ease_.Interpolation(startBodyY_, endBodyY_);
+	human->GetPart(PartID::Body)->pos.y = mEase.Interpolation(startBodyY_, endBodyY_);
 
 	Boss* boss = static_cast<Boss*>(human->iParent);
-	if (step_ == 3 || step_ == 6 || step_ == 10)
+	if (mStep == 3 || mStep == 6 || mStep == 10)
 	{
 		human->pos = moveEase_.InOut(startPos_, endPos_);
 		moveEase_.Update();
 	}
 
-	if (step_ == 3 || step_ == 6)
+	if (mStep == 3 || mStep == 6)
 	{
-		if (ease_.GetTimer() == 4)
+		if (mEase.GetTimer() == 4)
 		{
 			SoundManager::Play("BossAttackSE");
 		}
 	}
-	else if (step_ == 9)
+	else if (mStep == 9)
 	{
-		if (ease_.GetisEnd() == true)
+		if (mEase.GetisEnd() == true)
 		{
 			SoundManager::Play("BossAttackSE");
 		}
@@ -139,6 +139,6 @@ void BossAttack3Motion::SettingMovePrame(HumanoidBody* human, const float dis, c
 
 	// Œ»Ý‚ÌÀ•W‚ðŽæ“¾
 	startPos_ = human->pos;
-	endPos_ = startPos_ + boss->frontVec_.Norm() * dis;
+	endPos_ = startPos_ + boss->mFrontVec.Norm() * dis;
 }
 

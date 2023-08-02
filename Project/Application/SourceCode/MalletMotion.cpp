@@ -294,14 +294,14 @@ void MalletMotion::WeakStep1Init(PlayerBody* human)
 	human->parent->CalcFrontVec();
 
 	// UŒ‚ƒ‚[ƒVƒ‡ƒ“‚Åi‚Þ‹——£‚ÌŒvŽZ
-	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->frontVec_, 8);
+	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->mFrontVec, 8);
 
 	// Œ»Ý‚ÌÀ•W‚ðŽæ“¾
 	startPos_ = human->pos;
 
 	// “ü—Í‚µ‚½Œã‚Ì‰ñ“]Šp‚ðŽæ“¾
 	startRotY_ = human->rot.y;
-	endRotY_ = atan2f(human->parent->frontVec_.x, human->parent->frontVec_.z);
+	endRotY_ = atan2f(human->parent->mFrontVec.x, human->parent->mFrontVec.z);
 
 	// “–‚½‚è”»’è—LŒø
 	isCalcCollider_ = true;
@@ -309,10 +309,10 @@ void MalletMotion::WeakStep1Init(PlayerBody* human)
 void MalletMotion::WeakStep1Update(PlayerBody* human)
 {
 	// ­‚µ‘O‚ÉˆÚ“®‚·‚éˆ—
-	const Vec3 endPos = startPos_ + human->parent->frontVec_.Norm() * length_;
+	const Vec3 endPos = startPos_ + human->parent->mFrontVec.Norm() * length_;
 	human->pos = ease_.InOut(startPos_, endPos);
 	human->rot.y = ease_.InOut(startRotY_, endRotY_);
-	human->parent->moveVel = endPos - startPos_;
+	human->parent->mMoveVel = endPos - startPos_;
 
 	if (ease_.GetTimer() == 15)
 	{
@@ -369,7 +369,7 @@ void MalletMotion::HeavyStep1Update(PlayerBody* human)
 	if (ease_.GetisEnd())
 	{
 		Player* player = static_cast<Player*>(human->iParent);
-		player->weapon_->SetChargeRate(1.f + ease_.GetTimeRate());
+		player->mWeapon->SetChargeRate(1.f + ease_.GetTimeRate());
 	}
 }
 void MalletMotion::HeavyStep2Init(PlayerBody* human)
@@ -378,14 +378,14 @@ void MalletMotion::HeavyStep2Init(PlayerBody* human)
 	human->parent->CalcFrontVec();
 
 	// UŒ‚ƒ‚[ƒVƒ‡ƒ“‚Åi‚Þ‹——£‚ÌŒvŽZ
-	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->frontVec_, 10);
+	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->mFrontVec, 10);
 
 	// Œ»Ý‚ÌÀ•W‚ðŽæ“¾
 	startPos_ = human->pos;
 
 	// “ü—Í‚µ‚½Œã‚Ì‰ñ“]Šp‚ðŽæ“¾
 	startRotY_ = human->rot.y;
-	endRotY_ = atan2f(human->parent->frontVec_.x, human->parent->frontVec_.z);
+	endRotY_ = atan2f(human->parent->mFrontVec.x, human->parent->mFrontVec.z);
 
 	startPosY = endPosY;
 	endPosY = -1.3f;
@@ -395,10 +395,10 @@ void MalletMotion::HeavyStep2Update(PlayerBody* human)
 	human->GetPart(PartID::Body)->pos.y = ease_.In(startPosY, endPosY);
 
 	// ­‚µ‘O‚ÉˆÚ“®‚·‚éˆ—
-	const Vec3 endPos = startPos_ + human->parent->frontVec_.Norm() * length_;
+	const Vec3 endPos = startPos_ + human->parent->mFrontVec.Norm() * length_;
 	human->pos = ease_.InOut(startPos_, endPos);
 	human->rot.y = ease_.InOut(startRotY_, endRotY_);
-	human->parent->moveVel = endPos - startPos_;
+	human->parent->mMoveVel = endPos - startPos_;
 
 	if (ease_.GetisEnd() == true)
 	{
@@ -472,14 +472,14 @@ void MalletMotion::BackStep0Init(PlayerBody* human)
 	human->parent->CalcFrontVec();
 
 	// UŒ‚ƒ‚[ƒVƒ‡ƒ“‚Åi‚Þ‹——£‚ÌŒvŽZ
-	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(-human->parent->frontVec_, 2);
+	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(-human->parent->mFrontVec, 2);
 
 	// Œ»Ý‚ÌÀ•W‚ðŽæ“¾
 	startPos_ = human->pos;
 
 	// “ü—Í‚µ‚½Œã‚Ì‰ñ“]Šp‚ðŽæ“¾
 	startRotY_ = human->rot.y;
-	endRotY_ = atan2f(human->parent->frontVec_.x, human->parent->frontVec_.z);
+	endRotY_ = atan2f(human->parent->mFrontVec.x, human->parent->mFrontVec.z);
 
 	moveEase_.SetEaseTimer(5);
 	moveEase_.SetPowNum(2);
@@ -490,9 +490,9 @@ void MalletMotion::BackStep0Update(PlayerBody* human)
 	moveEase_.Update();
 
 	// ­‚µ‘O‚ÉˆÚ“®‚·‚éˆ—
-	const Vec3 endPos = startPos_ - human->parent->frontVec_.Norm() * length_;
+	const Vec3 endPos = startPos_ - human->parent->mFrontVec.Norm() * length_;
 	human->pos = moveEase_.InOut(startPos_, endPos);
-	human->parent->moveVel = endPos - startPos_;
+	human->parent->mMoveVel = endPos - startPos_;
 }
 void MalletMotion::BackStep2Init(PlayerBody* human)
 {
@@ -500,14 +500,14 @@ void MalletMotion::BackStep2Init(PlayerBody* human)
 	human->parent->CalcFrontVec();
 
 	// UŒ‚ƒ‚[ƒVƒ‡ƒ“‚Åi‚Þ‹——£‚ÌŒvŽZ
-	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->frontVec_, 17.5);
+	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->mFrontVec, 17.5);
 
 	// Œ»Ý‚ÌÀ•W‚ðŽæ“¾
 	startPos_ = human->pos;
 
 	// “ü—Í‚µ‚½Œã‚Ì‰ñ“]Šp‚ðŽæ“¾
 	startRotY_ = human->rot.y;
-	endRotY_ = atan2f(human->parent->frontVec_.x, human->parent->frontVec_.z);
+	endRotY_ = atan2f(human->parent->mFrontVec.x, human->parent->mFrontVec.z);
 
 	// “–‚½‚è”»’è—LŒø
 	isCalcCollider_ = true;
@@ -521,9 +521,9 @@ void MalletMotion::BackStep2Update(PlayerBody* human)
 	moveEase_.Update();
 
 	// ­‚µ‘O‚ÉˆÚ“®‚·‚éˆ—
-	const Vec3 endPos = startPos_ + human->parent->frontVec_.Norm() * length_;
+	const Vec3 endPos = startPos_ + human->parent->mFrontVec.Norm() * length_;
 	human->pos = moveEase_.InOut(startPos_, endPos);
-	human->parent->moveVel = endPos - startPos_;
+	human->parent->mMoveVel = endPos - startPos_;
 
 	if (ease_.GetisEnd() == true)
 	{
@@ -535,9 +535,9 @@ void MalletMotion::BackStep3Update(PlayerBody* human)
 	moveEase_.Update();
 
 	// ­‚µ‘O‚ÉˆÚ“®‚·‚éˆ—
-	const Vec3 endPos = startPos_ + human->parent->frontVec_.Norm() * length_;
+	const Vec3 endPos = startPos_ + human->parent->mFrontVec.Norm() * length_;
 	human->pos = moveEase_.InOut(startPos_, endPos);
-	human->parent->moveVel = endPos - startPos_;
+	human->parent->mMoveVel = endPos - startPos_;
 
 	if (ease_.GetisEnd() == true)
 	{
@@ -554,14 +554,14 @@ void MalletMotion::RollStep0Init(PlayerBody* human)
 	human->parent->CalcFrontVec();
 
 	// UŒ‚ƒ‚[ƒVƒ‡ƒ“‚Åi‚Þ‹——£‚ÌŒvŽZ
-	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(-human->parent->frontVec_, 8);
+	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(-human->parent->mFrontVec, 8);
 
 	// Œ»Ý‚ÌÀ•W‚ðŽæ“¾
 	startPos_ = human->pos;
 
 	// “ü—Í‚µ‚½Œã‚Ì‰ñ“]Šp‚ðŽæ“¾
 	startRotY_ = human->rot.y;
-	endRotY_ = atan2f(human->parent->frontVec_.x, human->parent->frontVec_.z);
+	endRotY_ = atan2f(human->parent->mFrontVec.x, human->parent->mFrontVec.z);
 
 	// “–‚½‚è”»’è—LŒø
 	isCalcCollider_ = true;
@@ -575,9 +575,9 @@ void MalletMotion::RollStep0Update(PlayerBody* human)
 	moveEase_.Update();
 
 	// ­‚µ‘O‚ÉˆÚ“®‚·‚éˆ—
-	const Vec3 endPos = startPos_ + human->parent->frontVec_.Norm() * length_;
+	const Vec3 endPos = startPos_ + human->parent->mFrontVec.Norm() * length_;
 	human->pos = moveEase_.InOut(startPos_, endPos);
-	human->parent->moveVel = endPos - startPos_;
+	human->parent->mMoveVel = endPos - startPos_;
 
 	if (ease_.GetisEnd() == true)
 	{
@@ -589,9 +589,9 @@ void MalletMotion::RollStep1Update(PlayerBody* human)
 	moveEase_.Update();
 
 	// ­‚µ‘O‚ÉˆÚ“®‚·‚éˆ—
-	const Vec3 endPos = startPos_ + human->parent->frontVec_.Norm() * length_;
+	const Vec3 endPos = startPos_ + human->parent->mFrontVec.Norm() * length_;
 	human->pos = moveEase_.InOut(startPos_, endPos);
-	human->parent->moveVel = endPos - startPos_;
+	human->parent->mMoveVel = endPos - startPos_;
 
 	if (ease_.GetisEnd() == true)
 	{

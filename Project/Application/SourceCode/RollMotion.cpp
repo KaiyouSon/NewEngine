@@ -5,22 +5,22 @@
 
 RollMotion::RollMotion()
 {
-	motion_ = MotionManager::GetMotion("Roll");
+	mMotion = MotionManager::GetMotion("Roll");
 }
 
 void RollMotion::Init(HumanoidBody* human)
 {
-	isInit_ = false;
-	isPlay_ = false;
-	isCanChangeMotion_ = false;
-	step_ = 0;
+	mIsInit = false;
+	mIsPlay = false;
+	mIsCanChangeMotion = false;
+	mStep = 0;
 
-	curRots_.resize(human->GetPartsSize());
-	endRots_.resize(human->GetPartsSize());
-	curWeaponPoses_.resize(human->GetWeaponPartsSize());
-	endWeaponPoses_.resize(human->GetWeaponPartsSize());
-	curWeaponRots_.resize(human->GetWeaponPartsSize());
-	endWeaponRots_.resize(human->GetWeaponPartsSize());
+	mCurRots.resize(human->GetPartsSize());
+	mEndRots.resize(human->GetPartsSize());
+	mCurWeaponPoses.resize(human->GetWeaponPartsSize());
+	mEndWeaponPoses.resize(human->GetWeaponPartsSize());
+	mCurWeaponRots.resize(human->GetWeaponPartsSize());
+	mEndWeaponRots.resize(human->GetWeaponPartsSize());
 
 	moveEase_.SetEaseTimer(35);
 	moveEase_.SetPowNum(3);
@@ -32,18 +32,18 @@ void RollMotion::Init(HumanoidBody* human)
 }
 void RollMotion::Update(HumanoidBody* human)
 {
-	if (isPlay_ == false)
+	if (mIsPlay == false)
 	{
-		isPlay_ = true;
+		mIsPlay = true;
 	}
 
-	ease_.Update();
+	mEase.Update();
 
-	if (isInit_ == false)
+	if (mIsInit == false)
 	{
 		BaseInit(human);
 		CurrentStepInit(human);
-		isInit_ = true;
+		mIsInit = true;
 	}
 	BasePrevUpdate(human);
 	CurrentStepUpdate(human);
@@ -52,26 +52,26 @@ void RollMotion::Update(HumanoidBody* human)
 
 void RollMotion::CurrentStepInit(HumanoidBody* human)
 {
-	if (step_ == 0)
+	if (mStep == 0)
 	{
 		Step0Init(human);
 	}
 }
 void RollMotion::CurrentStepUpdate(HumanoidBody* human)
 {
-	if (step_ == 0)
+	if (mStep == 0)
 	{
 		Step0Update(human);
 	}
-	else if (step_ == 1)
+	else if (mStep == 1)
 	{
 		Step1Update(human);
 	}
-	else if (step_ == 2)
+	else if (mStep == 2)
 	{
 		Step2Update(human);
 	}
-	else if (step_ == 3)
+	else if (mStep == 3)
 	{
 		Step3Update(human);
 	}
@@ -85,14 +85,14 @@ void RollMotion::Step0Init(HumanoidBody* human)
 
 	// UŒ‚ƒ‚[ƒVƒ‡ƒ“‚Åi‚Þ‹——£‚ÌŒvŽZ
 	player->CalcFrontVec();
-	length_ = 30;// CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->frontVec_, 30);
+	length_ = 30;// CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->mFrontVec, 30);
 
 	// Œ»Ý‚ÌÀ•W‚ðŽæ“¾
 	startPos_ = human->pos;
-	endPos_ = startPos_ + player->frontVec_.Norm() * length_;
+	endPos_ = startPos_ + player->mFrontVec.Norm() * length_;
 
 	// “ü—Í‚µ‚½Œã‚Ì‰ñ“]Šp‚ðŽæ“¾
-	rotY_ = atan2f(player->frontVec_.x, player->frontVec_.z);
+	rotY_ = atan2f(player->mFrontVec.x, player->mFrontVec.z);
 }
 void RollMotion::Step0Update(HumanoidBody* human)
 {
@@ -100,11 +100,11 @@ void RollMotion::Step0Update(HumanoidBody* human)
 
 	human->pos = moveEase_.InOut(startPos_, endPos_);
 	human->rot.y = rotY_;
-	player->moveVel = endPos_ - startPos_;
+	player->mMoveVel = endPos_ - startPos_;
 
 	moveEase_.Update();
 
-	if (ease_.GetisEnd() == true)
+	if (mEase.GetisEnd() == true)
 	{
 		SoundManager::Play("RollSE");
 	}
@@ -113,13 +113,13 @@ void RollMotion::Step1Update(HumanoidBody* human)
 {
 	Player* player = static_cast<Player*>(human->iParent);
 
-	human->GetPart(PartID::Body)->pos.y = ease_.In(0, -3);
+	human->GetPart(PartID::Body)->pos.y = mEase.In(0, -3);
 	human->pos = moveEase_.InOut(startPos_, endPos_);
-	player->moveVel = endPos_ - startPos_;
+	player->mMoveVel = endPos_ - startPos_;
 
 	moveEase_.Update();
 
-	if (ease_.GetisEnd() == true)
+	if (mEase.GetisEnd() == true)
 	{
 		//human->GetPart(PartID::Body)->rot.x = 30;
 	}
@@ -128,28 +128,28 @@ void RollMotion::Step2Update(HumanoidBody* human)
 {
 	Player* player = static_cast<Player*>(human->iParent);
 
-	human->GetPart(PartID::Body)->pos.y = ease_.Lerp(-3.f, -0.7f);
+	human->GetPart(PartID::Body)->pos.y = mEase.Lerp(-3.f, -0.7f);
 	human->pos = moveEase_.InOut(startPos_, endPos_);
-	player->moveVel = endPos_ - startPos_;
+	player->mMoveVel = endPos_ - startPos_;
 
 	moveEase_.Update();
 
-	if (ease_.GetisEnd() == true)
+	if (mEase.GetisEnd() == true)
 	{
-		isCanChangeMotion_ = true;
+		mIsCanChangeMotion = true;
 	}
 }
 void RollMotion::Step3Update(HumanoidBody* human)
 {
 	Player* player = static_cast<Player*>(human->iParent);
 
-	human->GetPart(PartID::Body)->pos.y = ease_.Out(-0.7f, 0.f);
+	human->GetPart(PartID::Body)->pos.y = mEase.Out(-0.7f, 0.f);
 	human->pos = moveEase_.InOut(startPos_, endPos_);
-	player->moveVel = endPos_ - startPos_;
+	player->mMoveVel = endPos_ - startPos_;
 
 	moveEase_.Update();
 
-	if (ease_.GetisEnd() == true)
+	if (mEase.GetisEnd() == true)
 	{
 		human->GetPart(PartID::Body)->rot.x = 0;
 	}

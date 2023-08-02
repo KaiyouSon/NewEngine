@@ -5,12 +5,12 @@
 class ICamera
 {
 protected:
-	std::unique_ptr<Camera> camera_;
+	std::unique_ptr<Camera> mCamera;
 	Player* mPlayer;
-	Vec3 lockonPos_;
-	Vec3 targetPos_;
-	Vec3 targetRot_;
-	bool isEase_;
+	Vec3 mLockonPos;
+	Vec3 mTargetPos;
+	Vec3 mTargetRot;
+	bool mIsEase;
 
 protected:
 	void EaseCamera();

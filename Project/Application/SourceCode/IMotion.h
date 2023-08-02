@@ -7,22 +7,22 @@ class HumanoidBody;
 struct IMotion
 {
 public:
-	bool isInit_;
-	bool isPlay_;
-	bool isCanChangeMotion_;
+	bool mIsInit;
+	bool mIsPlay;
+	bool mIsCanChangeMotion;
 
-	uint32_t step_;
-	Easing ease_;
+	uint32_t mStep;
+	Easing mEase;
 
-	std::vector<Vec3> curRots_;
-	std::vector<Vec3> endRots_;
+	std::vector<Vec3> mCurRots;
+	std::vector<Vec3> mEndRots;
 
-	std::vector<Vec3> curWeaponPoses_;
-	std::vector<Vec3> endWeaponPoses_;
+	std::vector<Vec3> mCurWeaponPoses;
+	std::vector<Vec3> mEndWeaponPoses;
 
-	std::vector<Vec3> curWeaponRots_;
-	std::vector<Vec3> endWeaponRots_;
-	Motion* motion_;
+	std::vector<Vec3> mCurWeaponRots;
+	std::vector<Vec3> mEndWeaponRots;
+	Motion* mMotion;
 
 public:
 	void BaseInit(HumanoidBody* human);

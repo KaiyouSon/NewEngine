@@ -134,7 +134,7 @@ void MoveMotion::Step0Update(PlayerBody* human)
 		human->GetPart((PartID)i)->rot = ease_.InOut(curRots_[i], startRots_[i]);
 	}
 
-	human->parent->moveSpeed_ = ease_.Lerp(0, endSpeed_);
+	human->parent->mMoveSpeed = ease_.Lerp(0, endSpeed_);
 
 	ease_.Update();
 
@@ -190,7 +190,7 @@ void MoveMotion::Step2Init(PlayerBody* human)
 	ease_.SetEaseTimer(10);
 	ease_.SetPowNum(2);
 
-	curSpeed_ = human->parent->moveSpeed_;
+	curSpeed_ = human->parent->mMoveSpeed;
 
 	CalcCurrentRot(human);
 }
@@ -200,7 +200,7 @@ void MoveMotion::Step2Update(PlayerBody* human)
 	{
 		human->GetPart((PartID)i)->rot = ease_.InOut(curRots_[i], 0);
 	}
-	human->parent->moveSpeed_ = ease_.Lerp(curSpeed_, 0);
+	human->parent->mMoveSpeed = ease_.Lerp(curSpeed_, 0);
 	ease_.Update();
 
 	if (ease_.GetisEnd() == true)
@@ -218,7 +218,7 @@ void MoveMotion::Step3Init(PlayerBody* human)
 	ease_.SetPowNum(2);
 	ease_.Reset();
 
-	curSpeed_ = human->parent->moveSpeed_;
+	curSpeed_ = human->parent->mMoveSpeed;
 
 	if (count_ == 1)
 	{
@@ -232,7 +232,7 @@ void MoveMotion::Step3Update(PlayerBody* human)
 		human->GetPart((PartID)i)->rot = ease_.Lerp(curRots_[i], endRots_[i]);
 	}
 
-	human->parent->moveSpeed_ = ease_.Lerp(curSpeed_, endSpeed_);
+	human->parent->mMoveSpeed = ease_.Lerp(curSpeed_, endSpeed_);
 
 	ease_.Update();
 
@@ -258,7 +258,7 @@ void MoveMotion::JoggingInit(PlayerBody* human)
 	// 現在の角度を計算
 	curRots_ = human->CalcCurRots();
 	// 終了速度の取得
-	endSpeed_ = human->parent->joggingSpeed_;
+	endSpeed_ = human->parent->mJoggingSpeed;
 
 	// 各部位の角度の初期化
 	startRots_[(uint32_t)PartID::Head] = Radian(Vec3(0, -2, 0));
@@ -294,7 +294,7 @@ void MoveMotion::RunInit(PlayerBody* human)
 	// 現在の角度を計算
 	curRots_ = human->CalcCurRots();
 	// 終了速度の取得
-	endSpeed_ = human->parent->runSpeed_;
+	endSpeed_ = human->parent->mRunSpeed;
 
 	// 各部位の角度の初期化
 	startRots_[(uint32_t)PartID::Head] = Radian(Vec3(0, -10, 0));

@@ -4,8 +4,8 @@
 class TargetCamera : public ICamera
 {
 private:
-	Vec3 curCamePos_;
-	Vec3 targetCamePos_;
+	Vec3 mCurCamePos;
+	Vec3 mTargetCamePos;
 
 public:
 	TargetCamera();

@@ -5,13 +5,13 @@
 class DefaultCamera : public ICamera
 {
 private:
-	float targetYaw_;
-	float assistYaw_;
-	float controlYaw_;
-	float controlPitch_;
+	float mTargetYaw;
+	float mAssistYaw;
+	float mControlYaw;
+	float mControlPitch;
 
-	Vec3 vec_;
-	Vec3 rot_;
+	Vec3 mVec;
+	Vec3 mRot;
 
 public:
 	DefaultCamera();

@@ -24,37 +24,37 @@ public:
 	};
 
 private:
-	std::array<GaugeParam, 3> gaugePrames_;
-	std::unique_ptr<Weapon> weapon_;
+	std::array<GaugeParam, 3> mGaugePrames;
+	std::unique_ptr<Weapon> mWeapon;
 	std::unique_ptr<PlayerBody> mPlayer;
-	uint32_t bottleNum_;
+	uint32_t mBottleNum;
 
-	bool isAlive_;
-	bool isDissolve_;
+	bool mIsAlive;
+	bool mIsDissolve;
 
 private:
-	Timer pushTimer; //ボタン連打させないように
+	Timer mPushTimer; //ボタン連打させないように
 
 private:
 	// 状態
-	State state_;
+	State mState;
 
 private:
 	// 移動関連
-	float moveSpeed_;
-	float joggingSpeed_;
-	float runSpeed_;
-	Vec3 moveVel;
+	float mMoveSpeed;
+	float mJoggingSpeed;
+	float mRunSpeed;
+	Vec3 mMoveVel;
 
 private:
 	// 当たりあ判定関連
-	Vec3 frontVec_;
-	CapsuleCollider bodyCollider_;
+	Vec3 mFrontVec;
+	CapsuleCollider mBodyCollider;
 
 private:
 	// ダメージ関連
-	bool ismDamage;
-	Timer damageCoolTimer_;
+	bool mIsDamage;
+	Timer mDamageCoolTimer;
 
 private:
 	void CalcFrontVec();

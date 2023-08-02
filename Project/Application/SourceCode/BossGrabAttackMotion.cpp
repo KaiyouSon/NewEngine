@@ -4,32 +4,32 @@
 
 BossGrabAttackMotion::BossGrabAttackMotion()
 {
-	motion_ = MotionManager::GetMotion("BossGrabAttack");
+	mMotion = MotionManager::GetMotion("BossGrabAttack");
 }
 
 void BossGrabAttackMotion::Init(HumanoidBody* human)
 {
-	curRots_.resize(human->GetPartsSize());
-	endRots_.resize(human->GetPartsSize());
-	curWeaponPoses_.resize(human->GetWeaponPartsSize());
-	endWeaponPoses_.resize(human->GetWeaponPartsSize());
-	curWeaponRots_.resize(human->GetWeaponPartsSize());
-	endWeaponRots_.resize(human->GetWeaponPartsSize());
+	mCurRots.resize(human->GetPartsSize());
+	mEndRots.resize(human->GetPartsSize());
+	mCurWeaponPoses.resize(human->GetWeaponPartsSize());
+	mEndWeaponPoses.resize(human->GetWeaponPartsSize());
+	mCurWeaponRots.resize(human->GetWeaponPartsSize());
+	mEndWeaponRots.resize(human->GetWeaponPartsSize());
 }
 void BossGrabAttackMotion::Update(HumanoidBody* human)
 {
-	if (isPlay_ == false)
+	if (mIsPlay == false)
 	{
-		isPlay_ = true;
+		mIsPlay = true;
 	}
 
-	ease_.Update();
+	mEase.Update();
 
-	if (isInit_ == false)
+	if (mIsInit == false)
 	{
 		BaseInit(human);
 		CurrentStepInit(human);
-		isInit_ = true;
+		mIsInit = true;
 	}
 	BasePrevUpdate(human);
 	CurrentStepUpdate(human);
@@ -39,7 +39,7 @@ void BossGrabAttackMotion::Update(HumanoidBody* human)
 void BossGrabAttackMotion::CurrentStepInit(HumanoidBody* human)
 {
 	startBodyY_ = human->GetPart(PartID::Body)->pos.y;
-	switch (step_)
+	switch (mStep)
 	{
 	case 0:
 		SettingMovePrame(human, 3, 30, 2);
@@ -64,11 +64,11 @@ void BossGrabAttackMotion::CurrentStepInit(HumanoidBody* human)
 }
 void BossGrabAttackMotion::CurrentStepUpdate(HumanoidBody* human)
 {
-	human->GetPart(PartID::Body)->pos.y = ease_.Interpolation(startBodyY_, endBodyY_);
+	human->GetPart(PartID::Body)->pos.y = mEase.Interpolation(startBodyY_, endBodyY_);
 
 	Boss* boss = static_cast<Boss*>(human->iParent);
-	if ((step_ >= 0 && step_ <= 2) ||
-		(step_ == 3))
+	if ((mStep >= 0 && mStep <= 2) ||
+		(mStep == 3))
 	{
 		human->pos = moveEase_.InOut(startPos_, endPos_);
 		moveEase_.Update();
@@ -89,6 +89,6 @@ void BossGrabAttackMotion::SettingMovePrame(HumanoidBody* human, const float dis
 
 	// Œ»Ý‚ÌÀ•W‚ðŽæ“¾
 	startPos_ = human->pos;
-	endPos_ = startPos_ + boss->frontVec_.Norm() * dis;
+	endPos_ = startPos_ + boss->mFrontVec.Norm() * dis;
 }
 
