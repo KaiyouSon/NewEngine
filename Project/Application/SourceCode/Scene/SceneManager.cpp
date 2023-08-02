@@ -12,7 +12,7 @@
 #include "Vignette.h"
 #include "Cloud.h"
 
-std::unique_ptr<IScene> SceneManager::currentScene = nullptr;
+std::unique_ptr<IScene> SceneManager::sCurrentScene = nullptr;
 
 SceneManager::SceneManager()
 {
@@ -25,7 +25,7 @@ SceneManager::SceneManager()
 	DOF::CreateGraphicsPipeline();
 	RadialBlur::CreateGraphicsPipeline();
 	Vignette::CreateGraphicsPipeline();
-	currentScene = std::make_unique<GameScene>();
+	sCurrentScene = std::make_unique<GameScene>();
 }
 
 SceneManager::~SceneManager()
@@ -34,42 +34,44 @@ SceneManager::~SceneManager()
 
 void SceneManager::Init()
 {
-	currentScene->Init();
+	sCurrentScene->Init();
 }
 
 void SceneManager::Update()
 {
-	currentScene->Update();
+	sCurrentScene->Update();
 	Camera::current.Update();
 	SceneChanger::GetInstance()->Update();
 }
 
 void SceneManager::RenderTextureSetting()
 {
-	currentScene->RenderTextureSetting();
+	sCurrentScene->RenderTextureSetting();
 }
 
 void SceneManager::DrawBackSprite()
 {
-	currentScene->DrawBackSprite();
+	sCurrentScene->DrawBackSprite();
 }
 
 void SceneManager::DrawModel()
 {
-	currentScene->DrawModel();
+	sCurrentScene->DrawModel();
 }
 
 void SceneManager::DrawFrontSprite()
 {
-	currentScene->DrawFrontSprite();
+	sCurrentScene->DrawFrontSprite();
 	SceneChanger::GetInstance()->Draw();
 
-#ifdef _DEBUG
-#endif
-	currentScene->DrawDebugGui();
+	// デバッグ時のみ実行
+	ProcessAtDebugBulid([&]()
+		{
+			sCurrentScene->DrawDebugGui();
+		});
 }
 
 void SceneManager::DrawRenderTexture()
 {
-	currentScene->DrawRenderTexture();
+	sCurrentScene->DrawRenderTexture();
 }

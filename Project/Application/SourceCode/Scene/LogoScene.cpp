@@ -2,8 +2,8 @@
 #include "TitleScene.h"
 
 LogoScene::LogoScene() :
-	logoSprite(std::move(std::make_unique<Sprite>())),
-	backSprite(std::move(std::make_unique<Sprite>()))
+	mLogoSprite(std::move(std::make_unique<Sprite>())),
+	mBackSprite(std::move(std::make_unique<Sprite>()))
 {
 }
 
@@ -16,59 +16,58 @@ void LogoScene::Init()
 	Texture tex1 = TextureManager::LoadTexture("LogoScene/NewEngineTitle.png");
 	Texture tex2 = TextureManager::CreateTexture(Color::black);
 
-	logoSprite->SetTexture(&tex1);
-	backSprite->SetTexture(&tex2);
+	mLogoSprite->SetTexture(&tex1);
+	mBackSprite->SetTexture(&tex2);
 
-	logoSprite->pos = GetWindowHalfSize();
-	backSprite->pos = GetWindowHalfSize();
+	mLogoSprite->pos = GetWindowHalfSize();
+	mBackSprite->pos = GetWindowHalfSize();
 
-	logoSprite->color.a = 0;
-	//backSprite->size = GetWindowSize();
+	mLogoSprite->color.a = 0;
+	//mBackSprite->size = GetWindowSize();
 
-	stayTimer.SetLimitTimer(30);
+	mStayTimer.SetLimitTimer(30);
 
-	alphaEase.SetEaseTimer(60);
-	isRevercr = false;
+	mAlphaEase.SetEaseTimer(60);
+	mIsReverce = false;
 
-	isEnd = false;
-
+	mIsEnd = false;
 }
 
 void LogoScene::Update()
 {
-	stayTimer.Update(true);
-	if (stayTimer.GetisTimeOut() == true && isEnd == false)
+	mStayTimer.Update(true);
+	if (mStayTimer.GetisTimeOut() == true && mIsEnd == false)
 	{
-		alphaEase.Update();
+		mAlphaEase.Update();
 
-		if (isRevercr == false)
+		if (mIsReverce == false)
 		{
-			logoSprite->color.a = alphaEase.Lerp(0, 255);
+			mLogoSprite->color.a = mAlphaEase.Lerp(0, 255);
 
-			if (alphaEase.GetisEnd() == true)
+			if (mAlphaEase.GetisEnd() == true)
 			{
-				alphaEase.Reset();
-				isRevercr = true;
+				mAlphaEase.Reset();
+				mIsReverce = true;
 			}
 		}
-		if (isRevercr == true)
+		if (mIsReverce == true)
 		{
-			logoSprite->color.a = alphaEase.Lerp(255, 0);
+			mLogoSprite->color.a = mAlphaEase.Lerp(255, 0);
 
-			if (alphaEase.GetisEnd() == true)
+			if (mAlphaEase.GetisEnd() == true)
 			{
-				alphaEase.Reset();
-				stayTimer.Reset();
-				isRevercr = false;
-				isEnd = true;
+				mAlphaEase.Reset();
+				mStayTimer.Reset();
+				mIsReverce = false;
+				mIsEnd = true;
 			}
 		}
 	}
 
-	logoSprite->Update();
-	backSprite->Update();
+	mLogoSprite->Update();
+	mBackSprite->Update();
 
-	if (stayTimer.GetisTimeOut() == true && isEnd == true)
+	if (mStayTimer.GetisTimeOut() == true && mIsEnd == true)
 	{
 		SceneManager::ChangeScene<TitleScene>();
 	}
@@ -92,8 +91,8 @@ void LogoScene::DrawModel()
 
 void LogoScene::DrawFrontSprite()
 {
-	backSprite->Draw();
-	logoSprite->Draw();
+	mBackSprite->Draw();
+	mLogoSprite->Draw();
 }
 
 void LogoScene::DrawDebugGui()

@@ -14,16 +14,16 @@ private:
 	};
 
 private:
-	std::unique_ptr<Sprite> sprite;
-	Easing moveEase;
-	ChangeStep changeStep_;
+	std::unique_ptr<Sprite> mSprite;
+	Easing mMoveEase;
+	ChangeStep mChangeStep;
 
-	bool isSceneChanging;
-	bool isChange;
+	bool mIsSceneChanging;
+	bool mIsChange;
 
 private:
-	bool isEaseTitleBGM_;
-	bool isEaseGameBGM_;
+	bool mIsEaseTitleBGM;
+	bool mIsEaseGameBGM;
 
 private:
 	void Init();
@@ -37,9 +37,9 @@ public:
 	void SetisEaseGameBGM(const bool isEaseGameBGM);
 
 public:
-	inline bool GetisChange() { return isChange; }
-	inline void SetisChange(bool isChange) { this->isChange = isChange; }
-	inline bool GetisSceneChanging() { return isSceneChanging; }
+	inline bool GetisChange() { return mIsChange; }
+	inline void SetisChange(bool mIsChange) { this->mIsChange = mIsChange; }
+	inline bool GetisSceneChanging() { return mIsSceneChanging; }
 
 private:
 	friend Singleton<SceneChanger>;

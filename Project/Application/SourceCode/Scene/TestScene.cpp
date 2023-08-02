@@ -12,14 +12,12 @@ void TestScene::Init()
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
-	//obj1_.SetModel(ModelManager::GetModel("Block1"));
 	obj1_.SetModel(ModelManager::GetModel("Block1"));
 	obj2_.SetModel(ModelManager::GetModel("BoneTest"));
 	obj2_.pos.x = 3;
 	obj2_.scale = 0.01f;
 
 	obj1_.SetTexture(TextureManager::GetTexture("pic"));
-	//obj2_.SetTexture(TextureManager::GetTexture("pic"));
 
 	skyDome_.SetModel(ModelManager::GetModel("SkyDome"));
 

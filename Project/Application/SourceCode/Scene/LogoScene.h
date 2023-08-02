@@ -4,14 +4,14 @@
 class LogoScene : public IScene
 {
 private:
-	std::unique_ptr<Sprite> logoSprite;
-	std::unique_ptr<Sprite> backSprite;
+	std::unique_ptr<Sprite> mLogoSprite;
+	std::unique_ptr<Sprite> mBackSprite;
 
-	Timer stayTimer;
+	Timer mStayTimer;
 
-	Easing alphaEase;
-	bool isRevercr;
-	bool isEnd;
+	Easing mAlphaEase;
+	bool mIsReverce;
+	bool mIsEnd;
 
 public:
 	LogoScene();

@@ -14,13 +14,13 @@ private:
 	std::unique_ptr<Player> mPlayer;
 	std::unique_ptr<Boss> mBoss;
 	std::unique_ptr<UIManager> mUiManager;
-	std::unique_ptr<CameraManager> cameraManager_;
-	std::unique_ptr<MenuManager> menuManager_;
+	std::unique_ptr<CameraManager> mCameraManager;
+	std::unique_ptr<MenuManager> mMenuManager;
 	std::unique_ptr<Field> mField;
 
-	ShadowMap shadowMap_;
+	ShadowMap mShadowMap;
 
-	float bgmVolume_;
+	float mBgmVolume;
 
 public:
 	GameScene();

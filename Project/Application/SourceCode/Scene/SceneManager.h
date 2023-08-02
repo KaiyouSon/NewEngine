@@ -8,7 +8,7 @@ class SceneManager : public Singleton<SceneManager>
 {
 private:
 	friend Singleton<SceneManager>;
-	static std::unique_ptr<IScene> currentScene;
+	static std::unique_ptr<IScene> sCurrentScene;
 
 public:
 	SceneManager();
@@ -28,7 +28,7 @@ public:
 	{
 		std::unique_ptr<IScene> nextScene = std::make_unique<T>();
 		nextScene->Init();
-		currentScene = std::move(nextScene);
+		sCurrentScene = std::move(nextScene);
 	}
 };
 

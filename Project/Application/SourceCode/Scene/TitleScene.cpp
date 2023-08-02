@@ -7,32 +7,32 @@ void TitleScene::Init()
 	Camera::current.pos = { 0,0,-10 };
 	Camera::current.rot = { 0,0,0 };
 
-	titleUI_ = std::make_unique<TitleUI>();
-	titleUI_->Init();
+	mTitleUI = std::make_unique<TitleUI>();
+	mTitleUI->Init();
 
 	SoundManager::Play("TitleBGM", true);
 	SoundManager::SetVolume("TitleBGM", 0);
-	bgmVolume_ = 0;
+	mBgmVolume = 0;
 }
 
 void TitleScene::Update()
 {
-	SoundManager::SetVolume("TitleBGM", bgmVolume_);
-	bgmVolume_ += 0.01f;
-	bgmVolume_ = Min<float>(bgmVolume_, 1.f);
+	SoundManager::SetVolume("TitleBGM", mBgmVolume);
+	mBgmVolume += 0.01f;
+	mBgmVolume = Min<float>(mBgmVolume, 1.f);
 
-	titleUI_->Update();
+	mTitleUI->Update();
 
 	if (Pad::GetAnyButtonDown())
 	{
-		if (titleUI_->GetisAfterImage() == false)
+		if (mTitleUI->GetisAfterImage() == false)
 		{
 			SoundManager::Play("SelectSE");
-			titleUI_->SetisAfterImage(true);
+			mTitleUI->SetisAfterImage(true);
 		}
 	}
 
-	if (titleUI_->GetisEnd() == true)
+	if (mTitleUI->GetisEnd() == true)
 	{
 		if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
 		{
@@ -67,7 +67,7 @@ void TitleScene::DrawModel()
 
 void TitleScene::DrawFrontSprite()
 {
-	titleUI_->DrawFrontSprite();
+	mTitleUI->DrawFrontSprite();
 }
 
 void TitleScene::DrawDebugGui()

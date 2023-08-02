@@ -3,106 +3,106 @@
 using namespace std;
 
 SceneChanger::SceneChanger() :
-	sprite(move(make_unique<Sprite>())),
-	isSceneChanging(false)
+	mSprite(move(make_unique<Sprite>())),
+	mIsSceneChanging(false)
 {
-	sprite->SetTexture(TextureManager::GetTexture("White"));
-	sprite->pos = GetWindowHalfSize();
-	sprite->scale = GetWindowSize();
-	sprite->color = Color::black;
+	mSprite->SetTexture(TextureManager::GetTexture("White"));
+	mSprite->pos = GetWindowHalfSize();
+	mSprite->scale = GetWindowSize();
+	mSprite->color = Color::black;
 }
 
 void SceneChanger::Init()
 {
-	isChange = false;
+	mIsChange = false;
 
-	changeStep_ = ChangeStep::In;
+	mChangeStep = ChangeStep::In;
 
-	moveEase.SetEaseTimer(80);
-	moveEase.SetPowNum(2);
+	mMoveEase.SetEaseTimer(80);
+	mMoveEase.SetPowNum(2);
 }
 
 void SceneChanger::Update()
 {
-	if (isSceneChanging == false)
+	if (mIsSceneChanging == false)
 	{
 		return;
 	}
 
-	if (changeStep_ == ChangeStep::In)
+	if (mChangeStep == ChangeStep::In)
 	{
-		sprite->color.a = moveEase.InOut(0, 255);
-		if (isEaseTitleBGM_ == true)
+		mSprite->color.a = mMoveEase.InOut(0, 255);
+		if (mIsEaseTitleBGM == true)
 		{
-			float volume = moveEase.InOut(1, 0);
+			float volume = mMoveEase.InOut(1, 0);
 			SoundManager::SetVolume("TitleBGM", volume);
 		}
-		else if (isEaseGameBGM_ == true)
+		else if (mIsEaseGameBGM == true)
 		{
-			float volume = moveEase.InOut(1, 0);
+			float volume = mMoveEase.InOut(1, 0);
 			SoundManager::SetVolume("BattleBGM", volume);
 		}
 
-		moveEase.Update();
-		if (moveEase.GetisEnd() == true)
+		mMoveEase.Update();
+		if (mMoveEase.GetisEnd() == true)
 		{
-			changeStep_ = ChangeStep::Out;
-			isChange = true;
+			mChangeStep = ChangeStep::Out;
+			mIsChange = true;
 
-			if (isEaseTitleBGM_ == true)
+			if (mIsEaseTitleBGM == true)
 			{
 				SoundManager::Stop("TitleBGM");
 			}
-			else if (isEaseGameBGM_ == true)
+			else if (mIsEaseGameBGM == true)
 			{
 				SoundManager::Stop("BattleBGM");
 			}
 
-			moveEase.Reset();
+			mMoveEase.Reset();
 		}
 	}
-	else if (changeStep_ == ChangeStep::Out)
+	else if (mChangeStep == ChangeStep::Out)
 	{
-		sprite->color.a = moveEase.InOut(255, 0);
-		moveEase.Update();
-		if (moveEase.GetisEnd() == true)
+		mSprite->color.a = mMoveEase.InOut(255, 0);
+		mMoveEase.Update();
+		if (mMoveEase.GetisEnd() == true)
 		{
-			changeStep_ = ChangeStep::End;
-			isChange = false;
-			isSceneChanging = false;
+			mChangeStep = ChangeStep::End;
+			mIsChange = false;
+			mIsSceneChanging = false;
 
-			isEaseTitleBGM_ = false;
-			isEaseGameBGM_ = false;
+			mIsEaseTitleBGM = false;
+			mIsEaseGameBGM = false;
 
-			moveEase.Reset();
+			mMoveEase.Reset();
 		}
 	}
 
-	sprite->Update();
+	mSprite->Update();
 }
 
 void SceneChanger::Draw()
 {
-	if (isSceneChanging == false) return;
+	if (mIsSceneChanging == false) return;
 
-	sprite->Draw();
+	mSprite->Draw();
 }
 
 void SceneChanger::StartSceneChange()
 {
-	if (isSceneChanging == false)
+	if (mIsSceneChanging == false)
 	{
 		Init();
-		isSceneChanging = true;
+		mIsSceneChanging = true;
 	}
 }
 
 void SceneChanger::SetisEaseTitleBGM(const bool isEaseTitleBGM)
 {
-	isEaseTitleBGM_ = isEaseTitleBGM;
+	mIsEaseTitleBGM = isEaseTitleBGM;
 }
 
 void SceneChanger::SetisEaseGameBGM(const bool isEaseGameBGM)
 {
-	isEaseGameBGM_ = isEaseGameBGM;
+	mIsEaseGameBGM = isEaseGameBGM;
 }

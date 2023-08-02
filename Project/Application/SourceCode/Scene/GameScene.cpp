@@ -9,8 +9,8 @@ GameScene::GameScene() :
 	mPlayer(std::make_unique<Player>()),
 	mBoss(std::make_unique<Boss>()),
 	mUiManager(std::make_unique<UIManager>()),
-	cameraManager_(std::make_unique<CameraManager>()),
-	menuManager_(std::make_unique<MenuManager>()),
+	mCameraManager(std::make_unique<CameraManager>()),
+	mMenuManager(std::make_unique<MenuManager>()),
 	mField(std::make_unique<Field>())
 {
 
@@ -33,11 +33,11 @@ void GameScene::Init()
 	mUiManager->SetBoss(mBoss.get());
 	mUiManager->Init();
 
-	cameraManager_->SetPlayer(mPlayer.get());
-	cameraManager_->SetBoss(mBoss.get());
-	cameraManager_->Init();
+	mCameraManager->SetPlayer(mPlayer.get());
+	mCameraManager->SetBoss(mBoss.get());
+	mCameraManager->Init();
 
-	menuManager_->Init();
+	mMenuManager->Init();
 
 	mField->Init();
 
@@ -53,7 +53,7 @@ void GameScene::Init()
 
 	SceneChanger::GetInstance()->SetisEaseTitleBGM(false);
 
-	bgmVolume_ = 0;
+	mBgmVolume = 0;
 }
 void GameScene::Update()
 {
@@ -61,40 +61,13 @@ void GameScene::Update()
 	{
 		if (SoundManager::GetIsPlaying("BattleBGM") == true)
 		{
-			SoundManager::SetVolume("BattleBGM", bgmVolume_);
-			bgmVolume_ += 0.005f;
-			bgmVolume_ = Min<float>(bgmVolume_, 1.f);
+			SoundManager::SetVolume("BattleBGM", mBgmVolume);
+			mBgmVolume += 0.005f;
+			mBgmVolume = Min<float>(mBgmVolume, 1.f);
 		}
 	}
-	//// 仮のここに書いた
-	//Camera prevCamera = Camera::current;
 
-	//Camera::current.pos = LightManager::GetInstance()->directionalLight.pos;
-	//Camera::current.rot = Vec3(Radian(90), 0, 0);
-	//Camera::current.Update();
-	//mPlayer->PostUpdate();
-	//mBoss->Update();
-
-	//// SRVヒープの設定コマンド
-	//auto temp = TextureManager::GetSrvDescHeap();
-	//RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &temp);
-	//tex_->PrevDrawScene();
-
-	//RenderBase::GetInstance()->SetObject3DDrawCommand();
-	//mPlayer->DrawModel();
-	//mBoss->DrawModel();
-	//tex_->PostDrawScene();
-
-	//Camera::current = prevCamera;
-	//Camera::current.Update();
-
-	//float x = (float)(Key::GetKey(DIK_RIGHT) - Key::GetKey(DIK_LEFT));
-	//float y = (float)(Key::GetKey(DIK_DOWN) - Key::GetKey(DIK_UP));
-	//currentScene_->pos.x += x;
-	//currentScene_->pos.y += y;
-	//currentScene_->Update();
-
-	if (menuManager_->GetisActive() == false)
+	if (mMenuManager->GetisActive() == false)
 	{
 		mPlayer->PrevUpdate();
 		mBoss->Update();
@@ -104,14 +77,14 @@ void GameScene::Update()
 	}
 
 
-	menuManager_->Update();
+	mMenuManager->Update();
 	mField->Update();
-	shadowMap_.Update();
+	mShadowMap.Update();
 	EffectManager::GetInstance()->Update();
 
-	if (menuManager_->GetisActive() == false)
+	if (mMenuManager->GetisActive() == false)
 	{
-		cameraManager_->Update();
+		mCameraManager->Update();
 	}
 
 	bool isBackToTitle =
@@ -159,12 +132,12 @@ void GameScene::Update()
 
 void GameScene::RenderTextureSetting()
 {
-	shadowMap_.RenderTextureSetting();
+	mShadowMap.RenderTextureSetting();
 }
 
 void GameScene::DrawRenderTexture()
 {
-	shadowMap_.DrawPostEffect();
+	mShadowMap.DrawPostEffect();
 
 
 	//currentScene_->Draw();
@@ -184,7 +157,7 @@ void GameScene::DrawFrontSprite()
 {
 	mUiManager->DrawFrontSprite();
 
-	menuManager_->DrawFrontSprite();
+	mMenuManager->DrawFrontSprite();
 }
 void GameScene::DrawDebugGui()
 {
