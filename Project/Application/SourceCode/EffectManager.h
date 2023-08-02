@@ -1,5 +1,5 @@
 #pragma once
-#include "BloodSpray.h"
+#include "BloodSprayEffect.h"
 #include "PlayerRecoveryEffect.h"
 
 template<typename T> class Singleton;
@@ -7,8 +7,8 @@ template<typename T> class Singleton;
 class EffectManager : public Singleton<EffectManager>
 {
 private:
-	std::unique_ptr<BloodSpray> bloodSpray_;
-	std::unique_ptr<PlayerRecoveryEffect> playerRecoveryEffect_;
+	std::unique_ptr<BloodSprayEffect> mBloodSprayEffect;
+	std::unique_ptr<PlayerRecoveryEffect> mPlayerRecoveryEffect;
 
 public:
 	EffectManager();

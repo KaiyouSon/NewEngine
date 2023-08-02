@@ -4,15 +4,15 @@
 class PlayerRecoveryEffect
 {
 private:
-	bool isGenerate;
-	Timer timer_;
+	bool mIsGenerate;
+	Timer mTimer;
 
-	std::unique_ptr<Emitter> circleEmitter_;
-	std::unique_ptr<Emitter> lineEmitter_;
-	std::vector<ParticleParameter::PParam1> circlePParam;
-	std::vector<ParticleParameter::PParam1> linePParam;
+	std::unique_ptr<Emitter> mCircleEmitter;
+	std::unique_ptr<Emitter> mLineEmitter;
+	std::vector<ParticleParameter::PParam1> mCirclePParam;
+	std::vector<ParticleParameter::PParam1> mLinePParam;
 
-	Vec3 startPos;
+	Vec3 mStartPos;
 
 private:
 	void GenerateUpdate();

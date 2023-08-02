@@ -1,89 +1,89 @@
 #include "PlayerRecoveryEffect.h"
 
 PlayerRecoveryEffect::PlayerRecoveryEffect() :
-	circleEmitter_(std::make_unique<Emitter>()),
-	lineEmitter_(std::make_unique<Emitter>()),
-	isGenerate(false)
+	mCircleEmitter(std::make_unique<Emitter>()),
+	mLineEmitter(std::make_unique<Emitter>()),
+	mIsGenerate(false)
 {
-	circleEmitter_->SetMaxParticle(2048);
+	mCircleEmitter->SetMaxParticle(2048);
 
-	lineEmitter_->SetMaxParticle(1024);
-	lineEmitter_->SetTexture(TextureManager::GetTexture("Line"));
+	mLineEmitter->SetMaxParticle(1024);
+	mLineEmitter->SetTexture(TextureManager::GetTexture("Line"));
 }
 
 void PlayerRecoveryEffect::Generate(const Vec3 pos)
 {
-	isGenerate = true;
-	timer_.SetLimitTimer(20);
-	timer_.Reset();
+	mIsGenerate = true;
+	mTimer.SetLimitTimer(20);
+	mTimer.Reset();
 
-	startPos = pos;
+	mStartPos = pos;
 }
 
 void PlayerRecoveryEffect::Update()
 {
-	if (isGenerate == true)
+	if (mIsGenerate == true)
 	{
 		GenerateUpdate();
-		startPos.y += 0.2f;
+		mStartPos.y += 0.2f;
 
-		timer_.Update();
-		if (timer_ == true)
+		mTimer.Update();
+		if (mTimer == true)
 		{
-			timer_.Reset();
-			isGenerate = false;
+			mTimer.Reset();
+			mIsGenerate = false;
 		}
 	}
 
 	// ó±
-	for (uint32_t i = 0; i < circlePParam.size(); i++)
+	for (uint32_t i = 0; i < mCirclePParam.size(); i++)
 	{
-		circleEmitter_->pParam[i].curPos = circlePParam[i].startPos;
-		circlePParam[i].startPos += circlePParam[i].moveVec * circlePParam[i].moveAccel;
+		mCircleEmitter->pParam[i].curPos = mCirclePParam[i].startPos;
+		mCirclePParam[i].startPos += mCirclePParam[i].moveVec * mCirclePParam[i].moveAccel;
 
-		circleEmitter_->pParam[i].curScale = circlePParam[i].startScale;
-		circlePParam[i].startScale -= 0.005f;
+		mCircleEmitter->pParam[i].curScale = mCirclePParam[i].startScale;
+		mCirclePParam[i].startScale -= 0.005f;
 
-		circleEmitter_->pParam[i].curColor = circlePParam[i].startColor;
+		mCircleEmitter->pParam[i].curColor = mCirclePParam[i].startColor;
 	}
 
-	std::erase_if(circlePParam,
+	std::erase_if(mCirclePParam,
 		[](ParticleParameter::PParam1 param)
 		{
 			return param.startScale <= 0;
 		});
 
-	circleEmitter_->pSize = (uint32_t)circlePParam.size();
+	mCircleEmitter->pSize = (uint32_t)mCirclePParam.size();
 
 	// ê¸
-	for (uint32_t i = 0; i < linePParam.size(); i++)
+	for (uint32_t i = 0; i < mLinePParam.size(); i++)
 	{
-		lineEmitter_->pParam[i].curPos = linePParam[i].startPos;
-		linePParam[i].startPos += linePParam[i].moveVec * linePParam[i].moveAccel;
+		mLineEmitter->pParam[i].curPos = mLinePParam[i].startPos;
+		mLinePParam[i].startPos += mLinePParam[i].moveVec * mLinePParam[i].moveAccel;
 
-		lineEmitter_->pParam[i].curScale = linePParam[i].startScale;
+		mLineEmitter->pParam[i].curScale = mLinePParam[i].startScale;
 
-		lineEmitter_->pParam[i].curColor = linePParam[i].startColor;
-		linePParam[i].startColor.a -= 5.f;
+		mLineEmitter->pParam[i].curColor = mLinePParam[i].startColor;
+		mLinePParam[i].startColor.a -= 5.f;
 	}
 
-	std::erase_if(linePParam,
+	std::erase_if(mLinePParam,
 		[](ParticleParameter::PParam1 param)
 		{
 			return param.startColor.a <= 0;
 		});
 
-	lineEmitter_->pSize = (uint32_t)linePParam.size();
+	mLineEmitter->pSize = (uint32_t)mLinePParam.size();
 
 
-	circleEmitter_->Update();
-	lineEmitter_->Update();
+	mCircleEmitter->Update();
+	mLineEmitter->Update();
 }
 
 void PlayerRecoveryEffect::DrawModel()
 {
-	circleEmitter_->Draw();
-	lineEmitter_->Draw();
+	mCircleEmitter->Draw();
+	mLineEmitter->Draw();
 }
 
 
@@ -103,17 +103,17 @@ void PlayerRecoveryEffect::GenerateUpdate()
 			Random::RangeF(-depth,depth),
 		};
 
-		circlePParam.emplace_back();
-		circlePParam.back().startPos = startPos + offset;
-		circlePParam.back().moveVec = Vec3::one;
-		circlePParam.back().moveAccel =
+		mCirclePParam.emplace_back();
+		mCirclePParam.back().startPos = mStartPos + offset;
+		mCirclePParam.back().moveVec = Vec3::one;
+		mCirclePParam.back().moveAccel =
 		{
 			Random::RangeF(-0.025f, 0.025f),
 			0.05f,
 			Random::RangeF(-0.025f, 0.025f)
 		};
-		circlePParam.back().startScale = Random::RangeF(0.15f, 0.35f);
-		circlePParam.back().startColor = Color(0xffa80b);
+		mCirclePParam.back().startScale = Random::RangeF(0.15f, 0.35f);
+		mCirclePParam.back().startColor = Color(0xffa80b);
 	}
 
 	width = 1.5f;
@@ -130,11 +130,11 @@ void PlayerRecoveryEffect::GenerateUpdate()
 			Random::RangeF(-depth,depth),
 		};
 
-		linePParam.emplace_back();
-		linePParam.back().startPos = startPos + offset;
-		linePParam.back().moveVec = Vec3::one;
-		linePParam.back().moveAccel = { 0.f,0.05f,0.f };
-		linePParam.back().startScale = 1.5f;
-		linePParam.back().startColor = Color(0xffe95c);
+		mLinePParam.emplace_back();
+		mLinePParam.back().startPos = mStartPos + offset;
+		mLinePParam.back().moveVec = Vec3::one;
+		mLinePParam.back().moveAccel = { 0.f,0.05f,0.f };
+		mLinePParam.back().startScale = 1.5f;
+		mLinePParam.back().startColor = Color(0xffe95c);
 	}
 }

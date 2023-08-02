@@ -552,7 +552,7 @@
     <ClCompile Include="Application\SourceCode\EffectManager.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\BloodSpray.cpp">
+    <ClCompile Include="Application\SourceCode\BloodSprayEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\Emitter.cpp">
@@ -947,7 +947,7 @@
     <ClInclude Include="Application\SourceCode\DrinkMotion.h">
       <Filter>Application\Header\Motion\Human</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\BloodSpray.h">
+    <ClInclude Include="Application\SourceCode\BloodSprayEffect.h">
       <Filter>Application\Header\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\EffectManager.h">

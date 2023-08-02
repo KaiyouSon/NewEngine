@@ -1,8 +1,8 @@
 #include "EffectManager.h"
 
 EffectManager::EffectManager() :
-	bloodSpray_(std::make_unique<BloodSpray>()),
-	playerRecoveryEffect_(std::make_unique<PlayerRecoveryEffect>())
+	mBloodSprayEffect(std::make_unique<BloodSprayEffect>()),
+	mPlayerRecoveryEffect(std::make_unique<PlayerRecoveryEffect>())
 {
 }
 
@@ -12,22 +12,22 @@ void EffectManager::Init()
 
 void EffectManager::Update()
 {
-	bloodSpray_->Update();
-	playerRecoveryEffect_->Update();
+	mBloodSprayEffect->Update();
+	mPlayerRecoveryEffect->Update();
 }
 
 void EffectManager::DrawModel()
 {
-	bloodSpray_->DrawModel();
-	playerRecoveryEffect_->DrawModel();
+	mBloodSprayEffect->DrawModel();
+	mPlayerRecoveryEffect->DrawModel();
 }
 
 void EffectManager::GenerateBloodSprayEffect(const Vec3 pos)
 {
-	bloodSpray_->Generate(pos);
+	mBloodSprayEffect->Generate(pos);
 }
 
 void EffectManager::GeneratePlayerRecoveryEffect(const Vec3 pos)
 {
-	playerRecoveryEffect_->Generate(pos);
+	mPlayerRecoveryEffect->Generate(pos);
 }

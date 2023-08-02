@@ -169,7 +169,7 @@
     <ClCompile Include="Application\SourceCode\UIManager.cpp" />
     <ClCompile Include="Application\SourceCode\Vignette.cpp" />
     <ClCompile Include="Application\SourceCode\Weapon.cpp" />
-    <ClCompile Include="Application\SourceCode\BloodSpray.cpp" />
+    <ClCompile Include="Application\SourceCode\BloodSprayEffect.cpp" />
     <ClCompile Include="NewEngine\Collision\Collider.cpp" />
     <ClCompile Include="NewEngine\Collision\Collision.cpp" />
     <ClCompile Include="NewEngine\Collision\ICollider.cpp" />
@@ -237,7 +237,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\1.School\3.3年前期\TL1\CG5_Task01\Project\External\nlohmann\json.hpp" />
     <ClInclude Include="Application\SourceCode\BackstepMotion.h" />
-    <ClInclude Include="Application\SourceCode\BloodSpray.h" />
+    <ClInclude Include="Application\SourceCode\BloodSprayEffect.h" />
     <ClInclude Include="Application\SourceCode\Bloom.h" />
     <ClInclude Include="Application\SourceCode\Boss.h" />
     <ClInclude Include="Application\SourceCode\BossAttack3Motion.h" />
