@@ -1,57 +1,57 @@
 #include "TitleUI.h"
 
 TitleUI::TitleUI() :
-	backColor_(std::make_unique<Sprite>()),
-	gameTitle_(std::make_unique<Sprite>()),
-	titleLogo_(std::make_unique<Sprite>()),
-	pressButton_(std::make_unique<Sprite>()),
-	pressButtonAfterImage_(std::make_unique<Sprite>())
+	mBackColor(std::make_unique<Sprite>()),
+	mGameTitle(std::make_unique<Sprite>()),
+	mTitleLogo(std::make_unique<Sprite>()),
+	mPressButton(std::make_unique<Sprite>()),
+	mPressButtonAfterImage(std::make_unique<Sprite>())
 {
-	for (uint32_t i = 0; i < pressButtonBacks_.size(); i++)
+	for (uint32_t i = 0; i < mPressButtonBacks.size(); i++)
 	{
-		pressButtonBacks_[i] = std::make_unique<Sprite>();
+		mPressButtonBacks[i] = std::make_unique<Sprite>();
 	}
 }
 
 void TitleUI::Init()
 {
-	backColor_->SetTexture(TextureManager::GetTexture("White"));
-	backColor_->pos = GetWindowHalfSize();
-	backColor_->color = Color::black;
-	backColor_->SetSize(Vec2(1920, 1080));
+	mBackColor->SetTexture(TextureManager::GetTexture("White"));
+	mBackColor->pos = GetWindowHalfSize();
+	mBackColor->color = Color::black;
+	mBackColor->SetSize(Vec2(1920, 1080));
 
-	gameTitle_->SetTexture(TextureManager::GetTexture("GameTitle"));
-	gameTitle_->pos = Vec2(GetWindowHalfSize().x, 320);
-	gameTitle_->scale = 1.75f;
+	mGameTitle->SetTexture(TextureManager::GetTexture("GameTitle"));
+	mGameTitle->pos = Vec2(GetWindowHalfSize().x, 320);
+	mGameTitle->scale = 1.75f;
 
-	titleLogo_->SetTexture(TextureManager::GetTexture("TitleLogo"));
-	titleLogo_->pos = Vec2(GetWindowHalfSize().x, GetWindowHalfSize().y - 150);
-	titleLogo_->scale = 1.25f;
+	mTitleLogo->SetTexture(TextureManager::GetTexture("TitleLogo"));
+	mTitleLogo->pos = Vec2(GetWindowHalfSize().x, GetWindowHalfSize().y - 150);
+	mTitleLogo->scale = 1.25f;
 
-	pressButton_->SetTexture(TextureManager::GetTexture("PressButton"));
-	pressButton_->pos = Vec2(GetWindowHalfSize().x, 900);
-	pressButton_->scale = 0.3f;
+	mPressButton->SetTexture(TextureManager::GetTexture("PressButton"));
+	mPressButton->pos = Vec2(GetWindowHalfSize().x, 900);
+	mPressButton->scale = 0.3f;
 
-	for (uint32_t i = 0; i < pressButtonBacks_.size(); i++)
+	for (uint32_t i = 0; i < mPressButtonBacks.size(); i++)
 	{
-		pressButtonBacks_[i]->SetTexture(TextureManager::GetTexture("PressButtonBack"));
-		pressButtonBacks_[i]->pos = Vec2(GetWindowHalfSize().x, 900);
+		mPressButtonBacks[i]->SetTexture(TextureManager::GetTexture("PressButtonBack"));
+		mPressButtonBacks[i]->pos = Vec2(GetWindowHalfSize().x, 900);
 	}
-	pressButtonBacks_[0]->scale = Vec2(1.5f, 0.8f);
-	pressButtonBacks_[0]->color = Color(0xf79e0f);
-	pressButtonBacks_[1]->scale = Vec2(1.f, 0.3f);
-	pressButtonBacks_[1]->color = Color::white;
+	mPressButtonBacks[0]->scale = Vec2(1.5f, 0.8f);
+	mPressButtonBacks[0]->color = Color(0xf79e0f);
+	mPressButtonBacks[1]->scale = Vec2(1.f, 0.3f);
+	mPressButtonBacks[1]->color = Color::white;
 
-	pressButtonAfterImage_->SetTexture(TextureManager::GetTexture("PressButton"));
-	pressButtonAfterImage_->pos = Vec2(GetWindowHalfSize().x, 900);
-	pressButtonAfterImage_->scale = 0.3f;
+	mPressButtonAfterImage->SetTexture(TextureManager::GetTexture("PressButton"));
+	mPressButtonAfterImage->pos = Vec2(GetWindowHalfSize().x, 900);
+	mPressButtonAfterImage->scale = 0.3f;
 
-	alphaEase_.SetEaseTimer(60);
-	alphaEase_.SetPowNum(2);
-	isReverce_ = false;
+	mAlphaEase.SetEaseTimer(60);
+	mAlphaEase.SetPowNum(2);
+	mIsReverce = false;
 
-	isAfterImage_ = false;
-	afterImageStep_ = 0;
+	mIsAfterImage = false;
+	mAfterImageStep = 0;
 }
 
 void TitleUI::Update()
@@ -59,132 +59,131 @@ void TitleUI::Update()
 	BackAlphaUpdate();
 	AfterImagaUpdate();
 
-	titleLogo_->pos = Vec2(GetWindowHalfSize().x, GetWindowHalfSize().y - 100);
-	//titleLogo_->scale = 1.25f;
+	mTitleLogo->pos = Vec2(GetWindowHalfSize().x, GetWindowHalfSize().y - 100);
 
-	backColor_->Update();
-	gameTitle_->Update();
-	titleLogo_->Update();
-	pressButton_->Update();
-	for (uint32_t i = 0; i < pressButtonBacks_.size(); i++)
+	mBackColor->Update();
+	mGameTitle->Update();
+	mTitleLogo->Update();
+	mPressButton->Update();
+	for (uint32_t i = 0; i < mPressButtonBacks.size(); i++)
 	{
-		pressButtonBacks_[i]->Update();
+		mPressButtonBacks[i]->Update();
 	}
 
-	if (isAfterImage_ == true)
+	if (mIsAfterImage == true)
 	{
-		pressButtonAfterImage_->Update();
+		mPressButtonAfterImage->Update();
 	}
 }
 
 void TitleUI::DrawFrontSprite()
 {
-	backColor_->Draw();
-	titleLogo_->Draw();
-	gameTitle_->Draw();
+	mBackColor->Draw();
+	mTitleLogo->Draw();
+	mGameTitle->Draw();
 
-	for (uint32_t i = 0; i < pressButtonBacks_.size(); i++)
+	for (uint32_t i = 0; i < mPressButtonBacks.size(); i++)
 	{
-		pressButtonBacks_[i]->Draw();
+		mPressButtonBacks[i]->Draw();
 	}
-	pressButton_->Draw();
+	mPressButton->Draw();
 
-	if (isAfterImage_ == true)
+	if (mIsAfterImage == true)
 	{
-		pressButtonAfterImage_->Draw();
+		mPressButtonAfterImage->Draw();
 	}
 }
 
 bool TitleUI::GetisEnd()
 {
-	return isEnd_;
+	return mIsEnd;
 }
 
 bool TitleUI::GetisAfterImage()
 {
-	return isAfterImage_;
+	return mIsAfterImage;
 }
 
 void TitleUI::BackAlphaUpdate()
 {
 	float min = 55.f;
-	alphaEase_.Update();
-	if (isReverce_ == false)
+	mAlphaEase.Update();
+	if (mIsReverce == false)
 	{
-		for (uint32_t i = 0; i < pressButtonBacks_.size(); i++)
+		for (uint32_t i = 0; i < mPressButtonBacks.size(); i++)
 		{
-			pressButtonBacks_[i]->color.a = alphaEase_.In(255.f, min);
+			mPressButtonBacks[i]->color.a = mAlphaEase.In(255.f, min);
 		}
-		if (alphaEase_.GetisEnd() == true)
+		if (mAlphaEase.GetisEnd() == true)
 		{
-			isReverce_ = true;
-			alphaEase_.Reset();
+			mIsReverce = true;
+			mAlphaEase.Reset();
 		}
 	}
 	else
 	{
-		for (uint32_t i = 0; i < pressButtonBacks_.size(); i++)
+		for (uint32_t i = 0; i < mPressButtonBacks.size(); i++)
 		{
-			pressButtonBacks_[i]->color.a = alphaEase_.Out(min, 255.f);
+			mPressButtonBacks[i]->color.a = mAlphaEase.Out(min, 255.f);
 		}
-		if (alphaEase_.GetisEnd() == true)
+		if (mAlphaEase.GetisEnd() == true)
 		{
-			isReverce_ = false;
-			alphaEase_.Reset();
+			mIsReverce = false;
+			mAlphaEase.Reset();
 		}
 	}
 }
 
 void TitleUI::AfterImagaUpdate()
 {
-	if (isAfterImage_ == false)
+	if (mIsAfterImage == false)
 	{
 		return;
 	}
 
 	const float accel = 0.002f;
 
-	if (afterImageStep_ == 0)
+	if (mAfterImageStep == 0)
 	{
 		float max = 0.3f;
-		pressButtonAfterImage_->scale += accel;
-		if (pressButtonAfterImage_->scale >= max)
+		mPressButtonAfterImage->scale += accel;
+		if (mPressButtonAfterImage->scale >= max)
 		{
-			afterImageStep_ = 1;
+			mAfterImageStep = 1;
 		}
 	}
-	else if (afterImageStep_ == 1)
+	else if (mAfterImageStep == 1)
 	{
 		float max = 0.35f;
-		pressButtonAfterImage_->scale += accel;
-		if (pressButtonAfterImage_->scale >= max)
+		mPressButtonAfterImage->scale += accel;
+		if (mPressButtonAfterImage->scale >= max)
 		{
-			afterImageStep_ = 2;
+			mAfterImageStep = 2;
 		}
 
 		//if (afterImageEase_.GetisEnd() == true)
 		//{
-		//	afterImageStep_ = 1;
+		//	mAfterImageStep = 1;
 		//	afterImageEase_.Reset();
-		//	isEnd_ = true;
+		//	mIsEnd = true;
 		//}
 
 	}
-	else if (afterImageStep_ == 2)
+	else if (mAfterImageStep == 2)
 	{
-		pressButtonAfterImage_->scale += accel;
-		pressButtonAfterImage_->color.a -= 10.f;
-		if (pressButtonAfterImage_->color.a <= 0)
+		mPressButtonAfterImage->scale += accel;
+		mPressButtonAfterImage->color.a -= 10.f;
+		if (mPressButtonAfterImage->color.a <= 0)
 		{
-			//pressButtonAfterImage_->scale = 0.425f;
-			//pressButtonAfterImage_->color.a = 255.f;
-			afterImageStep_ = 2;
-			isEnd_ = true;
+			//mPressButtonAfterImage->scale = 0.425f;
+			//mPressButtonAfterImage->color.a = 255.f;
+			mAfterImageStep = 2;
+			mIsEnd = true;
 		}
 	}
 }
 
 void TitleUI::SetisAfterImage(const bool isAfterImage)
 {
-	isAfterImage_ = isAfterImage;
+	mIsAfterImage = isAfterImage;
 }

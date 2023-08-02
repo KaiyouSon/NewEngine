@@ -1,140 +1,139 @@
 #include "ItemBoxUIManager.h"
 
 ItemBoxUIManager::ItemBoxUIManager() :
-	num_(std::make_unique<Sprite>())
+	mNumber(std::make_unique<Sprite>())
 {
-	for (uint32_t i = 0; i < itemBoxUIs_.size(); i++)
+	for (uint32_t i = 0; i < mItemBoxUIs.size(); i++)
 	{
-		itemBoxUIs_[i] = std::make_unique<ItemBoxUI>();
-		itemUIs_[i] = std::make_unique<ItemUI>();
+		mItemBoxUIs[i] = std::make_unique<ItemBoxUI>();
+		mItemUIs[i] = std::make_unique<ItemUI>();
 	}
 
-	num_->SetTexture(TextureManager::GetTexture("NumberSheets"));
-	num_->SetSize(96);
+	mNumber->SetTexture(TextureManager::GetTexture("NumberSheets"));
+	mNumber->SetSize(96);
 }
 
 void ItemBoxUIManager::Init()
 {
 	// íÜêSç¿ïW
-	parent.pos = Vec2(288, GetWindowSize().y - 256);
-	parent.scale = 1.25f;
-	parent.Update();
+	mParent.pos = Vec2(288, GetWindowSize().y - 256);
+	mParent.scale = 1.25f;
+	mParent.Update();
 
-	for (uint32_t i = 0; i < itemBoxUIs_.size(); i++)
+	for (uint32_t i = 0; i < mItemBoxUIs.size(); i++)
 	{
-		itemBoxUIs_[i]->Init();
-		itemUIs_[i]->Init();
+		mItemBoxUIs[i]->Init();
+		mItemUIs[i]->Init();
 	}
-	itemUIs_[Position::Down]->SetType(ItemType::HPBottle);
-	itemUIs_[Position::Right]->SetType(ItemType::Club);
+	mItemUIs[Position::Down]->SetType(ItemType::HPBottle);
+	mItemUIs[Position::Right]->SetType(ItemType::Club);
 
-	notActiveTimer_.SetLimitTimer(180);
+	mNotActiveTimer.SetLimitTimer(180);
 }
 
 void ItemBoxUIManager::Update()
 {
-	num_->scale = 0.4f;
-	num_->pos = Vec2(28, 86);
+	mNumber->scale = 0.4f;
+	mNumber->pos = Vec2(28, 86);
 
 	bool isLeftStickMove = Pad::GetStick(PadCode::LeftStick, 300) != 0;
 	bool isAnyButtonDown = Pad::GetAnyButtonDown();
 
 	if (isLeftStickMove || isAnyButtonDown)
 	{
-		notActiveTimer_.Reset();
-		isActive_ = true;
+		mNotActiveTimer.Reset();
+		mIsActive = true;
 	}
 	else
 	{
-		notActiveTimer_.Update();
-		if (notActiveTimer_ == true)
+		mNotActiveTimer.Update();
+		if (mNotActiveTimer == true)
 		{
-			isActive_ = false;
+			mIsActive = false;
 		}
 	}
 
 	float speed = 15;
-	if (isActive_ == true)
+	if (mIsActive == true)
 	{
-		alpha_ += speed;
+		mAlpha += speed;
 	}
 	else
 	{
-		alpha_ -= speed;
+		mAlpha -= speed;
 	}
-	alpha_ = Clamp<float>(alpha_, 0, 255);
+	mAlpha = Clamp<float>(mAlpha, 0, 255);
 
-	if (isActive_ == true)
+	if (mIsActive == true)
 	{
 		if (Pad::GetButtonDown(PadCode::ButtonRight))
 		{
-			itemBoxUIs_[Position::Right]->SetisLightActive(true);
+			mItemBoxUIs[Position::Right]->SetisLightActive(true);
 		}
 		else if (Pad::GetButtonDown(PadCode::ButtonLeft))
 		{
-			itemBoxUIs_[Position::Left]->SetisLightActive(true);
+			mItemBoxUIs[Position::Left]->SetisLightActive(true);
 		}
 		else if (Pad::GetButtonDown(PadCode::ButtonUp))
 		{
-			itemBoxUIs_[Position::Up]->SetisLightActive(true);
+			mItemBoxUIs[Position::Up]->SetisLightActive(true);
 		}
 		else if (Pad::GetButtonDown(PadCode::ButtonDown))
 		{
-			itemBoxUIs_[Position::Down]->SetisLightActive(true);
+			mItemBoxUIs[Position::Down]->SetisLightActive(true);
 		}
 	}
 
-	parent.pos = Vec2(224, GetWindowSize().y - 196);
-	parent.Update();
+	mParent.pos = Vec2(224, GetWindowSize().y - 196);
+	mParent.Update();
 
 	float width = 92.f;
 	float height = 56.f;
-	itemBoxUIs_[Position::Left]->SetPos(Vec2(-width, 0));
-	itemBoxUIs_[Position::Right]->SetPos(Vec2(width, 0));
-	itemBoxUIs_[Position::Up]->SetPos(Vec2(0, -height));
-	itemBoxUIs_[Position::Down]->SetPos(Vec2(0, height));
+	mItemBoxUIs[Position::Left]->SetPos(Vec2(-width, 0));
+	mItemBoxUIs[Position::Right]->SetPos(Vec2(width, 0));
+	mItemBoxUIs[Position::Up]->SetPos(Vec2(0, -height));
+	mItemBoxUIs[Position::Down]->SetPos(Vec2(0, height));
 
-	itemUIs_[Position::Right]->SetPos(Vec2(width, 0));
-	itemUIs_[Position::Down]->SetPos(Vec2(0, height));
+	mItemUIs[Position::Right]->SetPos(Vec2(width, 0));
+	mItemUIs[Position::Down]->SetPos(Vec2(0, height));
 
 	if (mPlayer->GetBottleNum() <= 0)
 	{
-		itemUIs_[Position::Down]->SetType(ItemType::EmptyBottle);
+		mItemUIs[Position::Down]->SetType(ItemType::EmptyBottle);
 	}
 
-	for (uint32_t i = 0; i < itemBoxUIs_.size(); i++)
+	for (uint32_t i = 0; i < mItemBoxUIs.size(); i++)
 	{
-		itemBoxUIs_[i]->SetFrameAlpha(alpha_);
-		//itemBoxUIs_[i]->SetLightAlpha(lightAlpha_);
-		itemUIs_[i]->SetAlpha(alpha_);
+		mItemBoxUIs[i]->SetFrameAlpha(mAlpha);
+		mItemUIs[i]->SetAlpha(mAlpha);
 
-		itemBoxUIs_[i]->Update(&parent);
-		itemUIs_[i]->Update(&parent);
+		mItemBoxUIs[i]->Update(&mParent);
+		mItemUIs[i]->Update(&mParent);
 	}
 
-	num_->color.a = alpha_;
+	mNumber->color.a = mAlpha;
 	Vec2 leftUp = { 0 + (float)mPlayer->GetBottleNum() * 96,0 };
 	Vec2 rightDown = { 96 + (float)mPlayer->GetBottleNum() * 96,96 };
-	num_->SetTextureRect(leftUp, rightDown);
+	mNumber->SetTextureRect(leftUp, rightDown);
 
-	num_->Update(&parent);
+	mNumber->Update(&mParent);
 }
 
 void ItemBoxUIManager::DrawFrontSprite()
 {
-	for (uint32_t i = 0; i < itemBoxUIs_.size(); i++)
+	for (uint32_t i = 0; i < mItemBoxUIs.size(); i++)
 	{
-		itemBoxUIs_[i]->DrawFrame();
-		itemUIs_[i]->DrawFrontSprite();
-		itemBoxUIs_[i]->DrawLight();
+		mItemBoxUIs[i]->DrawFrame();
+		mItemUIs[i]->DrawFrontSprite();
+		mItemBoxUIs[i]->DrawLight();
 	}
 
-	num_->Draw();
+	mNumber->Draw();
 }
 
 void ItemBoxUIManager::SetAlpha(const float alpha)
 {
-	alpha_ = alpha;
+	mAlpha = alpha;
 }
 
 void ItemBoxUIManager::SetPlayer(Player* player)

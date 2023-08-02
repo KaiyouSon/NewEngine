@@ -4,17 +4,17 @@
 class MessageUI
 {
 private:
-	std::unique_ptr<Sprite> back_;
-	std::unique_ptr<Sprite> button_;
-	std::unique_ptr<Sprite> colon_;
-	std::unique_ptr<Sprite> text_;
+	std::unique_ptr<Sprite> mBack;
+	std::unique_ptr<Sprite> mButton;
+	std::unique_ptr<Sprite> mColon;
+	std::unique_ptr<Sprite> mText;
 
-	std::unique_ptr<Sprite> message_;
-	std::unique_ptr<Sprite> messageSignUI_;
-	Transform parent_;
+	std::unique_ptr<Sprite> mMessage;
+	std::unique_ptr<Sprite> mMessageSignUI;
+	Transform mParent;
 
-	float alpha_;
-	bool isActive_;
+	float mAlpha;
+	bool mIsActive;
 
 public:
 	MessageUI();

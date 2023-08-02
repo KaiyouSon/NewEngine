@@ -11,19 +11,19 @@ public:
 	};
 
 private:
-	std::unique_ptr<Sprite> back_;
-	std::unique_ptr<Sprite> text_;
-	std::unique_ptr<Sprite> textAfterImage_;
-	Transform parent_;
-	bool isActive_;
-	Timer timer_;
-	bool isWait_;
-	Timer waitTimer_;
-	ResultType resultType_;
+	std::unique_ptr<Sprite> mBack;
+	std::unique_ptr<Sprite> mText;
+	std::unique_ptr<Sprite> mTextAfterImage;
+	Transform mParent;
+	bool mIsActive;
+	Timer mTimer;
+	bool mIsWait;
+	Timer mWaitTimer;
+	ResultType mResultType;
 
-	bool isAfterImage_;
+	bool mIsAfterImage;
 
-	static bool isEnd_;
+	static bool sIsEnd;
 
 private:
 	void EnemyFelledUpdate();

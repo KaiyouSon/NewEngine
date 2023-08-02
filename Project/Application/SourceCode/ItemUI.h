@@ -17,8 +17,8 @@ enum class ItemType
 class ItemUI
 {
 private:
-	std::unique_ptr<Sprite> itemUI_;
-	ItemType itemType_;
+	std::unique_ptr<Sprite> mItemUI;
+	ItemType mItemType;
 
 private:
 	void SettingsByType();

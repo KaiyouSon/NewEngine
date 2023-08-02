@@ -4,22 +4,22 @@
 class TitleUI
 {
 private:
-	std::unique_ptr<Sprite> backColor_;
-	std::unique_ptr<Sprite> gameTitle_;
-	std::unique_ptr<Sprite> titleLogo_;
-	std::unique_ptr<Sprite> pressButton_;
-	std::array<std::unique_ptr<Sprite>, 2> pressButtonBacks_;
-	std::unique_ptr<Sprite> pressButtonAfterImage_;
+	std::unique_ptr<Sprite> mBackColor;
+	std::unique_ptr<Sprite> mGameTitle;
+	std::unique_ptr<Sprite> mTitleLogo;
+	std::unique_ptr<Sprite> mPressButton;
+	std::array<std::unique_ptr<Sprite>, 2> mPressButtonBacks;
+	std::unique_ptr<Sprite> mPressButtonAfterImage;
 
 private:
-	Easing alphaEase_;
-	bool isReverce_;
+	Easing mAlphaEase;
+	bool mIsReverce;
 
 private:
-	uint32_t afterImageStep_;
-	Easing afterImageEase_;
-	bool isAfterImage_;
-	bool isEnd_;
+	uint32_t mAfterImageStep;
+	Easing mAfterImageEase;
+	bool mIsAfterImage;
+	bool mIsEnd;
 
 private:
 	void BackAlphaUpdate();

@@ -7,14 +7,13 @@ class NegotiationUI
 {
 private:
 	UIManager* mUiManager;
-	std::unique_ptr<Sprite> backFrame_;
-	std::unique_ptr<Sprite> button_;
-	std::unique_ptr<Sprite> text_;
-	std::unique_ptr<Sprite> colon_;
+	std::unique_ptr<Sprite> mBackFrame;
+	std::unique_ptr<Sprite> mButton;
+	std::unique_ptr<Sprite> mText;
+	std::unique_ptr<Sprite> mColon;
 
-	float alpha_;
-	bool isActive_;
-
+	float mAlpha;
+	bool mIsActive;
 
 private:
 	void AlphaUpdate();

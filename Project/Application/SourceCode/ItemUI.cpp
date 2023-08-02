@@ -1,62 +1,62 @@
 #include "ItemUI.h"
 
 ItemUI::ItemUI() :
-	itemUI_(std::make_unique<Sprite>())
+	mItemUI(std::make_unique<Sprite>())
 {
 }
 
 void ItemUI::Init()
 {
-	itemUI_->scale = 0.325f;
+	mItemUI->scale = 0.325f;
 }
 
 void ItemUI::Update(Transform* parent)
 {
-	itemUI_->Update(parent);
+	mItemUI->Update(parent);
 }
 
 void ItemUI::DrawFrontSprite()
 {
-	itemUI_->Draw();
+	mItemUI->Draw();
 }
 
 void ItemUI::SettingsByType()
 {
-	switch (itemType_)
+	switch (mItemType)
 	{
 		// HPボトル
 	case ItemType::HPBottle:
 	{
-		itemUI_->SetTexture(TextureManager::GetTexture("BottleUI"));
-		itemUI_->SetTextureRect(Vec2(0, 0), Vec2(256, 256));
-		itemUI_->SetSize(256);
+		mItemUI->SetTexture(TextureManager::GetTexture("BottleUI"));
+		mItemUI->SetTextureRect(Vec2(0, 0), Vec2(256, 256));
+		mItemUI->SetSize(256);
 	}
 	break;
 
 	// MPボトル
 	case ItemType::MPBottle:
 	{
-		itemUI_->SetTexture(TextureManager::GetTexture("BottleUI"));
-		itemUI_->SetTextureRect(Vec2(256, 0), Vec2(512, 256));
-		itemUI_->SetSize(256);
+		mItemUI->SetTexture(TextureManager::GetTexture("BottleUI"));
+		mItemUI->SetTextureRect(Vec2(256, 0), Vec2(512, 256));
+		mItemUI->SetSize(256);
 	}
 	break;
 
 	// MPボトル
 	case ItemType::EmptyBottle:
 	{
-		itemUI_->SetTexture(TextureManager::GetTexture("BottleUI"));
-		itemUI_->SetTextureRect(Vec2(512, 0), Vec2(768, 256));
-		itemUI_->SetSize(256);
+		mItemUI->SetTexture(TextureManager::GetTexture("BottleUI"));
+		mItemUI->SetTextureRect(Vec2(512, 0), Vec2(768, 256));
+		mItemUI->SetSize(256);
 	}
 	break;
 
 	// MPボトル
 	case ItemType::Club:
 	{
-		itemUI_->SetTexture(TextureManager::GetTexture("ClubUI"));
-		itemUI_->SetTextureRect(Vec2(0, 0), Vec2(256, 256));
-		itemUI_->SetSize(256);
+		mItemUI->SetTexture(TextureManager::GetTexture("ClubUI"));
+		mItemUI->SetTextureRect(Vec2(0, 0), Vec2(256, 256));
+		mItemUI->SetSize(256);
 	}
 	break;
 
@@ -68,16 +68,16 @@ void ItemUI::SettingsByType()
 
 void ItemUI::SetPos(const Vec2 pos)
 {
-	itemUI_->pos = pos;
+	mItemUI->pos = pos;
 }
 
 void ItemUI::SetType(const ItemType itemType)
 {
-	itemType_ = itemType;
+	mItemType = itemType;
 	SettingsByType();
 }
 
 void ItemUI::SetAlpha(const float alpha)
 {
-	itemUI_->color.a = alpha;
+	mItemUI->color.a = alpha;
 }

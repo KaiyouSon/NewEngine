@@ -2,39 +2,39 @@
 #include "UIManager.h"
 
 NegotiationUI::NegotiationUI() :
-	backFrame_(std::make_unique<Sprite>()),
-	button_(std::make_unique<Sprite>()),
-	colon_(std::make_unique<Sprite>()),
-	text_(std::make_unique<Sprite>()),
-	isActive_(false)
+	mBackFrame(std::make_unique<Sprite>()),
+	mButton(std::make_unique<Sprite>()),
+	mColon(std::make_unique<Sprite>()),
+	mText(std::make_unique<Sprite>()),
+	mIsActive(false)
 {
-	backFrame_->SetTexture(TextureManager::GetTexture("NegotiationBack"));
+	mBackFrame->SetTexture(TextureManager::GetTexture("NegotiationBack"));
 
-	button_->SetTexture(TextureManager::GetTexture("Buttons"));
-	button_->SetTextureRect(Vec2(96, 96), Vec2(192, 192));
-	button_->SetSize(96);
+	mButton->SetTexture(TextureManager::GetTexture("Buttons"));
+	mButton->SetTextureRect(Vec2(96, 96), Vec2(192, 192));
+	mButton->SetSize(96);
 
-	colon_->SetTexture(TextureManager::GetTexture("ColonStr"));
+	mColon->SetTexture(TextureManager::GetTexture("ColonStr"));
 
-	text_->SetTexture(TextureManager::GetTexture("ReadMessageStr"));
+	mText->SetTexture(TextureManager::GetTexture("ReadMessageStr"));
 }
 
 void NegotiationUI::Init()
 {
 	const float height = 928.f;
 
-	backFrame_->pos = Vec2(GetWindowHalfSize().x, height);
-	backFrame_->scale = Vec2(1.25f, 0.75f);
-	backFrame_->color.a = 245.f;
+	mBackFrame->pos = Vec2(GetWindowHalfSize().x, height);
+	mBackFrame->scale = Vec2(1.25f, 0.75f);
+	mBackFrame->color.a = 245.f;
 
-	button_->pos = Vec2(GetWindowHalfSize().x - 96, height);
-	button_->scale = 0.4f;
+	mButton->pos = Vec2(GetWindowHalfSize().x - 96, height);
+	mButton->scale = 0.4f;
 
-	colon_->pos = Vec2(GetWindowHalfSize().x - 70, height);
-	colon_->scale = 0.3f;
+	mColon->pos = Vec2(GetWindowHalfSize().x - 70, height);
+	mColon->scale = 0.3f;
 
-	text_->pos = Vec2(GetWindowHalfSize().x + 32, height);
-	text_->scale = 0.3f;
+	mText->pos = Vec2(GetWindowHalfSize().x + 32, height);
+	mText->scale = 0.3f;
 }
 
 void NegotiationUI::Update()
@@ -42,55 +42,55 @@ void NegotiationUI::Update()
 	AlphaUpdate();
 	TutorialMessageUpdate();
 
-	backFrame_->color.a = alpha_ - 10.f;
-	button_->color.a = alpha_;
-	colon_->color.a = alpha_;
-	text_->color.a = alpha_;
+	mBackFrame->color.a = mAlpha - 10.f;
+	mButton->color.a = mAlpha;
+	mColon->color.a = mAlpha;
+	mText->color.a = mAlpha;
 
-	backFrame_->Update();
-	button_->Update();
-	colon_->Update();
-	text_->Update();
+	mBackFrame->Update();
+	mButton->Update();
+	mColon->Update();
+	mText->Update();
 }
 
 void NegotiationUI::DrawFrontSprite()
 {
-	if (alpha_ == 0)
+	if (mAlpha == 0)
 	{
 		return;
 	}
 
-	backFrame_->Draw();
-	button_->Draw();
-	colon_->Draw();
-	text_->Draw();
+	mBackFrame->Draw();
+	mButton->Draw();
+	mColon->Draw();
+	mText->Draw();
 }
 
 void NegotiationUI::AlphaUpdate()
 {
 	const float add = 20.f;
 
-	if (isActive_ == false)
+	if (mIsActive == false)
 	{
-		alpha_ -= add;
+		mAlpha -= add;
 	}
 	else
 	{
-		alpha_ += add;
+		mAlpha += add;
 	}
-	alpha_ = Clamp<float>(alpha_, 0.f, 255.f);
+	mAlpha = Clamp<float>(mAlpha, 0.f, 255.f);
 }
 
 void NegotiationUI::TutorialMessageUpdate()
 {
-	if (alpha_ == 0)
+	if (mAlpha == 0)
 	{
 		return;
 	}
 
 	MessageUI* messageUI = mUiManager->GetMessageUI();
 
-	if (isActive_ == false)
+	if (mIsActive == false)
 	{
 		messageUI->SetisActive(false);
 	}
@@ -115,10 +115,10 @@ void NegotiationUI::SetUIManager(UIManager* uiManager)
 
 void NegotiationUI::SetisActive(const bool isActive)
 {
-	isActive_ = isActive;
+	mIsActive = isActive;
 }
 
 bool NegotiationUI::GetisActive()
 {
-	return isActive_;
+	return mIsActive;
 }

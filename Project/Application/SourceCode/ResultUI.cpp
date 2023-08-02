@@ -1,37 +1,37 @@
 #include "ResultUI.h"
 
-bool ResultUI::isEnd_ = false;
+bool ResultUI::sIsEnd = false;
 
 ResultUI::ResultUI() :
-	back_(std::make_unique<Sprite>()),
-	text_(std::make_unique<Sprite>()),
-	textAfterImage_(std::make_unique<Sprite>())
+	mBack(std::make_unique<Sprite>()),
+	mText(std::make_unique<Sprite>()),
+	mTextAfterImage(std::make_unique<Sprite>())
 {
-	back_->SetTexture(TextureManager::GetTexture("ResultBack"));
-	text_->SetTexture(TextureManager::GetTexture("YouDiedStr"));
-	textAfterImage_->SetTexture(TextureManager::GetTexture("EnemyFelledStr"));
+	mBack->SetTexture(TextureManager::GetTexture("ResultBack"));
+	mText->SetTexture(TextureManager::GetTexture("YouDiedStr"));
+	mTextAfterImage->SetTexture(TextureManager::GetTexture("EnemyFelledStr"));
 }
 void ResultUI::Init()
 {
-	back_->scale.x = 15.f;
-	back_->color.a = 0.f;
-	text_->color.a = 0.f;
+	mBack->scale.x = 15.f;
+	mBack->color.a = 0.f;
+	mText->color.a = 0.f;
 
-	parent_.pos = GetWindowHalfSize();
-	parent_.Update();
+	mParent.pos = GetWindowHalfSize();
+	mParent.Update();
 
-	timer_.SetLimitTimer(180);
+	mTimer.SetLimitTimer(180);
 
-	isAfterImage_ = false;
-	textAfterImage_->color.a = 0.f;
+	mIsAfterImage = false;
+	mTextAfterImage->color.a = 0.f;
 
-	isEnd_ = false;
+	sIsEnd = false;
 }
 void ResultUI::Update()
 {
-	if (isActive_ == true)
+	if (mIsActive == true)
 	{
-		switch (resultType_)
+		switch (mResultType)
 		{
 		case ResultType::EnemyFelledStr:
 			EnemyFelledUpdate();
@@ -46,15 +46,15 @@ void ResultUI::Update()
 		}
 	}
 
-	back_->Update(&parent_);
-	text_->Update(&parent_);
-	textAfterImage_->Update(&parent_);
+	mBack->Update(&mParent);
+	mText->Update(&mParent);
+	mTextAfterImage->Update(&mParent);
 }
 void ResultUI::DrawFrontSprite()
 {
-	back_->Draw();
+	mBack->Draw();
 
-	switch (resultType_)
+	switch (mResultType)
 	{
 	case ResultType::EnemyFelledStr:
 		EnemyFelledDraw();
@@ -72,141 +72,140 @@ void ResultUI::DrawFrontSprite()
 
 void ResultUI::EnemyFelledUpdate()
 {
-	if (isEnd_ == true)
+	if (sIsEnd == true)
 	{
 		return;
 	}
-	waitTimer_.SetLimitTimer(120);
+	mWaitTimer.SetLimitTimer(120);
 
-	if (isWait_ == true)
+	if (mIsWait == true)
 	{
-		waitTimer_.Update();
-		if (waitTimer_ == true)
+		mWaitTimer.Update();
+		if (mWaitTimer == true)
 		{
-			waitTimer_.Reset();
-			isWait_ = false;
+			mWaitTimer.Reset();
+			mIsWait = false;
 		}
 	}
 	else
 	{
-		back_->color.a = sinf(Radian((float)timer_.GetTimer())) * 245.f;
-		text_->color.a = sinf(Radian((float)timer_.GetTimer())) * 245.f;
+		mBack->color.a = sinf(Radian((float)mTimer.GetTimer())) * 245.f;
+		mText->color.a = sinf(Radian((float)mTimer.GetTimer())) * 245.f;
 
-		if (isAfterImage_ == false)
+		if (mIsAfterImage == false)
 		{
-			text_->scale += 0.001f;
+			mText->scale += 0.001f;
 		}
 
-		timer_.Update();
+		mTimer.Update();
 		// 90“x‚ÌŽž
-		if (timer_.GetTimer() == 90)
+		if (mTimer.GetTimer() == 90)
 		{
-			if (isAfterImage_ == false)
+			if (mIsAfterImage == false)
 			{
-				isAfterImage_ = true;
-				textAfterImage_->scale = text_->scale;
-				//textAfterImage_->color.a = 105.f;
+				mIsAfterImage = true;
+				mTextAfterImage->scale = mText->scale;
 			}
 
-			if (isWait_ == false)
+			if (mIsWait == false)
 			{
-				isWait_ = true;
+				mIsWait = true;
 			}
 		}
 	}
 
-	if (isAfterImage_ == true)
+	if (mIsAfterImage == true)
 	{
-		textAfterImage_->scale += 0.0005f;
-		textAfterImage_->color.a = sinf(Radian((float)timer_.GetTimer())) * 55.f;
+		mTextAfterImage->scale += 0.0005f;
+		mTextAfterImage->color.a = sinf(Radian((float)mTimer.GetTimer())) * 55.f;
 	}
 
-	if (timer_.GetisTimeOut() == true)
+	if (mTimer.GetisTimeOut() == true)
 	{
-		back_->color.a = 0;
-		text_->color.a = 0;
-		textAfterImage_->color.a = 0;
-		text_->scale = 1;
+		mBack->color.a = 0;
+		mText->color.a = 0;
+		mTextAfterImage->color.a = 0;
+		mText->scale = 1;
 
-		timer_.Reset();
-		isActive_ = false;
-		isAfterImage_ = false;
-		isEnd_ = true;
+		mTimer.Reset();
+		mIsActive = false;
+		mIsAfterImage = false;
+		sIsEnd = true;
 	}
 }
 void ResultUI::EnemyFelledDraw()
 {
-	textAfterImage_->Draw();
-	text_->Draw();
+	mTextAfterImage->Draw();
+	mText->Draw();
 }
 
 void ResultUI::YouDiedUpdate()
 {
-	if (isEnd_ == true)
+	if (sIsEnd == true)
 	{
 		return;
 	}
 
-	waitTimer_.SetLimitTimer(60);
+	mWaitTimer.SetLimitTimer(60);
 
-	if (isWait_ == true)
+	if (mIsWait == true)
 	{
-		waitTimer_.Update();
-		if (waitTimer_ == true)
+		mWaitTimer.Update();
+		if (mWaitTimer == true)
 		{
-			waitTimer_.Reset();
-			isWait_ = false;
+			mWaitTimer.Reset();
+			mIsWait = false;
 		}
 	}
 	else
 	{
-		back_->color.a = sinf(Radian((float)timer_.GetTimer())) * 245.f;
-		text_->color.a = sinf(Radian((float)timer_.GetTimer())) * 245.f;
-		text_->scale += 0.001f;
+		mBack->color.a = sinf(Radian((float)mTimer.GetTimer())) * 245.f;
+		mText->color.a = sinf(Radian((float)mTimer.GetTimer())) * 245.f;
+		mText->scale += 0.001f;
 
-		timer_.Update();
+		mTimer.Update();
 		// 90“x‚ÌŽž
-		if (timer_.GetTimer() == 90)
+		if (mTimer.GetTimer() == 90)
 		{
-			if (isWait_ == false)
+			if (mIsWait == false)
 			{
-				isWait_ = true;
+				mIsWait = true;
 			}
 		}
 	}
 
-	if (timer_.GetisTimeOut() == true)
+	if (mTimer.GetisTimeOut() == true)
 	{
-		back_->color.a = 0;
-		text_->color.a = 0;
-		text_->scale = 1;
+		mBack->color.a = 0;
+		mText->color.a = 0;
+		mText->scale = 1;
 
-		timer_.Reset();
-		isActive_ = false;
-		isEnd_ = true;
+		mTimer.Reset();
+		mIsActive = false;
+		sIsEnd = true;
 	}
 }
 void ResultUI::YouDiedDraw()
 {
-	text_->Draw();
+	mText->Draw();
 }
 
 void ResultUI::SetisActive(const bool isActive)
 {
-	isActive_ = isActive;
+	mIsActive = isActive;
 }
 void ResultUI::SetResultType(const ResultType resultType)
 {
-	resultType_ = resultType;
+	mResultType = resultType;
 
-	switch (resultType_)
+	switch (mResultType)
 	{
 	case ResultType::EnemyFelledStr:
-		text_->SetTexture(TextureManager::GetTexture("EnemyFelledStr"));
+		mText->SetTexture(TextureManager::GetTexture("EnemyFelledStr"));
 		break;
 
 	case ResultType::YouDiedStr:
-		text_->SetTexture(TextureManager::GetTexture("YouDiedStr"));
+		mText->SetTexture(TextureManager::GetTexture("YouDiedStr"));
 		break;
 
 	default:
@@ -216,5 +215,5 @@ void ResultUI::SetResultType(const ResultType resultType)
 
 bool ResultUI::GetisEnd()
 {
-	return isEnd_;
+	return sIsEnd;
 }

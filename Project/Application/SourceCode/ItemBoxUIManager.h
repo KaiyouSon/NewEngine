@@ -12,16 +12,16 @@ private:
 	};
 
 private:
-	Transform parent;
+	Transform mParent;
 
-	std::array<std::unique_ptr<ItemBoxUI>, 4> itemBoxUIs_;
-	std::array<std::unique_ptr<ItemUI>, 4> itemUIs_;
-	std::unique_ptr<Sprite> num_;
+	std::array<std::unique_ptr<ItemBoxUI>, 4> mItemBoxUIs;
+	std::array<std::unique_ptr<ItemUI>, 4> mItemUIs;
+	std::unique_ptr<Sprite> mNumber;
 
-	Timer notActiveTimer_;
-	bool isActive_;
-	float alpha_;
-	float lightAlpha_;
+	Timer mNotActiveTimer;
+	bool mIsActive;
+	float mAlpha;
+	float mLightAlpha;
 	Player* mPlayer;
 
 public:

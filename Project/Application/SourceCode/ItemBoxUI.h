@@ -4,10 +4,10 @@
 class ItemBoxUI
 {
 private:
-	std::unique_ptr<Sprite> frame_;
-	std::unique_ptr<Sprite> light_;
-	bool isLightActive_;
-	Timer lightActiveTimer_;
+	std::unique_ptr<Sprite> mFrame;
+	std::unique_ptr<Sprite> mLight;
+	bool mIsLightActive;
+	Timer mLightActiveTimer;
 
 public:
 	ItemBoxUI();
