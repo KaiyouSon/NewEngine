@@ -1,25 +1,26 @@
 #include "ShaderObject.h"
+#include "Util.h"
 #include <d3dcompiler.h>
 #include <string>
 #include <cassert>
 #pragma comment(lib,"d3dcompiler.lib")
 
-Microsoft::WRL::ComPtr <ID3DBlob> ShaderObject::sErrorBlob_ = nullptr;
+Microsoft::WRL::ComPtr <ID3DBlob> ShaderObject::sErrorBlob = nullptr;
 
-ShaderObject::ShaderObject() : result_(HRESULT())
+ShaderObject::ShaderObject() : mResult(HRESULT())
 {
 }
 
 void ShaderObject::ShowErrorDetails()
 {
 	// シェーダのエラー内容を表示
-	if (FAILED(result_))
+	if (FAILED(mResult))
 	{
-		// sErrorBlob_からエラー内容をstring型にコピー
+		// sErrorBlobからエラー内容をstring型にコピー
 		std::string error;
-		error.resize(sErrorBlob_->GetBufferSize());
-		std::copy_n((char*)sErrorBlob_->GetBufferPointer(),
-			sErrorBlob_->GetBufferSize(),
+		error.resize(sErrorBlob->GetBufferSize());
+		std::copy_n((char*)sErrorBlob->GetBufferPointer(),
+			sErrorBlob->GetBufferSize(),
 			error.begin());
 		error += "\n";
 		// エラー内容を出力ウィンドウに表示
@@ -35,33 +36,33 @@ void ShaderObject::CompileVertexShader(
 	// stringをwstringに変換
 	std::wstring wFilePath(filePath.begin(), filePath.end());
 
-#ifdef _DEBUG
+	// デバッグのみ実行
+	ProcessAtDebugBulid([&]()
+		{
+			// シェーダの読み込みとコンパイル
+			mResult = D3DCompileFromFile(
+				wFilePath.c_str(), // シェーダファイル名
+				nullptr,
+				D3D_COMPILE_STANDARD_FILE_INCLUDE,	// インクルード可能にする
+				entryPointName.c_str(), "vs_5_0",	// エントリーポイント名、シェーダーモデル指定
+				D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
+				0,
+				&mVsBlob, &sErrorBlob);
+		});
 
-	// シェーダの読み込みとコンパイル
-	result_ = D3DCompileFromFile(
-		wFilePath.c_str(), // シェーダファイル名
-		nullptr,
-		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
-		entryPointName.c_str(), "vs_5_0", // エントリーポイント名、シェーダーモデル指定
-		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
-		0,
-		&vsBlob_, &sErrorBlob_);
-
-#endif
-
-#ifdef NDEBUG
-
-	// シェーダの読み込みとコンパイル
-	result_ = D3DCompileFromFile(
-		wFilePath.c_str(), // シェーダファイル名
-		nullptr,
-		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
-		entryPointName.c_str(), "vs_5_0", // エントリーポイント名、シェーダーモデル指定
-		D3DCOMPILE_OPTIMIZATION_LEVEL3, // デバッグ用設定
-		0,
-		&vsBlob_, &sErrorBlob_);
-
-#endif
+	// リリースのみ実行
+	ProcessAtReleaseBulid([&]()
+		{
+			// シェーダの読み込みとコンパイル
+			mResult = D3DCompileFromFile(
+				wFilePath.c_str(), // シェーダファイル名
+				nullptr,
+				D3D_COMPILE_STANDARD_FILE_INCLUDE,	// インクルード可能にする
+				entryPointName.c_str(), "vs_5_0",	// エントリーポイント名、シェーダーモデル指定
+				D3DCOMPILE_OPTIMIZATION_LEVEL3, // デバッグ用設定
+				0,
+				&mVsBlob, &sErrorBlob);
+		});
 
 	// シェーダのエラー内容を表示
 	ShowErrorDetails();
@@ -74,33 +75,33 @@ void ShaderObject::CompileGeometryShader(
 	// stringをwstringに変換
 	std::wstring wFilePath(filePath.begin(), filePath.end());
 
-#ifdef _DEBUG
+	// デバッグのみ実行
+	ProcessAtDebugBulid([&]()
+		{
+			// シェーダの読み込みとコンパイル
+			mResult = D3DCompileFromFile(
+				wFilePath.c_str(), // シェーダファイル名
+				nullptr,
+				D3D_COMPILE_STANDARD_FILE_INCLUDE,	// インクルード可能にする
+				entryPointName.c_str(), "gs_5_0",	// エントリーポイント名、シェーダーモデル指定
+				D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
+				0,
+				&mGsBlob, &sErrorBlob);
+		});
 
-	// シェーダの読み込みとコンパイル
-	result_ = D3DCompileFromFile(
-		wFilePath.c_str(), // シェーダファイル名
-		nullptr,
-		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
-		entryPointName.c_str(), "gs_5_0", // エントリーポイント名、シェーダーモデル指定
-		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
-		0,
-		&gsBlob_, &sErrorBlob_);
-
-#endif
-
-#ifdef NDEBUG
-
-	// シェーダの読み込みとコンパイル
-	result_ = D3DCompileFromFile(
-		wFilePath.c_str(), // シェーダファイル名
-		nullptr,
-		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
-		entryPointName.c_str(), "gs_5_0", // エントリーポイント名、シェーダーモデル指定
-		D3DCOMPILE_OPTIMIZATION_LEVEL3, // デバッグ用設定
-		0,
-		&gsBlob_, &sErrorBlob_);
-
-#endif
+	// リリースのみ実行
+	ProcessAtReleaseBulid([&]()
+		{
+			// シェーダの読み込みとコンパイル
+			mResult = D3DCompileFromFile(
+				wFilePath.c_str(), // シェーダファイル名
+				nullptr,
+				D3D_COMPILE_STANDARD_FILE_INCLUDE,	// インクルード可能にする
+				entryPointName.c_str(), "gs_5_0",	// エントリーポイント名、シェーダーモデル指定
+				D3DCOMPILE_OPTIMIZATION_LEVEL3, // デバッグ用設定
+				0,
+				&mGsBlob, &sErrorBlob);
+		});
 
 	// シェーダのエラー内容を表示
 	ShowErrorDetails();
@@ -113,33 +114,69 @@ void ShaderObject::CompilePixelShader(
 	// stringをwstringに変換
 	std::wstring wFilePath(filePath.begin(), filePath.end());
 
-#ifdef _DEBUG
+	// デバッグのみ実行
+	ProcessAtDebugBulid([&]()
+		{
+			// シェーダの読み込みとコンパイル
+			mResult = D3DCompileFromFile(
+				wFilePath.c_str(), // シェーダファイル名
+				nullptr,
+				D3D_COMPILE_STANDARD_FILE_INCLUDE,	// インクルード可能にする
+				entryPointName.c_str(), "ps_5_0",	// エントリーポイント名、シェーダーモデル指定
+				D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
+				0,
+				&mPsBlob, &sErrorBlob);
+		});
 
-	// シェーダの読み込みとコンパイル
-	result_ = D3DCompileFromFile(
-		wFilePath.c_str(), // シェーダファイル名
-		nullptr,
-		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
-		entryPointName.c_str(), "ps_5_0", // エントリーポイント名、シェーダーモデル指定
-		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
-		0,
-		&psBlob_, &sErrorBlob_);
 
-#endif
-
-#ifdef NDEBUG
-
-	// シェーダの読み込みとコンパイル
-	result_ = D3DCompileFromFile(
-		wFilePath.c_str(), // シェーダファイル名
-		nullptr,
-		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
-		entryPointName.c_str(), "ps_5_0", // エントリーポイント名、シェーダーモデル指定
-		D3DCOMPILE_OPTIMIZATION_LEVEL3, // デバッグ用設定
-		0,
-		&psBlob_, &sErrorBlob_);
-#endif
+	// リリースのみ実行
+	ProcessAtReleaseBulid([&]()
+		{
+			// シェーダの読み込みとコンパイル
+			mResult = D3DCompileFromFile(
+				wFilePath.c_str(), // シェーダファイル名
+				nullptr,
+				D3D_COMPILE_STANDARD_FILE_INCLUDE,	// インクルード可能にする
+				entryPointName.c_str(), "ps_5_0",	// エントリーポイント名、シェーダーモデル指定
+				D3DCOMPILE_OPTIMIZATION_LEVEL3, // デバッグ用設定
+				0,
+				&mPsBlob, &sErrorBlob);
+		});
 
 	// シェーダのエラー内容を表示
 	ShowErrorDetails();
 }
+
+// インプットレイアウトの追加
+void ShaderObject::AddInputLayout(const LPCSTR& semanticName, const DXGI_FORMAT format, const uint32_t index)
+{
+	mInputLayout.push_back(
+		{	// xyz座標
+			semanticName, index, format, 0,
+			D3D12_APPEND_ALIGNED_ELEMENT,
+			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
+		});
+}
+
+// ゲッター
+ID3DBlob* ShaderObject::GetErrorBlob()
+{
+	return  sErrorBlob.Get();
+}
+ID3DBlob* ShaderObject::GetVSBlob()
+{
+	return mVsBlob.Get();
+}
+ID3DBlob* ShaderObject::GetGSBlob()
+{
+	return mGsBlob.Get();
+}
+ID3DBlob* ShaderObject::GetPSBlob()
+{
+	return mPsBlob.Get();
+}
+const std::vector <D3D12_INPUT_ELEMENT_DESC>& ShaderObject::GetInputLayout()
+{
+	return mInputLayout;
+}
+

@@ -128,15 +128,7 @@ void NewEngineEnd()
 	RenderWindow::GetInstance()->TerminateGameWindow();		// ウィンドウクラスを登録解除
 	SoundManager::Destroy();
 
-	//ComPtr<ID3D12Device> tempDevice = RenderBase::GetInstance()->GetDevice();
 	RenderBase::Destroy();
-
-	//ID3D12DebugDevice* debugInterface;
-	//if (SUCCEEDED(tempDevice->QueryInterface(&debugInterface)))
-	//{
-	//	debugInterface->ReportLiveDeviceObjects(D3D12_RLDO_DETAIL | D3D12_RLDO_IGNORE_INTERNAL);
-	//	debugInterface->Release();
-	//}
 }
 
 bool ProcessMessage()

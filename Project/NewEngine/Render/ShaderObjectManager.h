@@ -6,7 +6,7 @@
 class ShaderObjectManager
 {
 private:
-	static std::unordered_map<std::string, std::unique_ptr<ShaderObject>> sShaderObjectMap_;
+	static std::unordered_map<std::string, std::unique_ptr<ShaderObject>> sShaderObjectMap;
 
 public:
 	static void Create(const std::string shaderObjectTag);
