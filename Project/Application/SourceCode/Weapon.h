@@ -4,17 +4,17 @@
 struct Weapon
 {
 protected:
-	Vec3 localPos_;
-	Vec3 localRot_;
-	bool isCalcCollider_;
+	Vec3 mLocalPos;
+	Vec3 mLocalRot;
+	bool mIsCalcCollider;
 
 protected:
-	float weakAttackDamage_;
-	float heavyAttackDamage_;
-	float backAttackDamage_;
-	float rollAttackDamage_;
-	float damage_;
-	float chargeRate_;
+	float mWeakAttackDamage;
+	float mHeavyAttackDamage;
+	float mBackAttackDamage;
+	float mRollAttackDamage;
+	float mDamage;
+	float mChargeRate;
 
 public:
 	std::unique_ptr<Object3D> weapon;

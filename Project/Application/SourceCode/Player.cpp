@@ -4,7 +4,7 @@
 #include "Sword.h"
 
 Player::Player() :
-	player_(std::make_unique<PlayerBody>()),
+	mPlayer(std::make_unique<PlayerBody>()),
 	weapon_(std::make_unique<Club>()),
 	frontVec_(Vec3::front)
 {
@@ -13,12 +13,12 @@ Player::Player() :
 void Player::Init()
 {
 	GaugeParamInit();
-	player_->Init();
-	player_->pos.y = 4.75f;
+	mPlayer->Init();
+	mPlayer->pos.y = 4.75f;
 
-	player_->SetWeapon(weapon_.get(), WeaponPartID::Right);
-	player_->iParent = this;
-	player_->parent = static_cast<Player*>(player_->iParent);
+	mPlayer->SetWeapon(weapon_.get(), WeaponPartID::Right);
+	mPlayer->iParent = this;
+	mPlayer->parent = static_cast<Player*>(mPlayer->iParent);
 
 	joggingSpeed_ = 0.7f;
 	runSpeed_ = 1.2f;
@@ -67,16 +67,16 @@ void Player::PrevUpdate()
 
 	if (isAlive_ == false)
 	{
-		for (uint32_t i = 1; i < player_->parts_.size(); i++)
+		for (uint32_t i = 1; i < mPlayer->parts_.size(); i++)
 		{
-			player_->parts_[i]->dissolve += 0.005f;
-			player_->parts_[i]->dissolve = Min(player_->parts_[i]->dissolve, 2.f);
+			mPlayer->parts_[i]->dissolve += 0.005f;
+			mPlayer->parts_[i]->dissolve = Min(mPlayer->parts_[i]->dissolve, 2.f);
 		}
 
 		weapon_->weapon->dissolve += 0.005f;
 		weapon_->weapon->dissolve = Min(weapon_->weapon->dissolve, 2.f);
 
-		if (player_->parts_[1]->dissolve >= 0.5f)
+		if (mPlayer->parts_[1]->dissolve >= 0.5f)
 		{
 			if (isDissolve_ == false)
 			{
@@ -93,28 +93,28 @@ void Player::PostUpdate()
 			if (Key::GetKeyDown(DIK_SPACE))
 			{
 				flag = true;
-				for (uint32_t i = 0; i < player_->parts_.size(); i++)
+				for (uint32_t i = 0; i < mPlayer->parts_.size(); i++)
 				{
-					player_->parts_[i]->dissolve = 0.f;
+					mPlayer->parts_[i]->dissolve = 0.f;
 				}
 
 			}
 			if (flag == true)
 			{
-				for (uint32_t i = 0; i < player_->parts_.size(); i++)
+				for (uint32_t i = 0; i < mPlayer->parts_.size(); i++)
 				{
-					player_->parts_[i]->dissolve += 0.005f;
-					player_->parts_[i]->dissolve = Min(player_->parts_[i]->dissolve, 2.f);
+					mPlayer->parts_[i]->dissolve += 0.005f;
+					mPlayer->parts_[i]->dissolve = Min(mPlayer->parts_[i]->dissolve, 2.f);
 				}
 			}
 		});
 
-	player_->DebugUpdate();
-	player_->Update();
+	mPlayer->DebugUpdate();
+	mPlayer->Update();
 }
 void Player::DrawModel()
 {
-	player_->DrawModel();
+	mPlayer->DrawModel();
 }
 void Player::DrawDebugGui()
 {
@@ -125,13 +125,13 @@ void Player::DrawDebugGui()
 	//GuiManager::DrawColorEdit("D color", color);
 	//GuiManager::EndWindow();
 
-	//for (uint32_t i = 1; i < player_->parts_.size(); i++)
+	//for (uint32_t i = 1; i < mPlayer->parts_.size(); i++)
 	//{
-	//	player_->parts_[i]->colorPower = power;
-	//	player_->parts_[i]->dissolveColor = color;
+	//	mPlayer->parts_[i]->colorPower = power;
+	//	mPlayer->parts_[i]->dissolveColor = color;
 	//}
 
-	player_->DrawDebugGui();
+	mPlayer->DrawDebugGui();
 }
 
 void Player::Recovery()
@@ -155,7 +155,7 @@ void Player::Damage(const float damage)
 void Player::CalcFrontVec()
 {
 	// カメラの前ベクトル
-	Vec3 cameForward = player_->pos - Camera::current.pos;
+	Vec3 cameForward = mPlayer->pos - Camera::current.pos;
 	cameForward.y = 0.f;
 
 	// カメラの右ベクトル
@@ -183,8 +183,8 @@ void Player::CalcBodyCollider()
 }
 void Player::ColliderUpdate()
 {
-	bodyCollider_.startPos = player_->pos - Vec3(0.f, 4.75f, 0.f);
-	bodyCollider_.endPos = player_->pos + Vec3(0.f, 4.75f, 0.f);
+	bodyCollider_.startPos = mPlayer->pos - Vec3(0.f, 4.75f, 0.f);
+	bodyCollider_.endPos = mPlayer->pos + Vec3(0.f, 4.75f, 0.f);
 	bodyCollider_.radius = 2.5f;
 
 	weapon_->ColliderUpdate();
@@ -224,13 +224,13 @@ void Player::MoveUpdate()
 	{
 		moveVel = frontVec_.Norm() * moveSpeed_;
 
-		player_->pos += moveVel;
-		player_->rot.y = atan2f(frontVec_.x, frontVec_.z);
+		mPlayer->pos += moveVel;
+		mPlayer->rot.y = atan2f(frontVec_.x, frontVec_.z);
 	}
 }
 void Player::IdleUpdate()
 {
-	player_->IdleMotion();
+	mPlayer->IdleMotion();
 
 	if (Pad::GetButtonDown(PadCode::ButtonR1))
 	{
@@ -274,7 +274,7 @@ void Player::IdleUpdate()
 }
 void Player::JoggingUpdate()
 {
-	player_->JoggingMotion();
+	mPlayer->JoggingMotion();
 
 	MoveUpdate();
 
@@ -297,15 +297,15 @@ void Player::JoggingUpdate()
 	else if (Pad::GetButton(PadCode::ButtonA))
 	{
 		// 何フレーム押したかを記録する
-		pushTimer.Update(false);
-		if (pushTimer.GetisTimeOut() == true)
+		pushTimer.Update();
+		if (pushTimer == true)
 		{
 			state_ = State::Run;
-			player_->ChangeMoveMotionInit();
+			mPlayer->ChangeMoveMotionInit();
 			pushTimer.Reset();
 		}
 	}
-	else if (player_->GetisPlayMoveMotion() == false)
+	else if (mPlayer->GetisPlayMoveMotion() == false)
 	{
 		state_ = State::Idle;
 	}
@@ -324,8 +324,8 @@ void Player::JoggingUpdate()
 				gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
 				state_ = State::Roll;
 
-				player_->RollMotionInit();
-				player_->ChangeMoveMotionInit();
+				mPlayer->RollMotionInit();
+				mPlayer->ChangeMoveMotionInit();
 			}
 		}
 		pushTimer.Reset();
@@ -333,7 +333,7 @@ void Player::JoggingUpdate()
 }
 void Player::RunUpdate()
 {
-	player_->RunMotion();
+	mPlayer->RunMotion();
 
 	gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 1.f;
 
@@ -343,9 +343,9 @@ void Player::RunUpdate()
 		gaugePrames_[(uint32_t)GaugeType::Stamina].value <= 0.f)
 	{
 		state_ = State::Jogging;
-		player_->ChangeMoveMotionInit();
+		mPlayer->ChangeMoveMotionInit();
 	}
-	else if (player_->GetisPlayMoveMotion() == false)
+	else if (mPlayer->GetisPlayMoveMotion() == false)
 	{
 		state_ = State::Idle;
 	}
@@ -356,9 +356,9 @@ void Player::RunUpdate()
 }
 void Player::BackstepUpdate()
 {
-	player_->BackstepMotionUpdate();
+	mPlayer->BackstepMotionUpdate();
 
-	if (player_->GetisBackStepMotionCanChange() == true)
+	if (mPlayer->GetisBackStepMotionCanChange() == true)
 	{
 		if (Pad::GetButtonDown(PadCode::ButtonA))
 		{
@@ -366,7 +366,7 @@ void Player::BackstepUpdate()
 			{
 				gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
 				state_ = State::Backstep;
-				player_->BackstepMotionInit();
+				mPlayer->BackstepMotionInit();
 			}
 		}
 		else if (Pad::GetButtonDown(PadCode::ButtonR1))
@@ -374,14 +374,14 @@ void Player::BackstepUpdate()
 			if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 20 >= 0)
 			{
 				gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 20;
-				player_->BackstepMotionInit();
+				mPlayer->BackstepMotionInit();
 				state_ = State::AttackBack;
 			}
 		}
 		else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
 		{
-			player_->BackstepMotionInit();
-			player_->ChangeMoveMotionInit();
+			mPlayer->BackstepMotionInit();
+			mPlayer->ChangeMoveMotionInit();
 
 			if (Pad::GetButton(PadCode::ButtonA))
 			{
@@ -398,20 +398,20 @@ void Player::BackstepUpdate()
 		}
 		else if (Pad::GetButtonDown(PadCode::ButtonX))
 		{
-			player_->BackstepMotionInit();
+			mPlayer->BackstepMotionInit();
 			state_ = State::Drink;
 		}
 	}
-	else if (player_->GetisPlayBackStepMotion() == false)
+	else if (mPlayer->GetisPlayBackStepMotion() == false)
 	{
 		state_ = State::Idle;
 	}
 }
 void Player::RollUpdate()
 {
-	player_->RollMotionUpdate();
+	mPlayer->RollMotionUpdate();
 
-	if (player_->GetisRollMotionCanChange() == true)
+	if (mPlayer->GetisRollMotionCanChange() == true)
 	{
 		if (Pad::GetButtonDown(PadCode::ButtonA))
 		{
@@ -419,7 +419,7 @@ void Player::RollUpdate()
 			{
 				gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
 				state_ = State::Backstep;
-				player_->RollMotionInit();
+				mPlayer->RollMotionInit();
 			}
 		}
 		else if (Pad::GetButtonDown(PadCode::ButtonR1))
@@ -428,7 +428,7 @@ void Player::RollUpdate()
 			{
 				gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 20;
 				state_ = State::AttackRoll;
-				player_->RollMotionInit();
+				mPlayer->RollMotionInit();
 			}
 		}
 		else if (Pad::GetStick(PadCode::LeftStick, 300) != 0)
@@ -439,34 +439,34 @@ void Player::RollUpdate()
 				{
 					gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
 					state_ = State::Roll;
-					player_->RollMotionInit();
+					mPlayer->RollMotionInit();
 				}
 			}
 			else
 			{
 				state_ = State::Jogging;
-				player_->RollMotionInit();
+				mPlayer->RollMotionInit();
 			}
 		}
 		else if (Pad::GetButtonDown(PadCode::ButtonX))
 		{
 			state_ = State::Drink;
-			player_->RollMotionInit();
+			mPlayer->RollMotionInit();
 		}
 	}
 
-	if (player_->GetisPlayRollMotion() == false)
+	if (mPlayer->GetisPlayRollMotion() == false)
 	{
 		if (state_ == State::Roll)
 		{
 			state_ = State::Idle;
-			player_->RollMotionInit();
+			mPlayer->RollMotionInit();
 		}
 	}
 }
 void Player::AttackR1Update()
 {
-	player_->AttackR1MotionUpdate();
+	mPlayer->AttackR1MotionUpdate();
 
 	if (Pad::GetButtonDown(PadCode::ButtonA))
 	{
@@ -476,35 +476,35 @@ void Player::AttackR1Update()
 			{
 				gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
 				state_ = State::Roll;
-				player_->AttackMotionInit(WeaponPartID::Right);
+				mPlayer->AttackMotionInit(WeaponPartID::Right);
 			}
 		}
 		else
 		{
-			if (player_->GetisAttackMotionCanChange(WeaponPartID::Right) == true)
+			if (mPlayer->GetisAttackMotionCanChange(WeaponPartID::Right) == true)
 			{
 				if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 30 >= 0)
 				{
 					gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
-					player_->AttackMotionInit(WeaponPartID::Right);
+					mPlayer->AttackMotionInit(WeaponPartID::Right);
 					state_ = State::Backstep;
 				}
 			}
 		}
 	}
 
-	if (player_->GetisPlayAttackMotion(WeaponPartID::Right) == false)
+	if (mPlayer->GetisPlayAttackMotion(WeaponPartID::Right) == false)
 	{
 		if (state_ == State::AttackR1)
 		{
-			player_->AttackMotionInit(WeaponPartID::Right);
+			mPlayer->AttackMotionInit(WeaponPartID::Right);
 			state_ = State::Idle;
 		}
 	}
 }
 void Player::AttackR2Update()
 {
-	player_->AttackR2MotionUpdate();
+	mPlayer->AttackR2MotionUpdate();
 
 	if (Pad::GetButtonDown(PadCode::ButtonA))
 	{
@@ -514,69 +514,69 @@ void Player::AttackR2Update()
 			{
 				gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
 				state_ = State::Roll;
-				player_->AttackMotionInit(WeaponPartID::Right);
+				mPlayer->AttackMotionInit(WeaponPartID::Right);
 			}
 		}
 		else
 		{
-			if (player_->GetisAttackMotionCanChange(WeaponPartID::Right) == true)
+			if (mPlayer->GetisAttackMotionCanChange(WeaponPartID::Right) == true)
 			{
 				if (gaugePrames_[(uint32_t)GaugeType::Stamina].value - 30 >= 0)
 				{
 					gaugePrames_[(uint32_t)GaugeType::Stamina].value -= 30;
-					player_->AttackMotionInit(WeaponPartID::Right);
+					mPlayer->AttackMotionInit(WeaponPartID::Right);
 					state_ = State::Backstep;
 				}
 			}
 		}
 	}
 
-	if (player_->GetisPlayAttackMotion(WeaponPartID::Right) == false)
+	if (mPlayer->GetisPlayAttackMotion(WeaponPartID::Right) == false)
 	{
 		if (state_ == State::AttackR2)
 		{
-			player_->AttackMotionInit(WeaponPartID::Right);
+			mPlayer->AttackMotionInit(WeaponPartID::Right);
 			state_ = State::Idle;
 		}
 	}
 }
 void Player::AttackBackUpdate()
 {
-	player_->AttackBackMotionUpdate();
+	mPlayer->AttackBackMotionUpdate();
 
-	if (player_->GetisPlayAttackMotion(WeaponPartID::Right) == false)
+	if (mPlayer->GetisPlayAttackMotion(WeaponPartID::Right) == false)
 	{
 		if (state_ == State::AttackBack)
 		{
-			player_->AttackMotionInit(WeaponPartID::Right);
+			mPlayer->AttackMotionInit(WeaponPartID::Right);
 			state_ = State::Idle;
 		}
 	}
 }
 void Player::AttackRollUpdate()
 {
-	player_->AttackRollMotionUpdate();
+	mPlayer->AttackRollMotionUpdate();
 
-	if (player_->GetisPlayAttackMotion(WeaponPartID::Right) == false)
+	if (mPlayer->GetisPlayAttackMotion(WeaponPartID::Right) == false)
 	{
 		if (state_ == State::AttackRoll)
 		{
-			player_->AttackMotionInit(WeaponPartID::Right);
+			mPlayer->AttackMotionInit(WeaponPartID::Right);
 			state_ = State::Idle;
 		}
 	}
 }
 void Player::DrinkUpdate()
 {
-	auto motion = player_->drinkMotion_.get();
+	auto motion = mPlayer->drinkMotion_.get();
 
-	motion->Update(player_.get());
+	motion->Update(mPlayer.get());
 
 	if (motion->GetisPlay() == false)
 	{
 		if (state_ == State::Drink)
 		{
-			motion->Init(player_.get());
+			motion->Init(mPlayer.get());
 			state_ = State::Idle;
 		}
 	}
@@ -584,27 +584,27 @@ void Player::DrinkUpdate()
 
 void Player::DamageUpdate()
 {
-	if (isDamage_ == false)
+	if (ismDamage == false)
 	{
 		return;
 	}
 
-	damageCoolTimer_.Update(false);
-	if (damageCoolTimer_.GetisTimeOut() == true)
+	damageCoolTimer_.Update();
+	if (damageCoolTimer_ == true)
 	{
 		damageCoolTimer_.Reset();
-		isDamage_ = false;
+		ismDamage = false;
 	}
 }
 
 // セッター
 void Player::SetPos(const Vec3 pos)
 {
-	player_->pos = pos;
+	mPlayer->pos = pos;
 }
 void Player::SetisDamage(const bool isDamage)
 {
-	isDamage_ = isDamage;
+	ismDamage = isDamage;
 }
 
 // ゲッター
@@ -614,7 +614,7 @@ GaugeParam Player::GetGaugeParam(const uint32_t index)
 }
 PlayerBody* Player::GetPlayerBody()
 {
-	return player_.get();
+	return mPlayer.get();
 }
 Weapon* Player::GetWeapon()
 {
@@ -622,19 +622,19 @@ Weapon* Player::GetWeapon()
 }
 Vec3 Player::GetPos()
 {
-	return player_->pos;
+	return mPlayer->pos;
 }
 Vec3 Player::GetRot()
 {
-	return player_->rot;
+	return mPlayer->rot;
 }
 Vec3 Player::GetAttackPos()
 {
-	return player_->attackPos;
+	return mPlayer->attackPos;
 }
 Vec3 Player::GetHeadPos()
 {
-	return player_->GetWorldPos(PartID::Head);
+	return mPlayer->GetWorldPos(PartID::Head);
 }
 Vec3 Player::GetMoveVel()
 {
@@ -654,7 +654,7 @@ CapsuleCollider Player::GetBodyCollider()
 }
 bool Player::GetisDamage()
 {
-	return isDamage_;
+	return ismDamage;
 }
 bool Player::GetisAlive()
 {

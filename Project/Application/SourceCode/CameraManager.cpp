@@ -10,12 +10,12 @@ CameraManager::CameraManager()
 void CameraManager::Init()
 {
 	currentCamera_ = std::make_unique<DefaultCamera>();
-	currentCamera_->Init(player_);
+	currentCamera_->Init(mPlayer);
 }
 
 void CameraManager::Update()
 {
-	currentCamera_->SetLockonPos(boss_->GetPos());
+	currentCamera_->SetLockonPos(mBoss->GetPos());
 	currentCamera_->Update();
 
 	if (Camera::current.rot.y >= Radian(360))
@@ -33,8 +33,8 @@ void CameraManager::Update()
 	{
 		if (isRightStickDown)
 		{
-			Vec3 v1 = player_->GetPos() - Camera::current.pos;
-			Vec3 v2 = currentCamera_->GetLockonPos() - player_->GetPos();
+			Vec3 v1 = mPlayer->GetPos() - Camera::current.pos;
+			Vec3 v2 = currentCamera_->GetLockonPos() - mPlayer->GetPos();
 
 			float dot = Vec3::Dot(v1.Norm(), v2.Norm());
 			if (dot >= cosf(Radian(80)) &&
@@ -58,9 +58,9 @@ void CameraManager::Update()
 			ChangeCamera(CameraType::Default);
 		}
 
-		float dis = Vec3(boss_->GetPos() - player_->GetPos()).Length();
-		if (player_->GetisAlive() == false ||
-			boss_->GetisAlive() == false || dis >= 200)
+		float dis = Vec3(mBoss->GetPos() - mPlayer->GetPos()).Length();
+		if (mPlayer->GetisAlive() == false ||
+			mBoss->GetisAlive() == false || dis >= 200)
 		{
 			ChangeCamera(CameraManager::Default);
 		}
@@ -88,7 +88,7 @@ void CameraManager::ChangeCamera(const CameraType cameraType)
 		break;
 	}
 
-	nextCamera->Init(player_);
+	nextCamera->Init(mPlayer);
 	currentCamera_ = std::move(nextCamera);
 }
 
@@ -99,10 +99,10 @@ CameraManager::CameraType CameraManager::GetCameraType()
 
 void CameraManager::SetPlayer(Player* player)
 {
-	player_ = player;
+	mPlayer = player;
 }
 
 void CameraManager::SetBoss(Boss* boss)
 {
-	boss_ = boss;
+	mBoss = boss;
 }

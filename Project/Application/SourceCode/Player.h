@@ -26,7 +26,7 @@ public:
 private:
 	std::array<GaugeParam, 3> gaugePrames_;
 	std::unique_ptr<Weapon> weapon_;
-	std::unique_ptr<PlayerBody> player_;
+	std::unique_ptr<PlayerBody> mPlayer;
 	uint32_t bottleNum_;
 
 	bool isAlive_;
@@ -53,7 +53,7 @@ private:
 
 private:
 	// ダメージ関連
-	bool isDamage_;
+	bool ismDamage;
 	Timer damageCoolTimer_;
 
 private:

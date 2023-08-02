@@ -6,7 +6,7 @@ class UIManager;
 class NegotiationUI
 {
 private:
-	UIManager* uiManager_;
+	UIManager* mUiManager;
 	std::unique_ptr<Sprite> backFrame_;
 	std::unique_ptr<Sprite> button_;
 	std::unique_ptr<Sprite> text_;

@@ -12,7 +12,7 @@ class UIManager
 private:
 	std::array<std::unique_ptr<GaugeUI>, 3> gauges_;
 
-	std::unique_ptr<ItemBoxUIManager> itemBoxUIManager_;
+	std::unique_ptr<ItemBoxUIManager> itemBoxmUiManager;
 	std::unique_ptr<GaugeUI> bossHPGauge_;
 	std::unique_ptr<NegotiationUI> negotiationUI_;
 	std::unique_ptr<MessageUI> messageUI_;
@@ -21,8 +21,8 @@ private:
 private:
 	Transform itemBoxUIParent;
 
-	Player* player_;
-	Boss* boss_;
+	Player* mPlayer;
+	Boss* mBoss;
 
 public:
 	UIManager();

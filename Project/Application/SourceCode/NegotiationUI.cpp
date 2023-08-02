@@ -88,7 +88,7 @@ void NegotiationUI::TutorialMessageUpdate()
 		return;
 	}
 
-	MessageUI* messageUI = uiManager_->GetMessageUI();
+	MessageUI* messageUI = mUiManager->GetMessageUI();
 
 	if (isActive_ == false)
 	{
@@ -110,7 +110,7 @@ void NegotiationUI::TutorialMessageUpdate()
 
 void NegotiationUI::SetUIManager(UIManager* uiManager)
 {
-	uiManager_ = uiManager;
+	mUiManager = uiManager;
 }
 
 void NegotiationUI::SetisActive(const bool isActive)

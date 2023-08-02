@@ -6,7 +6,7 @@ template<typename T> class Singleton;
 class LoadManager :public Singleton<LoadManager>
 {
 private:
-	bool isLoaded;
+	bool mIsLoaded;
 
 private:
 	bool ModelLoad();
@@ -18,7 +18,7 @@ public:
 	void Load();
 
 public:
-	inline bool GetisLoaded() { return isLoaded; }
+	inline bool GetisLoaded() { return mIsLoaded; }
 
 private:
 	friend Singleton<LoadManager>;

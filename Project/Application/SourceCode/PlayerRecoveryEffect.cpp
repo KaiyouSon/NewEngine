@@ -27,8 +27,8 @@ void PlayerRecoveryEffect::Update()
 		GenerateUpdate();
 		startPos.y += 0.2f;
 
-		timer_.Update(false);
-		if (timer_.GetisTimeOut() == true)
+		timer_.Update();
+		if (timer_ == true)
 		{
 			timer_.Reset();
 			isGenerate = false;

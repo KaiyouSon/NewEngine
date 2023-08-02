@@ -11,9 +11,9 @@ class BossAttack3Motion;
 class Boss : public Character
 {
 private:
-	std::unique_ptr<BossBody> boss_;
+	std::unique_ptr<BossBody> mBoss;
 	std::unique_ptr<Weapon> weapon_;
-	Player* player_;
+	Player* mPlayer;
 	bool isAlive_;
 	bool isDissolve_;
 	bool isFight_;
@@ -26,11 +26,11 @@ private:
 	Vec3 frontVec_;
 	float rotY_;
 
-	float damage_;
+	float mDamage;
 
 private:
 	// ダメージ関連
-	bool isDamage_;
+	bool ismDamage;
 	Timer damageCoolTimer_;
 
 private:

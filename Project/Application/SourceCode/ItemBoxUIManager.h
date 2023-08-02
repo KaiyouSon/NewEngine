@@ -22,7 +22,7 @@ private:
 	bool isActive_;
 	float alpha_;
 	float lightAlpha_;
-	Player* player_;
+	Player* mPlayer;
 
 public:
 	ItemBoxUIManager();

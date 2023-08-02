@@ -11,12 +11,12 @@
 class GameScene : public IScene
 {
 private:
-	std::unique_ptr<Player> player_;
-	std::unique_ptr<Boss> boss_;
-	std::unique_ptr<UIManager> uiManager_;
+	std::unique_ptr<Player> mPlayer;
+	std::unique_ptr<Boss> mBoss;
+	std::unique_ptr<UIManager> mUiManager;
 	std::unique_ptr<CameraManager> cameraManager_;
 	std::unique_ptr<MenuManager> menuManager_;
-	std::unique_ptr<Field> field_;
+	std::unique_ptr<Field> mField;
 
 	ShadowMap shadowMap_;
 

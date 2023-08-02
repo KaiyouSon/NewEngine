@@ -9,17 +9,17 @@ Club::Club()
 	// í∆ÇÃÉÇÅ[ÉVÉáÉì
 	motion = std::make_unique<MalletMotion>();
 
-	localPos_ = Vec3(0.f, -1.5f, 0.f);
+	mLocalPos = Vec3(0.f, -1.5f, 0.f);
 
 	Init();
 }
 
 void Club::Init()
 {
-	weakAttackDamage_ = 85.f;
-	heavyAttackDamage_ = 185.f;
-	backAttackDamage_ = 65.f;
-	rollAttackDamage_ = 125.f;
+	mWeakAttackDamage = 85.f;
+	mHeavyAttackDamage = 185.f;
+	mBackAttackDamage = 65.f;
+	mRollAttackDamage = 125.f;
 }
 
 void Club::Update(Transform* parent)
@@ -61,26 +61,26 @@ void Club::CalcDamage()
 	{
 	case AttackType::Weak:
 		range = 5.f;
-		damage_ = Random::RangeF(weakAttackDamage_ - range, weakAttackDamage_ + range);
+		mDamage = Random::RangeF(mWeakAttackDamage - range, mWeakAttackDamage + range);
 		break;
 
 	case AttackType::Heavy:
 		range = 10.f;
-		damage_ = Random::RangeF(heavyAttackDamage_ - range, heavyAttackDamage_ + range) * chargeRate_;
+		mDamage = Random::RangeF(mHeavyAttackDamage - range, mHeavyAttackDamage + range) * mChargeRate;
 		break;
 
 	case AttackType::Back:
 		range = 5.f;
-		damage_ = Random::RangeF(backAttackDamage_ - range, backAttackDamage_ + range);
+		mDamage = Random::RangeF(mBackAttackDamage - range, mBackAttackDamage + range);
 		break;
 
 	case AttackType::Roll:
 		range = 10.f;
-		damage_ = Random::RangeF(rollAttackDamage_ - range, rollAttackDamage_ + range);
+		mDamage = Random::RangeF(mRollAttackDamage - range, mRollAttackDamage + range);
 		break;
 
 	default:
-		damage_ = 0.f;
+		mDamage = 0.f;
 		break;
 	}
 }

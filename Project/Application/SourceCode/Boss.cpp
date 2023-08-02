@@ -3,27 +3,27 @@
 #include "Player.h"
 
 Boss::Boss() :
-	boss_(std::make_unique<BossBody>()),
+	mBoss(std::make_unique<BossBody>()),
 	weapon_(std::make_unique<Sword>())
 {
 }
 void Boss::Init()
 {
-	boss_->Init();
-	boss_->pos = Vec3(0, 7.125f, 400.f);
-	boss_->scale = 1.5f;
+	mBoss->Init();
+	mBoss->pos = Vec3(0, 7.125f, 400.f);
+	mBoss->scale = 1.5f;
 	rotY_ = Radian(180);
 
-	boss_->SetWeapon(weapon_.get(), WeaponPartID::Right);
-	boss_->iParent = this;
-	boss_->parent = static_cast<Boss*>(boss_->iParent);
+	mBoss->SetWeapon(weapon_.get(), WeaponPartID::Right);
+	mBoss->iParent = this;
+	mBoss->parent = static_cast<Boss*>(mBoss->iParent);
 
 	// HPƒQ[ƒW
 	hpGaugeParam_.CalcRate(2560.f, 2560.f);
 
 	coolTimer_.SetLimitTimer(120);
 
-	isDamage_ = false;
+	ismDamage = false;
 	damageCoolTimer_.SetLimitTimer(40);
 
 	weapon_->weapon->isUseDissolve = true;
@@ -36,7 +36,7 @@ void Boss::Init()
 }
 void Boss::Update()
 {
-	float disToPlayer = Vec3::Distance(player_->GetPos(), boss_->pos);
+	float disToPlayer = Vec3::Distance(mPlayer->GetPos(), mBoss->pos);
 	if (disToPlayer <= 150.f)
 	{
 		if (isFight_ == false)
@@ -49,16 +49,16 @@ void Boss::Update()
 
 	if (isAlive_ == false)
 	{
-		for (uint32_t i = 1; i < boss_->parts_.size(); i++)
+		for (uint32_t i = 1; i < mBoss->parts_.size(); i++)
 		{
-			boss_->parts_[i]->dissolve += 0.005f;
-			boss_->parts_[i]->dissolve = Min(boss_->parts_[i]->dissolve, 2.f);
+			mBoss->parts_[i]->dissolve += 0.005f;
+			mBoss->parts_[i]->dissolve = Min(mBoss->parts_[i]->dissolve, 2.f);
 		}
 
 		weapon_->weapon->dissolve += 0.005f;
 		weapon_->weapon->dissolve = Min(weapon_->weapon->dissolve, 2.f);
 
-		if (boss_->parts_[1]->dissolve >= 0.5f)
+		if (mBoss->parts_[1]->dissolve >= 0.5f)
 		{
 			if (isDissolve_ == false)
 			{
@@ -74,33 +74,33 @@ void Boss::Update()
 		}
 	}
 
-	if (isDamage_ == true)
+	if (ismDamage == true)
 	{
-		damageCoolTimer_.Update(false);
-		if (damageCoolTimer_.GetisTimeOut() == true)
+		damageCoolTimer_.Update();
+		if (damageCoolTimer_ == true)
 		{
 			damageCoolTimer_.Reset();
-			isDamage_ = false;
+			ismDamage = false;
 		}
 	}
 
 	// HPƒQ[ƒW
 	hpGaugeParam_.CalcRate(hpGaugeParam_.value, 2560.f);
 
-	boss_->rot.y = rotY_;
-	boss_->Update();
+	mBoss->rot.y = rotY_;
+	mBoss->Update();
 
 	ColliderUpdate();
 
 }
 void Boss::DrawModel()
 {
-	boss_->DrawModel();
+	mBoss->DrawModel();
 }
 
 void Boss::CalcFrontVec()
 {
-	Vec3 v = player_->GetPos() - boss_->pos;
+	Vec3 v = mPlayer->GetPos() - mBoss->pos;
 	v.y = 0;
 
 	frontVec_ = v.Norm();
@@ -110,11 +110,11 @@ void Boss::CalcFrontVec()
 }
 void Boss::ColliderUpdate()
 {
-	collider_.startPos = boss_->pos - Vec3(0.f, 7.f, 0.f);
-	collider_.endPos = boss_->pos + Vec3(0.f, 7.f, 0.f);
+	collider_.startPos = mBoss->pos - Vec3(0.f, 7.f, 0.f);
+	collider_.endPos = mBoss->pos + Vec3(0.f, 7.f, 0.f);
 	collider_.radius = 5.f;
 
-	bodyCollider_.centerPos = boss_->pos;
+	bodyCollider_.centerPos = mBoss->pos;
 	bodyCollider_.size = Vec3(2, 4, 2);
 	bodyCollider_.CalcPoints();
 
@@ -123,13 +123,13 @@ void Boss::ColliderUpdate()
 
 void Boss::MotionUpdate()
 {
-	if (boss_->GetisPlayMotion() == false)
+	if (mBoss->GetisPlayMotion() == false)
 	{
 		CalcFrontVec();
 
 		motionNum_ = 0;
-		coolTimer_.Update(false);
-		if (coolTimer_.GetisTimeOut() == true)
+		coolTimer_.Update();
+		if (coolTimer_ == true)
 		{
 			motionNum_ = Random::Range(2, 3);
 			//motionNum_ = 2;
@@ -142,13 +142,13 @@ void Boss::MotionUpdate()
 		switch (motionNum_)
 		{
 		case 1:
-			boss_->GrabAttackMotion();
+			mBoss->GrabAttackMotion();
 			break;
 		case 2:
-			boss_->Attack2Motion();
+			mBoss->Attack2Motion();
 			break;
 		case 3:
-			boss_->Attack3Motion();
+			mBoss->Attack3Motion();
 		}
 	}
 }
@@ -156,7 +156,7 @@ void Boss::MotionUpdate()
 void Boss::Damage(const float damage)
 {
 	hpGaugeParam_.value -= damage;
-	isDamage_ = true;
+	ismDamage = true;
 
 	if (hpGaugeParam_.value <= 0)
 	{
@@ -166,11 +166,11 @@ void Boss::Damage(const float damage)
 
 void Boss::SetPlayer(Player* player)
 {
-	player_ = player;
+	mPlayer = player;
 }
 void Boss::SetisDamage(const bool isDamage)
 {
-	isDamage_ = isDamage;
+	ismDamage = isDamage;
 }
 
 CapsuleCollider Boss::GetCollider()
@@ -187,11 +187,11 @@ GaugeParam Boss::GetHpGaugeParam()
 }
 Vec3 Boss::GetPos()
 {
-	return boss_->pos;
+	return mBoss->pos;
 }
 bool Boss::GetisDamage()
 {
-	return isDamage_;
+	return ismDamage;
 }
 Weapon* Boss::GetWeapon()
 {
@@ -199,7 +199,7 @@ Weapon* Boss::GetWeapon()
 }
 float Boss::GetDamage()
 {
-	return damage_;
+	return mDamage;
 }
 bool Boss::GetisAlive()
 {

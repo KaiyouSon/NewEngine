@@ -129,7 +129,7 @@ bool LoadManager::MotionLoad()
 	return true;
 }
 
-LoadManager::LoadManager() : isLoaded(false)
+LoadManager::LoadManager() : mIsLoaded(false)
 {
 }
 
@@ -150,7 +150,7 @@ void LoadManager::Load()
 		soundFtr.get() == true &&
 		motionFtr.get() == true)	// サウンド
 	{
-		isLoaded = true;
+		mIsLoaded = true;
 		// コマンド実行
 		TextureManager::ExcuteComandList();
 	}

@@ -2,32 +2,32 @@
 
 GaugeUI::GaugeUI()
 {
-	gaugeSize_.y = 14.f;
-	for (uint32_t i = 0; i < sprites_.size(); i++)
+	mGaugeSize.y = 14.f;
+	for (uint32_t i = 0; i < mSprites.size(); i++)
 	{
-		sprites_[i] = std::make_unique<Sprite>();
-		sprites_[i]->SetTexture(TextureManager::GetTexture("Gauge"));
-		sprites_[i]->SetAnchorPoint(Vec2(0.f, 0.5f));
+		mSprites[i] = std::make_unique<Sprite>();
+		mSprites[i]->SetTexture(TextureManager::GetTexture("Gauge"));
+		mSprites[i]->SetAnchorPoint(Vec2(0.f, 0.5f));
 	}
-	sprites_[BackFrame]->SetTexture(TextureManager::GetTexture("White"));
-	sprites_[BackFrame]->color = Color(0.f, 0.f, 0.f, 155.f);
+	mSprites[BackFrame]->SetTexture(TextureManager::GetTexture("White"));
+	mSprites[BackFrame]->color = Color(0.f, 0.f, 0.f, 155.f);
 
-	sprites_[BackColor]->SetTexture(TextureManager::GetTexture("White"));
-	sprites_[BackColor]->color = Color(0x776116);
+	mSprites[BackColor]->SetTexture(TextureManager::GetTexture("White"));
+	mSprites[BackColor]->color = Color(0x776116);
 
-	stayTimer.SetLimitTimer(60);
+	mStayTimer.SetLimitTimer(60);
 }
 
 void GaugeUI::Init()
 {
 	// 描画範囲
-	sprites_[FrontColor]->SetTextureRect(Vec2(160, 0), Vec2(191, 31));
-	sprites_[CurrentPos]->SetTextureRect(Vec2(192, 0), Vec2(223, 31));
-	sprites_[FrontFrame]->SetTextureRect(Vec2(64, 0), Vec2(95, 31));
-	sprites_[FrontLeftFrame]->SetTextureRect(Vec2(0, 0), Vec2(63, 31));
-	sprites_[FrontRightFrame]->SetTextureRect(Vec2(96, 0), Vec2(159, 31));
+	mSprites[FrontColor]->SetTextureRect(Vec2(160, 0), Vec2(191, 31));
+	mSprites[CurrentPos]->SetTextureRect(Vec2(192, 0), Vec2(223, 31));
+	mSprites[FrontFrame]->SetTextureRect(Vec2(64, 0), Vec2(95, 31));
+	mSprites[FrontLeftFrame]->SetTextureRect(Vec2(0, 0), Vec2(63, 31));
+	mSprites[FrontRightFrame]->SetTextureRect(Vec2(96, 0), Vec2(159, 31));
 
-	backGaugeSize_ = gaugeSize_;
+	mBackGaugeSize = mGaugeSize;
 }
 
 void GaugeUI::Update()
@@ -35,36 +35,36 @@ void GaugeUI::Update()
 	CalcPosUpdate();
 	CalcSizeUpdate();
 
-	if (backGaugeSize_.x > gaugeSize_.x)
+	if (mBackGaugeSize.x > mGaugeSize.x)
 	{
-		stayTimer.Update(false);
-		if (stayTimer.GetisTimeOut() == true)
+		mStayTimer.Update();
+		if (mStayTimer == true)
 		{
-			backGaugeSize_.x -= 5.f;
+			mBackGaugeSize.x -= 5.f;
 		}
 	}
 	else
 	{
-		stayTimer.Reset();
+		mStayTimer.Reset();
 	}
-	backGaugeSize_.x = Max<float>(gaugeSize_.x, backGaugeSize_.x);
-	sprites_[BackColor]->SetSize(backGaugeSize_);
+	mBackGaugeSize.x = Max<float>(mGaugeSize.x, mBackGaugeSize.x);
+	mSprites[BackColor]->SetSize(mBackGaugeSize);
 
-	for (uint32_t i = 0; i < sprites_.size(); i++)
+	for (uint32_t i = 0; i < mSprites.size(); i++)
 	{
-		sprites_[i]->Update();
+		mSprites[i]->Update();
 	}
 }
 
 void GaugeUI::DrawFrontSprite()
 {
-	sprites_[BackFrame]->Draw();
-	sprites_[BackColor]->Draw();
-	sprites_[FrontColor]->Draw();
-	sprites_[CurrentPos]->Draw();
-	sprites_[FrontFrame]->Draw();
-	sprites_[FrontLeftFrame]->Draw();
-	sprites_[FrontRightFrame]->Draw();
+	mSprites[BackFrame]->Draw();
+	mSprites[BackColor]->Draw();
+	mSprites[FrontColor]->Draw();
+	mSprites[CurrentPos]->Draw();
+	mSprites[FrontFrame]->Draw();
+	mSprites[FrontLeftFrame]->Draw();
+	mSprites[FrontRightFrame]->Draw();
 }
 
 void GaugeUI::CalcPosUpdate()
@@ -72,64 +72,64 @@ void GaugeUI::CalcPosUpdate()
 	// 可変
 	for (uint32_t i = 0; i <= BackFrame; i++)
 	{
-		sprites_[i]->pos = basePos_;
+		mSprites[i]->pos = mBasePos;
 	}
-	sprites_[CurrentPos]->pos = basePos_ + Vec2(gaugeSize_.x, 0.5f);
+	mSprites[CurrentPos]->pos = mBasePos + Vec2(mGaugeSize.x, 0.5f);
 
 	// 不変
 	const float kOffset = -20.f;
-	sprites_[BackFrame]->pos = basePos_ + Vec2(0, 1);
-	sprites_[FrontFrame]->pos = basePos_ + Vec2(0, 1);
-	sprites_[FrontLeftFrame]->pos = basePos_ + Vec2(kOffset, 0);
-	sprites_[FrontRightFrame]->pos = basePos_ + Vec2(kOffset + constGaugeSize_.x, 0);
+	mSprites[BackFrame]->pos = mBasePos + Vec2(0, 1);
+	mSprites[FrontFrame]->pos = mBasePos + Vec2(0, 1);
+	mSprites[FrontLeftFrame]->pos = mBasePos + Vec2(kOffset, 0);
+	mSprites[FrontRightFrame]->pos = mBasePos + Vec2(kOffset + mConstGaugeSize.x, 0);
 }
 
 void GaugeUI::CalcSizeUpdate()
 {
 	// サイズ
 	const Vec2 kLeftRightSize(32, 16);
-	sprites_[BackFrame]->SetSize(constGaugeSize_ + Vec2(6, 0));
-	sprites_[FrontFrame]->SetSize(constGaugeSize_);
-	sprites_[FrontLeftFrame]->SetSize(kLeftRightSize);
-	sprites_[FrontRightFrame]->SetSize(kLeftRightSize);
-	sprites_[CurrentPos]->SetSize(Vec2(16, 16));
+	mSprites[BackFrame]->SetSize(mConstGaugeSize + Vec2(6, 0));
+	mSprites[FrontFrame]->SetSize(mConstGaugeSize);
+	mSprites[FrontLeftFrame]->SetSize(kLeftRightSize);
+	mSprites[FrontRightFrame]->SetSize(kLeftRightSize);
+	mSprites[CurrentPos]->SetSize(Vec2(16, 16));
 }
 
 void GaugeUI::SetPos(const Vec2 pos)
 {
-	basePos_ = pos;
+	mBasePos = pos;
 
 	// 可変
 	for (uint32_t i = 0; i <= BackFrame; i++)
 	{
-		sprites_[i]->pos = basePos_;
+		mSprites[i]->pos = mBasePos;
 	}
-	sprites_[CurrentPos]->pos = basePos_ + Vec2(gaugeSize_.x, 0.5f);
+	mSprites[CurrentPos]->pos = mBasePos + Vec2(mGaugeSize.x, 0.5f);
 
 	// 不変
 	const float kOffset = -20.f;
-	sprites_[FrontFrame]->pos = basePos_ + Vec2(0, 1);
-	sprites_[FrontLeftFrame]->pos = basePos_ + Vec2(kOffset, 0);
-	sprites_[FrontRightFrame]->pos = basePos_ + Vec2(kOffset + constGaugeSize_.x, 0);
+	mSprites[FrontFrame]->pos = mBasePos + Vec2(0, 1);
+	mSprites[FrontLeftFrame]->pos = mBasePos + Vec2(kOffset, 0);
+	mSprites[FrontRightFrame]->pos = mBasePos + Vec2(kOffset + mConstGaugeSize.x, 0);
 }
 
 void GaugeUI::SetColor(const uint32_t index, const Color color)
 {
-	sprites_[index]->color = color;
+	mSprites[index]->color = color;
 
 	if (index == FrontColor)
 	{
-		sprites_[CurrentPos]->color = color;
+		mSprites[CurrentPos]->color = color;
 	}
 }
 
 void GaugeUI::SetGaugePrame(const GaugeParam gaugeParam)
 {
-	gaugeWidthMax_ = Min<float>(gaugeParam.max, 896.f);
+	mGaugeWidthMax = Min<float>(gaugeParam.max, 896.f);
 
-	constGaugeSize_ = Vec2(gaugeWidthMax_, gaugeSize_.y);
+	mConstGaugeSize = Vec2(mGaugeWidthMax, mGaugeSize.y);
 
 	// CurrentPosの画像のサイズは不変、座標を可変
-	gaugeSize_.x = gaugeParam.rate * gaugeWidthMax_;
-	sprites_[FrontColor]->SetSize(gaugeSize_);
+	mGaugeSize.x = gaugeParam.rate * mGaugeWidthMax;
+	mSprites[FrontColor]->SetSize(mGaugeSize);
 }

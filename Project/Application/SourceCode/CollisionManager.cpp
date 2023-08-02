@@ -19,41 +19,41 @@ void CollisionManager::PlayerHitBoss()
 
 	bool isAttackBoss =
 		Collision::CapsuleHitCapsule(
-			player_->GetWeapon()->collider,
-			boss_->GetCollider(),
+			mPlayer->GetWeapon()->collider,
+			mBoss->GetCollider(),
 			hitPoint);
 
 	if (isAttackBoss)
 	{
-		if (boss_->GetisAlive() == true)
+		if (mBoss->GetisAlive() == true)
 		{
-			if (boss_->GetisDamage() == false)
+			if (mBoss->GetisDamage() == false)
 			{
-				boss_->Damage(player_->GetWeapon()->GetDamage());
+				mBoss->Damage(mPlayer->GetWeapon()->GetDamage());
 
 				SoundManager::Play("HitSE");
 				EffectManager::GetInstance()->GenerateBloodSprayEffect(hitPoint);
 
-				boss_->SetisDamage(true);
+				mBoss->SetisDamage(true);
 			}
 		}
 	}
 
 	bool isBodyTouch =
 		Collision::CapsuleHitCapsule(
-			player_->GetBodyCollider(),
-			boss_->GetCollider());
+			mPlayer->GetBodyCollider(),
+			mBoss->GetCollider());
 
 	if (isBodyTouch == true)
 	{
 		// ”¼Œa‚ð‘«‚µ‚ÄŽÀÛ‚Ì’·‚³‚ð‹‚ß‚é
 		float checkLength =
-			player_->GetBodyCollider().radius +
-			boss_->GetCollider().radius;
+			mPlayer->GetBodyCollider().radius +
+			mBoss->GetCollider().radius;
 
 		// yŽ²‚ð–³Ž‹‚·‚é
-		Vec3 pos1 = player_->GetPos() * Vec3(1, 0, 1);
-		Vec3 pos2 = boss_->GetPos() * Vec3(1, 0, 1);
+		Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
+		Vec3 pos2 = mBoss->GetPos() * Vec3(1, 0, 1);
 
 		Vec3 toPlayer = pos1 - pos2;
 
@@ -72,32 +72,32 @@ void CollisionManager::PlayerHitBoss()
 
 		Vec3 pushVec = normal * embedLength;
 
-		Vec3 nextPos = player_->GetPos() + pushVec;
-		player_->SetPos(nextPos);
+		Vec3 nextPos = mPlayer->GetPos() + pushVec;
+		mPlayer->SetPos(nextPos);
 	}
 }
 void CollisionManager::PlayerHitMessageSign()
 {
-	for (const auto& messageSign : *field_->GetMessageSigns())
+	for (const auto& messageSign : *mField->GetMessageSigns())
 	{
 		if (Collision::SphereHitCapsule(
-			messageSign->GetCollider(), player_->GetBodyCollider()))
+			messageSign->GetCollider(), mPlayer->GetBodyCollider()))
 		{
-			uiManager_->GetNegotiationUI()->SetisActive(true);
-			uiManager_->GetMessageUI()->SetTexture(messageSign->GetMessageTexture());
+			mUiManager->GetNegotiationUI()->SetisActive(true);
+			mUiManager->GetMessageUI()->SetTexture(messageSign->GetMessageTexture());
 			break;
 		}
 		else
 		{
-			uiManager_->GetNegotiationUI()->SetisActive(false);
+			mUiManager->GetNegotiationUI()->SetisActive(false);
 		}
 	}
 }
 
 void CollisionManager::BossHitPlayer()
 {
-	if (player_->GetisAlive() == false ||
-		boss_->GetisAlive() == false)
+	if (mPlayer->GetisAlive() == false ||
+		mBoss->GetisAlive() == false)
 	{
 		return;
 	}
@@ -106,22 +106,22 @@ void CollisionManager::BossHitPlayer()
 
 	bool isAttackBoss =
 		Collision::CapsuleHitCapsule(
-			boss_->GetWeapon()->collider,
-			player_->GetBodyCollider(),
+			mBoss->GetWeapon()->collider,
+			mPlayer->GetBodyCollider(),
 			hitPoint);
 
 	if (isAttackBoss)
 	{
-		if (player_->GetState() != Player::State::Roll &&
-			player_->GetState() != Player::State::Backstep)
+		if (mPlayer->GetState() != Player::State::Roll &&
+			mPlayer->GetState() != Player::State::Backstep)
 		{
-			if (player_->GetisDamage() == false)
+			if (mPlayer->GetisDamage() == false)
 			{
 				SoundManager::Play("HitSE");
-				player_->Damage(boss_->GetDamage() * 1.5f);
+				mPlayer->Damage(mBoss->GetDamage() * 1.5f);
 				EffectManager::GetInstance()->GenerateBloodSprayEffect(hitPoint);
 
-				player_->SetisDamage(true);
+				mPlayer->SetisDamage(true);
 			}
 		}
 	}
@@ -134,7 +134,7 @@ bool CollisionManager::IsCheckFrontBoss(const Vec3 pos, const Vec3 front)
 	frontCollider.radius = 1.0f;
 
 	SphereCollider bossCollider;
-	bossCollider.centerPos = boss_->GetPos();
+	bossCollider.centerPos = mBoss->GetPos();
 	bossCollider.radius = 1.0f;
 
 	bool isHit = Collision::SphereHitSphere(frontCollider, bossCollider);
@@ -143,11 +143,11 @@ bool CollisionManager::IsCheckFrontBoss(const Vec3 pos, const Vec3 front)
 float CollisionManager::CalcPlayerDisToFront(const Vec3 frontVec, const float max)
 {
 	RayCollider playerFront;
-	playerFront.startPos = player_->GetPos();
+	playerFront.startPos = mPlayer->GetPos();
 	playerFront.dirVec = frontVec;
 
 	SphereCollider bossCollider;
-	bossCollider.centerPos = boss_->GetPos();
+	bossCollider.centerPos = mBoss->GetPos();
 	bossCollider.radius = 1.f;
 
 	bool isHit = Collision::RayHitSphere(playerFront, bossCollider);
@@ -156,12 +156,12 @@ float CollisionManager::CalcPlayerDisToFront(const Vec3 frontVec, const float ma
 	if (isHit == true)
 	{
 		// yŽ²‚ð–³Ž‹‚·‚é
-		Vec3 pos1 = player_->GetPos() * Vec3(1, 0, 1);
-		Vec3 pos2 = boss_->GetPos() * Vec3(1, 0, 1);
+		Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
+		Vec3 pos2 = mBoss->GetPos() * Vec3(1, 0, 1);
 
 		float radius =
-			player_->GetBodyCollider().radius +
-			boss_->GetCollider().radius;
+			mPlayer->GetBodyCollider().radius +
+			mBoss->GetCollider().radius;
 		dis = Vec3::Distance(pos1, pos2) - radius;
 		dis = Min<float>(dis, max);
 	}
@@ -171,17 +171,17 @@ float CollisionManager::CalcPlayerDisToFront(const Vec3 frontVec, const float ma
 
 void CollisionManager::SetPlayer(Player* player)
 {
-	player_ = player;
+	mPlayer = player;
 }
 void CollisionManager::SetBoss(Boss* boss)
 {
-	boss_ = boss;
+	mBoss = boss;
 }
 void CollisionManager::SetField(Field* field)
 {
-	field_ = field;
+	mField = field;
 }
 void CollisionManager::SetUIManager(UIManager* uiManager)
 {
-	uiManager_ = uiManager;
+	mUiManager = uiManager;
 }

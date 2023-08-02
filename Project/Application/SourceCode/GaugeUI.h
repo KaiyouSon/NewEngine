@@ -21,14 +21,14 @@ public:
 	};
 
 private:
-	std::array<std::unique_ptr<Sprite>, 7> sprites_;
-	Vec2 basePos_;
-	Vec2 gaugeSize_;
-	Vec2 backGaugeSize_;
-	Vec2 constGaugeSize_;
-	float gaugeWidthMax_;
+	std::array<std::unique_ptr<Sprite>, 7> mSprites;
+	Vec2 mBasePos;
+	Vec2 mGaugeSize;
+	Vec2 mBackGaugeSize;
+	Vec2 mConstGaugeSize;
+	float mGaugeWidthMax;
 
-	Timer stayTimer;
+	Timer mStayTimer;
 
 private:
 	void CalcPosUpdate();

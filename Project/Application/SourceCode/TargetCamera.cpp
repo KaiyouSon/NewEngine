@@ -7,7 +7,7 @@ TargetCamera::TargetCamera()
 
 void TargetCamera::Init(Player* player)
 {
-	player_ = player;
+	mPlayer = player;
 	isEase_ = false;
 }
 
@@ -18,7 +18,7 @@ void TargetCamera::Update()
 	// 座標の設定
 	const float length = 30.f;	// 長さ
 	// 現在の座標 (y座標固定)
-	Vec3 curPos = player_->GetPos() * Vec3(1.f, 0.f, 1.f) + Vec3(0.f, 9.5f, 0.f);
+	Vec3 curPos = mPlayer->GetPos() * Vec3(1.f, 0.f, 1.f) + Vec3(0.f, 9.5f, 0.f);
 	// ターゲットからのベクトル (ターゲットの高さに依存しないため、y軸を無視する)
 	Vec3 vec = (curPos - target) * Vec3(1.f, 0.f, 1.f);
 

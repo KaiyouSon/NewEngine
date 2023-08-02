@@ -4,7 +4,7 @@ UIManager::UIManager() :
 	bossHPGauge_(std::make_unique<GaugeUI>()),
 	negotiationUI_(std::make_unique<NegotiationUI>()),
 	messageUI_(std::make_unique<MessageUI>()),
-	itemBoxUIManager_(std::make_unique<ItemBoxUIManager>()),
+	itemBoxmUiManager(std::make_unique<ItemBoxUIManager>()),
 	resultUI_(std::make_unique<ResultUI>())
 {
 	for (uint32_t i = 0; i < gauges_.size(); i++)
@@ -17,7 +17,7 @@ void UIManager::Init()
 {
 	for (uint32_t i = 0; i < gauges_.size(); i++)
 	{
-		gauges_[i]->SetGaugePrame(player_->GetGaugeParam(i));
+		gauges_[i]->SetGaugePrame(mPlayer->GetGaugeParam(i));
 		gauges_[i]->SetPos(Vec2(144.f, (float)(48.f + i * 18.f)));
 		gauges_[i]->Init();
 	}
@@ -26,7 +26,7 @@ void UIManager::Init()
 	gauges_[(uint32_t)GaugeType::Mp]->SetColor(GaugeUI::FrontColor, Color::blue);
 	gauges_[(uint32_t)GaugeType::Stamina]->SetColor(GaugeUI::FrontColor, Color::green);
 
-	bossHPGauge_->SetGaugePrame(boss_->GetHpGaugeParam());
+	bossHPGauge_->SetGaugePrame(mBoss->GetHpGaugeParam());
 	bossHPGauge_->SetPos(Vec2(GetWindowHalfSize().x - 448.f, 880.f));
 	bossHPGauge_->SetColor(GaugeUI::FrontColor, Color::red);
 	bossHPGauge_->Init();
@@ -36,8 +36,8 @@ void UIManager::Init()
 
 	messageUI_->Init();
 
-	itemBoxUIManager_->Init();
-	itemBoxUIManager_->SetPlayer(player_);
+	itemBoxmUiManager->Init();
+	itemBoxmUiManager->SetPlayer(mPlayer);
 
 	resultUI_->Init();
 }
@@ -59,28 +59,28 @@ void UIManager::Update()
 			}
 		});
 
-	if (player_->GetisDissolve() == true)
+	if (mPlayer->GetisDissolve() == true)
 	{
 		resultUI_->SetisActive(true);
 		resultUI_->SetResultType(ResultUI::ResultType::YouDiedStr);
 	}
-	else if (boss_->GetisDissolve() == true)
+	else if (mBoss->GetisDissolve() == true)
 	{
 		resultUI_->SetisActive(true);
 		resultUI_->SetResultType(ResultUI::ResultType::EnemyFelledStr);
 	}
 
 	// アイテムボックス(左下のやつ)
-	itemBoxUIManager_->Update();
+	itemBoxmUiManager->Update();
 
 	// プレイヤーのゲージ
 	for (uint32_t i = 0; i < gauges_.size(); i++)
 	{
-		gauges_[i]->SetGaugePrame(player_->GetGaugeParam(i));
+		gauges_[i]->SetGaugePrame(mPlayer->GetGaugeParam(i));
 		gauges_[i]->Update();
 	}
 
-	bossHPGauge_->SetGaugePrame(boss_->GetHpGaugeParam());
+	bossHPGauge_->SetGaugePrame(mBoss->GetHpGaugeParam());
 	bossHPGauge_->Update();
 
 	negotiationUI_->Update();
@@ -101,7 +101,7 @@ void UIManager::DrawFrontSprite()
 
 	messageUI_->DrawFrontSprite();
 
-	itemBoxUIManager_->DrawFrontSprite();
+	itemBoxmUiManager->DrawFrontSprite();
 
 	bossHPGauge_->DrawFrontSprite();
 
@@ -110,12 +110,12 @@ void UIManager::DrawFrontSprite()
 
 void UIManager::SetPlayer(Player* player)
 {
-	player_ = player;
+	mPlayer = player;
 }
 
 void UIManager::SetBoss(Boss* boss)
 {
-	boss_ = boss;
+	mBoss = boss;
 }
 
 NegotiationUI* UIManager::GetNegotiationUI()

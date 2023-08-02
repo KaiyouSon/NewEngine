@@ -6,7 +6,7 @@ DefaultCamera::DefaultCamera()
 
 void DefaultCamera::Init(Player* player)
 {
-	player_ = player;
+	mPlayer = player;
 	assistYaw_ = 0;
 	controlPitch_ = Angle(Camera::current.rot.x);
 	controlYaw_ = Angle(Camera::current.rot.y);
@@ -41,16 +41,16 @@ void DefaultCamera::Update()
 	// À•W
 	const float angleOffset = 20.f;
 	bool frontRange =
-		player_->GetRot().y <= camera_->rot.y + Radian(angleOffset) &&
-		player_->GetRot().y >= camera_->rot.y - Radian(angleOffset);
+		mPlayer->GetRot().y <= camera_->rot.y + Radian(angleOffset) &&
+		mPlayer->GetRot().y >= camera_->rot.y - Radian(angleOffset);
 	bool backRange =
-		player_->GetRot().y <= camera_->rot.y + Radian(180) + Radian(angleOffset) &&
-		player_->GetRot().y >= camera_->rot.y + Radian(180) - Radian(angleOffset);
+		mPlayer->GetRot().y <= camera_->rot.y + Radian(180) + Radian(angleOffset) &&
+		mPlayer->GetRot().y >= camera_->rot.y + Radian(180) - Radian(angleOffset);
 
 	if (!frontRange && !backRange)
 	{
 		Vec2 leftStick = Pad::GetStick(PadCode::LeftStick, 300);
-		if (player_->GetMoveVel() == 0)
+		if (mPlayer->GetMoveVel() == 0)
 		{
 			leftStick = 0;
 		}
@@ -72,7 +72,7 @@ void DefaultCamera::Update()
 	};
 
 	const float length = 30.f;
-	Vec3 curPos = player_->GetPos() * Vec3(1.f, 0.f, 1.f) + Vec3(0.f, 9.5f, 0.f);
+	Vec3 curPos = mPlayer->GetPos() * Vec3(1.f, 0.f, 1.f) + Vec3(0.f, 9.5f, 0.f);
 	camera_->pos = curPos + vec_.Norm() * length;
 
 	// ‰ñ“]‚Ìˆ—
@@ -92,8 +92,8 @@ void DefaultCamera::Update()
 		camera_->pos = Camera::current.pos;
 		camera_->rot = Camera::current.rot;
 		// Œ»Ý‚ÌÀ•W (yÀ•WŒÅ’è)
-		Vec3 targetPos = curPos + -player_->GetFrontVec() * length;
-		Vec3 targetRot = { 0,player_->GetRot().y,0 };
+		Vec3 targetPos = curPos + -mPlayer->GetFrontVec() * length;
+		Vec3 targetRot = { 0,mPlayer->GetRot().y,0 };
 
 		// ˆê‰ñ“]‚µ‚È‚¢‚æ‚¤‚É‚·‚é‚½‚ß‚Ìˆ—
 		if (Camera::current.rot.y - targetRot.y >= Radian(180))

@@ -9,9 +9,9 @@ Sword::Sword()
 	// í∆ÇÃÉÇÅ[ÉVÉáÉì
 	motion = std::make_unique<MalletMotion>();
 
-	localPos_ = Vec3(0.f, -1.5f, 0.f);
+	mLocalPos = Vec3(0.f, -1.5f, 0.f);
 
-	isCalcCollider_ = false;
+	mIsCalcCollider = false;
 }
 
 void Sword::Init()
@@ -32,7 +32,7 @@ void Sword::DrawModel()
 
 void Sword::ColliderUpdate()
 {
-	if (isCalcCollider_ == false)
+	if (mIsCalcCollider == false)
 	{
 		collider.startPos = Vec3(0, -10000, 0);
 		collider.endPos = Vec3(0, -10000, 0);

@@ -52,7 +52,7 @@ void BossAttack3Motion::CurrentStepInit(HumanoidBody* human)
 	case 2:
 		endBodyY_ = -1.2f;
 		boss->GetWeapon()->SetisCalcCollider(true);
-		boss->damage_ = 30.f;
+		boss->mDamage = 30.f;
 		break;
 	case 3:
 		SettingMovePrame(human, 5, 15, 2);
@@ -61,12 +61,12 @@ void BossAttack3Motion::CurrentStepInit(HumanoidBody* human)
 	case 4:
 		endBodyY_ = -1.0f;
 		boss->GetWeapon()->SetisCalcCollider(false);
-		boss->damage_ = 0.f;
+		boss->mDamage = 0.f;
 		break;
 	case 5:
 		endBodyY_ = -1.3f;
 		boss->GetWeapon()->SetisCalcCollider(true);
-		boss->damage_ = 30.f;
+		boss->mDamage = 30.f;
 		break;
 	case 6:
 		SettingMovePrame(human, 5, 15, 2);
@@ -75,7 +75,7 @@ void BossAttack3Motion::CurrentStepInit(HumanoidBody* human)
 	case 7:
 		endBodyY_ = -1.1f;
 		boss->GetWeapon()->SetisCalcCollider(false);
-		boss->damage_ = 0.f;
+		boss->mDamage = 0.f;
 		break;
 	case 8:
 		endBodyY_ = -0.95f;
@@ -83,7 +83,7 @@ void BossAttack3Motion::CurrentStepInit(HumanoidBody* human)
 	case 9:
 		endBodyY_ = -0.95f;
 		boss->GetWeapon()->SetisCalcCollider(true);
-		boss->damage_ = 50.f;
+		boss->mDamage = 50.f;
 		break;
 	case 10:
 		SettingMovePrame(human, 8, 10, 2);
@@ -92,7 +92,7 @@ void BossAttack3Motion::CurrentStepInit(HumanoidBody* human)
 	case 11:
 		endBodyY_ = -0.95f;
 		boss->GetWeapon()->SetisCalcCollider(false);
-		boss->damage_ = 0.f;
+		boss->mDamage = 0.f;
 		break;
 	default:
 		endBodyY_ = 0;

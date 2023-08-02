@@ -9,10 +9,10 @@ template<typename T> class Singleton;
 class CollisionManager : public Singleton<CollisionManager>
 {
 private:
-	Player* player_;
-	Boss* boss_;
-	Field* field_;
-	UIManager* uiManager_;
+	Player* mPlayer;
+	Boss* mBoss;
+	Field* mField;
+	UIManager* mUiManager;
 
 private:
 	void PlayerHitBoss();

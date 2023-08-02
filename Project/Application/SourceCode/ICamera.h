@@ -6,7 +6,7 @@ class ICamera
 {
 protected:
 	std::unique_ptr<Camera> camera_;
-	Player* player_;
+	Player* mPlayer;
 	Vec3 lockonPos_;
 	Vec3 targetPos_;
 	Vec3 targetRot_;

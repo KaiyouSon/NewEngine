@@ -2,20 +2,20 @@
 
 float Weapon::GetDamage()
 {
-	return damage_;
+	return mDamage;
 }
 
 float Weapon::GetChargeRate()
 {
-	return chargeRate_;
+	return mChargeRate;
 }
 
 void Weapon::SetisCalcCollider(const bool isCalcCollider)
 {
-	isCalcCollider_ = isCalcCollider;
+	mIsCalcCollider = isCalcCollider;
 }
 
 void Weapon::SetChargeRate(const float chargeRate)
 {
-	chargeRate_ = chargeRate;
+	mChargeRate = chargeRate;
 }

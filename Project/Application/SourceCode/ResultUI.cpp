@@ -80,8 +80,8 @@ void ResultUI::EnemyFelledUpdate()
 
 	if (isWait_ == true)
 	{
-		waitTimer_.Update(false);
-		if (waitTimer_.GetisTimeOut() == true)
+		waitTimer_.Update();
+		if (waitTimer_ == true)
 		{
 			waitTimer_.Reset();
 			isWait_ = false;
@@ -97,7 +97,7 @@ void ResultUI::EnemyFelledUpdate()
 			text_->scale += 0.001f;
 		}
 
-		timer_.Update(false);
+		timer_.Update();
 		// 90“x‚ÌŽž
 		if (timer_.GetTimer() == 90)
 		{
@@ -151,8 +151,8 @@ void ResultUI::YouDiedUpdate()
 
 	if (isWait_ == true)
 	{
-		waitTimer_.Update(false);
-		if (waitTimer_.GetisTimeOut() == true)
+		waitTimer_.Update();
+		if (waitTimer_ == true)
 		{
 			waitTimer_.Reset();
 			isWait_ = false;
@@ -164,7 +164,7 @@ void ResultUI::YouDiedUpdate()
 		text_->color.a = sinf(Radian((float)timer_.GetTimer())) * 245.f;
 		text_->scale += 0.001f;
 
-		timer_.Update(false);
+		timer_.Update();
 		// 90“x‚ÌŽž
 		if (timer_.GetTimer() == 90)
 		{

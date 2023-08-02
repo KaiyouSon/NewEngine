@@ -46,8 +46,8 @@ void ItemBoxUIManager::Update()
 	}
 	else
 	{
-		notActiveTimer_.Update(false);
-		if (notActiveTimer_.GetisTimeOut() == true)
+		notActiveTimer_.Update();
+		if (notActiveTimer_ == true)
 		{
 			isActive_ = false;
 		}
@@ -97,7 +97,7 @@ void ItemBoxUIManager::Update()
 	itemUIs_[Position::Right]->SetPos(Vec2(width, 0));
 	itemUIs_[Position::Down]->SetPos(Vec2(0, height));
 
-	if (player_->GetBottleNum() <= 0)
+	if (mPlayer->GetBottleNum() <= 0)
 	{
 		itemUIs_[Position::Down]->SetType(ItemType::EmptyBottle);
 	}
@@ -113,8 +113,8 @@ void ItemBoxUIManager::Update()
 	}
 
 	num_->color.a = alpha_;
-	Vec2 leftUp = { 0 + (float)player_->GetBottleNum() * 96,0 };
-	Vec2 rightDown = { 96 + (float)player_->GetBottleNum() * 96,96 };
+	Vec2 leftUp = { 0 + (float)mPlayer->GetBottleNum() * 96,0 };
+	Vec2 rightDown = { 96 + (float)mPlayer->GetBottleNum() * 96,96 };
 	num_->SetTextureRect(leftUp, rightDown);
 
 	num_->Update(&parent);
@@ -139,5 +139,5 @@ void ItemBoxUIManager::SetAlpha(const float alpha)
 
 void ItemBoxUIManager::SetPlayer(Player* player)
 {
-	player_ = player;
+	mPlayer = player;
 }
