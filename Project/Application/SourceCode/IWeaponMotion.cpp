@@ -2,97 +2,92 @@
 #include "HumanoidBody.h"
 #include "PlayerBody.h"
 
-
 void IWeaponMotion::BaseInit(HumanoidBody* human, const uint32_t index)
 {
-	if (isInit_ == false)
+	if (mIsInit == false)
 	{
 		human->pos.y = 4.75f;
 
 		// Œ»Žž“_‚Ìƒ‚[ƒVƒ‡ƒ“‚Ì‰Šú‰»
-		curRots_ = human->CalcCurRots();
-		MotionData current = motions_[(uint32_t)index]->data[step_];
+		mCurRots = human->CalcCurRots();
+		MotionData current = mMotions[(uint32_t)index]->data[mStep];
 		for (uint32_t i = 0; i < current.endRots.size(); i++)
 		{
-			endRots_[i] = current.endRots[i];
+			mEndRots[i] = current.endRots[i];
 		}
-		curWeaponRots_ = human->CalcCurWeaponRots();
+		mCurWeaponRots = human->CalcCurWeaponRots();
 		for (uint32_t i = 0; i < current.endWeaponRots.size(); i++)
 		{
-			endWeaponRots_[i] = current.endWeaponRots[i];
+			mEndWeaponRots[i] = current.endWeaponRots[i];
 		}
-		ease_ = current.ease;
+		mEase = current.ease;
 	}
 }
 
 void IWeaponMotion::BasePrevUpdate(PlayerBody* human, const uint32_t index)
 {
-	for (uint32_t i = (uint32_t)PartID::Body; i < curRots_.size(); i++)
+	for (uint32_t i = (uint32_t)PartID::Body; i < mCurRots.size(); i++)
 	{
-		human->GetPart((PartID)i)->rot = ease_.Interpolation(curRots_[i], endRots_[i]);
+		human->GetPart((PartID)i)->rot = mEase.Interpolation(mCurRots[i], mEndRots[i]);
 	}
-	for (uint32_t i = 0; i < curWeaponRots_.size(); i++)
+	for (uint32_t i = 0; i < mCurWeaponRots.size(); i++)
 	{
 		if (human->GetWeaponPart((WeaponPartID)i) == nullptr)
 		{
 			continue;
 		}
 
-		human->GetWeaponPart((WeaponPartID)i)->rot = ease_.Interpolation(curWeaponRots_[i], endWeaponRots_[i]);
+		human->GetWeaponPart((WeaponPartID)i)->rot = mEase.Interpolation(mCurWeaponRots[i], mEndWeaponRots[i]);
 	}
 }
 
 void IWeaponMotion::BasePostUpdate(PlayerBody* human, const uint32_t index)
 {
-	if (ease_.GetisEnd() == true)
+	if (mEase.GetisEnd() == true)
 	{
-		step_++;
-		//if (step_ == 1)
-		//{
-		//	step_ = 10;
-		//}
+		mStep++;
 
-		if (step_ >= motions_[(uint32_t)index]->data.size())
+		if (mStep >= mMotions[(uint32_t)index]->data.size())
 		{
-			step_ = 0;
-			isPlay_ = false;
+			mStep = 0;
+			mIsPlay = false;
 		}
-		isInit_ = false;
-		ease_.Reset();
+		mIsInit = false;
+		mEase.Reset();
 	}
 }
 
 void IWeaponMotion::IncreComboCount()
 {
-	comboCount_++;
+	mComboCount++;
 }
 
 void IWeaponMotion::ResetComboCount()
 {
-	comboCount_ = 1;
+	mComboCount = 1;
 }
 
 void IWeaponMotion::SetisPlay(const bool isPlay)
 {
-	isPlay_ = isPlay;
+	mIsPlay = isPlay;
 }
 
 bool IWeaponMotion::GetisPlay()
 {
-	return isPlay_;
+	return mIsPlay;
 }
 
 bool IWeaponMotion::GetisCalcCollider()
 {
-	return isCalcCollider_;
+	return mIsCalcCollider;
 }
 
 bool IWeaponMotion::GetisCanChangeMotion()
 {
-	return isCanChangeMotion_;
+	return mIsCanChangeMotion;
 }
 
 AttackType IWeaponMotion::GetAttackType()
 {
-	return attackType_;
+	return mAttackType;
 }

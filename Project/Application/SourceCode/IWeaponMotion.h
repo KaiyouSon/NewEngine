@@ -16,20 +16,20 @@ enum class AttackType
 class IWeaponMotion
 {
 protected:
-	bool isPlay_;
-	bool isInit_;
-	bool isCalcCollider_;
-	bool isCanChangeMotion_;
-	uint32_t comboCount_;
-	uint32_t comboMaxCount_;
-	uint32_t step_;
-	Easing ease_;
-	std::vector<Vec3> curRots_;
-	std::vector<Vec3> endRots_;
-	std::vector<Vec3> curWeaponRots_;
-	std::vector<Vec3> endWeaponRots_;
-	std::vector<Motion*> motions_;
-	AttackType attackType_;
+	bool mIsPlay;
+	bool mIsInit;
+	bool mIsCalcCollider;
+	bool mIsCanChangeMotion;
+	uint32_t mComboCount;
+	uint32_t mComboMaxCount;
+	uint32_t mStep;
+	Easing mEase;
+	std::vector<Vec3> mCurRots;
+	std::vector<Vec3> mEndRots;
+	std::vector<Vec3> mCurWeaponRots;
+	std::vector<Vec3> mEndWeaponRots;
+	std::vector<Motion*> mMotions;
+	AttackType mAttackType;
 
 protected:
 	void BaseInit(HumanoidBody* human, const uint32_t index);

@@ -4,32 +4,32 @@
 
 MalletMotion::MalletMotion()
 {
-	motions_.emplace_back(MotionManager::GetMotion("MalletWeakAttack1"));
-	motions_.emplace_back(MotionManager::GetMotion("MalletWeakAttack2"));
-	motions_.emplace_back(MotionManager::GetMotion("MalletWeakAttack3"));
-	motions_.emplace_back(MotionManager::GetMotion("MalletHeavyAttack"));
-	motions_.emplace_back(MotionManager::GetMotion("MalletBackAttack"));
-	motions_.emplace_back(MotionManager::GetMotion("MalletRollAttack"));
+	mMotions.emplace_back(MotionManager::GetMotion("MalletWeakAttack1"));
+	mMotions.emplace_back(MotionManager::GetMotion("MalletWeakAttack2"));
+	mMotions.emplace_back(MotionManager::GetMotion("MalletWeakAttack3"));
+	mMotions.emplace_back(MotionManager::GetMotion("MalletHeavyAttack"));
+	mMotions.emplace_back(MotionManager::GetMotion("MalletBackAttack"));
+	mMotions.emplace_back(MotionManager::GetMotion("MalletRollAttack"));
 }
 
 void MalletMotion::Init(HumanoidBody* human)
 {
-	isPlay_ = false;
-	isInit_ = false;
-	isCanChangeMotion_ = false;
-	isCalcCollider_ = false;
-	step_ = 0;
-	ease_.Reset();
-	curRots_.clear();
-	comboMaxCount_ = 5;
+	mIsPlay = false;
+	mIsInit = false;
+	mIsCanChangeMotion = false;
+	mIsCalcCollider = false;
+	mStep = 0;
+	mEase.Reset();
+	mCurRots.clear();
+	mComboMaxCount = 5;
 
-	curRots_.resize(human->GetPartsSize());
-	endRots_.resize(human->GetPartsSize());
-	curWeaponRots_.resize(human->GetWeaponPartsSize());
-	endWeaponRots_.resize(human->GetWeaponPartsSize());
+	mCurRots.resize(human->GetPartsSize());
+	mEndRots.resize(human->GetPartsSize());
+	mCurWeaponRots.resize(human->GetWeaponPartsSize());
+	mEndWeaponRots.resize(human->GetWeaponPartsSize());
 
 	// 再生終わった時の初期化
-	if (comboCount_ > comboMaxCount_)
+	if (mComboCount > mComboMaxCount)
 	{
 		// コンボ中の初期化しないため
 		ResetComboCount();
@@ -43,22 +43,22 @@ void MalletMotion::Update(HumanoidBody* human)
 }
 void MalletMotion::WeakMotion(PlayerBody* human)
 {
-	if (isPlay_ == false)
+	if (mIsPlay == false)
 	{
-		isPlay_ = true;
-		attackType_ = AttackType::Weak;
+		mIsPlay = true;
+		mAttackType = AttackType::Weak;
 	}
 
-	ease_.Update();
+	mEase.Update();
 
-	if (isInit_ == false)
+	if (mIsInit == false)
 	{
 		CurrentStepInit(human);
-		if (comboCount_ == 1)
+		if (mComboCount == 1)
 		{
 			BaseInit(human, 0);
 		}
-		else if (comboCount_ < comboMaxCount_)
+		else if (mComboCount < mComboMaxCount)
 		{
 			BaseInit(human, 1);
 		}
@@ -66,14 +66,14 @@ void MalletMotion::WeakMotion(PlayerBody* human)
 		{
 			BaseInit(human, 2);
 		}
-		isInit_ = true;
+		mIsInit = true;
 	}
 
-	if (comboCount_ == 1)
+	if (mComboCount == 1)
 	{
 		BasePrevUpdate(human, 0);
 	}
-	else if (comboCount_ < comboMaxCount_)
+	else if (mComboCount < mComboMaxCount)
 	{
 		BasePrevUpdate(human, 1);
 	}
@@ -84,11 +84,11 @@ void MalletMotion::WeakMotion(PlayerBody* human)
 
 	CurrentStepUpdate(human);
 
-	if (comboCount_ == 1)
+	if (mComboCount == 1)
 	{
 		BasePostUpdate(human, 0);
 	}
-	else if (comboCount_ < comboMaxCount_)
+	else if (mComboCount < mComboMaxCount)
 	{
 		BasePostUpdate(human, 1);
 	}
@@ -99,18 +99,18 @@ void MalletMotion::WeakMotion(PlayerBody* human)
 }
 void MalletMotion::HeavyMotion(PlayerBody* human)
 {
-	if (isPlay_ == false)
+	if (mIsPlay == false)
 	{
-		isPlay_ = true;
-		attackType_ = AttackType::Heavy;
+		mIsPlay = true;
+		mAttackType = AttackType::Heavy;
 	}
-	ease_.Update();
+	mEase.Update();
 
-	if (isInit_ == false)
+	if (mIsInit == false)
 	{
 		CurrentStepInit(human);
 		BaseInit(human, 3);
-		isInit_ = true;
+		mIsInit = true;
 	}
 	BasePrevUpdate(human, 3);
 	CurrentStepUpdate(human);
@@ -118,18 +118,18 @@ void MalletMotion::HeavyMotion(PlayerBody* human)
 }
 void MalletMotion::BackMotion(PlayerBody* human)
 {
-	if (isPlay_ == false)
+	if (mIsPlay == false)
 	{
-		isPlay_ = true;
-		attackType_ = AttackType::Back;
+		mIsPlay = true;
+		mAttackType = AttackType::Back;
 	}
-	ease_.Update();
+	mEase.Update();
 
-	if (isInit_ == false)
+	if (mIsInit == false)
 	{
 		CurrentStepInit(human);
 		BaseInit(human, 4);
-		isInit_ = true;
+		mIsInit = true;
 	}
 	BasePrevUpdate(human, 4);
 	CurrentStepUpdate(human);
@@ -137,19 +137,19 @@ void MalletMotion::BackMotion(PlayerBody* human)
 }
 void MalletMotion::RollMotion(PlayerBody* human)
 {
-	if (isPlay_ == false)
+	if (mIsPlay == false)
 	{
-		isPlay_ = true;
-		attackType_ = AttackType::Roll;
+		mIsPlay = true;
+		mAttackType = AttackType::Roll;
 	}
-	ease_.Update();
+	mEase.Update();
 
-	if (isInit_ == false)
+	if (mIsInit == false)
 	{
 		CurrentStepInit(human);
 		BaseInit(human, 5);
 
-		isInit_ = true;
+		mIsInit = true;
 	}
 	BasePrevUpdate(human, 5);
 	CurrentStepUpdate(human);
@@ -158,58 +158,58 @@ void MalletMotion::RollMotion(PlayerBody* human)
 
 void MalletMotion::CurrentStepInit(PlayerBody* human)
 {
-	if (attackType_ == AttackType::Weak)
+	if (mAttackType == AttackType::Weak)
 	{
-		if (step_ == 1)
+		if (mStep == 1)
 		{
 			WeakStep1Init(human);
 		}
 	}
-	else if (attackType_ == AttackType::Heavy)
+	else if (mAttackType == AttackType::Heavy)
 	{
-		if (step_ == 0)
+		if (mStep == 0)
 		{
 			HeavyStep0Init(human);
 		}
-		else if (step_ == 1)
+		else if (mStep == 1)
 		{
 			HeavyStep1Init(human);
 		}
-		else if (step_ == 2)
+		else if (mStep == 2)
 		{
 			HeavyStep2Init(human);
 		}
-		else if (step_ == 3)
+		else if (mStep == 3)
 		{
 			HeavyStep3Init(human);
 		}
-		else if (step_ == 4)
+		else if (mStep == 4)
 		{
 			HeavyStep4Init(human);
 		}
-		else if (step_ == 5)
+		else if (mStep == 5)
 		{
 			HeavyStep5Init(human);
 		}
-		else if (step_ == 6)
+		else if (mStep == 6)
 		{
 			HeavyStep6Init(human);
 		}
 	}
-	else if (attackType_ == AttackType::Back)
+	else if (mAttackType == AttackType::Back)
 	{
-		if (step_ == 0)
+		if (mStep == 0)
 		{
 			BackStep0Init(human);
 		}
-		else if (step_ == 2)
+		else if (mStep == 2)
 		{
 			BackStep2Init(human);
 		}
 	}
-	else if (attackType_ == AttackType::Roll)
+	else if (mAttackType == AttackType::Roll)
 	{
-		if (step_ == 0)
+		if (mStep == 0)
 		{
 			RollStep0Init(human);
 		}
@@ -217,70 +217,70 @@ void MalletMotion::CurrentStepInit(PlayerBody* human)
 }
 void MalletMotion::CurrentStepUpdate(PlayerBody* human)
 {
-	if (attackType_ == AttackType::Weak)
+	if (mAttackType == AttackType::Weak)
 	{
-		if (step_ == 1)
+		if (mStep == 1)
 		{
 			WeakStep1Update(human);
 		}
-		else if (step_ == 2)
+		else if (mStep == 2)
 		{
 			WeakStep2Update(human);
 		}
 	}
-	else if (attackType_ == AttackType::Heavy)
+	else if (mAttackType == AttackType::Heavy)
 	{
-		if (step_ == 0)
+		if (mStep == 0)
 		{
 			HeavyStep0Update(human);
 		}
-		else if (step_ == 1)
+		else if (mStep == 1)
 		{
 			HeavyStep1Update(human);
 		}
-		else if (step_ == 2)
+		else if (mStep == 2)
 		{
 			HeavyStep2Update(human);
 		}
-		else if (step_ == 3)
+		else if (mStep == 3)
 		{
 			HeavyStep3Update(human);
 		}
-		else if (step_ == 3)
+		else if (mStep == 3)
 		{
 			HeavyStep4Update(human);
 		}
-		else if (step_ == 5)
+		else if (mStep == 5)
 		{
 			HeavyStep5Update(human);
 		}
-		else if (step_ == 6)
+		else if (mStep == 6)
 		{
 			HeavyStep6Update(human);
 		}
 	}
-	else if (attackType_ == AttackType::Back)
+	else if (mAttackType == AttackType::Back)
 	{
-		if (step_ == 0)
+		if (mStep == 0)
 		{
 			BackStep0Update(human);
 		}
-		else if (step_ == 2)
+		else if (mStep == 2)
 		{
 			BackStep2Update(human);
 		}
-		else if (step_ == 3)
+		else if (mStep == 3)
 		{
 			BackStep3Update(human);
 		}
 	}
-	else if (attackType_ == AttackType::Roll)
+	else if (mAttackType == AttackType::Roll)
 	{
-		if (step_ == 0)
+		if (mStep == 0)
 		{
 			RollStep0Update(human);
 		}
-		else if (step_ == 1)
+		else if (mStep == 1)
 		{
 			RollStep1Update(human);
 		}
@@ -304,41 +304,41 @@ void MalletMotion::WeakStep1Init(PlayerBody* human)
 	endRotY_ = atan2f(human->parent->mFrontVec.x, human->parent->mFrontVec.z);
 
 	// 当たり判定有効
-	isCalcCollider_ = true;
+	mIsCalcCollider = true;
 }
 void MalletMotion::WeakStep1Update(PlayerBody* human)
 {
 	// 少し前に移動する処理
 	const Vec3 endPos = startPos_ + human->parent->mFrontVec.Norm() * length_;
-	human->pos = ease_.InOut(startPos_, endPos);
-	human->rot.y = ease_.InOut(startRotY_, endRotY_);
+	human->pos = mEase.InOut(startPos_, endPos);
+	human->rot.y = mEase.InOut(startRotY_, endRotY_);
 	human->parent->mMoveVel = endPos - startPos_;
 
-	if (ease_.GetTimer() == 15)
+	if (mEase.GetTimer() == 15)
 	{
 		SoundManager::Play("WeakAttackSE");
 	}
 
-	if (ease_.GetisEnd() == true)
+	if (mEase.GetisEnd() == true)
 	{
-		if (comboCount_ < comboMaxCount_)
+		if (mComboCount < mComboMaxCount)
 		{
 			// コンボできるフラフ
-			isCanChangeMotion_ = true;
+			mIsCanChangeMotion = true;
 		}
 
 		// 当たり判定無効
-		isCalcCollider_ = false;
+		mIsCalcCollider = false;
 	}
 }
 void MalletMotion::WeakStep2Update(PlayerBody* human)
 {
-	//if (ease_.GetisEnd() == true)
+	//if (mEase.GetisEnd() == true)
 	//{
-	//	step_ = 0;
-	//	isInit_ = false;
-	//	isPlay_ = false;
-	//	isCanChangeMotion_ = false;
+	//	mStep = 0;
+	//	mIsInit = false;
+	//	mIsPlay = false;
+	//	mIsCanChangeMotion = false;
 	//}
 }
 
@@ -350,7 +350,7 @@ void MalletMotion::HeavyStep0Init(PlayerBody* human)
 }
 void MalletMotion::HeavyStep0Update(PlayerBody* human)
 {
-	human->GetPart(PartID::Body)->pos.y = ease_.In(startPosY, endPosY);
+	human->GetPart(PartID::Body)->pos.y = mEase.In(startPosY, endPosY);
 }
 void MalletMotion::HeavyStep1Init(PlayerBody* human)
 {
@@ -359,17 +359,17 @@ void MalletMotion::HeavyStep1Init(PlayerBody* human)
 }
 void MalletMotion::HeavyStep1Update(PlayerBody* human)
 {
-	human->GetPart(PartID::Body)->pos.y = ease_.In(startPosY, endPosY);
+	human->GetPart(PartID::Body)->pos.y = mEase.In(startPosY, endPosY);
 
 	if (!Pad::GetTrigger(PadCode::RightTrigger, 300))
 	{
-		ease_.SetisEnd(true);
+		mEase.SetisEnd(true);
 	}
 
-	if (ease_.GetisEnd())
+	if (mEase.GetisEnd())
 	{
 		Player* player = static_cast<Player*>(human->iParent);
-		player->mWeapon->SetChargeRate(1.f + ease_.GetTimeRate());
+		player->mWeapon->SetChargeRate(1.f + mEase.GetTimeRate());
 	}
 }
 void MalletMotion::HeavyStep2Init(PlayerBody* human)
@@ -392,23 +392,23 @@ void MalletMotion::HeavyStep2Init(PlayerBody* human)
 }
 void MalletMotion::HeavyStep2Update(PlayerBody* human)
 {
-	human->GetPart(PartID::Body)->pos.y = ease_.In(startPosY, endPosY);
+	human->GetPart(PartID::Body)->pos.y = mEase.In(startPosY, endPosY);
 
 	// 少し前に移動する処理
 	const Vec3 endPos = startPos_ + human->parent->mFrontVec.Norm() * length_;
-	human->pos = ease_.InOut(startPos_, endPos);
-	human->rot.y = ease_.InOut(startRotY_, endRotY_);
+	human->pos = mEase.InOut(startPos_, endPos);
+	human->rot.y = mEase.InOut(startRotY_, endRotY_);
 	human->parent->mMoveVel = endPos - startPos_;
 
-	if (ease_.GetisEnd() == true)
+	if (mEase.GetisEnd() == true)
 	{
 		SoundManager::Play("WeakAttackSE");
 		// 当たり判定有効
-		isCalcCollider_ = true;
-		//if (comboCount_ < comboMaxCount_)
+		mIsCalcCollider = true;
+		//if (mComboCount < mComboMaxCount)
 		//{
 		//	// コンボできるフラフ
-		//	isCanChangeMotion_ = true;
+		//	mIsCanChangeMotion = true;
 		//}
 	}
 }
@@ -419,17 +419,17 @@ void MalletMotion::HeavyStep3Init(PlayerBody* human)
 }
 void MalletMotion::HeavyStep3Update(PlayerBody* human)
 {
-	human->GetPart(PartID::Body)->pos.y = ease_.In(startPosY, endPosY);
+	human->GetPart(PartID::Body)->pos.y = mEase.In(startPosY, endPosY);
 
-	if (ease_.GetTimer() == 0)
+	if (mEase.GetTimer() == 0)
 	{
 
 	}
 
-	if (ease_.GetisEnd() == true)
+	if (mEase.GetisEnd() == true)
 	{
 		// 当たり判定無効
-		isCalcCollider_ = false;
+		mIsCalcCollider = false;
 	}
 }
 void MalletMotion::HeavyStep4Init(PlayerBody* human)
@@ -439,7 +439,7 @@ void MalletMotion::HeavyStep4Init(PlayerBody* human)
 }
 void MalletMotion::HeavyStep4Update(PlayerBody* human)
 {
-	human->GetPart(PartID::Body)->pos.y = ease_.In(startPosY, endPosY);
+	human->GetPart(PartID::Body)->pos.y = mEase.In(startPosY, endPosY);
 }
 void MalletMotion::HeavyStep5Init(PlayerBody* human)
 {
@@ -448,11 +448,11 @@ void MalletMotion::HeavyStep5Init(PlayerBody* human)
 }
 void MalletMotion::HeavyStep5Update(PlayerBody* human)
 {
-	human->GetPart(PartID::Body)->pos.y = ease_.In(startPosY, endPosY);
+	human->GetPart(PartID::Body)->pos.y = mEase.In(startPosY, endPosY);
 
-	if (ease_.GetisEnd() == true)
+	if (mEase.GetisEnd() == true)
 	{
-		isCanChangeMotion_ = true;
+		mIsCanChangeMotion = true;
 	}
 }
 void MalletMotion::HeavyStep6Init(PlayerBody* human)
@@ -462,7 +462,7 @@ void MalletMotion::HeavyStep6Init(PlayerBody* human)
 }
 void MalletMotion::HeavyStep6Update(PlayerBody* human)
 {
-	human->GetPart(PartID::Body)->pos.y = ease_.In(startPosY, endPosY);
+	human->GetPart(PartID::Body)->pos.y = mEase.In(startPosY, endPosY);
 }
 
 // バック攻撃
@@ -510,7 +510,7 @@ void MalletMotion::BackStep2Init(PlayerBody* human)
 	endRotY_ = atan2f(human->parent->mFrontVec.x, human->parent->mFrontVec.z);
 
 	// 当たり判定有効
-	isCalcCollider_ = true;
+	mIsCalcCollider = true;
 
 	moveEase_.SetEaseTimer(15);
 	moveEase_.SetPowNum(2);
@@ -525,7 +525,7 @@ void MalletMotion::BackStep2Update(PlayerBody* human)
 	human->pos = moveEase_.InOut(startPos_, endPos);
 	human->parent->mMoveVel = endPos - startPos_;
 
-	if (ease_.GetisEnd() == true)
+	if (mEase.GetisEnd() == true)
 	{
 		SoundManager::Play("WeakAttackSE");
 	}
@@ -539,10 +539,10 @@ void MalletMotion::BackStep3Update(PlayerBody* human)
 	human->pos = moveEase_.InOut(startPos_, endPos);
 	human->parent->mMoveVel = endPos - startPos_;
 
-	if (ease_.GetisEnd() == true)
+	if (mEase.GetisEnd() == true)
 	{
 		// 当たり判定無効
-		isCalcCollider_ = false;
+		mIsCalcCollider = false;
 	}
 
 }
@@ -564,7 +564,7 @@ void MalletMotion::RollStep0Init(PlayerBody* human)
 	endRotY_ = atan2f(human->parent->mFrontVec.x, human->parent->mFrontVec.z);
 
 	// 当たり判定有効
-	isCalcCollider_ = true;
+	mIsCalcCollider = true;
 
 	moveEase_.SetEaseTimer(30);
 	moveEase_.SetPowNum(2);
@@ -579,7 +579,7 @@ void MalletMotion::RollStep0Update(PlayerBody* human)
 	human->pos = moveEase_.InOut(startPos_, endPos);
 	human->parent->mMoveVel = endPos - startPos_;
 
-	if (ease_.GetisEnd() == true)
+	if (mEase.GetisEnd() == true)
 	{
 		SoundManager::Play("WeakAttackSE");
 	}
@@ -593,9 +593,9 @@ void MalletMotion::RollStep1Update(PlayerBody* human)
 	human->pos = moveEase_.InOut(startPos_, endPos);
 	human->parent->mMoveVel = endPos - startPos_;
 
-	if (ease_.GetisEnd() == true)
+	if (mEase.GetisEnd() == true)
 	{
 		// 当たり判定無効
-		isCalcCollider_ = false;
+		mIsCalcCollider = false;
 	}
 }
