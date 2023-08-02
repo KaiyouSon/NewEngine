@@ -5,13 +5,13 @@
 class Field
 {
 private:
-	std::unique_ptr<Object3D> ground_;
-	std::unique_ptr<Skydome> skydome_;
-	std::array<std::unique_ptr<MessageSign>, 5> messageSigns_;
+	std::unique_ptr<Object3D> mGround;
+	std::unique_ptr<Skydome> mSkydome;
+	std::array<std::unique_ptr<MessageSign>, 5> mMessageSigns;
 
 private:
 	// デバッグ用
-	std::unique_ptr<Object3D> sphere_;
+	std::unique_ptr<Object3D> mSphere;
 
 public:
 	Field();

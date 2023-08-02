@@ -1,57 +1,57 @@
 #include "MessageSign.h"
 
 MessageSign::MessageSign() :
-	messageSign_(std::make_unique<Object3D>())
+	mMessageSign(std::make_unique<Object3D>())
 {
-	messageSign_->SetModel(ModelManager::GetModel("MessageSign"));
+	mMessageSign->SetModel(ModelManager::GetModel("MessageSign"));
 
 	Init();
 }
 
 void MessageSign::Init()
 {
-	messageSign_->scale = 1.5f;
+	mMessageSign->scale = 1.5f;
 }
 
 void MessageSign::Update()
 {
 	ColliderUpdate();
 
-	messageSign_->Update();
+	mMessageSign->Update();
 }
 
 void MessageSign::DrawModel()
 {
-	messageSign_->Draw();
+	mMessageSign->Draw();
 }
 
 Texture* MessageSign::GetMessageTexture()
 {
-	return messageTex_;
+	return mMessageTex;
 }
 
 SphereCollider MessageSign::GetCollider()
 {
-	return collider_;
+	return mCollider;
 }
 
 void MessageSign::SetMessageTexture(Texture* texture)
 {
-	messageTex_ = texture;
+	mMessageTex = texture;
 }
 
 void MessageSign::SetPos(const Vec3 pos)
 {
-	messageSign_->pos = pos;
+	mMessageSign->pos = pos;
 }
 
 void MessageSign::SetRot(const Vec3 rot)
 {
-	messageSign_->rot = rot;
+	mMessageSign->rot = rot;
 }
 
 void MessageSign::ColliderUpdate()
 {
-	collider_.centerPos = messageSign_->pos;
-	collider_.radius = messageSign_->scale.x;
+	mCollider.centerPos = mMessageSign->pos;
+	mCollider.radius = mMessageSign->scale.x;
 }

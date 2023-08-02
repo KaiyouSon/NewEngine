@@ -8,9 +8,9 @@ private:
 	static uint32_t sIndex;
 
 private:
-	std::unique_ptr<PostEffect> currentScene_;
-	RenderTexture* renderTex_;
-	Camera lightCamera_;
+	std::unique_ptr<PostEffect> mCurrentScene;
+	RenderTexture* mRenderTex;
+	Camera mLightCamera;
 
 public:
 	ShadowMap();

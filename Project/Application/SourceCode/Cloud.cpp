@@ -28,35 +28,35 @@ void Cloud::CreateGraphicsPipeline()
 }
 
 Cloud::Cloud() :
-	cloud_(std::make_unique<Object3D>())
+	mCloud(std::make_unique<Object3D>())
 {
-	cloud_->SetModel(ModelManager::GetModel("Cloud"));
-	cloud_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Cloud"));
-	cloud_->color = Color(0xc4c178);
+	mCloud->SetModel(ModelManager::GetModel("Cloud"));
+	mCloud->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Cloud"));
+	mCloud->color = Color(0xc4c178);
 
 	Init();
 }
 
 void Cloud::Init()
 {
-	cloud_->pos.y = 180.f;
-	cloud_->scale = 100.f;
-	cloud_->rot.x = Radian(180);
+	mCloud->pos.y = 180.f;
+	mCloud->scale = 100.f;
+	mCloud->rot.x = Radian(180);
 }
 
 void Cloud::Update()
 {
-	cloud_->offset.x += 0.0005f;
+	mCloud->offset.x += 0.0005f;
 
-	cloud_->Update();
+	mCloud->Update();
 }
 
 void Cloud::DrawModel()
 {
-	cloud_->Draw();
+	mCloud->Draw();
 }
 
 void Cloud::SetPos(const Vec3 pos)
 {
-	cloud_->pos = pos;
+	mCloud->pos = pos;
 }

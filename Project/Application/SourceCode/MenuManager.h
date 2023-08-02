@@ -4,8 +4,8 @@
 class MenuManager
 {
 private:
-	bool isActive_;
-	std::vector<std::unique_ptr<IMenu>> menus_;
+	bool mIsActive;
+	std::vector<std::unique_ptr<IMenu>> mMenus;
 
 public:
 	void Init();

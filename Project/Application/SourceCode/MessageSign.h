@@ -4,11 +4,11 @@
 class MessageSign
 {
 private:
-	std::unique_ptr<Object3D> messageSign_;
-	Texture* messageTex_;
+	std::unique_ptr<Object3D> mMessageSign;
+	Texture* mMessageTex;
 
 private:
-	SphereCollider collider_;
+	SphereCollider mCollider;
 
 private:
 	void ColliderUpdate();

@@ -4,15 +4,15 @@ std::vector<Object3D> ShadowMap::sObjShadows;
 uint32_t ShadowMap::sIndex;
 
 ShadowMap::ShadowMap() :
-	currentScene_(std::make_unique<PostEffect>()),
-	renderTex_(TextureManager::GetRenderTexture("CurrentScene"))
+	mCurrentScene(std::make_unique<PostEffect>()),
+	mRenderTex(TextureManager::GetRenderTexture("CurrentScene"))
 {
-	renderTex_->useDepth = true;
+	mRenderTex->useDepth = true;
 
-	currentScene_->AddRenderTexture(renderTex_);
-	currentScene_->anchorPoint = 0;
-	currentScene_->scale = 0.5f;
-	currentScene_->pos = GetWindowHalfSize() / 2;
+	mCurrentScene->AddRenderTexture(mRenderTex);
+	mCurrentScene->anchorPoint = 0;
+	mCurrentScene->scale = 0.5f;
+	mCurrentScene->pos = GetWindowHalfSize() / 2;
 
 	sIndex = 0;
 }
@@ -24,22 +24,22 @@ void ShadowMap::Init()
 void ShadowMap::Update()
 {
 	// ƒJƒƒ‰‚ÌÝ’è
-	lightCamera_.pos = LightManager::GetInstance()->directionalLight.pos;
-	lightCamera_.rot = Vec3(Radian(90), 0, 0);
-	lightCamera_.Update();
+	mLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
+	mLightCamera.rot = Vec3(Radian(90), 0, 0);
+	mLightCamera.Update();
 
 	for (auto& obj : sObjShadows)
 	{
-		obj.SetCamera(&lightCamera_);
+		obj.SetCamera(&mLightCamera);
 		obj.Update();
 	}
 
-	currentScene_->Update();
+	mCurrentScene->Update();
 }
 
 void ShadowMap::RenderTextureSetting()
 {
-	renderTex_->PrevDrawScene();
+	mRenderTex->PrevDrawScene();
 
 	RenderBase::GetInstance()->SetObject3DDrawCommand();
 	for (auto& obj : sObjShadows)
@@ -47,7 +47,7 @@ void ShadowMap::RenderTextureSetting()
 		obj.Draw();
 	}
 
-	renderTex_->PostDrawScene();
+	mRenderTex->PostDrawScene();
 }
 
 void ShadowMap::DrawModel()
@@ -60,7 +60,7 @@ void ShadowMap::DrawModel()
 
 void ShadowMap::DrawPostEffect()
 {
-	currentScene_->Draw();
+	mCurrentScene->Draw();
 }
 
 void ShadowMap::Register()

@@ -4,7 +4,7 @@
 class Cloud
 {
 private:
-	std::unique_ptr<Object3D> cloud_;
+	std::unique_ptr<Object3D> mCloud;
 
 public:
 	static void CreateGraphicsPipeline();

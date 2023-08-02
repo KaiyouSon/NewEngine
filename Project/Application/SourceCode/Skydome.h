@@ -5,8 +5,8 @@
 class Skydome
 {
 private:
-	std::unique_ptr<Object3D> skydome_;
-	std::vector<std::unique_ptr<Cloud>> clouds_;
+	std::unique_ptr<Object3D> mSkydome;
+	std::vector<std::unique_ptr<Cloud>> mClouds;
 
 public:
 	Skydome();

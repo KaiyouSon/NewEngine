@@ -10,15 +10,14 @@ public:
 		CloseGame,
 	};
 
-
 private:
-	std::unique_ptr<Sprite> back_;
-	std::unique_ptr<Sprite> textLight_;
-	std::array<std::unique_ptr<Sprite>, 2> textFrames_;
-	std::array<std::unique_ptr<Sprite>, 2> texts_;
+	std::unique_ptr<Sprite> mBack;
+	std::unique_ptr<Sprite> mTextLight;
+	std::array<std::unique_ptr<Sprite>, 2> mTextFrames;
+	std::array<std::unique_ptr<Sprite>, 2> mTexts;
 
-	static Select select_;
-	static bool isEnd_;
+	static Select sSelect;
+	static bool sIsEnd;
 
 public:
 	LogoutMenu();

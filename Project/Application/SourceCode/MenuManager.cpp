@@ -11,27 +11,27 @@ void MenuManager::Update()
 	if (Pad::GetButtonDown(PadCode::ButtonStart))
 	{
 		SoundManager::Play("SelectSE");
-		if (isActive_ == false)
+		if (mIsActive == false)
 		{
-			menus_.emplace_back(std::move(std::make_unique<LogoutMenu>()));
-			isActive_ = true;
+			mMenus.emplace_back(std::move(std::make_unique<LogoutMenu>()));
+			mIsActive = true;
 		}
 		else
 		{
-			menus_.clear();
-			isActive_ = false;
+			mMenus.clear();
+			mIsActive = false;
 		}
 	}
 
-	if (menus_.empty() == false)
+	if (mMenus.empty() == false)
 	{
-		menus_.back()->Update();
+		mMenus.back()->Update();
 	}
 }
 
 void MenuManager::DrawFrontSprite()
 {
-	for (const auto& cur : menus_)
+	for (const auto& cur : mMenus)
 	{
 		cur->DrawFrontSprite();
 	}
@@ -39,5 +39,5 @@ void MenuManager::DrawFrontSprite()
 
 bool MenuManager::GetisActive()
 {
-	return isActive_;
+	return mIsActive;
 }

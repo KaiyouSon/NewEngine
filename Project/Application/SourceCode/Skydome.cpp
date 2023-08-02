@@ -1,15 +1,15 @@
 #include "Skydome.h"
 
 Skydome::Skydome() :
-	skydome_(std::make_unique<Object3D>())
+	mSkydome(std::make_unique<Object3D>())
 {
-	skydome_->SetModel(ModelManager::GetModel("Skydome"));
-	skydome_->color = Color(0xc4c178);
-	skydome_->isLighting = false;
+	mSkydome->SetModel(ModelManager::GetModel("Skydome"));
+	mSkydome->color = Color(0xc4c178);
+	mSkydome->isLighting = false;
 
 	for (uint32_t i = 0; i < 50; i++)
 	{
-		clouds_.emplace_back(std::move(std::make_unique<Cloud>()));
+		mClouds.emplace_back(std::move(std::make_unique<Cloud>()));
 
 		const float range = 500.f;
 		const Vec3 randomPos =
@@ -18,36 +18,36 @@ Skydome::Skydome() :
 			150.f,
 			Random::RangeF(-range, range),
 		};
-		clouds_.back()->SetPos(randomPos);
+		mClouds.back()->SetPos(randomPos);
 	}
 }
 
 void Skydome::Init()
 {
-	skydome_->scale = 800.f;
+	mSkydome->scale = 800.f;
 }
 
 void Skydome::Update()
 {
-	skydome_->Update();
-	for (uint32_t i = 0; i < clouds_.size(); i++)
+	mSkydome->Update();
+	for (uint32_t i = 0; i < mClouds.size(); i++)
 	{
-		clouds_[i]->Update();
+		mClouds[i]->Update();
 	}
 }
 
 void Skydome::DrawModel()
 {
-	skydome_->Draw();
-	for (uint32_t i = 0; i < clouds_.size(); i++)
+	mSkydome->Draw();
+	for (uint32_t i = 0; i < mClouds.size(); i++)
 	{
-		clouds_[i]->DrawModel();
+		mClouds[i]->DrawModel();
 	}
 }
 
 void Skydome::DrawDebugGui()
 {
 	GuiManager::BeginWindow("Skydome");
-	GuiManager::DrawColorEdit("Skydome Color", skydome_->color);
+	GuiManager::DrawColorEdit("Skydome Color", mSkydome->color);
 	GuiManager::EndWindow();
 }

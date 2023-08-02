@@ -1,75 +1,75 @@
 #include "LogoutMenu.h"
 
-LogoutMenu::Select LogoutMenu::select_ = LogoutMenu::Select::BackToTitle;
-bool LogoutMenu::isEnd_ = false;
+LogoutMenu::Select LogoutMenu::sSelect = LogoutMenu::Select::BackToTitle;
+bool LogoutMenu::sIsEnd = false;
 
 LogoutMenu::LogoutMenu() :
-	back_(std::make_unique<Sprite>()),
-	textLight_(std::make_unique<Sprite>())
+	mBack(std::make_unique<Sprite>()),
+	mTextLight(std::make_unique<Sprite>())
 {
-	back_->SetTexture(TextureManager::GetTexture("MenuBack"));
-	textLight_->SetTexture(TextureManager::GetTexture("MenuTextLight"));
-	textLight_->scale = 0.75f;
+	mBack->SetTexture(TextureManager::GetTexture("MenuBack"));
+	mTextLight->SetTexture(TextureManager::GetTexture("MenuTextLight"));
+	mTextLight->scale = 0.75f;
 
-	for (uint32_t i = 0; i < textFrames_.size(); i++)
+	for (uint32_t i = 0; i < mTextFrames.size(); i++)
 	{
-		textFrames_[i] = std::make_unique<Sprite>();
-		textFrames_[i]->SetTexture(TextureManager::GetTexture("MenuTextFrame"));
+		mTextFrames[i] = std::make_unique<Sprite>();
+		mTextFrames[i]->SetTexture(TextureManager::GetTexture("MenuTextFrame"));
 
 		Vec2 pos = GetWindowHalfSize() - Vec2::up * 80;
 		Vec2 offset = Vec2::up * (float)i * 240;
-		textFrames_[i]->pos = pos + offset;
-		textFrames_[i]->scale = 0.75f;
+		mTextFrames[i]->pos = pos + offset;
+		mTextFrames[i]->scale = 0.75f;
 
-		texts_[i] = std::make_unique<Sprite>();
-		texts_[i]->pos = pos + offset;
-		texts_[i]->scale = 0.35f;
+		mTexts[i] = std::make_unique<Sprite>();
+		mTexts[i]->pos = pos + offset;
+		mTexts[i]->scale = 0.35f;
 	}
 
-	texts_[0]->SetTexture(TextureManager::GetTexture("BackToTitleStr"));
-	texts_[1]->SetTexture(TextureManager::GetTexture("CloseGameStr"));
+	mTexts[0]->SetTexture(TextureManager::GetTexture("BackToTitleStr"));
+	mTexts[1]->SetTexture(TextureManager::GetTexture("CloseGameStr"));
 
 	Init();
 }
 
 void LogoutMenu::Init()
 {
-	back_->pos = GetWindowHalfSize() + Vec2::up * 48;
-	back_->color.a = 250.f;
-	isEnd_ = false;
+	mBack->pos = GetWindowHalfSize() + Vec2::up * 48;
+	mBack->color.a = 250.f;
+	sIsEnd = false;
 }
 
 void LogoutMenu::Update()
 {
 	const float deadZoneY = 300;
 
-	switch (select_)
+	switch (sSelect)
 	{
 	case Select::BackToTitle:
-		textLight_->pos = textFrames_[(uint32_t)Select::BackToTitle]->pos;
+		mTextLight->pos = mTextFrames[(uint32_t)Select::BackToTitle]->pos;
 
 		if (Pad::GetButtonDown(PadCode::ButtonDown) ||
 			Pad::GetStickDown(PadCode::LeftStick, deadZoneY).y > 0)
 		{
 			SoundManager::Play("SelectSE");
-			select_ = Select::CloseGame;
+			sSelect = Select::CloseGame;
 		}
 
 		if (Pad::GetButtonDown(PadCode::ButtonA))
 		{
-			isEnd_ = true;
+			sIsEnd = true;
 		}
 
 		break;
 
 	case Select::CloseGame:
-		textLight_->pos = textFrames_[(uint32_t)Select::CloseGame]->pos;
+		mTextLight->pos = mTextFrames[(uint32_t)Select::CloseGame]->pos;
 
 		if (Pad::GetButtonDown(PadCode::ButtonUp) ||
 			Pad::GetStickDown(PadCode::LeftStick, deadZoneY).y < 0)
 		{
 			SoundManager::Play("SelectSE");
-			select_ = Select::BackToTitle;
+			sSelect = Select::BackToTitle;
 		}
 
 		break;
@@ -78,40 +78,40 @@ void LogoutMenu::Update()
 	if (Pad::GetButtonDown(PadCode::ButtonA))
 	{
 		SoundManager::Play("SelectSE");
-		isEnd_ = true;
+		sIsEnd = true;
 	}
 
-	back_->Update();
-	textLight_->Update();
-	for (uint32_t i = 0; i < textFrames_.size(); i++)
+	mBack->Update();
+	mTextLight->Update();
+	for (uint32_t i = 0; i < mTextFrames.size(); i++)
 	{
-		textFrames_[i]->Update();
-		texts_[i]->Update();
+		mTextFrames[i]->Update();
+		mTexts[i]->Update();
 	}
 }
 
 void LogoutMenu::DrawFrontSprite()
 {
-	back_->Draw();
-	for (uint32_t i = 0; i < textFrames_.size(); i++)
+	mBack->Draw();
+	for (uint32_t i = 0; i < mTextFrames.size(); i++)
 	{
-		textFrames_[i]->Draw();
-		texts_[i]->Draw();
+		mTextFrames[i]->Draw();
+		mTexts[i]->Draw();
 	}
-	textLight_->Draw();
+	mTextLight->Draw();
 }
 
 LogoutMenu::Select LogoutMenu::GetSelect()
 {
-	return select_;
+	return sSelect;
 }
 
 bool LogoutMenu::GetisEnd()
 {
-	return isEnd_;
+	return sIsEnd;
 }
 
 void LogoutMenu::SetisEnd(const bool isEnd)
 {
-	isEnd_ = isEnd;
+	sIsEnd = isEnd;
 }
