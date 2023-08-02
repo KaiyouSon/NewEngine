@@ -10,19 +10,17 @@
 class Object3D
 {
 private:
-	Vec3 worldPos_;
-	Vec3 worldScale_;
-	Transform transform_;
-	Transform* parent_;
-	Model* model_;
-	Texture* texture_;
-	Texture* dissolveTex_;
-	Material material_;
-	GraphicsPipeline* graphicsPipeline_;
-	Camera* camera_;
-	bool isShadow_;
-
-	FbxAnimation animation;
+	Vec3 mWorldPos;
+	Vec3 mWorldScale;
+	Transform mTransform;
+	Transform* mParent;
+	Model* mModel;
+	Texture* mTexture;
+	Texture* mDissolveTex;
+	Material mMaterial;
+	GraphicsPipeline* mGraphicsPipeline;
+	Camera* mCamera;
+	bool mIsShadow;
 
 public:
 	Vec3 pos;
@@ -87,7 +85,5 @@ public: // ゲッター
 
 	// モデル
 	Model* GetModel();
-
-
 };
 

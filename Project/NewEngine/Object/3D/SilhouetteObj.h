@@ -6,14 +6,15 @@
 #include "Util.h"
 #include "Object3D.h"
 
+// 最近使ってないためリファクタリングは後回し
 class SilhouetteObj
 {
 private:
-	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform3D>> constantBufferTransform_;
-	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> constantBufferColor_;
-	GraphicsPipeline* graphicsPipeline_;
-	Transform transform_;
-	Transform* parent_;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform3D>> mConstantBufferTransform;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> mConstantBufferColor;
+	GraphicsPipeline* mGraphicsPipeline;
+	Transform mTransform;
+	Transform* mParent;
 
 public:
 	Object3D* obj;

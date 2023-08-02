@@ -1,13 +1,14 @@
 #pragma once
 #include "NewEngine.h"
 
+// 最近使ってないためリファクタリングは後回し
 class OutLineObj
 {
 private:
-	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform3D>> constantBufferTransform_;
-	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> constantBufferColor_;
-	Transform transform_;
-	Transform* parent_;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform3D>> mConstantBufferTransform;
+	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> mConstantBufferColor;
+	Transform mTransform;
+	Transform* mParent;
 
 public:
 	Object3D* obj;
