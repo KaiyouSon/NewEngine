@@ -13,16 +13,17 @@
 #pragma comment(lib,"d3dcompiler.lib")
 using namespace Microsoft::WRL;
 
-float RenderBase::sClearColor_[4] = { 0.1f,0.25f,0.5f,0.0f };
+float RenderBase::sClearColor[4] = { 0.1f,0.25f,0.5f,0.0f };
 
 void RenderBase::Init()
 {
-	renderWindow_ = RenderWindow::GetInstance().get();
-	viewport_ = std::make_unique<Viewport>();
-	scissorRectangle_ = std::make_unique<ScissorRectangle>();
+	mRenderWindow = RenderWindow::GetInstance().get();
+	mViewport = std::make_unique<Viewport>();
+	mScissorRectangle = std::make_unique<ScissorRectangle>();
 
-	rtvIncrementIndex_ = 0;
-	dsvIncrementIndex_ = 0;
+	mFenceValue = 0;
+	mRtvIncrementIndex = 0;
+	mDsvIncrementIndex = 0;
 
 	DeviceInit();			// デバイスの初期化
 	DescriptorHeapInit();	// ティスクリプターヒープの初期化
@@ -37,46 +38,40 @@ void RenderBase::Init()
 void RenderBase::PreDraw()
 {
 	//---------------------- リソースバリアの変更コマンド ----------------------//
-	// バックバッファの番号を取得（2つなので0番か1番）
-	UINT bbIndex = swapChain_->GetCurrentBackBufferIndex();
+	// バックバッファの番号を取得
+	UINT bbIndex = mSwapChain->GetCurrentBackBufferIndex();
 	// １．リソースバリアで書き込み可能に変更
-	barrierDesc_.Transition.pResource = backBuffers_[bbIndex]->GetBuffer();	// バックバッファを指定
-	barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;	// 表示状態から
-	barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画状態へ
-	commandList_->ResourceBarrier(1, &barrierDesc_);
+	mBarrierDesc.Transition.pResource = mBackBuffers[bbIndex]->GetBuffer();	// バックバッファを指定
+	mBarrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;	// 表示状態から
+	mBarrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画状態へ
+	mCommandList->ResourceBarrier(1, &mBarrierDesc);
 
 	//--------------------------- 描画先指定コマンド ---------------------------//
 	// ２．描画先の変更
 	// レンダーターゲットビューのハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = backBuffers_[bbIndex]->GetCpuHandle();
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = mBackBuffers[bbIndex]->GetCpuHandle();
 
 	// 深度ステンシルビュー用デスクリプタヒープのハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = depthBuffer_->GetCpuHandle();
-	commandList_->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = mDepthBuffer->GetCpuHandle();
+	mCommandList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
 
 	// 画面クリア R G B A
-	commandList_->ClearRenderTargetView(rtvHandle, sClearColor_, 0, nullptr);
+	mCommandList->ClearRenderTargetView(rtvHandle, sClearColor, 0, nullptr);
 
 	// 深度バッファクリア
-	commandList_->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+	mCommandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
 	// ビューポートの処理
-	viewport_->SetViewport(
+	mViewport->SetViewport(
 		{ 0,0 },
 		{
-			(float)renderWindow_->GetWindowSize().x,
-			(float)renderWindow_->GetWindowSize().y
+			(float)mRenderWindow->GetWindowSize().x,
+			(float)mRenderWindow->GetWindowSize().y
 		});
-	viewport_->Update();
+	mViewport->Update();
 
 	// シザー矩形の処理
-	scissorRectangle_->Update();
-
-	//commandList_->SetDescriptorHeaps(1, srvDescHeap.GetAddressOf());
-
-
-	// SRVヒープの設定コマンド
-	//auto temp = renderBase->GetSrvDescHeap();
+	mScissorRectangle->Update();
 }
 void RenderBase::PostDraw()
 {
@@ -84,78 +79,78 @@ void RenderBase::PostDraw()
 
 	//---------------------- リソースバリアの復帰コマンド ----------------------//
 	// ５．リソースバリアを戻す
-	barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画状態から
-	barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT; // 表示状態へ
-	commandList_->ResourceBarrier(1, &barrierDesc_);
+	mBarrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画状態から
+	mBarrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT; // 表示状態へ
+	mCommandList->ResourceBarrier(1, &mBarrierDesc);
 
 	//-------------------------- コマンドのフラッシュ --------------------------//
 	// 命令のクローズ
-	result = commandList_->Close();
+	result = mCommandList->Close();
 	assert(SUCCEEDED(result));
 	// コマンドリストの実行
-	ID3D12CommandList* commandList_s[] = { commandList_.Get() };
-	commandQueue_->ExecuteCommandLists(1, commandList_s);
+	ID3D12CommandList* mCommandLists[] = { mCommandList.Get() };
+	mCommandQueue->ExecuteCommandLists(1, mCommandLists);
 
 	// 画面に表示するバッファをフリップ（裏表の入替え）
-	result = swapChain_->Present(1, 0);
+	result = mSwapChain->Present(1, 0);
 	assert(SUCCEEDED(result));
 
 	// コマンドの実行完了を待つ
-	commandQueue_->Signal(fence_.Get(), ++fenceVal_);
-	if (fence_.Get()->GetCompletedValue() != fenceVal_)
+	mCommandQueue->Signal(mFence.Get(), ++mFenceValue);
+	if (mFence.Get()->GetCompletedValue() != mFenceValue)
 	{
 		HANDLE event = CreateEvent(nullptr, false, false, nullptr);
-		fence_->SetEventOnCompletion(fenceVal_, event);
+		mFence->SetEventOnCompletion(mFenceValue, event);
 		WaitForSingleObject(event, INFINITE);
 		CloseHandle(event);
 	}
 
 	// キューをクリア
-	result = commandAllocator_->Reset();
+	result = mCommandAllocator->Reset();
 	assert(SUCCEEDED(result));
 	// 再びコマンドリストを貯める準備
-	result = commandList_.Get()->Reset(commandAllocator_.Get(), nullptr);
+	result = mCommandList.Get()->Reset(mCommandAllocator.Get(), nullptr);
 	assert(SUCCEEDED(result));
 }
 void RenderBase::SetObject3DDrawCommand()
 {
-	commandList_->SetGraphicsRootSignature(object3DRootSignature_->GetRootSignature());
+	mCommandList->SetGraphicsRootSignature(mObject3DRootSignature->GetRootSignature());
 }
 void RenderBase::SetSpriteDrawCommand()
 {
-	commandList_->SetGraphicsRootSignature(spriteRootSignature_->GetRootSignature());
+	mCommandList->SetGraphicsRootSignature(mSpriteRootSignature->GetRootSignature());
 }
 void RenderBase::SetRenderTextureDrawCommand()
 {
-	commandList_->SetGraphicsRootSignature(renderTextureRootSignature_->GetRootSignature());
+	mCommandList->SetGraphicsRootSignature(mRenderTextureRootSignature->GetRootSignature());
 }
 
 void RenderBase::CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC* rtvDesc)
 {
 	// RTVヒープの先頭ハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvCpuHandle = rtvDescHeap_->GetCPUDescriptorHandleForHeapStart();
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvCpuHandle = mRtvDescHeap->GetCPUDescriptorHandleForHeapStart();
 
-	UINT descriptorSize = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+	UINT descriptorSize = mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
-	rtvCpuHandle.ptr += descriptorSize * rtvIncrementIndex_;
+	rtvCpuHandle.ptr += descriptorSize * mRtvIncrementIndex;
 
 	renderTarget.SetCpuHandle(rtvCpuHandle);
 
 	// ハンドルの指す位置にRTV作成
-	device_->CreateRenderTargetView(renderTarget.GetBuffer(), rtvDesc, rtvCpuHandle);
+	mDevice->CreateRenderTargetView(renderTarget.GetBuffer(), rtvDesc, rtvCpuHandle);
 
-	rtvIncrementIndex_++;
+	mRtvIncrementIndex++;
 }
-void RenderBase::CreateDSV(DepthBuffer& depthBuffer_)
+void RenderBase::CreateDSV(DepthBuffer& mDepthBuffer)
 {
 	// RTVヒープの先頭ハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvCpuHandle = dsvDescHeap_->GetCPUDescriptorHandleForHeapStart();
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvCpuHandle = mDsvDescHeap->GetCPUDescriptorHandleForHeapStart();
 
-	UINT descriptorSize = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
+	UINT descriptorSize = mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 
-	dsvCpuHandle.ptr += descriptorSize * dsvIncrementIndex_;
+	dsvCpuHandle.ptr += descriptorSize * mDsvIncrementIndex;
 
-	depthBuffer_.SetCpuHandle(dsvCpuHandle);
+	mDepthBuffer.SetCpuHandle(dsvCpuHandle);
 
 	// 深度ビュー作成
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
@@ -163,17 +158,18 @@ void RenderBase::CreateDSV(DepthBuffer& depthBuffer_)
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 
 	// ハンドルの指す位置にRTV作成
-	device_->CreateDepthStencilView(depthBuffer_.GetBuffer(), &dsvDesc, dsvCpuHandle);
+	mDevice->CreateDepthStencilView(mDepthBuffer.GetBuffer(), &dsvDesc, dsvCpuHandle);
 
-	dsvIncrementIndex_++;
+	mDsvIncrementIndex++;
 }
 
+// --- 初期化関連 ------------------------------------------------------------ //
 void RenderBase::DeviceInit()
 {
 	HRESULT result;
 
 	// DXGIファクトリーの生成
-	result = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory_));
+	result = CreateDXGIFactory(IID_PPV_ARGS(&mDxgiFactory));
 	assert(SUCCEEDED(result));
 
 	// アダプターの列挙用
@@ -183,7 +179,7 @@ void RenderBase::DeviceInit()
 
 	// パフォーマンスが高いものから順に、全てのアダプターを列挙する
 	for (UINT i = 0;
-		dxgiFactory_->EnumAdapterByGpuPreference(i,
+		mDxgiFactory->EnumAdapterByGpuPreference(i,
 			DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE,
 			IID_PPV_ARGS(&tmpAdapter)) != DXGI_ERROR_NOT_FOUND;
 		i++)
@@ -221,7 +217,7 @@ void RenderBase::DeviceInit()
 	{
 		// 採用したアダプターでデバイスを生成
 		result = D3D12CreateDevice(tmpAdapter.Get(), levels[i],
-			IID_PPV_ARGS(device_.GetAddressOf()));
+			IID_PPV_ARGS(mDevice.GetAddressOf()));
 		if (result == S_OK) {
 			// デバイスを生成できた時点でループを抜ける
 			featureLevel = levels[i];
@@ -240,12 +236,12 @@ void RenderBase::DescriptorHeapInit()
 	const size_t maxRTVCount = 64;	// RTVの最大個数
 
 	// RTV用デスクリプタヒープの設定
-	rtvHeapDesc_.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;		// レンダーターゲットビュー
-	//rtvHeapDesc_.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;	// シェーダから見えるように
-	rtvHeapDesc_.NumDescriptors = maxRTVCount; // 裏表の２つ
+	mRtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;		// レンダーターゲットビュー
+	//mRtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;	// シェーダから見えるように
+	mRtvHeapDesc.NumDescriptors = maxRTVCount; // 裏表の２つ
 
 	// RTV用デスクリプタヒープの生成
-	result = device_->CreateDescriptorHeap(&rtvHeapDesc_, IID_PPV_ARGS(&rtvDescHeap_));
+	result = mDevice->CreateDescriptorHeap(&mRtvHeapDesc, IID_PPV_ARGS(&mRtvDescHeap));
 	assert(SUCCEEDED(result));
 
 
@@ -259,7 +255,7 @@ void RenderBase::DescriptorHeapInit()
 	dsvHeapDesc.NumDescriptors = maxDSVCount;	// 深度ビューは一つ
 
 	// DSV用デスクリプタヒープの生成
-	result = device_->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvDescHeap_));
+	result = mDevice->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&mDsvDescHeap));
 	assert(SUCCEEDED(result));
 }
 void RenderBase::CommandInit()
@@ -267,59 +263,59 @@ void RenderBase::CommandInit()
 	HRESULT result;
 
 	// コマンドアロケータを生成
-	result = device_->CreateCommandAllocator
+	result = mDevice->CreateCommandAllocator
 	(
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
-		IID_PPV_ARGS(&commandAllocator_)
+		IID_PPV_ARGS(&mCommandAllocator)
 	);
 	assert(SUCCEEDED(result));
 
 	// コマンドリストを生成
-	result = device_->CreateCommandList
+	result = mDevice->CreateCommandList
 	(
 		0,
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
-		commandAllocator_.Get(), nullptr,
-		IID_PPV_ARGS(&commandList_)
+		mCommandAllocator.Get(), nullptr,
+		IID_PPV_ARGS(&mCommandList)
 	);
 	assert(SUCCEEDED(result));
 
 	//コマンドキューの設定
-	D3D12_COMMAND_QUEUE_DESC commandQueue_Desc{};
+	D3D12_COMMAND_QUEUE_DESC mCommandQueueDesc{};
 	//コマンドキューを生成
-	result = device_.Get()->CreateCommandQueue(&commandQueue_Desc, IID_PPV_ARGS(&commandQueue_));
+	result = mDevice.Get()->CreateCommandQueue(&mCommandQueueDesc, IID_PPV_ARGS(&mCommandQueue));
 	assert(SUCCEEDED(result));
 }
 void RenderBase::SwapChainInit()
 {
 	HRESULT result;
 
-	backBuffers_[0] = std::make_unique<RenderTarget>();
-	backBuffers_[1] = std::make_unique<RenderTarget>();
+	mBackBuffers[0] = std::make_unique<RenderTarget>();
+	mBackBuffers[1] = std::make_unique<RenderTarget>();
 
 	// リソースの設定
-	DXGI_SWAP_CHAIN_DESC1 swapChain_Desc{};
-	swapChain_Desc.Width = (UINT)renderWindow_->GetWindowSize().x;
-	swapChain_Desc.Height = (UINT)renderWindow_->GetWindowSize().y;
-	swapChain_Desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;				 // 色情報の書式
-	swapChain_Desc.SampleDesc.Count = 1;								 // マルチサンプルしない
-	swapChain_Desc.BufferUsage = DXGI_USAGE_BACK_BUFFER;				 // バックバッファ用
-	swapChain_Desc.BufferCount = 2;									 // バッファ数を２つに設定
-	swapChain_Desc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;		 // フリップ後は破棄
-	swapChain_Desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+	DXGI_SWAP_CHAIN_DESC1 mSwapChainDesc{};
+	mSwapChainDesc.Width = (UINT)mRenderWindow->GetWindowSize().x;
+	mSwapChainDesc.Height = (UINT)mRenderWindow->GetWindowSize().y;
+	mSwapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;				 // 色情報の書式
+	mSwapChainDesc.SampleDesc.Count = 1;								 // マルチサンプルしない
+	mSwapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER;				 // バックバッファ用
+	mSwapChainDesc.BufferCount = 2;									 // バッファ数を２つに設定
+	mSwapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;		 // フリップ後は破棄
+	mSwapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
 	// スワップチェーンの生成
-	ComPtr<IDXGISwapChain1> swapChain_1;
-	result = dxgiFactory_->CreateSwapChainForHwnd
+	ComPtr<IDXGISwapChain1> mSwapChain1;
+	result = mDxgiFactory->CreateSwapChainForHwnd
 	(
-		commandQueue_.Get(),
-		renderWindow_->GetHwnd(),
-		&swapChain_Desc,
+		mCommandQueue.Get(),
+		mRenderWindow->GetHwnd(),
+		&mSwapChainDesc,
 		nullptr,
 		nullptr,
-		&swapChain_1
+		&mSwapChain1
 	);
-	swapChain_1.As(&swapChain_);
+	mSwapChain1.As(&mSwapChain);
 	assert(SUCCEEDED(result));
 
 	// レンダーターゲットビューの設定
@@ -329,12 +325,12 @@ void RenderBase::SwapChainInit()
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
 	// スワップチェーンの全てのバッファについて処理する
-	for (size_t i = 0; i < backBuffers_.size(); i++)
+	for (size_t i = 0; i < mBackBuffers.size(); i++)
 	{
 		// スワップチェーンからバッファを取得
-		swapChain_->GetBuffer((UINT)i, IID_PPV_ARGS(backBuffers_[i]->GetBufferAddress()));
+		mSwapChain->GetBuffer((UINT)i, IID_PPV_ARGS(mBackBuffers[i]->GetBufferAddress()));
 
-		CreateRTV(*backBuffers_[i], &rtvDesc);
+		CreateRTV(*mBackBuffers[i], &rtvDesc);
 	}
 }
 void RenderBase::FenceInit()
@@ -342,13 +338,13 @@ void RenderBase::FenceInit()
 	HRESULT result;
 
 	// フェンスの生成
-	result = device_->CreateFence(
-		fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(fence_.GetAddressOf()));
+	result = mDevice->CreateFence(
+		mFenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(mFence.GetAddressOf()));
 }
 void RenderBase::DepthBufferInit()
 {
-	depthBuffer_ = std::make_unique<DepthBuffer>();
-	depthBuffer_->Create();
+	mDepthBuffer = std::make_unique<DepthBuffer>();
+	mDepthBuffer->Create();
 }
 void RenderBase::ShaderCompilerInit()
 {
@@ -435,22 +431,22 @@ void RenderBase::ShaderCompilerInit()
 void RenderBase::RootSignatureInit()
 {
 	// 3Dオブジェクト用
-	object3DRootSignature_ = std::make_unique<RootSignature>();
-	object3DRootSignature_->AddConstantBufferViewToRootRrameter(7);
-	object3DRootSignature_->AddDescriptorRangeToRootPrameter(1);
-	object3DRootSignature_->Create(2);
+	mObject3DRootSignature = std::make_unique<RootSignature>();
+	mObject3DRootSignature->AddConstantBufferViewToRootRrameter(7);
+	mObject3DRootSignature->AddDescriptorRangeToRootPrameter(1);
+	mObject3DRootSignature->Create(2);
 
 	// スプライト用
-	spriteRootSignature_ = std::make_unique<RootSignature>();
-	spriteRootSignature_->AddConstantBufferViewToRootRrameter(3);
-	spriteRootSignature_->AddDescriptorRangeToRootPrameter(1);
-	spriteRootSignature_->Create(1);
+	mSpriteRootSignature = std::make_unique<RootSignature>();
+	mSpriteRootSignature->AddConstantBufferViewToRootRrameter(3);
+	mSpriteRootSignature->AddDescriptorRangeToRootPrameter(1);
+	mSpriteRootSignature->Create(1);
 
 	// スプライト用
-	renderTextureRootSignature_ = std::make_unique<RootSignature>();
-	renderTextureRootSignature_->AddConstantBufferViewToRootRrameter(5);
-	renderTextureRootSignature_->AddDescriptorRangeToRootPrameter(1);
-	renderTextureRootSignature_->Create(2);
+	mRenderTextureRootSignature = std::make_unique<RootSignature>();
+	mRenderTextureRootSignature->AddConstantBufferViewToRootRrameter(5);
+	mRenderTextureRootSignature->AddDescriptorRangeToRootPrameter(1);
+	mRenderTextureRootSignature->Create(2);
 }
 void RenderBase::GraphicsPipelineInit()
 {
@@ -475,7 +471,7 @@ void RenderBase::GraphicsPipelineInit()
 	// 3Dオブジェクト用
 	GraphicsPipelineManager::Create(
 		ShaderObjectManager::GetShaderObject("Object3D"),
-		object3DRootSignature_->GetRootSignature(),
+		mObject3DRootSignature->GetRootSignature(),
 		CullMode::Back,
 		depthStencilDesc1,
 		TopologyType::Triangle,
@@ -485,7 +481,7 @@ void RenderBase::GraphicsPipelineInit()
 	// 3Dオブジェクト用
 	GraphicsPipelineManager::Create(
 		ShaderObjectManager::GetShaderObject("FbxModel"),
-		object3DRootSignature_->GetRootSignature(),
+		mObject3DRootSignature->GetRootSignature(),
 		CullMode::Back,
 		depthStencilDesc1,
 		TopologyType::Triangle,
@@ -495,7 +491,7 @@ void RenderBase::GraphicsPipelineInit()
 	// スプライト用
 	GraphicsPipelineManager::Create(
 		ShaderObjectManager::GetShaderObject("Sprite"),
-		spriteRootSignature_->GetRootSignature(),
+		mSpriteRootSignature->GetRootSignature(),
 		CullMode::None,
 		depthStencilDesc2,
 		TopologyType::Triangle,
@@ -505,7 +501,7 @@ void RenderBase::GraphicsPipelineInit()
 	// 円形ゲージスプライト用
 	GraphicsPipelineManager::Create(
 		ShaderObjectManager::GetShaderObject("CircleGaugeSprite"),
-		spriteRootSignature_->GetRootSignature(),
+		mSpriteRootSignature->GetRootSignature(),
 		CullMode::None,
 		depthStencilDesc2,
 		TopologyType::Triangle,
@@ -515,7 +511,7 @@ void RenderBase::GraphicsPipelineInit()
 	// レンダーテクスチャ用
 	GraphicsPipelineManager::Create(
 		ShaderObjectManager::GetShaderObject("RenderTexture"),
-		renderTextureRootSignature_->GetRootSignature(),
+		mRenderTextureRootSignature->GetRootSignature(),
 		CullMode::None,
 		depthStencilDesc2,
 		TopologyType::Triangle,
@@ -525,7 +521,7 @@ void RenderBase::GraphicsPipelineInit()
 	// シルエット用
 	GraphicsPipelineManager::Create(
 		ShaderObjectManager::GetShaderObject("Silhouette"),
-		object3DRootSignature_->GetRootSignature(),
+		mObject3DRootSignature->GetRootSignature(),
 		CullMode::Back,
 		depthStencilDesc3,
 		TopologyType::Triangle,
@@ -535,7 +531,7 @@ void RenderBase::GraphicsPipelineInit()
 	// アウトライン用
 	GraphicsPipelineManager::Create(
 		ShaderObjectManager::GetShaderObject("Outline"),
-		object3DRootSignature_->GetRootSignature(),
+		mObject3DRootSignature->GetRootSignature(),
 		CullMode::Front,
 		depthStencilDesc4,
 		TopologyType::Triangle,
@@ -545,7 +541,7 @@ void RenderBase::GraphicsPipelineInit()
 	// トゥーンレンダリング用
 	GraphicsPipelineManager::Create(
 		ShaderObjectManager::GetShaderObject("ToonRender"),
-		object3DRootSignature_->GetRootSignature(),
+		mObject3DRootSignature->GetRootSignature(),
 		CullMode::Back,
 		depthStencilDesc1,
 		TopologyType::Triangle,
@@ -555,7 +551,7 @@ void RenderBase::GraphicsPipelineInit()
 	// ライン用
 	GraphicsPipelineManager::Create(
 		ShaderObjectManager::GetShaderObject("Line"),
-		object3DRootSignature_->GetRootSignature(),
+		mObject3DRootSignature->GetRootSignature(),
 		CullMode::None,
 		depthStencilDesc1,
 		TopologyType::Line,
@@ -565,10 +561,56 @@ void RenderBase::GraphicsPipelineInit()
 	// エミッター用
 	GraphicsPipelineManager::Create(
 		ShaderObjectManager::GetShaderObject("Emitter"),
-		object3DRootSignature_->GetRootSignature(),
+		mObject3DRootSignature->GetRootSignature(),
 		CullMode::None,
 		depthStencilDesc1,
 		TopologyType::Point,
 		1,
 		"Emitter");
+}
+
+// --- ゲッター -------------------------------------------------------------- //
+ID3D12Device* RenderBase::GetDevice() const
+{
+	return mDevice.Get();
+}
+ID3D12GraphicsCommandList* RenderBase::GetCommandList() const
+{
+	return mCommandList.Get();
+}
+ID3D12CommandQueue* RenderBase::GetCommandQueue() const
+{
+	return mCommandQueue.Get();
+}
+ID3D12CommandAllocator* RenderBase::GetCommandAllocator() const
+{
+	return mCommandAllocator.Get();
+}
+ID3D12Fence* RenderBase::GetFence() const
+{
+	return mFence.Get();
+}
+RootSignature* RenderBase::GetObject3DRootSignature() const
+{
+	return mObject3DRootSignature.get();
+}
+RootSignature* RenderBase::GetSpriteRootSignature() const
+{
+	return mSpriteRootSignature.get();
+}
+RootSignature* RenderBase::GetRenderTextureRootSignature() const
+{
+	return mRenderTextureRootSignature.get();
+}
+DepthBuffer* RenderBase::GetDepthBuffer() const
+{
+	return mDepthBuffer.get();
+}
+Viewport* RenderBase::GetViewport() const
+{
+	return mViewport.get();
+}
+UINT64 RenderBase::GetFenceValue() const
+{
+	return mFenceValue;
 }

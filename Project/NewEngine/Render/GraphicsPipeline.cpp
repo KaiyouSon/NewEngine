@@ -4,13 +4,13 @@
 #include <cassert>
 
 GraphicsPipeline::GraphicsPipeline() :
-	cullMode_(CullMode::None),
-	topologyType_(TopologyType::Triangle),
-	shaderObject_(nullptr), rootSignature_(nullptr), result_(HRESULT())
+	mCullMode(CullMode::None),
+	mTopologyType(TopologyType::Triangle),
+	mShaderObject(nullptr), mRootSignature(nullptr), mResult(HRESULT())
 {
-	depthStencilDesc_.DepthEnable = true; // 深度テストを行う
-	depthStencilDesc_.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み許可
-	depthStencilDesc_.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
+	mDepthStencilDesc.DepthEnable = true; // 深度テストを行う
+	mDepthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み許可
+	mDepthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
 }
 
 void GraphicsPipeline::Create()
@@ -20,7 +20,6 @@ void GraphicsPipeline::Create()
 	CreatePipelineState(BlendMode::Sub);		// 減算ブレンド
 	CreatePipelineState(BlendMode::Inv);
 }
-
 void GraphicsPipeline::CreatePipelineState(const BlendMode blendMode)
 {
 	ID3D12Device* device = RenderBase::GetInstance()->GetDevice();
@@ -29,24 +28,24 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode blendMode)
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
 
 	// シェーダーの設定
-	if (shaderObject_->GetVSBlob() != nullptr)
+	if (mShaderObject->GetVSBlob() != nullptr)
 	{
-		pipelineDesc.VS = CD3DX12_SHADER_BYTECODE(shaderObject_->GetVSBlob());
+		pipelineDesc.VS = CD3DX12_SHADER_BYTECODE(mShaderObject->GetVSBlob());
 	}
-	if (shaderObject_->GetGSBlob() != nullptr)
+	if (mShaderObject->GetGSBlob() != nullptr)
 	{
-		pipelineDesc.GS = CD3DX12_SHADER_BYTECODE(shaderObject_->GetGSBlob());
+		pipelineDesc.GS = CD3DX12_SHADER_BYTECODE(mShaderObject->GetGSBlob());
 	}
-	if (shaderObject_->GetPSBlob() != nullptr)
+	if (mShaderObject->GetPSBlob() != nullptr)
 	{
-		pipelineDesc.PS = CD3DX12_SHADER_BYTECODE(shaderObject_->GetPSBlob());
+		pipelineDesc.PS = CD3DX12_SHADER_BYTECODE(mShaderObject->GetPSBlob());
 	}
 
 	// サンプルマスクの設定
 	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // 標準設定
 
 	// ラスタライザの設定
-	switch (cullMode_)
+	switch (mCullMode)
 	{
 	case CullMode::None:	// カリングしない
 		pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
@@ -68,14 +67,14 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode blendMode)
 	pipelineDesc.RasterizerState.DepthClipEnable = true; // 深度クリッピングを有効に
 
 	// デプスステンシルステートの設定
-	pipelineDesc.DepthStencilState = depthStencilDesc_;
-	if (depthStencilDesc_.DepthEnable == (BOOL)true)
+	pipelineDesc.DepthStencilState = mDepthStencilDesc;
+	if (mDepthStencilDesc.DepthEnable == (BOOL)true)
 	{
 		pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	// 深度値フォーマット
 	}
 
 	// レンダーターゲットのブレンド設定
-	for (uint32_t i = 0; i < rtvNum; i++)
+	for (uint32_t i = 0; i < mRtvNum; i++)
 	{
 		D3D12_RENDER_TARGET_BLEND_DESC blendDesc{};// = pipelineDesc.BlendState.RenderTarget[i];
 
@@ -123,11 +122,11 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode blendMode)
 	}
 
 	// 頂点レイアウトの設定
-	pipelineDesc.InputLayout.pInputElementDescs = shaderObject_->GetInputLayout().data();
-	pipelineDesc.InputLayout.NumElements = (UINT)shaderObject_->GetInputLayout().size();
+	pipelineDesc.InputLayout.pInputElementDescs = mShaderObject->GetInputLayout().data();
+	pipelineDesc.InputLayout.NumElements = (UINT)mShaderObject->GetInputLayout().size();
 
 	// 図形の形状設定
-	switch (topologyType_)
+	switch (mTopologyType)
 	{
 	case TopologyType::Point:
 		pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
@@ -146,37 +145,69 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode blendMode)
 	}
 
 	// その他の設定
-	pipelineDesc.NumRenderTargets = (UINT)rtvNum; // 描画対象は1つ
-	for (size_t i = 0; i < rtvNum; i++)
+	pipelineDesc.NumRenderTargets = (uint32_t)mRtvNum; // 描画対象の数
+	for (size_t i = 0; i < mRtvNum; i++)
 	{
 		pipelineDesc.RTVFormats[i] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB; // 0～255指定のRGBA
 	}
 	pipelineDesc.SampleDesc.Count = 1; // 1ピクセルにつき1回サンプリング
 
 	// パイプラインにルートシグネチャをセット
-	pipelineDesc.pRootSignature = rootSignature_;
+	pipelineDesc.pRootSignature = mRootSignature;
 
 	// パイプランステートの生成
 	switch (blendMode)
 	{
 	case BlendMode::Alpha: // αブレンド
-		result_ = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&alphaPipeline_));
+		mResult = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mAlphaPipeline));
 		break;
 
 	case BlendMode::Add:	// 加算ブレンド
-		result_ = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&addPipeline_));
+		mResult = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mAddPipeline));
 		break;
 
 	case BlendMode::Sub:	// 減算ブレンド
-		result_ = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&subPipeline_));
+		mResult = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mSubPipeline));
 		break;
 
 	case BlendMode::Inv:	// 反転
-		result_ = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&invPipeline_));
+		mResult = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mInvPipeline));
 		break;
 
 	default:
 		break;
 	}
-	assert(SUCCEEDED(result_));
+	assert(SUCCEEDED(mResult));
 }
+
+// セッター
+void GraphicsPipeline::SetCullMode(const CullMode cullMode)
+{
+	mCullMode = cullMode;
+}
+void GraphicsPipeline::SetTopologyType(const TopologyType topologyType)
+{
+	mTopologyType = topologyType;
+}
+void GraphicsPipeline::SetShaderObject(ShaderObject* shaderObject)
+{
+	mShaderObject = shaderObject;
+}
+void GraphicsPipeline::SetRootSignature(ID3D12RootSignature* rootSignature)
+{
+	mRootSignature = rootSignature;
+}
+void GraphicsPipeline::SetDepthStencilDesc(const D3D12_DEPTH_STENCIL_DESC depthStencilDesc)
+{
+	mDepthStencilDesc = depthStencilDesc;
+}
+void GraphicsPipeline::SetRTVNum(const uint32_t rtvNum)
+{
+	mRtvNum = rtvNum;
+}
+
+// ゲッター
+ID3D12PipelineState* GraphicsPipeline::GetAlphaPipeline() const { return mAlphaPipeline.Get(); }
+ID3D12PipelineState* GraphicsPipeline::GetAddPipeline() const { return mAddPipeline.Get(); }
+ID3D12PipelineState* GraphicsPipeline::GetSubPipeline() const { return mSubPipeline.Get(); }
+ID3D12PipelineState* GraphicsPipeline::GetInvPipeline() const { return mInvPipeline.Get(); }

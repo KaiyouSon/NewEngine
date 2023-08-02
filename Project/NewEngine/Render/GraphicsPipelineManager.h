@@ -9,7 +9,7 @@
 class GraphicsPipelineManager
 {
 private:
-	static std::unordered_map<std::string, std::unique_ptr<GraphicsPipeline>> sGraphicsPipelineMap_;
+	static std::unordered_map<std::string, std::unique_ptr<GraphicsPipeline>> sGraphicsPipelineMap;
 
 public:
 	static GraphicsPipeline* Create(

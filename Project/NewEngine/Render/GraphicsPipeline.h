@@ -8,20 +8,20 @@
 class GraphicsPipeline
 {
 private:
-	HRESULT result_;
+	HRESULT mResult;
 
-	CullMode cullMode_;
-	TopologyType topologyType_;
-	ShaderObject* shaderObject_;
-	ID3D12RootSignature* rootSignature_;
-	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc_;
-	uint32_t rtvNum = 1;	// RTVの数
+	CullMode mCullMode;
+	TopologyType mTopologyType;
+	ShaderObject* mShaderObject;
+	ID3D12RootSignature* mRootSignature;
+	D3D12_DEPTH_STENCIL_DESC  mDepthStencilDesc;
+	uint32_t mRtvNum = 1;	// RTVの数
 
 	// 各ブレンドのパイプライン
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> alphaPipeline_;	// αブレンド
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> addPipeline_;	// 加算ブレンド
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> subPipeline_;	// 減算ブレンド
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> invPipeline_;	// 反転ブレンド
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> mAlphaPipeline;	// αブレンド
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> mAddPipeline;	// 加算ブレンド
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> mSubPipeline;	// 減算ブレンド
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> mInvPipeline;	// 反転ブレンド
 
 private:
 	void CreatePipelineState(const BlendMode blendMode);
@@ -32,18 +32,18 @@ public:
 
 public:
 	// セッター
-	inline void SetCullMode(const CullMode cullMode) { this->cullMode_ = cullMode; }
-	inline void SetTopologyType(const TopologyType topologyType) { this->topologyType_ = topologyType; }
-	inline void SetShaderObject(ShaderObject* shaderObject) { this->shaderObject_ = shaderObject; }
-	inline void SetRootSignature(ID3D12RootSignature* rootSignature) { this->rootSignature_ = rootSignature; }
-	inline void SetDepthStencilDesc(const D3D12_DEPTH_STENCIL_DESC depthStencilDesc) { this->depthStencilDesc_ = depthStencilDesc; }
-	inline void SetRTVNum(const uint32_t rtvNum) { this->rtvNum = rtvNum; }
+	void SetCullMode(const CullMode cullMode);
+	void SetTopologyType(const TopologyType topologyType);
+	void SetShaderObject(ShaderObject* shaderObject);
+	void SetRootSignature(ID3D12RootSignature* rootSignature);
+	void SetDepthStencilDesc(const D3D12_DEPTH_STENCIL_DESC depthStencilDesc);
+	void SetRTVNum(const uint32_t rtvNum);
 
 public:
 	// ゲッター
-	inline ID3D12PipelineState* GetAlphaPipeline() const { return alphaPipeline_.Get(); }
-	inline ID3D12PipelineState* GetAddPipeline() const { return addPipeline_.Get(); }
-	inline ID3D12PipelineState* GetSubPipeline() const { return subPipeline_.Get(); }
-	inline ID3D12PipelineState* GetInvPipeline() const { return invPipeline_.Get(); }
+	ID3D12PipelineState* GetAlphaPipeline() const;
+	ID3D12PipelineState* GetAddPipeline() const;
+	ID3D12PipelineState* GetSubPipeline() const;
+	ID3D12PipelineState* GetInvPipeline() const;
 };
 

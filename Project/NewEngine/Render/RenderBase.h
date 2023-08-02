@@ -21,7 +21,48 @@ class RenderBase// : public Singleton<RenderBase>
 {
 public:
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr <T>;
-	static float sClearColor_[4];
+	static float sClearColor[4];
+
+private:
+	// デバイス関連
+	ComPtr<ID3D12Device> mDevice;
+	ComPtr<IDXGIFactory7> mDxgiFactory;
+
+	// コマンド関連
+	ComPtr<ID3D12CommandAllocator> mCommandAllocator;
+	ComPtr<ID3D12GraphicsCommandList> mCommandList;
+	ComPtr<ID3D12CommandQueue> mCommandQueue;
+
+	// スワップチェーン
+	ComPtr<IDXGISwapChain4> mSwapChain;
+	D3D12_DESCRIPTOR_HEAP_DESC mRtvHeapDesc;		 // rtv設定構造体
+	std::array<std::unique_ptr<RenderTarget>, 2> mBackBuffers;
+
+	// フェンス
+	ComPtr<ID3D12Fence> mFence;
+	UINT64 mFenceValue;
+
+	// 深度バッファ
+	std::unique_ptr<DepthBuffer> mDepthBuffer;
+
+	// ティスクリプタヒープ
+	ComPtr<ID3D12DescriptorHeap> mRtvDescHeap;		// rtv用デスクリプタヒープ
+	ComPtr<ID3D12DescriptorHeap> mDsvDescHeap;		// dsv用デスクリプタヒープ
+	UINT mRtvIncrementIndex;
+	UINT mDsvIncrementIndex;
+
+	// ルートシグネチャー関連
+	ComPtr<ID3DBlob> mErrorBlob;	// エラーオブジェクト
+	std::unique_ptr<RootSignature> mObject3DRootSignature;
+	std::unique_ptr<RootSignature> mSpriteRootSignature;
+	std::unique_ptr<RootSignature> mRenderTextureRootSignature;
+
+	// 描画処理関連
+	D3D12_RESOURCE_BARRIER mBarrierDesc;	// リソースバリア
+	std::unique_ptr<Viewport> mViewport;
+	std::unique_ptr<ScissorRectangle> mScissorRectangle;
+
+	RenderWindow* mRenderWindow;
 
 public:
 	void Init();
@@ -32,6 +73,7 @@ public:
 	void SetRenderTextureDrawCommand();
 	void CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC* rtvDesc);
 	void CreateDSV(DepthBuffer& depthBuffer);
+	void PreIncrimentFenceValue() { ++mFenceValue; }
 
 private:
 	// 初期化関連
@@ -46,63 +88,17 @@ private:
 	void GraphicsPipelineInit();
 
 public:
-	inline ID3D12Device* GetDevice() const { return device_.Get(); }
-	inline ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
-	inline ID3D12CommandQueue* GetCommandQueue() const { return commandQueue_.Get(); }
-	inline ID3D12CommandAllocator* GetCommandAllocator() const { return commandAllocator_.Get(); }
-	inline ID3D12Fence* GetFence() const { return fence_.Get(); }
-
-	inline RootSignature* GetObject3DRootSignature() const { return object3DRootSignature_.get(); }
-	inline RootSignature* GetSpriteRootSignature() const { return spriteRootSignature_.get(); }
-	inline RootSignature* GetRenderTextureRootSignature() const { return renderTextureRootSignature_.get(); }
-
-	inline DepthBuffer* GetDepthBuffer() const { return depthBuffer_.get(); }
-
-	inline Viewport* GetViewport() const { return viewport_.get(); }
-
-	inline void PreIncrimentFenceValue() { ++fenceVal_; }
-	inline UINT64 GetFenceValue() { return fenceVal_; }
-private:
-
-	// デバイス関連
-	ComPtr<ID3D12Device> device_;
-	ComPtr<IDXGIFactory7> dxgiFactory_;
-
-	// コマンド関連
-	ComPtr<ID3D12CommandAllocator> commandAllocator_;
-	ComPtr<ID3D12GraphicsCommandList> commandList_;
-	ComPtr<ID3D12CommandQueue> commandQueue_;
-
-	// スワップチェーン
-	ComPtr<IDXGISwapChain4> swapChain_;
-	D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc_;		 // rtv設定構造体
-	std::array<std::unique_ptr<RenderTarget>, 2> backBuffers_;
-
-	// フェンス
-	ComPtr<ID3D12Fence> fence_;
-	UINT64 fenceVal_ = 0;
-
-	// 深度バッファ
-	std::unique_ptr<DepthBuffer> depthBuffer_;
-
-	// ティスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> rtvDescHeap_;		// rtv用デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> dsvDescHeap_;		// dsv用デスクリプタヒープ
-	UINT rtvIncrementIndex_;
-	UINT dsvIncrementIndex_;
-
-	// ルートシグネチャー関連
-	ComPtr <ID3DBlob> errorBlob_;	// エラーオブジェクト
-	std::unique_ptr<RootSignature> object3DRootSignature_;
-	std::unique_ptr<RootSignature> spriteRootSignature_;
-	std::unique_ptr<RootSignature> renderTextureRootSignature_;
-
-	// 描画処理関連
-	D3D12_RESOURCE_BARRIER barrierDesc_;	// リソースバリア
-	std::unique_ptr<Viewport> viewport_;
-	std::unique_ptr<ScissorRectangle> scissorRectangle_;
-
-	RenderWindow* renderWindow_;
+	ID3D12Device* GetDevice() const;
+	ID3D12GraphicsCommandList* GetCommandList() const;
+	ID3D12CommandQueue* GetCommandQueue() const;
+	ID3D12CommandAllocator* GetCommandAllocator() const;
+	ID3D12Fence* GetFence() const;
+	RootSignature* GetObject3DRootSignature() const;
+	RootSignature* GetSpriteRootSignature() const;
+	RootSignature* GetRenderTextureRootSignature() const;
+	DepthBuffer* GetDepthBuffer() const;
+	Viewport* GetViewport() const;
+	UINT64 GetFenceValue() const;
 
 private:
 	RenderBase() {}
