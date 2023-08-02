@@ -45,7 +45,7 @@ void Emitter::Update(Transform* parent)
 		vertices_[i].pos = pParam[i].curPos;
 		vertices_[i].scale = pParam[i].curScale;
 		vertices_[i].rot = pParam[i].curRot;
-		vertices_[i].color = pParam[i].curColor.GetColorTo01();
+		vertices_[i].color = pParam[i].curColor.To01();
 	}
 	vertexBuffer_->TransferToBuffer(vertices_);
 }

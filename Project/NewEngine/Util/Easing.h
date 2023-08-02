@@ -6,12 +6,12 @@
 class Easing
 {
 private:
-	int32_t timer_;
-	int32_t limitTimer_;
-	float timeRate_;
-	float powNum_;
-	bool isEnd_;
-	EaseType easeType_;
+	int32_t mTimer;
+	int32_t mLimitTimer;
+	float mTimeRate;
+	float mPowNum;
+	bool mIsEnd;
+	EaseType mEaseType;
 
 public:
 	Easing();
@@ -23,20 +23,20 @@ public:
 public: // セッター
 
 	// 補間時間をセットする
-	inline void SetEaseTimer(const int32_t limitTimer) { limitTimer_ = limitTimer; }
+	inline void SetEaseTimer(const int32_t limitTimer) { mLimitTimer = limitTimer; }
 	// N乗をセットする
-	inline void SetPowNum(const float powNum) { powNum_ = powNum; }
-	inline void SetEaseType(const EaseType easeType) { easeType_ = easeType; }
-	inline void SetisEnd(const bool isEnd) { isEnd_ = isEnd; }
+	inline void SetPowNum(const float powNum) { mPowNum = powNum; }
+	inline void SetEaseType(const EaseType easeType) { mEaseType = easeType; }
+	inline void SetisEnd(const bool isEnd) { mIsEnd = isEnd; }
 
 public: // ゲッター
 
 	// イージング終わり
-	inline bool GetisEnd() { return isEnd_; }
+	inline bool GetisEnd() { return mIsEnd; }
 	// タイマー取得
-	inline int32_t GetTimer() { return timer_; }
+	inline int32_t GetTimer() { return mTimer; }
 	// タイムレートを取得
-	inline float GetTimeRate() { return timeRate_; }
+	inline float GetTimeRate() { return mTimeRate; }
 
 public:
 

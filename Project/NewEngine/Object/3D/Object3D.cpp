@@ -176,7 +176,7 @@ void Object3D::MaterialTransfer()
 	TransferDataToConstantBuffer(material_.constantBuffers[4].get(), uvData);
 
 	// ƒfƒBƒ]ƒ‹ƒu
-	CDissolve dissolveData = { dissolve,colorPower,Vec2(0,0), dissolveColor.GetColorTo01() };
+	CDissolve dissolveData = { dissolve,colorPower,Vec2(0,0), dissolveColor.To01() };
 	TransferDataToConstantBuffer(material_.constantBuffers[5].get(), dissolveData);
 }
 void Object3D::MaterialDrawCommands()

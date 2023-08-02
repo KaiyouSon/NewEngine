@@ -15,6 +15,11 @@ bool Color::operator!=(const Color other) const
 	return r != other.r || g != other.g || b != other.b || a != other.a;
 }
 
+Color Color::To01()
+{
+	return *this / 255.f;
+}
+
 Color Color::operator=(const Color other)
 {
 	r = other.r, g = other.g, b = other.b, a = other.a;

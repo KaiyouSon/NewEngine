@@ -27,7 +27,7 @@ T Min(const T a, const T b)
 }
 
 // •„†‚ğ•Ô‚·i -1, 0, 1 j
-int Sign(const float a);
+uint32_t Sign(const float a);
 Vec2 Sign(const Vec2 a);
 Vec3 Sign(const Vec3 a);
 
@@ -81,7 +81,7 @@ T Restore(const T value, const T limit, const T origin = 0)
 }
 
 // Œ…”‚ğæ“¾
-int GetDight(const int value);
+uint32_t GetDight(const uint32_t value);
 
 // Œ»İŠÔ‚ğ•Ô‚·ŠÖ”
 unsigned long GetNowTime(const TimeUnit timeUnit = TimeUnit::MilliSecond);

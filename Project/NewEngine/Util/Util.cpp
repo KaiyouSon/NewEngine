@@ -2,7 +2,7 @@
 #include "RenderBase.h"
 #include "Camera.h"
 
-int Sign(const float a)
+uint32_t Sign(const float a)
 {
 	return a >= 0 ? 1 : -1;
 }
@@ -17,10 +17,10 @@ Vec3 Sign(const Vec3 a)
 	return { (float)Sign(a.x),(float)Sign(a.y),(float)Sign(a.z) };
 }
 
-int GetDight(const int value)
+uint32_t GetDight(const uint32_t value)
 {
-	int tempValue = value;
-	int digit = 0;
+	uint32_t tempValue = value;
+	uint32_t digit = 0;
 	while (tempValue != 0)
 	{
 		tempValue /= 10;

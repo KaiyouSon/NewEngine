@@ -31,8 +31,8 @@ void ItemBoxUI::Update(Transform* parent)
 	{
 		light_->color.a = sinf(lightActiveTimer_.GetTimeRate() * PI) * 255;
 
-		lightActiveTimer_.Update(false, 30);
-		if (lightActiveTimer_.GetisTimeOut() == true)
+		lightActiveTimer_.Update(30);
+		if (lightActiveTimer_ == true)
 		{
 			light_->color.a = 0;
 			lightActiveTimer_.Reset();

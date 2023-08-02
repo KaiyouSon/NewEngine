@@ -25,7 +25,7 @@ struct Color
 	const static Color one;
 	const static Color zero;
 
-	Color GetColorTo01() { return { r / 255,g / 255,b / 255 ,a / 255 }; }
+	Color To01();
 
 	Color operator=(const Color other);
 
@@ -33,10 +33,10 @@ struct Color
 	bool operator!=(const Color other) const;
 	Color& operator++();
 
-	Color operator+(const float num) const;		 // ˆê‚Â‚Ì’l‚Æ‚Ì‘«‚µŽZ
-	Color operator-(const float num) const;		 // ˆê‚Â‚Ì’l‚Æ‚Ìˆø‚«ŽZ
-	Color operator*(const float num) const;         // ˆê‚Â‚Ì’l‚Æ‚ÌŠ|‚¯ŽZ
-	Color operator/(const float num) const;         // ˆê‚Â‚Ì’l‚Æ‚ÌŠ„‚èŽZ
+	Color operator+(const float num) const;	// ˆê‚Â‚Ì’l‚Æ‚Ì‘«‚µŽZ
+	Color operator-(const float num) const;	// ˆê‚Â‚Ì’l‚Æ‚Ìˆø‚«ŽZ
+	Color operator*(const float num) const; // ˆê‚Â‚Ì’l‚Æ‚ÌŠ|‚¯ŽZ
+	Color operator/(const float num) const; // ˆê‚Â‚Ì’l‚Æ‚ÌŠ„‚èŽZ
 
 };
 

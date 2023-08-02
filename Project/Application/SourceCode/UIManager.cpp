@@ -45,19 +45,19 @@ void UIManager::Init()
 void UIManager::Update()
 {
 	// デバッグ時のみ実行
-	//ProcessAtDebugBulid([&]()
-	//	{
-	//		if (Key::GetKeyDown(DIK_1))
-	//		{
-	//			resultUI_->SetisActive(true);
-	//			resultUI_->SetResultType(ResultUI::ResultType::EnemyFelledStr);
-	//		}
-	//		else if (Key::GetKeyDown(DIK_2))
-	//		{
-	//			resultUI_->SetisActive(true);
-	//			resultUI_->SetResultType(ResultUI::ResultType::YouDiedStr);
-	//		}
-	//	});
+	ProcessAtDebugBulid([&]()
+		{
+			if (Key::GetKeyDown(DIK_1))
+			{
+				resultUI_->SetisActive(true);
+				resultUI_->SetResultType(ResultUI::ResultType::EnemyFelledStr);
+			}
+			else if (Key::GetKeyDown(DIK_2))
+			{
+				resultUI_->SetisActive(true);
+				resultUI_->SetResultType(ResultUI::ResultType::YouDiedStr);
+			}
+		});
 
 	if (player_->GetisDissolve() == true)
 	{

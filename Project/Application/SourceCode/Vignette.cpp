@@ -62,6 +62,6 @@ void Vignette::PostSceneDraw()
 void Vignette::DrawDebugGui()
 {
 	GuiManager::DrawColorEdit("Vignette Color", vignetteData.color);
-	vignetteData.color = vignetteData.color.GetColorTo01();
+	vignetteData.color = vignetteData.color.To01();
 	GuiManager::DrawSlider2("Vignette Range", vignetteData.range, 0.01f);
 }

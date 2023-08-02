@@ -7,6 +7,8 @@ ShadowMap::ShadowMap() :
 	currentScene_(std::make_unique<PostEffect>()),
 	renderTex_(TextureManager::GetRenderTexture("CurrentScene"))
 {
+	renderTex_->useDepth = true;
+
 	currentScene_->AddRenderTexture(renderTex_);
 	currentScene_->anchorPoint = 0;
 	currentScene_->scale = 0.5f;

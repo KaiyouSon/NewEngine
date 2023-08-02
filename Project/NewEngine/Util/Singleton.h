@@ -13,17 +13,17 @@ private:
 	Singleton(const Singleton&&) = delete;
 	Singleton& operator=(const Singleton&&) = delete;
 
-	static std::unique_ptr<T> sInstance_;
+	static std::unique_ptr<T> sInstance;
 public:
 	inline static std::unique_ptr<T>& GetInstance()
 	{
-		if (sInstance_.get() == nullptr)
+		if (sInstance.get() == nullptr)
 		{
-			sInstance_.reset(new T());
+			sInstance.reset(new T());
 		}
-		return sInstance_;
+		return sInstance;
 	}
 };
 
 template<typename T>
-std::unique_ptr<T> Singleton<T>::sInstance_ = {};
+std::unique_ptr<T> Singleton<T>::sInstance = {};

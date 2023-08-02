@@ -5,12 +5,12 @@
 class Transform
 {
 private:
-	Mat4 scaleMat_;	// スケール行列
-	Mat4 rotMat_;	// 回転行列
-	Mat4 transMat_;	// 平行移動行列
-	Mat4 worldMat_;	// ワールド変換行列
+	Mat4 mScaleMat;	// スケール行列
+	Mat4 mRotMat;	// 回転行列
+	Mat4 mTransMat;	// 平行移動行列
+	Mat4 mWorldMat;	// ワールド変換行列
 
-	Billboard billboard_;
+	Billboard mBillboard;
 
 public:
 	Vec3 pos;	// 座標

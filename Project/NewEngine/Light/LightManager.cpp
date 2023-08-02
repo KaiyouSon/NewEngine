@@ -23,7 +23,7 @@ void LightManager::Update()
 {
 	// マトリックス
 	CDirectionalLight directionalLightData;
-	directionalLightData.color = directionalLight.color.GetColorTo01();
+	directionalLightData.color = directionalLight.color.To01();
 	directionalLightData.dir = directionalLight.pos.Norm();
 	directionalLightData.isActive = directionalLight.isActive;
 	TransferDataToConstantBuffer(material_.constantBuffers[0].get(), directionalLightData);
