@@ -13,16 +13,16 @@ class TextureAnimeiton;
 class Sprite
 {
 private:
-	std::vector<VertexBufferData::VSprite> vertices_;
-	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> vertexBuffer_;
-	std::unique_ptr<Material> material_;
-	GraphicsPipeline* graphicsPipeline_;
-	Transform transform_;
-	Transform* parent_;
-	Texture* texture_;
-	Vec2 anchorPoint_;
-	Vec2 size_;
-	FlipType flipType_;
+	std::vector<VertexBufferData::VSprite> mVertices;
+	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> mVertexBuffer;
+	std::unique_ptr<Material> mMaterial;
+	GraphicsPipeline* mGraphicsPipeline;
+	Transform mTransform;
+	Transform* mParent;
+	Texture* mTexture;
+	Vec2 mAnchorPoint;
+	Vec2 mSize;
+	FlipType mFlipType;
 
 public:
 	Vec2 pos;
@@ -64,6 +64,7 @@ public: //セッター
 	// グラフィックスパイプライン
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
+private:
 	// ブレンド
 	void SetBlendMode(const BlendMode blendMode);
 

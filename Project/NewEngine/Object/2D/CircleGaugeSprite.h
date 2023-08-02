@@ -9,32 +9,56 @@
 class CircleGaugeSprite
 {
 private:
-	std::vector<VertexBufferData::VSprite> vertices_;
-	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> vertexBuffer_;
-	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform2D>> constantBufferTransform_;
-	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> constantBufferColor_;
-	std::unique_ptr<ConstantBuffer<ConstantBufferData::CCircleGauge>> constantBufferCircleGauge_;
-	GraphicsPipeline* graphicsPipeline_;
-	Transform transform_;
+	std::vector<VertexBufferData::VSprite> mVertices;
+	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> mVertexBuffer;
+	std::unique_ptr<Material> mMaterial;
+	GraphicsPipeline* mGraphicsPipeline;
+	Transform mTransform;
+	Transform* mParent;
+	Texture* mTexture;
+	Vec2 mAnchorPoint;
+	Vec2 mSize;
 
 public:
-	Texture* texture;
 	Vec2 pos;
 	Vec2 scale;
-	Vec2 uvPos;
-	Vec2 size;
 	float rot;
 	Color color;
-	Vec2 anchorPoint;
 	float startRadian;
 	float endRadian;
 
+private: // マテリアル関連
+	void MaterialInit();
+	void MaterialTransfer();
+	void MaterialDrawCommands();
+
 private:
-	void TransferTexturePos();
-	void SetBlendMode(const BlendMode blendMode);
+	void TransferVertexCoord();
+	void TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightDownPos);
 
 public:
 	CircleGaugeSprite();
-	void Update();
+	void Update(Transform* parent);
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
+
+
+public:	// セッター
+	// テクスチャー
+	void SetTexture(Texture* texture);
+
+	// 描画範囲
+	void SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos);
+
+	//　サイズ
+	void SetSize(const Vec2 size);
+
+	// アンカーポイント
+	void SetAnchorPoint(const Vec2 anchorPoint);
+
+	// グラフィックスパイプライン
+	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
+
+private:
+	// ブレンド
+	void SetBlendMode(const BlendMode blendMode);
 };

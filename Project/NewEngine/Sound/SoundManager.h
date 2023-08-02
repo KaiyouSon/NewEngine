@@ -7,9 +7,9 @@
 class SoundManager
 {
 private:
-	static IXAudio2MasteringVoice* sMasterVoice_;
-	static Microsoft::WRL::ComPtr<IXAudio2> sXAudio2_;
-	static std::map<std::string, std::unique_ptr<Sound>> sSoundMap_;
+	static IXAudio2MasteringVoice* sMasterVoice;
+	static Microsoft::WRL::ComPtr<IXAudio2> sXAudio2;
+	static std::map<std::string, std::unique_ptr<Sound>> sSoundMap;
 
 public:
 	static Sound* GetSound(std::string soundTag);
@@ -22,5 +22,5 @@ public:
 
 	static void Init();
 	static void Destroy();
-	static inline IXAudio2* GetXAudio2() { return sXAudio2_.Get(); }
+	static IXAudio2* GetXAudio2() { return sXAudio2.Get(); }
 };

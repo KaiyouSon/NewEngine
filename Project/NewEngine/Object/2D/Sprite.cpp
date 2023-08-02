@@ -7,19 +7,19 @@ using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
 Sprite::Sprite() :
-	texture_(TextureManager::GetTexture("White")),
+	mTexture(TextureManager::GetTexture("White")),
 	pos(0), scale(1), rot(0), color(Color::white),
-	anchorPoint_(0.5f), flipType_(FlipType::None),
-	vertexBuffer_(std::make_unique<VertexBuffer<VSprite>>()),
-	material_(std::make_unique<Material>()),
-	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("Sprite"))
+	mAnchorPoint(0.5f), mFlipType(FlipType::None),
+	mVertexBuffer(std::make_unique<VertexBuffer<VSprite>>()),
+	mMaterial(std::make_unique<Material>()),
+	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Sprite"))
 {
-	vertices_.resize(4);
-	vertices_[0].uv = { 0.0f,1.0f };
-	vertices_[1].uv = { 0.0f,0.0f };
-	vertices_[2].uv = { 1.0f,1.0f };
-	vertices_[3].uv = { 1.0f,0.0f };
-	vertexBuffer_->Create(vertices_);
+	mVertices.resize(4);
+	mVertices[0].uv = { 0.0f,1.0f };
+	mVertices[1].uv = { 0.0f,0.0f };
+	mVertices[2].uv = { 1.0f,1.0f };
+	mVertices[3].uv = { 1.0f,0.0f };
+	mVertexBuffer->Create(mVertices);
 
 	// マテリアルの初期化
 	MaterialInit();
@@ -27,25 +27,25 @@ Sprite::Sprite() :
 
 void Sprite::Update(Transform* parent)
 {
-	transform_.pos = pos;
-	transform_.scale = { scale.x,scale.y,1 };
-	transform_.rot = { 0,0,rot };
-	transform_.Update();
+	mTransform.pos = pos;
+	mTransform.scale = { scale.x,scale.y,1 };
+	mTransform.rot = { 0,0,rot };
+	mTransform.Update();
 
 	if (parent != nullptr)
 	{
-		parent_ = parent;
+		mParent = parent;
 
-		Mat4 mat = transform_.GetWorldMat();
-		mat *= parent_->GetWorldMat();
-		transform_.SetWorldMat(mat);
+		Mat4 mat = mTransform.GetWorldMat();
+		mat *= mParent->GetWorldMat();
+		mTransform.SetWorldMat(mat);
 	}
 
 	// マテリアルの転送
 	MaterialTransfer();
 
-
-	vertexBuffer_->TransferToBuffer(vertices_);
+	// 頂点データの転送
+	mVertexBuffer->TransferToBuffer(mVertices);
 }
 void Sprite::Draw(const BlendMode blendMode)
 {
@@ -56,21 +56,21 @@ void Sprite::Draw(const BlendMode blendMode)
 	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	// VBVとIBVの設定コマンド
-	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, vertexBuffer_->GetvbViewAddress());
+	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
 
 	// マテリアルの描画コマンド
 	MaterialDrawCommands();
 
-	size_t max = renderBase->GetSpriteRootSignature()->GetConstantBufferNum();
+	uint32_t max = renderBase->GetSpriteRootSignature()->GetConstantBufferNum();
 
 	for (int i = 0; i < 1; i++)
 	{
 		// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			UINT(max + i), texture_->GetGpuHandle());
+			uint32_t(max + i), mTexture->GetGpuHandle());
 	}
 
-	renderBase->GetCommandList()->DrawInstanced((uint16_t)vertices_.size(), 1, 0, 0);
+	renderBase->GetCommandList()->DrawInstanced((uint16_t)mVertices.size(), 1, 0, 0);
 }
 
 // --- マテリアル関連 --------------------------------------------------- //
@@ -79,29 +79,29 @@ void Sprite::MaterialInit()
 	// インスタンス生成
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3D行列
+	// 2D行列
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform2D>>();
-	material_->constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// 色
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
-	material_->constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// 初期化
-	material_->Init();
+	mMaterial->Init();
 }
 void Sprite::MaterialTransfer()
 {
 	// マトリックス
 	CTransform2D transform2DData =
 	{
-		transform_.GetWorldMat() * Camera::current.GetOrthoGrphicProjectionMat()
+		mTransform.GetWorldMat() * Camera::current.GetOrthoGrphicProjectionMat()
 	};
-	TransferDataToConstantBuffer(material_->constantBuffers[0].get(), transform2DData);
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), transform2DData);
 
 	// 色データ
-	CColor colorData = { color / 255 };
-	TransferDataToConstantBuffer(material_->constantBuffers[1].get(), colorData);
+	CColor colorData = { color.To01() };
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[1].get(), colorData);
 }
 void Sprite::MaterialDrawCommands()
 {
@@ -109,10 +109,10 @@ void Sprite::MaterialDrawCommands()
 
 	// CBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, material_->constantBuffers[0]->constantBuffer->GetGPUVirtualAddress());
+		0, mMaterial->constantBuffers[0]->constantBuffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, material_->constantBuffers[1]->constantBuffer->GetGPUVirtualAddress());
+		1, mMaterial->constantBuffers[1]->constantBuffer->GetGPUVirtualAddress());
 }
 
 // --- 頂点データ関連 --------------------------------------------------- //
@@ -121,12 +121,12 @@ void Sprite::TransferVertexCoord()
 	enum class Point { LD, LU, RD, RU };
 
 	// 四辺
-	float left = (0.f - anchorPoint_.x) * size_.x;
-	float right = (1.f - anchorPoint_.x) * size_.x;
-	float up = (0.f - anchorPoint_.y) * size_.y;
-	float down = (1.f - anchorPoint_.y) * size_.y;
+	float left = (0.f - mAnchorPoint.x) * mSize.x;
+	float right = (1.f - mAnchorPoint.x) * mSize.x;
+	float up = (0.f - mAnchorPoint.y) * mSize.y;
+	float down = (1.f - mAnchorPoint.y) * mSize.y;
 
-	switch (flipType_)
+	switch (mFlipType)
 	{
 	case FlipType::X:
 		left = -left;
@@ -150,26 +150,26 @@ void Sprite::TransferVertexCoord()
 	}
 
 	// 頂点座標
-	vertices_[(uint32_t)Point::LD].pos = Vec3(left, down, 0.f);	  //左下
-	vertices_[(uint32_t)Point::LU].pos = Vec3(left, up, 0.f);	  //左上
-	vertices_[(uint32_t)Point::RD].pos = Vec3(right, down, 0.f);  //右下
-	vertices_[(uint32_t)Point::RU].pos = Vec3(right, up, 0.f);	  //右上
+	mVertices[(uint32_t)Point::LD].pos = Vec3(left, down, 0.f);	  //左下
+	mVertices[(uint32_t)Point::LU].pos = Vec3(left, up, 0.f);	  //左上
+	mVertices[(uint32_t)Point::RD].pos = Vec3(right, down, 0.f);  //右下
+	mVertices[(uint32_t)Point::RU].pos = Vec3(right, up, 0.f);	  //右上
 }
 void Sprite::TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightDownPos)
 {
 	enum class Point { LD, LU, RD, RU };
 
 	// 四辺
-	float left = leftTopPos.x / texture_->size.x;
-	float right = rightDownPos.x / texture_->size.x;
-	float up = leftTopPos.y / texture_->size.y;
-	float down = rightDownPos.y / texture_->size.y;
+	float left = leftTopPos.x / mTexture->size.x;
+	float right = rightDownPos.x / mTexture->size.x;
+	float up = leftTopPos.y / mTexture->size.y;
+	float down = rightDownPos.y / mTexture->size.y;
 
 	// uv座標
-	vertices_[(uint32_t)Point::LD].uv = Vec2(left, down);	 //左下
-	vertices_[(uint32_t)Point::LU].uv = Vec2(left, up);		 //左上
-	vertices_[(uint32_t)Point::RD].uv = Vec2(right, down);	 //右下
-	vertices_[(uint32_t)Point::RU].uv = Vec2(right, up);	 //右上
+	mVertices[(uint32_t)Point::LD].uv = Vec2(left, down);	 //左下
+	mVertices[(uint32_t)Point::LU].uv = Vec2(left, up);		 //左上
+	mVertices[(uint32_t)Point::RD].uv = Vec2(right, down);	 //右下
+	mVertices[(uint32_t)Point::RU].uv = Vec2(right, up);	 //右上
 }
 
 // --- セッター -------------------------------------------------------- //
@@ -177,7 +177,7 @@ void Sprite::TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightDownPos)
 // テクスチャー
 void Sprite::SetTexture(Texture* texture)
 {
-	texture_ = texture;
+	mTexture = texture;
 	SetSize(texture->size);
 }
 
@@ -185,34 +185,34 @@ void Sprite::SetTexture(Texture* texture)
 void Sprite::SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos)
 {
 	TransferUVCoord(leftTopPos, rightDownPos);
-	vertexBuffer_->TransferToBuffer(vertices_);
+	mVertexBuffer->TransferToBuffer(mVertices);
 }
 
 // サイズ
 void Sprite::SetSize(const Vec2 size)
 {
-	size_ = size;
+	mSize = size;
 
 	TransferVertexCoord();
-	vertexBuffer_->TransferToBuffer(vertices_);
+	mVertexBuffer->TransferToBuffer(mVertices);
 }
 
 // アンカーポイント
 void Sprite::SetAnchorPoint(const Vec2 anchorPoint)
 {
-	anchorPoint_ = anchorPoint;
+	mAnchorPoint = anchorPoint;
 
 	TransferVertexCoord();
-	vertexBuffer_->TransferToBuffer(vertices_);
+	mVertexBuffer->TransferToBuffer(mVertices);
 }
 
 // 画像反転
 void Sprite::SetFlipType(const FlipType flipType)
 {
-	flipType_ = flipType;
+	mFlipType = flipType;
 
 	TransferVertexCoord();
-	vertexBuffer_->TransferToBuffer(vertices_);
+	mVertexBuffer->TransferToBuffer(mVertices);
 }
 
 // ブレンド
@@ -223,19 +223,19 @@ void Sprite::SetBlendMode(const BlendMode blendMode)
 	switch (blendMode)
 	{
 	case BlendMode::Alpha: // αブレンド
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetAlphaPipeline());
+		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetAlphaPipeline());
 		break;
 
 	case BlendMode::Add:	// 加算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetAddPipeline());
+		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetAddPipeline());
 		break;
 
 	case BlendMode::Sub:	// 減算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetSubPipeline());
+		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetSubPipeline());
 		break;
 
 	case BlendMode::Inv:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetInvPipeline());
+		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetInvPipeline());
 		break;
 
 	default:
@@ -246,5 +246,5 @@ void Sprite::SetBlendMode(const BlendMode blendMode)
 // グラフィックスパイプライン
 void Sprite::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
-	graphicsPipeline_ = graphicsPipeline;
+	mGraphicsPipeline = graphicsPipeline;
 }
