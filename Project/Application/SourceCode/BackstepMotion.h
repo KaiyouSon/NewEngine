@@ -4,12 +4,12 @@
 class BackstepMotion : public IMotion
 {
 private:
-	Easing moveEase_;
-	Vec3 startPos_;
-	Vec3 endPos_;
-	float length_;
-	float up_;
-	float down_;
+	Easing mMoveEase;
+	Vec3 mStartPos;
+	Vec3 mEndPos;
+	float mLength;
+	float mUp;
+	float mDown;
 
 private:
 	void CurrentStepInit(HumanoidBody* human);

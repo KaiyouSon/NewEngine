@@ -38,40 +38,40 @@ void BossGrabAttackMotion::Update(HumanoidBody* human)
 
 void BossGrabAttackMotion::CurrentStepInit(HumanoidBody* human)
 {
-	startBodyY_ = human->GetPart(PartID::Body)->pos.y;
+	mStartBodyY = human->GetPart(PartID::Body)->pos.y;
 	switch (mStep)
 	{
 	case 0:
 		SettingMovePrame(human, 3, 30, 2);
-		endBodyY_ = -0.0f;
+		mEndBodyY = -0.0f;
 		break;
 	case 1:
-		endBodyY_ = -0.26f;
+		mEndBodyY = -0.26f;
 		break;
 	case 2:
-		endBodyY_ = -0.24f;
+		mEndBodyY = -0.24f;
 		break;
 	case 3:
 		SettingMovePrame(human, 12, 30, 3);
-		endBodyY_ = -0.48f;
+		mEndBodyY = -0.48f;
 		break;
 	case 4:
-		endBodyY_ = -0.43f;
+		mEndBodyY = -0.43f;
 		break;
 	default:
-		endBodyY_ = 0;
+		mEndBodyY = 0;
 	}
 }
 void BossGrabAttackMotion::CurrentStepUpdate(HumanoidBody* human)
 {
-	human->GetPart(PartID::Body)->pos.y = mEase.Interpolation(startBodyY_, endBodyY_);
+	human->GetPart(PartID::Body)->pos.y = mEase.Interpolation(mStartBodyY, mEndBodyY);
 
 	Boss* boss = static_cast<Boss*>(human->iParent);
 	if ((mStep >= 0 && mStep <= 2) ||
 		(mStep == 3))
 	{
-		human->pos = moveEase_.InOut(startPos_, endPos_);
-		moveEase_.Update();
+		human->pos = mMoveEase.InOut(mStartPos, mEndPos);
+		mMoveEase.Update();
 	}
 }
 
@@ -79,16 +79,16 @@ void BossGrabAttackMotion::SettingMovePrame(HumanoidBody* human, const float dis
 {
 	Boss* boss = static_cast<Boss*>(human->iParent);
 
-	moveEase_.SetEaseTimer(easeTimer);
-	moveEase_.SetPowNum(powNum);
-	moveEase_.Reset();
+	mMoveEase.SetEaseTimer(easeTimer);
+	mMoveEase.SetPowNum(powNum);
+	mMoveEase.Reset();
 	boss->CalcFrontVec();
 
 	// 攻撃モーションで進む距離の計算
 	//length_ = 5;
 
 	// 現在の座標を取得
-	startPos_ = human->pos;
-	endPos_ = startPos_ + boss->mFrontVec.Norm() * dis;
+	mStartPos = human->pos;
+	mEndPos = mStartPos + boss->mFrontVec.Norm() * dis;
 }
 

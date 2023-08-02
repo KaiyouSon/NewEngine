@@ -4,12 +4,12 @@
 class BossGrabAttackMotion : public IMotion
 {
 private:
-	Easing moveEase_;
-	Vec3 startPos_;
-	Vec3 endPos_;
-	float length_;
-	float startBodyY_;
-	float endBodyY_;
+	Easing mMoveEase;
+	Vec3 mStartPos;
+	Vec3 mEndPos;
+	float mLength;
+	float mStartBodyY;
+	float mEndBodyY;
 
 private:
 	void CurrentStepInit(HumanoidBody* human);

@@ -40,73 +40,73 @@ void BossAttack3Motion::CurrentStepInit(HumanoidBody* human)
 {
 	Boss* boss = static_cast<Boss*>(human->iParent);
 
-	startBodyY_ = human->GetPart(PartID::Body)->pos.y;
+	mStartBodyY = human->GetPart(PartID::Body)->pos.y;
 	switch (mStep)
 	{
 	case 0:
-		endBodyY_ = -0.3f;
+		mEndBodyY = -0.3f;
 		break;
 	case 1:
-		endBodyY_ = -0.28f;
+		mEndBodyY = -0.28f;
 		break;
 	case 2:
-		endBodyY_ = -1.2f;
+		mEndBodyY = -1.2f;
 		boss->GetWeapon()->SetisCalcCollider(true);
 		boss->mDamage = 30.f;
 		break;
 	case 3:
 		SettingMovePrame(human, 5, 15, 2);
-		endBodyY_ = -1.1f;
+		mEndBodyY = -1.1f;
 		break;
 	case 4:
-		endBodyY_ = -1.0f;
+		mEndBodyY = -1.0f;
 		boss->GetWeapon()->SetisCalcCollider(false);
 		boss->mDamage = 0.f;
 		break;
 	case 5:
-		endBodyY_ = -1.3f;
+		mEndBodyY = -1.3f;
 		boss->GetWeapon()->SetisCalcCollider(true);
 		boss->mDamage = 30.f;
 		break;
 	case 6:
 		SettingMovePrame(human, 5, 15, 2);
-		endBodyY_ = -0.37f;
+		mEndBodyY = -0.37f;
 		break;
 	case 7:
-		endBodyY_ = -1.1f;
+		mEndBodyY = -1.1f;
 		boss->GetWeapon()->SetisCalcCollider(false);
 		boss->mDamage = 0.f;
 		break;
 	case 8:
-		endBodyY_ = -0.95f;
+		mEndBodyY = -0.95f;
 		break;
 	case 9:
-		endBodyY_ = -0.95f;
+		mEndBodyY = -0.95f;
 		boss->GetWeapon()->SetisCalcCollider(true);
 		boss->mDamage = 50.f;
 		break;
 	case 10:
 		SettingMovePrame(human, 8, 10, 2);
-		endBodyY_ = -1.5f;
+		mEndBodyY = -1.5f;
 		break;
 	case 11:
-		endBodyY_ = -0.95f;
+		mEndBodyY = -0.95f;
 		boss->GetWeapon()->SetisCalcCollider(false);
 		boss->mDamage = 0.f;
 		break;
 	default:
-		endBodyY_ = 0;
+		mEndBodyY = 0;
 	}
 }
 void BossAttack3Motion::CurrentStepUpdate(HumanoidBody* human)
 {
-	human->GetPart(PartID::Body)->pos.y = mEase.Interpolation(startBodyY_, endBodyY_);
+	human->GetPart(PartID::Body)->pos.y = mEase.Interpolation(mStartBodyY, mEndBodyY);
 
 	Boss* boss = static_cast<Boss*>(human->iParent);
 	if (mStep == 3 || mStep == 6 || mStep == 10)
 	{
-		human->pos = moveEase_.InOut(startPos_, endPos_);
-		moveEase_.Update();
+		human->pos = mMoveEase.InOut(mStartPos, mEndPos);
+		mMoveEase.Update();
 	}
 
 	if (mStep == 3 || mStep == 6)
@@ -129,16 +129,16 @@ void BossAttack3Motion::SettingMovePrame(HumanoidBody* human, const float dis, c
 {
 	Boss* boss = static_cast<Boss*>(human->iParent);
 
-	moveEase_.SetEaseTimer(easeTimer);
-	moveEase_.SetPowNum(powNum);
-	moveEase_.Reset();
+	mMoveEase.SetEaseTimer(easeTimer);
+	mMoveEase.SetPowNum(powNum);
+	mMoveEase.Reset();
 	boss->CalcFrontVec();
 
 	// 攻撃モーションで進む距離の計算
 	//length_ = 5;
 
 	// 現在の座標を取得
-	startPos_ = human->pos;
-	endPos_ = startPos_ + boss->mFrontVec.Norm() * dis;
+	mStartPos = human->pos;
+	mEndPos = mStartPos + boss->mFrontVec.Norm() * dis;
 }
 

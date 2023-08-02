@@ -23,8 +23,8 @@ void BackstepMotion::Init(HumanoidBody* human)
 	mCurWeaponRots.resize(human->GetWeaponPartsSize());
 	mEndWeaponRots.resize(human->GetWeaponPartsSize());
 
-	moveEase_.SetEaseTimer(15);
-	moveEase_.SetPowNum(2);
+	mMoveEase.SetEaseTimer(15);
+	mMoveEase.SetPowNum(2);
 }
 void BackstepMotion::Update(HumanoidBody* human)
 {
@@ -73,40 +73,40 @@ void BackstepMotion::Step0Init(HumanoidBody* human)
 {
 	Player* player = static_cast<Player*>(human->iParent);
 
-	moveEase_.Reset();
+	mMoveEase.Reset();
 
 	mStep = 0;
 
 	// 攻撃モーションで進む距離の計算
 	player->CalcFrontVec();
-	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(-player->mFrontVec, 15);
+	mLength = CollisionManager::GetInstance()->CalcPlayerDisToFront(-player->mFrontVec, 15);
 
 	// 現在の座標を取得
-	startPos_ = human->pos;
-	endPos_ = startPos_ - player->mFrontVec.Norm() * length_;
+	mStartPos = human->pos;
+	mEndPos = mStartPos - player->mFrontVec.Norm() * mLength;
 
-	up_ = 1;
-	down_ = -0.5;
+	mUp = 1;
+	mDown = -0.5;
 }
 void BackstepMotion::Step0Update(HumanoidBody* human)
 {
 	Player* player = static_cast<Player*>(human->iParent);
 
-	human->GetPart(PartID::Body)->pos.y = mEase.Interpolation(0.f, up_);
-	human->pos = moveEase_.InOut(startPos_, endPos_);
-	player->mMoveVel = endPos_ - startPos_;
+	human->GetPart(PartID::Body)->pos.y = mEase.Interpolation(0.f, mUp);
+	human->pos = mMoveEase.InOut(mStartPos, mEndPos);
+	player->mMoveVel = mEndPos - mStartPos;
 
-	moveEase_.Update();
+	mMoveEase.Update();
 }
 void BackstepMotion::Step1Update(HumanoidBody* human)
 {
 	Player* player = static_cast<Player*>(human->iParent);
 
-	human->GetPart(PartID::Body)->pos.y = mEase.Interpolation(up_, down_);
-	human->pos = moveEase_.InOut(startPos_, endPos_);
-	player->mMoveVel = endPos_ - startPos_;
+	human->GetPart(PartID::Body)->pos.y = mEase.Interpolation(mUp, mDown);
+	human->pos = mMoveEase.InOut(mStartPos, mEndPos);
+	player->mMoveVel = mEndPos - mStartPos;
 
-	moveEase_.Update();
+	mMoveEase.Update();
 
 	if (mEase.GetisEnd() == true)
 	{
@@ -116,7 +116,7 @@ void BackstepMotion::Step1Update(HumanoidBody* human)
 }
 void BackstepMotion::Step2Update(HumanoidBody* human)
 {
-	human->GetPart(PartID::Body)->pos.y = mEase.Interpolation(down_, 0.f);
+	human->GetPart(PartID::Body)->pos.y = mEase.Interpolation(mDown, 0.f);
 
 	if (mEase.GetisEnd() == true)
 	{

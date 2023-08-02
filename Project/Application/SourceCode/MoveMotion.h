@@ -6,19 +6,19 @@ class PlayerBody;
 class MoveMotion
 {
 private:
-	bool isPlay_;
-	bool isInit_;
-	uint32_t step_;
-	std::vector<Vec3> curRots_;
-	std::vector<Vec3> startRots_;
-	std::vector<Vec3> endRots_;
-	Easing ease_;
-	float curSpeed_;
-	float endSpeed_;
+	bool mIsPlay;
+	bool mIsInit;
+	uint32_t mStep;
+	std::vector<Vec3> mCurRots;
+	std::vector<Vec3> mStartRots;
+	std::vector<Vec3> mEndRots;
+	Easing mEase;
+	float mCurSpeed;
+	float mEndSpeed;
 
-	uint32_t count_;
+	uint32_t mCount;
+
 private:
-
 	void CalcCurrentRot(PlayerBody* human);
 	void ReverceRots();
 
@@ -30,8 +30,6 @@ private:
 	void Step2Update(PlayerBody* human);
 	void Step3Init(PlayerBody* human);
 	void Step3Update(PlayerBody* human);
-
-
 
 public:
 	MoveMotion();

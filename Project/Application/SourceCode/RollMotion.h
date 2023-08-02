@@ -4,11 +4,11 @@
 class RollMotion : public IMotion
 {
 private:
-	Easing moveEase_;
-	Vec3 startPos_;
-	Vec3 endPos_;
-	float length_;
-	float rotY_;
+	Easing mMoveEase;
+	Vec3 mStartPos;
+	Vec3 mEndPos;
+	float mLength;
+	float mRotY;
 
 private:
 	void CurrentStepInit(HumanoidBody* human);
