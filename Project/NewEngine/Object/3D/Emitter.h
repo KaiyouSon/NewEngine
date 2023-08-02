@@ -11,16 +11,16 @@
 class Emitter
 {
 private:
-	std::vector<VertexBufferData::VParticle> vertices_;
-	std::unique_ptr<VertexBuffer<VertexBufferData::VParticle>> vertexBuffer_;
-	Vec3 worldPos_;
-	Vec3 worldScale_;
-	Transform transform_;
-	Transform* parent_;
-	Texture* texture_;
-	Material material_;
-	GraphicsPipeline* graphicsPipeline_;
-	Billboard billboard_;
+	std::vector<VertexBufferData::VParticle> mVertices;
+	std::unique_ptr<VertexBuffer<VertexBufferData::VParticle>> mVertexBuffer;
+	Vec3 mWorldPos;
+	Vec3 mWorldScale;
+	Transform mTransform;
+	Transform* mParent;
+	Texture* mTexture;
+	Material mMaterial;
+	GraphicsPipeline* mGraphicsPipeline;
+	Billboard mBillboard;
 
 public:
 	Vec3 pos;
