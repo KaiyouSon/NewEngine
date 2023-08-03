@@ -56,7 +56,7 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 	// ファイルオープン失敗をチェック
 	if (file.fail())
 	{
-		std::string log = "[ObjModel Load] FileName : " + fileName + ", tag : " + modelTag + ", is,failed to load";
+		std::string log = "[ObjModel Load] FileName : " + fileName + ", Tag : " + modelTag + ", is,failed to load";
 		OutputDebugLog(log.c_str());
 
 		assert(0 && "モデルの読み込みが失敗しました");
@@ -211,8 +211,23 @@ Model* ModelManager::LoadFbxModel(const std::string fileName, const std::string 
 	std::string fbxfile = fileName + ".fbx";
 	std::string fullPath = path + fbxfile;
 
-	// assimpでロードする
-	AssimpLoader::GetInstance()->LoadFbxModel(fullPath, model.get());
+	// フラグ
+	uint32_t flags = aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs;
+
+	// シーンの読み込み
+	model->scene = model->importer.ReadFile(fullPath, flags);
+
+	if (model->scene == nullptr)
+	{
+		std::string log = "[ObjModel Load] FileName : " + fileName + ", Tag : " + modelTag + ", is,failed to load";
+		OutputDebugLog(log.c_str());
+
+		assert(0 && "モデルの読み込みが失敗しました");
+	}
+
+	// マテリアルの解析
+	AssimpLoader::GetInstance()->ParseMaterial(model.get(), model->scene);
+	AssimpLoader::GetInstance()->ParseNodeRecursive(model.get(), nullptr, model->scene->mRootNode);
 
 	// バッファー生成
 	model->mesh.vertexBuffer.Create(model->mesh.vertices);

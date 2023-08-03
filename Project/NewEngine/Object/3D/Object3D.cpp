@@ -82,7 +82,7 @@ void Object3D::Draw(const BlendMode blendMode)
 	//auto tex = TextureManager::GetRenderTexture("CurrentScene")->depthTexture.get();
 	//if (isUseDissolve == true)
 	//{
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)index + 1, mDissolveTex->GetGpuHandle());
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)index + 1, mDissolveTex->GetGpuHandle());
 	//}
 	//else
 	//{
@@ -94,19 +94,20 @@ void Object3D::Draw(const BlendMode blendMode)
 	//	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
 	//	renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
 
-	//	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-	//		(UINT)index + 1, tex->GetGpuHandle());
+	//	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)index + 1, tex->GetGpuHandle());
 	//}
 
 	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModel->mesh.indices.size(), 1, 0, 0, 0);
-
-	//D3D12_RESOURCE_BARRIER  barrier{};
-	//barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	//barrier.Transition.pResource = tex->buffer.Get();
-	//barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	//barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_GENERIC_READ;
-	//barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_DEPTH_WRITE;
-	//renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
+	//if (isUseDissolve == false)
+	//{
+	//	D3D12_RESOURCE_BARRIER  barrier{};
+	//	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	//	barrier.Transition.pResource = tex->buffer.Get();
+	//	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+	//	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_GENERIC_READ;
+	//	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_DEPTH_WRITE;
+	//	renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
+	//}
 }
 
 // --- マテリアル関連 --------------------------------------------------- //

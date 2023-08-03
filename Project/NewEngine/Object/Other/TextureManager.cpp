@@ -31,11 +31,11 @@ Texture* TextureManager::GetTexture(std::string textureTag)
 	std::string log;
 	if (sTextureMap[textureTag].get() == nullptr)
 	{
-		log = "[Texture Use] TextureTag : " + textureTag + ", does not exist";
+		log = "[Texture Use] Tag : " + textureTag + ", does not exist";
 	}
 	else
 	{
-		log = "[Texture Use] TextureTag : " + textureTag + ", was used";
+		log = "[Texture Use] Tag : " + textureTag + ", was used";
 	}
 	OutputDebugLog(log.c_str());
 
@@ -214,7 +214,7 @@ Texture* TextureManager::CreateTexture(Color color, std::string textureTag)
 
 	RenderBase::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrier);
 
-	std::string log = "[Texture Create] ColorTexture, TextureTag : " + textureTag + ", created";
+	std::string log = "[Texture Create] ColorTexture, Tag : " + textureTag + ", created";
 	OutputDebugLog(log.c_str());
 
 	return sTextureMap[textureTag].get();
@@ -509,7 +509,7 @@ Texture* TextureManager::LoadMaterialTexture(std::string filePath, std::string t
 
 	if (result != S_OK)
 	{
-		std::string log = "[Texture Load] FilePath : " + filePath + ", TextureTag : " + textureTag + ", is,failed to load";
+		std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + textureTag + ", is,failed to load";
 		OutputDebugLog(log.c_str());
 
 		assert(0 && "テクスチャーの読み込みが失敗しました");
@@ -612,7 +612,7 @@ Texture* TextureManager::LoadMaterialTexture(std::string filePath, std::string t
 
 	RenderBase::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrier);
 
-	std::string log = "[Texture Load] FilePath : " + filePath + ", TextureTag : " + textureTag + ", was loaded successfully";
+	std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + textureTag + ", was loaded successfully";
 	OutputDebugLog(log.c_str());
 
 	return sTextureMap[textureTag].get();
@@ -634,7 +634,7 @@ Texture* TextureManager::CreateDepthTexture(Vec2 size)
 	// SRV作成
 	CreateSRV(*sTextureMap[tag], sTextureMap[tag]->buffer.Get());
 
-	std::string log = "[Texture Create] DepthTexture, TextureTag : " + tag + ", created";
+	std::string log = "[Texture Create] DepthTexture, Tag : " + tag + ", created";
 	OutputDebugLog(log.c_str());
 
 	return sTextureMap[tag].get();
@@ -650,11 +650,11 @@ RenderTexture* TextureManager::GetRenderTexture(std::string textureTag)
 	std::string log;
 	if (sRenderTextureMap[textureTag].get() == nullptr)
 	{
-		log = "[RenderTexture Use] TextureTag : " + textureTag + ", does not exist";
+		log = "[RenderTexture Use] Tag : " + textureTag + ", does not exist";
 	}
 	else
 	{
-		log = "[RenderTexture Use] TextureTag : " + textureTag + ", was used";
+		log = "[RenderTexture Use] Tag : " + textureTag + ", was used";
 	}
 	OutputDebugLog(log.c_str());
 
@@ -732,12 +732,11 @@ RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, uint32_t num, std:
 
 	renderTex->depthTexture = std::make_unique<Texture>();
 	renderTex->depthTexture->buffer = renderTex->depthBuffer.GetBuffer();
-	//renderTex->depthTexture->buffer->SetName(L"DepthName");
 	CreateSRV(*renderTex->depthTexture, renderTex->depthTexture->buffer.Get());
 
 	sRenderTextureMap.insert(std::make_pair(textureTag, std::move(renderTex)));
 
-	std::string log = "[RenderTexture Create] TextureTag : " + textureTag + ", created";
+	std::string log = "[RenderTexture Create] Tag : " + textureTag + ", created";
 	OutputDebugLog(log.c_str());
 
 	return sRenderTextureMap[textureTag].get();

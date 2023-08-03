@@ -3,26 +3,6 @@
 
 using namespace VertexBufferData;
 
-void AssimpLoader::LoadFbxModel(const std::string filePath, FbxModel* model)
-{
-	// フラグ
-	uint32_t flags = aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs;
-
-	// シーンの読み込み
-	model->scene = model->importer.ReadFile(filePath, flags);
-
-	if (model->scene == nullptr)
-	{
-		assert(0 && "モデルの読み込みが失敗しました");
-	}
-
-	// マテリアルの解析
-	ParseMaterial(model, model->scene);
-
-	ParseNodeRecursive(model, nullptr, model->scene->mRootNode);
-
-}
-
 void AssimpLoader::ParseMesh(FbxModel* model, aiMesh* mesh)
 {
 	ParseMeshVertices(model, mesh);

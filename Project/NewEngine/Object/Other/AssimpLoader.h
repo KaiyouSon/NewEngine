@@ -12,15 +12,13 @@ private:
 	void ParseMeshVertices(FbxModel* model, aiMesh* mesh);	// 頂点データの解析
 	void ParseMeshFaces(FbxModel* model, aiMesh* mesh);		// フェンスの解析
 	void ParseSkin(FbxModel* model, aiMesh* mesh);			// スキン情報の解析
-	void ParseMaterial(FbxModel* model, const aiScene* scene);		// マテリアルカラーの解析
-	void ParseNodeRecursive(FbxModel* model, FbxNode* parent, const aiNode* node);
 
 public:
 	static Mat4 ConvertMat4FromAssimpMat(const aiMatrix4x4& mat);
 	std::string ExractFileName(const std::string& path);
 
-public:
-	void LoadFbxModel(const std::string filePath, FbxModel* model);
+	void ParseMaterial(FbxModel* model, const aiScene* scene);		// マテリアルカラーの解析
+	void ParseNodeRecursive(FbxModel* model, FbxNode* parent, const aiNode* node);
 
 private:
 	friend Singleton<AssimpLoader>;
