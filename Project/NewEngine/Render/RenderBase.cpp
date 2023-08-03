@@ -141,7 +141,7 @@ void RenderBase::CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET
 
 	mRtvIncrementIndex++;
 }
-void RenderBase::CreateDSV(DepthBuffer& mDepthBuffer)
+void RenderBase::CreateDSV(DepthBuffer& depthBuffer)
 {
 	// RTVヒープの先頭ハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvCpuHandle = mDsvDescHeap->GetCPUDescriptorHandleForHeapStart();
@@ -150,7 +150,7 @@ void RenderBase::CreateDSV(DepthBuffer& mDepthBuffer)
 
 	dsvCpuHandle.ptr += descriptorSize * mDsvIncrementIndex;
 
-	mDepthBuffer.SetCpuHandle(dsvCpuHandle);
+	depthBuffer.SetCpuHandle(dsvCpuHandle);
 
 	// 深度ビュー作成
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
@@ -158,7 +158,7 @@ void RenderBase::CreateDSV(DepthBuffer& mDepthBuffer)
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 
 	// ハンドルの指す位置にRTV作成
-	mDevice->CreateDepthStencilView(mDepthBuffer.GetBuffer(), &dsvDesc, dsvCpuHandle);
+	mDevice->CreateDepthStencilView(depthBuffer.GetBuffer(), &dsvDesc, dsvCpuHandle);
 
 	mDsvIncrementIndex++;
 }

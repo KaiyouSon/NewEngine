@@ -56,6 +56,9 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 	// ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“Ž¸”s‚ðƒ`ƒFƒbƒN
 	if (file.fail())
 	{
+		std::string log = "[ObjModel Load] FileName : " + fileName + ", tag : " + modelTag + ", is,failed to load";
+		OutputDebugLog(log.c_str());
+
 		assert(0 && "ƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý‚ªŽ¸”s‚µ‚Ü‚µ‚½");
 	}
 
@@ -184,6 +187,9 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 
 	model->mesh.CreateBuffer();
 
+	std::string log = "[ObjModel Load] FileName : " + fileName + ", Tag : " + modelTag + ", was loaded successfully";
+	OutputDebugLog(log.c_str());
+
 	// map‚ÉŠi”[
 	sModelMap.insert(std::make_pair(modelTag, std::move(model)));
 
@@ -214,6 +220,10 @@ Model* ModelManager::LoadFbxModel(const std::string fileName, const std::string 
 
 	// map‚ÉŠi”[
 	sModelMap.insert(std::make_pair(modelTag, std::move(model)));
+
+
+	std::string log = "[FbxModel Load] FileName : " + fileName + ", Tag : " + modelTag + ", was loaded successfully";
+	OutputDebugLog(log.c_str());
 
 	return sModelMap[modelTag].get();
 }

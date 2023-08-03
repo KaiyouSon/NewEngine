@@ -377,7 +377,7 @@ Texture* TextureManager::LoadTexture(std::string filePath, std::string textureTa
 
 	if (result != S_OK)
 	{
-		std::string log = "[Texture Load] FilePath : " + filePath + ", TextureTag : " + textureTag + ", is,failed to load";
+		std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + textureTag + ", is,failed to load";
 		OutputDebugLog(log.c_str());
 
 		assert(0 && "テクスチャーの読み込みが失敗しました");
@@ -481,7 +481,7 @@ Texture* TextureManager::LoadTexture(std::string filePath, std::string textureTa
 
 	RenderBase::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrier);
 
-	std::string log = "[Texture Load] FilePath : " + filePath + ", TextureTag : " + textureTag + ", was loaded successfully";
+	std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + textureTag + ", was loaded successfully";
 	OutputDebugLog(log.c_str());
 
 	return sTextureMap[textureTag].get();
@@ -648,7 +648,7 @@ Texture* TextureManager::CreateDepthTexture(Vec2 size)
 RenderTexture* TextureManager::GetRenderTexture(std::string textureTag)
 {
 	std::string log;
-	if (sTextureMap[textureTag].get() == nullptr)
+	if (sRenderTextureMap[textureTag].get() == nullptr)
 	{
 		log = "[RenderTexture Use] TextureTag : " + textureTag + ", does not exist";
 	}

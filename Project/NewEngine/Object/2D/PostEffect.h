@@ -14,10 +14,10 @@ private:
 	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> vertexBuffer_;
 	std::vector<RenderTexture*> renderTextures_;
 	GraphicsPipeline* graphicsPipeline_;
-	Texture* depthTexture_;
 	Material material_;
 	Transform transform_;
 	Vec2 size_;
+	Texture* depthTexture_;
 
 public:
 	Vec2 pos;

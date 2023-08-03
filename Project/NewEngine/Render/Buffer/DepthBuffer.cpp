@@ -16,6 +16,7 @@ void DepthBuffer::Create()
 	depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;	// 深度値デフォルト
 	depthResourceDesc.SampleDesc.Count = 1;
 	depthResourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+	depthResourceDesc.MipLevels = 1;
 
 	// 深度用ヒーププロパティ
 	D3D12_HEAP_PROPERTIES depthHeapProp{};
