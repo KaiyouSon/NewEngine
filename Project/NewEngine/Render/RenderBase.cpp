@@ -444,7 +444,7 @@ void RenderBase::RootSignatureInit()
 
 	// スプライト用
 	mRenderTextureRootSignature = std::make_unique<RootSignature>();
-	mRenderTextureRootSignature->AddConstantBufferViewToRootRrameter(5);
+	mRenderTextureRootSignature->AddConstantBufferViewToRootRrameter(2);
 	mRenderTextureRootSignature->AddDescriptorRangeToRootPrameter(1);
 	mRenderTextureRootSignature->Create(2);
 }

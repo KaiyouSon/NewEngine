@@ -79,10 +79,10 @@ void Object3D::Draw(const BlendMode blendMode)
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)index, mTexture->GetGpuHandle());
 
-	if (isUseDissolve == true)
-	{
+	//if (isUseDissolve == true)
+	//{
 		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)index + 1, mDissolveTex->GetGpuHandle());
-	}
+	//}
 
 	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModel->mesh.indices.size(), 1, 0, 0, 0);
 }

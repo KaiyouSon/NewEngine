@@ -93,3 +93,29 @@ void ProcessAtReleaseBulid(std::function<void()> lambdaFunc)
 
 #endif
 }
+
+void OutputDebugLog(const char* fmt ...)
+{
+	char buffer[1024]{};
+
+	// 可変長引数を取得するための処理
+	va_list args;
+	va_start(args, fmt);
+
+	// フォーマットされた文字列をbufferに格納します
+	vsnprintf(buffer, sizeof(buffer), fmt, args);
+
+	// 可変長引数の処理を終了します
+	va_end(args);
+
+	// 最後に改行を追加します
+	uint32_t len = (uint32_t)strlen(buffer);
+	// バッファに十分な余裕がある場合のみ改行を追加します
+	if (len < sizeof(buffer) - 2)
+	{
+		buffer[len] = '\n';
+		buffer[len + 1] = '\0';
+	}
+
+	OutputDebugStringA(buffer);
+}

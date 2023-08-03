@@ -7,9 +7,9 @@
 class ModelManager
 {
 private:
-	static std::unordered_map<std::string, std::unique_ptr<Model>> sModelMap_;	// モデルのマップ
-	static std::mutex sMtx_;	// 排他制御
-	static std::string sDirectoryPath_;
+	static std::unordered_map<std::string, std::unique_ptr<Model>> sModelMap;	// モデルのマップ
+	static std::mutex sMtx;	// 排他制御
+	static std::string sDirectoryPath;
 
 public:	// モデル関連
 	// モデルの取得

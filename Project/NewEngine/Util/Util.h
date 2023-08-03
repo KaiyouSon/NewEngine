@@ -97,3 +97,6 @@ void ProcessAtDebugBulid(std::function<void()> lambdaFunc);
 
 // Releaseビルド身の実行する
 void ProcessAtReleaseBulid(std::function<void()> lambdaFunc);
+
+// 出力ウィンドウに出力する
+void OutputDebugLog(const char* fmt...);

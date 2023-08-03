@@ -57,19 +57,37 @@ void PostEffect::Draw()
 	{
 		renderBase->GetCommandList()->
 			SetGraphicsRootDescriptorTable(index + i, renderTextures_[i]->GetGpuHandle(rtvIndex));
-		if (renderTextures_[i]->useDepth == true)
-		{
-			renderBase->GetCommandList()->
-				SetGraphicsRootDescriptorTable(
-					(uint32_t)(index + renderTextures_.size()),
-					renderTextures_[i]->depthTexture->GetGpuHandle());
-		}
+
+		//renderBase->GetCommandList()->
+		//	SetGraphicsRootDescriptorTable(index + 1, renderTextures_[i]->GetGpuHandle(rtvIndex));
+
+		//if (renderTextures_[i]->useDepth == true)
+		//{
+
+		D3D12_RESOURCE_BARRIER  barrier{};
+		barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+		barrier.Transition.pResource = renderTextures_[i]->depthTexture->buffer.Get();
+		barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+		barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_DEPTH_WRITE;
+		barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
+
+		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
+
+		renderBase->GetCommandList()->
+			SetGraphicsRootDescriptorTable(
+				(uint32_t)(index + 1),
+				renderTextures_[i]->depthTexture->GetGpuHandle());
+
+		barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+		barrier.Transition.pResource = renderTextures_[i]->depthTexture->buffer.Get();
+		barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+		barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_GENERIC_READ;
+		barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_DEPTH_WRITE;
+
+		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
+
+		//}
 	}
-	//if (depthTexture_ != nullptr)
-	//{
-	//	renderBase->GetCommandList()->
-	//		SetGraphicsRootDescriptorTable((uint32_t)(index + renderTextures_.size()), depthTexture_->GetGpuHandle());
-	//}
 
 	renderBase->GetCommandList()->DrawInstanced((uint16_t)vertices_.size(), 1, 0, 0);
 }

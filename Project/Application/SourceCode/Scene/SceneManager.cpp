@@ -19,12 +19,12 @@ SceneManager::SceneManager()
 	Object3D::isAllLighting = true;
 	Cloud::CreateGraphicsPipeline();
 
-	Bloom::CreateGraphicsPipeline();
-	GaussianBlur::CreateGraphicsPipeline();
-	Glare::CreateGraphicsPipeline();
-	DOF::CreateGraphicsPipeline();
-	RadialBlur::CreateGraphicsPipeline();
-	Vignette::CreateGraphicsPipeline();
+	//Bloom::CreateGraphicsPipeline();
+	//GaussianBlur::CreateGraphicsPipeline();
+	//Glare::CreateGraphicsPipeline();
+	//DOF::CreateGraphicsPipeline();
+	//RadialBlur::CreateGraphicsPipeline();
+	//Vignette::CreateGraphicsPipeline();
 	sCurrentScene = std::make_unique<GameScene>();
 }
 

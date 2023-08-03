@@ -7,21 +7,32 @@
 using namespace VertexBufferData;
 
 // モデルのマップ
-std::unordered_map<std::string, std::unique_ptr<Model>> ModelManager::sModelMap_;
-std::mutex ModelManager::sMtx_ = std::mutex{};
-std::string ModelManager::sDirectoryPath_ = "Application/Resources/Model/";
+std::unordered_map<std::string, std::unique_ptr<Model>> ModelManager::sModelMap;
+std::mutex ModelManager::sMtx = std::mutex{};
+std::string ModelManager::sDirectoryPath = "Application/Resources/Model/";
 
 // モデルの取得
 Model* ModelManager::GetModel(const std::string modelTag)
 {
-	return sModelMap_[modelTag].get();
+	std::string log;
+	if (sModelMap[modelTag].get() == nullptr)
+	{
+		log = "[Model Use] ModelTag : " + modelTag + ", does not exist";
+	}
+	else
+	{
+		log = "[Model Use] ModelTag : " + modelTag + ", was used";
+	}
+	OutputDebugLog(log.c_str());
+
+	return sModelMap[modelTag].get();
 }
 
 // objファイルからモデルをロードしマップの格納する
 Model* ModelManager::LoadObjModel(const std::string fileName, const std::string modelTag, const bool isSmoothing)
 {
 	// 排他制御
-	std::lock_guard<std::mutex> lock(sMtx_);
+	std::lock_guard<std::mutex> lock(sMtx);
 
 	// インスタンス生成
 	std::unique_ptr<Model> model = std::make_unique<ObjModel>();
@@ -36,7 +47,7 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 		objfile = fileName.substr(pos + 1, fileName.size() - pos - 1) + ".obj";
 	}
 
-	std::string path = sDirectoryPath_ + fileName + "/";
+	std::string path = sDirectoryPath + fileName + "/";
 
 	// ファイルストリーム
 	std::ifstream file;
@@ -174,23 +185,23 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 	model->mesh.CreateBuffer();
 
 	// mapに格納
-	sModelMap_.insert(std::make_pair(modelTag, std::move(model)));
+	sModelMap.insert(std::make_pair(modelTag, std::move(model)));
 
-	return sModelMap_[modelTag].get();
+	return sModelMap[modelTag].get();
 }
 
 // fbxファイルからモデルをロードしマップの格納する
 Model* ModelManager::LoadFbxModel(const std::string fileName, const std::string modelTag)
 {
 	// 排他制御
-	std::lock_guard<std::mutex> lock(sMtx_);
+	std::lock_guard<std::mutex> lock(sMtx);
 
 	// モデル生成
 	std::unique_ptr<FbxModel> model = std::make_unique<FbxModel>();
 	model->name = fileName;
 
 	// モデルと同じ名前のフォルダーから読み込む
-	std::string path = sDirectoryPath_ + fileName + "/";
+	std::string path = sDirectoryPath + fileName + "/";
 	std::string fbxfile = fileName + ".fbx";
 	std::string fullPath = path + fbxfile;
 
@@ -202,9 +213,9 @@ Model* ModelManager::LoadFbxModel(const std::string fileName, const std::string 
 	model->mesh.indexBuffer.Create(model->mesh.indices);
 
 	// mapに格納
-	sModelMap_.insert(std::make_pair(modelTag, std::move(model)));
+	sModelMap.insert(std::make_pair(modelTag, std::move(model)));
 
-	return sModelMap_[modelTag].get();
+	return sModelMap[modelTag].get();
 }
 
 // .mtlファイルの読み込み

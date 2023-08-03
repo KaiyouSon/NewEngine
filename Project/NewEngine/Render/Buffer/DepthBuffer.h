@@ -5,10 +5,10 @@
 class DepthBuffer
 {
 private:
-	Microsoft::WRL::ComPtr<ID3D12Resource> mBuffer;
 	D3D12_CPU_DESCRIPTOR_HANDLE mCpuHandle = D3D12_CPU_DESCRIPTOR_HANDLE(); //RTVのハンドル(CPU側)
 
 public:
+	Microsoft::WRL::ComPtr<ID3D12Resource> mBuffer;
 	void Create();
 
 public: // セッター
