@@ -25,7 +25,7 @@ void Cloud::CreateGraphicsPipeline()
 	setting.depthStencilDesc = depthStencilDesc;
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.constantBufferViewNum = 7;
-	setting.rootSignatureSetting.descriptorRangeNum = 2;
+	setting.rootSignatureSetting.descriptorRangeNum = 3;
 	GraphicsPipelineManager::Create(setting, "Cloud");
 
 }

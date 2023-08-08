@@ -99,16 +99,9 @@ void NewEneineDraw()
 	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
 	if (isLoaded == true)
 	{
-		RenderBase::GetInstance()->SetSpriteDrawCommand();
 		SceneManager::GetInstance()->DrawBackSprite();
-
-		RenderBase::GetInstance()->SetObject3DDrawCommand();
 		SceneManager::GetInstance()->DrawModel();
-
-		RenderBase::GetInstance()->SetSpriteDrawCommand();
 		SceneManager::GetInstance()->DrawFrontSprite();
-
-		RenderBase::GetInstance()->SetRenderTextureDrawCommand();
 		SceneManager::GetInstance()->DrawRenderTexture();
 	}
 }

@@ -22,6 +22,11 @@ private:
 	Camera* mCamera;
 	bool mIsShadow;
 
+
+private:
+	// Œã®—‚·‚é
+	Texture* mWhiteTex;
+
 public:
 	Vec3 pos;
 	Vec3 scale;

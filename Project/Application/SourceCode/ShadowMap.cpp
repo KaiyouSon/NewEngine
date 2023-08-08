@@ -41,7 +41,7 @@ void ShadowMap::RenderTextureSetting()
 {
 	mRenderTex->PrevDrawScene();
 
-	RenderBase::GetInstance()->SetObject3DDrawCommand();
+	
 	for (auto& obj : sObjShadows)
 	{
 		obj.Draw();

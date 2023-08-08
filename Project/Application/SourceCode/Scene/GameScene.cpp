@@ -137,11 +137,10 @@ void GameScene::RenderTextureSetting()
 
 void GameScene::DrawRenderTexture()
 {
-	//mShadowMap.DrawPostEffect();
+	mShadowMap.DrawPostEffect();
 }
 void GameScene::DrawBackSprite()
 {
-	RenderBase::GetInstance()->SetRenderTextureDrawCommand();
 	mShadowMap.DrawPostEffect();
 }
 void GameScene::DrawModel()

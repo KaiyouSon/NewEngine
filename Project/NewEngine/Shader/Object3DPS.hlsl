@@ -3,6 +3,7 @@
 
 Texture2D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
 Texture2D<float4> dissolveTex : register(t1); // 0番スロットに設定されたテクスチャ
+Texture2D<float4> shadowMapTex : register(t2); // 0番スロットに設定されたテクスチャ
 SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
 
 PSOutput main(V2P i)// : SV_TARGET
@@ -48,9 +49,12 @@ PSOutput main(V2P i)// : SV_TARGET
 
     float4 resultColor = adsColor * texColor * color;
     
+    float4 shadowMap = shadowMapTex.Sample(smp, newUV);
+    shadowMap.a = 1;
+    
     PSOutput output;
-    output.target0 = resultColor * maskIntensity + dissolveColor * colorPower * (1 - maskIntensity);
-   // output.target0 = resultColor * maskIntensity + float4(1, 0, 0, 1) * (1 - maskIntensity);
+    //output.target0 = resultColor * maskIntensity + dissolveColor * colorPower * (1 - maskIntensity);
+    output.target0 = shadowMap;
     output.target1 = float4(1 - resultColor.rgb, color.a);
     return output;
     

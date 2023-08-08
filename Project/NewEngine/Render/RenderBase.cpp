@@ -32,7 +32,6 @@ void RenderBase::Init()
 	FenceInit();			// フェンスの初期化
 	DepthBufferInit();		// 深度バッファの初期化
 	ShaderCompilerInit();	// シェーダーコンパイラーの初期化
-	RootSignatureInit();	// ルードシグネチャーの初期化
 	GraphicsPipelineInit();	// グラフィックスパイプラインの初期化
 }
 void RenderBase::PreDraw()
@@ -111,18 +110,6 @@ void RenderBase::PostDraw()
 	// 再びコマンドリストを貯める準備
 	result = mCommandList.Get()->Reset(mCommandAllocator.Get(), nullptr);
 	assert(SUCCEEDED(result));
-}
-void RenderBase::SetObject3DDrawCommand()
-{
-	//mCommandList->SetGraphicsRootSignature(mObject3DRootSignature->GetRootSignature());
-}
-void RenderBase::SetSpriteDrawCommand()
-{
-	//mCommandList->SetGraphicsRootSignature(mSpriteRootSignature->GetRootSignature());
-}
-void RenderBase::SetRenderTextureDrawCommand()
-{
-	//mCommandList->SetGraphicsRootSignature(mRenderTextureRootSignature->GetRootSignature());
 }
 
 void RenderBase::CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC* rtvDesc)
@@ -428,20 +415,6 @@ void RenderBase::ShaderCompilerInit()
 	ShaderObjectManager::GetShaderObject("Emitter")->CompileGeometryShader(path + "EmitterGS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Emitter")->CompilePixelShader(path + "EmitterPS.hlsl", "main");
 }
-void RenderBase::RootSignatureInit()
-{
-	//// 3Dオブジェクト用
-	//mObject3DRootSignature = std::make_unique<RootSignature>();
-	//mObject3DRootSignature->Create(7, 2);
-
-	//// スプライト用
-	//mSpriteRootSignature = std::make_unique<RootSignature>();
-	//mSpriteRootSignature->Create(3, 1);
-
-	//// スプライト用
-	//mRenderTextureRootSignature = std::make_unique<RootSignature>();
-	//mRenderTextureRootSignature->Create(2, 2);
-}
 void RenderBase::GraphicsPipelineInit()
 {
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc1{};
@@ -472,7 +445,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rtvNum = 2;
 	setting.rootSignatureSetting.constantBufferViewNum = 7;
-	setting.rootSignatureSetting.descriptorRangeNum = 2;
+	setting.rootSignatureSetting.descriptorRangeNum = 3;
 	GraphicsPipelineManager::Create(setting, "Object3D");
 
 	// FBXモデル用
@@ -595,18 +568,6 @@ ID3D12CommandAllocator* RenderBase::GetCommandAllocator() const
 ID3D12Fence* RenderBase::GetFence() const
 {
 	return mFence.Get();
-}
-RootSignature* RenderBase::GetObject3DRootSignature() const
-{
-	return mObject3DRootSignature.get();
-}
-RootSignature* RenderBase::GetSpriteRootSignature() const
-{
-	return mSpriteRootSignature.get();
-}
-RootSignature* RenderBase::GetRenderTextureRootSignature() const
-{
-	return mRenderTextureRootSignature.get();
 }
 DepthBuffer* RenderBase::GetDepthBuffer() const
 {

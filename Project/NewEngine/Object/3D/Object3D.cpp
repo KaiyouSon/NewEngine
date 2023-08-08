@@ -26,6 +26,8 @@ Object3D::Object3D() :
 	{
 		isLighting = true;
 	}
+
+	mWhiteTex = TextureManager::GetTexture("White");
 }
 
 void Object3D::Update(Transform* parent)
@@ -78,35 +80,44 @@ void Object3D::Draw(const BlendMode blendMode)
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetDescriptorTableStartIndex();
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetGpuHandle());
 
-	//auto tex = TextureManager::GetRenderTexture("CurrentScene")->depthTexture.get();
-	//if (isUseDissolve == true)
-	//{
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 1, mDissolveTex->GetGpuHandle());
-	//}
-	//else
-	//{
-	//	D3D12_RESOURCE_BARRIER  barrier{};
-	//	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	//	barrier.Transition.pResource = tex->buffer.Get();
-	//	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	//	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_DEPTH_WRITE;
-	//	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
-	//	renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
+	auto tex = TextureManager::GetRenderTexture("CurrentScene")->depthTexture.get();
+	if (isUseDissolve == true)
+	{
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 1, mDissolveTex->GetGpuHandle());
+	}
+	else
+	{
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 1, mWhiteTex->GetGpuHandle());
+	}
 
-	//	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)index + 1, tex->GetGpuHandle());
-	//}
+	if (mIsShadow == true)
+	{
+		CD3DX12_RESOURCE_BARRIER barrier =
+			CD3DX12_RESOURCE_BARRIER::Transition(
+				tex->buffer.Get(),
+				D3D12_RESOURCE_STATE_DEPTH_WRITE,
+				D3D12_RESOURCE_STATE_GENERIC_READ,
+				D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
+
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)startIndex + 2, tex->GetGpuHandle());
+	}
+	else
+	{
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)startIndex + 2, mWhiteTex->GetGpuHandle());
+	}
 
 	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModel->mesh.indices.size(), 1, 0, 0, 0);
-	//if (isUseDissolve == false)
-	//{
-	//	D3D12_RESOURCE_BARRIER  barrier{};
-	//	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	//	barrier.Transition.pResource = tex->buffer.Get();
-	//	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	//	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_GENERIC_READ;
-	//	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_DEPTH_WRITE;
-	//	renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
-	//}
+	if (mIsShadow == true)
+	{
+		CD3DX12_RESOURCE_BARRIER barrier =
+			CD3DX12_RESOURCE_BARRIER::Transition(
+				tex->buffer.Get(),
+				D3D12_RESOURCE_STATE_GENERIC_READ,
+				D3D12_RESOURCE_STATE_DEPTH_WRITE,
+				D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
+	}
 }
 
 // --- マテリアル関連 --------------------------------------------------- //

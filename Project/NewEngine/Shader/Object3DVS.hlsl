@@ -14,7 +14,6 @@ V2P main(Appdata i)
     
     output.wpos = wpos;
     output.normal = wnormal.xyz;
-    //output.normal = i.normal.xyz;
     output.uv = i.uv;
 
     return output;

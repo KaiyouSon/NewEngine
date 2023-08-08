@@ -53,9 +53,6 @@ private:
 
 	// ルートシグネチャー関連
 	ComPtr<ID3DBlob> mErrorBlob;	// エラーオブジェクト
-	std::unique_ptr<RootSignature> mObject3DRootSignature;
-	std::unique_ptr<RootSignature> mSpriteRootSignature;
-	std::unique_ptr<RootSignature> mRenderTextureRootSignature;
 
 	// 描画処理関連
 	D3D12_RESOURCE_BARRIER mBarrierDesc;	// リソースバリア
@@ -68,9 +65,6 @@ public:
 	void Init();
 	void PreDraw();
 	void PostDraw();
-	void SetObject3DDrawCommand();
-	void SetSpriteDrawCommand();
-	void SetRenderTextureDrawCommand();
 	void CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC* rtvDesc);
 	void CreateDSV(DepthBuffer& depthBuffer);
 	void PreIncrimentFenceValue() { ++mFenceValue; }
@@ -84,7 +78,6 @@ private:
 	void DepthBufferInit();
 	void DescriptorHeapInit();
 	void ShaderCompilerInit();
-	void RootSignatureInit();
 	void GraphicsPipelineInit();
 
 public:
@@ -93,9 +86,6 @@ public:
 	ID3D12CommandQueue* GetCommandQueue() const;
 	ID3D12CommandAllocator* GetCommandAllocator() const;
 	ID3D12Fence* GetFence() const;
-	RootSignature* GetObject3DRootSignature() const;
-	RootSignature* GetSpriteRootSignature() const;
-	RootSignature* GetRenderTextureRootSignature() const;
 	DepthBuffer* GetDepthBuffer() const;
 	Viewport* GetViewport() const;
 	UINT64 GetFenceValue() const;

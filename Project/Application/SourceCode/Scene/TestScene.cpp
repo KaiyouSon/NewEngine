@@ -107,20 +107,16 @@ void TestScene::Update()
 void TestScene::RenderTextureSetting()
 {
 	backGround_->PrevDrawScene();
-	RenderBase::GetInstance()->SetSpriteDrawCommand();
 	spr_.Draw();
 
-	RenderBase::GetInstance()->SetObject3DDrawCommand();
 	obj1_.Draw();
 	backGround_->PostDrawScene();
 
 	if (postEffectType_ == 0)
 	{
 		task_.PrevSceneDraw();
-		RenderBase::GetInstance()->SetSpriteDrawCommand();
 		spr_.Draw();
 
-		RenderBase::GetInstance()->SetObject3DDrawCommand();
 		obj1_.Draw();
 		task_.PostSceneDraw();
 	}
@@ -128,7 +124,7 @@ void TestScene::RenderTextureSetting()
 	{
 		//// Œ»Ý‚ÌƒV[ƒ“‚ð•`‰æ
 		//bloom_.PrevSceneDraw(0);
-		//RenderBase::GetInstance()->SetObject3DDrawCommand();
+		//
 		//obj1_.Draw();
 		//bloom_.PostSceneDraw(0);
 
@@ -146,10 +142,8 @@ void TestScene::RenderTextureSetting()
 	else if (postEffectType_ == 2)
 	{
 		gaussianBlur_.PrevSceneDraw();
-		RenderBase::GetInstance()->SetSpriteDrawCommand();
 		spr_.Draw();
 
-		RenderBase::GetInstance()->SetObject3DDrawCommand();
 		obj1_.Draw();
 		gaussianBlur_.PostSceneDraw();
 	}
@@ -157,12 +151,10 @@ void TestScene::RenderTextureSetting()
 	{
 		// Œ»Ý‚ÌƒV[ƒ“‚ð•`‰æ
 		glare_.PrevSceneDraw(0);
-		RenderBase::GetInstance()->SetObject3DDrawCommand();
 		obj1_.Draw();
 		glare_.PostSceneDraw(0);
 
 		// Œ»Ý‚ÌƒV[ƒ“‚Ì‚‹P“x’Šo‚µ‚Ä•`‰æ
-		RenderBase::GetInstance()->SetRenderTextureDrawCommand();
 		glare_.PrevSceneDraw(1);
 		glare_.DrawPostEffect(0);
 		glare_.PostSceneDraw(1);
@@ -189,7 +181,7 @@ void TestScene::RenderTextureSetting()
 	else if (postEffectType_ == 4)
 	{
 		dof_.PrevSceneDraw();
-		RenderBase::GetInstance()->SetObject3DDrawCommand();
+		
 		obj1_.Draw();
 		for (uint32_t i = 0; i < objs_.size(); i++)
 		{
@@ -200,7 +192,7 @@ void TestScene::RenderTextureSetting()
 	else if (postEffectType_ == 5)
 	{
 		radialBlur_.PrevSceneDraw();
-		RenderBase::GetInstance()->SetObject3DDrawCommand();
+		
 		skyDome_.Draw();
 		obj1_.Draw();
 		radialBlur_.PostSceneDraw();
@@ -208,7 +200,7 @@ void TestScene::RenderTextureSetting()
 	else if (postEffectType_ == 6)
 	{
 		vignette_.PrevSceneDraw();
-		RenderBase::GetInstance()->SetObject3DDrawCommand();
+		
 		skyDome_.Draw();
 		obj1_.Draw();
 		vignette_.PostSceneDraw();

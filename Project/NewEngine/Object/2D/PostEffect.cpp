@@ -57,13 +57,12 @@ void PostEffect::Draw()
 
 		if (mRenderTextures[i]->useDepth == true)
 		{
-			D3D12_RESOURCE_BARRIER  barrier{};
-			barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-			barrier.Transition.pResource = mRenderTextures[i]->depthTexture->buffer.Get();
-			barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-			barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_DEPTH_WRITE;
-			barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
-
+			CD3DX12_RESOURCE_BARRIER barrier =
+				CD3DX12_RESOURCE_BARRIER::Transition(
+					mRenderTextures[i]->depthTexture->buffer.Get(),
+					D3D12_RESOURCE_STATE_DEPTH_WRITE,
+					D3D12_RESOURCE_STATE_GENERIC_READ,
+					D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
 			renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
 
 			renderBase->GetCommandList()->
@@ -84,12 +83,12 @@ void PostEffect::Draw()
 	{
 		if (mRenderTextures[i]->useDepth == true)
 		{
-			D3D12_RESOURCE_BARRIER  barrier{};
-			barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-			barrier.Transition.pResource = mRenderTextures[i]->depthTexture->buffer.Get();
-			barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-			barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_GENERIC_READ;
-			barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_DEPTH_WRITE;
+			CD3DX12_RESOURCE_BARRIER barrier =
+				CD3DX12_RESOURCE_BARRIER::Transition(
+					mRenderTextures[i]->depthTexture->buffer.Get(),
+					D3D12_RESOURCE_STATE_GENERIC_READ,
+					D3D12_RESOURCE_STATE_DEPTH_WRITE,
+					D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
 			renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
 		}
 	}
