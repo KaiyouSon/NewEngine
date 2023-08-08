@@ -17,6 +17,14 @@ namespace ConstantBufferData
 		Vec3 cameraPos;
 	};
 
+	struct CTransform3DShadow
+	{
+		Mat4 viewProjMat;
+		Mat4 shadowMat;
+		Mat4 worldMat;
+		Vec3 cameraPos;
+	};
+
 	struct CTransform2D
 	{
 		Mat4 mat;	//3D•ÏŠ·s—ñ

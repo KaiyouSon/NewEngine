@@ -69,7 +69,6 @@ enum class ModelFormat
 {
 	Obj,
 	Fbx,
-	DFbx,
 };
 
 // ”½“]ƒtƒ‰ƒO

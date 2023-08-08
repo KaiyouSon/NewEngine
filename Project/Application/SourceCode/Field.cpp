@@ -8,6 +8,9 @@ Field::Field() :
 	mGround->SetModel(ModelManager::GetModel("Ground"));
 	mSphere->SetModel(ModelManager::GetModel("Sphere"));
 
+	mGround->SetisShadow(true);
+	mSphere->SetisShadow(true);
+
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
 	{
 		mMessageSigns[i] = std::make_unique<MessageSign>();
@@ -52,6 +55,8 @@ void Field::Update()
 	mSphere->rot.y += Radian(1);
 	mSphere->Update();
 
+	//mSphere->pos = { 0,8,0 };
+
 	mGround->Update();
 	mSkydome->Update();
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
@@ -62,7 +67,7 @@ void Field::Update()
 
 void Field::DrawModel()
 {
-	//mSphere->Draw();
+	mSphere->Draw();
 	mGround->Draw();
 	mSkydome->DrawModel();
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)

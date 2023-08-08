@@ -6,11 +6,11 @@ class ShadowMap
 private:
 	static std::vector<Object3D> sObjShadows;
 	static uint32_t sIndex;
+	static Camera sLightCamera;
 
 private:
 	std::unique_ptr<PostEffect> mCurrentScene;
 	RenderTexture* mRenderTex;
-	Camera mLightCamera;
 
 public:
 	ShadowMap();
@@ -23,5 +23,6 @@ public:
 public:
 	static void Register();
 	static void Bind(Object3D& object);
+	static Camera GetLightCamera();
 };
 

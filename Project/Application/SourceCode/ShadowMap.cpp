@@ -2,6 +2,7 @@
 
 std::vector<Object3D> ShadowMap::sObjShadows;
 uint32_t ShadowMap::sIndex;
+Camera ShadowMap::sLightCamera;
 
 ShadowMap::ShadowMap() :
 	mCurrentScene(std::make_unique<PostEffect>()),
@@ -24,14 +25,17 @@ void ShadowMap::Init()
 void ShadowMap::Update()
 {
 	// カメラの設定
-	mLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
-	mLightCamera.rot = Vec3(Radian(90), 0, 0);
-	mLightCamera.Update();
+	sLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
+	sLightCamera.rot = Vec3(Radian(45), 0, 0);
+	sLightCamera.Update();
+
+	static uint32_t i = 0;
 
 	for (auto& obj : sObjShadows)
 	{
-		obj.SetCamera(&mLightCamera);
+		obj.SetCamera(&sLightCamera);
 		obj.Update();
+		i++;
 	}
 
 	mCurrentScene->Update();
@@ -41,7 +45,6 @@ void ShadowMap::RenderTextureSetting()
 {
 	mRenderTex->PrevDrawScene();
 
-	
 	for (auto& obj : sObjShadows)
 	{
 		obj.Draw();
@@ -65,7 +68,7 @@ void ShadowMap::DrawPostEffect()
 
 void ShadowMap::Register()
 {
-	sObjShadows.emplace_back(Object3D());
+	sObjShadows.emplace_back();
 }
 
 void ShadowMap::Bind(Object3D& object)
@@ -82,7 +85,17 @@ void ShadowMap::Bind(Object3D& object)
 	sObjShadows[sIndex].rot = object.rot;
 	sObjShadows[sIndex].scale = object.scale;
 
-	sObjShadows[sIndex].SetModel(object.GetModel());
+	if (object.GetModel() != nullptr)
+	{
+		sObjShadows[sIndex].SetModel(object.GetModel());
+	}
+
+	if (object.GetParent() != nullptr)
+	{
+		auto p = object.GetParent();
+		sObjShadows[sIndex].SetParent(p);
+	}
+
 	sIndex++;
 
 	// 次のフレーム再バインドするために
@@ -90,4 +103,9 @@ void ShadowMap::Bind(Object3D& object)
 	{
 		sIndex = 0;
 	}
+}
+
+Camera ShadowMap::GetLightCamera()
+{
+	return sLightCamera;
 }

@@ -141,7 +141,7 @@ void GameScene::DrawRenderTexture()
 }
 void GameScene::DrawBackSprite()
 {
-	mShadowMap.DrawPostEffect();
+	//mShadowMap.DrawPostEffect();
 }
 void GameScene::DrawModel()
 {

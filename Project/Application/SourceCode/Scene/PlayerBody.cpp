@@ -15,10 +15,7 @@ PlayerBody::PlayerBody() :
 		{
 			mParts[i]->SetModel(ModelManager::GetModel("Limbs"));
 		}
-		if (i > 0)
-		{
-			mParts[i]->SetisShadow(true);
-		}
+		mParts[i]->SetisShadow(true);
 	}
 	mParts[(uint32_t)PartID::Body]->SetModel(ModelManager::GetModel("Body"));
 	mParts[(uint32_t)PartID::Head]->SetModel(ModelManager::GetModel("Head"));

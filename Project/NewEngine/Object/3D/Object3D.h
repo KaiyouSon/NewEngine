@@ -22,7 +22,6 @@ private:
 	Camera* mCamera;
 	bool mIsShadow;
 
-
 private:
 	// 後整理する
 	Texture* mWhiteTex;
@@ -73,6 +72,9 @@ public: //セッター
 	// 影
 	void SetisShadow(const bool isShadow);
 
+	// 親
+	void SetParent(Transform* parent);
+
 public: // ゲッター
 
 	// ワールド座標
@@ -83,6 +85,9 @@ public: // ゲッター
 
 	// トランスフォーム
 	Transform GetTransform();
+
+	// 親のトランスフォーム
+	Transform* GetParent();
 
 	// モデル
 	Model* GetModel();

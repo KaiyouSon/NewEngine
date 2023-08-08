@@ -12,7 +12,7 @@ bool Object3D::isAllLighting = false;
 Object3D::Object3D() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0), offset(0, 0), tiling(1, 1),
 	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
-	mTexture(TextureManager::GetTexture("White")),
+	mTexture(TextureManager::GetTexture("White")), mModel(nullptr), mParent(nullptr),
 	mDissolveTex(TextureManager::GetTexture("DissolveTexture")),
 	isLighting(false), mIsShadow(false), mCamera(&Camera::current),
 	isUseDissolve(false), dissolve(0.f), colorPower(1), dissolveColor(Color::red)
@@ -47,6 +47,12 @@ void Object3D::Update(Transform* parent)
 	{
 		mParent = parent;
 
+		Mat4 mat = mTransform.GetWorldMat();
+		mat *= mParent->GetWorldMat();
+		mTransform.SetWorldMat(mat);
+	}
+	else if (mParent != nullptr)
+	{
 		Mat4 mat = mTransform.GetWorldMat();
 		mat *= mParent->GetWorldMat();
 		mTransform.SetWorldMat(mat);
@@ -127,7 +133,7 @@ void Object3D::MaterialInit()
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
 	// 3D行列
-	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform3D>>();
+	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform3DShadow>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// マテリアルカラー
@@ -156,13 +162,14 @@ void Object3D::MaterialInit()
 void Object3D::MaterialTransfer()
 {
 	// マトリックス
-	CTransform3D transform3DData =
+	CTransform3DShadow transform3DShadowData =
 	{
 		mCamera->GetViewLookToMat() * mCamera->GetPerspectiveProjectionMat(),
+		ShadowMap::GetLightCamera().GetViewLookToMat() * ShadowMap::GetLightCamera().GetPerspectiveProjectionMat(),
 		mTransform.GetWorldMat(),
 		mCamera->pos
 	};
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transform3DData);
+	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transform3DShadowData);
 
 	if (mModel == nullptr)
 	{
@@ -249,10 +256,8 @@ void Object3D::SetModel(Model* model)
 	{
 		mGraphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("Object3D");
 	}
-	if (mModel->format == ModelFormat::Fbx ||
-		mModel->format == ModelFormat::DFbx)
+	if (mModel->format == ModelFormat::Fbx)
 	{
-		//mGraphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("Object3D");
 		mGraphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("FbxModel");
 	}
 }
@@ -283,6 +288,7 @@ void Object3D::SetCamera(Camera* camera)
 	mCamera = camera;
 }
 
+// 影
 void Object3D::SetisShadow(const bool isShadow)
 {
 	mIsShadow = isShadow;
@@ -291,6 +297,12 @@ void Object3D::SetisShadow(const bool isShadow)
 	{
 		ShadowMap::Register();
 	}
+}
+
+// 親
+void Object3D::SetParent(Transform* parent)
+{
+	mParent = parent;
 }
 
 // --- ゲッター -------------------------------------------------------- //
@@ -311,6 +323,12 @@ Vec3 Object3D::GetWorldScale()
 
 // トランスフォーム
 Transform Object3D::GetTransform() { return mTransform; }
+
+// 親
+Transform* Object3D::GetParent()
+{
+	return mParent;
+}
 
 // モデル
 Model* Object3D::GetModel() { return mModel; }
