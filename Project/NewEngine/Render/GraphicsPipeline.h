@@ -1,8 +1,7 @@
 #pragma once
 #include "ShaderObject.h"
 #include "RootSignature.h"
-#include "Util.h"
-#include <d3d12.h>
+#include "Enum.h"
 #include <wrl.h>
 #include <cstdint>
 
@@ -18,7 +17,7 @@ struct GraphicsPipelineSetting
 	};
 
 	// 生成するパイプラインの種類
-	uint8_t pipelineBlend = 0b001;
+	uint8_t pipelineBlend;
 
 	// カーリングモード
 	CullMode cullMode;
@@ -29,31 +28,26 @@ struct GraphicsPipelineSetting
 	// シェダーオブジェクト
 	ShaderObject* shaderObject;
 
-	// ルートシグネーチャー
-	RootSignature rootSignature;
-
 	// 深度設定
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc;
 
 	// RTVの数
-	uint32_t rtvNum = 1;
+	uint32_t rtvNum;
+
+	// RootParamter関連
+	RootSignatureSetting rootSignatureSetting;
+
+	// コンストラクタ
+	GraphicsPipelineSetting();
 };
 
 class GraphicsPipeline
 {
 private:
 	HRESULT mResult;
-
 	GraphicsPipelineSetting mSetting;
-
-	CullMode mCullMode;
-	TopologyType mTopologyType;
-	ShaderObject* mShaderObject;
-	ID3D12RootSignature* mRootSignature;
-	D3D12_DEPTH_STENCIL_DESC  mDepthStencilDesc;
-	uint32_t mRtvNum = 1;	// RTVの数
-
 	std::vector<Microsoft::WRL::ComPtr<ID3D12PipelineState>> mPSOs;
+	std::unique_ptr<RootSignature> mRootSignature;	// ルートシグネーチャー
 
 private:
 	void CreatePipelineState(const BlendMode blendMode);
@@ -65,12 +59,10 @@ public:
 
 public:
 	// セッター
-	void SetCullMode(const CullMode cullMode);
-	void SetTopologyType(const TopologyType topologyType);
-	void SetShaderObject(ShaderObject* shaderObject);
-	void SetRootSignature(ID3D12RootSignature* rootSignature);
-	void SetDepthStencilDesc(const D3D12_DEPTH_STENCIL_DESC depthStencilDesc);
-	void SetRTVNum(const uint32_t rtvNum);
 	void SetGraphicsPipelineSetter(const GraphicsPipelineSetting& setting);
+
+public:
+	// ゲッター
+	RootSignature* GetRootSignature();
 };
 

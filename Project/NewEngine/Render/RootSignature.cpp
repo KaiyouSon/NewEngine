@@ -4,13 +4,19 @@
 #include <d3dcompiler.h>
 #include <cassert>
 
-void RootSignature::Create(const uint32_t constantBufferViewNum, const uint32_t descriptorRangeNum)
+RootSignatureSetting::RootSignatureSetting() :
+	constantBufferViewNum(1), descriptorRangeNum(1)
+{
+}
+
+
+void RootSignature::Create(const RootSignatureSetting setting)
 {
 	// RootParameterにConstantBufferViewを追加
-	AddConstantBufferViewToRootRrameter(constantBufferViewNum);
+	AddConstantBufferViewToRootRrameter(setting.constantBufferViewNum);
 
 	// RootParameterにDescriptorRangeを追加
-	AddDescriptorRangeToRootPrameter(descriptorRangeNum);
+	AddDescriptorRangeToRootPrameter(setting.descriptorRangeNum);
 
 	// テクスチャサンプラーの設定
 	D3D12_STATIC_SAMPLER_DESC samplerDesc{};

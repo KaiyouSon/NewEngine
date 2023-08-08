@@ -5,6 +5,13 @@
 #include <wrl.h>
 #include <vector>
 
+struct RootSignatureSetting
+{
+	uint32_t constantBufferViewNum;
+	uint32_t descriptorRangeNum;
+	RootSignatureSetting();
+};
+
 class RootSignature
 {
 private:
@@ -21,7 +28,7 @@ private:
 	void AddDescriptorRangeToRootPrameter(const uint32_t number);
 
 public:
-	void Create(const uint32_t constantBufferViewNum, const uint32_t descriptorRangeNum);
+	void Create(const RootSignatureSetting setting);
 
 	ID3D12RootSignature* GetRootSignature();
 	uint32_t GetConstantBufferStartIndex();

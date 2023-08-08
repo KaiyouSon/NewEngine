@@ -63,7 +63,7 @@ void Emitter::Draw(const BlendMode blendMode)
 	MaterialDrawCommands();
 
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	uint32_t startIndex = renderBase->GetObject3DRootSignature()->GetDescriptorTableStartIndex();
+	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetDescriptorTableStartIndex();
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawInstanced(pSize, 1, 0, 0);

@@ -102,5 +102,5 @@ void Line::MaterialDrawCommands()
 		0, mMaterial->constantBuffers[0]->constantBuffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		2, mMaterial->constantBuffers[1]->constantBuffer->GetGPUVirtualAddress());
+		1, mMaterial->constantBuffers[1]->constantBuffer->GetGPUVirtualAddress());
 }

@@ -52,7 +52,8 @@ enum class TopologyType
 {
 	Point,
 	Line,
-	Triangle,
+	TriangleList,
+	TriangleStrip,
 };
 
 // カーリングモード

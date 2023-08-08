@@ -20,11 +20,12 @@ void Cloud::CreateGraphicsPipeline()
 	GraphicsPipelineSetting setting;
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Cloud");
-	setting.rootSignature = *RenderBase::GetInstance()->GetObject3DRootSignature();
 	setting.cullMode = CullMode::Back;
-	setting.topologyType = TopologyType::Triangle;
+	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc;
 	setting.rtvNum = 1;
+	setting.rootSignatureSetting.constantBufferViewNum = 7;
+	setting.rootSignatureSetting.descriptorRangeNum = 2;
 	GraphicsPipelineManager::Create(setting, "Cloud");
 
 }

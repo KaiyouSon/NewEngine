@@ -49,7 +49,7 @@ void PostEffect::Draw()
 	MaterialDrawCommands();
 
 	// SRVÝ’èƒRƒ}ƒ“ƒh
-	uint32_t startIndex = renderBase->GetRenderTextureRootSignature()->GetDescriptorTableStartIndex();
+	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetDescriptorTableStartIndex();
 	for (uint32_t i = 0; i < mRenderTextures.size(); i++)
 	{
 		renderBase->GetCommandList()->

@@ -3,10 +3,15 @@
 #include <d3dx12.h>
 #include <cassert>
 
-GraphicsPipeline::GraphicsPipeline() :
-	/*	mCullMode(CullMode::None),
-		mTopologyType(TopologyType::Triangle),
-		mShaderObject(nullptr), mRootSignature(nullptr), */mResult(HRESULT())
+GraphicsPipelineSetting::GraphicsPipelineSetting() :
+	pipelineBlend(PipelineBlend::Alpha), cullMode(CullMode::Back),
+	topologyType(TopologyType::TriangleList), shaderObject(nullptr),
+	depthStencilDesc(D3D12_DEPTH_STENCIL_DESC()), rtvNum(1),
+	rootSignatureSetting(RootSignatureSetting())
+{
+}
+
+GraphicsPipeline::GraphicsPipeline() : mResult(HRESULT())
 {
 	// デフォルト
 	mSetting.depthStencilDesc.DepthEnable = true;
@@ -23,7 +28,7 @@ void GraphicsPipeline::DrawCommand(const BlendMode blendMode)
 	ID3D12GraphicsCommandList* cmdList = RenderBase::GetInstance()->GetCommandList();
 
 	// RootSignature設定
-	cmdList->SetGraphicsRootSignature(mSetting.rootSignature.GetRootSignature());
+	cmdList->SetGraphicsRootSignature(mRootSignature->GetRootSignature());
 
 	// PSO設定
 	if (mPSOs[(uint32_t)blendMode])
@@ -46,8 +51,12 @@ void GraphicsPipeline::DrawCommand(const BlendMode blendMode)
 		cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);
 		break;
 
-	case TopologyType::Triangle:
+	case TopologyType::TriangleList:
 		cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		break;
+
+	case TopologyType::TriangleStrip:
+		cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 		break;
 
 	default:
@@ -57,6 +66,10 @@ void GraphicsPipeline::DrawCommand(const BlendMode blendMode)
 
 void GraphicsPipeline::CreatePipelineState(const BlendMode blendMode)
 {
+	// RootSignatureの生成
+	mRootSignature = std::make_unique<RootSignature>();
+	mRootSignature->Create(mSetting.rootSignatureSetting);
+
 	ID3D12Device* device = RenderBase::GetInstance()->GetDevice();
 
 	// グラフィックスパイプライン設定
@@ -171,7 +184,8 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode blendMode)
 		pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE;
 		break;
 
-	case TopologyType::Triangle:
+	case TopologyType::TriangleList:
+	case TopologyType::TriangleStrip:
 		pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 		break;
 
@@ -188,7 +202,7 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode blendMode)
 	pipelineDesc.SampleDesc.Count = 1; // 1ピクセルにつき1回サンプリング
 
 	// パイプラインにルートシグネチャをセット
-	pipelineDesc.pRootSignature = mSetting.rootSignature.GetRootSignature();
+	pipelineDesc.pRootSignature = mRootSignature->GetRootSignature();
 
 	// パイプランステートの生成
 	uint8_t bit = (uint8_t)mSetting.pipelineBlend;
@@ -212,32 +226,12 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode blendMode)
 }
 
 // セッター
-void GraphicsPipeline::SetCullMode(const CullMode cullMode)
-{
-	mCullMode = cullMode;
-}
-void GraphicsPipeline::SetTopologyType(const TopologyType topologyType)
-{
-	mTopologyType = topologyType;
-}
-void GraphicsPipeline::SetShaderObject(ShaderObject* shaderObject)
-{
-	mShaderObject = shaderObject;
-}
-void GraphicsPipeline::SetRootSignature(ID3D12RootSignature* rootSignature)
-{
-	mRootSignature = rootSignature;
-}
-void GraphicsPipeline::SetDepthStencilDesc(const D3D12_DEPTH_STENCIL_DESC depthStencilDesc)
-{
-	mDepthStencilDesc = depthStencilDesc;
-}
-void GraphicsPipeline::SetRTVNum(const uint32_t rtvNum)
-{
-	mRtvNum = rtvNum;
-}
-
 void GraphicsPipeline::SetGraphicsPipelineSetter(const GraphicsPipelineSetting& setting)
 {
 	mSetting = setting;
+}
+
+RootSignature* GraphicsPipeline::GetRootSignature()
+{
+	return mRootSignature.get();
 }

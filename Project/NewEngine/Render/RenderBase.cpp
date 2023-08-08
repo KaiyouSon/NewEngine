@@ -114,15 +114,15 @@ void RenderBase::PostDraw()
 }
 void RenderBase::SetObject3DDrawCommand()
 {
-	mCommandList->SetGraphicsRootSignature(mObject3DRootSignature->GetRootSignature());
+	//mCommandList->SetGraphicsRootSignature(mObject3DRootSignature->GetRootSignature());
 }
 void RenderBase::SetSpriteDrawCommand()
 {
-	mCommandList->SetGraphicsRootSignature(mSpriteRootSignature->GetRootSignature());
+	//mCommandList->SetGraphicsRootSignature(mSpriteRootSignature->GetRootSignature());
 }
 void RenderBase::SetRenderTextureDrawCommand()
 {
-	mCommandList->SetGraphicsRootSignature(mRenderTextureRootSignature->GetRootSignature());
+	//mCommandList->SetGraphicsRootSignature(mRenderTextureRootSignature->GetRootSignature());
 }
 
 void RenderBase::CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC* rtvDesc)
@@ -430,17 +430,17 @@ void RenderBase::ShaderCompilerInit()
 }
 void RenderBase::RootSignatureInit()
 {
-	// 3Dオブジェクト用
-	mObject3DRootSignature = std::make_unique<RootSignature>();
-	mObject3DRootSignature->Create(7, 2);
+	//// 3Dオブジェクト用
+	//mObject3DRootSignature = std::make_unique<RootSignature>();
+	//mObject3DRootSignature->Create(7, 2);
 
-	// スプライト用
-	mSpriteRootSignature = std::make_unique<RootSignature>();
-	mSpriteRootSignature->Create(3, 1);
+	//// スプライト用
+	//mSpriteRootSignature = std::make_unique<RootSignature>();
+	//mSpriteRootSignature->Create(3, 1);
 
-	// スプライト用
-	mRenderTextureRootSignature = std::make_unique<RootSignature>();
-	mRenderTextureRootSignature->Create(2, 2);
+	//// スプライト用
+	//mRenderTextureRootSignature = std::make_unique<RootSignature>();
+	//mRenderTextureRootSignature->Create(2, 2);
 }
 void RenderBase::GraphicsPipelineInit()
 {
@@ -467,101 +467,111 @@ void RenderBase::GraphicsPipelineInit()
 	// 3Dオブジェクト用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Object3D");
-	setting.rootSignature = *mObject3DRootSignature;
 	setting.cullMode = CullMode::Back;
-	setting.topologyType = TopologyType::Triangle;
+	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rtvNum = 2;
+	setting.rootSignatureSetting.constantBufferViewNum = 7;
+	setting.rootSignatureSetting.descriptorRangeNum = 2;
 	GraphicsPipelineManager::Create(setting, "Object3D");
 
 	// FBXモデル用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("FbxModel");
-	setting.rootSignature = *mObject3DRootSignature;
 	setting.cullMode = CullMode::Back;
-	setting.topologyType = TopologyType::Triangle;
+	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rtvNum = 1;
+	setting.rootSignatureSetting.constantBufferViewNum = 7;
+	setting.rootSignatureSetting.descriptorRangeNum = 2;
 	GraphicsPipelineManager::Create(setting, "FbxModel");
 
 	// スプライト用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Sprite");
-	setting.rootSignature = *mSpriteRootSignature;
 	setting.cullMode = CullMode::None;
-	setting.topologyType = TopologyType::Triangle;
+	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
 	setting.rtvNum = 2;
+	setting.rootSignatureSetting.constantBufferViewNum = 3;
+	setting.rootSignatureSetting.descriptorRangeNum = 1;
 	GraphicsPipelineManager::Create(setting, "Sprite");
 
 	// 円形ゲージスプライト用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("CircleGaugeSprite");
-	setting.rootSignature = *mSpriteRootSignature;
 	setting.cullMode = CullMode::None;
-	setting.topologyType = TopologyType::Triangle;
+	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
 	setting.rtvNum = 1;
+	setting.rootSignatureSetting.constantBufferViewNum = 3;
+	setting.rootSignatureSetting.descriptorRangeNum = 1;
 	GraphicsPipelineManager::Create(setting, "CircleGaugeSprite");
 
 	// レンダーテクスチャ用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("RenderTexture");
-	setting.rootSignature = *mRenderTextureRootSignature;
 	setting.cullMode = CullMode::None;
-	setting.topologyType = TopologyType::Triangle;
+	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
 	setting.rtvNum = 2;
+	setting.rootSignatureSetting.constantBufferViewNum = 2;
+	setting.rootSignatureSetting.descriptorRangeNum = 2;
 	GraphicsPipelineManager::Create(setting, "RenderTexture");
 
 	// シルエット用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Silhouette");
-	setting.rootSignature = *mObject3DRootSignature;
 	setting.cullMode = CullMode::Back;
-	setting.topologyType = TopologyType::Triangle;
+	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc3;
 	setting.rtvNum = 1;
+	setting.rootSignatureSetting.constantBufferViewNum = 7;
+	setting.rootSignatureSetting.descriptorRangeNum = 2;
 	GraphicsPipelineManager::Create(setting, "Silhouette");
 
 	// アウトライン用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Outline");
-	setting.rootSignature = *mObject3DRootSignature;
 	setting.cullMode = CullMode::Front;
-	setting.topologyType = TopologyType::Triangle;
+	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc4;
 	setting.rtvNum = 1;
+	setting.rootSignatureSetting.constantBufferViewNum = 7;
+	setting.rootSignatureSetting.descriptorRangeNum = 2;
 	GraphicsPipelineManager::Create(setting, "Outline");
 
 	// トゥーンレンダリング用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("ToonRendering");
-	setting.rootSignature = *mObject3DRootSignature;
 	setting.cullMode = CullMode::Back;
-	setting.topologyType = TopologyType::Triangle;
+	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc4;
 	setting.rtvNum = 1;
+	setting.rootSignatureSetting.constantBufferViewNum = 7;
+	setting.rootSignatureSetting.descriptorRangeNum = 2;
 	GraphicsPipelineManager::Create(setting, "ToonRendering");
 
 	// ライン用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Line");
-	setting.rootSignature = *mObject3DRootSignature;
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Line;
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rtvNum = 1;
+	setting.rootSignatureSetting.constantBufferViewNum = 2;
+	setting.rootSignatureSetting.descriptorRangeNum = 0;
 	GraphicsPipelineManager::Create(setting, "Line");
 
 	// エミッター用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Emitter");
-	setting.rootSignature = *mObject3DRootSignature;
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rtvNum = 1;
+	setting.rootSignatureSetting.constantBufferViewNum = 7;
+	setting.rootSignatureSetting.descriptorRangeNum = 2;
 	GraphicsPipelineManager::Create(setting, "Emitter");
 }
 

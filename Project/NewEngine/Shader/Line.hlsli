@@ -7,7 +7,7 @@ cbuffer ConstantBufferDataTransform : register(b0)
 }
 
 // F
-cbuffer ConstantBufferDataColor : register(b2)
+cbuffer ConstantBufferDataColor : register(b1)
 {
     float4 color; // F
 }
