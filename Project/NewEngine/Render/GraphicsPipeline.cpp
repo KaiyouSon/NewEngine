@@ -21,7 +21,26 @@ GraphicsPipeline::GraphicsPipeline() : mResult(HRESULT())
 
 void GraphicsPipeline::Create()
 {
-	CreatePipelineState(BlendMode::Alpha);		// αブレンド
+	// パイプランステートの生成
+	uint8_t bit = (uint8_t)mSetting.pipelineBlend;
+	mPSOs.resize(4);
+
+	if (bit & GraphicsPipelineSetting::Alpha)
+	{
+		CreatePipelineState(GraphicsPipelineSetting::Alpha);
+	}
+	if (bit & GraphicsPipelineSetting::Add)
+	{
+		CreatePipelineState(GraphicsPipelineSetting::Add);
+	}
+	if (bit & GraphicsPipelineSetting::Sub)
+	{
+		CreatePipelineState(GraphicsPipelineSetting::Sub);
+	}
+	if (bit & GraphicsPipelineSetting::Inv)
+	{
+		CreatePipelineState(GraphicsPipelineSetting::Inv);
+	}
 }
 void GraphicsPipeline::DrawCommand(const BlendMode blendMode)
 {
@@ -64,7 +83,7 @@ void GraphicsPipeline::DrawCommand(const BlendMode blendMode)
 	}
 }
 
-void GraphicsPipeline::CreatePipelineState(const BlendMode blendMode)
+void GraphicsPipeline::CreatePipelineState(const GraphicsPipelineSetting::PipelineBlend pipelineBlend)
 {
 	// RootSignatureの生成
 	mRootSignature = std::make_unique<RootSignature>();
@@ -136,27 +155,27 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode blendMode)
 		blendDesc.DestBlendAlpha = D3D12_BLEND_ZERO;	// デストの値を  0％使う
 
 		// 半透明合成
-		switch (blendMode)
+		switch (pipelineBlend)
 		{
-		case BlendMode::Alpha: // αブレンド
+		case GraphicsPipelineSetting::Alpha: // αブレンド
 			blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// 加算
 			blendDesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;			// ソースのアルファ値
 			blendDesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;	// 1.0f-ソースのアルファ値
 			break;
 
-		case BlendMode::Add:	// 加算ブレンド
+		case GraphicsPipelineSetting::Add:	// 加算ブレンド
 			blendDesc.BlendOp = D3D12_BLEND_OP_ADD;		// 加算
 			blendDesc.SrcBlend = D3D12_BLEND_ONE;		// ソースの値を100％使う
 			blendDesc.DestBlend = D3D12_BLEND_ONE;		// デストの値を100％使う
 			break;
 
-		case BlendMode::Sub:	// 減算ブレンド
+		case GraphicsPipelineSetting::Sub:	// 減算ブレンド
 			blendDesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;	// デストからソースを減算
 			blendDesc.SrcBlend = D3D12_BLEND_ONE;				// ソースの値を100％使う
 			blendDesc.DestBlend = D3D12_BLEND_ONE;				// デストの値を100％使う
 			break;
 
-		case BlendMode::Inv:	// 反転
+		case GraphicsPipelineSetting::Inv:	// 反転
 			blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// 加算
 			blendDesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;	// 1.0f-デストカラーの値
 			blendDesc.DestBlend = D3D12_BLEND_ZERO;				// 使わない
@@ -205,24 +224,28 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode blendMode)
 	pipelineDesc.pRootSignature = mRootSignature->GetRootSignature();
 
 	// パイプランステートの生成
-	uint8_t bit = (uint8_t)mSetting.pipelineBlend;
-	mPSOs.resize(4);
-	for (int i = 0; i < 4; i++)
+	switch (pipelineBlend)
 	{
-		uint8_t mask = (1 << i);
-		// 生成する場合
-		if (bit & mask)
-		{
-			mResult = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mPSOs[i]));
-			assert(SUCCEEDED(mResult));
+	case GraphicsPipelineSetting::Alpha:
+		mResult = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mPSOs[0]));
+		break;
 
-		}
-		// しない場合
-		else
-		{
-			mPSOs[i] = nullptr;
-		}
+	case GraphicsPipelineSetting::Add:
+		mResult = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mPSOs[1]));
+		break;
+
+	case GraphicsPipelineSetting::Sub:
+		mResult = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mPSOs[2]));
+		break;
+
+	case GraphicsPipelineSetting::Inv:
+		mResult = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mPSOs[3]));
+		break;
+
+	default:
+		break;
 	}
+	assert(SUCCEEDED(mResult));
 }
 
 // セッター
@@ -231,6 +254,7 @@ void GraphicsPipeline::SetGraphicsPipelineSetter(const GraphicsPipelineSetting& 
 	mSetting = setting;
 }
 
+// ゲッター
 RootSignature* GraphicsPipeline::GetRootSignature()
 {
 	return mRootSignature.get();

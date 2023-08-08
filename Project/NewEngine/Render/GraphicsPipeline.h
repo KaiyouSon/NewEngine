@@ -50,7 +50,7 @@ private:
 	std::unique_ptr<RootSignature> mRootSignature;	// ルートシグネーチャー
 
 private:
-	void CreatePipelineState(const BlendMode blendMode);
+	void CreatePipelineState(const GraphicsPipelineSetting::PipelineBlend pipelineBlend);
 
 public:
 	GraphicsPipeline();
