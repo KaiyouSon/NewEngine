@@ -61,13 +61,13 @@ void Sprite::Draw(const BlendMode blendMode)
 	// マテリアルの描画コマンド
 	MaterialDrawCommands();
 
-	uint32_t max = renderBase->GetSpriteRootSignature()->GetConstantBufferNum();
+	uint32_t startIndex = renderBase->GetSpriteRootSignature()->GetDescriptorTableStartIndex();
+	uint32_t endIndex = renderBase->GetSpriteRootSignature()->GetDescriptorTableEndIndex();
 
-	for (int i = 0; i < 1; i++)
+	for (uint32_t i = startIndex; i < endIndex; i++)
 	{
 		// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			uint32_t(max + i), mTexture->GetGpuHandle());
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetGpuHandle());
 	}
 
 	renderBase->GetCommandList()->DrawInstanced((uint16_t)mVertices.size(), 1, 0, 0);

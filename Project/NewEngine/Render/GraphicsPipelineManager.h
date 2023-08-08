@@ -12,15 +12,10 @@ private:
 	static std::unordered_map<std::string, std::unique_ptr<GraphicsPipeline>> sGraphicsPipelineMap;
 
 public:
-	static GraphicsPipeline* Create(
-		ShaderObject* shaderObject,
-		ID3D12RootSignature* rootSignature,
-		const CullMode cullMode,
-		const D3D12_DEPTH_STENCIL_DESC depthStencilDesc,
-		const TopologyType topologyType,
-		const uint32_t rtvNum,
-		const std::string graphicsPipelineTag);
+	// ê∂ê¨
+	static GraphicsPipeline* Create(const GraphicsPipelineSetting& setting, const std::string tag);
 
-	static GraphicsPipeline* GetGraphicsPipeline(const std::string graphicsPipelineTag);
+	// éÊìæ
+	static GraphicsPipeline* GetGraphicsPipeline(const std::string tag);
 };
 

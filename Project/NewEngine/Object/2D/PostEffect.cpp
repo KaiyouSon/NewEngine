@@ -52,11 +52,11 @@ void PostEffect::Draw()
 	MaterialDrawCommands();
 
 	// SRVÝ’èƒRƒ}ƒ“ƒh
-	uint32_t index = renderBase->GetRenderTextureRootSignature()->GetConstantBufferNum();
+	uint32_t startIndex = renderBase->GetRenderTextureRootSignature()->GetDescriptorTableStartIndex();
 	for (uint32_t i = 0; i < renderTextures_.size(); i++)
 	{
 		renderBase->GetCommandList()->
-			SetGraphicsRootDescriptorTable(index + i, renderTextures_[i]->GetGpuHandle(rtvIndex));
+			SetGraphicsRootDescriptorTable(startIndex + i, renderTextures_[i]->GetGpuHandle(rtvIndex));
 
 		if (renderTextures_[i]->useDepth == true)
 		{
@@ -71,13 +71,13 @@ void PostEffect::Draw()
 
 			renderBase->GetCommandList()->
 				SetGraphicsRootDescriptorTable(
-					(uint32_t)(index + 1),
+					(uint32_t)(startIndex + 1),
 					renderTextures_[i]->depthTexture->GetGpuHandle());
 		}
 		else
 		{
 			renderBase->GetCommandList()->
-				SetGraphicsRootDescriptorTable(index + 1, renderTextures_[i]->GetGpuHandle(rtvIndex));
+				SetGraphicsRootDescriptorTable(startIndex + 1, renderTextures_[i]->GetGpuHandle(rtvIndex));
 		}
 	}
 

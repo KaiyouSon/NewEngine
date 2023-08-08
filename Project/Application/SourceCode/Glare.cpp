@@ -48,58 +48,58 @@ Glare::Glare() :
 
 void Glare::CreateGraphicsPipeline()
 {
-	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
-	depthStencilDesc.DepthEnable = false; // 深度テストを行う
+	//D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
+	//depthStencilDesc.DepthEnable = false; // 深度テストを行う
 
-	std::string path = "Application/Shader/";
+	//std::string path = "Application/Shader/";
 
-	// ラインブラー用
-	ShaderObjectManager::Create("GLineBlur");
-	ShaderObjectManager::GetShaderObject("GLineBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("GLineBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("GLineBlur")->CompileVertexShader(path + "GLineBlurVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("GLineBlur")->CompilePixelShader(path + "GLineBlurPS.hlsl", "main");
+	//// ラインブラー用
+	//ShaderObjectManager::Create("GLineBlur");
+	//ShaderObjectManager::GetShaderObject("GLineBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderObjectManager::GetShaderObject("GLineBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//ShaderObjectManager::GetShaderObject("GLineBlur")->CompileVertexShader(path + "GLineBlurVS.hlsl", "main");
+	//ShaderObjectManager::GetShaderObject("GLineBlur")->CompilePixelShader(path + "GLineBlurPS.hlsl", "main");
 
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("GLineBlur"),
-		RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
-		CullMode::None,
-		depthStencilDesc,
-		TopologyType::Triangle,
-		1,
-		"GLineBlur");
+	//GraphicsPipelineManager::Create(
+	//	ShaderObjectManager::GetShaderObject("GLineBlur"),
+	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
+	//	CullMode::None,
+	//	depthStencilDesc,
+	//	TopologyType::Triangle,
+	//	1,
+	//	"GLineBlur");
 
-	// グレア用
-	ShaderObjectManager::Create("Glare");
-	ShaderObjectManager::GetShaderObject("Glare")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Glare")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Glare")->CompileVertexShader(path + "GlareVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Glare")->CompilePixelShader(path + "GlarePS.hlsl", "main");
+	//// グレア用
+	//ShaderObjectManager::Create("Glare");
+	//ShaderObjectManager::GetShaderObject("Glare")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderObjectManager::GetShaderObject("Glare")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//ShaderObjectManager::GetShaderObject("Glare")->CompileVertexShader(path + "GlareVS.hlsl", "main");
+	//ShaderObjectManager::GetShaderObject("Glare")->CompilePixelShader(path + "GlarePS.hlsl", "main");
 
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("Glare"),
-		RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
-		CullMode::None,
-		depthStencilDesc,
-		TopologyType::Triangle,
-		1,
-		"Glare");
+	//GraphicsPipelineManager::Create(
+	//	ShaderObjectManager::GetShaderObject("Glare"),
+	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
+	//	CullMode::None,
+	//	depthStencilDesc,
+	//	TopologyType::Triangle,
+	//	1,
+	//	"Glare");
 
-	// ドットフィルター用
-	ShaderObjectManager::Create("DotFilter");
-	ShaderObjectManager::GetShaderObject("DotFilter")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("DotFilter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("DotFilter")->CompileVertexShader(path + "DotFilterVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("DotFilter")->CompilePixelShader(path + "DotFilterPS.hlsl", "main");
+	//// ドットフィルター用
+	//ShaderObjectManager::Create("DotFilter");
+	//ShaderObjectManager::GetShaderObject("DotFilter")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderObjectManager::GetShaderObject("DotFilter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//ShaderObjectManager::GetShaderObject("DotFilter")->CompileVertexShader(path + "DotFilterVS.hlsl", "main");
+	//ShaderObjectManager::GetShaderObject("DotFilter")->CompilePixelShader(path + "DotFilterPS.hlsl", "main");
 
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("DotFilter"),
-		RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
-		CullMode::None,
-		depthStencilDesc,
-		TopologyType::Triangle,
-		1,
-		"DotFilter");
+	//GraphicsPipelineManager::Create(
+	//	ShaderObjectManager::GetShaderObject("DotFilter"),
+	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
+	//	CullMode::None,
+	//	depthStencilDesc,
+	//	TopologyType::Triangle,
+	//	1,
+	//	"DotFilter");
 }
 
 void Glare::Update()

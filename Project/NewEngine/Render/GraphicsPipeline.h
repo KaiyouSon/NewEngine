@@ -1,14 +1,42 @@
 #pragma once
 #include "ShaderObject.h"
+#include "RootSignature.h"
 #include "Util.h"
 #include <d3d12.h>
 #include <wrl.h>
 #include <cstdint>
 
+struct GraphicsPipelineSetting
+{
+	// 生成するパイプラインの種類
+	PipelineBlend pipelineBlend;
+
+	// カーリングモード
+	CullMode cullMode;
+
+	// トポロジータイプ
+	TopologyType topologyType;
+
+	// シェダーオブジェクト
+	ShaderObject* shaderObject;
+
+	// ルートシグネーチャー
+	RootSignature rootSignature;
+	//ID3D12RootSignature* rootSignature;
+
+	// 深度設定
+	D3D12_DEPTH_STENCIL_DESC depthStencilDesc;
+
+	// RTVの数
+	uint32_t rtvNum = 1;
+};
+
 class GraphicsPipeline
 {
 private:
 	HRESULT mResult;
+
+	GraphicsPipelineSetting mSetting;
 
 	CullMode mCullMode;
 	TopologyType mTopologyType;
@@ -17,11 +45,13 @@ private:
 	D3D12_DEPTH_STENCIL_DESC  mDepthStencilDesc;
 	uint32_t mRtvNum = 1;	// RTVの数
 
+	std::vector<Microsoft::WRL::ComPtr<ID3D12PipelineState>> psos;
+
 	// 各ブレンドのパイプライン
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> mAlphaPipeline;	// αブレンド
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> mAddPipeline;	// 加算ブレンド
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> mSubPipeline;	// 減算ブレンド
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> mInvPipeline;	// 反転ブレンド
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> mAlphaPSO;	// αブレンド
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> mAddPSO;	// 加算ブレンド
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> mSubPSO;	// 減算ブレンド
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> mInvPSO;	// 反転ブレンド
 
 private:
 	void CreatePipelineState(const BlendMode blendMode);
@@ -29,6 +59,7 @@ private:
 public:
 	GraphicsPipeline();
 	void Create();
+	void DrawCommand(const BlendMode blendMode);
 
 public:
 	// セッター
@@ -38,6 +69,8 @@ public:
 	void SetRootSignature(ID3D12RootSignature* rootSignature);
 	void SetDepthStencilDesc(const D3D12_DEPTH_STENCIL_DESC depthStencilDesc);
 	void SetRTVNum(const uint32_t rtvNum);
+
+	void SetGraphicsPipelineSetter(const GraphicsPipelineSetting& setting);
 
 public:
 	// ゲッター

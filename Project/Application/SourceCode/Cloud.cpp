@@ -17,14 +17,15 @@ void Cloud::CreateGraphicsPipeline()
 	ShaderObjectManager::GetShaderObject("Cloud")->CompileVertexShader(path + "CloudVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Cloud")->CompilePixelShader(path + "CloudPS.hlsl", "main");
 
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("Cloud"),
-		RenderBase::GetInstance()->GetObject3DRootSignature()->GetRootSignature(),
-		CullMode::Back,
-		depthStencilDesc,
-		TopologyType::Triangle,
-		1,
-		"Cloud");
+	GraphicsPipelineSetting setting;
+	setting.shaderObject = ShaderObjectManager::GetShaderObject("Cloud");
+	setting.rootSignature = *RenderBase::GetInstance()->GetObject3DRootSignature();
+	setting.cullMode = CullMode::Back;
+	setting.topologyType = TopologyType::Triangle;
+	setting.depthStencilDesc = depthStencilDesc;
+	setting.rtvNum = 1;
+	GraphicsPipelineManager::Create(setting, "Cloud");
+
 }
 
 Cloud::Cloud() :

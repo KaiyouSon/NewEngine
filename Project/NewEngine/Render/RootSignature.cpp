@@ -4,57 +4,13 @@
 #include <d3dcompiler.h>
 #include <cassert>
 
-void RootSignature::Create(const uint32_t number)
+void RootSignature::Create(const uint32_t constantBufferViewNum, const uint32_t descriptorRangeNum)
 {
-	//// デスクリプタレンジの設定
-	//CD3DX12_DESCRIPTOR_RANGE descriptorRange{};
-	//descriptorRange.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
-	////descriptorRange.NumDescriptors = 1;			// 一度の描画に使うテクスチャが1枚なので１
-	////descriptorRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-	////descriptorRange.BaseShaderRegister = 0;		// テクスチャレジスタ0番
-	////descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
-	//
-	//D3D12_ROOT_PARAMETER rootParam;
-	//rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE; // 種類
-	//rootParam.DescriptorTable.pDescriptorRanges = &descriptorRange;		  // デスクリプタレンジ
-	//rootParam.DescriptorTable.NumDescriptorRanges = 1;					  // デスクリプタレンジ数
-	//rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;			  // 全てのシェーダから見える
-	//
-	//// テクスチャレジスタ0番（SRV）
-	//rootParameters.emplace_back(rootParam);
+	// RootParameterにConstantBufferViewを追加
+	AddConstantBufferViewToRootRrameter(constantBufferViewNum);
 
-	if (number == 1)
-	{
-		// デスクリプタレンジの設定
-		CD3DX12_DESCRIPTOR_RANGE descriptorRange1{};
-		descriptorRange1.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
-
-		CD3DX12_ROOT_PARAMETER rootParam;
-		rootParam.InitAsDescriptorTable(1, &descriptorRange1, D3D12_SHADER_VISIBILITY_ALL);
-		mRootParameters.emplace_back(rootParam);
-
-		mDescriptorRangeNum = 1;
-	}
-	else if (number == 2)
-	{
-		// デスクリプタレンジの設定
-		CD3DX12_DESCRIPTOR_RANGE descriptorRange1{};
-		descriptorRange1.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
-
-		CD3DX12_ROOT_PARAMETER rootParam1;
-		rootParam1.InitAsDescriptorTable(1, &descriptorRange1, D3D12_SHADER_VISIBILITY_ALL);
-		mRootParameters.emplace_back(rootParam1);
-
-		// デスクリプタレンジの設定
-		CD3DX12_DESCRIPTOR_RANGE descriptorRange2{};
-		descriptorRange2.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1);
-
-		CD3DX12_ROOT_PARAMETER rootParam2;
-		rootParam2.InitAsDescriptorTable(1, &descriptorRange2, D3D12_SHADER_VISIBILITY_ALL);
-		mRootParameters.emplace_back(rootParam2);
-
-		mDescriptorRangeNum = 2;
-	}
+	// RootParameterにDescriptorRangeを追加
+	AddDescriptorRangeToRootPrameter(descriptorRangeNum);
 
 	// テクスチャサンプラーの設定
 	D3D12_STATIC_SAMPLER_DESC samplerDesc{};
@@ -71,8 +27,8 @@ void RootSignature::Create(const uint32_t number)
 	// ルートシグネチャの設定
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
 	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-	rootSignatureDesc.pParameters = mRootParameters.data();	// ルートパラメータの先頭アドレス
-	rootSignatureDesc.NumParameters = (UINT)mRootParameters.size();		// ルートパラメータ数
+	rootSignatureDesc.pParameters = mRootParameters.data();					// ルートパラメータの先頭アドレス
+	rootSignatureDesc.NumParameters = (uint32_t)mRootParameters.size();		// ルートパラメータ数
 	rootSignatureDesc.pStaticSamplers = &samplerDesc;
 	rootSignatureDesc.NumStaticSamplers = 1;
 
@@ -101,7 +57,7 @@ void RootSignature::AddConstantBufferViewToRootRrameter(const uint32_t number)
 	{
 		D3D12_ROOT_PARAMETER rootParam;
 		rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
-		rootParam.Descriptor.ShaderRegister = (UINT)mRootParameters.size();	// 定数バッファ番号
+		rootParam.Descriptor.ShaderRegister = (uint32_t)mRootParameters.size();	// 定数バッファ番号
 		rootParam.Descriptor.RegisterSpace = 0;						// デフォルト値
 		rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
 
@@ -111,25 +67,40 @@ void RootSignature::AddConstantBufferViewToRootRrameter(const uint32_t number)
 }
 void RootSignature::AddDescriptorRangeToRootPrameter(const uint32_t number)
 {
-	//for (int i = 0; i < number; i++)
-	//{
-	//	// デスクリプタレンジの設定
-	//	CD3DX12_DESCRIPTOR_RANGE descriptorRange{};
-	//	descriptorRange.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, (UINT)descriptorRangeNum);
+	// なぜかこうしないとエラーになる
+	for (uint32_t i = 0; i < number; i++)
+	{
+		mDescriptorRanges.emplace_back();
+		mDescriptorRanges.back().Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, (uint32_t)i);
+	}
 
-	//	D3D12_ROOT_PARAMETER rootParam;
-	//	rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE; // 種類
-	//	rootParam.DescriptorTable.pDescriptorRanges = &descriptorRange;		  // デスクリプタレンジ
-	//	rootParam.DescriptorTable.NumDescriptorRanges = 1;					  // デスクリプタレンジ数
-	//	rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;			  // 全てのシェーダから見える
+	for (uint32_t i = 0; i < number; i++)
+	{
+		mRootParameters.emplace_back();
+		mRootParameters.back().InitAsDescriptorTable(1, &mDescriptorRanges[i]);
 
-	//	// テクスチャレジスタ0番（SRV）
-	//	rootParameters.emplace_back(rootParam);
-
-	//	descriptorRangeNum++;
-	//}
+		mDescriptorRangeNum++;
+	}
 }
 
-ID3D12RootSignature* RootSignature::GetRootSignature() { return mRootSignature.Get(); }
-uint32_t RootSignature::GetConstantBufferNum() { return mConstantBufferNum; }
-uint32_t RootSignature::GetRootDescriptorTableIndex() { return (uint32_t)(mRootParameters.size() - 1); }
+ID3D12RootSignature* RootSignature::GetRootSignature()
+{
+	return mRootSignature.Get();
+}
+uint32_t RootSignature::GetConstantBufferStartIndex()
+{
+	// 必ず0番目から作るようにするため0を返す
+	return 0;
+}
+uint32_t RootSignature::GetConstantBufferEndIndex()
+{
+	return (uint32_t)(mRootParameters.size() - mDescriptorRangeNum);
+}
+uint32_t RootSignature::GetDescriptorTableStartIndex()
+{
+	return (uint32_t)(mRootParameters.size() - mDescriptorRangeNum);
+}
+uint32_t RootSignature::GetDescriptorTableEndIndex()
+{
+	return (uint32_t)(mRootParameters.size());
+}

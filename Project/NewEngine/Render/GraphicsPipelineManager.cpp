@@ -2,30 +2,17 @@
 
 std::unordered_map<std::string, std::unique_ptr<GraphicsPipeline>> GraphicsPipelineManager::sGraphicsPipelineMap;
 
-GraphicsPipeline* GraphicsPipelineManager::Create(
-	ShaderObject* shaderObject,
-	ID3D12RootSignature* rootSignature,
-	const CullMode cullMode,
-	const D3D12_DEPTH_STENCIL_DESC depthStencilDesc,
-	const TopologyType topologyType,
-	const uint32_t rtvNum,
-	const std::string graphicsPipelineTag)
+GraphicsPipeline* GraphicsPipelineManager::Create(const GraphicsPipelineSetting& setting, const std::string tag)
 {
 	std::unique_ptr<GraphicsPipeline> gp = std::make_unique<GraphicsPipeline>();
-	gp->SetShaderObject(shaderObject);
-	gp->SetCullMode(cullMode);
-	gp->SetDepthStencilDesc(depthStencilDesc);
-	gp->SetTopologyType(topologyType);
-	gp->SetRootSignature(rootSignature);
-	gp->SetRTVNum(rtvNum);
+	gp->SetGraphicsPipelineSetter(setting);
 	gp->Create();
 
-	sGraphicsPipelineMap.insert(std::make_pair(graphicsPipelineTag, std::move(gp)));
-
-	return sGraphicsPipelineMap[graphicsPipelineTag].get();
+	sGraphicsPipelineMap.insert(std::make_pair(tag, std::move(gp)));
+	return sGraphicsPipelineMap[tag].get();
 }
 
-GraphicsPipeline* GraphicsPipelineManager::GetGraphicsPipeline(const std::string graphicsPipelineTag)
+GraphicsPipeline* GraphicsPipelineManager::GetGraphicsPipeline(const std::string tag)
 {
-	return sGraphicsPipelineMap[graphicsPipelineTag].get();
+	return sGraphicsPipelineMap[tag].get();
 }

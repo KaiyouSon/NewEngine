@@ -14,26 +14,26 @@ RadialBlur::RadialBlur() :
 
 void RadialBlur::CreateGraphicsPipeline()
 {
-	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
-	depthStencilDesc.DepthEnable = false; // 深度テストを行う
+	//D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
+	//depthStencilDesc.DepthEnable = false; // 深度テストを行う
 
-	std::string path = "Application/Shader/";
+	//std::string path = "Application/Shader/";
 
-	// 高輝度抽出用
-	ShaderObjectManager::Create("RadialBlur");
-	ShaderObjectManager::GetShaderObject("RadialBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("RadialBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("RadialBlur")->CompileVertexShader(path + "RadialBlurVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("RadialBlur")->CompilePixelShader(path + "RadialBlurPS.hlsl", "main");
+	//// 高輝度抽出用
+	//ShaderObjectManager::Create("RadialBlur");
+	//ShaderObjectManager::GetShaderObject("RadialBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderObjectManager::GetShaderObject("RadialBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//ShaderObjectManager::GetShaderObject("RadialBlur")->CompileVertexShader(path + "RadialBlurVS.hlsl", "main");
+	//ShaderObjectManager::GetShaderObject("RadialBlur")->CompilePixelShader(path + "RadialBlurPS.hlsl", "main");
 
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("RadialBlur"),
-		RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
-		CullMode::None,
-		depthStencilDesc,
-		TopologyType::Triangle,
-		1,
-		"RadialBlur");
+	//GraphicsPipelineManager::Create(
+	//	ShaderObjectManager::GetShaderObject("RadialBlur"),
+	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
+	//	CullMode::None,
+	//	depthStencilDesc,
+	//	TopologyType::Triangle,
+	//	1,
+	//	"RadialBlur");
 }
 
 void RadialBlur::Update()

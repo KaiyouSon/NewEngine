@@ -25,58 +25,58 @@ Bloom::Bloom() :
 
 void Bloom::CreateGraphicsPipeline()
 {
-	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
-	depthStencilDesc.DepthEnable = false; // 深度テストを行う
+	//D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
+	//depthStencilDesc.DepthEnable = false; // 深度テストを行う
 
-	std::string path = "Application/Shader/";
+	//std::string path = "Application/Shader/";
 
-	// 高輝度抽出用
-	ShaderObjectManager::Create("HighLumi");
-	ShaderObjectManager::GetShaderObject("HighLumi")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("HighLumi")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("HighLumi")->CompileVertexShader(path + "HighLumiVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("HighLumi")->CompilePixelShader(path + "HighLumiPS.hlsl", "main");
+	//// 高輝度抽出用
+	//ShaderObjectManager::Create("HighLumi");
+	//ShaderObjectManager::GetShaderObject("HighLumi")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderObjectManager::GetShaderObject("HighLumi")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//ShaderObjectManager::GetShaderObject("HighLumi")->CompileVertexShader(path + "HighLumiVS.hlsl", "main");
+	//ShaderObjectManager::GetShaderObject("HighLumi")->CompilePixelShader(path + "HighLumiPS.hlsl", "main");
 
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("HighLumi"),
-		RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
-		CullMode::None,
-		depthStencilDesc,
-		TopologyType::Triangle,
-		1,
-		"HighLumi");
+	//GraphicsPipelineManager::Create(
+	//	ShaderObjectManager::GetShaderObject("HighLumi"),
+	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
+	//	CullMode::None,
+	//	depthStencilDesc,
+	//	TopologyType::Triangle,
+	//	1,
+	//	"HighLumi");
 
-	// ガウシアンブラー用
-	ShaderObjectManager::Create("BGaussainBlur");
-	ShaderObjectManager::GetShaderObject("BGaussainBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("BGaussainBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("BGaussainBlur")->CompileVertexShader(path + "BGaussainBlurVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("BGaussainBlur")->CompilePixelShader(path + "BGaussainBlurPS.hlsl", "main");
+	//// ガウシアンブラー用
+	//ShaderObjectManager::Create("BGaussainBlur");
+	//ShaderObjectManager::GetShaderObject("BGaussainBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderObjectManager::GetShaderObject("BGaussainBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//ShaderObjectManager::GetShaderObject("BGaussainBlur")->CompileVertexShader(path + "BGaussainBlurVS.hlsl", "main");
+	//ShaderObjectManager::GetShaderObject("BGaussainBlur")->CompilePixelShader(path + "BGaussainBlurPS.hlsl", "main");
 
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("BGaussainBlur"),
-		RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
-		CullMode::None,
-		depthStencilDesc,
-		TopologyType::Triangle,
-		1,
-		"BGaussainBlur");
+	//GraphicsPipelineManager::Create(
+	//	ShaderObjectManager::GetShaderObject("BGaussainBlur"),
+	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
+	//	CullMode::None,
+	//	depthStencilDesc,
+	//	TopologyType::Triangle,
+	//	1,
+	//	"BGaussainBlur");
 
-	// ブルーム用
-	ShaderObjectManager::Create("Bloom");
-	ShaderObjectManager::GetShaderObject("Bloom")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Bloom")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Bloom")->CompileVertexShader(path + "BloomVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Bloom")->CompilePixelShader(path + "BloomPS.hlsl", "main");
+	//// ブルーム用
+	//ShaderObjectManager::Create("Bloom");
+	//ShaderObjectManager::GetShaderObject("Bloom")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderObjectManager::GetShaderObject("Bloom")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//ShaderObjectManager::GetShaderObject("Bloom")->CompileVertexShader(path + "BloomVS.hlsl", "main");
+	//ShaderObjectManager::GetShaderObject("Bloom")->CompilePixelShader(path + "BloomPS.hlsl", "main");
 
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("Bloom"),
-		RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
-		CullMode::None,
-		depthStencilDesc,
-		TopologyType::Triangle,
-		1,
-		"Bloom");
+	//GraphicsPipelineManager::Create(
+	//	ShaderObjectManager::GetShaderObject("Bloom"),
+	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
+	//	CullMode::None,
+	//	depthStencilDesc,
+	//	TopologyType::Triangle,
+	//	1,
+	//	"Bloom");
 }
 
 void Bloom::Update()

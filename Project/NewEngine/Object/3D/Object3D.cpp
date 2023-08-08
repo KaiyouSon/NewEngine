@@ -75,14 +75,14 @@ void Object3D::Draw(const BlendMode blendMode)
 	MaterialDrawCommands();
 	LightManager::GetInstance()->DrawCommand(5);
 
-	size_t index = renderBase->GetObject3DRootSignature()->GetConstantBufferNum();
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)index, mTexture->GetGpuHandle());
+	uint32_t startIndex = renderBase->GetObject3DRootSignature()->GetDescriptorTableStartIndex();
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetGpuHandle());
 
 	//auto tex = TextureManager::GetRenderTexture("CurrentScene")->depthTexture.get();
 	//if (isUseDissolve == true)
 	//{
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)index + 1, mDissolveTex->GetGpuHandle());
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 1, mDissolveTex->GetGpuHandle());
 	//}
 	//else
 	//{

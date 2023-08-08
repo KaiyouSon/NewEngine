@@ -12,25 +12,25 @@ GaussianBlur::GaussianBlur() :
 
 void GaussianBlur::CreateGraphicsPipeline()
 {
-	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
-	depthStencilDesc.DepthEnable = false; // 深度テストを行う
+	//D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
+	//depthStencilDesc.DepthEnable = false; // 深度テストを行う
 
-	std::string path = "Application/Shader/";
+	//std::string path = "Application/Shader/";
 
-	ShaderObjectManager::Create("GaussianBlur");
-	ShaderObjectManager::GetShaderObject("GaussianBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("GaussianBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("GaussianBlur")->CompileVertexShader(path + "GaussianBlurVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("GaussianBlur")->CompilePixelShader(path + "GaussianBlurPS.hlsl", "main");
+	//ShaderObjectManager::Create("GaussianBlur");
+	//ShaderObjectManager::GetShaderObject("GaussianBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderObjectManager::GetShaderObject("GaussianBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//ShaderObjectManager::GetShaderObject("GaussianBlur")->CompileVertexShader(path + "GaussianBlurVS.hlsl", "main");
+	//ShaderObjectManager::GetShaderObject("GaussianBlur")->CompilePixelShader(path + "GaussianBlurPS.hlsl", "main");
 
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("GaussianBlur"),
-		RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
-		CullMode::None,
-		depthStencilDesc,
-		TopologyType::Triangle,
-		1,
-		"GaussianBlur");
+	//GraphicsPipelineManager::Create(
+	//	ShaderObjectManager::GetShaderObject("GaussianBlur"),
+	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
+	//	CullMode::None,
+	//	depthStencilDesc,
+	//	TopologyType::Triangle,
+	//	1,
+	//	"GaussianBlur");
 }
 
 void GaussianBlur::Update()

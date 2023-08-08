@@ -60,8 +60,8 @@ void CircleGaugeSprite::Draw(const BlendMode blendMode)
 	MaterialDrawCommands();
 
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-		renderBase->GetSpriteRootSignature()->GetRootDescriptorTableIndex(), mTexture->GetGpuHandle());
+	uint32_t startIndex = renderBase->GetSpriteRootSignature()->GetDescriptorTableStartIndex();
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawInstanced((unsigned short)mVertices.size(), 1, 0, 0);
 }
