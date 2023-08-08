@@ -47,11 +47,10 @@ void CircleGaugeSprite::Update(Transform* parent)
 }
 void CircleGaugeSprite::Draw(const BlendMode blendMode)
 {
-	SetBlendMode(blendMode);
-
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	// GraphicsPipeline描画コマンド
+	mGraphicsPipeline->DrawCommand(blendMode);
 
 	// VBVとIBVの設定コマンド
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
@@ -185,34 +184,6 @@ void CircleGaugeSprite::SetAnchorPoint(const Vec2 anchorPoint)
 
 	TransferVertexCoord();
 	mVertexBuffer->TransferToBuffer(mVertices);
-}
-
-// ブレンドモード
-void CircleGaugeSprite::SetBlendMode(const BlendMode blendMode)
-{
-	RenderBase* renderBase = RenderBase::GetInstance();//.get();
-
-	switch (blendMode)
-	{
-	case BlendMode::Alpha: // αブレンド
-		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetAlphaPipeline());
-		break;
-
-	case BlendMode::Add:	// 加算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetAddPipeline());
-		break;
-
-	case BlendMode::Sub:	// 減算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetSubPipeline());
-		break;
-
-	case BlendMode::Inv:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetInvPipeline());
-		break;
-
-	default:
-		break;
-	}
 }
 
 // グラフィックスパイプライン

@@ -17,21 +17,41 @@ GraphicsPipeline::GraphicsPipeline() :
 void GraphicsPipeline::Create()
 {
 	CreatePipelineState(BlendMode::Alpha);		// αブレンド
-	CreatePipelineState(BlendMode::Add);		// 加算ブレンド
-	CreatePipelineState(BlendMode::Sub);		// 減算ブレンド
-	CreatePipelineState(BlendMode::Inv);
 }
 void GraphicsPipeline::DrawCommand(const BlendMode blendMode)
 {
 	ID3D12GraphicsCommandList* cmdList = RenderBase::GetInstance()->GetCommandList();
 
-	// ルートシグネーチャ
+	// RootSignature設定
 	cmdList->SetGraphicsRootSignature(mSetting.rootSignature.GetRootSignature());
 
 	// PSO設定
-	if (psos[(uint32_t)blendMode])
+	if (mPSOs[(uint32_t)blendMode])
 	{
-		cmdList->SetPipelineState(psos[(uint32_t)blendMode].Get());
+		cmdList->SetPipelineState(mPSOs[(uint32_t)blendMode].Get());
+	}
+	else
+	{
+		assert(0 && "使用しているパイプラインがnullptrです");
+	}
+
+	// 形状の設定
+	switch (mSetting.topologyType)
+	{
+	case TopologyType::Point:
+		cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
+		break;
+
+	case TopologyType::Line:
+		cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);
+		break;
+
+	case TopologyType::Triangle:
+		cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		break;
+
+	default:
+		break;
 	}
 }
 
@@ -171,28 +191,24 @@ void GraphicsPipeline::CreatePipelineState(const BlendMode blendMode)
 	pipelineDesc.pRootSignature = mSetting.rootSignature.GetRootSignature();
 
 	// パイプランステートの生成
-	switch (blendMode)
+	uint8_t bit = (uint8_t)mSetting.pipelineBlend;
+	mPSOs.resize(4);
+	for (int i = 0; i < 4; i++)
 	{
-	case BlendMode::Alpha: // αブレンド
-		mResult = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mAlphaPSO));
-		break;
+		uint8_t mask = (1 << i);
+		// 生成する場合
+		if (bit & mask)
+		{
+			mResult = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mPSOs[i]));
+			assert(SUCCEEDED(mResult));
 
-	case BlendMode::Add:	// 加算ブレンド
-		mResult = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mAddPSO));
-		break;
-
-	case BlendMode::Sub:	// 減算ブレンド
-		mResult = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mSubPSO));
-		break;
-
-	case BlendMode::Inv:	// 反転
-		mResult = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mInvPSO));
-		break;
-
-	default:
-		break;
+		}
+		// しない場合
+		else
+		{
+			mPSOs[i] = nullptr;
+		}
 	}
-	assert(SUCCEEDED(mResult));
 }
 
 // セッター
@@ -225,9 +241,3 @@ void GraphicsPipeline::SetGraphicsPipelineSetter(const GraphicsPipelineSetting& 
 {
 	mSetting = setting;
 }
-
-// ゲッター
-ID3D12PipelineState* GraphicsPipeline::GetAlphaPipeline() const { return mAlphaPSO.Get(); }
-ID3D12PipelineState* GraphicsPipeline::GetAddPipeline() const { return mAddPSO.Get(); }
-ID3D12PipelineState* GraphicsPipeline::GetSubPipeline() const { return mSubPSO.Get(); }
-ID3D12PipelineState* GraphicsPipeline::GetInvPipeline() const { return mInvPSO.Get(); }

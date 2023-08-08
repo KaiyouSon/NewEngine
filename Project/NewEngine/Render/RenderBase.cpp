@@ -465,6 +465,7 @@ void RenderBase::GraphicsPipelineInit()
 	GraphicsPipelineSetting setting;
 
 	// 3Dオブジェクト用
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Object3D");
 	setting.rootSignature = *mObject3DRootSignature;
 	setting.cullMode = CullMode::Back;
@@ -474,6 +475,7 @@ void RenderBase::GraphicsPipelineInit()
 	GraphicsPipelineManager::Create(setting, "Object3D");
 
 	// FBXモデル用
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("FbxModel");
 	setting.rootSignature = *mObject3DRootSignature;
 	setting.cullMode = CullMode::Back;
@@ -483,6 +485,7 @@ void RenderBase::GraphicsPipelineInit()
 	GraphicsPipelineManager::Create(setting, "FbxModel");
 
 	// スプライト用
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Sprite");
 	setting.rootSignature = *mSpriteRootSignature;
 	setting.cullMode = CullMode::None;
@@ -492,6 +495,7 @@ void RenderBase::GraphicsPipelineInit()
 	GraphicsPipelineManager::Create(setting, "Sprite");
 
 	// 円形ゲージスプライト用
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("CircleGaugeSprite");
 	setting.rootSignature = *mSpriteRootSignature;
 	setting.cullMode = CullMode::None;
@@ -501,6 +505,7 @@ void RenderBase::GraphicsPipelineInit()
 	GraphicsPipelineManager::Create(setting, "CircleGaugeSprite");
 
 	// レンダーテクスチャ用
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("RenderTexture");
 	setting.rootSignature = *mRenderTextureRootSignature;
 	setting.cullMode = CullMode::None;
@@ -510,6 +515,7 @@ void RenderBase::GraphicsPipelineInit()
 	GraphicsPipelineManager::Create(setting, "RenderTexture");
 
 	// シルエット用
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Silhouette");
 	setting.rootSignature = *mObject3DRootSignature;
 	setting.cullMode = CullMode::Back;
@@ -519,6 +525,7 @@ void RenderBase::GraphicsPipelineInit()
 	GraphicsPipelineManager::Create(setting, "Silhouette");
 
 	// アウトライン用
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Outline");
 	setting.rootSignature = *mObject3DRootSignature;
 	setting.cullMode = CullMode::Front;
@@ -528,6 +535,7 @@ void RenderBase::GraphicsPipelineInit()
 	GraphicsPipelineManager::Create(setting, "Outline");
 
 	// トゥーンレンダリング用
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("ToonRendering");
 	setting.rootSignature = *mObject3DRootSignature;
 	setting.cullMode = CullMode::Back;
@@ -537,6 +545,7 @@ void RenderBase::GraphicsPipelineInit()
 	GraphicsPipelineManager::Create(setting, "ToonRendering");
 
 	// ライン用
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Line");
 	setting.rootSignature = *mObject3DRootSignature;
 	setting.cullMode = CullMode::None;
@@ -546,6 +555,7 @@ void RenderBase::GraphicsPipelineInit()
 	GraphicsPipelineManager::Create(setting, "Line");
 
 	// エミッター用
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Emitter");
 	setting.rootSignature = *mObject3DRootSignature;
 	setting.cullMode = CullMode::None;

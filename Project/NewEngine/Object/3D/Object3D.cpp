@@ -62,11 +62,10 @@ void Object3D::Draw(const BlendMode blendMode)
 {
 	if (mTexture == nullptr || mModel == nullptr) return;
 
-	SetBlendMode(blendMode);
-
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	// GraphicsPipeline描画コマンド
+	mGraphicsPipeline->DrawCommand(blendMode);
 
 	// VBVとIBVの設定コマンド
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mModel->mesh.vertexBuffer.GetvbViewAddress());
@@ -227,34 +226,6 @@ void Object3D::MaterialDrawCommands()
 }
 
 // --- セッター -------------------------------------------------------- //
-
-//  ブレンド
-void Object3D::SetBlendMode(const BlendMode blendMode)
-{
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
-
-	switch (blendMode)
-	{
-	case BlendMode::Alpha: // αブレンド
-		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetAlphaPipeline());
-		break;
-
-	case BlendMode::Add:	// 加算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetAddPipeline());
-		break;
-
-	case BlendMode::Sub:	// 減算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetSubPipeline());
-		break;
-
-	case BlendMode::Inv:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetInvPipeline());
-		break;
-
-	default:
-		break;
-	}
-}
 
 // モデル
 void Object3D::SetModel(Model* model)

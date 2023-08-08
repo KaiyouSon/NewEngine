@@ -9,15 +9,6 @@ enum class BlendMode
 	Inv,
 };
 
-// パイプライン生成用
-enum class PipelineBlend
-{
-	Alpha = 1,
-	Add = 2,
-	Sub = 4,
-	Inv = 8,
-};
-
 // 時間単位
 enum class TimeUnit
 {

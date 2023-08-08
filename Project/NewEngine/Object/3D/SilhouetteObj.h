@@ -24,7 +24,5 @@ public:
 	SilhouetteObj();
 	void Update(Transform* parent = nullptr);
 	void Draw(const BlendMode& blendMode = BlendMode::Alpha);
-
-	void SetBlendMode(const BlendMode& blendMode);
 };
 

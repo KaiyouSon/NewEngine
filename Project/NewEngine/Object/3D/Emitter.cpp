@@ -52,11 +52,10 @@ void Emitter::Draw(const BlendMode blendMode)
 {
 	if (mTexture == nullptr) return;
 
-	SetBlendMode(blendMode);
-
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
+	// GraphicsPipeline描画コマンド
+	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
 
 	// VBVとIBVの設定コマンド
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
@@ -128,35 +127,7 @@ void Emitter::MaterialDrawCommands()
 		2, mMaterial.constantBuffers[2]->constantBuffer->GetGPUVirtualAddress());
 }
 
-// --- セッター -------------------------------------------------------- //
-
-//  ブレンド
-void Emitter::SetBlendMode(const BlendMode blendMode)
-{
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
-
-	switch (blendMode)
-	{
-	case BlendMode::Alpha: // αブレンド
-		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetAlphaPipeline());
-		break;
-
-	case BlendMode::Add:	// 加算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetAddPipeline());
-		break;
-
-	case BlendMode::Sub:	// 減算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetSubPipeline());
-		break;
-
-	case BlendMode::Inv:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetInvPipeline());
-		break;
-
-	default:
-		break;
-	}
-}
+// --- セッター -------------------------------------------------------- //ko
 
 // テクスチャー
 void Emitter::SetTexture(Texture* texture) { mTexture = texture; }

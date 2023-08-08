@@ -18,6 +18,7 @@ void Cloud::CreateGraphicsPipeline()
 	ShaderObjectManager::GetShaderObject("Cloud")->CompilePixelShader(path + "CloudPS.hlsl", "main");
 
 	GraphicsPipelineSetting setting;
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Cloud");
 	setting.rootSignature = *RenderBase::GetInstance()->GetObject3DRootSignature();
 	setting.cullMode = CullMode::Back;

@@ -43,10 +43,6 @@ private:
 	void MaterialTransfer();
 	void MaterialDrawCommands();
 
-private:
-	//  ƒuƒŒƒ“ƒhİ’è
-	void SetBlendMode(const BlendMode blendMode);
-
 public:
 	Object3D();
 	void Update(Transform* parent = nullptr);

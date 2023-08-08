@@ -10,14 +10,14 @@
 class PostEffect
 {
 private:
-	std::vector<VertexBufferData::VSprite> vertices_;
-	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> vertexBuffer_;
-	std::vector<RenderTexture*> renderTextures_;
-	GraphicsPipeline* graphicsPipeline_;
-	Material material_;
-	Transform transform_;
-	Vec2 size_;
-	Texture* depthTexture_;
+	std::vector<VertexBufferData::VSprite> mVertices;
+	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> mVertexBuffer;
+	std::vector<RenderTexture*> mRenderTextures;
+	GraphicsPipeline* mGraphicsPipeline;
+	Material mMaterial;
+	Transform mTransform;
+	Vec2 mSize;
+	Texture* mDepthTexture;
 
 public:
 	Vec2 pos;
@@ -46,7 +46,7 @@ public: // その他
 	{
 		std::unique_ptr<IConstantBuffer> iConstatnBuffer = std::make_unique<T>();
 		iConstatnBuffer->Create();
-		material_.constantBuffers.push_back(std::move(iConstatnBuffer));
+		mMaterial.constantBuffers.push_back(std::move(iConstatnBuffer));
 	}
 
 public: // ゲッター
@@ -56,8 +56,8 @@ public: // ゲッター
 	template<typename T>
 	void SetTransferBuffer(const uint32_t bufferNum, const T& data)
 	{
-		uint32_t bNum = Min<uint32_t>(bufferNum, (uint32_t)material_.constantBuffers.size());
-		TransferDataToConstantBuffer(material_.constantBuffers[bNum].get(), data);
+		uint32_t bNum = Min<uint32_t>(bufferNum, (uint32_t)mMaterial.constantBuffers.size());
+		TransferDataToConstantBuffer(mMaterial.constantBuffers[bNum].get(), data);
 	}
 };
 

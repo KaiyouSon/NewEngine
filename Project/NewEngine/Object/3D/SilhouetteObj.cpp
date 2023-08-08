@@ -44,10 +44,10 @@ void SilhouetteObj::Update(Transform* parent)
 }
 void SilhouetteObj::Draw(const BlendMode& blendMode)
 {
-	SetBlendMode(BlendMode::Alpha);
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	// GraphicsPipeline描画コマンド
+	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
 
 	// VBVとIBVの設定コマンド
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, obj->GetModel()->mesh.vertexBuffer.GetvbViewAddress());
@@ -63,32 +63,5 @@ void SilhouetteObj::Draw(const BlendMode& blendMode)
 		(uint16_t)obj->GetModel()->mesh.indices.size(), 1, 0, 0, 0);
 
 	obj->Draw(BlendMode::Alpha);
-}
-
-void SilhouetteObj::SetBlendMode(const BlendMode& blendMode)
-{
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
-
-	switch (blendMode)
-	{
-	case BlendMode::Alpha: // αブレンド
-		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetAlphaPipeline());
-		break;
-
-	case BlendMode::Add:	// 加算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetAddPipeline());
-		break;
-
-	case BlendMode::Sub:	// 減算ブレンド
-		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetSubPipeline());
-		break;
-
-	case BlendMode::Inv:	// 反転
-		renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetInvPipeline());
-		break;
-
-	default:
-		break;
-	}
 }
 

@@ -8,8 +8,17 @@
 
 struct GraphicsPipelineSetting
 {
+	// パイプライン生成用
+	enum PipelineBlend
+	{
+		Alpha = 0b0001,
+		Add = 0b0010,
+		Sub = 0b0100,
+		Inv = 0b1000,
+	};
+
 	// 生成するパイプラインの種類
-	PipelineBlend pipelineBlend;
+	uint8_t pipelineBlend = 0b001;
 
 	// カーリングモード
 	CullMode cullMode;
@@ -22,7 +31,6 @@ struct GraphicsPipelineSetting
 
 	// ルートシグネーチャー
 	RootSignature rootSignature;
-	//ID3D12RootSignature* rootSignature;
 
 	// 深度設定
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc;
@@ -45,13 +53,7 @@ private:
 	D3D12_DEPTH_STENCIL_DESC  mDepthStencilDesc;
 	uint32_t mRtvNum = 1;	// RTVの数
 
-	std::vector<Microsoft::WRL::ComPtr<ID3D12PipelineState>> psos;
-
-	// 各ブレンドのパイプライン
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> mAlphaPSO;	// αブレンド
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> mAddPSO;	// 加算ブレンド
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> mSubPSO;	// 減算ブレンド
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> mInvPSO;	// 反転ブレンド
+	std::vector<Microsoft::WRL::ComPtr<ID3D12PipelineState>> mPSOs;
 
 private:
 	void CreatePipelineState(const BlendMode blendMode);
@@ -69,14 +71,6 @@ public:
 	void SetRootSignature(ID3D12RootSignature* rootSignature);
 	void SetDepthStencilDesc(const D3D12_DEPTH_STENCIL_DESC depthStencilDesc);
 	void SetRTVNum(const uint32_t rtvNum);
-
 	void SetGraphicsPipelineSetter(const GraphicsPipelineSetting& setting);
-
-public:
-	// ゲッター
-	ID3D12PipelineState* GetAlphaPipeline() const;
-	ID3D12PipelineState* GetAddPipeline() const;
-	ID3D12PipelineState* GetSubPipeline() const;
-	ID3D12PipelineState* GetInvPipeline() const;
 };
 

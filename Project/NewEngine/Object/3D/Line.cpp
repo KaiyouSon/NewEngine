@@ -48,8 +48,8 @@ void Line::Draw()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();
 
-	renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetAlphaPipeline());
-	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);
+	// GraphicsPipeline描画コマンド
+	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
 
 	// VBVとIBVの設定コマンド
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());

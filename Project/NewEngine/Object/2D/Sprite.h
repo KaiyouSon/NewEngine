@@ -65,10 +65,6 @@ public: //セッター
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
 private:
-	// ブレンド
-	void SetBlendMode(const BlendMode blendMode);
-
-private:
 	friend TextureAnimeiton;
 };
 

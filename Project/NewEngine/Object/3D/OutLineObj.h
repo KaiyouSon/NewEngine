@@ -7,6 +7,7 @@ class OutLineObj
 private:
 	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform3D>> mConstantBufferTransform;
 	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> mConstantBufferColor;
+	GraphicsPipeline* mGraphicsPipeline;
 	Transform mTransform;
 	Transform* mParent;
 

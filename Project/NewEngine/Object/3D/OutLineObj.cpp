@@ -6,7 +6,8 @@ using namespace ConstantBufferData;
 OutLineObj::OutLineObj() :
 	color(Color::black),
 	mConstantBufferTransform(std::make_unique<ConstantBuffer<CTransform3D>>()),
-	mConstantBufferColor(std::make_unique<ConstantBuffer<CColor>>())
+	mConstantBufferColor(std::make_unique<ConstantBuffer<CColor>>()),
+	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Outline"))
 {
 	// 定数バッファ初期化
 	mConstantBufferTransform->Create();	// 3D行列
@@ -46,9 +47,8 @@ void OutLineObj::Draw()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	renderBase->GetCommandList()->SetPipelineState(
-		GraphicsPipelineManager::GetGraphicsPipeline("Outline")->GetAlphaPipeline());
-	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	// GraphicsPipeline描画コマンド
+	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
 
 	// VBVとIBVの設定コマンド
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, obj->GetModel()->mesh.vertexBuffer.GetvbViewAddress());
