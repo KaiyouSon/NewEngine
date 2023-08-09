@@ -14,7 +14,8 @@ Object3D::Object3D() :
 	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
 	mTexture(TextureManager::GetTexture("White")), mModel(nullptr), mParent(nullptr),
 	mDissolveTex(TextureManager::GetTexture("DissolveTexture")),
-	isLighting(false), mIsShadow(false), isWriteShadow(false), mCamera(&Camera::current),
+	isLighting(false), mIsWriteShadow(false), mIsWriteDepth(false),
+	mCamera(&Camera::current),
 	isUseDissolve(false), dissolve(0.f), colorPower(1), dissolveColor(Color::red)
 {
 	// マテリアルの初期化
@@ -58,7 +59,7 @@ void Object3D::Update(Transform* parent)
 		mTransform.SetWorldMat(mat);
 	}
 
-	if (mIsShadow == true)
+	if (mIsWriteDepth == true)
 	{
 		ShadowMap::Bind(*this);
 	}
@@ -96,7 +97,7 @@ void Object3D::Draw(const BlendMode blendMode)
 		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 1, mWhiteTex->GetGpuHandle());
 	}
 
-	if (mIsShadow == true)
+	if (mIsWriteShadow == true)
 	{
 		CD3DX12_RESOURCE_BARRIER barrier =
 			CD3DX12_RESOURCE_BARRIER::Transition(
@@ -114,7 +115,7 @@ void Object3D::Draw(const BlendMode blendMode)
 	}
 
 	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModel->mesh.indices.size(), 1, 0, 0, 0);
-	if (mIsShadow == true)
+	if (mIsWriteShadow == true)
 	{
 		CD3DX12_RESOURCE_BARRIER barrier =
 			CD3DX12_RESOURCE_BARRIER::Transition(
@@ -224,7 +225,7 @@ void Object3D::MaterialTransfer()
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[5].get(), dissolveData);
 
 	// ディゾルブ
-	CShadowMap shadowMapData = { isWriteShadow };
+	CShadowMap shadowMapData = { mIsWriteShadow };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[6].get(), shadowMapData);
 }
 void Object3D::MaterialDrawCommands()
@@ -300,11 +301,12 @@ void Object3D::SetCamera(Camera* camera)
 }
 
 // 影
-void Object3D::SetisShadow(const bool isShadow)
+void Object3D::SetisShadow(const bool isWriteShadow, const bool isWriteDepth)
 {
-	mIsShadow = isShadow;
+	mIsWriteShadow = isWriteShadow;
+	mIsWriteDepth = isWriteDepth;
 
-	if (mIsShadow == true)
+	if (mIsWriteDepth == true)
 	{
 		ShadowMap::Register();
 	}

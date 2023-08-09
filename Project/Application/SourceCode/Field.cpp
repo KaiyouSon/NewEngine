@@ -8,8 +8,7 @@ Field::Field() :
 	mGround->SetModel(ModelManager::GetModel("Ground"));
 	mSphere->SetModel(ModelManager::GetModel("Sphere"));
 
-	mGround->SetisShadow(true);
-	mGround->isWriteShadow = true;
+	mGround->SetisShadow(true, false);
 	//mSphere->SetisShadow(true);
 
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)

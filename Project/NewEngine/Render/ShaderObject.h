@@ -9,6 +9,7 @@ class ShaderObject
 {
 private:
 	static Microsoft::WRL::ComPtr <ID3DBlob> sErrorBlob;	// エラーオブジェクト
+	Microsoft::WRL::ComPtr<ID3DBlob> mCsBlob;			// 頂点シェーダオブジェクト
 	Microsoft::WRL::ComPtr<ID3DBlob> mVsBlob;			// 頂点シェーダオブジェクト
 	Microsoft::WRL::ComPtr<ID3DBlob> mGsBlob;			// ジオメトリシェーダオブジェクト
 	Microsoft::WRL::ComPtr<ID3DBlob> mPsBlob;			// ピクセルシェーダオブジェクト
@@ -21,6 +22,11 @@ private:
 
 public:
 	ShaderObject();
+
+	// コンピュートシェーダーのコンパイル
+	void CompileComputeShader(
+		const std::string& filePath,
+		const std::string& entryPointName);
 
 	// 頂点シェーダーのコンパイル
 	void CompileVertexShader(

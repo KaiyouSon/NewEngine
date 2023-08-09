@@ -1188,5 +1188,8 @@
     <FxCompile Include="NewEngine\Shader\EmitterGS.hlsl">
       <Filter>Shader\Engine</Filter>
     </FxCompile>
+    <FxCompile Include="NewEngine\Shader\EmitterCS.hlsl">
+      <Filter>Shader\Engine</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

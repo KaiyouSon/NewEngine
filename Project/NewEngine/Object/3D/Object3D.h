@@ -20,7 +20,8 @@ private:
 	Material mMaterial;
 	GraphicsPipeline* mGraphicsPipeline;
 	Camera* mCamera;
-	bool mIsShadow;
+	bool mIsWriteShadow;
+	bool mIsWriteDepth;
 
 private:
 	// 後整理する
@@ -38,7 +39,6 @@ public:
 	float colorPower;
 	Color dissolveColor;
 
-	bool isWriteShadow;
 
 	bool isLighting;
 	bool isUseDissolve;
@@ -72,7 +72,7 @@ public: //セッター
 	void SetCamera(Camera* camera = nullptr);
 
 	// 影
-	void SetisShadow(const bool isShadow);
+	void SetisShadow(const bool isWriteShadow, const bool isWriteDepth);
 
 	// 親
 	void SetParent(Transform* parent);
