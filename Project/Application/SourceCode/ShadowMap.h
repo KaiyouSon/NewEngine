@@ -5,7 +5,10 @@ class ShadowMap
 {
 private:
 	static std::vector<Object3D> sObjShadows;
+	static std::vector<Transform> sParents;
 	static uint32_t sIndex;
+
+public:
 	static Camera sLightCamera;
 
 private:

@@ -49,7 +49,7 @@ void GameScene::Init()
 	EffectManager::GetInstance()->Init();
 
 	LightManager::GetInstance()->directionalLight.isActive = true;
-	LightManager::GetInstance()->directionalLight.pos = Vec3(-1, 10, -1);
+	LightManager::GetInstance()->directionalLight.pos = Vec3(-10, 20, -10);
 
 	SceneChanger::GetInstance()->SetisEaseTitleBGM(false);
 
@@ -162,6 +162,7 @@ void GameScene::DrawDebugGui()
 	GuiManager::BeginWindow("Lighting");
 	GuiManager::DrawCheckBox("isActive", &LightManager::GetInstance()->directionalLight.isActive);
 	GuiManager::DrawSlider3("pos", LightManager::GetInstance()->directionalLight.pos, 0.01f);
+	GuiManager::DrawSlider3("rot", ShadowMap::sLightCamera.rot, 0.01f);
 	GuiManager::DrawColorEdit("color", LightManager::GetInstance()->directionalLight.color);
 	GuiManager::EndWindow();
 

@@ -1,6 +1,7 @@
 #include "ShadowMap.h"
 
 std::vector<Object3D> ShadowMap::sObjShadows;
+std::vector<Transform> ShadowMap::sParents;
 uint32_t ShadowMap::sIndex;
 Camera ShadowMap::sLightCamera;
 
@@ -26,7 +27,7 @@ void ShadowMap::Update()
 {
 	// ƒJƒƒ‰‚ÌÝ’è
 	sLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
-	sLightCamera.rot = Vec3(Radian(45), 0, 0);
+	//sLightCamera.rot = Vec3(Radian(45), 0, 0);
 	sLightCamera.Update();
 
 	static uint32_t i = 0;
@@ -69,6 +70,7 @@ void ShadowMap::DrawPostEffect()
 void ShadowMap::Register()
 {
 	sObjShadows.emplace_back();
+	sParents.emplace_back();
 }
 
 void ShadowMap::Bind(Object3D& object)
@@ -90,10 +92,11 @@ void ShadowMap::Bind(Object3D& object)
 		sObjShadows[sIndex].SetModel(object.GetModel());
 	}
 
-	if (object.GetParent() != nullptr)
+	if (object.GetParent())
 	{
-		auto p = object.GetParent();
-		sObjShadows[sIndex].SetParent(p);
+		//sObjShadows[sIndex].SetParent(object.GetParent());
+		sParents[sIndex] = *object.GetParent();
+		sObjShadows[sIndex].SetParent(&sParents[sIndex]);
 	}
 
 	sIndex++;
