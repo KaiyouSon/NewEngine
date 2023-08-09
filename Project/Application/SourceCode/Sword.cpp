@@ -5,6 +5,7 @@ Sword::Sword()
 {
 	weapon = std::make_unique<Object3D>();
 	weapon->SetModel(ModelManager::GetModel("Sword"));
+	weapon->SetisShadow(true);
 
 	// ’Æ‚Ìƒ‚[ƒVƒ‡ƒ“
 	motion = std::make_unique<MalletMotion>();

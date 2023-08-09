@@ -20,6 +20,8 @@ void BossBody::Init()
 		mParts[i]->isUseDissolve = true;
 		mParts[i]->colorPower = 5;
 		mParts[i]->dissolveColor = Color(255, 30, 0, 255);
+
+		mParts[i]->SetisShadow(true);
 	}
 }
 

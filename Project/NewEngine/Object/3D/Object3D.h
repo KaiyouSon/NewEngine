@@ -38,6 +38,8 @@ public:
 	float colorPower;
 	Color dissolveColor;
 
+	bool isWriteShadow;
+
 	bool isLighting;
 	bool isUseDissolve;
 	static bool isAllLighting;

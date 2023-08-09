@@ -444,7 +444,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rtvNum = 2;
-	setting.rootSignatureSetting.constantBufferViewNum = 7;
+	setting.rootSignatureSetting.constantBufferViewNum = 8;
 	setting.rootSignatureSetting.descriptorRangeNum = 3;
 	GraphicsPipelineManager::Create(setting, "Object3D");
 

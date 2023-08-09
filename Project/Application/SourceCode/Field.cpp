@@ -9,7 +9,8 @@ Field::Field() :
 	mSphere->SetModel(ModelManager::GetModel("Sphere"));
 
 	mGround->SetisShadow(true);
-	mSphere->SetisShadow(true);
+	mGround->isWriteShadow = true;
+	//mSphere->SetisShadow(true);
 
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
 	{
@@ -67,7 +68,7 @@ void Field::Update()
 
 void Field::DrawModel()
 {
-	mSphere->Draw();
+	//mSphere->Draw();
 	mGround->Draw();
 	mSkydome->DrawModel();
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)

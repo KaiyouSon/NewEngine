@@ -48,17 +48,21 @@ PSOutput main(V2P i)// : SV_TARGET
     }
     
     float shadow = 1.0f;
-    //シャドウマップのZ値を参照
-    float w = 1.0f / i.spos.w;
-    float2 shadowTexUV;
-    shadowTexUV.x = (1.0f + i.spos.x * w) * 0.5f;
-    shadowTexUV.y = (1.0f - i.spos.y * w) * 0.5f;
-		//uv座標で0～1なら影判定をする
-    if (shadowTexUV.x >= 0 && shadowTexUV.x <= 1.0f && shadowTexUV.y >= 0 && shadowTexUV.y <= 1.0f)
+    if (isWriteShadow == true)
     {
-        if (shadowMapTex.Sample(smp, shadowTexUV).x + 0.0005f < i.spos.z * w)
+        //シャドウマップのZ値を参照
+        float w = 1.0f / i.spos.w;
+        float2 shadowTexUV;
+        shadowTexUV.x = (1.0f + i.spos.x * w) * 0.5f;
+        shadowTexUV.y = (1.0f - i.spos.y * w) * 0.5f;
+		//uv座標で0～1なら影判定をする
+        if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
+            shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
         {
-            shadow *= 0.5f;
+            if (shadowMapTex.Sample(smp, shadowTexUV).x + 0.0005f < i.spos.z * w)
+            {
+                shadow *= 0.5f;
+            }
         }
     }
     
@@ -67,9 +71,6 @@ PSOutput main(V2P i)// : SV_TARGET
     
     PSOutput output;
     output.target0 = resultColor * maskIntensity + dissolveColor * colorPower * (1 - maskIntensity);
-    //output.target0 = float4(shadow, shadow, shadow, 1);
     output.target1 = float4(1 - resultColor.rgb, color.a);
     return output;
-    
-    //return shaderColor * texColor * color;
 }

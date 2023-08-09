@@ -14,7 +14,7 @@ Object3D::Object3D() :
 	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
 	mTexture(TextureManager::GetTexture("White")), mModel(nullptr), mParent(nullptr),
 	mDissolveTex(TextureManager::GetTexture("DissolveTexture")),
-	isLighting(false), mIsShadow(false), mCamera(&Camera::current),
+	isLighting(false), mIsShadow(false), isWriteShadow(false), mCamera(&Camera::current),
 	isUseDissolve(false), dissolve(0.f), colorPower(1), dissolveColor(Color::red)
 {
 	// マテリアルの初期化
@@ -106,11 +106,11 @@ void Object3D::Draw(const BlendMode blendMode)
 				D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
 		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
 
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)startIndex + 2, tex->GetGpuHandle());
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 2, tex->GetGpuHandle());
 	}
 	else
 	{
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)startIndex + 2, mWhiteTex->GetGpuHandle());
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 2, mWhiteTex->GetGpuHandle());
 	}
 
 	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModel->mesh.indices.size(), 1, 0, 0, 0);
@@ -152,8 +152,12 @@ void Object3D::MaterialInit()
 	iConstantBuffer = std::make_unique<ConstantBuffer<CUVParameter>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// UV情報
+	// ディゾルブ
 	iConstantBuffer = std::make_unique<ConstantBuffer<CDissolve>>();
+	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+
+	// 影
+	iConstantBuffer = std::make_unique<ConstantBuffer<CShadowMap>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// 初期化
@@ -218,6 +222,10 @@ void Object3D::MaterialTransfer()
 	// ディゾルブ
 	CDissolve dissolveData = { dissolve,colorPower,Vec2(0,0), dissolveColor.To01() };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[5].get(), dissolveData);
+
+	// ディゾルブ
+	CShadowMap shadowMapData = { isWriteShadow };
+	TransferDataToConstantBuffer(mMaterial.constantBuffers[6].get(), shadowMapData);
 }
 void Object3D::MaterialDrawCommands()
 {
@@ -241,6 +249,9 @@ void Object3D::MaterialDrawCommands()
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		6, mMaterial.constantBuffers[5]->constantBuffer->GetGPUVirtualAddress());
+
+	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+		7, mMaterial.constantBuffers[6]->constantBuffer->GetGPUVirtualAddress());
 }
 
 // --- セッター -------------------------------------------------------- //

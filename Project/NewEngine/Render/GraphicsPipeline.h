@@ -64,5 +64,6 @@ public:
 public:
 	// ƒQƒbƒ^[
 	RootSignature* GetRootSignature();
+	GraphicsPipelineSetting GetSetting();
 };
 

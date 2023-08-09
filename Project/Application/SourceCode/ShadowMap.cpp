@@ -26,8 +26,6 @@ void ShadowMap::Init()
 void ShadowMap::Update()
 {
 	// ƒJƒƒ‰‚ÌÝ’è
-	sLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
-	//sLightCamera.rot = Vec3(Radian(45), 0, 0);
 	sLightCamera.Update();
 
 	static uint32_t i = 0;

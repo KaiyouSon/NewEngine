@@ -52,6 +52,11 @@ cbuffer ConstantBufferDissolve : register(b6)
     float4 dissolveColor;
 }
 
+cbuffer ConstantBufferDissolve : register(b7)
+{
+    uint isWriteShadow;
+}
+
 struct Appdata
 {
     float4 pos : POSITION;

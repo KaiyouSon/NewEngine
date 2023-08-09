@@ -10,7 +10,7 @@ void CollisionManager::Update()
 	PlayerHitMessageSign();
 
 	// ボスとプレイヤー
-	BossHitPlayer();
+	//BossHitPlayer();
 }
 
 void CollisionManager::PlayerHitBoss()

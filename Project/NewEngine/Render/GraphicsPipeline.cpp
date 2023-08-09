@@ -259,3 +259,8 @@ RootSignature* GraphicsPipeline::GetRootSignature()
 {
 	return mRootSignature.get();
 }
+
+GraphicsPipelineSetting GraphicsPipeline::GetSetting()
+{
+	return mSetting;
+}

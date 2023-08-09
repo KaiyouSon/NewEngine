@@ -134,4 +134,9 @@ namespace ConstantBufferData
 		Vec2 pad;
 		Color dissolveColor;
 	};
+
+	struct CShadowMap
+	{
+		bool isWrite;
+	};
 }
