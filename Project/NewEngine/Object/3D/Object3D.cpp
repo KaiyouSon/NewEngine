@@ -14,6 +14,7 @@ Object3D::Object3D() :
 	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
 	mTexture(TextureManager::GetTexture("White")), mModel(nullptr), mParent(nullptr),
 	mDissolveTex(TextureManager::GetTexture("DissolveTexture")),
+	mDepthTex(TextureManager::GetRenderTexture("CurrentScene")->depthTexture.get()),
 	isLighting(false), mIsWriteShadow(false), mIsWriteDepth(false),
 	mCamera(&Camera::current),
 	isUseDissolve(false), dissolve(0.f), colorPower(1), dissolveColor(Color::red)
@@ -87,7 +88,6 @@ void Object3D::Draw(const BlendMode blendMode)
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetDescriptorTableStartIndex();
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetGpuHandle());
 
-	auto tex = TextureManager::GetRenderTexture("CurrentScene")->depthTexture.get();
 	if (isUseDissolve == true)
 	{
 		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 1, mDissolveTex->GetGpuHandle());
@@ -101,13 +101,13 @@ void Object3D::Draw(const BlendMode blendMode)
 	{
 		CD3DX12_RESOURCE_BARRIER barrier =
 			CD3DX12_RESOURCE_BARRIER::Transition(
-				tex->buffer.Get(),
+				mDepthTex->buffer.Get(),
 				D3D12_RESOURCE_STATE_DEPTH_WRITE,
 				D3D12_RESOURCE_STATE_GENERIC_READ,
 				D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
 		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
 
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 2, tex->GetGpuHandle());
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 2, mDepthTex->GetGpuHandle());
 	}
 	else
 	{
@@ -119,7 +119,7 @@ void Object3D::Draw(const BlendMode blendMode)
 	{
 		CD3DX12_RESOURCE_BARRIER barrier =
 			CD3DX12_RESOURCE_BARRIER::Transition(
-				tex->buffer.Get(),
+				mDepthTex->buffer.Get(),
 				D3D12_RESOURCE_STATE_GENERIC_READ,
 				D3D12_RESOURCE_STATE_DEPTH_WRITE,
 				D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
@@ -187,7 +187,7 @@ void Object3D::MaterialTransfer()
 	{
 		materialColorData =
 		{
-			Color(1, 1, 1) - 0.5f,
+			Color::one - 0.4f,
 			mModel->material.diffuse,
 			mModel->material.specular,
 		};
@@ -318,6 +318,11 @@ void Object3D::SetParent(Transform* parent)
 	mParent = parent;
 }
 
+void Object3D::SetBillboardType(const BillboardType type)
+{
+	mTransform.SetBillboardType(type);
+}
+
 // --- ゲッター -------------------------------------------------------- //
 
 // ワールド座標
@@ -335,7 +340,10 @@ Vec3 Object3D::GetWorldScale()
 }
 
 // トランスフォーム
-Transform Object3D::GetTransform() { return mTransform; }
+Transform Object3D::GetTransform()
+{
+	return mTransform;
+}
 
 // 親
 Transform* Object3D::GetParent()

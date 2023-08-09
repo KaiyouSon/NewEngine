@@ -11,6 +11,7 @@
 #include "RadialBlur.h"
 #include "Vignette.h"
 #include "Cloud.h"
+#include "RespawnPoint.h"
 
 std::unique_ptr<IScene> SceneManager::sCurrentScene = nullptr;
 
@@ -18,6 +19,7 @@ SceneManager::SceneManager()
 {
 	Object3D::isAllLighting = true;
 	Cloud::CreateGraphicsPipeline();
+	RespawnPoint::CreateGraphicsPipeline();
 
 	//Bloom::CreateGraphicsPipeline();
 	//GaussianBlur::CreateGraphicsPipeline();

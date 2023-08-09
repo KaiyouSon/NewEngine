@@ -206,3 +206,7 @@ bool Boss::GetisDissolve()
 {
 	return mIsDissolve;
 }
+bool Boss::GetisFight()
+{
+	return mIsFight;
+}

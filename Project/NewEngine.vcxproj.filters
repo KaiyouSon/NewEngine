@@ -223,6 +223,18 @@
     <Filter Include="Application\Header\Menu">
       <UniqueIdentifier>{e293f399-1977-442e-815f-9586e9c468cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\Cloud">
+      <UniqueIdentifier>{a91876c3-70eb-4c47-b383-02110c1429b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\RespawnPoint">
+      <UniqueIdentifier>{2aeaa800-57e6-4a47-991a-d643c6a5a56c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\RespawnPoint\Ripple">
+      <UniqueIdentifier>{f9d89569-7a2b-47b7-b3f3-1145af54c6e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\RespawnPoint\Rhombus">
+      <UniqueIdentifier>{1abab86d-546b-4066-843d-330619fd51ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -584,6 +596,9 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\ShadowMap.cpp">
       <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\RespawnPoint.cpp">
+      <Filter>Application\Source\Field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -983,6 +998,9 @@
     <ClInclude Include="Application\SourceCode\ShadowMap.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SourceCode\RespawnPoint.h">
+      <Filter>Application\Header\Field</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1051,11 +1069,14 @@
     <None Include="Application\Shader\RadialBlur.hlsli">
       <Filter>Shader\Application</Filter>
     </None>
-    <None Include="Application\Shader\Cloud.hlsli">
-      <Filter>Shader\Application</Filter>
-    </None>
     <None Include="NewEngine\Shader\Emitter.hlsli">
       <Filter>Shader\Engine</Filter>
+    </None>
+    <None Include="Application\Shader\Cloud.hlsli">
+      <Filter>Shader\Application\Cloud</Filter>
+    </None>
+    <None Include="Application\Shader\Ripple.hlsli">
+      <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1173,12 +1194,6 @@
     <FxCompile Include="Application\Shader\RadialBlurVS.hlsl">
       <Filter>Shader\Application</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\CloudPS.hlsl">
-      <Filter>Shader\Application</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\CloudVS.hlsl">
-      <Filter>Shader\Application</Filter>
-    </FxCompile>
     <FxCompile Include="NewEngine\Shader\EmitterPS.hlsl">
       <Filter>Shader\Engine</Filter>
     </FxCompile>
@@ -1190,6 +1205,24 @@
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\EmitterCS.hlsl">
       <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\CloudPS.hlsl">
+      <Filter>Shader\Application\Cloud</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\CloudVS.hlsl">
+      <Filter>Shader\Application\Cloud</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RipplePS.hlsl">
+      <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RippleVS.hlsl">
+      <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RhombusPS.hlsl">
+      <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RhombusVS.hlsl">
+      <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

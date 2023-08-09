@@ -145,7 +145,7 @@ void GameScene::RenderTextureSetting()
 
 void GameScene::DrawRenderTexture()
 {
-	mShadowMap.DrawPostEffect();
+	//mShadowMap.DrawPostEffect();
 }
 void GameScene::DrawBackSprite()
 {
@@ -173,7 +173,7 @@ void GameScene::DrawDebugGui()
 
 	GuiManager::EndWindow();
 
-	//mField->DrawDebugGui();
+	mField->DrawDebugGui();
 
 	//mPlayer->DrawDebugGui();
 }

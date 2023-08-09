@@ -17,6 +17,7 @@ private:
 	Model* mModel;
 	Texture* mTexture;
 	Texture* mDissolveTex;
+	Texture* mDepthTex;
 	Material mMaterial;
 	GraphicsPipeline* mGraphicsPipeline;
 	Camera* mCamera;
@@ -38,7 +39,6 @@ public:
 	float dissolve;
 	float colorPower;
 	Color dissolveColor;
-
 
 	bool isLighting;
 	bool isUseDissolve;
@@ -76,6 +76,9 @@ public: //セッター
 
 	// 親
 	void SetParent(Transform* parent);
+
+	// ビルボード
+	void SetBillboardType(const BillboardType type);
 
 public: // ゲッター
 

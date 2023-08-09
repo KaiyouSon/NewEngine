@@ -3,7 +3,8 @@
 Field::Field() :
 	mGround(std::make_unique<Object3D>()),
 	mSphere(std::make_unique<Object3D>()),
-	mSkydome(std::make_unique<Skydome>())
+	mSkydome(std::make_unique<Skydome>()),
+	mRespawnPoint(std::make_unique<RespawnPoint>())
 {
 	mGround->SetModel(ModelManager::GetModel("Ground"));
 	mSphere->SetModel(ModelManager::GetModel("Sphere"));
@@ -48,6 +49,7 @@ void Field::Init()
 		mMessageSigns[i]->Init();
 	}
 	mSkydome->Init();
+	mRespawnPoint->Init();
 }
 
 void Field::Update()
@@ -59,6 +61,7 @@ void Field::Update()
 
 	mGround->Update();
 	mSkydome->Update();
+	mRespawnPoint->Update();
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
 	{
 		mMessageSigns[i]->Update();
@@ -70,6 +73,7 @@ void Field::DrawModel()
 	//mSphere->Draw();
 	mGround->Draw();
 	mSkydome->DrawModel();
+	mRespawnPoint->DrawModel();
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
 	{
 		mMessageSigns[i]->DrawModel();

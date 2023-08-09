@@ -19,6 +19,8 @@ void Cloud::CreateGraphicsPipeline()
 
 	GraphicsPipelineSetting setting = GraphicsPipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Cloud");
+	setting.cullMode = CullMode::Back;
+	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc;
 	setting.rtvNum = 1;
 	GraphicsPipelineManager::Create(setting, "Cloud");
@@ -45,7 +47,6 @@ void Cloud::Init()
 void Cloud::Update()
 {
 	mCloud->offset.x += 0.0005f;
-
 	mCloud->Update();
 }
 

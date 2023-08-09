@@ -10,8 +10,6 @@ float4 main(V2P i) : SV_TARGET
     
     float dis = 1 - smoothstep(0.05, radius, r);
     
-    //clip(1 - dis);
-    
     float2 newUV = (i.uv + offset) * tiling;
     // テクスチャーマッピング
     float4 texColor = tex.Sample(smp, newUV);

@@ -67,6 +67,7 @@ public:
 	float GetDamage();
 	bool GetisAlive();
 	bool GetisDissolve();
+	bool GetisFight();
 
 private:
 	friend BossGrabAttackMotion;

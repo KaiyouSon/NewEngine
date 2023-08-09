@@ -1,12 +1,14 @@
 #pragma once
 #include "MessageSign.h"
 #include "Skydome.h"
+#include "RespawnPoint.h"
 
 class Field
 {
 private:
 	std::unique_ptr<Object3D> mGround;
 	std::unique_ptr<Skydome> mSkydome;
+	std::unique_ptr<RespawnPoint> mRespawnPoint;
 	std::array<std::unique_ptr<MessageSign>, 5> mMessageSigns;
 
 private:

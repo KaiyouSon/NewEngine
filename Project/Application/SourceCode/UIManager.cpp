@@ -80,8 +80,12 @@ void UIManager::Update()
 		mGauges[i]->Update();
 	}
 
-	mBossHPGauge->SetGaugePrame(mBoss->GetHpGaugeParam());
-	mBossHPGauge->Update();
+	// í“¬’†‚ÌŽž‚ÉXV
+	if (mBoss->GetisFight() == true)
+	{
+		mBossHPGauge->SetGaugePrame(mBoss->GetHpGaugeParam());
+		mBossHPGauge->Update();
+	}
 
 	mNegotiationUI->Update();
 
@@ -103,7 +107,11 @@ void UIManager::DrawFrontSprite()
 
 	mItemBoxUiManager->DrawFrontSprite();
 
-	mBossHPGauge->DrawFrontSprite();
+	// í“¬’†‚ÌŽž‚É•`‰æ
+	if (mBoss->GetisFight() == true)
+	{
+		mBossHPGauge->DrawFrontSprite();
+	}
 
 	mResultUI->DrawFrontSprite();
 }

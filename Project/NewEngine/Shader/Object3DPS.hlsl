@@ -33,7 +33,7 @@ PSOutput main(V2P i)// : SV_TARGET
         float dotLightNormal = dot(dirLightVec, i.normal);
         
         // アンビエント
-        float3 ambient = /*texColor.rgb * 0.1f **/material.ambient.rgb;
+        float3 ambient = /*texColor.rgb **/ material.ambient.rgb;
      
         // ディフューズ
         float intensity = saturate(dot(normalize(i.normal), dirLightVec));

@@ -10,6 +10,8 @@ bool LoadManager::ModelLoad()
 	ModelManager::LoadObjModel("Cube", "Cube");
 	ModelManager::LoadObjModel("Sphere", "Sphere");
 
+	ModelManager::LoadObjModel("Plane", "Plane");
+
 	ModelManager::LoadObjModel("Ground", "Ground");
 	ModelManager::LoadObjModel("Skydome", "Skydome", true);
 	ModelManager::LoadObjModel("Cloud", "Cloud");
@@ -34,6 +36,9 @@ bool LoadManager::TextureLoad()
 {
 	TextureManager::CreateDepthTexture(Vec2(1920, 1080));
 	TextureManager::LoadTexture("DissolveTexture.png", "DissolveTexture");
+
+	// ノイズテクスチャ
+	TextureManager::LoadTexture("Noice/BlurNoice.png", "BlurNoice");
 
 	// タイトル
 	TextureManager::LoadTexture("Title/GameTitle.png", "GameTitle");
