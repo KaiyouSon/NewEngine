@@ -17,7 +17,7 @@ namespace ConstantBufferData
 		Vec3 cameraPos;
 	};
 
-	struct CTransfromShadowObj
+	struct CTransformShadowObj
 	{
 		Mat4 viewProjMat;
 		Mat4 worldMat;

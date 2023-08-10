@@ -83,13 +83,7 @@ void GameScene::Update()
 	mMenuManager->Update();
 	mField->Update();
 
-	ShadowMap::sLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
-	//mPlayer->GetPos() +
-	//LightManager::GetInstance()->directionalLight.pos.Norm() * 20;
-	//ShadowMap::sLightCamera.rot = Vec3(Radian(45), Radian(45), 0);
-	//ShadowMap::sLightCamera.rot = Vec3(Radian(45), 0, 0);
 	mShadowMap.Update();
-
 
 	EffectManager::GetInstance()->Update();
 
@@ -169,33 +163,33 @@ void GameScene::DrawFrontSprite()
 }
 void GameScene::DrawDebugGui()
 {
-	GuiManager::BeginWindow("Lighting");
-	//GuiManager::DrawCheckBox("isActive", &LightManager::GetInstance()->directionalLight.isActive);
-	//GuiManager::DrawColorEdit("color", LightManager::GetInstance()->directionalLight.color);
-	GuiManager::DrawSlider3("Light Pos", LightManager::GetInstance()->directionalLight.pos, 0.01f);
+	//GuiManager::BeginWindow("Lighting");
+	////GuiManager::DrawCheckBox("isActive", &LightManager::GetInstance()->directionalLight.isActive);
+	////GuiManager::DrawColorEdit("color", LightManager::GetInstance()->directionalLight.color);
+	//GuiManager::DrawSlider3("Light Pos", LightManager::GetInstance()->directionalLight.pos, 0.01f);
 
-	Vec3 angle = Angle(ShadowMap::sLightCamera.rot);
-	GuiManager::DrawSlider3("Camera Rot", angle, 1.f);
-	ShadowMap::sLightCamera.rot = Radian(angle);
+	//Vec3 angle = Angle(ShadowMap::sLightCamera.rot);
+	//GuiManager::DrawSlider3("Camera Rot", angle, 1.f);
+	//ShadowMap::sLightCamera.rot = Radian(angle);
 
-	GuiManager::DrawSlider1("Camera NearZ", ShadowMap::sLightCamera.oNearZ, 0.01f);
-	GuiManager::DrawSlider1("Camera FarZ", ShadowMap::sLightCamera.oFarZ, 1.f);
+	//GuiManager::DrawSlider1("Camera NearZ", ShadowMap::sLightCamera.oNearZ, 0.01f);
+	//GuiManager::DrawSlider1("Camera FarZ", ShadowMap::sLightCamera.oFarZ, 1.f);
 
-	float fov = Angle(ShadowMap::sLightCamera.fov);
-	GuiManager::DrawSlider1("Camera Fov", fov, 1.f);
-	ShadowMap::sLightCamera.fov = Radian(fov);
+	//float fov = Angle(ShadowMap::sLightCamera.fov);
+	//GuiManager::DrawSlider1("Camera Fov", fov, 1.f);
+	//ShadowMap::sLightCamera.fov = Radian(fov);
 
-	float width = ShadowMap::sLightCamera.rect.right;
-	GuiManager::DrawSlider1("Camera Rect Width", width, 1.f);
-	ShadowMap::sLightCamera.rect.left = -width;
-	ShadowMap::sLightCamera.rect.right = +width;
+	//float width = ShadowMap::sLightCamera.rect.right;
+	//GuiManager::DrawSlider1("Camera Rect Width", width, 1.f);
+	//ShadowMap::sLightCamera.rect.left = -width;
+	//ShadowMap::sLightCamera.rect.right = +width;
 
-	float height = ShadowMap::sLightCamera.rect.top;
-	GuiManager::DrawSlider1("Camera Rect Height", ShadowMap::sLightCamera.rect.top, 1.f);
-	ShadowMap::sLightCamera.rect.top = +height;
-	ShadowMap::sLightCamera.rect.bottom = -height;
+	//float height = ShadowMap::sLightCamera.rect.top;
+	//GuiManager::DrawSlider1("Camera Rect Height", ShadowMap::sLightCamera.rect.top, 1.f);
+	//ShadowMap::sLightCamera.rect.top = +height;
+	//ShadowMap::sLightCamera.rect.bottom = -height;
 
-	GuiManager::EndWindow();
+	//GuiManager::EndWindow();
 
 	//mField->DrawDebugGui();
 

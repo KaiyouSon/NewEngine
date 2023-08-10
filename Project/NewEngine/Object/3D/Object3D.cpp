@@ -14,7 +14,7 @@ Object3D::Object3D() :
 	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
 	mTexture(TextureManager::GetTexture("White")), mModel(nullptr), mParent(nullptr),
 	mDissolveTex(TextureManager::GetTexture("DissolveTexture")),
-	mDepthTex(TextureManager::GetRenderTexture("CurrentScene")->depthTexture.get()),
+	mDepthTex(TextureManager::GetRenderTexture("ShadowMap")->depthTexture.get()),
 	isLighting(false), mIsWriteShadow(false), mIsWriteDepth(false),
 	mCamera(&Camera::current),
 	isUseDissolve(false), dissolve(0.f), colorPower(1), dissolveColor(Color::red)

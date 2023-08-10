@@ -218,6 +218,9 @@ void PostEffect::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 }
 void PostEffect::SetDrawCommands(const uint32_t registerNum, const uint32_t bufferNum)
 {
+	// GraphicsPipeline•`‰æƒRƒ}ƒ“ƒh
+	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
+
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
 	uint32_t bNum = Min<uint32_t>(bufferNum, (uint32_t)mMaterial.constantBuffers.size());

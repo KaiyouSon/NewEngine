@@ -1,19 +1,44 @@
 #include "ShadowMap.h"
+using namespace ConstantBufferData;
 
 std::vector<ShadowObj> ShadowMap::sShadowObjs;
 std::vector<Transform> ShadowMap::sParents;
 uint32_t ShadowMap::sIndex;
 Camera ShadowMap::sLightCamera;
 
+void ShadowMap::CreateGraphicsPipeline()
+{
+	std::string path = "Application/Shader/";
+
+	// ShadowObj用
+	ShaderObjectManager::Create("ShadowMap");
+	ShaderObjectManager::GetShaderObject("ShadowMap")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("ShadowMap")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderObjectManager::GetShaderObject("ShadowMap")->CompileVertexShader(path + "ShadowMapVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("ShadowMap")->CompilePixelShader(path + "ShadowMapPS.hlsl", "main");
+
+	// 3Dオブジェクト用
+	GraphicsPipelineSetting setting =
+		GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
+	setting.shaderObject = ShaderObjectManager::GetShaderObject("ShadowMap");
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.constantBufferViewNum = 3;
+	GraphicsPipelineManager::Create(setting, "ShadowMap");
+
+}
+
 ShadowMap::ShadowMap() :
-	mCurrentScene(std::make_unique<PostEffect>()),
-	mRenderTex(TextureManager::GetRenderTexture("CurrentScene"))
+	mShadowMap(std::make_unique<PostEffect>()),
+	mRenderTex(TextureManager::GetRenderTexture("ShadowMap"))
 {
 	mRenderTex->useDepth = true;
 
-	mCurrentScene->AddRenderTexture(mRenderTex);
-	mCurrentScene->scale = 0.125f;
-	mCurrentScene->pos = GetWindowHalfSize() / 2;
+	mShadowMap->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("ShadowMap"));
+	mShadowMap->AddRenderTexture(mRenderTex);
+	mShadowMap->scale = 1.f / 32.f;
+	mShadowMap->pos = GetWindowHalfSize() / 2;
+	mShadowMap->AddMaterial(ConstantBuffer<CTransformShadowObj>{});
+
 	sIndex = 0;
 
 	sLightCamera.rot = Vec3(Radian(45), Radian(45), 0);
@@ -27,18 +52,25 @@ void ShadowMap::Init()
 
 void ShadowMap::Update()
 {
+	sLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
+
 	// カメラの設定
 	sLightCamera.Update();
-
-	static uint32_t i = 0;
 
 	for (auto& obj : sShadowObjs)
 	{
 		obj.SetCamera(&sLightCamera);
 		obj.Update();
-		i++;
 	}
-	mCurrentScene->Update();
+
+	CTransformShadowObj data =
+	{
+		sLightCamera.GetViewLookToMat() * sLightCamera.GetOrthoGrphicProjectionMat(),
+		Mat4::Identity(),
+	};
+
+	mShadowMap->SetTransferBuffer(2, data);
+	mShadowMap->Update();
 }
 
 void ShadowMap::RenderTextureSetting()
@@ -63,7 +95,8 @@ void ShadowMap::DrawModel()
 
 void ShadowMap::DrawPostEffect()
 {
-	mCurrentScene->Draw();
+	mShadowMap->SetDrawCommands(2, 2);
+	mShadowMap->Draw();
 }
 
 void ShadowMap::Register()

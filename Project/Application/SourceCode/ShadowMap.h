@@ -13,10 +13,11 @@ public:
 	static Camera sLightCamera;
 
 private:
-	std::unique_ptr<PostEffect> mCurrentScene;
+	std::unique_ptr<PostEffect> mShadowMap;
 	RenderTexture* mRenderTex;
 
 public:
+	static void CreateGraphicsPipeline();
 	ShadowMap();
 	void Init();
 	void Update();

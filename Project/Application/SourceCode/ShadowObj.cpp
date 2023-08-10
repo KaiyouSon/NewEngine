@@ -92,7 +92,7 @@ void ShadowObj::MaterialInit()
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
 	// 3D行列
-	iConstantBuffer = std::make_unique<ConstantBuffer<CTransfromShadowObj>>();
+	iConstantBuffer = std::make_unique<ConstantBuffer<CTransformShadowObj>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// 初期化
@@ -101,7 +101,7 @@ void ShadowObj::MaterialInit()
 void ShadowObj::MaterialTransfer()
 {
 	// マトリックス
-	CTransfromShadowObj transformShadowObjData =
+	CTransformShadowObj transformShadowObjData =
 	{
 		mCamera->GetViewLookToMat() * mCamera->GetOrthoGrphicProjectionMat(),
 		mTransform.GetWorldMat(),
