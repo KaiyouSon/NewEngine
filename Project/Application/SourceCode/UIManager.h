@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Boss.h"
 #include "ResultUI.h"
+#include "RespawnPointUI.h"
 
 class UIManager
 {
@@ -17,6 +18,9 @@ private:
 	std::unique_ptr<NegotiationUI> mNegotiationUI;
 	std::unique_ptr<MessageUI> mMessageUI;
 	std::unique_ptr<ResultUI> mResultUI;
+	std::unique_ptr<RespawnPointUI> mRespawnPointUI;
+
+
 
 private:
 	Transform mItemBoxUIParent;

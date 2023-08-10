@@ -25,6 +25,12 @@ void MessageSign::DrawModel()
 	mMessageSign->Draw();
 }
 
+void MessageSign::ColliderUpdate()
+{
+	mCollider.centerPos = mMessageSign->pos;
+	mCollider.radius = mMessageSign->scale.x;
+}
+
 Texture* MessageSign::GetMessageTexture()
 {
 	return mMessageTex;
@@ -48,10 +54,4 @@ void MessageSign::SetPos(const Vec3 pos)
 void MessageSign::SetRot(const Vec3 rot)
 {
 	mMessageSign->rot = rot;
-}
-
-void MessageSign::ColliderUpdate()
-{
-	mCollider.centerPos = mMessageSign->pos;
-	mCollider.radius = mMessageSign->scale.x;
 }

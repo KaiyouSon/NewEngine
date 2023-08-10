@@ -1,4 +1,5 @@
 #include "RespawnPoint.h"
+#include "EffectManager.h"
 
 void RespawnPoint::CreateGraphicsPipeline()
 {
@@ -50,37 +51,56 @@ RespawnPoint::RespawnPoint() :
 
 void RespawnPoint::Init()
 {
+	mParent.pos = Vec3(10, 0, 0);
+	mParent.scale = 2.f;
+	mParent.Update();
+
 	mRipple->pos.y = 0.05f;
 	mRipple->rot.x = Radian(90);
-	mRipple->scale = 4;
+	mRipple->scale = 2.f;
 	mRipple->color = Color(0xc4c178);
 
-	mRhombus->pos.y = 3.f;
-	mRhombus->scale = 2.f;
+	mRhombus->pos.y = 1.5f;
 	mRhombus->color = Color(0xc4c178);
 	mRhombus->SetBillboardType(BillboardType::YAxisBillboard);
 
-	angle.SetLimitTimer(360);
+	mAngle.SetLimitTimer(360);
 }
 
 void RespawnPoint::Update()
 {
+	ColliderUpdatge();
+
 	mRipple->offset.x -= 0.001f;
 	mRhombus->offset.x += 0.01f;
 
-	mRhombus->pos.y += cosf(Radian((float)angle.GetTimer())) * 0.0075f;
-	angle.Update();
-	if (angle == true)
+	mRhombus->pos.y += cosf(Radian((float)mAngle.GetTimer())) * 0.0075f;
+	mAngle.Update();
+	if (mAngle == true)
 	{
-		angle.Reset();
+		mAngle.Reset();
 	}
 
-	mRipple->Update();
-	mRhombus->Update();
+	// 関数の中身でタイマー設定しているためメソッド呼ぶだけでいい
+	EffectManager::GetInstance()->GenerateRespawnPointEffect(mParent.pos);
+
+	mRipple->Update(&mParent);
+	mRhombus->Update(&mParent);
 }
 
 void RespawnPoint::DrawModel()
 {
 	mRipple->Draw();
 	mRhombus->Draw();
+}
+
+void RespawnPoint::ColliderUpdatge()
+{
+	mCollider.centerPos = mParent.pos;
+	mCollider.radius = mParent.scale.x;
+}
+
+SphereCollider RespawnPoint::GetCollider()
+{
+	return mCollider;
 }

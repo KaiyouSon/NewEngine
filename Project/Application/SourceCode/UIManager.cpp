@@ -5,7 +5,8 @@ UIManager::UIManager() :
 	mNegotiationUI(std::make_unique<NegotiationUI>()),
 	mMessageUI(std::make_unique<MessageUI>()),
 	mItemBoxUiManager(std::make_unique<ItemBoxUIManager>()),
-	mResultUI(std::make_unique<ResultUI>())
+	mResultUI(std::make_unique<ResultUI>()),
+	mRespawnPointUI(std::make_unique<RespawnPointUI>())
 {
 	for (uint32_t i = 0; i < mGauges.size(); i++)
 	{
@@ -92,6 +93,8 @@ void UIManager::Update()
 	mMessageUI->Update();
 
 	mResultUI->Update();
+
+	mRespawnPointUI->Update();
 }
 
 void UIManager::DrawFrontSprite()
@@ -114,6 +117,8 @@ void UIManager::DrawFrontSprite()
 	}
 
 	mResultUI->DrawFrontSprite();
+
+	mRespawnPointUI->DrawFrontSprite();
 }
 
 void UIManager::SetPlayer(Player* player)

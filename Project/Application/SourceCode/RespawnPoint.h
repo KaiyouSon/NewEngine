@@ -4,10 +4,14 @@
 class RespawnPoint
 {
 private:
+	Transform mParent;
 	std::unique_ptr<Object3D> mRipple;
 	std::unique_ptr<Object3D> mRhombus;
+	Timer mAngle;
+	SphereCollider mCollider;
 
-	Timer angle;
+private:
+	void ColliderUpdatge();
 
 public:
 	static void CreateGraphicsPipeline();
@@ -15,5 +19,9 @@ public:
 	void Init();
 	void Update();
 	void DrawModel();
+
+public:
+	// ÉQÉbÉ^Å[
+	SphereCollider GetCollider();
 };
 

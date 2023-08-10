@@ -3,15 +3,18 @@
 #include "RenderWindow.h"
 #include <cassert>
 
-void DepthBuffer::Create()
+void DepthBuffer::Create(const Vec2 size)
 {
 	HRESULT result;
+
+	Vec2 depthResourceSize = size;
+	depthResourceSize = (depthResourceSize != -1) ? size : RenderWindow::GetInstance()->GetWindowSize();
 
 	// リソースの設定
 	D3D12_RESOURCE_DESC depthResourceDesc{};
 	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	depthResourceDesc.Width = (UINT)RenderWindow::GetInstance()->GetWindowSize().x;		// 幅
-	depthResourceDesc.Height = (UINT)RenderWindow::GetInstance()->GetWindowSize().y; // 高さ
+	depthResourceDesc.Width = (uint32_t)depthResourceSize.x;		// 幅
+	depthResourceDesc.Height = (uint32_t)depthResourceSize.y; // 高さ
 	depthResourceDesc.DepthOrArraySize = 1;
 	depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;	// 深度値デフォルト
 	depthResourceDesc.SampleDesc.Count = 1;

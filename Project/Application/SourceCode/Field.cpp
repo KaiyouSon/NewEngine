@@ -93,3 +93,8 @@ std::array<std::unique_ptr<MessageSign>, 5>* Field::GetMessageSigns()
 {
 	return &mMessageSigns;
 }
+
+RespawnPoint* Field::GetRespawnPoint()
+{
+	return mRespawnPoint.get();
+}

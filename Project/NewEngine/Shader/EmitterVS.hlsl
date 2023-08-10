@@ -6,6 +6,7 @@ V2G main(Appdata i)
     o.pos = i.pos;
     o.scale = i.scale;
     o.rot = i.rot;
+    o.shininess = i.shininess;
     o.color = i.color;
     return o;
 }

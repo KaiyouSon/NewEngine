@@ -726,7 +726,7 @@ RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, uint32_t num, std:
 	}
 
 	// DSVì¬
-	renderTex->depthBuffer.Create();
+	renderTex->depthBuffer.Create(size);
 	renderBase->CreateDSV(renderTex->depthBuffer);
 	renderTex->depthBuffer.mBuffer->SetName(L"DepthBuffer");
 

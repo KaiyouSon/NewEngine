@@ -1,6 +1,7 @@
 #pragma once
 #include <d3d12.h>
 #include <wrl.h>
+#include "Vec2.h"
 
 class DepthBuffer
 {
@@ -9,7 +10,7 @@ private:
 
 public:
 	Microsoft::WRL::ComPtr<ID3D12Resource> mBuffer;
-	void Create();
+	void Create(const Vec2 size = -1);
 
 public: // セッター
 	void SetCpuHandle(const D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle);

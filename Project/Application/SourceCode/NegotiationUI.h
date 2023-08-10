@@ -5,6 +5,13 @@ class UIManager;
 
 class NegotiationUI
 {
+public:
+	enum StrType
+	{
+		ReadMessageStr,
+		RestInLightStr,
+	};
+
 private:
 	UIManager* mUiManager;
 	std::unique_ptr<Sprite> mBackFrame;
@@ -14,6 +21,8 @@ private:
 
 	float mAlpha;
 	bool mIsActive;
+
+	StrType mType;
 
 private:
 	void AlphaUpdate();
@@ -28,6 +37,7 @@ public:
 public:
 	void SetUIManager(UIManager* uiManager);
 	void SetisActive(const bool isActive);
+	void SetStrType(const StrType type);
 
 public:
 	bool GetisActive();

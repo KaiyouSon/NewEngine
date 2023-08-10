@@ -13,9 +13,8 @@ ShadowMap::ShadowMap() :
 
 	mCurrentScene->AddRenderTexture(mRenderTex);
 	mCurrentScene->anchorPoint = 0;
-	mCurrentScene->scale = 0.5f;
-	mCurrentScene->pos = GetWindowHalfSize() / 2;
-
+	mCurrentScene->scale = 0.25f;
+	mCurrentScene->pos = GetWindowHalfSize();
 	sIndex = 0;
 }
 
@@ -92,7 +91,6 @@ void ShadowMap::Bind(Object3D& object)
 
 	if (object.GetParent())
 	{
-		//sObjShadows[sIndex].SetParent(object.GetParent());
 		sParents[sIndex] = *object.GetParent();
 		sObjShadows[sIndex].SetParent(&sParents[sIndex]);
 	}

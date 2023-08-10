@@ -410,6 +410,7 @@ void RenderBase::ShaderCompilerInit()
 	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);	// 座標
 	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);		// スケール
 	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 1);		// 回転
+	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 2);		// 輝き度
 	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);	// 色
 	ShaderObjectManager::GetShaderObject("Emitter")->CompileVertexShader(path + "EmitterVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Emitter")->CompileGeometryShader(path + "EmitterGS.hlsl", "main");

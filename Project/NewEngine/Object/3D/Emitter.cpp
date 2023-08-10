@@ -11,7 +11,7 @@ Emitter::Emitter() :
 	offset(0, 0), tiling(1, 1), pSize(0),
 	mVertexBuffer(std::make_unique <VertexBuffer<VParticle>>()),
 	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Emitter")),
-	mTexture(TextureManager::GetTexture("Particle"))
+	mTexture(TextureManager::GetTexture("Particle1"))
 {
 	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰Šú‰»
 	MaterialInit();
@@ -44,6 +44,7 @@ void Emitter::Update(Transform* parent)
 		mVertices[i].pos = pParam[i].curPos;
 		mVertices[i].scale = pParam[i].curScale;
 		mVertices[i].rot = pParam[i].curRot;
+		mVertices[i].shininess = pParam[i].curShininess;
 		mVertices[i].color = pParam[i].curColor.To01();
 	}
 	mVertexBuffer->TransferToBuffer(mVertices);

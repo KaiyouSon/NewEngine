@@ -11,5 +11,8 @@ float4 main(G2P i) : SV_TARGET
     
     clip(texColor.a - 0.5);
     
-    return texColor * i.color;
+    float4 shineColor = i.color;
+    shineColor.rgb *= i.shininess;
+    
+    return texColor * shineColor;
 }

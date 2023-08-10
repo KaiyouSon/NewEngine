@@ -171,6 +171,7 @@ void Object3D::MaterialTransfer()
 	{
 		mCamera->GetViewLookToMat() * mCamera->GetPerspectiveProjectionMat(),
 		ShadowMap::GetLightCamera().GetViewLookToMat() * ShadowMap::GetLightCamera().GetPerspectiveProjectionMat(),
+		//ShadowMap::GetLightCamera().GetOrthoGrphicProjectionMat(),
 		mTransform.GetWorldMat(),
 		mCamera->pos
 	};

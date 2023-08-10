@@ -17,6 +17,8 @@ private:
 private:
 	void PlayerHitBoss();
 	void PlayerHitMessageSign();
+	void PlayerHitRespawnPoint();
+	void PlayerHitNegotiation();
 
 	void BossHitPlayer();
 

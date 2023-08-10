@@ -33,14 +33,17 @@ void NegotiationUI::Init()
 	mColon->pos = Vec2(GetWindowHalfSize().x - 70, height);
 	mColon->scale = 0.3f;
 
-	mText->pos = Vec2(GetWindowHalfSize().x + 32, height);
+	mText->pos = Vec2(GetWindowHalfSize().x - 56, height);
 	mText->scale = 0.3f;
+	mText->SetAnchorPoint(Vec2(0.0f, 0.5f));
 }
 
 void NegotiationUI::Update()
 {
 	AlphaUpdate();
 	TutorialMessageUpdate();
+
+	mText->pos.x = GetWindowHalfSize().x - 56;
 
 	mBackFrame->color.a = mAlpha - 10.f;
 	mButton->color.a = mAlpha;
@@ -95,17 +98,39 @@ void NegotiationUI::TutorialMessageUpdate()
 		messageUI->SetisActive(false);
 	}
 
-	if (Pad::GetButtonDown(PadCode::ButtonB))
+	switch (mType)
 	{
-		if (messageUI->GetisActive() == true)
+	case ReadMessageStr:
+		if (Pad::GetButtonDown(PadCode::ButtonB))
 		{
-			messageUI->SetisActive(false);
+			if (messageUI->GetisActive() == true)
+			{
+				messageUI->SetisActive(false);
+			}
+			else
+			{
+				messageUI->SetisActive(true);
+			}
 		}
-		else
+		break;
+
+	case RestInLightStr:
+		if (Pad::GetButtonDown(PadCode::ButtonB))
 		{
-			messageUI->SetisActive(true);
+			if (messageUI->GetisActive() == true)
+			{
+				messageUI->SetisActive(false);
+			}
+			else
+			{
+				messageUI->SetisActive(true);
+			}
 		}
+		break;
 	}
+
+
+
 }
 
 void NegotiationUI::SetUIManager(UIManager* uiManager)
@@ -116,6 +141,21 @@ void NegotiationUI::SetUIManager(UIManager* uiManager)
 void NegotiationUI::SetisActive(const bool isActive)
 {
 	mIsActive = isActive;
+}
+
+void NegotiationUI::SetStrType(const StrType type)
+{
+	mType = type;
+	switch (mType)
+	{
+	case ReadMessageStr:
+		mText->SetTexture(TextureManager::GetTexture("ReadMessageStr"));
+		break;
+
+	case RestInLightStr:
+		mText->SetTexture(TextureManager::GetTexture("RestInLightStr"));
+		break;
+	}
 }
 
 bool NegotiationUI::GetisActive()

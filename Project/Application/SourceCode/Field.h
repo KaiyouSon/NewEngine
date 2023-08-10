@@ -25,5 +25,6 @@ public:
 
 public:
 	std::array<std::unique_ptr<MessageSign>, 5>* GetMessageSigns();
+	RespawnPoint* GetRespawnPoint();
 };
 

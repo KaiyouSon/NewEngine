@@ -37,6 +37,7 @@ namespace VertexBufferData
 		Vec3 pos;
 		Vec2 scale;
 		float rot;
+		float shininess = 1.0f;
 		Color color = Color::zero;
 	};
 }

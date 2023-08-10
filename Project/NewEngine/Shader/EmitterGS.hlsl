@@ -47,6 +47,7 @@ void main(point V2G input[1] : SV_POSITION, inout TriangleStream<G2P> output)
         
         element.pos = mul(mul(viewMat, worldMat), vpos);
         element.uv = uvArray[i];
+        element.shininess = input[0].shininess;
         element.color = input[0].color;
         output.Append(element);
     }

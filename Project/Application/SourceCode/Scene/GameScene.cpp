@@ -145,7 +145,7 @@ void GameScene::RenderTextureSetting()
 
 void GameScene::DrawRenderTexture()
 {
-	//mShadowMap.DrawPostEffect();
+	mShadowMap.DrawPostEffect();
 }
 void GameScene::DrawBackSprite()
 {

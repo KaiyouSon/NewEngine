@@ -600,6 +600,12 @@
     <ClCompile Include="Application\SourceCode\RespawnPoint.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\RespawnPointEffect.cpp">
+      <Filter>Application\Source\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\RespawnPointUI.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1000,6 +1006,12 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\RespawnPoint.h">
       <Filter>Application\Header\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\RespawnPointEffect.h">
+      <Filter>Application\Header\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\RespawnPointUI.h">
+      <Filter>Application\Header\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

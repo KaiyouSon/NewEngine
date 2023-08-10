@@ -150,6 +150,8 @@
     <ClCompile Include="Application\SourceCode\PlayerRecoveryEffect.cpp" />
     <ClCompile Include="Application\SourceCode\RadialBlur.cpp" />
     <ClCompile Include="Application\SourceCode\RespawnPoint.cpp" />
+    <ClCompile Include="Application\SourceCode\RespawnPointEffect.cpp" />
+    <ClCompile Include="Application\SourceCode\RespawnPointUI.cpp" />
     <ClCompile Include="Application\SourceCode\ResultUI.cpp" />
     <ClCompile Include="Application\SourceCode\RollMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\GameScene.cpp" />
@@ -280,6 +282,8 @@
     <ClInclude Include="Application\SourceCode\PlayerRecoveryEffect.h" />
     <ClInclude Include="Application\SourceCode\RadialBlur.h" />
     <ClInclude Include="Application\SourceCode\RespawnPoint.h" />
+    <ClInclude Include="Application\SourceCode\RespawnPointEffect.h" />
+    <ClInclude Include="Application\SourceCode\RespawnPointUI.h" />
     <ClInclude Include="Application\SourceCode\ResultUI.h" />
     <ClInclude Include="Application\SourceCode\RollMotion.h" />
     <ClInclude Include="Application\SourceCode\Scene\GameScene.h" />

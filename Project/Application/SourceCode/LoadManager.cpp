@@ -60,10 +60,12 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("UI/Menu/MenuTextFrame.png", "MenuTextFrame");
 	TextureManager::LoadTexture("UI/Menu/MenuTextLight.png", "MenuTextLight");
 	TextureManager::LoadTexture("UI/Result/ResultBack.png", "ResultBack");
+	TextureManager::LoadTexture("UI/RespawnPoint/RespawnBack.png", "RespawnBack");
 
 	// テキスト
 	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");
-	TextureManager::LoadTexture("Text/ReadMessageStr.png", "ReadMessageStr");
+	TextureManager::LoadTexture("Text/Negotiation/ReadMessageStr.png", "ReadMessageStr");
+	TextureManager::LoadTexture("Text/Negotiation/RestInLightStr.png", "RestInLightStr");
 	TextureManager::LoadTexture("Text/ExitStr.png", "ExitStr");
 	TextureManager::LoadTexture("Text/Tutorial/TutorialStr1.png", "TutorialStr1");
 	TextureManager::LoadTexture("Text/Tutorial/TutorialStr2.png", "TutorialStr2");
@@ -77,7 +79,8 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Text/NumberSheets.png", "NumberSheets");
 
 	// パーティクル
-	TextureManager::LoadTexture("Particle/Particle.png", "Particle");
+	TextureManager::LoadTexture("Particle/Particle1.png", "Particle1");
+	TextureManager::LoadTexture("Particle/Particle2.png", "Particle2");
 	TextureManager::LoadTexture("Particle/Line.png", "Line");
 
 	// レンダーテクスチャー

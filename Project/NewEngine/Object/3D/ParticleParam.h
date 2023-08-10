@@ -10,6 +10,7 @@ namespace ParticleParameter
 		Vec3 curPos;
 		Vec2 curScale;
 		float curRot;
+		float curShininess = 1.0f;;
 		Color curColor;
 	};
 
@@ -26,6 +27,9 @@ namespace ParticleParameter
 
 		float startRot;
 		float endRot;
+
+		float startShininess;
+		float endShininess;
 
 		Color startColor;
 		Color endColor;
