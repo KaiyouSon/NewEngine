@@ -12,9 +12,8 @@ ShadowMap::ShadowMap() :
 	mRenderTex->useDepth = true;
 
 	mCurrentScene->AddRenderTexture(mRenderTex);
-	mCurrentScene->anchorPoint = 0;
 	mCurrentScene->scale = 0.25f;
-	mCurrentScene->pos = GetWindowHalfSize();
+	mCurrentScene->pos = GetWindowHalfSize() / 4;
 	sIndex = 0;
 }
 
@@ -35,7 +34,6 @@ void ShadowMap::Update()
 		obj.Update();
 		i++;
 	}
-
 	mCurrentScene->Update();
 }
 

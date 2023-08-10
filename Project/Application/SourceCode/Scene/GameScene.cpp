@@ -53,11 +53,13 @@ void GameScene::Init()
 
 	SceneChanger::GetInstance()->SetisEaseTitleBGM(false);
 
+
 	mBgmVolume = 0;
 }
 
 void GameScene::Update()
 {
+
 	if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
 	{
 		if (SoundManager::GetIsPlaying("BattleBGM") == true)
@@ -81,9 +83,9 @@ void GameScene::Update()
 	mMenuManager->Update();
 	mField->Update();
 
-	ShadowMap::sLightCamera.pos =
-		mPlayer->GetPos() +
-		LightManager::GetInstance()->directionalLight.pos.Norm() * 20;
+	ShadowMap::sLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
+		//mPlayer->GetPos() +
+		//LightManager::GetInstance()->directionalLight.pos.Norm() * 20;
 	ShadowMap::sLightCamera.rot = Vec3(Radian(45), Radian(45), 0);
 	mShadowMap.Update();
 
@@ -170,6 +172,13 @@ void GameScene::DrawDebugGui()
 	GuiManager::DrawCheckBox("isActive", &LightManager::GetInstance()->directionalLight.isActive);
 	GuiManager::DrawSlider3("pos", LightManager::GetInstance()->directionalLight.pos, 0.01f);
 	GuiManager::DrawColorEdit("color", LightManager::GetInstance()->directionalLight.color);
+
+
+
+	float angle = Angle(ShadowMap::sLightCamera.fov);
+	GuiManager::DrawSlider1("FovAngle", angle, 1.f);
+	ShadowMap::sLightCamera.fov = Radian(angle);
+
 
 	GuiManager::EndWindow();
 

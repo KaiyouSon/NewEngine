@@ -16,13 +16,13 @@ private:
 	GraphicsPipeline* mGraphicsPipeline;
 	Material mMaterial;
 	Transform mTransform;
-	Vec2 mSize;
 	Texture* mDepthTexture;
+	Vec2 mAnchorPoint;
+	Vec2 mSize;
 
 public:
 	Vec2 pos;
 	Vec2 scale;
-	Vec2 anchorPoint;
 	float rot;
 	Color color;
 	uint32_t rtvIndex;
@@ -32,6 +32,7 @@ private:
 	void MaterialTransfer();
 	void MaterialDrawCommands();
 	void TransferTexturePos();
+	void TransferVertexCoord();
 
 public:
 	PostEffect();
@@ -50,6 +51,7 @@ public: // ÇªÇÃëº
 	}
 
 public: // ÉQÉbÉ^Å[
+	void SetSize(const Vec2 size);
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 	void SetDrawCommands(const uint32_t registerNum, const uint32_t bufferNum);
 

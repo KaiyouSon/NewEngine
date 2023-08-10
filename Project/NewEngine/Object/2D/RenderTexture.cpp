@@ -44,8 +44,8 @@ void RenderTexture::PrevDrawScene()
 		mViewports[i] =
 			CD3DX12_VIEWPORT(
 				0.f, 0.f,
-				renderWindow->GetWindowSize().x,
-				renderWindow->GetWindowSize().y);
+				size.x,
+				size.y);
 	}
 	renderBase->GetCommandList()->RSSetViewports((uint32_t)mViewports.size(), mViewports.data());
 
@@ -56,8 +56,8 @@ void RenderTexture::PrevDrawScene()
 		mScissorRects[i] =
 			CD3DX12_RECT(
 				0, 0,
-				(LONG)renderWindow->GetWindowSize().x,
-				(LONG)renderWindow->GetWindowSize().y);
+				(LONG)size.x,
+				(LONG)size.y);
 	}
 	renderBase->GetCommandList()->RSSetScissorRects((uint32_t)mScissorRects.size(), mScissorRects.data());
 

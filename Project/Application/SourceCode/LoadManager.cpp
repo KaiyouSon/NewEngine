@@ -86,7 +86,7 @@ bool LoadManager::TextureLoad()
 	// レンダーテクスチャー
 
 	// 現在のシーン描画情報
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "CurrentScene");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "CurrentScene");
 
 	// ブルーム
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "HighLumi");

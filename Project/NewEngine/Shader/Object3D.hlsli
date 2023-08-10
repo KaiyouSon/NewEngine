@@ -4,7 +4,7 @@
 cbuffer ConstantBufferDataTransform : register(b0)
 {
     matrix viewProjMat;
-    matrix lightViewMat;
+    matrix lightViewProjMat;
     matrix worldMat;
     float3 cameraPos;
 }

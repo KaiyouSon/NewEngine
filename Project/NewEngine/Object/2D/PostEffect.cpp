@@ -8,7 +8,7 @@ using namespace ConstantBufferData;
 PostEffect::PostEffect() :
 	mVertexBuffer(std::make_unique<VertexBuffer<VSprite>>()),
 	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture")),
-	pos(0), scale(1), rot(0), anchorPoint(0.5f), rtvIndex(0)
+	pos(0), scale(1), rot(0), mAnchorPoint(0.5f), rtvIndex(0)
 {
 	// 頂点バッファの生成
 	mVertices.resize(4);
@@ -20,6 +20,7 @@ PostEffect::PostEffect() :
 
 	// バッファ生成
 	MaterialInit();
+
 }
 
 void PostEffect::Update()
@@ -31,8 +32,9 @@ void PostEffect::Update()
 
 	// 転送処理
 	MaterialTransfer();
-}
 
+	mVertexBuffer->TransferToBuffer(mVertices);
+}
 void PostEffect::Draw()
 {
 	if (mRenderTextures.empty() == true) return;
@@ -137,6 +139,60 @@ void PostEffect::MaterialDrawCommands()
 		1, mMaterial.constantBuffers[1]->constantBuffer->GetGPUVirtualAddress());
 }
 
+// --- 頂点データ関連 --------------------------------------------------- //
+void PostEffect::TransferTexturePos()
+{
+	// テクスチャーのサイズ
+	float width = mRenderTextures.front()->size.x;
+	float height = mRenderTextures.front()->size.y;
+
+	mVertices[0].pos = { (0.0f - mAnchorPoint.x) * width,(1.0f - mAnchorPoint.y) * height,0.0f }; //左下
+	mVertices[1].pos = { (0.0f - mAnchorPoint.x) * width,(0.0f - mAnchorPoint.y) * height,0.0f }; //左上
+	mVertices[2].pos = { (1.0f - mAnchorPoint.x) * width,(1.0f - mAnchorPoint.y) * height,0.0f }; //右下
+	mVertices[3].pos = { (1.0f - mAnchorPoint.x) * width,(0.0f - mAnchorPoint.y) * height,0.0f }; //右上
+
+	mVertexBuffer->TransferToBuffer(mVertices);
+}
+void PostEffect::TransferVertexCoord()
+{
+	enum class Point { LD, LU, RD, RU };
+
+	// 四辺
+	float left = (0.f - mAnchorPoint.x) * mSize.x;
+	float right = (1.f - mAnchorPoint.x) * mSize.x;
+	float up = (0.f - mAnchorPoint.y) * mSize.y;
+	float down = (1.f - mAnchorPoint.y) * mSize.y;
+
+	/*switch (mFlipType)
+	{
+	case FlipType::X:
+		left = -left;
+		right = -right;
+		break;
+
+	case FlipType::Y:
+		up = -up;
+		down = -down;
+		break;
+
+	case FlipType::XY:
+		left = -left;
+		right = -right;
+		up = -up;
+		down = -down;
+		break;
+
+	default:
+		break;
+	}*/
+
+	// 頂点座標
+	mVertices[(uint32_t)Point::LD].pos = Vec3(left, down, 0.f);	  //左下
+	mVertices[(uint32_t)Point::LU].pos = Vec3(left, up, 0.f);	  //左上
+	mVertices[(uint32_t)Point::RD].pos = Vec3(right, down, 0.f);  //右下
+	mVertices[(uint32_t)Point::RU].pos = Vec3(right, up, 0.f);	  //右上
+}
+
 // --- その他の関数 ----------------------------------------------------- //
 void PostEffect::AddRenderTexture(RenderTexture* renderTexture)
 {
@@ -149,11 +205,17 @@ void PostEffect::AddRenderTexture(RenderTexture* renderTexture)
 	}
 }
 
+// --- セッター --------------------------------------------------------- //
+void PostEffect::SetSize(const Vec2 size)
+{
+	mSize = size;
+	TransferVertexCoord();
+
+}
 void PostEffect::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
 	mGraphicsPipeline = graphicsPipeline;
 }
-
 void PostEffect::SetDrawCommands(const uint32_t registerNum, const uint32_t bufferNum)
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
@@ -163,18 +225,4 @@ void PostEffect::SetDrawCommands(const uint32_t registerNum, const uint32_t buff
 	// CBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		registerNum, mMaterial.constantBuffers[bNum]->constantBuffer->GetGPUVirtualAddress());
-}
-
-void PostEffect::TransferTexturePos()
-{
-	// テクスチャーのサイズ
-	float width = mRenderTextures.front()->size.x;
-	float height = mRenderTextures.front()->size.y;
-
-	mVertices[0].pos = { (0.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f }; //左下
-	mVertices[1].pos = { (0.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f }; //左上
-	mVertices[2].pos = { (1.0f - anchorPoint.x) * width,(1.0f - anchorPoint.y) * height,0.0f }; //右下
-	mVertices[3].pos = { (1.0f - anchorPoint.x) * width,(0.0f - anchorPoint.y) * height,0.0f }; //右上
-
-	mVertexBuffer->TransferToBuffer(mVertices);
 }
