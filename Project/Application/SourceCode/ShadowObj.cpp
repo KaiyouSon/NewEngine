@@ -104,7 +104,6 @@ void ShadowObj::MaterialTransfer()
 	CTransfromShadowObj transformShadowObjData =
 	{
 		mCamera->GetViewLookToMat() * mCamera->GetOrthoGrphicProjectionMat(),
-		//mCamera->GetViewLookToMat() * mCamera->GetPerspectiveProjectionMat(),
 		mTransform.GetWorldMat(),
 	};
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformShadowObjData);

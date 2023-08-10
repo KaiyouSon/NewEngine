@@ -170,8 +170,7 @@ void Object3D::MaterialTransfer()
 	CTransform3DShadow transform3DShadowData =
 	{
 		mCamera->GetViewLookToMat() * mCamera->GetPerspectiveProjectionMat(),
-		ShadowMap::GetLightCamera().GetViewLookToMat() * ShadowMap::GetLightCamera().GetPerspectiveProjectionMat(),
-		//ShadowMap::GetLightCamera().GetViewLookToMat() * ShadowMap::GetLightCamera().GetOrthoGrphicProjectionMat(),
+		ShadowMap::GetLightCamera().GetViewLookToMat() * ShadowMap::GetLightCamera().GetOrthoGrphicProjectionMat(),
 		mTransform.GetWorldMat(),
 		mCamera->pos
 	};

@@ -49,7 +49,8 @@ void GameScene::Init()
 	EffectManager::GetInstance()->Init();
 
 	LightManager::GetInstance()->directionalLight.isActive = true;
-	LightManager::GetInstance()->directionalLight.pos = Vec3(-10, 15, -10);
+	LightManager::GetInstance()->directionalLight.pos = Vec3(-400, 400, -100);
+
 
 	SceneChanger::GetInstance()->SetisEaseTitleBGM(false);
 
@@ -86,7 +87,7 @@ void GameScene::Update()
 	//mPlayer->GetPos() +
 	//LightManager::GetInstance()->directionalLight.pos.Norm() * 20;
 	//ShadowMap::sLightCamera.rot = Vec3(Radian(45), Radian(45), 0);
-	ShadowMap::sLightCamera.rot = Vec3(Radian(45),0, 0);
+	//ShadowMap::sLightCamera.rot = Vec3(Radian(45), 0, 0);
 	mShadowMap.Update();
 
 
@@ -173,9 +174,26 @@ void GameScene::DrawDebugGui()
 	//GuiManager::DrawColorEdit("color", LightManager::GetInstance()->directionalLight.color);
 	GuiManager::DrawSlider3("Light Pos", LightManager::GetInstance()->directionalLight.pos, 0.01f);
 
-	float angle = Angle(ShadowMap::sLightCamera.fov);
-	GuiManager::DrawSlider1("LightViewCamera FovAngle", angle, 1.f);
-	ShadowMap::sLightCamera.fov = Radian(angle);
+	Vec3 angle = Angle(ShadowMap::sLightCamera.rot);
+	GuiManager::DrawSlider3("Camera Rot", angle, 1.f);
+	ShadowMap::sLightCamera.rot = Radian(angle);
+
+	GuiManager::DrawSlider1("Camera NearZ", ShadowMap::sLightCamera.oNearZ, 0.01f);
+	GuiManager::DrawSlider1("Camera FarZ", ShadowMap::sLightCamera.oFarZ, 1.f);
+
+	float fov = Angle(ShadowMap::sLightCamera.fov);
+	GuiManager::DrawSlider1("Camera Fov", fov, 1.f);
+	ShadowMap::sLightCamera.fov = Radian(fov);
+
+	float width = ShadowMap::sLightCamera.rect.right;
+	GuiManager::DrawSlider1("Camera Rect Width", width, 1.f);
+	ShadowMap::sLightCamera.rect.left = -width;
+	ShadowMap::sLightCamera.rect.right = +width;
+
+	float height = ShadowMap::sLightCamera.rect.top;
+	GuiManager::DrawSlider1("Camera Rect Height", ShadowMap::sLightCamera.rect.top, 1.f);
+	ShadowMap::sLightCamera.rect.top = +height;
+	ShadowMap::sLightCamera.rect.bottom = -height;
 
 	GuiManager::EndWindow();
 

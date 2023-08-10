@@ -15,6 +15,10 @@ ShadowMap::ShadowMap() :
 	mCurrentScene->scale = 0.125f;
 	mCurrentScene->pos = GetWindowHalfSize() / 2;
 	sIndex = 0;
+
+	sLightCamera.rot = Vec3(Radian(45), Radian(45), 0);
+	sLightCamera.rect = RectAngle(-480, 480, 270, -270);
+	sLightCamera.oFarZ = 1000.f;
 }
 
 void ShadowMap::Init()
