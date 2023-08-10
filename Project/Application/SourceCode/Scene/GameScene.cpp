@@ -49,10 +49,9 @@ void GameScene::Init()
 	EffectManager::GetInstance()->Init();
 
 	LightManager::GetInstance()->directionalLight.isActive = true;
-	LightManager::GetInstance()->directionalLight.pos = Vec3(-1, 1.5, -1);
+	LightManager::GetInstance()->directionalLight.pos = Vec3(-10, 15, -10);
 
 	SceneChanger::GetInstance()->SetisEaseTitleBGM(false);
-
 
 	mBgmVolume = 0;
 }
@@ -84,8 +83,8 @@ void GameScene::Update()
 	mField->Update();
 
 	ShadowMap::sLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
-		//mPlayer->GetPos() +
-		//LightManager::GetInstance()->directionalLight.pos.Norm() * 20;
+	//mPlayer->GetPos() +
+	//LightManager::GetInstance()->directionalLight.pos.Norm() * 20;
 	ShadowMap::sLightCamera.rot = Vec3(Radian(45), Radian(45), 0);
 	mShadowMap.Update();
 
@@ -169,20 +168,17 @@ void GameScene::DrawFrontSprite()
 void GameScene::DrawDebugGui()
 {
 	GuiManager::BeginWindow("Lighting");
-	GuiManager::DrawCheckBox("isActive", &LightManager::GetInstance()->directionalLight.isActive);
-	GuiManager::DrawSlider3("pos", LightManager::GetInstance()->directionalLight.pos, 0.01f);
-	GuiManager::DrawColorEdit("color", LightManager::GetInstance()->directionalLight.color);
-
-
+	//GuiManager::DrawCheckBox("isActive", &LightManager::GetInstance()->directionalLight.isActive);
+	//GuiManager::DrawColorEdit("color", LightManager::GetInstance()->directionalLight.color);
+	GuiManager::DrawSlider3("Light Pos", LightManager::GetInstance()->directionalLight.pos, 0.01f);
 
 	float angle = Angle(ShadowMap::sLightCamera.fov);
-	GuiManager::DrawSlider1("FovAngle", angle, 1.f);
+	GuiManager::DrawSlider1("LightViewCamera FovAngle", angle, 1.f);
 	ShadowMap::sLightCamera.fov = Radian(angle);
-
 
 	GuiManager::EndWindow();
 
-	mField->DrawDebugGui();
+	//mField->DrawDebugGui();
 
 	//mPlayer->DrawDebugGui();
 }

@@ -12,8 +12,8 @@ ShadowMap::ShadowMap() :
 	mRenderTex->useDepth = true;
 
 	mCurrentScene->AddRenderTexture(mRenderTex);
-	mCurrentScene->scale = 0.25f;
-	mCurrentScene->pos = GetWindowHalfSize() / 4;
+	mCurrentScene->scale = 0.125f;
+	mCurrentScene->pos = GetWindowHalfSize() / 2;
 	sIndex = 0;
 }
 
