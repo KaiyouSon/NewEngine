@@ -1,10 +1,11 @@
 #pragma once
 #include "NewEngine.h"
+#include "ShadowObj.h"
 
 class ShadowMap
 {
 private:
-	static std::vector<Object3D> sObjShadows;
+	static std::vector<ShadowObj> sShadowObjs;
 	static std::vector<Transform> sParents;
 	static uint32_t sIndex;
 

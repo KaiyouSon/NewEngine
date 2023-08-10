@@ -6,9 +6,12 @@ class Camera
 public:
 	Vec3 pos;
 	Vec3 rot;
-	float nearZ;
-	float farZ;
+	float oNearZ;
+	float oFarZ;
+	float pNearZ;
+	float pFarZ;
 	float fov;
+	RectAngle rect;
 	static Camera current;
 
 private:

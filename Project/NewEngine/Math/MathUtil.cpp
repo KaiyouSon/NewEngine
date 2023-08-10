@@ -273,6 +273,20 @@ Mat4 ConvertOrthoGrphicProjectionMat(float WIN_WIDTH, float WIN_HEIGHT)
 	};
 }
 
+Mat4 ConvertOrthoGrphicProjectionMat(const RectAngle rect, const float nearZ, const float farZ)
+{
+	Mat4 orthoGrphic = Mat4::Identity();
+	orthoGrphic.m[0][0] = 2 / (rect.right - rect.left);
+	orthoGrphic.m[1][1] = 2 / (rect.top - rect.bottom);
+	orthoGrphic.m[2][2] = 1 / (farZ - nearZ);
+
+	orthoGrphic.m[3][0] = (rect.left + rect.right) / (rect.left - rect.right);
+	orthoGrphic.m[3][1] = (rect.top + rect.bottom) / (rect.bottom - rect.top);
+	orthoGrphic.m[3][2] = -nearZ / (farZ - nearZ);
+
+	return orthoGrphic;
+}
+
 Mat4 ConvertViewportMat(Viewport& viewport)
 {
 	Mat4 viewportMat = Mat4::Identity();

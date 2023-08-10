@@ -3,7 +3,10 @@
 
 Camera Camera::current = {};
 
-Camera::Camera() : pos(0, 0, -30), rot(0, 0, 0), fov(Radian(45)), nearZ(0.1f), farZ(10000.0f)
+Camera::Camera() :
+	pos(0, 0, -30), rot(0, 0, 0), fov(Radian(45)),
+	oNearZ(0), oFarZ(1), rect(0, 1920, 0, 1080),
+	pNearZ(0.1f), pFarZ(10000.0f)
 {
 	// àÍâÒåƒÇ‘
 	Update();
@@ -27,9 +30,11 @@ void Camera::Update()
 	mOrthoGrphicProjectionMat = ConvertOrthoGrphicProjectionMat(
 		GetWindowSize().x, GetWindowSize().y);
 
+	mOrthoGrphicProjectionMat = ConvertOrthoGrphicProjectionMat(rect, oNearZ, oFarZ);
+
 	// ìßéãìäâeçsóÒÇÃåvéZ
 	mPerspectiveProjectionMat = ConvertPerspectiveProjectionMat(
-		fov, (float)GetWindowSize().x / GetWindowSize().y, nearZ, farZ);
+		fov, (float)GetWindowSize().x / GetWindowSize().y, pNearZ, pFarZ);
 }
 
 void Camera::DebugCameraUpdate()

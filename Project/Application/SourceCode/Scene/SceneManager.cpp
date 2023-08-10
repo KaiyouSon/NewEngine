@@ -10,6 +10,7 @@
 #include "DOF.h"
 #include "RadialBlur.h"
 #include "Vignette.h"
+#include "ShadowObj.h"
 #include "Cloud.h"
 #include "RespawnPoint.h"
 
@@ -18,6 +19,7 @@ std::unique_ptr<IScene> SceneManager::sCurrentScene = nullptr;
 SceneManager::SceneManager()
 {
 	Object3D::isAllLighting = true;
+	ShadowObj::CreateGraphicsPipeline();
 	Cloud::CreateGraphicsPipeline();
 	RespawnPoint::CreateGraphicsPipeline();
 

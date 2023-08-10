@@ -1,6 +1,6 @@
 #include "ShadowMap.h"
 
-std::vector<Object3D> ShadowMap::sObjShadows;
+std::vector<ShadowObj> ShadowMap::sShadowObjs;
 std::vector<Transform> ShadowMap::sParents;
 uint32_t ShadowMap::sIndex;
 Camera ShadowMap::sLightCamera;
@@ -28,7 +28,7 @@ void ShadowMap::Update()
 
 	static uint32_t i = 0;
 
-	for (auto& obj : sObjShadows)
+	for (auto& obj : sShadowObjs)
 	{
 		obj.SetCamera(&sLightCamera);
 		obj.Update();
@@ -41,7 +41,7 @@ void ShadowMap::RenderTextureSetting()
 {
 	mRenderTex->PrevDrawScene();
 
-	for (auto& obj : sObjShadows)
+	for (auto& obj : sShadowObjs)
 	{
 		obj.Draw();
 	}
@@ -51,7 +51,7 @@ void ShadowMap::RenderTextureSetting()
 
 void ShadowMap::DrawModel()
 {
-	for (auto& obj : sObjShadows)
+	for (auto& obj : sShadowObjs)
 	{
 		obj.Draw();
 	}
@@ -64,39 +64,39 @@ void ShadowMap::DrawPostEffect()
 
 void ShadowMap::Register()
 {
-	sObjShadows.emplace_back();
+	sShadowObjs.emplace_back();
 	sParents.emplace_back();
 }
 
 void ShadowMap::Bind(Object3D& object)
 {
 	// からだったら
-	if (sObjShadows.empty() == true)
+	if (sShadowObjs.empty() == true)
 	{
 		return;
 	}
 
 	// 確保したリストの先頭から順番にバインドする
 	// バインドするオブジェクトの順番は処理による
-	sObjShadows[sIndex].pos = object.pos;
-	sObjShadows[sIndex].rot = object.rot;
-	sObjShadows[sIndex].scale = object.scale;
+	sShadowObjs[sIndex].pos = object.pos;
+	sShadowObjs[sIndex].rot = object.rot;
+	sShadowObjs[sIndex].scale = object.scale;
 
 	if (object.GetModel() != nullptr)
 	{
-		sObjShadows[sIndex].SetModel(object.GetModel());
+		sShadowObjs[sIndex].SetModel(object.GetModel());
 	}
 
 	if (object.GetParent())
 	{
 		sParents[sIndex] = *object.GetParent();
-		sObjShadows[sIndex].SetParent(&sParents[sIndex]);
+		sShadowObjs[sIndex].SetParent(&sParents[sIndex]);
 	}
 
 	sIndex++;
 
 	// 次のフレーム再バインドするために
-	if (sIndex >= sObjShadows.size())
+	if (sIndex >= sShadowObjs.size())
 	{
 		sIndex = 0;
 	}

@@ -235,6 +235,9 @@
     <Filter Include="Shader\Application\RespawnPoint\Rhombus">
       <UniqueIdentifier>{1abab86d-546b-4066-843d-330619fd51ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\ShaderMap">
+      <UniqueIdentifier>{07f3a72f-efb1-48ef-b187-562e4f30b081}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -605,6 +608,12 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\RespawnPointUI.cpp">
       <Filter>Application\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\ShadowObj.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Util\Rect.cpp">
+      <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1013,6 +1022,12 @@
     <ClInclude Include="Application\SourceCode\RespawnPointUI.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SourceCode\ShadowObj.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Util\Rect.h">
+      <Filter>NewEngine\Header\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1089,6 +1104,9 @@
     </None>
     <None Include="Application\Shader\Ripple.hlsli">
       <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
+    </None>
+    <None Include="Application\Shader\ShadowObj.hlsli">
+      <Filter>Shader\Application\ShaderMap</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1235,6 +1253,12 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\RhombusVS.hlsl">
       <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\ShadowObjVS.hlsl">
+      <Filter>Shader\Application\ShaderMap</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\ShadowObjPS.hlsl">
+      <Filter>Shader\Application\ShaderMap</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

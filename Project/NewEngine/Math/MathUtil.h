@@ -5,6 +5,7 @@
 #include "Mat4.h"
 #include "Quaternion.h"
 #include "Viewport.h"
+#include "Rect.h"
 
 constexpr float PI = 3.141592f;
 
@@ -42,6 +43,7 @@ Mat4 ConvertViewProjectionMatLookAt(const Vec3 pos, const Vec3 target, const Vec
 Mat4 ConvertViewProjectionMatLookTo(const Vec3 pos, const Vec3 zAxis, const Vec3 yAxis);		// ƒrƒ…[•ÏŠ·
 Mat4 ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, float farZ);	// “§‹Ë‰e•ÏŠ·
 Mat4 ConvertOrthoGrphicProjectionMat(float WIN_WIDTH, float WIN_HEIGHT);						// •½sË‰e•ÏŠ·
+Mat4 ConvertOrthoGrphicProjectionMat(const RectAngle rect, const float nearZ, const float farZ);		// •½sË‰e•ÏŠ·
 Mat4 ConvertViewportMat(Viewport& viewport);
 
 Mat4 CalculateWorldMat(const Vec3 pos, const Vec3 scale, const Vec3 rot);

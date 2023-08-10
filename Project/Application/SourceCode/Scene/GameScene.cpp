@@ -85,7 +85,8 @@ void GameScene::Update()
 	ShadowMap::sLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
 	//mPlayer->GetPos() +
 	//LightManager::GetInstance()->directionalLight.pos.Norm() * 20;
-	ShadowMap::sLightCamera.rot = Vec3(Radian(45), Radian(45), 0);
+	//ShadowMap::sLightCamera.rot = Vec3(Radian(45), Radian(45), 0);
+	ShadowMap::sLightCamera.rot = Vec3(Radian(45),0, 0);
 	mShadowMap.Update();
 
 

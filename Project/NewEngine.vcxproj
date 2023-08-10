@@ -163,6 +163,7 @@
     <ClCompile Include="Application\SourceCode\Scene\TitleScene.cpp" />
     <ClCompile Include="Application\SourceCode\MessageSign.cpp" />
     <ClCompile Include="Application\SourceCode\ShadowMap.cpp" />
+    <ClCompile Include="Application\SourceCode\ShadowObj.cpp" />
     <ClCompile Include="Application\SourceCode\Skydome.cpp" />
     <ClCompile Include="Application\SourceCode\Sword.cpp" />
     <ClCompile Include="Application\SourceCode\TargetCamera.cpp" />
@@ -233,6 +234,7 @@
     <ClCompile Include="NewEngine\Util\FrameRate.cpp" />
     <ClCompile Include="NewEngine\Util\Random.cpp" />
     <ClCompile Include="NewEngine\Sound\Sound.cpp" />
+    <ClCompile Include="NewEngine\Util\Rect.cpp" />
     <ClCompile Include="NewEngine\Util\Timer.cpp" />
     <ClCompile Include="NewEngine\Util\Transform.cpp" />
     <ClCompile Include="NewEngine\Util\Util.cpp" />
@@ -295,6 +297,7 @@
     <ClInclude Include="Application\SourceCode\Scene\TitleScene.h" />
     <ClInclude Include="Application\SourceCode\MessageSign.h" />
     <ClInclude Include="Application\SourceCode\ShadowMap.h" />
+    <ClInclude Include="Application\SourceCode\ShadowObj.h" />
     <ClInclude Include="Application\SourceCode\Skydome.h" />
     <ClInclude Include="Application\SourceCode\Sword.h" />
     <ClInclude Include="Application\SourceCode\TargetCamera.h" />
@@ -368,6 +371,7 @@
     <ClInclude Include="NewEngine\Util\Enum.h" />
     <ClInclude Include="NewEngine\Util\FrameRate.h" />
     <ClInclude Include="NewEngine\Util\Random.h" />
+    <ClInclude Include="NewEngine\Util\Rect.h" />
     <ClInclude Include="NewEngine\Util\Singleton.h" />
     <ClInclude Include="NewEngine\Sound\Sound.h" />
     <ClInclude Include="NewEngine\Util\Timer.h" />
@@ -386,6 +390,7 @@
     <None Include="Application\Shader\GaussianBlur.hlsli" />
     <None Include="Application\Shader\RadialBlur.hlsli" />
     <None Include="Application\Shader\Ripple.hlsli" />
+    <None Include="Application\Shader\ShadowObj.hlsli" />
     <None Include="Application\Shader\Vignette.hlsli" />
     <None Include="NewEngine\Shader\Blur.hlsli" />
     <None Include="NewEngine\Shader\CircleGaugeSprite.hlsli" />
@@ -535,6 +540,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\ShadowObjPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\ShadowObjVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Application\Shader\VignettePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
