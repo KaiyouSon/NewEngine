@@ -16,7 +16,7 @@ float4 main(VSOutputSvposUv vsOutput) : SV_TARGET
     //float4 result = float4(d, d, d, 1) + float4(texColor1.rgb, 1);
     //return result;
     
-   // return float4(d, 0, 0, 1);
+    //return float4(d, d, d, 1);
     return float4(texColor1.rgb, 1);
     
     //return Monochrome(tex, smp, vsOutput.uv);

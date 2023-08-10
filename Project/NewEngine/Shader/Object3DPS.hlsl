@@ -33,7 +33,7 @@ PSOutput main(V2P i)// : SV_TARGET
         float dotLightNormal = dot(dirLightVec, i.normal);
         
         // アンビエント
-        float3 ambient = /*texColor.rgb **/ material.ambient.rgb;
+        float3 ambient = /*texColor.rgb **/material.ambient.rgb;
      
         // ディフューズ
         float intensity = saturate(dot(normalize(i.normal), dirLightVec));
@@ -50,16 +50,18 @@ PSOutput main(V2P i)// : SV_TARGET
     float shadow = 1.0f;
     if (isWriteShadow == true)
     {
-        //シャドウマップのZ値を参照
-        float w = 1.0f / i.spos.w;
-        float2 shadowTexUV;
-        shadowTexUV.x = (1.0f + i.spos.x * w) * 0.5f;
-        shadowTexUV.y = (1.0f - i.spos.y * w) * 0.5f;
-		//uv座標で0～1なら影判定をする
+        float2 shadowTexUV = i.spos.xy / i.spos.w;
+        shadowTexUV *= float2(0.5f, -0.5f);
+        shadowTexUV += 0.5f;
+        
+        // ライトビューでのスクリーン空間でのz値を計算する
+        float z = i.spos.z / i.spos.w;
+        
         if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
             shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
         {
-            if (shadowMapTex.Sample(smp, shadowTexUV).x + 0.0005f < i.spos.z * w)
+            float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV).r;
+            if (shadowDepth < z)
             {
                 shadow *= 0.5f;
             }
