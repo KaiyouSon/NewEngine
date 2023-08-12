@@ -14,7 +14,10 @@ public:
 
 private:
 	std::unique_ptr<PostEffect> mShadowMap;
-	RenderTexture* mRenderTex;
+	RenderTexture* mShadowMapRT;
+
+	std::unique_ptr<PostEffect> mBlur;
+	RenderTexture* mBlurRT;
 
 public:
 	static void CreateGraphicsPipeline();

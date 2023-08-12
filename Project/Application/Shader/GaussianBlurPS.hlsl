@@ -1,6 +1,6 @@
 #include "GaussianBlur.hlsli"
 
-Texture2D<float4> tex1 : register(t0); // 0番スロットに設定されたテクスチャ
+Texture2D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
 SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
 
 // ガウス関数
@@ -43,7 +43,8 @@ float4 GaussianBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float si
 
 float4 main(V2P i) : SV_TARGET
 {
-    float4 texColor1 = GaussianBlur(tex1, smp, i.uv, 0.01f, 10);
+    float4 texColor = GaussianBlur(tex, smp, i.uv, 0.01f, 5);
     
-    return float4(texColor1.rgb, 1);
+    //float4 texColor = tex.Sample(smp, i.uv);
+    return float4(texColor.rgb, 1);
 }

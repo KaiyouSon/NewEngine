@@ -20,8 +20,6 @@ private:
 	std::unique_ptr<ResultUI> mResultUI;
 	std::unique_ptr<RespawnPointUI> mRespawnPointUI;
 
-
-
 private:
 	Transform mItemBoxUIParent;
 
@@ -41,5 +39,6 @@ public:
 public:
 	NegotiationUI* GetNegotiationUI();
 	MessageUI* GetMessageUI();
+	RespawnPointUI* GetRespawnPointUI();
 };
 

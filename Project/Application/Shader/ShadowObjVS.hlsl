@@ -13,6 +13,8 @@ V2P main(Appdata i)
     output.wpos = wpos;
     output.normal = wnormal.xyz;
     output.uv = i.uv;
+    output.depth.x = length(wpos - float4(cameraPos, 1)) / 1000.f;
+    output.depth.y = output.depth.x * output.depth.x;
 
     return output;
 }

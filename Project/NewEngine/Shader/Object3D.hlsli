@@ -7,6 +7,7 @@ cbuffer ConstantBufferDataTransform : register(b0)
     matrix lightViewProjMat;
     matrix worldMat;
     float3 cameraPos;
+    float3 lightCameraPos;
 }
 
 // ƒ}ƒeƒŠƒAƒ‹
@@ -52,7 +53,7 @@ cbuffer ConstantBufferDissolve : register(b6)
     float4 dissolveColor;
 }
 
-cbuffer ConstantBufferDissolve : register(b7)
+cbuffer ConstantBufferShadow : register(b7)
 {
     uint isWriteShadow;
 }

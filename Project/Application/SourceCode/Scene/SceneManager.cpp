@@ -13,6 +13,7 @@
 #include "ShadowMap.h"
 #include "Cloud.h"
 #include "RespawnPoint.h"
+#include "RespawnPointUI.h"
 
 std::unique_ptr<IScene> SceneManager::sCurrentScene = nullptr;
 
@@ -23,6 +24,7 @@ SceneManager::SceneManager()
 	ShadowObj::CreateGraphicsPipeline();
 	Cloud::CreateGraphicsPipeline();
 	RespawnPoint::CreateGraphicsPipeline();
+	RespawnPointUI::CreateGraphicsPipeline();
 
 	//Bloom::CreateGraphicsPipeline();
 	//GaussianBlur::CreateGraphicsPipeline();

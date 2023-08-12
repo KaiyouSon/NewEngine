@@ -5,10 +5,10 @@ cbuffer ConstantBufferDataTransform : register(b0)
     matrix worldMat;
 }
 
-static const int maxBones = 32;
 cbuffer ConstantBufferDataSkinning : register(b1)
 {
-    matrix skinningMat[maxBones];
+    matrix lightViewProjMat;
+    float3 cameraPos;
 }
 
 struct Appdata
@@ -23,5 +23,6 @@ struct V2P
     float4 svpos : SV_POSITION; // システム用頂点座標
     float4 wpos : POSITION0; // ワールド座標
     float3 normal : NORMAL; // 法線ベクトル
-    float2 uv : TEXCOORD; // uv値
+    float2 uv : TEXCOORD0; // uv値
+    float2 depth : TEXCOORD1;
 };

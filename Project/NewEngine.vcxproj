@@ -152,6 +152,7 @@
     <ClCompile Include="Application\SourceCode\RespawnPoint.cpp" />
     <ClCompile Include="Application\SourceCode\RespawnPointEffect.cpp" />
     <ClCompile Include="Application\SourceCode\RespawnPointUI.cpp" />
+    <ClCompile Include="Application\SourceCode\RespawnTransition.cpp" />
     <ClCompile Include="Application\SourceCode\ResultUI.cpp" />
     <ClCompile Include="Application\SourceCode\RollMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\GameScene.cpp" />
@@ -286,6 +287,7 @@
     <ClInclude Include="Application\SourceCode\RespawnPoint.h" />
     <ClInclude Include="Application\SourceCode\RespawnPointEffect.h" />
     <ClInclude Include="Application\SourceCode\RespawnPointUI.h" />
+    <ClInclude Include="Application\SourceCode\RespawnTransition.h" />
     <ClInclude Include="Application\SourceCode\ResultUI.h" />
     <ClInclude Include="Application\SourceCode\RollMotion.h" />
     <ClInclude Include="Application\SourceCode\Scene\GameScene.h" />
@@ -389,6 +391,7 @@
     <None Include="Application\Shader\HighLumi.hlsli" />
     <None Include="Application\Shader\GaussianBlur.hlsli" />
     <None Include="Application\Shader\RadialBlur.hlsli" />
+    <None Include="Application\Shader\RespawnTransition.hlsli" />
     <None Include="Application\Shader\Ripple.hlsli" />
     <None Include="Application\Shader\ShadowMap.hlsli" />
     <None Include="Application\Shader\ShadowObj.hlsli" />
@@ -519,6 +522,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RespawnTransitionPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RespawnTransitionVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Application\Shader\RhombusPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

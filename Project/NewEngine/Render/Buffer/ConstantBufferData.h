@@ -29,6 +29,7 @@ namespace ConstantBufferData
 		Mat4 shadowMat;
 		Mat4 worldMat;
 		Vec3 cameraPos;
+		Vec3 lightCameraPos;
 	};
 
 	struct CTransform2D
@@ -144,5 +145,17 @@ namespace ConstantBufferData
 	struct CShadowMap
 	{
 		bool isWrite;
+	};
+
+	struct CRespawnTransition
+	{
+		float min;
+		float max;
+	};
+
+	struct CLightView
+	{
+		Mat4 viewProjView;
+		Vec3 cameraPos;
 	};
 }

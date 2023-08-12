@@ -44,6 +44,14 @@ public:
 	void Update(Transform* parent = nullptr);
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 
+	template<typename T>
+	void AddMaterial(const T& constantBuffer)
+	{
+		std::unique_ptr<IConstantBuffer> iConstatnBuffer = std::make_unique<T>();
+		iConstatnBuffer->Create();
+		mMaterial->constantBuffers.push_back(std::move(iConstatnBuffer));
+	}
+
 public: //セッター
 
 	// テクスチャー
@@ -63,6 +71,13 @@ public: //セッター
 
 	// グラフィックスパイプライン
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
+
+	template<typename T>
+	void SetTransferBuffer(const uint32_t bufferNum, const T& data)
+	{
+		uint32_t bNum = Min<uint32_t>(bufferNum, (uint32_t)mMaterial->constantBuffers.size());
+		TransferDataToConstantBuffer(mMaterial->constantBuffers[bNum].get(), data);
+	}
 
 private:
 	friend TextureAnimeiton;

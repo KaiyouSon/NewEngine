@@ -51,7 +51,6 @@ void GameScene::Init()
 	LightManager::GetInstance()->directionalLight.isActive = true;
 	LightManager::GetInstance()->directionalLight.pos = Vec3(-400, 400, -100);
 
-
 	SceneChanger::GetInstance()->SetisEaseTitleBGM(false);
 
 	mBgmVolume = 0;
@@ -149,6 +148,9 @@ void GameScene::DrawBackSprite()
 }
 void GameScene::DrawModel()
 {
+	//mShadowMap.DrawPostEffect();
+
+
 	mPlayer->DrawModel();
 	mBoss->DrawModel();
 	mField->DrawModel();

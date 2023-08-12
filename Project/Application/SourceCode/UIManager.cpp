@@ -140,3 +140,8 @@ MessageUI* UIManager::GetMessageUI()
 {
 	return mMessageUI.get();
 }
+
+RespawnPointUI* UIManager::GetRespawnPointUI()
+{
+	return mRespawnPointUI.get();
+}

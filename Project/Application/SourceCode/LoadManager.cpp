@@ -39,6 +39,7 @@ bool LoadManager::TextureLoad()
 
 	// ノイズテクスチャ
 	TextureManager::LoadTexture("Noice/BlurNoice.png", "BlurNoice");
+	TextureManager::LoadTexture("Noice/ScreenNoice.png", "ScreenNoice");
 
 	// タイトル
 	TextureManager::LoadTexture("Title/GameTitle.png", "GameTitle");
@@ -76,6 +77,7 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Text/Menu/CloseGameStr.png", "CloseGameStr");
 	TextureManager::LoadTexture("Text/Result/EnemyFelledStr.png", "EnemyFelledStr");
 	TextureManager::LoadTexture("Text/Result/YouDiedStr.png", "YouDiedStr");
+	TextureManager::LoadTexture("Text/RespawnPoint/DecisionCloseStr.png", "DecisionCloseStr");
 	TextureManager::LoadTexture("Text/NumberSheets.png", "NumberSheets");
 
 	// パーティクル
@@ -87,6 +89,10 @@ bool LoadManager::TextureLoad()
 
 	// 現在のシーン描画情報
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMap");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMapBlur");
+
+	//TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 2, 1, "ShadowMap");
+	//TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 2, 1, "ShadowMapBlur");
 
 	// ブルーム
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "HighLumi");

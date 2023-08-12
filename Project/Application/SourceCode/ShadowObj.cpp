@@ -19,7 +19,7 @@ void ShadowObj::CreateGraphicsPipeline()
 		GraphicsPipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("ShadowObj");
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.constantBufferViewNum = 1;
+	setting.rootSignatureSetting.constantBufferViewNum = 2;
 	setting.rootSignatureSetting.descriptorRangeNum = 1;
 	GraphicsPipelineManager::Create(setting, "ShadowObj");
 }
@@ -95,6 +95,10 @@ void ShadowObj::MaterialInit()
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransformShadowObj>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
+	// 3D行列
+	iConstantBuffer = std::make_unique<ConstantBuffer<CLightView>>();
+	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+
 	// 初期化
 	mMaterial.Init();
 }
@@ -107,6 +111,11 @@ void ShadowObj::MaterialTransfer()
 		mTransform.GetWorldMat(),
 	};
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformShadowObjData);
+	CLightView lightViewData =
+	{
+		mCamera->GetViewLookToMat() * mCamera->GetOrthoGrphicProjectionMat(),
+		mCamera->pos
+	};
 
 }
 void ShadowObj::MaterialDrawCommands()
@@ -116,6 +125,10 @@ void ShadowObj::MaterialDrawCommands()
 	// CBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		0, mMaterial.constantBuffers[0]->constantBuffer->GetGPUVirtualAddress());
+
+	// CBVの設定コマンド
+	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+		1, mMaterial.constantBuffers[1]->constantBuffer->GetGPUVirtualAddress());
 }
 
 // --- セッター -------------------------------------------------------- //

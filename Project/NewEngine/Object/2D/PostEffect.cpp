@@ -130,13 +130,16 @@ void PostEffect::MaterialDrawCommands()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// CBVの設定コマンド
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, mMaterial.constantBuffers[0]->constantBuffer->GetGPUVirtualAddress());
+	for (uint32_t i = 0; i < mMaterial.constantBuffers.size(); i++)
+	{
+		// CBVの設定コマンド
+		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+			i, mMaterial.constantBuffers[i]->constantBuffer->GetGPUVirtualAddress());
+	}
 
-	// CBVの設定コマンド
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, mMaterial.constantBuffers[1]->constantBuffer->GetGPUVirtualAddress());
+	//// CBVの設定コマンド
+	//renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+	//	1, mMaterial.constantBuffers[1]->constantBuffer->GetGPUVirtualAddress());
 }
 
 // --- 頂点データ関連 --------------------------------------------------- //
@@ -219,7 +222,7 @@ void PostEffect::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 void PostEffect::SetDrawCommands(const uint32_t registerNum, const uint32_t bufferNum)
 {
 	// GraphicsPipeline描画コマンド
-	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
+	//mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 

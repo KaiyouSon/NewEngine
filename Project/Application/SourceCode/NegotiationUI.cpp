@@ -92,6 +92,7 @@ void NegotiationUI::TutorialMessageUpdate()
 	}
 
 	MessageUI* messageUI = mUiManager->GetMessageUI();
+	RespawnPointUI* respawnPointUI = mUiManager->GetRespawnPointUI();
 
 	if (mIsActive == false)
 	{
@@ -117,13 +118,13 @@ void NegotiationUI::TutorialMessageUpdate()
 	case RestInLightStr:
 		if (Pad::GetButtonDown(PadCode::ButtonB))
 		{
-			if (messageUI->GetisActive() == true)
+			if (respawnPointUI->GetisActive() == true)
 			{
-				messageUI->SetisActive(false);
+				respawnPointUI->SetisActive(false);
 			}
 			else
 			{
-				messageUI->SetisActive(true);
+				respawnPointUI->SetisActive(true);
 			}
 		}
 		break;

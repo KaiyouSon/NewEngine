@@ -107,6 +107,10 @@ void Object3D::Draw(const BlendMode blendMode)
 				D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
 		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
 
+
+		//auto handle = TextureManager::GetRenderTexture("ShadowMapBlur")->GetGpuHandle(0);
+		//renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 2, handle);
+
 		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 2, mDepthTex->GetGpuHandle());
 	}
 	else
@@ -172,7 +176,8 @@ void Object3D::MaterialTransfer()
 		mCamera->GetViewLookToMat() * mCamera->GetPerspectiveProjectionMat(),
 		ShadowMap::GetLightCamera().GetViewLookToMat() * ShadowMap::GetLightCamera().GetOrthoGrphicProjectionMat(),
 		mTransform.GetWorldMat(),
-		mCamera->pos
+		mCamera->pos,
+		ShadowMap::GetLightCamera().pos
 	};
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transform3DShadowData);
 

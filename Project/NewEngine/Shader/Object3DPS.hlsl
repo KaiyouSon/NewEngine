@@ -6,6 +6,51 @@ Texture2D<float4> dissolveTex : register(t1); // 0番スロットに設定されたテクスチ
 Texture2D<float4> shadowMapTex : register(t2); // 0番スロットに設定されたテクスチャ
 SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
 
+float4 CalcShadowColor(V2P i, float4 color)
+{
+    float4 resultColor = color;
+    
+    // ライトビュースクリーン空間からUV空間に座標変換
+    float2 shadowTexUV = i.spos.xy / i.spos.w;
+    shadowTexUV *= float2(0.5f, -0.5f);
+    shadowTexUV += 0.5f;
+        
+    // ライトビューでのスクリーン空間でのz値を計算する
+    float z = i.spos.z;
+    
+    if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
+        shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
+    {
+        float2 shadowValue = shadowMapTex.Sample(smp, shadowTexUV).rg;
+        
+        if (shadowValue.r < z && z <= 1.0f)
+        {
+            float depthSq = shadowValue.x * shadowValue.x;
+            
+            float variance = min(max(shadowValue.y - depthSq, 0.0001f), 1.0f);
+            
+            float md = z - shadowValue.x;
+            
+            float lightFactor = variance / (variance + md * md);
+            
+            float3 shadowColor = resultColor.rgb * 0.5f;
+            
+            shadowColor.rgb = lerp(shadowColor, color.xyz, lightFactor);
+        }
+        
+        //float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV).r;
+        //if (shadowDepth < z)
+        //{
+         
+            
+        //    resultColor = lerp(color * shadow, color, lightFactor);
+            
+        //    shadow *= 0.5f;
+        //}
+    }
+    
+    return resultColor;
+}
 
 float CalcShadow(float4 spos)
 {
@@ -19,7 +64,7 @@ float CalcShadow(float4 spos)
     float z = spos.z / spos.w;
         
     if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
-            shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
+        shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
     {
         float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV).r;
         if (shadowDepth < z)
@@ -72,14 +117,20 @@ PSOutput main(V2P i)// : SV_TARGET
         adsColor.rgb = ambient + diffuse + specular * dirLightColor;
     }
     
+    float4 resultColor = (adsColor * texColor * color);
+    
+    
     float shadow = 1.0f;
+   //float4 shadowColor = 1.0f;
     if (isWriteShadow == true)
     {
         shadow = CalcShadow(i.spos);
+        //shadowColor = CalcShadowColor(i, resultColor);
+        //resultColor.rgb = shadowColor;
     }
     
-    float4 resultColor = (adsColor * texColor * color);
     resultColor.rgb *= shadow;
+    //resultColor.rgb = shadowColor;
     
     PSOutput output;
     output.target0 = resultColor * maskIntensity + dissolveColor * colorPower * (1 - maskIntensity);

@@ -25,19 +25,43 @@ void ShadowMap::CreateGraphicsPipeline()
 	setting.rootSignatureSetting.constantBufferViewNum = 3;
 	GraphicsPipelineManager::Create(setting, "ShadowMap");
 
+	// ShadowObj用
+	ShaderObjectManager::Create("ShadowMapBlur");
+	ShaderObjectManager::GetShaderObject("ShadowMapBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("ShadowMapBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderObjectManager::GetShaderObject("ShadowMapBlur")->CompileVertexShader(path + "GaussianBlurVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("ShadowMapBlur")->CompilePixelShader(path + "GaussianBlurPS.hlsl", "main");
+
+	// 3Dオブジェクト用
+	setting =
+		GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
+	setting.shaderObject = ShaderObjectManager::GetShaderObject("ShadowMapBlur");
+	setting.rtvNum = 1;
+	GraphicsPipelineManager::Create(setting, "ShadowMapBlur");
+
 }
 
 ShadowMap::ShadowMap() :
 	mShadowMap(std::make_unique<PostEffect>()),
-	mRenderTex(TextureManager::GetRenderTexture("ShadowMap"))
+	mShadowMapRT(TextureManager::GetRenderTexture("ShadowMap")),
+	mBlur(std::make_unique<PostEffect>()),
+	mBlurRT(TextureManager::GetRenderTexture("ShadowMapBlur"))
 {
-	mRenderTex->useDepth = true;
+	mShadowMapRT->useDepth = true;
 
 	mShadowMap->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("ShadowMap"));
-	mShadowMap->AddRenderTexture(mRenderTex);
-	mShadowMap->scale = 1.f / 32.f;
-	mShadowMap->pos = GetWindowHalfSize() / 2;
+	mShadowMap->AddRenderTexture(mShadowMapRT);
+	//mShadowMap->scale = 1.f / 32.f;
+	//mShadowMap->pos = GetWindowHalfSize() / 2;
+	mShadowMap->scale = 1.f / 2.f;
+	mShadowMap->pos = GetWindowHalfSize();
 	mShadowMap->AddMaterial(ConstantBuffer<CTransformShadowObj>{});
+
+	mBlur->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("ShadowMapBlur"));
+	mBlur->AddRenderTexture(mBlurRT);
+	//mBlur->scale = 1.f / 4.f;
+	mBlur->scale = 1.f / 4.f;
+	mBlur->pos = GetWindowHalfSize() / 2;
 
 	sIndex = 0;
 
@@ -52,6 +76,17 @@ void ShadowMap::Init()
 
 void ShadowMap::Update()
 {
+	if (Key::GetKeyDown(DIK_Q))
+	{
+		mBlur->scale = 1.f / 32.f;
+		mBlur->pos = GetWindowHalfSize() / 2;
+	}
+	if (Key::GetKeyDown(DIK_E))
+	{
+		mBlur->scale = 1.f / 8.f;
+		mBlur->pos = GetWindowHalfSize();
+	}
+
 	sLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
 
 	// カメラの設定
@@ -71,18 +106,22 @@ void ShadowMap::Update()
 
 	mShadowMap->SetTransferBuffer(2, data);
 	mShadowMap->Update();
+
+	mBlur->Update();
 }
 
 void ShadowMap::RenderTextureSetting()
 {
-	mRenderTex->PrevDrawScene();
-
+	mShadowMapRT->PrevDrawScene();
 	for (auto& obj : sShadowObjs)
 	{
 		obj.Draw();
 	}
+	mShadowMapRT->PostDrawScene();
 
-	mRenderTex->PostDrawScene();
+	//mBlurRT->PrevDrawScene();
+	//mShadowMap->Draw();
+	//mBlurRT->PostDrawScene();
 }
 
 void ShadowMap::DrawModel()
@@ -95,8 +134,10 @@ void ShadowMap::DrawModel()
 
 void ShadowMap::DrawPostEffect()
 {
-	mShadowMap->SetDrawCommands(2, 2);
-	mShadowMap->Draw();
+	//mShadowMap->SetDrawCommands(2, 2);
+	//mShadowMap->Draw();
+
+	//mBlur->Draw();
 }
 
 void ShadowMap::Register()
