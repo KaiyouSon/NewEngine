@@ -10,7 +10,7 @@ float4 main(V2P i) : SV_TARGET
     // テクスチャーマッピング
     float4 texColor = tex.Sample(smp, newUV);
     
-    float rate = 1 - smoothstep(min, max, texColor.r);
+    float rate = 1 - smoothstep(0.0f, max, texColor.r);
     
     texColor.a = rate;
     

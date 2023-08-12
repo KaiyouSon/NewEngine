@@ -14,6 +14,12 @@ GameScene::GameScene() :
 	mField(std::make_unique<Field>())
 {
 
+	SceneChanger::GetInstance()->SetisEaseTitleBGM(false);
+	mBgmVolume = 0;
+
+	mRespawnTransition = nullptr;
+	mRespawnTransition = std::make_unique<RespawnTransition>();
+	mRespawnTransition->Generate();
 }
 GameScene::~GameScene()
 {
@@ -50,14 +56,26 @@ void GameScene::Init()
 
 	LightManager::GetInstance()->directionalLight.isActive = true;
 	LightManager::GetInstance()->directionalLight.pos = Vec3(-400, 400, -100);
-
-	SceneChanger::GetInstance()->SetisEaseTitleBGM(false);
-
-	mBgmVolume = 0;
 }
 
 void GameScene::Update()
 {
+	static bool isInit = false;
+
+	if (Key::GetKeyDown(DIK_SPACE))
+	{
+		mRespawnTransition->Generate();
+	}
+
+	if (Key::GetKeyDown(DIK_A))
+	{
+		isInit = false;
+		mRespawnTransition->SetStep(RespawnTransition::In);
+	}
+	if (Key::GetKeyDown(DIK_D))
+	{
+		mRespawnTransition->SetStep(RespawnTransition::Out);
+	}
 
 	if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
 	{
@@ -132,6 +150,21 @@ void GameScene::Update()
 			SceneChanger::GetInstance()->SetisChange(false);
 		}
 	}
+
+	if (mRespawnTransition != nullptr)
+	{
+		if (mRespawnTransition->GetStep() == RespawnTransition::Progress)
+		{
+			if (isInit == false)
+			{
+				Init();
+				isInit = true;
+			}
+		}
+
+		mRespawnTransition->Update();
+	}
+
 }
 
 void GameScene::RenderTextureSetting()
@@ -162,6 +195,11 @@ void GameScene::DrawFrontSprite()
 	mUiManager->DrawFrontSprite();
 
 	mMenuManager->DrawFrontSprite();
+
+	if (mRespawnTransition != nullptr)
+	{
+		mRespawnTransition->DrawFrontSprite();
+	}
 }
 void GameScene::DrawDebugGui()
 {

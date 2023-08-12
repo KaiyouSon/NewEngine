@@ -14,7 +14,8 @@ void Player::Init()
 {
 	GaugeParamInit();
 	mPlayer->Init();
-	mPlayer->pos.y = 4.75f;
+	mPlayer->pos = Vec3(0.f, 4.75f, 0.f);
+	mPlayer->rot = 0;
 
 	mPlayer->SetWeapon(mWeapon.get(), WeaponPartID::Right);
 	mPlayer->iParent = this;
