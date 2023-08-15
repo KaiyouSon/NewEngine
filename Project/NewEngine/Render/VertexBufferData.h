@@ -45,6 +45,6 @@ namespace VertexBufferData
 	{
 		Vec3 pos;
 		Vec2 scale;
-		float rotY;
+		Vec3 rot;
 	};
 }

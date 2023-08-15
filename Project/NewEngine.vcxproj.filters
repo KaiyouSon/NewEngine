@@ -642,9 +642,6 @@
     <ClCompile Include="Application\SourceCode\Tree.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Branch.cpp">
-      <Filter>Application\Source\Field</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1064,9 +1061,6 @@
     <ClInclude Include="Application\SourceCode\Tree.h">
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Branch.h">
-      <Filter>Application\Header\Field</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1319,9 +1313,6 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\GaussianBlurVS.hlsl">
       <Filter>Shader\Application\GaussianBlur</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\BranchGS.hlsl">
-      <Filter>Shader\Application\Branch</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\BranchVS.hlsl">
       <Filter>Shader\Application\Branch</Filter>

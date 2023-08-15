@@ -16,6 +16,7 @@ bool LoadManager::ModelLoad()
 	ModelManager::LoadObjModel("Skydome", "Skydome", true);
 	ModelManager::LoadObjModel("Cloud", "Cloud");
 	ModelManager::LoadObjModel("Tree", "Tree", true);
+	ModelManager::LoadObjModel("Branch", "Branch");
 
 	ModelManager::LoadObjModel("MessageSign", "MessageSign");
 
@@ -85,7 +86,6 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Particle/Particle1.png", "Particle1");
 	TextureManager::LoadTexture("Particle/Particle2.png", "Particle2");
 	TextureManager::LoadTexture("Particle/Line.png", "Line");
-
 
 	TextureManager::LoadTexture("Branch.png", "Branch");
 

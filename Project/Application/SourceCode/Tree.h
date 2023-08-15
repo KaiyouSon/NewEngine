@@ -1,14 +1,16 @@
 #pragma once
 #include "NewEngine.h"
-#include "Branch.h"
 
 class Tree
 {
 private:
+	Transform mPraent;
 	std::unique_ptr<Object3D> mTree;
-	std::vector<std::unique_ptr<Branch>> mBranchs;
+	std::unique_ptr<Object3D> mBranch;
 
 public:
+	static void CreateGraphicsPipeline();
+
 	Tree();
 	void Init();
 	void Update();
