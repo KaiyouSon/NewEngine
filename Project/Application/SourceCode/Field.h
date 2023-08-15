@@ -2,6 +2,7 @@
 #include "MessageSign.h"
 #include "Skydome.h"
 #include "RespawnPoint.h"
+#include "Tree.h"
 
 class Field
 {
@@ -10,6 +11,7 @@ private:
 	std::unique_ptr<Skydome> mSkydome;
 	std::unique_ptr<RespawnPoint> mRespawnPoint;
 	std::array<std::unique_ptr<MessageSign>, 5> mMessageSigns;
+	std::vector<std::unique_ptr<Tree>> mTrees;
 
 private:
 	// デバッグ用

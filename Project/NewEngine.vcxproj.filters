@@ -636,6 +636,9 @@
     <ClCompile Include="Application\SourceCode\RespawnTransition.cpp">
       <Filter>Application\Source\Transition</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\Tree.cpp">
+      <Filter>Application\Source\Field</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1051,6 +1054,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\RespawnTransition.h">
       <Filter>Application\Header\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Tree.h">
+      <Filter>Application\Header\Field</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

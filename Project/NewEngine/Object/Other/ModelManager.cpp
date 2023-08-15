@@ -137,7 +137,7 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 			{
 				// 頂点インデックス1個分の文字列をストリームに変換して解析しやすくする
 				std::istringstream indexStream(indexString);
-				unsigned short indexPos, indexNormal, indexTexcoord;
+				uint32_t indexPos = 0, indexNormal = 0, indexTexcoord = 0;
 
 				indexStream >> indexPos;
 				indexStream.seekg(1, std::ios_base::cur);	// スラッシュを飛ばす

@@ -15,6 +15,7 @@ bool LoadManager::ModelLoad()
 	ModelManager::LoadObjModel("Ground", "Ground");
 	ModelManager::LoadObjModel("Skydome", "Skydome", true);
 	ModelManager::LoadObjModel("Cloud", "Cloud");
+	ModelManager::LoadObjModel("Tree", "Tree", true);
 
 	ModelManager::LoadObjModel("MessageSign", "MessageSign");
 

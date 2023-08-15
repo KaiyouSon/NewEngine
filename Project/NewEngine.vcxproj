@@ -171,6 +171,7 @@
     <ClCompile Include="Application\SourceCode\Task.cpp" />
     <ClCompile Include="Application\SourceCode\TitleUI.cpp" />
     <ClCompile Include="Application\SourceCode\MessageUI.cpp" />
+    <ClCompile Include="Application\SourceCode\Tree.cpp" />
     <ClCompile Include="Application\SourceCode\UIManager.cpp" />
     <ClCompile Include="Application\SourceCode\Vignette.cpp" />
     <ClCompile Include="Application\SourceCode\Weapon.cpp" />
@@ -306,6 +307,7 @@
     <ClInclude Include="Application\SourceCode\Task.h" />
     <ClInclude Include="Application\SourceCode\TitleUI.h" />
     <ClInclude Include="Application\SourceCode\MessageUI.h" />
+    <ClInclude Include="Application\SourceCode\Tree.h" />
     <ClInclude Include="Application\SourceCode\UIManager.h" />
     <ClInclude Include="Application\SourceCode\Vignette.h" />
     <ClInclude Include="Application\SourceCode\Weapon.h" />

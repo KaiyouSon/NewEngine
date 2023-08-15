@@ -33,6 +33,8 @@ Field::Field() :
 	mMessageSigns[3]->SetMessageTexture(TextureManager::GetTexture("TutorialStr4"));
 	mMessageSigns[4]->SetMessageTexture(TextureManager::GetTexture("TutorialStr5"));
 
+	mTrees.emplace_back(std::make_unique<Tree>());
+
 	Init();
 }
 
@@ -50,6 +52,11 @@ void Field::Init()
 	}
 	mSkydome->Init();
 	mRespawnPoint->Init();
+
+	for (uint32_t i = 0; i < mTrees.size(); i++)
+	{
+		mTrees[i]->Init();
+	}
 }
 
 void Field::Update()
@@ -66,6 +73,11 @@ void Field::Update()
 	{
 		mMessageSigns[i]->Update();
 	}
+
+	for (uint32_t i = 0; i < mTrees.size(); i++)
+	{
+		mTrees[i]->Update();
+	}
 }
 
 void Field::DrawModel()
@@ -77,6 +89,11 @@ void Field::DrawModel()
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
 	{
 		mMessageSigns[i]->DrawModel();
+	}
+
+	for (uint32_t i = 0; i < mTrees.size(); i++)
+	{
+		mTrees[i]->DrawModel();
 	}
 }
 
