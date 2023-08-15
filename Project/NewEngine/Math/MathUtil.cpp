@@ -85,36 +85,6 @@ Mat4 ConvertRotationMat(const Quaternion q)
 {
 	Mat4 result = Mat4::Identity();
 
-	//result.m[0][0] = (q.w * q.w) + (q.x * q.x) - (q.y * q.y) - (q.z * q.z);
-	//result.m[0][1] = 2 * (q.x * q.y + q.w * q.z);
-	//result.m[0][2] = 2 * (q.x * q.z - q.w * q.y);
-
-	//result.m[1][0] = 2 * (q.x * q.y - q.w * q.z);
-	//result.m[1][1] = (q.w * q.w) - (q.x * q.x) + (q.y * q.y) - (q.z * q.z);
-	//result.m[1][2] = 2 * (q.y * q.z + q.w * q.x);
-
-	//result.m[2][0] = 2 * (q.x * q.z + q.w * q.y);
-	//result.m[2][1] = 2 * (q.y * q.z - q.w * q.x);
-	//result.m[2][2] = (q.w * q.w) - (q.x * q.x) - (q.y * q.y) + (q.z * q.z);
-
-	//float xx = q.x * q.x * 2.f;
-	//float yy = q.y * q.y * 2.f;
-	//float zz = q.z * q.z * 2.f;
-	//float xy = q.x * q.y * 2.f;
-	//float xz = q.x * q.z * 2.f;
-	//float yz = q.y * q.z * 2.f;
-	//float wx = q.w * q.x * 2.f;
-	//float wy = q.w * q.y * 2.f;
-	//float wz = q.w * q.z * 2.f;
-
-	//result =
-	//{
-	//	1.f - yy - zz,	xy + wz,		xz - wy,		0.f,
-	//	xy - wz,		1.f - xx - zz,	yz + wx,		0.f,
-	//	xz + wy,		yz + wx,		1.f - xx - yy,	0.f,
-	//	0.f,			0.f,			0.f,			1.f,
-	//};
-
 	float xx = q.x * q.x;
 	float yy = q.y * q.y;
 	float zz = q.z * q.z;

@@ -40,4 +40,11 @@ namespace VertexBufferData
 		float shininess = 1.0f;
 		Color color = Color::zero;
 	};
+
+	struct VBranch
+	{
+		Vec3 pos;
+		Vec2 scale;
+		float rotY;
+	};
 }

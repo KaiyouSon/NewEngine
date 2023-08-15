@@ -117,6 +117,7 @@
     <ClCompile Include="Application\SourceCode\BossAttack2Motion.cpp" />
     <ClCompile Include="Application\SourceCode\BossBody.cpp" />
     <ClCompile Include="Application\SourceCode\BossGrabAttackMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\Branch.cpp" />
     <ClCompile Include="Application\SourceCode\CameraManager.cpp" />
     <ClCompile Include="Application\SourceCode\Character.cpp" />
     <ClCompile Include="Application\SourceCode\Cloud.cpp" />
@@ -251,6 +252,7 @@
     <ClInclude Include="Application\SourceCode\BossAttack2Motion.h" />
     <ClInclude Include="Application\SourceCode\BossBody.h" />
     <ClInclude Include="Application\SourceCode\BossGrabAttackMotion.h" />
+    <ClInclude Include="Application\SourceCode\Branch.h" />
     <ClInclude Include="Application\SourceCode\CameraManager.h" />
     <ClInclude Include="Application\SourceCode\Character.h" />
     <ClInclude Include="Application\SourceCode\Cloud.h" />
@@ -385,6 +387,7 @@
   <ItemGroup>
     <None Include="Application\Shader\Bloom.hlsli" />
     <None Include="Application\Shader\BGaussainBlur.hlsli" />
+    <None Include="Application\Shader\Branch.hlsli" />
     <None Include="Application\Shader\Cloud.hlsli" />
     <None Include="Application\Shader\DOF.hlsli" />
     <None Include="Application\Shader\DotFilter.hlsli" />
@@ -432,6 +435,20 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\BranchGS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\BranchPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\BranchVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Application\Shader\CloudPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

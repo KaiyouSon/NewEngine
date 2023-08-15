@@ -86,6 +86,9 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Particle/Particle2.png", "Particle2");
 	TextureManager::LoadTexture("Particle/Line.png", "Line");
 
+
+	TextureManager::LoadTexture("Branch.png", "Branch");
+
 	// レンダーテクスチャー
 
 	// 現在のシーン描画情報

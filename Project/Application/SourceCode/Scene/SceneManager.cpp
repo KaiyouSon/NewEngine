@@ -14,6 +14,7 @@
 #include "Cloud.h"
 #include "RespawnPoint.h"
 #include "RespawnPointUI.h"
+#include "Branch.h"
 
 std::unique_ptr<IScene> SceneManager::sCurrentScene = nullptr;
 
@@ -25,6 +26,7 @@ SceneManager::SceneManager()
 	Cloud::CreateGraphicsPipeline();
 	RespawnPoint::CreateGraphicsPipeline();
 	RespawnPointUI::CreateGraphicsPipeline();
+	Branch::CreateGraphicsPipeline();
 
 	//Bloom::CreateGraphicsPipeline();
 	//GaussianBlur::CreateGraphicsPipeline();

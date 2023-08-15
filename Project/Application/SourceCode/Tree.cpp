@@ -5,6 +5,8 @@ Tree::Tree() :
 {
 	mTree->SetModel(ModelManager::GetModel("Tree"));
 	mTree->SetisShadow(false, true);
+
+	mBranchs.emplace_back(std::make_unique<Branch>());
 }
 
 void Tree::Init()
@@ -16,9 +18,19 @@ void Tree::Init()
 void Tree::Update()
 {
 	mTree->Update();
+
+	for (const auto& branch : mBranchs)
+	{
+		branch->Update();
+	}
 }
 
 void Tree::DrawModel()
 {
 	mTree->Draw();
+
+	for (const auto& branch : mBranchs)
+	{
+		branch->Draw();
+	}
 }
