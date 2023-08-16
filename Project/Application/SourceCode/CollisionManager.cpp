@@ -157,7 +157,6 @@ void CollisionManager::PlayerHitFieldObject()
 
 	const std::vector<std::unique_ptr<Coffin>>& coffins = fieldData->coffins;
 	for (uint32_t i = 0; i < coffins.size(); i++)
-	//for (uint32_t i = 0; i < 1; i++)
 	{
 		Vec3 hitPoint = 0;
 

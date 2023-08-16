@@ -542,7 +542,20 @@
                             1.0
                         ]
                     },
-                    "obj_name": "CoffinBottom"
+                    "obj_name": "CoffinBottom",
+                    "collider": {
+                        "type": "BOX",
+                        "center": [
+                            39.999996185302734,
+                            1.2999999523162842,
+                            100.0
+                        ],
+                        "size": [
+                            8.0,
+                            1.2999999523162842,
+                            3.0
+                        ]
+                    }
                 },
                 {
                     "type": "MESH",
@@ -610,7 +623,20 @@
                             1.0
                         ]
                     },
-                    "obj_name": "CoffinBottom"
+                    "obj_name": "CoffinBottom",
+                    "collider": {
+                        "type": "BOX",
+                        "center": [
+                            39.999996185302734,
+                            1.2999999523162842,
+                            80.0
+                        ],
+                        "size": [
+                            8.0,
+                            1.2999999523162842,
+                            3.0
+                        ]
+                    }
                 },
                 {
                     "type": "MESH",
@@ -678,7 +704,20 @@
                             1.0
                         ]
                     },
-                    "obj_name": "CoffinBottom"
+                    "obj_name": "CoffinBottom",
+                    "collider": {
+                        "type": "BOX",
+                        "center": [
+                            40.0,
+                            1.2999999523162842,
+                            60.0
+                        ],
+                        "size": [
+                            8.0,
+                            1.2999999523162842,
+                            3.0
+                        ]
+                    }
                 },
                 {
                     "type": "MESH",
@@ -746,7 +785,20 @@
                             1.0
                         ]
                     },
-                    "obj_name": "CoffinBottom"
+                    "obj_name": "CoffinBottom",
+                    "collider": {
+                        "type": "BOX",
+                        "center": [
+                            40.0,
+                            1.2999999523162842,
+                            40.0
+                        ],
+                        "size": [
+                            8.0,
+                            1.2999999523162842,
+                            3.0
+                        ]
+                    }
                 },
                 {
                     "type": "MESH",
@@ -814,7 +866,20 @@
                             1.0
                         ]
                     },
-                    "obj_name": "CoffinBottom"
+                    "obj_name": "CoffinBottom",
+                    "collider": {
+                        "type": "BOX",
+                        "center": [
+                            40.000003814697266,
+                            1.2999999523162842,
+                            20.0
+                        ],
+                        "size": [
+                            8.0,
+                            1.2999999523162842,
+                            3.0
+                        ]
+                    }
                 },
                 {
                     "type": "MESH",
@@ -882,7 +947,20 @@
                             1.0
                         ]
                     },
-                    "obj_name": "CoffinBottom"
+                    "obj_name": "CoffinBottom",
+                    "collider": {
+                        "type": "BOX",
+                        "center": [
+                            40.000003814697266,
+                            1.2999999523162842,
+                            -0.0
+                        ],
+                        "size": [
+                            8.0,
+                            1.2999999523162842,
+                            3.0
+                        ]
+                    }
                 },
                 {
                     "type": "MESH",
