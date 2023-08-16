@@ -2,6 +2,7 @@
 #include "NewEngine.h"
 #include "AssimpLoader.h"
 #include "MotionManager.h"
+#include "FieldDataManager.h"
 
 bool LoadManager::ModelLoad()
 {
@@ -26,6 +27,9 @@ bool LoadManager::ModelLoad()
 
 	ModelManager::LoadObjModel("Weapon/Club", "Club", true);
 	ModelManager::LoadObjModel("Weapon/Sword", "Sword", true);
+
+	ModelManager::LoadObjModel("CoffinTop", "CoffinTop", true);
+	ModelManager::LoadObjModel("CoffinBottom", "CoffinBottom", true);
 
 	ModelManager::LoadObjModel("Capsule", "Capsule");
 	ModelManager::LoadObjModel("Collider/CapsuleCollider", "CapsuleCollider");
@@ -156,6 +160,7 @@ void LoadManager::Load()
 	// マルチスレッドに入る前に作っとく
 	TextureManager::CreateTexture(Color::white, "White");
 
+
 	// 非同期
 	std::future<bool> textureFtr = std::async(std::launch::async, [this] { return TextureLoad(); });
 	std::future<bool> modelFtr = std::async(std::launch::async, [this] { return ModelLoad(); });
@@ -171,6 +176,7 @@ void LoadManager::Load()
 		mIsLoaded = true;
 		// コマンド実行
 		TextureManager::ExcuteComandList();
-	}
 
+		FieldDataManager::Load("SkyIsland", "SkyIsland");
+	}
 }

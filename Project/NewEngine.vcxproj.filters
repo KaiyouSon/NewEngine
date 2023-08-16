@@ -642,6 +642,15 @@
     <ClCompile Include="Application\SourceCode\Tree.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\Coffin.cpp">
+      <Filter>Application\Source\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\FieldDataManager.cpp">
+      <Filter>Application\Source\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\FieldData.cpp">
+      <Filter>Application\Source\Field</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1059,6 +1068,15 @@
       <Filter>Application\Header\Transition</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Tree.h">
+      <Filter>Application\Header\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Coffin.h">
+      <Filter>Application\Header\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\FieldDataManager.h">
+      <Filter>Application\Header\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\FieldData.h">
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
   </ItemGroup>

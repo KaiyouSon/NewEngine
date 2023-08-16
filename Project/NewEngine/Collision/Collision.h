@@ -18,6 +18,16 @@ namespace Collision
 		const CubeCollider& cube1,
 		const CubeCollider& cube2);
 
+	// キューブとカプセル
+	bool CubeHitCapsule(
+		const CubeCollider& cube,
+		const CapsuleCollider& capsule);
+
+	bool CubeHitCapsule(
+		const CubeCollider& cube,
+		const CapsuleCollider& capsule,
+		Vec3& hitPoint);
+
 	// 球と平面
 	bool SphereHitPlane(
 		const SphereCollider& sphere,

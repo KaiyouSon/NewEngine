@@ -68,6 +68,8 @@ ShadowMap::ShadowMap() :
 	sLightCamera.rot = Vec3(Radian(45), Radian(45), 0);
 	sLightCamera.rect = RectAngle(-480, 480, 270, -270);
 	sLightCamera.oFarZ = 1000.f;
+
+	sShadowObjs.clear();
 }
 
 void ShadowMap::Init()

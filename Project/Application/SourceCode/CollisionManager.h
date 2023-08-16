@@ -15,10 +15,16 @@ private:
 	UIManager* mUiManager;
 
 private:
+	// ƒvƒŒƒCƒ„[‚Ì‰Ÿ‚µ–ß‚µˆ—
+	void PushBackPlayer();
+
+private:
 	void PlayerHitBoss();
 	void PlayerHitMessageSign();
 	void PlayerHitRespawnPoint();
 	void PlayerHitNegotiation();
+
+	void PlayerHitFieldObject();
 
 	void BossHitPlayer();
 

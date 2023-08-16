@@ -1,0 +1,847 @@
+{
+    "name": "scene",
+    "object": [
+        {
+            "type": "EMPTY",
+            "name": "棺桶",
+            "transform": {
+                "translation": [
+                    -40.0,
+                    0.0,
+                    -0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -90.00000762939453,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "obj_name": "Coffin",
+            "collider": {
+                "type": "None",
+                "center": [
+                    -40.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Bottom",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinBottom",
+                    "collider": {
+                        "type": "BOX",
+                        "center": [
+                            -40.0,
+                            1.2999999523162842,
+                            0.0
+                        ],
+                        "size": [
+                            8.0,
+                            1.2999999523162842,
+                            3.0
+                        ]
+                    }
+                },
+                {
+                    "type": "MESH",
+                    "name": "Top",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinTop"
+                }
+            ]
+        },
+        {
+            "type": "EMPTY",
+            "name": "棺桶.001",
+            "transform": {
+                "translation": [
+                    -40.0,
+                    0.0,
+                    20.0
+                ],
+                "rotation": [
+                    0.0,
+                    -90.00000762939453,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "obj_name": "Coffin",
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Bottom.001",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinBottom"
+                },
+                {
+                    "type": "MESH",
+                    "name": "Top.001",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinTop"
+                }
+            ]
+        },
+        {
+            "type": "EMPTY",
+            "name": "棺桶.002",
+            "transform": {
+                "translation": [
+                    -40.0,
+                    0.0,
+                    40.0
+                ],
+                "rotation": [
+                    0.0,
+                    -90.00000762939453,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "obj_name": "Coffin",
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Bottom.002",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinBottom"
+                },
+                {
+                    "type": "MESH",
+                    "name": "Top.002",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinTop"
+                }
+            ]
+        },
+        {
+            "type": "EMPTY",
+            "name": "棺桶.003",
+            "transform": {
+                "translation": [
+                    -40.0,
+                    0.0,
+                    60.0
+                ],
+                "rotation": [
+                    0.0,
+                    -90.00000762939453,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "obj_name": "Coffin",
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Bottom.003",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinBottom"
+                },
+                {
+                    "type": "MESH",
+                    "name": "Top.003",
+                    "transform": {
+                        "translation": [
+                            1.583810806274414,
+                            -0.12934084236621857,
+                            -1.5836715698242188
+                        ],
+                        "rotation": [
+                            -0.6216334700584412,
+                            -7.733702659606934,
+                            -36.413238525390625
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinTop"
+                }
+            ]
+        },
+        {
+            "type": "EMPTY",
+            "name": "棺桶.004",
+            "transform": {
+                "translation": [
+                    -40.0,
+                    0.0,
+                    80.0
+                ],
+                "rotation": [
+                    0.0,
+                    -90.00000762939453,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "obj_name": "Coffin",
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Bottom.004",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinBottom"
+                },
+                {
+                    "type": "MESH",
+                    "name": "Top.004",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinTop"
+                }
+            ]
+        },
+        {
+            "type": "EMPTY",
+            "name": "棺桶.005",
+            "transform": {
+                "translation": [
+                    -40.0,
+                    0.0,
+                    100.0
+                ],
+                "rotation": [
+                    0.0,
+                    -90.00000762939453,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "obj_name": "Coffin",
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Bottom.005",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinBottom"
+                },
+                {
+                    "type": "MESH",
+                    "name": "Top.005",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinTop"
+                }
+            ]
+        },
+        {
+            "type": "EMPTY",
+            "name": "棺桶.011",
+            "transform": {
+                "translation": [
+                    39.999996185302734,
+                    0.0,
+                    100.0
+                ],
+                "rotation": [
+                    -0.0,
+                    90.00000762939453,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "obj_name": "Coffin",
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Bottom.011",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinBottom"
+                },
+                {
+                    "type": "MESH",
+                    "name": "Top.011",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinTop"
+                }
+            ]
+        },
+        {
+            "type": "EMPTY",
+            "name": "棺桶.010",
+            "transform": {
+                "translation": [
+                    39.999996185302734,
+                    0.0,
+                    80.0
+                ],
+                "rotation": [
+                    -0.0,
+                    90.00000762939453,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "obj_name": "Coffin",
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Bottom.010",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinBottom"
+                },
+                {
+                    "type": "MESH",
+                    "name": "Top.010",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinTop"
+                }
+            ]
+        },
+        {
+            "type": "EMPTY",
+            "name": "棺桶.009",
+            "transform": {
+                "translation": [
+                    40.0,
+                    0.0,
+                    60.0
+                ],
+                "rotation": [
+                    -0.0,
+                    90.00000762939453,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "obj_name": "Coffin",
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Bottom.009",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinBottom"
+                },
+                {
+                    "type": "MESH",
+                    "name": "Top.009",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinTop"
+                }
+            ]
+        },
+        {
+            "type": "EMPTY",
+            "name": "棺桶.008",
+            "transform": {
+                "translation": [
+                    40.0,
+                    0.0,
+                    40.0
+                ],
+                "rotation": [
+                    -0.0,
+                    90.00000762939453,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "obj_name": "Coffin",
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Bottom.008",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinBottom"
+                },
+                {
+                    "type": "MESH",
+                    "name": "Top.008",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinTop"
+                }
+            ]
+        },
+        {
+            "type": "EMPTY",
+            "name": "棺桶.007",
+            "transform": {
+                "translation": [
+                    40.000003814697266,
+                    0.0,
+                    20.0
+                ],
+                "rotation": [
+                    -0.0,
+                    90.00000762939453,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "obj_name": "Coffin",
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Bottom.007",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinBottom"
+                },
+                {
+                    "type": "MESH",
+                    "name": "Top.007",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinTop"
+                }
+            ]
+        },
+        {
+            "type": "EMPTY",
+            "name": "棺桶.006",
+            "transform": {
+                "translation": [
+                    40.000003814697266,
+                    0.0,
+                    -0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    90.00000762939453,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "obj_name": "Coffin",
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "Bottom.006",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinBottom"
+                },
+                {
+                    "type": "MESH",
+                    "name": "Top.006",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "obj_name": "CoffinTop"
+                }
+            ]
+        }
+    ]
+}

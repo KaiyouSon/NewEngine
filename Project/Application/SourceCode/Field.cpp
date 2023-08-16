@@ -1,10 +1,12 @@
 #include "Field.h"
+#include "FieldDataManager.h"
 
 Field::Field() :
 	mGround(std::make_unique<Object3D>()),
 	mSphere(std::make_unique<Object3D>()),
 	mSkydome(std::make_unique<Skydome>()),
-	mRespawnPoint(std::make_unique<RespawnPoint>())
+	mRespawnPoint(std::make_unique<RespawnPoint>()),
+	mFieldData(nullptr)
 {
 	mGround->SetModel(ModelManager::GetModel("Ground"));
 	mSphere->SetModel(ModelManager::GetModel("Sphere"));
@@ -36,6 +38,8 @@ Field::Field() :
 	mTrees.emplace_back(std::make_unique<Tree>());
 
 	Init();
+
+	mFieldData = FieldDataManager::GetFieldData("SkyIsland");
 }
 
 void Field::Init()
@@ -44,7 +48,7 @@ void Field::Init()
 	mGround->tiling = 100;
 
 	mSphere->pos = { 0,0,0 };
-	mSphere->scale = 4.f;
+	mSphere->scale = 2.0f;
 
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
 	{
@@ -57,6 +61,15 @@ void Field::Init()
 	{
 		mTrees[i]->Init();
 	}
+
+	if (mFieldData)
+	{
+		for (uint32_t i = 0; i < mFieldData->coffins.size(); i++)
+		{
+			mFieldData->coffins[i]->Init();
+		}
+	}
+
 }
 
 void Field::Update()
@@ -78,11 +91,19 @@ void Field::Update()
 	{
 		mTrees[i]->Update();
 	}
+
+	if (mFieldData)
+	{
+		for (uint32_t i = 0; i < mFieldData->coffins.size(); i++)
+		{
+			mFieldData->coffins[i]->Update();
+		}
+	}
 }
 
 void Field::DrawModel()
 {
-	//mSphere->Draw();
+	mSphere->Draw();
 	mGround->Draw();
 	mSkydome->DrawModel();
 	mRespawnPoint->DrawModel();
@@ -94,6 +115,14 @@ void Field::DrawModel()
 	for (uint32_t i = 0; i < mTrees.size(); i++)
 	{
 		mTrees[i]->DrawModel();
+	}
+
+	if (mFieldData)
+	{
+		for (uint32_t i = 0; i < mFieldData->coffins.size(); i++)
+		{
+			mFieldData->coffins[i]->DrawModel();
+		}
 	}
 }
 
@@ -114,4 +143,14 @@ std::array<std::unique_ptr<MessageSign>, 5>* Field::GetMessageSigns()
 RespawnPoint* Field::GetRespawnPoint()
 {
 	return mRespawnPoint.get();
+}
+
+FieldData* Field::GetFieldData()
+{
+	return mFieldData;
+}
+
+void Field::SetSpherePos(const Vec3 pos)
+{
+	mSphere->pos = pos;
 }

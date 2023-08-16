@@ -3,10 +3,14 @@
 #include "Skydome.h"
 #include "RespawnPoint.h"
 #include "Tree.h"
+#include "Coffin.h"
+#include "FieldData.h"
 
 class Field
 {
 private:
+	FieldData* mFieldData;
+
 	std::unique_ptr<Object3D> mGround;
 	std::unique_ptr<Skydome> mSkydome;
 	std::unique_ptr<RespawnPoint> mRespawnPoint;
@@ -28,5 +32,9 @@ public:
 public:
 	std::array<std::unique_ptr<MessageSign>, 5>* GetMessageSigns();
 	RespawnPoint* GetRespawnPoint();
+
+	FieldData* GetFieldData();
+
+	void SetSpherePos(const Vec3 pos);
 };
 
