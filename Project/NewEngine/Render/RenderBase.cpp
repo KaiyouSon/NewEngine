@@ -415,6 +415,14 @@ void RenderBase::ShaderCompilerInit()
 	ShaderObjectManager::GetShaderObject("Emitter")->CompileVertexShader(path + "EmitterVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Emitter")->CompileGeometryShader(path + "EmitterGS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Emitter")->CompilePixelShader(path + "EmitterPS.hlsl", "main");
+
+	// ColliderObject用シェーダー
+	ShaderObjectManager::Create("ColliderObject");
+	ShaderObjectManager::GetShaderObject("ColliderObject")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("ColliderObject")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("ColliderObject")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderObjectManager::GetShaderObject("ColliderObject")->CompileVertexShader(path + "ColliderObjectVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("ColliderObject")->CompilePixelShader(path + "ColliderObjectPS.hlsl", "main");
 }
 void RenderBase::GraphicsPipelineInit()
 {
@@ -530,7 +538,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Line");
 	setting.cullMode = CullMode::None;
-	setting.topologyType = TopologyType::Line;
+	setting.topologyType = TopologyType::LineStrip;
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.constantBufferViewNum = 2;
@@ -547,6 +555,19 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.constantBufferViewNum = 7;
 	setting.rootSignatureSetting.descriptorRangeNum = 2;
 	GraphicsPipelineManager::Create(setting, "Emitter");
+
+	// ColliderObject用
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderObjectManager::GetShaderObject("ColliderObject");
+	setting.cullMode = CullMode::None;
+	//setting.topologyType = TopologyType::LineList;
+	setting.fillMode = GraphicsPipelineSetting::Wireframe;
+	setting.topologyType = TopologyType::TriangleList;
+	setting.depthStencilDesc = depthStencilDesc1;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.constantBufferViewNum = 2;
+	setting.rootSignatureSetting.descriptorRangeNum = 0;
+	GraphicsPipelineManager::Create(setting, "ColliderObject");
 }
 
 // --- ゲッター -------------------------------------------------------------- //

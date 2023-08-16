@@ -116,7 +116,7 @@ void Player::PostUpdate()
 	mPlayer->Update();
 
 	bodyColliderObj.pos = mPlayer->pos;
-	bodyColliderObj.scale = mBodyCollider.radius * Vec3(1, 0, 1) + Vec3::up * 2;
+	bodyColliderObj.scale = mBodyCollider.radius /** Vec3(1, 0, 1) + Vec3::up * 2*/;
 	bodyColliderObj.Update();
 }
 void Player::DrawModel()

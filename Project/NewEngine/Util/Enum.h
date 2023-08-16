@@ -51,7 +51,8 @@ enum class BillboardType
 enum class TopologyType
 {
 	Point,
-	Line,
+	LineList,
+	LineStrip,
 	TriangleList,
 	TriangleStrip,
 };

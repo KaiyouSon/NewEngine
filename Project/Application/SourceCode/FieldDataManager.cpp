@@ -118,7 +118,7 @@ void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 				};
 				coffin->SetBottomRot(Radian(angle));
 
-				if (jsonObj.contains("collider"))
+				if (child.contains("collider"))
 				{
 					nlohmann::json collider = child["collider"];
 
@@ -140,7 +140,7 @@ void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 						collider["size"][2],
 					};
 
-					coffin->SetBottomCollider(CubeCollider(pos, size * 2));
+					coffin->SetBottomCollider(CubeCollider(pos, size));
 				}
 			}
 			else if (child["obj_name"] == "CoffinTop")

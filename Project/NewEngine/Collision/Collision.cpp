@@ -121,7 +121,6 @@ bool Collision::CubeHitCapsule(const CubeCollider& cube, const CapsuleCollider& 
 
 	// カプセルの始点と終点をベクトル形式に変換
 	Vec3 capsuleDir = capsule.endPos - capsule.startPos;
-	Vec3 capsuleStartToEnd = capsule.endPos - capsule.startPos;
 
 	// カプセルの始点からキューブの中心までのベクトル
 	Vec3 capsuleToCube = cube.centerPos - capsule.startPos;
@@ -136,18 +135,18 @@ bool Collision::CubeHitCapsule(const CubeCollider& cube, const CapsuleCollider& 
 
 	// キューブの各辺に対する最近接点を計算
 	Vec3 closestCubePoint = closestPoint;
-	closestCubePoint.x = std::clamp(closestCubePoint.x, cube.centerPos.x - cube.size.x / 2.0f, cube.centerPos.x + cube.size.x / 2.0f);
-	closestCubePoint.y = std::clamp(closestCubePoint.y, cube.centerPos.y - cube.size.y / 2.0f, cube.centerPos.y + cube.size.y / 2.0f);
-	closestCubePoint.z = std::clamp(closestCubePoint.z, cube.centerPos.z - cube.size.z / 2.0f, cube.centerPos.z + cube.size.z / 2.0f);
+	closestCubePoint.x = Clamp(closestCubePoint.x, cube.centerPos.x - cube.size.x, cube.centerPos.x + cube.size.x);
+	closestCubePoint.y = Clamp(closestCubePoint.y, cube.centerPos.y - cube.size.y, cube.centerPos.y + cube.size.y);
+	closestCubePoint.z = Clamp(closestCubePoint.z, cube.centerPos.z - cube.size.z, cube.centerPos.z + cube.size.z);
 
 	// カプセルとキューブの最近接点間の距離を計算
 	float distanceSq = Vec3::Dot(closestCubePoint - closestPoint, closestCubePoint - closestPoint);
 
 	// 距離がカプセル半径とキューブ対角線の半分の和より小さい場合、衝突しているとみなす
 	float capsuleRadius = capsule.radius;
-	float cubeDiagonal = sqrtf(cube.size.Length()) / 2.0f;
+	float cubeDiagonal = cube.size.Length() / 2;
 
-	if (distanceSq <= (capsuleRadius + cubeDiagonal) * (capsuleRadius + cubeDiagonal))
+	if (distanceSq* distanceSq <= (capsuleRadius + cubeDiagonal) * (capsuleRadius + cubeDiagonal))
 	{
 		// 衝突した座標を計算し、引数に代入
 		hitPoint = closestCubePoint;

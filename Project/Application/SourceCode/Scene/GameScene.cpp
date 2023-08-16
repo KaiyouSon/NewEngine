@@ -104,6 +104,10 @@ void GameScene::Update()
 
 	EffectManager::GetInstance()->Update();
 
+	c.pos = Vec3(0, 5, 30);
+	c.scale = 4;
+	c.Update();
+
 	if (mMenuManager->GetisActive() == false)
 	{
 		mCameraManager->Update();
@@ -164,7 +168,6 @@ void GameScene::Update()
 
 		mRespawnTransition->Update();
 	}
-
 }
 
 void GameScene::RenderTextureSetting()
@@ -189,6 +192,8 @@ void GameScene::DrawModel()
 	mField->DrawModel();
 
 	EffectManager::GetInstance()->DrawModel();
+
+	c.Draw();
 }
 void GameScene::DrawFrontSprite()
 {

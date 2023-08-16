@@ -180,6 +180,8 @@
     <ClCompile Include="Application\SourceCode\Weapon.cpp" />
     <ClCompile Include="Application\SourceCode\BloodSprayEffect.cpp" />
     <ClCompile Include="NewEngine\Collision\Collider.cpp" />
+    <ClCompile Include="NewEngine\Collision\ColliderDrawer.cpp" />
+    <ClCompile Include="NewEngine\Collision\ColliderObject.cpp" />
     <ClCompile Include="NewEngine\Collision\Collision.cpp" />
     <ClCompile Include="NewEngine\Collision\ICollider.cpp" />
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp" />
@@ -318,6 +320,8 @@
     <ClInclude Include="Application\SourceCode\Vignette.h" />
     <ClInclude Include="Application\SourceCode\Weapon.h" />
     <ClInclude Include="NewEngine\Collision\Collider.h" />
+    <ClInclude Include="NewEngine\Collision\ColliderDrawer.h" />
+    <ClInclude Include="NewEngine\Collision\ColliderObject.h" />
     <ClInclude Include="NewEngine\Collision\Collision.h" />
     <ClInclude Include="NewEngine\Collision\ICollider.h" />
     <ClInclude Include="NewEngine\Gui\GuiManager.h" />
@@ -407,6 +411,7 @@
     <None Include="Application\Shader\Vignette.hlsli" />
     <None Include="NewEngine\Shader\Blur.hlsli" />
     <None Include="NewEngine\Shader\CircleGaugeSprite.hlsli" />
+    <None Include="NewEngine\Shader\ColliderObject.hlsli" />
     <None Include="NewEngine\Shader\Emitter.hlsli" />
     <None Include="NewEngine\Shader\FbxModel.hlsli" />
     <None Include="NewEngine\Shader\Lighting.hlsli" />
@@ -609,6 +614,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ColliderObjectPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ColliderObjectVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\EmitterCS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>

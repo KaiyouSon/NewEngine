@@ -16,8 +16,16 @@ struct GraphicsPipelineSetting
 		Inv = 0b1000,
 	};
 
+	enum FillMode
+	{
+		Solid,
+		Wireframe,
+	};
+
 	// 生成するパイプラインの種類
 	uint8_t pipelineBlend;
+
+	FillMode fillMode;
 
 	// カーリングモード
 	CullMode cullMode;

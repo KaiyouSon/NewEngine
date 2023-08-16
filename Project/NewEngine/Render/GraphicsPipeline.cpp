@@ -4,7 +4,8 @@
 #include <cassert>
 
 GraphicsPipelineSetting::GraphicsPipelineSetting() :
-	pipelineBlend(PipelineBlend::Alpha), cullMode(CullMode::Back),
+	pipelineBlend(PipelineBlend::Alpha),
+	fillMode(FillMode::Solid), cullMode(CullMode::Back),
 	topologyType(TopologyType::TriangleList), shaderObject(nullptr),
 	depthStencilDesc(D3D12_DEPTH_STENCIL_DESC()), rtvNum(1),
 	rootSignatureSetting(RootSignatureSetting())
@@ -66,7 +67,11 @@ void GraphicsPipeline::DrawCommand(const BlendMode blendMode)
 		cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 		break;
 
-	case TopologyType::Line:
+	case TopologyType::LineList:
+		cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
+		break;
+
+	case TopologyType::LineStrip:
 		cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);
 		break;
 
@@ -130,7 +135,19 @@ void GraphicsPipeline::CreatePipelineState(const GraphicsPipelineSetting::Pipeli
 		pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 		break;
 	}
-	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;	// ポリゴン内塗りつぶし
+
+	switch (mSetting.fillMode)
+	{
+	case GraphicsPipelineSetting::Solid:
+		// ポリゴン内塗りつぶし
+		pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
+		break;
+
+	case GraphicsPipelineSetting::Wireframe:
+		// ワイヤーフレーム
+		pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_WIREFRAME;
+		break;
+	}
 	pipelineDesc.RasterizerState.DepthClipEnable = true; // 深度クリッピングを有効に
 
 	// デプスステンシルステートの設定
@@ -199,7 +216,8 @@ void GraphicsPipeline::CreatePipelineState(const GraphicsPipelineSetting::Pipeli
 		pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
 		break;
 
-	case TopologyType::Line:
+	case TopologyType::LineList:
+	case TopologyType::LineStrip:
 		pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE;
 		break;
 
