@@ -122,7 +122,7 @@ void Player::PostUpdate()
 void Player::DrawModel()
 {
 	mPlayer->DrawModel();
-	bodyColliderObj.Draw();
+	//bodyColliderObj.Draw();
 }
 void Player::DrawDebugGui()
 {

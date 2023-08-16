@@ -96,6 +96,7 @@ void ProcessAtReleaseBulid(std::function<void()> lambdaFunc)
 
 void OutputDebugLog(const char* fmt ...)
 {
+#ifdef _DEBUG
 	char buffer[1024]{};
 
 	// ‰Â•Ï’·ˆø”‚ğæ“¾‚·‚é‚½‚ß‚Ìˆ—
@@ -118,4 +119,5 @@ void OutputDebugLog(const char* fmt ...)
 	}
 
 	OutputDebugStringA(buffer);
+#endif
 }

@@ -27,6 +27,7 @@ GameScene::~GameScene()
 
 void GameScene::Init()
 {
+
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
@@ -57,7 +58,6 @@ void GameScene::Init()
 	LightManager::GetInstance()->directionalLight.isActive = true;
 	LightManager::GetInstance()->directionalLight.pos = Vec3(-400, 400, -100);
 }
-
 void GameScene::Update()
 {
 	static bool isInit = false;
@@ -97,16 +97,16 @@ void GameScene::Update()
 	}
 
 
+	auto collider = mPlayer->GetBodyCollider();
+	ColliderDrawer::GetInstance()->Bind(&collider);
+
+
 	mMenuManager->Update();
 	mField->Update();
 
 	mShadowMap.Update();
 
 	EffectManager::GetInstance()->Update();
-
-	c.pos = Vec3(0, 5, 30);
-	c.scale = 4;
-	c.Update();
 
 	if (mMenuManager->GetisActive() == false)
 	{
@@ -193,7 +193,6 @@ void GameScene::DrawModel()
 
 	EffectManager::GetInstance()->DrawModel();
 
-	c.Draw();
 }
 void GameScene::DrawFrontSprite()
 {

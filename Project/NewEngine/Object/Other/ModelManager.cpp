@@ -241,7 +241,7 @@ Model* ModelManager::LoadFbxModel(const std::string fileName, const std::string 
 	OutputDebugLog(log.c_str());
 
 	return sModelMap[modelTag].get();
-}
+}\
 
 // .mtlƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
 void ModelManager::LoadMaterialColor(std::string filePath, Model* model)

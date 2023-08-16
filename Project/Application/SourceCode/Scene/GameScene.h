@@ -8,7 +8,6 @@
 #include "Field.h"
 #include "ShadowMap.h"
 #include "RespawnTransition.h"
-#include "ColliderObject.h"
 
 class GameScene : public IScene
 {
@@ -25,7 +24,6 @@ private:
 	ShadowMap mShadowMap;
 
 	float mBgmVolume;
-	ColliderObject c;
 
 
 public:

@@ -61,6 +61,8 @@ void NewEngineInit()
 	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
 	if (isLoaded == true)
 	{
+		ColliderDrawer::GetInstance()->Load();
+		ColliderDrawer::GetInstance()->Init();
 		SceneManager::GetInstance()->Init();
 	}
 
@@ -76,6 +78,7 @@ void NewEngineUpda()
 		InputManager::GetInstance()->Update();
 		LightManager::GetInstance()->Update();
 		SceneManager::GetInstance()->Update();
+		ColliderDrawer::GetInstance()->Update();
 	}
 }
 void NewEnginePreDraw()
@@ -101,6 +104,7 @@ void NewEneineDraw()
 	{
 		SceneManager::GetInstance()->DrawBackSprite();
 		SceneManager::GetInstance()->DrawModel();
+		ColliderDrawer::GetInstance()->DrawCollider();
 		SceneManager::GetInstance()->DrawFrontSprite();
 		SceneManager::GetInstance()->DrawRenderTexture();
 	}

@@ -26,6 +26,7 @@
 #include "Fog.h"
 #include "PostEffect.h"
 #include "ConstantBufferData.h"
+#include "ColliderDrawer.h"
 
 // c++
 #include <memory>
