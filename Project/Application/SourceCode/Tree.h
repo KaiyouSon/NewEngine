@@ -15,5 +15,8 @@ public:
 	void Init();
 	void Update();
 	void DrawModel();
+
+public:
+	void SetParent(const Transform parent);
 };
 

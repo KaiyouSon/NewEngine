@@ -21,6 +21,10 @@ public:
 	void DrawModel();
 
 public:
+	// セッター
+	void SetParent(const Transform parent);
+
+public:
 	// ゲッター
 	SphereCollider GetCollider();
 };

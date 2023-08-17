@@ -56,6 +56,14 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 			{
 				LoadSkyIslandData(fieldData.get(), object);
 			}
+			else if (object["obj_name"] == "Tree")
+			{
+				LoadTreeData(fieldData.get(), object);
+			}
+			else if (object["obj_name"] == "RespawnPoint")
+			{
+				LoadRespawnPointData(fieldData.get(), object);
+			}
 		}
 	}
 
@@ -63,7 +71,6 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 	sFieldDataMap.insert(std::make_pair(tag, std::move(fieldData)));
 	return sFieldDataMap[tag].get();
 }
-
 FieldData* FieldDataManager::GetFieldData(const std::string tag)
 {
 	return sFieldDataMap[tag].get();
@@ -171,7 +178,6 @@ void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 	}
 	data->coffins.push_back(std::move(coffin));
 }
-
 void FieldDataManager::LoadSkyIslandData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<SkyIsland> skyIsland = std::make_unique<SkyIsland>();
@@ -199,4 +205,58 @@ void FieldDataManager::LoadSkyIslandData(FieldData* data, nlohmann::json jsonObj
 	skyIsland->SetModel(ModelManager::GetModel(jsonObj["obj_name"]));
 
 	data->skyIslands.push_back(std::move(skyIsland));
+}
+void FieldDataManager::LoadTreeData(FieldData* data, nlohmann::json jsonObj)
+{
+	std::unique_ptr<Tree> tree = std::make_unique<Tree>();
+	// トランスフォームのパラメータ読み込み
+	nlohmann::json transform = jsonObj["transform"];
+	Vec3 pos =
+	{
+		(float)transform["translation"][0],
+		(float)transform["translation"][1],
+		(float)transform["translation"][2],
+	};
+	Vec3 scale =
+	{
+		(float)transform["scaling"][0],
+		(float)transform["scaling"][1],
+		(float)transform["scaling"][2],
+	};
+	Vec3 angle =
+	{
+		(float)transform["rotation"][0],
+		(float)transform["rotation"][1],
+		(float)transform["rotation"][2],
+	};
+	tree->SetParent(Transform(pos, scale, Radian(angle)));
+
+	data->trees.push_back(std::move(tree));
+}
+void FieldDataManager::LoadRespawnPointData(FieldData* data, nlohmann::json jsonObj)
+{
+	std::unique_ptr<RespawnPoint> respawnPoint = std::make_unique<RespawnPoint>();
+	// トランスフォームのパラメータ読み込み
+	nlohmann::json transform = jsonObj["transform"];
+	Vec3 pos =
+	{
+		(float)transform["translation"][0],
+		(float)transform["translation"][1],
+		(float)transform["translation"][2],
+	};
+	Vec3 scale =
+	{
+		(float)transform["scaling"][0],
+		(float)transform["scaling"][1],
+		(float)transform["scaling"][2],
+	};
+	Vec3 angle =
+	{
+		(float)transform["rotation"][0],
+		(float)transform["rotation"][1],
+		(float)transform["rotation"][2],
+	};
+	respawnPoint->SetParent(Transform(pos, scale, Radian(angle)));
+
+	data->respawnPoints.push_back(std::move(respawnPoint));
 }

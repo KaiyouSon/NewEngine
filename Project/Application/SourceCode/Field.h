@@ -12,9 +12,7 @@ private:
 	FieldData* mFieldData;
 
 	std::unique_ptr<Skydome> mSkydome;
-	std::unique_ptr<RespawnPoint> mRespawnPoint;
 	std::array<std::unique_ptr<MessageSign>, 5> mMessageSigns;
-	std::vector<std::unique_ptr<Tree>> mTrees;
 
 private:
 	// デバッグ用
@@ -30,7 +28,6 @@ public:
 
 public:
 	std::array<std::unique_ptr<MessageSign>, 5>* GetMessageSigns();
-	RespawnPoint* GetRespawnPoint();
 
 	FieldData* GetFieldData();
 

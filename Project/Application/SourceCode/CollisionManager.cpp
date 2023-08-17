@@ -107,50 +107,87 @@ void CollisionManager::PlayerHitMessageSign()
 }
 void CollisionManager::PlayerHitRespawnPoint()
 {
-	if (Collision::SphereHitCapsule(
-		mField->GetRespawnPoint()->GetCollider(), mPlayer->GetBodyCollider()))
-	{
-		mUiManager->GetNegotiationUI()->SetisActive(true);
-		mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::RestInLightStr);
-	}
-	else
-	{
-		mUiManager->GetNegotiationUI()->SetisActive(false);
-	}
+	//if (Collision::SphereHitCapsule(
+	//	mField->GetRespawnPoint()->GetCollider(), mPlayer->GetBodyCollider()))
+	//{
+	//	mUiManager->GetNegotiationUI()->SetisActive(true);
+	//	mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::RestInLightStr);
+	//}
+	//else
+	//{
+	//	mUiManager->GetNegotiationUI()->SetisActive(false);
+	//}
 }
 
 void CollisionManager::PlayerHitNegotiation()
 {
+	// 何かに当たった時用
+	bool isHit = false;
+
 	// リスポーン地点と当たったら
-	if (Collision::SphereHitCapsule(
-		mField->GetRespawnPoint()->GetCollider(), mPlayer->GetBodyCollider()))
+	for (const auto& respawnPoint : mField->GetFieldData()->respawnPoints)
 	{
-		mUiManager->GetNegotiationUI()->SetisActive(true);
-		mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::RestInLightStr);
-		return;
-	}
-	else
-	{
-		// メッセージサインと当たったら
-		for (const auto& messageSign : *mField->GetMessageSigns())
+		if (Collision::SphereHitCapsule(
+			respawnPoint->GetCollider(), mPlayer->GetBodyCollider()))
 		{
-			if (Collision::SphereHitCapsule(
-				messageSign->GetCollider(), mPlayer->GetBodyCollider()))
-			{
-				mUiManager->GetNegotiationUI()->SetisActive(true);
-				mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::ReadMessageStr);
-				mUiManager->GetMessageUI()->SetTexture(messageSign->GetMessageTexture());
-				break;
-			}
-			else
-			{
-				mUiManager->GetNegotiationUI()->SetisActive(false);
-			}
+			mUiManager->GetNegotiationUI()->SetisActive(true);
+			mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::RestInLightStr);
+			isHit = true;
+			return;
 		}
 	}
 
-}
+	// メッセージサインと当たったら
+	for (const auto& messageSign : *mField->GetMessageSigns())
+	{
+		if (Collision::SphereHitCapsule(
+			messageSign->GetCollider(), mPlayer->GetBodyCollider()))
+		{
+			mUiManager->GetNegotiationUI()->SetisActive(true);
+			mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::ReadMessageStr);
+			mUiManager->GetMessageUI()->SetTexture(messageSign->GetMessageTexture());
+			isHit = true;
+			return;
+		}
+	}
 
+	// 何も当たってなかった時
+	if (isHit == false)
+	{
+		mUiManager->GetNegotiationUI()->SetisActive(false);
+	}
+
+
+
+	//// リスポーン地点と当たったら
+	//if (Collision::SphereHitCapsule(
+	//	mField->GetRespawnPoint()->GetCollider(), mPlayer->GetBodyCollider()))
+	//{
+	//	mUiManager->GetNegotiationUI()->SetisActive(true);
+	//	mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::RestInLightStr);
+	//	return;
+	//}
+	//else
+	//{
+	//	// メッセージサインと当たったら
+	//	for (const auto& messageSign : *mField->GetMessageSigns())
+	//	{
+	//		if (Collision::SphereHitCapsule(
+	//			messageSign->GetCollider(), mPlayer->GetBodyCollider()))
+	//		{
+	//			mUiManager->GetNegotiationUI()->SetisActive(true);
+	//			mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::ReadMessageStr);
+	//			mUiManager->GetMessageUI()->SetTexture(messageSign->GetMessageTexture());
+	//			break;
+	//		}
+	//		else
+	//		{
+
+	//		}
+	//	}
+	//}
+
+}
 void CollisionManager::PlayerHitFieldObject()
 {
 	FieldData* fieldData = mField->GetFieldData();

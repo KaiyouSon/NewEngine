@@ -4,7 +4,6 @@
 Field::Field() :
 	mSphere(std::make_unique<Object3D>()),
 	mSkydome(std::make_unique<Skydome>()),
-	mRespawnPoint(std::make_unique<RespawnPoint>()),
 	mFieldData(nullptr)
 {
 	mSphere->SetModel(ModelManager::GetModel("Sphere"));
@@ -31,8 +30,6 @@ Field::Field() :
 	mMessageSigns[3]->SetMessageTexture(TextureManager::GetTexture("TutorialStr4"));
 	mMessageSigns[4]->SetMessageTexture(TextureManager::GetTexture("TutorialStr5"));
 
-	mTrees.emplace_back(std::make_unique<Tree>());
-
 	Init();
 
 	mFieldData = FieldDataManager::GetFieldData("SkyIsland");
@@ -48,12 +45,6 @@ void Field::Init()
 		mMessageSigns[i]->Init();
 	}
 	mSkydome->Init();
-	mRespawnPoint->Init();
-
-	for (uint32_t i = 0; i < mTrees.size(); i++)
-	{
-		mTrees[i]->Init();
-	}
 
 	if (mFieldData)
 	{
@@ -63,12 +54,22 @@ void Field::Init()
 			mFieldData->coffins[i]->Init();
 		}
 
-
 		// 浮島
-		mFieldData->skyIslands.push_back(std::make_unique<SkyIsland>());
 		for (uint32_t i = 0; i < mFieldData->skyIslands.size(); i++)
 		{
 			mFieldData->skyIslands[i]->Init();
+		}
+
+		// 木
+		for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
+		{
+			mFieldData->trees[i]->Init();
+		}
+
+		// リスポーン地点
+		for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
+		{
+			mFieldData->respawnPoints[i]->Init();
 		}
 	}
 
@@ -82,15 +83,9 @@ void Field::Update()
 	//mSphere->pos = { 0,8,0 };
 
 	mSkydome->Update();
-	mRespawnPoint->Update();
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
 	{
 		mMessageSigns[i]->Update();
-	}
-
-	for (uint32_t i = 0; i < mTrees.size(); i++)
-	{
-		mTrees[i]->Update();
 	}
 
 	if (mFieldData)
@@ -106,6 +101,18 @@ void Field::Update()
 		{
 			mFieldData->skyIslands[i]->Update();
 		}
+
+		// 木
+		for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
+		{
+			mFieldData->trees[i]->Update();
+		}
+
+		// リスポーン地点
+		for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
+		{
+			mFieldData->respawnPoints[i]->Update();
+		}
 	}
 }
 
@@ -116,11 +123,6 @@ void Field::DrawModel()
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
 	{
 		mMessageSigns[i]->DrawModel();
-	}
-
-	for (uint32_t i = 0; i < mTrees.size(); i++)
-	{
-		mTrees[i]->DrawModel();
 	}
 
 	if (mFieldData)
@@ -136,10 +138,19 @@ void Field::DrawModel()
 		{
 			mFieldData->skyIslands[i]->DrawModel();
 		}
+
+		// 木
+		for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
+		{
+			mFieldData->trees[i]->DrawModel();
+		}
+
+		// リスポーン地点
+		for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
+		{
+			mFieldData->respawnPoints[i]->DrawModel();
+		}
 	}
-
-	mRespawnPoint->DrawModel();
-
 }
 
 void Field::DrawFrontSprite()
@@ -154,11 +165,6 @@ void Field::DrawDebugGui()
 std::array<std::unique_ptr<MessageSign>, 5>* Field::GetMessageSigns()
 {
 	return &mMessageSigns;
-}
-
-RespawnPoint* Field::GetRespawnPoint()
-{
-	return mRespawnPoint.get();
 }
 
 FieldData* Field::GetFieldData()

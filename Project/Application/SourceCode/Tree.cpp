@@ -26,33 +26,19 @@ Tree::Tree() :
 	mBranch(std::make_unique<Object3D>())
 {
 	mTree->SetModel(ModelManager::GetModel("Tree"));
-	mTree->SetisShadow(false, true);
-
 	mBranch->SetModel(ModelManager::GetModel("Branch"));
-	mBranch->SetisShadow(false, true);
-	mBranch->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Branch"));
 }
 
 void Tree::Init()
 {
-	mPraent.pos = Vec3(-10, 0, 0);
-	mPraent.scale = 3;
-	mPraent.Update();
-
+	mTree->SetisShadow(false, true);
+	mBranch->SetisShadow(false, true);
 	mBranch->rot.y = Radian(286);
+	mBranch->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Branch"));
 }
 
 void Tree::Update()
 {
-	if (Key::GetKey(DIK_RIGHT))
-	{
-		mBranch->rot.y += Radian(1);
-	}
-	if (Key::GetKey(DIK_LEFT))
-	{
-		mBranch->rot.y -= Radian(1);
-	}
-
 	mTree->Update(&mPraent);
 	mBranch->Update(&mPraent);
 }
@@ -61,4 +47,10 @@ void Tree::DrawModel()
 {
 	mTree->Draw();
 	mBranch->Draw();
+}
+
+void Tree::SetParent(const Transform parent)
+{
+	mPraent = parent;
+	mPraent.Update();
 }

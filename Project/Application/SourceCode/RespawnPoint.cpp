@@ -41,27 +41,23 @@ RespawnPoint::RespawnPoint() :
 {
 	mRipple->SetModel(ModelManager::GetModel("Plane"));
 	mRipple->SetTexture(TextureManager::GetTexture("DissolveTexture"));
-	mRipple->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Ripple"));
 
 	mRhombus->SetModel(ModelManager::GetModel("Plane"));
 	mRhombus->SetTexture(TextureManager::GetTexture("BlurNoice"));
-	mRhombus->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Rhombus"));
 
 }
 
 void RespawnPoint::Init()
 {
-	mParent.pos = Vec3(10, 0, 0);
-	mParent.scale = 2.f;
-	mParent.Update();
-
 	mRipple->pos.y = 0.05f;
 	mRipple->rot.x = Radian(90);
 	mRipple->scale = 2.f;
 	mRipple->color = Color(0xc4c178);
+	mRipple->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Ripple"));
 
 	mRhombus->pos.y = 1.5f;
 	mRhombus->color = Color(0xc4c178);
+	mRhombus->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Rhombus"));
 	mRhombus->SetBillboardType(BillboardType::YAxisBillboard);
 
 	mAngle.SetLimitTimer(360);
@@ -98,6 +94,12 @@ void RespawnPoint::ColliderUpdatge()
 {
 	mCollider.centerPos = mParent.pos;
 	mCollider.radius = mParent.scale.x;
+}
+
+void RespawnPoint::SetParent(const Transform parent)
+{
+	mParent = parent;
+	mParent.Update();
 }
 
 SphereCollider RespawnPoint::GetCollider()
