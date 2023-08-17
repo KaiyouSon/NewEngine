@@ -62,7 +62,7 @@ void Object3D::Update(Transform* parent)
 
 	if (mIsWriteDepth == true)
 	{
-		ShadowMap::Bind(*this);
+		ShadowMap::GetInstance()->Bind(*this);
 	}
 
 	// マテリアルの転送
@@ -170,14 +170,16 @@ void Object3D::MaterialInit()
 }
 void Object3D::MaterialTransfer()
 {
+	Camera lightViewCamera = ShadowMap::GetInstance()->GetLightCamera();
+
 	// マトリックス
 	CTransform3DShadow transform3DShadowData =
 	{
 		mCamera->GetViewLookToMat() * mCamera->GetPerspectiveProjectionMat(),
-		ShadowMap::GetLightCamera().GetViewLookToMat() * ShadowMap::GetLightCamera().GetOrthoGrphicProjectionMat(),
+		lightViewCamera.GetViewLookToMat() * lightViewCamera.GetOrthoGrphicProjectionMat(),
 		mTransform.GetWorldMat(),
 		mCamera->pos,
-		ShadowMap::GetLightCamera().pos
+		lightViewCamera.pos
 	};
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transform3DShadowData);
 
@@ -310,11 +312,6 @@ void Object3D::SetisShadow(const bool isWriteShadow, const bool isWriteDepth)
 {
 	mIsWriteShadow = isWriteShadow;
 	mIsWriteDepth = isWriteDepth;
-
-	if (mIsWriteDepth == true)
-	{
-		ShadowMap::Register();
-	}
 }
 
 // 親

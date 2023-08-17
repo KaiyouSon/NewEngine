@@ -2,15 +2,17 @@
 #include "NewEngine.h"
 #include "ShadowObj.h"
 
-class ShadowMap
+template<typename T> class Singleton;
+
+class ShadowMap : public Singleton<ShadowMap>
 {
 private:
-	static std::vector<ShadowObj> sShadowObjs;
-	static std::vector<Transform> sParents;
-	static uint32_t sIndex;
+	std::vector<ShadowObj> mShadowObjs;
+	std::vector<Transform> mParents;
+	uint32_t mIndex;
 
 public:
-	static Camera sLightCamera;
+	Camera mLightCamera;
 
 private:
 	std::unique_ptr<PostEffect> mShadowMap;
@@ -23,14 +25,17 @@ public:
 	static void CreateGraphicsPipeline();
 	ShadowMap();
 	void Init();
+	void Register(const uint32_t size);
 	void Update();
 	void RenderTextureSetting();
 	void DrawModel();
 	void DrawPostEffect();
 
 public:
-	static void Register();
-	static void Bind(Object3D& object);
-	static Camera GetLightCamera();
+	void Bind(Object3D& object);
+	Camera GetLightCamera();
+
+private:
+	friend Singleton<ShadowMap>;
 };
 

@@ -1,9 +1,10 @@
 #include "GameScene.h"
+#include "TitleScene.h"
 #include "SceneChanger.h"
 #include "CollisionManager.h"
 #include "EffectManager.h"
 #include "LogoutMenu.h"
-#include "TitleScene.h"
+#include "ShadowMap.h"
 
 GameScene::GameScene() :
 	mPlayer(std::make_unique<Player>()),
@@ -27,7 +28,6 @@ GameScene::~GameScene()
 
 void GameScene::Init()
 {
-
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
@@ -47,6 +47,9 @@ void GameScene::Init()
 	mMenuManager->Init();
 
 	mField->Init();
+
+	ShadowMap::GetInstance()->Init();
+	ShadowMap::GetInstance()->Register(128);
 
 	CollisionManager::GetInstance()->SetPlayer(mPlayer.get());
 	CollisionManager::GetInstance()->SetBoss(mBoss.get());
@@ -104,7 +107,7 @@ void GameScene::Update()
 	mMenuManager->Update();
 	mField->Update();
 
-	mShadowMap.Update();
+	ShadowMap::GetInstance()->Update();
 
 	EffectManager::GetInstance()->Update();
 
@@ -174,12 +177,12 @@ void GameScene::Update()
 
 void GameScene::RenderTextureSetting()
 {
-	mShadowMap.RenderTextureSetting();
+	ShadowMap::GetInstance()->RenderTextureSetting();
 }
 
 void GameScene::DrawRenderTexture()
 {
-	mShadowMap.DrawPostEffect();
+	ShadowMap::GetInstance()->DrawPostEffect();
 }
 void GameScene::DrawBackSprite()
 {

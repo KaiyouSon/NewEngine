@@ -6,7 +6,6 @@
 #include "CameraManager.h"
 #include "MenuManager.h"
 #include "Field.h"
-#include "ShadowMap.h"
 #include "RespawnTransition.h"
 
 class GameScene : public IScene
@@ -20,8 +19,6 @@ private:
 	std::unique_ptr<Field> mField;
 
 	std::unique_ptr<RespawnTransition> mRespawnTransition;
-
-	ShadowMap mShadowMap;
 
 	float mBgmVolume;
 

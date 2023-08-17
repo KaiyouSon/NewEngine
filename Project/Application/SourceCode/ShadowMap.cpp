@@ -1,11 +1,6 @@
 #include "ShadowMap.h"
 using namespace ConstantBufferData;
 
-std::vector<ShadowObj> ShadowMap::sShadowObjs;
-std::vector<Transform> ShadowMap::sParents;
-uint32_t ShadowMap::sIndex;
-Camera ShadowMap::sLightCamera;
-
 void ShadowMap::CreateGraphicsPipeline()
 {
 	std::string path = "Application/Shader/";
@@ -63,17 +58,28 @@ ShadowMap::ShadowMap() :
 	mBlur->scale = 1.f / 4.f;
 	mBlur->pos = GetWindowHalfSize() / 2;
 
-	sIndex = 0;
+	mIndex = 0;
 
-	sLightCamera.rot = Vec3(Radian(45), Radian(45), 0);
-	sLightCamera.rect = RectAngle(-480, 480, 270, -270);
-	sLightCamera.oFarZ = 1000.f;
+	mLightCamera.rot = Vec3(Radian(45), Radian(45), 0);
+	mLightCamera.rect = RectAngle(-480, 480, 270, -270);
+	mLightCamera.oFarZ = 1000.f;
 
-	sShadowObjs.clear();
+	mShadowObjs.clear();
+	mParents.clear();
+}
+
+void ShadowMap::Register(const uint32_t size)
+{
+	for (uint32_t i = 0; i < size; i++)
+	{
+		mShadowObjs.emplace_back();
+		mParents.emplace_back();
+	}
 }
 
 void ShadowMap::Init()
 {
+
 }
 
 void ShadowMap::Update()
@@ -89,20 +95,24 @@ void ShadowMap::Update()
 		mBlur->pos = GetWindowHalfSize();
 	}
 
-	sLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
+	mLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
 
 	// カメラの設定
-	sLightCamera.Update();
+	mLightCamera.Update();
 
-	for (auto& obj : sShadowObjs)
+	for (uint32_t i = 0; i < mShadowObjs.size(); i++)
 	{
-		obj.SetCamera(&sLightCamera);
-		obj.Update();
+		mShadowObjs[i].SetCamera(&mLightCamera);
+		mShadowObjs[i].Update();
+		if (i > mIndex)
+		{
+			break;
+		}
 	}
 
 	CTransformShadowObj data =
 	{
-		sLightCamera.GetViewLookToMat() * sLightCamera.GetOrthoGrphicProjectionMat(),
+		mLightCamera.GetViewLookToMat() * mLightCamera.GetOrthoGrphicProjectionMat(),
 		Mat4::Identity(),
 	};
 
@@ -115,11 +125,18 @@ void ShadowMap::Update()
 void ShadowMap::RenderTextureSetting()
 {
 	mShadowMapRT->PrevDrawScene();
-	for (auto& obj : sShadowObjs)
+	for (uint32_t i = 0; i < mShadowObjs.size(); i++)
 	{
-		obj.Draw();
+		mShadowObjs[i].Draw();
+		if (i > mIndex)
+		{
+			break;
+		}
 	}
 	mShadowMapRT->PostDrawScene();
+
+	// 次のフレームの準備
+	mIndex = 0;
 
 	//mBlurRT->PrevDrawScene();
 	//mShadowMap->Draw();
@@ -128,10 +145,6 @@ void ShadowMap::RenderTextureSetting()
 
 void ShadowMap::DrawModel()
 {
-	for (auto& obj : sShadowObjs)
-	{
-		obj.Draw();
-	}
 }
 
 void ShadowMap::DrawPostEffect()
@@ -142,47 +155,35 @@ void ShadowMap::DrawPostEffect()
 	//mBlur->Draw();
 }
 
-void ShadowMap::Register()
-{
-	sShadowObjs.emplace_back();
-	sParents.emplace_back();
-}
-
 void ShadowMap::Bind(Object3D& object)
 {
 	// からだったら
-	if (sShadowObjs.empty() == true)
+	if (mIndex >= mShadowObjs.size())
 	{
 		return;
 	}
 
 	// 確保したリストの先頭から順番にバインドする
 	// バインドするオブジェクトの順番は処理による
-	sShadowObjs[sIndex].pos = object.pos;
-	sShadowObjs[sIndex].rot = object.rot;
-	sShadowObjs[sIndex].scale = object.scale;
+	mShadowObjs[mIndex].pos = object.pos;
+	mShadowObjs[mIndex].rot = object.rot;
+	mShadowObjs[mIndex].scale = object.scale;
 
 	if (object.GetModel() != nullptr)
 	{
-		sShadowObjs[sIndex].SetModel(object.GetModel());
+		mShadowObjs[mIndex].SetModel(object.GetModel());
 	}
 
 	if (object.GetParent())
 	{
-		sParents[sIndex] = *object.GetParent();
-		sShadowObjs[sIndex].SetParent(&sParents[sIndex]);
+		mParents[mIndex] = *object.GetParent();
+		mShadowObjs[mIndex].SetParent(&mParents[mIndex]);
 	}
 
-	sIndex++;
-
-	// 次のフレーム再バインドするために
-	if (sIndex >= sShadowObjs.size())
-	{
-		sIndex = 0;
-	}
+	mIndex++;
 }
 
 Camera ShadowMap::GetLightCamera()
 {
-	return sLightCamera;
+	return mLightCamera;
 }
