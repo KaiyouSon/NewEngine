@@ -50,6 +50,7 @@ void SceneManager::Update()
 {
 	sCurrentScene->Update();
 	Camera::current.Update();
+
 	SceneChanger::GetInstance()->Update();
 }
 

@@ -32,8 +32,6 @@ private:
 	bool mIsAlive;
 	bool mIsDissolve;
 
-	Object3D bodyColliderObj;
-
 private:
 	Timer mPushTimer; //ƒ{ƒ^ƒ“˜A‘Å‚³‚¹‚È‚¢‚æ‚¤‚É
 

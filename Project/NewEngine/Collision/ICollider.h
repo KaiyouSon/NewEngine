@@ -9,6 +9,5 @@ public:
 
 public:
 	virtual ~ICollider() {}
-
 };
 

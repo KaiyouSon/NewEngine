@@ -657,6 +657,9 @@
     <ClCompile Include="NewEngine\Collision\ColliderDrawer.cpp">
       <Filter>NewEngine\Source\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Collision\SkyIsland.cpp">
+      <Filter>Application\Source\Field</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1090,6 +1093,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Collision\ColliderObject.h">
       <Filter>NewEngine\Header\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Collision\SkyIsland.h">
+      <Filter>Application\Header\Field</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

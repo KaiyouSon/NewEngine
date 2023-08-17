@@ -20,8 +20,8 @@ namespace Collision
 
 	// キューブとカプセル
 	bool CubeHitCapsule(
-		const CubeCollider& cube,
-		const CapsuleCollider& capsule);
+		CubeCollider& cube,
+		CapsuleCollider& capsule);
 
 	bool CubeHitCapsule(
 		const CubeCollider& cube,

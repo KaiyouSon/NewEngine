@@ -78,7 +78,6 @@ void NewEngineUpda()
 		InputManager::GetInstance()->Update();
 		LightManager::GetInstance()->Update();
 		SceneManager::GetInstance()->Update();
-		ColliderDrawer::GetInstance()->Update();
 	}
 }
 void NewEnginePreDraw()

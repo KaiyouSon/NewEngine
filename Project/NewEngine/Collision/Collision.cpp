@@ -74,7 +74,7 @@ bool Collision::CubeHitCube(const CubeCollider& cube1, const CubeCollider& cube2
 }
 
 // キューブとカプセル
-bool Collision::CubeHitCapsule(const CubeCollider& cube, const CapsuleCollider& capsule)
+bool Collision::CubeHitCapsule(CubeCollider& cube, CapsuleCollider& capsule)
 {
 	if (cube.isActive == false || capsule.isActive == false)
 	{
@@ -109,7 +109,9 @@ bool Collision::CubeHitCapsule(const CubeCollider& cube, const CapsuleCollider& 
 	float capsuleRadius = capsule.radius;
 	float cubeDiagonal = sqrtf(cube.size.Length()) / 2.0f;
 
-	return distanceSq <= (capsuleRadius + cubeDiagonal) * (capsuleRadius + cubeDiagonal);
+	bool isHit = distanceSq * distanceSq <= (capsuleRadius + cubeDiagonal) * (capsuleRadius + cubeDiagonal);
+
+	return isHit;
 }
 
 bool Collision::CubeHitCapsule(const CubeCollider& cube, const CapsuleCollider& capsule, Vec3& hitPoint)
@@ -146,7 +148,9 @@ bool Collision::CubeHitCapsule(const CubeCollider& cube, const CapsuleCollider& 
 	float capsuleRadius = capsule.radius;
 	float cubeDiagonal = cube.size.Length() / 2;
 
-	if (distanceSq* distanceSq <= (capsuleRadius + cubeDiagonal) * (capsuleRadius + cubeDiagonal))
+	bool isHit = distanceSq * distanceSq <= (capsuleRadius + cubeDiagonal) * (capsuleRadius + cubeDiagonal);
+
+	if (isHit)
 	{
 		// 衝突した座標を計算し、引数に代入
 		hitPoint = closestCubePoint;

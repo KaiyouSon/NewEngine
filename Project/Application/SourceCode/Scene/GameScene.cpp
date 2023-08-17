@@ -108,6 +108,8 @@ void GameScene::Update()
 
 	EffectManager::GetInstance()->Update();
 
+	ColliderDrawer::GetInstance()->Update();
+
 	if (mMenuManager->GetisActive() == false)
 	{
 		mCameraManager->Update();

@@ -50,6 +50,10 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 			{
 				LoadCoffinData(fieldData.get(), object);
 			}
+			else if (object["obj_name"] == "SkyIsland")
+			{
+				LoadSkyIslandData(fieldData.get(), object);
+			}
 		}
 	}
 
@@ -164,4 +168,33 @@ void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 		}
 	}
 	data->coffins.push_back(std::move(coffin));
+}
+
+void FieldDataManager::LoadSkyIslandData(FieldData* data, nlohmann::json jsonObj)
+{
+	std::unique_ptr<SkyIsland> skyIsland = std::make_unique<SkyIsland>();
+	// トランスフォームのパラメータ読み込み
+	nlohmann::json transform = jsonObj["transform"];
+	Vec3 pos =
+	{
+		(float)transform["translation"][0],
+		(float)transform["translation"][1],
+		(float)transform["translation"][2],
+	};
+	Vec3 scale =
+	{
+		(float)transform["scaling"][0],
+		(float)transform["scaling"][1],
+		(float)transform["scaling"][2],
+	};
+	Vec3 angle =
+	{
+		(float)transform["rotation"][0],
+		(float)transform["rotation"][1],
+		(float)transform["rotation"][2],
+	};
+	skyIsland->SetParent(Transform(pos, scale, Radian(angle)));
+
+	data->skyIslands.push_back(std::move(skyIsland));
+
 }

@@ -36,7 +36,6 @@ void Player::Init()
 
 	mBottleNum = 4;
 
-	bodyColliderObj.SetModel(ModelManager::GetModel("CapsuleCollider"));
 }
 void Player::PrevUpdate()
 {
@@ -115,14 +114,10 @@ void Player::PostUpdate()
 	mPlayer->DebugUpdate();
 	mPlayer->Update();
 
-	bodyColliderObj.pos = mPlayer->pos;
-	bodyColliderObj.scale = mBodyCollider.radius /** Vec3(1, 0, 1) + Vec3::up * 2*/;
-	bodyColliderObj.Update();
 }
 void Player::DrawModel()
 {
 	mPlayer->DrawModel();
-	//bodyColliderObj.Draw();
 }
 void Player::DrawDebugGui()
 {

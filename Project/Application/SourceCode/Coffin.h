@@ -16,7 +16,7 @@ public:
 	void DrawModel();
 
 public:
-	void SetParent(const Transform transform);
+	void SetParent(const Transform parent);
 	void SetTopPos(const Vec3 pos);
 	void SetBottomPos(const Vec3 pos);
 	void SetTopRot(const Vec3 rot);

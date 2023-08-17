@@ -30,10 +30,9 @@ bool LoadManager::ModelLoad()
 
 	ModelManager::LoadObjModel("CoffinTop", "CoffinTop", true);
 	ModelManager::LoadObjModel("CoffinBottom", "CoffinBottom", true);
+	ModelManager::LoadObjModel("SkyIsland", "SkyIsland", true);
 
 	ModelManager::LoadObjModel("Capsule", "Capsule");
-	ModelManager::LoadObjModel("Collider/CapsuleCollider", "CapsuleCollider");
-
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
 	return true;
 }

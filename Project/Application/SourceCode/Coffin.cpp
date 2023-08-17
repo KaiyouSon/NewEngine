@@ -20,6 +20,8 @@ void Coffin::Init()
 
 void Coffin::Update()
 {
+	ColliderDrawer::GetInstance()->Bind(&mBottomCollider);
+
 	mCoffinTop->Update(&mParent);
 	mCoffinBottom->Update(&mParent);
 }
@@ -30,11 +32,9 @@ void Coffin::DrawModel()
 	mCoffinBottom->Draw();
 }
 
-void Coffin::SetParent(const Transform transform)
+void Coffin::SetParent(const Transform parent)
 {
-	mParent.pos = transform.pos;
-	mParent.scale = transform.scale;
-	mParent.rot = transform.rot;
+	mParent = parent;
 	mParent.Update();
 }
 

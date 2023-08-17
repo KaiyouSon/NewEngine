@@ -33,10 +33,12 @@ SquareCollider::SquareCollider(const Vec2 centerPos, const Vec2 size) :
 CubeCollider::CubeCollider() :
 	centerPos(0), size(0)
 {
+	primitive = ColliderPrimitive::Cube;
 }
 CubeCollider::CubeCollider(const Vec3 centerPos, const Vec3 size) :
 	centerPos(centerPos), size(size)
 {
+	primitive = ColliderPrimitive::Cube;
 }
 void CubeCollider::CalcPoints()
 {

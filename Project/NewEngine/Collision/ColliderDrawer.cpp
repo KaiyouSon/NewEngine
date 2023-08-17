@@ -8,13 +8,22 @@ void ColliderDrawer::Load()
 {
 	// コライダーモデルのロード
 	ModelManager::LoadObjModel("Collider/SphereCollider", "SphereCollider");
+	ModelManager::LoadObjModel("Collider/CubeCollider", "CubeCollider");
 	ModelManager::LoadObjModel("Collider/CapsuleColliderParts1", "CapsuleColliderParts1");
 	ModelManager::LoadObjModel("Collider/CapsuleColliderParts2", "CapsuleColliderParts2");
 
 	// 球体
-	mModels.insert(std::make_pair("Sphere", ModelManager::GetModel("SphereCollider")));
+	mModels.insert(std::make_pair("SphereCollider", ModelManager::GetModel("SphereCollider")));
+
+	// キューブ
+	mModels.insert(std::make_pair("CubeCollider", ModelManager::GetModel("CubeCollider")));
+
+	// 半球体
 	mModels.insert(std::make_pair("CapsuleColliderParts1", ModelManager::GetModel("CapsuleColliderParts1")));
+
+	// 円柱(上下に面がない)
 	mModels.insert(std::make_pair("CapsuleColliderParts2", ModelManager::GetModel("CapsuleColliderParts2")));
+
 
 }
 
@@ -69,24 +78,42 @@ void ColliderDrawer::Bind(ICollider* collider)
 	{
 		// キャスト
 		SphereCollider* castCollider = dynamic_cast<SphereCollider*>(collider);
-		mColliderObjects[index]->model = mModels["Sphere"];
+		mColliderObjects[index]->model = mModels["SphereCollider"];
 		mColliderObjects[index]->transform.pos = castCollider->centerPos;
 		mColliderObjects[index]->transform.scale = castCollider->radius;
 		mColliderObjects[index]->transform.rot = 0;
+		mColliderObjects[index]->color = Color::white;
 		index++;
 	}
 	break;
+
+	case ColliderPrimitive::Cube:
+	{
+		// キャスト
+		CubeCollider* castCollider = dynamic_cast<CubeCollider*>(collider);
+		mColliderObjects[index]->model = mModels["CubeCollider"];
+		mColliderObjects[index]->transform.pos = castCollider->centerPos;
+		mColliderObjects[index]->transform.scale = castCollider->size;
+		mColliderObjects[index]->transform.rot = 0;
+		mColliderObjects[index]->color = Color::white;
+		index++;
+	}
+	break;
+
 
 	case ColliderPrimitive::Capsule:
 	{
 		// キャスト
 		CapsuleCollider* castCollider = dynamic_cast<CapsuleCollider*>(collider);
 
+		Color col = Color::white;
+
 		// 下の半球
 		mColliderObjects[index]->model = mModels["CapsuleColliderParts1"];
 		mColliderObjects[index]->transform.pos = castCollider->startPos;
 		mColliderObjects[index]->transform.scale = castCollider->radius;
 		mColliderObjects[index]->transform.rot.z = Radian(180);
+		mColliderObjects[index]->color = col;
 		index++;
 
 		// 上半球
@@ -94,6 +121,7 @@ void ColliderDrawer::Bind(ICollider* collider)
 		mColliderObjects[index]->transform.pos = castCollider->endPos;
 		mColliderObjects[index]->transform.scale = castCollider->radius;
 		mColliderObjects[index]->transform.rot = 0;
+		mColliderObjects[index]->color = Color::white;
 		index++;
 
 		// 円柱
@@ -105,6 +133,7 @@ void ColliderDrawer::Bind(ICollider* collider)
 		mColliderObjects[index]->transform.pos = castCollider->startPos + halfPos;
 		mColliderObjects[index]->transform.scale = Vec3(castCollider->radius, length, castCollider->radius);
 		mColliderObjects[index]->transform.rot = 0;
+		mColliderObjects[index]->color = col;
 		index++;
 	}
 	break;

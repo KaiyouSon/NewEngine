@@ -985,6 +985,28 @@
                     "obj_name": "CoffinTop"
                 }
             ]
+        },
+        {
+            "type": "MESH",
+            "name": "浮島",
+            "transform": {
+                "translation": [
+                    5.0,
+                    0.0,
+                    50.0
+                ],
+                "rotation": [
+                    0.0,
+                    -90.00000762939453,
+                    0.0
+                ],
+                "scaling": [
+                    90.0,
+                    90.0,
+                    90.0
+                ]
+            },
+            "obj_name": "SkyIsland"
         }
     ]
 }
