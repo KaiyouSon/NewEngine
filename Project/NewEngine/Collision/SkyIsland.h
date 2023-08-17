@@ -15,5 +15,6 @@ public:
 
 public:
 	void SetParent(const Transform parent);
+	void SetModel(Model* model);
 };
 

@@ -1006,7 +1006,51 @@
                     90.0
                 ]
             },
-            "obj_name": "SkyIsland"
+            "obj_name": "SkyIsland1"
+        },
+        {
+            "type": "MESH",
+            "name": "浮島2.001",
+            "transform": {
+                "translation": [
+                    -49.86909866333008,
+                    11.536286354064941,
+                    -95.7776870727539
+                ],
+                "rotation": [
+                    -0.0,
+                    39.9000129699707,
+                    0.0
+                ],
+                "scaling": [
+                    15.0,
+                    15.0,
+                    15.0
+                ]
+            },
+            "obj_name": "SkyIsland2"
+        },
+        {
+            "type": "MESH",
+            "name": "浮島2",
+            "transform": {
+                "translation": [
+                    -35.20283126831055,
+                    0.0,
+                    362.63873291015625
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    150.0,
+                    150.0,
+                    150.0
+                ]
+            },
+            "obj_name": "SkyIsland2"
         }
     ]
 }

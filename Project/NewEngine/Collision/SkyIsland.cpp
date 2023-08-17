@@ -3,7 +3,7 @@
 SkyIsland::SkyIsland() :
 	mSkyIsland(std::make_unique<Object3D>())
 {
-	mSkyIsland->SetModel(ModelManager::GetModel("SkyIsland"));
+	//mSkyIsland->SetModel(ModelManager::GetModel("SkyIsland"));
 }
 
 void SkyIsland::Init()
@@ -26,4 +26,9 @@ void SkyIsland::SetParent(const Transform parent)
 {
 	mParent = parent;
 	mParent.Update();
+}
+
+void SkyIsland::SetModel(Model* model)
+{
+	mSkyIsland->SetModel(model);
 }

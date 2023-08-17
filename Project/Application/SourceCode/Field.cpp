@@ -2,16 +2,12 @@
 #include "FieldDataManager.h"
 
 Field::Field() :
-	mGround(std::make_unique<Object3D>()),
 	mSphere(std::make_unique<Object3D>()),
 	mSkydome(std::make_unique<Skydome>()),
 	mRespawnPoint(std::make_unique<RespawnPoint>()),
 	mFieldData(nullptr)
 {
-	mGround->SetModel(ModelManager::GetModel("SkyIsland"));
 	mSphere->SetModel(ModelManager::GetModel("Sphere"));
-
-	mGround->SetisShadow(true, false);
 	//mSphere->SetisShadow(true);
 
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
@@ -29,6 +25,7 @@ Field::Field() :
 		}
 	}
 
+	mMessageSigns[0]->SetMessageTexture(TextureManager::GetTexture("TutorialStr2"));
 	mMessageSigns[1]->SetMessageTexture(TextureManager::GetTexture("TutorialStr1"));
 	mMessageSigns[2]->SetMessageTexture(TextureManager::GetTexture("TutorialStr3"));
 	mMessageSigns[3]->SetMessageTexture(TextureManager::GetTexture("TutorialStr4"));
@@ -43,9 +40,6 @@ Field::Field() :
 
 void Field::Init()
 {
-	mGround->scale = 100.f;
-	mGround->tiling = 100;
-
 	mSphere->pos = { 0,0,0 };
 	mSphere->scale = 2.0f;
 
@@ -87,7 +81,6 @@ void Field::Update()
 
 	//mSphere->pos = { 0,8,0 };
 
-	mGround->Update();
 	mSkydome->Update();
 	mRespawnPoint->Update();
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
@@ -119,7 +112,6 @@ void Field::Update()
 void Field::DrawModel()
 {
 	mSphere->Draw();
-	//mGround->Draw();
 	mSkydome->DrawModel();
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
 	{

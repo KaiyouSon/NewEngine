@@ -50,7 +50,9 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 			{
 				LoadCoffinData(fieldData.get(), object);
 			}
-			else if (object["obj_name"] == "SkyIsland")
+			else if (
+				object["obj_name"] == "SkyIsland1" ||
+				object["obj_name"] == "SkyIsland2")
 			{
 				LoadSkyIslandData(fieldData.get(), object);
 			}
@@ -194,7 +196,7 @@ void FieldDataManager::LoadSkyIslandData(FieldData* data, nlohmann::json jsonObj
 		(float)transform["rotation"][2],
 	};
 	skyIsland->SetParent(Transform(pos, scale, Radian(angle)));
+	skyIsland->SetModel(ModelManager::GetModel(jsonObj["obj_name"]));
 
 	data->skyIslands.push_back(std::move(skyIsland));
-
 }
