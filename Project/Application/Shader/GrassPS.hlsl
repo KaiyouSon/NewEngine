@@ -9,5 +9,5 @@ float4 main(G2P i) : SV_TARGET
     
     clip(texColor.a - 0.5);
     
-    return texColor;
+    return texColor * color;
 }
