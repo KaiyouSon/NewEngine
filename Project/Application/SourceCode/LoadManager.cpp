@@ -91,6 +91,9 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Particle/Particle2.png", "Particle2");
 	TextureManager::LoadTexture("Particle/Line.png", "Line");
 
+	// 草
+	TextureManager::LoadTexture("Grass/Weed.png", "Weed");
+
 	TextureManager::LoadTexture("Branch.png", "Branch");
 
 	// レンダーテクスチャー

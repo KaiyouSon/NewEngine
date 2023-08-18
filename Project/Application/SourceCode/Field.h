@@ -1,10 +1,8 @@
 #pragma once
 #include "MessageSign.h"
 #include "Skydome.h"
-#include "RespawnPoint.h"
-#include "Tree.h"
-#include "Coffin.h"
 #include "FieldData.h"
+#include "Weed.h"
 
 class Field
 {
@@ -17,6 +15,7 @@ private:
 private:
 	// デバッグ用
 	std::unique_ptr<Object3D> mSphere;
+	std::unique_ptr<Weed> mWeed;
 
 public:
 	Field();

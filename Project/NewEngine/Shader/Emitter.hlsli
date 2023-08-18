@@ -19,7 +19,6 @@ cbuffer ConstantBufferDataUVParameter : register(b2)
     float2 tiling;
 };
 
-
 struct Appdata
 {
     float4 pos : POSITION;

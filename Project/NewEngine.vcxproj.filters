@@ -259,6 +259,15 @@
     <Filter Include="Shader\Application\Branch">
       <UniqueIdentifier>{93889a9d-0237-42b8-b942-6723e5073531}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\Grass">
+      <UniqueIdentifier>{956d59f5-2312-4aa5-839b-1801557317bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\Grass">
+      <UniqueIdentifier>{fa0aa4ee-a39f-4904-a52c-fc95561f4400}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\Grass">
+      <UniqueIdentifier>{796449d9-75b4-489f-8fed-945b7f8f3fb0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -659,6 +668,12 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Collision\SkyIsland.cpp">
       <Filter>Application\Source\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Collision\Grass.cpp">
+      <Filter>Application\Source\Grass</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Weed.cpp">
+      <Filter>Application\Source\Grass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1097,6 +1112,12 @@
     <ClInclude Include="NewEngine\Collision\SkyIsland.h">
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
+    <ClInclude Include="NewEngine\Collision\Grass.h">
+      <Filter>Application\Header\Grass</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Weed.h">
+      <Filter>Application\Header\Grass</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1188,6 +1209,9 @@
     </None>
     <None Include="NewEngine\Shader\ColliderObject.hlsli">
       <Filter>Shader\Engine</Filter>
+    </None>
+    <None Include="Application\Shader\Grass.hlsli">
+      <Filter>Shader\Application\Grass</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1364,6 +1388,15 @@
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\ColliderObjectPS.hlsl">
       <Filter>Shader\Engine</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\GrassVS.hlsl">
+      <Filter>Shader\Application\Grass</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\GrassPS.hlsl">
+      <Filter>Shader\Application\Grass</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\GrassGS.hlsl">
+      <Filter>Shader\Application\Grass</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

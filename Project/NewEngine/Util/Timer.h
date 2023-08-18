@@ -17,12 +17,13 @@ public:
 	void Update(const int32_t addTimer = 1);
 
 public:	// セッター
-	inline void SetLimitTimer(const int32_t maxTimer) { mLimitTimer = maxTimer; }
+	void SetLimitTimer(const int32_t maxTimer);
+	void SetTimer(const int32_t timer);
 
 public:	// ゲッター
-	inline int32_t GetTimer() { return mTimer; }
-	inline float GetTimeRate() { return mTimeRate; }
-	inline bool GetisTimeOut() { return mIsTimeOut; }
+	int32_t GetTimer();
+	float GetTimeRate();
+	bool GetisTimeOut();
 
 public:
 	/// <summary>

@@ -4,6 +4,7 @@
 Field::Field() :
 	mSphere(std::make_unique<Object3D>()),
 	mSkydome(std::make_unique<Skydome>()),
+	mWeed(std::make_unique<Weed>()),
 	mFieldData(nullptr)
 {
 	mSphere->SetModel(ModelManager::GetModel("Sphere"));
@@ -45,6 +46,7 @@ void Field::Init()
 		mMessageSigns[i]->Init();
 	}
 	mSkydome->Init();
+	mWeed->Init();
 
 	if (mFieldData)
 	{
@@ -72,13 +74,13 @@ void Field::Init()
 			mFieldData->respawnPoints[i]->Init();
 		}
 	}
-
 }
 
 void Field::Update()
 {
 	mSphere->rot.y += Radian(1);
 	mSphere->Update();
+	mWeed->Update();
 
 	//mSphere->pos = { 0,8,0 };
 
@@ -120,6 +122,7 @@ void Field::DrawModel()
 {
 	mSphere->Draw();
 	mSkydome->DrawModel();
+	mWeed->DrawModel();
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
 	{
 		mMessageSigns[i]->DrawModel();

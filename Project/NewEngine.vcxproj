@@ -179,10 +179,12 @@
     <ClCompile Include="Application\SourceCode\Vignette.cpp" />
     <ClCompile Include="Application\SourceCode\Weapon.cpp" />
     <ClCompile Include="Application\SourceCode\BloodSprayEffect.cpp" />
+    <ClCompile Include="Application\SourceCode\Weed.cpp" />
     <ClCompile Include="NewEngine\Collision\Collider.cpp" />
     <ClCompile Include="NewEngine\Collision\ColliderDrawer.cpp" />
     <ClCompile Include="NewEngine\Collision\ColliderObject.cpp" />
     <ClCompile Include="NewEngine\Collision\Collision.cpp" />
+    <ClCompile Include="NewEngine\Collision\Grass.cpp" />
     <ClCompile Include="NewEngine\Collision\ICollider.cpp" />
     <ClCompile Include="NewEngine\Collision\SkyIsland.cpp" />
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp" />
@@ -320,10 +322,12 @@
     <ClInclude Include="Application\SourceCode\UIManager.h" />
     <ClInclude Include="Application\SourceCode\Vignette.h" />
     <ClInclude Include="Application\SourceCode\Weapon.h" />
+    <ClInclude Include="Application\SourceCode\Weed.h" />
     <ClInclude Include="NewEngine\Collision\Collider.h" />
     <ClInclude Include="NewEngine\Collision\ColliderDrawer.h" />
     <ClInclude Include="NewEngine\Collision\ColliderObject.h" />
     <ClInclude Include="NewEngine\Collision\Collision.h" />
+    <ClInclude Include="NewEngine\Collision\Grass.h" />
     <ClInclude Include="NewEngine\Collision\ICollider.h" />
     <ClInclude Include="NewEngine\Collision\SkyIsland.h" />
     <ClInclude Include="NewEngine\Gui\GuiManager.h" />
@@ -403,6 +407,7 @@
     <None Include="Application\Shader\DotFilter.hlsli" />
     <None Include="Application\Shader\Glare.hlsli" />
     <None Include="Application\Shader\GLineBlur.hlsli" />
+    <None Include="Application\Shader\Grass.hlsli" />
     <None Include="Application\Shader\HighLumi.hlsli" />
     <None Include="Application\Shader\GaussianBlur.hlsli" />
     <None Include="Application\Shader\RadialBlur.hlsli" />
@@ -510,6 +515,20 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\GrassGS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\GrassPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\GrassVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Application\Shader\HighLumiPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

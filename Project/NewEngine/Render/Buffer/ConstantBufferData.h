@@ -158,4 +158,11 @@ namespace ConstantBufferData
 		Mat4 viewProjView;
 		Vec3 cameraPos;
 	};
+
+	struct CTransformGrass
+	{
+		Mat4 viewMat;
+		Mat4 worldMat;
+		Mat4 billboardMat;
+	};
 }

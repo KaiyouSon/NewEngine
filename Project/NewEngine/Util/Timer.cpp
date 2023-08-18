@@ -35,3 +35,12 @@ bool Timer::operator==(const bool flag)
 {
 	return mIsTimeOut;
 }
+
+// セッター
+void Timer::SetTimer(const int32_t timer) { mTimer = timer; }
+void Timer::SetLimitTimer(const int32_t maxTimer) { mLimitTimer = maxTimer; }
+
+// ゲッター
+int32_t Timer::GetTimer() { return mTimer; }
+float Timer::GetTimeRate() { return mTimeRate; }
+bool Timer::GetisTimeOut() { return mIsTimeOut; }

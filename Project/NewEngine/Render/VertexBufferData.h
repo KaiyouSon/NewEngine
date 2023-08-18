@@ -47,4 +47,11 @@ namespace VertexBufferData
 		Vec2 scale;
 		Vec3 rot;
 	};
+
+	struct VGrass
+	{
+		Vec3 pos;
+		Vec2 scale;
+		Vec2 timer;
+	};
 }

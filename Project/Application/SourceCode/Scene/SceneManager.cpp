@@ -15,6 +15,7 @@
 #include "RespawnPoint.h"
 #include "RespawnPointUI.h"
 #include "Tree.h"
+#include "Grass.h"
 
 std::unique_ptr<IScene> SceneManager::sCurrentScene = nullptr;
 
@@ -27,6 +28,7 @@ SceneManager::SceneManager()
 	RespawnPoint::CreateGraphicsPipeline();
 	RespawnPointUI::CreateGraphicsPipeline();
 	Tree::CreateGraphicsPipeline();
+	Grass::CreateGraphicsPipeline();
 
 	//Bloom::CreateGraphicsPipeline();
 	//GaussianBlur::CreateGraphicsPipeline();
