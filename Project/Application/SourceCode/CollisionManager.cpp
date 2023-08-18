@@ -1,5 +1,6 @@
 #include "CollisionManager.h"
 #include "EffectManager.h"
+#include "TransitionManager.h"
 
 void CollisionManager::Update()
 {
@@ -87,38 +88,6 @@ void CollisionManager::PlayerHitBoss()
 		mPlayer->SetPos(nextPos);
 	}
 }
-void CollisionManager::PlayerHitMessageSign()
-{
-	for (const auto& messageSign : *mField->GetMessageSigns())
-	{
-		if (Collision::SphereHitCapsule(
-			messageSign->GetCollider(), mPlayer->GetBodyCollider()))
-		{
-			mUiManager->GetNegotiationUI()->SetisActive(true);
-			mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::ReadMessageStr);
-			mUiManager->GetMessageUI()->SetTexture(messageSign->GetMessageTexture());
-			break;
-		}
-		else
-		{
-			mUiManager->GetNegotiationUI()->SetisActive(false);
-		}
-	}
-}
-void CollisionManager::PlayerHitRespawnPoint()
-{
-	//if (Collision::SphereHitCapsule(
-	//	mField->GetRespawnPoint()->GetCollider(), mPlayer->GetBodyCollider()))
-	//{
-	//	mUiManager->GetNegotiationUI()->SetisActive(true);
-	//	mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::RestInLightStr);
-	//}
-	//else
-	//{
-	//	mUiManager->GetNegotiationUI()->SetisActive(false);
-	//}
-}
-
 void CollisionManager::PlayerHitNegotiation()
 {
 	// ‰½‚©‚É“–‚½‚Á‚½Žž—p
@@ -133,6 +102,11 @@ void CollisionManager::PlayerHitNegotiation()
 			mUiManager->GetNegotiationUI()->SetisActive(true);
 			mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::RestInLightStr);
 			isHit = true;
+
+			if (Pad::GetButtonDown(PadCode::ButtonB))
+			{
+				TransitionManager::GetInstance()->Start(TransitionType::Respawn);
+			}
 			return;
 		}
 	}

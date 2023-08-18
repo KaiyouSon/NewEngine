@@ -4,25 +4,36 @@ Weed::Weed() :
 	mGrass(std::make_unique<Grass>())
 {
 	mGrass->pos = Vec3(0, 0, 10);
-	mGrass->scale = 1.5f;
-	mGrass->color = Color(0xc4bc3c);
+	mGrass->scale = 2.f;
+	mGrass->color = Color(0xb8b137);
 	mGrass->texture = TextureManager::GetTexture("Weed");
-	mGrass->GenerateGrassToSquare(Vec2(2, 2), 32);
 	mGrass->SetBillboardType(BillboardType::YAxisBillboard);
+
+	mGenerateSize = 1;
 }
 
 void Weed::Init()
 {
+	float area = mGenerateSize.x * mGenerateSize.y;
+	mGrass->GenerateGrassToSquare(mGenerateSize, (uint32_t)(area * 8));
 }
 
 void Weed::Update()
 {
-	mGrass->color = Color(0xc4bc3c);
-
 	mGrass->Update();
 }
 
 void Weed::DrawModel()
 {
 	mGrass->Draw();
+}
+
+void Weed::SetPos(const Vec3 pos)
+{
+	mGrass->pos = pos;
+}
+
+void Weed::SetGenerateSize(const Vec2 size)
+{
+	mGenerateSize = size;
 }

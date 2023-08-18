@@ -675,6 +675,12 @@
     <ClCompile Include="Application\SourceCode\Weed.cpp">
       <Filter>Application\Source\Grass</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\ITransition.cpp">
+      <Filter>Application\Source\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\TransitionManager.cpp">
+      <Filter>Application\Source\Transition</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1117,6 +1123,12 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Weed.h">
       <Filter>Application\Header\Grass</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\ITransition.h">
+      <Filter>Application\Header\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\TransitionManager.h">
+      <Filter>Application\Header\Transition</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

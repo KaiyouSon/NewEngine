@@ -4,7 +4,6 @@
 Field::Field() :
 	mSphere(std::make_unique<Object3D>()),
 	mSkydome(std::make_unique<Skydome>()),
-	mWeed(std::make_unique<Weed>()),
 	mFieldData(nullptr)
 {
 	mSphere->SetModel(ModelManager::GetModel("Sphere"));
@@ -46,7 +45,6 @@ void Field::Init()
 		mMessageSigns[i]->Init();
 	}
 	mSkydome->Init();
-	mWeed->Init();
 
 	if (mFieldData)
 	{
@@ -68,6 +66,12 @@ void Field::Init()
 			mFieldData->trees[i]->Init();
 		}
 
+		// 雑草
+		for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
+		{
+			mFieldData->weeds[i]->Init();
+		}
+
 		// リスポーン地点
 		for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
 		{
@@ -80,7 +84,6 @@ void Field::Update()
 {
 	mSphere->rot.y += Radian(1);
 	mSphere->Update();
-	mWeed->Update();
 
 	//mSphere->pos = { 0,8,0 };
 
@@ -110,6 +113,12 @@ void Field::Update()
 			mFieldData->trees[i]->Update();
 		}
 
+		// 雑草
+		for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
+		{
+			mFieldData->weeds[i]->Update();
+		}
+
 		// リスポーン地点
 		for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
 		{
@@ -122,7 +131,6 @@ void Field::DrawModel()
 {
 	mSphere->Draw();
 	mSkydome->DrawModel();
-	mWeed->DrawModel();
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
 	{
 		mMessageSigns[i]->DrawModel();
@@ -146,6 +154,12 @@ void Field::DrawModel()
 		for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
 		{
 			mFieldData->trees[i]->DrawModel();
+		}
+
+		// 雑草
+		for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
+		{
+			mFieldData->weeds[i]->DrawModel();
 		}
 
 		// リスポーン地点

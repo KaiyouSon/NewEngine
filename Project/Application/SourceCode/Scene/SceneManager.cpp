@@ -16,6 +16,8 @@
 #include "RespawnPointUI.h"
 #include "Tree.h"
 #include "Grass.h"
+#include "FieldDataManager.h"
+#include "TransitionManager.h"
 
 std::unique_ptr<IScene> SceneManager::sCurrentScene = nullptr;
 
@@ -29,6 +31,9 @@ SceneManager::SceneManager()
 	RespawnPointUI::CreateGraphicsPipeline();
 	Tree::CreateGraphicsPipeline();
 	Grass::CreateGraphicsPipeline();
+
+	FieldDataManager::Load("SkyIsland", "SkyIsland");
+
 
 	//Bloom::CreateGraphicsPipeline();
 	//GaussianBlur::CreateGraphicsPipeline();
@@ -51,6 +56,7 @@ void SceneManager::Init()
 void SceneManager::Update()
 {
 	sCurrentScene->Update();
+	TransitionManager::GetInstance()->Update();
 	Camera::current.Update();
 
 	SceneChanger::GetInstance()->Update();
@@ -75,6 +81,7 @@ void SceneManager::DrawFrontSprite()
 {
 	sCurrentScene->DrawFrontSprite();
 	SceneChanger::GetInstance()->Draw();
+	TransitionManager::GetInstance()->DrawFrontSprite();
 
 	// デバッグ時のみ実行
 	ProcessAtDebugBulid([&]()

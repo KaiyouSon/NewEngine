@@ -13,6 +13,8 @@ RespawnTransition::RespawnTransition()
 
 		mTransition[i]->color = Color(0xc4c178);
 	}
+
+	mType = TransitionType::Respawn;
 }
 
 void RespawnTransition::Generate()
@@ -30,17 +32,16 @@ void RespawnTransition::Generate()
 	mTransition[Back]->scale = 2;
 	mTransition[Front]->scale = 4;
 	mUVParameteData[Front].offset.x = 0.25f;
-
-	mStep = None;
+	mStep = TransitionStep::None;
 }
 
 void RespawnTransition::Update()
 {
-	const float transitionDataAccel = 0.01f;
+	const float transitionDataAccel = 0.015f;
 
 	switch (mStep)
 	{
-	case In:
+	case TransitionStep::In:
 	{
 		mUVParameteData[Back].offset.y -= 0.001f;
 
@@ -49,12 +50,12 @@ void RespawnTransition::Update()
 
 		if (mTransitionData[Back].max >= 1.f)
 		{
-			mStep = Progress;
+			mStep = TransitionStep::Progress;
 		}
 	}
 	break;
 
-	case Out:
+	case TransitionStep::Out:
 	{
 		mUVParameteData[Back].offset.y -= 0.001f;
 
@@ -63,7 +64,7 @@ void RespawnTransition::Update()
 
 		if (mTransitionData[Back].max <= 0.f)
 		{
-			mStep = End;
+			mStep = TransitionStep::End;
 		}
 	}
 	break;
@@ -82,18 +83,13 @@ void RespawnTransition::Update()
 
 void RespawnTransition::DrawFrontSprite()
 {
+	if (mStep == TransitionStep::None)
+	{
+		return;
+	}
+
 	for (uint32_t i = 0; i < mTransition.size(); i++)
 	{
 		mTransition[i]->Draw();
 	}
-}
-
-RespawnTransition::Step RespawnTransition::GetStep()
-{
-	return mStep;
-}
-
-void RespawnTransition::SetStep(const Step step)
-{
-	mStep = step;
 }

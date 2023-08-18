@@ -60,6 +60,10 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 			{
 				LoadTreeData(fieldData.get(), object);
 			}
+			else if (object["obj_name"] == "Weed")
+			{
+				LoadWeedData(fieldData.get(), object);
+			}
 			else if (object["obj_name"] == "RespawnPoint")
 			{
 				LoadRespawnPointData(fieldData.get(), object);
@@ -232,6 +236,28 @@ void FieldDataManager::LoadTreeData(FieldData* data, nlohmann::json jsonObj)
 	tree->SetParent(Transform(pos, scale, Radian(angle)));
 
 	data->trees.push_back(std::move(tree));
+}
+void FieldDataManager::LoadWeedData(FieldData* data, nlohmann::json jsonObj)
+{
+	std::unique_ptr<Weed> weed = std::make_unique<Weed>();
+	// トランスフォームのパラメータ読み込み
+	nlohmann::json transform = jsonObj["transform"];
+	Vec3 pos =
+	{
+		(float)transform["translation"][0],
+		(float)transform["translation"][1],
+		(float)transform["translation"][2],
+	};
+	Vec3 scale =
+	{
+		(float)transform["scaling"][0],
+		(float)transform["scaling"][1],
+		(float)transform["scaling"][2],
+	};
+	weed->SetPos(pos);
+	weed->SetGenerateSize(Vec2(scale.x, scale.z) / 2);
+
+	data->weeds.push_back(std::move(weed));
 }
 void FieldDataManager::LoadRespawnPointData(FieldData* data, nlohmann::json jsonObj)
 {

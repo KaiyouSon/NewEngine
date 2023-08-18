@@ -5,6 +5,7 @@
 #include "EffectManager.h"
 #include "LogoutMenu.h"
 #include "ShadowMap.h"
+#include "TransitionManager.h"
 
 GameScene::GameScene() :
 	mPlayer(std::make_unique<Player>()),
@@ -14,13 +15,8 @@ GameScene::GameScene() :
 	mMenuManager(std::make_unique<MenuManager>()),
 	mField(std::make_unique<Field>())
 {
-
 	SceneChanger::GetInstance()->SetisEaseTitleBGM(false);
 	mBgmVolume = 0;
-
-	mRespawnTransition = nullptr;
-	mRespawnTransition = std::make_unique<RespawnTransition>();
-	mRespawnTransition->Generate();
 }
 GameScene::~GameScene()
 {
@@ -60,24 +56,14 @@ void GameScene::Init()
 
 	LightManager::GetInstance()->directionalLight.isActive = true;
 	LightManager::GetInstance()->directionalLight.pos = Vec3(-400, 400, -100);
+
+	isInit = false;
 }
 void GameScene::Update()
 {
-	static bool isInit = false;
-
 	if (Key::GetKeyDown(DIK_SPACE))
 	{
-		mRespawnTransition->Generate();
-	}
-
-	if (Key::GetKeyDown(DIK_A))
-	{
-		isInit = false;
-		mRespawnTransition->SetStep(RespawnTransition::In);
-	}
-	if (Key::GetKeyDown(DIK_D))
-	{
-		mRespawnTransition->SetStep(RespawnTransition::Out);
+		TransitionManager::GetInstance()->Start(TransitionType::Respawn);
 	}
 
 	if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
@@ -99,10 +85,8 @@ void GameScene::Update()
 		mPlayer->PostUpdate();
 	}
 
-
 	auto collider = mPlayer->GetBodyCollider();
 	ColliderDrawer::GetInstance()->Bind(&collider);
-
 
 	mMenuManager->Update();
 	mField->Update();
@@ -160,18 +144,19 @@ void GameScene::Update()
 		}
 	}
 
-	if (mRespawnTransition != nullptr)
+	auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
+	if (currentTransition != nullptr)
 	{
-		if (mRespawnTransition->GetStep() == RespawnTransition::Progress)
+		if (currentTransition->GetType() == TransitionType::Respawn &&
+			currentTransition->GetStep() == TransitionStep::Progress)
 		{
 			if (isInit == false)
 			{
 				Init();
+				TransitionManager::GetInstance()->End();
 				isInit = true;
 			}
 		}
-
-		mRespawnTransition->Update();
 	}
 }
 
@@ -202,13 +187,7 @@ void GameScene::DrawModel()
 void GameScene::DrawFrontSprite()
 {
 	mUiManager->DrawFrontSprite();
-
 	mMenuManager->DrawFrontSprite();
-
-	if (mRespawnTransition != nullptr)
-	{
-		mRespawnTransition->DrawFrontSprite();
-	}
 }
 void GameScene::DrawDebugGui()
 {

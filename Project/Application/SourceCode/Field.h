@@ -15,7 +15,6 @@ private:
 private:
 	// デバッグ用
 	std::unique_ptr<Object3D> mSphere;
-	std::unique_ptr<Weed> mWeed;
 
 public:
 	Field();

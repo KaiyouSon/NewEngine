@@ -62,8 +62,6 @@ void RespawnPointUI::Update()
 
 void RespawnPointUI::DrawFrontSprite()
 {
-	
-
 	if (mAlpha == 0)
 	{
 		return;

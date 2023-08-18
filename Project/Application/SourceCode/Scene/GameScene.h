@@ -6,7 +6,6 @@
 #include "CameraManager.h"
 #include "MenuManager.h"
 #include "Field.h"
-#include "RespawnTransition.h"
 
 class GameScene : public IScene
 {
@@ -18,10 +17,8 @@ private:
 	std::unique_ptr<MenuManager> mMenuManager;
 	std::unique_ptr<Field> mField;
 
-	std::unique_ptr<RespawnTransition> mRespawnTransition;
-
+	bool isInit;
 	float mBgmVolume;
-
 
 public:
 	GameScene();
