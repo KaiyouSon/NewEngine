@@ -162,7 +162,7 @@ bool Collision::CubeHitCapsule(const CubeCollider& cube, const CapsuleCollider& 
 }
 
 // 球と平面
-bool Collision::SphereHitPlane(const SphereCollider& sphere, const PlaneCollider& plane, Vec3* hitPos)
+bool Collision::SphereHitPlane(const SphereCollider& sphere, const PlaneCollider& plane, Vec3* hitPoint)
 {
 	if (sphere.isActive == false || plane.isActive == false)
 	{
@@ -180,16 +180,16 @@ bool Collision::SphereHitPlane(const SphereCollider& sphere, const PlaneCollider
 		return false;
 	}
 
-	if (hitPos != nullptr)
+	if (hitPoint != nullptr)
 	{
-		*hitPos = dis * plane.normal + sphere.centerPos;
+		*hitPoint = dis * plane.normal + sphere.centerPos;
 	}
 
 	return true;
 }
 
 // 球と三角形
-bool Collision::SphereHitTriangle(const SphereCollider& sphere, const TriangleCollider& triangle, Vec3* hitPos)
+bool Collision::SphereHitTriangle(const SphereCollider& sphere, const TriangleCollider& triangle, Vec3* hitPoint)
 {
 	if (sphere.isActive == false || triangle.isActive == false)
 	{
@@ -207,9 +207,9 @@ bool Collision::SphereHitTriangle(const SphereCollider& sphere, const TriangleCo
 		return false;
 	}
 
-	if (hitPos != nullptr)
+	if (hitPoint != nullptr)
 	{
-		*hitPos = p;
+		*hitPoint = p;
 	}
 
 	return true;
@@ -230,36 +230,74 @@ bool Collision::SphereHitCapsule(const SphereCollider& sphere, const CapsuleColl
 	Vec3 n = capsuleAxis.Norm();
 
 	// カプセルの軸ベクトル上の最近接点を計算
-	float t =
-		(sphereToCapsule.x * n.x) +
-		(sphereToCapsule.y * n.y) +
-		(sphereToCapsule.z * n.z);
+	float dot = Vec3::Dot(sphereToCapsule, n);
+	float lengthRate = dot * dot / capsuleAxis.LengthSq();
 
-	Vec3 closestPoint;
-	if (t <= 0.0f)
+	float dis = 0;
+	if (lengthRate < 0.0f)
 	{
-		closestPoint = capsule.startPos;
+		dis = Vec3::DistanceSq(capsule.startPos, sphere.centerPos);
 	}
-	else if (t >= capsuleAxis.Length())
+	else if (lengthRate <= 1.0f)
 	{
-		closestPoint = capsule.endPos;
+		Vec3 p = n * dot;
+		dis = Vec3::DistanceSq(capsule.startPos + p, sphere.centerPos);
 	}
 	else
 	{
-		closestPoint = capsule.startPos + capsuleAxis * t;
+		dis = Vec3::DistanceSq(capsule.endPos, sphere.centerPos);
 	}
 
-	// 最近接点と球の中心位置の距離を計算
-	float distance =
-		(closestPoint.x - sphere.centerPos.x) * (closestPoint.x - sphere.centerPos.x) +
-		(closestPoint.y - sphere.centerPos.y) * (closestPoint.y - sphere.centerPos.y) +
-		(closestPoint.z - sphere.centerPos.z) * (closestPoint.z - sphere.centerPos.z);
+	// 距離が半径の合計よりも小さい場合は衝突しているとみなす
+	float totalRadius = sphere.radius + capsule.radius;
+
+	if (dis <= totalRadius * totalRadius)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool Collision::SphereHitCapsule(const SphereCollider& sphere, const CapsuleCollider& capsule, Vec3& hitPoint)
+{
+	if (sphere.isActive == false || capsule.isActive == false)
+	{
+		return false;
+	}
+
+	// カプセルの軸ベクトルと球の中心位置ベクトルの差を計算
+	Vec3 capsuleAxis = capsule.endPos - capsule.startPos;
+	Vec3 sphereToCapsule = sphere.centerPos - capsule.startPos;
+
+	Vec3 n = capsuleAxis.Norm();
+
+	// カプセルの軸ベクトル上の最近接点を計算
+	float dot = Vec3::Dot(sphereToCapsule, n);
+	Vec3 closestPoint = capsule.startPos + n * dot;
+
+	float dis = 0;
+	float lengthRate = dot * dot / capsuleAxis.LengthSq();
+	if (lengthRate < 0.0f)
+	{
+		dis = Vec3::DistanceSq(capsule.startPos, sphere.centerPos);
+	}
+	else if (lengthRate <= 1.0f)
+	{
+		dis = Vec3::DistanceSq(closestPoint, sphere.centerPos);
+	}
+	else
+	{
+		dis = Vec3::DistanceSq(capsule.endPos, sphere.centerPos);
+	}
 
 	// 距離が半径の合計よりも小さい場合は衝突しているとみなす
-	float totalRadius = sphere.radius + sphere.radius;
+	float totalRadius = sphere.radius + capsule.radius;
 
-	if (distance <= (totalRadius * totalRadius))
+	if (dis <= totalRadius * totalRadius)
 	{
+		Vec3 v = sphere.centerPos - closestPoint;
+		hitPoint = closestPoint + v.Norm() * capsule.radius;
 		return true;
 	}
 

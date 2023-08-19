@@ -32,18 +32,23 @@ namespace Collision
 	bool SphereHitPlane(
 		const SphereCollider& sphere,
 		const PlaneCollider& plane,
-		Vec3* hitPos = nullptr);
+		Vec3* hitPoint = nullptr);
 
 	// 球と三角形
 	bool SphereHitTriangle(
 		const SphereCollider& sphere,
 		const TriangleCollider& triangle,
-		Vec3* hitPos = nullptr);
+		Vec3* hitPoint = nullptr);
 
 	// 球とカプセル
 	bool SphereHitCapsule(
 		const SphereCollider& sphere,
 		const CapsuleCollider& capsule);
+
+	bool SphereHitCapsule(
+		const SphereCollider& sphere,
+		const CapsuleCollider& capsule,
+		Vec3& hitPoint);
 
 	// レイと平面
 	bool RayHitPlane(

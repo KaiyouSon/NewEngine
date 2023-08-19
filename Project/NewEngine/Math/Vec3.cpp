@@ -12,6 +12,8 @@ const Vec3 Vec3::zero(0.f, 0.f, 0.f);
 
 float Vec3::Length() const { return sqrtf(x * x + y * y + z * z); }
 
+float Vec3::LengthSq() const { return x * x + y * y + z * z; }
+
 Vec3 Vec3::Norm() const
 {
 	if (x == 0 && y == 0 && z == 0)
@@ -44,6 +46,14 @@ float Vec3::Distance(const Vec3 v1, const Vec3 v2)
 		(v2.x - v1.x) * (v2.x - v1.x) +
 		(v2.y - v1.y) * (v2.y - v1.y) +
 		(v2.z - v1.z) * (v2.z - v1.z));
+}
+
+float Vec3::DistanceSq(const Vec3 v1, const Vec3 v2)
+{
+	return
+		(v2.x - v1.x) * (v2.x - v1.x) +
+		(v2.y - v1.y) * (v2.y - v1.y) +
+		(v2.z - v1.z) * (v2.z - v1.z);
 }
 
 Vec3 Vec3::Max(const Vec3 v1, const Vec3 v2)

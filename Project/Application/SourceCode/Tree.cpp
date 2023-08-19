@@ -27,6 +27,8 @@ Tree::Tree() :
 {
 	mTree->SetModel(ModelManager::GetModel("Tree"));
 	mBranch->SetModel(ModelManager::GetModel("Branch"));
+
+	mCollider.isActive = false;
 }
 
 void Tree::Init()
@@ -39,8 +41,10 @@ void Tree::Init()
 
 void Tree::Update()
 {
-	mTree->Update(&mPraent);
-	mBranch->Update(&mPraent);
+	ColliderDrawer::GetInstance()->Bind(&mCollider);
+
+	mTree->Update(&mParent);
+	mBranch->Update(&mParent);
 }
 
 void Tree::DrawModel()
@@ -51,6 +55,22 @@ void Tree::DrawModel()
 
 void Tree::SetParent(const Transform parent)
 {
-	mPraent = parent;
-	mPraent.Update();
+	mParent = parent;
+	mParent.Update();
+}
+
+void Tree::SetCollider(const SphereCollider collider)
+{
+	mCollider = collider;
+	mCollider.isActive = true;
+}
+
+Vec3 Tree::GetPos()
+{
+	return mParent.pos;
+}
+
+SphereCollider Tree::GetCollider()
+{
+	return mCollider;
 }

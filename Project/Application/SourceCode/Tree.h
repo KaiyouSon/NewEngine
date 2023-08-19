@@ -4,9 +4,10 @@
 class Tree
 {
 private:
-	Transform mPraent;
+	Transform mParent;
 	std::unique_ptr<Object3D> mTree;
 	std::unique_ptr<Object3D> mBranch;
+	SphereCollider mCollider;
 
 public:
 	static void CreateGraphicsPipeline();
@@ -18,5 +19,10 @@ public:
 
 public:
 	void SetParent(const Transform parent);
+	void SetCollider(const SphereCollider collider);
+
+public:
+	Vec3 GetPos();
+	SphereCollider GetCollider();
 };
 

@@ -166,11 +166,17 @@ void CollisionManager::PlayerHitFieldObject()
 {
 	FieldData* fieldData = mField->GetFieldData();
 
+	// Š»‰±
 	const std::vector<std::unique_ptr<Coffin>>& coffins = fieldData->coffins;
 	for (uint32_t i = 0; i < coffins.size(); i++)
 	{
-		Vec3 hitPoint = 0;
+		float dis = Vec3::Distance(mPlayer->GetPos(), coffins[i]->GetPos());
+		if (dis >= 20)
+		{
+			continue;
+		}
 
+		Vec3 hitPoint = 0;
 		if (Collision::CubeHitCapsule(
 			coffins[i]->GetBottomCollider(), mPlayer->GetBodyCollider(), hitPoint))
 		{
@@ -190,6 +196,52 @@ void CollisionManager::PlayerHitFieldObject()
 
 			// ‰Ÿ‚µ–ß‚µ‚ÌƒxƒNƒgƒ‹
 			Vec3 pushVec = normal * (overlap);
+
+			Vec3 nextPos = mPlayer->GetPos() + pushVec;
+			mPlayer->SetPos(nextPos);
+		}
+	}
+
+	// –Ø
+	const std::vector<std::unique_ptr<Tree>>& trees = fieldData->trees;
+	for (uint32_t i = 0; i < trees.size(); i++)
+	{
+		float dis = Vec3::Distance(mPlayer->GetPos(), trees[i]->GetPos());
+		if (dis >= 20)
+		{
+			continue;
+		}
+
+		Vec3 hitPoint = 0;
+		if (Collision::SphereHitCapsule(
+			trees[i]->GetCollider(), mPlayer->GetBodyCollider(), hitPoint))
+		{
+			mField->SetSpherePos(hitPoint);
+
+			// ”¼Œa‚ğ‘«‚µ‚ÄÀÛ‚Ì’·‚³‚ğ‹‚ß‚é
+			float checkLength =
+				mPlayer->GetBodyCollider().radius + trees[i]->GetCollider().radius;
+
+			// y²‚ğ–³‹‚·‚é
+			Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
+			Vec3 pos2 = trees[i]->GetPos() * Vec3(1, 0, 1);
+
+			Vec3 toPlayer = pos1 - pos2;
+
+			// Œ»İ‚Ì’·‚³
+			float curLength = toPlayer.Length();
+
+			// checkLength ‚Æ curLength ‚Ì·•ª‚Å–„‚ß‚ñ‚¾’·‚³‚ª‹‚Ü‚é
+			float embedLength = checkLength - curLength;
+
+			// Œë·‚ğ‚¯‚·ˆ—
+			Vec3 normal = toPlayer.Norm();
+			if (fabs(curLength) < 0.0001f)
+			{
+				normal = 0;
+			}
+
+			Vec3 pushVec = normal * embedLength;
 
 			Vec3 nextPos = mPlayer->GetPos() + pushVec;
 			mPlayer->SetPos(nextPos);

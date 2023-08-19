@@ -235,6 +235,19 @@ void FieldDataManager::LoadTreeData(FieldData* data, nlohmann::json jsonObj)
 	};
 	tree->SetParent(Transform(pos, scale, Radian(angle)));
 
+	nlohmann::json collider = jsonObj["collider"];
+	if (collider["type"] == "Sphere")
+	{
+		Vec3 pos =
+		{
+			collider["center"][0],
+			collider["center"][1],
+			collider["center"][2],
+		};
+		float radius = collider["size"][0];
+		tree->SetCollider(SphereCollider(pos, radius));
+	}
+
 	data->trees.push_back(std::move(tree));
 }
 void FieldDataManager::LoadWeedData(FieldData* data, nlohmann::json jsonObj)

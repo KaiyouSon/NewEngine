@@ -29,6 +29,7 @@ struct Vec3
 
 	// 関数
 	float Length() const;    // ベクトルの大きさ
+	float LengthSq() const;    // ベクトルの大きさ
 	Vec3 Norm() const;    // 正規化にしたベクトル
 
 	static Vec3 Lerp(const Vec3 s, const Vec3 e, const float f);
@@ -37,6 +38,7 @@ struct Vec3
 	static float Dot(const Vec3 v1, const Vec3 v2);		// 二つのベクトルの内積
 	static Vec3 Cross(const Vec3 v1, const Vec3 v2);		// 二つのベクトルの外積
 	static float Distance(const Vec3 v1, const Vec3 v2);	// 二つのベクトルの距離
+	static float DistanceSq(const Vec3 v1, const Vec3 v2);	// 二つのベクトルの距離
 
 	// 二つのベクトルで各成分の一番大きな値を使用してベクトルを作成する
 	static Vec3 Max(const Vec3 v1, const Vec3 v2);
