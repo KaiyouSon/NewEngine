@@ -26,6 +26,7 @@ public:
 
 public:
 	// ƒQƒbƒ^[
+	Vec3 GetPos();
 	SphereCollider GetCollider();
 };
 

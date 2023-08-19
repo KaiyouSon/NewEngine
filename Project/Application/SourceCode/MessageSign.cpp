@@ -31,6 +31,11 @@ void MessageSign::ColliderUpdate()
 	mCollider.radius = mMessageSign->scale.x;
 }
 
+Vec3 MessageSign::GetPos()
+{
+	return mMessageSign->pos;
+}
+
 Texture* MessageSign::GetMessageTexture()
 {
 	return mMessageTex;

@@ -102,6 +102,11 @@ void RespawnPoint::SetParent(const Transform parent)
 	mParent.Update();
 }
 
+Vec3 RespawnPoint::GetPos()
+{
+	return mParent.pos;
+}
+
 SphereCollider RespawnPoint::GetCollider()
 {
 	return mCollider;

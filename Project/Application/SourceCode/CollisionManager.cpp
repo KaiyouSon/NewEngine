@@ -7,12 +7,6 @@ void CollisionManager::Update()
 	// プレイヤーとボス
 	PlayerHitBoss();
 
-	// プレイヤーとメッセージサイン
-	//PlayerHitMessageSign();
-
-	// プレイヤーとリスポーン地点
-	//PlayerHitRespawnPoint();
-
 	PlayerHitFieldObject();
 
 	PlayerHitNegotiation();
@@ -28,6 +22,12 @@ void CollisionManager::PushBackPlayer()
 void CollisionManager::PlayerHitBoss()
 {
 	static Vec3 hitPoint = {};
+
+	float dis = Vec3::Distance(mPlayer->GetPos(), mBoss->GetPos());
+	if (dis >= 50)
+	{
+		return;
+	}
 
 	bool isAttackBoss =
 		Collision::CapsuleHitCapsule(
@@ -96,6 +96,12 @@ void CollisionManager::PlayerHitNegotiation()
 	// リスポーン地点と当たったら
 	for (const auto& respawnPoint : mField->GetFieldData()->respawnPoints)
 	{
+		float dis = Vec3::Distance(mPlayer->GetPos(), respawnPoint->GetPos());
+		if (dis >= 20)
+		{
+			continue;;
+		}
+
 		if (Collision::SphereHitCapsule(
 			respawnPoint->GetCollider(), mPlayer->GetBodyCollider()))
 		{
@@ -114,6 +120,12 @@ void CollisionManager::PlayerHitNegotiation()
 	// メッセージサインと当たったら
 	for (const auto& messageSign : *mField->GetMessageSigns())
 	{
+		float dis = Vec3::Distance(mPlayer->GetPos(), messageSign->GetPos());
+		if (dis >= 20)
+		{
+			return;
+		}
+
 		if (Collision::SphereHitCapsule(
 			messageSign->GetCollider(), mPlayer->GetBodyCollider()))
 		{
@@ -130,37 +142,6 @@ void CollisionManager::PlayerHitNegotiation()
 	{
 		mUiManager->GetNegotiationUI()->SetisActive(false);
 	}
-
-
-
-	//// リスポーン地点と当たったら
-	//if (Collision::SphereHitCapsule(
-	//	mField->GetRespawnPoint()->GetCollider(), mPlayer->GetBodyCollider()))
-	//{
-	//	mUiManager->GetNegotiationUI()->SetisActive(true);
-	//	mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::RestInLightStr);
-	//	return;
-	//}
-	//else
-	//{
-	//	// メッセージサインと当たったら
-	//	for (const auto& messageSign : *mField->GetMessageSigns())
-	//	{
-	//		if (Collision::SphereHitCapsule(
-	//			messageSign->GetCollider(), mPlayer->GetBodyCollider()))
-	//		{
-	//			mUiManager->GetNegotiationUI()->SetisActive(true);
-	//			mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::ReadMessageStr);
-	//			mUiManager->GetMessageUI()->SetTexture(messageSign->GetMessageTexture());
-	//			break;
-	//		}
-	//		else
-	//		{
-
-	//		}
-	//	}
-	//}
-
 }
 void CollisionManager::PlayerHitFieldObject()
 {
@@ -248,7 +229,6 @@ void CollisionManager::PlayerHitFieldObject()
 		}
 	}
 }
-
 void CollisionManager::BossHitPlayer()
 {
 	if (mPlayer->GetisAlive() == false ||

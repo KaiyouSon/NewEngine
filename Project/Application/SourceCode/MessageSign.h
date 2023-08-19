@@ -25,6 +25,7 @@ public:
 	void SetRot(const Vec3 rot);
 
 public:
+	Vec3 GetPos();
 	Texture* GetMessageTexture();
 	SphereCollider GetCollider();
 };
