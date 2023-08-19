@@ -35,7 +35,7 @@ void Tree::Init()
 {
 	mTree->SetisShadow(false, true);
 	mBranch->SetisShadow(false, true);
-	mBranch->rot.y = Radian(286);
+	//mBranch->rot.y = Radian(286);
 	mBranch->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Branch"));
 }
 
