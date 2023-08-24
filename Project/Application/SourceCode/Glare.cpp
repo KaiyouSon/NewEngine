@@ -157,6 +157,6 @@ void Glare::PostSceneDraw(const uint32_t index)
 
 void Glare::DrawDebugGui()
 {
-	GuiManager::DrawSlider1("LineBlur1 Angle", lineBlurData1_.angle, 1.f);
-	GuiManager::DrawSlider1("LineBlur2 Angle", lineBlurData2_.angle, 1.f);
+	Gui::DrawSlider1("LineBlur1 Angle", lineBlurData1_.angle, 1.f);
+	Gui::DrawSlider1("LineBlur2 Angle", lineBlurData2_.angle, 1.f);
 }

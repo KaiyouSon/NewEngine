@@ -62,10 +62,10 @@ void DOF::PostSceneDraw()
 
 void DOF::DrawDebugGui()
 {
-	GuiManager::DrawSlider1("FocusDepth", dofData_.focusDepth, 0.0001f);
-	GuiManager::DrawSlider1("MiddleDepth", dofData_.middleDepth, 0.0001f);
+	Gui::DrawSlider1("FocusDepth", dofData_.focusDepth, 0.0001f);
+	Gui::DrawSlider1("MiddleDepth", dofData_.middleDepth, 0.0001f);
 
 	bool flag = dofData_.isRGB;
-	GuiManager::DrawCheckBox("isRGB", &flag);
+	Gui::DrawCheckBox("isRGB", &flag);
 	dofData_.isRGB = flag;
 }

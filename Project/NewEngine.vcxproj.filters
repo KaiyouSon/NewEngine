@@ -681,6 +681,9 @@
     <ClCompile Include="Application\SourceCode\TransitionManager.cpp">
       <Filter>Application\Source\Transition</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\DebugManager.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1129,6 +1132,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\TransitionManager.h">
       <Filter>Application\Header\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\DebugManager.h">
+      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

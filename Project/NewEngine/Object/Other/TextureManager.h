@@ -47,6 +47,10 @@ public: // レンダーテクスチャー関連
 	static RenderTexture* CreateRenderTexture(Vec2 size, uint32_t num, std::string textureTag);
 
 public:
+	// マップ
+	static std::unordered_map<std::string, std::unique_ptr<Texture>>* GetTextureMap();
+
+public:
 	// 深度テクスチャーを生成
 	static Texture* CreateDepthTexture(Vec2 size);
 

@@ -252,22 +252,22 @@ void TestScene::DrawRenderTexture()
 }
 void TestScene::DrawDebugGui()
 {
-	GuiManager::BeginWindow("PostEffect");
-	GuiManager::DrawInputInt("PostEffectType", (int&)postEffectType_);
+	Gui::BeginWindow("PostEffect");
+	Gui::DrawInputInt("PostEffectType", (int&)postEffectType_);
 
-	GuiManager::DrawString("PostEffectType 0 : CG4Task");
-	GuiManager::DrawString("PostEffectType 1 : Bloom");
-	GuiManager::DrawString("PostEffectType 2 : Gaussian Blur");
-	GuiManager::DrawString("PostEffectType 3 : Glare");
-	GuiManager::DrawString("PostEffectType 4 : Depth Of Field");
-	GuiManager::DrawString("PostEffectType 5 : Radial Blur");
-	GuiManager::DrawString("PostEffectType 6 : Vignette");
-	GuiManager::DrawString("PostEffectType 7 : Skin Animation");
+	Gui::DrawString("PostEffectType 0 : CG4Task");
+	Gui::DrawString("PostEffectType 1 : Bloom");
+	Gui::DrawString("PostEffectType 2 : Gaussian Blur");
+	Gui::DrawString("PostEffectType 3 : Glare");
+	Gui::DrawString("PostEffectType 4 : Depth Of Field");
+	Gui::DrawString("PostEffectType 5 : Radial Blur");
+	Gui::DrawString("PostEffectType 6 : Vignette");
+	Gui::DrawString("PostEffectType 7 : Skin Animation");
 
-	GuiManager::EndWindow();
+	Gui::EndWindow();
 
 	// É}ÉeÉäÉAÉãèÓïÒ
-	GuiManager::BeginWindow("Parameter");
+	Gui::BeginWindow("Parameter");
 
 	if (postEffectType_ == 3)
 	{
@@ -287,10 +287,10 @@ void TestScene::DrawDebugGui()
 	}
 	else if (postEffectType_ == 7)
 	{
-		GuiManager::DrawSlider1("Animation Time", animationTime_);
+		Gui::DrawSlider1("Animation Time", animationTime_);
 		animationTime_ = Max<float>(animationTime_, 60.f);
 	}
 
-	GuiManager::EndWindow();
+	Gui::EndWindow();
 
 }

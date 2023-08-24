@@ -60,9 +60,9 @@ void RadialBlur::PostSceneDraw()
 
 void RadialBlur::DrawDebugGui()
 {
-	GuiManager::DrawSlider1("Strength", data_.strength, 0.01f);
+	Gui::DrawSlider1("Strength", data_.strength, 0.01f);
 	data_.strength = Max<float>(data_.strength, 0.f);
 
-	GuiManager::DrawSlider1("LoopNum", data_.loopNum, 1.f);
+	Gui::DrawSlider1("LoopNum", data_.loopNum, 1.f);
 	data_.loopNum = Clamp<float>(data_.loopNum, 1, 16);
 }

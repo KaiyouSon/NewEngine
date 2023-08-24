@@ -744,6 +744,11 @@ RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, uint32_t num, std:
 
 #pragma endregion
 
+std::unordered_map<std::string, std::unique_ptr<Texture>>* TextureManager::GetTextureMap()
+{
+	return &sTextureMap;
+}
+
 #pragma region その他の処理
 
 // ディスクリプターヒープを作成する処理

@@ -47,7 +47,7 @@ void Skydome::DrawModel()
 
 void Skydome::DrawDebugGui()
 {
-	GuiManager::BeginWindow("Skydome");
-	GuiManager::DrawColorEdit("Skydome Color", mSkydome->color);
-	GuiManager::EndWindow();
+	Gui::BeginWindow("Skydome");
+	Gui::DrawColorEdit("Skydome Color", mSkydome->color);
+	Gui::EndWindow();
 }

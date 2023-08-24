@@ -3,6 +3,7 @@
 #include "RenderWindow.h"
 #include "RenderTexture.h"
 #include "LoadManager.h"
+#include "DebugManager.h"
 #include <wrl.h>
 using namespace Microsoft::WRL;
 
@@ -52,9 +53,10 @@ void NewEngineInit()
 	// -------------------------------------------------------------------------------- //
 
 	Random::Init();
+	Gui::Init();
 	SoundManager::Init();
 	InputManager::GetInstance()->Init();
-	GuiManager::GetInstance()->Init();
+	DebugManager::GetInstance()->Init();
 	LoadManager::GetInstance()->Load();
 
 	//　ロード終了チェック
@@ -78,6 +80,7 @@ void NewEngineUpda()
 		InputManager::GetInstance()->Update();
 		LightManager::GetInstance()->Update();
 		SceneManager::GetInstance()->Update();
+		DebugManager::GetInstance()->Update();
 	}
 }
 void NewEnginePreDraw()
@@ -92,7 +95,7 @@ void NewEnginePreDraw()
 		SceneManager::GetInstance()->RenderTextureSetting();
 
 		RenderBase::GetInstance()->PreDraw();
-		GuiManager::GetInstance()->PreDraw();
+		Gui::PreDraw();
 	}
 }
 void NewEneineDraw()
@@ -106,6 +109,8 @@ void NewEneineDraw()
 		ColliderDrawer::GetInstance()->DrawCollider();
 		SceneManager::GetInstance()->DrawFrontSprite();
 		SceneManager::GetInstance()->DrawRenderTexture();
+		DebugManager::GetInstance()->DrawDebugGui();
+
 	}
 }
 void NewEnginePostDraw()
@@ -114,13 +119,13 @@ void NewEnginePostDraw()
 	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
 	if (isLoaded == true)
 	{
-		GuiManager::GetInstance()->PostDraw();
+		Gui::PostDraw();
 		RenderBase::GetInstance()->PostDraw();
 	}
 }
 void NewEngineEnd()
 {
-	GuiManager::GetInstance()->Destroy();
+	Gui::Destroy();
 	RenderWindow::GetInstance()->TerminateGameWindow();		// ウィンドウクラスを登録解除
 	SoundManager::Destroy();
 
