@@ -34,6 +34,7 @@ bool LoadManager::ModelLoad()
 	ModelManager::LoadObjModel("SkyIsland/SkyIsland2", "SkyIsland2", true);
 
 	ModelManager::LoadObjModel("Capsule", "Capsule");
+	ModelManager::LoadObjModel("MainGateWall", "MainGateWall");
 	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
 	return true;
 }

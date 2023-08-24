@@ -11,6 +11,7 @@ private:
 
 	std::unique_ptr<Skydome> mSkydome;
 	std::array<std::unique_ptr<MessageSign>, 5> mMessageSigns;
+	std::unique_ptr<Object3D> mMainGateWall;
 
 private:
 	// デバッグ用

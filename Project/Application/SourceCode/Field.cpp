@@ -4,9 +4,13 @@
 Field::Field() :
 	mSphere(std::make_unique<Object3D>()),
 	mSkydome(std::make_unique<Skydome>()),
+	mMainGateWall(std::make_unique<Object3D>()),
 	mFieldData(nullptr)
 {
 	mSphere->SetModel(ModelManager::GetModel("Sphere"));
+	mMainGateWall->SetModel(ModelManager::GetModel("MainGateWall"));
+	mMainGateWall->rot.y = Radian(90);
+	mMainGateWall->scale = 5;
 	//mSphere->SetisShadow(true);
 
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
@@ -84,6 +88,7 @@ void Field::Update()
 {
 	mSphere->rot.y += Radian(1);
 	mSphere->Update();
+	mMainGateWall->Update();
 
 	//mSphere->pos = { 0,8,0 };
 
@@ -129,8 +134,9 @@ void Field::Update()
 
 void Field::DrawModel()
 {
-	mSphere->Draw();
+	//mSphere->Draw();
 	mSkydome->DrawModel();
+	//mMainGateWall->Draw();
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
 	{
 		mMessageSigns[i]->DrawModel();

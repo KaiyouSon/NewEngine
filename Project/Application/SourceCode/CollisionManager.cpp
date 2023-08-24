@@ -123,7 +123,7 @@ void CollisionManager::PlayerHitNegotiation()
 		float dis = Vec3::Distance(mPlayer->GetPos(), messageSign->GetPos());
 		if (dis >= 20)
 		{
-			return;
+			continue;
 		}
 
 		if (Collision::SphereHitCapsule(

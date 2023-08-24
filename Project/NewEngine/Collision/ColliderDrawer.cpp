@@ -47,10 +47,10 @@ void ColliderDrawer::Update()
 
 void ColliderDrawer::DrawCollider()
 {
-	for (const auto& colliderObjcet : mColliderObjects)
-	{
-		colliderObjcet->Draw();
-	}
+	//for (const auto& colliderObjcet : mColliderObjects)
+	//{
+	//	colliderObjcet->Draw();
+	//}
 
 	// Ÿ‚ÌƒtƒŒ[ƒ€‚Ì€”õ
 	index = 0;
