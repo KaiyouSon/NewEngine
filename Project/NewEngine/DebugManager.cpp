@@ -45,6 +45,11 @@ void DebugManager::DrawDebugGui()
 		Gui::EndMenuBar();
 	}
 
+	// “–‚½‚è”»’è‚Ì•\Ž¦
+	bool isShowCollider = ColliderDrawer::GetInstance()->GetisShow();
+	Gui::DrawCheckBox("Show Collider", &isShowCollider);
+	ColliderDrawer::GetInstance()->SetisShow(isShowCollider);
+
 	Gui::EndWindow();
 
 	LoadedWindow(&mIsShowLoadedWindow);

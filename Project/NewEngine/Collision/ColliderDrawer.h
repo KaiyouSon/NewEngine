@@ -14,6 +14,7 @@ private:
 	std::vector<std::unique_ptr<ColliderObject>> mColliderObjects;
 	uint32_t mMaxColliderNum;
 	static uint32_t index;
+	bool mIsShow;
 
 public:
 	void Load();
@@ -22,8 +23,10 @@ public:
 	void DrawCollider();
 
 public:
-	void SetMaxColliderNum();
 	void Bind(ICollider* collider);
+
+	void SetisShow(const bool isShow);
+	bool GetisShow();
 
 private:
 	friend Singleton<ColliderDrawer>;

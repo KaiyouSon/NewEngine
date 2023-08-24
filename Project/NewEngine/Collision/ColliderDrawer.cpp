@@ -23,8 +23,6 @@ void ColliderDrawer::Load()
 
 	// ‰~’Œ(ã‰º‚É–Ê‚ª‚È‚¢)
 	mModels.insert(std::make_pair("CapsuleColliderParts2", ModelManager::GetModel("CapsuleColliderParts2")));
-
-
 }
 
 void ColliderDrawer::Init()
@@ -35,10 +33,17 @@ void ColliderDrawer::Init()
 	{
 		mColliderObjects.push_back(std::make_unique<ColliderObject>());
 	}
+
+	mIsShow = false;
 }
 
 void ColliderDrawer::Update()
 {
+	if (mIsShow == false)
+	{
+		return;
+	}
+
 	for (const auto& colliderObjcet : mColliderObjects)
 	{
 		colliderObjcet->Update();
@@ -47,13 +52,29 @@ void ColliderDrawer::Update()
 
 void ColliderDrawer::DrawCollider()
 {
-	//for (const auto& colliderObjcet : mColliderObjects)
-	//{
-	//	colliderObjcet->Draw();
-	//}
+	if (mIsShow == false)
+	{
+		index = 0;
+		return;
+	}
+
+	for (const auto& colliderObjcet : mColliderObjects)
+	{
+		colliderObjcet->Draw();
+	}
 
 	// Ÿ‚ÌƒtƒŒ[ƒ€‚Ì€”õ
 	index = 0;
+}
+
+void ColliderDrawer::SetisShow(const bool isShow)
+{
+	mIsShow = isShow;
+}
+
+bool ColliderDrawer::GetisShow()
+{
+	return mIsShow;
 }
 
 void ColliderDrawer::Bind(ICollider* collider)
