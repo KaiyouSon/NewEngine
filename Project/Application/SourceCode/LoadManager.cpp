@@ -32,6 +32,8 @@ bool LoadManager::ModelLoad()
 	ModelManager::LoadObjModel("CoffinBottom", "CoffinBottom", true);
 	ModelManager::LoadObjModel("SkyIsland/SkyIsland1", "SkyIsland1", true);
 	ModelManager::LoadObjModel("SkyIsland/SkyIsland2", "SkyIsland2", true);
+	ModelManager::LoadObjModel("Wall/MainWall", "MainWall");
+	ModelManager::LoadObjModel("Wall/Wall2", "Wall2");
 
 	ModelManager::LoadObjModel("Capsule", "Capsule");
 	ModelManager::LoadObjModel("MainGateWall", "MainGateWall");

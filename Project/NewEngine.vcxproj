@@ -179,6 +179,7 @@
     <ClCompile Include="Application\SourceCode\Tree.cpp" />
     <ClCompile Include="Application\SourceCode\UIManager.cpp" />
     <ClCompile Include="Application\SourceCode\Vignette.cpp" />
+    <ClCompile Include="Application\SourceCode\Wall.cpp" />
     <ClCompile Include="Application\SourceCode\Weapon.cpp" />
     <ClCompile Include="Application\SourceCode\BloodSprayEffect.cpp" />
     <ClCompile Include="Application\SourceCode\Weed.cpp" />
@@ -326,6 +327,7 @@
     <ClInclude Include="Application\SourceCode\Tree.h" />
     <ClInclude Include="Application\SourceCode\UIManager.h" />
     <ClInclude Include="Application\SourceCode\Vignette.h" />
+    <ClInclude Include="Application\SourceCode\Wall.h" />
     <ClInclude Include="Application\SourceCode\Weapon.h" />
     <ClInclude Include="Application\SourceCode\Weed.h" />
     <ClInclude Include="NewEngine\Collision\Collider.h" />

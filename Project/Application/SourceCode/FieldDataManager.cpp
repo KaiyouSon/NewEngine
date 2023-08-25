@@ -68,6 +68,13 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 			{
 				LoadRespawnPointData(fieldData.get(), object);
 			}
+			else if (
+				object["obj_name"] == "MainWall" ||
+				object["obj_name"] == "Wall1" ||
+				object["obj_name"] == "Wall2")
+			{
+				LoadWallData(fieldData.get(), object);
+			}
 		}
 	}
 
@@ -250,28 +257,6 @@ void FieldDataManager::LoadTreeData(FieldData* data, nlohmann::json jsonObj)
 
 	data->trees.push_back(std::move(tree));
 }
-void FieldDataManager::LoadWeedData(FieldData* data, nlohmann::json jsonObj)
-{
-	std::unique_ptr<Weed> weed = std::make_unique<Weed>();
-	// トランスフォームのパラメータ読み込み
-	nlohmann::json transform = jsonObj["transform"];
-	Vec3 pos =
-	{
-		(float)transform["translation"][0],
-		(float)transform["translation"][1],
-		(float)transform["translation"][2],
-	};
-	Vec3 scale =
-	{
-		(float)transform["scaling"][0],
-		(float)transform["scaling"][1],
-		(float)transform["scaling"][2],
-	};
-	weed->SetPos(pos);
-	weed->SetGenerateSize(Vec2(scale.x, scale.z) / 2);
-
-	data->weeds.push_back(std::move(weed));
-}
 void FieldDataManager::LoadRespawnPointData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<RespawnPoint> respawnPoint = std::make_unique<RespawnPoint>();
@@ -298,4 +283,71 @@ void FieldDataManager::LoadRespawnPointData(FieldData* data, nlohmann::json json
 	respawnPoint->SetParent(Transform(pos, scale, Radian(angle)));
 
 	data->respawnPoints.push_back(std::move(respawnPoint));
+}
+void FieldDataManager::LoadWeedData(FieldData* data, nlohmann::json jsonObj)
+{
+	std::unique_ptr<Weed> weed = std::make_unique<Weed>();
+	// トランスフォームのパラメータ読み込み
+	nlohmann::json transform = jsonObj["transform"];
+	Vec3 pos =
+	{
+		(float)transform["translation"][0],
+		(float)transform["translation"][1],
+		(float)transform["translation"][2],
+	};
+	Vec3 scale =
+	{
+		(float)transform["scaling"][0],
+		(float)transform["scaling"][1],
+		(float)transform["scaling"][2],
+	};
+	weed->SetPos(pos);
+	weed->SetGenerateSize(Vec2(scale.x, scale.z) / 2);
+
+	data->weeds.push_back(std::move(weed));
+}
+void FieldDataManager::LoadWallData(FieldData* data, nlohmann::json jsonObj)
+{
+	std::unique_ptr<Wall> wall = std::make_unique<Wall>();
+	// トランスフォームのパラメータ読み込み
+	nlohmann::json transform = jsonObj["transform"];
+	Vec3 pos =
+	{
+		(float)transform["translation"][0],
+		(float)transform["translation"][1],
+		(float)transform["translation"][2],
+	};
+	Vec3 scale =
+	{
+		(float)transform["scaling"][0],
+		(float)transform["scaling"][1],
+		(float)transform["scaling"][2],
+	};
+	Vec3 angle =
+	{
+		(float)transform["rotation"][0],
+		(float)transform["rotation"][1],
+		(float)transform["rotation"][2],
+	};
+	wall->SetParent(Transform(pos, scale, Radian(angle)));
+	wall->SetModel(ModelManager::GetModel(jsonObj["obj_name"]));
+
+	// Colliderがあれば
+	if (jsonObj.contains("collider"))
+	{
+		nlohmann::json collider = jsonObj["collider"];
+		if (collider["type"] == "Sphere")
+		{
+			Vec3 pos =
+			{
+				collider["center"][0],
+				collider["center"][1],
+				collider["center"][2],
+			};
+			float radius = collider["size"][0];
+			wall->SetCollider(SphereCollider(pos, radius));
+		}
+	}
+
+	data->walls.push_back(std::move(wall));
 }

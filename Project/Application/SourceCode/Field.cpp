@@ -76,11 +76,18 @@ void Field::Init()
 			mFieldData->weeds[i]->Init();
 		}
 
+		// 壁
+		for (uint32_t i = 0; i < mFieldData->walls.size(); i++)
+		{
+			mFieldData->walls[i]->Init();
+		}
+
 		// リスポーン地点
 		for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
 		{
 			mFieldData->respawnPoints[i]->Init();
 		}
+
 	}
 }
 
@@ -122,6 +129,12 @@ void Field::Update()
 		for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
 		{
 			mFieldData->weeds[i]->Update();
+		}
+
+		// 壁
+		for (uint32_t i = 0; i < mFieldData->walls.size(); i++)
+		{
+			mFieldData->walls[i]->Update();
 		}
 
 		// リスポーン地点
@@ -166,6 +179,12 @@ void Field::DrawModel()
 		for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
 		{
 			mFieldData->weeds[i]->DrawModel();
+		}
+
+		// 壁
+		for (uint32_t i = 0; i < mFieldData->walls.size(); i++)
+		{
+			mFieldData->walls[i]->DrawModel();
 		}
 
 		// リスポーン地点
