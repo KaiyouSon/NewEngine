@@ -104,10 +104,6 @@ void ShadowMap::Update()
 	{
 		mShadowObjs[i].SetCamera(&mLightCamera);
 		mShadowObjs[i].Update();
-		//if (i > mIndex)
-		//{
-		//	break;
-		//}
 	}
 
 	CTransformShadowObj data =
@@ -128,10 +124,6 @@ void ShadowMap::RenderTextureSetting()
 	for (uint32_t i = 0; i < mShadowObjs.size(); i++)
 	{
 		mShadowObjs[i].Draw();
-		//if (i > mIndex)
-		//{
-		//	break;
-		//}
 	}
 	mShadowMapRT->PostDrawScene();
 
