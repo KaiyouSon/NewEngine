@@ -45,6 +45,15 @@ void DebugManager::DrawDebugGui()
 		Gui::EndMenuBar();
 	}
 
+	// ストップする
+	Gui::DrawCheckBox("Stop", &mIsStop);
+	Gui::DrawTab();
+	if (Gui::DrawButton("Next Frame", Vec2(96, 24)))
+	{
+		mIsNextFrame = true;
+	}
+	Gui::DrawLine();
+
 	// 当たり判定の表示
 	bool isShowCollider = ColliderDrawer::GetInstance()->GetisShow();
 	Gui::DrawCheckBox("Show Collider", &isShowCollider);
@@ -56,6 +65,21 @@ void DebugManager::DrawDebugGui()
 
 	static bool isActive = true;
 	Gui::DrawDemoWindow(isActive);
+}
+
+bool DebugManager::GetisStop()
+{
+	return mIsStop;
+}
+
+bool DebugManager::GetisNextFrame()
+{
+	return mIsNextFrame;
+}
+
+void DebugManager::SetisNextFrame(const bool isNextFrame)
+{
+	mIsNextFrame = isNextFrame;
 }
 
 void DebugManager::LoadedWindow(bool* flag)

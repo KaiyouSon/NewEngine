@@ -7,6 +7,8 @@ class DebugManager : public Singleton<DebugManager>
 {
 private:
 	bool mIsActive;
+	bool mIsStop;
+	bool mIsNextFrame;
 
 private:
 	// LoadedŠÖ˜A
@@ -17,6 +19,11 @@ public:
 	void Init();
 	void Update();
 	void DrawDebugGui();
+
+public:
+	bool GetisStop();
+	bool GetisNextFrame();
+	void SetisNextFrame(const bool isNextFrame);
 
 private:
 	friend Singleton<DebugManager>;

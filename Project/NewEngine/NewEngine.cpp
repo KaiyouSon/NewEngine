@@ -78,9 +78,14 @@ void NewEngineUpda()
 	if (isLoaded == true)
 	{
 		InputManager::GetInstance()->Update();
-		LightManager::GetInstance()->Update();
-		SceneManager::GetInstance()->Update();
 		DebugManager::GetInstance()->Update();
+		if (DebugManager::GetInstance()->GetisStop() == false ||
+			DebugManager::GetInstance()->GetisNextFrame() == true)
+		{
+			LightManager::GetInstance()->Update();
+			SceneManager::GetInstance()->Update();
+			DebugManager::GetInstance()->SetisNextFrame(false);
+		}
 	}
 }
 void NewEnginePreDraw()
