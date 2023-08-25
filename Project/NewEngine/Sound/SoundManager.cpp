@@ -43,6 +43,11 @@ void SoundManager::SetPitch(std::string soundTag, float pitch)
 	sSoundMap[soundTag]->SetPitch(pitch);
 }
 
+std::map<std::string, std::unique_ptr<Sound>>* SoundManager::GetSoundMap()
+{
+	return &sSoundMap;
+}
+
 void SoundManager::Init()
 {
 	HRESULT result;

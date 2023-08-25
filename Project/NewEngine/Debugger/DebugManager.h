@@ -1,5 +1,6 @@
 #pragma once
 #include "Singleton.h"
+#include "MappingWindow.h"
 
 template<typename T> class Singleton;
 
@@ -11,9 +12,7 @@ private:
 	bool mIsNextFrame;
 
 private:
-	// LoadedŠÖ˜A
-	bool mIsShowLoadedWindow;
-	void LoadedWindow(bool* flag);
+	std::unique_ptr<MappingWindow> mMappingWindow;
 
 public:
 	void Init();
@@ -27,5 +26,6 @@ public:
 
 private:
 	friend Singleton<DebugManager>;
+	DebugManager();
 };
 

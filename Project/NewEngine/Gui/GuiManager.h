@@ -2,6 +2,7 @@
 #include "imgui.h"
 #include "Util.h"
 #include "Texture.h"
+#include <stdint.h>
 
 namespace Gui
 {
@@ -44,7 +45,7 @@ namespace Gui
 	void DrawString(const char* fmt, ...);
 	void DrawCheckBox(const char* label, bool* flag);
 
-	bool DrawRadioButton(const char* label, int& current, const int& index, const bool& isTab = true);
+	bool DrawRadioButton(const char* label, uint32_t* current, const uint32_t index, const bool isTab = true);
 
 	void DrawSlider1(const char* label, float& v, const float& moveSpeed = 1.f);
 	void DrawSlider2(const char* label, Vec2& v, const float& moveSpeed = 1.f);

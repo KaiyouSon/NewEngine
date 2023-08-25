@@ -205,9 +205,9 @@ void Gui::DrawCheckBox(const char* label, bool* flag)
 	ImGui::Checkbox(label, flag);
 }
 
-bool Gui::DrawRadioButton(const char* label, int& current, const int& index, const bool& isTab)
+bool Gui::DrawRadioButton(const char* label, uint32_t* current, const uint32_t index, const bool isTab)
 {
-	bool flag = ImGui::RadioButton(label, &current, index);
+	bool flag = ImGui::RadioButton(label, (int*)current, (int)index);
 	if (isTab == true)
 	{
 		ImGui::SameLine();

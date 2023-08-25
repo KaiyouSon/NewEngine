@@ -268,6 +268,12 @@
     <Filter Include="Application\Header\Grass">
       <UniqueIdentifier>{796449d9-75b4-489f-8fed-945b7f8f3fb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NewEngine\Header\Debugger">
+      <UniqueIdentifier>{edb8e02b-5b82-4eee-b83f-cd23a4e96d35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Debugger">
+      <UniqueIdentifier>{cb973788-dcfc-4393-b3b7-b308ef56152c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -681,11 +687,14 @@
     <ClCompile Include="Application\SourceCode\TransitionManager.cpp">
       <Filter>Application\Source\Transition</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\DebugManager.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\Wall.cpp">
       <Filter>Application\Source\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\DebugManager.cpp">
+      <Filter>NewEngine\Source\Debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\MappingWindow.cpp">
+      <Filter>NewEngine\Source\Debugger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1136,11 +1145,14 @@
     <ClInclude Include="Application\SourceCode\TransitionManager.h">
       <Filter>Application\Header\Transition</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\DebugManager.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\Wall.h">
       <Filter>Application\Header\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\DebugManager.h">
+      <Filter>NewEngine\Header\Debugger</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\MappingWindow.h">
+      <Filter>NewEngine\Header\Debugger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -20,6 +20,8 @@ public:
 	static void SetVolume(std::string soundTag, float volume);
 	static void SetPitch(std::string soundTag, float pitch);
 
+	static std::map<std::string, std::unique_ptr<Sound>>* GetSoundMap();
+
 	static void Init();
 	static void Destroy();
 	static IXAudio2* GetXAudio2() { return sXAudio2.Get(); }

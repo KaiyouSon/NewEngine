@@ -241,7 +241,12 @@ Model* ModelManager::LoadFbxModel(const std::string fileName, const std::string 
 	OutputDebugLog(log.c_str());
 
 	return sModelMap[modelTag].get();
-}\
+}
+
+std::unordered_map<std::string, std::unique_ptr<Model>>* ModelManager::GetModelMap()
+{
+	return &sModelMap;
+}
 
 // .mtlƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
 void ModelManager::LoadMaterialColor(std::string filePath, Model* model)

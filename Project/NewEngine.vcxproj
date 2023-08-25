@@ -64,7 +64,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Debugger;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -89,7 +89,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Debugger;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -190,7 +190,7 @@
     <ClCompile Include="NewEngine\Collision\Grass.cpp" />
     <ClCompile Include="NewEngine\Collision\ICollider.cpp" />
     <ClCompile Include="NewEngine\Collision\SkyIsland.cpp" />
-    <ClCompile Include="NewEngine\DebugManager.cpp" />
+    <ClCompile Include="NewEngine\Debugger\DebugManager.cpp" />
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp" />
     <ClCompile Include="NewEngine\Input\InputManager.cpp" />
     <ClCompile Include="NewEngine\Input\JoypadInput.cpp" />
@@ -199,6 +199,7 @@
     <ClCompile Include="NewEngine\Light\CircleShadow.cpp" />
     <ClCompile Include="NewEngine\Light\LightManager.cpp" />
     <ClCompile Include="NewEngine\main.cpp" />
+    <ClCompile Include="NewEngine\Debugger\MappingWindow.cpp" />
     <ClCompile Include="NewEngine\Math\Mat4.cpp" />
     <ClCompile Include="NewEngine\Math\MathUtil.cpp" />
     <ClCompile Include="NewEngine\Math\Quaternion.cpp" />
@@ -337,7 +338,7 @@
     <ClInclude Include="NewEngine\Collision\Grass.h" />
     <ClInclude Include="NewEngine\Collision\ICollider.h" />
     <ClInclude Include="NewEngine\Collision\SkyIsland.h" />
-    <ClInclude Include="NewEngine\DebugManager.h" />
+    <ClInclude Include="NewEngine\Debugger\DebugManager.h" />
     <ClInclude Include="NewEngine\Gui\GuiManager.h" />
     <ClInclude Include="NewEngine\Input\InputManager.h" />
     <ClInclude Include="NewEngine\Input\JoypadInput.h" />
@@ -345,6 +346,7 @@
     <ClInclude Include="NewEngine\Input\MouseInput.h" />
     <ClInclude Include="NewEngine\Light\CircleShadow.h" />
     <ClInclude Include="NewEngine\Light\LightManager.h" />
+    <ClInclude Include="NewEngine\Debugger\MappingWindow.h" />
     <ClInclude Include="NewEngine\Math\Mat4.h" />
     <ClInclude Include="NewEngine\Math\MathUtil.h" />
     <ClInclude Include="NewEngine\Math\Quaternion.h" />

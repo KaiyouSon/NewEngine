@@ -1,11 +1,15 @@
 #include "DebugManager.h"
 #include "NewEngine.h"
 
+DebugManager::DebugManager() :
+	mMappingWindow(std::make_unique<MappingWindow>())
+{
+
+}
+
 void DebugManager::Init()
 {
 	mIsActive = true;
-
-	mIsShowLoadedWindow = false;
 }
 
 void DebugManager::Update()
@@ -38,7 +42,10 @@ void DebugManager::DrawDebugGui()
 		{
 			Gui::BeginMenuBar();
 
-			if (Gui::MenuItem("Loaded")) mIsShowLoadedWindow = true;
+			if (Gui::MenuItem("All Map"))
+			{
+				mMappingWindow->SetisShow(true);
+			}
 
 			Gui::EndMenu();
 		}
@@ -61,7 +68,7 @@ void DebugManager::DrawDebugGui()
 
 	Gui::EndWindow();
 
-	LoadedWindow(&mIsShowLoadedWindow);
+	mMappingWindow->DrawDebugGUI();
 
 	static bool isActive = true;
 	Gui::DrawDemoWindow(isActive);
@@ -82,27 +89,4 @@ void DebugManager::SetisNextFrame(const bool isNextFrame)
 	mIsNextFrame = isNextFrame;
 }
 
-void DebugManager::LoadedWindow(bool* flag)
-{
-	if (mIsShowLoadedWindow == false)
-	{
-		return;
-	}
 
-	Gui::BeginWindow("Loaded Window", -1, flag);
-
-	Gui::DrawString("std::unordered_map<std::string, std::unique_ptr<Texture>>");
-
-	for (const auto& pair : *TextureManager::GetTextureMap())
-	{
-		if (Gui::DrawCollapsingHeader(pair.first.c_str()))
-		{
-			Gui::DrawString("Texture Size : (%f,%f)", pair.second->size.x, pair.second->size.y);
-			Gui::DrawImage(pair.second.get(), pair.second->size);
-
-		}
-		Gui::DrawLine();
-	}
-
-	Gui::EndWindow();
-}

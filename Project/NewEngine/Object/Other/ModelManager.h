@@ -21,5 +21,7 @@ public:	// モデル関連
 	// fbxファイルからモデルをロードしマップの格納する
 	static Model* LoadFbxModel(const std::string fileName, const std::string modelTag);
 
+	static std::unordered_map<std::string, std::unique_ptr<Model>>* GetModelMap();
+
 	static void LoadMaterialColor(std::string filePath, Model* model);
 };
