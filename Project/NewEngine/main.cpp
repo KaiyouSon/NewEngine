@@ -4,19 +4,22 @@
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-	SetWindowTitle("PON_DE_RING");
-	SetWindowSize({ 1920, 1080 });
-	SetBackGroundColor(25.5, 63.75, 127.5);
-	SetFrameRate(60);
-	NewEngineInit();	// エンジンの初期化
+	NewEngineSetting setting;
+	setting.windowTitle = "PON_DE_RING";
+	setting.windowSize = Vec2(1920, 1080);
+	setting.bgColor = Color(25.5, 63.75, 127.5);
+	setting.frameRate = 60.f;
+
+	std::unique_ptr<NewEngine> newEngine = std::make_unique<NewEngine>(setting);
+	newEngine->Init();	// エンジンの初期化
 
 	// ゲームループ
 	while (true)
 	{
-		NewEngineUpda();		// エンジンの更新処理
-		NewEnginePreDraw();		// エンジン描画前処理
-		NewEneineDraw();		// エンジンの描画処理
-		NewEnginePostDraw();	// エンジン描画後処理
+		newEngine->Update();	// エンジンの更新処理
+		newEngine->PrevDraw();	// エンジン描画前処理
+		newEngine->Draw();		// エンジンの描画処理
+		newEngine->PostDraw();	// エンジン描画後処理
 
 		bool isCloseGame =
 			LogoutMenu::GetisEnd() == true &&
@@ -27,7 +30,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			break;
 		}
 
-		if (ProcessMessage())
+		if (newEngine->ProcessMessage())
 		{
 			break;
 		}
@@ -40,10 +43,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 #endif // DEBUG
 
-		FrameRateUpdate();
+		newEngine->FrameControl();
 	}
-
-	NewEngineEnd();	// エンジンのエンド処理
 
 	// 正常終了
 	return 0;

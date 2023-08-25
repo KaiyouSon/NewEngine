@@ -28,6 +28,9 @@
 #include "ConstantBufferData.h"
 #include "ColliderDrawer.h"
 
+#include "RenderBase.h"
+#include "RenderWindow.h"
+
 // c++
 #include <memory>
 #include <vector>
@@ -42,18 +45,42 @@
 #include <algorithm>
 #include <queue>
 
-void NewEngineInit();
-void NewEngineUpda();
-void NewEnginePreDraw();
-void NewEneineDraw();
-void NewEnginePostDraw();
-void NewEngineEnd();
+struct NewEngineSetting
+{
+	std::string windowTitle;	// ウィンドウタイトル
+	Vec2 windowSize;			// ウィンドウサイズ
+	Color bgColor;				// 背景色
+	float frameRate;			// フレームレート
+};
 
-// ウインドウ関連
-bool ProcessMessage();
-void SetWindowTitle(const std::string& title);
-void SetWindowSize(const Vec2& size);
-void SetBackGroundColor(const float& r, const float& g, const float& b);
+class NewEngine
+{
+private:
+	NewEngineSetting mSetting;
+	RenderWindow* mRenderWindow;
+	RenderBase* mRenderBase;
+
+private:
+	void Setting();
+
+public:
+	NewEngine(const NewEngineSetting& setting);
+	~NewEngine();
+
+	void Init();
+	void Update();
+	void Draw();
+	void PrevDraw();
+	void PostDraw();
+
+	void FrameControl();
+	
+public:
+	// ウインドウ関連
+	bool ProcessMessage();
+
+};
+
 Vec2 GetWindowSize();
 Vec2 GetWindowHalfSize();
 
