@@ -55,9 +55,9 @@ void SceneManager::Init()
 
 void SceneManager::Update()
 {
+	Camera::current.Update();
 	sCurrentScene->Update();
 	TransitionManager::GetInstance()->Update();
-	Camera::current.Update();
 
 	SceneChanger::GetInstance()->Update();
 }
