@@ -19,6 +19,7 @@ private:
 
 private:
 	void ShowTextureMap();
+	void ShowRenderTextureMap();
 	void ShowModelMap();
 	void ShowSoundMap();
 

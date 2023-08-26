@@ -1,7 +1,8 @@
 #include "Skydome.h"
 
 Skydome::Skydome() :
-	mSkydome(std::make_unique<Object3D>())
+	mSkydome(std::make_unique<Object3D>()),
+	mPostEffect(std::make_unique<PostEffect>())
 {
 	mSkydome->SetModel(ModelManager::GetModel("Skydome"));
 	mSkydome->color = Color(0xc4c178);
@@ -20,6 +21,9 @@ Skydome::Skydome() :
 		};
 		mClouds.back()->SetPos(randomPos);
 	}
+
+	mRenderTexture = TextureManager::GetRenderTexture("Skydome");
+	mPostEffect->AddRenderTexture(mRenderTexture);
 }
 
 void Skydome::Init()
@@ -36,7 +40,7 @@ void Skydome::Update()
 	}
 }
 
-void Skydome::DrawModel()
+void Skydome::Draw()
 {
 	mSkydome->Draw();
 	for (uint32_t i = 0; i < mClouds.size(); i++)

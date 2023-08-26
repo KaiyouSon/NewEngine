@@ -49,6 +49,7 @@ public: // レンダーテクスチャー関連
 public:
 	// マップ
 	static std::unordered_map<std::string, std::unique_ptr<Texture>>* GetTextureMap();
+	static std::unordered_map<std::string, std::unique_ptr<RenderTexture>>* GetRenderTextureMap();
 
 public:
 	// 深度テクスチャーを生成

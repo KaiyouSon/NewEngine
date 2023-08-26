@@ -749,6 +749,11 @@ std::unordered_map<std::string, std::unique_ptr<Texture>>* TextureManager::GetTe
 	return &sTextureMap;
 }
 
+std::unordered_map<std::string, std::unique_ptr<RenderTexture>>* TextureManager::GetRenderTextureMap()
+{
+	return &sRenderTextureMap;
+}
+
 #pragma region その他の処理
 
 // ディスクリプターヒープを作成する処理

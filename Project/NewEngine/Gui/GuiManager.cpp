@@ -262,6 +262,13 @@ void Gui::DrawImage(Texture* texture, const Vec2& size)
 	ImGui::Image(gpuHandle, textureSize);
 }
 
+void Gui::DrawImage(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle, const Vec2& size)
+{
+	ImTextureID handle = (ImTextureID)gpuHandle.ptr;
+	ImVec2 textureSize = { size.x,size.y };
+	ImGui::Image(handle, textureSize);
+}
+
 bool Gui::DrawImageButton(Texture* texture, const Vec2& size)
 {
 	if (texture == nullptr) return false;

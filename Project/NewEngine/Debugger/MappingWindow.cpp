@@ -20,6 +20,7 @@ void MappingWindow::DrawDebugGUI()
 
 	Gui::DrawRadioButton("None", &currentType, None);
 	Gui::DrawRadioButton("Texture Map", &currentType, Texture);
+	Gui::DrawRadioButton("RenderTexture Map", &currentType, RenderTexture);
 	Gui::DrawRadioButton("Model Map", &currentType, Model);
 	Gui::DrawRadioButton("Sound Map", &currentType, Sound);
 	Gui::DrawLine();
@@ -28,6 +29,10 @@ void MappingWindow::DrawDebugGUI()
 	{
 	case Texture:
 		ShowTextureMap();
+		break;
+
+	case RenderTexture:
+		ShowRenderTextureMap();
 		break;
 
 	case Model:
@@ -51,14 +56,40 @@ void MappingWindow::ShowTextureMap()
 	{
 		if (Gui::DrawCollapsingHeader(pair.first.c_str()))
 		{
-			Gui::DrawString("Texture Size : (%f,%f)", pair.second->size.x, pair.second->size.y);
-			Gui::DrawImage(pair.second.get(), pair.second->size);
+			Vec2 size = pair.second->size;
+			Gui::DrawString("Texture Size : (%f,%f)", size.x, size.y);
+			size = size >= 1000 ? size / 10.f : size;
+			Gui::DrawImage(pair.second.get(), size);
 
 		}
 		Gui::DrawLine();
 	}
 }
+void MappingWindow::ShowRenderTextureMap()
+{
+	Gui::DrawString("RenderTexture Map");
+	Gui::DrawLine();
 
+	for (const auto& pair : *TextureManager::GetRenderTextureMap())
+	{
+		if (Gui::DrawCollapsingHeader(pair.first.c_str()))
+		{
+			Vec2 size = pair.second->size;
+			Gui::DrawString("Texture Size : (%f,%f)", size.x, size.y);
+			size = size >= 1000 ? size / 10.f : size;
+			size = size >= 10000 ? size / 100.f : size;
+
+			for (uint32_t i = 0; i < pair.second.get()->buffers.size(); i++)
+			{
+				Gui::DrawString("Pass %d", i);
+
+				Gui::DrawImage(pair.second.get()->GetGpuHandle(i), size);
+			}
+
+		}
+		Gui::DrawLine();
+	}
+}
 void MappingWindow::ShowModelMap()
 {
 	Gui::DrawString("Model Map");
@@ -81,7 +112,6 @@ void MappingWindow::ShowModelMap()
 		Gui::DrawLine();
 	}
 }
-
 void MappingWindow::ShowSoundMap()
 {
 	Gui::DrawString("Sound Map");
@@ -114,7 +144,6 @@ void MappingWindow::SetisShow(const bool isShow)
 {
 	mIsShow = isShow;
 }
-
 bool MappingWindow::GetisShow()
 {
 	return mIsShow;

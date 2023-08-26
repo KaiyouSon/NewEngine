@@ -148,7 +148,7 @@ void Field::Update()
 void Field::DrawModel()
 {
 	//mSphere->Draw();
-	mSkydome->DrawModel();
+	mSkydome->Draw();
 	//mMainGateWall->Draw();
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
 	{

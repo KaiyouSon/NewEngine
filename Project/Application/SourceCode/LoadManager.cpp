@@ -108,6 +108,8 @@ bool LoadManager::TextureLoad()
 	//TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 2, 1, "ShadowMap");
 	//TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 2, 1, "ShadowMapBlur");
 
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080) , 1, "Skydome");
+
 	// ƒuƒ‹[ƒ€
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "HighLumi");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BGaussainBlur");

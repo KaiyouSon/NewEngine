@@ -9,7 +9,7 @@ DebugManager::DebugManager() :
 
 void DebugManager::Init()
 {
-	mIsActive = true;
+	mIsActive = false;
 }
 
 void DebugManager::Update()
@@ -70,8 +70,8 @@ void DebugManager::DrawDebugGui()
 
 	mMappingWindow->DrawDebugGUI();
 
-	static bool isActive = true;
-	Gui::DrawDemoWindow(isActive);
+	//static bool isActive = true;
+	//Gui::DrawDemoWindow(isActive);
 }
 
 bool DebugManager::GetisStop()
