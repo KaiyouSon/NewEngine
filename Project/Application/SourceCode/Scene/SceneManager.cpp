@@ -16,6 +16,7 @@
 #include "RespawnPointUI.h"
 #include "Tree.h"
 #include "Grass.h"
+#include "Skydome.h"
 #include "FieldDataManager.h"
 #include "TransitionManager.h"
 
@@ -31,6 +32,7 @@ SceneManager::SceneManager()
 	RespawnPointUI::CreateGraphicsPipeline();
 	Tree::CreateGraphicsPipeline();
 	Grass::CreateGraphicsPipeline();
+	Skydome::CreateGraphicsPipeline();
 
 	FieldDataManager::Load("SkyIsland", "SkyIsland");
 

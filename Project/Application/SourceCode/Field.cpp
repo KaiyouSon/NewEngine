@@ -145,6 +145,11 @@ void Field::Update()
 	}
 }
 
+void Field::RenderTextureSetting()
+{
+	mSkydome->RenderTextureSetting();
+}
+
 void Field::DrawModel()
 {
 	//mSphere->Draw();

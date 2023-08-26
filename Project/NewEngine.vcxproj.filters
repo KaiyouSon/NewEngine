@@ -262,17 +262,20 @@
     <Filter Include="Shader\Application\Grass">
       <UniqueIdentifier>{956d59f5-2312-4aa5-839b-1801557317bf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Source\Grass">
-      <UniqueIdentifier>{fa0aa4ee-a39f-4904-a52c-fc95561f4400}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Header\Grass">
-      <UniqueIdentifier>{796449d9-75b4-489f-8fed-945b7f8f3fb0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="NewEngine\Header\Debugger">
       <UniqueIdentifier>{edb8e02b-5b82-4eee-b83f-cd23a4e96d35}</UniqueIdentifier>
     </Filter>
     <Filter Include="NewEngine\Source\Debugger">
       <UniqueIdentifier>{cb973788-dcfc-4393-b3b7-b308ef56152c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\Field\Grass">
+      <UniqueIdentifier>{fa0aa4ee-a39f-4904-a52c-fc95561f4400}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\Field\Grass">
+      <UniqueIdentifier>{796449d9-75b4-489f-8fed-945b7f8f3fb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\Skydome">
+      <UniqueIdentifier>{146f96ec-24ea-4e76-a9ca-b4b66c7a0476}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -676,10 +679,10 @@
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Collision\Grass.cpp">
-      <Filter>Application\Source\Grass</Filter>
+      <Filter>Application\Source\Field\Grass</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Weed.cpp">
-      <Filter>Application\Source\Grass</Filter>
+      <Filter>Application\Source\Field\Grass</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\ITransition.cpp">
       <Filter>Application\Source\Transition</Filter>
@@ -1134,10 +1137,10 @@
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Collision\Grass.h">
-      <Filter>Application\Header\Grass</Filter>
+      <Filter>Application\Header\Field\Grass</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Weed.h">
-      <Filter>Application\Header\Grass</Filter>
+      <Filter>Application\Header\Field\Grass</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\ITransition.h">
       <Filter>Application\Header\Transition</Filter>
@@ -1248,6 +1251,9 @@
     </None>
     <None Include="Application\Shader\Grass.hlsli">
       <Filter>Shader\Application\Grass</Filter>
+    </None>
+    <None Include="Application\Shader\Skydome.hlsli">
+      <Filter>Shader\Application\Skydome</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1433,6 +1439,12 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\GrassGS.hlsl">
       <Filter>Shader\Application\Grass</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\SkydomeVS.hlsl">
+      <Filter>Shader\Application\Skydome</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\SkydomePS.hlsl">
+      <Filter>Shader\Application\Skydome</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

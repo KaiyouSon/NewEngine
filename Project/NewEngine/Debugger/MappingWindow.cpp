@@ -76,8 +76,7 @@ void MappingWindow::ShowRenderTextureMap()
 		{
 			Vec2 size = pair.second->size;
 			Gui::DrawString("Texture Size : (%f,%f)", size.x, size.y);
-			size = size >= 1000 ? size / 10.f : size;
-			size = size >= 10000 ? size / 100.f : size;
+			size = size >= 10000 ? size / 10.f : size;
 
 			for (uint32_t i = 0; i < pair.second.get()->buffers.size(); i++)
 			{

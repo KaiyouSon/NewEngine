@@ -38,6 +38,8 @@ void NewEngine::Setting()
 
 void NewEngine::Init()
 {
+	Setting();
+
 	// ウィンドウ生成
 	mRenderWindow->CreateGameWindow();
 

@@ -1,5 +1,25 @@
 #include "Skydome.h"
 
+void Skydome::CreateGraphicsPipeline()
+{
+	std::string path = "Application/Shader/";
+
+	// ShadowObj用
+	ShaderObjectManager::Create("Skydome");
+	ShaderObjectManager::GetShaderObject("Skydome")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderObjectManager::GetShaderObject("Skydome")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderObjectManager::GetShaderObject("Skydome")->CompileVertexShader(path + "SkydomeVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Skydome")->CompilePixelShader(path + "SkydomePS.hlsl", "main");
+
+	// 3Dオブジェクト用
+	GraphicsPipelineSetting setting =
+		GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
+	setting.shaderObject = ShaderObjectManager::GetShaderObject("Skydome");
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.constantBufferViewNum = 3;
+	GraphicsPipelineManager::Create(setting, "Skydome");
+}
+
 Skydome::Skydome() :
 	mSkydome(std::make_unique<Object3D>()),
 	mPostEffect(std::make_unique<PostEffect>())
@@ -23,7 +43,14 @@ Skydome::Skydome() :
 	}
 
 	mRenderTexture = TextureManager::GetRenderTexture("Skydome");
+	mRenderTexture->useDepth = false;
+	mPostEffect->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Skydome"));
 	mPostEffect->AddRenderTexture(mRenderTexture);
+	mPostEffect->AddMaterial(ConstantBuffer<ConstantBufferData::CVignette>{});
+	mPostEffect->pos = GetWindowHalfSize();
+
+	mVignetteData.range = Vec2(0.2f, 1.7f);
+	mVignetteData.color = Color::black;
 }
 
 void Skydome::Init()
@@ -38,20 +65,32 @@ void Skydome::Update()
 	{
 		mClouds[i]->Update();
 	}
+	mPostEffect->SetTransferBuffer(2, mVignetteData);
+	mPostEffect->Update();
 }
 
-void Skydome::Draw()
+void Skydome::RenderTextureSetting()
 {
+	mRenderTexture->PrevDrawScene();
 	mSkydome->Draw();
 	for (uint32_t i = 0; i < mClouds.size(); i++)
 	{
 		mClouds[i]->DrawModel();
 	}
+	mRenderTexture->PostDrawScene();
+}
+
+void Skydome::Draw()
+{
+	mPostEffect->SetDrawCommands(2, 2);
+	mPostEffect->Draw();
 }
 
 void Skydome::DrawDebugGui()
 {
 	Gui::BeginWindow("Skydome");
 	Gui::DrawColorEdit("Skydome Color", mSkydome->color);
+	Gui::DrawSlider2("Vignette Range", mVignetteData.range, 0.01f);
+	Gui::DrawColorEdit("Vignette Color", mVignetteData.color);
 	Gui::EndWindow();
 }

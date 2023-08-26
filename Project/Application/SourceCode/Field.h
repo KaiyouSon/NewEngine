@@ -21,6 +21,7 @@ public:
 	Field();
 	void Init();
 	void Update();
+	void RenderTextureSetting();
 	void DrawModel();
 	void DrawFrontSprite();
 	void DrawDebugGui();

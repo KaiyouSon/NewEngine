@@ -163,6 +163,7 @@ void GameScene::Update()
 void GameScene::RenderTextureSetting()
 {
 	ShadowMap::GetInstance()->RenderTextureSetting();
+	mField->RenderTextureSetting();
 }
 
 void GameScene::DrawRenderTexture()
@@ -176,10 +177,9 @@ void GameScene::DrawModel()
 {
 	//mShadowMap.DrawPostEffect();
 
-
+	mField->DrawModel();
 	mPlayer->DrawModel();
 	mBoss->DrawModel();
-	mField->DrawModel();
 
 	EffectManager::GetInstance()->DrawModel();
 
@@ -219,7 +219,7 @@ void GameScene::DrawDebugGui()
 
 	//GuiManager::EndWindow();
 
-	//mField->DrawDebugGui();
+	mField->DrawDebugGui();
 
 	//mPlayer->DrawDebugGui();
 }
