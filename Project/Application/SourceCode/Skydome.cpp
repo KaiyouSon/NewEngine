@@ -49,6 +49,7 @@ Skydome::Skydome() :
 	mPostEffect->AddMaterial(ConstantBuffer<ConstantBufferData::CVignette>{});
 	mPostEffect->pos = GetWindowHalfSize();
 
+	isVignette = true;
 	mVignetteData.range = Vec2(0.2f, 1.7f);
 	mVignetteData.color = Color::black;
 }
@@ -82,14 +83,26 @@ void Skydome::RenderTextureSetting()
 
 void Skydome::Draw()
 {
-	mPostEffect->SetDrawCommands(2, 2);
-	mPostEffect->Draw();
+	if (isVignette == false)
+	{
+		mSkydome->Draw();
+		for (uint32_t i = 0; i < mClouds.size(); i++)
+		{
+			mClouds[i]->DrawModel();
+		}
+	}
+	else
+	{
+		mPostEffect->SetDrawCommands(2, 2);
+		mPostEffect->Draw();
+	}
 }
 
 void Skydome::DrawDebugGui()
 {
 	Gui::BeginWindow("Skydome");
 	Gui::DrawColorEdit("Skydome Color", mSkydome->color);
+	Gui::DrawCheckBox("Use Vignette", &isVignette);
 	Gui::DrawSlider2("Vignette Range", mVignetteData.range, 0.01f);
 	Gui::DrawColorEdit("Vignette Color", mVignetteData.color);
 	Gui::EndWindow();

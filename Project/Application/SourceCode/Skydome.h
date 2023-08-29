@@ -9,6 +9,7 @@ private:
 	std::vector<std::unique_ptr<Cloud>> mClouds;
 	std::unique_ptr<PostEffect> mPostEffect;
 	RenderTexture* mRenderTexture;
+	bool isVignette;
 	ConstantBufferData::CVignette mVignetteData;
 
 
