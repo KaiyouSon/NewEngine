@@ -1,9 +1,7 @@
 // 3D•ÏŠ·s—ñ
 cbuffer ConstantBufferDataTransform : register(b0)
 {
-    matrix viewProjMat;
-    matrix worldMat;
-    float3 cameraPos;
+    matrix wvpMat;
 }
 
 // F

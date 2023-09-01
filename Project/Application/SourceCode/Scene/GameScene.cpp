@@ -58,6 +58,10 @@ void GameScene::Init()
 	LightManager::GetInstance()->directionalLight.pos = Vec3(-400, 400, -100);
 
 	isInit = false;
+
+	colli.isActive = true;
+	colli.centerPos = GetWindowHalfSize();
+	colli.radius = 32;
 }
 void GameScene::Update()
 {
@@ -87,6 +91,7 @@ void GameScene::Update()
 
 	auto collider = mPlayer->GetBodyCollider();
 	ColliderDrawer::GetInstance()->Bind(&collider);
+	ColliderDrawer::GetInstance()->Bind(&colli);
 
 	mMenuManager->Update();
 	mField->Update();

@@ -7,10 +7,18 @@ uint32_t ColliderDrawer::index = 0;
 void ColliderDrawer::Load()
 {
 	// コライダーモデルのロード
+	ModelManager::LoadObjModel("Collider/CircleCollider", "CircleCollider");
+	ModelManager::LoadObjModel("Collider/SquareCollider", "SquareCollider");
 	ModelManager::LoadObjModel("Collider/SphereCollider", "SphereCollider");
 	ModelManager::LoadObjModel("Collider/CubeCollider", "CubeCollider");
 	ModelManager::LoadObjModel("Collider/CapsuleColliderParts1", "CapsuleColliderParts1");
 	ModelManager::LoadObjModel("Collider/CapsuleColliderParts2", "CapsuleColliderParts2");
+
+	// 円
+	mModels.insert(std::make_pair("CircleCollider", ModelManager::GetModel("CircleCollider")));
+
+	// 矩形
+	mModels.insert(std::make_pair("SquareCollider", ModelManager::GetModel("SquareCollider")));
 
 	// 球体
 	mModels.insert(std::make_pair("SphereCollider", ModelManager::GetModel("SphereCollider")));
@@ -95,6 +103,34 @@ void ColliderDrawer::Bind(ICollider* collider)
 	// コライダーを構成するために必要な数分格納する
 	switch (collider->primitive)
 	{
+	case ColliderPrimitive::Circle:
+	{
+		// キャスト
+		CircleCollider* castCollider = dynamic_cast<CircleCollider*>(collider);
+		mColliderObjects[index]->model = mModels["CircleCollider"];
+		mColliderObjects[index]->transform.pos = castCollider->centerPos;
+		mColliderObjects[index]->transform.scale = castCollider->radius;
+		mColliderObjects[index]->transform.rot = 0;
+		mColliderObjects[index]->color = Color::white;
+		mColliderObjects[index]->is3D = false;
+		index++;
+	}
+	break;
+
+	case ColliderPrimitive::Square:
+	{
+		// キャスト
+		SquareCollider* castCollider = dynamic_cast<SquareCollider*>(collider);
+		mColliderObjects[index]->model = mModels["SquareCollider"];
+		mColliderObjects[index]->transform.pos = castCollider->centerPos;
+		mColliderObjects[index]->transform.scale = castCollider->size;
+		mColliderObjects[index]->transform.rot = 0;
+		mColliderObjects[index]->color = Color::white;
+		mColliderObjects[index]->is3D = false;
+		index++;
+	}
+	break;
+
 	case ColliderPrimitive::Sphere:
 	{
 		// キャスト

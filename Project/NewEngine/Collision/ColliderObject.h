@@ -19,15 +19,12 @@ public:
 	Transform transform;
 	Model* model;
 	Color color;
+	bool is3D;
 
 private:
 	void MaterialInit();
 	void MaterialTransfer();
 	void MaterialDrawCommands();
-
-private:
-	void GenerateSphere();
-	void GenerateCapsule();
 
 public:
 	ColliderObject();

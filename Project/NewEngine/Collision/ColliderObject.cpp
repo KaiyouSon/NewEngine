@@ -7,7 +7,7 @@ using namespace ConstantBufferData;
 
 ColliderObject::ColliderObject() :
 	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("ColliderObject")),
-	model(nullptr), mCamera(&Camera::current)
+	model(nullptr), mCamera(&Camera::current), is3D(true)
 {
 	// マテリアルの初期化
 	MaterialInit();
@@ -59,7 +59,7 @@ void ColliderObject::MaterialInit()
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
 	// 3D行列
-	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform3D>>();
+	iConstantBuffer = std::make_unique<ConstantBuffer<CTransformCollider>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// 色
@@ -72,13 +72,18 @@ void ColliderObject::MaterialInit()
 void ColliderObject::MaterialTransfer()
 {
 	// マトリックス
-	CTransform3D transform3DData =
+	CTransformCollider transformColliderData =
 	{
-		mCamera->GetViewLookToMat() * mCamera->GetPerspectiveProjectionMat(),
-		transform.GetWorldMat(),
-		mCamera->pos,
+		is3D == true ?
+		// 3Dの場合
+		transform.GetWorldMat() *
+		mCamera->GetViewLookToMat() *
+		mCamera->GetPerspectiveProjectionMat():
+		// 2Dの場合
+		transform.GetWorldMat() *
+		mCamera->GetOrthoGrphicProjectionMat()
 	};
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transform3DData);
+	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformColliderData);
 
 	// 色データ
 	CColor colorData = { color / 255 };

@@ -5,12 +5,12 @@
 CircleCollider::CircleCollider() :
 	centerPos(0), radius(1)
 {
-	primitive = ColliderPrimitive::Sphere;
+	primitive = ColliderPrimitive::Circle;
 }
 CircleCollider::CircleCollider(const Vec2 centerPos, const float radius) :
 	centerPos(centerPos), radius(radius)
 {
-	primitive = ColliderPrimitive::Sphere;
+	primitive = ColliderPrimitive::Circle;
 }
 
 // ----- 矩形コライダー ----------------- //
