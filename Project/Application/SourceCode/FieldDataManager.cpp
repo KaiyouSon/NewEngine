@@ -146,25 +146,23 @@ void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 				{
 					nlohmann::json collider = child["collider"];
 
-					if (collider["type"] == "None")
+					if (collider["type"] == "Box")
 					{
-						continue;
+						Vec3 pos =
+						{
+							collider["center"][0],
+							collider["center"][1],
+							collider["center"][2],
+						};
+						Vec3 size =
+						{
+							collider["size"][0],
+							collider["size"][1],
+							collider["size"][2],
+						};
+
+						coffin->SetBottomCollider(CubeCollider(pos, size));
 					}
-
-					Vec3 pos =
-					{
-						collider["center"][0],
-						collider["center"][1],
-						collider["center"][2],
-					};
-					Vec3 size =
-					{
-						collider["size"][0],
-						collider["size"][1],
-						collider["size"][2],
-					};
-
-					coffin->SetBottomCollider(CubeCollider(pos, size));
 				}
 			}
 			else if (child["obj_name"] == "CoffinTop")
@@ -251,7 +249,7 @@ void FieldDataManager::LoadTreeData(FieldData* data, nlohmann::json jsonObj)
 			collider["center"][1],
 			collider["center"][2],
 		};
-		float radius = collider["size"][0];
+		float radius = collider["radius"];
 		tree->SetCollider(SphereCollider(pos, radius));
 	}
 
@@ -336,17 +334,17 @@ void FieldDataManager::LoadWallData(FieldData* data, nlohmann::json jsonObj)
 	if (jsonObj.contains("collider"))
 	{
 		nlohmann::json collider = jsonObj["collider"];
-		if (collider["type"] == "Sphere")
-		{
-			Vec3 pos =
-			{
-				collider["center"][0],
-				collider["center"][1],
-				collider["center"][2],
-			};
-			float radius = collider["size"][0];
-			wall->SetCollider(SphereCollider(pos, radius));
-		}
+		//if (collider["type"] == "Sphere")
+		//{
+		//	Vec3 pos =
+		//	{
+		//		collider["center"][0],
+		//		collider["center"][1],
+		//		collider["center"][2],
+		//	};
+		//	float radius = collider["size"][0];
+		//	wall->SetCollider(SphereCollider(pos, radius));
+		//}
 	}
 
 	data->walls.push_back(std::move(wall));

@@ -61,6 +61,7 @@ void Skydome::Init()
 
 void Skydome::Update()
 {
+	mSkydome->pos.z = 200.f;
 	mSkydome->Update();
 	for (uint32_t i = 0; i < mClouds.size(); i++)
 	{

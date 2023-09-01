@@ -10,6 +10,8 @@ float4 main(V2P i) : SV_TARGET
     float4 texColor = tex.Sample(smp, i.uv);
     float d = depthTex.Sample(smp, i.uv).r;
     
-    return texColor;
-    //return float4(d, d * d, 0, 1);
+    return float4(d, 0, 0, 1);
+    
+    //return texColor;
+    return float4(d, d * d, 0, 1);
 }

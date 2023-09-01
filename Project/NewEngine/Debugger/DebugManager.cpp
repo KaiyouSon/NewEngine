@@ -52,6 +52,17 @@ void DebugManager::DrawDebugGui()
 		Gui::EndMenuBar();
 	}
 
+	Gui::DrawCollapsingHeader("Current Camera");
+	Gui::DrawSlider3("Pos", Camera::current.pos);
+	Vec3 angle = Angle(Camera::current.rot);
+	Gui::DrawSlider3("Rot", angle);
+	Camera::current.rot = Radian(angle);
+
+	Gui::DrawSlider1("Far Z", Camera::current.oFarZ);
+	Gui::DrawSlider1("Near Z", Camera::current.oNearZ);
+	Gui::DrawSlider1("Fov Angle", Camera::current.fov);
+	Gui::DrawLine();
+
 	// ストップする
 	Gui::DrawCheckBox("Stop", &mIsStop);
 	Gui::DrawTab();

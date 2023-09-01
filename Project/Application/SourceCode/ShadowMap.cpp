@@ -48,7 +48,7 @@ ShadowMap::ShadowMap() :
 	mShadowMap->AddRenderTexture(mShadowMapRT);
 	//mShadowMap->scale = 1.f / 32.f;
 	//mShadowMap->pos = GetWindowHalfSize() / 2;
-	mShadowMap->scale = 1.f / 2.f;
+	mShadowMap->scale = 1.f / 32.f;
 	mShadowMap->pos = GetWindowHalfSize();
 	mShadowMap->AddMaterial(ConstantBuffer<CTransformShadowObj>{});
 
@@ -84,16 +84,16 @@ void ShadowMap::Init()
 
 void ShadowMap::Update()
 {
-	if (Key::GetKeyDown(DIK_Q))
-	{
-		mBlur->scale = 1.f / 32.f;
-		mBlur->pos = GetWindowHalfSize() / 2;
-	}
-	if (Key::GetKeyDown(DIK_E))
-	{
-		mBlur->scale = 1.f / 8.f;
-		mBlur->pos = GetWindowHalfSize();
-	}
+	//if (Key::GetKeyDown(DIK_Q))
+	//{
+	//	mBlur->scale = 1.f / 32.f;
+	//	mBlur->pos = GetWindowHalfSize() / 2;
+	//}
+	//if (Key::GetKeyDown(DIK_E))
+	//{
+	//	mBlur->scale = 1.f / 8.f;
+	//	mBlur->pos = GetWindowHalfSize();
+	//}
 
 	mLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
 

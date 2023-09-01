@@ -10,7 +10,7 @@ float4 main(V2P i) : SV_TARGET
     
     clip(texColor.a - 0.5f);
     
-    return float4(i.depth, 0, 1);
+    //return float4(i.depth, 0, 1);
     
     return texColor;
 }

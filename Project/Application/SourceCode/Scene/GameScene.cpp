@@ -186,8 +186,8 @@ void GameScene::DrawModel()
 }
 void GameScene::DrawFrontSprite()
 {
-	mUiManager->DrawFrontSprite();
-	mMenuManager->DrawFrontSprite();
+	//mUiManager->DrawFrontSprite();
+	//mMenuManager->DrawFrontSprite();
 }
 void GameScene::DrawDebugGui()
 {
@@ -219,7 +219,7 @@ void GameScene::DrawDebugGui()
 
 	//GuiManager::EndWindow();
 
-	mField->DrawDebugGui();
+	//mField->DrawDebugGui();
 
 	//mPlayer->DrawDebugGui();
 }

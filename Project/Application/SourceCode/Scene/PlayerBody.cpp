@@ -40,7 +40,7 @@ void PlayerBody::Init()
 void PlayerBody::DebugUpdate()
 {
 	static bool flag = false;
-	if (Key::GetKeyDown(DIK_F5))
+	if (Key::GetKeyDown(DIK_F4))
 	{
 		mWeapons[1]->motion->Init(this);
 		flag = true;

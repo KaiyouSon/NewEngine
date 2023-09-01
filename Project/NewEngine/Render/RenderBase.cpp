@@ -602,7 +602,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("ColliderObject");
 	setting.cullMode = CullMode::None;
-	//setting.topologyType = TopologyType::LineList;
 	setting.fillMode = GraphicsPipelineSetting::Wireframe;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
