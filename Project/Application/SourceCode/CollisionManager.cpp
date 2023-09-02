@@ -228,6 +228,42 @@ void CollisionManager::PlayerHitFieldObject()
 			mPlayer->SetPos(nextPos);
 		}
 	}
+
+	// 壁
+	const std::vector<std::unique_ptr<Wall>>& walls = fieldData->walls;
+	for (uint32_t i = 0; i < walls.size(); i++)
+	{
+		float dis = Vec3::Distance(mPlayer->GetPos(), walls[i]->GetPos());
+		if (dis >= 50)
+		{
+			continue;
+		}
+
+		Vec3 hitPoint = 0;
+		if (Collision::CapsuleHitCapsule(
+			walls[i]->GetCollider(), mPlayer->GetBodyCollider(), hitPoint))
+		{
+			mField->SetSpherePos(hitPoint);
+
+			// y軸を無視する
+			Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
+			Vec3 pos2 = hitPoint * Vec3(1, 0, 1);
+
+			// プレイヤーに向かうベクトル
+			Vec3 toPlayer = pos1 - pos2;
+			float toPlayerLength = toPlayer.Length();
+			Vec3 normal = toPlayer.Norm();
+
+			// 衝突した位置とプレイヤーの中心が重なる距離を計算
+			float overlap = mPlayer->GetBodyCollider().radius - toPlayerLength;
+
+			// 押し戻しのベクトル
+			Vec3 pushVec = normal * (overlap);
+
+			Vec3 nextPos = mPlayer->GetPos() + pushVec;
+			mPlayer->SetPos(nextPos);
+		}
+	}
 }
 void CollisionManager::BossHitPlayer()
 {
