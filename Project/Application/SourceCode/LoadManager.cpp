@@ -35,6 +35,7 @@ bool LoadManager::ModelLoad()
 	ModelManager::LoadObjModel("Wall/MainWall", "MainWall");
 	ModelManager::LoadObjModel("Wall/Wall1", "Wall1");
 	ModelManager::LoadObjModel("Wall/Wall2", "Wall2");
+	ModelManager::LoadObjModel("Wall/WallGate", "WallGate");
 
 	ModelManager::LoadObjModel("Capsule", "Capsule");
 	ModelManager::LoadObjModel("MainGateWall", "MainGateWall");

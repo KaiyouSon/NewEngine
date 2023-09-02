@@ -71,7 +71,8 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 			else if (
 				object["obj_name"] == "MainWall" ||
 				object["obj_name"] == "Wall1" ||
-				object["obj_name"] == "Wall2")
+				object["obj_name"] == "Wall2" ||
+				object["obj_name"] == "WallGate")
 			{
 				LoadWallData(fieldData.get(), object);
 			}
