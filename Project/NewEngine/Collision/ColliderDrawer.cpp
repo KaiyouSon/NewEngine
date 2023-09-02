@@ -96,7 +96,12 @@ void ColliderDrawer::Bind(ICollider* collider)
 	if (collider == nullptr)
 	{
 		OutputDebugLog("Bind‚µ‚Ä‚¢‚éCollider‚ªnullptr‚Å‚·");
+		return;
+	}
 
+	if (collider->isActive == false)
+	{
+		OutputDebugLog("Collider->isActive‚ªfalse‚Å‚·");
 		return;
 	}
 
@@ -165,11 +170,19 @@ void ColliderDrawer::Bind(ICollider* collider)
 
 		Color col = Color::white;
 
+		Vec3 v = castCollider->endPos - castCollider->startPos;
+		Vec3 rot =
+		{
+			atan2f(-v.z,-v.y),
+			atan2f(-v.z,v.x),
+			atan2f(v.x,-v.y),
+		};
+
 		// ‰º‚Ì”¼‹…
 		mColliderObjects[index]->model = mModels["CapsuleColliderParts1"];
 		mColliderObjects[index]->transform.pos = castCollider->startPos;
 		mColliderObjects[index]->transform.scale = castCollider->radius;
-		mColliderObjects[index]->transform.rot.z = Radian(180);
+		mColliderObjects[index]->transform.rot = rot + Vec3(0, 0, Radian(180));
 		mColliderObjects[index]->color = col;
 		index++;
 
@@ -177,19 +190,18 @@ void ColliderDrawer::Bind(ICollider* collider)
 		mColliderObjects[index]->model = mModels["CapsuleColliderParts1"];
 		mColliderObjects[index]->transform.pos = castCollider->endPos;
 		mColliderObjects[index]->transform.scale = castCollider->radius;
-		mColliderObjects[index]->transform.rot = 0;
+		mColliderObjects[index]->transform.rot = rot;
 		mColliderObjects[index]->color = Color::white;
 		index++;
 
 		// ‰~’Œ
-		Vec3 v = castCollider->endPos - castCollider->startPos;
 		Vec3 halfPos = v / 2;
 		float length = v.Length() / 2;
 
 		mColliderObjects[index]->model = mModels["CapsuleColliderParts2"];
 		mColliderObjects[index]->transform.pos = castCollider->startPos + halfPos;
 		mColliderObjects[index]->transform.scale = Vec3(castCollider->radius, length, castCollider->radius);
-		mColliderObjects[index]->transform.rot = 0;
+		mColliderObjects[index]->transform.rot = rot;
 		mColliderObjects[index]->color = col;
 		index++;
 	}

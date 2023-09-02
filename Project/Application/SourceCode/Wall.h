@@ -6,7 +6,7 @@ class Wall
 private:
 	Transform mParent;
 	std::unique_ptr<Object3D> mWall;
-	SphereCollider mCollider;
+	CapsuleCollider mCollider;
 
 public:
 	Wall();
@@ -16,11 +16,11 @@ public:
 
 public:
 	void SetParent(const Transform parent);
-	void SetCollider(const SphereCollider collider);
+	void SetCollider(const CapsuleCollider collider);
 	void SetModel(Model* model);
 
 public:
 	Vec3 GetPos();
-	SphereCollider GetCollider();
+	CapsuleCollider GetCollider();
 };
 

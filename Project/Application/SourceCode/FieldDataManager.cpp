@@ -334,17 +334,23 @@ void FieldDataManager::LoadWallData(FieldData* data, nlohmann::json jsonObj)
 	if (jsonObj.contains("collider"))
 	{
 		nlohmann::json collider = jsonObj["collider"];
-		//if (collider["type"] == "Sphere")
-		//{
-		//	Vec3 pos =
-		//	{
-		//		collider["center"][0],
-		//		collider["center"][1],
-		//		collider["center"][2],
-		//	};
-		//	float radius = collider["size"][0];
-		//	wall->SetCollider(SphereCollider(pos, radius));
-		//}
+		if (collider["type"] == "Capsule")
+		{
+			Vec3 start =
+			{
+				collider["start"][0],
+				collider["start"][1],
+				collider["start"][2],
+			};
+			Vec3 end =
+			{
+				collider["end"][0],
+				collider["end"][1],
+				collider["end"][2],
+			};
+			float radius = collider["radius"];
+			wall->SetCollider(CapsuleCollider(start, end, radius));
+		}
 	}
 
 	data->walls.push_back(std::move(wall));

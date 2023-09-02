@@ -29,7 +29,7 @@ void Wall::SetParent(const Transform parent)
 	mParent.Update();
 }
 
-void Wall::SetCollider(const SphereCollider collider)
+void Wall::SetCollider(const CapsuleCollider collider)
 {
 	mCollider = collider;
 	mCollider.isActive = true;
@@ -45,7 +45,7 @@ Vec3 Wall::GetPos()
 	return mParent.pos;
 }
 
-SphereCollider Wall::GetCollider()
+CapsuleCollider Wall::GetCollider()
 {
 	return mCollider;
 }
