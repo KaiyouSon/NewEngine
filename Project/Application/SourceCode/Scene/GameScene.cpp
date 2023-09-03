@@ -61,11 +61,6 @@ void GameScene::Init()
 }
 void GameScene::Update()
 {
-	if (Key::GetKeyDown(DIK_SPACE))
-	{
-		TransitionManager::GetInstance()->Start(TransitionType::Respawn);
-	}
-
 	if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
 	{
 		if (SoundManager::GetIsPlaying("BattleBGM") == true)

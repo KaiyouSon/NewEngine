@@ -57,6 +57,7 @@ void Player::PrevUpdate()
 			&Player::AttackBackUpdate,
 			&Player::AttackRollUpdate,
 			&Player::DrinkUpdate,
+			&Player::OpenGateUpdate,
 		};
 
 		// é¿çs
@@ -89,31 +90,8 @@ void Player::PrevUpdate()
 }
 void Player::PostUpdate()
 {
-	ProcessAtDebugBulid([&]()
-		{
-			static bool flag = false;
-			if (Key::GetKeyDown(DIK_SPACE))
-			{
-				flag = true;
-				for (uint32_t i = 0; i < mPlayer->mParts.size(); i++)
-				{
-					mPlayer->mParts[i]->dissolve = 0.f;
-				}
-
-			}
-			if (flag == true)
-			{
-				for (uint32_t i = 0; i < mPlayer->mParts.size(); i++)
-				{
-					mPlayer->mParts[i]->dissolve += 0.005f;
-					mPlayer->mParts[i]->dissolve = Min(mPlayer->mParts[i]->dissolve, 2.f);
-				}
-			}
-		});
-
 	mPlayer->DebugUpdate();
 	mPlayer->Update();
-
 }
 void Player::DrawModel()
 {
@@ -121,19 +99,6 @@ void Player::DrawModel()
 }
 void Player::DrawDebugGui()
 {
-	//static float power = 1;
-	//static Color color = Color::red;
-	//GuiManager::BeginWindow("Player Alpha");
-	//GuiManager::DrawSlider1("D power", power, 0.01f);
-	//GuiManager::DrawColorEdit("D color", color);
-	//GuiManager::EndWindow();
-
-	//for (uint32_t i = 1; i < mPlayer->mParts.size(); i++)
-	//{
-	//	mPlayer->mParts[i]->colorPower = power;
-	//	mPlayer->mParts[i]->dissolveColor = color;
-	//}
-
 	mPlayer->DrawDebugGui();
 }
 
@@ -273,6 +238,10 @@ void Player::IdleUpdate()
 	else if (Pad::GetButtonDown(PadCode::ButtonX))
 	{
 		mState = State::Drink;
+	}
+	else if (Key::GetKeyDown(DIK_SPACE))
+	{
+		mState = State::OpenGate;
 	}
 }
 void Player::JoggingUpdate()
@@ -578,6 +547,21 @@ void Player::DrinkUpdate()
 	if (motion->GetisPlay() == false)
 	{
 		if (mState == State::Drink)
+		{
+			motion->Init(mPlayer.get());
+			mState = State::Idle;
+		}
+	}
+}
+void Player::OpenGateUpdate()
+{
+	auto motion = mPlayer->mOpenGateMotion.get();
+
+	motion->Update(mPlayer.get());
+
+	if (motion->GetisPlay() == false)
+	{
+		if (mState == State::OpenGate)
 		{
 			motion->Init(mPlayer.get());
 			mState = State::Idle;

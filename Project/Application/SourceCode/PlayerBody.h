@@ -4,6 +4,7 @@
 #include "BackstepMotion.h"
 #include "RollMotion.h"
 #include "DrinkMotion.h"
+#include "OpenGateMotion.h"
 
 struct Weapon;
 class Player;
@@ -15,6 +16,7 @@ private:
 	std::unique_ptr<RollMotion> mRollMotion;
 	std::unique_ptr<BackstepMotion> mBackstepMotion;
 	std::unique_ptr<DrinkMotion> mDrinkMotion;
+	std::unique_ptr<OpenGateMotion> mOpenGateMotion;
 
 public:
 	Player* parent;

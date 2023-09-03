@@ -6,7 +6,8 @@ PlayerBody::PlayerBody() :
 	mMoveMotion(std::make_unique<MoveMotion>()),
 	mBackstepMotion(std::make_unique<BackstepMotion>()),
 	mRollMotion(std::make_unique<RollMotion>()),
-	mDrinkMotion(std::make_unique<DrinkMotion>())
+	mDrinkMotion(std::make_unique<DrinkMotion>()),
+	mOpenGateMotion(std::make_unique<OpenGateMotion>())
 {
 	for (uint32_t i = 0; i < mParts.size(); i++)
 	{
@@ -36,6 +37,7 @@ void PlayerBody::Init()
 	mBackstepMotion->Init(this);
 	mRollMotion->Init(this);
 	mDrinkMotion->Init(this);
+	mOpenGateMotion->Init(this);
 }
 void PlayerBody::DebugUpdate()
 {

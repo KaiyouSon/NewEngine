@@ -166,12 +166,6 @@
     <Filter Include="Application\Header\Motion\Weapon">
       <UniqueIdentifier>{9d596a25-0aa2-4b97-9519-08c94b2fcd82}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Source\Motion\Human">
-      <UniqueIdentifier>{b40eae28-5076-49a3-8ff1-a9360c5a9642}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Header\Motion\Human">
-      <UniqueIdentifier>{1d57f7e9-95ce-47f4-8e7b-a310d7ff9a6e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="nlohmann">
       <UniqueIdentifier>{90d0df66-bf66-4133-a379-d1d84e3ef1a6}</UniqueIdentifier>
     </Filter>
@@ -276,6 +270,12 @@
     </Filter>
     <Filter Include="Shader\Application\Skydome">
       <UniqueIdentifier>{146f96ec-24ea-4e76-a9ca-b4b66c7a0476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\Motion\Player">
+      <UniqueIdentifier>{1d57f7e9-95ce-47f4-8e7b-a310d7ff9a6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\Motion\Player">
+      <UniqueIdentifier>{b40eae28-5076-49a3-8ff1-a9360c5a9642}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -514,13 +514,13 @@
       <Filter>Application\Source\Motion\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\MoveMotion.cpp">
-      <Filter>Application\Source\Motion\Human</Filter>
+      <Filter>Application\Source\Motion\Player</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\BackstepMotion.cpp">
-      <Filter>Application\Source\Motion\Human</Filter>
+      <Filter>Application\Source\Motion\Player</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\RollMotion.cpp">
-      <Filter>Application\Source\Motion\Human</Filter>
+      <Filter>Application\Source\Motion\Player</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\TitleUI.cpp">
       <Filter>Application\Source\UI</Filter>
@@ -601,7 +601,7 @@
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\DrinkMotion.cpp">
-      <Filter>Application\Source\Motion\Human</Filter>
+      <Filter>Application\Source\Motion\Player</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\EffectManager.cpp">
       <Filter>Application\Source\Effect</Filter>
@@ -698,6 +698,9 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Debugger\MappingWindow.cpp">
       <Filter>NewEngine\Source\Debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\OpenGateMotion.cpp">
+      <Filter>Application\Source\Motion\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -969,13 +972,13 @@
       <Filter>Application\Header\Motion\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\BackstepMotion.h">
-      <Filter>Application\Header\Motion\Human</Filter>
+      <Filter>Application\Header\Motion\Player</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\MoveMotion.h">
-      <Filter>Application\Header\Motion\Human</Filter>
+      <Filter>Application\Header\Motion\Player</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\RollMotion.h">
-      <Filter>Application\Header\Motion\Human</Filter>
+      <Filter>Application\Header\Motion\Player</Filter>
     </ClInclude>
     <ClInclude Include="..\..\1.School\3.3年前期\TL1\CG5_Task01\Project\External\nlohmann\json.hpp">
       <Filter>nlohmann</Filter>
@@ -1059,7 +1062,7 @@
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\DrinkMotion.h">
-      <Filter>Application\Header\Motion\Human</Filter>
+      <Filter>Application\Header\Motion\Player</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\BloodSprayEffect.h">
       <Filter>Application\Header\Effect</Filter>
@@ -1156,6 +1159,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Debugger\MappingWindow.h">
       <Filter>NewEngine\Header\Debugger</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\OpenGateMotion.h">
+      <Filter>Application\Header\Motion\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

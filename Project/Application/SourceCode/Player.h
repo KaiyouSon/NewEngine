@@ -21,6 +21,7 @@ public:
 		AttackBack,
 		AttackRoll,
 		Drink,
+		OpenGate,
 	};
 
 private:
@@ -78,6 +79,7 @@ private:
 	void AttackBackUpdate();
 	void AttackRollUpdate();
 	void DrinkUpdate();
+	void OpenGateUpdate();
 
 private:
 	void DamageUpdate();
