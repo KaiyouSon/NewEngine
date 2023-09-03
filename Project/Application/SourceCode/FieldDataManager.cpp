@@ -76,6 +76,10 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 			{
 				LoadWallData(fieldData.get(), object);
 			}
+			//else if (object["obj_name"] == "WallGate")
+			//{
+			//	LoadGateData(fieldData.get(), object);
+			//}
 		}
 	}
 
@@ -355,4 +359,143 @@ void FieldDataManager::LoadWallData(FieldData* data, nlohmann::json jsonObj)
 	}
 
 	data->walls.push_back(std::move(wall));
+}
+void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
+{
+	std::unique_ptr<Gate> gate = std::make_unique<Gate>();
+	// トランスフォームのパラメータ読み込み
+	nlohmann::json transform = jsonObj["transform"];
+	Vec3 pos =
+	{
+		(float)transform["translation"][0],
+		(float)transform["translation"][1],
+		(float)transform["translation"][2],
+	};
+	Vec3 scale =
+	{
+		(float)transform["scaling"][0],
+		(float)transform["scaling"][1],
+		(float)transform["scaling"][2],
+	};
+	Vec3 angle =
+	{
+		(float)transform["rotation"][0],
+		(float)transform["rotation"][1],
+		(float)transform["rotation"][2],
+	};
+	Transform parent = Transform(pos, scale, Radian(angle));
+	parent.Update();
+
+	// 子があれば
+	if (jsonObj.contains("children"))
+	{
+		nlohmann::json children = jsonObj["children"];
+		for (const auto& child : children)
+		{
+			nlohmann::json transform = child["transform"];
+
+			if (!jsonObj.contains("obj_name"))
+			{
+				continue;
+			}
+			else if (child["obj_name"] == "GateLeft")
+			{
+				Vec3 pos =
+				{
+					(float)transform["translation"][0],
+					(float)transform["translation"][1],
+					(float)transform["translation"][2],
+				};
+				Vec3 scale =
+				{
+					(float)transform["scaling"][0],
+					(float)transform["scaling"][1],
+					(float)transform["scaling"][2],
+				};
+				Vec3 angle =
+				{
+					(float)transform["rotation"][0],
+					(float)transform["rotation"][1],
+					(float)transform["rotation"][2],
+				};
+
+				pos = Vec3MulMat4(pos, parent.GetWorldMat());
+				gate->SetLeftTransform(Transform(pos, scale, Radian(angle)));
+
+				// Colliderがあれば
+				if (child.contains("collider"))
+				{
+					//nlohmann::json collider = child["collider"];
+
+					//if (collider["type"] == "Box")
+					//{
+					//	Vec3 pos =
+					//	{
+					//		collider["center"][0],
+					//		collider["center"][1],
+					//		collider["center"][2],
+					//	};
+					//	Vec3 size =
+					//	{
+					//		collider["size"][0],
+					//		collider["size"][1],
+					//		collider["size"][2],
+					//	};
+
+					//	coffin->SetBottomCollider(CubeCollider(pos, size));
+					//}
+				}
+			}
+			else if (child["obj_name"] == "GateRight")
+			{
+				Vec3 pos =
+				{
+					(float)transform["translation"][0],
+					(float)transform["translation"][1],
+					(float)transform["translation"][2],
+				};
+				Vec3 scale =
+				{
+					(float)transform["scaling"][0],
+					(float)transform["scaling"][1],
+					(float)transform["scaling"][2],
+				};
+				Vec3 angle =
+				{
+					(float)transform["rotation"][0],
+					(float)transform["rotation"][1],
+					(float)transform["rotation"][2],
+				};
+
+				pos = Vec3MulMat4(pos, parent.GetWorldMat());
+				gate->SetRightTransform(Transform(pos, scale, Radian(angle)));
+
+				// Colliderがあれば
+				if (child.contains("collider"))
+				{
+					//nlohmann::json collider = child["collider"];
+
+					//if (collider["type"] == "Box")
+					//{
+					//	Vec3 pos =
+					//	{
+					//		collider["center"][0],
+					//		collider["center"][1],
+					//		collider["center"][2],
+					//	};
+					//	Vec3 size =
+					//	{
+					//		collider["size"][0],
+					//		collider["size"][1],
+					//		collider["size"][2],
+					//	};
+
+					//	coffin->SetBottomCollider(CubeCollider(pos, size));
+					//}
+				}
+			}
+		}
+	}
+
+	data->gates.push_back(std::move(gate));
 }

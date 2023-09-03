@@ -41,7 +41,10 @@ void Tree::Init()
 
 void Tree::Update()
 {
-	ColliderDrawer::GetInstance()->Bind(&mCollider);
+	if (mCollider.isActive == true)
+	{
+		ColliderDrawer::GetInstance()->Bind(&mCollider);
+	}
 
 	mTree->Update(&mParent);
 	mBranch->Update(&mParent);
@@ -53,7 +56,7 @@ void Tree::DrawModel()
 	mBranch->Draw();
 }
 
-void Tree::SetParent(const Transform parent)
+void Tree::SetParent(const Transform& parent)
 {
 	mParent = parent;
 	mParent.Update();

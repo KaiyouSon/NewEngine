@@ -13,17 +13,17 @@ LogoScene::~LogoScene()
 
 void LogoScene::Init()
 {
-	Texture tex1 = TextureManager::LoadTexture("LogoScene/NewEngineTitle.png");
-	Texture tex2 = TextureManager::CreateTexture(Color::black);
+	mLogoTex = TextureManager::LoadTexture("LogoScene/NewEngineTitle.png");
+	mBackTex = TextureManager::CreateTexture(Color::black);
 
-	mLogoSprite->SetTexture(&tex1);
-	mBackSprite->SetTexture(&tex2);
+	mLogoSprite->SetTexture(&mLogoTex);
+	mBackSprite->SetTexture(&mBackTex);
 
 	mLogoSprite->pos = GetWindowHalfSize();
 	mBackSprite->pos = GetWindowHalfSize();
 
 	mLogoSprite->color.a = 0;
-	//mBackSprite->size = GetWindowSize();
+	mBackSprite->SetSize(GetWindowSize());
 
 	mStayTimer.SetLimitTimer(30);
 

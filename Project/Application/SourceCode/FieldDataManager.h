@@ -15,6 +15,7 @@ private:
 	static void LoadRespawnPointData(FieldData* data, nlohmann::json jsonObj);
 	static void LoadWeedData(FieldData* data, nlohmann::json jsonObj);
 	static void LoadWallData(FieldData* data, nlohmann::json jsonObj);
+	static void LoadGateData(FieldData* data, nlohmann::json jsonObj);
 
 public:
 	static FieldData* Load(const std::string filename, const std::string tag);

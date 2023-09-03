@@ -5,6 +5,7 @@
 #include "RespawnPoint.h" 
 #include "Weed.h"
 #include "Wall.h"
+#include "Gate.h"
 
 struct FieldData
 {
@@ -14,4 +15,5 @@ struct FieldData
 	std::vector<std::unique_ptr<RespawnPoint>> respawnPoints;
 	std::vector<std::unique_ptr<Weed>> weeds;
 	std::vector<std::unique_ptr<Wall>> walls;
+	std::vector<std::unique_ptr<Gate>> gates;
 };

@@ -13,7 +13,10 @@ void Wall::Init()
 
 void Wall::Update()
 {
-	ColliderDrawer::GetInstance()->Bind(&mCollider);
+	if (mCollider.isActive == true)
+	{
+		ColliderDrawer::GetInstance()->Bind(&mCollider);
+	}
 
 	mWall->Update(&mParent);
 }

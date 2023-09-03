@@ -6,6 +6,8 @@ class LogoScene : public IScene
 private:
 	std::unique_ptr<Sprite> mLogoSprite;
 	std::unique_ptr<Sprite> mBackSprite;
+	Texture mLogoTex;
+	Texture mBackTex;
 
 	Timer mStayTimer;
 

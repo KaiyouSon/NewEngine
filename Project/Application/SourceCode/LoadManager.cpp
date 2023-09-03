@@ -78,6 +78,7 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");
 	TextureManager::LoadTexture("Text/Negotiation/ReadMessageStr.png", "ReadMessageStr");
 	TextureManager::LoadTexture("Text/Negotiation/RestInLightStr.png", "RestInLightStr");
+	TextureManager::LoadTexture("Text/Negotiation/OpenStr.png", "OpenStr");
 	TextureManager::LoadTexture("Text/ExitStr.png", "ExitStr");
 	TextureManager::LoadTexture("Text/Tutorial/TutorialStr1.png", "TutorialStr1");
 	TextureManager::LoadTexture("Text/Tutorial/TutorialStr2.png", "TutorialStr2");

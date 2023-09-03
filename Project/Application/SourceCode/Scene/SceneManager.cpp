@@ -36,14 +36,17 @@ SceneManager::SceneManager()
 
 	FieldDataManager::Load("SkyIsland", "SkyIsland");
 
+	// デバッグ時
+	ProcessAtDebugBulid([]()
+		{
+			sCurrentScene = std::make_unique<GameScene>();
+		});
 
-	//Bloom::CreateGraphicsPipeline();
-	//GaussianBlur::CreateGraphicsPipeline();
-	//Glare::CreateGraphicsPipeline();
-	//DOF::CreateGraphicsPipeline();
-	//RadialBlur::CreateGraphicsPipeline();
-	//Vignette::CreateGraphicsPipeline();
-	sCurrentScene = std::make_unique<GameScene>();
+	// リリース時
+	ProcessAtReleaseBulid([]()
+		{
+			sCurrentScene = std::make_unique<LogoScene>();
+		});
 }
 
 SceneManager::~SceneManager()

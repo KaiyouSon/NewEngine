@@ -4,13 +4,9 @@
 Field::Field() :
 	mSphere(std::make_unique<Object3D>()),
 	mSkydome(std::make_unique<Skydome>()),
-	mMainGateWall(std::make_unique<Object3D>()),
 	mFieldData(nullptr)
 {
 	mSphere->SetModel(ModelManager::GetModel("Sphere"));
-	mMainGateWall->SetModel(ModelManager::GetModel("MainGateWall"));
-	mMainGateWall->rot.y = Radian(90);
-	mMainGateWall->scale = 5;
 	//mSphere->SetisShadow(true);
 
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
@@ -82,6 +78,12 @@ void Field::Init()
 			mFieldData->walls[i]->Init();
 		}
 
+		// 正門
+		for (uint32_t i = 0; i < mFieldData->gates.size(); i++)
+		{
+			mFieldData->gates[i]->Init();
+		}
+
 		// リスポーン地点
 		for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
 		{
@@ -95,8 +97,6 @@ void Field::Update()
 {
 	mSphere->rot.y += Radian(1);
 	mSphere->Update();
-	mMainGateWall->Update();
-
 	//mSphere->pos = { 0,8,0 };
 
 	mSkydome->Update();
@@ -137,6 +137,12 @@ void Field::Update()
 			mFieldData->walls[i]->Update();
 		}
 
+		// 正門
+		for (uint32_t i = 0; i < mFieldData->gates.size(); i++)
+		{
+			mFieldData->gates[i]->Update();
+		}
+
 		// リスポーン地点
 		for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
 		{
@@ -154,7 +160,6 @@ void Field::DrawModel()
 {
 	//mSphere->Draw();
 	mSkydome->Draw();
-	//mMainGateWall->Draw();
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
 	{
 		mMessageSigns[i]->DrawModel();
@@ -190,6 +195,12 @@ void Field::DrawModel()
 		for (uint32_t i = 0; i < mFieldData->walls.size(); i++)
 		{
 			mFieldData->walls[i]->DrawModel();
+		}
+
+		// 正門
+		for (uint32_t i = 0; i < mFieldData->gates.size(); i++)
+		{
+			mFieldData->gates[i]->DrawModel();
 		}
 
 		// リスポーン地点

@@ -702,6 +702,9 @@
     <ClCompile Include="Application\SourceCode\OpenGateMotion.cpp">
       <Filter>Application\Source\Motion\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\Gate.cpp">
+      <Filter>Application\Source\Field</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1162,6 +1165,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\OpenGateMotion.h">
       <Filter>Application\Header\Motion\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Gate.h">
+      <Filter>Application\Header\Field</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

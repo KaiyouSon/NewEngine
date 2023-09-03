@@ -12,7 +12,7 @@ void CollisionManager::Update()
 	PlayerHitNegotiation();
 
 	// ボスとプレイヤー
-	//BossHitPlayer();
+	BossHitPlayer();
 }
 
 void CollisionManager::PushBackPlayer()

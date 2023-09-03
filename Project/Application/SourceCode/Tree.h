@@ -18,7 +18,7 @@ public:
 	void DrawModel();
 
 public:
-	void SetParent(const Transform parent);
+	void SetParent(const Transform& parent);
 	void SetCollider(const SphereCollider collider);
 
 public:
