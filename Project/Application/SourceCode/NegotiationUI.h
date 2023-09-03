@@ -10,6 +10,7 @@ public:
 	{
 		ReadMessageStr,
 		RestInLightStr,
+		OpenStr,
 	};
 
 private:

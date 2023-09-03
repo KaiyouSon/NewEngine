@@ -21,8 +21,6 @@ void RespawnPointUI::CreateGraphicsPipeline()
 RespawnPointUI::RespawnPointUI() :
 	mBack(std::make_unique<Sprite>())
 {
-
-
 	mBack->SetTexture(TextureManager::GetTexture("RespawnBack"));
 
 	for (uint32_t i = 0; i < mText.size(); i++)

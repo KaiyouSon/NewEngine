@@ -387,6 +387,23 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 	Transform parent = Transform(pos, scale, Radian(angle));
 	parent.Update();
 
+	// Collider‚ª‚ ‚ê‚Î
+	if (jsonObj.contains("collider"))
+	{
+		nlohmann::json collider = jsonObj["collider"];
+		if (collider["type"] == "Sphere")
+		{
+			Vec3 center =
+			{
+				collider["center"][0],
+				collider["center"][1],
+				collider["center"][2],
+			};
+			float radius = collider["radius"];
+			gate->SetNegotiationCollider(SphereCollider(center, radius));
+		}
+	}
+
 	// Žq‚ª‚ ‚ê‚Î
 	if (jsonObj.contains("children"))
 	{
@@ -422,30 +439,6 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 
 				pos = Vec3MulMat4(pos, parent.GetWorldMat());
 				gate->SetLeftTransform(Transform(pos, scale, Radian(angle)));
-
-				// Collider‚ª‚ ‚ê‚Î
-				if (child.contains("collider"))
-				{
-					nlohmann::json collider = child["collider"];
-
-					if (collider["type"] == "Capsule")
-					{
-						Vec3 start =
-						{
-							collider["start"][0],
-							collider["start"][1],
-							collider["start"][2],
-						};
-						Vec3 end =
-						{
-							collider["end"][0],
-							collider["end"][1],
-							collider["end"][2],
-						};
-						float radius = collider["radius"];
-						gate->SetLeftCollider(CapsuleCollider(start, end, radius));
-					}
-				}
 			}
 			else if (child["obj_name"] == "GateRight")
 			{
@@ -470,30 +463,6 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 
 				pos = Vec3MulMat4(pos, parent.GetWorldMat());
 				gate->SetRightTransform(Transform(pos, scale, Radian(angle)));
-
-				// Collider‚ª‚ ‚ê‚Î
-				if (child.contains("collider"))
-				{
-					nlohmann::json collider = child["collider"];
-
-					if (collider["type"] == "Capsule")
-					{
-						Vec3 start =
-						{
-							collider["start"][0],
-							collider["start"][1],
-							collider["start"][2],
-						};
-						Vec3 end =
-						{
-							collider["end"][0],
-							collider["end"][1],
-							collider["end"][2],
-						};
-						float radius = collider["radius"];
-						gate->SetRightCollider(CapsuleCollider(start, end, radius));
-					}
-				}
 			}
 		}
 	}

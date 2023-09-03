@@ -8,7 +8,18 @@ private:
 	std::unique_ptr<Object3D> mGateRight;
 	CapsuleCollider mLeftCollider;
 	CapsuleCollider mRightCollider;
-	Vec3 centerPos;
+	CapsuleCollider mCloseCollider;
+	SphereCollider mNegotiationCollider;
+	Vec3 mCenterPos;
+	Vec3 mNegotitationPos;
+	bool mIsOpen;		// 開いたフラグ
+	bool mIsOpening;	// 開いてる最中のフラグ
+	Easing mOpenEase;
+	Timer mStayTimer;
+
+private:
+	void ColliderUpdate();
+	void OpeningUpdate();
 
 public:
 	Gate();
@@ -19,14 +30,16 @@ public:
 public:
 	void SetLeftTransform(const Transform& transform);
 	void SetRightTransform(const Transform& transform);
-	void SetLeftCollider(const CapsuleCollider collider);
-	void SetRightCollider(const CapsuleCollider collider);
+	void SetNegotiationCollider(const SphereCollider collider);
 	void SetCenterPos(const Vec3 pos);
-	void SetLeftRot(const Vec3 rot);
-	void SetRightRot(const Vec3 rot);
+	void SetisOpening(const bool isOpening);
 
 public:
 	CapsuleCollider GetLeftCollider();
 	CapsuleCollider GetRightCollider();
+	CapsuleCollider GetCloseCollider();
+	SphereCollider GetNegotiationCollider();
 	Vec3 GetCenterPos();
+	Vec3 GetNegotitationPos();
+	bool GetisOpen();
 };

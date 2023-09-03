@@ -99,6 +99,7 @@ public:
 public:
 	void SetPos(const Vec3 pos);
 	void SetisDamage(const bool isDamage);
+	void SetState(const State state);
 
 public:
 	GaugeParam GetGaugeParam(const uint32_t index);

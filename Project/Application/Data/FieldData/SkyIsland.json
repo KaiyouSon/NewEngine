@@ -1918,6 +1918,15 @@
                 ]
             },
             "obj_name": "WallGate",
+            "collider": {
+                "type": "Sphere",
+                "center": [
+                    0.0,
+                    0.0,
+                    209.44400024414062
+                ],
+                "radius": 10
+            },
             "children": [
                 {
                     "type": "MESH",
@@ -1930,7 +1939,7 @@
                         ],
                         "rotation": [
                             0.0,
-                            -45.0,
+                            -0.0,
                             0.0
                         ],
                         "scaling": [
@@ -1941,18 +1950,7 @@
                     },
                     "obj_name": "GateLeft",
                     "collider": {
-                        "type": "Capsule",
-                        "start": [
-                            -25.0,
-                            5.0,
-                            209.44400024414062
-                        ],
-                        "end": [
-                            -11.0,
-                            5.0,
-                            223.44000244140625
-                        ],
-                        "radius": 5
+                        "type": "None"
                     }
                 },
                 {
@@ -1966,7 +1964,7 @@
                         ],
                         "rotation": [
                             0.0,
-                            -135.0,
+                            179.99998474121094,
                             0.0
                         ],
                         "scaling": [
@@ -1977,18 +1975,7 @@
                     },
                     "obj_name": "GateRight",
                     "collider": {
-                        "type": "Capsule",
-                        "start": [
-                            26.0,
-                            5.0,
-                            209.44400024414062
-                        ],
-                        "end": [
-                            11.0,
-                            5.0,
-                            223.44000244140625
-                        ],
-                        "radius": 5
+                        "type": "None"
                     }
                 }
             ]

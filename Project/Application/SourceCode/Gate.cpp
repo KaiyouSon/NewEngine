@@ -6,8 +6,6 @@ Gate::Gate() :
 {
 	mGateLeft->SetModel(ModelManager::GetModel("WallGate"));
 	mGateRight->SetModel(ModelManager::GetModel("WallGate"));
-	mLeftCollider.isActive = false;
-	mRightCollider.isActive = false;
 }
 
 void Gate::Init()
@@ -16,12 +14,23 @@ void Gate::Init()
 	mGateRight->SetisShadow(false, true);
 	mGateLeft->isLighting = true;
 	mGateRight->isLighting = true;
+
+	mLeftCollider.isActive = false;
+	mRightCollider.isActive = false;
+	mCloseCollider.isActive = true;
+	mNegotiationCollider.isActive = false;
+	mIsOpen = false;
+
+	mOpenEase.SetEaseTimer(180);
+	mStayTimer.SetLimitTimer(30);
 }
 
 void Gate::Update()
 {
-	ColliderDrawer::GetInstance()->Bind(&mLeftCollider);
-	ColliderDrawer::GetInstance()->Bind(&mRightCollider);
+	mNegotitationPos = mCenterPos + Vec3::back * 7.5f;
+
+	ColliderUpdate();
+	OpeningUpdate();
 
 	mGateLeft->Update();
 	mGateRight->Update();
@@ -31,6 +40,70 @@ void Gate::DrawModel()
 {
 	mGateLeft->Draw();
 	mGateRight->Draw();
+}
+
+void Gate::ColliderUpdate()
+{
+	const float endLength = 20.f;
+
+	const Vec3 leftVec = { cosf(mGateLeft->rot.y), 0, -sinf(mGateLeft->rot.y) };
+	mLeftCollider.startPos = mGateLeft->pos;
+	mLeftCollider.endPos = mGateLeft->pos + leftVec.Norm() * endLength;
+	mLeftCollider.radius = 5.f;
+
+	const Vec3 rightVec = { cosf(mGateRight->rot.y), 0, -sinf(mGateRight->rot.y) };
+	mRightCollider.startPos = mGateRight->pos;
+	mRightCollider.endPos = mGateRight->pos + rightVec.Norm() * endLength;
+	mRightCollider.radius = 5.f;
+
+	mCloseCollider.startPos = mGateLeft->pos;
+	mCloseCollider.endPos = mGateRight->pos;
+	mCloseCollider.radius = 5.f;
+
+	// ゲートの開きによってコライダーのアクティブ
+	if (mIsOpen == true)
+	{
+		mLeftCollider.isActive = true;
+		mRightCollider.isActive = true;
+		mCloseCollider.isActive = false;
+		mNegotiationCollider.isActive = false;
+	}
+	else
+	{
+		mLeftCollider.isActive = false;
+		mRightCollider.isActive = false;
+		mCloseCollider.isActive = true;
+		mNegotiationCollider.isActive = true;
+	}
+
+	ColliderDrawer::GetInstance()->Bind(&mLeftCollider);
+	ColliderDrawer::GetInstance()->Bind(&mRightCollider);
+	ColliderDrawer::GetInstance()->Bind(&mCloseCollider);
+	ColliderDrawer::GetInstance()->Bind(&mNegotiationCollider);
+}
+
+void Gate::OpeningUpdate()
+{
+	if (mIsOpening == false)
+	{
+		return;
+	}
+
+	mStayTimer.Update();
+	if (mStayTimer == true)
+	{
+		mGateLeft->rot.y = mOpenEase.Lerp(Radian(0), Radian(-45));
+		mGateRight->rot.y = mOpenEase.Lerp(Radian(180), Radian(225));
+
+		mOpenEase.Update();
+		if (mOpenEase.GetisEnd() == true)
+		{
+			mIsOpen = true;
+			mIsOpening = false;
+			mOpenEase.Reset();
+			mStayTimer.Reset();
+		}
+	}
 }
 
 void Gate::SetLeftTransform(const Transform& transform)
@@ -47,31 +120,20 @@ void Gate::SetRightTransform(const Transform& transform)
 	mGateRight->rot = transform.rot;
 }
 
-void Gate::SetLeftCollider(const CapsuleCollider collider)
+void Gate::SetNegotiationCollider(const SphereCollider collider)
 {
-	mLeftCollider = collider;
-	mLeftCollider.isActive = true;
-}
-
-void Gate::SetRightCollider(const CapsuleCollider collider)
-{
-	mRightCollider = collider;
-	mRightCollider.isActive = true;
+	mNegotiationCollider = collider;
+	mNegotiationCollider.isActive = true;
 }
 
 void Gate::SetCenterPos(const Vec3 pos)
 {
-	centerPos = pos;
+	mCenterPos = pos;
 }
 
-void Gate::SetLeftRot(const Vec3 rot)
+void Gate::SetisOpening(const bool isOpening)
 {
-	mGateLeft->rot = rot;
-}
-
-void Gate::SetRightRot(const Vec3 rot)
-{
-	mGateRight->rot = rot;
+	mIsOpening = isOpening;
 }
 
 CapsuleCollider Gate::GetLeftCollider()
@@ -84,7 +146,27 @@ CapsuleCollider Gate::GetRightCollider()
 	return mRightCollider;
 }
 
+CapsuleCollider Gate::GetCloseCollider()
+{
+	return mCloseCollider;
+}
+
+SphereCollider Gate::GetNegotiationCollider()
+{
+	return mNegotiationCollider;
+}
+
 Vec3 Gate::GetCenterPos()
 {
-	return centerPos;
+	return mCenterPos;
+}
+
+Vec3 Gate::GetNegotitationPos()
+{
+	return mNegotitationPos;
+}
+
+bool Gate::GetisOpen()
+{
+	return mIsOpen;
 }

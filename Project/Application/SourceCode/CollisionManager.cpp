@@ -137,6 +137,41 @@ void CollisionManager::PlayerHitNegotiation()
 		}
 	}
 
+	// ê≥ñÂ
+	const std::vector<std::unique_ptr<Gate>>& gates = mField->GetFieldData()->gates;
+	for (uint32_t i = 0; i < gates.size(); i++)
+	{
+		float dis = Vec3::Distance(mPlayer->GetPos(), gates[i]->GetCenterPos());
+		if (dis >= 20)
+		{
+			continue;
+		}
+
+		if (gates[i]->GetisOpen() == true)
+		{
+			continue;
+		}
+
+		if (Collision::SphereHitCapsule(
+			gates[i]->GetNegotiationCollider(), mPlayer->GetBodyCollider()))
+		{
+			mUiManager->GetNegotiationUI()->SetisActive(true);
+			mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::OpenStr);
+			isHit = true;
+
+			if (Pad::GetButtonDown(PadCode::ButtonB))
+			{
+				Vec3 pos = gates[i]->GetNegotitationPos();
+				pos.y = mPlayer->GetPos().y;
+				mPlayer->SetPos(pos);
+				mPlayer->SetState(Player::State::OpenGate);
+
+				gates[i]->SetisOpening(true);
+			}
+			return;
+		}
+	}
+
 	// âΩÇ‡ìñÇΩÇ¡ÇƒÇ»Ç©Ç¡ÇΩéû
 	if (isHit == false)
 	{
@@ -277,7 +312,8 @@ void CollisionManager::PlayerHitFieldObject()
 
 		Vec3 hitPoint = 0;
 		if (Collision::CapsuleHitCapsule(gates[i]->GetLeftCollider(), mPlayer->GetBodyCollider(), hitPoint) ||
-			Collision::CapsuleHitCapsule(gates[i]->GetRightCollider(), mPlayer->GetBodyCollider(), hitPoint))
+			Collision::CapsuleHitCapsule(gates[i]->GetRightCollider(), mPlayer->GetBodyCollider(), hitPoint) ||
+			Collision::CapsuleHitCapsule(gates[i]->GetCloseCollider(), mPlayer->GetBodyCollider(), hitPoint))
 		{
 			mField->SetSpherePos(hitPoint);
 

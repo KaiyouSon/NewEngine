@@ -10,7 +10,6 @@ private:
 	bool mIsActive;
 	float mAlpha;
 
-
 public:
 	static void CreateGraphicsPipeline();
 	RespawnPointUI();

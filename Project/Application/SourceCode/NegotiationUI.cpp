@@ -156,6 +156,10 @@ void NegotiationUI::SetStrType(const StrType type)
 	case RestInLightStr:
 		mText->SetTexture(TextureManager::GetTexture("RestInLightStr"));
 		break;
+
+	case OpenStr:
+		mText->SetTexture(TextureManager::GetTexture("OpenStr"));
+		break;
 	}
 }
 

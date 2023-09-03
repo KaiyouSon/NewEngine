@@ -593,6 +593,10 @@ void Player::SetisDamage(const bool isDamage)
 {
 	mIsDamage = isDamage;
 }
+void Player::SetState(const State state)
+{
+	mState = state;
+}
 
 // ÉQÉbÉ^Å[
 GaugeParam Player::GetGaugeParam(const uint32_t index)
