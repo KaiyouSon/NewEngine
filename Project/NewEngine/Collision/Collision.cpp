@@ -451,12 +451,6 @@ bool Collision::CapsuleHitCapsule(const CapsuleCollider& capsule1, const Capsule
 		return true;
 	}
 
-
-	if (disPow2 < radius * radius)
-	{
-		return true;
-	}
-
 	return false;
 }
 

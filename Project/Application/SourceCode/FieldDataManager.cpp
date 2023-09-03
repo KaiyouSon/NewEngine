@@ -71,15 +71,14 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 			else if (
 				object["obj_name"] == "MainWall" ||
 				object["obj_name"] == "Wall1" ||
-				object["obj_name"] == "Wall2" ||
-				object["obj_name"] == "WallGate")
+				object["obj_name"] == "Wall2")
 			{
 				LoadWallData(fieldData.get(), object);
 			}
-			//else if (object["obj_name"] == "WallGate")
-			//{
-			//	LoadGateData(fieldData.get(), object);
-			//}
+			else if (object["obj_name"] == "WallGate")
+			{
+				LoadGateData(fieldData.get(), object);
+			}
 		}
 	}
 
@@ -383,6 +382,8 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 		(float)transform["rotation"][1],
 		(float)transform["rotation"][2],
 	};
+	gate->SetCenterPos(pos);
+
 	Transform parent = Transform(pos, scale, Radian(angle));
 	parent.Update();
 
@@ -425,25 +426,25 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 				// Collider‚ª‚ ‚ê‚Î
 				if (child.contains("collider"))
 				{
-					//nlohmann::json collider = child["collider"];
+					nlohmann::json collider = child["collider"];
 
-					//if (collider["type"] == "Box")
-					//{
-					//	Vec3 pos =
-					//	{
-					//		collider["center"][0],
-					//		collider["center"][1],
-					//		collider["center"][2],
-					//	};
-					//	Vec3 size =
-					//	{
-					//		collider["size"][0],
-					//		collider["size"][1],
-					//		collider["size"][2],
-					//	};
-
-					//	coffin->SetBottomCollider(CubeCollider(pos, size));
-					//}
+					if (collider["type"] == "Capsule")
+					{
+						Vec3 start =
+						{
+							collider["start"][0],
+							collider["start"][1],
+							collider["start"][2],
+						};
+						Vec3 end =
+						{
+							collider["end"][0],
+							collider["end"][1],
+							collider["end"][2],
+						};
+						float radius = collider["radius"];
+						gate->SetLeftCollider(CapsuleCollider(start, end, radius));
+					}
 				}
 			}
 			else if (child["obj_name"] == "GateRight")
@@ -473,25 +474,25 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 				// Collider‚ª‚ ‚ê‚Î
 				if (child.contains("collider"))
 				{
-					//nlohmann::json collider = child["collider"];
+					nlohmann::json collider = child["collider"];
 
-					//if (collider["type"] == "Box")
-					//{
-					//	Vec3 pos =
-					//	{
-					//		collider["center"][0],
-					//		collider["center"][1],
-					//		collider["center"][2],
-					//	};
-					//	Vec3 size =
-					//	{
-					//		collider["size"][0],
-					//		collider["size"][1],
-					//		collider["size"][2],
-					//	};
-
-					//	coffin->SetBottomCollider(CubeCollider(pos, size));
-					//}
+					if (collider["type"] == "Capsule")
+					{
+						Vec3 start =
+						{
+							collider["start"][0],
+							collider["start"][1],
+							collider["start"][2],
+						};
+						Vec3 end =
+						{
+							collider["end"][0],
+							collider["end"][1],
+							collider["end"][2],
+						};
+						float radius = collider["radius"];
+						gate->SetRightCollider(CapsuleCollider(start, end, radius));
+					}
 				}
 			}
 		}

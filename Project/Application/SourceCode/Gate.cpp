@@ -6,6 +6,8 @@ Gate::Gate() :
 {
 	mGateLeft->SetModel(ModelManager::GetModel("WallGate"));
 	mGateRight->SetModel(ModelManager::GetModel("WallGate"));
+	mLeftCollider.isActive = false;
+	mRightCollider.isActive = false;
 }
 
 void Gate::Init()
@@ -18,6 +20,9 @@ void Gate::Init()
 
 void Gate::Update()
 {
+	ColliderDrawer::GetInstance()->Bind(&mLeftCollider);
+	ColliderDrawer::GetInstance()->Bind(&mRightCollider);
+
 	mGateLeft->Update();
 	mGateRight->Update();
 }
@@ -42,14 +47,21 @@ void Gate::SetRightTransform(const Transform& transform)
 	mGateRight->rot = transform.rot;
 }
 
-void Gate::SetLeftPos(const Vec3 pos)
+void Gate::SetLeftCollider(const CapsuleCollider collider)
 {
-	mGateLeft->pos = pos;
+	mLeftCollider = collider;
+	mLeftCollider.isActive = true;
 }
 
-void Gate::SetRightPos(const Vec3 pos)
+void Gate::SetRightCollider(const CapsuleCollider collider)
 {
-	mGateRight->pos = pos;
+	mRightCollider = collider;
+	mRightCollider.isActive = true;
+}
+
+void Gate::SetCenterPos(const Vec3 pos)
+{
+	centerPos = pos;
 }
 
 void Gate::SetLeftRot(const Vec3 rot)
@@ -60,4 +72,19 @@ void Gate::SetLeftRot(const Vec3 rot)
 void Gate::SetRightRot(const Vec3 rot)
 {
 	mGateRight->rot = rot;
+}
+
+CapsuleCollider Gate::GetLeftCollider()
+{
+	return mLeftCollider;
+}
+
+CapsuleCollider Gate::GetRightCollider()
+{
+	return mRightCollider;
+}
+
+Vec3 Gate::GetCenterPos()
+{
+	return centerPos;
 }
