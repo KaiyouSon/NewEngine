@@ -22,9 +22,9 @@ void Gui::Init()
 		renderBase->GetDevice(),
 		sNumFramesInFlight,
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
-		TextureManager::GetSrvDescHeap(),
-		TextureManager::GetSrvDescHeap()->GetCPUDescriptorHandleForHeapStart(),
-		TextureManager::GetSrvDescHeap()->GetGPUDescriptorHandleForHeapStart());
+		TextureManager::GetInstance()->GetSrvDescHeap(),
+		TextureManager::GetInstance()->GetSrvDescHeap()->GetCPUDescriptorHandleForHeapStart(),
+		TextureManager::GetInstance()->GetSrvDescHeap()->GetGPUDescriptorHandleForHeapStart());
 }
 
 void Gui::PreDraw()
@@ -42,7 +42,7 @@ void Gui::PostDraw()
 	ImGui::Render();
 	// SRVヒープの設定コマンド
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
-	auto srvDescHeap = TextureManager::GetSrvDescHeap();
+	auto srvDescHeap = TextureManager::GetInstance()->GetSrvDescHeap();
 	renderBase->GetCommandList()->SetDescriptorHeaps(1, &srvDescHeap);
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), renderBase->GetCommandList());
 }

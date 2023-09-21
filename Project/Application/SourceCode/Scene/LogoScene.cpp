@@ -13,8 +13,8 @@ LogoScene::~LogoScene()
 
 void LogoScene::Init()
 {
-	mLogoTex = TextureManager::LoadTexture("LogoScene/NewEngineTitle.png");
-	mBackTex = TextureManager::CreateTexture(Color::black);
+	//mLogoTex = TextureManager::LoadTexture("LogoScene/NewEngineTitle.png", "NewEngineTitle");
+	//mBackTex = TextureManager::CreateTexture(Color::black, "Black");
 
 	mLogoSprite->SetTexture(&mLogoTex);
 	mBackSprite->SetTexture(&mBackTex);

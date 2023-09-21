@@ -4,140 +4,46 @@
 #include <d3dx12.h>
 using namespace DirectX;
 
-#pragma region 静的メンバー変数
+TextureManager::TextureManager() :
+	mMutex(std::mutex{}), mSrvIncrementIndex(1), mSrvDescHeap(nullptr)
+{
+}
 
-// srv作成時にインクリメント用
-UINT TextureManager::sSrvIncrementIndex = 1;
-
-// srv用ディスクリプタヒープ
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> TextureManager::sSrvDescHeap;
-
-// テクスチャーのマップ
-std::unordered_map<std::string, std::unique_ptr<Texture>> TextureManager::sTextureMap;
-
-// レンダーテクスチャーのマップ
-std::unordered_map<std::string, std::unique_ptr<RenderTexture>> TextureManager::sRenderTextureMap;
-
-// 排他制御
-std::mutex TextureManager::sMtx = std::mutex{};
-
-#pragma endregion
-
-#pragma region テクスチャー関連
+void TextureManager::Init()
+{
+}
 
 // テクスチャーの取得
-Texture* TextureManager::GetTexture(std::string textureTag)
+Texture* TextureManager::GetTexture(const std::string tag)
 {
-	std::string log;
-	if (sTextureMap[textureTag].get() == nullptr)
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	// ログ
+	std::string log = "Error";
+
+	if (GetInstance()->mTextureMap[tag].get() == nullptr)
 	{
-		log = "[Texture Use] Tag : " + textureTag + ", does not exist";
+		log = "[Texture Use] Tag : " + tag + ", does not exist";
 	}
 	else
 	{
-		log = "[Texture Use] Tag : " + textureTag + ", was used";
+		log = "[Texture Use] Tag : " + tag + ", was used";
 	}
 	OutputDebugLog(log.c_str());
 
-	return sTextureMap[textureTag].get();
-}
-
-// 色を指定してテクスチャを生成する
-Texture TextureManager::CreateTexture(Color color)
-{
-	Texture tex;
-
-	HRESULT result;
-
-	// ヒープの設定
-	D3D12_HEAP_PROPERTIES textureHeapProp{};
-	textureHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
-
-	// リソース設定
-	D3D12_RESOURCE_DESC textureResourceDesc{};
-	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	textureResourceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	textureResourceDesc.Width = 1; // 幅
-	textureResourceDesc.Height = 1; // 高さ
-	textureResourceDesc.DepthOrArraySize = 1;
-	textureResourceDesc.MipLevels = 1;
-	textureResourceDesc.SampleDesc.Count = 1;
-
-	// テクスチャのサイズをセット
-	tex.size = { (float)textureResourceDesc.Width, (float)textureResourceDesc.Height };
-
-	// テクスチャバッファの生成
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc,
-			D3D12_RESOURCE_STATE_COPY_DEST,
-			nullptr,
-			IID_PPV_ARGS(&tex.buffer));
-	assert(SUCCEEDED(result));
-
-	CreateSRV(tex, tex.buffer.Get());
-
-	Color col = Color(color.r / 255, color.g / 255, color.b / 255, color.a / 255);
-
-	D3D12_SUBRESOURCE_DATA subResourcesData{};
-	subResourcesData.pData = (void**)&col;
-	subResourcesData.RowPitch = (LONG_PTR)(sizeof(Color) * tex.size.x);
-	subResourcesData.SlicePitch = (LONG_PTR)(sizeof(Color) * tex.size.x * tex.size.y);
-
-	uint64_t uploadSize = GetRequiredIntermediateSize(tex.buffer.Get(), 0, 1);
-
-	// ヒープの設定
-	D3D12_HEAP_PROPERTIES textureHeapProp1{};
-	textureHeapProp1.Type = D3D12_HEAP_TYPE_UPLOAD;
-	CD3DX12_RESOURCE_DESC textureResourceDesc1 =
-		CD3DX12_RESOURCE_DESC::Buffer(uploadSize);
-
-	// テクスチャバッファの生成
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp1,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc1,
-			D3D12_RESOURCE_STATE_GENERIC_READ,
-			nullptr,
-			IID_PPV_ARGS(&tex.uploadBuffer));
-	assert(SUCCEEDED(result));
-
-	UpdateSubresources(
-		RenderBase::GetInstance()->GetCommandList(),
-		tex.buffer.Get(),
-		tex.uploadBuffer.Get(),
-		0,
-		0,
-		1,
-		&subResourcesData);
-
-	D3D12_RESOURCE_BARRIER  barrier{};
-	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	barrier.Transition.pResource = tex.buffer.Get();
-	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
-	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
-
-	RenderBase::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrier);
-
-	std::string log = "[Texture Create] ColorTexture, created";
-	OutputDebugLog(log.c_str());
-
-	ExcuteComandList();
-
-	return tex;
+	return GetInstance()->mTextureMap[tag].get();
 }
 
 // 色を指定してテクスチャを生成しマップに格納する
-Texture* TextureManager::CreateTexture(Color color, std::string textureTag)
+Texture* TextureManager::CreateTexture(const Color color, const std::string tag)
 {
 	// 排他制御
-	std::lock_guard<std::mutex> lock(sMtx);
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
-	sTextureMap.insert(std::make_pair(textureTag, std::move(std::make_unique<Texture>())));
+	// テクスチャー作成
+	GetInstance()->mTextureMap.
+		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
 
 	HRESULT result;
 
@@ -152,7 +58,8 @@ Texture* TextureManager::CreateTexture(Color color, std::string textureTag)
 			1, 1, 1, 1, 1);
 
 	// テクスチャのサイズをセット
-	sTextureMap[textureTag]->size = { (float)textureResourceDesc.Width, (float)textureResourceDesc.Height };
+	GetInstance()->mTextureMap[tag]->size =
+		Vec2((float)textureResourceDesc.Width, (float)textureResourceDesc.Height);
 
 	// テクスチャバッファの生成
 	result = RenderBase::GetInstance()->GetDevice()->
@@ -162,19 +69,26 @@ Texture* TextureManager::CreateTexture(Color color, std::string textureTag)
 			&textureResourceDesc,
 			D3D12_RESOURCE_STATE_COPY_DEST,
 			nullptr,
-			IID_PPV_ARGS(&sTextureMap[textureTag]->buffer));
+			IID_PPV_ARGS(&GetInstance()->mTextureMap[tag]->buffer));
 	assert(SUCCEEDED(result));
 
-	CreateSRV(*sTextureMap[textureTag], sTextureMap[textureTag]->buffer.Get());
+	// SRV作成
+	GetInstance()->CreateSRV(*GetInstance()->mTextureMap[tag], GetInstance()->mTextureMap[tag]->buffer.Get());
 
-	Color col = Color(color.r / 255, color.g / 255, color.b / 255, color.a / 255);
+	// 色
+	Color col = color / 255.f;
 
 	D3D12_SUBRESOURCE_DATA subResourcesData{};
 	subResourcesData.pData = (void**)&col;
-	subResourcesData.RowPitch = (LONG_PTR)(sizeof(Color) * sTextureMap[textureTag]->size.x);
-	subResourcesData.SlicePitch = (LONG_PTR)(sizeof(Color) * sTextureMap[textureTag]->size.x * sTextureMap[textureTag]->size.y);
+	subResourcesData.RowPitch =
+		(LONG_PTR)(sizeof(Color) *
+			GetInstance()->mTextureMap[tag]->size.x);
+	subResourcesData.SlicePitch =
+		(LONG_PTR)(sizeof(Color) *
+			GetInstance()->mTextureMap[tag]->size.x *
+			GetInstance()->mTextureMap[tag]->size.y);
 
-	uint64_t uploadSize = GetRequiredIntermediateSize(sTextureMap[textureTag]->buffer.Get(), 0, 1);
+	uint64_t uploadSize = GetRequiredIntermediateSize(GetInstance()->mTextureMap[tag]->buffer.Get(), 0, 1);
 
 	// ヒープの設定
 	D3D12_HEAP_PROPERTIES textureHeapProp1{};
@@ -190,176 +104,46 @@ Texture* TextureManager::CreateTexture(Color color, std::string textureTag)
 			&textureResourceDesc1,
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
-			IID_PPV_ARGS(&sTextureMap[textureTag]->uploadBuffer));
+			IID_PPV_ARGS(&GetInstance()->mTextureMap[tag]->uploadBuffer));
 	assert(SUCCEEDED(result));
 
 	UpdateSubresources(
 		RenderBase::GetInstance()->GetCommandList(),
-		sTextureMap[textureTag]->buffer.Get(),
-		sTextureMap[textureTag]->uploadBuffer.Get(),
+		GetInstance()->mTextureMap[tag]->buffer.Get(),
+		GetInstance()->mTextureMap[tag]->uploadBuffer.Get(),
 		0,
 		0,
 		1,
 		&subResourcesData);
 
-	sTextureMap[textureTag]->buffer->SetName(L"ResourceBuffer");
-	sTextureMap[textureTag]->uploadBuffer->SetName(L"UploadBuffer");
+	GetInstance()->mTextureMap[tag]->buffer->SetName(L"ResourceBuffer");
+	GetInstance()->mTextureMap[tag]->uploadBuffer->SetName(L"UploadBuffer");
 
 	D3D12_RESOURCE_BARRIER  barrier{};
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	barrier.Transition.pResource = sTextureMap[textureTag]->buffer.Get();
+	barrier.Transition.pResource = GetInstance()->mTextureMap[tag]->buffer.Get();
 	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
 
 	RenderBase::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrier);
 
-	std::string log = "[Texture Create] ColorTexture, Tag : " + textureTag + ", created";
+	// ログ出力
+	std::string log = "[Texture Create] ColorTexture, Tag : " + tag + ", created";
 	OutputDebugLog(log.c_str());
 
-	return sTextureMap[textureTag].get();
-}
-
-// ファイルパスを指定してテクスチャを生成する
-Texture TextureManager::LoadTexture(std::string filePath)
-{
-	Texture tex;
-
-	std::string path = "Application/Resources/Texture/" + filePath;
-
-	TexMetadata metadata{};
-	ScratchImage scratchImg{};
-	std::wstring wfilePath(path.begin(), path.end());
-
-	HRESULT result;
-
-	// WICテクスチャのロード
-	result = LoadFromWICFile(
-		wfilePath.c_str(),
-		WIC_FLAGS_NONE,
-		&metadata, scratchImg);
-
-	if (result != S_OK)
-	{
-		std::string log = "[Texture Load] FilePath : " + filePath + ", is,failed to load";
-		OutputDebugLog(log.c_str());
-
-		assert(0 && "テクスチャーの読み込みが失敗しました");
-	}
-
-	// ミップマップ生成
-	ScratchImage mipChain{};
-	result = GenerateMipMaps(
-		scratchImg.GetImages(),
-		scratchImg.GetImageCount(),
-		scratchImg.GetMetadata(),
-		TEX_FILTER_DEFAULT, 0, mipChain);
-	if (SUCCEEDED(result))
-	{
-		scratchImg = std::move(mipChain);
-		metadata = scratchImg.GetMetadata();
-	}
-
-	// 読み込んだディフューズテクスチャをSRGBとして扱う
-	metadata.format = MakeSRGB(metadata.format);
-
-	// ヒープの設定
-	CD3DX12_HEAP_PROPERTIES textureHeapProp =
-		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-
-	// リソース設定
-	CD3DX12_RESOURCE_DESC textureResourceDesc =
-		CD3DX12_RESOURCE_DESC::Tex2D(
-			metadata.format,
-			(UINT64)metadata.width,
-			(UINT)metadata.height,
-			(UINT16)metadata.arraySize,
-			(UINT16)metadata.mipLevels,
-			1);
-
-	// テクスチャのサイズをセット
-	tex.size = { (float)textureResourceDesc.Width, (float)textureResourceDesc.Height };
-
-	// テクスチャバッファの生成
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc,
-			D3D12_RESOURCE_STATE_COPY_DEST,
-			nullptr,
-			IID_PPV_ARGS(&tex.buffer));
-	assert(SUCCEEDED(result));
-
-	CreateSRV(tex, tex.buffer.Get());
-
-	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas{};
-	subResourcesDatas.resize(metadata.mipLevels);
-
-	for (size_t i = 0; i < subResourcesDatas.size(); i++)
-	{
-		// 全ミップマップレベルを指定してイメージを取得
-		const Image* img = scratchImg.GetImage(i, 0, 0);
-
-		subResourcesDatas[i].pData = img->pixels;
-		subResourcesDatas[i].RowPitch = img->rowPitch;
-		subResourcesDatas[i].SlicePitch = img->slicePitch;
-	}
-
-	uint64_t uploadSize = GetRequiredIntermediateSize(tex.buffer.Get(), 0, (UINT)metadata.mipLevels);
-
-	// ヒープの設定
-	D3D12_HEAP_PROPERTIES textureHeapProp1{};
-	textureHeapProp1.Type = D3D12_HEAP_TYPE_UPLOAD;
-	CD3DX12_RESOURCE_DESC textureResourceDesc1 =
-		CD3DX12_RESOURCE_DESC::Buffer(uploadSize);
-
-	Microsoft::WRL::ComPtr<ID3D12Resource> uploadBuffer;
-
-	// テクスチャバッファの生成
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp1,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc1,
-			D3D12_RESOURCE_STATE_GENERIC_READ,
-			nullptr,
-			IID_PPV_ARGS(&uploadBuffer));
-	assert(SUCCEEDED(result));
-
-	UpdateSubresources(
-		RenderBase::GetInstance()->GetCommandList(),
-		tex.buffer.Get(),
-		uploadBuffer.Get(),
-		0,
-		0,
-		(UINT)metadata.mipLevels,
-		subResourcesDatas.data());
-
-	D3D12_RESOURCE_BARRIER  barrier{};
-	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	barrier.Transition.pResource = tex.buffer.Get();
-	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
-	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
-
-	RenderBase::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrier);
-
-	std::string log = "[Texture Load] FilePath : " + filePath + ", was loaded successfully";
-	OutputDebugLog(log.c_str());
-
-	ExcuteComandList();
-
-	return tex;
+	return GetInstance()->mTextureMap[tag].get();
 }
 
 // ファイルパスを指定してテクスチャを生成しマップの格納する
-Texture* TextureManager::LoadTexture(std::string filePath, std::string textureTag)
+Texture* TextureManager::LoadTexture(const std::string filePath, const std::string tag)
 {
 	// 排他制御
-	std::lock_guard<std::mutex> lock(sMtx);
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
-	sTextureMap.insert(std::make_pair(textureTag, std::move(std::make_unique<Texture>())));
+	// テクスチャー作成
+	GetInstance()->mTextureMap.
+		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
 
 	std::string path = "Application/Resources/Texture/" + filePath;
 
@@ -377,7 +161,7 @@ Texture* TextureManager::LoadTexture(std::string filePath, std::string textureTa
 
 	if (result != S_OK)
 	{
-		std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + textureTag + ", is,failed to load";
+		std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + tag + ", is,failed to load";
 		OutputDebugLog(log.c_str());
 
 		assert(0 && "テクスチャーの読み込みが失敗しました");
@@ -414,7 +198,8 @@ Texture* TextureManager::LoadTexture(std::string filePath, std::string textureTa
 			1);
 
 	// テクスチャのサイズをセット
-	sTextureMap[textureTag]->size = { (float)textureResourceDesc.Width, (float)textureResourceDesc.Height };
+	GetInstance()->mTextureMap[tag]->size =
+		Vec2((float)textureResourceDesc.Width, (float)textureResourceDesc.Height);
 
 	// テクスチャバッファの生成
 	result = RenderBase::GetInstance()->GetDevice()->
@@ -424,142 +209,11 @@ Texture* TextureManager::LoadTexture(std::string filePath, std::string textureTa
 			&textureResourceDesc,
 			D3D12_RESOURCE_STATE_COPY_DEST,
 			nullptr,
-			IID_PPV_ARGS(&sTextureMap[textureTag]->buffer));
+			IID_PPV_ARGS(&GetInstance()->mTextureMap[tag]->buffer));
 	assert(SUCCEEDED(result));
 
-	sTextureMap[textureTag]->buffer->SetName(L"TextureBuffer");
-
-	CreateSRV(*sTextureMap[textureTag], sTextureMap[textureTag]->buffer.Get());
-
-	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas{};
-	subResourcesDatas.resize(metadata.mipLevels);
-
-	for (size_t i = 0; i < subResourcesDatas.size(); i++)
-	{
-		// 全ミップマップレベルを指定してイメージを取得
-		const Image* img = scratchImg.GetImage(i, 0, 0);
-
-		subResourcesDatas[i].pData = img->pixels;
-		subResourcesDatas[i].RowPitch = img->rowPitch;
-		subResourcesDatas[i].SlicePitch = img->slicePitch;
-	}
-
-	uint64_t uploadSize = GetRequiredIntermediateSize(sTextureMap[textureTag]->buffer.Get(), 0, (UINT)metadata.mipLevels);
-
-	// ヒープの設定
-	D3D12_HEAP_PROPERTIES textureHeapProp1{};
-	textureHeapProp1.Type = D3D12_HEAP_TYPE_UPLOAD;
-	CD3DX12_RESOURCE_DESC textureResourceDesc1 =
-		CD3DX12_RESOURCE_DESC::Buffer(uploadSize);
-
-	// テクスチャバッファの生成
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp1,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc1,
-			D3D12_RESOURCE_STATE_GENERIC_READ,
-			nullptr,
-			IID_PPV_ARGS(&sTextureMap[textureTag]->uploadBuffer));
-	assert(SUCCEEDED(result));
-
-	UpdateSubresources(
-		RenderBase::GetInstance()->GetCommandList(),
-		sTextureMap[textureTag]->buffer.Get(),
-		sTextureMap[textureTag]->uploadBuffer.Get(),
-		0,
-		0,
-		(UINT)metadata.mipLevels,
-		subResourcesDatas.data());
-
-	D3D12_RESOURCE_BARRIER  barrier{};
-	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	barrier.Transition.pResource = sTextureMap[textureTag]->buffer.Get();
-	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
-	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
-
-	RenderBase::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrier);
-
-	std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + textureTag + ", was loaded successfully";
-	OutputDebugLog(log.c_str());
-
-	return sTextureMap[textureTag].get();
-}
-
-// objファイルからロードしたテクスチャーをロードする専用関数
-Texture* TextureManager::LoadMaterialTexture(std::string filePath, std::string textureTag)
-{
-	// 排他制御
-	std::lock_guard<std::mutex> lock(sMtx);
-
-	sTextureMap.insert(std::make_pair(textureTag, std::move(std::make_unique<Texture>())));
-
-	TexMetadata metadata{};
-	ScratchImage scratchImg{};
-	std::wstring wfilePath(filePath.begin(), filePath.end());
-
-	HRESULT result;
-
-	// WICテクスチャのロード
-	result = LoadFromWICFile(
-		wfilePath.c_str(),
-		WIC_FLAGS_NONE,
-		&metadata, scratchImg);
-
-	if (result != S_OK)
-	{
-		std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + textureTag + ", is,failed to load";
-		OutputDebugLog(log.c_str());
-
-		assert(0 && "テクスチャーの読み込みが失敗しました");
-	}
-
-	// ミップマップ生成
-	ScratchImage mipChain{};
-	result = GenerateMipMaps(
-		scratchImg.GetImages(),
-		scratchImg.GetImageCount(),
-		scratchImg.GetMetadata(),
-		TEX_FILTER_DEFAULT, 0, mipChain);
-	if (SUCCEEDED(result))
-	{
-		scratchImg = std::move(mipChain);
-		metadata = scratchImg.GetMetadata();
-	}
-
-	// 読み込んだディフューズテクスチャをSRGBとして扱う
-	metadata.format = MakeSRGB(metadata.format);
-
-	// ヒープの設定
-	CD3DX12_HEAP_PROPERTIES textureHeapProp =
-		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-
-	// リソース設定
-	CD3DX12_RESOURCE_DESC textureResourceDesc =
-		CD3DX12_RESOURCE_DESC::Tex2D(
-			metadata.format,
-			(UINT64)metadata.width,
-			(UINT)metadata.height,
-			(UINT16)metadata.arraySize,
-			(UINT16)metadata.mipLevels,
-			1);
-
-	// テクスチャのサイズをセット
-	sTextureMap[textureTag]->size = { (float)textureResourceDesc.Width, (float)textureResourceDesc.Height };
-
-	// テクスチャバッファの生成
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc,
-			D3D12_RESOURCE_STATE_COPY_DEST,
-			nullptr,
-			IID_PPV_ARGS(&sTextureMap[textureTag]->buffer));
-	assert(SUCCEEDED(result));
-
-	CreateSRV(*sTextureMap[textureTag], sTextureMap[textureTag]->buffer.Get());
+	// SRV作成
+	GetInstance()->CreateSRV(*GetInstance()->mTextureMap[tag], GetInstance()->mTextureMap[tag]->buffer.Get());
 
 	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas{};
 	subResourcesDatas.resize(metadata.mipLevels);
@@ -575,7 +229,7 @@ Texture* TextureManager::LoadMaterialTexture(std::string filePath, std::string t
 	}
 
 	uint64_t uploadSize =
-		GetRequiredIntermediateSize(sTextureMap[textureTag]->buffer.Get(), 0, (UINT)metadata.mipLevels);
+		GetRequiredIntermediateSize(GetInstance()->mTextureMap[tag]->buffer.Get(), 0, (UINT)metadata.mipLevels);
 
 	// ヒープの設定
 	D3D12_HEAP_PROPERTIES textureHeapProp1{};
@@ -591,13 +245,13 @@ Texture* TextureManager::LoadMaterialTexture(std::string filePath, std::string t
 			&textureResourceDesc1,
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
-			IID_PPV_ARGS(&sTextureMap[textureTag]->uploadBuffer));
+			IID_PPV_ARGS(&GetInstance()->mTextureMap[tag]->uploadBuffer));
 	assert(SUCCEEDED(result));
 
 	UpdateSubresources(
 		RenderBase::GetInstance()->GetCommandList(),
-		sTextureMap[textureTag]->buffer.Get(),
-		sTextureMap[textureTag]->uploadBuffer.Get(),
+		GetInstance()->mTextureMap[tag]->buffer.Get(),
+		GetInstance()->mTextureMap[tag]->uploadBuffer.Get(),
 		0,
 		0,
 		(UINT)metadata.mipLevels,
@@ -605,67 +259,198 @@ Texture* TextureManager::LoadMaterialTexture(std::string filePath, std::string t
 
 	D3D12_RESOURCE_BARRIER  barrier{};
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	barrier.Transition.pResource = sTextureMap[textureTag]->buffer.Get();
+	barrier.Transition.pResource = GetInstance()->mTextureMap[tag]->buffer.Get();
 	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
 
 	RenderBase::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrier);
 
-	std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + textureTag + ", was loaded successfully";
+	// ログ出力
+	std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + tag + ", was loaded successfully";
 	OutputDebugLog(log.c_str());
 
-	return sTextureMap[textureTag].get();
+	return GetInstance()->mTextureMap[tag].get();
+}
+
+// objファイルからロードしたテクスチャーをロードする専用関数
+Texture* TextureManager::LoadMaterialTexture(const std::string filePath, const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	// テクスチャー作成
+	GetInstance()->mMaterialTextureMap.
+		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
+
+	TexMetadata metadata{};
+	ScratchImage scratchImg{};
+	std::wstring wfilePath(filePath.begin(), filePath.end());
+
+	HRESULT result;
+
+	// WICテクスチャのロード
+	result = LoadFromWICFile(
+		wfilePath.c_str(),
+		WIC_FLAGS_NONE,
+		&metadata, scratchImg);
+
+	if (result != S_OK)
+	{
+		std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + tag + ", is,failed to load";
+		OutputDebugLog(log.c_str());
+
+		assert(0 && "テクスチャーの読み込みが失敗しました");
+	}
+
+	// ミップマップ生成
+	ScratchImage mipChain{};
+	result = GenerateMipMaps(
+		scratchImg.GetImages(),
+		scratchImg.GetImageCount(),
+		scratchImg.GetMetadata(),
+		TEX_FILTER_DEFAULT, 0, mipChain);
+	if (SUCCEEDED(result))
+	{
+		scratchImg = std::move(mipChain);
+		metadata = scratchImg.GetMetadata();
+	}
+
+	// 読み込んだディフューズテクスチャをSRGBとして扱う
+	metadata.format = MakeSRGB(metadata.format);
+
+	// ヒープの設定
+	CD3DX12_HEAP_PROPERTIES textureHeapProp =
+		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+
+	// リソース設定
+	CD3DX12_RESOURCE_DESC textureResourceDesc =
+		CD3DX12_RESOURCE_DESC::Tex2D(
+			metadata.format,
+			(UINT64)metadata.width,
+			(UINT)metadata.height,
+			(UINT16)metadata.arraySize,
+			(UINT16)metadata.mipLevels,
+			1);
+
+	// テクスチャのサイズをセット
+	GetInstance()->mMaterialTextureMap[tag]->size =
+		Vec2((float)textureResourceDesc.Width, (float)textureResourceDesc.Height);
+
+	// テクスチャバッファの生成
+	result = RenderBase::GetInstance()->GetDevice()->
+		CreateCommittedResource(
+			&textureHeapProp,
+			D3D12_HEAP_FLAG_NONE,
+			&textureResourceDesc,
+			D3D12_RESOURCE_STATE_COPY_DEST,
+			nullptr,
+			IID_PPV_ARGS(&GetInstance()->mMaterialTextureMap[tag]->buffer));
+	assert(SUCCEEDED(result));
+
+	// SRV作成
+	GetInstance()->CreateSRV(*GetInstance()->mMaterialTextureMap[tag], GetInstance()->mMaterialTextureMap[tag]->buffer.Get());
+
+	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas{};
+	subResourcesDatas.resize(metadata.mipLevels);
+
+	for (size_t i = 0; i < subResourcesDatas.size(); i++)
+	{
+		// 全ミップマップレベルを指定してイメージを取得
+		const Image* img = scratchImg.GetImage(i, 0, 0);
+
+		subResourcesDatas[i].pData = img->pixels;
+		subResourcesDatas[i].RowPitch = img->rowPitch;
+		subResourcesDatas[i].SlicePitch = img->slicePitch;
+	}
+
+	uint64_t uploadSize =
+		GetRequiredIntermediateSize(GetInstance()->mMaterialTextureMap[tag]->buffer.Get(), 0, (UINT)metadata.mipLevels);
+
+	// ヒープの設定
+	D3D12_HEAP_PROPERTIES textureHeapProp1{};
+	textureHeapProp1.Type = D3D12_HEAP_TYPE_UPLOAD;
+	CD3DX12_RESOURCE_DESC textureResourceDesc1 =
+		CD3DX12_RESOURCE_DESC::Buffer(uploadSize);
+
+	// テクスチャバッファの生成
+	result = RenderBase::GetInstance()->GetDevice()->
+		CreateCommittedResource(
+			&textureHeapProp1,
+			D3D12_HEAP_FLAG_NONE,
+			&textureResourceDesc1,
+			D3D12_RESOURCE_STATE_GENERIC_READ,
+			nullptr,
+			IID_PPV_ARGS(&GetInstance()->mMaterialTextureMap[tag]->uploadBuffer));
+	assert(SUCCEEDED(result));
+
+	UpdateSubresources(
+		RenderBase::GetInstance()->GetCommandList(),
+		GetInstance()->mMaterialTextureMap[tag]->buffer.Get(),
+		GetInstance()->mMaterialTextureMap[tag]->uploadBuffer.Get(),
+		0,
+		0,
+		(UINT)metadata.mipLevels,
+		subResourcesDatas.data());
+
+	D3D12_RESOURCE_BARRIER  barrier{};
+	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	barrier.Transition.pResource = GetInstance()->mMaterialTextureMap[tag]->buffer.Get();
+	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
+	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
+
+	RenderBase::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrier);
+
+	std::string log = "[MaterialTexture Load] FilePath : " + filePath + ", Tag : " + tag + ", was loaded successfully";
+	OutputDebugLog(log.c_str());
+
+	return GetInstance()->mMaterialTextureMap[tag].get();
 }
 
 // 深度テクスチャーを生成
-Texture* TextureManager::CreateDepthTexture(Vec2 size)
+Texture* TextureManager::CreateDepthTexture(const Vec2 size)
 {
 	// 排他制御
-	std::lock_guard<std::mutex> lock(sMtx);
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
 	std::string tag = "DepthTexture";
-	sTextureMap.insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
+	GetInstance()->mTextureMap.insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
 
 	// 深度バッファのリソース
-	sTextureMap[tag]->buffer = RenderBase::GetInstance()->GetDepthBuffer()->GetBuffer();
-	//sTextureMap[tag]->buffer->SetName(L"DepthBuffer");
+	GetInstance()->mTextureMap[tag]->buffer = RenderBase::GetInstance()->GetDepthBuffer()->GetBuffer();
 
 	// SRV作成
-	CreateSRV(*sTextureMap[tag], sTextureMap[tag]->buffer.Get());
+	GetInstance()->CreateSRV(*GetInstance()->mTextureMap[tag], GetInstance()->mTextureMap[tag]->buffer.Get());
 
 	std::string log = "[Texture Create] DepthTexture, Tag : " + tag + ", created";
 	OutputDebugLog(log.c_str());
 
-	return sTextureMap[tag].get();
+	return GetInstance()->mTextureMap[tag].get();
 }
 
-#pragma endregion
-
-#pragma region レンダーテクスチャー関連
-
 // レンダーテクスチャーの取得
-RenderTexture* TextureManager::GetRenderTexture(std::string textureTag)
+RenderTexture* TextureManager::GetRenderTexture(const std::string tag)
 {
 	std::string log;
-	if (sRenderTextureMap[textureTag].get() == nullptr)
+	if (GetInstance()->mRenderTextureMap[tag].get() == nullptr)
 	{
-		log = "[RenderTexture Use] Tag : " + textureTag + ", does not exist";
+		log = "[RenderTexture Use] Tag : " + tag + ", does not exist";
 	}
 	else
 	{
-		log = "[RenderTexture Use] Tag : " + textureTag + ", was used";
+		log = "[RenderTexture Use] Tag : " + tag + ", was used";
 	}
 	OutputDebugLog(log.c_str());
 
-	return sRenderTextureMap[textureTag].get();
+	return GetInstance()->mRenderTextureMap[tag].get();
 }
 
 // レンダーテクスチャーを生成しマップに格納する
-RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, uint32_t num, std::string textureTag)
+RenderTexture* TextureManager::CreateRenderTexture(const Vec2 size, const uint32_t num, const std::string tag)
 {
 	// 排他制御
-	std::lock_guard<std::mutex> lock(sMtx);
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
 	std::unique_ptr<RenderTexture> renderTex = std::make_unique<RenderTexture>();
 	renderTex->buffers.resize(num);
@@ -705,8 +490,6 @@ RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, uint32_t num, std:
 		assert(SUCCEEDED(result));
 	}
 
-	//renderTex->buffers[0]->SetName(L"RenderTex1");
-
 	// レンダーターゲットビューの設定
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 	// シェーダーの計算結果をSRGBに変換して書き込む
@@ -718,7 +501,7 @@ RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, uint32_t num, std:
 	for (uint32_t i = 0; i < num; i++)
 	{
 		// SRV作成
-		CreateSRV(*renderTex, renderTex->buffers[i].Get(), i);
+		GetInstance()->CreateSRV(*renderTex, renderTex->buffers[i].Get(), i);
 
 		// RTV作成
 		renderTex->renderTargets[i].buffer_ = renderTex->buffers[i];
@@ -732,29 +515,33 @@ RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, uint32_t num, std:
 
 	renderTex->depthTexture = std::make_unique<Texture>();
 	renderTex->depthTexture->buffer = renderTex->depthBuffer.GetBuffer();
-	CreateSRV(*renderTex->depthTexture, renderTex->depthTexture->buffer.Get());
+	GetInstance()->CreateSRV(*renderTex->depthTexture, renderTex->depthTexture->buffer.Get());
 
-	sRenderTextureMap.insert(std::make_pair(textureTag, std::move(renderTex)));
+	GetInstance()->mRenderTextureMap.insert(std::make_pair(tag, std::move(renderTex)));
 
-	std::string log = "[RenderTexture Create] Tag : " + textureTag + ", created";
+	std::string log = "[RenderTexture Create] Tag : " + tag + ", created";
 	OutputDebugLog(log.c_str());
 
-	return sRenderTextureMap[textureTag].get();
+	return GetInstance()->mRenderTextureMap[tag].get();
 }
 
-#pragma endregion
-
+// テクスチャマップの取得
 std::unordered_map<std::string, std::unique_ptr<Texture>>* TextureManager::GetTextureMap()
 {
-	return &sTextureMap;
+	return &GetInstance()->mTextureMap;
 }
 
+// テクスチャマップの取得
+std::unordered_map<std::string, std::unique_ptr<Texture>>* TextureManager::GetMaterialTextureMap()
+{
+	return &GetInstance()->mMaterialTextureMap;
+}
+
+// レンダーテクスチャマップの取得
 std::unordered_map<std::string, std::unique_ptr<RenderTexture>>* TextureManager::GetRenderTextureMap()
 {
-	return &sRenderTextureMap;
+	return &GetInstance()->mRenderTextureMap;
 }
-
-#pragma region その他の処理
 
 // ディスクリプターヒープを作成する処理
 void TextureManager::CreateDescriptorHeap()
@@ -772,7 +559,7 @@ void TextureManager::CreateDescriptorHeap()
 
 	// SRV用デスクリプタヒープを生成
 	result = RenderBase::GetInstance()->GetDevice()->
-		CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&sSrvDescHeap));
+		CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&GetInstance()->mSrvDescHeap));
 	assert(SUCCEEDED(result));
 
 }
@@ -781,14 +568,14 @@ void TextureManager::CreateDescriptorHeap()
 void TextureManager::CreateSRV(Texture& texture, ID3D12Resource* buffer)
 {
 	// SRVヒープの先頭ハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE srvCpuHandle = sSrvDescHeap->GetCPUDescriptorHandleForHeapStart();
-	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = sSrvDescHeap->GetGPUDescriptorHandleForHeapStart();
+	D3D12_CPU_DESCRIPTOR_HANDLE srvCpuHandle = mSrvDescHeap->GetCPUDescriptorHandleForHeapStart();
+	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = mSrvDescHeap->GetGPUDescriptorHandleForHeapStart();
 
 	UINT descriptorSize = RenderBase::GetInstance()->GetDevice()->
 		GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-	srvCpuHandle.ptr += (int32_t)(descriptorSize * sSrvIncrementIndex);
-	srvGpuHandle.ptr += (int32_t)(descriptorSize * sSrvIncrementIndex);
+	srvCpuHandle.ptr += (int32_t)(descriptorSize * mSrvIncrementIndex);
+	srvGpuHandle.ptr += (int32_t)(descriptorSize * mSrvIncrementIndex);
 
 	texture.SetCpuHandle(srvCpuHandle);
 	texture.SetGpuHandle(srvGpuHandle);
@@ -812,19 +599,19 @@ void TextureManager::CreateSRV(Texture& texture, ID3D12Resource* buffer)
 	RenderBase::GetInstance()->GetDevice()->
 		CreateShaderResourceView(buffer, &srvDesc, srvCpuHandle);
 
-	sSrvIncrementIndex++;
+	mSrvIncrementIndex++;
 }
 void TextureManager::CreateSRV(RenderTexture& texture, ID3D12Resource* buffer, uint32_t index)
 {
 	// SRVヒープの先頭ハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE srvCpuHandle = sSrvDescHeap->GetCPUDescriptorHandleForHeapStart();
-	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = sSrvDescHeap->GetGPUDescriptorHandleForHeapStart();
+	D3D12_CPU_DESCRIPTOR_HANDLE srvCpuHandle = mSrvDescHeap->GetCPUDescriptorHandleForHeapStart();
+	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = mSrvDescHeap->GetGPUDescriptorHandleForHeapStart();
 
 	UINT descriptorSize = RenderBase::GetInstance()->GetDevice()->
 		GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-	srvCpuHandle.ptr += (int32_t)(descriptorSize * sSrvIncrementIndex);
-	srvGpuHandle.ptr += (int32_t)(descriptorSize * sSrvIncrementIndex);
+	srvCpuHandle.ptr += (int32_t)(descriptorSize * mSrvIncrementIndex);
+	srvGpuHandle.ptr += (int32_t)(descriptorSize * mSrvIncrementIndex);
 
 	texture.SetCpuHandle(index, srvCpuHandle);
 	texture.SetGpuHandle(index, srvGpuHandle);
@@ -840,7 +627,7 @@ void TextureManager::CreateSRV(RenderTexture& texture, ID3D12Resource* buffer, u
 	RenderBase::GetInstance()->GetDevice()->
 		CreateShaderResourceView(buffer, &srvDesc, srvCpuHandle);
 
-	sSrvIncrementIndex++;
+	mSrvIncrementIndex++;
 }
 
 // テクスチャーロード後のコマンドリストの実行
@@ -879,4 +666,8 @@ void TextureManager::ExcuteComandList()
 	assert(SUCCEEDED(result));
 }
 
-#pragma endregion
+// SRV用のディスクリプターヒープを取得
+ID3D12DescriptorHeap* TextureManager::GetSrvDescHeap()
+{
+	return mSrvDescHeap.Get();
+}

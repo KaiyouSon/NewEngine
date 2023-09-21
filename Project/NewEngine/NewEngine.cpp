@@ -120,8 +120,8 @@ void NewEngine::PrevDraw()
 	if (isLoaded == true)
 	{
 		// SRVヒープの設定コマンド
-		auto temp = TextureManager::GetSrvDescHeap();
-		RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &temp);
+		auto srvDescHeap = TextureManager::GetInstance()->GetSrvDescHeap();
+		RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &srvDescHeap);
 		SceneManager::GetInstance()->RenderTextureSetting();
 
 		RenderBase::GetInstance()->PreDraw();

@@ -2,53 +2,55 @@
 #include "Texture.h"
 #include "TextureAnimeiton.h"
 #include "RenderTexture.h"
+#include "Singleton.h"
 #include <DirectXTex.h>
 #include <mutex>
 #include <unordered_map>
 
-class TextureManager
+template<typename T> class Singleton;
+
+class TextureManager : public Singleton<TextureManager>
 {
 private:
+	std::unordered_map<std::string, std::unique_ptr<Texture>> mTextureMap;				// テクスチャーのマップ
+	std::unordered_map<std::string, std::unique_ptr<Texture>> mMaterialTextureMap;		// マテリアルテクスチャーのマップ
+	std::unordered_map<std::string, std::unique_ptr<RenderTexture>> mRenderTextureMap;	// レンダーテクスチャーのマップ
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mSrvDescHeap;	// srv用ディスクリプタヒープ
 
-	static std::unordered_map<std::string, std::unique_ptr<Texture>> sTextureMap;					// テクスチャーのマップ
-	static std::unordered_map<std::string, std::unique_ptr<RenderTexture>> sRenderTextureMap;		// レンダーテクスチャーのマップ
+	std::mutex mMutex;	// 排他制御
 
-	static std::mutex sMtx;	// 排他制御
+public:
+	uint32_t mSrvIncrementIndex;	// srv作成時にインクリメント用
+
+private:
+	void Init();
 
 public:	// テクスチャー関連
 
-	static UINT sSrvIncrementIndex;	// srv作成時にインクリメント用
-	static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> sSrvDescHeap;	// srv用ディスクリプタヒープ
-
 	// テクスチャーの取得
-	static Texture* GetTexture(std::string textureTag);
-
-	// 色を指定してテクスチャを生成する
-	static Texture CreateTexture(Color color);
+	static Texture* GetTexture(const std::string tag);
 
 	// 色を指定してテクスチャを生成しマップに格納する
-	static Texture* CreateTexture(Color color, std::string textureTag);
-
-	// ファイルパスを指定してテクスチャを生成する
-	static Texture LoadTexture(std::string filePath);
+	static Texture* CreateTexture(const Color color, const std::string tag);
 
 	// ファイルパスを指定してテクスチャを生成しマップの格納する
-	static Texture* LoadTexture(std::string filePath, std::string textureTag);
+	static Texture* LoadTexture(const std::string filePath, const std::string tag);
 
 	// objファイルからロードしたテクスチャーをロードする専用関数
-	static Texture* LoadMaterialTexture(std::string filePath, std::string textureTag);
+	static Texture* LoadMaterialTexture(const std::string filePath, const std::string tag);
 
 public: // レンダーテクスチャー関連
 
 	// レンダーテクスチャーの取得
-	static RenderTexture* GetRenderTexture(std::string textureTag);
+	static RenderTexture* GetRenderTexture(const std::string tag);
 
 	// レンダーテクスチャーを生成しマップに格納する
-	static RenderTexture* CreateRenderTexture(Vec2 size, uint32_t num, std::string textureTag);
+	static RenderTexture* CreateRenderTexture(const Vec2 size, const uint32_t num, const std::string tag);
 
 public:
 	// マップ
 	static std::unordered_map<std::string, std::unique_ptr<Texture>>* GetTextureMap();
+	static std::unordered_map<std::string, std::unique_ptr<Texture>>* GetMaterialTextureMap();
 	static std::unordered_map<std::string, std::unique_ptr<RenderTexture>>* GetRenderTextureMap();
 
 public:
@@ -60,16 +62,19 @@ public:	// その他の処理
 	static void CreateDescriptorHeap();
 
 	// SRVを作成する処理
-	static void CreateSRV(Texture& texture, ID3D12Resource* buffer);
-	static void CreateSRV(RenderTexture& texture, ID3D12Resource* buffer, uint32_t index);
-	//static void CreateSRV(RenderTexture& texture, ID3D12Resource* buffer, uint32_t index);
+	void CreateSRV(Texture& texture, ID3D12Resource* buffer);
+	void CreateSRV(RenderTexture& texture, ID3D12Resource* buffer, uint32_t index);
 
 	// テクスチャーロード後のコマンドリストの実行
 	static void ExcuteComandList();
 
 public:
 	// SRV用のディスクリプターヒープを取得
-	static inline ID3D12DescriptorHeap* GetSrvDescHeap() { return sSrvDescHeap.Get(); }
+	ID3D12DescriptorHeap* GetSrvDescHeap();
 
+private:
+	// シングルトン
+	friend Singleton<TextureManager>;
+	TextureManager();
 };
 
