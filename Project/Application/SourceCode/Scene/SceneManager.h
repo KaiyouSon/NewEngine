@@ -26,8 +26,14 @@ public:
 	template<typename T>
 	static void ChangeScene()
 	{
+		// 現在のシーンのアセットをアンロードする
+		sCurrentScene->UnLoad();
+
+		// 次のシーンのインスタンスを作成
 		std::unique_ptr<IScene> nextScene = std::make_unique<T>();
-		nextScene->Init();
+		nextScene->Load();	// ロード
+		nextScene->Init();	// 初期化
+
 		sCurrentScene = std::move(nextScene);
 	}
 };

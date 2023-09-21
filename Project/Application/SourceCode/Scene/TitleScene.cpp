@@ -2,6 +2,24 @@
 #include "GameScene.h"
 #include "SceneChanger.h"
 
+void TitleScene::Load()
+{
+	TextureManager::LoadTexture("Title/TitleLogo.png", "TitleLogo");
+	TextureManager::LoadTexture("Title/GameTitle.png", "GameTitle");
+	TextureManager::LoadTexture("Title/PressButton.png", "PressButton");
+	TextureManager::LoadTexture("Title/PressButtonBack.png", "PressButtonBack");
+
+	TextureManager::ExcuteComandList();
+}
+
+void TitleScene::UnLoad()
+{
+	TextureManager::UnLoadTexture("TitleLogo");
+	TextureManager::UnLoadTexture("GameTitle");
+	TextureManager::UnLoadTexture("PressButton");
+	TextureManager::UnLoadTexture("PressButtonBack");
+}
+
 void TitleScene::Init()
 {
 	Camera::current.pos = { 0,0,-10 };

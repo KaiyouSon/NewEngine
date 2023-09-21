@@ -7,13 +7,7 @@
 #include "ShadowMap.h"
 #include "TransitionManager.h"
 
-GameScene::GameScene() :
-	mPlayer(std::make_unique<Player>()),
-	mBoss(std::make_unique<Boss>()),
-	mUiManager(std::make_unique<UIManager>()),
-	mCameraManager(std::make_unique<CameraManager>()),
-	mMenuManager(std::make_unique<MenuManager>()),
-	mField(std::make_unique<Field>())
+GameScene::GameScene()
 {
 	SceneChanger::GetInstance()->SetisEaseTitleBGM(false);
 	mBgmVolume = 0;
@@ -22,8 +16,52 @@ GameScene::~GameScene()
 {
 }
 
+void GameScene::Load()
+{
+	// UI
+	TextureManager::LoadTexture("UI/Gauge.png", "Gauge");
+	TextureManager::LoadTexture("UI/Buttons.png", "Buttons");
+	TextureManager::LoadTexture("UI/Negotiation/NegotiationBack.png", "NegotiationBack");
+	TextureManager::LoadTexture("UI/MessageSign/MessageBack.png", "MessageBack");
+	TextureManager::LoadTexture("UI/MessageSign/MessageSignUI.png", "MessageSignUI");
+	TextureManager::LoadTexture("UI/ItemBoxFrame.png", "ItemBoxFrame");
+	TextureManager::LoadTexture("UI/ItemBoxLight.png", "ItemBoxLight");
+	TextureManager::LoadTexture("UI/ItemUI/BottleUI.png", "BottleUI");
+	TextureManager::LoadTexture("UI/ItemUI/ClubUI.png", "ClubUI");
+	TextureManager::LoadTexture("UI/Menu/TempMenuBack.png", "MenuBack");
+	TextureManager::LoadTexture("UI/Menu/MenuTextFrame.png", "MenuTextFrame");
+	TextureManager::LoadTexture("UI/Menu/MenuTextLight.png", "MenuTextLight");
+	TextureManager::LoadTexture("UI/Result/ResultBack.png", "ResultBack");
+	TextureManager::LoadTexture("UI/RespawnPoint/RespawnBack.png", "RespawnBack");
+}
+
+void GameScene::UnLoad()
+{
+	TextureManager::UnLoadTexture("Gauge");
+	TextureManager::UnLoadTexture("Buttons");
+	TextureManager::UnLoadTexture("NegotiationBack");
+	TextureManager::UnLoadTexture("MessageBack");
+	TextureManager::UnLoadTexture("MessageSignUI");
+	TextureManager::UnLoadTexture("ItemBoxFrame");
+	TextureManager::UnLoadTexture("ItemBoxLight");
+	TextureManager::UnLoadTexture("BottleUI");
+	TextureManager::UnLoadTexture("ClubUI");
+	TextureManager::UnLoadTexture("MenuBack");
+	TextureManager::UnLoadTexture("MenuTextFrame");
+	TextureManager::UnLoadTexture("MenuTextLight");
+	TextureManager::UnLoadTexture("ResultBack");
+	TextureManager::UnLoadTexture("RespawnBack");
+}
+
 void GameScene::Init()
 {
+	mPlayer = std::make_unique<Player>();
+	mBoss = std::make_unique<Boss>();
+	mUiManager = std::make_unique<UIManager>();
+	mCameraManager = std::make_unique<CameraManager>();
+	mMenuManager = std::make_unique<MenuManager>();
+	mField = std::make_unique<Field>();
+
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 

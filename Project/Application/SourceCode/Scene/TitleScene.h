@@ -10,6 +10,8 @@ private:
 	float mBgmVolume;
 
 public:
+	void Load() override;
+	void UnLoad() override;
 	void Init() override;
 	void Update() override;
 	void RenderTextureSetting() override;

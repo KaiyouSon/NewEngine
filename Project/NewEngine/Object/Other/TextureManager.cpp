@@ -408,6 +408,16 @@ Texture* TextureManager::LoadMaterialTexture(const std::string filePath, const s
 	return GetInstance()->mMaterialTextureMap[tag].get();
 }
 
+// テクスチャーのアンロード関数
+void TextureManager::UnLoadTexture(const std::string tag)
+{
+	uint32_t index = GetInstance()->mTextureMap[tag]->GetSRVIndex();
+	if (index > 0)
+	{
+		GetInstance()->mCheckSRVIndex[index - 1] = false;
+	}
+}
+
 // 深度テクスチャーを生成
 Texture* TextureManager::CreateDepthTexture(const Vec2 size)
 {
@@ -561,12 +571,30 @@ void TextureManager::CreateDescriptorHeap()
 	result = RenderBase::GetInstance()->GetDevice()->
 		CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&GetInstance()->mSrvDescHeap));
 	assert(SUCCEEDED(result));
-
 }
 
 // SRVを作成する処理
 void TextureManager::CreateSRV(Texture& texture, ID3D12Resource* buffer)
 {
+	// ImGUIで0番使ってあるから1から使う
+	uint32_t srvIndex = 1;
+
+	// mCheckSRVIndex使ってない番号ないかをチェック
+	for (uint32_t i = 0; i < mCheckSRVIndex.size(); i++)
+	{
+		// i番が false だったら
+		if (mCheckSRVIndex[i] == false)
+		{
+			srvIndex = i + 1;
+			mCheckSRVIndex[i] = true;
+			break;
+		}
+	}
+
+	// 最後尾に新しいやつを追加
+	mCheckSRVIndex.push_back(true);
+	srvIndex = (uint32_t)mCheckSRVIndex.size();	// 元からindexより1多いから+1しなくていい
+
 	// SRVヒープの先頭ハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE srvCpuHandle = mSrvDescHeap->GetCPUDescriptorHandleForHeapStart();
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = mSrvDescHeap->GetGPUDescriptorHandleForHeapStart();
@@ -574,11 +602,13 @@ void TextureManager::CreateSRV(Texture& texture, ID3D12Resource* buffer)
 	UINT descriptorSize = RenderBase::GetInstance()->GetDevice()->
 		GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-	srvCpuHandle.ptr += (int32_t)(descriptorSize * mSrvIncrementIndex);
-	srvGpuHandle.ptr += (int32_t)(descriptorSize * mSrvIncrementIndex);
+	// index分ずらす
+	srvCpuHandle.ptr += (uint32_t)(descriptorSize * srvIndex);
+	srvGpuHandle.ptr += (uint32_t)(descriptorSize * srvIndex);
 
 	texture.SetCpuHandle(srvCpuHandle);
 	texture.SetGpuHandle(srvGpuHandle);
+	texture.SetSRVIndex(srvIndex);
 
 	// シェーダーリソースビュー設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	// srv設定構造体
@@ -598,11 +628,28 @@ void TextureManager::CreateSRV(Texture& texture, ID3D12Resource* buffer)
 	// ハンドルの指す位置にシェーダーリソースビュー作成
 	RenderBase::GetInstance()->GetDevice()->
 		CreateShaderResourceView(buffer, &srvDesc, srvCpuHandle);
-
-	mSrvIncrementIndex++;
 }
 void TextureManager::CreateSRV(RenderTexture& texture, ID3D12Resource* buffer, uint32_t index)
 {
+	// ImGUIで0番使ってあるから1から使う
+	uint32_t srvIndex = 1;
+
+	// mCheckSRVIndex使ってない番号ないかをチェック
+	for (uint32_t i = 0; i < mCheckSRVIndex.size(); i++)
+	{
+		// i番が false だったら
+		if (mCheckSRVIndex[i] == false)
+		{
+			srvIndex = i + 1;
+			mCheckSRVIndex[i] = true;
+			break;
+		}
+	}
+
+	// 最後尾に新しいやつを追加
+	mCheckSRVIndex.push_back(true);
+	srvIndex = (uint32_t)mCheckSRVIndex.size();	// 元からindexより1多いから+1しなくていい
+
 	// SRVヒープの先頭ハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE srvCpuHandle = mSrvDescHeap->GetCPUDescriptorHandleForHeapStart();
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = mSrvDescHeap->GetGPUDescriptorHandleForHeapStart();
@@ -610,8 +657,9 @@ void TextureManager::CreateSRV(RenderTexture& texture, ID3D12Resource* buffer, u
 	UINT descriptorSize = RenderBase::GetInstance()->GetDevice()->
 		GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-	srvCpuHandle.ptr += (int32_t)(descriptorSize * mSrvIncrementIndex);
-	srvGpuHandle.ptr += (int32_t)(descriptorSize * mSrvIncrementIndex);
+	// index分ずらす
+	srvCpuHandle.ptr += (int32_t)(descriptorSize * srvIndex);
+	srvGpuHandle.ptr += (int32_t)(descriptorSize * srvIndex);
 
 	texture.SetCpuHandle(index, srvCpuHandle);
 	texture.SetGpuHandle(index, srvGpuHandle);
@@ -626,8 +674,6 @@ void TextureManager::CreateSRV(RenderTexture& texture, ID3D12Resource* buffer, u
 	// ハンドルの指す位置にシェーダーリソースビュー作成
 	RenderBase::GetInstance()->GetDevice()->
 		CreateShaderResourceView(buffer, &srvDesc, srvCpuHandle);
-
-	mSrvIncrementIndex++;
 }
 
 // テクスチャーロード後のコマンドリストの実行

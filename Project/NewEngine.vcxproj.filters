@@ -705,6 +705,9 @@
     <ClCompile Include="Application\SourceCode\Gate.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\Texture.cpp">
+      <Filter>NewEngine\Source\Object\Other</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">

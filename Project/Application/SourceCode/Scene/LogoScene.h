@@ -18,6 +18,8 @@ private:
 public:
 	LogoScene();
 	~LogoScene();
+	void Load() override;
+	void UnLoad() override;
 	void Init() override;
 	void Update() override;
 	void RenderTextureSetting() override;

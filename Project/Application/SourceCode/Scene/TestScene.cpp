@@ -7,6 +7,14 @@ TestScene::~TestScene()
 {
 }
 
+void TestScene::Load()
+{
+}
+
+void TestScene::UnLoad()
+{
+}
+
 void TestScene::Init()
 {
 	Camera::current.pos = { 0,1,-15 };

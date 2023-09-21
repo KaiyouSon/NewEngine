@@ -34,12 +34,10 @@ SceneManager::SceneManager()
 	Grass::CreateGraphicsPipeline();
 	Skydome::CreateGraphicsPipeline();
 
-	FieldDataManager::Load("SkyIsland", "SkyIsland");
-
 	// デバッグ時
 	ProcessAtDebugBulid([]()
 		{
-			sCurrentScene = std::make_unique<GameScene>();
+			sCurrentScene = std::make_unique<TitleScene>();
 		});
 
 	// リリース時
@@ -47,6 +45,8 @@ SceneManager::SceneManager()
 		{
 			sCurrentScene = std::make_unique<LogoScene>();
 		});
+
+	FieldDataManager::Load("SkyIsland", "SkyIsland");
 }
 
 SceneManager::~SceneManager()
@@ -55,6 +55,7 @@ SceneManager::~SceneManager()
 
 void SceneManager::Init()
 {
+	sCurrentScene->Load();
 	sCurrentScene->Init();
 }
 

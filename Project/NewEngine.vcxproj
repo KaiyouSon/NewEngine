@@ -230,6 +230,7 @@
     <ClCompile Include="NewEngine\Object\3D\Object3D.cpp" />
     <ClCompile Include="NewEngine\Object\3D\OutLineObj.cpp" />
     <ClCompile Include="NewEngine\Object\3D\SilhouetteObj.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\Texture.cpp" />
     <ClCompile Include="NewEngine\Object\Other\TextureAnimeiton.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\DepthBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp" />

@@ -4,6 +4,8 @@ class IScene
 {
 public:
 	virtual ~IScene() {}
+	virtual void Load() = 0;
+	virtual void UnLoad() = 0;
 	virtual void Init() = 0;
 	virtual void Update() = 0;
 	virtual void RenderTextureSetting() = 0;

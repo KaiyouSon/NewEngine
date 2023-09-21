@@ -45,34 +45,27 @@ bool LoadManager::ModelLoad()
 
 bool LoadManager::TextureLoad()
 {
-	TextureManager::CreateDepthTexture(Vec2(1920, 1080));
 	TextureManager::LoadTexture("DissolveTexture.png", "DissolveTexture");
 
 	// ノイズテクスチャ
 	TextureManager::LoadTexture("Noice/BlurNoice.png", "BlurNoice");
 	TextureManager::LoadTexture("Noice/ScreenNoice.png", "ScreenNoice");
 
-	// タイトル
-	TextureManager::LoadTexture("Title/GameTitle.png", "GameTitle");
-	TextureManager::LoadTexture("Title/TitleLogo.png", "TitleLogo");
-	TextureManager::LoadTexture("Title/PressButton.png", "PressButton");
-	TextureManager::LoadTexture("Title/PressButtonBack.png", "PressButtonBack");
-
-	// UI
-	TextureManager::LoadTexture("UI/Gauge.png", "Gauge");
-	TextureManager::LoadTexture("UI/Buttons.png", "Buttons");
-	TextureManager::LoadTexture("UI/Negotiation/NegotiationBack.png", "NegotiationBack");
-	TextureManager::LoadTexture("UI/MessageSign/MessageBack.png", "MessageBack");
-	TextureManager::LoadTexture("UI/MessageSign/MessageSignUI.png", "MessageSignUI");
-	TextureManager::LoadTexture("UI/ItemBoxFrame.png", "ItemBoxFrame");
-	TextureManager::LoadTexture("UI/ItemBoxLight.png", "ItemBoxLight");
-	TextureManager::LoadTexture("UI/ItemUI/BottleUI.png", "BottleUI");
-	TextureManager::LoadTexture("UI/ItemUI/ClubUI.png", "ClubUI");
-	TextureManager::LoadTexture("UI/Menu/TempMenuBack.png", "MenuBack");
-	TextureManager::LoadTexture("UI/Menu/MenuTextFrame.png", "MenuTextFrame");
-	TextureManager::LoadTexture("UI/Menu/MenuTextLight.png", "MenuTextLight");
-	TextureManager::LoadTexture("UI/Result/ResultBack.png", "ResultBack");
-	TextureManager::LoadTexture("UI/RespawnPoint/RespawnBack.png", "RespawnBack");
+	//// UI
+	//TextureManager::LoadTexture("UI/Gauge.png", "Gauge");
+	//TextureManager::LoadTexture("UI/Buttons.png", "Buttons");
+	//TextureManager::LoadTexture("UI/Negotiation/NegotiationBack.png", "NegotiationBack");
+	//TextureManager::LoadTexture("UI/MessageSign/MessageBack.png", "MessageBack");
+	//TextureManager::LoadTexture("UI/MessageSign/MessageSignUI.png", "MessageSignUI");
+	//TextureManager::LoadTexture("UI/ItemBoxFrame.png", "ItemBoxFrame");
+	//TextureManager::LoadTexture("UI/ItemBoxLight.png", "ItemBoxLight");
+	//TextureManager::LoadTexture("UI/ItemUI/BottleUI.png", "BottleUI");
+	//TextureManager::LoadTexture("UI/ItemUI/ClubUI.png", "ClubUI");
+	//TextureManager::LoadTexture("UI/Menu/TempMenuBack.png", "MenuBack");
+	//TextureManager::LoadTexture("UI/Menu/MenuTextFrame.png", "MenuTextFrame");
+	//TextureManager::LoadTexture("UI/Menu/MenuTextLight.png", "MenuTextLight");
+	//TextureManager::LoadTexture("UI/Result/ResultBack.png", "ResultBack");
+	//TextureManager::LoadTexture("UI/RespawnPoint/RespawnBack.png", "RespawnBack");
 
 	// テキスト
 	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");
@@ -104,6 +97,8 @@ bool LoadManager::TextureLoad()
 
 	// レンダーテクスチャー
 
+	TextureManager::CreateDepthTexture(Vec2(1920, 1080));
+
 	// 現在のシーン描画情報
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMap");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMapBlur");
@@ -111,7 +106,7 @@ bool LoadManager::TextureLoad()
 	//TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 2, 1, "ShadowMap");
 	//TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 2, 1, "ShadowMapBlur");
 
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080) , 1, "Skydome");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Skydome");
 
 	// ブルーム
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "HighLumi");

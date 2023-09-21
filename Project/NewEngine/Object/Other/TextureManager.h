@@ -17,6 +17,8 @@ private:
 	std::unordered_map<std::string, std::unique_ptr<RenderTexture>> mRenderTextureMap;	// レンダーテクスチャーのマップ
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mSrvDescHeap;	// srv用ディスクリプタヒープ
 
+	std::vector<bool> mCheckSRVIndex; // index番のSRVが開いてるかどうかをチェックするため
+
 	std::mutex mMutex;	// 排他制御
 
 public:
@@ -38,6 +40,9 @@ public:	// テクスチャー関連
 
 	// objファイルからロードしたテクスチャーをロードする専用関数
 	static Texture* LoadMaterialTexture(const std::string filePath, const std::string tag);
+
+	// テクスチャーのアンロード関数
+	static void UnLoadTexture(const std::string tag);
 
 public: // レンダーテクスチャー関連
 

@@ -8,8 +8,9 @@
 class Texture
 {
 private:
-	D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle = D3D12_CPU_DESCRIPTOR_HANDLE(); //SRVのハンドル(CPU側)
-	D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle = D3D12_GPU_DESCRIPTOR_HANDLE(); //SRVのハンドル(GPU側)
+	D3D12_CPU_DESCRIPTOR_HANDLE mCpuHandle; //SRVのハンドル(CPU側)
+	D3D12_GPU_DESCRIPTOR_HANDLE mGpuHandle; //SRVのハンドル(GPU側)
+	uint32_t mSrvIndex;
 
 public:
 	Microsoft::WRL::ComPtr<ID3D12Resource> buffer; //テクスチャのリソース
@@ -18,12 +19,15 @@ public:
 	bool isMaterial = false;
 
 public:
-	Texture() {};
+	Texture();
 
 public: // セッター
-	inline void SetCpuHandle(const D3D12_CPU_DESCRIPTOR_HANDLE& cpuHandle) { this->cpuHandle = cpuHandle; }
-	inline void SetGpuHandle(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle) { this->gpuHandle = gpuHandle; }
+	void SetCpuHandle(const D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle);
+	void SetGpuHandle(const D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle);
+	void SetSRVIndex(const uint32_t srvIndex);
 
 public: // ゲッター
-	inline D3D12_GPU_DESCRIPTOR_HANDLE GetGpuHandle() { return gpuHandle; }
+	D3D12_GPU_DESCRIPTOR_HANDLE GetGpuHandle();
+	uint32_t GetSRVIndex();
+
 };

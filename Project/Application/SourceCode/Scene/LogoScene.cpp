@@ -11,6 +11,14 @@ LogoScene::~LogoScene()
 {
 }
 
+void LogoScene::Load()
+{
+}
+
+void LogoScene::UnLoad()
+{
+}
+
 void LogoScene::Init()
 {
 	//mLogoTex = TextureManager::LoadTexture("LogoScene/NewEngineTitle.png", "NewEngineTitle");
