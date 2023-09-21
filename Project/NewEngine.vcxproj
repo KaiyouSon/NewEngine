@@ -166,7 +166,6 @@
     <ClCompile Include="Application\SourceCode\Scene\PlayerBody.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\SceneChanger.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\SceneManager.cpp" />
-    <ClCompile Include="Application\SourceCode\Scene\TestScene.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\TitleScene.cpp" />
     <ClCompile Include="Application\SourceCode\MessageSign.cpp" />
     <ClCompile Include="Application\SourceCode\ShadowMap.cpp" />
@@ -318,7 +317,6 @@
     <ClInclude Include="Application\SourceCode\Scene\LogoScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\SceneChanger.h" />
     <ClInclude Include="Application\SourceCode\Scene\SceneManager.h" />
-    <ClInclude Include="Application\SourceCode\Scene\TestScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\TitleScene.h" />
     <ClInclude Include="Application\SourceCode\MessageSign.h" />
     <ClInclude Include="Application\SourceCode\ShadowMap.h" />

@@ -1,6 +1,5 @@
 #include "SceneManager.h"
 #include "SceneChanger.h"
-#include "TestScene.h"
 #include "TitleScene.h"
 #include "GameScene.h"
 #include "LogoScene.h"
@@ -56,6 +55,7 @@ SceneManager::~SceneManager()
 void SceneManager::Init()
 {
 	sCurrentScene->Load();
+	sCurrentScene->CreateInstance();
 	sCurrentScene->Init();
 }
 
@@ -73,22 +73,8 @@ void SceneManager::RenderTextureSetting()
 	sCurrentScene->RenderTextureSetting();
 }
 
-void SceneManager::DrawBackSprite()
+void SceneManager::DrawDebugGui()
 {
-	sCurrentScene->DrawBackSprite();
-}
-
-void SceneManager::DrawModel()
-{
-	sCurrentScene->DrawModel();
-}
-
-void SceneManager::DrawFrontSprite()
-{
-	sCurrentScene->DrawFrontSprite();
-	SceneChanger::GetInstance()->Draw();
-	TransitionManager::GetInstance()->DrawFrontSprite();
-
 	// デバッグ時のみ実行
 	ProcessAtDebugBulid([&]()
 		{
@@ -96,7 +82,9 @@ void SceneManager::DrawFrontSprite()
 		});
 }
 
-void SceneManager::DrawRenderTexture()
+void SceneManager::Draw()
 {
-	sCurrentScene->DrawRenderTexture();
+	sCurrentScene->Draw();
+	SceneChanger::GetInstance()->Draw();
+	TransitionManager::GetInstance()->DrawFrontSprite();
 }

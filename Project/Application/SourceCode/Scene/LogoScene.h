@@ -20,14 +20,11 @@ public:
 	~LogoScene();
 	void Load() override;
 	void UnLoad() override;
+	void CreateInstance() override;
 	void Init() override;
 	void Update() override;
 	void RenderTextureSetting() override;
-	void DrawBackSprite() override;
-	void DrawModel() override;
-	void DrawFrontSprite() override;
-	void DrawRenderTexture() override;
+	void Draw() override;
 	void DrawDebugGui() override;
-
 };
 

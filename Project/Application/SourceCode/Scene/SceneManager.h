@@ -18,10 +18,8 @@ public:
 	void Init();
 	void Update();
 	void RenderTextureSetting();
-	void DrawBackSprite();
-	void DrawModel();
-	void DrawFrontSprite();
-	void DrawRenderTexture();
+	void Draw();
+	void DrawDebugGui();
 
 	template<typename T>
 	static void ChangeScene()
@@ -31,8 +29,15 @@ public:
 
 		// 次のシーンのインスタンスを作成
 		std::unique_ptr<IScene> nextScene = std::make_unique<T>();
-		nextScene->Load();	// ロード
-		nextScene->Init();	// 初期化
+
+		// シーン内で使うアセットのロード
+		nextScene->Load();
+
+		// シーン内で使うインスタンス生成
+		nextScene->CreateInstance();
+
+		// シーン初期化
+		nextScene->Init();
 
 		sCurrentScene = std::move(nextScene);
 	}

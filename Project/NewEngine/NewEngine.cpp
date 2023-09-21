@@ -104,11 +104,8 @@ void NewEngine::Draw()
 	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
 	if (isLoaded == true)
 	{
-		SceneManager::GetInstance()->DrawBackSprite();
-		SceneManager::GetInstance()->DrawModel();
+		SceneManager::GetInstance()->Draw();
 		ColliderDrawer::GetInstance()->DrawCollider();
-		SceneManager::GetInstance()->DrawFrontSprite();
-		SceneManager::GetInstance()->DrawRenderTexture();
 		DebugManager::GetInstance()->DrawDebugGui();
 	}
 }

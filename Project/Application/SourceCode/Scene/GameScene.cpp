@@ -53,7 +53,7 @@ void GameScene::UnLoad()
 	TextureManager::UnLoadTexture("RespawnBack");
 }
 
-void GameScene::Init()
+void GameScene::CreateInstance()
 {
 	mPlayer = std::make_unique<Player>();
 	mBoss = std::make_unique<Boss>();
@@ -61,6 +61,10 @@ void GameScene::Init()
 	mCameraManager = std::make_unique<CameraManager>();
 	mMenuManager = std::make_unique<MenuManager>();
 	mField = std::make_unique<Field>();
+}
+
+void GameScene::Init()
+{
 
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
@@ -199,16 +203,9 @@ void GameScene::RenderTextureSetting()
 	mField->RenderTextureSetting();
 }
 
-void GameScene::DrawRenderTexture()
+void GameScene::Draw()
 {
 	ShadowMap::GetInstance()->DrawPostEffect();
-}
-void GameScene::DrawBackSprite()
-{
-}
-void GameScene::DrawModel()
-{
-	//mShadowMap.DrawPostEffect();
 
 	mField->DrawModel();
 	mPlayer->DrawModel();
@@ -216,12 +213,11 @@ void GameScene::DrawModel()
 
 	EffectManager::GetInstance()->DrawModel();
 
-}
-void GameScene::DrawFrontSprite()
-{
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
+
 }
+
 void GameScene::DrawDebugGui()
 {
 	//GuiManager::BeginWindow("Lighting");

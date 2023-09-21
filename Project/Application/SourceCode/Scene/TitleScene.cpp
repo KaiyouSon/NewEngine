@@ -20,12 +20,16 @@ void TitleScene::UnLoad()
 	TextureManager::UnLoadTexture("PressButtonBack");
 }
 
+void TitleScene::CreateInstance()
+{
+	mTitleUI = std::make_unique<TitleUI>();
+}
+
 void TitleScene::Init()
 {
 	Camera::current.pos = { 0,0,-10 };
 	Camera::current.rot = { 0,0,0 };
 
-	mTitleUI = std::make_unique<TitleUI>();
 	mTitleUI->Init();
 
 	SoundManager::Play("TitleBGM", true);
@@ -62,7 +66,6 @@ void TitleScene::Update()
 		{
 			SceneManager::ChangeScene<GameScene>();
 			SceneChanger::GetInstance()->SetisChange(false);
-
 		}
 	}
 }
@@ -71,19 +74,7 @@ void TitleScene::RenderTextureSetting()
 {
 }
 
-void TitleScene::DrawRenderTexture()
-{
-}
-
-void TitleScene::DrawBackSprite()
-{
-}
-
-void TitleScene::DrawModel()
-{
-}
-
-void TitleScene::DrawFrontSprite()
+void TitleScene::Draw()
 {
 	mTitleUI->DrawFrontSprite();
 }

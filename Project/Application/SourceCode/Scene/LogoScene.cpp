@@ -1,9 +1,7 @@
 #include "LogoScene.h"
 #include "TitleScene.h"
 
-LogoScene::LogoScene() :
-	mLogoSprite(std::move(std::make_unique<Sprite>())),
-	mBackSprite(std::move(std::make_unique<Sprite>()))
+LogoScene::LogoScene()
 {
 }
 
@@ -17,6 +15,12 @@ void LogoScene::Load()
 
 void LogoScene::UnLoad()
 {
+}
+
+void LogoScene::CreateInstance()
+{
+	mLogoSprite = std::move(std::make_unique<Sprite>());
+	mBackSprite = std::move(std::make_unique<Sprite>());
 }
 
 void LogoScene::Init()
@@ -85,19 +89,7 @@ void LogoScene::RenderTextureSetting()
 {
 }
 
-void LogoScene::DrawRenderTexture()
-{
-}
-
-void LogoScene::DrawBackSprite()
-{
-}
-
-void LogoScene::DrawModel()
-{
-}
-
-void LogoScene::DrawFrontSprite()
+void LogoScene::Draw()
 {
 	mBackSprite->Draw();
 	mLogoSprite->Draw();

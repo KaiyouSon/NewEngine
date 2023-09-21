@@ -447,9 +447,6 @@
     <ClCompile Include="Application\SourceCode\Scene\LogoScene.cpp">
       <Filter>Application\Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Scene\TestScene.cpp">
-      <Filter>Application\Source\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\Billboard.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
@@ -897,9 +894,6 @@
       <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Scene\LogoScene.h">
-      <Filter>Application\Header\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Scene\TestScene.h">
       <Filter>Application\Header\Scene</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Sound\WaveSound.h">
