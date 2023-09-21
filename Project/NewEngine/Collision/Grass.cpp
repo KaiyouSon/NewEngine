@@ -27,7 +27,7 @@ Grass::Grass() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
 	mVertexBuffer(std::make_unique <VertexBuffer<VGrass>>()),
 	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Grass")),
-	texture(TextureManager::GetTexture("Particle1"))
+	texture(TextureManager::GetTexture("White"))
 {
 	// 頂点バッファの生成
 	mVertices.resize(1);

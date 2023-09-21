@@ -4,6 +4,7 @@ BloodSprayEffect::BloodSprayEffect() :
 	mEmitter(std::make_unique<Emitter>())
 {
 	mEmitter->SetMaxParticle(1024);
+	mEmitter->SetTexture(TextureManager::GetTexture("Particle1"));
 }
 
 void BloodSprayEffect::Generate(const Vec3 pos)

@@ -11,7 +11,7 @@ Emitter::Emitter() :
 	offset(0, 0), tiling(1, 1), pSize(0),
 	mVertexBuffer(std::make_unique <VertexBuffer<VParticle>>()),
 	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Emitter")),
-	mTexture(TextureManager::GetTexture("Particle1"))
+	mTexture(TextureManager::GetTexture("White"))
 {
 	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰Šú‰»
 	MaterialInit();

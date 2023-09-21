@@ -416,6 +416,8 @@ void TextureManager::UnLoadTexture(const std::string tag)
 	{
 		GetInstance()->mCheckSRVIndex[index - 1] = false;
 	}
+
+	GetInstance()->mTextureMap.erase(tag);
 }
 
 // 深度テクスチャーを生成
