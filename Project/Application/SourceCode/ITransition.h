@@ -3,6 +3,7 @@
 enum class TransitionType
 {
 	Respawn,
+	Scene,
 };
 
 enum class TransitionStep

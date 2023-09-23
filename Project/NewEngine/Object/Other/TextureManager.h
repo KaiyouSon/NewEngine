@@ -52,6 +52,9 @@ public: // レンダーテクスチャー関連
 	// レンダーテクスチャーを生成しマップに格納する
 	static RenderTexture* CreateRenderTexture(const Vec2 size, const uint32_t num, const std::string tag);
 
+	// レンダーテクスチャーのアンロード関数
+	static void UnLoadRenderTexture(const std::string tag);
+
 public:
 	// マップ
 	static std::unordered_map<std::string, std::unique_ptr<Texture>>* GetTextureMap();

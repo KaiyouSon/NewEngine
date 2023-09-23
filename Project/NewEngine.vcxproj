@@ -161,6 +161,7 @@
     <ClCompile Include="Application\SourceCode\RespawnTransition.cpp" />
     <ClCompile Include="Application\SourceCode\ResultUI.cpp" />
     <ClCompile Include="Application\SourceCode\RollMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\SceneTransition.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\GameScene.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\LogoScene.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\PlayerBody.cpp" />
@@ -312,6 +313,7 @@
     <ClInclude Include="Application\SourceCode\RespawnTransition.h" />
     <ClInclude Include="Application\SourceCode\ResultUI.h" />
     <ClInclude Include="Application\SourceCode\RollMotion.h" />
+    <ClInclude Include="Application\SourceCode\SceneTransition.h" />
     <ClInclude Include="Application\SourceCode\Scene\GameScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\IScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\LogoScene.h" />

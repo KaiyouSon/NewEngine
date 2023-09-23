@@ -86,6 +86,11 @@ void RenderTexture::PostDrawScene()
 	}
 }
 
+void RenderTexture::AddSRVIndex(const uint32_t index)
+{
+	mSrvIndexes.push_back(index);
+}
+
 // セッター
 void RenderTexture::SetHandleNum(const uint32_t num)
 {
@@ -117,4 +122,9 @@ D3D12_GPU_DESCRIPTOR_HANDLE RenderTexture::GetGpuHandle(const uint32_t index)
 	uint32_t i = Clamp<uint32_t>(index, min, max);
 
 	return mGpuHandles[i];
+}
+
+std::vector<uint32_t>* RenderTexture::GetSRVIndexes()
+{
+	return &mSrvIndexes;
 }

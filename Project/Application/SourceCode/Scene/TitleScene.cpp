@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 #include "GameScene.h"
 #include "SceneChanger.h"
+#include "TransitionManager.h"
 
 void TitleScene::Load()
 {
@@ -45,28 +46,66 @@ void TitleScene::Update()
 
 	mTitleUI->Update();
 
+	if (Key::GetKeyDown(DIK_S))
+	{
+		TransitionManager::GetInstance()->Start(TransitionType::Scene);
+	}
+	if (Key::GetKeyDown(DIK_E))
+	{
+		TransitionManager::GetInstance()->End();
+	}
+
 	if (Pad::GetAnyButtonDown())
 	{
 		if (mTitleUI->GetisAfterImage() == false)
 		{
 			SoundManager::Play("SelectSE");
 			mTitleUI->SetisAfterImage(true);
+
+			if (mIsPush == false)
+			{
+				mIsPush = true;
+			}
 		}
 	}
 
 	if (mTitleUI->GetisEnd() == true)
 	{
-		if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
+		auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
+
+		// トランジションがnullかつボタン押してない場合
+		if (currentTransition == nullptr)
 		{
-			SceneChanger::GetInstance()->StartSceneChange();
-			SceneChanger::GetInstance()->SetisEaseTitleBGM(true);
+			if (mIsPush == true)
+			{
+				TransitionManager::GetInstance()->Start(TransitionType::Scene);
+				mIsPush = false;
+			}
+		}
+		else
+		{
+			if (currentTransition->GetType() == TransitionType::Scene &&
+				currentTransition->GetStep() == TransitionStep::Progress)
+			{
+				SceneManager::ChangeScene<GameScene>();
+				if (SceneManager::GetisChanged() == true)
+				{
+					TransitionManager::GetInstance()->End();
+				}
+			}
 		}
 
-		if (SceneChanger::GetInstance()->GetisChange() == true)
-		{
-			SceneManager::ChangeScene<GameScene>();
-			SceneChanger::GetInstance()->SetisChange(false);
-		}
+		//if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
+		//{
+		//	TransitionManager::GetInstance()->Start(TransitionType::Scene);
+		//	SceneChanger::GetInstance()->SetisEaseTitleBGM(true);
+		//}
+
+		//if (SceneChanger::GetInstance()->GetisChange() == true)
+		//{
+		//	SceneManager::ChangeScene<GameScene>();
+		//	SceneChanger::GetInstance()->SetisChange(false);
+		//}
 	}
 }
 
@@ -76,6 +115,15 @@ void TitleScene::RenderTextureSetting()
 
 void TitleScene::Draw()
 {
+	auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
+	if (currentTransition != nullptr)
+	{
+		if (currentTransition->GetStep() == TransitionStep::Progress)
+		{
+			return;
+		}
+	}
+
 	mTitleUI->DrawFrontSprite();
 }
 

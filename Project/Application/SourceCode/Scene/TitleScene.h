@@ -8,6 +8,7 @@ class TitleScene : public IScene
 private:
 	std::unique_ptr<TitleUI> mTitleUI;
 	float mBgmVolume;
+	bool mIsPush;
 
 public:
 	void Load() override;

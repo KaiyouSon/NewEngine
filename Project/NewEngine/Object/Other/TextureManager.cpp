@@ -537,6 +537,20 @@ RenderTexture* TextureManager::CreateRenderTexture(const Vec2 size, const uint32
 	return GetInstance()->mRenderTextureMap[tag].get();
 }
 
+// レンダーテクスチャーのアンロード関数
+void TextureManager::UnLoadRenderTexture(const std::string tag)
+{
+	for (uint32_t i = 0; i < GetInstance()->mRenderTextureMap[tag]->GetSRVIndexes()->size(); i++)
+	{
+		uint32_t index = GetInstance()->mRenderTextureMap[tag]->GetSRVIndexes()->at(i);
+		if (index > 0)
+		{
+			GetInstance()->mCheckSRVIndex[index - 1] = false;
+		}
+		GetInstance()->mTextureMap.erase(tag);
+	}
+}
+
 // テクスチャマップの取得
 std::unordered_map<std::string, std::unique_ptr<Texture>>* TextureManager::GetTextureMap()
 {

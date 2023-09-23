@@ -20,6 +20,8 @@
 #include "TransitionManager.h"
 
 std::unique_ptr<IScene> SceneManager::sCurrentScene = nullptr;
+std::unique_ptr<IScene> SceneManager::sNextScene = nullptr;
+bool SceneManager::sIsChanged = false;
 
 SceneManager::SceneManager()
 {
@@ -57,6 +59,8 @@ void SceneManager::Init()
 	sCurrentScene->Load();
 	sCurrentScene->CreateInstance();
 	sCurrentScene->Init();
+
+	mChangeStep = CreateInstance;
 }
 
 void SceneManager::Update()
@@ -82,9 +86,31 @@ void SceneManager::DrawDebugGui()
 		});
 }
 
+bool SceneManager::InitNextScene()
+{
+	// 現在のシーンのアセットをアンロードする
+	sCurrentScene->UnLoad();
+
+	// シーン内で使うアセットのロード
+	sNextScene->Load();
+
+	// シーン内で使うインスタンス生成
+	sNextScene->CreateInstance();
+
+	// シーン初期化
+	sNextScene->Init();
+
+	return true;
+}
+
 void SceneManager::Draw()
 {
 	sCurrentScene->Draw();
 	SceneChanger::GetInstance()->Draw();
 	TransitionManager::GetInstance()->DrawFrontSprite();
+}
+
+bool SceneManager::GetisChanged()
+{
+	return sIsChanged;
 }

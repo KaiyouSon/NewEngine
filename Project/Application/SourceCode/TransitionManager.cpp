@@ -1,5 +1,6 @@
 #include "TransitionManager.h"
 #include "RespawnTransition.h"
+#include "SceneTransition.h"
 
 TransitionManager::TransitionManager() :
 	mCurrnetTransition(nullptr)
@@ -41,6 +42,12 @@ void TransitionManager::Start(TransitionType type)
 	{
 	case TransitionType::Respawn:
 		mCurrnetTransition = std::make_unique<RespawnTransition>();
+		mCurrnetTransition->Generate();
+		mCurrnetTransition->SetStep(TransitionStep::In);
+		break;
+
+	case TransitionType::Scene:
+		mCurrnetTransition = std::make_unique<SceneTransition>();
 		mCurrnetTransition->Generate();
 		mCurrnetTransition->SetStep(TransitionStep::In);
 		break;

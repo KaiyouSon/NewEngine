@@ -1,14 +1,27 @@
 #pragma once
 #include "IScene.h"
 #include "Util.h"
+#include <future>
+#include <thread>
 
 template<typename T> class Singleton;
 
 class SceneManager : public Singleton<SceneManager>
 {
 private:
+	enum ChangeStep
+	{
+		CreateInstance,
+		Loading,
+		End
+	};
+
+private:
 	friend Singleton<SceneManager>;
 	static std::unique_ptr<IScene> sCurrentScene;
+	static std::unique_ptr<IScene> sNextScene;
+	static bool sIsChanged;
+	ChangeStep mChangeStep;
 
 public:
 	SceneManager();
@@ -21,25 +34,61 @@ public:
 	void Draw();
 	void DrawDebugGui();
 
+public:
+	static bool InitNextScene();
+
 	template<typename T>
 	static void ChangeScene()
 	{
-		// 現在のシーンのアセットをアンロードする
-		sCurrentScene->UnLoad();
+		sIsChanged = false;
 
-		// 次のシーンのインスタンスを作成
-		std::unique_ptr<IScene> nextScene = std::make_unique<T>();
+		switch (GetInstance()->mChangeStep)
+		{
+		case CreateInstance:
+		{
+			// 次のシーンのインスタンスを作成
+			sNextScene = std::make_unique<T>();
+			GetInstance()->mChangeStep = Loading;
+		}
+		break;
 
-		// シーン内で使うアセットのロード
-		nextScene->Load();
+		case Loading:
+		{
+			std::future<void> ftr = std::async(std::launch::async,
+				[]()
+				{
+					// 現在のシーンのアセットをアンロードする
+					sCurrentScene->UnLoad();
 
-		// シーン内で使うインスタンス生成
-		nextScene->CreateInstance();
+					// シーン内で使うアセットのロード
+					sNextScene->Load();
 
-		// シーン初期化
-		nextScene->Init();
+					// シーン内で使うインスタンス生成
+					sNextScene->CreateInstance();
 
-		sCurrentScene = std::move(nextScene);
+					// シーン初期化
+					sNextScene->Init();
+
+					GetInstance()->mChangeStep = End;
+				});
+		}
+		break;
+
+		case End:
+		{
+			sCurrentScene = std::move(sNextScene);
+
+			// 次のための準備
+			GetInstance()->mChangeStep = CreateInstance;
+
+			// 終わったのを知らせるため
+			sIsChanged = true;
+		}
+		break;
+
+		}
 	}
+
+	static bool GetisChanged();
 };
 

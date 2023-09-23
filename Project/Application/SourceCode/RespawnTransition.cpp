@@ -3,6 +3,7 @@ using namespace ConstantBufferData;
 
 RespawnTransition::RespawnTransition()
 {
+	// インスタンス生成生成
 	for (uint32_t i = 0; i < mTransition.size(); i++)
 	{
 		mTransition[i] = std::make_unique<Sprite>();
@@ -14,11 +15,13 @@ RespawnTransition::RespawnTransition()
 		mTransition[i]->color = Color(0xc4c178);
 	}
 
+	// 種類設定
 	mType = TransitionType::Respawn;
 }
 
 void RespawnTransition::Generate()
 {
+	// 初期設定
 	for (uint32_t i = 0; i < mTransition.size(); i++)
 	{
 		mTransition[i]->pos = GetWindowHalfSize();
@@ -41,7 +44,7 @@ void RespawnTransition::Update()
 
 	switch (mStep)
 	{
-	case TransitionStep::In:
+	case TransitionStep::In: // 遷移がインの時
 	{
 		mUVParameteData[Back].offset.y -= 0.001f;
 
@@ -55,7 +58,7 @@ void RespawnTransition::Update()
 	}
 	break;
 
-	case TransitionStep::Out:
+	case TransitionStep::Out: // 遷移がアウトの時
 	{
 		mUVParameteData[Back].offset.y -= 0.001f;
 
@@ -75,8 +78,10 @@ void RespawnTransition::Update()
 	{
 		mTransitionData[i].max = Clamp(mTransitionData[i].max, mTransitionData[i].min, 1.0f);
 
+		// 定数バッファデータの設定
 		mTransition[i]->SetTransferBuffer(2, mTransitionData[i]);
 		mTransition[i]->SetTransferBuffer(3, mUVParameteData[i]);
+
 		mTransition[i]->Update();
 	}
 }

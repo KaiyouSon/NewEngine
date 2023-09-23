@@ -16,6 +16,7 @@ private:
 	std::vector<CD3DX12_RECT> mScissorRects;	// シザー矩形
 	std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> mCpuHandles; // SRVのハンドル(CPU側)
 	std::vector<D3D12_GPU_DESCRIPTOR_HANDLE> mGpuHandles; // SRVのハンドル(GPU側)
+	std::vector<uint32_t> mSrvIndexes;
 
 public:
 	static const float sClearColor[4];
@@ -31,6 +32,9 @@ public:
 	void PostDrawScene();
 
 public:
+	void AddSRVIndex(const uint32_t index);
+
+public:
 	// セッター
 	void SetHandleNum(const uint32_t num);
 	void SetCpuHandle(const uint32_t index, const D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle);
@@ -39,4 +43,5 @@ public:
 public: // ゲッター
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCpuHandle(const uint32_t index);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGpuHandle(const uint32_t index);
+	std::vector<uint32_t>* GetSRVIndexes();
 };

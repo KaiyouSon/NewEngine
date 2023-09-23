@@ -49,6 +49,11 @@ void Sprite::Update(Transform* parent)
 }
 void Sprite::Draw(const BlendMode blendMode)
 {
+	if (mTexture == nullptr)
+	{
+		return;
+	}
+
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
 	// GraphicsPipeline•`‰æƒRƒ}ƒ“ƒh

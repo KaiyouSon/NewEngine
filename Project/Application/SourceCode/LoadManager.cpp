@@ -28,8 +28,8 @@ bool LoadManager::ModelLoad()
 	ModelManager::LoadObjModel("Weapon/Club", "Club", true);
 	ModelManager::LoadObjModel("Weapon/Sword", "Sword", true);
 
-	ModelManager::LoadObjModel("CoffinTop", "CoffinTop", true);
-	ModelManager::LoadObjModel("CoffinBottom", "CoffinBottom", true);
+	ModelManager::LoadObjModel("CoffinTop", "CoffinTop");
+	ModelManager::LoadObjModel("CoffinBottom", "CoffinBottom");
 	ModelManager::LoadObjModel("SkyIsland/SkyIsland1", "SkyIsland1", true);
 	ModelManager::LoadObjModel("SkyIsland/SkyIsland2", "SkyIsland2", true);
 	ModelManager::LoadObjModel("Wall/MainWall", "MainWall");
@@ -51,49 +51,6 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Noice/BlurNoice.png", "BlurNoice");
 	TextureManager::LoadTexture("Noice/ScreenNoice.png", "ScreenNoice");
 
-	//// UI
-	//TextureManager::LoadTexture("UI/Gauge.png", "Gauge");
-	//TextureManager::LoadTexture("UI/Buttons.png", "Buttons");
-	//TextureManager::LoadTexture("UI/Negotiation/NegotiationBack.png", "NegotiationBack");
-	//TextureManager::LoadTexture("UI/MessageSign/MessageBack.png", "MessageBack");
-	//TextureManager::LoadTexture("UI/MessageSign/MessageSignUI.png", "MessageSignUI");
-	//TextureManager::LoadTexture("UI/ItemBoxFrame.png", "ItemBoxFrame");
-	//TextureManager::LoadTexture("UI/ItemBoxLight.png", "ItemBoxLight");
-	//TextureManager::LoadTexture("UI/ItemUI/BottleUI.png", "BottleUI");
-	//TextureManager::LoadTexture("UI/ItemUI/ClubUI.png", "ClubUI");
-	//TextureManager::LoadTexture("UI/Menu/TempMenuBack.png", "MenuBack");
-	//TextureManager::LoadTexture("UI/Menu/MenuTextFrame.png", "MenuTextFrame");
-	//TextureManager::LoadTexture("UI/Menu/MenuTextLight.png", "MenuTextLight");
-	//TextureManager::LoadTexture("UI/Result/ResultBack.png", "ResultBack");
-	//TextureManager::LoadTexture("UI/RespawnPoint/RespawnBack.png", "RespawnBack");
-
-	//// テキスト
-	//TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");
-	//TextureManager::LoadTexture("Text/Negotiation/ReadMessageStr.png", "ReadMessageStr");
-	//TextureManager::LoadTexture("Text/Negotiation/RestInLightStr.png", "RestInLightStr");
-	//TextureManager::LoadTexture("Text/Negotiation/OpenStr.png", "OpenStr");
-	//TextureManager::LoadTexture("Text/ExitStr.png", "ExitStr");
-	//TextureManager::LoadTexture("Text/Tutorial/TutorialStr1.png", "TutorialStr1");
-	//TextureManager::LoadTexture("Text/Tutorial/TutorialStr2.png", "TutorialStr2");
-	//TextureManager::LoadTexture("Text/Tutorial/TutorialStr3.png", "TutorialStr3");
-	//TextureManager::LoadTexture("Text/Tutorial/TutorialStr4.png", "TutorialStr4");
-	//TextureManager::LoadTexture("Text/Tutorial/TutorialStr5.png", "TutorialStr5");
-	//TextureManager::LoadTexture("Text/Menu/BackToTitleStr.png", "BackToTitleStr");
-	//TextureManager::LoadTexture("Text/Menu/CloseGameStr.png", "CloseGameStr");
-	//TextureManager::LoadTexture("Text/Result/EnemyFelledStr.png", "EnemyFelledStr");
-	//TextureManager::LoadTexture("Text/Result/YouDiedStr.png", "YouDiedStr");
-	//TextureManager::LoadTexture("Text/RespawnPoint/DecisionCloseStr.png", "DecisionCloseStr");
-	//TextureManager::LoadTexture("Text/NumberSheets.png", "NumberSheets");
-
-	// パーティクル
-	//TextureManager::LoadTexture("Particle/Particle1.png", "Particle1");
-	//TextureManager::LoadTexture("Particle/Particle2.png", "Particle2");
-	//TextureManager::LoadTexture("Particle/Line.png", "Line");
-
-	//// 草
-	//TextureManager::LoadTexture("Grass/Weed.png", "Weed");
-	//TextureManager::LoadTexture("Branch.png", "Branch");
-
 	// レンダーテクスチャー
 	TextureManager::CreateDepthTexture(Vec2(1920, 1080));
 
@@ -101,10 +58,10 @@ bool LoadManager::TextureLoad()
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMap");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMapBlur");
 
-	//TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 2, 1, "ShadowMap");
-	//TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 2, 1, "ShadowMapBlur");
+	////TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 2, 1, "ShadowMap");
+	////TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 2, 1, "ShadowMapBlur");
 
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Skydome");
+	//TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Skydome");
 
 	// ブルーム
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "HighLumi");

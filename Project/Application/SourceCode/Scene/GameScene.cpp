@@ -60,6 +60,9 @@ void GameScene::Load()
 	// ‘
 	TextureManager::LoadTexture("Grass/Weed.png", "Weed");
 	TextureManager::LoadTexture("Branch.png", "Branch");
+
+	// “V‹…
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Skydome");
 }
 
 void GameScene::UnLoad()
@@ -106,6 +109,8 @@ void GameScene::UnLoad()
 	// ‘
 	TextureManager::UnLoadTexture("Weed");
 	TextureManager::UnLoadTexture("Branch");
+
+	TextureManager::UnLoadRenderTexture("Skydome");
 }
 
 void GameScene::CreateInstance()
@@ -302,7 +307,7 @@ void GameScene::DrawDebugGui()
 
 	//GuiManager::EndWindow();
 
-	//mField->DrawDebugGui();
+	mField->DrawDebugGui();
 
 	//mPlayer->DrawDebugGui();
 }

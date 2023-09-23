@@ -106,6 +106,7 @@ void NewEngine::Draw()
 	{
 		SceneManager::GetInstance()->Draw();
 		ColliderDrawer::GetInstance()->DrawCollider();
+		SceneManager::GetInstance()->DrawDebugGui();
 		DebugManager::GetInstance()->DrawDebugGui();
 	}
 }

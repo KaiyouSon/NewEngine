@@ -705,6 +705,9 @@
     <ClCompile Include="NewEngine\Object\Other\Texture.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\SceneTransition.cpp">
+      <Filter>Application\Source\Transition</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1165,6 +1168,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Gate.h">
       <Filter>Application\Header\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\SceneTransition.h">
+      <Filter>Application\Header\Transition</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
