@@ -5,7 +5,9 @@
 
 void TitleScene::Load()
 {
+	// ƒV[ƒ“‘JˆÚ‚ÉŽg‚¤‚©‚çUnLoad‚µ‚È‚¢
 	TextureManager::LoadTexture("Title/TitleLogo.png", "TitleLogo");
+
 	TextureManager::LoadTexture("Title/GameTitle.png", "GameTitle");
 	TextureManager::LoadTexture("Title/PressButton.png", "PressButton");
 	TextureManager::LoadTexture("Title/PressButtonBack.png", "PressButtonBack");
@@ -15,7 +17,6 @@ void TitleScene::Load()
 
 void TitleScene::UnLoad()
 {
-	TextureManager::UnLoadTexture("TitleLogo");
 	TextureManager::UnLoadTexture("GameTitle");
 	TextureManager::UnLoadTexture("PressButton");
 	TextureManager::UnLoadTexture("PressButtonBack");
@@ -94,18 +95,6 @@ void TitleScene::Update()
 				}
 			}
 		}
-
-		//if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
-		//{
-		//	TransitionManager::GetInstance()->Start(TransitionType::Scene);
-		//	SceneChanger::GetInstance()->SetisEaseTitleBGM(true);
-		//}
-
-		//if (SceneChanger::GetInstance()->GetisChange() == true)
-		//{
-		//	SceneManager::ChangeScene<GameScene>();
-		//	SceneChanger::GetInstance()->SetisChange(false);
-		//}
 	}
 }
 
@@ -115,13 +104,10 @@ void TitleScene::RenderTextureSetting()
 
 void TitleScene::Draw()
 {
-	auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
-	if (currentTransition != nullptr)
+	if (SceneManager::GetisLoading() == true ||
+		SceneManager::GetisChanged() == true)
 	{
-		if (currentTransition->GetStep() == TransitionStep::Progress)
-		{
-			return;
-		}
+		return;
 	}
 
 	mTitleUI->DrawFrontSprite();

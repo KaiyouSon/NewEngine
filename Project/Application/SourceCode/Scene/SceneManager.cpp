@@ -61,6 +61,7 @@ void SceneManager::Init()
 	sCurrentScene->Init();
 
 	mChangeStep = CreateInstance;
+	mTestTimer.SetLimitTimer(300);
 }
 
 void SceneManager::Update()
@@ -110,7 +111,14 @@ void SceneManager::Draw()
 	TransitionManager::GetInstance()->DrawFrontSprite();
 }
 
+bool SceneManager::GetisLoading()
+{
+	return GetInstance()->mChangeStep == Loading;
+}
+
 bool SceneManager::GetisChanged()
 {
-	return sIsChanged;
+	return GetInstance()->mChangeStep == Changed;
+
+	//return sIsChanged;
 }

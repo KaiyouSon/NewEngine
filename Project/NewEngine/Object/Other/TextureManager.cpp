@@ -411,6 +411,12 @@ Texture* TextureManager::LoadMaterialTexture(const std::string filePath, const s
 // テクスチャーのアンロード関数
 void TextureManager::UnLoadTexture(const std::string tag)
 {
+	auto it = GetInstance()->mTextureMap.find(tag);
+	if (it == GetInstance()->mTextureMap.end())
+	{
+		return;
+	}
+
 	uint32_t index = GetInstance()->mTextureMap[tag]->GetSRVIndex();
 	if (index > 0)
 	{

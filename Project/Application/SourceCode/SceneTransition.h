@@ -6,7 +6,9 @@ class SceneTransition : public ITransition
 {
 private:
 	std::unique_ptr<Sprite> mTransition;
+	std::unique_ptr<Sprite> mLoadSprite;
 	Easing mEase;
+	Timer mAlphaTimer;
 
 public:
 	SceneTransition();
