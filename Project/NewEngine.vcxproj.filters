@@ -1270,6 +1270,9 @@
     <None Include="Application\Shader\Skydome.hlsli">
       <Filter>Shader\Application\Skydome</Filter>
     </None>
+    <None Include="Application\Shader\Composite.hlsli">
+      <Filter>Shader\Application</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="NewEngine\Shader\CircleGaugeSpritePS.hlsl">
@@ -1460,6 +1463,12 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\SkydomePS.hlsl">
       <Filter>Shader\Application\Skydome</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\CompositePS.hlsl">
+      <Filter>Shader\Application</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\CompositeVS.hlsl">
+      <Filter>Shader\Application</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

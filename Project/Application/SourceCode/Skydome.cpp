@@ -4,7 +4,7 @@ void Skydome::CreateGraphicsPipeline()
 {
 	std::string path = "Application/Shader/";
 
-	// ShadowObj用
+	// ビネット用
 	ShaderObjectManager::Create("Skydome");
 	ShaderObjectManager::GetShaderObject("Skydome")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Skydome")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
@@ -94,7 +94,7 @@ void Skydome::Draw()
 	}
 	else
 	{
-		mPostEffect->SetDrawCommands(2, 2);
+		//mPostEffect->SetDrawCommands(2, 2);
 		mPostEffect->Draw();
 	}
 }

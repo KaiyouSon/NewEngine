@@ -47,7 +47,6 @@ bool LoadManager::TextureLoad()
 {
 	// シーン遷移に使うからUnLoadしない
 	TextureManager::LoadTexture("Title/TitleLogo.png", "TitleLogo");
-
 	TextureManager::LoadTexture("DissolveTexture.png", "DissolveTexture");
 
 	// ノイズテクスチャ
@@ -66,10 +65,16 @@ bool LoadManager::TextureLoad()
 
 	//TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Skydome");
 
+	// 現在のシーン
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "CurrentScene");
+
 	// ブルーム
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "HighLumi");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BGaussainBlur");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "GaussianBlur");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
+
+
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectBloom");
 
 
 	// 処理が終わったのを教えるため、必ずtrueを返す

@@ -125,6 +125,8 @@ void GameScene::CreateInstance()
 
 void GameScene::Init()
 {
+	mCurrentScene = TextureManager::GetRenderTexture("CurrentScene");
+
 	Camera::current.pos = { 0,1,-15 };
 	Camera::current.rot = { Radian(0),0,0 };
 
@@ -157,6 +159,7 @@ void GameScene::Init()
 
 	LightManager::GetInstance()->directionalLight.isActive = true;
 	LightManager::GetInstance()->directionalLight.pos = Vec3(-400, 400, -100);
+
 
 	isInit = false;
 }
@@ -306,17 +309,22 @@ void GameScene::RenderTextureSetting()
 {
 	ShadowMap::GetInstance()->RenderTextureSetting();
 	mField->RenderTextureSetting();
+
+	EffectManager::GetInstance()->RenderTextureSetting();
+	EffectManager::GetInstance()->GetBloom()->PrevSceneDraw(Bloom::PassType::Target);
+	mField->DrawModel();
+
+	EffectManager::GetInstance()->DrawModel();
+	mPlayer->DrawModel();
+	mBoss->DrawModel();
+	EffectManager::GetInstance()->GetBloom()->PostSceneDraw(Bloom::PassType::Target);
 }
 
 void GameScene::Draw()
 {
 	ShadowMap::GetInstance()->DrawPostEffect();
+	EffectManager::GetInstance()->DrawBloom();
 
-	mField->DrawModel();
-	mPlayer->DrawModel();
-	mBoss->DrawModel();
-
-	EffectManager::GetInstance()->DrawModel();
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();

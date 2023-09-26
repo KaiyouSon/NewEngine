@@ -35,6 +35,8 @@ SceneManager::SceneManager()
 	Grass::CreateGraphicsPipeline();
 	Skydome::CreateGraphicsPipeline();
 
+	Bloom::CreateGraphicsPipeline();
+
 	// デバッグ時
 	ProcessAtDebugBulid([]()
 		{

@@ -4,26 +4,32 @@
 class Bloom
 {
 public:
-	enum class TexType
+	enum class PassType
 	{
+		// •`‰æ—p
 		HighLumi,
-		Blur,
-		Bloom
+		GaussianBlur,
+		Bloom,
+		Target,
+
+		Size
 	};
 
 private:
-	std::unique_ptr<PostEffect> highLumi_;
-	std::unique_ptr<PostEffect> blur_;
-	std::unique_ptr<PostEffect> bloom_;
-	std::array<RenderTexture*, 3> texs_;
+	std::array<std::unique_ptr<PostEffect>, (uint32_t)PassType::Size> mPasses;
+	std::array<RenderTexture*, (uint32_t)PassType::Size> mTexs;
+	std::unique_ptr<PostEffect> mCompositePass;
+
+	bool flag;
 
 public:
 	Bloom();
 	static void CreateGraphicsPipeline();
 	void Update();
-	void DrawPostEffect(const TexType texType);
-	void PrevSceneDraw(const TexType texType);
-	void PostSceneDraw(const TexType texType);
+	void DrawPostEffect();
+	void DrawPass(const PassType passType);
+	void PrevSceneDraw(const PassType passType);
+	void PostSceneDraw(const PassType passType);
 	void DrawDebugGui();
 };
 

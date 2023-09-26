@@ -17,6 +17,8 @@ private:
 	std::unique_ptr<MenuManager> mMenuManager;
 	std::unique_ptr<Field> mField;
 
+	RenderTexture* mCurrentScene;
+
 	bool isInit;
 	float mBgmVolume;
 
