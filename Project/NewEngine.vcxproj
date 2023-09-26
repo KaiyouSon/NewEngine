@@ -144,6 +144,7 @@
     <ClCompile Include="Application\SourceCode\ItemUI.cpp" />
     <ClCompile Include="Application\SourceCode\ITransition.cpp" />
     <ClCompile Include="Application\SourceCode\IWeaponMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\LeadEffect.cpp" />
     <ClCompile Include="Application\SourceCode\LogoutMenu.cpp" />
     <ClCompile Include="Application\SourceCode\MenuManager.cpp" />
     <ClCompile Include="Application\SourceCode\MotionManager.cpp" />
@@ -295,6 +296,7 @@
     <ClInclude Include="Application\SourceCode\ItemUI.h" />
     <ClInclude Include="Application\SourceCode\ITransition.h" />
     <ClInclude Include="Application\SourceCode\IWeaponMotion.h" />
+    <ClInclude Include="Application\SourceCode\LeadEffect.h" />
     <ClInclude Include="Application\SourceCode\LogoutMenu.h" />
     <ClInclude Include="Application\SourceCode\MenuManager.h" />
     <ClInclude Include="Application\SourceCode\MotionManager.h" />

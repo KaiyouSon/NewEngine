@@ -78,7 +78,8 @@ void RespawnPoint::Update()
 	}
 
 	// 関数の中身でタイマー設定しているためメソッド呼ぶだけでいい
-	EffectManager::GetInstance()->GenerateRespawnPointEffect(mParent.pos);
+	//EffectManager::GetInstance()->GenerateRespawnPointEffect(mParent.pos);
+	EffectManager::GetInstance()->GenerateLeadEffect(mParent.pos + Vec3::up * 2.f, Vec3::front);
 
 	mRipple->Update(&mParent);
 	mRhombus->Update(&mParent);
