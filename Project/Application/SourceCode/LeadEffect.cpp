@@ -32,34 +32,37 @@ void LeadEffect::Update()
 	for (uint32_t i = 0; i < mPParam.size(); i++)
 	{
 		mPParam[i].ease.Update();
-		if (mPParam[i].ease.GetTimer() % 200 == 0)
+
+		if (mPParam[i].ease.GetisEnd() == false)
 		{
-			mPParam.back().moveAccel =
+			if (mPParam[i].ease.GetTimer() % 200 == 0)
 			{
-				Random::RangeF(0.02f, 0.04f),
-				Random::RangeF(-0.0125f, 0.0125f),
-				Random::RangeF(0.02f, 0.04f)
-			};
+				mPParam.back().moveAccel =
+				{
+					Random::RangeF(0.02f, 0.04f),
+					Random::RangeF(-0.0125f, 0.0125f),
+					Random::RangeF(0.02f, 0.04f)
+				};
 
-			Vec3 vec = mFrontVec;
+				Vec3 vec = mFrontVec;
 
-			// 右ベクトルを求める
-			Vec3 rightVec = Vec3::Cross(mFrontVec, Vec3::up);
+				// 右ベクトルを求める
+				Vec3 rightVec = Vec3::Cross(mFrontVec, Vec3::up);
 
-			// クォータニオンを使って右ベクトルを基準にまず上下に回転
-			Quaternion q1;
-			q1 = vec;
-			vec = q1.AnyAxisRotation(rightVec, Radian(Random::RangeAngle(-15, 15)));
+				// クォータニオンを使って右ベクトルを基準にまず上下に回転
+				Quaternion q1;
+				q1 = vec;
+				vec = q1.AnyAxisRotation(rightVec, Radian(Random::RangeAngle(-15, 15)));
 
-			// 前ベクトルを基準にもう一回回転する
-			Quaternion q2;
-			q2 = vec;
-			vec = q2.AnyAxisRotation(mFrontVec, Random::RangeRadian());
+				// 前ベクトルを基準にもう一回回転する
+				Quaternion q2;
+				q2 = vec;
+				vec = q2.AnyAxisRotation(mFrontVec, Random::RangeRadian());
 
-			mPParam.back().moveVec = vec;
+				mPParam.back().moveVec = vec;
+			}
 		}
-
-		if (mPParam[i].ease.GetisEnd() == true)
+		else
 		{
 			mPParam[i].startScale -= 0.01f;
 		}

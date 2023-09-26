@@ -314,9 +314,9 @@ void GameScene::RenderTextureSetting()
 	EffectManager::GetInstance()->GetBloom()->PrevSceneDraw(Bloom::PassType::Target);
 	mField->DrawModel();
 
-	EffectManager::GetInstance()->DrawModel();
 	mPlayer->DrawModel();
 	mBoss->DrawModel();
+	EffectManager::GetInstance()->DrawModel();
 	EffectManager::GetInstance()->GetBloom()->PostSceneDraw(Bloom::PassType::Target);
 }
 

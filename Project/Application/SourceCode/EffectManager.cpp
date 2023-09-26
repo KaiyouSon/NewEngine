@@ -53,7 +53,6 @@ void EffectManager::RenderTextureSetting()
 	//mRespawnPointEffect->DrawModel();
 	//mBloom->PostSceneDraw(Bloom::PassType::Target);
 
-
 	//// リスポーン地点のエフェクト
 	//mBloom->PrevSceneDraw(Bloom::PassType::HighLumi2);
 	//mBloom->DrawPass(Bloom::PassType::HighLumi);
@@ -67,6 +66,8 @@ void EffectManager::RenderTextureSetting()
 
 void EffectManager::DrawBloom()
 {
+	//mBloom->DrawPass(Bloom::PassType::GaussianBlur);
+
 	mBloom->DrawPostEffect();
 }
 

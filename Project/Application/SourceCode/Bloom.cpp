@@ -5,6 +5,11 @@ void Bloom::CreateGraphicsPipeline()
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
 	depthStencilDesc.DepthEnable = false; // 深度テストを行う
 
+	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc1{};
+	depthStencilDesc1.DepthEnable = true; // 深度テストを行う
+	depthStencilDesc1.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 書き込み許可
+	depthStencilDesc1.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
+
 	std::string path = "Application/Shader/";
 
 	// 高輝度抽出用
@@ -17,6 +22,7 @@ void Bloom::CreateGraphicsPipeline()
 	GraphicsPipelineSetting setting = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("HighLumi");
 	setting.rtvNum = 1;
+	setting.depthStencilDesc = depthStencilDesc1;
 	GraphicsPipelineManager::Create(setting, "HighLumi");
 
 	// ガウシアンブラー用
