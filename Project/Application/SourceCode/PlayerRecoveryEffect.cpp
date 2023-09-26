@@ -5,7 +5,12 @@ PlayerRecoveryEffect::PlayerRecoveryEffect() :
 	mLineEmitter(std::make_unique<Emitter>()),
 	mIsGenerate(false)
 {
+}
+
+void PlayerRecoveryEffect::Init()
+{
 	mCircleEmitter->SetMaxParticle(2048);
+	mCircleEmitter->SetTexture(TextureManager::GetTexture("Particle1"));
 
 	mLineEmitter->SetMaxParticle(1024);
 	mLineEmitter->SetTexture(TextureManager::GetTexture("Line"));

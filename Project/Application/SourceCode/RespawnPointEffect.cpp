@@ -3,9 +3,14 @@
 RespawnPointEffect::RespawnPointEffect() :
 	mCircleEmitter(std::make_unique<Emitter>())
 {
+}
+
+void RespawnPointEffect::Init()
+{
 	mCircleEmitter->SetMaxParticle(32);
 	mCircleEmitter->SetTexture(TextureManager::GetTexture("Particle2"));
 	mTimer.SetLimitTimer(20);
+	mTimer.Reset();
 }
 
 void RespawnPointEffect::Generate(const Vec3 pos)

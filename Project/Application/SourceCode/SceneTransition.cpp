@@ -67,6 +67,8 @@ void SceneTransition::Update()
 
 	case TransitionStep::Out: // ‘JˆÚ‚ªƒAƒEƒg‚ÌŽž
 	{
+		SceneManager::SetChangeStepToCreateInstance();
+
 		mTransition->color.a = mEase.InOut(255, 0);
 		mLoadSprite->color.a = mEase.InOut(255, 0);
 

@@ -202,47 +202,93 @@ void GameScene::Update()
 		LogoutMenu::GetisEnd() == true &&
 		LogoutMenu::GetSelect() == LogoutMenu::Select::BackToTitle;
 
-	if (isBackToTitle == true)
+	//if (isBackToTitle == true)
+	//{
+	//	//if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
+	//	//{
+	//	//	SceneChanger::GetInstance()->StartSceneChange();
+	//	//	SceneChanger::GetInstance()->SetisEaseGameBGM(true);
+	//	//}
+
+	//	//if (SceneChanger::GetInstance()->GetisChange() == true)
+	//	//{
+	//	//	SceneManager::ChangeScene<TitleScene>();
+	//	//	SceneChanger::GetInstance()->SetisChange(false);
+	//	//}
+	//}
+	//else if (ResultUI::GetisEnd() == true)
+	//{
+	//	if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
+	//	{
+	//		SceneChanger::GetInstance()->StartSceneChange();
+	//		SceneChanger::GetInstance()->SetisEaseGameBGM(true);
+	//	}
+
+	//	if (SceneChanger::GetInstance()->GetisChange() == true)
+	//	{
+	//		// プレイヤーが死んだ場合
+	//		if (mPlayer->GetisDissolve() == true)
+	//		{
+	//			SceneManager::ChangeScene<GameScene>();
+	//		}
+	//		else
+	//		{
+	//			SceneManager::ChangeScene<TitleScene>();
+	//		}
+
+	//		SceneChanger::GetInstance()->SetisChange(false);
+	//	}
+	//}
+
+	// 遷移の処理
+	auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
+	if (currentTransition == nullptr)
 	{
-		if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
+		// タイトルにもどる時
+		if (isBackToTitle == true)
 		{
-			SceneChanger::GetInstance()->StartSceneChange();
+			TransitionManager::GetInstance()->Start(TransitionType::Scene);
 			SceneChanger::GetInstance()->SetisEaseGameBGM(true);
 		}
-
-		if (SceneChanger::GetInstance()->GetisChange() == true)
+		// リザルトの時
+		else if (ResultUI::GetisEnd() == true)
 		{
-			SceneManager::ChangeScene<TitleScene>();
-			SceneChanger::GetInstance()->SetisChange(false);
+			TransitionManager::GetInstance()->Start(TransitionType::Scene);
+			SceneChanger::GetInstance()->SetisEaseGameBGM(true);
 		}
 	}
-	else if (ResultUI::GetisEnd() == true)
+	else
 	{
-		if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
+		// シーンの遷移
+		if (currentTransition->GetType() == TransitionType::Scene &&
+			currentTransition->GetStep() == TransitionStep::Progress)
 		{
-			SceneChanger::GetInstance()->StartSceneChange();
-			SceneChanger::GetInstance()->SetisEaseGameBGM(true);
-		}
-
-		if (SceneChanger::GetInstance()->GetisChange() == true)
-		{
-			// プレイヤーが死んだ場合
-			if (mPlayer->GetisDissolve() == true)
-			{
-				SceneManager::ChangeScene<GameScene>();
-			}
-			else
+			if (isBackToTitle == true)
 			{
 				SceneManager::ChangeScene<TitleScene>();
 			}
+			else
+			{
+				// プレイヤーが死んだ場合
+				if (mPlayer->GetisDissolve() == true)
+				{
+					// シーンだらゲームシーンを初期化
+					SceneManager::ChangeScene<GameScene>();
+				}
+				else
+				{
+					// クリアしたらタイトルに戻す
+					SceneManager::ChangeScene<TitleScene>();
+				}
+			}
 
-			SceneChanger::GetInstance()->SetisChange(false);
+			if (SceneManager::GetisChanged() == true)
+			{
+				TransitionManager::GetInstance()->End();
+			}
 		}
-	}
 
-	auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
-	if (currentTransition != nullptr)
-	{
+		// リスポーンの遷移
 		if (currentTransition->GetType() == TransitionType::Respawn &&
 			currentTransition->GetStep() == TransitionStep::Progress)
 		{
@@ -307,7 +353,7 @@ void GameScene::DrawDebugGui()
 
 	//GuiManager::EndWindow();
 
-	mField->DrawDebugGui();
+	//mField->DrawDebugGui();
 
 	//mPlayer->DrawDebugGui();
 }

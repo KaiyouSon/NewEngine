@@ -9,6 +9,9 @@ EffectManager::EffectManager() :
 
 void EffectManager::Init()
 {
+	mBloodSprayEffect->Init();
+	mPlayerRecoveryEffect->Init();
+	mRespawnPointEffect->Init();
 }
 
 void EffectManager::Update()

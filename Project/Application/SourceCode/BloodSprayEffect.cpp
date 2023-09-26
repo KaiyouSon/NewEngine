@@ -3,6 +3,10 @@
 BloodSprayEffect::BloodSprayEffect() :
 	mEmitter(std::make_unique<Emitter>())
 {
+}
+
+void BloodSprayEffect::Init()
+{
 	mEmitter->SetMaxParticle(1024);
 	mEmitter->SetTexture(TextureManager::GetTexture("Particle1"));
 }

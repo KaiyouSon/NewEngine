@@ -79,7 +79,10 @@ void ShadowMap::Register(const uint32_t size)
 
 void ShadowMap::Init()
 {
+	mShadowObjs.clear();
+	mParents.clear();
 
+	mIndex = 0;
 }
 
 void ShadowMap::Update()

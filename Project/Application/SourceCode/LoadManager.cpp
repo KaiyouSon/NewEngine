@@ -45,6 +45,9 @@ bool LoadManager::ModelLoad()
 
 bool LoadManager::TextureLoad()
 {
+	// シーン遷移に使うからUnLoadしない
+	TextureManager::LoadTexture("Title/TitleLogo.png", "TitleLogo");
+
 	TextureManager::LoadTexture("DissolveTexture.png", "DissolveTexture");
 
 	// ノイズテクスチャ

@@ -5,9 +5,6 @@
 
 void TitleScene::Load()
 {
-	// ƒV[ƒ“‘JˆÚ‚ÉŽg‚¤‚©‚çUnLoad‚µ‚È‚¢
-	TextureManager::LoadTexture("Title/TitleLogo.png", "TitleLogo");
-
 	TextureManager::LoadTexture("Title/GameTitle.png", "GameTitle");
 	TextureManager::LoadTexture("Title/PressButton.png", "PressButton");
 	TextureManager::LoadTexture("Title/PressButtonBack.png", "PressButtonBack");
@@ -104,12 +101,6 @@ void TitleScene::RenderTextureSetting()
 
 void TitleScene::Draw()
 {
-	if (SceneManager::GetisLoading() == true ||
-		SceneManager::GetisChanged() == true)
-	{
-		return;
-	}
-
 	mTitleUI->DrawFrontSprite();
 }
 

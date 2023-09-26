@@ -38,7 +38,7 @@ SceneManager::SceneManager()
 	// デバッグ時
 	ProcessAtDebugBulid([]()
 		{
-			sCurrentScene = std::make_unique<TitleScene>();
+			sCurrentScene = std::make_unique<GameScene>();
 		});
 
 	// リリース時
@@ -62,10 +62,14 @@ void SceneManager::Init()
 
 	mChangeStep = CreateInstance;
 	mTestTimer.SetLimitTimer(300);
+
+	mIsReturn = false;
 }
 
 void SceneManager::Update()
 {
+	//mChangeStep = CreateInstance;
+
 	Camera::current.Update();
 	sCurrentScene->Update();
 	TransitionManager::GetInstance()->Update();
@@ -87,26 +91,19 @@ void SceneManager::DrawDebugGui()
 		});
 }
 
-bool SceneManager::InitNextScene()
-{
-	// 現在のシーンのアセットをアンロードする
-	sCurrentScene->UnLoad();
-
-	// シーン内で使うアセットのロード
-	sNextScene->Load();
-
-	// シーン内で使うインスタンス生成
-	sNextScene->CreateInstance();
-
-	// シーン初期化
-	sNextScene->Init();
-
-	return true;
-}
-
 void SceneManager::Draw()
 {
-	sCurrentScene->Draw();
+	//if (mIsReturn == true)
+	//{
+	//	return;
+	//}
+
+	if (SceneManager::GetisLoading() == false &&
+		SceneManager::GetisChanged() == false)
+	{
+		sCurrentScene->Draw();
+	}
+
 	SceneChanger::GetInstance()->Draw();
 	TransitionManager::GetInstance()->DrawFrontSprite();
 }
@@ -119,6 +116,10 @@ bool SceneManager::GetisLoading()
 bool SceneManager::GetisChanged()
 {
 	return GetInstance()->mChangeStep == Changed;
+}
 
-	//return sIsChanged;
+void SceneManager::SetChangeStepToCreateInstance()
+{
+	GetInstance()->mIsReturn = false;
+	GetInstance()->mChangeStep = CreateInstance;
 }

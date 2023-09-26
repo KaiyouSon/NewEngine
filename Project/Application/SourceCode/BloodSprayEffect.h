@@ -9,6 +9,7 @@ private:
 
 public:
 	BloodSprayEffect();
+	void Init();
 	void Generate(const Vec3 pos);
 	void Update();
 	void DrawModel();
