@@ -96,7 +96,7 @@ Bloom::Bloom()
 	mCompositePass->AddRenderTexture(mTexs[(uint32_t)PassType::Target]);
 	mCompositePass->pos = GetWindowHalfSize();
 
-	flag = false;
+	flag = true;
 
 	//texs_[TexType::HighLumi] = TextureManager::GetRenderTexture("HighLumi");
 	////texs_[1] = TextureManager::GetRenderTexture("BGaussianBlur");

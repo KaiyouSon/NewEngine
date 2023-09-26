@@ -40,7 +40,7 @@ void OpenGateMotion::Update(HumanoidBody* human)
 	if (mIsInit == false)
 	{
 		BaseInit(human);
-		//CurrentStepInit(human);
+		CurrentStepInit(human);
 		mIsInit = true;
 	}
 	BasePrevUpdate(human);
@@ -50,25 +50,27 @@ void OpenGateMotion::Update(HumanoidBody* human)
 
 void OpenGateMotion::CurrentStepInit(HumanoidBody* human)
 {
+	Player* player = static_cast<Player*>(human->iParent);
+
+
+	Vec3 rot = Vec3(0, 0, 0);
+	player->SetRot(rot);
+	player->CalcFrontVec();
+
+	mStartPos = human->pos;
+	mEndPos = mStartPos + Vec3::front * 20.f;
+
+	uint32_t  maxTimer = 0;
+	for (uint32_t i = 0; i < mMotion->data.size(); i++)
+	{
+		maxTimer += mMotion->data[i].ease.GetEaseTimer();
+	}
+	mMoveEase.SetEaseTimer(maxTimer);
+	mMoveEase.Reset();
+
 }
 void OpenGateMotion::CurrentStepUpdate(HumanoidBody* human)
 {
-	//Player* player = static_cast<Player*>(human->iParent);
-	//if (player->GetBottleNum() <= 0)
-	//{
-	//	return;
-	//}
-
-	//if (mStep == 2)
-	//{
-	//	if (mEase.GetisEnd() == true)
-	//	{
-	//		Vec3 pos = player->GetPos() + Vec3::down * 2;
-
-	//		player->Recovery();
-	//		SoundManager::Play("RecoverySE");
-	//		EffectManager::GetInstance()->GeneratePlayerRecoveryEffect(pos);
-	//	}
-	//}
-
+	human->pos = mMoveEase.InOut(mStartPos, mEndPos);
+	mMoveEase.Update();
 }

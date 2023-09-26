@@ -4,6 +4,12 @@
 class OpenGateMotion : public IMotion
 {
 private:
+	Vec3 mStartPos;
+	Vec3 mEndPos;
+
+	Easing mMoveEase;
+
+private:
 	void CurrentStepInit(HumanoidBody* human);
 	void CurrentStepUpdate(HumanoidBody* human);
 

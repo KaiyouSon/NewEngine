@@ -37,6 +37,27 @@ void Easing::Update()
 	mTimeRate = Min<float>((float)mTimer / mLimitTimer, 1);
 }
 
+// イージング終わり
+bool Easing::GetisEnd()
+{
+	return mIsEnd;
+}
+// タイマー取得
+int32_t Easing::GetTimer()
+{
+	return mTimer;
+}
+// タイムレートを取得
+float Easing::GetTimeRate()
+{
+	return mTimeRate;
+}
+// 補間タイムを取得
+uint32_t Easing::GetEaseTimer()
+{
+	return mLimitTimer;
+}
+
 float Easing::Interpolation(const float startPos, const float endPos)
 {
 	switch (mEaseType)

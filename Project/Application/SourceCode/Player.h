@@ -57,8 +57,9 @@ private:
 	bool mIsDamage;
 	Timer mDamageCoolTimer;
 
-private:
+public:
 	void CalcFrontVec();
+private:
 	void CalcBodyCollider();
 	void ColliderUpdate();
 
@@ -98,6 +99,7 @@ public:
 
 public:
 	void SetPos(const Vec3 pos);
+	void SetRot(const Vec3 rot);
 	void SetisDamage(const bool isDamage);
 	void SetState(const State state);
 

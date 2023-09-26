@@ -32,11 +32,13 @@ public: // セッター
 public: // ゲッター
 
 	// イージング終わり
-	inline bool GetisEnd() { return mIsEnd; }
+	bool GetisEnd();
 	// タイマー取得
-	inline int32_t GetTimer() { return mTimer; }
+	int32_t GetTimer();
 	// タイムレートを取得
-	inline float GetTimeRate() { return mTimeRate; }
+	float GetTimeRate();
+	// 補間タイムを取得
+	uint32_t GetEaseTimer();
 
 public:
 

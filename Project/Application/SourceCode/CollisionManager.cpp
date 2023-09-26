@@ -164,6 +164,7 @@ void CollisionManager::PlayerHitNegotiation()
 				Vec3 pos = gates[i]->GetNegotitationPos();
 				pos.y = mPlayer->GetPos().y;
 				mPlayer->SetPos(pos);
+
 				mPlayer->SetState(Player::State::OpenGate);
 
 				gates[i]->SetisOpening(true);

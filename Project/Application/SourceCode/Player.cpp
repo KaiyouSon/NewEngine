@@ -151,6 +151,16 @@ void Player::CalcBodyCollider()
 }
 void Player::ColliderUpdate()
 {
+	// ƒhƒA‚ðŠJ‚¯‚éŽž
+	if (mState == State::OpenGate)
+	{
+		mBodyCollider.isActive = false;
+	}
+	else
+	{
+		mBodyCollider.isActive = true;
+	}
+
 	mBodyCollider.startPos = mPlayer->pos - Vec3(0.f, 4.75f, 0.f);
 	mBodyCollider.endPos = mPlayer->pos + Vec3(0.f, 4.75f, 0.f);
 	mBodyCollider.radius = 2.5f;
@@ -588,6 +598,10 @@ void Player::DamageUpdate()
 void Player::SetPos(const Vec3 pos)
 {
 	mPlayer->pos = pos;
+}
+void Player::SetRot(const Vec3 rot)
+{
+	mPlayer->rot = rot;
 }
 void Player::SetisDamage(const bool isDamage)
 {
