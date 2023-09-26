@@ -30,12 +30,14 @@ void EffectManager::Update()
 void EffectManager::RenderTextureSetting()
 {
 	mBloom->PrevSceneDraw(Bloom::PassType::HighLumi);
-
 	// リスポーン地点のエフェクト
 	mRespawnPointEffect->DrawModel();
 
 	// 回復
 	mPlayerRecoveryEffect->DrawModel();
+
+	// 導虫みたいなエフェクト
+	mLeadEffect->DrawModel();
 	mBloom->PostSceneDraw(Bloom::PassType::HighLumi);
 
 	// リスポーン地点のエフェクト
