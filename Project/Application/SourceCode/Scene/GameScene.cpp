@@ -156,6 +156,7 @@ void GameScene::Init()
 	CollisionManager::GetInstance()->SetUIManager(mUiManager.get());
 
 	EffectManager::GetInstance()->Init();
+	EffectManager::GetInstance()->SetPlayer(mPlayer.get());
 
 	LightManager::GetInstance()->directionalLight.isActive = true;
 	LightManager::GetInstance()->directionalLight.pos = Vec3(-400, 400, -100);

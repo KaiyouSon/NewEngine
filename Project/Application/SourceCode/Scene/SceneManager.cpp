@@ -18,6 +18,7 @@
 #include "Skydome.h"
 #include "FieldDataManager.h"
 #include "TransitionManager.h"
+#include "EffectManager.h"
 
 std::unique_ptr<IScene> SceneManager::sCurrentScene = nullptr;
 std::unique_ptr<IScene> SceneManager::sNextScene = nullptr;
@@ -34,6 +35,7 @@ SceneManager::SceneManager()
 	Tree::CreateGraphicsPipeline();
 	Grass::CreateGraphicsPipeline();
 	Skydome::CreateGraphicsPipeline();
+	EffectManager::CreateGraphicsPipeline();
 
 	Bloom::CreateGraphicsPipeline();
 

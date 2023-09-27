@@ -611,6 +611,14 @@ void Player::SetState(const State state)
 {
 	mState = state;
 }
+void Player::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	for (uint32_t i = 0; i < mPlayer->mParts.size(); i++)
+	{
+		mPlayer->mParts[i]->SetGraphicsPipeline(graphicsPipeline);
+	}
+	mWeapon->SetGraphicsPipeline(graphicsPipeline);
+}
 
 // ÉQÉbÉ^Å[
 GaugeParam Player::GetGaugeParam(const uint32_t index)

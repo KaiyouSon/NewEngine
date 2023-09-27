@@ -1,5 +1,14 @@
 #include "EffectManager.h"
 
+void EffectManager::CreateGraphicsPipeline()
+{
+	GraphicsPipelineSetting setting = GraphicsPipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
+
+	// 3Dオブジェクト用
+	setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
+	GraphicsPipelineManager::Create(setting, "Object3DWriteNone");
+}
+
 EffectManager::EffectManager() :
 	mBloodSprayEffect(std::make_unique<BloodSprayEffect>()),
 	mPlayerRecoveryEffect(std::make_unique<PlayerRecoveryEffect>()),
@@ -30,6 +39,11 @@ void EffectManager::Update()
 void EffectManager::RenderTextureSetting()
 {
 	mBloom->PrevSceneDraw(Bloom::PassType::HighLumi);
+
+	mPlayer->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+	mPlayer->DrawModel();
+	mPlayer->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3D"));
+
 	// リスポーン地点のエフェクト
 	mRespawnPointEffect->DrawModel();
 
@@ -106,6 +120,11 @@ void EffectManager::GenerateRespawnPointEffect(const Vec3 pos)
 void EffectManager::GenerateLeadEffect(const Vec3 pos, const Vec3 frontVec)
 {
 	mLeadEffect->Generate(pos, frontVec);
+}
+
+void EffectManager::SetPlayer(Player* player)
+{
+	mPlayer = player;
 }
 
 Bloom* EffectManager::GetBloom()

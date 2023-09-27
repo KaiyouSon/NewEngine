@@ -102,6 +102,7 @@ public:
 	void SetRot(const Vec3 rot);
 	void SetisDamage(const bool isDamage);
 	void SetState(const State state);
+	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
 public:
 	GaugeParam GetGaugeParam(const uint32_t index);

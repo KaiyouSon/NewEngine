@@ -19,3 +19,8 @@ void Weapon::SetChargeRate(const float chargeRate)
 {
 	mChargeRate = chargeRate;
 }
+
+void Weapon::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	weapon->SetGraphicsPipeline(graphicsPipeline);
+}

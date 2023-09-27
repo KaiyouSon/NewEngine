@@ -6,6 +6,7 @@
 GraphicsPipelineSetting::GraphicsPipelineSetting() :
 	pipelineBlend(PipelineBlend::Alpha),
 	fillMode(FillMode::Solid), cullMode(CullMode::Back),
+	renderTargetBlendMask(WriteAll),
 	topologyType(TopologyType::TriangleList), shaderObject(nullptr),
 	depthStencilDesc(D3D12_DEPTH_STENCIL_DESC()), rtvNum(1),
 	rootSignatureSetting(RootSignatureSetting())
@@ -162,10 +163,10 @@ void GraphicsPipeline::CreatePipelineState(const GraphicsPipelineSetting::Pipeli
 	{
 		D3D12_RENDER_TARGET_BLEND_DESC blendDesc{};// = pipelineDesc.BlendState.RenderTarget[i];
 
-		blendDesc.RenderTargetWriteMask =
-			D3D12_COLOR_WRITE_ENABLE_RED |
-			D3D12_COLOR_WRITE_ENABLE_GREEN |
-			D3D12_COLOR_WRITE_ENABLE_BLUE;
+		blendDesc.RenderTargetWriteMask = mSetting.renderTargetBlendMask;
+		//D3D12_COLOR_WRITE_ENABLE_RED |
+		//	D3D12_COLOR_WRITE_ENABLE_GREEN |
+		//	D3D12_COLOR_WRITE_ENABLE_BLUE;
 		blendDesc.BlendEnable = true;					// ブレンドを有効にする
 		blendDesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;	// 加算
 		blendDesc.SrcBlendAlpha = D3D12_BLEND_ONE;		// ソースの値を100％使う

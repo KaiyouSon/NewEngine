@@ -16,16 +16,32 @@ struct GraphicsPipelineSetting
 		Inv = 0b1000,
 	};
 
+	// 塗りつぶし
 	enum FillMode
 	{
 		Solid,
 		Wireframe,
 	};
 
+	// 書き込み
+	enum RenderTargetBlendMask
+	{
+		WriteNone = 0,
+		WriteRed = 1,
+		WriteGreen = 2,
+		WriteBlue = 4,
+		WriteAlpha = 8,
+		WriteAll = ((WriteRed | WriteGreen) | WriteBlue) | WriteAlpha,
+	};
+
 	// 生成するパイプラインの種類
 	uint8_t pipelineBlend;
 
+	// 塗りつぶし
 	FillMode fillMode;
+
+	// 書き込み
+	RenderTargetBlendMask renderTargetBlendMask;
 
 	// カーリングモード
 	CullMode cullMode;

@@ -473,7 +473,6 @@ RenderTexture* TextureManager::CreateRenderTexture(const Vec2 size, const uint32
 	std::unique_ptr<RenderTexture> renderTex = std::make_unique<RenderTexture>();
 	renderTex->buffers.resize(num);
 
-
 	HRESULT result;
 	RenderBase* renderBase = RenderBase::GetInstance();
 

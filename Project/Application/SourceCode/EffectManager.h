@@ -4,6 +4,7 @@
 #include "RespawnPointEffect.h"
 #include "LeadEffect.h"
 #include "Bloom.h"
+#include "Player.h"
 
 template<typename T> class Singleton;
 
@@ -19,7 +20,12 @@ private:
 	// ポストエフェクト
 	std::unique_ptr<Bloom> mBloom;
 
+private:
+	Player* mPlayer;
+
 public:
+	static void CreateGraphicsPipeline();
+
 	EffectManager();
 	void Init();
 	void Update();
@@ -32,6 +38,9 @@ public:
 	void GeneratePlayerRecoveryEffect(const Vec3 pos);
 	void GenerateRespawnPointEffect(const Vec3 pos);
 	void GenerateLeadEffect(const Vec3 pos, const Vec3 frontVec);
+
+public:
+	void SetPlayer(Player* player);
 
 public:
 	Bloom* GetBloom();

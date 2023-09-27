@@ -40,6 +40,7 @@ public:
 public:
 	void SetisCalcCollider(const bool isCalcCollide);
 	void SetChargeRate(const float chargeRate);
+	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
 };
 
