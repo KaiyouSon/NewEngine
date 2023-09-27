@@ -21,6 +21,11 @@ void CollisionManager::PushBackPlayer()
 
 void CollisionManager::PlayerHitBoss()
 {
+	if (mPlayer->GetisAlive() == false)
+	{
+		return;
+	}
+
 	static Vec3 hitPoint = {};
 
 	float dis = Vec3::Distance(mPlayer->GetPos(), mBoss->GetPos());

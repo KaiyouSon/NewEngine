@@ -39,6 +39,18 @@ void SceneTransition::Update()
 		mTransition->color.a = mEase.InOut(0, 255);
 		mLoadSprite->color.a = mEase.InOut(0, 255);
 
+		if (SoundManager::GetIsPlaying("TitleBGM") == true)
+		{
+			float volume = mEase.InOut(1, 0);
+			SoundManager::SetVolume("TitleBGM", volume);
+		}
+
+		if (SoundManager::GetIsPlaying("BattleBGM") == true)
+		{
+			float volume = mEase.InOut(1, 0);
+			SoundManager::SetVolume("BattleBGM", volume);
+		}
+
 		mEase.Update();
 		if (mEase.GetisEnd() == true)
 		{
@@ -54,6 +66,16 @@ void SceneTransition::Update()
 	case TransitionStep::Progress:
 	{
 		mLoadSprite->rot += Radian(10);
+
+		if (SoundManager::GetIsPlaying("TitleBGM") == true)
+		{
+			SoundManager::Stop("TitleBGM");
+		}
+
+		if (SoundManager::GetIsPlaying("BattleBGM") == true)
+		{
+			SoundManager::Stop("BattleBGM");
+		}
 
 		//mLoadSprite->color.a = cosf(Radian((float)mAlphaTimer.GetTimer())) * 255.f;
 

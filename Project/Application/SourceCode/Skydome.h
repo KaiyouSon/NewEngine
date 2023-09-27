@@ -12,6 +12,7 @@ private:
 	bool isVignette;
 	ConstantBufferData::CVignette mVignetteData;
 
+	bool test;
 
 public:
 	static void CreateGraphicsPipeline();

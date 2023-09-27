@@ -20,8 +20,6 @@ private:
 	std::array<RenderTexture*, (uint32_t)PassType::Size> mTexs;
 	std::unique_ptr<PostEffect> mCompositePass;
 
-	bool flag;
-
 public:
 	Bloom();
 	static void CreateGraphicsPipeline();

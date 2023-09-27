@@ -288,7 +288,6 @@ void GameScene::Draw()
 	ShadowMap::GetInstance()->DrawPostEffect();
 
 	mPostEffectManager->DrawEffectBloom();
-	//mPlayer->DrawModel();
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();

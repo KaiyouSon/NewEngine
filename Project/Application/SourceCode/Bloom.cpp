@@ -70,21 +70,10 @@ Bloom::Bloom()
 	mCompositePass->AddRenderTexture(mTexs[(uint32_t)PassType::Bloom]);
 	mCompositePass->AddRenderTexture(mTexs[(uint32_t)PassType::Target]);
 	mCompositePass->pos = GetWindowHalfSize();
-
-	flag = true;
 }
 
 void Bloom::Update()
 {
-	if (Key::GetKeyDown(DIK_Q))
-	{
-		flag = true;
-	}
-	if (Key::GetKeyDown(DIK_E))
-	{
-		flag = false;
-	}
-
 	for (uint32_t i = 0; i < mPasses.size(); i++)
 	{
 		mPasses[i]->Update();
@@ -95,18 +84,12 @@ void Bloom::Update()
 
 void Bloom::DrawPostEffect()
 {
-	if (flag == true)
-	{
-		mCompositePass->Draw();
-	}
+	mCompositePass->Draw();
 }
 
 void Bloom::DrawPass(const PassType passType)
 {
-	if (flag == true)
-	{
-		mPasses[(uint32_t)passType]->Draw();
-	}
+	mPasses[(uint32_t)passType]->Draw();
 }
 
 void Bloom::PrevSceneDraw(const PassType passType)

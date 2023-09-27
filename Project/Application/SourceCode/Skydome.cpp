@@ -52,6 +52,8 @@ Skydome::Skydome() :
 	isVignette = true;
 	mVignetteData.range = Vec2(0.2f, 1.7f);
 	mVignetteData.color = Color::black;
+
+	test = false;
 }
 
 void Skydome::Init()
@@ -61,6 +63,15 @@ void Skydome::Init()
 
 void Skydome::Update()
 {
+	if (Key::GetKeyDown(DIK_Z))
+	{
+		test = false;
+	}
+	if (Key::GetKeyDown(DIK_C))
+	{
+		test = true;
+	}
+
 	mSkydome->pos.z = 200.f;
 	mSkydome->Update();
 	for (uint32_t i = 0; i < mClouds.size(); i++)
@@ -101,10 +112,13 @@ void Skydome::Draw()
 
 void Skydome::DrawDebugGui()
 {
-	Gui::BeginWindow("Skydome");
-	Gui::DrawColorEdit("Skydome Color", mSkydome->color);
-	Gui::DrawCheckBox("Use Vignette", &isVignette);
-	Gui::DrawSlider2("Vignette Range", mVignetteData.range, 0.01f);
-	Gui::DrawColorEdit("Vignette Color", mVignetteData.color);
-	Gui::EndWindow();
+	if (test == true)
+	{
+		Gui::BeginWindow("Skydome");
+		Gui::DrawColorEdit("Skydome Color", mSkydome->color);
+		Gui::DrawCheckBox("Use Vignette", &isVignette);
+		Gui::DrawSlider2("Vignette Range", mVignetteData.range, 0.01f);
+		Gui::DrawColorEdit("Vignette Color", mVignetteData.color);
+		Gui::EndWindow();
+	}
 }
