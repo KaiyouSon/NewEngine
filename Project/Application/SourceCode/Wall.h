@@ -18,6 +18,7 @@ public:
 	void SetParent(const Transform parent);
 	void SetCollider(const CapsuleCollider collider);
 	void SetModel(Model* model);
+	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
 public:
 	Vec3 GetPos();

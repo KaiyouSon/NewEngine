@@ -37,3 +37,8 @@ void Weed::SetGenerateSize(const Vec2 size)
 {
 	mGenerateSize = size;
 }
+
+void Weed::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	mGrass->SetGraphicsPipeline(graphicsPipeline);
+}

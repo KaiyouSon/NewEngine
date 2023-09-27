@@ -65,6 +65,12 @@ void Coffin::SetBottomCollider(const CubeCollider& collider)
 	mBottomCollider.isActive = true;
 }
 
+void Coffin::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	mCoffinTop->SetGraphicsPipeline(graphicsPipeline);
+	mCoffinBottom->SetGraphicsPipeline(graphicsPipeline);
+}
+
 CubeCollider Coffin::GetBottomCollider()
 {
 	return mBottomCollider;

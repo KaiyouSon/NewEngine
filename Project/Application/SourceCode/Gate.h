@@ -33,6 +33,7 @@ public:
 	void SetNegotiationCollider(const SphereCollider collider);
 	void SetCenterPos(const Vec3 pos);
 	void SetisOpening(const bool isOpening);
+	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
 public:
 	CapsuleCollider GetLeftCollider();

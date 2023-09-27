@@ -16,5 +16,6 @@ public:
 public:
 	void SetPos(const Vec3 pos);
 	void SetGenerateSize(const Vec2 size);
+	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 };
 

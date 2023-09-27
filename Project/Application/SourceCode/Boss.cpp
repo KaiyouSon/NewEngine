@@ -170,6 +170,15 @@ void Boss::SetisDamage(const bool isDamage)
 	mIsDamage = isDamage;
 }
 
+void Boss::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	for (uint32_t i = 0; i < mBoss->mParts.size(); i++)
+	{
+		mBoss->mParts[i]->SetGraphicsPipeline(graphicsPipeline);
+	}
+	mWeapon->SetGraphicsPipeline(graphicsPipeline);
+}
+
 CapsuleCollider Boss::GetCollider()
 {
 	return mCollider;

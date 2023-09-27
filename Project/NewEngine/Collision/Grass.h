@@ -36,5 +36,6 @@ public:
 
 public:
 	void SetBillboardType(const BillboardType billboardType);
+	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 };
 

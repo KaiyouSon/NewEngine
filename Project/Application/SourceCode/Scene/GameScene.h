@@ -5,6 +5,7 @@
 #include "UIManager.h"
 #include "CameraManager.h"
 #include "MenuManager.h"
+#include "PostEffectManager.h"
 #include "Field.h"
 
 class GameScene : public IScene
@@ -15,6 +16,7 @@ private:
 	std::unique_ptr<UIManager> mUiManager;
 	std::unique_ptr<CameraManager> mCameraManager;
 	std::unique_ptr<MenuManager> mMenuManager;
+	std::unique_ptr<PostEffectManager> mPostEffectManager;
 	std::unique_ptr<Field> mField;
 
 	RenderTexture* mCurrentScene;

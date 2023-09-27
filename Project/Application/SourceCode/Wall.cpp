@@ -43,6 +43,11 @@ void Wall::SetModel(Model* model)
 	mWall->SetModel(model);
 }
 
+void Wall::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	mWall->SetGraphicsPipeline(graphicsPipeline);
+}
+
 Vec3 Wall::GetPos()
 {
 	return mParent.pos;

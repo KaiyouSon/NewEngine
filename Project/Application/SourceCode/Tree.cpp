@@ -68,6 +68,12 @@ void Tree::SetCollider(const SphereCollider collider)
 	mCollider.isActive = true;
 }
 
+void Tree::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	mTree->SetGraphicsPipeline(graphicsPipeline);
+	mBranch->SetGraphicsPipeline(graphicsPipeline);
+}
+
 Vec3 Tree::GetPos()
 {
 	return mParent.pos;

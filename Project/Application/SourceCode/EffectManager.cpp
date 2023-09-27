@@ -1,20 +1,10 @@
 #include "EffectManager.h"
 
-void EffectManager::CreateGraphicsPipeline()
-{
-	GraphicsPipelineSetting setting = GraphicsPipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
-
-	// 3Dオブジェクト用
-	setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
-	GraphicsPipelineManager::Create(setting, "Object3DWriteNone");
-}
-
 EffectManager::EffectManager() :
 	mBloodSprayEffect(std::make_unique<BloodSprayEffect>()),
 	mPlayerRecoveryEffect(std::make_unique<PlayerRecoveryEffect>()),
 	mRespawnPointEffect(std::make_unique<RespawnPointEffect>()),
-	mLeadEffect(std::make_unique<LeadEffect>()),
-	mBloom(std::make_unique<Bloom>())
+	mLeadEffect(std::make_unique<LeadEffect>())
 {
 }
 
@@ -32,57 +22,6 @@ void EffectManager::Update()
 	mPlayerRecoveryEffect->Update();
 	mRespawnPointEffect->Update();
 	mLeadEffect->Update();
-
-	mBloom->Update();
-}
-
-void EffectManager::RenderTextureSetting()
-{
-	mBloom->PrevSceneDraw(Bloom::PassType::HighLumi);
-
-	mPlayer->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
-	mPlayer->DrawModel();
-	mPlayer->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3D"));
-
-	// リスポーン地点のエフェクト
-	mRespawnPointEffect->DrawModel();
-
-	// 回復
-	mPlayerRecoveryEffect->DrawModel();
-
-	// 導虫みたいなエフェクト
-	mLeadEffect->DrawModel();
-	mBloom->PostSceneDraw(Bloom::PassType::HighLumi);
-
-	// リスポーン地点のエフェクト
-	mBloom->PrevSceneDraw(Bloom::PassType::GaussianBlur);
-	mBloom->DrawPass(Bloom::PassType::HighLumi);
-	mBloom->PostSceneDraw(Bloom::PassType::GaussianBlur);
-
-	mBloom->PrevSceneDraw(Bloom::PassType::Bloom);
-	mBloom->DrawPass(Bloom::PassType::GaussianBlur);
-	mBloom->PostSceneDraw(Bloom::PassType::Bloom);
-
-	//mBloom->PrevSceneDraw(Bloom::PassType::Target);
-	//mRespawnPointEffect->DrawModel();
-	//mBloom->PostSceneDraw(Bloom::PassType::Target);
-
-	//// リスポーン地点のエフェクト
-	//mBloom->PrevSceneDraw(Bloom::PassType::HighLumi2);
-	//mBloom->DrawPass(Bloom::PassType::HighLumi);
-	//mBloom->PostSceneDraw(Bloom::PassType::HighLumi2);
-
-	//// リスポーン地点のエフェクト
-	//mBloom->PrevSceneDraw(Bloom::PassType::GaussianBlur2);
-	//mBloom->DrawPass(Bloom::PassType::GaussianBlur);
-	//mBloom->PostSceneDraw(Bloom::PassType::GaussianBlur2);
-}
-
-void EffectManager::DrawBloom()
-{
-	//mBloom->DrawPass(Bloom::PassType::GaussianBlur);
-
-	mBloom->DrawPostEffect();
 }
 
 void EffectManager::DrawModel()
@@ -100,6 +39,37 @@ void EffectManager::DrawModel()
 
 	// 導虫みたいなエフェクト
 	mLeadEffect->DrawModel();
+}
+
+void EffectManager::DrawEffect(const bool isBloom)
+{
+	// ブルーム効果かけたいエフェクト
+	if (isBloom == true)
+	{
+		// 回復
+		mPlayerRecoveryEffect->DrawModel();
+
+		// リスポーン地点のエフェクト
+		mRespawnPointEffect->DrawModel();
+
+		// 導虫みたいなエフェクト
+		mLeadEffect->DrawModel();
+	}
+	// それ以外
+	else
+	{
+		// 血
+		mBloodSprayEffect->DrawModel();
+
+		// 回復
+		mPlayerRecoveryEffect->DrawModel();
+
+		// リスポーン地点のエフェクト
+		mRespawnPointEffect->DrawModel();
+
+		// 導虫みたいなエフェクト
+		mLeadEffect->DrawModel();
+	}
 }
 
 void EffectManager::GenerateBloodSprayEffect(const Vec3 pos)
@@ -125,9 +95,4 @@ void EffectManager::GenerateLeadEffect(const Vec3 pos, const Vec3 frontVec)
 void EffectManager::SetPlayer(Player* player)
 {
 	mPlayer = player;
-}
-
-Bloom* EffectManager::GetBloom()
-{
-	return mBloom.get();
 }

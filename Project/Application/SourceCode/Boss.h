@@ -56,6 +56,7 @@ public:
 public:
 	void SetPlayer(Player* player);
 	void SetisDamage(const bool isDamage);
+	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
 public:
 	CapsuleCollider GetCollider();

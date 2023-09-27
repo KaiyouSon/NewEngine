@@ -22,14 +22,17 @@ public:
 	void Update();
 	void RenderTextureSetting();
 	void DrawModel();
+	void DrawSkydome();
 	void DrawFrontSprite();
 	void DrawDebugGui();
 
 public:
 	std::array<std::unique_ptr<MessageSign>, 5>* GetMessageSigns();
-
 	FieldData* GetFieldData();
 
+public:
 	void SetSpherePos(const Vec3 pos);
+	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
+	void SetWeedGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 };
 

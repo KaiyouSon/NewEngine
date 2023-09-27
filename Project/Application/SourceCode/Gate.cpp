@@ -136,6 +136,12 @@ void Gate::SetisOpening(const bool isOpening)
 	mIsOpening = isOpening;
 }
 
+void Gate::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	mGateLeft->SetGraphicsPipeline(graphicsPipeline);
+	mGateRight->SetGraphicsPipeline(graphicsPipeline);
+}
+
 CapsuleCollider Gate::GetLeftCollider()
 {
 	return mLeftCollider;

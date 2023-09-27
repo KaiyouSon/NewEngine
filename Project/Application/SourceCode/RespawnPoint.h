@@ -23,6 +23,7 @@ public:
 public:
 	// セッター
 	void SetParent(const Transform parent);
+	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
 public:
 	// ゲッター

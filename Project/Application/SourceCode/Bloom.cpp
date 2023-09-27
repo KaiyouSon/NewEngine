@@ -2,14 +2,6 @@
 
 void Bloom::CreateGraphicsPipeline()
 {
-	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
-	depthStencilDesc.DepthEnable = false; // 深度テストを行う
-
-	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc1{};
-	depthStencilDesc1.DepthEnable = true; // 深度テストを行う
-	depthStencilDesc1.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// 書き込み許可
-	depthStencilDesc1.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
-
 	std::string path = "Application/Shader/";
 
 	// 高輝度抽出用
@@ -22,7 +14,6 @@ void Bloom::CreateGraphicsPipeline()
 	GraphicsPipelineSetting setting = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("HighLumi");
 	setting.rtvNum = 1;
-	//setting.depthStencilDesc = depthStencilDesc1;
 	GraphicsPipelineManager::Create(setting, "HighLumi");
 
 	// ガウシアンブラー用
@@ -48,22 +39,6 @@ void Bloom::CreateGraphicsPipeline()
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Composite");
 	setting.rtvNum = 1;
 	GraphicsPipelineManager::Create(setting, "Composite");
-
-	//// ブルーム用
-	//ShaderObjectManager::Create("Bloom");
-	//ShaderObjectManager::GetShaderObject("Bloom")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	//ShaderObjectManager::GetShaderObject("Bloom")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	//ShaderObjectManager::GetShaderObject("Bloom")->CompileVertexShader(path + "BloomVS.hlsl", "main");
-	//ShaderObjectManager::GetShaderObject("Bloom")->CompilePixelShader(path + "BloomPS.hlsl", "main");
-
-	//GraphicsPipelineManager::Create(
-	//	ShaderObjectManager::GetShaderObject("Bloom"),
-	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
-	//	CullMode::None,
-	//	depthStencilDesc,
-	//	TopologyType::Triangle,
-	//	1,
-	//	"Bloom");
 }
 
 Bloom::Bloom()
@@ -97,23 +72,6 @@ Bloom::Bloom()
 	mCompositePass->pos = GetWindowHalfSize();
 
 	flag = true;
-
-	//texs_[TexType::HighLumi] = TextureManager::GetRenderTexture("HighLumi");
-	////texs_[1] = TextureManager::GetRenderTexture("BGaussianBlur");
-	////texs_[2] = TextureManager::GetRenderTexture("Bloom");
-
-	//highLumi_->pos = GetWindowHalfSize();
-	//highLumi_->AddRenderTexture(texs_[0]);
-	//highLumi_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("HighLumi"));
-
-	//blur_->pos = GetWindowHalfSize();
-	//blur_->AddRenderTexture(texs_[1]);
-	//blur_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("BGaussianBlur"));
-
-	//bloom_->pos = GetWindowHalfSize();
-	//bloom_->AddRenderTexture(texs_[2]);
-	//bloom_->AddRenderTexture(TextureManager::GetRenderTexture("CurrentScene"));
-	//bloom_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Bloom"));
 }
 
 void Bloom::Update()

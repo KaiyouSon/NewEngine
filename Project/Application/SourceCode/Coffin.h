@@ -22,6 +22,7 @@ public:
 	void SetTopRot(const Vec3 rot);
 	void SetBottomRot(const Vec3 rot);
 	void SetBottomCollider(const CubeCollider& collider);
+	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
 public:
 	CubeCollider GetBottomCollider();

@@ -60,3 +60,8 @@ void MessageSign::SetRot(const Vec3 rot)
 {
 	mMessageSign->rot = rot;
 }
+
+void MessageSign::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	mMessageSign->SetGraphicsPipeline(graphicsPipeline);
+}

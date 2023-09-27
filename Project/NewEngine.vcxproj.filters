@@ -711,6 +711,9 @@
     <ClCompile Include="Application\SourceCode\LeadEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\PostEffectManager.cpp">
+      <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1177,6 +1180,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\LeadEffect.h">
       <Filter>Application\Header\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\PostEffectManager.h">
+      <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

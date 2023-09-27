@@ -155,6 +155,7 @@
     <ClCompile Include="Application\SourceCode\OpenGateMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Player.cpp" />
     <ClCompile Include="Application\SourceCode\PlayerRecoveryEffect.cpp" />
+    <ClCompile Include="Application\SourceCode\PostEffectManager.cpp" />
     <ClCompile Include="Application\SourceCode\RadialBlur.cpp" />
     <ClCompile Include="Application\SourceCode\RespawnPoint.cpp" />
     <ClCompile Include="Application\SourceCode\RespawnPointEffect.cpp" />
@@ -308,6 +309,7 @@
     <ClInclude Include="Application\SourceCode\Player.h" />
     <ClInclude Include="Application\SourceCode\PlayerBody.h" />
     <ClInclude Include="Application\SourceCode\PlayerRecoveryEffect.h" />
+    <ClInclude Include="Application\SourceCode\PostEffectManager.h" />
     <ClInclude Include="Application\SourceCode\RadialBlur.h" />
     <ClInclude Include="Application\SourceCode\RespawnPoint.h" />
     <ClInclude Include="Application\SourceCode\RespawnPointEffect.h" />

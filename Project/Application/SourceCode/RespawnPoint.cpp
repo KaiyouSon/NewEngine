@@ -103,6 +103,12 @@ void RespawnPoint::SetParent(const Transform parent)
 	mParent.Update();
 }
 
+void RespawnPoint::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	mRipple->SetGraphicsPipeline(graphicsPipeline);
+	mRhombus->SetGraphicsPipeline(graphicsPipeline);
+}
+
 Vec3 RespawnPoint::GetPos()
 {
 	return mParent.pos;

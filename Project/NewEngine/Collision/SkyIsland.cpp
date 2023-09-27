@@ -32,3 +32,8 @@ void SkyIsland::SetModel(Model* model)
 {
 	mSkyIsland->SetModel(model);
 }
+
+void SkyIsland::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	mSkyIsland->SetGraphicsPipeline(graphicsPipeline);
+}

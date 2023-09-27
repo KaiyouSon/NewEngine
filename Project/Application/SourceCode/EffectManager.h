@@ -17,21 +17,14 @@ private:
 	std::unique_ptr<LeadEffect> mLeadEffect;
 
 private:
-	// ポストエフェクト
-	std::unique_ptr<Bloom> mBloom;
-
-private:
 	Player* mPlayer;
 
 public:
-	static void CreateGraphicsPipeline();
-
 	EffectManager();
 	void Init();
 	void Update();
-	void RenderTextureSetting();
-	void DrawBloom();
 	void DrawModel();
+	void DrawEffect(const bool isBloom = false);
 
 public:
 	void GenerateBloodSprayEffect(const Vec3 pos);
@@ -41,9 +34,6 @@ public:
 
 public:
 	void SetPlayer(Player* player);
-
-public:
-	Bloom* GetBloom();
 
 private:
 	friend Singleton<EffectManager>;

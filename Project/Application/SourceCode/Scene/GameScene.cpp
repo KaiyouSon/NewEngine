@@ -121,6 +121,7 @@ void GameScene::CreateInstance()
 	mCameraManager = std::make_unique<CameraManager>();
 	mMenuManager = std::make_unique<MenuManager>();
 	mField = std::make_unique<Field>();
+	mPostEffectManager = std::make_unique<PostEffectManager>();
 }
 
 void GameScene::Init()
@@ -146,6 +147,11 @@ void GameScene::Init()
 	mMenuManager->Init();
 
 	mField->Init();
+
+	mPostEffectManager->SetPlayer(mPlayer.get());
+	mPostEffectManager->SetBoss(mBoss.get());
+	mPostEffectManager->SetField(mField.get());
+	mPostEffectManager->Init();
 
 	ShadowMap::GetInstance()->Init();
 	ShadowMap::GetInstance()->Register(128);
@@ -188,8 +194,9 @@ void GameScene::Update()
 	auto collider = mPlayer->GetBodyCollider();
 	ColliderDrawer::GetInstance()->Bind(&collider);
 
-	mMenuManager->Update();
 	mField->Update();
+	mMenuManager->Update();
+	mPostEffectManager->Update();
 
 	ShadowMap::GetInstance()->Update();
 
@@ -205,44 +212,6 @@ void GameScene::Update()
 	bool isBackToTitle =
 		LogoutMenu::GetisEnd() == true &&
 		LogoutMenu::GetSelect() == LogoutMenu::Select::BackToTitle;
-
-	//if (isBackToTitle == true)
-	//{
-	//	//if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
-	//	//{
-	//	//	SceneChanger::GetInstance()->StartSceneChange();
-	//	//	SceneChanger::GetInstance()->SetisEaseGameBGM(true);
-	//	//}
-
-	//	//if (SceneChanger::GetInstance()->GetisChange() == true)
-	//	//{
-	//	//	SceneManager::ChangeScene<TitleScene>();
-	//	//	SceneChanger::GetInstance()->SetisChange(false);
-	//	//}
-	//}
-	//else if (ResultUI::GetisEnd() == true)
-	//{
-	//	if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
-	//	{
-	//		SceneChanger::GetInstance()->StartSceneChange();
-	//		SceneChanger::GetInstance()->SetisEaseGameBGM(true);
-	//	}
-
-	//	if (SceneChanger::GetInstance()->GetisChange() == true)
-	//	{
-	//		// ƒvƒŒƒCƒ„[‚ªŽ€‚ñ‚¾ê‡
-	//		if (mPlayer->GetisDissolve() == true)
-	//		{
-	//			SceneManager::ChangeScene<GameScene>();
-	//		}
-	//		else
-	//		{
-	//			SceneManager::ChangeScene<TitleScene>();
-	//		}
-
-	//		SceneChanger::GetInstance()->SetisChange(false);
-	//	}
-	//}
 
 	// ‘JˆÚ‚Ìˆ—
 	auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
@@ -311,20 +280,15 @@ void GameScene::RenderTextureSetting()
 	ShadowMap::GetInstance()->RenderTextureSetting();
 	mField->RenderTextureSetting();
 
-	EffectManager::GetInstance()->RenderTextureSetting();
-	EffectManager::GetInstance()->GetBloom()->PrevSceneDraw(Bloom::PassType::Target);
-	mField->DrawModel();
-
-	mPlayer->DrawModel();
-	mBoss->DrawModel();
-	EffectManager::GetInstance()->DrawModel();
-	EffectManager::GetInstance()->GetBloom()->PostSceneDraw(Bloom::PassType::Target);
+	mPostEffectManager->RenderTextureSetting();
 }
 
 void GameScene::Draw()
 {
 	ShadowMap::GetInstance()->DrawPostEffect();
-	EffectManager::GetInstance()->DrawBloom();
+
+	mPostEffectManager->DrawEffectBloom();
+	//mPlayer->DrawModel();
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
@@ -333,26 +297,28 @@ void GameScene::Draw()
 
 void GameScene::DrawDebugGui()
 {
-	//GuiManager::BeginWindow("Lighting");
-	////GuiManager::DrawCheckBox("isActive", &LightManager::GetInstance()->directionalLight.isActive);
-	////GuiManager::DrawColorEdit("color", LightManager::GetInstance()->directionalLight.color);
-	//GuiManager::DrawSlider3("Light Pos", LightManager::GetInstance()->directionalLight.pos, 0.01f);
+	{
+		//GuiManager::BeginWindow("Lighting");
+		////GuiManager::DrawCheckBox("isActive", &LightManager::GetInstance()->directionalLight.isActive);
+		////GuiManager::DrawColorEdit("color", LightManager::GetInstance()->directionalLight.color);
+		//GuiManager::DrawSlider3("Light Pos", LightManager::GetInstance()->directionalLight.pos, 0.01f);
 
-	//Vec3 angle = Angle(ShadowMap::sLightCamera.rot);
-	//GuiManager::DrawSlider3("Camera Rot", angle, 1.f);
-	//ShadowMap::sLightCamera.rot = Radian(angle);
+		//Vec3 angle = Angle(ShadowMap::sLightCamera.rot);
+		//GuiManager::DrawSlider3("Camera Rot", angle, 1.f);
+		//ShadowMap::sLightCamera.rot = Radian(angle);
 
-	//GuiManager::DrawSlider1("Camera NearZ", ShadowMap::sLightCamera.oNearZ, 0.01f);
-	//GuiManager::DrawSlider1("Camera FarZ", ShadowMap::sLightCamera.oFarZ, 1.f);
+		//GuiManager::DrawSlider1("Camera NearZ", ShadowMap::sLightCamera.oNearZ, 0.01f);
+		//GuiManager::DrawSlider1("Camera FarZ", ShadowMap::sLightCamera.oFarZ, 1.f);
 
-	//float fov = Angle(ShadowMap::sLightCamera.fov);
-	//GuiManager::DrawSlider1("Camera Fov", fov, 1.f);
-	//ShadowMap::sLightCamera.fov = Radian(fov);
+		//float fov = Angle(ShadowMap::sLightCamera.fov);
+		//GuiManager::DrawSlider1("Camera Fov", fov, 1.f);
+		//ShadowMap::sLightCamera.fov = Radian(fov);
 
-	//float width = ShadowMap::sLightCamera.rect.right;
-	//GuiManager::DrawSlider1("Camera Rect Width", width, 1.f);
-	//ShadowMap::sLightCamera.rect.left = -width;
-	//ShadowMap::sLightCamera.rect.right = +width;
+		//float width = ShadowMap::sLightCamera.rect.right;
+		//GuiManager::DrawSlider1("Camera Rect Width", width, 1.f);
+		//ShadowMap::sLightCamera.rect.left = -width;
+		//ShadowMap::sLightCamera.rect.right = +width;
+	}
 
 	//float height = ShadowMap::sLightCamera.rect.top;
 	//GuiManager::DrawSlider1("Camera Rect Height", ShadowMap::sLightCamera.rect.top, 1.f);

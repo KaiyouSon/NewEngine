@@ -159,7 +159,7 @@ void Field::RenderTextureSetting()
 void Field::DrawModel()
 {
 	//mSphere->Draw();
-	mSkydome->Draw();
+	//mSkydome->Draw();
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
 	{
 		mMessageSigns[i]->DrawModel();
@@ -211,6 +211,11 @@ void Field::DrawModel()
 	}
 }
 
+void Field::DrawSkydome()
+{
+	mSkydome->Draw();
+}
+
 void Field::DrawFrontSprite()
 {
 }
@@ -233,4 +238,63 @@ FieldData* Field::GetFieldData()
 void Field::SetSpherePos(const Vec3 pos)
 {
 	mSphere->pos = pos;
+}
+
+void Field::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
+	{
+		mMessageSigns[i]->SetGraphicsPipeline(graphicsPipeline);
+	}
+
+	if (mFieldData)
+	{
+		// 棺桶
+		for (uint32_t i = 0; i < mFieldData->coffins.size(); i++)
+		{
+			mFieldData->coffins[i]->SetGraphicsPipeline(graphicsPipeline);
+		}
+
+		// 浮島
+		for (uint32_t i = 0; i < mFieldData->skyIslands.size(); i++)
+		{
+			mFieldData->skyIslands[i]->SetGraphicsPipeline(graphicsPipeline);
+		}
+
+		// 木
+		for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
+		{
+			mFieldData->trees[i]->SetGraphicsPipeline(graphicsPipeline);
+		}
+
+		// 壁
+		for (uint32_t i = 0; i < mFieldData->walls.size(); i++)
+		{
+			mFieldData->walls[i]->SetGraphicsPipeline(graphicsPipeline);
+		}
+
+		// 正門
+		for (uint32_t i = 0; i < mFieldData->gates.size(); i++)
+		{
+			mFieldData->gates[i]->SetGraphicsPipeline(graphicsPipeline);
+		}
+
+		//// リスポーン地点
+		//for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
+		//{
+		//	mFieldData->respawnPoints[i]->SetGraphicsPipeline(graphicsPipeline);
+		//}
+	}
+}
+
+void Field::SetWeedGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	if (mFieldData)
+	{
+		// 雑草
+		for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
+		{
+			mFieldData->weeds[i]->SetGraphicsPipeline(graphicsPipeline);
+		}
+	}
 }

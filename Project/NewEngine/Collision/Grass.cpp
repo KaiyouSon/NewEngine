@@ -169,3 +169,7 @@ void Grass::SetBillboardType(const BillboardType billboardType)
 {
 	mBillboard.SetBillboardType(billboardType);
 }
+void Grass::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	mGraphicsPipeline = graphicsPipeline;
+}
