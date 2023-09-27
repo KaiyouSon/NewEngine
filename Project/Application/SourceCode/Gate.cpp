@@ -23,6 +23,9 @@ void Gate::Init()
 
 	mOpenEase.SetEaseTimer(180);
 	mStayTimer.SetLimitTimer(30);
+
+	mGateLeft->rot.y = 0;
+	mGateRight->rot.y = Radian(180);
 }
 
 void Gate::Update()

@@ -11,10 +11,14 @@ LogoScene::~LogoScene()
 
 void LogoScene::Load()
 {
+	TextureManager::LoadTexture("LogoScene/NewEngineTitle.png", "NewEngineTitle");
+	TextureManager::CreateTexture(Color::black, "Black");
 }
 
 void LogoScene::UnLoad()
 {
+	TextureManager::UnLoadTexture("NewEngineTitle");
+	TextureManager::UnLoadTexture("Black");
 }
 
 void LogoScene::CreateInstance()
@@ -25,11 +29,8 @@ void LogoScene::CreateInstance()
 
 void LogoScene::Init()
 {
-	//mLogoTex = TextureManager::LoadTexture("LogoScene/NewEngineTitle.png", "NewEngineTitle");
-	//mBackTex = TextureManager::CreateTexture(Color::black, "Black");
-
-	mLogoSprite->SetTexture(&mLogoTex);
-	mBackSprite->SetTexture(&mBackTex);
+	mLogoSprite->SetTexture(TextureManager::GetTexture("NewEngineTitle"));
+	mBackSprite->SetTexture(TextureManager::GetTexture("Black"));
 
 	mLogoSprite->pos = GetWindowHalfSize();
 	mBackSprite->pos = GetWindowHalfSize();
@@ -82,6 +83,11 @@ void LogoScene::Update()
 	if (mStayTimer.GetisTimeOut() == true && mIsEnd == true)
 	{
 		SceneManager::ChangeScene<TitleScene>();
+
+		if (SceneManager::GetisChanged() == true)
+		{
+			SceneManager::SetChangeStepToCreateInstance();
+		}
 	}
 }
 

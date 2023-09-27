@@ -7,6 +7,7 @@ LeadEffect::LeadEffect() :
 
 void LeadEffect::Init()
 {
+	mPParam.clear();
 	mEmitter->SetMaxParticle(256);
 	mEmitter->SetTexture(TextureManager::GetTexture("Particle2"));
 	mTimer.SetLimitTimer(20);

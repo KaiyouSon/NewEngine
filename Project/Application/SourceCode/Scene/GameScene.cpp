@@ -265,12 +265,8 @@ void GameScene::Update()
 		if (currentTransition->GetType() == TransitionType::Respawn &&
 			currentTransition->GetStep() == TransitionStep::Progress)
 		{
-			if (isInit == false)
-			{
-				Init();
-				TransitionManager::GetInstance()->End();
-				isInit = true;
-			}
+			Init();
+			TransitionManager::GetInstance()->End();
 		}
 	}
 }

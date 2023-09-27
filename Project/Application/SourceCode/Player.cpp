@@ -21,6 +21,8 @@ void Player::Init()
 	mPlayer->iParent = this;
 	mPlayer->parent = static_cast<Player*>(mPlayer->iParent);
 
+	mState = State::Idle;
+
 	mJoggingSpeed = 0.7f;
 	mRunSpeed = 1.2f;
 

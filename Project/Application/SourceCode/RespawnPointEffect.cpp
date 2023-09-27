@@ -7,6 +7,7 @@ RespawnPointEffect::RespawnPointEffect() :
 
 void RespawnPointEffect::Init()
 {
+	mCirclePParam.clear();
 	mCircleEmitter->SetMaxParticle(32);
 	mCircleEmitter->SetTexture(TextureManager::GetTexture("Particle2"));
 	mTimer.SetLimitTimer(20);

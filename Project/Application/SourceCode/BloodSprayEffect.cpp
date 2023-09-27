@@ -7,6 +7,7 @@ BloodSprayEffect::BloodSprayEffect() :
 
 void BloodSprayEffect::Init()
 {
+	mPParam.clear();
 	mEmitter->SetMaxParticle(1024);
 	mEmitter->SetTexture(TextureManager::GetTexture("Particle1"));
 }

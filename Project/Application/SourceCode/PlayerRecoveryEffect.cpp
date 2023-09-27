@@ -9,9 +9,11 @@ PlayerRecoveryEffect::PlayerRecoveryEffect() :
 
 void PlayerRecoveryEffect::Init()
 {
+	mCirclePParam.clear();
 	mCircleEmitter->SetMaxParticle(2048);
 	mCircleEmitter->SetTexture(TextureManager::GetTexture("Particle1"));
 
+	mLinePParam.clear();
 	mLineEmitter->SetMaxParticle(1024);
 	mLineEmitter->SetTexture(TextureManager::GetTexture("Line"));
 }

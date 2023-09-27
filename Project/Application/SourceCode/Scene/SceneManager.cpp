@@ -42,7 +42,9 @@ SceneManager::SceneManager()
 	// デバッグ時
 	ProcessAtDebugBulid([]()
 		{
-			sCurrentScene = std::make_unique<GameScene>();
+			//sCurrentScene = std::make_unique<GameScene>();
+			sCurrentScene = std::make_unique<LogoScene>();
+
 		});
 
 	// リリース時
