@@ -5,7 +5,7 @@
 #include <cassert>
 
 RootSignatureSetting::RootSignatureSetting() :
-	constantBufferViewNum(1), descriptorRangeNum(1)
+	constantBufferViewNum(1), descriptorRangeNum(1), maxUavDescritor(0)
 {
 }
 
@@ -17,6 +17,8 @@ void RootSignature::Create(const RootSignatureSetting setting)
 
 	// RootParameterにDescriptorRangeを追加
 	AddDescriptorRangeToRootPrameter(setting.descriptorRangeNum);
+
+	AddUavToRootPrameter(setting.maxUavDescritor);
 
 	// テクスチャサンプラーの設定
 	D3D12_STATIC_SAMPLER_DESC samplerDesc{};
@@ -87,6 +89,25 @@ void RootSignature::AddDescriptorRangeToRootPrameter(const uint32_t number)
 
 		mDescriptorRangeNum++;
 	}
+}
+
+void RootSignature::AddUavToRootPrameter(const uint32_t maxUavDescritor)
+{
+	if (maxUavDescritor <= 0)
+	{
+		return;
+	}
+
+	mUavDescriptorRange.Init(
+		D3D12_DESCRIPTOR_RANGE_TYPE_UAV,
+		maxUavDescritor,
+		0,
+		0,
+		D3D12_DESCRIPTOR_RANGE_FLAG_DATA_STATIC);
+
+	mRootParameters.emplace_back();
+	mRootParameters.back().InitAsDescriptorTable(1, &mUavDescriptorRange);
+	//mUavDescriptorNum++;
 }
 
 ID3D12RootSignature* RootSignature::GetRootSignature()

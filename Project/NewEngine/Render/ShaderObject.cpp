@@ -43,7 +43,7 @@ void ShaderObject::CompileComputeShader(const std::string& filePath, const std::
 				wFilePath.c_str(), // シェーダファイル名
 				nullptr,
 				D3D_COMPILE_STANDARD_FILE_INCLUDE,	// インクルード可能にする
-				entryPointName.c_str(), "vs_5_0",	// エントリーポイント名、シェーダーモデル指定
+				entryPointName.c_str(), "cs_5_0",	// エントリーポイント名、シェーダーモデル指定
 				D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
 				0,
 				&mCsBlob, &sErrorBlob);
@@ -57,7 +57,7 @@ void ShaderObject::CompileComputeShader(const std::string& filePath, const std::
 				wFilePath.c_str(), // シェーダファイル名
 				nullptr,
 				D3D_COMPILE_STANDARD_FILE_INCLUDE,	// インクルード可能にする
-				entryPointName.c_str(), "vs_5_0",	// エントリーポイント名、シェーダーモデル指定
+				entryPointName.c_str(), "cs_5_0",	// エントリーポイント名、シェーダーモデル指定
 				D3DCOMPILE_OPTIMIZATION_LEVEL3, // デバッグ用設定
 				0,
 				&mCsBlob, &sErrorBlob);

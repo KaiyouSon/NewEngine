@@ -13,7 +13,7 @@ void DescriptorHeap::Create(const DescriptorHeapSetting setting)
 		// デスクリプタヒープの設定
 		D3D12_DESCRIPTOR_HEAP_DESC heapDesc{};
 		heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-		//uavHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+		heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 		heapDesc.NumDescriptors = mSetting.maxSize;
 
 		// UAV用デスクリプタヒープの生成

@@ -24,10 +24,22 @@ void PipelineManager::CreateComputePipeline(const ComputePipelineSetting& settin
 // ƒQƒbƒ^[
 GraphicsPipeline* PipelineManager::GetGraphicsPipeline(const std::string tag)
 {
+	auto it = sGraphicsPipelineMap.find(tag);
+	if (it == sGraphicsPipelineMap.end())
+	{
+		return nullptr;
+	}
+
 	return sGraphicsPipelineMap[tag].get();
 }
 
 ComputePipeline* PipelineManager::GetComputePipeline(const std::string tag)
 {
+	auto it = sComputePipelineMap.find(tag);
+	if (it == sComputePipelineMap.end())
+	{
+		return nullptr;
+	}
+
 	return sComputePipelineMap[tag].get();
 }

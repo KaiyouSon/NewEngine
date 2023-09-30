@@ -67,15 +67,22 @@ void Emitter::Draw(const BlendMode blendMode)
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	//renderBase->GetCommandList()->
-	//	SetComputeRootSignature(mGraphicsPipeline->GetRootSignature()->GetRootSignature());
+	PipelineManager::GetComputePipeline("Emitter")->ExecuteCommand();
 
-	//renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetPSO(blendMode));
+	ID3D12DescriptorHeap* descriptorHeap[] =
+	{
+		DescriptorHeapManager::GetDescriptorHeap("SRV_UAV")->GetDescriptorHeap()
+	};
+	renderBase->GetCommandList()->SetDescriptorHeaps(1, descriptorHeap);
 
-	//renderBase->GetCommandList()->Dispatch(1, 1, 1);
+	uint32_t index = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetDescriptorTableStartIndex();
+	renderBase->GetCommandList()->SetComputeRootDescriptorTable(0, mInputData->GetBufferResource()->gpuHandle);
 
-	//uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetDescriptorTableStartIndex();
-	//renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetGpuHandle());
+	uint32_t end = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetDescriptorTableEndIndex();
+	renderBase->GetCommandList()->SetComputeRootDescriptorTable(1, mOutputData->GetBufferResource()->gpuHandle);
+
+	// ディスパッチ
+	renderBase->GetCommandList()->Dispatch(1, 1, 1);
 
 
 
@@ -84,6 +91,12 @@ void Emitter::Draw(const BlendMode blendMode)
 
 	// VBVとIBVの設定コマンド
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
+
+	ID3D12DescriptorHeap* descriptorHeap2[] =
+	{
+		TextureManager::GetInstance()->GetSrvDescHeap()
+	};
+	renderBase->GetCommandList()->SetDescriptorHeaps(1, descriptorHeap2);
 
 	MaterialDrawCommands();
 

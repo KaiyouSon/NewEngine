@@ -83,6 +83,7 @@ private:
 	void DescriptorHeapInit();
 	void ShaderCompilerInit();
 	void GraphicsPipelineInit();
+	void ComputePipelineInit();
 
 public:
 	ID3D12Device* GetDevice() const;

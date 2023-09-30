@@ -30,10 +30,24 @@ void ComputePipeline::Create(const ComputePipelineSetting& setting)
 	pipelineDesc.CachedPSO.pCachedBlob = nullptr;		// キャッシュされたPSOへのポインタ
 	pipelineDesc.CachedPSO.CachedBlobSizeInBytes = 0;	// キャッシュされたPSOのサイズ
 
+	pipelineDesc.pRootSignature = mRootSignature->GetRootSignature();
+
 	// PSO作成
 	mResult = device->CreateComputePipelineState(&pipelineDesc, IID_PPV_ARGS(&mPSO));
 }
 
-void ComputePipeline::DrawCommand()
+void ComputePipeline::ExecuteCommand()
 {
+	auto* cmdList = RenderBase::GetInstance()->GetCommandList();
+
+	// ルートシグネーチャ
+	cmdList->SetComputeRootSignature(mRootSignature->GetRootSignature());
+
+	// PSO
+	cmdList->SetPipelineState(mPSO.Get());
+}
+
+RootSignature* ComputePipeline::GetRootSignature()
+{
+	return mRootSignature.get();
 }

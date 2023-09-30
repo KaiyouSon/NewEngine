@@ -9,6 +9,7 @@ struct RootSignatureSetting
 {
 	uint32_t constantBufferViewNum;
 	uint32_t descriptorRangeNum;
+	uint32_t maxUavDescritor;
 	RootSignatureSetting();
 };
 
@@ -22,10 +23,13 @@ private:
 	uint32_t mConstantBufferNum;
 	uint32_t mDescriptorRangeNum;
 
+	CD3DX12_DESCRIPTOR_RANGE mUavDescriptorRange;
+	uint32_t mMaxUavDescritor;
 
 private:
 	void AddConstantBufferViewToRootRrameter(const uint32_t number);
 	void AddDescriptorRangeToRootPrameter(const uint32_t number);
+	void AddUavToRootPrameter(const uint32_t maxUavDescritor);
 
 public:
 	void Create(const RootSignatureSetting setting);

@@ -75,6 +75,7 @@ void RenderBase::Init()
 	DepthBufferInit();		// 深度バッファの初期化
 	ShaderCompilerInit();	// シェーダーコンパイラーの初期化
 	GraphicsPipelineInit();	// グラフィックスパイプラインの初期化
+	ComputePipelineInit();	// コンピュートパイプラインの初期化
 }
 void RenderBase::PreDraw()
 {
@@ -459,6 +460,7 @@ void RenderBase::ShaderCompilerInit()
 	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 1);		// 回転
 	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 2);		// 輝き度
 	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);	// 色
+	ShaderObjectManager::GetShaderObject("Emitter")->CompileComputeShader(path + "EmitterCS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Emitter")->CompileVertexShader(path + "EmitterVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Emitter")->CompileGeometryShader(path + "EmitterGS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Emitter")->CompilePixelShader(path + "EmitterPS.hlsl", "main");
@@ -614,6 +616,15 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.constantBufferViewNum = 2;
 	setting.rootSignatureSetting.descriptorRangeNum = 0;
 	PipelineManager::CreateGraphicsPipeline(setting, "ColliderObject");
+}
+void RenderBase::ComputePipelineInit()
+{
+	ComputePipelineSetting setting;
+	setting.shaderObject = ShaderObjectManager::GetShaderObject("Emitter");
+	setting.rootSignatureSetting.constantBufferViewNum = 0;
+	setting.rootSignatureSetting.descriptorRangeNum = 1;
+	setting.rootSignatureSetting.maxUavDescritor = 1;
+	PipelineManager::CreateComputePipeline(setting, "Emitter");
 }
 
 // --- ゲッター -------------------------------------------------------------- //
