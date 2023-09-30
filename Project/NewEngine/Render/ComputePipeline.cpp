@@ -6,8 +6,10 @@ ComputePipeline::ComputePipeline() :
 {
 }
 
-void ComputePipeline::Create()
+void ComputePipeline::Create(const ComputePipelineSetting& setting)
 {
+	mSetting = setting;
+
 	// RootSignature‚Ì¶¬
 	mRootSignature = std::make_unique<RootSignature>();
 	mRootSignature->Create(mSetting.rootSignatureSetting);

@@ -15,18 +15,18 @@ void Grass::CreateGraphicsPipeline()
 	ShaderObjectManager::GetShaderObject("Grass")->CompileGeometryShader(path + "GrassGS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Grass")->CompilePixelShader(path + "GrassPS.hlsl", "main");
 
-	GraphicsPipelineSetting setting = GraphicsPipelineManager::GetGraphicsPipeline("Emitter")->GetSetting();
+	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Emitter")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Grass");
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.constantBufferViewNum = 2;
 	setting.rootSignatureSetting.descriptorRangeNum = 1;
-	GraphicsPipelineManager::Create(setting, "Grass");
+	PipelineManager::CreateGraphicsPipeline(setting, "Grass");
 }
 
 Grass::Grass() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
 	mVertexBuffer(std::make_unique <VertexBuffer<VGrass>>()),
-	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Grass")),
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass")),
 	texture(TextureManager::GetTexture("White"))
 {
 	// 頂点バッファの生成

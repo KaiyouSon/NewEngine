@@ -21,8 +21,10 @@ GraphicsPipeline::GraphicsPipeline() : mResult(HRESULT())
 	mSetting.depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 小さいほうを採用
 }
 
-void GraphicsPipeline::Create()
+void GraphicsPipeline::Create(const GraphicsPipelineSetting& setting)
 {
+	mSetting = setting;
+
 	// パイプランステートの生成
 	uint8_t bit = (uint8_t)mSetting.pipelineBlend;
 	mPSOs.resize(4);
@@ -265,12 +267,6 @@ void GraphicsPipeline::CreatePipelineState(const GraphicsPipelineSetting::Pipeli
 		break;
 	}
 	assert(SUCCEEDED(mResult));
-}
-
-// セッター
-void GraphicsPipeline::SetGraphicsPipelineSetter(const GraphicsPipelineSetting& setting)
-{
-	mSetting = setting;
 }
 
 // ゲッター

@@ -11,7 +11,7 @@ bool Object3D::isAllLighting = false;
 
 Object3D::Object3D() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0), offset(0, 0), tiling(1, 1),
-	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D")),
 	mTexture(TextureManager::GetTexture("White")), mModel(nullptr), mParent(nullptr),
 	mDissolveTex(TextureManager::GetTexture("DissolveTexture")),
 	mDepthTex(TextureManager::GetRenderTexture("ShadowMap")->depthTexture.get()),
@@ -273,11 +273,11 @@ void Object3D::SetModel(Model* model)
 	// パイプライン変更
 	if (mModel->format == ModelFormat::Obj)
 	{
-		mGraphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("Object3D");
+		mGraphicsPipeline = PipelineManager::GetGraphicsPipeline("Object3D");
 	}
 	if (mModel->format == ModelFormat::Fbx)
 	{
-		mGraphicsPipeline = GraphicsPipelineManager::GetGraphicsPipeline("FbxModel");
+		mGraphicsPipeline = PipelineManager::GetGraphicsPipeline("FbxModel");
 	}
 }
 

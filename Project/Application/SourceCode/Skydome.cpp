@@ -13,11 +13,11 @@ void Skydome::CreateGraphicsPipeline()
 
 	// 3Dオブジェクト用
 	GraphicsPipelineSetting setting =
-		GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
+		PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Skydome");
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.constantBufferViewNum = 3;
-	GraphicsPipelineManager::Create(setting, "Skydome");
+	PipelineManager::CreateGraphicsPipeline(setting, "Skydome");
 }
 
 Skydome::Skydome() :
@@ -44,7 +44,7 @@ Skydome::Skydome() :
 
 	mRenderTexture = TextureManager::GetRenderTexture("Skydome");
 	mRenderTexture->useDepth = false;
-	mPostEffect->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Skydome"));
+	mPostEffect->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Skydome"));
 	mPostEffect->AddRenderTexture(mRenderTexture);
 	mPostEffect->AddMaterial(ConstantBuffer<ConstantBufferData::CVignette>{});
 	mPostEffect->pos = GetWindowHalfSize();

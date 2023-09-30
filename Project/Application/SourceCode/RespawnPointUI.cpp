@@ -11,11 +11,11 @@ void RespawnPointUI::CreateGraphicsPipeline()
 	ShaderObjectManager::GetShaderObject("RespawnTransition")->CompileVertexShader(path + "RespawnTransitionVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("RespawnTransition")->CompilePixelShader(path + "RespawnTransitionPS.hlsl", "main");
 
-	GraphicsPipelineSetting setting = GraphicsPipelineManager::GetGraphicsPipeline("Sprite")->GetSetting();
+	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Sprite")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("RespawnTransition");
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.constantBufferViewNum = 4;
-	GraphicsPipelineManager::Create(setting, "RespawnTransition");
+	PipelineManager::CreateGraphicsPipeline(setting, "RespawnTransition");
 }
 
 RespawnPointUI::RespawnPointUI() :

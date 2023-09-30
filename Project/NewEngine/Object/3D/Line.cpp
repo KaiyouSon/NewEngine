@@ -7,7 +7,7 @@ using namespace ConstantBufferData;
 
 Line::Line() :
 	mVertexBuffer(std::make_unique<VertexBuffer<VLine>>()),
-	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Line")),
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Line")),
 	startPos(-1), endPos(1)
 {
 	mVertices.resize(2);

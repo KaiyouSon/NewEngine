@@ -502,7 +502,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rtvNum = 2;
 	setting.rootSignatureSetting.constantBufferViewNum = 8;
 	setting.rootSignatureSetting.descriptorRangeNum = 3;
-	GraphicsPipelineManager::Create(setting, "Object3D");
+	PipelineManager::CreateGraphicsPipeline(setting, "Object3D");
 
 	// FBXモデル用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
@@ -513,7 +513,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.constantBufferViewNum = 7;
 	setting.rootSignatureSetting.descriptorRangeNum = 2;
-	GraphicsPipelineManager::Create(setting, "FbxModel");
+	PipelineManager::CreateGraphicsPipeline(setting, "FbxModel");
 
 	// スプライト用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
@@ -524,7 +524,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rtvNum = 2;
 	setting.rootSignatureSetting.constantBufferViewNum = 3;
 	setting.rootSignatureSetting.descriptorRangeNum = 1;
-	GraphicsPipelineManager::Create(setting, "Sprite");
+	PipelineManager::CreateGraphicsPipeline(setting, "Sprite");
 
 	// 円形ゲージスプライト用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
@@ -535,7 +535,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.constantBufferViewNum = 3;
 	setting.rootSignatureSetting.descriptorRangeNum = 1;
-	GraphicsPipelineManager::Create(setting, "CircleGaugeSprite");
+	PipelineManager::CreateGraphicsPipeline(setting, "CircleGaugeSprite");
 
 	// レンダーテクスチャ用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
@@ -546,7 +546,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rtvNum = 2;
 	setting.rootSignatureSetting.constantBufferViewNum = 2;
 	setting.rootSignatureSetting.descriptorRangeNum = 2;
-	GraphicsPipelineManager::Create(setting, "RenderTexture");
+	PipelineManager::CreateGraphicsPipeline(setting, "RenderTexture");
 
 	// シルエット用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
@@ -557,7 +557,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.constantBufferViewNum = 7;
 	setting.rootSignatureSetting.descriptorRangeNum = 2;
-	GraphicsPipelineManager::Create(setting, "Silhouette");
+	PipelineManager::CreateGraphicsPipeline(setting, "Silhouette");
 
 	// アウトライン用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
@@ -568,7 +568,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.constantBufferViewNum = 7;
 	setting.rootSignatureSetting.descriptorRangeNum = 2;
-	GraphicsPipelineManager::Create(setting, "Outline");
+	PipelineManager::CreateGraphicsPipeline(setting, "Outline");
 
 	// トゥーンレンダリング用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
@@ -579,7 +579,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.constantBufferViewNum = 7;
 	setting.rootSignatureSetting.descriptorRangeNum = 2;
-	GraphicsPipelineManager::Create(setting, "ToonRendering");
+	PipelineManager::CreateGraphicsPipeline(setting, "ToonRendering");
 
 	// ライン用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
@@ -590,7 +590,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.constantBufferViewNum = 2;
 	setting.rootSignatureSetting.descriptorRangeNum = 0;
-	GraphicsPipelineManager::Create(setting, "Line");
+	PipelineManager::CreateGraphicsPipeline(setting, "Line");
 
 	// エミッター用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
@@ -601,7 +601,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.constantBufferViewNum = 7;
 	setting.rootSignatureSetting.descriptorRangeNum = 2;
-	GraphicsPipelineManager::Create(setting, "Emitter");
+	PipelineManager::CreateGraphicsPipeline(setting, "Emitter");
 
 	// ColliderObject用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
@@ -613,7 +613,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.constantBufferViewNum = 2;
 	setting.rootSignatureSetting.descriptorRangeNum = 0;
-	GraphicsPipelineManager::Create(setting, "ColliderObject");
+	PipelineManager::CreateGraphicsPipeline(setting, "ColliderObject");
 }
 
 // --- ゲッター -------------------------------------------------------------- //

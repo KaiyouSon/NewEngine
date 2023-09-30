@@ -3,17 +3,17 @@
 
 void PostEffectManager::CreateGraphicsPipeline()
 {
-	GraphicsPipelineSetting setting = GraphicsPipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
+	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 
 	// 3Dオブジェクト用
 	setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
-	GraphicsPipelineManager::Create(setting, "Object3DWriteNone");
+	PipelineManager::CreateGraphicsPipeline(setting, "Object3DWriteNone");
 
-	setting = GraphicsPipelineManager::GetGraphicsPipeline("Grass")->GetSetting();
+	setting = PipelineManager::GetGraphicsPipeline("Grass")->GetSetting();
 
 	// 3Dオブジェクト用
 	setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
-	GraphicsPipelineManager::Create(setting, "GrassWriteNone");
+	PipelineManager::CreateGraphicsPipeline(setting, "GrassWriteNone");
 }
 
 PostEffectManager::PostEffectManager() :
@@ -47,20 +47,20 @@ void PostEffectManager::EffectBloomDrawPass()
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::HighLumi);
 
 	// プレイヤーのDepth書き込む
-	mPlayer->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+	mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
 	mPlayer->DrawModel();
-	mPlayer->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3D"));
+	mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 
 	// ボスのDepth書き込む
-	mBoss->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+	mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
 	mBoss->DrawModel();
-	mBoss->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3D"));
+	mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 
-	mField->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
-	mField->SetWeedGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("GrassWriteNone"));
+	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GrassWriteNone"));
 	mField->DrawModel();
-	mField->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Object3D"));
-	mField->SetWeedGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Grass"));
+	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
+	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass"));
 
 	// エフェクト
 	EffectManager::GetInstance()->DrawEffect(true);

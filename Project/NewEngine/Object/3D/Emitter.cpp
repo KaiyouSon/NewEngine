@@ -10,7 +10,7 @@ Emitter::Emitter() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
 	offset(0, 0), tiling(1, 1), pSize(0),
 	mVertexBuffer(std::make_unique <VertexBuffer<VParticle>>()),
-	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Emitter")),
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Emitter")),
 	mTexture(TextureManager::GetTexture("White")),
 
 	mInputData(std::make_unique<StructuredBuffer<ParticleParameter::Test>>()),

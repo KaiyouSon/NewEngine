@@ -19,31 +19,31 @@ Glare::Glare() :
 
 	highLumi_->pos = GetWindowHalfSize();
 	highLumi_->AddRenderTexture(texs_[0]);
-	highLumi_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("HighLumi"));
+	highLumi_->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("HighLumi"));
 
 	dotFilter_->pos = GetWindowHalfSize();
 	dotFilter_->AddRenderTexture(texs_[1]);
-	dotFilter_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("DotFilter"));
+	dotFilter_->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("DotFilter"));
 
 	blur45_->pos = GetWindowHalfSize();
 	blur45_->AddRenderTexture(texs_[2]);
-	blur45_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("GLineBlur"));
+	blur45_->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GLineBlur"));
 	blur45_->AddMaterial(ConstantBuffer<CLineBlur>{});
 
 	blur135_->pos = GetWindowHalfSize();
 	blur135_->AddRenderTexture(texs_[2]);
-	blur135_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("GLineBlur"));
+	blur135_->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GLineBlur"));
 	blur135_->AddMaterial(ConstantBuffer<CLineBlur>{});
 
 	glare_->pos = GetWindowHalfSize();
 	glare_->AddRenderTexture(texs_[3]);
 	glare_->AddRenderTexture(texs_[4]);
-	glare_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Glare"));
+	glare_->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Glare"));
 
 	result_->pos = GetWindowHalfSize();
 	result_->AddRenderTexture(texs_[5]);
 	result_->AddRenderTexture(TextureManager::GetRenderTexture("BackGround"));
-	result_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Glare"));
+	result_->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Glare"));
 }
 
 void Glare::CreateGraphicsPipeline()
@@ -60,7 +60,7 @@ void Glare::CreateGraphicsPipeline()
 	//ShaderObjectManager::GetShaderObject("GLineBlur")->CompileVertexShader(path + "GLineBlurVS.hlsl", "main");
 	//ShaderObjectManager::GetShaderObject("GLineBlur")->CompilePixelShader(path + "GLineBlurPS.hlsl", "main");
 
-	//GraphicsPipelineManager::Create(
+	//PipelineManager::CreateGraphicsPipeline(
 	//	ShaderObjectManager::GetShaderObject("GLineBlur"),
 	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
 	//	CullMode::None,
@@ -76,7 +76,7 @@ void Glare::CreateGraphicsPipeline()
 	//ShaderObjectManager::GetShaderObject("Glare")->CompileVertexShader(path + "GlareVS.hlsl", "main");
 	//ShaderObjectManager::GetShaderObject("Glare")->CompilePixelShader(path + "GlarePS.hlsl", "main");
 
-	//GraphicsPipelineManager::Create(
+	//PipelineManager::CreateGraphicsPipeline(
 	//	ShaderObjectManager::GetShaderObject("Glare"),
 	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
 	//	CullMode::None,
@@ -92,7 +92,7 @@ void Glare::CreateGraphicsPipeline()
 	//ShaderObjectManager::GetShaderObject("DotFilter")->CompileVertexShader(path + "DotFilterVS.hlsl", "main");
 	//ShaderObjectManager::GetShaderObject("DotFilter")->CompilePixelShader(path + "DotFilterPS.hlsl", "main");
 
-	//GraphicsPipelineManager::Create(
+	//PipelineManager::CreateGraphicsPipeline(
 	//	ShaderObjectManager::GetShaderObject("DotFilter"),
 	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
 	//	CullMode::None,

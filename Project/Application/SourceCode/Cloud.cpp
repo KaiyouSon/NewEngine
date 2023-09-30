@@ -17,13 +17,13 @@ void Cloud::CreateGraphicsPipeline()
 	ShaderObjectManager::GetShaderObject("Cloud")->CompileVertexShader(path + "CloudVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Cloud")->CompilePixelShader(path + "CloudPS.hlsl", "main");
 
-	GraphicsPipelineSetting setting = GraphicsPipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
+	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Cloud");
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc;
 	setting.rtvNum = 1;
-	GraphicsPipelineManager::Create(setting, "Cloud");
+	PipelineManager::CreateGraphicsPipeline(setting, "Cloud");
 
 }
 
@@ -31,7 +31,7 @@ Cloud::Cloud() :
 	mCloud(std::make_unique<Object3D>())
 {
 	mCloud->SetModel(ModelManager::GetModel("Cloud"));
-	mCloud->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Cloud"));
+	mCloud->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Cloud"));
 	mCloud->color = Color(0xc4c178);
 
 	Init();

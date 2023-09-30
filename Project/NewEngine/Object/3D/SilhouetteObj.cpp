@@ -7,7 +7,7 @@ SilhouetteObj::SilhouetteObj() :
 	color(Color::black),
 	mConstantBufferTransform(std::make_unique<ConstantBuffer<CTransform3D>>()),
 	mConstantBufferColor(std::make_unique<ConstantBuffer<CColor>>()),
-	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Silhouette"))
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Silhouette"))
 {
 	// 定数バッファ初期化
 	mConstantBufferTransform->Create();	// 3D行列

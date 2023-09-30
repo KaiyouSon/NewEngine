@@ -738,7 +738,7 @@
     <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp">
       <Filter>NewEngine\Source\Render\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Render\GraphicsPipelineManager.cpp">
+    <ClCompile Include="NewEngine\Render\PipelineManager.cpp">
       <Filter>NewEngine\Source\Render\Pipeline</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Render\ShaderObject.cpp">
@@ -1226,7 +1226,7 @@
     <ClInclude Include="NewEngine\Render\RWStructuredBuffer.h">
       <Filter>NewEngine\Header\Render\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Render\GraphicsPipelineManager.h">
+    <ClInclude Include="NewEngine\Render\PipelineManager.h">
       <Filter>NewEngine\Header\Render\Pipeline</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Render\GraphicsPipeline.h">

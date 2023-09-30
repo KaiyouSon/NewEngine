@@ -10,7 +10,7 @@ DOF::DOF() :
 
 	dof_->pos = GetWindowHalfSize();
 	dof_->AddRenderTexture(tex_);
-	dof_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("DOF"));
+	dof_->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("DOF"));
 	dof_->AddMaterial(ConstantBuffer<CDOF>{});
 }
 
@@ -28,7 +28,7 @@ void DOF::CreateGraphicsPipeline()
 	//ShaderObjectManager::GetShaderObject("DOF")->CompileVertexShader(path + "DOFVS.hlsl", "main");
 	//ShaderObjectManager::GetShaderObject("DOF")->CompilePixelShader(path + "DOFPS.hlsl", "main");
 
-	//GraphicsPipelineManager::Create(
+	//PipelineManager::CreateGraphicsPipeline(
 	//	ShaderObjectManager::GetShaderObject("DOF"),
 	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
 	//	CullMode::None,

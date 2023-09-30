@@ -6,7 +6,7 @@
 using namespace ConstantBufferData;
 
 ColliderObject::ColliderObject() :
-	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("ColliderObject")),
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ColliderObject")),
 	model(nullptr), mCamera(&Camera::current), is3D(true)
 {
 	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰Šú‰»

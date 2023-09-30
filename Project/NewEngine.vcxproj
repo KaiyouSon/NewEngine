@@ -242,7 +242,7 @@
     <ClCompile Include="NewEngine\Render\DescriptorHeap.cpp" />
     <ClCompile Include="NewEngine\Render\DescriptorHeapManager.cpp" />
     <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp" />
-    <ClCompile Include="NewEngine\Render\GraphicsPipelineManager.cpp" />
+    <ClCompile Include="NewEngine\Render\PipelineManager.cpp" />
     <ClCompile Include="NewEngine\Render\RenderBase.cpp" />
     <ClCompile Include="NewEngine\Render\RenderWindow.cpp" />
     <ClCompile Include="NewEngine\Render\RootSignature.cpp" />
@@ -402,7 +402,7 @@
     <ClInclude Include="NewEngine\Render\DescriptorHeap.h" />
     <ClInclude Include="NewEngine\Render\DescriptorHeapManager.h" />
     <ClInclude Include="NewEngine\Render\GraphicsPipeline.h" />
-    <ClInclude Include="NewEngine\Render\GraphicsPipelineManager.h" />
+    <ClInclude Include="NewEngine\Render\PipelineManager.h" />
     <ClInclude Include="NewEngine\Render\RenderBase.h" />
     <ClInclude Include="NewEngine\Render\RenderTarget.h" />
     <ClInclude Include="NewEngine\Render\RenderWindow.h" />

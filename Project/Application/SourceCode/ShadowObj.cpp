@@ -16,18 +16,18 @@ void ShadowObj::CreateGraphicsPipeline()
 
 	// 3Dオブジェクト用
 	GraphicsPipelineSetting setting =
-		GraphicsPipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
+		PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("ShadowObj");
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.constantBufferViewNum = 2;
 	setting.rootSignatureSetting.descriptorRangeNum = 1;
-	GraphicsPipelineManager::Create(setting, "ShadowObj");
+	PipelineManager::CreateGraphicsPipeline(setting, "ShadowObj");
 }
 
 ShadowObj::ShadowObj() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
 	mCamera(&Camera::current), mModel(nullptr), mParent(nullptr),
-	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("ShadowObj"))
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ShadowObj"))
 {
 	// マテリアルの初期化
 	MaterialInit();

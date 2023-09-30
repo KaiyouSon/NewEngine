@@ -8,7 +8,7 @@ RadialBlur::RadialBlur() :
 
 	postEffect_->pos = GetWindowHalfSize();
 	postEffect_->AddRenderTexture(tex_);
-	postEffect_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("RadialBlur"));
+	postEffect_->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("RadialBlur"));
 	postEffect_->AddMaterial(ConstantBuffer<CRadialBlur>{});
 }
 
@@ -26,7 +26,7 @@ void RadialBlur::CreateGraphicsPipeline()
 	//ShaderObjectManager::GetShaderObject("RadialBlur")->CompileVertexShader(path + "RadialBlurVS.hlsl", "main");
 	//ShaderObjectManager::GetShaderObject("RadialBlur")->CompilePixelShader(path + "RadialBlurPS.hlsl", "main");
 
-	//GraphicsPipelineManager::Create(
+	//PipelineManager::CreateGraphicsPipeline(
 	//	ShaderObjectManager::GetShaderObject("RadialBlur"),
 	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
 	//	CullMode::None,

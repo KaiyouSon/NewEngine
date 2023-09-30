@@ -8,7 +8,7 @@ Vignette::Vignette() :
 
 	postEffect_->pos = GetWindowHalfSize();
 	postEffect_->AddRenderTexture(tex_);
-	postEffect_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Vignette"));
+	postEffect_->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Vignette"));
 	postEffect_->AddMaterial(ConstantBuffer<CVignette>{});
 
 	vignetteData.range = Vec2(0.6f, 1.3f);
@@ -27,7 +27,7 @@ void Vignette::CreateGraphicsPipeline()
 	//ShaderObjectManager::GetShaderObject("Vignette")->CompileVertexShader(path + "VignetteVS.hlsl", "main");
 	//ShaderObjectManager::GetShaderObject("Vignette")->CompilePixelShader(path + "VignettePS.hlsl", "main");
 
-	//GraphicsPipelineManager::Create(
+	//PipelineManager::CreateGraphicsPipeline(
 	//	ShaderObjectManager::GetShaderObject("Vignette"),
 	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
 	//	CullMode::None,

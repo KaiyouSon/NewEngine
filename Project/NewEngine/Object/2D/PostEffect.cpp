@@ -7,7 +7,7 @@ using namespace ConstantBufferData;
 
 PostEffect::PostEffect() :
 	mVertexBuffer(std::make_unique<VertexBuffer<VSprite>>()),
-	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture")),
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("RenderTexture")),
 	pos(0), scale(1), rot(0), mAnchorPoint(0.5f), rtvIndex(0)
 {
 	// 頂点バッファの生成

@@ -13,12 +13,12 @@ void RespawnPoint::CreateGraphicsPipeline()
 	ShaderObjectManager::GetShaderObject("Ripple")->CompileVertexShader(path + "RippleVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Ripple")->CompilePixelShader(path + "RipplePS.hlsl", "main");
 
-	GraphicsPipelineSetting setting = GraphicsPipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
+	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Ripple");
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.rtvNum = 1;
-	GraphicsPipelineManager::Create(setting, "Ripple");
+	PipelineManager::CreateGraphicsPipeline(setting, "Ripple");
 
 	// …–ä—p
 	ShaderObjectManager::Create("Rhombus");
@@ -32,7 +32,7 @@ void RespawnPoint::CreateGraphicsPipeline()
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.rtvNum = 1;
-	GraphicsPipelineManager::Create(setting, "Rhombus");
+	PipelineManager::CreateGraphicsPipeline(setting, "Rhombus");
 }
 
 RespawnPoint::RespawnPoint() :
@@ -53,11 +53,11 @@ void RespawnPoint::Init()
 	mRipple->rot.x = Radian(90);
 	mRipple->scale = 2.f;
 	mRipple->color = Color(0xc4c178);
-	mRipple->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Ripple"));
+	mRipple->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Ripple"));
 
 	mRhombus->pos.y = 1.5f;
 	mRhombus->color = Color(0xc4c178);
-	mRhombus->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Rhombus"));
+	mRhombus->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Rhombus"));
 	mRhombus->SetBillboardType(BillboardType::YAxisBillboard);
 
 	mAngle.SetLimitTimer(360);

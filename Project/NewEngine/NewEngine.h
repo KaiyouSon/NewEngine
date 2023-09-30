@@ -18,7 +18,7 @@
 #include "SceneManager.h"
 #include "LightManager.h"
 #include "ShaderObjectManager.h"
-#include "GraphicsPipelineManager.h"
+#include "PipelineManager.h"
 
 #include "CircleGaugeSprite.h"
 #include "SilhouetteObj.h"

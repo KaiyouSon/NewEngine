@@ -14,11 +14,11 @@ void ShadowMap::CreateGraphicsPipeline()
 
 	// 3Dオブジェクト用
 	GraphicsPipelineSetting setting =
-		GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
+		PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("ShadowMap");
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.constantBufferViewNum = 3;
-	GraphicsPipelineManager::Create(setting, "ShadowMap");
+	PipelineManager::CreateGraphicsPipeline(setting, "ShadowMap");
 
 	// ShadowObj用
 	ShaderObjectManager::Create("ShadowMapBlur");
@@ -29,10 +29,10 @@ void ShadowMap::CreateGraphicsPipeline()
 
 	// 3Dオブジェクト用
 	setting =
-		GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
+		PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("ShadowMapBlur");
 	setting.rtvNum = 1;
-	GraphicsPipelineManager::Create(setting, "ShadowMapBlur");
+	PipelineManager::CreateGraphicsPipeline(setting, "ShadowMapBlur");
 
 }
 
@@ -44,7 +44,7 @@ ShadowMap::ShadowMap() :
 {
 	mShadowMapRT->useDepth = true;
 
-	mShadowMap->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("ShadowMap"));
+	mShadowMap->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ShadowMap"));
 	mShadowMap->AddRenderTexture(mShadowMapRT);
 	//mShadowMap->scale = 1.f / 32.f;
 	//mShadowMap->pos = GetWindowHalfSize() / 2;
@@ -52,7 +52,7 @@ ShadowMap::ShadowMap() :
 	mShadowMap->pos = GetWindowHalfSize();
 	mShadowMap->AddMaterial(ConstantBuffer<CTransformShadowObj>{});
 
-	mBlur->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("ShadowMapBlur"));
+	mBlur->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ShadowMapBlur"));
 	mBlur->AddRenderTexture(mBlurRT);
 	//mBlur->scale = 1.f / 4.f;
 	mBlur->scale = 1.f / 4.f;

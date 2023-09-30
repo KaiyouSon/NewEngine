@@ -14,11 +14,11 @@ void Tree::CreateGraphicsPipeline()
 
 	// 3Dオブジェクト用
 	GraphicsPipelineSetting setting =
-		GraphicsPipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
+		PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Branch");
 	setting.cullMode = CullMode::None;
 	setting.rtvNum = 1;
-	GraphicsPipelineManager::Create(setting, "Branch");
+	PipelineManager::CreateGraphicsPipeline(setting, "Branch");
 }
 
 Tree::Tree() :
@@ -36,7 +36,7 @@ void Tree::Init()
 	mTree->SetisShadow(false, true);
 	mBranch->SetisShadow(false, true);
 	//mBranch->rot.y = Radian(286);
-	mBranch->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Branch"));
+	mBranch->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Branch"));
 }
 
 void Tree::Update()

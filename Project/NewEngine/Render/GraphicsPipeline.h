@@ -78,12 +78,8 @@ private:
 
 public:
 	GraphicsPipeline();
-	void Create();
+	void Create(const GraphicsPipelineSetting& setting);
 	void DrawCommand(const BlendMode blendMode);
-
-public:
-	// セッター
-	void SetGraphicsPipelineSetter(const GraphicsPipelineSetting& setting);
 
 public:
 	// ゲッター

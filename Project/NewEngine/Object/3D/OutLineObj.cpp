@@ -7,7 +7,7 @@ OutLineObj::OutLineObj() :
 	color(Color::black),
 	mConstantBufferTransform(std::make_unique<ConstantBuffer<CTransform3D>>()),
 	mConstantBufferColor(std::make_unique<ConstantBuffer<CColor>>()),
-	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Outline"))
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Outline"))
 {
 	// 定数バッファ初期化
 	mConstantBufferTransform->Create();	// 3D行列
@@ -63,6 +63,6 @@ void OutLineObj::Draw()
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(uint16_t)obj->GetModel()->mesh.indices.size(), 1, 0, 0, 0);
 
-	obj->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("ToonRendering"));
+	obj->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ToonRendering"));
 	obj->Draw(BlendMode::Alpha);
 }

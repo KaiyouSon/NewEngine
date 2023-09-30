@@ -22,7 +22,7 @@ private:
 
 public:
 	ComputePipeline();
-	void Create();
+	void Create(const ComputePipelineSetting& setting);
 	void DrawCommand();
 };
 

@@ -7,7 +7,7 @@ GaussianBlur::GaussianBlur() :
 
 	postEffect_->pos = GetWindowHalfSize();
 	postEffect_->AddRenderTexture(tex_);
-	postEffect_->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("GaussianBlur"));
+	postEffect_->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GaussianBlur"));
 }
 
 void GaussianBlur::CreateGraphicsPipeline()
@@ -23,7 +23,7 @@ void GaussianBlur::CreateGraphicsPipeline()
 	//ShaderObjectManager::GetShaderObject("GaussianBlur")->CompileVertexShader(path + "GaussianBlurVS.hlsl", "main");
 	//ShaderObjectManager::GetShaderObject("GaussianBlur")->CompilePixelShader(path + "GaussianBlurPS.hlsl", "main");
 
-	//GraphicsPipelineManager::Create(
+	//PipelineManager::CreateGraphicsPipeline(
 	//	ShaderObjectManager::GetShaderObject("GaussianBlur"),
 	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
 	//	CullMode::None,

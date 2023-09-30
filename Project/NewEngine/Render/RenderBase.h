@@ -2,7 +2,7 @@
 #include "RenderWindow.h"
 #include "ShaderObject.h"
 #include "RootSignature.h"
-#include "GraphicsPipelineManager.h"
+#include "PipelineManager.h"
 #include "Texture.h"
 #include "RenderTarget.h"
 #include "DepthBuffer.h"

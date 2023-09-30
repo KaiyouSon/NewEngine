@@ -8,7 +8,7 @@ CircleGaugeSprite::CircleGaugeSprite() :
 	pos(0), scale(1), rot(0), mAnchorPoint(0.5f),
 	startRadian(0), endRadian(0),
 	mVertexBuffer(std::make_unique<VertexBuffer<VSprite>>()),
-	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("CircleGaugeSprite"))
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("CircleGaugeSprite"))
 {
 	mVertices.resize(4);
 	mVertices[0].uv = { 0.0f,1.0f };

@@ -1,0 +1,33 @@
+#include "PipelineManager.h"
+
+std::unordered_map<std::string, std::unique_ptr<GraphicsPipeline>> PipelineManager::sGraphicsPipelineMap;
+std::unordered_map<std::string, std::unique_ptr<ComputePipeline>> PipelineManager::sComputePipelineMap;
+
+// GraphicsPipeline‚Ìì¬
+void PipelineManager::CreateGraphicsPipeline(const GraphicsPipelineSetting& setting, const std::string tag)
+{
+	std::unique_ptr<GraphicsPipeline> gp = std::make_unique<GraphicsPipeline>();
+	gp->Create(setting);
+
+	sGraphicsPipelineMap.insert(std::make_pair(tag, std::move(gp)));
+}
+
+// ComputePipeline‚Ìì¬
+void PipelineManager::CreateComputePipeline(const ComputePipelineSetting& setting, const std::string tag)
+{
+	std::unique_ptr<ComputePipeline> cp = std::make_unique<ComputePipeline>();
+	cp->Create(setting);
+
+	sComputePipelineMap.insert(std::make_pair(tag, std::move(cp)));
+}
+
+// ƒQƒbƒ^[
+GraphicsPipeline* PipelineManager::GetGraphicsPipeline(const std::string tag)
+{
+	return sGraphicsPipelineMap[tag].get();
+}
+
+ComputePipeline* PipelineManager::GetComputePipeline(const std::string tag)
+{
+	return sComputePipelineMap[tag].get();
+}

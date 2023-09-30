@@ -11,10 +11,10 @@ void Bloom::CreateGraphicsPipeline()
 	ShaderObjectManager::GetShaderObject("HighLumi")->CompileVertexShader(path + "HighLumiVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("HighLumi")->CompilePixelShader(path + "HighLumiPS.hlsl", "main");
 
-	GraphicsPipelineSetting setting = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
+	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("HighLumi");
 	setting.rtvNum = 1;
-	GraphicsPipelineManager::Create(setting, "HighLumi");
+	PipelineManager::CreateGraphicsPipeline(setting, "HighLumi");
 
 	// ガウシアンブラー用
 	ShaderObjectManager::Create("GaussianBlur");
@@ -23,10 +23,10 @@ void Bloom::CreateGraphicsPipeline()
 	ShaderObjectManager::GetShaderObject("GaussianBlur")->CompileVertexShader(path + "GaussianBlurVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("GaussianBlur")->CompilePixelShader(path + "GaussianBlurPS.hlsl", "main");
 
-	setting = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
+	setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("GaussianBlur");
 	setting.rtvNum = 1;
-	GraphicsPipelineManager::Create(setting, "GaussianBlur");
+	PipelineManager::CreateGraphicsPipeline(setting, "GaussianBlur");
 
 	// 合成用
 	ShaderObjectManager::Create("Composite");
@@ -35,10 +35,10 @@ void Bloom::CreateGraphicsPipeline()
 	ShaderObjectManager::GetShaderObject("Composite")->CompileVertexShader(path + "CompositeVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Composite")->CompilePixelShader(path + "CompositePS.hlsl", "main");
 
-	setting = GraphicsPipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
+	setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Composite");
 	setting.rtvNum = 1;
-	GraphicsPipelineManager::Create(setting, "Composite");
+	PipelineManager::CreateGraphicsPipeline(setting, "Composite");
 }
 
 Bloom::Bloom()
@@ -60,13 +60,13 @@ Bloom::Bloom()
 
 	// パイプライン設定
 	mPasses[(uint32_t)PassType::HighLumi]->
-		SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("HighLumi"));
+		SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("HighLumi"));
 	mPasses[(uint32_t)PassType::GaussianBlur]->
-		SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("GaussianBlur"));
+		SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GaussianBlur"));
 
 	// 合成用パス
 	mCompositePass = std::make_unique<PostEffect>();
-	mCompositePass->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Composite"));
+	mCompositePass->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Composite"));
 	mCompositePass->AddRenderTexture(mTexs[(uint32_t)PassType::Bloom]);
 	mCompositePass->AddRenderTexture(mTexs[(uint32_t)PassType::Target]);
 	mCompositePass->pos = GetWindowHalfSize();

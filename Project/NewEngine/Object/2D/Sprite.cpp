@@ -12,7 +12,7 @@ Sprite::Sprite() :
 	mAnchorPoint(0.5f), mFlipType(FlipType::None),
 	mVertexBuffer(std::make_unique<VertexBuffer<VSprite>>()),
 	mMaterial(std::make_unique<Material>()),
-	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Sprite"))
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Sprite"))
 {
 	mVertices.resize(4);
 	mVertices[0].uv = { 0.0f,1.0f };
