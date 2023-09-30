@@ -201,6 +201,10 @@ ID3DBlob* ShaderObject::GetErrorBlob()
 {
 	return  sErrorBlob.Get();
 }
+ID3DBlob* ShaderObject::GetCSBlob()
+{
+	return mCsBlob.Get();
+}
 ID3DBlob* ShaderObject::GetVSBlob()
 {
 	return mVsBlob.Get();

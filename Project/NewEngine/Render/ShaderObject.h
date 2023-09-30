@@ -44,6 +44,7 @@ public:
 		const std::string& entryPointName);
 
 public:
+	ID3DBlob* GetCSBlob();
 	ID3DBlob* GetVSBlob();
 	ID3DBlob* GetGSBlob();
 	ID3DBlob* GetPSBlob();

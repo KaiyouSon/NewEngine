@@ -238,6 +238,7 @@
     <ClCompile Include="NewEngine\Render\Buffer\DepthBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\StructuredBuffer.cpp" />
+    <ClCompile Include="NewEngine\Render\ComputePipeline.cpp" />
     <ClCompile Include="NewEngine\Render\DescriptorHeap.cpp" />
     <ClCompile Include="NewEngine\Render\DescriptorHeapManager.cpp" />
     <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp" />
@@ -397,6 +398,7 @@
     <ClInclude Include="NewEngine\Render\Buffer\IndexBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\StructuredBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\VertexBuffer.h" />
+    <ClInclude Include="NewEngine\Render\ComputePipeline.h" />
     <ClInclude Include="NewEngine\Render\DescriptorHeap.h" />
     <ClInclude Include="NewEngine\Render\DescriptorHeapManager.h" />
     <ClInclude Include="NewEngine\Render\GraphicsPipeline.h" />
