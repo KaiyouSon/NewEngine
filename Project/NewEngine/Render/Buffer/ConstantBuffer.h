@@ -1,19 +1,11 @@
 #pragma once
 #include "RenderBase.h"
+#include "IConstantBuffer.h"
 #include "ConstantBufferData.h"
 #include <d3d12.h>
 #include <cassert>
 #include <wrl.h>
-
-class IConstantBuffer
-{
-public:
-	Microsoft::WRL::ComPtr<ID3D12Resource> constantBuffer;	//	定数バッファ
-
-public:
-	virtual void Create() = 0;
-	virtual ~IConstantBuffer() {}
-};
+#include <memory>
 
 template<typename T>
 class ConstantBuffer : public IConstantBuffer
@@ -22,18 +14,23 @@ public:
 	T* constantBufferMap;	// マッピング用
 
 public:
-	ConstantBuffer() :constantBufferMap(nullptr) {}
+	ConstantBuffer() : constantBufferMap(nullptr)
+	{
+		bufferResource = nullptr;
+	}
 	~ConstantBuffer()
 	{
-		if (constantBuffer == nullptr)
+		if (bufferResource == nullptr)
 		{
 			return;
 		}
-		constantBuffer->Unmap(0, nullptr);
+		bufferResource->buffer->Unmap(0, nullptr);
 	}
 
 	void Create() override
 	{
+		bufferResource = std::make_unique<BufferResource>();
+
 		HRESULT result;
 
 		// ヒープの設定
@@ -57,13 +54,13 @@ public:
 				&cbResourceDesc, // リソースの設定
 				D3D12_RESOURCE_STATE_GENERIC_READ,
 				nullptr,
-				IID_PPV_ARGS(&constantBuffer));
+				IID_PPV_ARGS(&bufferResource->buffer));
 		assert(SUCCEEDED(result));
 
 		//constantBuffer->SetName(L"ConstantBuffer");
 
 		// 定数バッファのマッピング
-		result = constantBuffer->Map(0, nullptr, (void**)&constantBufferMap);	// マッピング
+		result = bufferResource->buffer->Map(0, nullptr, (void**)&constantBufferMap);	// マッピング
 		assert(SUCCEEDED(result));
 	}
 };

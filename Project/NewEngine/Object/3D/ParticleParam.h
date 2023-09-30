@@ -10,7 +10,16 @@ namespace ParticleParameter
 		Vec3 curPos;
 		Vec2 curScale;
 		float curRot;
-		float curShininess = 1.0f;;
+		float curShininess = 1.0f;
+		Color curColor;
+	};
+
+	struct Test
+	{
+		Vec3 curPos; float pad;
+		Vec2 curScale;
+		float curRot;
+		float curShininess = 1.0f;
 		Color curColor;
 	};
 

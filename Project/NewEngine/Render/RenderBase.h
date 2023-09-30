@@ -6,8 +6,11 @@
 #include "Texture.h"
 #include "RenderTarget.h"
 #include "DepthBuffer.h"
+#include "IConstantBuffer.h"
+#include "BufferResource.h"
 #include "Viewport.h"
 #include "ScissorRectangle.h"
+#include "DescriptorHeapManager.h"
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <vector>
@@ -48,8 +51,8 @@ private:
 	// ティスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> mRtvDescHeap;		// rtv用デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> mDsvDescHeap;		// dsv用デスクリプタヒープ
-	UINT mRtvIncrementIndex;
-	UINT mDsvIncrementIndex;
+	uint32_t mRtvIncrementIndex;
+	uint32_t mDsvIncrementIndex;
 
 	// ルートシグネチャー関連
 	ComPtr<ID3DBlob> mErrorBlob;	// エラーオブジェクト
@@ -67,6 +70,7 @@ public:
 	void PostDraw();
 	void CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC* rtvDesc);
 	void CreateDSV(DepthBuffer& depthBuffer);
+	void CreateUAV(IConstantBuffer& iConstantBuffer);
 	void PreIncrimentFenceValue() { ++mFenceValue; }
 
 private:

@@ -277,6 +277,12 @@
     <Filter Include="Application\Source\Motion\Player">
       <UniqueIdentifier>{b40eae28-5076-49a3-8ff1-a9360c5a9642}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NewEngine\Header\Render\DescriptorHeap">
+      <UniqueIdentifier>{6b0f24c7-7c65-4eb3-92a1-f267f63e696f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Render\DescriptorHeap">
+      <UniqueIdentifier>{06517463-70e2-4119-b87b-9980dad25945}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -713,6 +719,21 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\PostEffectManager.cpp">
       <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\Buffer\BufferResource.cpp">
+      <Filter>NewEngine\Source\Render\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\Buffer\StructuredBuffer.cpp">
+      <Filter>NewEngine\Source\Render\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\DescriptorHeap.cpp">
+      <Filter>NewEngine\Source\Render\DescriptorHeap</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\DescriptorHeapManager.cpp">
+      <Filter>NewEngine\Source\Render\DescriptorHeap</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\RWStructuredBuffer.cpp">
+      <Filter>NewEngine\Source\Render\Buffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1183,6 +1204,24 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\PostEffectManager.h">
       <Filter>Application\Header\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\Buffer\BufferResource.h">
+      <Filter>NewEngine\Header\Render\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\Buffer\IConstantBuffer.h">
+      <Filter>NewEngine\Header\Render\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\Buffer\StructuredBuffer.h">
+      <Filter>NewEngine\Header\Render\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\DescriptorHeap.h">
+      <Filter>NewEngine\Header\Render\DescriptorHeap</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\DescriptorHeapManager.h">
+      <Filter>NewEngine\Header\Render\DescriptorHeap</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\RWStructuredBuffer.h">
+      <Filter>NewEngine\Header\Render\Buffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

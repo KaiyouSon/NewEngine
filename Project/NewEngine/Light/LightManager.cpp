@@ -34,5 +34,5 @@ void LightManager::DrawCommand(const uint32_t index)
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		index, material_.constantBuffers[0]->constantBuffer->GetGPUVirtualAddress());
+		index, material_.constantBuffers[0]->bufferResource->buffer->GetGPUVirtualAddress());
 }

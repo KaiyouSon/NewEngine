@@ -134,7 +134,7 @@ void PostEffect::MaterialDrawCommands()
 	{
 		// CBVの設定コマンド
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-			i, mMaterial.constantBuffers[i]->constantBuffer->GetGPUVirtualAddress());
+			i, mMaterial.constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
 	}
 }
 
@@ -224,5 +224,5 @@ void PostEffect::SetDrawCommands(const uint32_t registerNum, const uint32_t buff
 
 	// CBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		registerNum, mMaterial.constantBuffers[bNum]->constantBuffer->GetGPUVirtualAddress());
+		registerNum, mMaterial.constantBuffers[bNum]->bufferResource->buffer->GetGPUVirtualAddress());
 }

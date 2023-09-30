@@ -7,12 +7,18 @@
 #include "GraphicsPipeline.h"
 #include "VertexBuffer.h"
 #include "ParticleParam.h"
+#include "StructuredBuffer.h"
+#include "RWStructuredBuffer.h"
 
 class Emitter
 {
 private:
 	std::vector<VertexBufferData::VParticle> mVertices;
 	std::unique_ptr<VertexBuffer<VertexBufferData::VParticle>> mVertexBuffer;
+
+	std::unique_ptr<StructuredBuffer<ParticleParameter::Test>> mInputData;
+	std::unique_ptr<RWStructuredBuffer<VertexBufferData::VParticle>> mOutputData;
+
 	Vec3 mWorldPos;
 	Vec3 mWorldScale;
 	Transform mTransform;

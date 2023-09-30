@@ -241,25 +241,25 @@ void Object3D::MaterialDrawCommands()
 
 	// CBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, mMaterial.constantBuffers[0]->constantBuffer->GetGPUVirtualAddress());
+		0, mMaterial.constantBuffers[0]->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, mMaterial.constantBuffers[1]->constantBuffer->GetGPUVirtualAddress());
+		1, mMaterial.constantBuffers[1]->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		2, mMaterial.constantBuffers[2]->constantBuffer->GetGPUVirtualAddress());
+		2, mMaterial.constantBuffers[2]->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		3, mMaterial.constantBuffers[3]->constantBuffer->GetGPUVirtualAddress());
+		3, mMaterial.constantBuffers[3]->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		4, mMaterial.constantBuffers[4]->constantBuffer->GetGPUVirtualAddress());
+		4, mMaterial.constantBuffers[4]->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		6, mMaterial.constantBuffers[5]->constantBuffer->GetGPUVirtualAddress());
+		6, mMaterial.constantBuffers[5]->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		7, mMaterial.constantBuffers[6]->constantBuffer->GetGPUVirtualAddress());
+		7, mMaterial.constantBuffers[6]->bufferResource->buffer->GetGPUVirtualAddress());
 }
 
 // --- セッター -------------------------------------------------------- //

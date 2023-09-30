@@ -115,10 +115,8 @@ void Sprite::MaterialDrawCommands()
 	{
 		// CBVの設定コマンド
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-			i, mMaterial->constantBuffers[i]->constantBuffer->GetGPUVirtualAddress());
+			i, mMaterial->constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
 	}
-	//renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-	//1, mMaterial->constantBuffers[1]->constantBuffer->GetGPUVirtualAddress());
 }
 
 // --- 頂点データ関連 --------------------------------------------------- //

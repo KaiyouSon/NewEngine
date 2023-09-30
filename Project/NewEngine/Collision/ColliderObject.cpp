@@ -97,7 +97,7 @@ void ColliderObject::MaterialDrawCommands()
 	{
 		// CBV‚ÌÝ’èƒRƒ}ƒ“ƒh
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-			i, mMaterial.constantBuffers[i]->constantBuffer->GetGPUVirtualAddress());
+			i, mMaterial.constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
 	}
 }
 

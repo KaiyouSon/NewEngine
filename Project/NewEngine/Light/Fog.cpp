@@ -24,5 +24,5 @@ void Fog::Draw()
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		4, constantBufferFog_->constantBuffer->GetGPUVirtualAddress());
+		4, constantBufferFog_->bufferResource->buffer->GetGPUVirtualAddress());
 }

@@ -89,5 +89,6 @@ public:
 	// ÉQÉbÉ^Å[
 	RootSignature* GetRootSignature();
 	GraphicsPipelineSetting GetSetting();
+	ID3D12PipelineState* GetPSO(const BlendMode blendMode);
 };
 

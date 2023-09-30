@@ -26,5 +26,5 @@ void CircleShadow::Draw()
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		6, constantBufferCircleShadow_->constantBuffer->GetGPUVirtualAddress());
+		6, constantBufferCircleShadow_->bufferResource->buffer->GetGPUVirtualAddress());
 }

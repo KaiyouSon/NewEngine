@@ -283,3 +283,8 @@ GraphicsPipelineSetting GraphicsPipeline::GetSetting()
 {
 	return mSetting;
 }
+
+ID3D12PipelineState* GraphicsPipeline::GetPSO(const BlendMode blendMode)
+{
+	return mPSOs[(uint32_t)blendMode].Get();
+}

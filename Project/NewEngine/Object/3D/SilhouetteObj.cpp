@@ -55,9 +55,9 @@ void SilhouetteObj::Draw(const BlendMode& blendMode)
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, mConstantBufferTransform->constantBuffer->GetGPUVirtualAddress());
+		0, mConstantBufferTransform->bufferResource->buffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, mConstantBufferColor->constantBuffer->GetGPUVirtualAddress());
+		1, mConstantBufferColor->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(uint16_t)obj->GetModel()->mesh.indices.size(), 1, 0, 0, 0);

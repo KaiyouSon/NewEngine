@@ -262,30 +262,35 @@ void RenderBase::DescriptorHeapInit()
 	TextureManager::CreateDescriptorHeap();
 
 	// --- RTV ------------------------------------------------------ //
-	const size_t maxRTVCount = 64;	// RTVの最大個数
+	const uint32_t maxRTVSize = 64;	// RTVの最大個数
 
 	// RTV用デスクリプタヒープの設定
-	mRtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;		// レンダーターゲットビュー
-	//mRtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;	// シェーダから見えるように
-	mRtvHeapDesc.NumDescriptors = maxRTVCount; // 裏表の２つ
+	mRtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+	mRtvHeapDesc.NumDescriptors = maxRTVSize;
 
 	// RTV用デスクリプタヒープの生成
 	result = mDevice->CreateDescriptorHeap(&mRtvHeapDesc, IID_PPV_ARGS(&mRtvDescHeap));
 	assert(SUCCEEDED(result));
 
-
 	// --- DSV ------------------------------------------------------ //
-	const size_t maxDSVCount = 64;	// DSVの最大個数
+	const uint32_t maxDSVSize = 64;	// DSVの最大個数
 
 	// DSV用デスクリプタヒープの設定
 	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
-	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;		// デプスステンシルビュー
-	//dsvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;	// シェーダから見えるように
-	dsvHeapDesc.NumDescriptors = maxDSVCount;	// 深度ビューは一つ
+	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
+	dsvHeapDesc.NumDescriptors = maxDSVSize;
 
 	// DSV用デスクリプタヒープの生成
 	result = mDevice->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&mDsvDescHeap));
 	assert(SUCCEEDED(result));
+
+
+	DescriptorHeapSetting setting;
+
+	// ComputShader用
+	setting.maxSize = 512;
+	setting.heapType = DescriptorHeapSetting::CBV_SRV_UAV;
+	DescriptorHeapManager::Create(setting, "SRV_UAV");
 }
 void RenderBase::CommandInit()
 {

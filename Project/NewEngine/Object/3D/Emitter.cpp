@@ -11,11 +11,22 @@ Emitter::Emitter() :
 	offset(0, 0), tiling(1, 1), pSize(0),
 	mVertexBuffer(std::make_unique <VertexBuffer<VParticle>>()),
 	mGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("Emitter")),
-	mTexture(TextureManager::GetTexture("White"))
+	mTexture(TextureManager::GetTexture("White")),
+
+	mInputData(std::make_unique<StructuredBuffer<ParticleParameter::Test>>()),
+	mOutputData(std::make_unique<RWStructuredBuffer<VertexBufferData::VParticle>>())
 {
 	// マテリアルの初期化
 	MaterialInit();
 	mTexture->isMaterial = true;
+
+	mInputData->Create();
+	mOutputData->Create();
+
+	DescriptorHeapManager::GetDescriptorHeap("SRV_UAV")->
+		CreateSRV(mInputData->GetBufferResource(), 1, sizeof(ParticleParameter::Test));
+	DescriptorHeapManager::GetDescriptorHeap("SRV_UAV")->
+		CreateUAV(mOutputData->GetBufferResource(), 1, sizeof(ParticleParameter::Test));
 
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
 }
@@ -39,6 +50,7 @@ void Emitter::Update(Transform* parent)
 	// マテリアルの転送
 	MaterialTransfer();
 
+
 	for (uint32_t i = 0; i < pSize; i++)
 	{
 		mVertices[i].pos = pParam[i].curPos;
@@ -54,6 +66,18 @@ void Emitter::Draw(const BlendMode blendMode)
 	if (mTexture == nullptr) return;
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
+
+	//renderBase->GetCommandList()->
+	//	SetComputeRootSignature(mGraphicsPipeline->GetRootSignature()->GetRootSignature());
+
+	//renderBase->GetCommandList()->SetPipelineState(mGraphicsPipeline->GetPSO(blendMode));
+
+	//renderBase->GetCommandList()->Dispatch(1, 1, 1);
+
+	//uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetDescriptorTableStartIndex();
+	//renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetGpuHandle());
+
+
 
 	// GraphicsPipeline描画コマンド
 	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
@@ -117,15 +141,12 @@ void Emitter::MaterialDrawCommands()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// CBVの設定コマンド
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, mMaterial.constantBuffers[0]->constantBuffer->GetGPUVirtualAddress());
-
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, mMaterial.constantBuffers[1]->constantBuffer->GetGPUVirtualAddress());
-
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		2, mMaterial.constantBuffers[2]->constantBuffer->GetGPUVirtualAddress());
+	for (uint32_t i = 0; i < mMaterial.constantBuffers.size(); i++)
+	{
+		// CBVの設定コマンド
+		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+			i, mMaterial.constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
+	}
 }
 
 // --- セッター -------------------------------------------------------- //ko
