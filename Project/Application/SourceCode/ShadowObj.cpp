@@ -19,8 +19,8 @@ void ShadowObj::CreateGraphicsPipeline()
 		PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("ShadowObj");
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.constantBufferViewNum = 2;
-	setting.rootSignatureSetting.descriptorRangeNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "ShadowObj");
 }
 
@@ -79,8 +79,8 @@ void ShadowObj::Draw()
 	MaterialDrawCommands();
 
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetDescriptorTableStartIndex();
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mModel->texture->GetGpuHandle());
+	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(2, mModel->texture->GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModel->mesh.indices.size(), 1, 0, 0, 0);
 }

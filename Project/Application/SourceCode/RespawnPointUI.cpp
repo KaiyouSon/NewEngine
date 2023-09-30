@@ -14,7 +14,7 @@ void RespawnPointUI::CreateGraphicsPipeline()
 	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Sprite")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("RespawnTransition");
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.constantBufferViewNum = 4;
+	setting.rootSignatureSetting.maxCbvRootParameter = 4;
 	PipelineManager::CreateGraphicsPipeline(setting, "RespawnTransition");
 }
 

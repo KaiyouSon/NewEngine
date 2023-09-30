@@ -502,8 +502,8 @@ void RenderBase::GraphicsPipelineInit()
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rtvNum = 2;
-	setting.rootSignatureSetting.constantBufferViewNum = 8;
-	setting.rootSignatureSetting.descriptorRangeNum = 3;
+	setting.rootSignatureSetting.maxCbvRootParameter = 8;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "Object3D");
 
 	// FBXモデル用
@@ -513,8 +513,8 @@ void RenderBase::GraphicsPipelineInit()
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.constantBufferViewNum = 7;
-	setting.rootSignatureSetting.descriptorRangeNum = 2;
+	setting.rootSignatureSetting.maxCbvRootParameter = 7;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "FbxModel");
 
 	// スプライト用
@@ -524,8 +524,8 @@ void RenderBase::GraphicsPipelineInit()
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
 	setting.rtvNum = 2;
-	setting.rootSignatureSetting.constantBufferViewNum = 3;
-	setting.rootSignatureSetting.descriptorRangeNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Sprite");
 
 	// 円形ゲージスプライト用
@@ -535,8 +535,8 @@ void RenderBase::GraphicsPipelineInit()
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.constantBufferViewNum = 3;
-	setting.rootSignatureSetting.descriptorRangeNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "CircleGaugeSprite");
 
 	// レンダーテクスチャ用
@@ -546,8 +546,8 @@ void RenderBase::GraphicsPipelineInit()
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
 	setting.rtvNum = 2;
-	setting.rootSignatureSetting.constantBufferViewNum = 2;
-	setting.rootSignatureSetting.descriptorRangeNum = 2;
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "RenderTexture");
 
 	// シルエット用
@@ -557,8 +557,8 @@ void RenderBase::GraphicsPipelineInit()
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc3;
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.constantBufferViewNum = 7;
-	setting.rootSignatureSetting.descriptorRangeNum = 2;
+	setting.rootSignatureSetting.maxCbvRootParameter = 7;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Silhouette");
 
 	// アウトライン用
@@ -568,8 +568,8 @@ void RenderBase::GraphicsPipelineInit()
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc4;
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.constantBufferViewNum = 7;
-	setting.rootSignatureSetting.descriptorRangeNum = 2;
+	setting.rootSignatureSetting.maxCbvRootParameter = 7;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Outline");
 
 	// トゥーンレンダリング用
@@ -579,8 +579,8 @@ void RenderBase::GraphicsPipelineInit()
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc4;
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.constantBufferViewNum = 7;
-	setting.rootSignatureSetting.descriptorRangeNum = 2;
+	setting.rootSignatureSetting.maxCbvRootParameter = 7;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "ToonRendering");
 
 	// ライン用
@@ -590,8 +590,8 @@ void RenderBase::GraphicsPipelineInit()
 	setting.topologyType = TopologyType::LineStrip;
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.constantBufferViewNum = 2;
-	setting.rootSignatureSetting.descriptorRangeNum = 0;
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	PipelineManager::CreateGraphicsPipeline(setting, "Line");
 
 	// エミッター用
@@ -601,8 +601,8 @@ void RenderBase::GraphicsPipelineInit()
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.constantBufferViewNum = 7;
-	setting.rootSignatureSetting.descriptorRangeNum = 2;
+	setting.rootSignatureSetting.maxCbvRootParameter = 7;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Emitter");
 
 	// ColliderObject用
@@ -613,17 +613,17 @@ void RenderBase::GraphicsPipelineInit()
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.constantBufferViewNum = 2;
-	setting.rootSignatureSetting.descriptorRangeNum = 0;
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	PipelineManager::CreateGraphicsPipeline(setting, "ColliderObject");
 }
 void RenderBase::ComputePipelineInit()
 {
 	ComputePipelineSetting setting;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Emitter");
-	setting.rootSignatureSetting.constantBufferViewNum = 0;
-	setting.rootSignatureSetting.descriptorRangeNum = 1;
-	setting.rootSignatureSetting.maxUavDescritor = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 0;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	setting.rootSignatureSetting.maxUavDescritorRange = 1;
 	PipelineManager::CreateComputePipeline(setting, "Emitter");
 }
 

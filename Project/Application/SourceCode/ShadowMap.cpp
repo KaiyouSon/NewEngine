@@ -17,7 +17,7 @@ void ShadowMap::CreateGraphicsPipeline()
 		PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("ShadowMap");
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.constantBufferViewNum = 3;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "ShadowMap");
 
 	// ShadowObj—p

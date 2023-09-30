@@ -75,10 +75,10 @@ void Emitter::Draw(const BlendMode blendMode)
 	};
 	renderBase->GetCommandList()->SetDescriptorHeaps(1, descriptorHeap);
 
-	uint32_t index = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetDescriptorTableStartIndex();
+	uint32_t index = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetSRVStartIndex();
 	renderBase->GetCommandList()->SetComputeRootDescriptorTable(0, mInputData->GetBufferResource()->gpuHandle);
 
-	uint32_t end = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetDescriptorTableEndIndex();
+	uint32_t end = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetUAVStartIndex();
 	renderBase->GetCommandList()->SetComputeRootDescriptorTable(1, mOutputData->GetBufferResource()->gpuHandle);
 
 	// ディスパッチ
@@ -101,7 +101,7 @@ void Emitter::Draw(const BlendMode blendMode)
 	MaterialDrawCommands();
 
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetDescriptorTableStartIndex();
+	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawInstanced(pSize, 1, 0, 0);

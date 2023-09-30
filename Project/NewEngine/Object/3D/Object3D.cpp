@@ -85,7 +85,7 @@ void Object3D::Draw(const BlendMode blendMode)
 	LightManager::GetInstance()->DrawCommand(5);
 
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetDescriptorTableStartIndex();
+	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetGpuHandle());
 
 	if (isUseDissolve == true)

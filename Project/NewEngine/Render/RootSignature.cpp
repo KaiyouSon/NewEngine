@@ -5,20 +5,23 @@
 #include <cassert>
 
 RootSignatureSetting::RootSignatureSetting() :
-	constantBufferViewNum(1), descriptorRangeNum(1), maxUavDescritor(0)
+	maxCbvRootParameter(1), maxSrvDescritorRange(1), maxUavDescritorRange(0)
 {
 }
 
 
 void RootSignature::Create(const RootSignatureSetting setting)
 {
+	mSetting = setting;
+
 	// RootParameterにConstantBufferViewを追加
-	AddConstantBufferViewToRootRrameter(setting.constantBufferViewNum);
+	AddCbvToRootRrameter(mSetting.maxCbvRootParameter);
 
-	// RootParameterにDescriptorRangeを追加
-	AddDescriptorRangeToRootPrameter(setting.descriptorRangeNum);
+	// RootParameterにSRVのDescriptorRangeを追加
+	AddSrvToRootPrameter(mSetting.maxSrvDescritorRange);
 
-	AddUavToRootPrameter(setting.maxUavDescritor);
+	// RootParameterにUAVのDescriptorRangeを追加
+	AddUavToRootPrameter(mSetting.maxUavDescritorRange);
 
 	// テクスチャサンプラーの設定
 	D3D12_STATIC_SAMPLER_DESC samplerDesc{};
@@ -59,9 +62,9 @@ void RootSignature::Create(const RootSignatureSetting setting)
 	assert(SUCCEEDED(mResult));
 }
 
-void RootSignature::AddConstantBufferViewToRootRrameter(const uint32_t number)
+void RootSignature::AddCbvToRootRrameter(const uint32_t maxCbvRootParameter)
 {
-	for (uint32_t i = 0; i < number; i++)
+	for (uint32_t i = 0; i < maxCbvRootParameter; i++)
 	{
 		D3D12_ROOT_PARAMETER rootParam;
 		rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// 種類
@@ -70,64 +73,56 @@ void RootSignature::AddConstantBufferViewToRootRrameter(const uint32_t number)
 		rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// 全てのシェーダから見える
 
 		mRootParameters.emplace_back(rootParam);
-		mConstantBufferNum++;
 	}
 }
-void RootSignature::AddDescriptorRangeToRootPrameter(const uint32_t number)
+void RootSignature::AddSrvToRootPrameter(const uint32_t maxSrvDescritorRange)
 {
-	// なぜかこうしないとエラーになる
-	for (uint32_t i = 0; i < number; i++)
+	for (uint32_t i = 0; i < maxSrvDescritorRange; i++)
 	{
-		mDescriptorRanges.emplace_back();
-		mDescriptorRanges.back().Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, (uint32_t)i);
+		mSrvDescriptorRanges.emplace_back();
+		mSrvDescriptorRanges.back().Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, (uint32_t)i);
 	}
 
-	for (uint32_t i = 0; i < number; i++)
+	for (uint32_t i = 0; i < maxSrvDescritorRange; i++)
 	{
 		mRootParameters.emplace_back();
-		mRootParameters.back().InitAsDescriptorTable(1, &mDescriptorRanges[i]);
-
-		mDescriptorRangeNum++;
+		mRootParameters.back().InitAsDescriptorTable(1, &mSrvDescriptorRanges[i]);
 	}
 }
 
-void RootSignature::AddUavToRootPrameter(const uint32_t maxUavDescritor)
+void RootSignature::AddUavToRootPrameter(const uint32_t maxUavDescritorRange)
 {
-	if (maxUavDescritor <= 0)
+	for (uint32_t i = 0; i < maxUavDescritorRange; i++)
 	{
-		return;
+		mUavDescriptorRanges.emplace_back();
+		mUavDescriptorRanges.back().Init(D3D12_DESCRIPTOR_RANGE_TYPE_UAV, 1, (uint32_t)i);
 	}
 
-	mUavDescriptorRange.Init(
-		D3D12_DESCRIPTOR_RANGE_TYPE_UAV,
-		maxUavDescritor,
-		0,
-		0,
-		D3D12_DESCRIPTOR_RANGE_FLAG_DATA_STATIC);
-
-	mRootParameters.emplace_back();
-	mRootParameters.back().InitAsDescriptorTable(1, &mUavDescriptorRange);
-	//mUavDescriptorNum++;
+	for (uint32_t i = 0; i < maxUavDescritorRange; i++)
+	{
+		mRootParameters.emplace_back();
+		mRootParameters.back().InitAsDescriptorTable(1, &mUavDescriptorRanges[i]);
+	}
 }
 
 ID3D12RootSignature* RootSignature::GetRootSignature()
 {
 	return mRootSignature.Get();
 }
-uint32_t RootSignature::GetConstantBufferStartIndex()
+uint32_t RootSignature::GetCBVStartIndex()
 {
 	// 必ず0番目から作るようにするため0を返す
 	return 0;
 }
-uint32_t RootSignature::GetConstantBufferEndIndex()
+uint32_t RootSignature::GetSRVStartIndex()
 {
-	return (uint32_t)(mRootParameters.size() - mDescriptorRangeNum);
+	// maxCbvRootParameterがSRVの最初のIndexになる
+	return mSetting.maxCbvRootParameter;
 }
-uint32_t RootSignature::GetDescriptorTableStartIndex()
+uint32_t RootSignature::GetUAVStartIndex()
 {
-	return (uint32_t)(mRootParameters.size() - mDescriptorRangeNum);
-}
-uint32_t RootSignature::GetDescriptorTableEndIndex()
-{
-	return (uint32_t)(mRootParameters.size());
+	// maxSrvDescritorRangeがUAVの最初のIndexになる
+	return
+		mSetting.maxCbvRootParameter +
+		mSetting.maxSrvDescritorRange;
 }

@@ -18,8 +18,8 @@ void Grass::CreateGraphicsPipeline()
 	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Emitter")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Grass");
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.constantBufferViewNum = 2;
-	setting.rootSignatureSetting.descriptorRangeNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Grass");
 }
 
@@ -112,7 +112,7 @@ void Grass::Draw()
 	MaterialDrawCommands();
 
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetDescriptorTableStartIndex();
+	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, texture->GetGpuHandle());
 
 	renderBase->GetCommandList()->DrawInstanced((uint16_t)mVertices.size(), 1, 0, 0);

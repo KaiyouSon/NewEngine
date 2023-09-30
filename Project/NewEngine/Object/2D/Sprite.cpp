@@ -65,8 +65,8 @@ void Sprite::Draw(const BlendMode blendMode)
 	// マテリアルの描画コマンド
 	MaterialDrawCommands();
 
-	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetDescriptorTableStartIndex();
-	uint32_t endIndex = mGraphicsPipeline->GetRootSignature()->GetDescriptorTableEndIndex();
+	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
+	uint32_t endIndex = mGraphicsPipeline->GetRootSignature()->GetUAVStartIndex();
 
 	for (uint32_t i = startIndex; i < endIndex; i++)
 	{
