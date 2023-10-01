@@ -3,7 +3,7 @@
 #include "PlayerRecoveryEffect.h"
 #include "RespawnPointEffect.h"
 #include "LeadEffect.h"
-#include "Bloom.h"
+#include "AirEffect.h"
 #include "Player.h"
 
 template<typename T> class Singleton;
@@ -15,6 +15,7 @@ private:
 	std::unique_ptr<PlayerRecoveryEffect> mPlayerRecoveryEffect;
 	std::unique_ptr<RespawnPointEffect> mRespawnPointEffect;
 	std::unique_ptr<LeadEffect> mLeadEffect;
+	std::unique_ptr<AirEffect> mAirEffect;
 
 private:
 	Player* mPlayer;

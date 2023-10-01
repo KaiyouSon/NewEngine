@@ -110,6 +110,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\SourceCode\AirEffect.cpp" />
     <ClCompile Include="Application\SourceCode\BackstepMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Bloom.cpp" />
     <ClCompile Include="Application\SourceCode\Boss.cpp" />
@@ -151,6 +152,7 @@
     <ClCompile Include="Application\SourceCode\MoveMotion.cpp" />
     <ClCompile Include="Application\SourceCode\LoadManager.cpp" />
     <ClCompile Include="Application\SourceCode\MalletMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\MovieEvent.cpp" />
     <ClCompile Include="Application\SourceCode\NegotiationUI.cpp" />
     <ClCompile Include="Application\SourceCode\OpenGateMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Player.cpp" />
@@ -267,6 +269,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\1.School\3.3年前期\TL1\CG5_Task01\Project\External\nlohmann\json.hpp" />
+    <ClInclude Include="Application\SourceCode\AirEffect.h" />
     <ClInclude Include="Application\SourceCode\BackstepMotion.h" />
     <ClInclude Include="Application\SourceCode\BloodSprayEffect.h" />
     <ClInclude Include="Application\SourceCode\Bloom.h" />
@@ -310,6 +313,7 @@
     <ClInclude Include="Application\SourceCode\MoveMotion.h" />
     <ClInclude Include="Application\SourceCode\LoadManager.h" />
     <ClInclude Include="Application\SourceCode\MalletMotion.h" />
+    <ClInclude Include="Application\SourceCode\MovieEvent.h" />
     <ClInclude Include="Application\SourceCode\NegotiationUI.h" />
     <ClInclude Include="Application\SourceCode\OpenGateMotion.h" />
     <ClInclude Include="Application\SourceCode\Player.h" />

@@ -4,7 +4,8 @@ EffectManager::EffectManager() :
 	mBloodSprayEffect(std::make_unique<BloodSprayEffect>()),
 	mPlayerRecoveryEffect(std::make_unique<PlayerRecoveryEffect>()),
 	mRespawnPointEffect(std::make_unique<RespawnPointEffect>()),
-	mLeadEffect(std::make_unique<LeadEffect>())
+	mLeadEffect(std::make_unique<LeadEffect>()),
+	mAirEffect(std::make_unique<AirEffect>())
 {
 }
 
@@ -14,6 +15,7 @@ void EffectManager::Init()
 	mPlayerRecoveryEffect->Init();
 	mRespawnPointEffect->Init();
 	mLeadEffect->Init();
+	mAirEffect->Init();
 }
 
 void EffectManager::Update()
@@ -22,6 +24,9 @@ void EffectManager::Update()
 	mPlayerRecoveryEffect->Update();
 	mRespawnPointEffect->Update();
 	mLeadEffect->Update();
+	mAirEffect->Update();
+
+	mAirEffect->Generate(mPlayer->GetPos());
 }
 
 void EffectManager::DrawModel()
@@ -54,6 +59,9 @@ void EffectManager::DrawEffect(const bool isBloom)
 
 		// 導虫みたいなエフェクト
 		mLeadEffect->DrawModel();
+
+		// 空中にあるやつ
+		mAirEffect->DrawModel();
 	}
 	// それ以外
 	else
@@ -69,6 +77,9 @@ void EffectManager::DrawEffect(const bool isBloom)
 
 		// 導虫みたいなエフェクト
 		mLeadEffect->DrawModel();
+
+		// 空中にあるやつ
+		mAirEffect->DrawModel();
 	}
 }
 

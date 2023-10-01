@@ -750,6 +750,12 @@
     <ClCompile Include="NewEngine\Render\ComputePipeline.cpp">
       <Filter>NewEngine\Source\Render\Pipeline</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\MovieEvent.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\AirEffect.cpp">
+      <Filter>Application\Source\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1240,6 +1246,12 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Render\ComputePipeline.h">
       <Filter>NewEngine\Header\Render\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\MovieEvent.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\AirEffect.h">
+      <Filter>Application\Header\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
