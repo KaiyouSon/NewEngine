@@ -77,8 +77,7 @@
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy /y $(SolutionDir)..\Generated\Outputs\assimp\$(Configuration)\assimp-vc143-mtd.dll $(SolutionDir)..\Generated\Outputs\NewEngine\$(Configuration)\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -105,8 +104,7 @@
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy /y $(SolutionDir)..\Generated\Outputs\assimp\$(Configuration)\assimp-vc143-mt.dll $(SolutionDir)..\Generated\Outputs\NewEngine\$(Configuration)\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
