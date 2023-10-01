@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include "SceneChanger.h"
 #include "TransitionManager.h"
+#include "MovieEvent.h"
 
 void TitleScene::Load()
 {
@@ -34,6 +35,8 @@ void TitleScene::Init()
 	SoundManager::Play("TitleBGM", true);
 	SoundManager::SetVolume("TitleBGM", 0);
 	mBgmVolume = 0;
+
+	MovieEvent::SetisPlayOnce(false);
 }
 
 void TitleScene::Update()

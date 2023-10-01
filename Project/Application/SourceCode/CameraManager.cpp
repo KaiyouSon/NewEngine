@@ -1,14 +1,15 @@
 #include "CameraManager.h"
 #include "DefaultCamera.h"
 #include "TargetCamera.h"
+#include "MovieCamera.h"
 
 CameraManager::CameraManager()
 {
-	mCameraType = CameraType::Default;
 }
 
 void CameraManager::Init()
 {
+	mCameraType = CameraType::Default;
 	mCurrentCamera = std::make_unique<DefaultCamera>();
 	mCurrentCamera->Init(mPlayer);
 }
@@ -82,6 +83,10 @@ void CameraManager::ChangeCamera(const CameraType cameraType)
 
 	case CameraType::Target:
 		nextCamera = std::make_unique<TargetCamera>();
+		break;
+
+	case CameraType::Movie:
+		nextCamera = std::make_unique<MovieCamera>();
 		break;
 
 	default:

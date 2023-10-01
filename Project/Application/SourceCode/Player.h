@@ -3,6 +3,7 @@
 #include "GaugeParam.h"
 #include "HumanoidBody.h"
 #include "PlayerBody.h"
+#include "MovieEvent.h"
 
 class MalletMotion;
 
@@ -57,6 +58,9 @@ private:
 	bool mIsDamage;
 	Timer mDamageCoolTimer;
 
+private:
+	MovieEvent* mMovieEvent;
+
 public:
 	void CalcFrontVec();
 private:
@@ -98,6 +102,7 @@ public:
 	void Damage(const float damage);
 
 public:
+	void SetMovieEvent(MovieEvent* movieEvent);
 	void SetPos(const Vec3 pos);
 	void SetRot(const Vec3 rot);
 	void SetisDamage(const bool isDamage);

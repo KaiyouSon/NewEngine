@@ -45,6 +45,11 @@ void UIManager::Init()
 
 void UIManager::Update()
 {
+	if (mMovieEvent->GetisPlaying() == true)
+	{
+		return;
+	}
+
 	if (mPlayer->GetisDissolve() == true)
 	{
 		mResultUI->SetisActive(true);
@@ -84,6 +89,11 @@ void UIManager::Update()
 
 void UIManager::DrawFrontSprite()
 {
+	if (mMovieEvent->GetisPlaying() == true)
+	{
+		return;
+	}
+
 	for (uint32_t i = 0; i < mGauges.size(); i++)
 	{
 		mGauges[i]->DrawFrontSprite();
@@ -114,6 +124,11 @@ void UIManager::SetPlayer(Player* player)
 void UIManager::SetBoss(Boss* boss)
 {
 	mBoss = boss;
+}
+
+void UIManager::SetMovieEvent(MovieEvent* movieEvent)
+{
+	mMovieEvent = movieEvent;
 }
 
 NegotiationUI* UIManager::GetNegotiationUI()

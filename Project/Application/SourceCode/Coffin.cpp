@@ -16,6 +16,8 @@ void Coffin::Init()
 	mCoffinBottom->SetisShadow(false, true);
 	mCoffinTop->isLighting = true;
 	mCoffinBottom->isLighting = true;
+
+	mCoffinTop->pos = 0;
 }
 
 void Coffin::Update()
@@ -79,4 +81,9 @@ CubeCollider Coffin::GetBottomCollider()
 Vec3 Coffin::GetPos()
 {
 	return mParent.pos;
+}
+
+Vec3 Coffin::GetTopPos()
+{
+	return mCoffinTop->pos;
 }

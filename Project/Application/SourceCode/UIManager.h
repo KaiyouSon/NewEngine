@@ -7,6 +7,7 @@
 #include "Boss.h"
 #include "ResultUI.h"
 #include "RespawnPointUI.h"
+#include "MovieEvent.h"
 
 class UIManager
 {
@@ -25,6 +26,7 @@ private:
 
 	Player* mPlayer;
 	Boss* mBoss;
+	MovieEvent* mMovieEvent;
 
 public:
 	UIManager();
@@ -35,6 +37,7 @@ public:
 public:
 	void SetPlayer(Player* player);
 	void SetBoss(Boss* boss);
+	void SetMovieEvent(MovieEvent* movieEvent);
 
 public:
 	NegotiationUI* GetNegotiationUI();

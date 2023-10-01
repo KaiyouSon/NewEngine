@@ -6,6 +6,8 @@
 #include "LogoutMenu.h"
 #include "ShadowMap.h"
 #include "TransitionManager.h"
+#include "CameraManager.h"
+#include "MovieCamera.h"
 
 GameScene::GameScene()
 {
@@ -118,33 +120,37 @@ void GameScene::CreateInstance()
 	mPlayer = std::make_unique<Player>();
 	mBoss = std::make_unique<Boss>();
 	mUiManager = std::make_unique<UIManager>();
-	mCameraManager = std::make_unique<CameraManager>();
 	mMenuManager = std::make_unique<MenuManager>();
 	mField = std::make_unique<Field>();
 	mPostEffectManager = std::make_unique<PostEffectManager>();
+	mMovieEvent = std::make_unique<MovieEvent>();
 }
 
 void GameScene::Init()
 {
 	mCurrentScene = TextureManager::GetRenderTexture("CurrentScene");
 
-	Camera::current.pos = { 0,1,-15 };
-	Camera::current.rot = { Radian(0),0,0 };
+	Camera::current.pos = Vec3(-65, 75, -85);
+	Camera::current.rot = Radian(Vec3(25, 40, 0));
 
 	mPlayer->Init();
+	mPlayer->SetMovieEvent(mMovieEvent.get());
 
 	mBoss->Init();
 	mBoss->SetPlayer(mPlayer.get());
 
 	mUiManager->SetPlayer(mPlayer.get());
 	mUiManager->SetBoss(mBoss.get());
+	mUiManager->SetMovieEvent(mMovieEvent.get());
 	mUiManager->Init();
 
-	mCameraManager->SetPlayer(mPlayer.get());
-	mCameraManager->SetBoss(mBoss.get());
-	mCameraManager->Init();
+	CameraManager::GetInstance()->SetPlayer(mPlayer.get());
+	CameraManager::GetInstance()->SetBoss(mBoss.get());
+	CameraManager::GetInstance()->Init();
+	MovieCamera::SetMovieEvent(mMovieEvent.get());
 
 	mMenuManager->Init();
+	mMenuManager->SetMovieEvent(mMovieEvent.get());
 
 	mField->Init();
 
@@ -160,6 +166,7 @@ void GameScene::Init()
 	CollisionManager::GetInstance()->SetBoss(mBoss.get());
 	CollisionManager::GetInstance()->SetField(mField.get());
 	CollisionManager::GetInstance()->SetUIManager(mUiManager.get());
+	CollisionManager::GetInstance()->SetMovieEvent(mMovieEvent.get());
 
 	EffectManager::GetInstance()->Init();
 	EffectManager::GetInstance()->SetPlayer(mPlayer.get());
@@ -167,20 +174,25 @@ void GameScene::Init()
 	LightManager::GetInstance()->directionalLight.isActive = true;
 	LightManager::GetInstance()->directionalLight.pos = Vec3(-400, 400, -100);
 
+	mMovieEvent->Init();
+	mMovieEvent->SetPlayer(mPlayer.get());
+	mMovieEvent->SetPlayerCoffin(mField->GetFieldData()->coffins[10].get());
+	mMovieEvent->Start();
 
 	isInit = false;
+
+	mIsChangeScene = false;
 }
 void GameScene::Update()
 {
-	if (SceneChanger::GetInstance()->GetisSceneChanging() == false)
+	if (SoundManager::GetIsPlaying("BattleBGM") == true)
 	{
-		if (SoundManager::GetIsPlaying("BattleBGM") == true)
-		{
-			SoundManager::SetVolume("BattleBGM", mBgmVolume);
-			mBgmVolume += 0.005f;
-			mBgmVolume = Min<float>(mBgmVolume, 1.f);
-		}
+		SoundManager::SetVolume("BattleBGM", mBgmVolume);
+		mBgmVolume += 0.005f;
+		mBgmVolume = Min<float>(mBgmVolume, 1.f);
 	}
+
+	mMovieEvent->Update();
 
 	if (mMenuManager->GetisActive() == false)
 	{
@@ -206,7 +218,7 @@ void GameScene::Update()
 
 	if (mMenuManager->GetisActive() == false)
 	{
-		mCameraManager->Update();
+		CameraManager::GetInstance()->Update();
 	}
 
 	bool isBackToTitle =
@@ -239,6 +251,7 @@ void GameScene::Update()
 			if (isBackToTitle == true)
 			{
 				SceneManager::ChangeScene<TitleScene>();
+				mIsChangeScene = true;
 			}
 			else
 			{
@@ -247,17 +260,30 @@ void GameScene::Update()
 				{
 					// シーンだらゲームシーンを初期化
 					SceneManager::ChangeScene<GameScene>();
+					mIsChangeScene = true;
 				}
-				else
+				else if (mBoss->GetisDissolve() == true)
 				{
 					// クリアしたらタイトルに戻す
 					SceneManager::ChangeScene<TitleScene>();
+					mIsChangeScene = true;
 				}
 			}
 
-			if (SceneManager::GetisChanged() == true)
+			if (mIsChangeScene == true)
+			{
+				if (SceneManager::GetisChanged() == true)
+				{
+					TransitionManager::GetInstance()->End();
+				}
+			}
+			else
 			{
 				TransitionManager::GetInstance()->End();
+				mPlayer->Init();
+				mMovieEvent->End();
+
+				CameraManager::GetInstance()->ChangeCamera(CameraManager::CameraType::Default);
 			}
 		}
 

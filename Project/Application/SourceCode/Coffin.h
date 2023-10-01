@@ -27,4 +27,5 @@ public:
 public:
 	CubeCollider GetBottomCollider();
 	Vec3 GetPos();
+	Vec3 GetTopPos();
 };

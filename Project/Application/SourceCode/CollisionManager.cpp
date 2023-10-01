@@ -7,9 +7,12 @@ void CollisionManager::Update()
 	// プレイヤーとボス
 	PlayerHitBoss();
 
-	PlayerHitFieldObject();
+	if (mMovieEvent->GetisPlaying() == false)
+	{
+		PlayerHitFieldObject();
 
-	PlayerHitNegotiation();
+		PlayerHitNegotiation();
+	}
 
 	// ボスとプレイヤー
 	BossHitPlayer();
@@ -433,4 +436,9 @@ void CollisionManager::SetField(Field* field)
 void CollisionManager::SetUIManager(UIManager* uiManager)
 {
 	mUiManager = uiManager;
+}
+
+void CollisionManager::SetMovieEvent(MovieEvent* movieEvent)
+{
+	mMovieEvent = movieEvent;
 }

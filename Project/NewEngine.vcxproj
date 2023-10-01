@@ -150,6 +150,7 @@
     <ClCompile Include="Application\SourceCode\MoveMotion.cpp" />
     <ClCompile Include="Application\SourceCode\LoadManager.cpp" />
     <ClCompile Include="Application\SourceCode\MalletMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\MovieCamera.cpp" />
     <ClCompile Include="Application\SourceCode\MovieEvent.cpp" />
     <ClCompile Include="Application\SourceCode\NegotiationUI.cpp" />
     <ClCompile Include="Application\SourceCode\OpenGateMotion.cpp" />
@@ -311,6 +312,7 @@
     <ClInclude Include="Application\SourceCode\MoveMotion.h" />
     <ClInclude Include="Application\SourceCode\LoadManager.h" />
     <ClInclude Include="Application\SourceCode\MalletMotion.h" />
+    <ClInclude Include="Application\SourceCode\MovieCamera.h" />
     <ClInclude Include="Application\SourceCode\MovieEvent.h" />
     <ClInclude Include="Application\SourceCode\NegotiationUI.h" />
     <ClInclude Include="Application\SourceCode\OpenGateMotion.h" />

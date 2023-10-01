@@ -8,6 +8,11 @@ void MenuManager::Init()
 
 void MenuManager::Update()
 {
+	if (mMovieEvent->GetisPlaying() == true)
+	{
+		return;
+	}
+
 	if (Pad::GetButtonDown(PadCode::ButtonStart))
 	{
 		SoundManager::Play("SelectSE");
@@ -31,10 +36,20 @@ void MenuManager::Update()
 
 void MenuManager::DrawFrontSprite()
 {
+	if (mMovieEvent->GetisPlaying() == true)
+	{
+		return;
+	}
+
 	for (const auto& cur : mMenus)
 	{
 		cur->DrawFrontSprite();
 	}
+}
+
+void MenuManager::SetMovieEvent(MovieEvent* movieEvent)
+{
+	mMovieEvent = movieEvent;
 }
 
 bool MenuManager::GetisActive()

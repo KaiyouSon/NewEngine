@@ -13,6 +13,7 @@ public:
 	{
 		Default,
 		Target,
+		Movie,
 	};
 
 private:

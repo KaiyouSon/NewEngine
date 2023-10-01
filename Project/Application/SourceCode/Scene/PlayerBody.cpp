@@ -73,10 +73,17 @@ void PlayerBody::DrawModel()
 {
 	BaseDrawModel();
 
-	if (parent->mState != Player::State::Drink)
+	bool isDrinkMotion = parent->mState == Player::State::Drink;
+	bool isOpenGateMotion = parent->mState == Player::State::OpenGate;
+	bool isMovieEvent = parent->mMovieEvent->GetisPlaying();
+
+	if (isDrinkMotion == true ||
+		isOpenGateMotion == true ||
+		isMovieEvent == true)
 	{
-		DrawWeapon(WeaponPartID::Right);
+		return;
 	}
+	DrawWeapon(WeaponPartID::Right);
 }
 void PlayerBody::DrawDebugGui()
 {

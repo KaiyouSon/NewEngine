@@ -14,8 +14,8 @@ void Player::Init()
 {
 	GaugeParamInit();
 	mPlayer->Init();
-	mPlayer->pos = Vec3(0.f, 4.75f, 0.f);
-	mPlayer->rot = 0;
+	mPlayer->pos = Vec3(42.f, 4.75f, 13.f);
+	mPlayer->rot = Vec3(0, Radian(-90), 0);
 
 	mPlayer->SetWeapon(mWeapon.get(), WeaponPartID::Right);
 	mPlayer->iParent = this;
@@ -41,6 +41,11 @@ void Player::Init()
 }
 void Player::PrevUpdate()
 {
+	if (mMovieEvent->GetisPlaying() == true)
+	{
+		return;
+	}
+
 	mMoveVel = 0;
 
 	if (mIsAlive == true)
@@ -594,6 +599,11 @@ void Player::DamageUpdate()
 		mDamageCoolTimer.Reset();
 		mIsDamage = false;
 	}
+}
+
+void Player::SetMovieEvent(MovieEvent* movieEvent)
+{
+	mMovieEvent = movieEvent;
 }
 
 // セッター

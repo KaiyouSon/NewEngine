@@ -3,6 +3,7 @@
 #include "Boss.h"
 #include "Field.h"
 #include "UIManager.h"
+#include "MovieEvent.h"
 
 template<typename T> class Singleton;
 
@@ -13,6 +14,7 @@ private:
 	Boss* mBoss;
 	Field* mField;
 	UIManager* mUiManager;
+	MovieEvent* mMovieEvent;
 
 private:
 	// ƒvƒŒƒCƒ„[‚Ì‰Ÿ‚µ–ß‚µˆ—
@@ -36,6 +38,7 @@ public:
 	void SetBoss(Boss* boss);
 	void SetField(Field* field);
 	void SetUIManager(UIManager* uiManager);
+	void SetMovieEvent(MovieEvent* movieEvent);
 
 private:
 	friend Singleton<CollisionManager>;

@@ -750,11 +750,14 @@
     <ClCompile Include="NewEngine\Render\ComputePipeline.cpp">
       <Filter>NewEngine\Source\Render\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\MovieEvent.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\AirEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\MovieCamera.cpp">
+      <Filter>Application\Source\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\MovieEvent.cpp">
+      <Filter>Application\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1247,11 +1250,14 @@
     <ClInclude Include="NewEngine\Render\ComputePipeline.h">
       <Filter>NewEngine\Header\Render\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\MovieEvent.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\AirEffect.h">
       <Filter>Application\Header\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\MovieCamera.h">
+      <Filter>Application\Header\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\MovieEvent.h">
+      <Filter>Application\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
