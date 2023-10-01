@@ -6,25 +6,40 @@ void DescriptorHeap::Create(const DescriptorHeapSetting setting)
 {
 	mSetting = setting;
 
+	D3D12_DESCRIPTOR_HEAP_DESC heapDesc{};
+
 	switch (mSetting.heapType)
 	{
-	case DescriptorHeapSetting::CBV_SRV_UAV:
+	case DescriptorHeapSetting::RTV:
 	{
 		// デスクリプタヒープの設定
-		D3D12_DESCRIPTOR_HEAP_DESC heapDesc{};
-		heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-		heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+		heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 		heapDesc.NumDescriptors = mSetting.maxSize;
-
-		// UAV用デスクリプタヒープの生成
-		mResult = RenderBase::GetInstance()->GetDevice()->
-			CreateDescriptorHeap(&heapDesc, IID_PPV_ARGS(&mDescriptorHeap));
-		assert(SUCCEEDED(mResult));
 	}
 	break;
 
-
+	case DescriptorHeapSetting::DSV:
+	{
+		// デスクリプタヒープの設定
+		heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
+		heapDesc.NumDescriptors = mSetting.maxSize;
 	}
+	break;
+
+	case DescriptorHeapSetting::CBV_SRV_UAV:
+	{
+		// デスクリプタヒープの設定
+		heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+		heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+		heapDesc.NumDescriptors = mSetting.maxSize;
+	}
+	break;
+	}
+
+	// デスクリプタヒープの生成
+	mResult = RenderBase::GetInstance()->GetDevice()->
+		CreateDescriptorHeap(&heapDesc, IID_PPV_ARGS(&mDescriptorHeap));
+	assert(SUCCEEDED(mResult));
 }
 
 void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t arraySize, const uint32_t byteSize)
@@ -58,7 +73,6 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 	}
 	else if (bufferResource->buffer->GetDesc().Format == DXGI_FORMAT_UNKNOWN)
 	{
-		uint32_t zero = 0;
 		desc.Format = bufferResource->buffer->GetDesc().Format;
 		desc.Buffer.FirstElement = 0;				// 最初の要素のインデックス
 		desc.Buffer.NumElements = arraySize;		// バッファ内の要素数

@@ -287,8 +287,17 @@ void RenderBase::DescriptorHeapInit()
 
 
 	DescriptorHeapSetting setting;
+	// RTVŠi”[—p
+	setting.maxSize = 64;
+	setting.heapType = DescriptorHeapSetting::RTV;
+	DescriptorHeapManager::Create(setting, "RTV");
 
-	// ComputShader—p
+	// DSVŠi”[—p
+	setting.maxSize = 64;
+	setting.heapType = DescriptorHeapSetting::DSV;
+	DescriptorHeapManager::Create(setting, "DSV");
+
+	// SRV_UAVŠi”[—p
 	setting.maxSize = 512;
 	setting.heapType = DescriptorHeapSetting::CBV_SRV_UAV;
 	DescriptorHeapManager::Create(setting, "SRV_UAV");

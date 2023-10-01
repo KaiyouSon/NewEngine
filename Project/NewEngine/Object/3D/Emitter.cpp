@@ -20,13 +20,16 @@ Emitter::Emitter() :
 	MaterialInit();
 	mTexture->isMaterial = true;
 
-	mInputData->Create();
-	mOutputData->Create();
+	// 提出のために一回コメントアウト
+	{
+		//mInputData->Create();
+		//mOutputData->Create();
 
-	DescriptorHeapManager::GetDescriptorHeap("SRV_UAV")->
-		CreateSRV(mInputData->GetBufferResource(), 1, sizeof(ParticleParameter::Test));
-	DescriptorHeapManager::GetDescriptorHeap("SRV_UAV")->
-		CreateUAV(mOutputData->GetBufferResource(), 1, sizeof(ParticleParameter::Test));
+		//DescriptorHeapManager::GetDescriptorHeap("SRV_UAV")->
+		//	CreateSRV(mInputData->GetBufferResource(), 1, sizeof(ParticleParameter::Test));
+		//DescriptorHeapManager::GetDescriptorHeap("SRV_UAV")->
+		//	CreateUAV(mOutputData->GetBufferResource(), 1, sizeof(ParticleParameter::Test));
+	}
 
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
 }
@@ -67,24 +70,25 @@ void Emitter::Draw(const BlendMode blendMode)
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	PipelineManager::GetComputePipeline("Emitter")->ExecuteCommand();
-
-	ID3D12DescriptorHeap* descriptorHeap[] =
+	// 提出のために一回コメントアウト
 	{
-		DescriptorHeapManager::GetDescriptorHeap("SRV_UAV")->GetDescriptorHeap()
-	};
-	renderBase->GetCommandList()->SetDescriptorHeaps(1, descriptorHeap);
+		//PipelineManager::GetComputePipeline("Emitter")->ExecuteCommand();
 
-	uint32_t index = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetSRVStartIndex();
-	renderBase->GetCommandList()->SetComputeRootDescriptorTable(0, mInputData->GetBufferResource()->gpuHandle);
+		//ID3D12DescriptorHeap* descriptorHeap[] =
+		//{
+		//	DescriptorHeapManager::GetDescriptorHeap("SRV_UAV")->GetDescriptorHeap()
+		//};
+		//renderBase->GetCommandList()->SetDescriptorHeaps(1, descriptorHeap);
 
-	uint32_t end = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetUAVStartIndex();
-	renderBase->GetCommandList()->SetComputeRootDescriptorTable(1, mOutputData->GetBufferResource()->gpuHandle);
+		//uint32_t index = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetSRVStartIndex();
+		//renderBase->GetCommandList()->SetComputeRootDescriptorTable(0, mInputData->GetBufferResource()->gpuHandle);
 
-	// ディスパッチ
-	renderBase->GetCommandList()->Dispatch(1, 1, 1);
+		//uint32_t end = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetUAVStartIndex();
+		//renderBase->GetCommandList()->SetComputeRootDescriptorTable(1, mOutputData->GetBufferResource()->gpuHandle);
 
-
+		//// ディスパッチ
+		//renderBase->GetCommandList()->Dispatch(1, 1, 1);
+	}
 
 	// GraphicsPipeline描画コマンド
 	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
