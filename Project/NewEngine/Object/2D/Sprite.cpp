@@ -71,7 +71,7 @@ void Sprite::Draw(const BlendMode blendMode)
 	for (uint32_t i = startIndex; i < endIndex; i++)
 	{
 		// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetBufferResource()->gpuHandle);
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
 	}
 
 	renderBase->GetCommandList()->DrawInstanced((uint16_t)mVertices.size(), 1, 0, 0);

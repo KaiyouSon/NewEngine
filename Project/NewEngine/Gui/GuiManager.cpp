@@ -257,7 +257,7 @@ void Gui::DrawImage(Texture* texture, const Vec2& size)
 {
 	if (texture == nullptr) return;
 
-	ImTextureID gpuHandle = (ImTextureID)texture->GetBufferResource()->gpuHandle.ptr;
+	ImTextureID gpuHandle = (ImTextureID)texture->GetBufferResource()->srvHandle.gpu.ptr;
 	ImVec2 textureSize = { size.x,size.y };
 	ImGui::Image(gpuHandle, textureSize);
 }
@@ -273,7 +273,7 @@ bool Gui::DrawImageButton(Texture* texture, const Vec2& size)
 {
 	if (texture == nullptr) return false;
 
-	ImTextureID gpuHandle = (ImTextureID)texture->GetBufferResource()->gpuHandle.ptr;
+	ImTextureID gpuHandle = (ImTextureID)texture->GetBufferResource()->srvHandle.gpu.ptr;
 	ImVec2 buttonSize = { size.x,size.y };
 	return ImGui::ImageButton(gpuHandle, buttonSize);
 }

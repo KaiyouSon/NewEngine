@@ -57,7 +57,7 @@ void PostEffect::Draw()
 		renderBase->GetCommandList()->
 			SetGraphicsRootDescriptorTable(
 				startIndex + i,
-				mRenderTextures[i]->GetBufferResources()->at(rtvIndex).gpuHandle);
+				mRenderTextures[i]->GetBufferResources()->at(rtvIndex).srvHandle.gpu);
 
 		if (mRenderTextures[i]->useDepth == true)
 		{
@@ -72,14 +72,14 @@ void PostEffect::Draw()
 			renderBase->GetCommandList()->
 				SetGraphicsRootDescriptorTable(
 					(uint32_t)(startIndex + 1),
-					mRenderTextures[i]->depthTexture->GetBufferResource()->gpuHandle);
+					mRenderTextures[i]->depthTexture->GetBufferResource()->srvHandle.gpu);
 		}
 		else
 		{
 			renderBase->GetCommandList()->
 				SetGraphicsRootDescriptorTable(
 					startIndex + 1,
-					mRenderTextures[i]->GetBufferResources()->at(rtvIndex).gpuHandle);
+					mRenderTextures[i]->GetBufferResources()->at(rtvIndex).srvHandle.gpu);
 		}
 	}
 

@@ -82,7 +82,7 @@ void MappingWindow::ShowRenderTextureMap()
 			{
 				Gui::DrawString("Pass %d", i);
 
-				Gui::DrawImage(pair.second.get()->GetBufferResources()->at(i).gpuHandle, size);
+				Gui::DrawImage(pair.second.get()->GetBufferResources()->at(i).rtvHandle.gpu, size);
 			}
 
 		}

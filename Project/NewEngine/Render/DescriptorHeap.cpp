@@ -7,7 +7,6 @@ DescriptorHeapSetting::DescriptorHeapSetting() :
 {
 }
 
-
 void DescriptorHeap::Create(const DescriptorHeapSetting setting)
 {
 	mSetting = setting;
@@ -62,12 +61,12 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 	uint32_t incrementSize = GetIncrementSize();
 
 	// ヒープの先頭ハンドルを取得
-	bufferResource->cpuHandle = mDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
-	bufferResource->gpuHandle = mDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
+	bufferResource->srvHandle.cpu = mDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	bufferResource->srvHandle.gpu = mDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
 
 	// index分ずらす
-	bufferResource->cpuHandle.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->gpuHandle.ptr += (uint32_t)(incrementSize * incrementIndex);
+	bufferResource->srvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
+	bufferResource->srvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->index = incrementIndex;
 
 	// SRVの設定
@@ -94,13 +93,12 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 	}
 	desc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 
-
 	// ハンドルの指す位置にSRVを作成
 	RenderBase::GetInstance()->GetDevice()->
 		CreateShaderResourceView(
 			bufferResource->buffer.Get(),
 			&desc,
-			bufferResource->cpuHandle);
+			bufferResource->srvHandle.cpu);
 }
 
 void DescriptorHeap::CreateRTV(BufferResource* bufferResource)
@@ -117,12 +115,12 @@ void DescriptorHeap::CreateRTV(BufferResource* bufferResource)
 	uint32_t incrementSize = GetIncrementSize();
 
 	// ヒープの先頭ハンドルを取得
-	bufferResource->cpuHandle = mDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
-	bufferResource->gpuHandle = mDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
+	bufferResource->rtvHandle.cpu = mDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	bufferResource->rtvHandle.gpu = mDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
 
 	// index分ずらす
-	bufferResource->cpuHandle.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->gpuHandle.ptr += (uint32_t)(incrementSize * incrementIndex);
+	bufferResource->rtvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
+	bufferResource->rtvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->index = incrementIndex;
 
 	// レンダーターゲットビューの設定
@@ -136,7 +134,7 @@ void DescriptorHeap::CreateRTV(BufferResource* bufferResource)
 		CreateRenderTargetView(
 			bufferResource->buffer.Get(),
 			&desc,
-			bufferResource->cpuHandle);
+			bufferResource->rtvHandle.cpu);
 }
 
 void DescriptorHeap::CreateUAV(BufferResource* bufferResource, const uint32_t arraySize, const uint32_t byteSize)
@@ -153,12 +151,12 @@ void DescriptorHeap::CreateUAV(BufferResource* bufferResource, const uint32_t ar
 	uint32_t incrementSize = GetIncrementSize();
 
 	// ヒープの先頭ハンドルを取得
-	bufferResource->cpuHandle = mDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
-	bufferResource->gpuHandle = mDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
+	bufferResource->uavHandle.cpu = mDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	bufferResource->uavHandle.gpu = mDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
 
 	// index分ずらす
-	bufferResource->cpuHandle.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->gpuHandle.ptr += (uint32_t)(incrementSize * incrementIndex);
+	bufferResource->uavHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
+	bufferResource->uavHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->index = incrementIndex;
 
 	// UAVの設定
@@ -175,7 +173,7 @@ void DescriptorHeap::CreateUAV(BufferResource* bufferResource, const uint32_t ar
 			bufferResource->buffer.Get(),
 			nullptr,
 			&desc,
-			bufferResource->cpuHandle);
+			bufferResource->uavHandle.cpu);
 }
 
 uint32_t DescriptorHeap::GetIncrementIndex()

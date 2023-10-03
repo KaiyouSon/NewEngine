@@ -86,17 +86,17 @@ void Object3D::Draw(const BlendMode blendMode)
 
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetBufferResource()->gpuHandle);
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
 
 	if (isUseDissolve == true)
 	{
 		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			(uint32_t)startIndex + 1, mDissolveTex->GetBufferResource()->gpuHandle);
+			(uint32_t)startIndex + 1, mDissolveTex->GetBufferResource()->srvHandle.gpu);
 	}
 	else
 	{
 		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			(uint32_t)startIndex + 1, mWhiteTex->GetBufferResource()->gpuHandle);
+			(uint32_t)startIndex + 1, mWhiteTex->GetBufferResource()->srvHandle.gpu);
 	}
 
 	if (mIsWriteShadow == true)
@@ -110,12 +110,12 @@ void Object3D::Draw(const BlendMode blendMode)
 		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
 
 		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			(uint32_t)startIndex + 2, mDepthTex->GetBufferResource()->gpuHandle);
+			(uint32_t)startIndex + 2, mDepthTex->GetBufferResource()->srvHandle.gpu);
 	}
 	else
 	{
 		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			(uint32_t)startIndex + 2, mWhiteTex->GetBufferResource()->gpuHandle);
+			(uint32_t)startIndex + 2, mWhiteTex->GetBufferResource()->srvHandle.gpu);
 	}
 
 	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModel->mesh.indices.size(), 1, 0, 0, 0);

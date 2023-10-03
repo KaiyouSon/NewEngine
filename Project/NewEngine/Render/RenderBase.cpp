@@ -91,10 +91,10 @@ void RenderBase::PreDraw()
 	//--------------------------- 描画先指定コマンド ---------------------------//
 	// ２．描画先の変更
 	// レンダーターゲットビューのハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = mBackBuffers[bbIndex]->GetBufferResource()->cpuHandle;
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = mBackBuffers[bbIndex]->GetBufferResource()->rtvHandle.cpu;
 
 	// 深度ステンシルビュー用デスクリプタヒープのハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = mDepthBuffer->GetBufferResource()->cpuHandle;
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = mDepthBuffer->GetBufferResource()->dsvHandle.cpu;
 	mCommandList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
 
 	// 画面クリア R G B A
@@ -164,7 +164,7 @@ void RenderBase::CreateDSV(DepthBuffer& depthBuffer)
 
 	dsvCpuHandle.ptr += descriptorSize * mDsvIncrementIndex;
 
-	depthBuffer.GetBufferResource()->cpuHandle = dsvCpuHandle;
+	depthBuffer.GetBufferResource()->dsvHandle.cpu= dsvCpuHandle;
 
 	// 深度ビュー作成
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
