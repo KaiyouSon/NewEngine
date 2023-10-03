@@ -86,36 +86,36 @@ void Object3D::Draw(const BlendMode blendMode)
 
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetGpuHandle());
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetBufferResource()->gpuHandle);
 
 	if (isUseDissolve == true)
 	{
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 1, mDissolveTex->GetGpuHandle());
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+			(uint32_t)startIndex + 1, mDissolveTex->GetBufferResource()->gpuHandle);
 	}
 	else
 	{
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 1, mWhiteTex->GetGpuHandle());
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+			(uint32_t)startIndex + 1, mWhiteTex->GetBufferResource()->gpuHandle);
 	}
 
 	if (mIsWriteShadow == true)
 	{
 		CD3DX12_RESOURCE_BARRIER barrier =
 			CD3DX12_RESOURCE_BARRIER::Transition(
-				mDepthTex->buffer.Get(),
+				mDepthTex->GetBufferResource()->buffer.Get(),
 				D3D12_RESOURCE_STATE_DEPTH_WRITE,
 				D3D12_RESOURCE_STATE_GENERIC_READ,
 				D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
 		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
 
-
-		//auto handle = TextureManager::GetRenderTexture("ShadowMapBlur")->GetGpuHandle(0);
-		//renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 2, handle);
-
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 2, mDepthTex->GetGpuHandle());
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+			(uint32_t)startIndex + 2, mDepthTex->GetBufferResource()->gpuHandle);
 	}
 	else
 	{
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((uint32_t)startIndex + 2, mWhiteTex->GetGpuHandle());
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+			(uint32_t)startIndex + 2, mWhiteTex->GetBufferResource()->gpuHandle);
 	}
 
 	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModel->mesh.indices.size(), 1, 0, 0, 0);
@@ -123,7 +123,7 @@ void Object3D::Draw(const BlendMode blendMode)
 	{
 		CD3DX12_RESOURCE_BARRIER barrier =
 			CD3DX12_RESOURCE_BARRIER::Transition(
-				mDepthTex->buffer.Get(),
+				mDepthTex->GetBufferResource()->buffer.Get(),
 				D3D12_RESOURCE_STATE_GENERIC_READ,
 				D3D12_RESOURCE_STATE_DEPTH_WRITE,
 				D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);

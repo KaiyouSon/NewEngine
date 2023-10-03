@@ -55,13 +55,15 @@ void PostEffect::Draw()
 	for (uint32_t i = 0; i < mRenderTextures.size(); i++)
 	{
 		renderBase->GetCommandList()->
-			SetGraphicsRootDescriptorTable(startIndex + i, mRenderTextures[i]->GetGpuHandle(rtvIndex));
+			SetGraphicsRootDescriptorTable(
+				startIndex + i,
+				mRenderTextures[i]->GetBufferResources()->at(rtvIndex).gpuHandle);
 
 		if (mRenderTextures[i]->useDepth == true)
 		{
 			CD3DX12_RESOURCE_BARRIER barrier =
 				CD3DX12_RESOURCE_BARRIER::Transition(
-					mRenderTextures[i]->depthTexture->buffer.Get(),
+					mRenderTextures[i]->depthTexture->GetBufferResource()->buffer.Get(),
 					D3D12_RESOURCE_STATE_DEPTH_WRITE,
 					D3D12_RESOURCE_STATE_GENERIC_READ,
 					D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
@@ -70,12 +72,14 @@ void PostEffect::Draw()
 			renderBase->GetCommandList()->
 				SetGraphicsRootDescriptorTable(
 					(uint32_t)(startIndex + 1),
-					mRenderTextures[i]->depthTexture->GetGpuHandle());
+					mRenderTextures[i]->depthTexture->GetBufferResource()->gpuHandle);
 		}
 		else
 		{
 			renderBase->GetCommandList()->
-				SetGraphicsRootDescriptorTable(startIndex + 1, mRenderTextures[i]->GetGpuHandle(rtvIndex));
+				SetGraphicsRootDescriptorTable(
+					startIndex + 1,
+					mRenderTextures[i]->GetBufferResources()->at(rtvIndex).gpuHandle);
 		}
 	}
 
@@ -87,7 +91,7 @@ void PostEffect::Draw()
 		{
 			CD3DX12_RESOURCE_BARRIER barrier =
 				CD3DX12_RESOURCE_BARRIER::Transition(
-					mRenderTextures[i]->depthTexture->buffer.Get(),
+					mRenderTextures[i]->depthTexture->GetBufferResource()->buffer.Get(),
 					D3D12_RESOURCE_STATE_GENERIC_READ,
 					D3D12_RESOURCE_STATE_DEPTH_WRITE,
 					D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);

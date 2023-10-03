@@ -9,6 +9,7 @@ struct DescriptorHeapSetting
 {
 	enum HeapType
 	{
+		None,
 		CBV_SRV_UAV,
 		RTV,
 		DSV,
@@ -17,8 +18,12 @@ struct DescriptorHeapSetting
 	// サイズ
 	uint32_t maxSize;
 
+	uint32_t startIndex;
+
 	// ヒープの種類
 	HeapType heapType;
+
+	DescriptorHeapSetting();
 };
 
 class DescriptorHeap

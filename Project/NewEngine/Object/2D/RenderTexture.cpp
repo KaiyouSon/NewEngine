@@ -86,49 +86,6 @@ void RenderTexture::PostDrawScene()
 	}
 }
 
-void RenderTexture::AddSRVIndex(const uint32_t index)
-{
-	mSrvIndexes.push_back(index);
-}
-
-// セッター
-void RenderTexture::SetHandleNum(const uint32_t num)
-{
-	mCpuHandles.resize(num);
-	mGpuHandles.resize(num);
-}
-void RenderTexture::SetCpuHandle(const uint32_t index, const D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle)
-{
-	mCpuHandles[index] = cpuHandle;
-}
-void RenderTexture::SetGpuHandle(const uint32_t index, const D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle)
-{
-	mGpuHandles[index] = gpuHandle;
-}
-
-// ゲッター
-D3D12_CPU_DESCRIPTOR_HANDLE RenderTexture::GetCpuHandle(const uint32_t index)
-{
-	uint32_t min = 0;
-	uint32_t max = (uint32_t)(mCpuHandles.size() - 1);
-	uint32_t i = Clamp<uint32_t>(index, min, max);
-
-	return mCpuHandles[i];
-}
-D3D12_GPU_DESCRIPTOR_HANDLE RenderTexture::GetGpuHandle(const uint32_t index)
-{
-	uint32_t min = 0;
-	uint32_t max = (uint32_t)(mGpuHandles.size() - 1);
-	uint32_t i = Clamp<uint32_t>(index, min, max);
-
-	return mGpuHandles[i];
-}
-
-std::vector<uint32_t>* RenderTexture::GetSRVIndexes()
-{
-	return &mSrvIndexes;
-}
-
 std::vector<BufferResource>* RenderTexture::GetBufferResources()
 {
 	return &mBufferResources;

@@ -22,9 +22,9 @@ void Gui::Init()
 		renderBase->GetDevice(),
 		sNumFramesInFlight,
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
-		TextureManager::GetInstance()->GetSrvDescHeap(),
-		TextureManager::GetInstance()->GetSrvDescHeap()->GetCPUDescriptorHandleForHeapStart(),
-		TextureManager::GetInstance()->GetSrvDescHeap()->GetGPUDescriptorHandleForHeapStart());
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap(),
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap()->GetCPUDescriptorHandleForHeapStart(),
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap()->GetGPUDescriptorHandleForHeapStart());
 }
 
 void Gui::PreDraw()
@@ -42,7 +42,7 @@ void Gui::PostDraw()
 	ImGui::Render();
 	// SRVヒープの設定コマンド
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
-	auto srvDescHeap = TextureManager::GetInstance()->GetSrvDescHeap();
+	auto srvDescHeap = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
 	renderBase->GetCommandList()->SetDescriptorHeaps(1, &srvDescHeap);
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), renderBase->GetCommandList());
 }
@@ -257,7 +257,7 @@ void Gui::DrawImage(Texture* texture, const Vec2& size)
 {
 	if (texture == nullptr) return;
 
-	ImTextureID gpuHandle = (ImTextureID)texture->GetGpuHandle().ptr;
+	ImTextureID gpuHandle = (ImTextureID)texture->GetBufferResource()->gpuHandle.ptr;
 	ImVec2 textureSize = { size.x,size.y };
 	ImGui::Image(gpuHandle, textureSize);
 }
@@ -273,7 +273,7 @@ bool Gui::DrawImageButton(Texture* texture, const Vec2& size)
 {
 	if (texture == nullptr) return false;
 
-	ImTextureID gpuHandle = (ImTextureID)texture->GetGpuHandle().ptr;
+	ImTextureID gpuHandle = (ImTextureID)texture->GetBufferResource()->gpuHandle.ptr;
 	ImVec2 buttonSize = { size.x,size.y };
 	return ImGui::ImageButton(gpuHandle, buttonSize);
 }

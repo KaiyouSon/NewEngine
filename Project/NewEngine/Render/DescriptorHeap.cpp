@@ -2,6 +2,12 @@
 #include "RenderBase.h"
 #include <cassert>
 
+DescriptorHeapSetting::DescriptorHeapSetting() :
+	maxSize(64), startIndex(0), heapType(DescriptorHeapSetting::None)
+{
+}
+
+
 void DescriptorHeap::Create(const DescriptorHeapSetting setting)
 {
 	mSetting = setting;
@@ -50,7 +56,7 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 	}
 
 	// インデックスを取得
-	uint32_t incrementIndex = GetIncrementIndex();
+	uint32_t incrementIndex = mSetting.startIndex + GetIncrementIndex();
 
 	// サイズを取得
 	uint32_t incrementSize = GetIncrementSize();
@@ -68,11 +74,13 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 	D3D12_SHADER_RESOURCE_VIEW_DESC desc{};	// srv設定構造体
 	if (bufferResource->buffer->GetDesc().Format == DXGI_FORMAT_D32_FLOAT)
 	{
+		desc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 		desc.Format = DXGI_FORMAT_R32_FLOAT;
 		desc.Texture2D.MipLevels = bufferResource->buffer->GetDesc().MipLevels;
 	}
 	else if (bufferResource->buffer->GetDesc().Format == DXGI_FORMAT_UNKNOWN)
 	{
+		desc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
 		desc.Format = bufferResource->buffer->GetDesc().Format;
 		desc.Buffer.FirstElement = 0;				// 最初の要素のインデックス
 		desc.Buffer.NumElements = arraySize;		// バッファ内の要素数
@@ -80,11 +88,12 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 	}
 	else
 	{
+		desc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 		desc.Format = bufferResource->buffer->GetDesc().Format;
 		desc.Texture2D.MipLevels = bufferResource->buffer->GetDesc().MipLevels;
 	}
 	desc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	desc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
+
 
 	// ハンドルの指す位置にSRVを作成
 	RenderBase::GetInstance()->GetDevice()->

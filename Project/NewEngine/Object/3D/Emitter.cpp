@@ -98,7 +98,7 @@ void Emitter::Draw(const BlendMode blendMode)
 
 	ID3D12DescriptorHeap* descriptorHeap2[] =
 	{
-		TextureManager::GetInstance()->GetSrvDescHeap()
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap()
 	};
 	renderBase->GetCommandList()->SetDescriptorHeaps(1, descriptorHeap2);
 
@@ -106,7 +106,7 @@ void Emitter::Draw(const BlendMode blendMode)
 
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetGpuHandle());
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetBufferResource()->gpuHandle);
 
 	renderBase->GetCommandList()->DrawInstanced(pSize, 1, 0, 0);
 

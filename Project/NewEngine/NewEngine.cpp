@@ -118,7 +118,7 @@ void NewEngine::PrevDraw()
 	if (isLoaded == true)
 	{
 		// SRVヒープの設定コマンド
-		auto srvDescHeap = TextureManager::GetInstance()->GetSrvDescHeap();
+		auto srvDescHeap = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
 		RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &srvDescHeap);
 		SceneManager::GetInstance()->RenderTextureSetting();
 

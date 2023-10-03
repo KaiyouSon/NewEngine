@@ -14,9 +14,6 @@ class RenderTexture
 private:
 	std::vector<CD3DX12_VIEWPORT> mViewports;	// ビューポート
 	std::vector<CD3DX12_RECT> mScissorRects;	// シザー矩形
-	std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> mCpuHandles; // SRVのハンドル(CPU側)
-	std::vector<D3D12_GPU_DESCRIPTOR_HANDLE> mGpuHandles; // SRVのハンドル(GPU側)
-	std::vector<uint32_t> mSrvIndexes;
 
 private:
 	std::vector<BufferResource> mBufferResources;
@@ -33,19 +30,6 @@ public:
 	void PrevDrawScene();
 	void PostDrawScene();
 
-public:
-	void AddSRVIndex(const uint32_t index);
-
-public:
-	// セッター
-	void SetHandleNum(const uint32_t num);
-	void SetCpuHandle(const uint32_t index, const D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle);
-	void SetGpuHandle(const uint32_t index, const D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle);
-
 public: // ゲッター
-	D3D12_CPU_DESCRIPTOR_HANDLE GetCpuHandle(const uint32_t index);
-	D3D12_GPU_DESCRIPTOR_HANDLE GetGpuHandle(const uint32_t index);
-	std::vector<uint32_t>* GetSRVIndexes();
-
 	std::vector<BufferResource>* GetBufferResources();
 };

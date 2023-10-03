@@ -15,7 +15,6 @@ private:
 	std::unordered_map<std::string, std::unique_ptr<Texture>> mTextureMap;				// テクスチャーのマップ
 	std::unordered_map<std::string, std::unique_ptr<Texture>> mMaterialTextureMap;		// マテリアルテクスチャーのマップ
 	std::unordered_map<std::string, std::unique_ptr<RenderTexture>> mRenderTextureMap;	// レンダーテクスチャーのマップ
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mSrvDescHeap;	// srv用ディスクリプタヒープ
 
 	std::vector<bool> mCheckSRVIndex; // index番のSRVが開いてるかどうかをチェックするため
 
@@ -69,16 +68,8 @@ public:	// その他の処理
 	// ディスクリプターヒープを作成する処理
 	static void CreateDescriptorHeap();
 
-	// SRVを作成する処理
-	void CreateSRV(Texture& texture, ID3D12Resource* buffer);
-	void CreateSRV(RenderTexture& texture, ID3D12Resource* buffer, uint32_t index);
-
 	// テクスチャーロード後のコマンドリストの実行
 	static void ExcuteComandList();
-
-public:
-	// SRV用のディスクリプターヒープを取得
-	ID3D12DescriptorHeap* GetSrvDescHeap();
 
 private:
 	// シングルトン
