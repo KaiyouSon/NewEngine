@@ -245,6 +245,7 @@
     <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp" />
     <ClCompile Include="NewEngine\Render\PipelineManager.cpp" />
     <ClCompile Include="NewEngine\Render\RenderBase.cpp" />
+    <ClCompile Include="NewEngine\Render\RenderTarget.cpp" />
     <ClCompile Include="NewEngine\Render\RenderWindow.cpp" />
     <ClCompile Include="NewEngine\Render\RootSignature.cpp" />
     <ClCompile Include="NewEngine\Render\RWStructuredBuffer.cpp" />

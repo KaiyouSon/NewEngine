@@ -436,7 +436,7 @@ Texture* TextureManager::CreateDepthTexture(const Vec2 size)
 	GetInstance()->mTextureMap.insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
 
 	// 深度バッファのリソース
-	GetInstance()->mTextureMap[tag]->buffer = RenderBase::GetInstance()->GetDepthBuffer()->GetBuffer();
+	GetInstance()->mTextureMap[tag]->buffer = RenderBase::GetInstance()->GetDepthBuffer()->GetBufferResource()->buffer;
 
 	// SRV作成
 	GetInstance()->CreateSRV(*GetInstance()->mTextureMap[tag], GetInstance()->mTextureMap[tag]->buffer.Get());
@@ -521,17 +521,16 @@ RenderTexture* TextureManager::CreateRenderTexture(const Vec2 size, const uint32
 		GetInstance()->CreateSRV(*renderTex, renderTex->buffers[i].Get(), i);
 
 		// RTV作成
-		renderTex->renderTargets[i].buffer_ = renderTex->buffers[i];
+		renderTex->renderTargets[i].GetBufferResource()->buffer = renderTex->buffers[i];
 		renderBase->CreateRTV(renderTex->renderTargets[i], &rtvDesc);
 	}
 
 	// DSV作成
 	renderTex->depthBuffer.Create(size);
 	renderBase->CreateDSV(renderTex->depthBuffer);
-	renderTex->depthBuffer.mBuffer->SetName(L"DepthBuffer");
 
 	renderTex->depthTexture = std::make_unique<Texture>();
-	renderTex->depthTexture->buffer = renderTex->depthBuffer.GetBuffer();
+	renderTex->depthTexture->buffer = renderTex->depthBuffer.GetBufferResource()->buffer;
 	GetInstance()->CreateSRV(*renderTex->depthTexture, renderTex->depthTexture->buffer.Get());
 
 	GetInstance()->mRenderTextureMap.insert(std::make_pair(tag, std::move(renderTex)));

@@ -28,11 +28,11 @@ void RenderTexture::PrevDrawScene()
 	std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> rtvCpuHandle;
 	for (int i = 0; i < buffers.size(); i++)
 	{
-		rtvCpuHandle.push_back(renderTargets[i].GetCpuHandle());
+		rtvCpuHandle.push_back(renderTargets[i].GetBufferResource()->cpuHandle);
 	}
 
 	// DSV CPUハンドル
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvCpuHandle = depthBuffer.GetCpuHandle();
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvCpuHandle = depthBuffer.GetBufferResource()->cpuHandle;
 
 	// レンダーターゲットをセット
 	renderBase->GetCommandList()->OMSetRenderTargets((uint32_t)renderTargets.size(), rtvCpuHandle.data(), false, &dsvCpuHandle);

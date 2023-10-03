@@ -759,6 +759,9 @@
     <ClCompile Include="Application\SourceCode\MovieEvent.cpp">
       <Filter>Application\Source</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Render\RenderTarget.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">

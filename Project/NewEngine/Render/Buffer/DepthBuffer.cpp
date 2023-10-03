@@ -5,6 +5,8 @@
 
 void DepthBuffer::Create(const Vec2 size)
 {
+	mBufferResource = std::make_unique<BufferResource>();
+
 	HRESULT result;
 
 	Vec2 depthResourceSize = size;
@@ -37,19 +39,14 @@ void DepthBuffer::Create(const Vec2 size)
 			&depthResourceDesc,
 			D3D12_RESOURCE_STATE_DEPTH_WRITE, // 深度値書き込みに使用
 			&depthClearValue,
-			IID_PPV_ARGS(&mBuffer));
+			IID_PPV_ARGS(&mBufferResource->buffer));
 	assert(SUCCEEDED(result));
 
 	RenderBase::GetInstance()->CreateDSV(*this);
 }
 
-// セッター
-void DepthBuffer::SetCpuHandle(const D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle)
-{
-	mCpuHandle = cpuHandle;
-}
-
 // ゲッター
-ID3D12Resource* DepthBuffer::GetBuffer() { return mBuffer.Get(); }
-ID3D12Resource** DepthBuffer::GetBufferAddress() { return mBuffer.GetAddressOf(); }
-D3D12_CPU_DESCRIPTOR_HANDLE DepthBuffer::GetCpuHandle() { return mCpuHandle; }
+BufferResource* DepthBuffer::GetBufferResource()
+{
+	return mBufferResource.get();
+}

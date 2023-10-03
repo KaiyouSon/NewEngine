@@ -83,7 +83,7 @@ void RenderBase::PreDraw()
 	// バックバッファの番号を取得
 	UINT bbIndex = mSwapChain->GetCurrentBackBufferIndex();
 	// １．リソースバリアで書き込み可能に変更
-	mBarrierDesc.Transition.pResource = mBackBuffers[bbIndex]->GetBuffer();	// バックバッファを指定
+	mBarrierDesc.Transition.pResource = mBackBuffers[bbIndex]->GetBufferResource()->buffer.Get();	// バックバッファを指定
 	mBarrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;	// 表示状態から
 	mBarrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画状態へ
 	mCommandList->ResourceBarrier(1, &mBarrierDesc);
@@ -91,10 +91,10 @@ void RenderBase::PreDraw()
 	//--------------------------- 描画先指定コマンド ---------------------------//
 	// ２．描画先の変更
 	// レンダーターゲットビューのハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = mBackBuffers[bbIndex]->GetCpuHandle();
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = mBackBuffers[bbIndex]->GetBufferResource()->cpuHandle;
 
 	// 深度ステンシルビュー用デスクリプタヒープのハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = mDepthBuffer->GetCpuHandle();
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = mDepthBuffer->GetBufferResource()->cpuHandle;
 	mCommandList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
 
 	// 画面クリア R G B A
@@ -164,10 +164,10 @@ void RenderBase::CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET
 
 	rtvCpuHandle.ptr += descriptorSize * mRtvIncrementIndex;
 
-	renderTarget.SetCpuHandle(rtvCpuHandle);
+	renderTarget.GetBufferResource()->cpuHandle = rtvCpuHandle;
 
 	// ハンドルの指す位置にRTV作成
-	mDevice->CreateRenderTargetView(renderTarget.GetBuffer(), rtvDesc, rtvCpuHandle);
+	mDevice->CreateRenderTargetView(renderTarget.GetBufferResource()->buffer.Get(), rtvDesc, rtvCpuHandle);
 
 	mRtvIncrementIndex++;
 }
@@ -180,7 +180,7 @@ void RenderBase::CreateDSV(DepthBuffer& depthBuffer)
 
 	dsvCpuHandle.ptr += descriptorSize * mDsvIncrementIndex;
 
-	depthBuffer.SetCpuHandle(dsvCpuHandle);
+	depthBuffer.GetBufferResource()->cpuHandle = dsvCpuHandle;
 
 	// 深度ビュー作成
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
@@ -188,7 +188,7 @@ void RenderBase::CreateDSV(DepthBuffer& depthBuffer)
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 
 	// ハンドルの指す位置にRTV作成
-	mDevice->CreateDepthStencilView(depthBuffer.GetBuffer(), &dsvDesc, dsvCpuHandle);
+	mDevice->CreateDepthStencilView(depthBuffer.GetBufferResource()->buffer.Get(), &dsvDesc, dsvCpuHandle);
 
 	mDsvIncrementIndex++;
 }
@@ -372,7 +372,7 @@ void RenderBase::SwapChainInit()
 	for (size_t i = 0; i < mBackBuffers.size(); i++)
 	{
 		// スワップチェーンからバッファを取得
-		mSwapChain->GetBuffer((UINT)i, IID_PPV_ARGS(mBackBuffers[i]->GetBufferAddress()));
+		mSwapChain->GetBuffer((UINT)i, IID_PPV_ARGS(mBackBuffers[i]->GetBufferResource()->buffer.GetAddressOf()));
 
 		CreateRTV(*mBackBuffers[i], &rtvDesc);
 	}
