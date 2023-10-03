@@ -78,7 +78,7 @@ void MappingWindow::ShowRenderTextureMap()
 			Gui::DrawString("Texture Size : (%f,%f)", size.x, size.y);
 			size = size >= 10000 ? size / 10.f : size;
 
-			for (uint32_t i = 0; i < pair.second.get()->buffers.size(); i++)
+			for (uint32_t i = 0; i < pair.second.get()->GetBufferResources()->size(); i++)
 			{
 				Gui::DrawString("Pass %d", i);
 

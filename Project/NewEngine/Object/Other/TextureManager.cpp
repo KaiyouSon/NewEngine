@@ -471,7 +471,8 @@ RenderTexture* TextureManager::CreateRenderTexture(const Vec2 size, const uint32
 	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
 	std::unique_ptr<RenderTexture> renderTex = std::make_unique<RenderTexture>();
-	renderTex->buffers.resize(num);
+	renderTex->size = size;
+	renderTex->GetBufferResources()->resize(num);
 
 	HRESULT result;
 	RenderBase* renderBase = RenderBase::GetInstance();
@@ -492,8 +493,6 @@ RenderTexture* TextureManager::CreateRenderTexture(const Vec2 size, const uint32
 			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 			RenderTexture::sClearColor);
 
-	renderTex->size = size;
-
 	for (uint32_t i = 0; i < num; i++)
 	{
 		result = renderBase->GetDevice()->
@@ -503,7 +502,7 @@ RenderTexture* TextureManager::CreateRenderTexture(const Vec2 size, const uint32
 				&texturenResourceDesc,
 				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 				&textureResourceClearValue,
-				IID_PPV_ARGS(&renderTex->buffers[i]));
+				IID_PPV_ARGS(&renderTex->GetBufferResources()->at(i).buffer));
 		assert(SUCCEEDED(result));
 	}
 
@@ -512,10 +511,10 @@ RenderTexture* TextureManager::CreateRenderTexture(const Vec2 size, const uint32
 	for (uint32_t i = 0; i < num; i++)
 	{
 		// SRVì¬
-		GetInstance()->CreateSRV(*renderTex, renderTex->buffers[i].Get(), i);
+		GetInstance()->CreateSRV(*renderTex, renderTex->GetBufferResources()->at(i).buffer.Get(), i);
 
 		// RTVì¬
-		renderTex->renderTargets[i].GetBufferResource()->buffer = renderTex->buffers[i];
+		renderTex->renderTargets[i].GetBufferResource()->buffer = renderTex->GetBufferResources()->at(i).buffer;
 		DescriptorHeapManager::GetDescriptorHeap("RTV")->CreateRTV(renderTex->renderTargets[i].GetBufferResource());
 	}
 

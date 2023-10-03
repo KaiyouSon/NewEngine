@@ -18,9 +18,11 @@ private:
 	std::vector<D3D12_GPU_DESCRIPTOR_HANDLE> mGpuHandles; // SRVのハンドル(GPU側)
 	std::vector<uint32_t> mSrvIndexes;
 
+private:
+	std::vector<BufferResource> mBufferResources;
+
 public:
 	static const float sClearColor[4];
-	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> buffers; // テクスチャのリソース
 	std::vector<RenderTarget> renderTargets;
 	DepthBuffer depthBuffer;
 	std::unique_ptr<Texture> depthTexture;
@@ -44,4 +46,6 @@ public: // ゲッター
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCpuHandle(const uint32_t index);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGpuHandle(const uint32_t index);
 	std::vector<uint32_t>* GetSRVIndexes();
+
+	std::vector<BufferResource>* GetBufferResources();
 };

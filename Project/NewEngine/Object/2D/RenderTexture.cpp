@@ -14,11 +14,11 @@ void RenderTexture::PrevDrawScene()
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
 
 	// リソースバリアを変更（シェーダーリソース -> 描画可能）
-	for (int i = 0; i < buffers.size(); i++)
+	for (int i = 0; i < mBufferResources.size(); i++)
 	{
 		CD3DX12_RESOURCE_BARRIER resourceBarrier =
 			CD3DX12_RESOURCE_BARRIER::Transition(
-				buffers[i].Get(),
+				mBufferResources[i].buffer.Get(),
 				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 				D3D12_RESOURCE_STATE_RENDER_TARGET);
 		renderBase->GetCommandList()->ResourceBarrier(1, &resourceBarrier);
@@ -26,7 +26,7 @@ void RenderTexture::PrevDrawScene()
 
 	// RTV CPUハンドル
 	std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> rtvCpuHandle;
-	for (int i = 0; i < buffers.size(); i++)
+	for (int i = 0; i < mBufferResources.size(); i++)
 	{
 		rtvCpuHandle.push_back(renderTargets[i].GetBufferResource()->cpuHandle);
 	}
@@ -38,8 +38,8 @@ void RenderTexture::PrevDrawScene()
 	renderBase->GetCommandList()->OMSetRenderTargets((uint32_t)renderTargets.size(), rtvCpuHandle.data(), false, &dsvCpuHandle);
 
 	// ビューポートの設定
-	mViewports.resize(buffers.size());
-	for (int i = 0; i < buffers.size(); i++)
+	mViewports.resize(mBufferResources.size());
+	for (int i = 0; i < mBufferResources.size(); i++)
 	{
 		mViewports[i] =
 			CD3DX12_VIEWPORT(
@@ -50,8 +50,8 @@ void RenderTexture::PrevDrawScene()
 	renderBase->GetCommandList()->RSSetViewports((uint32_t)mViewports.size(), mViewports.data());
 
 	// シザー矩形の設定
-	mScissorRects.resize(buffers.size());
-	for (int i = 0; i < buffers.size(); i++)
+	mScissorRects.resize(mBufferResources.size());
+	for (int i = 0; i < mBufferResources.size(); i++)
 	{
 		mScissorRects[i] =
 			CD3DX12_RECT(
@@ -75,11 +75,11 @@ void RenderTexture::PostDrawScene()
 	RenderBase* renderBase = RenderBase::GetInstance();
 
 	// リソースバリアを変更（描画可能 -> シェーダーリソース）
-	for (int i = 0; i < buffers.size(); i++)
+	for (int i = 0; i < mBufferResources.size(); i++)
 	{
 		CD3DX12_RESOURCE_BARRIER resourceBarrier =
 			CD3DX12_RESOURCE_BARRIER::Transition(
-				buffers[i].Get(),
+				mBufferResources[i].buffer.Get(),
 				D3D12_RESOURCE_STATE_RENDER_TARGET,
 				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 		renderBase->GetCommandList()->ResourceBarrier(1, &resourceBarrier);
@@ -127,4 +127,9 @@ D3D12_GPU_DESCRIPTOR_HANDLE RenderTexture::GetGpuHandle(const uint32_t index)
 std::vector<uint32_t>* RenderTexture::GetSRVIndexes()
 {
 	return &mSrvIndexes;
+}
+
+std::vector<BufferResource>* RenderTexture::GetBufferResources()
+{
+	return &mBufferResources;
 }
