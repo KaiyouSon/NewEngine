@@ -93,6 +93,43 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 			&desc,
 			bufferResource->cpuHandle);
 }
+
+void DescriptorHeap::CreateRTV(BufferResource* bufferResource)
+{
+	if (mSetting.heapType != DescriptorHeapSetting::RTV)
+	{
+		return;
+	}
+
+	// インデックスを取得
+	uint32_t incrementIndex = GetIncrementIndex();
+
+	// サイズを取得
+	uint32_t incrementSize = GetIncrementSize();
+
+	// ヒープの先頭ハンドルを取得
+	bufferResource->cpuHandle = mDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	bufferResource->gpuHandle = mDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
+
+	// index分ずらす
+	bufferResource->cpuHandle.ptr += (uint32_t)(incrementSize * incrementIndex);
+	bufferResource->gpuHandle.ptr += (uint32_t)(incrementSize * incrementIndex);
+	bufferResource->index = incrementIndex;
+
+	// レンダーターゲットビューの設定
+	D3D12_RENDER_TARGET_VIEW_DESC desc{};
+	// シェーダーの計算結果をSRGBに変換して書き込む
+	desc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
+	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+
+	// ハンドルの指す位置にRTVを作成
+	RenderBase::GetInstance()->GetDevice()->
+		CreateRenderTargetView(
+			bufferResource->buffer.Get(),
+			&desc,
+			bufferResource->cpuHandle);
+}
+
 void DescriptorHeap::CreateUAV(BufferResource* bufferResource, const uint32_t arraySize, const uint32_t byteSize)
 {
 	if (mSetting.heapType != DescriptorHeapSetting::CBV_SRV_UAV)
@@ -168,8 +205,16 @@ uint32_t DescriptorHeap::GetIncrementSize()
 	{
 		incrementSize = RenderBase::GetInstance()->GetDevice()->
 			GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-		break;
 	}
+	break;
+
+	case DescriptorHeapSetting::RTV:
+	{
+		incrementSize = RenderBase::GetInstance()->GetDevice()->
+			GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+	}
+	break;
+
 	}
 
 	return incrementSize;

@@ -36,6 +36,7 @@ private:
 public:
 	void Create(const DescriptorHeapSetting setting);
 
+	void CreateRTV(BufferResource* bufferResource);
 	void CreateSRV(BufferResource* bufferResource, const uint32_t arraySize = 0, const uint32_t byteSize = 0);
 	void CreateUAV(BufferResource* bufferResource, const uint32_t arraySize = 0, const uint32_t byteSize = 0);
 

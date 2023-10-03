@@ -155,22 +155,6 @@ void RenderBase::PostDraw()
 	assert(SUCCEEDED(result));
 }
 
-void RenderBase::CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC* rtvDesc)
-{
-	// RTVヒープの先頭ハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvCpuHandle = mRtvDescHeap->GetCPUDescriptorHandleForHeapStart();
-
-	UINT descriptorSize = mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-
-	rtvCpuHandle.ptr += descriptorSize * mRtvIncrementIndex;
-
-	renderTarget.GetBufferResource()->cpuHandle = rtvCpuHandle;
-
-	// ハンドルの指す位置にRTV作成
-	mDevice->CreateRenderTargetView(renderTarget.GetBufferResource()->buffer.Get(), rtvDesc, rtvCpuHandle);
-
-	mRtvIncrementIndex++;
-}
 void RenderBase::CreateDSV(DepthBuffer& depthBuffer)
 {
 	// RTVヒープの先頭ハンドルを取得
@@ -342,8 +326,8 @@ void RenderBase::SwapChainInit()
 	mSwapChainDesc.Width = (UINT)mRenderWindow->GetWindowSize().x;
 	mSwapChainDesc.Height = (UINT)mRenderWindow->GetWindowSize().y;
 	mSwapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;				 // 色情報の書式
-	mSwapChainDesc.SampleDesc.Count = 1;								 // マルチサンプルしない
-	mSwapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER;				 // バックバッファ用
+	mSwapChainDesc.SampleDesc.Count = 1;							 // マルチサンプルしない
+	mSwapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER;			 // バックバッファ用
 	mSwapChainDesc.BufferCount = 2;									 // バッファ数を２つに設定
 	mSwapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;		 // フリップ後は破棄
 	mSwapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
@@ -374,7 +358,8 @@ void RenderBase::SwapChainInit()
 		// スワップチェーンからバッファを取得
 		mSwapChain->GetBuffer((UINT)i, IID_PPV_ARGS(mBackBuffers[i]->GetBufferResource()->buffer.GetAddressOf()));
 
-		CreateRTV(*mBackBuffers[i], &rtvDesc);
+		// RTV作成
+		DescriptorHeapManager::GetDescriptorHeap("RTV")->CreateRTV(mBackBuffers[i]->GetBufferResource());
 	}
 }
 void RenderBase::FenceInit()

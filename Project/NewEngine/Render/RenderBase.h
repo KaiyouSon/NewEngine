@@ -68,7 +68,6 @@ public:
 	void Init();
 	void PreDraw();
 	void PostDraw();
-	void CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC* rtvDesc);
 	void CreateDSV(DepthBuffer& depthBuffer);
 	void CreateUAV(IConstantBuffer& iConstantBuffer);
 	void PreIncrimentFenceValue() { ++mFenceValue; }
