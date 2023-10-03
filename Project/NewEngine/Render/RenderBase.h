@@ -68,8 +68,6 @@ public:
 	void Init();
 	void PreDraw();
 	void PostDraw();
-	void CreateDSV(DepthBuffer& depthBuffer);
-	void CreateUAV(IConstantBuffer& iConstantBuffer);
 	void PreIncrimentFenceValue() { ++mFenceValue; }
 
 private:

@@ -47,6 +47,7 @@ void DescriptorHeap::Create(const DescriptorHeapSetting setting)
 	assert(SUCCEEDED(mResult));
 }
 
+// SRV作成
 void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t arraySize, const uint32_t byteSize)
 {
 	if (mSetting.heapType != DescriptorHeapSetting::CBV_SRV_UAV)
@@ -101,6 +102,7 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 			bufferResource->srvHandle.cpu);
 }
 
+// RTV作成
 void DescriptorHeap::CreateRTV(BufferResource* bufferResource)
 {
 	if (mSetting.heapType != DescriptorHeapSetting::RTV)
@@ -137,6 +139,43 @@ void DescriptorHeap::CreateRTV(BufferResource* bufferResource)
 			bufferResource->rtvHandle.cpu);
 }
 
+// DSV作成
+void DescriptorHeap::CreateDSV(BufferResource* bufferResource)
+{
+	if (mSetting.heapType != DescriptorHeapSetting::DSV)
+	{
+		return;
+	}
+
+	// インデックスを取得
+	uint32_t incrementIndex = GetIncrementIndex();
+
+	// サイズを取得
+	uint32_t incrementSize = GetIncrementSize();
+
+	// ヒープの先頭ハンドルを取得
+	bufferResource->dsvHandle.cpu = mDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	bufferResource->dsvHandle.gpu = mDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
+
+	// index分ずらす
+	bufferResource->dsvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
+	bufferResource->dsvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
+	bufferResource->index = incrementIndex;
+
+	// 深度ビュー作成
+	D3D12_DEPTH_STENCIL_VIEW_DESC desc = {};
+	desc.Format = DXGI_FORMAT_D32_FLOAT;	// 深度値フォーマット
+	desc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+
+	// ハンドルの指す位置にDSVを作成
+	RenderBase::GetInstance()->GetDevice()->
+		CreateDepthStencilView(
+			bufferResource->buffer.Get(),
+			&desc,
+			bufferResource->dsvHandle.cpu);
+}
+
+// UAV作成
 void DescriptorHeap::CreateUAV(BufferResource* bufferResource, const uint32_t arraySize, const uint32_t byteSize)
 {
 	if (mSetting.heapType != DescriptorHeapSetting::CBV_SRV_UAV)
@@ -219,6 +258,13 @@ uint32_t DescriptorHeap::GetIncrementSize()
 	{
 		incrementSize = RenderBase::GetInstance()->GetDevice()->
 			GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+	}
+	break;
+
+	case DescriptorHeapSetting::DSV:
+	{
+		incrementSize = RenderBase::GetInstance()->GetDevice()->
+			GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 	}
 	break;
 

@@ -41,8 +41,6 @@ void DepthBuffer::Create(const Vec2 size)
 			&depthClearValue,
 			IID_PPV_ARGS(&mBufferResource->buffer));
 	assert(SUCCEEDED(result));
-
-	RenderBase::GetInstance()->CreateDSV(*this);
 }
 
 // ƒQƒbƒ^[

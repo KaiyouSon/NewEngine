@@ -20,7 +20,6 @@ private:
 
 public:
 	static const float sClearColor[4];
-	std::vector<RenderTarget> renderTargets;
 	std::unique_ptr<Texture> depthTexture;
 	DepthBuffer depthBuffer;
 	Vec2 size;

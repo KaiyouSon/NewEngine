@@ -155,28 +155,6 @@ void RenderBase::PostDraw()
 	assert(SUCCEEDED(result));
 }
 
-void RenderBase::CreateDSV(DepthBuffer& depthBuffer)
-{
-	// RTVヒープの先頭ハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvCpuHandle = mDsvDescHeap->GetCPUDescriptorHandleForHeapStart();
-
-	UINT descriptorSize = mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
-
-	dsvCpuHandle.ptr += descriptorSize * mDsvIncrementIndex;
-
-	depthBuffer.GetBufferResource()->dsvHandle.cpu= dsvCpuHandle;
-
-	// 深度ビュー作成
-	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
-	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;	// 深度値フォーマット
-	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
-
-	// ハンドルの指す位置にRTV作成
-	mDevice->CreateDepthStencilView(depthBuffer.GetBufferResource()->buffer.Get(), &dsvDesc, dsvCpuHandle);
-
-	mDsvIncrementIndex++;
-}
-
 // --- 初期化関連 ------------------------------------------------------------ //
 void RenderBase::DeviceInit()
 {
@@ -380,6 +358,7 @@ void RenderBase::DepthBufferInit()
 {
 	mDepthBuffer = std::make_unique<DepthBuffer>();
 	mDepthBuffer->Create();
+	DescriptorHeapManager::GetDescriptorHeap("DSV")->CreateDSV(mDepthBuffer->GetBufferResource());
 }
 void RenderBase::ShaderCompilerInit()
 {

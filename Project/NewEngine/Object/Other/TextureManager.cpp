@@ -483,17 +483,17 @@ RenderTexture* TextureManager::CreateRenderTexture(const Vec2 size, const uint32
 	RenderBase* renderBase = RenderBase::GetInstance();
 
 	// ヒープ設定
-	CD3DX12_HEAP_PROPERTIES texturenResourceHeapProp =
+	CD3DX12_HEAP_PROPERTIES heapProp =
 		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 
 	// リソース設定
-	CD3DX12_RESOURCE_DESC texturenResourceDesc =
+	CD3DX12_RESOURCE_DESC resourceDesc =
 		CD3DX12_RESOURCE_DESC::Tex2D(
 			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 			(UINT64)size.x, (UINT)size.y,
 			1, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
 
-	CD3DX12_CLEAR_VALUE textureResourceClearValue =
+	CD3DX12_CLEAR_VALUE clearValue =
 		CD3DX12_CLEAR_VALUE(
 			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 			RenderTexture::sClearColor);
@@ -502,29 +502,27 @@ RenderTexture* TextureManager::CreateRenderTexture(const Vec2 size, const uint32
 	{
 		result = renderBase->GetDevice()->
 			CreateCommittedResource(
-				&texturenResourceHeapProp,
+				&heapProp,
 				D3D12_HEAP_FLAG_NONE,
-				&texturenResourceDesc,
+				&resourceDesc,
 				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-				&textureResourceClearValue,
+				&clearValue,
 				IID_PPV_ARGS(&renderTex->GetBufferResources()->at(i).buffer));
 		assert(SUCCEEDED(result));
 	}
 
-	renderTex->renderTargets.resize(num);
 	for (uint32_t i = 0; i < num; i++)
 	{
 		// SRV作成
 		DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(&renderTex->GetBufferResources()->at(i));
 
 		// RTV作成
-		renderTex->renderTargets[i].GetBufferResource()->buffer = renderTex->GetBufferResources()->at(i).buffer;
-		DescriptorHeapManager::GetDescriptorHeap("RTV")->CreateRTV(renderTex->renderTargets[i].GetBufferResource());
+		DescriptorHeapManager::GetDescriptorHeap("RTV")->CreateRTV(&renderTex->GetBufferResources()->at(i));
 	}
 
 	// DSV作成
 	renderTex->depthBuffer.Create(size);
-	renderBase->CreateDSV(renderTex->depthBuffer);
+	DescriptorHeapManager::GetDescriptorHeap("DSV")->CreateDSV(renderTex->depthBuffer.GetBufferResource());
 
 	renderTex->depthTexture = std::make_unique<Texture>();
 	renderTex->depthTexture->GetBufferResource()->buffer = renderTex->depthBuffer.GetBufferResource()->buffer;
