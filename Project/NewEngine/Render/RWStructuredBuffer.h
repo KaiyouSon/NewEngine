@@ -24,7 +24,6 @@ public:
 		{
 			return;
 		}
-		//mBufferResource->buffer->Unmap(0, nullptr);
 	}
 
 	void Create()
@@ -49,16 +48,12 @@ public:
 				&heapProp,	// ヒープの設定
 				D3D12_HEAP_FLAG_NONE,
 				&resourceDesc, // リソースの設定
-				D3D12_RESOURCE_STATE_GENERIC_READ,
+				D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
 				nullptr,
 				IID_PPV_ARGS(&mBufferResource->buffer));
 		assert(SUCCEEDED(result));
 
 		mBufferResource->buffer->SetName(L"RWStructuredBuffer");
-
-		// 定数バッファのマッピング
-		//result = mBufferResource->buffer->Map(0, nullptr, (void**)&mapping);	// マッピング
-		//assert(SUCCEEDED(result));
 	}
 
 	BufferResource* GetBufferResource()

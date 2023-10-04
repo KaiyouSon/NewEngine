@@ -20,9 +20,6 @@ private:
 
 	std::mutex mMutex;	// 排他制御
 
-public:
-	uint32_t mSrvIncrementIndex;	// srv作成時にインクリメント用
-
 private:
 	void Init();
 
@@ -65,9 +62,6 @@ public:
 	static Texture* CreateDepthTexture(Vec2 size);
 
 public:	// その他の処理
-	// ディスクリプターヒープを作成する処理
-	static void CreateDescriptorHeap();
-
 	// テクスチャーロード後のコマンドリストの実行
 	static void ExcuteComandList();
 

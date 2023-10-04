@@ -16,8 +16,8 @@ private:
 	std::vector<VertexBufferData::VParticle> mVertices;
 	std::unique_ptr<VertexBuffer<VertexBufferData::VParticle>> mVertexBuffer;
 
-	std::unique_ptr<StructuredBuffer<ParticleParameter::Test>> mInputData;
-	std::unique_ptr<RWStructuredBuffer<VertexBufferData::VParticle>> mOutputData;
+	std::unique_ptr<StructuredBuffer<ParticleParameter::Test>> mStructuredBuffer;
+	std::unique_ptr<RWStructuredBuffer<ParticleParameter::Test>> mRWStructuredBuffer;
 
 	Vec3 mWorldPos;
 	Vec3 mWorldScale;

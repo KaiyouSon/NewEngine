@@ -111,7 +111,7 @@ void DescriptorHeap::CreateRTV(BufferResource* bufferResource)
 	}
 
 	// インデックスを取得
-	uint32_t incrementIndex = GetIncrementIndex();
+	uint32_t incrementIndex = mSetting.startIndex + GetIncrementIndex();
 
 	// サイズを取得
 	uint32_t incrementSize = GetIncrementSize();
@@ -148,7 +148,7 @@ void DescriptorHeap::CreateDSV(BufferResource* bufferResource)
 	}
 
 	// インデックスを取得
-	uint32_t incrementIndex = GetIncrementIndex();
+	uint32_t incrementIndex = mSetting.startIndex + GetIncrementIndex();
 
 	// サイズを取得
 	uint32_t incrementSize = GetIncrementSize();
@@ -184,7 +184,7 @@ void DescriptorHeap::CreateUAV(BufferResource* bufferResource, const uint32_t ar
 	}
 
 	// インデックスを取得
-	uint32_t incrementIndex = GetIncrementIndex();
+	uint32_t incrementIndex = mSetting.startIndex + GetIncrementIndex();
 
 	// サイズを取得
 	uint32_t incrementSize = GetIncrementSize();
@@ -213,6 +213,12 @@ void DescriptorHeap::CreateUAV(BufferResource* bufferResource, const uint32_t ar
 			nullptr,
 			&desc,
 			bufferResource->uavHandle.cpu);
+}
+
+// ビューを上書きできるようにする
+void DescriptorHeap::DestroyView(BufferResource* bufferResource)
+{
+	mCheckIndex[bufferResource->index] = false;
 }
 
 uint32_t DescriptorHeap::GetIncrementIndex()
@@ -276,3 +282,4 @@ ID3D12DescriptorHeap* DescriptorHeap::GetDescriptorHeap()
 {
 	return mDescriptorHeap.Get();
 }
+

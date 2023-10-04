@@ -41,7 +41,6 @@ void main(point V2G input[1] : SV_POSITION, inout TriangleStream<G2P> output)
         
         voffset = mul(billboardMat, voffset);
         voffset = mul(rotZMat, voffset);
-        //voffset = mul(billboardMat, voffset);
         
         float4 vpos = input[0].pos + voffset;
         

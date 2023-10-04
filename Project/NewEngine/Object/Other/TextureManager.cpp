@@ -4,8 +4,7 @@
 #include <d3dx12.h>
 using namespace DirectX;
 
-TextureManager::TextureManager() :
-	mMutex(std::mutex{}), mSrvIncrementIndex(1)
+TextureManager::TextureManager() : mMutex(std::mutex{})
 {
 }
 
@@ -422,12 +421,11 @@ void TextureManager::UnLoadTexture(const std::string tag)
 		return;
 	}
 
-	uint32_t index = GetInstance()->mTextureMap[tag]->GetBufferResource()->index;
-	if (index > 0)
-	{
-		GetInstance()->mCheckSRVIndex[index - 1] = false;
-	}
+	// ビュー削除
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->DestroyView(
+		GetInstance()->mTextureMap[tag]->GetBufferResource());
 
+	// マップから削除
 	GetInstance()->mTextureMap.erase(tag);
 }
 
@@ -539,13 +537,20 @@ RenderTexture* TextureManager::CreateRenderTexture(const Vec2 size, const uint32
 // レンダーテクスチャーのアンロード関数
 void TextureManager::UnLoadRenderTexture(const std::string tag)
 {
+	auto it = GetInstance()->mRenderTextureMap.find(tag);
+	if (it == GetInstance()->mRenderTextureMap.end())
+	{
+		return;
+	}
+
+
 	for (uint32_t i = 0; i < GetInstance()->mRenderTextureMap[tag]->GetBufferResources()->size(); i++)
 	{
-		uint32_t index = GetInstance()->mRenderTextureMap[tag]->GetBufferResources()->at(i).index;
-		if (index > 0)
-		{
-			GetInstance()->mCheckSRVIndex[index - 1] = false;
-		}
+		// ビュー削除
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->DestroyView(
+			&GetInstance()->mRenderTextureMap[tag]->GetBufferResources()->at(i));
+
+		// マップから削除
 		GetInstance()->mTextureMap.erase(tag);
 	}
 }
@@ -566,26 +571,6 @@ std::unordered_map<std::string, std::unique_ptr<Texture>>* TextureManager::GetMa
 std::unordered_map<std::string, std::unique_ptr<RenderTexture>>* TextureManager::GetRenderTextureMap()
 {
 	return &GetInstance()->mRenderTextureMap;
-}
-
-// ディスクリプターヒープを作成する処理
-void TextureManager::CreateDescriptorHeap()
-{
-	//HRESULT result;
-
-	//// --- SRV ------------------------------------------------------ //
-	//size_t maxSRVCount = 2056;	// SRVの最大個数
-
-	//// SRV用デスクリプタヒープの設定
-	//D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
-	//srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	//srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;	// シェーダから見えるように
-	//srvHeapDesc.NumDescriptors = (UINT)maxSRVCount;
-
-	//// SRV用デスクリプタヒープを生成
-	//result = RenderBase::GetInstance()->GetDevice()->
-	//	CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&GetInstance()->mSrvDescHeap));
-	//assert(SUCCEEDED(result));
 }
 
 // テクスチャーロード後のコマンドリストの実行

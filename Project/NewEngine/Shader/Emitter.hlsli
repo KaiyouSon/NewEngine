@@ -44,3 +44,4 @@ struct G2P
     float shininess : TEXCOORD2;
     float4 color : COLOR; //êF
 };
+

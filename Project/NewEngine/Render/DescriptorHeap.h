@@ -46,6 +46,8 @@ public:
 	void CreateSRV(BufferResource* bufferResource, const uint32_t arraySize = 0, const uint32_t byteSize = 0);
 	void CreateUAV(BufferResource* bufferResource, const uint32_t arraySize = 0, const uint32_t byteSize = 0);
 
+	void DestroyView(BufferResource* bufferResource);
+
 public:
 	ID3D12DescriptorHeap* GetDescriptorHeap();
 

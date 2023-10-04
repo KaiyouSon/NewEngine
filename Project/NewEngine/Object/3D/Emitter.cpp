@@ -13,23 +13,19 @@ Emitter::Emitter() :
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Emitter")),
 	mTexture(TextureManager::GetTexture("White")),
 
-	mInputData(std::make_unique<StructuredBuffer<ParticleParameter::Test>>()),
-	mOutputData(std::make_unique<RWStructuredBuffer<VertexBufferData::VParticle>>())
+	mStructuredBuffer(std::make_unique<StructuredBuffer<ParticleParameter::Test>>()),
+	mRWStructuredBuffer(std::make_unique<RWStructuredBuffer<ParticleParameter::Test>>())
 {
 	// マテリアルの初期化
 	MaterialInit();
 	mTexture->isMaterial = true;
 
-	// 提出のために一回コメントアウト
-	{
-		//mInputData->Create();
-		//mOutputData->Create();
-
-		//DescriptorHeapManager::GetDescriptorHeap("SRV_UAV")->
-		//	CreateSRV(mInputData->GetBufferResource(), 1, sizeof(ParticleParameter::Test));
-		//DescriptorHeapManager::GetDescriptorHeap("SRV_UAV")->
-		//	CreateUAV(mOutputData->GetBufferResource(), 1, sizeof(ParticleParameter::Test));
-	}
+	mStructuredBuffer->Create();
+	mRWStructuredBuffer->Create();
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->
+		CreateSRV(mStructuredBuffer->GetBufferResource(), 1, sizeof(ParticleParameter::Test));
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->
+		CreateUAV(mRWStructuredBuffer->GetBufferResource(), 1, sizeof(ParticleParameter::Test));
 
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
 }
@@ -69,46 +65,52 @@ void Emitter::Draw(const BlendMode blendMode)
 	if (mTexture == nullptr) return;
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
+	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
 
-	// 提出のために一回コメントアウト
+	PipelineManager::GetComputePipeline("Emitter")->ExecuteCommand();
+
+	ID3D12DescriptorHeap* descriptorHeap[] =
 	{
-		//PipelineManager::GetComputePipeline("Emitter")->ExecuteCommand();
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap()
+	};
+	cmdList->SetDescriptorHeaps(1, descriptorHeap);
 
-		//ID3D12DescriptorHeap* descriptorHeap[] =
-		//{
-		//	DescriptorHeapManager::GetDescriptorHeap("SRV_UAV")->GetDescriptorHeap()
-		//};
-		//renderBase->GetCommandList()->SetDescriptorHeaps(1, descriptorHeap);
+	uint32_t index = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetSRVStartIndex();
+	cmdList->SetComputeRootDescriptorTable(0, mStructuredBuffer->GetBufferResource()->srvHandle.gpu);
 
-		//uint32_t index = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetSRVStartIndex();
-		//renderBase->GetCommandList()->SetComputeRootDescriptorTable(0, mInputData->GetBufferResource()->gpuHandle);
+	uint32_t end = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetUAVStartIndex();
+	cmdList->SetComputeRootDescriptorTable(1, mRWStructuredBuffer->GetBufferResource()->uavHandle.gpu);
 
-		//uint32_t end = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetUAVStartIndex();
-		//renderBase->GetCommandList()->SetComputeRootDescriptorTable(1, mOutputData->GetBufferResource()->gpuHandle);
-
-		//// ディスパッチ
-		//renderBase->GetCommandList()->Dispatch(1, 1, 1);
-	}
+	// ディスパッチ
+	cmdList->Dispatch(1, 1, 1);
 
 	// GraphicsPipeline描画コマンド
 	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
 
 	// VBVとIBVの設定コマンド
-	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
+	cmdList->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
 
 	ID3D12DescriptorHeap* descriptorHeap2[] =
 	{
 		DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap()
 	};
-	renderBase->GetCommandList()->SetDescriptorHeaps(1, descriptorHeap2);
+	cmdList->SetDescriptorHeaps(1, descriptorHeap2);
 
 	MaterialDrawCommands();
 
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+		startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
 
-	renderBase->GetCommandList()->DrawInstanced(pSize, 1, 0, 0);
+	auto ViewDimension = mStructuredBuffer->GetBufferResource()->buffer->GetDesc().Dimension;
+	auto Format = mStructuredBuffer->GetBufferResource()->buffer->GetDesc().Format;
+
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+		startIndex + 1, mStructuredBuffer->GetBufferResource()->srvHandle.gpu);
+
+	//renderBase->GetCommandList()->DrawInstanced(pSize, 1, 0, 0);
+	renderBase->GetCommandList()->DrawInstanced((uint32_t)mVertices.size(), 1, 0, 0);
 
 }
 

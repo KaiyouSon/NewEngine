@@ -48,12 +48,6 @@ private:
 	// 深度バッファ
 	std::unique_ptr<DepthBuffer> mDepthBuffer;
 
-	// ティスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> mRtvDescHeap;		// rtv用デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> mDsvDescHeap;		// dsv用デスクリプタヒープ
-	uint32_t mRtvIncrementIndex;
-	uint32_t mDsvIncrementIndex;
-
 	// ルートシグネチャー関連
 	ComPtr<ID3DBlob> mErrorBlob;	// エラーオブジェクト
 

@@ -64,9 +64,6 @@ void RenderBase::Init()
 	mScissorRectangle = std::make_unique<ScissorRectangle>();
 
 	mFenceValue = 0;
-	mRtvIncrementIndex = 0;
-	mDsvIncrementIndex = 0;
-
 
 	DescriptorHeapInit();	// ティスクリプターヒープの初期化
 	CommandInit();			// コマンド関連の初期化
@@ -220,34 +217,6 @@ void RenderBase::DeviceInit()
 }
 void RenderBase::DescriptorHeapInit()
 {
-	HRESULT result;
-
-	TextureManager::CreateDescriptorHeap();
-
-	// --- RTV ------------------------------------------------------ //
-	const uint32_t maxRTVSize = 64;	// RTVの最大個数
-
-	// RTV用デスクリプタヒープの設定
-	mRtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-	mRtvHeapDesc.NumDescriptors = maxRTVSize;
-
-	// RTV用デスクリプタヒープの生成
-	result = mDevice->CreateDescriptorHeap(&mRtvHeapDesc, IID_PPV_ARGS(&mRtvDescHeap));
-	assert(SUCCEEDED(result));
-
-	// --- DSV ------------------------------------------------------ //
-	const uint32_t maxDSVSize = 64;	// DSVの最大個数
-
-	// DSV用デスクリプタヒープの設定
-	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
-	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
-	dsvHeapDesc.NumDescriptors = maxDSVSize;
-
-	// DSV用デスクリプタヒープの生成
-	result = mDevice->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&mDsvDescHeap));
-	assert(SUCCEEDED(result));
-
-
 	DescriptorHeapSetting setting;
 	// SRV格納用
 	setting.maxSize = 2048;
@@ -580,7 +549,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.maxCbvRootParameter = 7;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Emitter");
 
