@@ -13,17 +13,23 @@ Emitter::Emitter() :
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Emitter")),
 	mTexture(TextureManager::GetTexture("White")),
 
-	mStructuredBuffer(std::make_unique<StructuredBuffer<ParticleParameter::Test>>()),
+	mStructuredBuffer(std::make_unique<StructuredBuffer>()),
 	mRWStructuredBuffer(std::make_unique<RWStructuredBuffer<ParticleParameter::Test>>())
 {
 	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰Šú‰»
 	MaterialInit();
 	mTexture->isMaterial = true;
 
-	mStructuredBuffer->Create();
+	struct Data
+	{
+		std::array<ParticleParameter::Test, 2> data;
+	};
+
+	Data data;
+	mStructuredBuffer->Create(data);
 	mRWStructuredBuffer->Create();
 	DescriptorHeapManager::GetDescriptorHeap("SRV")->
-		CreateSRV(mStructuredBuffer->GetBufferResource(), 1, sizeof(ParticleParameter::Test));
+		CreateSRV(mStructuredBuffer->GetBufferResource(), 2, sizeof(Data));
 
 	CD3DX12_RESOURCE_BARRIER barrier =
 		CD3DX12_RESOURCE_BARRIER::Transition(
@@ -34,7 +40,7 @@ Emitter::Emitter() :
 	RenderBase::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrier);
 
 	DescriptorHeapManager::GetDescriptorHeap("SRV")->
-		CreateUAV(mStructuredBuffer->GetBufferResource(), 1, sizeof(ParticleParameter::Test));
+		CreateUAV(mStructuredBuffer->GetBufferResource(), 2, sizeof(Data));
 
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
 }

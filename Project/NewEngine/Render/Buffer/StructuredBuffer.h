@@ -1,33 +1,19 @@
 #pragma once
 #include "BufferResource.h"
 #include "RenderBase.h"
-#include "DescriptorHeapManager.h"
 #include <cassert>
 #include <d3dx12.h>
 
-template<typename T>
 class StructuredBuffer
 {
 private:
 	std::unique_ptr<BufferResource> mBufferResource;
 
 public:
-	T* mapping;	// マッピング用
+	StructuredBuffer();
 
-public:
-	StructuredBuffer() : mapping(nullptr)
-	{
-		mBufferResource = nullptr;
-	}
-	~StructuredBuffer()
-	{
-		if (mBufferResource == nullptr)
-		{
-			return;
-		}
-	}
-
-	void Create()
+	template<typename T>
+	void Create(T data)
 	{
 		mBufferResource = std::make_unique<BufferResource>();
 
@@ -56,9 +42,6 @@ public:
 		mBufferResource->buffer->SetName(L"StructuredBuffer");
 	}
 
-	BufferResource* GetBufferResource()
-	{
-		return mBufferResource.get();
-	}
+	BufferResource* GetBufferResource();
 };
 
