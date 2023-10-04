@@ -152,6 +152,20 @@ void RenderBase::PostDraw()
 	assert(SUCCEEDED(result));
 }
 
+void RenderBase::TransitionBufferState(
+	BufferResource* bufferResource,
+	const D3D12_RESOURCE_STATES currentState,
+	const D3D12_RESOURCE_STATES targetState)
+{
+	CD3DX12_RESOURCE_BARRIER barrier =
+		CD3DX12_RESOURCE_BARRIER::Transition(
+			bufferResource->buffer.Get(),
+			currentState,
+			targetState,
+			D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+	mCommandList->ResourceBarrier(1, &barrier);
+}
+
 // --- 初期化関連 ------------------------------------------------------------ //
 void RenderBase::DeviceInit()
 {
@@ -331,15 +345,16 @@ void RenderBase::DepthBufferInit()
 }
 void RenderBase::ShaderCompilerInit()
 {
-	std::string path = "NewEngine/Shader/";
+	std::string path1 = "NewEngine/Shader/";
+	std::string path2 = "Application/Shader/";
 
 	// Object3D用シェーダー
 	ShaderObjectManager::Create("Object3D");
 	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Object3D")->CompileVertexShader(path + "Object3DVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Object3D")->CompilePixelShader(path + "Object3DPS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Object3D")->CompileVertexShader(path1 + "Object3DVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Object3D")->CompilePixelShader(path1 + "Object3DPS.hlsl", "main");
 
 	// Fbxモデル用シェーダー
 	ShaderObjectManager::Create("FbxModel");
@@ -348,58 +363,58 @@ void RenderBase::ShaderCompilerInit()
 	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
 	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("BONEINDICES", DXGI_FORMAT_R32G32B32A32_UINT);
 	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("BONEWEIGHTS", DXGI_FORMAT_R32G32B32A32_FLOAT);
-	ShaderObjectManager::GetShaderObject("FbxModel")->CompileVertexShader(path + "FbxModelVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("FbxModel")->CompilePixelShader(path + "FbxModelPS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("FbxModel")->CompileVertexShader(path1 + "FbxModelVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("FbxModel")->CompilePixelShader(path1 + "FbxModelPS.hlsl", "main");
 
 	// スプライト用シェーダー
 	ShaderObjectManager::Create("Sprite");
 	ShaderObjectManager::GetShaderObject("Sprite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Sprite")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Sprite")->CompileVertexShader(path + "SpriteVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Sprite")->CompilePixelShader(path + "SpritePS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Sprite")->CompileVertexShader(path1 + "SpriteVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Sprite")->CompilePixelShader(path1 + "SpritePS.hlsl", "main");
 
 	// 円ゲージスプライト用シェーダー
 	ShaderObjectManager::Create("CircleGaugeSprite");
 	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->CompileVertexShader(path + "CircleGaugeSpriteVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->CompilePixelShader(path + "CircleGaugeSpritePS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->CompileVertexShader(path1 + "CircleGaugeSpriteVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->CompilePixelShader(path1 + "CircleGaugeSpritePS.hlsl", "main");
 
 	// レンダーテクスチャーのシェーダー
 	ShaderObjectManager::Create("RenderTexture");
 	ShaderObjectManager::GetShaderObject("RenderTexture")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("RenderTexture")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("RenderTexture")->CompileVertexShader(path + "RenderTextureVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("RenderTexture")->CompilePixelShader(path + "RenderTexturePS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("RenderTexture")->CompileVertexShader(path1 + "RenderTextureVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("RenderTexture")->CompilePixelShader(path1 + "RenderTexturePS.hlsl", "main");
 
 	// シルエット用シェーダー
 	ShaderObjectManager::Create("Silhouette");
 	ShaderObjectManager::GetShaderObject("Silhouette")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Silhouette")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Silhouette")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Silhouette")->CompileVertexShader(path + "SilhouetteVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Silhouette")->CompilePixelShader(path + "SilhouettePS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Silhouette")->CompileVertexShader(path1 + "SilhouetteVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Silhouette")->CompilePixelShader(path1 + "SilhouettePS.hlsl", "main");
 
 	// アウトラインObject用シェーダー
 	ShaderObjectManager::Create("Outline");
 	ShaderObjectManager::GetShaderObject("Outline")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Outline")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Outline")->CompileVertexShader(path + "OutLineVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Outline")->CompilePixelShader(path + "OutLinePS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Outline")->CompileVertexShader(path1 + "OutLineVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Outline")->CompilePixelShader(path1 + "OutLinePS.hlsl", "main");
 
 	// トゥーンレンダーリング用
 	ShaderObjectManager::Create("ToonRendering");
 	ShaderObjectManager::GetShaderObject("ToonRendering")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("ToonRendering")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("ToonRendering")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ToonRendering")->CompileVertexShader(path + "ToonRenderVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("ToonRendering")->CompilePixelShader(path + "ToonRenderPS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("ToonRendering")->CompileVertexShader(path1 + "ToonRenderVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("ToonRendering")->CompilePixelShader(path1 + "ToonRenderPS.hlsl", "main");
 
 	// ライン用
 	ShaderObjectManager::Create("Line");
 	ShaderObjectManager::GetShaderObject("Line")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Line")->CompileVertexShader(path + "LineVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Line")->CompilePixelShader(path + "LinePS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Line")->CompileVertexShader(path1 + "LineVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Line")->CompilePixelShader(path1 + "LinePS.hlsl", "main");
 
 	// エミッター用
 	ShaderObjectManager::Create("Emitter");
@@ -408,18 +423,25 @@ void RenderBase::ShaderCompilerInit()
 	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 1);		// 回転
 	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 2);		// 輝き度
 	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);	// 色
-	ShaderObjectManager::GetShaderObject("Emitter")->CompileComputeShader(path + "EmitterCS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Emitter")->CompileVertexShader(path + "EmitterVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Emitter")->CompileGeometryShader(path + "EmitterGS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Emitter")->CompilePixelShader(path + "EmitterPS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Emitter")->CompileComputeShader(path1 + "EmitterCS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Emitter")->CompileVertexShader(path1 + "EmitterVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Emitter")->CompileGeometryShader(path1 + "EmitterGS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("Emitter")->CompilePixelShader(path1 + "EmitterPS.hlsl", "main");
+
+	// GPUエミッター用
+	ShaderObjectManager::Create("GPUEmitter");
+	ShaderObjectManager::GetShaderObject("GPUEmitter")->CompileComputeShader(path2 + "RespawnPointEffectCS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("GPUEmitter")->CompileVertexShader(path2 + "RespawnPointEffectVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("GPUEmitter")->CompileGeometryShader(path1 + "EmitterGS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("GPUEmitter")->CompilePixelShader(path1 + "EmitterPS.hlsl", "main");
 
 	// ColliderObject用シェーダー
 	ShaderObjectManager::Create("ColliderObject");
 	ShaderObjectManager::GetShaderObject("ColliderObject")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("ColliderObject")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("ColliderObject")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ColliderObject")->CompileVertexShader(path + "ColliderObjectVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("ColliderObject")->CompilePixelShader(path + "ColliderObjectPS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("ColliderObject")->CompileVertexShader(path1 + "ColliderObjectVS.hlsl", "main");
+	ShaderObjectManager::GetShaderObject("ColliderObject")->CompilePixelShader(path1 + "ColliderObjectPS.hlsl", "main");
 }
 void RenderBase::GraphicsPipelineInit()
 {
@@ -553,6 +575,17 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Emitter");
 
+	// GPUエミッター用
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderObjectManager::GetShaderObject("GPUEmitter");
+	setting.cullMode = CullMode::None;
+	setting.topologyType = TopologyType::Point;
+	setting.depthStencilDesc = depthStencilDesc1;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
+	PipelineManager::CreateGraphicsPipeline(setting, "GPUEmitter");
+
 	// ColliderObject用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("ColliderObject");
@@ -568,11 +601,11 @@ void RenderBase::GraphicsPipelineInit()
 void RenderBase::ComputePipelineInit()
 {
 	ComputePipelineSetting setting;
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("Emitter");
+	setting.shaderObject = ShaderObjectManager::GetShaderObject("GPUEmitter");
 	setting.rootSignatureSetting.maxCbvRootParameter = 0;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	setting.rootSignatureSetting.maxUavDescritorRange = 1;
-	PipelineManager::CreateComputePipeline(setting, "Emitter");
+	PipelineManager::CreateComputePipeline(setting, "GPUEmitter");
 }
 
 // --- ゲッター -------------------------------------------------------------- //

@@ -7,16 +7,7 @@ namespace ParticleParameter
 {
 	struct PParam0
 	{
-		Vec3 curPos;
-		Vec2 curScale;
-		float curRot;
-		float curShininess = 1.0f;
-		Color curColor;
-	};
-
-	struct Test
-	{
-		Vec3 curPos; float pad;
+		Vec3 curPos; float pad1;
 		Vec2 curScale;
 		float curRot;
 		float curShininess = 1.0f;

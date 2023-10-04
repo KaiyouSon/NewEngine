@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include "Camera.h"
 #include "Emitter.h"
+#include "GPUEmitter.h"
 
 #include "TextureManager.h"
 #include "ModelManager.h"	

@@ -36,7 +36,7 @@ void ComputePipeline::Create(const ComputePipelineSetting& setting)
 	mResult = device->CreateComputePipelineState(&pipelineDesc, IID_PPV_ARGS(&mPSO));
 }
 
-void ComputePipeline::ExecuteCommand()
+void ComputePipeline::DrawCommand()
 {
 	auto* cmdList = RenderBase::GetInstance()->GetCommandList();
 

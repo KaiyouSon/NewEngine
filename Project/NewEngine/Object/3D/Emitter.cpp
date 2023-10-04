@@ -11,36 +11,11 @@ Emitter::Emitter() :
 	offset(0, 0), tiling(1, 1), pSize(0),
 	mVertexBuffer(std::make_unique <VertexBuffer<VParticle>>()),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Emitter")),
-	mTexture(TextureManager::GetTexture("White")),
-
-	mStructuredBuffer(std::make_unique<StructuredBuffer>()),
-	mRWStructuredBuffer(std::make_unique<RWStructuredBuffer<ParticleParameter::Test>>())
+	mTexture(TextureManager::GetTexture("White"))
 {
 	// マテリアルの初期化
 	MaterialInit();
 	mTexture->isMaterial = true;
-
-	struct Data
-	{
-		std::array<ParticleParameter::Test, 2> data;
-	};
-
-	Data data;
-	mStructuredBuffer->Create(data);
-	mRWStructuredBuffer->Create();
-	DescriptorHeapManager::GetDescriptorHeap("SRV")->
-		CreateSRV(mStructuredBuffer->GetBufferResource(), 2, sizeof(Data));
-
-	CD3DX12_RESOURCE_BARRIER barrier =
-		CD3DX12_RESOURCE_BARRIER::Transition(
-			mStructuredBuffer->GetBufferResource()->buffer.Get(),
-			D3D12_RESOURCE_STATE_GENERIC_READ,
-			D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
-			D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
-	RenderBase::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrier);
-
-	DescriptorHeapManager::GetDescriptorHeap("SRV")->
-		CreateUAV(mStructuredBuffer->GetBufferResource(), 2, sizeof(Data));
 
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
 }
@@ -82,23 +57,6 @@ void Emitter::Draw(const BlendMode blendMode)
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
 
-	PipelineManager::GetComputePipeline("Emitter")->ExecuteCommand();
-
-	ID3D12DescriptorHeap* descriptorHeap[] =
-	{
-		DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap()
-	};
-	cmdList->SetDescriptorHeaps(1, descriptorHeap);
-
-	uint32_t index = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetSRVStartIndex();
-	cmdList->SetComputeRootDescriptorTable(0, mStructuredBuffer->GetBufferResource()->srvHandle.gpu);
-
-	uint32_t end = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetUAVStartIndex();
-	cmdList->SetComputeRootDescriptorTable(1, mStructuredBuffer->GetBufferResource()->uavHandle.gpu);
-
-	// ディスパッチ
-	cmdList->Dispatch(1, 1, 1);
-
 	// GraphicsPipeline描画コマンド
 	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
 
@@ -118,15 +76,7 @@ void Emitter::Draw(const BlendMode blendMode)
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
 		startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
 
-	auto ViewDimension = mStructuredBuffer->GetBufferResource()->buffer->GetDesc().Dimension;
-	auto Format = mStructuredBuffer->GetBufferResource()->buffer->GetDesc().Format;
-
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-		startIndex + 1, mStructuredBuffer->GetBufferResource()->srvHandle.gpu);
-
-	//renderBase->GetCommandList()->DrawInstanced(pSize, 1, 0, 0);
-	renderBase->GetCommandList()->DrawInstanced((uint32_t)mVertices.size(), 1, 0, 0);
-
+	renderBase->GetCommandList()->DrawInstanced(pSize, 1, 0, 0);
 }
 
 // --- マテリアル関連 --------------------------------------------------- //

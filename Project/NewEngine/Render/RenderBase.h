@@ -64,6 +64,12 @@ public:
 	void PostDraw();
 	void PreIncrimentFenceValue() { ++mFenceValue; }
 
+public:
+	void TransitionBufferState(
+		BufferResource* bufferResource,
+		const D3D12_RESOURCE_STATES currentState,
+		const D3D12_RESOURCE_STATES targetState);
+
 private:
 	// èâä˙âªä÷òA
 	void DeviceInit();

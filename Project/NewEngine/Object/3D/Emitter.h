@@ -8,16 +8,12 @@
 #include "VertexBuffer.h"
 #include "ParticleParam.h"
 #include "StructuredBuffer.h"
-#include "RWStructuredBuffer.h"
 
 class Emitter
 {
 private:
 	std::vector<VertexBufferData::VParticle> mVertices;
 	std::unique_ptr<VertexBuffer<VertexBufferData::VParticle>> mVertexBuffer;
-
-	std::unique_ptr<StructuredBuffer> mStructuredBuffer;
-	std::unique_ptr<RWStructuredBuffer<ParticleParameter::Test>> mRWStructuredBuffer;
 
 	Vec3 mWorldPos;
 	Vec3 mWorldScale;

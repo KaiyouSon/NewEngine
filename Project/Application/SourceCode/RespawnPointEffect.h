@@ -6,6 +6,7 @@ class RespawnPointEffect
 private:
 	Timer mTimer;
 
+	//std::unique_ptr<GPUEmitter> mCircleEmitter;
 	std::unique_ptr<Emitter> mCircleEmitter;
 	std::vector<ParticleParameter::PParam1> mCirclePParam;
 

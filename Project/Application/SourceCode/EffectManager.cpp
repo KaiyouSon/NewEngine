@@ -54,11 +54,11 @@ void EffectManager::DrawEffect(const bool isBloom)
 		//// 回復
 		//mPlayerRecoveryEffect->DrawModel();
 
-		//// リスポーン地点のエフェクト
-		//mRespawnPointEffect->DrawModel();
+		// リスポーン地点のエフェクト
+		mRespawnPointEffect->DrawModel();
 
 		//// 導虫みたいなエフェクト
-		mLeadEffect->DrawModel();
+		//mLeadEffect->DrawModel();
 
 		//// 空中にあるやつ
 		//mAirEffect->DrawModel();
@@ -66,17 +66,17 @@ void EffectManager::DrawEffect(const bool isBloom)
 	// それ以外
 	else
 	{
-		// 血
+		//// 血
 		//mBloodSprayEffect->DrawModel();
 
 		//// 回復
 		//mPlayerRecoveryEffect->DrawModel();
 
-		//// リスポーン地点のエフェクト
-		//mRespawnPointEffect->DrawModel();
+		// リスポーン地点のエフェクト
+		mRespawnPointEffect->DrawModel();
 
 		//// 導虫みたいなエフェクト
-		mLeadEffect->DrawModel();
+		//mLeadEffect->DrawModel();
 
 		//// 空中にあるやつ
 		//mAirEffect->DrawModel();

@@ -23,7 +23,7 @@ private:
 public:
 	ComputePipeline();
 	void Create(const ComputePipelineSetting& setting);
-	void ExecuteCommand();
+	void DrawCommand();
 
 public:
 	RootSignature* GetRootSignature();

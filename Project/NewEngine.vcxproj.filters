@@ -295,6 +295,42 @@
     <Filter Include="NewEngine\Header\Render\ShaderObject">
       <UniqueIdentifier>{ede8b782-52bf-48fb-9310-c6ec24d25802}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\Effect">
+      <UniqueIdentifier>{7db4ec5d-312e-40f4-88b3-294aaa6f4cd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\Emitter">
+      <UniqueIdentifier>{6fcff61c-72ea-4b74-9dda-616d4c504024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\CircleGaugeSprite">
+      <UniqueIdentifier>{c9e0dfa7-9f8f-4446-8450-f5834c0937b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\Line">
+      <UniqueIdentifier>{566d5cb8-8478-49b2-bef1-9956ba34ee74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\ColliderObject">
+      <UniqueIdentifier>{fc2711d9-6937-4628-b3d0-c43a899e1d10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\FbxModel">
+      <UniqueIdentifier>{4fa65654-5ba3-472b-b99a-22a0e01a8556}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\Object3D">
+      <UniqueIdentifier>{eb581780-8607-4194-8186-2bc6ae32e159}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\OutLine">
+      <UniqueIdentifier>{d858ad41-b2cf-4430-b6f2-1b8e78477ffd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\RenderTexture">
+      <UniqueIdentifier>{8c0398ce-464f-466e-9ace-4048e9dc0cbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\Silhouette">
+      <UniqueIdentifier>{1558ed40-1c9c-4be4-ae99-eafac887b98f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\Sprite">
+      <UniqueIdentifier>{0be0cd81-a9ac-42a9-87bb-1de3191c8cf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\ToonRender">
+      <UniqueIdentifier>{8852c9eb-228e-4eff-8841-c20c923f557d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -732,9 +768,6 @@
     <ClCompile Include="NewEngine\Render\DescriptorHeapManager.cpp">
       <Filter>NewEngine\Source\Render\DescriptorHeap</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Render\RWStructuredBuffer.cpp">
-      <Filter>NewEngine\Source\Render\Buffer</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp">
       <Filter>NewEngine\Source\Render\Pipeline</Filter>
     </ClCompile>
@@ -761,6 +794,9 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Render\RenderTarget.cpp">
       <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\GPUEmitter.cpp">
+      <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1235,9 +1271,6 @@
     <ClInclude Include="NewEngine\Render\DescriptorHeapManager.h">
       <Filter>NewEngine\Header\Render\DescriptorHeap</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Render\RWStructuredBuffer.h">
-      <Filter>NewEngine\Header\Render\Buffer</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Render\PipelineManager.h">
       <Filter>NewEngine\Header\Render\Pipeline</Filter>
     </ClInclude>
@@ -1262,6 +1295,9 @@
     <ClInclude Include="Application\SourceCode\MovieEvent.h">
       <Filter>Application\Header</Filter>
     </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\GPUEmitter.h">
+      <Filter>NewEngine\Header\Object\3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1272,33 +1308,6 @@
     </None>
     <None Include="NewEngine\Shader\ShaderIO.hlsli">
       <Filter>Shader\Engine\Util</Filter>
-    </None>
-    <None Include="NewEngine\Shader\CircleGaugeSprite.hlsli">
-      <Filter>Shader\Engine</Filter>
-    </None>
-    <None Include="NewEngine\Shader\FbxModel.hlsli">
-      <Filter>Shader\Engine</Filter>
-    </None>
-    <None Include="NewEngine\Shader\Line.hlsli">
-      <Filter>Shader\Engine</Filter>
-    </None>
-    <None Include="NewEngine\Shader\Object3D.hlsli">
-      <Filter>Shader\Engine</Filter>
-    </None>
-    <None Include="NewEngine\Shader\OutLine.hlsli">
-      <Filter>Shader\Engine</Filter>
-    </None>
-    <None Include="NewEngine\Shader\RenderTexture.hlsli">
-      <Filter>Shader\Engine</Filter>
-    </None>
-    <None Include="NewEngine\Shader\Silhouette.hlsli">
-      <Filter>Shader\Engine</Filter>
-    </None>
-    <None Include="NewEngine\Shader\Sprite.hlsli">
-      <Filter>Shader\Engine</Filter>
-    </None>
-    <None Include="NewEngine\Shader\ToonRender.hlsli">
-      <Filter>Shader\Engine</Filter>
     </None>
     <None Include="Application\Shader\Bloom.hlsli">
       <Filter>Shader\Application\Bloom</Filter>
@@ -1327,9 +1336,6 @@
     <None Include="Application\Shader\RadialBlur.hlsli">
       <Filter>Shader\Application</Filter>
     </None>
-    <None Include="NewEngine\Shader\Emitter.hlsli">
-      <Filter>Shader\Engine</Filter>
-    </None>
     <None Include="Application\Shader\Cloud.hlsli">
       <Filter>Shader\Application\Cloud</Filter>
     </None>
@@ -1351,9 +1357,6 @@
     <None Include="Application\Shader\Branch.hlsli">
       <Filter>Shader\Application\Branch</Filter>
     </None>
-    <None Include="NewEngine\Shader\ColliderObject.hlsli">
-      <Filter>Shader\Engine</Filter>
-    </None>
     <None Include="Application\Shader\Grass.hlsli">
       <Filter>Shader\Application\Grass</Filter>
     </None>
@@ -1363,62 +1366,41 @@
     <None Include="Application\Shader\Composite.hlsli">
       <Filter>Shader\Application</Filter>
     </None>
+    <None Include="NewEngine\Shader\Emitter.hlsli">
+      <Filter>Shader\Engine\Emitter</Filter>
+    </None>
+    <None Include="NewEngine\Shader\CircleGaugeSprite.hlsli">
+      <Filter>Shader\Engine\CircleGaugeSprite</Filter>
+    </None>
+    <None Include="NewEngine\Shader\Line.hlsli">
+      <Filter>Shader\Engine\Line</Filter>
+    </None>
+    <None Include="NewEngine\Shader\ColliderObject.hlsli">
+      <Filter>Shader\Engine\ColliderObject</Filter>
+    </None>
+    <None Include="NewEngine\Shader\FbxModel.hlsli">
+      <Filter>Shader\Engine\FbxModel</Filter>
+    </None>
+    <None Include="NewEngine\Shader\Object3D.hlsli">
+      <Filter>Shader\Engine\Object3D</Filter>
+    </None>
+    <None Include="NewEngine\Shader\OutLine.hlsli">
+      <Filter>Shader\Engine\OutLine</Filter>
+    </None>
+    <None Include="NewEngine\Shader\RenderTexture.hlsli">
+      <Filter>Shader\Engine\RenderTexture</Filter>
+    </None>
+    <None Include="NewEngine\Shader\Silhouette.hlsli">
+      <Filter>Shader\Engine\Silhouette</Filter>
+    </None>
+    <None Include="NewEngine\Shader\Sprite.hlsli">
+      <Filter>Shader\Engine\Sprite</Filter>
+    </None>
+    <None Include="NewEngine\Shader\ToonRender.hlsli">
+      <Filter>Shader\Engine\ToonRender</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="NewEngine\Shader\CircleGaugeSpritePS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\CircleGaugeSpriteVS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\FbxModelPS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\FbxModelVS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\LinePS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\LineVS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Object3DPS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Object3DVS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\OutLinePS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\OutLineVS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\RenderTexturePS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\RenderTextureVS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\SilhouettePS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\SilhouetteVS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\SpritePS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\SpriteVS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ToonRenderPS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ToonRenderVS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
     <FxCompile Include="Application\Shader\BloomPS.hlsl">
       <Filter>Shader\Application\Bloom</Filter>
     </FxCompile>
@@ -1473,18 +1455,6 @@
     <FxCompile Include="Application\Shader\RadialBlurVS.hlsl">
       <Filter>Shader\Application</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\EmitterPS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\EmitterVS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\EmitterGS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\EmitterCS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
     <FxCompile Include="Application\Shader\CloudPS.hlsl">
       <Filter>Shader\Application\Cloud</Filter>
     </FxCompile>
@@ -1533,12 +1503,6 @@
     <FxCompile Include="Application\Shader\BranchPS.hlsl">
       <Filter>Shader\Application\Branch</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ColliderObjectVS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ColliderObjectPS.hlsl">
-      <Filter>Shader\Engine</Filter>
-    </FxCompile>
     <FxCompile Include="Application\Shader\GrassVS.hlsl">
       <Filter>Shader\Application\Grass</Filter>
     </FxCompile>
@@ -1559,6 +1523,87 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\CompositeVS.hlsl">
       <Filter>Shader\Application</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RespawnPointEffectCS.hlsl">
+      <Filter>Shader\Application\Effect</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\EmitterCS.hlsl">
+      <Filter>Shader\Engine\Emitter</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\EmitterGS.hlsl">
+      <Filter>Shader\Engine\Emitter</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\EmitterPS.hlsl">
+      <Filter>Shader\Engine\Emitter</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\EmitterVS.hlsl">
+      <Filter>Shader\Engine\Emitter</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\GPUEmitterVS.hlsl">
+      <Filter>Shader\Engine\Emitter</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\CircleGaugeSpritePS.hlsl">
+      <Filter>Shader\Engine\CircleGaugeSprite</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\CircleGaugeSpriteVS.hlsl">
+      <Filter>Shader\Engine\CircleGaugeSprite</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\LinePS.hlsl">
+      <Filter>Shader\Engine\Line</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\LineVS.hlsl">
+      <Filter>Shader\Engine\Line</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ColliderObjectPS.hlsl">
+      <Filter>Shader\Engine\ColliderObject</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ColliderObjectVS.hlsl">
+      <Filter>Shader\Engine\ColliderObject</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\FbxModelPS.hlsl">
+      <Filter>Shader\Engine\FbxModel</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\FbxModelVS.hlsl">
+      <Filter>Shader\Engine\FbxModel</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\Object3DPS.hlsl">
+      <Filter>Shader\Engine\Object3D</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\Object3DVS.hlsl">
+      <Filter>Shader\Engine\Object3D</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\OutLinePS.hlsl">
+      <Filter>Shader\Engine\OutLine</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\OutLineVS.hlsl">
+      <Filter>Shader\Engine\OutLine</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\RenderTexturePS.hlsl">
+      <Filter>Shader\Engine\RenderTexture</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\RenderTextureVS.hlsl">
+      <Filter>Shader\Engine\RenderTexture</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\SilhouettePS.hlsl">
+      <Filter>Shader\Engine\Silhouette</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\SilhouetteVS.hlsl">
+      <Filter>Shader\Engine\Silhouette</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\SpritePS.hlsl">
+      <Filter>Shader\Engine\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\SpriteVS.hlsl">
+      <Filter>Shader\Engine\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ToonRenderPS.hlsl">
+      <Filter>Shader\Engine\ToonRender</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ToonRenderVS.hlsl">
+      <Filter>Shader\Engine\ToonRender</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RespawnPointEffectVS.hlsl">
+      <Filter>Shader\Application\Effect</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

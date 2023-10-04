@@ -220,6 +220,7 @@
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Camera.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Emitter.cpp" />
+    <ClCompile Include="NewEngine\Object\3D\GPUEmitter.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Line.cpp" />
     <ClCompile Include="NewEngine\Object\3D\ParticleParam.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Model\ObjModel.cpp" />
@@ -248,7 +249,6 @@
     <ClCompile Include="NewEngine\Render\RenderTarget.cpp" />
     <ClCompile Include="NewEngine\Render\RenderWindow.cpp" />
     <ClCompile Include="NewEngine\Render\RootSignature.cpp" />
-    <ClCompile Include="NewEngine\Render\RWStructuredBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\ScissorRectangle.cpp" />
     <ClCompile Include="NewEngine\Render\ShaderObject.cpp" />
     <ClCompile Include="NewEngine\Render\ShaderObjectManager.cpp" />
@@ -378,6 +378,7 @@
     <ClInclude Include="NewEngine\Object\2D\RenderTexture.h" />
     <ClInclude Include="NewEngine\Object\2D\Sprite.h" />
     <ClInclude Include="NewEngine\Object\3D\Emitter.h" />
+    <ClInclude Include="NewEngine\Object\3D\GPUEmitter.h" />
     <ClInclude Include="NewEngine\Object\3D\ParticleParam.h" />
     <ClInclude Include="NewEngine\Object\Other\Model\ObjModel.h" />
     <ClInclude Include="NewEngine\Object\Other\AssimpLoader.h" />
@@ -412,7 +413,6 @@
     <ClInclude Include="NewEngine\Render\RenderTarget.h" />
     <ClInclude Include="NewEngine\Render\RenderWindow.h" />
     <ClInclude Include="NewEngine\Render\RootSignature.h" />
-    <ClInclude Include="NewEngine\Render\RWStructuredBuffer.h" />
     <ClInclude Include="NewEngine\Render\ScissorRectangle.h" />
     <ClInclude Include="NewEngine\Render\ShaderObject.h" />
     <ClInclude Include="NewEngine\Render\ShaderObjectManager.h" />
@@ -613,6 +613,18 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="Application\Shader\RespawnPointEffectCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RespawnPointEffectVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="Application\Shader\RespawnTransitionPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -730,6 +742,12 @@
     <FxCompile Include="NewEngine\Shader\FbxModelVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\GPUEmitterVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\LinePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
