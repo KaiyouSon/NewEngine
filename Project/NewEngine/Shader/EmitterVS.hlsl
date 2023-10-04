@@ -1,6 +1,6 @@
 #include "Emitter.hlsli"
 
-struct OutputData
+struct InputData
 {
     float3 curPos;
     float2 curScale;
@@ -9,12 +9,15 @@ struct OutputData
     float4 curColor;
 };
 
-StructuredBuffer<OutputData> inputData : register(t1);
+StructuredBuffer<InputData> inputData : register(t1);
 
 V2G main(Appdata i)
 {
     V2G o = (V2G) 0;
-    o.pos = float4(inputData[0].curPos, 1);
+    
+    InputData input = inputData[0];
+    
+    o.pos = float4(input.curPos, 1);
     o.scale = i.scale;
     o.rot = i.rot;
     o.shininess = i.shininess;

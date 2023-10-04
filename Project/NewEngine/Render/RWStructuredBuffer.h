@@ -42,7 +42,7 @@ public:
 				(sizeof(T) + 0xff) & ~0xff,	// 256バイトアラインメント
 				D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS);
 
-		// 定数バッファの生成
+		// バッファの生成
 		result = RenderBase::GetInstance()->GetDevice()->
 			CreateCommittedResource(
 				&heapProp,	// ヒープの設定

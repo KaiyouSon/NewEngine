@@ -24,8 +24,17 @@ Emitter::Emitter() :
 	mRWStructuredBuffer->Create();
 	DescriptorHeapManager::GetDescriptorHeap("SRV")->
 		CreateSRV(mStructuredBuffer->GetBufferResource(), 1, sizeof(ParticleParameter::Test));
+
+	CD3DX12_RESOURCE_BARRIER barrier =
+		CD3DX12_RESOURCE_BARRIER::Transition(
+			mStructuredBuffer->GetBufferResource()->buffer.Get(),
+			D3D12_RESOURCE_STATE_GENERIC_READ,
+			D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+			D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+	RenderBase::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrier);
+
 	DescriptorHeapManager::GetDescriptorHeap("SRV")->
-		CreateUAV(mRWStructuredBuffer->GetBufferResource(), 1, sizeof(ParticleParameter::Test));
+		CreateUAV(mStructuredBuffer->GetBufferResource(), 1, sizeof(ParticleParameter::Test));
 
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
 }
@@ -79,7 +88,7 @@ void Emitter::Draw(const BlendMode blendMode)
 	cmdList->SetComputeRootDescriptorTable(0, mStructuredBuffer->GetBufferResource()->srvHandle.gpu);
 
 	uint32_t end = PipelineManager::GetComputePipeline("Emitter")->GetRootSignature()->GetUAVStartIndex();
-	cmdList->SetComputeRootDescriptorTable(1, mRWStructuredBuffer->GetBufferResource()->uavHandle.gpu);
+	cmdList->SetComputeRootDescriptorTable(1, mStructuredBuffer->GetBufferResource()->uavHandle.gpu);
 
 	// ディスパッチ
 	cmdList->Dispatch(1, 1, 1);

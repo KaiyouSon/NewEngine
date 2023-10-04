@@ -25,7 +25,6 @@ public:
 		{
 			return;
 		}
-		mBufferResource->buffer->Unmap(0, nullptr);
 	}
 
 	void Create()
@@ -36,13 +35,14 @@ public:
 
 		// ヒープの設定
 		D3D12_HEAP_PROPERTIES heapProp =
-			CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
+			CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 
 		// リソース設定
 		D3D12_RESOURCE_DESC resourceDesc =
-			CD3DX12_RESOURCE_DESC::Buffer((sizeof(T) + 0xff) & ~0xff);	// 256バイトアラインメント
+			CD3DX12_RESOURCE_DESC::Buffer((sizeof(T) + 0xff) & ~0xff,	// 256バイトアラインメント
+				D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS);			// UAV使用を許可
 
-		// 定数バッファの生成
+		// バッファの生成
 		result = RenderBase::GetInstance()->GetDevice()->
 			CreateCommittedResource(
 				&heapProp,	// ヒープの設定
@@ -54,10 +54,6 @@ public:
 		assert(SUCCEEDED(result));
 
 		mBufferResource->buffer->SetName(L"StructuredBuffer");
-
-		// 定数バッファのマッピング
-		result = mBufferResource->buffer->Map(0, nullptr, (void**)&mapping);	// マッピング
-		assert(SUCCEEDED(result));
 	}
 
 	BufferResource* GetBufferResource()
