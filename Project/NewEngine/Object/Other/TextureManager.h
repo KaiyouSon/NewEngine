@@ -59,7 +59,7 @@ public:
 
 public:
 	// 深度テクスチャーを生成
-	static Texture* CreateDepthTexture(Vec2 size);
+	static Texture* CreateDepthTexture();
 
 public:	// その他の処理
 	// テクスチャーロード後のコマンドリストの実行

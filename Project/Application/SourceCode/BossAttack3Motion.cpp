@@ -33,7 +33,7 @@ void BossAttack3Motion::Update(HumanoidBody* human)
 	}
 	BasePrevUpdate(human);
 	CurrentStepUpdate(human);
-	BasePostUpdate(human);
+	BasePostUpdate();
 }
 
 void BossAttack3Motion::CurrentStepInit(HumanoidBody* human)
@@ -102,7 +102,6 @@ void BossAttack3Motion::CurrentStepUpdate(HumanoidBody* human)
 {
 	human->GetPart(PartID::Body)->pos.y = mEase.Interpolation(mStartBodyY, mEndBodyY);
 
-	Boss* boss = static_cast<Boss*>(human->iParent);
 	if (mStep == 3 || mStep == 6 || mStep == 10)
 	{
 		human->pos = mMoveEase.InOut(mStartPos, mEndPos);

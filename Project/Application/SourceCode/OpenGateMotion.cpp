@@ -45,7 +45,7 @@ void OpenGateMotion::Update(HumanoidBody* human)
 	}
 	BasePrevUpdate(human);
 	CurrentStepUpdate(human);
-	BasePostUpdate(human);
+	BasePostUpdate();
 }
 
 void OpenGateMotion::CurrentStepInit(HumanoidBody* human)

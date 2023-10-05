@@ -47,7 +47,7 @@ void SilhouetteObj::Draw(const BlendMode& blendMode)
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
 	// GraphicsPipeline描画コマンド
-	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
+	mGraphicsPipeline->DrawCommand(blendMode);
 
 	// VBVとIBVの設定コマンド
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, obj->GetModel()->mesh.vertexBuffer.GetvbViewAddress());

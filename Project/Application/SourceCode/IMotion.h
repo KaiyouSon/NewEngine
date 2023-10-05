@@ -27,7 +27,7 @@ public:
 public:
 	void BaseInit(HumanoidBody* human);
 	void BasePrevUpdate(HumanoidBody* human);
-	void BasePostUpdate(HumanoidBody* human);
+	void BasePostUpdate();
 
 public:
 	IMotion();

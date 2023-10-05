@@ -43,10 +43,10 @@ unsigned long GetNowTime(const TimeUnit timeUnit)
 		return (unsigned long)((GetTickCount64() / 60000) % 60);
 		break;
 	default:
+		return 0;
 		break;
 	}
 
-	return -1;
 }
 Vec2 WorldToScreen(const Vec3 worldPos)
 {

@@ -38,9 +38,6 @@ void MalletMotion::Init(HumanoidBody* human)
 	human->GetPart(PartID::Body)->pos.y = 0.f;
 
 }
-void MalletMotion::Update(HumanoidBody* human)
-{
-}
 void MalletMotion::WeakMotion(PlayerBody* human)
 {
 	if (mIsPlay == false)
@@ -71,30 +68,30 @@ void MalletMotion::WeakMotion(PlayerBody* human)
 
 	if (mComboCount == 1)
 	{
-		BasePrevUpdate(human, 0);
+		BasePrevUpdate(human);
 	}
 	else if (mComboCount < mComboMaxCount)
 	{
-		BasePrevUpdate(human, 1);
+		BasePrevUpdate(human);
 	}
 	else
 	{
-		BasePrevUpdate(human, 2);
+		BasePrevUpdate(human);
 	}
 
 	CurrentStepUpdate(human);
 
 	if (mComboCount == 1)
 	{
-		BasePostUpdate(human, 0);
+		BasePostUpdate(0);
 	}
 	else if (mComboCount < mComboMaxCount)
 	{
-		BasePostUpdate(human, 1);
+		BasePostUpdate(1);
 	}
 	else
 	{
-		BasePostUpdate(human, 2);
+		BasePostUpdate(2);
 	}
 }
 void MalletMotion::HeavyMotion(PlayerBody* human)
@@ -112,9 +109,9 @@ void MalletMotion::HeavyMotion(PlayerBody* human)
 		BaseInit(human, 3);
 		mIsInit = true;
 	}
-	BasePrevUpdate(human, 3);
+	BasePrevUpdate(human);
 	CurrentStepUpdate(human);
-	BasePostUpdate(human, 3);
+	BasePostUpdate(3);
 }
 void MalletMotion::BackMotion(PlayerBody* human)
 {
@@ -131,9 +128,9 @@ void MalletMotion::BackMotion(PlayerBody* human)
 		BaseInit(human, 4);
 		mIsInit = true;
 	}
-	BasePrevUpdate(human, 4);
+	BasePrevUpdate(human);
 	CurrentStepUpdate(human);
-	BasePostUpdate(human, 4);
+	BasePostUpdate(4);
 }
 void MalletMotion::RollMotion(PlayerBody* human)
 {
@@ -151,9 +148,9 @@ void MalletMotion::RollMotion(PlayerBody* human)
 
 		mIsInit = true;
 	}
-	BasePrevUpdate(human, 5);
+	BasePrevUpdate(human);
 	CurrentStepUpdate(human);
-	BasePostUpdate(human, 5);
+	BasePostUpdate(5);
 }
 
 void MalletMotion::CurrentStepInit(PlayerBody* human)
@@ -173,7 +170,7 @@ void MalletMotion::CurrentStepInit(PlayerBody* human)
 		}
 		else if (mStep == 1)
 		{
-			HeavyStep1Init(human);
+			HeavyStep1Init();
 		}
 		else if (mStep == 2)
 		{
@@ -181,19 +178,19 @@ void MalletMotion::CurrentStepInit(PlayerBody* human)
 		}
 		else if (mStep == 3)
 		{
-			HeavyStep3Init(human);
+			HeavyStep3Init();
 		}
 		else if (mStep == 4)
 		{
-			HeavyStep4Init(human);
+			HeavyStep4Init();
 		}
 		else if (mStep == 5)
 		{
-			HeavyStep5Init(human);
+			HeavyStep5Init();
 		}
 		else if (mStep == 6)
 		{
-			HeavyStep6Init(human);
+			HeavyStep6Init();
 		}
 	}
 	else if (mAttackType == AttackType::Back)
@@ -222,10 +219,6 @@ void MalletMotion::CurrentStepUpdate(PlayerBody* human)
 		if (mStep == 1)
 		{
 			WeakStep1Update(human);
-		}
-		else if (mStep == 2)
-		{
-			WeakStep2Update(human);
 		}
 	}
 	else if (mAttackType == AttackType::Heavy)
@@ -331,16 +324,6 @@ void MalletMotion::WeakStep1Update(PlayerBody* human)
 		mIsCalcCollider = false;
 	}
 }
-void MalletMotion::WeakStep2Update(PlayerBody* human)
-{
-	//if (mEase.GetisEnd() == true)
-	//{
-	//	mStep = 0;
-	//	mIsInit = false;
-	//	mIsPlay = false;
-	//	mIsCanChangeMotion = false;
-	//}
-}
 
 // ‹­UŒ‚
 void MalletMotion::HeavyStep0Init(PlayerBody* human)
@@ -352,7 +335,7 @@ void MalletMotion::HeavyStep0Update(PlayerBody* human)
 {
 	human->GetPart(PartID::Body)->pos.y = mEase.In(startPosY, endPosY);
 }
-void MalletMotion::HeavyStep1Init(PlayerBody* human)
+void MalletMotion::HeavyStep1Init()
 {
 	startPosY = endPosY;
 	endPosY = -1.04f;
@@ -366,7 +349,7 @@ void MalletMotion::HeavyStep1Update(PlayerBody* human)
 		mEase.SetisEnd(true);
 	}
 
-	if (mEase.GetisEnd())
+	if (mEase.GetisEnd() == true)
 	{
 		Player* player = static_cast<Player*>(human->iParent);
 		player->mWeapon->SetChargeRate(1.f + mEase.GetTimeRate());
@@ -412,7 +395,7 @@ void MalletMotion::HeavyStep2Update(PlayerBody* human)
 		//}
 	}
 }
-void MalletMotion::HeavyStep3Init(PlayerBody* human)
+void MalletMotion::HeavyStep3Init()
 {
 	startPosY = endPosY;
 	endPosY = -1.85f;
@@ -421,18 +404,13 @@ void MalletMotion::HeavyStep3Update(PlayerBody* human)
 {
 	human->GetPart(PartID::Body)->pos.y = mEase.In(startPosY, endPosY);
 
-	if (mEase.GetTimer() == 0)
-	{
-
-	}
-
 	if (mEase.GetisEnd() == true)
 	{
 		// “–‚½‚è”»’è–³Œø
 		mIsCalcCollider = false;
 	}
 }
-void MalletMotion::HeavyStep4Init(PlayerBody* human)
+void MalletMotion::HeavyStep4Init()
 {
 	startPosY = endPosY;
 	endPosY = -1.2f;
@@ -441,7 +419,7 @@ void MalletMotion::HeavyStep4Update(PlayerBody* human)
 {
 	human->GetPart(PartID::Body)->pos.y = mEase.In(startPosY, endPosY);
 }
-void MalletMotion::HeavyStep5Init(PlayerBody* human)
+void MalletMotion::HeavyStep5Init()
 {
 	startPosY = endPosY;
 	endPosY = -0.32f;
@@ -455,7 +433,7 @@ void MalletMotion::HeavyStep5Update(PlayerBody* human)
 		mIsCanChangeMotion = true;
 	}
 }
-void MalletMotion::HeavyStep6Init(PlayerBody* human)
+void MalletMotion::HeavyStep6Init()
 {
 	startPosY = endPosY;
 	endPosY = 0.f;

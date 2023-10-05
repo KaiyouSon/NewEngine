@@ -43,7 +43,7 @@ void AssimpLoader::ParseMeshFaces(FbxModel* model, aiMesh* mesh)
 
 		for (uint32_t j = 0; j < face.mNumIndices; j++)
 		{
-			indices[i * 3 + j] = face.mIndices[j];
+			indices[i * 3 + j] = static_cast<uint16_t>(face.mIndices[j]);
 		}
 	}
 }
@@ -160,11 +160,11 @@ void AssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 
 		// テクスチャー
 		int textureCount = material->GetTextureCount(aiTextureType_DIFFUSE);
-		for (int i = 0; i < textureCount; i++)
+		for (int j = 0; j < textureCount; j++)
 		{
 			aiString texturePath;
 
-			if (material->GetTexture(aiTextureType_DIFFUSE, i, &texturePath) == AI_SUCCESS)
+			if (material->GetTexture(aiTextureType_DIFFUSE, j, &texturePath) == AI_SUCCESS)
 			{
 				const std::string filePath = texturePath.C_Str();
 

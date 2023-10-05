@@ -54,7 +54,7 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Noice/ScreenNoice.png", "ScreenNoice");
 
 	// レンダーテクスチャー
-	TextureManager::CreateDepthTexture(Vec2(1920, 1080));
+	TextureManager::CreateDepthTexture();
 
 	// 現在のシーン描画情報
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMap");

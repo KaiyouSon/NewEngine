@@ -526,5 +526,5 @@ Vec3 Collision::ClosestPointOfPointAndTriangle(const Vec3 point, const TriangleC
 	float v = vb * denom;
 	float w = vc * denom;
 
-	return 0;
+	return triangle.p0 + p0_p1 * v + p0_p2 * w;
 }

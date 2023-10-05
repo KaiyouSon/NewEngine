@@ -9,7 +9,7 @@ RadialBlur::RadialBlur() :
 	postEffect_->pos = GetWindowHalfSize();
 	postEffect_->AddRenderTexture(tex_);
 	postEffect_->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("RadialBlur"));
-	postEffect_->AddMaterial(ConstantBuffer<CRadialBlur>{});
+	postEffect_->AddMaterial<ConstantBuffer<CRadialBlur>>();
 }
 
 void RadialBlur::CreateGraphicsPipeline()

@@ -160,11 +160,6 @@ Quaternion Quaternion::operator*(const Quaternion other) const
 
 	return result;
 }
-Quaternion Quaternion::operator/(const Quaternion other) const
-{
-	return Quaternion();
-}
-
 Quaternion Quaternion::operator*(const float num) const
 {
 	return { x * num,y * num ,z * num ,w * num };

@@ -43,7 +43,7 @@ public: // ‚»‚Ì‘¼
 	void AddRenderTexture(RenderTexture* renderTexture);
 
 	template<typename T>
-	void AddMaterial(const T& constantBuffer)
+	void AddMaterial()
 	{
 		std::unique_ptr<IConstantBuffer> iConstatnBuffer = std::make_unique<T>();
 		iConstatnBuffer->Create();

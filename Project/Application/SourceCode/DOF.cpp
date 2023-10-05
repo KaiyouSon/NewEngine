@@ -11,7 +11,7 @@ DOF::DOF() :
 	dof_->pos = GetWindowHalfSize();
 	dof_->AddRenderTexture(tex_);
 	dof_->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("DOF"));
-	dof_->AddMaterial(ConstantBuffer<CDOF>{});
+	dof_->AddMaterial<ConstantBuffer<CDOF>>();
 }
 
 void DOF::CreateGraphicsPipeline()

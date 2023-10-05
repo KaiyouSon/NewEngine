@@ -139,8 +139,6 @@ BOOL CALLBACK JoypadInput::DeviceFindCallBack(const DIDEVICEINSTANCE* pdidInstan
 // コントローラーを接続する処理
 void JoypadInput::SetJoyStick()
 {
-	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
-
 	HRESULT result;
 	// ジョイパットデバイスの列挙
 	result = InputManager::GetInstance()->GetDirectInput()->
@@ -459,7 +457,7 @@ bool JoypadInput::GetTriggerUp(const PadCode padCode, const float length, const 
 }
 
 // コントローラー接続しているか
-bool JoypadInput::GetisLinkPad(const int padIndex)
+bool JoypadInput::GetisLinkPad()
 {
 	// 仮
 	return GetInstance()->joypadObjs_.size() > 0;

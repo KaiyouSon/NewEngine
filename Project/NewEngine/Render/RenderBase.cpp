@@ -7,7 +7,10 @@
 #include <cassert>
 #include <string>
 #include <d3dcompiler.h>
+#pragma warning(push)
+#pragma warning(disable: 4061)
 #include <d3dx12.h>
+#pragma warning(pop)
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 #pragma comment(lib,"d3dcompiler.lib")

@@ -69,7 +69,7 @@ void GPUEmitter::Draw(const BlendMode blendMode)
 	cmdList->Dispatch(1, 1, 1);
 
 	// GraphicsPipeline•`‰æƒRƒ}ƒ“ƒh
-	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
+	mGraphicsPipeline->DrawCommand(blendMode);
 
 	auto descriptorHeap2 = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
 	cmdList->SetDescriptorHeaps(1, &descriptorHeap2);

@@ -58,7 +58,7 @@ void Emitter::Draw(const BlendMode blendMode)
 	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
 
 	// GraphicsPipeline描画コマンド
-	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
+	mGraphicsPipeline->DrawCommand(blendMode);
 
 	// VBVとIBVの設定コマンド
 	cmdList->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());

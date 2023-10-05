@@ -46,7 +46,7 @@ void KeyBoardInput::Update()
 bool KeyBoardInput::GetKey(const uint32_t key)
 {
 	// 例外スローしないように
-	int index = Clamp<int>(key, 0, 256);
+	uint32_t index = Clamp<uint32_t>(key, 0, 256);
 
 	return (bool)GetInstance()->keys_[index];
 }
@@ -55,16 +55,16 @@ bool KeyBoardInput::GetKey(const uint32_t key)
 bool KeyBoardInput::GetKeyDown(const uint32_t key)
 {
 	// 例外スローしないように
-	int index = Clamp<int>(key, 0, 256);
+	uint32_t index = Clamp<uint32_t>(key, 0, 256);
 
-	return (bool)(GetInstance()->keys_[key] && !GetInstance()->prevKeys_[key]);
+	return (bool)(GetInstance()->keys_[index] && !GetInstance()->prevKeys_[index]);
 }
 
 // キーを離した瞬間
 bool KeyBoardInput::GetKeyUp(const uint32_t key)
 {
 	// 例外スローしないように
-	int index = Clamp<int>(key, 0, 256);
+	uint32_t index = Clamp<uint32_t>(key, 0, 256);
 
-	return (bool)(!GetInstance()->keys_[key] && GetInstance()->prevKeys_[key]);
+	return (bool)(!GetInstance()->keys_[index] && GetInstance()->prevKeys_[index]);
 }

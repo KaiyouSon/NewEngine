@@ -1,7 +1,10 @@
 #include "TextureManager.h"
 #include "RenderBase.h"
 #include <DirectXTex.h>
+#pragma warning(push)
+#pragma warning(disable: 4061)
 #include <d3dx12.h>
+#pragma warning(pop)
 using namespace DirectX;
 
 TextureManager::TextureManager() : mMutex(std::mutex{})
@@ -430,7 +433,7 @@ void TextureManager::UnLoadTexture(const std::string tag)
 }
 
 // 深度テクスチャーを生成
-Texture* TextureManager::CreateDepthTexture(const Vec2 size)
+Texture* TextureManager::CreateDepthTexture()
 {
 	// 排他制御
 	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
@@ -590,7 +593,6 @@ void TextureManager::ExcuteComandList()
 	// コマンドの実行完了を待つ
 	iCommandQueue->Signal(RenderBase::GetInstance()->GetFence(), RenderBase::GetInstance()->GetFenceValue());
 
-	auto test = RenderBase::GetInstance()->GetFence()->GetCompletedValue();
 	if (RenderBase::GetInstance()->GetFence()->GetCompletedValue() != RenderBase::GetInstance()->GetFenceValue())
 	{
 		HANDLE event = CreateEvent(nullptr, false, false, nullptr);

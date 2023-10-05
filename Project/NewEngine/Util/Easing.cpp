@@ -77,8 +77,6 @@ float Easing::Interpolation(const float startPos, const float endPos)
 	default:
 		return 0;
 	}
-
-	return 0;
 }
 
 Vec2 Easing::Interpolation(const Vec2 startPos, const Vec2 endPos)
@@ -100,8 +98,6 @@ Vec2 Easing::Interpolation(const Vec2 startPos, const Vec2 endPos)
 	default:
 		return 0;
 	}
-
-	return 0;
 }
 
 Vec3 Easing::Interpolation(const Vec3 startPos, const Vec3 endPos)
@@ -123,10 +119,7 @@ Vec3 Easing::Interpolation(const Vec3 startPos, const Vec3 endPos)
 	default:
 		return 0;
 	}
-
-	return 0;
 }
-
 // ラープ
 float Easing::Lerp(const float startPos, const float endPos)
 {
@@ -169,12 +162,7 @@ float Easing::Out(const float startPos, const float endPos)
 	{
 		return dis * (powf(mTimeRate - 1, mPowNum) + 1) + startPos;
 	}
-	else if ((int32_t)mPowNum % 2 == 0)
-	{
-		return dis * -1 * (powf(mTimeRate - 1, mPowNum) - 1) + startPos;
-	}
-
-	return -1;
+	return dis * -1 * (powf(mTimeRate - 1, mPowNum) - 1) + startPos;
 }
 Vec2 Easing::Out(const Vec2 startPos, const Vec2 endPos)
 {
@@ -183,12 +171,7 @@ Vec2 Easing::Out(const Vec2 startPos, const Vec2 endPos)
 	{
 		return dis * (powf(mTimeRate - 1, mPowNum) + 1) + startPos;
 	}
-	else if ((int32_t)mPowNum % 2 == 0)
-	{
-		return dis * -1 * (powf(mTimeRate - 1, mPowNum) - 1) + startPos;
-	}
-
-	return -1;
+	return dis * -1 * (powf(mTimeRate - 1, mPowNum) - 1) + startPos;
 }
 Vec3 Easing::Out(const Vec3 startPos, const Vec3 endPos)
 {
@@ -197,12 +180,7 @@ Vec3 Easing::Out(const Vec3 startPos, const Vec3 endPos)
 	{
 		return dis * (powf(mTimeRate - 1, mPowNum) + 1) + startPos;
 	}
-	else if ((int32_t)mPowNum % 2 == 0)
-	{
-		return dis * -1 * (powf(mTimeRate - 1, mPowNum) - 1) + startPos;
-	}
-
-	return -1;
+	return dis * -1 * (powf(mTimeRate - 1, mPowNum) - 1) + startPos;
 }
 
 // インアウト
@@ -214,12 +192,8 @@ float Easing::InOut(const float startPos, const float endPos)
 	{
 		return dis / 2.f * powf(mTimeRate * 2.f, mPowNum) + startPos;
 	}
-	else
-	{
-		return -dis / 2.f * (powf((1.f - (mTimeRate - 0.5f) * 2.f), mPowNum) - 2.f) + startPos;
-	}
+	return -dis / 2.f * (powf((1.f - (mTimeRate - 0.5f) * 2.f), mPowNum) - 2.f) + startPos;
 
-	return -1;
 }
 Vec2 Easing::InOut(const Vec2 startPos, const Vec2 endPos)
 {
@@ -228,12 +202,7 @@ Vec2 Easing::InOut(const Vec2 startPos, const Vec2 endPos)
 	{
 		return In(startPos, endPos);
 	}
-	else
-	{
-		return Out(startPos, endPos);
-	}
-
-	return -1;
+	return Out(startPos, endPos);
 }
 Vec3 Easing::InOut(const Vec3 startPos, const Vec3 endPos)
 {
@@ -243,12 +212,7 @@ Vec3 Easing::InOut(const Vec3 startPos, const Vec3 endPos)
 	{
 		return dis / 2.f * powf(mTimeRate * 2.f, mPowNum) + startPos;
 	}
-	else
-	{
-		return -dis / 2.f * (powf((1.f - (mTimeRate - 0.5f) * 2.f), mPowNum) - 2.f) + startPos;
-	}
-
-	return -1;
+	return -dis / 2.f * (powf((1.f - (mTimeRate - 0.5f) * 2.f), mPowNum) - 2.f) + startPos;
 }
 
 // インバック

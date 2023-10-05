@@ -22,7 +22,7 @@ private:
 	void CalcCurrentRot(PlayerBody* human);
 	void ReverceRots();
 
-	void Step0Init(PlayerBody* human);
+	void Step0Init();
 	void Step0Update(PlayerBody* human);
 	void Step1Init(PlayerBody* human);
 	void Step1Update(PlayerBody* human);

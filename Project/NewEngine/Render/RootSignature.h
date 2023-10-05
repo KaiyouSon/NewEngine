@@ -1,9 +1,12 @@
 #pragma once
 #include <d3d12.h>
-#include <d3dx12.h>
 #include <dxgi1_6.h>
 #include <wrl.h>
 #include <vector>
+#pragma warning(push)
+#pragma warning(disable: 4061)
+#include <d3dx12.h>
+#pragma warning(pop)
 
 struct RootSignatureSetting
 {

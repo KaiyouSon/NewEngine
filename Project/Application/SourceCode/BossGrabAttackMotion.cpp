@@ -33,7 +33,7 @@ void BossGrabAttackMotion::Update(HumanoidBody* human)
 	}
 	BasePrevUpdate(human);
 	CurrentStepUpdate(human);
-	BasePostUpdate(human);
+	BasePostUpdate();
 }
 
 void BossGrabAttackMotion::CurrentStepInit(HumanoidBody* human)
@@ -66,7 +66,6 @@ void BossGrabAttackMotion::CurrentStepUpdate(HumanoidBody* human)
 {
 	human->GetPart(PartID::Body)->pos.y = mEase.Interpolation(mStartBodyY, mEndBodyY);
 
-	Boss* boss = static_cast<Boss*>(human->iParent);
 	if ((mStep >= 0 && mStep <= 2) ||
 		(mStep == 3))
 	{

@@ -1,11 +1,11 @@
 #include "GaugeParam.h"
 #include "Util.h"
 
-void GaugeParam::CalcRate(const float value, const float max)
+void GaugeParam::CalcRate(const float value_, const float max_)
 {
-	this->max = max;
-	this->value = value;
-	this->rate = Max<float>(value / max, 0.f);
+	this->max = max_;
+	this->value = value_;
+	this->rate = Max<float>(value_ / max_, 0.f);
 }
 
 void GaugeParam::Update()

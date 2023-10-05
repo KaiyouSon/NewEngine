@@ -47,7 +47,7 @@ void RollMotion::Update(HumanoidBody* human)
 	}
 	BasePrevUpdate(human);
 	CurrentStepUpdate(human);
-	BasePostUpdate(human);
+	BasePostUpdate();
 }
 
 void RollMotion::CurrentStepInit(HumanoidBody* human)

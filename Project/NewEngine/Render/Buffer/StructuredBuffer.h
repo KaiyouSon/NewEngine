@@ -2,7 +2,10 @@
 #include "BufferResource.h"
 #include "RenderBase.h"
 #include <cassert>
+#pragma warning(push)
+#pragma warning(disable: 4061)
 #include <d3dx12.h>
+#pragma warning(pop)
 
 class StructuredBuffer
 {

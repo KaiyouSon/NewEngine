@@ -52,7 +52,7 @@ void IMotion::BasePrevUpdate(HumanoidBody* human)
 	}
 }
 
-void IMotion::BasePostUpdate(HumanoidBody* human)
+void IMotion::BasePostUpdate()
 {
 	if (mEase.GetisEnd() == true)
 	{

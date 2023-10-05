@@ -45,12 +45,9 @@ void DrinkMotion::Update(HumanoidBody* human)
 	}
 	BasePrevUpdate(human);
 	CurrentStepUpdate(human);
-	BasePostUpdate(human);
+	BasePostUpdate();
 }
 
-void DrinkMotion::CurrentStepInit(HumanoidBody* human)
-{
-}
 void DrinkMotion::CurrentStepUpdate(HumanoidBody* human)
 {
 	Player* player = static_cast<Player*>(human->iParent);

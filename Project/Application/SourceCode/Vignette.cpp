@@ -9,7 +9,7 @@ Vignette::Vignette() :
 	postEffect_->pos = GetWindowHalfSize();
 	postEffect_->AddRenderTexture(tex_);
 	postEffect_->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Vignette"));
-	postEffect_->AddMaterial(ConstantBuffer<CVignette>{});
+	postEffect_->AddMaterial<ConstantBuffer<CVignette>>();
 
 	vignetteData.range = Vec2(0.6f, 1.3f);
 }

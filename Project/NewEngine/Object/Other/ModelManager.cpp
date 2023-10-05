@@ -39,12 +39,12 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 	model->name = fileName;
 
 	std::string objfile = fileName + ".obj";
-	size_t pos;
+	uint32_t checkPos;
 	// 区切り文字 '/' が出てくる一番最後の部分を検索
-	pos = fileName.rfind('/');
-	if (pos < fileName.size())
+	checkPos = static_cast<uint32_t>(fileName.rfind('/'));
+	if (checkPos < fileName.size())
 	{
-		objfile = fileName.substr(pos + 1, fileName.size() - pos - 1) + ".obj";
+		objfile = fileName.substr(checkPos + 1, fileName.size() - checkPos - 1) + ".obj";
 	}
 
 	std::string path = sDirectoryPath + fileName + "/";
@@ -80,10 +80,10 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 		if (key == "mtllib")
 		{
 			// マテリアルのファイル名を読み込む
-			std::string fileName;
-			lineStream >> fileName;
+			std::string mtlFileName;
+			lineStream >> mtlFileName;
 
-			LoadMaterialColor(path + fileName, model.get());
+			LoadMaterialColor(path + mtlFileName, model.get());
 			continue;
 		}
 
@@ -169,7 +169,7 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 
 				if (isSmoothing == true)
 				{
-					model->mesh.AddSmoothData(indexPos, (uint16_t)model->mesh.indices.size() - 1);
+					model->mesh.AddSmoothData((uint16_t)indexPos, (uint16_t)model->mesh.indices.size() - 1);
 				}
 
 				count++;

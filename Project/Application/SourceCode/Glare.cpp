@@ -28,12 +28,12 @@ Glare::Glare() :
 	blur45_->pos = GetWindowHalfSize();
 	blur45_->AddRenderTexture(texs_[2]);
 	blur45_->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GLineBlur"));
-	blur45_->AddMaterial(ConstantBuffer<CLineBlur>{});
+	blur45_->AddMaterial<ConstantBuffer<CLineBlur>>();
 
 	blur135_->pos = GetWindowHalfSize();
 	blur135_->AddRenderTexture(texs_[2]);
 	blur135_->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GLineBlur"));
-	blur135_->AddMaterial(ConstantBuffer<CLineBlur>{});
+	blur135_->AddMaterial<ConstantBuffer<CLineBlur>>();
 
 	glare_->pos = GetWindowHalfSize();
 	glare_->AddRenderTexture(texs_[3]);

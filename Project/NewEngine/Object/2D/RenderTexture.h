@@ -6,8 +6,11 @@
 #include "Vec2.h"
 #include <vector>
 #include <memory>
-#include <d3dx12.h>
 #include <wrl.h>
+#pragma warning(push)
+#pragma warning(disable: 4061)
+#include <d3dx12.h>
+#pragma warning(pop)
 
 class RenderTexture
 {

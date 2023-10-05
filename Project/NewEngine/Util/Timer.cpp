@@ -33,7 +33,7 @@ void Timer::Update(const int32_t addTimer)
 
 bool Timer::operator==(const bool flag)
 {
-	return mIsTimeOut;
+	return mIsTimeOut == flag;
 }
 
 // セッター

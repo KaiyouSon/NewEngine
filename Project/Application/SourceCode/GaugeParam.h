@@ -6,6 +6,6 @@ struct GaugeParam
 	float max;
 	float rate;
 
-	void CalcRate(const float value, const float max);
+	void CalcRate(const float value_, const float max_);
 	void Update();
 };

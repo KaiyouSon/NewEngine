@@ -4,7 +4,6 @@
 class DrinkMotion : public IMotion
 {
 private:
-	void CurrentStepInit(HumanoidBody* human);
 	void CurrentStepUpdate(HumanoidBody* human);
 
 public:

@@ -17,6 +17,7 @@ public:
 
 public:
 	OutLineObj();
+	OutLineObj(const OutLineObj& other) = delete;
 
 	void Update(Transform* parent = nullptr);
 	void Draw();

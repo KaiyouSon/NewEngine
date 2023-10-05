@@ -23,22 +23,21 @@ private:// ÉRÉìÉ{ 1 Å` 4
 	// é„çUåÇ
 	void WeakStep1Init(PlayerBody* human);
 	void WeakStep1Update(PlayerBody* human);
-	void WeakStep2Update(PlayerBody* human);
 
 	// ã≠çUåÇ
 	void HeavyStep0Init(PlayerBody* human);
 	void HeavyStep0Update(PlayerBody* human);
-	void HeavyStep1Init(PlayerBody* human);
+	void HeavyStep1Init();
 	void HeavyStep1Update(PlayerBody* human);
 	void HeavyStep2Init(PlayerBody* human);
 	void HeavyStep2Update(PlayerBody* human);
-	void HeavyStep3Init(PlayerBody* human);
+	void HeavyStep3Init();
 	void HeavyStep3Update(PlayerBody* human);
-	void HeavyStep4Init(PlayerBody* human);
+	void HeavyStep4Init();
 	void HeavyStep4Update(PlayerBody* human);
-	void HeavyStep5Init(PlayerBody* human);
+	void HeavyStep5Init();
 	void HeavyStep5Update(PlayerBody* human);
-	void HeavyStep6Init(PlayerBody* human);
+	void HeavyStep6Init();
 	void HeavyStep6Update(PlayerBody* human);
 
 	// ÉoÉbÉNçUåÇ
@@ -56,7 +55,6 @@ private:// ÉRÉìÉ{ 1 Å` 4
 public:
 	MalletMotion();
 	void Init(HumanoidBody* human) override;
-	void Update(HumanoidBody* human) override;
 	void WeakMotion(PlayerBody* human) override;
 	void HeavyMotion(PlayerBody* human) override;
 	void BackMotion(PlayerBody* human) override;

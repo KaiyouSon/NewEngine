@@ -122,7 +122,7 @@ void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 		nlohmann::json children = jsonObj["children"];
 		for (const auto& child : children)
 		{
-			nlohmann::json transform = child["transform"];
+			nlohmann::json ctransform = child["transform"];
 
 			if (!jsonObj.contains("obj_name"))
 			{
@@ -130,21 +130,21 @@ void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 			}
 			else if (child["obj_name"] == "CoffinBottom")
 			{
-				Vec3 pos =
+				Vec3 bottomPos =
 				{
-					(float)transform["translation"][0],
-					(float)transform["translation"][1],
-					(float)transform["translation"][2],
+					(float)ctransform["translation"][0],
+					(float)ctransform["translation"][1],
+					(float)ctransform["translation"][2],
 				};
-				coffin->SetBottomPos(pos);
+				coffin->SetBottomPos(bottomPos);
 
-				Vec3 angle =
+				Vec3 bottomAngle =
 				{
-					(float)transform["rotation"][0],
-					(float)transform["rotation"][1],
-					(float)transform["rotation"][2],
+					(float)ctransform["rotation"][0],
+					(float)ctransform["rotation"][1],
+					(float)ctransform["rotation"][2],
 				};
-				coffin->SetBottomRot(Radian(angle));
+				coffin->SetBottomRot(Radian(bottomAngle));
 
 				if (child.contains("collider"))
 				{
@@ -152,7 +152,7 @@ void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 
 					if (collider["type"] == "Box")
 					{
-						Vec3 pos =
+						Vec3 childPos =
 						{
 							collider["center"][0],
 							collider["center"][1],
@@ -165,27 +165,27 @@ void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 							collider["size"][2],
 						};
 
-						coffin->SetBottomCollider(CubeCollider(pos, size));
+						coffin->SetBottomCollider(CubeCollider(childPos, size));
 					}
 				}
 			}
 			else if (child["obj_name"] == "CoffinTop")
 			{
-				Vec3 pos =
+				Vec3 topPos =
 				{
-					(float)transform["translation"][0],
-					(float)transform["translation"][1],
-					(float)transform["translation"][2],
+					(float)ctransform["translation"][0],
+					(float)ctransform["translation"][1],
+					(float)ctransform["translation"][2],
 				};
-				coffin->SetTopPos(pos);
+				coffin->SetTopPos(topPos);
 
-				Vec3 angle =
+				Vec3 topAngle =
 				{
-					(float)transform["rotation"][0],
-					(float)transform["rotation"][1],
-					(float)transform["rotation"][2],
+					(float)ctransform["rotation"][0],
+					(float)ctransform["rotation"][1],
+					(float)ctransform["rotation"][2],
 				};
-				coffin->SetTopRot(Radian(angle));
+				coffin->SetTopRot(Radian(topAngle));
 			}
 		}
 	}
@@ -247,14 +247,14 @@ void FieldDataManager::LoadTreeData(FieldData* data, nlohmann::json jsonObj)
 	nlohmann::json collider = jsonObj["collider"];
 	if (collider["type"] == "Sphere")
 	{
-		Vec3 pos =
+		Vec3 colliderPos =
 		{
 			collider["center"][0],
 			collider["center"][1],
 			collider["center"][2],
 		};
 		float radius = collider["radius"];
-		tree->SetCollider(SphereCollider(pos, radius));
+		tree->SetCollider(SphereCollider(colliderPos, radius));
 	}
 
 	data->trees.push_back(std::move(tree));
@@ -410,7 +410,7 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 		nlohmann::json children = jsonObj["children"];
 		for (const auto& child : children)
 		{
-			nlohmann::json transform = child["transform"];
+			nlohmann::json ctransform = child["transform"];
 
 			if (!jsonObj.contains("obj_name"))
 			{
@@ -418,51 +418,51 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 			}
 			else if (child["obj_name"] == "GateLeft")
 			{
-				Vec3 pos =
+				Vec3 cpos =
 				{
-					(float)transform["translation"][0],
-					(float)transform["translation"][1],
-					(float)transform["translation"][2],
+					(float)ctransform["translation"][0],
+					(float)ctransform["translation"][1],
+					(float)ctransform["translation"][2],
 				};
-				Vec3 scale =
+				Vec3 cscale =
 				{
-					(float)transform["scaling"][0],
-					(float)transform["scaling"][1],
-					(float)transform["scaling"][2],
+					(float)ctransform["scaling"][0],
+					(float)ctransform["scaling"][1],
+					(float)ctransform["scaling"][2],
 				};
-				Vec3 angle =
+				Vec3 cangle =
 				{
-					(float)transform["rotation"][0],
-					(float)transform["rotation"][1],
-					(float)transform["rotation"][2],
+					(float)ctransform["rotation"][0],
+					(float)ctransform["rotation"][1],
+					(float)ctransform["rotation"][2],
 				};
 
-				pos = Vec3MulMat4(pos, parent.GetWorldMat());
-				gate->SetLeftTransform(Transform(pos, scale, Radian(angle)));
+				cpos = Vec3MulMat4(cpos, parent.GetWorldMat());
+				gate->SetRightTransform(Transform(cpos, cscale, Radian(cangle)));
 			}
 			else if (child["obj_name"] == "GateRight")
 			{
-				Vec3 pos =
+				Vec3 cpos =
 				{
-					(float)transform["translation"][0],
-					(float)transform["translation"][1],
-					(float)transform["translation"][2],
+					(float)ctransform["translation"][0],
+					(float)ctransform["translation"][1],
+					(float)ctransform["translation"][2],
 				};
-				Vec3 scale =
+				Vec3 cscale =
 				{
-					(float)transform["scaling"][0],
-					(float)transform["scaling"][1],
-					(float)transform["scaling"][2],
+					(float)ctransform["scaling"][0],
+					(float)ctransform["scaling"][1],
+					(float)ctransform["scaling"][2],
 				};
-				Vec3 angle =
+				Vec3 cangle =
 				{
-					(float)transform["rotation"][0],
-					(float)transform["rotation"][1],
-					(float)transform["rotation"][2],
+					(float)ctransform["rotation"][0],
+					(float)ctransform["rotation"][1],
+					(float)ctransform["rotation"][2],
 				};
 
-				pos = Vec3MulMat4(pos, parent.GetWorldMat());
-				gate->SetRightTransform(Transform(pos, scale, Radian(angle)));
+				cpos = Vec3MulMat4(cpos, parent.GetWorldMat());
+				gate->SetRightTransform(Transform(cpos, cscale, Radian(cangle)));
 			}
 		}
 	}

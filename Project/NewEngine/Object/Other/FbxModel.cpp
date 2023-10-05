@@ -31,9 +31,9 @@ void FbxModel::ParseNodeHeirarchy(
 
 	// ノードアニメーションを取得する
 	std::string nodeName = rootNode->mName.C_Str();
-	aiAnimation* animation = scene->mAnimations[index];  // 適切なアニメーションを選択する必要があります
+	aiAnimation* aiAnimation = scene->mAnimations[index];  // 適切なアニメーションを選択する必要があります
 
-	const aiNodeAnim* nodeAnim = FindNodeAnim(nodeName, animation);
+	const aiNodeAnim* nodeAnim = FindNodeAnim(nodeName, aiAnimation);
 
 	// ノードアニメーションがある場合、ノードの変換行列を補完する
 	if (nodeAnim)
@@ -70,11 +70,11 @@ void FbxModel::ParseNodeHeirarchy(
 }
 
 // ノードアニメーションを検索する関数
-aiNodeAnim* FbxModel::FindNodeAnim(const std::string& nodeName, aiAnimation* animation)
+aiNodeAnim* FbxModel::FindNodeAnim(const std::string& nodeName, aiAnimation* aiAnimation)
 {
-	for (unsigned int i = 0; i < animation->mNumChannels; i++)
+	for (unsigned int i = 0; i < aiAnimation->mNumChannels; i++)
 	{
-		aiNodeAnim* nodeAnim = animation->mChannels[i];
+		aiNodeAnim* nodeAnim = aiAnimation->mChannels[i];
 		if (nodeAnim->mNodeName.data == nodeName)
 		{
 			return nodeAnim;

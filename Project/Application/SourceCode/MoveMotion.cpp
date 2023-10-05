@@ -37,7 +37,7 @@ void MoveMotion::JoggingMotion(PlayerBody* human)
 	{
 		if (mIsInit == false)
 		{
-			Step0Init(human);
+			Step0Init();
 			mIsInit = true;
 		}
 		Step0Update(human);
@@ -86,7 +86,7 @@ void MoveMotion::RunMotion(PlayerBody* human)
 	{
 		if (mIsInit == false)
 		{
-			Step0Init(human);
+			Step0Init();
 			mIsInit = true;
 		}
 		Step0Update(human);
@@ -121,7 +121,7 @@ void MoveMotion::RunMotion(PlayerBody* human)
 }
 
 // 現在の姿勢から走りモーションに補間
-void MoveMotion::Step0Init(PlayerBody* human)
+void MoveMotion::Step0Init()
 {
 	mEase.SetEaseTimer(10);
 	mEase.SetPowNum(2);
@@ -156,6 +156,8 @@ void MoveMotion::Step0Update(PlayerBody* human)
 // 走りモーション
 void MoveMotion::Step1Init(PlayerBody* human)
 {
+	human = nullptr;
+
 	mEase.SetEaseTimer(20);
 	mEase.SetPowNum(2);
 }

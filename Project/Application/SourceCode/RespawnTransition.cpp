@@ -9,8 +9,8 @@ RespawnTransition::RespawnTransition()
 		mTransition[i] = std::make_unique<Sprite>();
 		mTransition[i]->SetTexture(TextureManager::GetTexture("ScreenNoice"));
 		mTransition[i]->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("RespawnTransition"));
-		mTransition[i]->AddMaterial(ConstantBuffer<CRespawnTransition>());
-		mTransition[i]->AddMaterial(ConstantBuffer<CUVParameter>());
+		mTransition[i]->AddMaterial<ConstantBuffer<CRespawnTransition>>();
+		mTransition[i]->AddMaterial<ConstantBuffer<CUVParameter>>();
 
 		mTransition[i]->color = Color(0xc4c178);
 	}

@@ -38,7 +38,7 @@ public:
 
 public:
 	inline bool GetisChange() { return mIsChange; }
-	inline void SetisChange(bool mIsChange) { this->mIsChange = mIsChange; }
+	inline void SetisChange(bool isChange) { this->mIsChange = isChange; }
 	inline bool GetisSceneChanging() { return mIsSceneChanging; }
 
 private:

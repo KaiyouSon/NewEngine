@@ -1,7 +1,10 @@
 #include "GraphicsPipeline.h"
 #include "RenderBase.h"
-#include <d3dx12.h>
 #include <cassert>
+#pragma warning(push)
+#pragma warning(disable: 4061)
+#include <d3dx12.h>
+#pragma warning(pop)
 
 GraphicsPipelineSetting::GraphicsPipelineSetting() :
 	pipelineBlend(PipelineBlend::Alpha),
@@ -165,10 +168,7 @@ void GraphicsPipeline::CreatePipelineState(const GraphicsPipelineSetting::Pipeli
 	{
 		D3D12_RENDER_TARGET_BLEND_DESC blendDesc{};// = pipelineDesc.BlendState.RenderTarget[i];
 
-		blendDesc.RenderTargetWriteMask = mSetting.renderTargetBlendMask;
-		//D3D12_COLOR_WRITE_ENABLE_RED |
-		//	D3D12_COLOR_WRITE_ENABLE_GREEN |
-		//	D3D12_COLOR_WRITE_ENABLE_BLUE;
+		blendDesc.RenderTargetWriteMask = static_cast<unsigned char>(mSetting.renderTargetBlendMask);
 		blendDesc.BlendEnable = true;					// ブレンドを有効にする
 		blendDesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;	// 加算
 		blendDesc.SrcBlendAlpha = D3D12_BLEND_ONE;		// ソースの値を100％使う

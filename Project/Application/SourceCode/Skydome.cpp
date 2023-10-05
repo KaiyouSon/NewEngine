@@ -46,7 +46,7 @@ Skydome::Skydome() :
 	mRenderTexture->useDepth = false;
 	mPostEffect->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Skydome"));
 	mPostEffect->AddRenderTexture(mRenderTexture);
-	mPostEffect->AddMaterial(ConstantBuffer<ConstantBufferData::CVignette>{});
+	mPostEffect->AddMaterial<ConstantBuffer<ConstantBufferData::CVignette>>();
 	mPostEffect->pos = GetWindowHalfSize();
 
 	isVignette = true;

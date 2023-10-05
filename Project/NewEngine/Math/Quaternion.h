@@ -33,7 +33,6 @@ struct Quaternion
 	Quaternion operator+(const Quaternion other) const;	// もう一つのクオータニオンとの足し算
 	Quaternion operator-(const Quaternion other) const;	// もう一つのクオータニオンとの引き算
 	Quaternion operator*(const Quaternion other) const;	// もう一つのクオータニオンとの掛け算
-	Quaternion operator/(const Quaternion other) const;	// もう一つのクオータニオンとの割り算
 	Quaternion operator*(const float num) const;			// 一つの値との掛け算
 	Quaternion operator/(const float num) const;			// 一つの値との割り算
 

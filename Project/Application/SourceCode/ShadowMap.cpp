@@ -50,7 +50,7 @@ ShadowMap::ShadowMap() :
 	//mShadowMap->pos = GetWindowHalfSize() / 2;
 	mShadowMap->scale = 1.f / 32.f;
 	mShadowMap->pos = GetWindowHalfSize();
-	mShadowMap->AddMaterial(ConstantBuffer<CTransformShadowObj>{});
+	mShadowMap->AddMaterial<ConstantBuffer<CTransformShadowObj>>();
 
 	mBlur->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ShadowMapBlur"));
 	mBlur->AddRenderTexture(mBlurRT);

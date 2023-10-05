@@ -24,7 +24,7 @@ void IWeaponMotion::BaseInit(HumanoidBody* human, const uint32_t index)
 	}
 }
 
-void IWeaponMotion::BasePrevUpdate(PlayerBody* human, const uint32_t index)
+void IWeaponMotion::BasePrevUpdate(PlayerBody* human)
 {
 	for (uint32_t i = (uint32_t)PartID::Body; i < mCurRots.size(); i++)
 	{
@@ -41,7 +41,7 @@ void IWeaponMotion::BasePrevUpdate(PlayerBody* human, const uint32_t index)
 	}
 }
 
-void IWeaponMotion::BasePostUpdate(PlayerBody* human, const uint32_t index)
+void IWeaponMotion::BasePostUpdate(const uint32_t index)
 {
 	if (mEase.GetisEnd() == true)
 	{

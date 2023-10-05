@@ -76,7 +76,7 @@ public:	// トリガー関連
 	static bool GetTriggerUp(const PadCode padCode, const float length = 0, const int padIndex = 0);
 
 public: // その他取得関連
-	static bool GetisLinkPad(const int padIndex = 0);
+	static bool GetisLinkPad();
 
 public: // アサット
 	static inline void SetisInsertPad(const bool isInsertPad) { JoypadInput::sIsInsertPad = isInsertPad; }

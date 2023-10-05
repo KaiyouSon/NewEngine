@@ -11,10 +11,9 @@ const float RenderTexture::sClearColor[4] = { 0.f,0.f,0.f,1.0f };
 void RenderTexture::PrevDrawScene()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();
-	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
 
 	// リソースバリアを変更（シェーダーリソース -> 描画可能）
-	for (int i = 0; i < mBufferResources.size(); i++)
+	for (uint32_t i = 0; i < mBufferResources.size(); i++)
 	{
 		CD3DX12_RESOURCE_BARRIER resourceBarrier =
 			CD3DX12_RESOURCE_BARRIER::Transition(
@@ -26,7 +25,7 @@ void RenderTexture::PrevDrawScene()
 
 	// RTV CPUハンドル
 	std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> rtvCpuHandle;
-	for (int i = 0; i < mBufferResources.size(); i++)
+	for (uint32_t i = 0; i < mBufferResources.size(); i++)
 	{
 		rtvCpuHandle.push_back(mBufferResources[i].rtvHandle.cpu);
 	}
