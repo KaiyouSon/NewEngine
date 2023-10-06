@@ -41,6 +41,8 @@ void DepthBuffer::Create(const Vec2 size)
 			&depthClearValue,
 			IID_PPV_ARGS(&mBufferResource->buffer));
 	assert(SUCCEEDED(result));
+
+	mBufferResource->bufferState = D3D12_RESOURCE_STATE_DEPTH_WRITE;
 }
 
 // ÉQÉbÉ^Å[

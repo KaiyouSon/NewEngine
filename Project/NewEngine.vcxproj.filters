@@ -1298,6 +1298,9 @@
     <ClInclude Include="NewEngine\Object\3D\GPUEmitter.h">
       <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
+    <ClInclude Include="NewEngine\NewEngineDefine.h">
+      <Filter>NewEngine\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1399,6 +1402,7 @@
     <None Include="NewEngine\Shader\ToonRender.hlsli">
       <Filter>Shader\Engine\ToonRender</Filter>
     </None>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Application\Shader\BloomPS.hlsl">

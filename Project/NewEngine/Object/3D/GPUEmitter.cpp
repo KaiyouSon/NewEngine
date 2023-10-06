@@ -51,19 +51,18 @@ void GPUEmitter::Draw(const BlendMode blendMode)
 	auto descriptorHeaps1 = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
 	cmdList->SetDescriptorHeaps(1, &descriptorHeaps1);
 
-	// SRV
-	uint32_t index = mComputePipeline->GetRootSignature()->GetSRVStartIndex();
-	cmdList->SetComputeRootDescriptorTable(index, mStructuredBuffer->GetBufferResource()->srvHandle.gpu);
-
-	// GENERIC_READ -> UNORDERED_ACCESS にしてUAVを設定する
-	renderBase->TransitionBufferState(
-		mStructuredBuffer->GetBufferResource(),
-		D3D12_RESOURCE_STATE_GENERIC_READ,
-		D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+	if (mStructuredBuffer->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_GENERIC_READ)
+	{
+		// GENERIC_READ -> UNORDERED_ACCESS にしてSRVを設定する
+		renderBase->TransitionBufferState(
+			mStructuredBuffer->GetBufferResource(),
+			D3D12_RESOURCE_STATE_GENERIC_READ,
+			D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+	}
 
 	// UAV
-	uint32_t end = mComputePipeline->GetRootSignature()->GetUAVStartIndex();
-	cmdList->SetComputeRootDescriptorTable(end, mStructuredBuffer->GetBufferResource()->uavHandle.gpu);
+	uint32_t index = mComputePipeline->GetRootSignature()->GetUAVStartIndex();
+	cmdList->SetComputeRootDescriptorTable(index, mStructuredBuffer->GetBufferResource()->uavHandle.gpu);
 
 	// ディスパッチ
 	cmdList->Dispatch(1, 1, 1);
@@ -81,17 +80,19 @@ void GPUEmitter::Draw(const BlendMode blendMode)
 	cmdList->SetGraphicsRootDescriptorTable(
 		startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
 
-	// UNORDERED_ACCESS -> GENERIC_READ にしてSRVを設定する
-	renderBase->TransitionBufferState(
-		mStructuredBuffer->GetBufferResource(),
-		D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
-		D3D12_RESOURCE_STATE_GENERIC_READ);
+	if (mStructuredBuffer->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_UNORDERED_ACCESS)
+	{
+		// GENERIC_READ -> UNORDERED_ACCESS にしてSRVを設定する
+		renderBase->TransitionBufferState(
+			mStructuredBuffer->GetBufferResource(),
+			D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+			D3D12_RESOURCE_STATE_GENERIC_READ);
+	}
 
 	cmdList->SetGraphicsRootDescriptorTable(
 		startIndex + 1, mStructuredBuffer->GetBufferResource()->srvHandle.gpu);
 
 	cmdList->DrawInstanced((uint32_t)mVertices.size(), 1, 0, 0);
-
 }
 
 // --- マテリアル関連 --------------------------------------------------- //
@@ -163,16 +164,13 @@ void GPUEmitter::SetMaxParticle(const uint32_t max)
 	mVertices.resize(max);
 
 	// SRVとUAVを作成
-	struct ParticleData
-	{
-		std::vector<ParticleParameter::PParam0> data;
-	};
-	ParticleData particleData;
-	particleData.data.resize(max);
-	mStructuredBuffer->Create(particleData);
+	ParticleParameter::PParam0 particleData[32];
+
+	uint32_t dataSize = sizeof(ParticleParameter::PParam0) * max;
+	mStructuredBuffer->Create(dataSize);
 
 	DescriptorHeapManager::GetDescriptorHeap("SRV")->
-		CreateSRV(mStructuredBuffer->GetBufferResource(), 2, sizeof(ParticleData));
+		CreateSRV(mStructuredBuffer->GetBufferResource(), max, sizeof(ParticleParameter::PParam0));
 
 	// GENERIC_READ -> UNORDERED_ACCESS にしてUAVを作成
 	RenderBase::GetInstance()->TransitionBufferState(
@@ -182,13 +180,7 @@ void GPUEmitter::SetMaxParticle(const uint32_t max)
 	mStructuredBuffer->GetBufferResource()->buffer->GetDesc();
 
 	DescriptorHeapManager::GetDescriptorHeap("SRV")->
-		CreateUAV(mStructuredBuffer->GetBufferResource(), 2, sizeof(ParticleData));
-
-	// 作成し終わった後 UNORDERED_ACCESS -> GENERIC_READ に戻す
-	RenderBase::GetInstance()->TransitionBufferState(
-		mStructuredBuffer->GetBufferResource(),
-		D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
-		D3D12_RESOURCE_STATE_GENERIC_READ);
+		CreateUAV(mStructuredBuffer->GetBufferResource(), max, sizeof(ParticleParameter::PParam0));
 }
 
 // --- ゲッター -------------------------------------------------------- //

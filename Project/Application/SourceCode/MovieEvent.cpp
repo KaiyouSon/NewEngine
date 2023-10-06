@@ -55,7 +55,6 @@ void MovieEvent::Start()
 	sIsPlayOnce = true;
 
 	CameraManager::GetInstance()->ChangeCamera(CameraManager::CameraType::Movie);
-
 }
 
 void MovieEvent::End()

@@ -185,6 +185,13 @@ void GameScene::Init()
 }
 void GameScene::Update()
 {
+	if (Key::GetKeyDown(DIK_RETURN))
+	{
+		mPlayer->Init();
+		mMovieEvent->End();
+		CameraManager::GetInstance()->ChangeCamera(CameraManager::CameraType::Default);
+	}
+
 	if (SoundManager::GetIsPlaying("BattleBGM") == true)
 	{
 		SoundManager::SetVolume("BattleBGM", mBgmVolume);

@@ -18,4 +18,6 @@ struct BufferResource
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> buffer;
 	uint32_t index;
+
+	D3D12_RESOURCE_STATES bufferState;
 };

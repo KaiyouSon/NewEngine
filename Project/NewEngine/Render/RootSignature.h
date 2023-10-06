@@ -1,12 +1,13 @@
 #pragma once
+#include "NewEngineDefine.h"
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <wrl.h>
 #include <vector>
-#pragma warning(push)
-#pragma warning(disable: 4061)
+
+DirectX12WarningDisableBegin
 #include <d3dx12.h>
-#pragma warning(pop)
+DirectX12WarningDisableEnd
 
 struct RootSignatureSetting
 {

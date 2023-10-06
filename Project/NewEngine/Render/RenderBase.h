@@ -11,6 +11,7 @@
 #include "Viewport.h"
 #include "ScissorRectangle.h"
 #include "DescriptorHeapManager.h"
+#include "NewEngineDefine.h"
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <vector>

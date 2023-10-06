@@ -7,10 +7,11 @@
 #include <cassert>
 #include <string>
 #include <d3dcompiler.h>
-#pragma warning(push)
-#pragma warning(disable: 4061)
+
+DirectX12WarningDisableBegin
 #include <d3dx12.h>
-#pragma warning(pop)
+DirectX12WarningDisableEnd
+
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 #pragma comment(lib,"d3dcompiler.lib")
@@ -166,6 +167,7 @@ void RenderBase::TransitionBufferState(
 			currentState,
 			targetState,
 			D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+	bufferResource->bufferState = targetState;
 	mCommandList->ResourceBarrier(1, &barrier);
 }
 
@@ -606,7 +608,7 @@ void RenderBase::ComputePipelineInit()
 	ComputePipelineSetting setting;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("GPUEmitter");
 	setting.rootSignatureSetting.maxCbvRootParameter = 0;
-	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 1;
 	PipelineManager::CreateComputePipeline(setting, "GPUEmitter");
 }

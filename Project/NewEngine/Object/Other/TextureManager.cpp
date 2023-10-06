@@ -1,10 +1,11 @@
 #include "TextureManager.h"
 #include "RenderBase.h"
 #include <DirectXTex.h>
-#pragma warning(push)
-#pragma warning(disable: 4061)
+
+DirectX12WarningDisableBegin
 #include <d3dx12.h>
-#pragma warning(pop)
+DirectX12WarningDisableEnd
+
 using namespace DirectX;
 
 TextureManager::TextureManager() : mMutex(std::mutex{})

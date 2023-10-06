@@ -1,7 +1,8 @@
 #include "RespawnPointEffect.h"
 
 RespawnPointEffect::RespawnPointEffect() :
-	mCircleEmitter(std::make_unique<Emitter>())
+	//mCircleEmitter(std::make_unique<Emitter>())
+	mCircleEmitter(std::make_unique<GPUEmitter>())
 {
 }
 

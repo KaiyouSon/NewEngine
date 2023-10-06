@@ -57,7 +57,9 @@ public:
 				IID_PPV_ARGS(&bufferResource->buffer));
 		assert(SUCCEEDED(result));
 
-		//constantBuffer->SetName(L"ConstantBuffer");
+		bufferResource->bufferState = D3D12_RESOURCE_STATE_GENERIC_READ;
+
+		bufferResource->buffer->SetName(L"ConstantBuffer");
 
 		// 定数バッファのマッピング
 		result = bufferResource->buffer->Map(0, nullptr, (void**)&constantBufferMap);	// マッピング

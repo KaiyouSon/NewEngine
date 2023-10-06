@@ -1,10 +1,10 @@
 #include "GraphicsPipeline.h"
 #include "RenderBase.h"
 #include <cassert>
-#pragma warning(push)
-#pragma warning(disable: 4061)
+
+DirectX12WarningDisableBegin
 #include <d3dx12.h>
-#pragma warning(pop)
+DirectX12WarningDisableEnd
 
 GraphicsPipelineSetting::GraphicsPipelineSetting() :
 	pipelineBlend(PipelineBlend::Alpha),

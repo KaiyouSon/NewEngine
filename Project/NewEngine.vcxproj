@@ -434,6 +434,7 @@
     <ClInclude Include="NewEngine\Util\Timer.h" />
     <ClInclude Include="NewEngine\Util\Transform.h" />
     <ClInclude Include="NewEngine\Util\Util.h" />
+    <ClInclude Include="NewEngine\NewEngineDefine.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Application\Shader\Bloom.hlsli" />
@@ -455,6 +456,7 @@
     <None Include="Application\Shader\ShadowObj.hlsli" />
     <None Include="Application\Shader\Skydome.hlsli" />
     <None Include="Application\Shader\Vignette.hlsli" />
+    <None Include="cpp.hint" />
     <None Include="NewEngine\Shader\Blur.hlsli" />
     <None Include="NewEngine\Shader\CircleGaugeSprite.hlsli" />
     <None Include="NewEngine\Shader\ColliderObject.hlsli" />

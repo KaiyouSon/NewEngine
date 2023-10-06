@@ -438,7 +438,7 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 				};
 
 				cpos = Vec3MulMat4(cpos, parent.GetWorldMat());
-				gate->SetRightTransform(Transform(cpos, cscale, Radian(cangle)));
+				gate->SetLeftTransform(Transform(cpos, cscale, Radian(cangle)));
 			}
 			else if (child["obj_name"] == "GateRight")
 			{
