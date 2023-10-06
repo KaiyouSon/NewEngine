@@ -322,14 +322,14 @@
     <Filter Include="Shader\Engine\Sprite">
       <UniqueIdentifier>{0be0cd81-a9ac-42a9-87bb-1de3191c8cf7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\Engine\ToonRender">
-      <UniqueIdentifier>{8852c9eb-228e-4eff-8841-c20c923f557d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="NewEngine\Source\Render\ShaderCompiler">
       <UniqueIdentifier>{476a86bb-2911-4c35-83df-34e09e6cec09}</UniqueIdentifier>
     </Filter>
     <Filter Include="NewEngine\Header\Render\ShaderCompiler">
       <UniqueIdentifier>{ede8b782-52bf-48fb-9310-c6ec24d25802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\ToonRendering">
+      <UniqueIdentifier>{8852c9eb-228e-4eff-8841-c20c923f557d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -800,6 +800,9 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\CreateManager.cpp">
       <Filter>Application\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Util\Setting.cpp">
+      <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1307,6 +1310,9 @@
     <ClInclude Include="Application\SourceCode\CreateManager.h">
       <Filter>Application\Header</Filter>
     </ClInclude>
+    <ClInclude Include="NewEngine\Util\Setting.h">
+      <Filter>NewEngine\Header\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1405,8 +1411,8 @@
     <None Include="NewEngine\Shader\Sprite.hlsli">
       <Filter>Shader\Engine\Sprite</Filter>
     </None>
-    <None Include="NewEngine\Shader\ToonRender.hlsli">
-      <Filter>Shader\Engine\ToonRender</Filter>
+    <None Include="NewEngine\Shader\ToonRendering.hlsli">
+      <Filter>Shader\Engine\ToonRendering</Filter>
     </None>
     <None Include=".editorconfig" />
   </ItemGroup>
@@ -1606,11 +1612,11 @@
     <FxCompile Include="NewEngine\Shader\SpriteVS.hlsl">
       <Filter>Shader\Engine\Sprite</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ToonRenderPS.hlsl">
-      <Filter>Shader\Engine\ToonRender</Filter>
+    <FxCompile Include="NewEngine\Shader\ToonRenderingPS.hlsl">
+      <Filter>Shader\Engine\ToonRendering</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ToonRenderVS.hlsl">
-      <Filter>Shader\Engine\ToonRender</Filter>
+    <FxCompile Include="NewEngine\Shader\ToonRenderingVS.hlsl">
+      <Filter>Shader\Engine\ToonRendering</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\RespawnPointEffectVS.hlsl">
       <Filter>Shader\Application\Effect</Filter>

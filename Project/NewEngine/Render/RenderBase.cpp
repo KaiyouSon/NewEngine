@@ -351,102 +351,134 @@ void RenderBase::DepthBufferInit()
 void RenderBase::ShaderCompilerInit()
 {
 	std::string path1 = "NewEngine/Shader/";
-	std::string path2 = "Application/Shader/";
 
-	// Object3D逕ｨ繧ｷ繧ｧ繝ｼ繝繝ｼ
-	ShaderCompilerManager::Create("Object3D");
-	ShaderCompilerManager::GetShaderCompiler("Object3D")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Object3D")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Object3D")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Object3D")->CompileVertexShader(path1 + "Object3DVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("Object3D")->CompilePixelShader(path1 + "Object3DPS.hlsl", "main");
+	ShaderCompilerSetting setting;
 
-	// Fbx繝｢繝・Ν逕ｨ繧ｷ繧ｧ繝ｼ繝繝ｼ
-	ShaderCompilerManager::Create("FbxModel");
-	ShaderCompilerManager::GetShaderCompiler("FbxModel")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("FbxModel")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("FbxModel")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("FbxModel")->AddInputLayout("BONEINDICES", DXGI_FORMAT_R32G32B32A32_UINT);
-	ShaderCompilerManager::GetShaderCompiler("FbxModel")->AddInputLayout("BONEWEIGHTS", DXGI_FORMAT_R32G32B32A32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("FbxModel")->CompileVertexShader(path1 + "FbxModelVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("FbxModel")->CompilePixelShader(path1 + "FbxModelPS.hlsl", "main");
+	// Object3D用
+	setting.mInputLayoutSettings.resize(3);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.vsFilePath = path1 + "Object3DVS.hlsl";
+	setting.psFilePath = path1 + "Object3DPS.hlsl";
+	ShaderCompilerManager::Create(setting, "Object3D");
 
-	// 繧ｹ繝励Λ繧､繝育畑繧ｷ繧ｧ繝ｼ繝繝ｼ
-	ShaderCompilerManager::Create("Sprite");
-	ShaderCompilerManager::GetShaderCompiler("Sprite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Sprite")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Sprite")->CompileVertexShader(path1 + "SpriteVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("Sprite")->CompilePixelShader(path1 + "SpritePS.hlsl", "main");
+	// Fbxモデル用
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(5);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.mInputLayoutSettings[3] = InputLayoutSetting("BONEINDICES", DXGI_FORMAT_R32G32B32A32_UINT);
+	setting.mInputLayoutSettings[4] = InputLayoutSetting("BONEWEIGHTS", DXGI_FORMAT_R32G32B32A32_FLOAT);
+	setting.vsFilePath = path1 + "FbxModelVS.hlsl";
+	setting.psFilePath = path1 + "FbxModelPS.hlsl";
+	ShaderCompilerManager::Create(setting, "FbxModel");
 
-	// 蜀・ご繝ｼ繧ｸ繧ｹ繝励Λ繧､繝育畑繧ｷ繧ｧ繝ｼ繝繝ｼ
-	ShaderCompilerManager::Create("CircleGaugeSprite");
-	ShaderCompilerManager::GetShaderCompiler("CircleGaugeSprite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("CircleGaugeSprite")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("CircleGaugeSprite")->CompileVertexShader(path1 + "CircleGaugeSpriteVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("CircleGaugeSprite")->CompilePixelShader(path1 + "CircleGaugeSpritePS.hlsl", "main");
+	// スプライト用
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(2);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.vsFilePath = path1 + "SpriteVS.hlsl";
+	setting.psFilePath = path1 + "SpritePS.hlsl";
+	ShaderCompilerManager::Create(setting, "Sprite");
 
-	// 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ縺ｮ繧ｷ繧ｧ繝ｼ繝繝ｼ
-	ShaderCompilerManager::Create("RenderTexture");
-	ShaderCompilerManager::GetShaderCompiler("RenderTexture")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("RenderTexture")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("RenderTexture")->CompileVertexShader(path1 + "RenderTextureVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("RenderTexture")->CompilePixelShader(path1 + "RenderTexturePS.hlsl", "main");
+	// 円ゲージスプライト用
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(2);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.vsFilePath = path1 + "CircleGaugeSpriteVS.hlsl";
+	setting.psFilePath = path1 + "CircleGaugeSpritePS.hlsl";
+	ShaderCompilerManager::Create(setting, "CircleGaugeSprite");
 
-	// 繧ｷ繝ｫ繧ｨ繝・ヨ逕ｨ繧ｷ繧ｧ繝ｼ繝繝ｼ
-	ShaderCompilerManager::Create("Silhouette");
-	ShaderCompilerManager::GetShaderCompiler("Silhouette")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Silhouette")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Silhouette")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Silhouette")->CompileVertexShader(path1 + "SilhouetteVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("Silhouette")->CompilePixelShader(path1 + "SilhouettePS.hlsl", "main");
+	// レンダーテクスチャ用（デフォルトシェーダー）
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(2);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.vsFilePath = path1 + "RenderTextureVS.hlsl";
+	setting.psFilePath = path1 + "RenderTexturePS.hlsl";
+	ShaderCompilerManager::Create(setting, "RenderTexture");
 
-	// 繧｢繧ｦ繝医Λ繧､繝ｳObject逕ｨ繧ｷ繧ｧ繝ｼ繝繝ｼ
-	ShaderCompilerManager::Create("Outline");
-	ShaderCompilerManager::GetShaderCompiler("Outline")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Outline")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Outline")->CompileVertexShader(path1 + "OutLineVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("Outline")->CompilePixelShader(path1 + "OutLinePS.hlsl", "main");
+	// シルエット用
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(3);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.vsFilePath = path1 + "SilhouetteVS.hlsl";
+	setting.psFilePath = path1 + "SilhouettePS.hlsl";
+	ShaderCompilerManager::Create(setting, "Silhouette");
 
-	// 繝医ぇ繝ｼ繝ｳ繝ｬ繝ｳ繝繝ｼ繝ｪ繝ｳ繧ｰ逕ｨ
-	ShaderCompilerManager::Create("ToonRendering");
-	ShaderCompilerManager::GetShaderCompiler("ToonRendering")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("ToonRendering")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("ToonRendering")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("ToonRendering")->CompileVertexShader(path1 + "ToonRenderVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("ToonRendering")->CompilePixelShader(path1 + "ToonRenderPS.hlsl", "main");
+	// アウトライン用
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(2);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.vsFilePath = path1 + "OutlineVS.hlsl";
+	setting.psFilePath = path1 + "OutlinePS.hlsl";
+	ShaderCompilerManager::Create(setting, "Outline");
 
-	// 繝ｩ繧､繝ｳ逕ｨ
-	ShaderCompilerManager::Create("Line");
-	ShaderCompilerManager::GetShaderCompiler("Line")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Line")->CompileVertexShader(path1 + "LineVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("Line")->CompilePixelShader(path1 + "LinePS.hlsl", "main");
+	// トゥーンレンダリング用
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(3);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.vsFilePath = path1 + "ToonRenderingVS.hlsl";
+	setting.psFilePath = path1 + "ToonRenderingPS.hlsl";
+	ShaderCompilerManager::Create(setting, "ToonRendering");
 
-	// 繧ｨ繝溘ャ繧ｿ繝ｼ逕ｨ
-	ShaderCompilerManager::Create("Emitter");
-	ShaderCompilerManager::GetShaderCompiler("Emitter")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);	// 蠎ｧ讓・
-	ShaderCompilerManager::GetShaderCompiler("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);		// 繧ｹ繧ｱ繝ｼ繝ｫ
-	ShaderCompilerManager::GetShaderCompiler("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 1);		// 蝗櫁ｻ｢
-	ShaderCompilerManager::GetShaderCompiler("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 2);		// 霈昴″蠎ｦ
-	ShaderCompilerManager::GetShaderCompiler("Emitter")->AddInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);	// 濶ｲ
-	ShaderCompilerManager::GetShaderCompiler("Emitter")->CompileComputeShader(path1 + "EmitterCS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("Emitter")->CompileVertexShader(path1 + "EmitterVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("Emitter")->CompileGeometryShader(path1 + "EmitterGS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("Emitter")->CompilePixelShader(path1 + "EmitterPS.hlsl", "main");
+	// 線用
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(1);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.vsFilePath = path1 + "LineVS.hlsl";
+	setting.psFilePath = path1 + "LinePS.hlsl";
+	ShaderCompilerManager::Create(setting, "Line");
 
-	// GPU繧ｨ繝溘ャ繧ｿ繝ｼ逕ｨ
-	ShaderCompilerManager::Create("GPUEmitter");
-	ShaderCompilerManager::GetShaderCompiler("GPUEmitter")->CompileComputeShader(path2 + "RespawnPointEffectCS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("GPUEmitter")->CompileVertexShader(path2 + "RespawnPointEffectVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("GPUEmitter")->CompileGeometryShader(path1 + "EmitterGS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("GPUEmitter")->CompilePixelShader(path1 + "EmitterPS.hlsl", "main");
+	// エミッター用
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(5);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);	// 座標
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);		// スケール
+	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 1);		// z軸回転
+	setting.mInputLayoutSettings[3] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 2);		// 輝度
+	setting.mInputLayoutSettings[4] = InputLayoutSetting("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);	// 色
+	setting.vsFilePath = path1 + "EmitterVS.hlsl";
+	setting.gsFilePath = path1 + "EmitterGS.hlsl";
+	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	ShaderCompilerManager::Create(setting, "Emitter");
 
-	// ColliderObject逕ｨ繧ｷ繧ｧ繝ｼ繝繝ｼ
-	ShaderCompilerManager::Create("ColliderObject");
-	ShaderCompilerManager::GetShaderCompiler("ColliderObject")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("ColliderObject")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("ColliderObject")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("ColliderObject")->CompileVertexShader(path1 + "ColliderObjectVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("ColliderObject")->CompilePixelShader(path1 + "ColliderObjectPS.hlsl", "main");
+	// GPUエミッター用
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.clear();
+	setting.csFilePath = path1 + "EmitterCS.hlsl";
+	setting.vsFilePath = path1 + "GPUEmitterVS.hlsl";
+	setting.gsFilePath = path1 + "EmitterGS.hlsl";
+	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	ShaderCompilerManager::Create(setting, "GPUEmitter");
+
+	// ColliderObject用
+
+	//ShaderCompilerManager::Create("ColliderObject");
+	//ShaderCompilerManager::GetShaderCompiler("ColliderObject")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("ColliderObject")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("ColliderObject")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("ColliderObject")->CompileVertexShader(path1 + "ColliderObjectVS.hlsl", "main");
+	//ShaderCompilerManager::GetShaderCompiler("ColliderObject")->CompilePixelShader(path1 + "ColliderObjectPS.hlsl", "main");
+
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(3);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.vsFilePath = path1 + "ColliderObjectVS.hlsl";
+	setting.psFilePath = path1 + "ColliderObjectPS.hlsl";
+	ShaderCompilerManager::Create(setting, "ColliderObject");
+
 }
 void RenderBase::GraphicsPipelineInit()
 {

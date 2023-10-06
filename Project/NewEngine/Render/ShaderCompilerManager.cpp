@@ -8,7 +8,16 @@ void ShaderCompilerManager::Create(const std::string shaderObjectTag)
 	sShaderCompilerMap.insert(std::make_pair(shaderObjectTag, std::move(shaderObject)));
 }
 
-ShaderCompiler* ShaderCompilerManager::GetShaderCompiler(const std::string shaderObjectTag)
+void ShaderCompilerManager::Create(const ShaderCompilerSetting& setting, const std::string tag)
 {
-	return sShaderCompilerMap[shaderObjectTag].get();
+	std::unique_ptr<ShaderCompiler> shaderCompiler =
+		std::make_unique<ShaderCompiler>(setting);
+
+	// マップの格納
+	sShaderCompilerMap.insert(std::make_pair(tag, std::move(shaderCompiler)));
+}
+
+ShaderCompiler* ShaderCompilerManager::GetShaderCompiler(const std::string tag)
+{
+	return sShaderCompilerMap[tag].get();
 }

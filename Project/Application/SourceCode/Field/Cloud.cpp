@@ -9,13 +9,6 @@ void Cloud::CreateGraphicsPipeline()
 
 	std::string path = "Application/Shader/";
 
-	// 鬮倩ｼ晏ｺｦ謚ｽ蜃ｺ逕ｨ
-	ShaderCompilerManager::Create("Cloud");
-	ShaderCompilerManager::GetShaderCompiler("Cloud")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Cloud")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Cloud")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Cloud")->CompileVertexShader(path + "CloudVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("Cloud")->CompilePixelShader(path + "CloudPS.hlsl", "main");
 
 	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Cloud");

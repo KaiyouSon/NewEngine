@@ -4,36 +4,18 @@ void Bloom::CreateGraphicsPipeline()
 {
 	std::string path = "Application/Shader/";
 
-	// 鬮倩ｼ晏ｺｦ謚ｽ蜃ｺ逕ｨ
-	ShaderCompilerManager::Create("HighLumi");
-	ShaderCompilerManager::GetShaderCompiler("HighLumi")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("HighLumi")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("HighLumi")->CompileVertexShader(path + "HighLumiVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("HighLumi")->CompilePixelShader(path + "HighLumiPS.hlsl", "main");
-
 	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("HighLumi");
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "HighLumi");
 
-	// 繧ｬ繧ｦ繧ｷ繧｢繝ｳ繝悶Λ繝ｼ逕ｨ
-	ShaderCompilerManager::Create("GaussianBlur");
-	ShaderCompilerManager::GetShaderCompiler("GaussianBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("GaussianBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("GaussianBlur")->CompileVertexShader(path + "GaussianBlurVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("GaussianBlur")->CompilePixelShader(path + "GaussianBlurPS.hlsl", "main");
 
 	setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("GaussianBlur");
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "GaussianBlur");
 
-	// 蜷域・逕ｨ
-	ShaderCompilerManager::Create("Composite");
-	ShaderCompilerManager::GetShaderCompiler("Composite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Composite")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Composite")->CompileVertexShader(path + "CompositeVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("Composite")->CompilePixelShader(path + "CompositePS.hlsl", "main");
+
 
 	setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Composite");

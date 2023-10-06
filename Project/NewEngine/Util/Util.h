@@ -9,6 +9,7 @@
 #include "BezierCurve.h"
 #include "Enum.h"
 #include "Rect.h"
+#include "Setting.h"
 #include <functional>
 
 static const int maxBoneIndices = 4;

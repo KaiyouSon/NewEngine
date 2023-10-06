@@ -1,19 +1,25 @@
 #pragma once
 #include "NewEngine.h"
 
+// 前方宣言
 template<typename T> class Singleton;
+
+// ゲーム内で必要なオブジェクト(主にPSO..)を生成するもの
 class CreateManager : public Singleton<CreateManager>
 {
 private:
-	// シェダーオブジェクト生成
+	// シェダーコンパイラーの生成
+	void CreateShaderCompiler();
 
-	// パイプライン生成
+	// パイプラインの生成
 	void CreatePipeline();
 
 public:
+	// 全部生成する関数
 	void Create();
 
 private:
+	// Singleton関連
 	friend Singleton<CreateManager>;
 	CreateManager() {}
 };

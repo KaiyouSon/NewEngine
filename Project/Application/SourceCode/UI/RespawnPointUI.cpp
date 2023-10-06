@@ -5,12 +5,7 @@ void RespawnPointUI::CreateGraphicsPipeline()
 {
 	std::string path = "Application/Shader/";
 
-	ShaderCompilerManager::Create("RespawnTransition");
-	ShaderCompilerManager::GetShaderCompiler("RespawnTransition")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("RespawnTransition")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("RespawnTransition")->CompileVertexShader(path + "RespawnTransitionVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("RespawnTransition")->CompilePixelShader(path + "RespawnTransitionPS.hlsl", "main");
-
+	
 	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Sprite")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("RespawnTransition");
 	setting.rtvNum = 1;

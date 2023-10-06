@@ -7,8 +7,31 @@
 
 Microsoft::WRL::ComPtr <ID3DBlob> ShaderCompiler::sErrorBlob = nullptr;
 
-ShaderCompiler::ShaderCompiler() : mResult(HRESULT())
+ShaderCompiler::ShaderCompiler(const ShaderCompilerSetting& shaderCompilerSetting)
+	: mResult(HRESULT())
 {
+	mSetting = shaderCompilerSetting;
+
+	// インプットレイアウトの設定
+	for (uint32_t i = 0; i < mSetting.mInputLayoutSettings.size(); i++)
+	{
+		mInputLayout.push_back(
+			{
+				mSetting.mInputLayoutSettings[i].semanticName.c_str(),
+				mSetting.mInputLayoutSettings[i].index,
+				mSetting.mInputLayoutSettings[i].format,
+				0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,
+				0
+			});
+	}
+
+	// シェーダーコンパイル
+	CompileComputeShader(mSetting.csFilePath);
+	CompileVertexShader(mSetting.vsFilePath);
+	CompileGeometryShader(mSetting.gsFilePath);
+	CompilePixelShader(mSetting.psFilePath);
 }
 
 void ShaderCompiler::ShowErrorDetails()
@@ -30,8 +53,14 @@ void ShaderCompiler::ShowErrorDetails()
 }
 
 // コンピュートシェーダー
-void ShaderCompiler::CompileComputeShader(const std::string& filePath, const std::string& entryPointName)
+void ShaderCompiler::CompileComputeShader(const std::string& filePath)
 {
+	// 設定してないならコンパイルしない
+	if (filePath.empty() == true)
+	{
+		return;
+	}
+
 	// stringをwstringに変換
 	std::wstring wFilePath(filePath.begin(), filePath.end());
 
@@ -43,7 +72,8 @@ void ShaderCompiler::CompileComputeShader(const std::string& filePath, const std
 				wFilePath.c_str(), // シェーダファイル名
 				nullptr,
 				D3D_COMPILE_STANDARD_FILE_INCLUDE,	// インクルード可能にする
-				entryPointName.c_str(), "cs_5_0",	// エントリーポイント名、シェーダーモデル指定
+				"main",								// エントリーポイント名
+				"cs_5_0",							// シェーダーモデル指定
 				D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
 				0,
 				&mCsBlob, &sErrorBlob);
@@ -57,8 +87,9 @@ void ShaderCompiler::CompileComputeShader(const std::string& filePath, const std
 				wFilePath.c_str(), // シェーダファイル名
 				nullptr,
 				D3D_COMPILE_STANDARD_FILE_INCLUDE,	// インクルード可能にする
-				entryPointName.c_str(), "cs_5_0",	// エントリーポイント名、シェーダーモデル指定
-				D3DCOMPILE_OPTIMIZATION_LEVEL3, // デバッグ用設定
+				"main",								// エントリーポイント名
+				"cs_5_0",							// シェーダーモデル指定
+				D3DCOMPILE_OPTIMIZATION_LEVEL3,		// リリース用設定
 				0,
 				&mCsBlob, &sErrorBlob);
 		});
@@ -68,9 +99,14 @@ void ShaderCompiler::CompileComputeShader(const std::string& filePath, const std
 }
 
 // 頂点シェーダー
-void ShaderCompiler::CompileVertexShader(
-	const std::string& filePath, const std::string& entryPointName)
+void ShaderCompiler::CompileVertexShader(const std::string& filePath)
 {
+	// 設定してないならコンパイルしない
+	if (filePath.empty() == true)
+	{
+		return;
+	}
+
 	// stringをwstringに変換
 	std::wstring wFilePath(filePath.begin(), filePath.end());
 
@@ -82,7 +118,8 @@ void ShaderCompiler::CompileVertexShader(
 				wFilePath.c_str(), // シェーダファイル名
 				nullptr,
 				D3D_COMPILE_STANDARD_FILE_INCLUDE,	// インクルード可能にする
-				entryPointName.c_str(), "vs_5_0",	// エントリーポイント名、シェーダーモデル指定
+				"main",								// エントリーポイント名
+				"vs_5_0",							// シェーダーモデル指定
 				D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
 				0,
 				&mVsBlob, &sErrorBlob);
@@ -96,8 +133,9 @@ void ShaderCompiler::CompileVertexShader(
 				wFilePath.c_str(), // シェーダファイル名
 				nullptr,
 				D3D_COMPILE_STANDARD_FILE_INCLUDE,	// インクルード可能にする
-				entryPointName.c_str(), "vs_5_0",	// エントリーポイント名、シェーダーモデル指定
-				D3DCOMPILE_OPTIMIZATION_LEVEL3, // デバッグ用設定
+				"main",								// エントリーポイント名
+				"vs_5_0",							// シェーダーモデル指定
+				D3DCOMPILE_OPTIMIZATION_LEVEL3,		// リリース用設定
 				0,
 				&mVsBlob, &sErrorBlob);
 		});
@@ -107,9 +145,14 @@ void ShaderCompiler::CompileVertexShader(
 }
 
 // ジオメトリシェーダー
-void ShaderCompiler::CompileGeometryShader(
-	const std::string& filePath, const std::string& entryPointName)
+void ShaderCompiler::CompileGeometryShader(const std::string& filePath)
 {
+	// 設定してないならコンパイルしない
+	if (filePath.empty() == true)
+	{
+		return;
+	}
+
 	// stringをwstringに変換
 	std::wstring wFilePath(filePath.begin(), filePath.end());
 
@@ -121,7 +164,8 @@ void ShaderCompiler::CompileGeometryShader(
 				wFilePath.c_str(), // シェーダファイル名
 				nullptr,
 				D3D_COMPILE_STANDARD_FILE_INCLUDE,	// インクルード可能にする
-				entryPointName.c_str(), "gs_5_0",	// エントリーポイント名、シェーダーモデル指定
+				"main",								// エントリーポイント名
+				"gs_5_0",							// シェーダーモデル指定
 				D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
 				0,
 				&mGsBlob, &sErrorBlob);
@@ -135,8 +179,9 @@ void ShaderCompiler::CompileGeometryShader(
 				wFilePath.c_str(), // シェーダファイル名
 				nullptr,
 				D3D_COMPILE_STANDARD_FILE_INCLUDE,	// インクルード可能にする
-				entryPointName.c_str(), "gs_5_0",	// エントリーポイント名、シェーダーモデル指定
-				D3DCOMPILE_OPTIMIZATION_LEVEL3, // デバッグ用設定
+				"main",								// エントリーポイント名
+				"gs_5_0",							// シェーダーモデル指定
+				D3DCOMPILE_OPTIMIZATION_LEVEL3,		// リリース用設定
 				0,
 				&mGsBlob, &sErrorBlob);
 		});
@@ -146,9 +191,14 @@ void ShaderCompiler::CompileGeometryShader(
 }
 
 // ピクセルシェーダー
-void ShaderCompiler::CompilePixelShader(
-	const std::string& filePath, const std::string& entryPointName)
+void ShaderCompiler::CompilePixelShader(const std::string& filePath)
 {
+	// 設定してないならコンパイルしない
+	if (filePath.empty() == true)
+	{
+		return;
+	}
+
 	// stringをwstringに変換
 	std::wstring wFilePath(filePath.begin(), filePath.end());
 
@@ -160,7 +210,8 @@ void ShaderCompiler::CompilePixelShader(
 				wFilePath.c_str(), // シェーダファイル名
 				nullptr,
 				D3D_COMPILE_STANDARD_FILE_INCLUDE,	// インクルード可能にする
-				entryPointName.c_str(), "ps_5_0",	// エントリーポイント名、シェーダーモデル指定
+				"main",								// エントリーポイント名
+				"ps_5_0",							// シェーダーモデル指定
 				D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
 				0,
 				&mPsBlob, &sErrorBlob);
@@ -175,25 +226,15 @@ void ShaderCompiler::CompilePixelShader(
 				wFilePath.c_str(), // シェーダファイル名
 				nullptr,
 				D3D_COMPILE_STANDARD_FILE_INCLUDE,	// インクルード可能にする
-				entryPointName.c_str(), "ps_5_0",	// エントリーポイント名、シェーダーモデル指定
-				D3DCOMPILE_OPTIMIZATION_LEVEL3, // デバッグ用設定
+				"main",								// エントリーポイント名
+				"ps_5_0",							// シェーダーモデル指定
+				D3DCOMPILE_OPTIMIZATION_LEVEL3,		// リリース用設定
 				0,
 				&mPsBlob, &sErrorBlob);
 		});
 
 	// シェーダのエラー内容を表示
 	ShowErrorDetails();
-}
-
-// インプットレイアウトの追加
-void ShaderCompiler::AddInputLayout(const LPCSTR& semanticName, const DXGI_FORMAT format, const uint32_t index)
-{
-	mInputLayout.push_back(
-		{	// xyz座標
-			semanticName, index, format, 0,
-			D3D12_APPEND_ALIGNED_ELEMENT,
-			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
-		});
 }
 
 // ゲッター

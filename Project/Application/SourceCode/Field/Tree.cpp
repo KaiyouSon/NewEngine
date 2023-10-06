@@ -4,14 +4,6 @@ void Tree::CreateGraphicsPipeline()
 {
 	std::string path = "Application/Shader/";
 
-	// ShadowObj逕ｨ
-	ShaderCompilerManager::Create("Branch");
-	ShaderCompilerManager::GetShaderCompiler("Branch")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Branch")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Branch")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("Branch")->CompileVertexShader(path + "BranchVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("Branch")->CompilePixelShader(path + "BranchPS.hlsl", "main");
-
 	// 3D繧ｪ繝悶ず繧ｧ繧ｯ繝育畑
 	GraphicsPipelineSetting setting =
 		PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();

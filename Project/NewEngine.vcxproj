@@ -266,6 +266,7 @@
     <ClCompile Include="NewEngine\Util\Random.cpp" />
     <ClCompile Include="NewEngine\Sound\Sound.cpp" />
     <ClCompile Include="NewEngine\Util\Rect.cpp" />
+    <ClCompile Include="NewEngine\Util\Setting.cpp" />
     <ClCompile Include="NewEngine\Util\Timer.cpp" />
     <ClCompile Include="NewEngine\Util\Transform.cpp" />
     <ClCompile Include="NewEngine\Util\Util.cpp" />
@@ -433,6 +434,7 @@
     <ClInclude Include="NewEngine\Util\FrameRate.h" />
     <ClInclude Include="NewEngine\Util\Random.h" />
     <ClInclude Include="NewEngine\Util\Rect.h" />
+    <ClInclude Include="NewEngine\Util\Setting.h" />
     <ClInclude Include="NewEngine\Util\Singleton.h" />
     <ClInclude Include="NewEngine\Sound\Sound.h" />
     <ClInclude Include="NewEngine\Util\Timer.h" />
@@ -474,7 +476,7 @@
     <None Include="NewEngine\Shader\ShaderIO.hlsli" />
     <None Include="NewEngine\Shader\Silhouette.hlsli" />
     <None Include="NewEngine\Shader\Sprite.hlsli" />
-    <None Include="NewEngine\Shader\ToonRender.hlsli" />
+    <None Include="NewEngine\Shader\ToonRendering.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Application\Shader\BloomPS.hlsl">
@@ -825,13 +827,13 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ToonRenderPS.hlsl">
+    <FxCompile Include="NewEngine\Shader\ToonRenderingPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ToonRenderVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\ToonRenderingVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>

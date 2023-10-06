@@ -6,14 +6,6 @@ void ShadowObj::CreateGraphicsPipeline()
 {
 	std::string path = "Application/Shader/";
 
-	// ShadowObj用
-	ShaderCompilerManager::Create("ShadowObj");
-	ShaderCompilerManager::GetShaderCompiler("ShadowObj")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("ShadowObj")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("ShadowObj")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderCompilerManager::GetShaderCompiler("ShadowObj")->CompileVertexShader(path + "ShadowObjVS.hlsl", "main");
-	ShaderCompilerManager::GetShaderCompiler("ShadowObj")->CompilePixelShader(path + "ShadowObjPS.hlsl", "main");
-
 	// 3Dオブジェクト用
 	GraphicsPipelineSetting setting =
 		PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();

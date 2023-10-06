@@ -19,6 +19,7 @@
 #include "FieldDataManager.h"
 #include "TransitionManager.h"
 #include "PostEffectManager.h"
+#include "CreateManager.h"
 
 std::unique_ptr<IScene> SceneManager::sCurrentScene = nullptr;
 std::unique_ptr<IScene> SceneManager::sNextScene = nullptr;
@@ -27,6 +28,9 @@ bool SceneManager::sIsChanged = false;
 SceneManager::SceneManager()
 {
 	Object3D::isAllLighting = true;
+
+	CreateManager::GetInstance()->Create();
+
 	ShadowMap::CreateGraphicsPipeline();
 	ShadowObj::CreateGraphicsPipeline();
 	Cloud::CreateGraphicsPipeline();
@@ -38,6 +42,7 @@ SceneManager::SceneManager()
 	PostEffectManager::CreateGraphicsPipeline();
 
 	Bloom::CreateGraphicsPipeline();
+
 
 	// 繝・ヰ繝・げ譎・
 	ProcessAtDebugBulid([]()

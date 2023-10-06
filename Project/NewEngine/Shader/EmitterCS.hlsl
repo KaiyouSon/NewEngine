@@ -14,13 +14,12 @@ struct Data
     ArrayData data[2];
 };
 
-StructuredBuffer<Data> inputData : register(t0);
 RWStructuredBuffer<Data> outputData : register(u0);
 
 [numthreads(1, 1, 1)]
 void main(uint3 DTid : SV_DispatchThreadID)
 {
-    Data result = inputData[0];
+    Data result = outputData[0];
     // 例: 出力データを設定
     for (uint i = 0; i < 2; i++)
     {
@@ -29,6 +28,4 @@ void main(uint3 DTid : SV_DispatchThreadID)
     }
     // 出力データを書き込む
     outputData[0] = result;
-    
-    //outputData[0].curPos = 10.f;
 }
