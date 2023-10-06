@@ -16,23 +16,17 @@ struct ParticleParam
     float4 color;
 };
 
-static const uint MaxNum = 32;
-struct Data
-{
-    ParticleParam param[MaxNum];
-};
-StructuredBuffer<Data> inputData : register(t1);
+static const uint MaxNum = 125000;
+StructuredBuffer<ParticleParam> inputData : register(t1);
 
 V2G main(uint SV_VertexID : SV_VertexID)
 {
     V2G o = (V2G) 0;
     
-    Data input = inputData[0];
-    
-    o.pos = float4(input.param[SV_VertexID].pos, 1);
-    o.scale = input.param[SV_VertexID].scale;
-    o.rot = input.param[SV_VertexID].rot;
-    o.shininess = input.param[SV_VertexID].shininess;
-    o.color = input.param[SV_VertexID].color;
+    o.pos = float4(inputData[SV_VertexID].pos, 1);
+    o.scale = inputData[SV_VertexID].scale;
+    o.rot = inputData[SV_VertexID].rot;
+    o.shininess = inputData[SV_VertexID].shininess;
+    o.color = inputData[SV_VertexID].color;
     return o;
 }

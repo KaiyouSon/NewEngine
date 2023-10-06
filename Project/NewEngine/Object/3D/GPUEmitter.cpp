@@ -164,8 +164,6 @@ void GPUEmitter::SetMaxParticle(const uint32_t max)
 	mVertices.resize(max);
 
 	// SRV‚ÆUAV‚ðì¬
-	ParticleParameter::PParam0 particleData[32];
-
 	uint32_t dataSize = sizeof(ParticleParameter::PParam0) * max;
 	mStructuredBuffer->Create(dataSize);
 

@@ -495,28 +495,28 @@
     <ClCompile Include="NewEngine\Object\Other\AssimpLoader.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Vignette.cpp">
+    <ClCompile Include="Application\SourceCode\PostEffect\Vignette.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Bloom.cpp">
+    <ClCompile Include="Application\SourceCode\PostEffect\Bloom.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Task.cpp">
+    <ClCompile Include="Application\SourceCode\PostEffect\Task.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\GaussianBlur.cpp">
+    <ClCompile Include="Application\SourceCode\PostEffect\GaussianBlur.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Glare.cpp">
+    <ClCompile Include="Application\SourceCode\PostEffect\Glare.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\DOF.cpp">
+    <ClCompile Include="Application\SourceCode\PostEffect\DOF.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\RadialBlur.cpp">
+    <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\Model\ObjModel.cpp">
@@ -528,184 +528,184 @@
     <ClCompile Include="NewEngine\Object\Other\FbxModel.cpp">
       <Filter>NewEngine\Source\Object\Other\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\UIManager.cpp">
+    <ClCompile Include="Application\SourceCode\UI\UIManager.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\GaugeUI.cpp">
+    <ClCompile Include="Application\SourceCode\UI\GaugeUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\GaugeParam.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Weapon.cpp">
+    <ClCompile Include="Application\SourceCode\Weapon\Weapon.cpp">
       <Filter>Application\Source\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Club.cpp">
+    <ClCompile Include="Application\SourceCode\Weapon\Club.cpp">
       <Filter>Application\Source\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\CollisionManager.cpp">
       <Filter>Application\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\IWeaponMotion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\IWeaponMotion.cpp">
       <Filter>Application\Source\Motion\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\MalletMotion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\MalletMotion.cpp">
       <Filter>Application\Source\Motion\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\MoveMotion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\MoveMotion.cpp">
       <Filter>Application\Source\Motion\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\BackstepMotion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\BackstepMotion.cpp">
       <Filter>Application\Source\Motion\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\RollMotion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\RollMotion.cpp">
       <Filter>Application\Source\Motion\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\TitleUI.cpp">
+    <ClCompile Include="Application\SourceCode\UI\TitleUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Scene\SceneChanger.cpp">
       <Filter>Application\Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Scene\PlayerBody.cpp">
+    <ClCompile Include="Application\SourceCode\Body\PlayerBody.cpp">
       <Filter>Application\Source\Body</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\HumanoidBody.cpp">
+    <ClCompile Include="Application\SourceCode\Body\HumanoidBody.cpp">
       <Filter>Application\Source\Body</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\BossBody.cpp">
+    <ClCompile Include="Application\SourceCode\Body\BossBody.cpp">
       <Filter>Application\Source\Body</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\CameraManager.cpp">
+    <ClCompile Include="Application\SourceCode\Camera\CameraManager.cpp">
       <Filter>Application\Source\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\ICamera.cpp">
+    <ClCompile Include="Application\SourceCode\Camera\ICamera.cpp">
       <Filter>Application\Source\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\DefaultCamera.cpp">
+    <ClCompile Include="Application\SourceCode\Camera\DefaultCamera.cpp">
       <Filter>Application\Source\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\TargetCamera.cpp">
+    <ClCompile Include="Application\SourceCode\Camera\TargetCamera.cpp">
       <Filter>Application\Source\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\MotionManager.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\MotionManager.cpp">
       <Filter>Application\Source\Motion</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field.cpp">
+    <ClCompile Include="Application\SourceCode\Field\Field.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\MessageSign.cpp">
+    <ClCompile Include="Application\SourceCode\Field\MessageSign.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\NegotiationUI.cpp">
+    <ClCompile Include="Application\SourceCode\UI\NegotiationUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\ItemBoxUI.cpp">
+    <ClCompile Include="Application\SourceCode\UI\ItemBoxUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\MessageUI.cpp">
+    <ClCompile Include="Application\SourceCode\UI\MessageUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Skydome.cpp">
+    <ClCompile Include="Application\SourceCode\Field\Skydome.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Cloud.cpp">
+    <ClCompile Include="Application\SourceCode\Field\Cloud.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Collision\ICollider.cpp">
       <Filter>NewEngine\Source\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\ItemBoxUIManager.cpp">
+    <ClCompile Include="Application\SourceCode\UI\ItemBoxUIManager.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\ItemUI.cpp">
+    <ClCompile Include="Application\SourceCode\UI\ItemUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Sword.cpp">
+    <ClCompile Include="Application\SourceCode\Weapon\Sword.cpp">
       <Filter>Application\Source\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\BossAttack2Motion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\BossAttack2Motion.cpp">
       <Filter>Application\Source\Motion\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\IMotion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\IMotion.cpp">
       <Filter>Application\Source\Motion</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\BossAttack3Motion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\BossAttack3Motion.cpp">
       <Filter>Application\Source\Motion\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\BossGrabAttackMotion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\BossGrabAttackMotion.cpp">
       <Filter>Application\Source\Motion\Boss</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\ParticleParam.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\DrinkMotion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\DrinkMotion.cpp">
       <Filter>Application\Source\Motion\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\EffectManager.cpp">
+    <ClCompile Include="Application\SourceCode\Effect\EffectManager.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\BloodSprayEffect.cpp">
+    <ClCompile Include="Application\SourceCode\Effect\BloodSprayEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\Emitter.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\PlayerRecoveryEffect.cpp">
+    <ClCompile Include="Application\SourceCode\Effect\PlayerRecoveryEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Character.cpp">
+    <ClCompile Include="Application\SourceCode\Character\Character.cpp">
       <Filter>Application\Source\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Player.cpp">
+    <ClCompile Include="Application\SourceCode\Character\Player.cpp">
       <Filter>Application\Source\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Boss.cpp">
+    <ClCompile Include="Application\SourceCode\Character\Boss.cpp">
       <Filter>Application\Source\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\MenuManager.cpp">
+    <ClCompile Include="Application\SourceCode\Menu\MenuManager.cpp">
       <Filter>Application\Source\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\IMenu.cpp">
+    <ClCompile Include="Application\SourceCode\Menu\IMenu.cpp">
       <Filter>Application\Source\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\LogoutMenu.cpp">
+    <ClCompile Include="Application\SourceCode\Menu\LogoutMenu.cpp">
       <Filter>Application\Source\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\ResultUI.cpp">
+    <ClCompile Include="Application\SourceCode\UI\ResultUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\RespawnPoint.cpp">
+    <ClCompile Include="Application\SourceCode\Field\RespawnPoint.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\RespawnPointEffect.cpp">
+    <ClCompile Include="Application\SourceCode\Effect\RespawnPointEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\RespawnPointUI.cpp">
+    <ClCompile Include="Application\SourceCode\UI\RespawnPointUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Util\Rect.cpp">
       <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\ShadowMap.cpp">
+    <ClCompile Include="Application\SourceCode\ShadowMap\ShadowMap.cpp">
       <Filter>Application\Source\ShadowMap</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\ShadowObj.cpp">
+    <ClCompile Include="Application\SourceCode\ShadowMap\ShadowObj.cpp">
       <Filter>Application\Source\ShadowMap</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\RespawnTransition.cpp">
+    <ClCompile Include="Application\SourceCode\Transition\RespawnTransition.cpp">
       <Filter>Application\Source\Transition</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Tree.cpp">
+    <ClCompile Include="Application\SourceCode\Field\Tree.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Coffin.cpp">
+    <ClCompile Include="Application\SourceCode\Field\Coffin.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\FieldDataManager.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldDataManager.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\FieldData.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldData.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Collision\ColliderObject.cpp">
@@ -720,16 +720,16 @@
     <ClCompile Include="NewEngine\Collision\Grass.cpp">
       <Filter>Application\Source\Field\Grass</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Weed.cpp">
+    <ClCompile Include="Application\SourceCode\Field\Weed.cpp">
       <Filter>Application\Source\Field\Grass</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\ITransition.cpp">
+    <ClCompile Include="Application\SourceCode\Transition\ITransition.cpp">
       <Filter>Application\Source\Transition</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\TransitionManager.cpp">
+    <ClCompile Include="Application\SourceCode\Transition\TransitionManager.cpp">
       <Filter>Application\Source\Transition</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Wall.cpp">
+    <ClCompile Include="Application\SourceCode\Field\Wall.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Debugger\DebugManager.cpp">
@@ -738,22 +738,22 @@
     <ClCompile Include="NewEngine\Debugger\MappingWindow.cpp">
       <Filter>NewEngine\Source\Debugger</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\OpenGateMotion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\OpenGateMotion.cpp">
       <Filter>Application\Source\Motion\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Gate.cpp">
+    <ClCompile Include="Application\SourceCode\Field\Gate.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\Texture.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\SceneTransition.cpp">
+    <ClCompile Include="Application\SourceCode\Transition\SceneTransition.cpp">
       <Filter>Application\Source\Transition</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\LeadEffect.cpp">
+    <ClCompile Include="Application\SourceCode\Effect\LeadEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\PostEffectManager.cpp">
+    <ClCompile Include="Application\SourceCode\PostEffect\PostEffectManager.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Render\Buffer\BufferResource.cpp">
@@ -783,10 +783,10 @@
     <ClCompile Include="NewEngine\Render\ComputePipeline.cpp">
       <Filter>NewEngine\Source\Render\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\AirEffect.cpp">
+    <ClCompile Include="Application\SourceCode\Effect\AirEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\MovieCamera.cpp">
+    <ClCompile Include="Application\SourceCode\Camera\MovieCamera.cpp">
       <Filter>Application\Source\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\MovieEvent.cpp">
@@ -989,28 +989,28 @@
     <ClInclude Include="NewEngine\Object\Other\MaterialColor.h">
       <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Vignette.h">
+    <ClInclude Include="Application\SourceCode\PostEffect\Vignette.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Bloom.h">
+    <ClInclude Include="Application\SourceCode\PostEffect\Bloom.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Task.h">
+    <ClInclude Include="Application\SourceCode\PostEffect\Task.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Glare.h">
+    <ClInclude Include="Application\SourceCode\PostEffect\Glare.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\DOF.h">
+    <ClInclude Include="Application\SourceCode\PostEffect\DOF.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\GaussianBlur.h">
+    <ClInclude Include="Application\SourceCode\PostEffect\GaussianBlur.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\RadialBlur.h">
+    <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\Model.h">
@@ -1025,10 +1025,10 @@
     <ClInclude Include="NewEngine\Object\Other\FbxModel.h">
       <Filter>NewEngine\Header\Object\Other\Model</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\UIManager.h">
+    <ClInclude Include="Application\SourceCode\UI\UIManager.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\GaugeUI.h">
+    <ClInclude Include="Application\SourceCode\UI\GaugeUI.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\GaugeParam.h">
@@ -1037,178 +1037,178 @@
     <ClInclude Include="Application\SourceCode\GaugeType.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Weapon.h">
+    <ClInclude Include="Application\SourceCode\Weapon\Weapon.h">
       <Filter>Application\Header\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Club.h">
+    <ClInclude Include="Application\SourceCode\Weapon\Club.h">
       <Filter>Application\Header\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\CollisionManager.h">
       <Filter>Application\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\IWeaponMotion.h">
+    <ClInclude Include="Application\SourceCode\Motion\IWeaponMotion.h">
       <Filter>Application\Header\Motion\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\MalletMotion.h">
+    <ClInclude Include="Application\SourceCode\Motion\MalletMotion.h">
       <Filter>Application\Header\Motion\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\BackstepMotion.h">
+    <ClInclude Include="Application\SourceCode\Motion\BackstepMotion.h">
       <Filter>Application\Header\Motion\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\MoveMotion.h">
+    <ClInclude Include="Application\SourceCode\Motion\MoveMotion.h">
       <Filter>Application\Header\Motion\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\RollMotion.h">
+    <ClInclude Include="Application\SourceCode\Motion\RollMotion.h">
       <Filter>Application\Header\Motion\Player</Filter>
     </ClInclude>
     <ClInclude Include="..\..\1.School\3.3年前期\TL1\CG5_Task01\Project\External\nlohmann\json.hpp">
       <Filter>nlohmann</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\TitleUI.h">
+    <ClInclude Include="Application\SourceCode\UI\TitleUI.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Scene\SceneChanger.h">
       <Filter>Application\Header\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\HumanoidBody.h">
+    <ClInclude Include="Application\SourceCode\Body\HumanoidBody.h">
       <Filter>Application\Header\Body</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\PlayerBody.h">
+    <ClInclude Include="Application\SourceCode\Body\PlayerBody.h">
       <Filter>Application\Header\Body</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\BossBody.h">
+    <ClInclude Include="Application\SourceCode\Body\BossBody.h">
       <Filter>Application\Header\Body</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\CameraManager.h">
+    <ClInclude Include="Application\SourceCode\Camera\CameraManager.h">
       <Filter>Application\Header\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\ICamera.h">
+    <ClInclude Include="Application\SourceCode\Camera\ICamera.h">
       <Filter>Application\Header\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\DefaultCamera.h">
+    <ClInclude Include="Application\SourceCode\Camera\DefaultCamera.h">
       <Filter>Application\Header\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\TargetCamera.h">
+    <ClInclude Include="Application\SourceCode\Camera\TargetCamera.h">
       <Filter>Application\Header\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field.h">
+    <ClInclude Include="Application\SourceCode\Field\Field.h">
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\MessageSign.h">
+    <ClInclude Include="Application\SourceCode\Field\MessageSign.h">
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\NegotiationUI.h">
+    <ClInclude Include="Application\SourceCode\UI\NegotiationUI.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\ItemBoxUI.h">
+    <ClInclude Include="Application\SourceCode\UI\ItemBoxUI.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\MessageUI.h">
+    <ClInclude Include="Application\SourceCode\UI\MessageUI.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Skydome.h">
+    <ClInclude Include="Application\SourceCode\Field\Skydome.h">
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Cloud.h">
+    <ClInclude Include="Application\SourceCode\Field\Cloud.h">
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Collision\ICollider.h">
       <Filter>NewEngine\Header\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\ItemBoxUIManager.h">
+    <ClInclude Include="Application\SourceCode\UI\ItemBoxUIManager.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\ItemUI.h">
+    <ClInclude Include="Application\SourceCode\UI\ItemUI.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\MotionManager.h">
+    <ClInclude Include="Application\SourceCode\Motion\MotionManager.h">
       <Filter>Application\Header\Motion</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Sword.h">
+    <ClInclude Include="Application\SourceCode\Weapon\Sword.h">
       <Filter>Application\Header\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\BossAttack2Motion.h">
+    <ClInclude Include="Application\SourceCode\Motion\BossAttack2Motion.h">
       <Filter>Application\Header\Motion\Boss</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\IMotion.h">
+    <ClInclude Include="Application\SourceCode\Motion\IMotion.h">
       <Filter>Application\Header\Motion</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\BossAttack3Motion.h">
+    <ClInclude Include="Application\SourceCode\Motion\BossAttack3Motion.h">
       <Filter>Application\Header\Motion\Boss</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\BossGrabAttackMotion.h">
+    <ClInclude Include="Application\SourceCode\Motion\BossGrabAttackMotion.h">
       <Filter>Application\Header\Motion\Boss</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\ParticleParam.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\DrinkMotion.h">
+    <ClInclude Include="Application\SourceCode\Motion\DrinkMotion.h">
       <Filter>Application\Header\Motion\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\BloodSprayEffect.h">
+    <ClInclude Include="Application\SourceCode\Effect\BloodSprayEffect.h">
       <Filter>Application\Header\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\EffectManager.h">
+    <ClInclude Include="Application\SourceCode\Effect\EffectManager.h">
       <Filter>Application\Header\Effect</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\Emitter.h">
       <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\PlayerRecoveryEffect.h">
+    <ClInclude Include="Application\SourceCode\Effect\PlayerRecoveryEffect.h">
       <Filter>Application\Header\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Boss.h">
+    <ClInclude Include="Application\SourceCode\Character\Boss.h">
       <Filter>Application\Header\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Player.h">
+    <ClInclude Include="Application\SourceCode\Character\Player.h">
       <Filter>Application\Header\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Character.h">
+    <ClInclude Include="Application\SourceCode\Character\Character.h">
       <Filter>Application\Header\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\MenuManager.h">
+    <ClInclude Include="Application\SourceCode\Menu\MenuManager.h">
       <Filter>Application\Header\Menu</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\IMenu.h">
+    <ClInclude Include="Application\SourceCode\Menu\IMenu.h">
       <Filter>Application\Header\Menu</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\LogoutMenu.h">
+    <ClInclude Include="Application\SourceCode\Menu\LogoutMenu.h">
       <Filter>Application\Header\Menu</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\ResultUI.h">
+    <ClInclude Include="Application\SourceCode\UI\ResultUI.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\RespawnPoint.h">
+    <ClInclude Include="Application\SourceCode\Field\RespawnPoint.h">
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\RespawnPointEffect.h">
+    <ClInclude Include="Application\SourceCode\Effect\RespawnPointEffect.h">
       <Filter>Application\Header\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\RespawnPointUI.h">
+    <ClInclude Include="Application\SourceCode\UI\RespawnPointUI.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Util\Rect.h">
       <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\ShadowMap.h">
+    <ClInclude Include="Application\SourceCode\ShadowMap\ShadowMap.h">
       <Filter>Application\Header\ShadowMap</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\ShadowObj.h">
+    <ClInclude Include="Application\SourceCode\ShadowMap\ShadowObj.h">
       <Filter>Application\Header\ShadowMap</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\RespawnTransition.h">
+    <ClInclude Include="Application\SourceCode\Transition\RespawnTransition.h">
       <Filter>Application\Header\Transition</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Tree.h">
+    <ClInclude Include="Application\SourceCode\Field\Tree.h">
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Coffin.h">
+    <ClInclude Include="Application\SourceCode\Field\Coffin.h">
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\FieldDataManager.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldDataManager.h">
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\FieldData.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldData.h">
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Collision\ColliderDrawer.h">
@@ -1223,16 +1223,16 @@
     <ClInclude Include="NewEngine\Collision\Grass.h">
       <Filter>Application\Header\Field\Grass</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Weed.h">
+    <ClInclude Include="Application\SourceCode\Field\Weed.h">
       <Filter>Application\Header\Field\Grass</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\ITransition.h">
+    <ClInclude Include="Application\SourceCode\Transition\ITransition.h">
       <Filter>Application\Header\Transition</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\TransitionManager.h">
+    <ClInclude Include="Application\SourceCode\Transition\TransitionManager.h">
       <Filter>Application\Header\Transition</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Wall.h">
+    <ClInclude Include="Application\SourceCode\Field\Wall.h">
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Debugger\DebugManager.h">
@@ -1241,19 +1241,19 @@
     <ClInclude Include="NewEngine\Debugger\MappingWindow.h">
       <Filter>NewEngine\Header\Debugger</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\OpenGateMotion.h">
+    <ClInclude Include="Application\SourceCode\Motion\OpenGateMotion.h">
       <Filter>Application\Header\Motion\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Gate.h">
+    <ClInclude Include="Application\SourceCode\Field\Gate.h">
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\SceneTransition.h">
+    <ClInclude Include="Application\SourceCode\Transition\SceneTransition.h">
       <Filter>Application\Header\Transition</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\LeadEffect.h">
+    <ClInclude Include="Application\SourceCode\Effect\LeadEffect.h">
       <Filter>Application\Header\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\PostEffectManager.h">
+    <ClInclude Include="Application\SourceCode\PostEffect\PostEffectManager.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Render\Buffer\BufferResource.h">
@@ -1286,10 +1286,10 @@
     <ClInclude Include="NewEngine\Render\ComputePipeline.h">
       <Filter>NewEngine\Header\Render\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\AirEffect.h">
+    <ClInclude Include="Application\SourceCode\Effect\AirEffect.h">
       <Filter>Application\Header\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\MovieCamera.h">
+    <ClInclude Include="Application\SourceCode\Camera\MovieCamera.h">
       <Filter>Application\Header\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\MovieEvent.h">
@@ -1402,7 +1402,6 @@
     <None Include="NewEngine\Shader\ToonRender.hlsli">
       <Filter>Shader\Engine\ToonRender</Filter>
     </None>
-    <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Application\Shader\BloomPS.hlsl">
