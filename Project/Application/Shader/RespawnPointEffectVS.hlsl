@@ -9,14 +9,15 @@ struct V2G
 
 struct ParticleParam
 {
+    uint isActive;
     float3 pos;
+    float3 moveVec;
+    float3 moveAccel;
     float2 scale;
-    float rot;
     float shininess;
     float4 color;
 };
 
-static const uint MaxNum = 125000;
 StructuredBuffer<ParticleParam> inputData : register(t1);
 
 V2G main(uint SV_VertexID : SV_VertexID)
@@ -25,7 +26,7 @@ V2G main(uint SV_VertexID : SV_VertexID)
     
     o.pos = float4(inputData[SV_VertexID].pos, 1);
     o.scale = inputData[SV_VertexID].scale;
-    o.rot = inputData[SV_VertexID].rot;
+    o.rot = 0;
     o.shininess = inputData[SV_VertexID].shininess;
     o.color = inputData[SV_VertexID].color;
     return o;

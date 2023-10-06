@@ -798,6 +798,9 @@
     <ClCompile Include="NewEngine\Object\3D\GPUEmitter.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\CreateManager.cpp">
+      <Filter>Application\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1300,6 +1303,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\NewEngineDefine.h">
       <Filter>NewEngine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\CreateManager.h">
+      <Filter>Application\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

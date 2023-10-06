@@ -8,11 +8,11 @@ using namespace ConstantBufferData;
 
 GPUEmitter::GPUEmitter() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
-	offset(0, 0), tiling(1, 1), pSize(0),
+	offset(0, 0), tiling(1, 1),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GPUEmitter")),
 	mComputePipeline(PipelineManager::GetComputePipeline("GPUEmitter")),
 	mTexture(TextureManager::GetTexture("White")),
-	mStructuredBuffer(std::make_unique<StructuredBuffer>())
+	mParticleData(std::make_unique<StructuredBuffer>())
 {
 	// 繝槭ユ繝ｪ繧｢繝ｫ縺ｮ蛻晄悄蛹・
 	MaterialInit();
@@ -48,30 +48,30 @@ void GPUEmitter::Draw(const BlendMode blendMode)
 
 	mComputePipeline->DrawCommand();
 
-	auto descriptorHeaps1 = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
-	cmdList->SetDescriptorHeaps(1, &descriptorHeaps1);
-
-	if (mStructuredBuffer->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_GENERIC_READ)
+	if (mParticleData->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_GENERIC_READ)
 	{
 		// GENERIC_READ -> UNORDERED_ACCESS 縺ｫ縺励※SRV繧定ｨｭ螳壹☆繧・
 		renderBase->TransitionBufferState(
-			mStructuredBuffer->GetBufferResource(),
+			mParticleData->GetBufferResource(),
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
 	}
 
 	// UAV
 	uint32_t index = mComputePipeline->GetRootSignature()->GetUAVStartIndex();
-	cmdList->SetComputeRootDescriptorTable(index, mStructuredBuffer->GetBufferResource()->uavHandle.gpu);
+	cmdList->SetComputeRootDescriptorTable(index, mParticleData->GetBufferResource()->uavHandle.gpu);
+
+	// その他のデータ
+	for (uint32_t i = 0; i < mStructuredBuffers.size(); i++)
+	{
+		cmdList->SetComputeRootDescriptorTable(index + i, mStructuredBuffers[i]->GetBufferResource()->uavHandle.gpu);
+	}
 
 	// 繝・ぅ繧ｹ繝代ャ繝・
 	cmdList->Dispatch(1, 1, 1);
 
 	// GraphicsPipeline謠冗判繧ｳ繝槭Φ繝・
 	mGraphicsPipeline->DrawCommand(blendMode);
-
-	auto descriptorHeap2 = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
-	cmdList->SetDescriptorHeaps(1, &descriptorHeap2);
 
 	MaterialDrawCommands();
 
@@ -80,17 +80,17 @@ void GPUEmitter::Draw(const BlendMode blendMode)
 	cmdList->SetGraphicsRootDescriptorTable(
 		startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
 
-	if (mStructuredBuffer->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_UNORDERED_ACCESS)
+	if (mParticleData->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_UNORDERED_ACCESS)
 	{
 		// GENERIC_READ -> UNORDERED_ACCESS 縺ｫ縺励※SRV繧定ｨｭ螳壹☆繧・
 		renderBase->TransitionBufferState(
-			mStructuredBuffer->GetBufferResource(),
+			mParticleData->GetBufferResource(),
 			D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
 			D3D12_RESOURCE_STATE_GENERIC_READ);
 	}
 
 	cmdList->SetGraphicsRootDescriptorTable(
-		startIndex + 1, mStructuredBuffer->GetBufferResource()->srvHandle.gpu);
+		startIndex + 1, mParticleData->GetBufferResource()->srvHandle.gpu);
 
 	cmdList->DrawInstanced((uint32_t)mVertices.size(), 1, 0, 0);
 }
@@ -156,30 +156,6 @@ void GPUEmitter::SetTexture(Texture* texture) { mTexture = texture; }
 
 // 繧ｰ繝ｩ繝輔ぅ繝・け繧ｹ繝代う繝励Λ繧､繝ｳ
 void GPUEmitter::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline) { mGraphicsPipeline = graphicsPipeline; }
-
-// 繝代・繝・ぅ繧ｯ繝ｫ縺ｮ謨ｰ
-void GPUEmitter::SetMaxParticle(const uint32_t max)
-{
-	pParam.resize(max);
-	mVertices.resize(max);
-
-	// SRV縺ｨUAV繧剃ｽ懈・
-	uint32_t dataSize = sizeof(ParticleParameter::PParam0) * max;
-	mStructuredBuffer->Create(dataSize);
-
-	DescriptorHeapManager::GetDescriptorHeap("SRV")->
-		CreateSRV(mStructuredBuffer->GetBufferResource(), max, sizeof(ParticleParameter::PParam0));
-
-	// GENERIC_READ -> UNORDERED_ACCESS 縺ｫ縺励※UAV繧剃ｽ懈・
-	RenderBase::GetInstance()->TransitionBufferState(
-		mStructuredBuffer->GetBufferResource(),
-		D3D12_RESOURCE_STATE_GENERIC_READ,
-		D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
-	mStructuredBuffer->GetBufferResource()->buffer->GetDesc();
-
-	DescriptorHeapManager::GetDescriptorHeap("SRV")->
-		CreateUAV(mStructuredBuffer->GetBufferResource(), max, sizeof(ParticleParameter::PParam0));
-}
 
 // --- 繧ｲ繝・ち繝ｼ -------------------------------------------------------- //
 

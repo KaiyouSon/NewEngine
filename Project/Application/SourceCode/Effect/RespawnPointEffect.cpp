@@ -9,7 +9,7 @@ RespawnPointEffect::RespawnPointEffect() :
 void RespawnPointEffect::Init()
 {
 	mCirclePParam.clear();
-	mCircleEmitter->SetMaxParticle(125000);
+	mCircleEmitter->SetParticleData<ParticleParameter::RespawnPointParticle>(64);
 	mCircleEmitter->SetTexture(TextureManager::GetTexture("Particle2"));
 	mTimer.SetLimitTimer(20);
 	mTimer.Reset();
@@ -28,27 +28,29 @@ void RespawnPointEffect::Generate(const Vec3 pos)
 
 void RespawnPointEffect::Update()
 {
+	mCircleEmitter->pos.x += (float)(Key::GetKey(DIK_RIGHT) - Key::GetKey(DIK_LEFT));
+	mCircleEmitter->pos.z += (float)(Key::GetKey(DIK_UP) - Key::GetKey(DIK_DOWN));
+
 	// 邊・
-	for (uint32_t i = 0; i < mCirclePParam.size(); i++)
-	{
-		mCircleEmitter->pParam[i].curPos = mCirclePParam[i].startPos;
-		mCirclePParam[i].startPos += mCirclePParam[i].moveVec * mCirclePParam[i].moveAccel;
+	//for (uint32_t i = 0; i < mCirclePParam.size(); i++)
+	//{
+	//	mCircleEmitter->pParam[i].curPos = mCirclePParam[i].startPos;
+	//	mCirclePParam[i].startPos += mCirclePParam[i].moveVec * mCirclePParam[i].moveAccel;
 
-		mCircleEmitter->pParam[i].curScale = mCirclePParam[i].startScale;
-		mCirclePParam[i].startScale -= 0.001f;
+	//	mCircleEmitter->pParam[i].curScale = mCirclePParam[i].startScale;
+	//	mCirclePParam[i].startScale -= 0.001f;
 
-		mCircleEmitter->pParam[i].curShininess = mCirclePParam[i].startShininess;
+	//	mCircleEmitter->pParam[i].curShininess = mCirclePParam[i].startShininess;
 
-		mCircleEmitter->pParam[i].curColor = mCirclePParam[i].startColor;
-	}
+	//	mCircleEmitter->pParam[i].curColor = mCirclePParam[i].startColor;
+	//}
 
-	std::erase_if(mCirclePParam,
-		[](ParticleParameter::PParam1 param)
-		{
-			return param.startScale <= 0;
-		});
+	//std::erase_if(mCirclePParam,
+	//	[](ParticleParameter::PParam1 param)
+	//	{
+	//		return param.startScale <= 0;
+	//	});
 
-	mCircleEmitter->pSize = (uint32_t)mCirclePParam.size();
 	mCircleEmitter->Update();
 }
 

@@ -7,7 +7,7 @@ namespace ParticleParameter
 {
 	struct PParam0
 	{
-		Vec3 curPos; float pad1;
+		Vec3 curPos;
 		Vec2 curScale;
 		float curRot;
 		float curShininess = 1.0f;
@@ -36,5 +36,27 @@ namespace ParticleParameter
 
 		Easing ease;
 		PParam1();
+	};
+
+	struct GPUParticleTimer
+	{
+		uint32_t timer;
+		uint32_t maxTimer;
+
+		GPUParticleTimer();
+		GPUParticleTimer(const uint32_t timer, const uint32_t maxTimer);
+	};
+
+	struct RespawnPointParticle
+	{
+		uint32_t isActive;
+		Vec3 pos;
+		Vec3 moveVec;
+		Vec3 moveAccel;
+		Vec2 scale;
+		float shininess;
+		Color color;
+
+		RespawnPointParticle();
 	};
 }
