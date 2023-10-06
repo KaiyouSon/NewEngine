@@ -18,17 +18,17 @@ GraphicsPipelineSetting::GraphicsPipelineSetting() :
 
 GraphicsPipeline::GraphicsPipeline() : mResult(HRESULT())
 {
-	// ƒfƒtƒHƒ‹ƒg
+	// ç¹ãƒ»ãƒµç¹§ï½©ç¹ï½«ç¹ãƒ»
 	mSetting.depthStencilDesc.DepthEnable = true;
-	mSetting.depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// ‘‚«‚İ‹–‰Â
-	mSetting.depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// ¬‚³‚¢‚Ù‚¤‚ğÌ—p
+	mSetting.depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// è­–ï½¸ç¸ºå´ï½¾ï½¼ç¸ºï½¿éšªï½±èœ¿ï½¯
+	mSetting.depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// èŸ†ä¸Šï¼†ç¸ºãƒ»âŠ‡ç¸ºãƒ»ï½’è¬—ï½¡é€•ï½¨
 }
 
 void GraphicsPipeline::Create(const GraphicsPipelineSetting& setting)
 {
 	mSetting = setting;
 
-	// ƒpƒCƒvƒ‰ƒ“ƒXƒe[ƒg‚Ì¶¬
+	// ç¹ä»£ã†ç¹åŠ±Î›ç¹ï½³ç¹§ï½¹ç¹ãƒ»ãƒ»ç¹åŒ»ãƒ»é€•æ»“ãƒ»
 	uint8_t bit = (uint8_t)mSetting.pipelineBlend;
 	mPSOs.resize(4);
 
@@ -53,20 +53,20 @@ void GraphicsPipeline::DrawCommand(const BlendMode blendMode)
 {
 	ID3D12GraphicsCommandList* cmdList = RenderBase::GetInstance()->GetCommandList();
 
-	// RootSignatureİ’è
+	// RootSignatureéšªï½­è³ãƒ»
 	cmdList->SetGraphicsRootSignature(mRootSignature->GetRootSignature());
 
-	// PSOİ’è
+	// PSOéšªï½­è³ãƒ»
 	if (mPSOs[(uint32_t)blendMode])
 	{
 		cmdList->SetPipelineState(mPSOs[(uint32_t)blendMode].Get());
 	}
 	else
 	{
-		assert(0 && "g—p‚µ‚Ä‚¢‚éƒpƒCƒvƒ‰ƒCƒ“‚ªnullptr‚Å‚·");
+		assert(0 && "è´ï½¿é€•ï½¨ç¸ºåŠ±â€»ç¸ºãƒ»ï½‹ç¹ä»£ã†ç¹åŠ±Î›ç¹§ï½¤ç¹ï½³ç¸ºç³»ullptrç¸ºï½§ç¸ºãƒ»");
 	}
 
-	// Œ`ó‚Ìİ’è
+	// è –ï½¢è¿¥ï½¶ç¸ºï½®éšªï½­è³ãƒ»
 	switch (mSetting.topologyType)
 	{
 	case TopologyType::Point:
@@ -96,16 +96,16 @@ void GraphicsPipeline::DrawCommand(const BlendMode blendMode)
 
 void GraphicsPipeline::CreatePipelineState(const GraphicsPipelineSetting::PipelineBlend pipelineBlend)
 {
-	// RootSignature‚Ì¶¬
+	// RootSignatureç¸ºï½®é€•æ»“ãƒ»
 	mRootSignature = std::make_unique<RootSignature>();
 	mRootSignature->Create(mSetting.rootSignatureSetting);
 
 	ID3D12Device* device = RenderBase::GetInstance()->GetDevice();
 
-	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“İ’è
+	// ç¹§ï½°ç¹ï½©ç¹è¼”ã…ç¹ãƒ»ã‘ç¹§ï½¹ç¹ä»£ã†ç¹åŠ±Î›ç¹§ï½¤ç¹ï½³éšªï½­è³ãƒ»
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
 
-	// ƒVƒF[ƒ_[‚Ìİ’è
+	// ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼ç¸ºï½®éšªï½­è³ãƒ»
 	if (mSetting.shaderObject->GetVSBlob() != nullptr)
 	{
 		pipelineDesc.VS = CD3DX12_SHADER_BYTECODE(mSetting.shaderObject->GetVSBlob());
@@ -119,21 +119,21 @@ void GraphicsPipeline::CreatePipelineState(const GraphicsPipelineSetting::Pipeli
 		pipelineDesc.PS = CD3DX12_SHADER_BYTECODE(mSetting.shaderObject->GetPSBlob());
 	}
 
-	// ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Ìİ’è
-	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // •W€İ’è
+	// ç¹§ï½µç¹ï½³ç¹åŠ±Îç¹æ§­ã›ç¹§ï½¯ç¸ºï½®éšªï½­è³ãƒ»
+	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // è®“å‘ï½ºå†¶ï½¨ï½­è³ãƒ»
 
-	// ƒ‰ƒXƒ^ƒ‰ƒCƒU‚Ìİ’è
+	// ç¹ï½©ç¹§ï½¹ç¹§ï½¿ç¹ï½©ç¹§ï½¤ç¹§ï½¶ç¸ºï½®éšªï½­è³ãƒ»
 	switch (mSetting.cullMode)
 	{
-	case CullMode::None:	// ƒJƒŠƒ“ƒO‚µ‚È‚¢
+	case CullMode::None:	// ç¹§ï½«ç¹ï½ªç¹ï½³ç¹§ï½°ç¸ºåŠ±â†‘ç¸ºãƒ»
 		pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 		break;
 
-	case CullMode::Front:	// ‘O–ÊƒJƒŠƒ“ƒO
+	case CullMode::Front:	// èœ‘åŸ¼æ“‡ç¹§ï½«ç¹ï½ªç¹ï½³ç¹§ï½°
 		pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_FRONT;
 		break;
 
-	case CullMode::Back:	// ”w–ÊƒJƒŠƒ“ƒO
+	case CullMode::Back:	// é–­ç¢æ“‡ç¹§ï½«ç¹ï½ªç¹ï½³ç¹§ï½°
 		pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;
 		break;
 
@@ -145,60 +145,60 @@ void GraphicsPipeline::CreatePipelineState(const GraphicsPipelineSetting::Pipeli
 	switch (mSetting.fillMode)
 	{
 	case GraphicsPipelineSetting::Solid:
-		// ƒ|ƒŠƒSƒ““à“h‚è‚Â‚Ô‚µ
+		// ç¹æ˜´Îœç¹§ï½´ç¹ï½³èœ€ãƒ»ï½¡åŠ±ï½Šç¸ºï½¤ç¸ºï½¶ç¸ºãƒ»
 		pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
 		break;
 
 	case GraphicsPipelineSetting::Wireframe:
-		// ƒƒCƒ„[ƒtƒŒ[ƒ€
+		// ç¹ï½¯ç¹§ï½¤ç¹ï½¤ç¹ï½¼ç¹è¼”Îç¹ï½¼ç¹ï£°
 		pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_WIREFRAME;
 		break;
 	}
-	pipelineDesc.RasterizerState.DepthClipEnable = true; // [“xƒNƒŠƒbƒsƒ“ƒO‚ğ—LŒø‚É
+	pipelineDesc.RasterizerState.DepthClipEnable = true; // è±ºï½±è ï½¦ç¹§ï½¯ç¹ï½ªç¹ãƒ»ãƒ´ç¹ï½³ç¹§ï½°ç¹§å‘ˆæ€èœ‰ï½¹ç¸ºï½«
 
-	// ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒXƒe[ƒg‚Ìİ’è
+	// ç¹ãƒ»ãƒ»ç¹§ï½¹ç¹§ï½¹ç¹ãƒ»Î¦ç¹§ï½·ç¹ï½«ç¹§ï½¹ç¹ãƒ»ãƒ»ç¹åŒ»ãƒ»éšªï½­è³ãƒ»
 	pipelineDesc.DepthStencilState = mSetting.depthStencilDesc;
 	if (mSetting.depthStencilDesc.DepthEnable == (BOOL)true)
 	{
-		pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	// [“x’lƒtƒH[ƒ}ƒbƒg
+		pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	// è±ºï½±è ï½¦è›Ÿï½¤ç¹è¼”ã‹ç¹ï½¼ç¹æ§­ãƒ£ç¹ãƒ»
 	}
 
-	// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ÌƒuƒŒƒ“ƒhİ’è
+	// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹§ï½¿ç¹ï½¼ç¹§ï½²ç¹ãƒ»ãƒ¨ç¸ºï½®ç¹æ‚¶Îç¹ï½³ç¹èŠ½ï½¨ï½­è³ãƒ»
 	for (uint32_t i = 0; i < mSetting.rtvNum; i++)
 	{
 		D3D12_RENDER_TARGET_BLEND_DESC blendDesc{};// = pipelineDesc.BlendState.RenderTarget[i];
 
 		blendDesc.RenderTargetWriteMask = static_cast<unsigned char>(mSetting.renderTargetBlendMask);
-		blendDesc.BlendEnable = true;					// ƒuƒŒƒ“ƒh‚ğ—LŒø‚É‚·‚é
-		blendDesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;	// ‰ÁZ
-		blendDesc.SrcBlendAlpha = D3D12_BLEND_ONE;		// ƒ\[ƒX‚Ì’l‚ğ100“g‚¤
-		blendDesc.DestBlendAlpha = D3D12_BLEND_ZERO;	// ƒfƒXƒg‚Ì’l‚ğ  0“g‚¤
+		blendDesc.BlendEnable = true;					// ç¹æ‚¶Îç¹ï½³ç¹å³¨ï½’è­›ç‰™æŸ‘ç¸ºï½«ç¸ºå¶ï½‹
+		blendDesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;	// èœ‰ï£°é‚‚ãƒ»
+		blendDesc.SrcBlendAlpha = D3D12_BLEND_ONE;		// ç¹§ï½½ç¹ï½¼ç¹§ï½¹ç¸ºï½®è›Ÿï½¤ç¹§ãƒ»00ãƒ»ãƒ»ï½½ï½¿ç¸ºãƒ»
+		blendDesc.DestBlendAlpha = D3D12_BLEND_ZERO;	// ç¹ãƒ»ã›ç¹åŒ»ãƒ»è›Ÿï½¤ç¹§ãƒ» 0ãƒ»ãƒ»ï½½ï½¿ç¸ºãƒ»
 
-		// ”¼“§–¾‡¬
+		// èœŠä¼Â€ä¹—ãƒ»èœ·åŸŸãƒ»
 		switch (pipelineBlend)
 		{
-		case GraphicsPipelineSetting::Alpha: // ƒ¿ƒuƒŒƒ“ƒh
-			blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// ‰ÁZ
-			blendDesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;			// ƒ\[ƒX‚ÌƒAƒ‹ƒtƒ@’l
-			blendDesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;	// 1.0f-ƒ\[ƒX‚ÌƒAƒ‹ƒtƒ@’l
+		case GraphicsPipelineSetting::Alpha: // ï¾ï½±ç¹æ‚¶Îç¹ï½³ç¹ãƒ»
+			blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// èœ‰ï£°é‚‚ãƒ»
+			blendDesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;			// ç¹§ï½½ç¹ï½¼ç¹§ï½¹ç¸ºï½®ç¹§ï½¢ç¹ï½«ç¹è¼”ãƒè›Ÿï½¤
+			blendDesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;	// 1.0f-ç¹§ï½½ç¹ï½¼ç¹§ï½¹ç¸ºï½®ç¹§ï½¢ç¹ï½«ç¹è¼”ãƒè›Ÿï½¤
 			break;
 
-		case GraphicsPipelineSetting::Add:	// ‰ÁZƒuƒŒƒ“ƒh
-			blendDesc.BlendOp = D3D12_BLEND_OP_ADD;		// ‰ÁZ
-			blendDesc.SrcBlend = D3D12_BLEND_ONE;		// ƒ\[ƒX‚Ì’l‚ğ100“g‚¤
-			blendDesc.DestBlend = D3D12_BLEND_ONE;		// ƒfƒXƒg‚Ì’l‚ğ100“g‚¤
+		case GraphicsPipelineSetting::Add:	// èœ‰ï£°é‚‚åŠ±ãƒ¶ç¹ï½¬ç¹ï½³ç¹ãƒ»
+			blendDesc.BlendOp = D3D12_BLEND_OP_ADD;		// èœ‰ï£°é‚‚ãƒ»
+			blendDesc.SrcBlend = D3D12_BLEND_ONE;		// ç¹§ï½½ç¹ï½¼ç¹§ï½¹ç¸ºï½®è›Ÿï½¤ç¹§ãƒ»00ãƒ»ãƒ»ï½½ï½¿ç¸ºãƒ»
+			blendDesc.DestBlend = D3D12_BLEND_ONE;		// ç¹ãƒ»ã›ç¹åŒ»ãƒ»è›Ÿï½¤ç¹§ãƒ»00ãƒ»ãƒ»ï½½ï½¿ç¸ºãƒ»
 			break;
 
-		case GraphicsPipelineSetting::Sub:	// Œ¸ZƒuƒŒƒ“ƒh
-			blendDesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;	// ƒfƒXƒg‚©‚çƒ\[ƒX‚ğŒ¸Z
-			blendDesc.SrcBlend = D3D12_BLEND_ONE;				// ƒ\[ƒX‚Ì’l‚ğ100“g‚¤
-			blendDesc.DestBlend = D3D12_BLEND_ONE;				// ƒfƒXƒg‚Ì’l‚ğ100“g‚¤
+		case GraphicsPipelineSetting::Sub:	// è²‚å¸·ï½®åŠ±ãƒ¶ç¹ï½¬ç¹ï½³ç¹ãƒ»
+			blendDesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;	// ç¹ãƒ»ã›ç¹åŒ»Â°ç¹§å³¨ãŸç¹ï½¼ç¹§ï½¹ç¹§å‘ˆï½¸å¸·ï½®ãƒ»
+			blendDesc.SrcBlend = D3D12_BLEND_ONE;				// ç¹§ï½½ç¹ï½¼ç¹§ï½¹ç¸ºï½®è›Ÿï½¤ç¹§ãƒ»00ãƒ»ãƒ»ï½½ï½¿ç¸ºãƒ»
+			blendDesc.DestBlend = D3D12_BLEND_ONE;				// ç¹ãƒ»ã›ç¹åŒ»ãƒ»è›Ÿï½¤ç¹§ãƒ»00ãƒ»ãƒ»ï½½ï½¿ç¸ºãƒ»
 			break;
 
-		case GraphicsPipelineSetting::Inv:	// ”½“]
-			blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// ‰ÁZ
-			blendDesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;	// 1.0f-ƒfƒXƒgƒJƒ‰[‚Ì’l
-			blendDesc.DestBlend = D3D12_BLEND_ZERO;				// g‚í‚È‚¢
+		case GraphicsPipelineSetting::Inv:	// èœ¿å´ï½»ï½¢
+			blendDesc.BlendOp = D3D12_BLEND_OP_ADD;				// èœ‰ï£°é‚‚ãƒ»
+			blendDesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;	// 1.0f-ç¹ãƒ»ã›ç¹åŒ»ãç¹ï½©ç¹ï½¼ç¸ºï½®è›Ÿï½¤
+			blendDesc.DestBlend = D3D12_BLEND_ZERO;				// è´ï½¿ç¹§ä¸Šâ†‘ç¸ºãƒ»
 			break;
 
 		default:
@@ -208,11 +208,11 @@ void GraphicsPipeline::CreatePipelineState(const GraphicsPipelineSetting::Pipeli
 		pipelineDesc.BlendState.RenderTarget[i] = blendDesc;
 	}
 
-	// ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+	// é¬†ã‚‰ã›ç¹ï½¬ç¹§ï½¤ç¹§ï½¢ç¹§ï½¦ç¹åŒ»ãƒ»éšªï½­è³ãƒ»
 	pipelineDesc.InputLayout.pInputElementDescs = mSetting.shaderObject->GetInputLayout().data();
 	pipelineDesc.InputLayout.NumElements = (uint32_t)mSetting.shaderObject->GetInputLayout().size();
 
-	// }Œ`‚ÌŒ`óİ’è
+	// è—ï½³è –ï½¢ç¸ºï½®è –ï½¢è¿¥ï½¶éšªï½­è³ãƒ»
 	switch (mSetting.topologyType)
 	{
 	case TopologyType::Point:
@@ -233,18 +233,18 @@ void GraphicsPipeline::CreatePipelineState(const GraphicsPipelineSetting::Pipeli
 		break;
 	}
 
-	// ‚»‚Ì‘¼‚Ìİ’è
-	pipelineDesc.NumRenderTargets = (uint32_t)mSetting.rtvNum; // •`‰æ‘ÎÛ‚Ì”
+	// ç¸ºæ˜´ãƒ»è‰æ‚¶ãƒ»éšªï½­è³ãƒ»
+	pipelineDesc.NumRenderTargets = (uint32_t)mSetting.rtvNum; // è¬ å†—åˆ¤èŸ‡ï½¾é›ï½¡ç¸ºï½®è¬¨ï½°
 	for (size_t i = 0; i < mSetting.rtvNum; i++)
 	{
-		pipelineDesc.RTVFormats[i] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB; // 0`255w’è‚ÌRGBA
+		pipelineDesc.RTVFormats[i] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB; // 0ãƒ»ãƒ»55è¬–ãƒ»ï½®å£¹ãƒ»RGBA
 	}
-	pipelineDesc.SampleDesc.Count = 1; // 1ƒsƒNƒZƒ‹‚É‚Â‚«1‰ñƒTƒ“ƒvƒŠƒ“ƒO
+	pipelineDesc.SampleDesc.Count = 1; // 1ç¹æ–ã‘ç¹§ï½»ç¹ï½«ç¸ºï½«ç¸ºï½¤ç¸ºãƒ»è—æ§­ã—ç¹ï½³ç¹åŠ±Îœç¹ï½³ç¹§ï½°
 
-	// ƒpƒCƒvƒ‰ƒCƒ“‚Éƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ğƒZƒbƒg
+	// ç¹ä»£ã†ç¹åŠ±Î›ç¹§ï½¤ç¹ï½³ç¸ºï½«ç¹ï½«ç¹ï½¼ç¹åŒ»ã™ç¹§ï½°ç¹é˜ªãƒ¡ç¹ï½£ç¹§åµãç¹ãƒ»ãƒ¨
 	pipelineDesc.pRootSignature = mRootSignature->GetRootSignature();
 
-	// ƒpƒCƒvƒ‰ƒ“ƒXƒe[ƒg‚Ì¶¬
+	// ç¹ä»£ã†ç¹åŠ±Î›ç¹ï½³ç¹§ï½¹ç¹ãƒ»ãƒ»ç¹åŒ»ãƒ»é€•æ»“ãƒ»
 	switch (pipelineBlend)
 	{
 	case GraphicsPipelineSetting::Alpha:
@@ -269,7 +269,7 @@ void GraphicsPipeline::CreatePipelineState(const GraphicsPipelineSetting::Pipeli
 	assert(SUCCEEDED(mResult));
 }
 
-// ƒQƒbƒ^[
+// ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
 RootSignature* GraphicsPipeline::GetRootSignature()
 {
 	return mRootSignature.get();
@@ -284,3 +284,4 @@ ID3D12PipelineState* GraphicsPipeline::GetPSO(const BlendMode blendMode)
 {
 	return mPSOs[(uint32_t)blendMode].Get();
 }
+

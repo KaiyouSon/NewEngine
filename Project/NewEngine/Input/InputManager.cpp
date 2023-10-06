@@ -9,12 +9,12 @@ void InputManager::Init()
 	HRESULT result;
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
 
-	// DirectInput‚Ì‰Šú‰»
+	// DirectInputç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 	result = DirectInput8Create(
 		renderWindow->GetHInstance(),
 		DIRECTINPUT_VERSION,
 		IID_IDirectInput8,
-		(void**)&directInput_, nullptr);
+		(void**)&mDirectInput, nullptr);
 	assert(SUCCEEDED(result));
 
 	JoypadInput::GetInstance()->Init();
@@ -27,4 +27,9 @@ void InputManager::Update()
 	JoypadInput::GetInstance()->Update();
 	KeyBoardInput::GetInstance()->Update();
 	MouseInput::GetInstance()->Update();
+}
+
+IDirectInput8* InputManager::GetDirectInput()
+{
+	return mDirectInput.Get();
 }

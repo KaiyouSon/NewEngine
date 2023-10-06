@@ -26,3 +26,4 @@ public:
 	static void Destroy();
 	static IXAudio2* GetXAudio2() { return sXAudio2.Get(); }
 };
+

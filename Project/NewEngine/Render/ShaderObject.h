@@ -8,37 +8,37 @@
 class ShaderObject
 {
 private:
-	static Microsoft::WRL::ComPtr <ID3DBlob> sErrorBlob;	// ƒGƒ‰[ƒIƒuƒWƒFƒNƒg
-	Microsoft::WRL::ComPtr<ID3DBlob> mCsBlob;			// ’¸“_ƒVƒF[ƒ_ƒIƒuƒWƒFƒNƒg
-	Microsoft::WRL::ComPtr<ID3DBlob> mVsBlob;			// ’¸“_ƒVƒF[ƒ_ƒIƒuƒWƒFƒNƒg
-	Microsoft::WRL::ComPtr<ID3DBlob> mGsBlob;			// ƒWƒIƒƒgƒŠƒVƒF[ƒ_ƒIƒuƒWƒFƒNƒg
-	Microsoft::WRL::ComPtr<ID3DBlob> mPsBlob;			// ƒsƒNƒZƒ‹ƒVƒF[ƒ_ƒIƒuƒWƒFƒNƒg
-	std::vector<D3D12_INPUT_ELEMENT_DESC> mInputLayout;	// ’¸“_ƒŒƒCƒAƒEƒg
+	static Microsoft::WRL::ComPtr <ID3DBlob> sErrorBlob;	// ç¹§ï½¨ç¹ï½©ç¹ï½¼ç¹§ï½ªç¹æ‚¶ãšç¹§ï½§ç¹§ï½¯ç¹ãƒ»
+	Microsoft::WRL::ComPtr<ID3DBlob> mCsBlob;			// é¬†ã‚‰ã›ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹§ï½ªç¹æ‚¶ãšç¹§ï½§ç¹§ï½¯ç¹ãƒ»
+	Microsoft::WRL::ComPtr<ID3DBlob> mVsBlob;			// é¬†ã‚‰ã›ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹§ï½ªç¹æ‚¶ãšç¹§ï½§ç¹§ï½¯ç¹ãƒ»
+	Microsoft::WRL::ComPtr<ID3DBlob> mGsBlob;			// ç¹§ï½¸ç¹§ï½ªç¹ï½¡ç¹åŒ»Îœç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹§ï½ªç¹æ‚¶ãšç¹§ï½§ç¹§ï½¯ç¹ãƒ»
+	Microsoft::WRL::ComPtr<ID3DBlob> mPsBlob;			// ç¹æ–ã‘ç¹§ï½»ç¹ï½«ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹§ï½ªç¹æ‚¶ãšç¹§ï½§ç¹§ï½¯ç¹ãƒ»
+	std::vector<D3D12_INPUT_ELEMENT_DESC> mInputLayout;	// é¬†ã‚‰ã›ç¹ï½¬ç¹§ï½¤ç¹§ï½¢ç¹§ï½¦ç¹ãƒ»
 	HRESULT mResult;
 
 private:
-	// ƒVƒF[ƒ_‚ÌƒGƒ‰[“à—e‚ğ•\¦‚·‚éŠÖ”
+	// ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¸ºï½®ç¹§ï½¨ç¹ï½©ç¹ï½¼èœ€ãƒ»ï½®ï½¹ç¹§å®šï½¡ï½¨é‰ï½ºç¸ºå¶ï½‹é«¢ï½¢è¬¨ï½°
 	void ShowErrorDetails();
 
 public:
 	ShaderObject();
 
-	// ƒRƒ“ƒsƒ…[ƒgƒVƒF[ƒ_[‚ÌƒRƒ“ƒpƒCƒ‹
+	// ç¹§ï½³ç¹ï½³ç¹æ–Î—ç¹ï½¼ç¹åŒ»ã™ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼ç¸ºï½®ç¹§ï½³ç¹ï½³ç¹ä»£ã†ç¹ï½«
 	void CompileComputeShader(
 		const std::string& filePath,
 		const std::string& entryPointName);
 
-	// ’¸“_ƒVƒF[ƒ_[‚ÌƒRƒ“ƒpƒCƒ‹
+	// é¬†ã‚‰ã›ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼ç¸ºï½®ç¹§ï½³ç¹ï½³ç¹ä»£ã†ç¹ï½«
 	void CompileVertexShader(
 		const std::string& filePath,
 		const std::string& entryPointName);
 
-	// ƒWƒIƒƒgƒŠƒVƒF[ƒ_[‚ÌƒRƒ“ƒpƒCƒ‹
+	// ç¹§ï½¸ç¹§ï½ªç¹ï½¡ç¹åŒ»Îœç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼ç¸ºï½®ç¹§ï½³ç¹ï½³ç¹ä»£ã†ç¹ï½«
 	void CompileGeometryShader(
 		const std::string& filePath,
 		const std::string& entryPointName);
 
-	// ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚ÌƒRƒ“ƒpƒCƒ‹
+	// ç¹æ–ã‘ç¹§ï½»ç¹ï½«ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼ç¸ºï½®ç¹§ï½³ç¹ï½³ç¹ä»£ã†ç¹ï½«
 	void CompilePixelShader(
 		const std::string& filePath,
 		const std::string& entryPointName);
@@ -52,3 +52,4 @@ public:
 	const std::vector <D3D12_INPUT_ELEMENT_DESC>& GetInputLayout();
 	void AddInputLayout(const LPCSTR& semanticName, const DXGI_FORMAT format, const uint32_t index = 0);
 };
+

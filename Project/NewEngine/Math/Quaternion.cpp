@@ -21,7 +21,7 @@ Quaternion Quaternion::AnyAxisRotation(const Vec3 v, const float radian)
 {
 	Quaternion result = { x,y,z,w };
 
-	// ‰ñ“]ƒNƒH[ƒ^ƒjƒIƒ“ì¬
+	// è—æ«ï½»ï½¢ç¹§ï½¯ç¹§ï½©ç¹ï½¼ç¹§ï½¿ç¹ä¹ãŒç¹ï½³è´æ‡ˆãƒ»
 	Quaternion q =
 	{
 		v.Norm().x * sinf(radian / 2),
@@ -29,10 +29,10 @@ Quaternion Quaternion::AnyAxisRotation(const Vec3 v, const float radian)
 		v.Norm().z * sinf(radian / 2),
 		cosf(radian / 2)
 	};
-	// ‰ñ“]ƒNƒH[ƒ^ƒjƒIƒ“‚Ì‹¤–ğƒNƒH[ƒ^ƒjƒIƒ“ì¬      
+	// è—æ«ï½»ï½¢ç¹§ï½¯ç¹§ï½©ç¹ï½¼ç¹§ï½¿ç¹ä¹ãŒç¹ï½³ç¸ºï½®èœˆï½±è –ï½¹ç¹§ï½¯ç¹§ï½©ç¹ï½¼ç¹§ï½¿ç¹ä¹ãŒç¹ï½³è´æ‡ˆãƒ»      
 	Quaternion qc = q.Conjugate();
 
-	// ‰ñ“]ˆ—
+	// è—æ«ï½»ï½¢èœƒï½¦é€…ãƒ»
 	result = q * result;
 	result = result * qc;
 
@@ -77,7 +77,7 @@ Quaternion Quaternion::Slerp(const Quaternion q1, const Quaternion q2, float t)
 
 Quaternion Quaternion::MakeAxisAngle(const Vec3 v, const float radian)
 {
-	// ‰ñ“]ƒNƒH[ƒ^ƒjƒIƒ“ì¬
+	// è—æ«ï½»ï½¢ç¹§ï½¯ç¹§ï½©ç¹ï½¼ç¹§ï½¿ç¹ä¹ãŒç¹ï½³è´æ‡ˆãƒ»
 	Quaternion q =
 	{
 		v.Norm().x * sinf(radian / 2),
@@ -91,7 +91,7 @@ Quaternion Quaternion::MakeAxisAngle(const Vec3 v, const float radian)
 
 Quaternion Quaternion::DirectionToDirection(const Vec3 v1, const Vec3 v2)
 {
-	// u‚Æv‚ğ³‹K‰»‚µ‚Ä“àÏ‚ğ‹‚ß‚éBu,v‚ğ’PˆÊƒxƒNƒgƒ‹‘O’ñ‚Æ‚·‚é‚È‚ç³‹K‰»‚Í•s—v
+	// uç¸ºï½¨vç¹§å‘ˆï½­ï½£éš•ä¸å–§ç¸ºåŠ±â€»èœ€ãƒ»ï½©é˜ªï½’è±ã‚…ï½ç¹§ä¹Â€ï¼¶,vç¹§è²è…°è´é˜ªãƒ»ç¹§ï½¯ç¹åŒ»Îèœ‘è‚´ç½²ç¸ºï½¨ç¸ºå¶ï½‹ç¸ºï½ªç¹§ç”»ï½­ï½£éš•ä¸å–§ç¸ºï½¯è³å´ï½¦ãƒ»
 	Vec3 u = v1;
 	u.Norm();
 	Vec3 v = v2;
@@ -99,17 +99,17 @@ Quaternion Quaternion::DirectionToDirection(const Vec3 v1, const Vec3 v2)
 
 	float dot = Vec3::Dot(u.Norm(), v.Norm());
 
-	// u,v‚ÌŠOÏ‚ğ‚Æ‚é
+	// u,vç¸ºï½®èŸä¹Ÿï½©é˜ªï½’ç¸ºï½¨ç¹§ãƒ»
 	Vec3 cross = Vec3::Cross(v1, v2);
 
-	// ²‚Í’PˆÊƒxƒNƒgƒ‹‚Å‚ ‚é•K—v‚ª‚ ‚é‚Ì‚Å³‹K‰»
-	// u‚Æv‚ª’PˆÊƒxƒNƒgƒ‹‚Å‚ ‚Á‚Ä‚àAŠOÏ‚ª’PˆÊƒxƒNƒgƒ‹‚Æ‚ÍŒÀ‚ç‚È‚¢‚Ì‚Å‚±‚±‚Ì³‹K‰»‚Í•K{
+	// éœ†ï½¸ç¸ºï½¯èœŠå€…ï½½é˜ªãƒ»ç¹§ï½¯ç¹åŒ»Îç¸ºï½§ç¸ºã‚…ï½‹è ¢ãƒ»ï½¦âˆšâ€²ç¸ºã‚…ï½‹ç¸ºï½®ç¸ºï½§è±ï½£éš•ä¸å–§
+	// uç¸ºï½¨vç¸ºæ‚Ÿè…°è´é˜ªãƒ»ç¹§ï½¯ç¹åŒ»Îç¸ºï½§ç¸ºã‚…â–²ç¸ºï½¦ç¹§ã‚…Â€âˆï½¤ä¹Ÿï½©é˜ªâ€²èœŠå€…ï½½é˜ªãƒ»ç¹§ï½¯ç¹åŒ»Îç¸ºï½¨ç¸ºï½¯é«¯èˆŒï½‰ç¸ºï½ªç¸ºãƒ»ãƒ»ç¸ºï½§ç¸ºè–™ï¼…ç¸ºï½®è±ï½£éš•ä¸å–§ç¸ºï½¯è ¢ãƒ»ï£°ãƒ»
 	Vec3 axis = cross.Norm();
 
-	// ’PˆÊƒxƒNƒgƒ‹‚Å“àÏ‚ğ‚Æ‚Á‚Ä‚¢‚é‚Ì‚Åacos‚ÅŠp“x‚ğ‹‚ß‚é
+	// èœŠå€…ï½½é˜ªãƒ»ç¹§ï½¯ç¹åŒ»Îç¸ºï½§èœ€ãƒ»ï½©é˜ªï½’ç¸ºï½¨ç¸ºï½£ç¸ºï½¦ç¸ºãƒ»ï½‹ç¸ºï½®ç¸ºï½§acosç¸ºï½§éš—è²ï½ºï½¦ç¹§å‘ˆï½±ã‚…ï½ç¹§ãƒ»
 	float theta = acosf(dot);
 
-	// axis‚Ætheta‚Å”CˆÓ²‰ñ“]‚ğì‚Á‚Ä•Ô‚·
+	// axisç¸ºï½¨thetaç¸ºï½§è‰ï½»è«¢å‰°ï½»ï½¸è—æ«ï½»ï½¢ç¹§å‰ƒï½½æ‡Šâ–²ç¸ºï½¦éœ‘æ–â˜†
 	return MakeAxisAngle(axis, theta);
 }
 
@@ -215,3 +215,4 @@ Quaternion operator*(const float num, const Quaternion q)
 {
 	return { num * q.x,num * q.y ,num * q.z ,num * q.w };
 }
+

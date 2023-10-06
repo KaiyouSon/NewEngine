@@ -6,7 +6,7 @@ class Bloom
 public:
 	enum class PassType
 	{
-		// •`‰æ—p
+		// è¬ å†—åˆ¤é€•ï½¨
 		HighLumi,
 		GaussianBlur,
 		Bloom,
@@ -30,4 +30,3 @@ public:
 	void PostSceneDraw(const PassType passType);
 	void DrawDebugGui();
 };
-

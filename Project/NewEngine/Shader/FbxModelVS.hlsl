@@ -5,32 +5,32 @@ SkinOutput ComputeSkin(VSInputPosNormalUvBone vsInput)
 {
     SkinOutput output = (SkinOutput) 0;
     
-    uint iBone; // ŒvZ‚·‚éƒ{[ƒ“”Ô†
-    float weight; // ƒ{[ƒ“ƒEƒFƒCƒgid‚İj
-    matrix skinMat; // ƒXƒLƒjƒ“ƒOs—ñ
+    uint iBone; // è¨ˆç®—ã™ã‚‹ãƒœãƒ¼ãƒ³ç•ªå·
+    float weight; // ãƒœãƒ¼ãƒ³ã‚¦ã‚§ã‚¤ãƒˆï¼ˆé‡ã¿ï¼‰
+    matrix skinMat; // ã‚¹ã‚­ãƒ‹ãƒ³ã‚°è¡Œåˆ—
     
-    // ƒ{[ƒ“0
+    // ãƒœãƒ¼ãƒ³0
     iBone = vsInput.boneIndices.x;
     weight = vsInput.boneWeights.x;
     skinMat = skinningMat[iBone];
     output.pos += weight * mul(skinMat, vsInput.pos);
     output.normal += weight * mul((float3x3) skinMat, vsInput.normal);
     
-    // ƒ{[ƒ“1
+    // ãƒœãƒ¼ãƒ³1
     iBone = vsInput.boneIndices.y;
     weight = vsInput.boneWeights.y;
     skinMat = skinningMat[iBone];
     output.pos += weight * mul(skinMat, vsInput.pos);
     output.normal += weight * mul((float3x3) skinMat, vsInput.normal);
     
-    // ƒ{[ƒ“2
+    // ãƒœãƒ¼ãƒ³2
     iBone = vsInput.boneIndices.z;
     weight = vsInput.boneWeights.z;
     skinMat = skinningMat[iBone];
     output.pos += weight * mul(skinMat, vsInput.pos);
     output.normal += weight * mul((float3x3) skinMat, vsInput.normal);
     
-    // ƒ{[ƒ“3
+    // ãƒœãƒ¼ãƒ³3
     iBone = vsInput.boneIndices.w;
     weight = vsInput.boneWeights.w;
     skinMat = skinningMat[iBone];
@@ -42,15 +42,15 @@ SkinOutput ComputeSkin(VSInputPosNormalUvBone vsInput)
 
 VSOutputSvposPosNormalUv main(VSInputPosNormalUvBone vsInput)
 {
-    // ƒXƒLƒjƒ“ƒOŒvZ
+    // ã‚¹ã‚­ãƒ‹ãƒ³ã‚°è¨ˆç®—
     SkinOutput skinned = ComputeSkin(vsInput);
     
-    // –@ü‚Éƒ[ƒ‹ƒhs—ñ‚É‚æ‚éƒXƒP[ƒŠƒ“ƒOE‰ñ“]‚ğ“K—p		
+    // æ³•ç·šã«ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«ã‚ˆã‚‹ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ãƒ»å›è»¢ã‚’é©ç”¨		
     float4 wnormal = normalize(mul(worldMat, float4(skinned.normal, 0)));
     float4 wpos = mul(worldMat, skinned.pos);
     float4 vertexPos = mul(mul(viewMat, worldMat), skinned.pos);
 
-    // ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚É“n‚·’l
+    // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«æ¸¡ã™å€¤
     VSOutputSvposPosNormalUv output = (VSOutputSvposPosNormalUv) 0;
     output.svpos = vertexPos;
     output.worldPos = wpos;

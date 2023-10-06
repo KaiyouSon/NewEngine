@@ -43,4 +43,3 @@ public:
 public:
 	bool GetisPlay();
 };
-

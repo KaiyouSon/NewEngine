@@ -61,17 +61,17 @@ void UIManager::Update()
 		mResultUI->SetResultType(ResultUI::ResultType::EnemyFelledStr);
 	}
 
-	// �A�C�e���{�b�N�X(�����̂��)
+	// アイテムボックス(左下のやつ)
 	mItemBoxUiManager->Update();
 
-	// �v���C���[�̃Q�[�W
+	// プレイヤーのゲージ
 	for (uint32_t i = 0; i < mGauges.size(); i++)
 	{
 		mGauges[i]->SetGaugePrame(mPlayer->GetGaugeParam(i));
 		mGauges[i]->Update();
 	}
 
-	// �퓬���̎��ɍX�V
+	// 戦闘中の時に更新
 	if (mBoss->GetisFight() == true)
 	{
 		mBossHPGauge->SetGaugePrame(mBoss->GetHpGaugeParam());
@@ -105,7 +105,7 @@ void UIManager::DrawFrontSprite()
 
 	mItemBoxUiManager->DrawFrontSprite();
 
-	// �퓬���̎��ɕ`��
+	// 戦闘中の時に描画
 	if (mBoss->GetisFight() == true)
 	{
 		mBossHPGauge->DrawFrontSprite();

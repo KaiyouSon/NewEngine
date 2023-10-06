@@ -5,12 +5,12 @@ enum class ItemType
 {
 	None,
 
-	// “¹‹ï
+	// é“å…·
 	HPBottle,
 	MPBottle,
 	EmptyBottle,
 
-	// •Ší
+	// æ­¦å™¨
 	Club,
 };
 

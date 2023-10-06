@@ -42,3 +42,4 @@ void Weed::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
 	mGrass->SetGraphicsPipeline(graphicsPipeline);
 }
+

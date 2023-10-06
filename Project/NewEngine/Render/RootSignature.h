@@ -23,7 +23,7 @@ private:
 	HRESULT mResult;
 	std::vector<CD3DX12_DESCRIPTOR_RANGE> mSrvDescriptorRanges;
 	std::vector<CD3DX12_DESCRIPTOR_RANGE> mUavDescriptorRanges;
-	std::vector<CD3DX12_ROOT_PARAMETER> mRootParameters;	// ƒ‹[ƒgƒpƒ‰ƒ[ƒ^[‚Ìİ’è
+	std::vector<CD3DX12_ROOT_PARAMETER> mRootParameters;	// ç¹ï½«ç¹ï½¼ç¹åŒ»ãƒ±ç¹ï½©ç¹ï½¡ç¹ï½¼ç¹§ï½¿ç¹ï½¼ç¸ºï½®éšªï½­è³ãƒ»
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> mRootSignature;
 	RootSignatureSetting mSetting;
 
@@ -41,4 +41,3 @@ public:
 	uint32_t GetSRVStartIndex();
 	uint32_t GetUAVStartIndex();
 };
-

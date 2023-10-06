@@ -24,4 +24,3 @@ public:
 	Vec3 GetPos();
 	CapsuleCollider GetCollider();
 };
-

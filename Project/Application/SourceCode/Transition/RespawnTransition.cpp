@@ -3,7 +3,7 @@ using namespace ConstantBufferData;
 
 RespawnTransition::RespawnTransition()
 {
-	// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬¶¬
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆç”Ÿæˆ
 	for (uint32_t i = 0; i < mTransition.size(); i++)
 	{
 		mTransition[i] = std::make_unique<Sprite>();
@@ -15,13 +15,13 @@ RespawnTransition::RespawnTransition()
 		mTransition[i]->color = Color(0xc4c178);
 	}
 
-	// í—Şİ’è
+	// ç¨®é¡è¨­å®š
 	mType = TransitionType::Respawn;
 }
 
 void RespawnTransition::Generate()
 {
-	// ‰Šúİ’è
+	// åˆæœŸè¨­å®š
 	for (uint32_t i = 0; i < mTransition.size(); i++)
 	{
 		mTransition[i]->pos = GetWindowHalfSize();
@@ -44,7 +44,7 @@ void RespawnTransition::Update()
 
 	switch (mStep)
 	{
-	case TransitionStep::In: // ‘JˆÚ‚ªƒCƒ“‚Ì
+	case TransitionStep::In: // é·ç§»ãŒã‚¤ãƒ³ã®æ™‚
 	{
 		mUVParameteData[Back].offset.y -= 0.001f;
 
@@ -58,7 +58,7 @@ void RespawnTransition::Update()
 	}
 	break;
 
-	case TransitionStep::Out: // ‘JˆÚ‚ªƒAƒEƒg‚Ì
+	case TransitionStep::Out: // é·ç§»ãŒã‚¢ã‚¦ãƒˆã®æ™‚
 	{
 		mUVParameteData[Back].offset.y -= 0.001f;
 
@@ -78,7 +78,7 @@ void RespawnTransition::Update()
 	{
 		mTransitionData[i].max = Clamp(mTransitionData[i].max, mTransitionData[i].min, 1.0f);
 
-		// ’è”ƒoƒbƒtƒ@ƒf[ƒ^‚Ìİ’è
+		// å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ‡ãƒ¼ã‚¿ã®è¨­å®š
 		mTransition[i]->SetTransferBuffer(2, mTransitionData[i]);
 		mTransition[i]->SetTransferBuffer(3, mUVParameteData[i]);
 

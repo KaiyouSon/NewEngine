@@ -1,23 +1,23 @@
 #include "Emitter.hlsli"
 
-// lŠpŒ`‚Ì’¸“_”
+// å››è§’å½¢ã®é ‚ç‚¹æ•°
 static const uint num = 4;
 
-// ’†S‚©‚ç‚ÌƒIƒtƒZƒbƒg
+// ä¸­å¿ƒã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
 static const float4 offsetArray[num] =
 {
-    float4(-0.5f, -0.5f, 0, 0), //¶‰º
-    float4(-0.5f, +0.5f, 0, 0), //¶ã
-    float4(+0.5f, -0.5f, 0, 0), //‰E‰º
-    float4(+0.5f, +0.5f, 0, 0), //‰Eã
+    float4(-0.5f, -0.5f, 0, 0), //å·¦ä¸‹
+    float4(-0.5f, +0.5f, 0, 0), //å·¦ä¸Š
+    float4(+0.5f, -0.5f, 0, 0), //å³ä¸‹
+    float4(+0.5f, +0.5f, 0, 0), //å³ä¸Š
 };
 
 static const float2 uvArray[num] =
 {
-    float2(0.0f, 1.0f), //¶‰º
-    float2(0.0f, 0.0f), //¶ã
-    float2(1.0f, 1.0f), //‰E‰º
-    float2(1.0f, 0.0f), //‰Eã
+    float2(0.0f, 1.0f), //å·¦ä¸‹
+    float2(0.0f, 0.0f), //å·¦ä¸Š
+    float2(1.0f, 1.0f), //å³ä¸‹
+    float2(1.0f, 0.0f), //å³ä¸Š
 };
 
 [maxvertexcount(num)]
@@ -27,10 +27,10 @@ void main(point V2G input[1] : SV_POSITION, inout TriangleStream<G2P> output)
     
     for (uint i = 0; i < num; i++)
     {
-        // ’†S‚©‚ç‚ÌƒIƒtƒZƒbƒg‚ğƒXƒP[ƒŠƒ“ƒO
+        // ä¸­å¿ƒã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
         float4 voffset = offsetArray[i] * float4(input[0].scale, 0, 0);
         
-        // Z²‰ñ“]s—ñ
+        // Zè»¸å›è»¢è¡Œåˆ—
         matrix rotZMat =
         {
             cos(input[0].rot), sin(input[0].rot), 0, 0,

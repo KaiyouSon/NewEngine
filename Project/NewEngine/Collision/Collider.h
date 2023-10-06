@@ -3,7 +3,7 @@
 #include "ICollider.h"
 #include <array>
 
-// ----- ‰~ƒRƒ‰ƒCƒ_[ ------------------- //
+// ----- å††ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ ------------------- //
 struct CircleCollider : public ICollider
 {
 	Vec2 centerPos = 0;
@@ -13,7 +13,7 @@ struct CircleCollider : public ICollider
 	CircleCollider(const Vec2 centerPos, const float radius);
 };
 
-// ----- ‹éŒ`ƒRƒ‰ƒCƒ_[ ----------------- //
+// ----- çŸ©å½¢ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ ----------------- //
 struct SquareCollider : public ICollider
 {
 	Vec2 centerPos;
@@ -27,7 +27,7 @@ struct SquareCollider : public ICollider
 	SquareCollider(const Vec2 centerPos, const Vec2 size);
 };
 
-// ----- ƒLƒ…[ƒuƒRƒ‰ƒCƒ_[ ------------- //
+// ----- ã‚­ãƒ¥ãƒ¼ãƒ–ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ ------------- //
 struct CubeCollider : public ICollider
 {
 	Vec3 centerPos;
@@ -40,7 +40,7 @@ struct CubeCollider : public ICollider
 	void CalcPoints();
 };
 
-// ----- ‹…ƒRƒ‰ƒCƒ_[ ------------------- //
+// ----- çƒã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ ------------------- //
 struct SphereCollider : public ICollider
 {
 	Vec3 centerPos = 0;
@@ -50,7 +50,7 @@ struct SphereCollider : public ICollider
 	SphereCollider(const Vec3 centerPos, const float radius);
 };
 
-// ----- ƒŒƒCƒRƒ‰ƒCƒ_[ ----------------- //
+// ----- ãƒ¬ã‚¤ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ ----------------- //
 struct RayCollider : public ICollider
 {
 	Vec3 startPos;
@@ -60,29 +60,29 @@ struct RayCollider : public ICollider
 	RayCollider(const Vec3 startPos, const Vec3 dirVec);
 };
 
-// ----- •½–ÊƒRƒ‰ƒCƒ_[ ------------- //
+// ----- å¹³é¢ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ ------------- //
 struct PlaneCollider : public ICollider
 {
-	Vec3 centerPos;		// ’†SÀ•W
-	Vec3 normal;		// –@üƒxƒNƒgƒ‹
+	Vec3 centerPos;		// ä¸­å¿ƒåº§æ¨™
+	Vec3 normal;		// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 
 	PlaneCollider();
 	PlaneCollider(const Vec3 centerPos, const Vec3 normal);
 };
 
-// ----- OŠpŒ`ƒRƒ‰ƒCƒ_[ ----------- //
+// ----- ä¸‰è§’å½¢ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ ----------- //
 struct TriangleCollider : public ICollider
 {
 	Vec3 p0;
 	Vec3 p1;
 	Vec3 p2;
-	Vec3 normal;		// –@üƒxƒNƒgƒ‹
+	Vec3 normal;		// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 
 	TriangleCollider();
 	TriangleCollider(const Vec3 p0, const Vec3 p1, const Vec3 p2);
 };
 
-// ----- ƒJƒvƒZƒ‹ƒRƒ‰ƒCƒ_[ --------- //
+// ----- ã‚«ãƒ—ã‚»ãƒ«ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ --------- //
 struct CapsuleCollider : public ICollider
 {
 	Vec3 startPos;

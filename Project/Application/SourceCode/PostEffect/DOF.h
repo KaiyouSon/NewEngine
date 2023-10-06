@@ -17,4 +17,3 @@ public:
 	void PostSceneDraw();
 	void DrawDebugGui();
 };
-

@@ -4,7 +4,7 @@
 
 void CollisionManager::Update()
 {
-	// ƒvƒŒƒCƒ„[‚Æƒ{ƒX
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨ãƒœã‚¹
 	PlayerHitBoss();
 
 	if (mMovieEvent->GetisPlaying() == false)
@@ -14,7 +14,7 @@ void CollisionManager::Update()
 		PlayerHitNegotiation();
 	}
 
-	// ƒ{ƒX‚ÆƒvƒŒƒCƒ„[
+	// ãƒœã‚¹ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	BossHitPlayer();
 }
 
@@ -66,24 +66,24 @@ void CollisionManager::PlayerHitBoss()
 
 	if (isBodyTouch == true)
 	{
-		// ”¼Œa‚ğ‘«‚µ‚ÄÀÛ‚Ì’·‚³‚ğ‹‚ß‚é
+		// åŠå¾„ã‚’è¶³ã—ã¦å®Ÿéš›ã®é•·ã•ã‚’æ±‚ã‚ã‚‹
 		float checkLength =
 			mPlayer->GetBodyCollider().radius +
 			mBoss->GetCollider().radius;
 
-		// y²‚ğ–³‹‚·‚é
+		// yè»¸ã‚’ç„¡è¦–ã™ã‚‹
 		Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
 		Vec3 pos2 = mBoss->GetPos() * Vec3(1, 0, 1);
 
 		Vec3 toPlayer = pos1 - pos2;
 
-		// Œ»İ‚Ì’·‚³
+		// ç¾åœ¨ã®é•·ã•
 		float curLength = toPlayer.Length();
 
-		// checkLength ‚Æ curLength ‚Ì·•ª‚Å–„‚ß‚ñ‚¾’·‚³‚ª‹‚Ü‚é
+		// checkLength ã¨ curLength ã®å·®åˆ†ã§åŸ‹ã‚è¾¼ã‚“ã é•·ã•ãŒæ±‚ã¾ã‚‹
 		float embedLength = checkLength - curLength;
 
-		// Œë·‚ğ‚¯‚·ˆ—
+		// èª¤å·®ã‚’ã‘ã™å‡¦ç†
 		Vec3 normal = toPlayer.Norm();
 		if (fabs(curLength) < 0.0001f)
 		{
@@ -98,10 +98,10 @@ void CollisionManager::PlayerHitBoss()
 }
 void CollisionManager::PlayerHitNegotiation()
 {
-	// ‰½‚©‚É“–‚½‚Á‚½—p
+	// ä½•ã‹ã«å½“ãŸã£ãŸæ™‚ç”¨
 	bool isHit = false;
 
-	// ƒŠƒXƒ|[ƒ“’n“_‚Æ“–‚½‚Á‚½‚ç
+	// ãƒªã‚¹ãƒãƒ¼ãƒ³åœ°ç‚¹ã¨å½“ãŸã£ãŸã‚‰
 	for (const auto& respawnPoint : mField->GetFieldData()->respawnPoints)
 	{
 		float dis = Vec3::Distance(mPlayer->GetPos(), respawnPoint->GetPos());
@@ -125,7 +125,7 @@ void CollisionManager::PlayerHitNegotiation()
 		}
 	}
 
-	// ƒƒbƒZ[ƒWƒTƒCƒ“‚Æ“–‚½‚Á‚½‚ç
+	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚µã‚¤ãƒ³ã¨å½“ãŸã£ãŸã‚‰
 	for (const auto& messageSign : *mField->GetMessageSigns())
 	{
 		float dis = Vec3::Distance(mPlayer->GetPos(), messageSign->GetPos());
@@ -145,7 +145,7 @@ void CollisionManager::PlayerHitNegotiation()
 		}
 	}
 
-	// ³–å
+	// æ­£é–€
 	const std::vector<std::unique_ptr<Gate>>& gates = mField->GetFieldData()->gates;
 	for (uint32_t i = 0; i < gates.size(); i++)
 	{
@@ -181,7 +181,7 @@ void CollisionManager::PlayerHitNegotiation()
 		}
 	}
 
-	// ‰½‚à“–‚½‚Á‚Ä‚È‚©‚Á‚½
+	// ä½•ã‚‚å½“ãŸã£ã¦ãªã‹ã£ãŸæ™‚
 	if (isHit == false)
 	{
 		mUiManager->GetNegotiationUI()->SetisActive(false);
@@ -191,7 +191,7 @@ void CollisionManager::PlayerHitFieldObject()
 {
 	FieldData* fieldData = mField->GetFieldData();
 
-	// Š»‰±
+	// æ£ºæ¡¶
 	const std::vector<std::unique_ptr<Coffin>>& coffins = fieldData->coffins;
 	for (uint32_t i = 0; i < coffins.size(); i++)
 	{
@@ -207,19 +207,19 @@ void CollisionManager::PlayerHitFieldObject()
 		{
 			mField->SetSpherePos(hitPoint);
 
-			// y²‚ğ–³‹‚·‚é
+			// yè»¸ã‚’ç„¡è¦–ã™ã‚‹
 			Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
 			Vec3 pos2 = hitPoint * Vec3(1, 0, 1);
 
-			// ƒvƒŒƒCƒ„[‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹
+			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«
 			Vec3 toPlayer = pos1 - pos2;
 			float toPlayerLength = toPlayer.Length();
 			Vec3 normal = toPlayer.Norm();
 
-			// Õ“Ë‚µ‚½ˆÊ’u‚ÆƒvƒŒƒCƒ„[‚Ì’†S‚ªd‚È‚é‹——£‚ğŒvZ
+			// è¡çªã—ãŸä½ç½®ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä¸­å¿ƒãŒé‡ãªã‚‹è·é›¢ã‚’è¨ˆç®—
 			float overlap = mPlayer->GetBodyCollider().radius - toPlayerLength;
 
-			// ‰Ÿ‚µ–ß‚µ‚ÌƒxƒNƒgƒ‹
+			// æŠ¼ã—æˆ»ã—ã®ãƒ™ã‚¯ãƒˆãƒ«
 			Vec3 pushVec = normal * (overlap);
 
 			Vec3 nextPos = mPlayer->GetPos() + pushVec;
@@ -227,7 +227,7 @@ void CollisionManager::PlayerHitFieldObject()
 		}
 	}
 
-	// –Ø
+	// æœ¨
 	const std::vector<std::unique_ptr<Tree>>& trees = fieldData->trees;
 	for (uint32_t i = 0; i < trees.size(); i++)
 	{
@@ -243,23 +243,23 @@ void CollisionManager::PlayerHitFieldObject()
 		{
 			mField->SetSpherePos(hitPoint);
 
-			// ”¼Œa‚ğ‘«‚µ‚ÄÀÛ‚Ì’·‚³‚ğ‹‚ß‚é
+			// åŠå¾„ã‚’è¶³ã—ã¦å®Ÿéš›ã®é•·ã•ã‚’æ±‚ã‚ã‚‹
 			float checkLength =
 				mPlayer->GetBodyCollider().radius + trees[i]->GetCollider().radius;
 
-			// y²‚ğ–³‹‚·‚é
+			// yè»¸ã‚’ç„¡è¦–ã™ã‚‹
 			Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
 			Vec3 pos2 = trees[i]->GetPos() * Vec3(1, 0, 1);
 
 			Vec3 toPlayer = pos1 - pos2;
 
-			// Œ»İ‚Ì’·‚³
+			// ç¾åœ¨ã®é•·ã•
 			float curLength = toPlayer.Length();
 
-			// checkLength ‚Æ curLength ‚Ì·•ª‚Å–„‚ß‚ñ‚¾’·‚³‚ª‹‚Ü‚é
+			// checkLength ã¨ curLength ã®å·®åˆ†ã§åŸ‹ã‚è¾¼ã‚“ã é•·ã•ãŒæ±‚ã¾ã‚‹
 			float embedLength = checkLength - curLength;
 
-			// Œë·‚ğ‚¯‚·ˆ—
+			// èª¤å·®ã‚’ã‘ã™å‡¦ç†
 			Vec3 normal = toPlayer.Norm();
 			if (fabs(curLength) < 0.0001f)
 			{
@@ -273,7 +273,7 @@ void CollisionManager::PlayerHitFieldObject()
 		}
 	}
 
-	// •Ç
+	// å£
 	const std::vector<std::unique_ptr<Wall>>& walls = fieldData->walls;
 	for (uint32_t i = 0; i < walls.size(); i++)
 	{
@@ -289,19 +289,19 @@ void CollisionManager::PlayerHitFieldObject()
 		{
 			mField->SetSpherePos(hitPoint);
 
-			// y²‚ğ–³‹‚·‚é
+			// yè»¸ã‚’ç„¡è¦–ã™ã‚‹
 			Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
 			Vec3 pos2 = hitPoint * Vec3(1, 0, 1);
 
-			// ƒvƒŒƒCƒ„[‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹
+			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«
 			Vec3 toPlayer = pos1 - pos2;
 			float toPlayerLength = toPlayer.Length();
 			Vec3 normal = toPlayer.Norm();
 
-			// Õ“Ë‚µ‚½ˆÊ’u‚ÆƒvƒŒƒCƒ„[‚Ì’†S‚ªd‚È‚é‹——£‚ğŒvZ
+			// è¡çªã—ãŸä½ç½®ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä¸­å¿ƒãŒé‡ãªã‚‹è·é›¢ã‚’è¨ˆç®—
 			float overlap = mPlayer->GetBodyCollider().radius - toPlayerLength;
 
-			// ‰Ÿ‚µ–ß‚µ‚ÌƒxƒNƒgƒ‹
+			// æŠ¼ã—æˆ»ã—ã®ãƒ™ã‚¯ãƒˆãƒ«
 			Vec3 pushVec = normal * (overlap);
 
 			Vec3 nextPos = mPlayer->GetPos() + pushVec;
@@ -309,7 +309,7 @@ void CollisionManager::PlayerHitFieldObject()
 		}
 	}
 
-	// ³–å
+	// æ­£é–€
 	const std::vector<std::unique_ptr<Gate>>& gates = fieldData->gates;
 	for (uint32_t i = 0; i < gates.size(); i++)
 	{
@@ -326,19 +326,19 @@ void CollisionManager::PlayerHitFieldObject()
 		{
 			mField->SetSpherePos(hitPoint);
 
-			// y²‚ğ–³‹‚·‚é
+			// yè»¸ã‚’ç„¡è¦–ã™ã‚‹
 			Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
 			Vec3 pos2 = hitPoint * Vec3(1, 0, 1);
 
-			// ƒvƒŒƒCƒ„[‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹
+			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«
 			Vec3 toPlayer = pos1 - pos2;
 			float toPlayerLength = toPlayer.Length();
 			Vec3 normal = toPlayer.Norm();
 
-			// Õ“Ë‚µ‚½ˆÊ’u‚ÆƒvƒŒƒCƒ„[‚Ì’†S‚ªd‚È‚é‹——£‚ğŒvZ
+			// è¡çªã—ãŸä½ç½®ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä¸­å¿ƒãŒé‡ãªã‚‹è·é›¢ã‚’è¨ˆç®—
 			float overlap = mPlayer->GetBodyCollider().radius - toPlayerLength;
 
-			// ‰Ÿ‚µ–ß‚µ‚ÌƒxƒNƒgƒ‹
+			// æŠ¼ã—æˆ»ã—ã®ãƒ™ã‚¯ãƒˆãƒ«
 			Vec3 pushVec = normal * (overlap);
 
 			Vec3 nextPos = mPlayer->GetPos() + pushVec;
@@ -407,7 +407,7 @@ float CollisionManager::CalcPlayerDisToFront(const Vec3 frontVec, const float ma
 	float dis = max;
 	if (isHit == true)
 	{
-		// y²‚ğ–³‹‚·‚é
+		// yè»¸ã‚’ç„¡è¦–ã™ã‚‹
 		Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
 		Vec3 pos2 = mBoss->GetPos() * Vec3(1, 0, 1);
 

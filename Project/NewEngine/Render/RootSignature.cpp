@@ -14,36 +14,36 @@ void RootSignature::Create(const RootSignatureSetting setting)
 {
 	mSetting = setting;
 
-	// RootParameter‚ÉConstantBufferView‚ğ’Ç‰Á
+	// RootParameterç¸ºï½«ConstantBufferViewç¹§å®šï½¿ï½½èœ‰ï£°
 	AddCbvToRootRrameter(mSetting.maxCbvRootParameter);
 
-	// RootParameter‚ÉSRV‚ÌDescriptorRange‚ğ’Ç‰Á
+	// RootParameterç¸ºï½«SRVç¸ºï½®DescriptorRangeç¹§å®šï½¿ï½½èœ‰ï£°
 	AddSrvToRootPrameter(mSetting.maxSrvDescritorRange);
 
-	// RootParameter‚ÉUAV‚ÌDescriptorRange‚ğ’Ç‰Á
+	// RootParameterç¸ºï½«UAVç¸ºï½®DescriptorRangeç¹§å®šï½¿ï½½èœ‰ï£°
 	AddUavToRootPrameter(mSetting.maxUavDescritorRange);
 
-	// ƒeƒNƒXƒ`ƒƒƒTƒ“ƒvƒ‰[‚Ìİ’è
+	// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹§ï½µç¹ï½³ç¹åŠ±Î›ç¹ï½¼ç¸ºï½®éšªï½­è³ãƒ»
 	D3D12_STATIC_SAMPLER_DESC samplerDesc{};
-	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// ‰¡ŒJ‚è•Ô‚µ(ƒ^ƒCƒŠƒ“ƒO)
-	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// cŒJ‚è•Ô‚µ(ƒ^ƒCƒŠƒ“ƒO)
-	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// ‰œsŒJ‚è•Ô‚µ(ƒ^ƒCƒŠƒ“ƒO)
-	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;	// ƒ{[ƒ_[‚Ì‚Í•
-	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;					// ‘S‚Ä‚ÌƒŠƒjƒA•âŠÔ
-	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;									// ƒ~ƒbƒvƒ}ƒbƒvÅ‘å’l
-	samplerDesc.MinLOD = 0.0f;												// ƒ~ƒbƒvƒ}ƒbƒvÅ¬’l
+	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// è®“ï½ªéƒ¢ï½°ç¹§é¡˜ï½¿æ–ï¼ (ç¹§ï½¿ç¹§ï½¤ç¹ï½ªç¹ï½³ç¹§ï½°)
+	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// é‚µï½¦éƒ¢ï½°ç¹§é¡˜ï½¿æ–ï¼ (ç¹§ï½¿ç¹§ï½¤ç¹ï½ªç¹ï½³ç¹§ï½°)
+	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// è‚ï½¥é™¦æªï½¹ï½°ç¹§é¡˜ï½¿æ–ï¼ (ç¹§ï½¿ç¹§ï½¤ç¹ï½ªç¹ï½³ç¹§ï½°)
+	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;	// ç¹æ‡Šãƒ»ç¹Â€ç¹ï½¼ç¸ºï½®è­ã‚…ãƒ»é®Ÿãƒ»
+	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;					// èœˆï½¨ç¸ºï½¦ç¸ºï½®ç¹ï½ªç¹ä¹ã„é™¬æ†ºä¿£
+	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;									// ç¹æº˜ãƒ£ç¹åŠ±ãƒ»ç¹ãƒ»ãƒ»è­›Â€èŸï½§è›Ÿï½¤
+	samplerDesc.MinLOD = 0.0f;												// ç¹æº˜ãƒ£ç¹åŠ±ãƒ»ç¹ãƒ»ãƒ»è­›Â€èŸ†ä¸Â€ï½¤
 	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;			// ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚©‚ç‚Ì‚İg—p‰Â”\
+	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;			// ç¹æ–ã‘ç¹§ï½»ç¹ï½«ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¸ºä¹ï½‰ç¸ºï½®ç¸ºï½¿è´ï½¿é€•ï½¨èœ¿ï½¯é–­ï½½
 
-	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ìİ’è
+	// ç¹ï½«ç¹ï½¼ç¹åŒ»ã™ç¹§ï½°ç¹é˜ªãƒ¡ç¹ï½£ç¸ºï½®éšªï½­è³ãƒ»
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
 	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-	rootSignatureDesc.pParameters = mRootParameters.data();					// ƒ‹[ƒgƒpƒ‰ƒ[ƒ^‚Ìæ“ªƒAƒhƒŒƒX
-	rootSignatureDesc.NumParameters = (uint32_t)mRootParameters.size();		// ƒ‹[ƒgƒpƒ‰ƒ[ƒ^”
+	rootSignatureDesc.pParameters = mRootParameters.data();					// ç¹ï½«ç¹ï½¼ç¹åŒ»ãƒ±ç¹ï½©ç¹ï½¡ç¹ï½¼ç¹§ï½¿ç¸ºï½®èœˆç£¯ï£°ï½­ç¹§ï½¢ç¹å³¨Îç¹§ï½¹
+	rootSignatureDesc.NumParameters = (uint32_t)mRootParameters.size();		// ç¹ï½«ç¹ï½¼ç¹åŒ»ãƒ±ç¹ï½©ç¹ï½¡ç¹ï½¼ç¹§ï½¿è¬¨ï½°
 	rootSignatureDesc.pStaticSamplers = &samplerDesc;
 	rootSignatureDesc.NumStaticSamplers = 1;
 
-	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ÌƒVƒŠƒAƒ‰ƒCƒY
+	// ç¹ï½«ç¹ï½¼ç¹åŒ»ã™ç¹§ï½°ç¹é˜ªãƒ¡ç¹ï½£ç¸ºï½®ç¹§ï½·ç¹ï½ªç¹§ï½¢ç¹ï½©ç¹§ï½¤ç¹§ï½º
 	auto errorBlob = ShaderObject::GetErrorBlob();
 	Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob;
 	mResult = D3D12SerializeRootSignature(
@@ -67,10 +67,10 @@ void RootSignature::AddCbvToRootRrameter(const uint32_t maxCbvRootParameter)
 	for (uint32_t i = 0; i < maxCbvRootParameter; i++)
 	{
 		D3D12_ROOT_PARAMETER rootParam;
-		rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// í—Ş
-		rootParam.Descriptor.ShaderRegister = (uint32_t)mRootParameters.size();	// ’è”ƒoƒbƒtƒ@”Ô†
-		rootParam.Descriptor.RegisterSpace = 0;						// ƒfƒtƒHƒ‹ƒg’l
-		rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// ‘S‚Ä‚ÌƒVƒF[ƒ_‚©‚çŒ©‚¦‚é
+		rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// éï½®é¬˜ãƒ»
+		rootParam.Descriptor.ShaderRegister = (uint32_t)mRootParameters.size();	// è³å£½ç„šç¹èˆŒãƒ£ç¹è¼”ãƒé€¡ï½ªèœ¿ï½·
+		rootParam.Descriptor.RegisterSpace = 0;						// ç¹ãƒ»ãƒµç¹§ï½©ç¹ï½«ç¹äº¥Â€ï½¤
+		rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// èœˆï½¨ç¸ºï½¦ç¸ºï½®ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¸ºä¹ï½‰éš•ä¹âˆ´ç¹§ãƒ»
 
 		mRootParameters.emplace_back(rootParam);
 	}
@@ -111,18 +111,19 @@ ID3D12RootSignature* RootSignature::GetRootSignature()
 }
 uint32_t RootSignature::GetCBVStartIndex()
 {
-	// •K‚¸0”Ô–Ú‚©‚çì‚é‚æ‚¤‚É‚·‚é‚½‚ß0‚ğ•Ô‚·
+	// è ¢ãƒ»â˜…0é€¡ï½ªé€¶ï½®ç¸ºä¹ï½‰è´æ‡Šï½‹ç¹§åŒ»â‰§ç¸ºï½«ç¸ºå¶ï½‹ç¸ºæº˜ï½0ç¹§å®šï½¿æ–â˜†
 	return 0;
 }
 uint32_t RootSignature::GetSRVStartIndex()
 {
-	// maxCbvRootParameter‚ªSRV‚ÌÅ‰‚ÌIndex‚É‚È‚é
+	// maxCbvRootParameterç¸ºéƒ¡RVç¸ºï½®è­›Â€è›»æ˜´ãƒ»Indexç¸ºï½«ç¸ºï½ªç¹§ãƒ»
 	return mSetting.maxCbvRootParameter;
 }
 uint32_t RootSignature::GetUAVStartIndex()
 {
-	// maxSrvDescritorRange‚ªUAV‚ÌÅ‰‚ÌIndex‚É‚È‚é
+	// maxSrvDescritorRangeç¸ºè¢ˆAVç¸ºï½®è­›Â€è›»æ˜´ãƒ»Indexç¸ºï½«ç¸ºï½ªç¹§ãƒ»
 	return
 		mSetting.maxCbvRootParameter +
 		mSetting.maxSrvDescritorRange;
 }
+

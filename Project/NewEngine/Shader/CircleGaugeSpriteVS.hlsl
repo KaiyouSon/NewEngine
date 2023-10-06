@@ -3,8 +3,8 @@
 
 VSOutputSvposUv main(float4 pos : POSITION, float2 uv : TEXCOORD)
 {
-    VSOutputSvposUv output; // ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚É“n‚·’l
-    output.svpos = mul(mat, pos); // À•W‚És—ñ‚ğæZ
+    VSOutputSvposUv output; // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«æ¸¡ã™å€¤
+    output.svpos = mul(mat, pos); // åº§æ¨™ã«è¡Œåˆ—ã‚’ä¹—ç®—
     output.uv = uv;
     return output;
 }

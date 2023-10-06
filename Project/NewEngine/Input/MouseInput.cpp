@@ -4,7 +4,7 @@
 #include <cassert>
 
 MouseInput::MouseInput() :
-	mouse_(nullptr), mouseInput_({}), prevMouseInput_({})
+	mMouse(nullptr), mMouseInput({}), mPrevMouseInput({})
 {
 }
 void MouseInput::Init()
@@ -12,17 +12,17 @@ void MouseInput::Init()
 	HRESULT result;
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
 
-	// ƒ}ƒEƒXƒfƒoƒCƒX‚Ì¶¬
+	// ç¹æ§­ãˆç¹§ï½¹ç¹ãƒ»ãƒ°ç¹§ï½¤ç¹§ï½¹ç¸ºï½®é€•æ»“ãƒ»
 	result = InputManager::GetInstance()->GetDirectInput()->
-		CreateDevice(GUID_SysMouse, &mouse_, nullptr);
+		CreateDevice(GUID_SysMouse, &mMouse, nullptr);
 	assert(SUCCEEDED(result));
 
-	// “ü—Íƒf[ƒ^Œ`Ž®‚ÌƒZƒbƒg
-	result = mouse_->SetDataFormat(&c_dfDIMouse2); // Šg’£8ƒ{ƒ^ƒ“‚Ü‚Å
+	// èœˆï½¥èœ‰å¸™ãƒ§ç¹ï½¼ç¹§ï½¿è –ï½¢è ‘ä¸Šãƒ»ç¹§ï½»ç¹ãƒ»ãƒ¨
+	result = mMouse->SetDataFormat(&c_dfDIMouse2); // è«¡ï½¡è ‘ï½µ8ç¹æ‡Šã¡ç¹ï½³ç¸ºï½¾ç¸ºï½§
 	assert(SUCCEEDED(result));
 
-	// ”r‘¼§ŒäƒŒƒxƒ‹‚ÌƒZƒbƒg
-	result = mouse_->SetCooperativeLevel(
+	// è¬—å‰ƒï½»é–€å®›è •ï½¡ç¹ï½¬ç¹å¶Îç¸ºï½®ç¹§ï½»ç¹ãƒ»ãƒ¨
+	result = mMouse->SetCooperativeLevel(
 		renderWindow->GetHwnd(),
 		DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	assert(SUCCEEDED(result));
@@ -31,64 +31,65 @@ void MouseInput::Update()
 {
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
 
-	// ƒ}ƒEƒXî•ñ‚ÌŽæ“¾ŠJŽn
-	mouse_->Acquire();
+	// ç¹æ§­ãˆç¹§ï½¹è« ãƒ»ï£°ï½±ç¸ºï½®èœ¿é–€ï½¾éˆ´å¹•èŸ‹ãƒ»
+	mMouse->Acquire();
 
-	// ÅV‚Ìƒ}ƒEƒXî•ñ‚¾‚Á‚½‚à‚Ì‚Í1ƒtƒŒ[ƒ€‘O‚ÌƒL[ƒ{[ƒhî•ñ‚Æ‚µ‚Ä•Û‘¶
-	prevMouseInput_ = mouseInput_;
+	// è­›Â€è­ï½°ç¸ºï½®ç¹æ§­ãˆç¹§ï½¹è« ãƒ»ï£°ï½±ç¸ºï£°ç¸ºï½£ç¸ºæº˜ï½‚ç¸ºï½®ç¸ºï½¯1ç¹è¼”Îžç¹ï½¼ç¹ï£°èœ‘é˜ªãƒ»ç¹§ï½­ç¹ï½¼ç¹æ‡Šãƒ»ç¹ç”»ãƒ¥è£ï½±ç¸ºï½¨ç¸ºåŠ±â€»è«æ™ï½­ãƒ»
+	mPrevMouseInput = mMouseInput;
 
-	// ÅV‚Ìƒ}ƒEƒXî•ñ‚ðŽæ“¾‚·‚é
-	mouse_->GetDeviceState(sizeof(mouseInput_), &mouseInput_);
+	// è­›Â€è­ï½°ç¸ºï½®ç¹æ§­ãˆç¹§ï½¹è« ãƒ»ï£°ï½±ç¹§è²žå™è •åŠ±â˜†ç¹§ãƒ»
+	mMouse->GetDeviceState(sizeof(mMouseInput), &mMouseInput);
 
 	POINT tempMousePos;
 	GetCursorPos(&tempMousePos);
 
-	// ƒEƒBƒ“ƒhƒEÀ•W‚É•ÏŠ·‚·‚é
+	// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆè Žï½§è®“å¶â†“èžŸç”»é‹¤ç¸ºå¶ï½‹
 	ScreenToClient(renderWindow->GetHwnd(), &tempMousePos);
-	mousePos_.x = static_cast<float>(tempMousePos.x);
-	mousePos_.y = static_cast<float>(tempMousePos.y);
+	mMousePos.x = static_cast<float>(tempMousePos.x);
+	mMousePos.y = static_cast<float>(tempMousePos.y);
 }
 
-// ƒNƒŠƒbƒN‚µ‚Ä‚¢‚éŠÔ
+// ç¹§ï½¯ç¹ï½ªç¹ãƒ»ã‘ç¸ºåŠ±â€»ç¸ºãƒ»ï½‹é«¢ãƒ»
 bool MouseInput::GetClick(const MouseCode mouseCode)
 {
-	bool isClick = (GetInstance()->mouseInput_.rgbButtons[(int)mouseCode] & 0x80) != 0;
+	bool isClick = (GetInstance()->mMouseInput.rgbButtons[(int)mouseCode] & 0x80) != 0;
 
 	return isClick;
 }
 
-// ƒNƒŠƒbƒN‚µ‚½uŠÔ
+// ç¹§ï½¯ç¹ï½ªç¹ãƒ»ã‘ç¸ºåŠ±â—†è¿¸ï½¬é«¢ãƒ»
 bool MouseInput::GetClickDown(const MouseCode mouseCode)
 {
-	bool isClick = (GetInstance()->mouseInput_.rgbButtons[(int)mouseCode] & 0x80) != 0;
-	bool isPrevClick = (GetInstance()->prevMouseInput_.rgbButtons[(int)mouseCode] & 0x80) != 0;
+	bool isClick = (GetInstance()->mMouseInput.rgbButtons[(int)mouseCode] & 0x80) != 0;
+	bool isPrevClick = (GetInstance()->mPrevMouseInput.rgbButtons[(int)mouseCode] & 0x80) != 0;
 
 	return isClick && !isPrevClick;
 }
 
-// ƒNƒŠƒbƒN‚µI‚í‚Á‚½uŠÔ
+// ç¹§ï½¯ç¹ï½ªç¹ãƒ»ã‘ç¸ºç¤¼ï½µã‚…ï½ç¸ºï½£ç¸ºæº½æ¤ªé«¢ãƒ»
 bool MouseInput::GetClickUp(const MouseCode mouseCode)
 {
-	bool isClick = (GetInstance()->mouseInput_.rgbButtons[(int)mouseCode] & 0x80) != 0;
-	bool isPrevClick = (GetInstance()->prevMouseInput_.rgbButtons[(int)mouseCode] & 0x80) != 0;
+	bool isClick = (GetInstance()->mMouseInput.rgbButtons[(int)mouseCode] & 0x80) != 0;
+	bool isPrevClick = (GetInstance()->mPrevMouseInput.rgbButtons[(int)mouseCode] & 0x80) != 0;
 
 	return !isClick && isPrevClick;
 }
 
-// ƒ}ƒEƒX‚ÌÀ•W
+// ç¹æ§­ãˆç¹§ï½¹ç¸ºï½®è Žï½§è®“ãƒ»
 Vec2 MouseInput::GetPos()
 {
-	return GetInstance()->mousePos_;
+	return GetInstance()->mMousePos;
 }
 
-// ƒ}ƒEƒX‚Ì“®‚¢‚Ä‚¢‚éƒxƒNƒgƒ‹
+// ç¹æ§­ãˆç¹§ï½¹ç¸ºï½®èœè¼”ï¼žç¸ºï½¦ç¸ºãƒ»ï½‹ç¹å¶ã‘ç¹åŒ»Î
 Vec2 MouseInput::GetMoveVec()
 {
-	return { (float)GetInstance()->mouseInput_.lX, (float)GetInstance()->mouseInput_.lY };
+	return { (float)GetInstance()->mMouseInput.lX, (float)GetInstance()->mMouseInput.lY };
 }
 
-// ƒ}ƒEƒXƒzƒCƒ‹‚Ì“®‚¢‚Ä‚¢‚éƒxƒNƒgƒ‹
+// ç¹æ§­ãˆç¹§ï½¹ç¹å¸™ã†ç¹ï½«ç¸ºï½®èœè¼”ï¼žç¸ºï½¦ç¸ºãƒ»ï½‹ç¹å¶ã‘ç¹åŒ»Î
 float MouseInput::GetWheelMoveVec()
 {
-	return (float)GetInstance()->mouseInput_.lZ;
+	return (float)GetInstance()->mMouseInput.lZ;
 }
+

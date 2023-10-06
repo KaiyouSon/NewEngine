@@ -1,10 +1,12 @@
 #include "Timer.h"
 
-Timer::Timer() : mTimer(0), mLimitTimer(0), mIsTimeOut(false)
+Timer::Timer() :
+	mTimer(0), mLimitTimer(0), mTimeRate(0), mIsTimeOut(false)
 {
 }
 
-Timer::Timer(const int32_t maxTimer) : mTimer(0), mLimitTimer(maxTimer), mIsTimeOut(false)
+Timer::Timer(const int32_t maxTimer) :
+	mTimer(0), mLimitTimer(maxTimer), mTimeRate(0), mIsTimeOut(false)
 {
 }
 
@@ -36,11 +38,26 @@ bool Timer::operator==(const bool flag)
 	return mIsTimeOut == flag;
 }
 
-// ÉZÉbÉ^Å[
-void Timer::SetTimer(const int32_t timer) { mTimer = timer; }
-void Timer::SetLimitTimer(const int32_t maxTimer) { mLimitTimer = maxTimer; }
+// ÁπßÔΩªÁπù„Éª„Å°ÁπùÔΩº
+void Timer::SetTimer(const int32_t timer)
+{
+	mTimer = timer;
+}
+void Timer::SetLimitTimer(const int32_t maxTimer)
+{
+	mLimitTimer = maxTimer;
+}
 
-// ÉQÉbÉ^Å[
-int32_t Timer::GetTimer() { return mTimer; }
-float Timer::GetTimeRate() { return mTimeRate; }
-bool Timer::GetisTimeOut() { return mIsTimeOut; }
+// ÁπßÔΩ≤Áπù„Éª„Å°ÁπùÔΩº
+int32_t Timer::GetTimer()
+{
+	return mTimer;
+}
+float Timer::GetTimeRate()
+{
+	return mTimeRate;
+}
+bool Timer::GetisTimeOut()
+{
+	return mIsTimeOut;
+}

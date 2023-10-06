@@ -6,12 +6,12 @@
 
 using namespace VertexBufferData;
 
-// ƒ‚ƒfƒ‹‚Ìƒ}ƒbƒv
+// ç¹ï½¢ç¹ãƒ»Îç¸ºï½®ç¹æ§­ãƒ£ç¹ãƒ»
 std::unordered_map<std::string, std::unique_ptr<Model>> ModelManager::sModelMap;
 std::mutex ModelManager::sMtx = std::mutex{};
 std::string ModelManager::sDirectoryPath = "Application/Resources/Model/";
 
-// ƒ‚ƒfƒ‹‚Ìæ“¾
+// ç¹ï½¢ç¹ãƒ»Îç¸ºï½®èœ¿é–€ï½¾ãƒ»
 Model* ModelManager::GetModel(const std::string modelTag)
 {
 	std::string log;
@@ -28,19 +28,19 @@ Model* ModelManager::GetModel(const std::string modelTag)
 	return sModelMap[modelTag].get();
 }
 
-// objƒtƒ@ƒCƒ‹‚©‚çƒ‚ƒfƒ‹‚ğƒ[ƒh‚µƒ}ƒbƒv‚ÌŠi”[‚·‚é
+// objç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¸ºä¹ï½‰ç¹ï½¢ç¹ãƒ»Îç¹§åµÎŸç¹ï½¼ç¹å³¨ï¼ ç¹æ§­ãƒ£ç¹åŠ±ãƒ»è­¬ï½¼é‚é˜ªâ˜†ç¹§ãƒ»
 Model* ModelManager::LoadObjModel(const std::string fileName, const std::string modelTag, const bool isSmoothing)
 {
-	// ”r‘¼§Œä
+	// è¬—å‰ƒï½»é–€å®›è •ï½¡
 	std::lock_guard<std::mutex> lock(sMtx);
 
-	// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	// ç¹§ï½¤ç¹ï½³ç¹§ï½¹ç¹§ï½¿ç¹ï½³ç¹§ï½¹é€•æ»“ãƒ»
 	std::unique_ptr<Model> model = std::make_unique<ObjModel>();
 	model->name = fileName;
 
 	std::string objfile = fileName + ".obj";
 	uint32_t checkPos;
-	// ‹æØ‚è•¶š '/' ‚ªo‚Ä‚­‚éˆê”ÔÅŒã‚Ì•”•ª‚ğŒŸõ
+	// è›¹ï½ºè›»ãƒ»ï½Šè­ãƒ»ï½­ãƒ»'/' ç¸ºæ‚Ÿãƒ»ç¸ºï½¦ç¸ºä¸Šï½‹è³Â€é€¡ï½ªè­›Â€è •å¾Œãƒ»é©›ï½¨è›»ãƒ»ï½’è®€æ‡ƒï½´ï½¢
 	checkPos = static_cast<uint32_t>(fileName.rfind('/'));
 	if (checkPos < fileName.size())
 	{
@@ -49,37 +49,37 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 
 	std::string path = sDirectoryPath + fileName + "/";
 
-	// ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€
+	// ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¹§ï½¹ç¹åŒ»Îœç¹ï½¼ç¹ï£°
 	std::ifstream file;
-	// .objƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	// .objç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¹§å¸å¹•ç¸ºãƒ»
 	file.open(path + objfile);
-	// ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“¸”s‚ğƒ`ƒFƒbƒN
+	// ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¹§ï½ªç¹ï½¼ç¹åŠ±Î¦èŸï½±è¬¨åŠ±ï½’ç¹âˆšã‰ç¹ãƒ»ã‘
 	if (file.fail())
 	{
 		std::string log = "[ObjModel Load] FileName : " + fileName + ", Tag : " + modelTag + ", is,failed to load";
 		OutputDebugLog(log.c_str());
 
-		assert(0 && "ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ‚ª¸”s‚µ‚Ü‚µ‚½");
+		assert(0 && "ç¹ï½¢ç¹ãƒ»Îç¸ºï½®éš±ï½­ç¸ºï½¿éœï½¼ç¸ºï½¿ç¸ºæ‚Ÿï½¤ï½±è¬¨åŠ±ï¼ ç¸ºï½¾ç¸ºåŠ±â—†");
 	}
 
 	std::vector<Vec3> positions;
 	std::vector<Vec3> normals;
 	std::vector<Vec2> texcoords;
 
-	// 1s‚¸‚Â“Ç‚İ‚Ş
+	// 1é™¦å¾Œâ˜…ç¸ºï½¤éš±ï½­ç¸ºï½¿éœï½¼ç¹§Â€
 	std::string line;
 	while (getline(file, line))
 	{
-		// 1s•ª‚Ì•¶š—ñ‚ğƒXƒgƒŠ[ƒ€‚É•ÏŠ·‚µ‚Ä‰ğÍ‚µ‚â‚·‚­‚·‚é
+		// 1é™¦æ‚Ÿãƒ»ç¸ºï½®è­ãƒ»ï½­æ€œãƒ»ç¹§åµã›ç¹åŒ»Îœç¹ï½¼ç¹ï£°ç¸ºï½«èŸç”»é‹¤ç¸ºåŠ±â€»éš—ï½£è­«èˆŒï¼ ç¹§ãƒ»â˜†ç¸ºä¸Šâ˜†ç¹§ãƒ»
 		std::istringstream lineStream(line);
 
-		// ”¼ŠpƒXƒy[ƒX‹æØ‚è‚Ås‚Ìæ“ª•¶š—ñ‚ğæ“¾
+		// èœŠé¡˜ï½§åµã›ç¹å£¹ãƒ»ç¹§ï½¹è›¹ï½ºè›»ãƒ»ï½Šç¸ºï½§é™¦å¾Œãƒ»èœˆç£¯ï£°ï½­è­ãƒ»ï½­æ€œãƒ»ç¹§è²å™è •ãƒ»
 		std::string key;
 		std::getline(lineStream, key, ' ');
 
 		if (key == "mtllib")
 		{
-			// ƒ}ƒeƒŠƒAƒ‹‚Ìƒtƒ@ƒCƒ‹–¼‚ğ“Ç‚İ‚Ş
+			// ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«ç¸ºï½®ç¹è¼”ãƒç¹§ï½¤ç¹ï½«èœ·é˜ªï½’éš±ï½­ç¸ºï½¿éœï½¼ç¹§Â€
 			std::string mtlFileName;
 			lineStream >> mtlFileName;
 
@@ -87,65 +87,65 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 			continue;
 		}
 
-		// æ“ª•¶š—ñ‚ªv‚È‚ç’¸“_À•W
+		// èœˆç£¯ï£°ï½­è­ãƒ»ï½­æ€œãƒ»ç¸ºè¨ˆç¸ºï½ªç¹§è›¾ï£°ã‚‰ã›è ï½§è®“ãƒ»
 		if (key == "v")
 		{
-			// X,Y,ZÀ•W“Ç‚İ‚İ
+			// X,Y,Zè ï½§è®“å‘µï½ªï½­ç¸ºï½¿éœï½¼ç¸ºï½¿
 			Vec3 pos{};
 			lineStream >> pos.x;
 			lineStream >> pos.y;
 			lineStream >> pos.z;
 			pos.z *= -1;
-			// À•Wƒf[ƒ^‚É’Ç‰Á
+			// è ï½§è®“å¶ãƒ§ç¹ï½¼ç¹§ï½¿ç¸ºï½«éœ‘ï½½èœ‰ï£°
 			positions.emplace_back(pos);
 		}
 
-		// æ“ª•¶š—ñ‚ªvt‚È‚çƒeƒNƒXƒ`ƒƒ
+		// èœˆç£¯ï£°ï½­è­ãƒ»ï½­æ€œãƒ»ç¸ºè¨ˆtç¸ºï½ªç¹§å³¨ãƒ¦ç¹§ï½¯ç¹§ï½¹ç¹âˆšÎ•
 		if (key == "vt")
 		{
-			// uv¬•ª“Ç‚İ‚İ
+			// uvè¬Œä»™ãƒ»éš±ï½­ç¸ºï½¿éœï½¼ç¸ºï½¿
 			Vec2 texcoord{};
 			lineStream >> texcoord.x;
 			lineStream >> texcoord.y;
-			// v•ûŒü”½“]
+			// vè­ï½¹èœ·å¤§æ¸šéœ†ï½¢
 			texcoord.y = 1.0f - texcoord.y;
-			// ƒeƒNƒXƒ`ƒƒÀ•Wƒf[ƒ^‚É’Ç‰Á
+			// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•è ï½§è®“å¶ãƒ§ç¹ï½¼ç¹§ï½¿ç¸ºï½«éœ‘ï½½èœ‰ï£°
 			texcoords.emplace_back(texcoord);
 		}
 
-		// æ“ª•¶š—ñ‚ªvn‚È‚ç–@üƒxƒNƒgƒ‹
+		// èœˆç£¯ï£°ï½­è­ãƒ»ï½­æ€œãƒ»ç¸ºè¨ˆnç¸ºï½ªç¹§ç”»ï½³æ…•ï½·å£¹ãƒ»ç¹§ï½¯ç¹åŒ»Î
 		if (key == "vn")
 		{
-			// xyz¬•ª“Ç‚İ‚İ
+			// xyzè¬Œä»™ãƒ»éš±ï½­ç¸ºï½¿éœï½¼ç¸ºï½¿
 			Vec3 normal{};
 			lineStream >> normal.x;
 			lineStream >> normal.y;
 			lineStream >> normal.z;
 			normal.z *= -1;
-			// –@üƒxƒNƒgƒ‹ƒf[ƒ^‚É’Ç‰Á
+			// è±•æ…•ï½·å£¹ãƒ»ç¹§ï½¯ç¹åŒ»Îç¹ãƒ»ãƒ»ç¹§ï½¿ç¸ºï½«éœ‘ï½½èœ‰ï£°
 			normals.emplace_back(normal);
 		}
 
-		// æ“ª•¶š—ñ‚ªf‚È‚çƒ|ƒŠƒSƒ“(OŠpŒ`)
+		// èœˆç£¯ï£°ï½­è­ãƒ»ï½­æ€œãƒ»ç¸ºæ²ç¸ºï½ªç¹§å³¨ãƒ»ç¹ï½ªç¹§ï½´ç¹ï½³(è³èŠ½ï½§è²ï½½ï½¢)
 		if (key == "f")
 		{
-			// ”¼ŠpƒXƒy[ƒX‹æØ‚è‚Ås‚Ì‘±‚«‚ğ“Ç‚İ‚Ş
+			// èœŠé¡˜ï½§åµã›ç¹å£¹ãƒ»ç¹§ï½¹è›¹ï½ºè›»ãƒ»ï½Šç¸ºï½§é™¦å¾Œãƒ»é‚¯å£¹â€³ç¹§å®šï½ªï½­ç¸ºï½¿éœï½¼ç¹§Â€
 			std::string indexString;
 			int count = 0;
 
 			while (getline(lineStream, indexString, ' '))
 			{
-				// ’¸“_ƒCƒ“ƒfƒbƒNƒX1ŒÂ•ª‚Ì•¶š—ñ‚ğƒXƒgƒŠ[ƒ€‚É•ÏŠ·‚µ‚Ä‰ğÍ‚µ‚â‚·‚­‚·‚é
+				// é¬†ã‚‰ã›ç¹§ï½¤ç¹ï½³ç¹ãƒ»ãƒ£ç¹§ï½¯ç¹§ï½¹1è›Ÿå¥ãƒ»ç¸ºï½®è­ãƒ»ï½­æ€œãƒ»ç¹§åµã›ç¹åŒ»Îœç¹ï½¼ç¹ï£°ç¸ºï½«èŸç”»é‹¤ç¸ºåŠ±â€»éš—ï½£è­«èˆŒï¼ ç¹§ãƒ»â˜†ç¸ºä¸Šâ˜†ç¹§ãƒ»
 				std::istringstream indexStream(indexString);
 				uint32_t indexPos = 0, indexNormal = 0, indexTexcoord = 0;
 
 				indexStream >> indexPos;
-				indexStream.seekg(1, std::ios_base::cur);	// ƒXƒ‰ƒbƒVƒ…‚ğ”ò‚Î‚·
+				indexStream.seekg(1, std::ios_base::cur);	// ç¹§ï½¹ç¹ï½©ç¹ãƒ»ã™ç¹ï½¥ç¹§å¸ï½£å¸™ãƒ»ç¸ºãƒ»
 				indexStream >> indexTexcoord;
-				indexStream.seekg(1, std::ios_base::cur);	// ƒXƒ‰ƒbƒVƒ…‚ğ”ò‚Î‚·
+				indexStream.seekg(1, std::ios_base::cur);	// ç¹§ï½¹ç¹ï½©ç¹ãƒ»ã™ç¹ï½¥ç¹§å¸ï½£å¸™ãƒ»ç¸ºãƒ»
 
 				indexStream >> indexNormal;
-				// ’¸“_ƒf[ƒ^‚Ì’Ç‰Á
+				// é¬†ã‚‰ã›ç¹ãƒ»ãƒ»ç¹§ï½¿ç¸ºï½®éœ‘ï½½èœ‰ï£°
 				VFbxModel vertex{};
 				vertex.pos = positions[indexPos - 1];
 				vertex.normal = normals[indexNormal - 1];
@@ -153,7 +153,7 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 
 				model->mesh.AddVertex(vertex);
 
-				// ’¸“_ƒCƒ“ƒfƒbƒNƒX‚É’Ç‰Á
+				// é¬†ã‚‰ã›ç¹§ï½¤ç¹ï½³ç¹ãƒ»ãƒ£ç¹§ï½¯ç¹§ï½¹ç¸ºï½«éœ‘ï½½èœ‰ï£°
 				if (count % 3 == 0)
 				{
 					model->mesh.AddIndex((uint16_t)model->mesh.indices.size());
@@ -177,7 +177,7 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 		}
 	}
 
-	// ƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é
+	// ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¹§å¸å“©ç¸ºå€¥ï½‹
 	file.close();
 
 	if (isSmoothing == true)
@@ -190,31 +190,31 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 	std::string log = "[ObjModel Load] FileName : " + fileName + ", Tag : " + modelTag + ", was loaded successfully";
 	OutputDebugLog(log.c_str());
 
-	// map‚ÉŠi”[
+	// mapç¸ºï½«è­¬ï½¼é‚ãƒ»
 	sModelMap.insert(std::make_pair(modelTag, std::move(model)));
 
 	return sModelMap[modelTag].get();
 }
 
-// fbxƒtƒ@ƒCƒ‹‚©‚çƒ‚ƒfƒ‹‚ğƒ[ƒh‚µƒ}ƒbƒv‚ÌŠi”[‚·‚é
+// fbxç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¸ºä¹ï½‰ç¹ï½¢ç¹ãƒ»Îç¹§åµÎŸç¹ï½¼ç¹å³¨ï¼ ç¹æ§­ãƒ£ç¹åŠ±ãƒ»è­¬ï½¼é‚é˜ªâ˜†ç¹§ãƒ»
 Model* ModelManager::LoadFbxModel(const std::string fileName, const std::string modelTag)
 {
-	// ”r‘¼§Œä
+	// è¬—å‰ƒï½»é–€å®›è •ï½¡
 	std::lock_guard<std::mutex> lock(sMtx);
 
-	// ƒ‚ƒfƒ‹¶¬
+	// ç¹ï½¢ç¹ãƒ»Îé€•æ»“ãƒ»
 	std::unique_ptr<FbxModel> model = std::make_unique<FbxModel>();
 	model->name = fileName;
 
-	// ƒ‚ƒfƒ‹‚Æ“¯‚¶–¼‘O‚ÌƒtƒHƒ‹ƒ_[‚©‚ç“Ç‚İ‚Ş
+	// ç¹ï½¢ç¹ãƒ»Îç¸ºï½¨èœ·å¾ŒÂ§èœ·æ¦Šç‡•ç¸ºï½®ç¹è¼”ã‹ç¹ï½«ç¹Â€ç¹ï½¼ç¸ºä¹ï½‰éš±ï½­ç¸ºï½¿éœï½¼ç¹§Â€
 	std::string path = sDirectoryPath + fileName + "/";
 	std::string fbxfile = fileName + ".fbx";
 	std::string fullPath = path + fbxfile;
 
-	// ƒtƒ‰ƒO
+	// ç¹è¼”Î›ç¹§ï½°
 	uint32_t flags = aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs;
 
-	// ƒV[ƒ“‚Ì“Ç‚İ‚İ
+	// ç¹§ï½·ç¹ï½¼ç¹ï½³ç¸ºï½®éš±ï½­ç¸ºï½¿éœï½¼ç¸ºï½¿
 	model->scene = model->importer.ReadFile(fullPath, flags);
 
 	if (model->scene == nullptr)
@@ -222,18 +222,18 @@ Model* ModelManager::LoadFbxModel(const std::string fileName, const std::string 
 		std::string log = "[ObjModel Load] FileName : " + fileName + ", Tag : " + modelTag + ", is,failed to load";
 		OutputDebugLog(log.c_str());
 
-		assert(0 && "ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ‚ª¸”s‚µ‚Ü‚µ‚½");
+		assert(0 && "ç¹ï½¢ç¹ãƒ»Îç¸ºï½®éš±ï½­ç¸ºï½¿éœï½¼ç¸ºï½¿ç¸ºæ‚Ÿï½¤ï½±è¬¨åŠ±ï¼ ç¸ºï½¾ç¸ºåŠ±â—†");
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰ğÍ
+	// ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«ç¸ºï½®éš—ï½£è­«ãƒ»
 	AssimpLoader::GetInstance()->ParseMaterial(model.get(), model->scene);
 	AssimpLoader::GetInstance()->ParseNodeRecursive(model.get(), nullptr, model->scene->mRootNode);
 
-	// ƒoƒbƒtƒ@[¶¬
+	// ç¹èˆŒãƒ£ç¹è¼”ãƒç¹ï½¼é€•æ»“ãƒ»
 	model->mesh.vertexBuffer.Create(model->mesh.vertices);
 	model->mesh.indexBuffer.Create(model->mesh.indices);
 
-	// map‚ÉŠi”[
+	// mapç¸ºï½«è­¬ï½¼é‚ãƒ»
 	sModelMap.insert(std::make_pair(modelTag, std::move(model)));
 
 
@@ -248,20 +248,20 @@ std::unordered_map<std::string, std::unique_ptr<Model>>* ModelManager::GetModelM
 	return &sModelMap;
 }
 
-// .mtlƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+// .mtlç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¸ºï½®éš±ï½­ç¸ºï½¿éœï½¼ç¸ºï½¿
 void ModelManager::LoadMaterialColor(std::string filePath, Model* model)
 {
-	// ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€
+	// ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¹§ï½¹ç¹åŒ»Îœç¹ï½¼ç¹ï£°
 	std::ifstream file;
-	// .mtlƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	// .mtlç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¹§å¸å¹•ç¸ºãƒ»
 	file.open(filePath);
-	// ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“¸”s‚ğƒ`ƒFƒbƒN
+	// ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¹§ï½ªç¹ï½¼ç¹åŠ±Î¦èŸï½±è¬¨åŠ±ï½’ç¹âˆšã‰ç¹ãƒ»ã‘
 	if (file.fail())
 	{
-		assert(0 && "ƒ}ƒeƒŠƒAƒ‹‚Ì“Ç‚İ‚İ‚ª¸”s‚µ‚Ü‚µ‚½");
+		assert(0 && "ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«ç¸ºï½®éš±ï½­ç¸ºï½¿éœï½¼ç¸ºï½¿ç¸ºæ‚Ÿï½¤ï½±è¬¨åŠ±ï¼ ç¸ºï½¾ç¸ºåŠ±â—†");
 	}
 
-	// ƒfƒBƒŒƒNƒgƒŠƒpƒX
+	// ç¹ãƒ»ã…ç¹ï½¬ç¹§ï½¯ç¹åŒ»Îœç¹ä»£ã›
 	std::string directoryPath = filePath;
 	while (true)
 	{
@@ -272,31 +272,31 @@ void ModelManager::LoadMaterialColor(std::string filePath, Model* model)
 		}
 	}
 
-	// 1s‚¸‚Â“Ç‚İ‚Ş
+	// 1é™¦å¾Œâ˜…ç¸ºï½¤éš±ï½­ç¸ºï½¿éœï½¼ç¹§Â€
 	std::string line;
 	while (getline(file, line))
 	{
-		// 1s•ª‚Ì•¶š—ñ‚ğƒXƒgƒŠ[ƒ€‚É•ÏŠ·‚µ‚Ä‰ğÍ‚µ‚â‚·‚­‚·‚é
+		// 1é™¦æ‚Ÿãƒ»ç¸ºï½®è­ãƒ»ï½­æ€œãƒ»ç¹§åµã›ç¹åŒ»Îœç¹ï½¼ç¹ï£°ç¸ºï½«èŸç”»é‹¤ç¸ºåŠ±â€»éš—ï½£è­«èˆŒï¼ ç¹§ãƒ»â˜†ç¸ºä¸Šâ˜†ç¹§ãƒ»
 		std::istringstream lineStream(line);
 
-		// ”¼ŠpƒXƒy[ƒX‹æØ‚è‚Ås‚Ìæ“ª•¶š—ñ‚ğæ“¾
+		// èœŠé¡˜ï½§åµã›ç¹å£¹ãƒ»ç¹§ï½¹è›¹ï½ºè›»ãƒ»ï½Šç¸ºï½§é™¦å¾Œãƒ»èœˆç£¯ï£°ï½­è­ãƒ»ï½­æ€œãƒ»ç¹§è²å™è •ãƒ»
 		std::string key;
 		std::getline(lineStream, key, ' ');
 
-		// æ“ª‚Ìƒ^ƒu•¶š‚ğ–³‹‚·‚é
+		// èœˆç£¯ï£°ï½­ç¸ºï½®ç¹§ï½¿ç¹åŒæšèŸ„åŠ±ï½’è¾Ÿï½¡éš•æ‚¶â˜†ç¹§ãƒ»
 		if (key[0] == '\t')
 		{
 			key.erase(key.begin());
 		}
 
-		// æ“ª•¶š—ñ‚ªnewmtl‚È‚çƒ}ƒeƒŠƒAƒ‹–¼
+		// èœˆç£¯ï£°ï½­è­ãƒ»ï½­æ€œãƒ»ç¸ºç³»ewmtlç¸ºï½ªç¹§å³¨ãƒ»ç¹ãƒ»Îœç¹§ï½¢ç¹ï½«èœ·ãƒ»
 		if (key == "newmtl")
 		{
-			// ƒ}ƒeƒŠƒAƒ‹–¼“Ç‚İ‚İ
+			// ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«èœ·å´ï½ªï½­ç¸ºï½¿éœï½¼ç¸ºï½¿
 			lineStream >> model->material.name;
 		}
 
-		// æ“ª•¶š—ñ‚ªKa‚È‚çƒAƒ“ƒrƒGƒ“ƒgF
+		// èœˆç£¯ï£°ï½­è­ãƒ»ï½­æ€œãƒ»ç¸ºæ¡‘aç¸ºï½ªç¹§å³¨ã„ç¹ï½³ç¹è–™ãŠç¹ï½³ç¹éƒç‰¡
 		if (key == "Ka")
 		{
 			lineStream >> model->material.ambient.r;
@@ -304,7 +304,7 @@ void ModelManager::LoadMaterialColor(std::string filePath, Model* model)
 			lineStream >> model->material.ambient.b;
 		}
 
-		// æ“ª•¶š—ñ‚ªKa‚È‚çƒfƒBƒt[ƒYF
+		// èœˆç£¯ï£°ï½­è­ãƒ»ï½­æ€œãƒ»ç¸ºæ¡‘aç¸ºï½ªç¹§å³¨ãƒ§ç¹§ï½£ç¹è¼”ãƒ»ç¹§ï½ºæ¿¶ï½²
 		if (key == "Kd")
 		{
 			lineStream >> model->material.diffuse.r;
@@ -312,7 +312,7 @@ void ModelManager::LoadMaterialColor(std::string filePath, Model* model)
 			lineStream >> model->material.diffuse.b;
 		}
 
-		// æ“ª•¶š—ñ‚ªKa‚È‚çƒXƒyƒLƒ…ƒ‰[F
+		// èœˆç£¯ï£°ï½­è­ãƒ»ï½­æ€œãƒ»ç¸ºæ¡‘aç¸ºï½ªç¹§å³¨ã›ç¹å£¹ãç¹ï½¥ç¹ï½©ç¹ï½¼æ¿¶ï½²
 		if (key == "Ks")
 		{
 			lineStream >> model->material.specular.r;
@@ -320,20 +320,21 @@ void ModelManager::LoadMaterialColor(std::string filePath, Model* model)
 			lineStream >> model->material.specular.b;
 		}
 
-		// æ“ª•¶š—ñ‚ªmap_Kd‚È‚çƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
+		// èœˆç£¯ï£°ï½­è­ãƒ»ï½­æ€œãƒ»ç¸ºç¨½ap_Kdç¸ºï½ªç¹§å³¨ãƒ¦ç¹§ï½¯ç¹§ï½¹ç¹âˆšÎ•ç¹è¼”ãƒç¹§ï½¤ç¹ï½«èœ·ãƒ»
 		if (key == "map_Kd")
 		{
-			// ƒeƒNƒXƒ`ƒƒ‚Ìƒtƒ@ƒCƒ‹–¼“Ç‚İ‚İ
+			// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¸ºï½®ç¹è¼”ãƒç¹§ï½¤ç¹ï½«èœ·å´ï½ªï½­ç¸ºï½¿éœï½¼ç¸ºï½¿
 			std::string textureName;
 			lineStream >> textureName;
 
 			std::string textureTag = model->name + "Texture";
 
-			// ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+			// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•éš±ï½­ç¸ºï½¿éœï½¼ç¸ºï½¿
 			model->texture = TextureManager::LoadMaterialTexture(directoryPath + textureName, textureTag);
 		}
 	}
 
-	// ƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é
+	// ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¹§å¸å“©ç¸ºå€¥ï½‹
 	file.close();
 }
+

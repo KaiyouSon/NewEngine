@@ -60,3 +60,4 @@ void BloodSprayEffect::DrawModel()
 {
 	mEmitter->Draw();
 }
+

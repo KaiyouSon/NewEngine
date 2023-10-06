@@ -33,52 +33,52 @@ void EffectManager::DrawModel()
 {
 	//mBloom->DrawPostEffect();
 
-	// ŒŒ
+	// é™¦Â€
 	mBloodSprayEffect->DrawModel();
 
-	// ‰ñ•œ
+	// è—æ§«ï½¾ï½©
 	mPlayerRecoveryEffect->DrawModel();
 
-	// ƒŠƒXƒ|[ƒ“’n“_‚ÌƒGƒtƒFƒNƒg
+	// ç¹ï½ªç¹§ï½¹ç¹æ˜´ãƒ»ç¹ï½³è¨ï½°è½¤ï½¹ç¸ºï½®ç¹§ï½¨ç¹è¼”ã‰ç¹§ï½¯ç¹ãƒ»
 	mRespawnPointEffect->DrawModel();
 
-	// “±’Ž‚Ý‚½‚¢‚ÈƒGƒtƒFƒNƒg
+	// èŸ†æ‰‹å‹ ç¸ºï½¿ç¸ºæº˜ï¼žç¸ºï½ªç¹§ï½¨ç¹è¼”ã‰ç¹§ï½¯ç¹ãƒ»
 	mLeadEffect->DrawModel();
 }
 
 void EffectManager::DrawEffect(const bool isBloom)
 {
-	// ƒuƒ‹[ƒ€Œø‰Ê‚©‚¯‚½‚¢ƒGƒtƒFƒNƒg
+	// ç¹æ‚¶Îç¹ï½¼ç¹ï£°èœ‰ï½¹è­«æ‡ŠÂ°ç¸ºä»£â—†ç¸ºãƒ»ãŠç¹è¼”ã‰ç¹§ï½¯ç¹ãƒ»
 	if (isBloom == true)
 	{
-		//// ‰ñ•œ
+		//// è—æ§«ï½¾ï½©
 		//mPlayerRecoveryEffect->DrawModel();
 
-		// ƒŠƒXƒ|[ƒ“’n“_‚ÌƒGƒtƒFƒNƒg
+		// ç¹ï½ªç¹§ï½¹ç¹æ˜´ãƒ»ç¹ï½³è¨ï½°è½¤ï½¹ç¸ºï½®ç¹§ï½¨ç¹è¼”ã‰ç¹§ï½¯ç¹ãƒ»
 		mRespawnPointEffect->DrawModel();
 
-		//// “±’Ž‚Ý‚½‚¢‚ÈƒGƒtƒFƒNƒg
+		//// èŸ†æ‰‹å‹ ç¸ºï½¿ç¸ºæº˜ï¼žç¸ºï½ªç¹§ï½¨ç¹è¼”ã‰ç¹§ï½¯ç¹ãƒ»
 		//mLeadEffect->DrawModel();
 
-		//// ‹ó’†‚É‚ ‚é‚â‚Â
+		//// é¨ï½ºè³ï½­ç¸ºï½«ç¸ºã‚…ï½‹ç¹§ãƒ»â–½
 		//mAirEffect->DrawModel();
 	}
-	// ‚»‚êˆÈŠO
+	// ç¸ºæ˜´ï½ŒèŽ‰ï½¥èžŸãƒ»
 	else
 	{
-		//// ŒŒ
+		//// é™¦Â€
 		//mBloodSprayEffect->DrawModel();
 
-		//// ‰ñ•œ
+		//// è—æ§«ï½¾ï½©
 		//mPlayerRecoveryEffect->DrawModel();
 
-		// ƒŠƒXƒ|[ƒ“’n“_‚ÌƒGƒtƒFƒNƒg
+		// ç¹ï½ªç¹§ï½¹ç¹æ˜´ãƒ»ç¹ï½³è¨ï½°è½¤ï½¹ç¸ºï½®ç¹§ï½¨ç¹è¼”ã‰ç¹§ï½¯ç¹ãƒ»
 		mRespawnPointEffect->DrawModel();
 
-		//// “±’Ž‚Ý‚½‚¢‚ÈƒGƒtƒFƒNƒg
+		//// èŸ†æ‰‹å‹ ç¸ºï½¿ç¸ºæº˜ï¼žç¸ºï½ªç¹§ï½¨ç¹è¼”ã‰ç¹§ï½¯ç¹ãƒ»
 		//mLeadEffect->DrawModel();
 
-		//// ‹ó’†‚É‚ ‚é‚â‚Â
+		//// é¨ï½ºè³ï½­ç¸ºï½«ç¸ºã‚…ï½‹ç¹§ãƒ»â–½
 		//mAirEffect->DrawModel();
 	}
 }
@@ -107,3 +107,4 @@ void EffectManager::SetPlayer(Player* player)
 {
 	mPlayer = player;
 }
+

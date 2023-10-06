@@ -6,11 +6,11 @@ void Grass::CreateGraphicsPipeline()
 {
 	std::string path = "Application/Shader/";
 
-	// ƒGƒ~ƒbƒ^[—p
+	// ç¹§ï½¨ç¹æº˜ãƒ£ç¹§ï½¿ç¹ï½¼é€•ï½¨
 	ShaderObjectManager::Create("Grass");
-	ShaderObjectManager::GetShaderObject("Grass")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);	// À•W
-	ShaderObjectManager::GetShaderObject("Grass")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);	// ƒXƒP[ƒ‹
-	ShaderObjectManager::GetShaderObject("Grass")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT, 1);	// ƒ^ƒCƒ}[
+	ShaderObjectManager::GetShaderObject("Grass")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);	// è ï½§è®“ãƒ»
+	ShaderObjectManager::GetShaderObject("Grass")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);	// ç¹§ï½¹ç¹§ï½±ç¹ï½¼ç¹ï½«
+	ShaderObjectManager::GetShaderObject("Grass")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT, 1);	// ç¹§ï½¿ç¹§ï½¤ç¹æ§­ãƒ»
 	ShaderObjectManager::GetShaderObject("Grass")->CompileVertexShader(path + "GrassVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Grass")->CompileGeometryShader(path + "GrassGS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Grass")->CompilePixelShader(path + "GrassPS.hlsl", "main");
@@ -29,19 +29,19 @@ Grass::Grass() :
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass")),
 	texture(TextureManager::GetTexture("White"))
 {
-	// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+	// é¬†ã‚‰ã›ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½®é€•æ»“ãƒ»
 	mVertices.resize(1);
 	mVertices.front().pos = 0;
 	mVertices.front().scale = 1;
 	mVertexBuffer->Create(mVertices);
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰Šú‰»
+	// ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 	MaterialInit();
 
 }
 void Grass::GenerateGrassToSquare(const Vec2 size, const uint32_t maxNum)
 {
-	// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+	// é¬†ã‚‰ã›ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½®é€•æ»“ãƒ»
 	mVertices.resize(maxNum);
 	mVertexBuffer->Create(mVertices);
 
@@ -58,7 +58,7 @@ void Grass::GenerateGrassToSquare(const Vec2 size, const uint32_t maxNum)
 
 		mVertices[i].scale = Random::RangeF(0.5f, 1.0f);
 
-		// 360‚Æ0ˆê‚¾‚©‚çMax359‚É‚·‚é
+		// 360ç¸ºï½¨0è³Â€é‚±åµâ–¡ç¸ºä¹ï½‰Max359ç¸ºï½«ç¸ºå¶ï½‹
 		mTimers[i].SetLimitTimer(359);
 		mTimers[i].SetTimer(Random::Range(0, 359));
 		mTimers[i].GetTimer();
@@ -80,10 +80,10 @@ void Grass::Update(Transform* parent)
 		mTransform.SetWorldMat(mat);
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì“]‘—
+	// ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«ç¸ºï½®éœ†ï½¢é¨¾ãƒ»
 	MaterialTransfer();
 
-	// ’¸“_ƒf[ƒ^‚Ì“]‘—
+	// é¬†ã‚‰ã›ç¹ãƒ»ãƒ»ç¹§ï½¿ç¸ºï½®éœ†ï½¢é¨¾ãƒ»
 	for (uint32_t i = 0; i < mVertices.size(); i++)
 	{
 		mVertices[i].timer.x = (float)mTimers[i].GetTimer();
@@ -103,43 +103,43 @@ void Grass::Draw()
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// GraphicsPipeline•`‰æƒRƒ}ƒ“ƒh
+	// GraphicsPipelineè¬ å†—åˆ¤ç¹§ï½³ç¹æ§­Î¦ç¹ãƒ»
 	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
 
-	// VBV‚ÆIBV‚Ìİ’èƒRƒ}ƒ“ƒh
+	// VBVç¸ºï½¨IBVç¸ºï½®éšªï½­è³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
 
 	MaterialDrawCommands();
 
-	// SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ğƒ‹[ƒgƒpƒ‰ƒ[ƒ^2”Ô‚Éİ’è
+	// SRVç¹åµãƒ»ç¹åŠ±ãƒ»èœˆç£¯ï£°ï½­ç¸ºï½«ç¸ºã‚…ï½‹SRVç¹§åµÎç¹ï½¼ç¹åŒ»ãƒ±ç¹ï½©ç¹ï½¡ç¹ï½¼ç¹§ï½¿2é€¡ï½ªç¸ºï½«éšªï½­è³ãƒ»
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, texture->GetBufferResource()->srvHandle.gpu);
 
 	renderBase->GetCommandList()->DrawInstanced((uint16_t)mVertices.size(), 1, 0, 0);
 }
 
-// --- ƒ}ƒeƒŠƒAƒ‹ŠÖ˜A --------------------------------------------------- //
+// --- ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«é«¢ï½¢é¨¾ï½£ --------------------------------------------------- //
 void Grass::MaterialInit()
 {
-	// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	// ç¹§ï½¤ç¹ï½³ç¹§ï½¹ç¹§ï½¿ç¹ï½³ç¹§ï½¹é€•æ»“ãƒ»
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3Ds—ñ
+	// 3Dé™¦æ‚Ÿãƒ»
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransformGrass>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// F
+	// æ¿¶ï½²
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ‰Šú‰»
+	// è›»æ™„æ‚„è›¹ãƒ»
 	mMaterial.Init();
 }
 void Grass::MaterialTransfer()
 {
 	mBillboard.CalculateBillboardMat();
 
-	// ƒ}ƒgƒŠƒbƒNƒX
+	// ç¹æ§­ãƒ¨ç¹ï½ªç¹ãƒ»ã‘ç¹§ï½¹
 	CTransformGrass transformGrassData =
 	{
 		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
@@ -148,7 +148,7 @@ void Grass::MaterialTransfer()
 	};
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformGrassData);
 
-	// Fƒf[ƒ^
+	// æ¿¶ï½²ç¹ãƒ»ãƒ»ç¹§ï½¿
 	CColor colorData = { color.To01() };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[1].get(), colorData);
 }
@@ -158,13 +158,13 @@ void Grass::MaterialDrawCommands()
 
 	for (uint32_t i = 0; i < mMaterial.constantBuffers.size(); i++)
 	{
-		// CBV‚Ìİ’èƒRƒ}ƒ“ƒh
+		// CBVç¸ºï½®éšªï½­è³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 			i, mMaterial.constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
 	}
 }
 
-// --- ƒZƒbƒ^[ --------------------------------------------------------- //
+// --- ç¹§ï½»ç¹ãƒ»ã¡ç¹ï½¼ --------------------------------------------------------- //
 void Grass::SetBillboardType(const BillboardType billboardType)
 {
 	mBillboard.SetBillboardType(billboardType);
@@ -173,3 +173,4 @@ void Grass::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
 	mGraphicsPipeline = graphicsPipeline;
 }
+

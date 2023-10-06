@@ -37,22 +37,22 @@ void Easing::Update()
 	mTimeRate = Min<float>((float)mTimer / mLimitTimer, 1);
 }
 
-// ƒC[ƒWƒ“ƒOI‚í‚è
+// ç¹§ï½¤ç¹ï½¼ç¹§ï½¸ç¹ï½³ç¹§ï½°é‚¨ã‚…ï½ç¹§ãƒ»
 bool Easing::GetisEnd()
 {
 	return mIsEnd;
 }
-// ƒ^ƒCƒ}[æ“¾
+// ç¹§ï½¿ç¹§ï½¤ç¹æ§­ãƒ»èœ¿é–€ï½¾ãƒ»
 int32_t Easing::GetTimer()
 {
 	return mTimer;
 }
-// ƒ^ƒCƒ€ƒŒ[ƒg‚ğæ“¾
+// ç¹§ï½¿ç¹§ï½¤ç¹ï£°ç¹ï½¬ç¹ï½¼ç¹åŒ»ï½’èœ¿é–€ï½¾ãƒ»
 float Easing::GetTimeRate()
 {
 	return mTimeRate;
 }
-// •âŠÔƒ^ƒCƒ€‚ğæ“¾
+// é™¬æ†ºä¿£ç¹§ï½¿ç¹§ï½¤ç¹ï£°ç¹§è²å™è •ãƒ»
 uint32_t Easing::GetEaseTimer()
 {
 	return mLimitTimer;
@@ -120,7 +120,7 @@ Vec3 Easing::Interpolation(const Vec3 startPos, const Vec3 endPos)
 		return 0;
 	}
 }
-// ƒ‰[ƒv
+// ç¹ï½©ç¹ï½¼ç¹ãƒ»
 float Easing::Lerp(const float startPos, const float endPos)
 {
 	float dis = endPos - startPos;
@@ -137,7 +137,7 @@ Vec3 Easing::Lerp(const Vec3 startPos, const Vec3 endPos)
 	return dis * mTimeRate + startPos;
 }
 
-// ƒC[ƒYƒCƒ“
+// ç¹§ï½¤ç¹ï½¼ç¹§ï½ºç¹§ï½¤ç¹ï½³
 float Easing::In(const float startPos, const float endPos)
 {
 	float dis = endPos - startPos;
@@ -154,7 +154,7 @@ Vec3 Easing::In(const Vec3 startPos, const Vec3 endPos)
 	return dis * powf(mTimeRate, mPowNum) + startPos;
 }
 
-// ƒC[ƒYƒAƒEƒg
+// ç¹§ï½¤ç¹ï½¼ç¹§ï½ºç¹§ï½¢ç¹§ï½¦ç¹ãƒ»
 float Easing::Out(const float startPos, const float endPos)
 {
 	float dis = endPos - startPos;
@@ -183,7 +183,7 @@ Vec3 Easing::Out(const Vec3 startPos, const Vec3 endPos)
 	return dis * -1 * (powf(mTimeRate - 1, mPowNum) - 1) + startPos;
 }
 
-// ƒCƒ“ƒAƒEƒg
+// ç¹§ï½¤ç¹ï½³ç¹§ï½¢ç¹§ï½¦ç¹ãƒ»
 float Easing::InOut(const float startPos, const float endPos)
 {
 	float dis = (endPos - startPos);
@@ -215,7 +215,7 @@ Vec3 Easing::InOut(const Vec3 startPos, const Vec3 endPos)
 	return -dis / 2.f * (powf((1.f - (mTimeRate - 0.5f) * 2.f), mPowNum) - 2.f) + startPos;
 }
 
-// ƒCƒ“ƒoƒbƒN
+// ç¹§ï½¤ç¹ï½³ç¹èˆŒãƒ£ç¹§ï½¯
 float Easing::InBack(const float startPos, const float endPos)
 {
 	const float back1 = 1.70154f;

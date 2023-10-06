@@ -35,26 +35,26 @@ private:
 	bool mIsDissolve;
 
 private:
-	Timer mPushTimer; //ƒ{ƒ^ƒ“˜A‘Å‚³‚¹‚È‚¢‚æ‚¤‚É
+	Timer mPushTimer; //ç¹æ‡Šã¡ç¹ï½³é¨¾ï½£è¬‡è–™ï¼†ç¸ºå¸™â†‘ç¸ºãƒ»ï½ˆç¸ºãƒ»â†“
 
 private:
-	// ó‘Ô
+	// è¿¥ï½¶è«·ãƒ»
 	State mState;
 
 private:
-	// ˆÚ“®ŠÖ˜A
+	// é˜ï½»èœæš®æœªé¨¾ï½£
 	float mMoveSpeed;
 	float mJoggingSpeed;
 	float mRunSpeed;
 	Vec3 mMoveVel;
 
 private:
-	// “–‚½‚è‚ ”»’èŠÖ˜A
+	// è –è–™â—†ç¹§ç¿«â‰ è›»ï½¤è³å¤æœªé¨¾ï½£
 	Vec3 mFrontVec;
 	CapsuleCollider mBodyCollider;
 
 private:
-	// ƒ_ƒ[ƒWŠÖ˜A
+	// ç¹Â€ç¹ï½¡ç¹ï½¼ç¹§ï½¸é«¢ï½¢é¨¾ï½£
 	bool mIsDamage;
 	Timer mDamageCoolTimer;
 
@@ -133,4 +133,3 @@ private:
 	friend BackstepMotion;
 	friend RollMotion;
 };
-

@@ -1,23 +1,23 @@
-// 3D•ÏŠ·s—ñ
+// 3Då¤‰æ›è¡Œåˆ—
 cbuffer ConstBufferDataTransform : register(b0)
 {
-    matrix mat; // 3D•ÏŠ·s—ñ
+    matrix mat; // 3Då¤‰æ›è¡Œåˆ—
 }
 
-// F
+// è‰²
 cbuffer ConstBufferDataMaterial : register(b1)
 {
-    float4 color; // F(RGBA)
+    float4 color; // è‰²(RGBA)
 };
 
-// F
+// è‰²
 cbuffer ConstBufferDataTransition : register(b2)
 {
     float min;
     float max;
 };
 
-// F
+// è‰²
 cbuffer ConstBufferDataUV : register(b3)
 {
     float2 offset;

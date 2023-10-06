@@ -31,9 +31,9 @@ public:
 	void Update();
 	void Draw();
 
-public: //セッター
+public: //繧ｻ繝�繧ｿ繝ｼ
 
-	// カメラ
+	// 繧ｫ繝｡繝ｩ
 	void SetCamera(Camera* camera = nullptr);
 };
 

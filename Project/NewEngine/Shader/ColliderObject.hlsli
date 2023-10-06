@@ -1,13 +1,13 @@
-// 3D•ÏŠ·s—ñ
+// 3Då¤‰æ›è¡Œåˆ—
 cbuffer ConstantBufferDataTransform : register(b0)
 {
     matrix wvpMat;
 }
 
-// F
+// è‰²
 cbuffer ConstantBufferDataColor : register(b1)
 {
-    float4 color; // F
+    float4 color; // è‰²
 }
 
 struct Appdata
@@ -19,5 +19,5 @@ struct Appdata
 
 struct V2P
 {
-    float4 svpos : SV_POSITION; // ƒVƒXƒeƒ€—p’¸“_À•W
+    float4 svpos : SV_POSITION; // ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
 };

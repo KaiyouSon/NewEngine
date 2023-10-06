@@ -1,14 +1,14 @@
 
-// 3D•ÏŠ·s—ñ
+// 3Då¤‰æ›è¡Œåˆ—
 cbuffer ConstBufferDataTransform : register(b0)
 {
-    matrix mat; // 3D•ÏŠ·s—ñ
+    matrix mat; // 3Då¤‰æ›è¡Œåˆ—
 }
 
-// F
+// è‰²
 cbuffer ConstBufferDataMaterial : register(b1)
 {
-    float4 color; // F(RGBA)
+    float4 color; // è‰²(RGBA)
 };
 
 cbuffer ConstantBufferDataCircleGauge : register(b2)
@@ -17,10 +17,10 @@ cbuffer ConstantBufferDataCircleGauge : register(b2)
     float endRadian;
 }
 
-// ’¸“_ƒVƒF[ƒ_[‚Ìo—Í\‘¢‘Ì
-// i’¸“_ƒVƒF[ƒ_[‚©‚çƒsƒNƒZƒ‹ƒVƒF[ƒ_[ƒw‚Ì‚â‚èæ‚è‚Ég—p‚·‚éj
+// é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®å‡ºåŠ›æ§‹é€ ä½“
+// ï¼ˆé ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‹ã‚‰ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ˜ã®ã‚„ã‚Šå–ã‚Šã«ä½¿ç”¨ã™ã‚‹ï¼‰
 struct VSOutput
 {
-    float4 svpos : SV_POSITION; // ƒVƒXƒeƒ€—p’¸“_À•W
-    float2 uv : TEXCOORD; // uv’l
+    float4 svpos : SV_POSITION; // ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+    float2 uv : TEXCOORD; // uvå€¤
 };

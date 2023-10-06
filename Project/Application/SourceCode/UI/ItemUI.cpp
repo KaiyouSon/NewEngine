@@ -24,7 +24,7 @@ void ItemUI::SettingsByType()
 {
 	switch (mItemType)
 	{
-		// HPボトル
+		// HP繝懊ヨ繝ｫ
 	case ItemType::HPBottle:
 	{
 		mItemUI->SetTexture(TextureManager::GetTexture("BottleUI"));
@@ -33,7 +33,7 @@ void ItemUI::SettingsByType()
 	}
 	break;
 
-	// MPボトル
+	// MP繝懊ヨ繝ｫ
 	case ItemType::MPBottle:
 	{
 		mItemUI->SetTexture(TextureManager::GetTexture("BottleUI"));
@@ -42,7 +42,7 @@ void ItemUI::SettingsByType()
 	}
 	break;
 
-	// MPボトル
+	// MP繝懊ヨ繝ｫ
 	case ItemType::EmptyBottle:
 	{
 		mItemUI->SetTexture(TextureManager::GetTexture("BottleUI"));
@@ -51,7 +51,7 @@ void ItemUI::SettingsByType()
 	}
 	break;
 
-	// MPボトル
+	// MP繝懊ヨ繝ｫ
 	case ItemType::Club:
 	{
 		mItemUI->SetTexture(TextureManager::GetTexture("ClubUI"));

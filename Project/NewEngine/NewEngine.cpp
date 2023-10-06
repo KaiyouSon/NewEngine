@@ -16,7 +16,7 @@ NewEngine::NewEngine(const NewEngineSetting& setting) :
 NewEngine::~NewEngine()
 {
 	Gui::Destroy();
-	RenderWindow::GetInstance()->TerminateGameWindow();		// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚ð“o˜^‰ðœ
+	RenderWindow::GetInstance()->TerminateGameWindow();		// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹§ï½¯ç¹ï½©ç¹§ï½¹ç¹§å ¤åŒ³éª­ï½²éš—ï½£é«¯ï½¤
 	SoundManager::Destroy();
 
 	RenderBase::Destroy();
@@ -24,13 +24,13 @@ NewEngine::~NewEngine()
 
 void NewEngine::Setting()
 {
-	// ƒEƒBƒ“ƒhƒEƒ^ƒCƒgƒ‹
+	// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹§ï½¿ç¹§ï½¤ç¹åŒ»Î
 	mRenderWindow->SetWindowTitle(mSetting.windowTitle);
 
-	// ƒEƒBƒ“ƒhƒEƒTƒCƒY
+	// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹§ï½µç¹§ï½¤ç¹§ï½º
 	mRenderWindow->SetWindowSize(mSetting.windowSize);
 
-	// ”wŒiF
+	// é–­æ¢§å‹¹æ¿¶ï½²
 	mRenderBase->sClearColor[0] = mSetting.bgColor.To01().r;
 	mRenderBase->sClearColor[1] = mSetting.bgColor.To01().g;
 	mRenderBase->sClearColor[2] = mSetting.bgColor.To01().b;
@@ -40,49 +40,49 @@ void NewEngine::Init()
 {
 	Setting();
 
-	// ƒEƒBƒ“ƒhƒE¶¬
+	// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆé€•æ»“ãƒ»
 	mRenderWindow->CreateGameWindow();
 
-	// RenderBase‚Ì‰Šú‰»
+	// RenderBaseç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 	mRenderBase->Init();
 
-	// ƒ‰ƒ“ƒh‚Ì‰Šú‰»
+	// ç¹ï½©ç¹ï½³ç¹å³¨ãƒ»è›»æ™„æ‚„è›¹ãƒ»
 	Random::Init();
 
-	//GUI‚Ì‰Šú‰»
+	//GUIç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 	Gui::Init();
 
-	// ƒTƒEƒ“ƒhƒ}ƒl[ƒWƒƒ‚Ì‰Šú‰»
+	// ç¹§ï½µç¹§ï½¦ç¹ï½³ç¹å³¨ãƒ»ç¹é˜ªãƒ»ç¹§ï½¸ç¹ï½£ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 	SoundManager::Init();
 
-	// ƒtƒŒ[ƒ€ƒŒ[ƒg‚Ì‰Šú‰»
+	// ç¹è¼”Îžç¹ï½¼ç¹ï£°ç¹ï½¬ç¹ï½¼ç¹åŒ»ãƒ»è›»æ™„æ‚„è›¹ãƒ»
 	FrameRate::GetInstance()->Init(mSetting.frameRate);
 
-	// ƒCƒ“ƒvƒbƒgƒ}ƒl[ƒWƒƒ‚Ì‰Šú‰»
+	// ç¹§ï½¤ç¹ï½³ç¹åŠ±ãƒ£ç¹åŒ»ãƒ»ç¹é˜ªãƒ»ç¹§ï½¸ç¹ï½£ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 	InputManager::GetInstance()->Init();
 
-	// ƒfƒoƒbƒOƒ}ƒl[ƒWƒƒ[‚Ì‰Šú‰»
+	// ç¹ãƒ»ãƒ°ç¹ãƒ»ã’ç¹æ§­ãƒ­ç¹ï½¼ç¹§ï½¸ç¹ï½£ç¹ï½¼ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 	DebugManager::GetInstance()->Init();
 
-	// ƒ[ƒhƒ}ƒl[ƒWƒƒ‚Ìƒ[ƒh
+	// ç¹ï½­ç¹ï½¼ç¹å³¨ãƒ»ç¹é˜ªãƒ»ç¹§ï½¸ç¹ï½£ç¸ºï½®ç¹ï½­ç¹ï½¼ç¹ãƒ»
 	LoadManager::GetInstance()->Load();
 
-	//@ƒ[ƒhI—¹ƒ`ƒFƒbƒN
+	//ç¸²Â€ç¹ï½­ç¹ï½¼ç¹è‡¥ï½µã‚†ï½ºãƒ»ãƒ¡ç¹§ï½§ç¹ãƒ»ã‘
 	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
 	if (isLoaded == true)
 	{
-		// ƒRƒ‰ƒCƒ_[ƒhƒƒ[‚Ìƒ[ƒh‚Æ‰Šú‰»
+		// ç¹§ï½³ç¹ï½©ç¹§ï½¤ç¹Â€ç¹ï½¼ç¹å³¨ÎŸç¹ï½¯ç¹ï½¼ç¸ºï½®ç¹ï½­ç¹ï½¼ç¹å³¨â†’è›»æ™„æ‚„è›¹ãƒ»
 		ColliderDrawer::GetInstance()->Load();
 		ColliderDrawer::GetInstance()->Init();
 
-		// ƒV[ƒ“ƒ}ƒl[ƒWƒƒ[‚Ì‰Šú‰»
+		// ç¹§ï½·ç¹ï½¼ç¹ï½³ç¹æ§­ãƒ­ç¹ï½¼ç¹§ï½¸ç¹ï½£ç¹ï½¼ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 		SceneManager::GetInstance()->Init();
 	}
 }
 
 void NewEngine::Update()
 {
-	//@ƒ[ƒhI—¹ƒ`ƒFƒbƒN
+	//ç¸²Â€ç¹ï½­ç¹ï½¼ç¹è‡¥ï½µã‚†ï½ºãƒ»ãƒ¡ç¹§ï½§ç¹ãƒ»ã‘
 	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
 	if (isLoaded == true)
 	{
@@ -100,7 +100,7 @@ void NewEngine::Update()
 
 void NewEngine::Draw()
 {
-	//@ƒ[ƒhI—¹ƒ`ƒFƒbƒN
+	//ç¸²Â€ç¹ï½­ç¹ï½¼ç¹è‡¥ï½µã‚†ï½ºãƒ»ãƒ¡ç¹§ï½§ç¹ãƒ»ã‘
 	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
 	if (isLoaded == true)
 	{
@@ -113,11 +113,11 @@ void NewEngine::Draw()
 
 void NewEngine::PrevDraw()
 {
-	//@ƒ[ƒhI—¹ƒ`ƒFƒbƒN
+	//ç¸²Â€ç¹ï½­ç¹ï½¼ç¹è‡¥ï½µã‚†ï½ºãƒ»ãƒ¡ç¹§ï½§ç¹ãƒ»ã‘
 	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
 	if (isLoaded == true)
 	{
-		// SRVƒq[ƒv‚ÌÝ’èƒRƒ}ƒ“ƒh
+		// SRVç¹åµãƒ»ç¹åŠ±ãƒ»éšªï½­èž³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 		auto srvDescHeap = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
 		RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &srvDescHeap);
 		SceneManager::GetInstance()->RenderTextureSetting();
@@ -129,7 +129,7 @@ void NewEngine::PrevDraw()
 
 void NewEngine::PostDraw()
 {
-	//@ƒ[ƒhI—¹ƒ`ƒFƒbƒN
+	//ç¸²Â€ç¹ï½­ç¹ï½¼ç¹è‡¥ï½µã‚†ï½ºãƒ»ãƒ¡ç¹§ï½§ç¹ãƒ»ã‘
 	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
 	if (isLoaded == true)
 	{
@@ -145,7 +145,7 @@ void NewEngine::FrameControl()
 
 bool NewEngine::ProcessMessage()
 {
-	//ƒEƒCƒ“ƒhƒEƒY‚ÌƒƒbƒZ[ƒW‚ðˆ—‚·‚é
+	//ç¹§ï½¦ç¹§ï½¤ç¹ï½³ç¹å³¨ãˆç¹§ï½ºç¸ºï½®ç¹ï½¡ç¹ãƒ»ãç¹ï½¼ç¹§ï½¸ç¹§è²žãƒ»é€…ãƒ»â˜†ç¹§ãƒ»
 	if (RenderWindow::GetInstance()->ProcessMessage() == WM_QUIT)
 	{
 		return true;
@@ -161,3 +161,4 @@ Vec2 GetWindowHalfSize()
 {
 	return RenderWindow::GetInstance()->GetWindowSize() / 2;
 }
+

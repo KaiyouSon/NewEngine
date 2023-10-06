@@ -13,7 +13,7 @@ RWStructuredBuffer<ParticleData> inputData : register(u0);
 [numthreads(1, 1, 1)]
 void main(uint3 DTid : SV_DispatchThreadID)
 {
-    // o—Íƒf[ƒ^‚ğİ’è
+    // å‡ºåŠ›ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
     for (uint i = 0; i < MaxNum; i++)
     {
         ParticleData result = inputData[i];
@@ -28,7 +28,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
         result.curShininess = 2.f;
         result.curColor = float4(1, 1, 1, 1);
         
-        // o—Íƒf[ƒ^‚ğ‘‚«‚Ş
+        // å‡ºåŠ›ãƒ‡ãƒ¼ã‚¿ã‚’æ›¸ãè¾¼ã‚€
         inputData[i] = result;
     }
 }

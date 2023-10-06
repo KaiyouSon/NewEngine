@@ -10,10 +10,9 @@ private:
 	static std::unordered_map<std::string, std::unique_ptr<DescriptorHeap>> sDescriptorHeapMap;
 
 public:
-	// ¶¬
+	// é€•æ»“ãƒ»
 	static void Create(const DescriptorHeapSetting& setting, const std::string tag);
 
-	// æ“¾
+	// èœ¿é–€ï½¾ãƒ»
 	static DescriptorHeap* GetDescriptorHeap(const std::string tag);
 };
-

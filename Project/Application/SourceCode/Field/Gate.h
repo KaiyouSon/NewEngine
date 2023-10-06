@@ -12,8 +12,8 @@ private:
 	SphereCollider mNegotiationCollider;
 	Vec3 mCenterPos;
 	Vec3 mNegotitationPos;
-	bool mIsOpen;		// ŠJ‚¢‚½ƒtƒ‰ƒO
-	bool mIsOpening;	// ŠJ‚¢‚Ä‚éÅ’†‚Ìƒtƒ‰ƒO
+	bool mIsOpen;		// é«¢ä¹ï¼ç¸ºæº˜ãƒµç¹ï½©ç¹§ï½°
+	bool mIsOpening;	// é«¢ä¹ï¼ç¸ºï½¦ç¹§åŒºæ€™è³ï½­ç¸ºï½®ç¹è¼”Î›ç¹§ï½°
 	Easing mOpenEase;
 	Timer mStayTimer;
 
@@ -44,3 +44,4 @@ public:
 	Vec3 GetNegotitationPos();
 	bool GetisOpen();
 };
+

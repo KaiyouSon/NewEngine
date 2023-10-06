@@ -1,5 +1,5 @@
 
-// 3D•ÏŠ·s—ñ
+// 3Då¤‰æ›è¡Œåˆ—
 cbuffer ConstantBufferDataTransform : register(b0)
 {
     matrix viewMat;
@@ -8,19 +8,19 @@ cbuffer ConstantBufferDataTransform : register(b0)
     float3 cameraPos;
 }
 
-// ƒ}ƒeƒŠƒAƒ‹
+// ãƒãƒ†ãƒªã‚¢ãƒ«
 cbuffer ConstantBufferDataMaterial : register(b1)
 {
-    float3 ambient : packoffset(c0); // ƒAƒ“ƒrƒGƒ“ƒgŒW”
-    float3 diffuse : packoffset(c1); // ƒfƒBƒtƒ…[ƒYŒW”
-    float3 specular : packoffset(c2); // ƒXƒyƒLƒ…ƒ‰[ŒW”
-    float alpha : packoffset(c2.w); // ƒAƒ‹ƒtƒ@
+    float3 ambient : packoffset(c0); // ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆä¿‚æ•°
+    float3 diffuse : packoffset(c1); // ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºä¿‚æ•°
+    float3 specular : packoffset(c2); // ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼ä¿‚æ•°
+    float alpha : packoffset(c2.w); // ã‚¢ãƒ«ãƒ•ã‚¡
 }
 
-// F
+// è‰²
 cbuffer ConstantBufferDataColor : register(b2)
 {
-    float4 color; // F
+    float4 color; // è‰²
 }
 
 static const int maxBones = 32;
@@ -29,18 +29,18 @@ cbuffer ConstantBufferDataSkinning : register(b3)
     matrix skinningMat[maxBones];
 }
 
-// --- ƒtƒHƒO ---------------------- //
+// --- ãƒ•ã‚©ã‚° ---------------------- //
 cbuffer ConstantBufferDataUVParameter : register(b4)
 {
     float2 offset;
     float2 tiling;
 };
 
-// •½sŒõŒ¹
+// å¹³è¡Œå…‰æº
 cbuffer ConstantBufferDirectionalLight : register(b5)
 {
-    float4 dirLightColor; // F
-    float3 dirLightVec; // •ûŒü
+    float4 dirLightColor; // è‰²
+    float3 dirLightVec; // æ–¹å‘
     uint isActiveDirLight;
 }
 
@@ -53,9 +53,9 @@ struct Appdata
 
 struct V2P
 {
-    float4 svpos : SV_POSITION; // ƒVƒXƒeƒ€—p’¸“_À•W
-    float4 worldPos : POSITION; // ƒ[ƒ‹ƒhÀ•W
-    float2 uv : TEXCOORD; // uv’l
+    float4 svpos : SV_POSITION; // ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+    float4 worldPos : POSITION; // ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™
+    float2 uv : TEXCOORD; // uvå€¤
 };
 
 struct PSOutput

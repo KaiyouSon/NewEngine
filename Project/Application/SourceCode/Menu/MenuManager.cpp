@@ -56,3 +56,4 @@ bool MenuManager::GetisActive()
 {
 	return mIsActive;
 }
+

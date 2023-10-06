@@ -47,7 +47,7 @@ Vec3 BezierCurve::InterPolation(const BezierType type)
 {
 	if (RecursiveLerp(mPoints, type).size() < 2) return { 0,0,0 };
 
-	// “ñ‰ñ
+	// èŽ æ‚Ÿå±“
 	switch (type)
 	{
 	case BezierType::Lerp:

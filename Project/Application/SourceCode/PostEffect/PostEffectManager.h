@@ -35,4 +35,3 @@ public:
 	void SetField(Field* field);
 
 };
-

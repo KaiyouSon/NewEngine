@@ -63,7 +63,7 @@ void DebugManager::DrawDebugGui()
 	Gui::DrawSlider1("Fov Angle", Camera::current.fov);
 	Gui::DrawLine();
 
-	// ƒXƒgƒbƒv‚·‚é
+	// ç¹§ï½¹ç¹åŒ»ãƒ£ç¹åŠ±â˜†ç¹§ãƒ»
 	Gui::DrawCheckBox("Stop", &mIsStop);
 	Gui::DrawTab();
 	if (Gui::DrawButton("Next Frame", Vec2(96, 24)))
@@ -72,7 +72,7 @@ void DebugManager::DrawDebugGui()
 	}
 	Gui::DrawLine();
 
-	// “–‚½‚è”»’è‚Ì•\Ž¦
+	// è –è–™â—†ç¹§é›æ„›èž³å£¹ãƒ»é™¦ï½¨é‰ï½º
 	bool isShowCollider = ColliderDrawer::GetInstance()->GetisShow();
 	Gui::DrawCheckBox("Show Collider", &isShowCollider);
 	ColliderDrawer::GetInstance()->SetisShow(isShowCollider);
@@ -99,5 +99,4 @@ void DebugManager::SetisNextFrame(const bool isNextFrame)
 {
 	mIsNextFrame = isNextFrame;
 }
-
 

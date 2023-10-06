@@ -17,7 +17,7 @@ void DescriptorHeap::Create(const DescriptorHeapSetting setting)
 	{
 	case DescriptorHeapSetting::RTV:
 	{
-		// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìİ’è
+		// ç¹ãƒ»ã›ç¹§ï½¯ç¹ï½ªç¹åŠ±ã¡ç¹åµãƒ»ç¹åŠ±ãƒ»éšªï½­è³ãƒ»
 		heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 		heapDesc.NumDescriptors = mSetting.maxSize;
 	}
@@ -25,7 +25,7 @@ void DescriptorHeap::Create(const DescriptorHeapSetting setting)
 
 	case DescriptorHeapSetting::DSV:
 	{
-		// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìİ’è
+		// ç¹ãƒ»ã›ç¹§ï½¯ç¹ï½ªç¹åŠ±ã¡ç¹åµãƒ»ç¹åŠ±ãƒ»éšªï½­è³ãƒ»
 		heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
 		heapDesc.NumDescriptors = mSetting.maxSize;
 	}
@@ -33,7 +33,7 @@ void DescriptorHeap::Create(const DescriptorHeapSetting setting)
 
 	case DescriptorHeapSetting::CBV_SRV_UAV:
 	{
-		// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìİ’è
+		// ç¹ãƒ»ã›ç¹§ï½¯ç¹ï½ªç¹åŠ±ã¡ç¹åµãƒ»ç¹åŠ±ãƒ»éšªï½­è³ãƒ»
 		heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 		heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 		heapDesc.NumDescriptors = mSetting.maxSize;
@@ -41,13 +41,13 @@ void DescriptorHeap::Create(const DescriptorHeapSetting setting)
 	break;
 	}
 
-	// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ì¶¬
+	// ç¹ãƒ»ã›ç¹§ï½¯ç¹ï½ªç¹åŠ±ã¡ç¹åµãƒ»ç¹åŠ±ãƒ»é€•æ»“ãƒ»
 	mResult = RenderBase::GetInstance()->GetDevice()->
 		CreateDescriptorHeap(&heapDesc, IID_PPV_ARGS(&mDescriptorHeap));
 	assert(SUCCEEDED(mResult));
 }
 
-// SRVì¬
+// SRVè´æ‡ˆãƒ»
 void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t arraySize, const uint32_t byteSize)
 {
 	if (mSetting.heapType != DescriptorHeapSetting::CBV_SRV_UAV)
@@ -55,23 +55,23 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 		return;
 	}
 
-	// ƒCƒ“ƒfƒbƒNƒX‚ğæ“¾
+	// ç¹§ï½¤ç¹ï½³ç¹ãƒ»ãƒ£ç¹§ï½¯ç¹§ï½¹ç¹§è²å™è •ãƒ»
 	uint32_t incrementIndex = mSetting.startIndex + GetIncrementIndex();
 
-	// ƒTƒCƒY‚ğæ“¾
+	// ç¹§ï½µç¹§ï½¤ç¹§ï½ºç¹§è²å™è •ãƒ»
 	uint32_t incrementSize = GetIncrementSize();
 
-	// ƒq[ƒv‚Ìæ“ªƒnƒ“ƒhƒ‹‚ğæ“¾
+	// ç¹åµãƒ»ç¹åŠ±ãƒ»èœˆç£¯ï£°ï½­ç¹ä¸ŠÎ¦ç¹å³¨Îç¹§è²å™è •ãƒ»
 	bufferResource->srvHandle.cpu = mDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
 	bufferResource->srvHandle.gpu = mDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
 
-	// index•ª‚¸‚ç‚·
+	// indexè›»ãƒ»â˜…ç¹§å³¨â˜†
 	bufferResource->srvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->srvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->index = incrementIndex;
 
-	// SRV‚Ìİ’è
-	D3D12_SHADER_RESOURCE_VIEW_DESC desc{};	// srvİ’è\‘¢‘Ì
+	// SRVç¸ºï½®éšªï½­è³ãƒ»
+	D3D12_SHADER_RESOURCE_VIEW_DESC desc{};	// srvéšªï½­è³å£½ï½§çŸ©Â€ï£°è´ãƒ»
 	if (bufferResource->buffer->GetDesc().Format == DXGI_FORMAT_D32_FLOAT)
 	{
 		desc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
@@ -82,9 +82,9 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 	{
 		desc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
 		desc.Format = bufferResource->buffer->GetDesc().Format;
-		desc.Buffer.FirstElement = 0;				// Å‰‚Ì—v‘f‚ÌƒCƒ“ƒfƒbƒNƒX
-		desc.Buffer.NumElements = arraySize;		// ƒoƒbƒtƒ@“à‚Ì—v‘f”
-		desc.Buffer.StructureByteStride = byteSize;	// —v‘f1‚Â‚ÌƒoƒCƒg”
+		desc.Buffer.FirstElement = 0;				// è­›Â€è›»æ˜´ãƒ»éš•âˆ«ï½´ï£°ç¸ºï½®ç¹§ï½¤ç¹ï½³ç¹ãƒ»ãƒ£ç¹§ï½¯ç¹§ï½¹
+		desc.Buffer.NumElements = arraySize;		// ç¹èˆŒãƒ£ç¹è¼”ãƒèœ€ãƒ»ãƒ»éš•âˆ«ï½´ï£°è¬¨ï½°
+		desc.Buffer.StructureByteStride = byteSize;	// éš•âˆ«ï½´ï£°1ç¸ºï½¤ç¸ºï½®ç¹èˆŒã†ç¹åŸŸç„š
 	}
 	else
 	{
@@ -94,7 +94,7 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 	}
 	desc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 
-	// ƒnƒ“ƒhƒ‹‚Ìw‚·ˆÊ’u‚ÉSRV‚ğì¬
+	// ç¹ä¸ŠÎ¦ç¹å³¨Îç¸ºï½®è¬–ãƒ»â˜†è´å’²ï½½ï½®ç¸ºï½«SRVç¹§å‰ƒï½½æ‡ˆãƒ»
 	RenderBase::GetInstance()->GetDevice()->
 		CreateShaderResourceView(
 			bufferResource->buffer.Get(),
@@ -102,7 +102,7 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 			bufferResource->srvHandle.cpu);
 }
 
-// RTVì¬
+// RTVè´æ‡ˆãƒ»
 void DescriptorHeap::CreateRTV(BufferResource* bufferResource)
 {
 	if (mSetting.heapType != DescriptorHeapSetting::RTV)
@@ -110,28 +110,28 @@ void DescriptorHeap::CreateRTV(BufferResource* bufferResource)
 		return;
 	}
 
-	// ƒCƒ“ƒfƒbƒNƒX‚ğæ“¾
+	// ç¹§ï½¤ç¹ï½³ç¹ãƒ»ãƒ£ç¹§ï½¯ç¹§ï½¹ç¹§è²å™è •ãƒ»
 	uint32_t incrementIndex = mSetting.startIndex + GetIncrementIndex();
 
-	// ƒTƒCƒY‚ğæ“¾
+	// ç¹§ï½µç¹§ï½¤ç¹§ï½ºç¹§è²å™è •ãƒ»
 	uint32_t incrementSize = GetIncrementSize();
 
-	// ƒq[ƒv‚Ìæ“ªƒnƒ“ƒhƒ‹‚ğæ“¾
+	// ç¹åµãƒ»ç¹åŠ±ãƒ»èœˆç£¯ï£°ï½­ç¹ä¸ŠÎ¦ç¹å³¨Îç¹§è²å™è •ãƒ»
 	bufferResource->rtvHandle.cpu = mDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
 	bufferResource->rtvHandle.gpu = mDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
 
-	// index•ª‚¸‚ç‚·
+	// indexè›»ãƒ»â˜…ç¹§å³¨â˜†
 	bufferResource->rtvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->rtvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->index = incrementIndex;
 
-	// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Ìİ’è
+	// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹§ï½¿ç¹ï½¼ç¹§ï½²ç¹ãƒ»ãƒ¨ç¹è–™Î—ç¹ï½¼ç¸ºï½®éšªï½­è³ãƒ»
 	D3D12_RENDER_TARGET_VIEW_DESC desc{};
-	// ƒVƒF[ƒ_[‚ÌŒvZŒ‹‰Ê‚ğSRGB‚É•ÏŠ·‚µ‚Ä‘‚«‚Ş
+	// ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼ç¸ºï½®éšªè‚²ï½®ç¤¼ï½µå…ˆæ£¡ç¹§æ‹…RGBç¸ºï½«èŸç”»é‹¤ç¸ºåŠ±â€»è­–ï½¸ç¸ºå´ï½¾ï½¼ç¹§Â€
 	desc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 
-	// ƒnƒ“ƒhƒ‹‚Ìw‚·ˆÊ’u‚ÉRTV‚ğì¬
+	// ç¹ä¸ŠÎ¦ç¹å³¨Îç¸ºï½®è¬–ãƒ»â˜†è´å’²ï½½ï½®ç¸ºï½«RTVç¹§å‰ƒï½½æ‡ˆãƒ»
 	RenderBase::GetInstance()->GetDevice()->
 		CreateRenderTargetView(
 			bufferResource->buffer.Get(),
@@ -139,7 +139,7 @@ void DescriptorHeap::CreateRTV(BufferResource* bufferResource)
 			bufferResource->rtvHandle.cpu);
 }
 
-// DSVì¬
+// DSVè´æ‡ˆãƒ»
 void DescriptorHeap::CreateDSV(BufferResource* bufferResource)
 {
 	if (mSetting.heapType != DescriptorHeapSetting::DSV)
@@ -147,27 +147,27 @@ void DescriptorHeap::CreateDSV(BufferResource* bufferResource)
 		return;
 	}
 
-	// ƒCƒ“ƒfƒbƒNƒX‚ğæ“¾
+	// ç¹§ï½¤ç¹ï½³ç¹ãƒ»ãƒ£ç¹§ï½¯ç¹§ï½¹ç¹§è²å™è •ãƒ»
 	uint32_t incrementIndex = mSetting.startIndex + GetIncrementIndex();
 
-	// ƒTƒCƒY‚ğæ“¾
+	// ç¹§ï½µç¹§ï½¤ç¹§ï½ºç¹§è²å™è •ãƒ»
 	uint32_t incrementSize = GetIncrementSize();
 
-	// ƒq[ƒv‚Ìæ“ªƒnƒ“ƒhƒ‹‚ğæ“¾
+	// ç¹åµãƒ»ç¹åŠ±ãƒ»èœˆç£¯ï£°ï½­ç¹ä¸ŠÎ¦ç¹å³¨Îç¹§è²å™è •ãƒ»
 	bufferResource->dsvHandle.cpu = mDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
 	bufferResource->dsvHandle.gpu = mDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
 
-	// index•ª‚¸‚ç‚·
+	// indexè›»ãƒ»â˜…ç¹§å³¨â˜†
 	bufferResource->dsvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->dsvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->index = incrementIndex;
 
-	// [“xƒrƒ…[ì¬
+	// è±ºï½±è ï½¦ç¹è–™Î—ç¹ï½¼è´æ‡ˆãƒ»
 	D3D12_DEPTH_STENCIL_VIEW_DESC desc = {};
-	desc.Format = DXGI_FORMAT_D32_FLOAT;	// [“x’lƒtƒH[ƒ}ƒbƒg
+	desc.Format = DXGI_FORMAT_D32_FLOAT;	// è±ºï½±è ï½¦è›Ÿï½¤ç¹è¼”ã‹ç¹ï½¼ç¹æ§­ãƒ£ç¹ãƒ»
 	desc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 
-	// ƒnƒ“ƒhƒ‹‚Ìw‚·ˆÊ’u‚ÉDSV‚ğì¬
+	// ç¹ä¸ŠÎ¦ç¹å³¨Îç¸ºï½®è¬–ãƒ»â˜†è´å’²ï½½ï½®ç¸ºï½«DSVç¹§å‰ƒï½½æ‡ˆãƒ»
 	RenderBase::GetInstance()->GetDevice()->
 		CreateDepthStencilView(
 			bufferResource->buffer.Get(),
@@ -175,7 +175,7 @@ void DescriptorHeap::CreateDSV(BufferResource* bufferResource)
 			bufferResource->dsvHandle.cpu);
 }
 
-// UAVì¬
+// UAVè´æ‡ˆãƒ»
 void DescriptorHeap::CreateUAV(BufferResource* bufferResource, const uint32_t arraySize, const uint32_t byteSize)
 {
 	if (mSetting.heapType != DescriptorHeapSetting::CBV_SRV_UAV)
@@ -183,30 +183,30 @@ void DescriptorHeap::CreateUAV(BufferResource* bufferResource, const uint32_t ar
 		return;
 	}
 
-	// ƒCƒ“ƒfƒbƒNƒX‚ğæ“¾
+	// ç¹§ï½¤ç¹ï½³ç¹ãƒ»ãƒ£ç¹§ï½¯ç¹§ï½¹ç¹§è²å™è •ãƒ»
 	uint32_t incrementIndex = mSetting.startIndex + GetIncrementIndex();
 
-	// ƒTƒCƒY‚ğæ“¾
+	// ç¹§ï½µç¹§ï½¤ç¹§ï½ºç¹§è²å™è •ãƒ»
 	uint32_t incrementSize = GetIncrementSize();
 
-	// ƒq[ƒv‚Ìæ“ªƒnƒ“ƒhƒ‹‚ğæ“¾
+	// ç¹åµãƒ»ç¹åŠ±ãƒ»èœˆç£¯ï£°ï½­ç¹ä¸ŠÎ¦ç¹å³¨Îç¹§è²å™è •ãƒ»
 	bufferResource->uavHandle.cpu = mDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
 	bufferResource->uavHandle.gpu = mDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
 
-	// index•ª‚¸‚ç‚·
+	// indexè›»ãƒ»â˜…ç¹§å³¨â˜†
 	bufferResource->uavHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->uavHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->index = incrementIndex;
 
-	// UAV‚Ìİ’è
+	// UAVç¸ºï½®éšªï½­è³ãƒ»
 	D3D12_UNORDERED_ACCESS_VIEW_DESC desc{};
 	desc.ViewDimension = D3D12_UAV_DIMENSION_BUFFER;
 	desc.Format = DXGI_FORMAT_UNKNOWN;
-	desc.Buffer.FirstElement = 0;				// Å‰‚Ì—v‘f‚ÌƒCƒ“ƒfƒbƒNƒX
-	desc.Buffer.NumElements = arraySize;		// ƒoƒbƒtƒ@“à‚Ì—v‘f”
-	desc.Buffer.StructureByteStride = byteSize;	// —v‘f1‚Â‚ÌƒoƒCƒg”
+	desc.Buffer.FirstElement = 0;				// è­›Â€è›»æ˜´ãƒ»éš•âˆ«ï½´ï£°ç¸ºï½®ç¹§ï½¤ç¹ï½³ç¹ãƒ»ãƒ£ç¹§ï½¯ç¹§ï½¹
+	desc.Buffer.NumElements = arraySize;		// ç¹èˆŒãƒ£ç¹è¼”ãƒèœ€ãƒ»ãƒ»éš•âˆ«ï½´ï£°è¬¨ï½°
+	desc.Buffer.StructureByteStride = byteSize;	// éš•âˆ«ï½´ï£°1ç¸ºï½¤ç¸ºï½®ç¹èˆŒã†ç¹åŸŸç„š
 
-	// ƒnƒ“ƒhƒ‹‚Ìw‚·ˆÊ’u‚ÉUAV‚ğì¬
+	// ç¹ä¸ŠÎ¦ç¹å³¨Îç¸ºï½®è¬–ãƒ»â˜†è´å’²ï½½ï½®ç¸ºï½«UAVç¹§å‰ƒï½½æ‡ˆãƒ»
 	RenderBase::GetInstance()->GetDevice()->
 		CreateUnorderedAccessView(
 			bufferResource->buffer.Get(),
@@ -215,7 +215,7 @@ void DescriptorHeap::CreateUAV(BufferResource* bufferResource, const uint32_t ar
 			bufferResource->uavHandle.cpu);
 }
 
-// ƒrƒ…[‚ğã‘‚«‚Å‚«‚é‚æ‚¤‚É‚·‚é
+// ç¹è–™Î—ç¹ï½¼ç¹§å‰ƒï½¸é ‘å¶Œç¸ºé˜ªã€’ç¸ºé˜ªï½‹ç¹§åŒ»â‰§ç¸ºï½«ç¸ºå¶ï½‹
 void DescriptorHeap::DestroyView(BufferResource* bufferResource)
 {
 	mCheckIndex[bufferResource->index] = false;
@@ -223,13 +223,13 @@ void DescriptorHeap::DestroyView(BufferResource* bufferResource)
 
 uint32_t DescriptorHeap::GetIncrementIndex()
 {
-	// ImGUI‚Å0”Ôg‚Á‚Ä‚ ‚é‚©‚ç1‚©‚çg‚¤
+	// ImGUIç¸ºï½§0é€¡ï½ªè´ï½¿ç¸ºï½£ç¸ºï½¦ç¸ºã‚…ï½‹ç¸ºä¹ï½‰1ç¸ºä¹ï½‰è´ï½¿ç¸ºãƒ»
 	uint32_t index = 0;
 
-	// mCheckSRVIndexg‚Á‚Ä‚È‚¢”Ô†‚È‚¢‚©‚ğƒ`ƒFƒbƒN
+	// mCheckSRVIndexè´ï½¿ç¸ºï½£ç¸ºï½¦ç¸ºï½ªç¸ºãƒ»åˆ†èœ¿ï½·ç¸ºï½ªç¸ºãƒ»Â°ç¹§åµãƒ¡ç¹§ï½§ç¹ãƒ»ã‘
 	for (uint32_t i = 0; i < mCheckIndex.size(); i++)
 	{
-		// i”Ô‚ª false ‚¾‚Á‚½‚ç
+		// ié€¡ï½ªç¸ºãƒ»false ç¸ºï£°ç¸ºï½£ç¸ºæº˜ï½‰
 		if (mCheckIndex[i] == false)
 		{
 			index = i + 1;
@@ -240,9 +240,9 @@ uint32_t DescriptorHeap::GetIncrementIndex()
 
 	if (index == 0)
 	{
-		// ÅŒã”ö‚ÉV‚µ‚¢‚â‚Â‚ğ’Ç‰Á
+		// è­›Â€è •æ‚Ÿï½°ï½¾ç¸ºï½«è­ï½°ç¸ºåŠ±ï¼ç¹§ãƒ»â–½ç¹§å®šï½¿ï½½èœ‰ï£°
 		mCheckIndex.push_back(true);
-		return (uint32_t)mCheckIndex.size();	// Œ³‚©‚çindex‚æ‚è1‘½‚¢‚©‚ç+1‚µ‚È‚­‚Ä‚¢‚¢
+		return (uint32_t)mCheckIndex.size();	// èœˆãƒ»Â°ç¹§æ°¸ndexç¹§åŒ»ï½Š1èŸå£¹ï¼ç¸ºä¹ï½‰+1ç¸ºåŠ±â†‘ç¸ºä¸Šâ€»ç¸ºãƒ»ï¼
 	}
 
 	return index;
@@ -282,4 +282,3 @@ ID3D12DescriptorHeap* DescriptorHeap::GetDescriptorHeap()
 {
 	return mDescriptorHeap.Get();
 }
-

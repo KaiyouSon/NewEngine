@@ -16,22 +16,22 @@ void FrameRate::Init(const float frameRate)
 
 void FrameRate::Update()
 {
-	// ‚P/ mFrameRate•b‚Ò‚Á‚½‚è‚ÌŠÔ
+	// ãƒ»ãƒ» mFrameRateé˜åµãƒ»ç¸ºï½£ç¸ºæº˜ï½Šç¸ºï½®è­ã‚‹ä¿£
 	const microseconds minTime(uint64_t(1000000.0f / mFrameRate));
 
-	// ‚P/ mFrameRate•b‚æ‚è‚í‚¸‚©‚É’Z‚¢ŠÔ
+	// ãƒ»ãƒ» mFrameRateé˜åµï½ˆç¹§ç¿«ï½ç¸ºå£¹Â°ç¸ºï½«éï½­ç¸ºãƒ»å‡¾é«¢ãƒ»
 	const microseconds minCheckTime(uint64_t(1000000.0f / (mFrameRate + 5)));
 
-	// Œ»İ‚ÌŠÔ‚ğæ“¾
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®è­ã‚‹ä¿£ç¹§è²å™è •ãƒ»
 	steady_clock::time_point nowTime = steady_clock::now();
 
-	// ‘O‰ñ‚Ì‹L˜^‚©‚çŒo‰ßŠÔ‚ğæ“¾‚·‚é
+	// èœ‘æ¦Šå±“ç¸ºï½®éšªå€¬é¹¸ç¸ºä¹ï½‰é‚¨ç¢â„ƒè­ã‚‹ä¿£ç¹§è²å™è •åŠ±â˜†ç¹§ãƒ»
 	microseconds elapsedTime = duration_cast<microseconds>(nowTime - mReference);
 
-	// ‚P/mFrameRate•bŒo‚Á‚Ä‚È‚¢ê‡
+	// ãƒ»ãƒ»mFrameRateé˜å ¤ï½µå¾Œâ–²ç¸ºï½¦ç¸ºï½ªç¸ºãƒ»ï£°ï½´èœ·ãƒ»
 	if (elapsedTime < minCheckTime)
 	{
-		// ‚P/mFrameRate•bŒo‰ß‚·‚é‚Ü‚Å”÷¬‚ÈƒXƒŠ[ƒv‚ğŒJ‚è•Ô‚·
+		// ãƒ»ãƒ»mFrameRateé˜å ¤ï½µç¢â„ƒç¸ºå¶ï½‹ç¸ºï½¾ç¸ºï½§è •ï½®èŸ†ä¸Šâ†‘ç¹§ï½¹ç¹ï½ªç¹ï½¼ç¹åŠ±ï½’éƒ¢ï½°ç¹§é¡˜ï½¿æ–â˜†
 		while (steady_clock::now() - mReference < minTime)
 		{
 			sleep_for(microseconds(1));
@@ -39,10 +39,10 @@ void FrameRate::Update()
 		}
 	}
 
-	// Œ»İ‚ÌFPS
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®FPS
 	mCurrentFPS = 1.0f / static_cast<float>(elapsedTime.count() / 1000000.0f);
 
-	// Œ»İ‚ÌŠÔ‚ğ‹L˜^‚·‚é
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®è­ã‚‹ä¿£ç¹§å®šï½¨å€¬é¹¸ç¸ºå¶ï½‹
 	mReference = steady_clock::now();
 }
 
@@ -50,3 +50,4 @@ float FrameRate::GetCurrentFPS()
 {
 	return mCurrentFPS;
 }
+

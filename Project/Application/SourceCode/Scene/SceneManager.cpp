@@ -39,13 +39,13 @@ SceneManager::SceneManager()
 
 	Bloom::CreateGraphicsPipeline();
 
-	// ƒfƒoƒbƒO
+	// ç¹ãƒ»ãƒ°ç¹ãƒ»ã’è­ãƒ»
 	ProcessAtDebugBulid([]()
 		{
 			sCurrentScene = std::make_unique<GameScene>();
 		});
 
-	// ƒŠƒŠ[ƒX
+	// ç¹ï½ªç¹ï½ªç¹ï½¼ç¹§ï½¹è­ãƒ»
 	ProcessAtReleaseBulid([]()
 		{
 			sCurrentScene = std::make_unique<LogoScene>();
@@ -88,7 +88,7 @@ void SceneManager::RenderTextureSetting()
 
 void SceneManager::DrawDebugGui()
 {
-	// ƒfƒoƒbƒO‚Ì‚İÀs
+	// ç¹ãƒ»ãƒ°ç¹ãƒ»ã’è­ã‚…ãƒ»ç¸ºï½¿è³æº¯ï½¡ãƒ»
 	ProcessAtDebugBulid([&]()
 		{
 			sCurrentScene->DrawDebugGui();
@@ -127,3 +127,4 @@ void SceneManager::SetChangeStepToCreateInstance()
 	GetInstance()->mIsReturn = false;
 	GetInstance()->mChangeStep = CreateInstance;
 }
+

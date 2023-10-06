@@ -1,33 +1,33 @@
 #include "ToonRender.hlsli"
 #include "ShaderIO.hlsli"
 
-Texture2D<float4> tex : register(t0); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ
-SamplerState smp : register(s0); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒTƒ“ƒvƒ‰[
+Texture2D<float4> tex : register(t0); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+SamplerState smp : register(s0); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©ãƒ¼
 
 float4 main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
 {
-	// ƒeƒNƒXƒ`ƒƒ[ƒ}ƒbƒsƒ“ƒO
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ãƒãƒƒãƒ”ãƒ³ã‚°
     float4 texColor = tex.Sample(smp, vsOutput.uv);
 
-	// Œõ‘ò“x
+	// å…‰æ²¢åº¦
     const float shininess = 4.0f;
 
-	// ’¸“_‚©‚ç‹“_‚Ö‚ÌƒxƒNƒgƒ‹
+	// é ‚ç‚¹ã‹ã‚‰è¦–ç‚¹ã¸ã®ãƒ™ã‚¯ãƒˆãƒ«
     float3 eyeDir = normalize(cameraPos - vsOutput.worldPos.xyz);
 
-    // ƒ}ƒeƒŠƒAƒ‹
+    // ãƒãƒ†ãƒªã‚¢ãƒ«
     Material material = { ambient, diffuse, specular };
     
-    // ƒVƒF[ƒ_[ƒJƒ‰[
+    // ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‚«ãƒ©ãƒ¼
     float4 shaderColor = float4(float3(1, 1, 1) * material.ambient, alpha);
 
-    // ‰e‚Ì’†ŠÔ’l
+    // å½±ã®ä¸­é–“å€¤
     const float middelValue = -0.35;
 
-	// •½sŒõŒ¹
+	// å¹³è¡Œå…‰æº
     for (int i = 0; i < directionalLightNum; i++)
     {
-        // ƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚Æ–@ü‚Ì“àÏ
+        // ãƒ©ã‚¤ãƒˆã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«ã¨æ³•ç·šã®å†…ç©
         float3 lightNormal = dot(directionalLights[i].vec, vsOutput.normal);
         lightNormal = smoothstep(middelValue, middelValue, lightNormal) ? 1.f : 0.1f;
         
@@ -36,19 +36,19 @@ float4 main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
         shaderColor.rgb += color;
     }
 
-    // ŒõŒ¹ŒvZ—pƒf[ƒ^
+    // å…‰æºè¨ˆç®—ç”¨ãƒ‡ãƒ¼ã‚¿
     LightCalculateData lightCalculateData;
     
-	// “_ŒõŒ¹
+	// ç‚¹å…‰æº
     for (int i = 0; i < pointLightNum; i++)
     {
-        // ’¸“_‚Ìƒ[ƒ‹ƒhÀ•W
+        // é ‚ç‚¹ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™
         lightCalculateData.vertexPos = vsOutput.worldPos.xyz;
-        // ’¸“_–@ü
+        // é ‚ç‚¹æ³•ç·š
         lightCalculateData.vertexNormal = vsOutput.normal;
-        // ’¸“_‚Ìƒ[ƒ‹ƒhÀ•W‚©‚çƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹
+        // é ‚ç‚¹ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã‹ã‚‰ãƒ©ã‚¤ãƒˆã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«
         lightCalculateData.lightVec = normalize(pointLights[i].pos - vsOutput.worldPos.xyz);
-        // ƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚Æ–@ü‚Ì“àÏ
+        // ãƒ©ã‚¤ãƒˆã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«ã¨æ³•ç·šã®å†…ç©
         float3 lightNormal = dot(lightCalculateData.lightVec, vsOutput.normal);
         lightCalculateData.lightNormal = smoothstep(middelValue, middelValue, lightNormal) ? 1.f : 0.1f;
         
@@ -57,16 +57,16 @@ float4 main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
         shaderColor.rgb += color;
     }
   
-	// ƒXƒ|ƒbƒgƒ‰ƒCƒg
+	// ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ
     for (int i = 0; i < spotLightNum; i++)
     {
-        // ’¸“_‚Ìƒ[ƒ‹ƒhÀ•W
+        // é ‚ç‚¹ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™
         lightCalculateData.vertexPos = vsOutput.worldPos.xyz;
-        // ’¸“_–@ü
+        // é ‚ç‚¹æ³•ç·š
         lightCalculateData.vertexNormal = vsOutput.normal;
-        // ’¸“_‚Ìƒ[ƒ‹ƒhÀ•W‚©‚çƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹
+        // é ‚ç‚¹ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã‹ã‚‰ãƒ©ã‚¤ãƒˆã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«
         lightCalculateData.lightVec = normalize(spotLights[i].pos - vsOutput.worldPos.xyz);
-        // ƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚Æ–@ü‚Ì“àÏ
+        // ãƒ©ã‚¤ãƒˆã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«ã¨æ³•ç·šã®å†…ç©
         float3 lightNormal = dot(lightCalculateData.lightVec, vsOutput.normal);
         lightCalculateData.lightNormal = smoothstep(middelValue, middelValue, lightNormal) ? 1.f : 0.1f;
         
@@ -75,7 +75,7 @@ float4 main(VSOutputSvposPosNormalUv vsOutput) : SV_TARGET
         shaderColor.rgb += color;
     }
 
-	// ŠÛ‰e
+	// ä¸¸å½±
     for (int i = 0; i < circleShadowNum; i++)
     {
         float3 color = CalculateCircleShadow(circleShadows[i], vsOutput.worldPos.xyz);

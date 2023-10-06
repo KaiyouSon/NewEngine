@@ -10,16 +10,16 @@ class UploadBuffer
 private:
 	HRESULT result;
 
-	Microsoft::WRL::ComPtr<ID3D12Resource> uploadBuffer;//	’è”ƒoƒbƒtƒ@
+	Microsoft::WRL::ComPtr<ID3D12Resource> uploadBuffer;//	å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	D3D12_PLACED_SUBRESOURCE_FOOTPRINT  footprint;
-	T* uploadBufferMap = nullptr;	// ƒ}ƒbƒsƒ“ƒO—p
+	T* uploadBufferMap = nullptr;	// ãƒãƒƒãƒ”ãƒ³ã‚°ç”¨
 
 public:
 	void Create(const CD3DX12_RESOURCE_DESC& textureResourcesDesc)
 	{
 		UINT64 uploadSize;
 
-		// ƒŒƒCƒAƒEƒg‚Ìæ“¾
+		// ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®å–å¾—
 		RenderBase::GetInstance()->GetDevice()->
 			GetCopyableFootprints(
 				&textureResourcesDesc,
@@ -31,15 +31,15 @@ public:
 				nullptr,
 				&uploadSize);
 
-		// ƒq[ƒv‚Ìİ’è
+		// ãƒ’ãƒ¼ãƒ—ã®è¨­å®š
 		CD3DX12_HEAP_PROPERTIES uploadHeapProp =
 			CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 
-		// ƒ\[ƒX‚Ìİ’è
+		// ã‚½ãƒ¼ã‚¹ã®è¨­å®š
 		CD3DX12_RESOURCE_DESC uploadResourceDesc =
 			CD3DX12_RESOURCE_DESC::Buffer(uploadSize);
 
-		// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 		result = RenderBase::GetInstance()->GetDevice()->
 			CreateCommittedResource(
 				&uploadHeapProp,
@@ -88,7 +88,7 @@ public:
 
 		RenderBase::GetInstance()->PreIncrimentFenceValue();
 
-		// ƒRƒ}ƒ“ƒh‚ÌÀsŠ®—¹‚ğ‘Ò‚Â
+		// ã‚³ãƒãƒ³ãƒ‰ã®å®Ÿè¡Œå®Œäº†ã‚’å¾…ã¤
 		RenderBase::GetInstance()->GetCommandQueue()->Signal(
 			RenderBase::GetInstance()->GetFence(),
 			RenderBase::GetInstance()->GetFenceValue());
@@ -103,10 +103,10 @@ public:
 		}
 
 		HRESULT result;
-		// ƒLƒ…[‚ğƒNƒŠƒA
+		// ã‚­ãƒ¥ãƒ¼ã‚’ã‚¯ãƒªã‚¢
 		result = RenderBase::GetInstance()->GetCommandAllocator()->Reset();
 		assert(SUCCEEDED(result));
-		// Ä‚ÑƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğ’™‚ß‚é€”õ
+		// å†ã³ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’è²¯ã‚ã‚‹æº–å‚™
 		result = RenderBase::GetInstance()->GetCommandList()->
 			Reset(RenderBase::GetInstance()->GetCommandAllocator(), nullptr);
 		assert(SUCCEEDED(result));

@@ -49,11 +49,11 @@ Glare::Glare() :
 void Glare::CreateGraphicsPipeline()
 {
 	//D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
-	//depthStencilDesc.DepthEnable = false; // [“xƒeƒXƒg‚ðs‚¤
+	//depthStencilDesc.DepthEnable = false; // è±ºï½±è Žï½¦ç¹ãƒ»ã›ç¹åŒ»ï½’é™¦å¾Œâ‰§
 
 	//std::string path = "Application/Shader/";
 
-	//// ƒ‰ƒCƒ“ƒuƒ‰[—p
+	//// ç¹ï½©ç¹§ï½¤ç¹ï½³ç¹æ‚¶Î›ç¹ï½¼é€•ï½¨
 	//ShaderObjectManager::Create("GLineBlur");
 	//ShaderObjectManager::GetShaderObject("GLineBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	//ShaderObjectManager::GetShaderObject("GLineBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
@@ -69,7 +69,7 @@ void Glare::CreateGraphicsPipeline()
 	//	1,
 	//	"GLineBlur");
 
-	//// ƒOƒŒƒA—p
+	//// ç¹§ï½°ç¹ï½¬ç¹§ï½¢é€•ï½¨
 	//ShaderObjectManager::Create("Glare");
 	//ShaderObjectManager::GetShaderObject("Glare")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	//ShaderObjectManager::GetShaderObject("Glare")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
@@ -85,7 +85,7 @@ void Glare::CreateGraphicsPipeline()
 	//	1,
 	//	"Glare");
 
-	//// ƒhƒbƒgƒtƒBƒ‹ƒ^[—p
+	//// ç¹å³¨ãƒ£ç¹åŒ»ãƒµç¹§ï½£ç¹ï½«ç¹§ï½¿ç¹ï½¼é€•ï½¨
 	//ShaderObjectManager::Create("DotFilter");
 	//ShaderObjectManager::GetShaderObject("DotFilter")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	//ShaderObjectManager::GetShaderObject("DotFilter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
@@ -160,3 +160,4 @@ void Glare::DrawDebugGui()
 	Gui::DrawSlider1("LineBlur1 Angle", lineBlurData1_.angle, 1.f);
 	Gui::DrawSlider1("LineBlur2 Angle", lineBlurData2_.angle, 1.f);
 }
+

@@ -29,4 +29,3 @@ public:
 	Vec3 GetLockonPos();
 
 };
-

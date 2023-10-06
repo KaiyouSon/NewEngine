@@ -1,4 +1,4 @@
-// 3D•ÏŠ·s—ñ
+// 3Då¤‰æ›è¡Œåˆ—
 cbuffer ConstantBufferDataTransform : register(b0)
 {
     matrix viewMat;
@@ -6,10 +6,10 @@ cbuffer ConstantBufferDataTransform : register(b0)
     matrix billboardMat;
 }
 
-// F
+// è‰²
 cbuffer ConstantBufferDataColor : register(b1)
 {
-    float4 color; // F
+    float4 color; // è‰²
 }
 
 struct Appdata
@@ -21,13 +21,13 @@ struct Appdata
 
 struct V2G
 {
-    float4 pos : SV_POSITION; // ƒVƒXƒeƒ€—p’¸“_À•W
-    float2 scale : TEXCOORD0; // ƒXƒP[ƒ‹
+    float4 pos : SV_POSITION; // ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+    float2 scale : TEXCOORD0; // ã‚¹ã‚±ãƒ¼ãƒ«
     float2 timer : TEXCOORD1;
 };
 
 struct G2P
 {
-    float4 pos : SV_POSITION; //ƒVƒXƒeƒ€—p’¸“_À•W
-    float2 uv : TEXCOORD; //uv’l
+    float4 pos : SV_POSITION; //ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+    float2 uv : TEXCOORD; //uvå€¤
 };

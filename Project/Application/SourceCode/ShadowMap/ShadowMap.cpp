@@ -5,14 +5,14 @@ void ShadowMap::CreateGraphicsPipeline()
 {
 	std::string path = "Application/Shader/";
 
-	// ShadowObj�p
+	// ShadowObj用
 	ShaderObjectManager::Create("ShadowMap");
 	ShaderObjectManager::GetShaderObject("ShadowMap")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("ShadowMap")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
 	ShaderObjectManager::GetShaderObject("ShadowMap")->CompileVertexShader(path + "ShadowMapVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("ShadowMap")->CompilePixelShader(path + "ShadowMapPS.hlsl", "main");
 
-	// 3D�I�u�W�F�N�g�p
+	// 3Dオブジェクト用
 	GraphicsPipelineSetting setting =
 		PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("ShadowMap");
@@ -20,14 +20,14 @@ void ShadowMap::CreateGraphicsPipeline()
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "ShadowMap");
 
-	// ShadowObj�p
+	// ShadowObj用
 	ShaderObjectManager::Create("ShadowMapBlur");
 	ShaderObjectManager::GetShaderObject("ShadowMapBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("ShadowMapBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
 	ShaderObjectManager::GetShaderObject("ShadowMapBlur")->CompileVertexShader(path + "GaussianBlurVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("ShadowMapBlur")->CompilePixelShader(path + "GaussianBlurPS.hlsl", "main");
 
-	// 3D�I�u�W�F�N�g�p
+	// 3Dオブジェクト用
 	setting =
 		PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("ShadowMapBlur");
@@ -100,7 +100,7 @@ void ShadowMap::Update()
 
 	mLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
 
-	// �J�����̐ݒ�
+	// カメラの設定
 	mLightCamera.Update();
 
 	for (uint32_t i = 0; i < mShadowObjs.size(); i++)
@@ -130,7 +130,7 @@ void ShadowMap::RenderTextureSetting()
 	}
 	mShadowMapRT->PostDrawScene();
 
-	// ���̃t���[���̏���
+	// 次のフレームの準備
 	mIndex = 0;
 
 	//mBlurRT->PrevDrawScene();
@@ -152,14 +152,14 @@ void ShadowMap::DrawPostEffect()
 
 void ShadowMap::Bind(Object3D& object)
 {
-	// ���炾������
+	// からだったら
 	if (mIndex >= mShadowObjs.size())
 	{
 		return;
 	}
 
-	// �m�ۂ������X�g�̐擪���珇�ԂɃo�C���h����
-	// �o�C���h����I�u�W�F�N�g�̏��Ԃ͏����ɂ��
+	// 確保したリストの先頭から順番にバインドする
+	// バインドするオブジェクトの順番は処理による
 	mShadowObjs[mIndex].pos = object.pos;
 	mShadowObjs[mIndex].rot = object.rot;
 	mShadowObjs[mIndex].scale = object.scale;

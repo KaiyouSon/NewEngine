@@ -14,4 +14,3 @@ public:
 	void Update();
 	void DrawModel();
 };
-

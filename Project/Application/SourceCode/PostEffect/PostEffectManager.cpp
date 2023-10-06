@@ -5,13 +5,13 @@ void PostEffectManager::CreateGraphicsPipeline()
 {
 	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 
-	// 3DÉIÉuÉWÉFÉNÉgóp
+	// 3DÁπßÔΩ™ÁπùÊÇ∂„ÅöÁπßÔΩßÁπßÔΩØÁπùËÇ≤Áïë
 	setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
 	PipelineManager::CreateGraphicsPipeline(setting, "Object3DWriteNone");
 
 	setting = PipelineManager::GetGraphicsPipeline("Grass")->GetSetting();
 
-	// 3DÉIÉuÉWÉFÉNÉgóp
+	// 3DÁπßÔΩ™ÁπùÊÇ∂„ÅöÁπßÔΩßÁπßÔΩØÁπùËÇ≤Áïë
 	setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
 	PipelineManager::CreateGraphicsPipeline(setting, "GrassWriteNone");
 }
@@ -30,28 +30,28 @@ void PostEffectManager::Update()
 }
 void PostEffectManager::RenderTextureSetting()
 {
-	// ÉGÉtÉFÉNÉgÇÃÉpÉX
+	// ÁπßÔΩ®ÁπùËºî„ÅâÁπßÔΩØÁπùÂåª„ÉªÁπù‰ª£„Åõ
 	EffectBloomDrawPass();
 }
 
-// ï`âÊ
+// Ë¨†ÂÜóÂà§
 void PostEffectManager::DrawEffectBloom()
 {
 	mEffectBloom->DrawPostEffect();
 }
 
-// ÉpÉXÇÃê›íË
+// Áπù‰ª£„ÅõÁ∏∫ÔΩÆÈö™ÔΩ≠Ëû≥„Éª
 void PostEffectManager::EffectBloomDrawPass()
 {
-	// çÇãPìxâ”èäÇíäèo
+	// È¨ÆÂÄ©ÔΩºÊôèÔΩ∫ÔΩ¶ÈÇÇ„ÉªÂúíÁπßÂëàÊ≠ìËúÉÔΩ∫
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::HighLumi);
 
-	// ÉvÉåÉCÉÑÅ[ÇÃDepthèëÇ´çûÇﬁ
+	// ÁπùÂä±ŒûÁπßÔΩ§ÁπùÔΩ§ÁπùÔΩºÁ∏∫ÔΩÆDepthË≠ñÔΩ∏Á∏∫Â¥éÔΩæÔΩºÁπß¬Ä
 	mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
 	mPlayer->DrawModel();
 	mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 
-	// É{ÉXÇÃDepthèëÇ´çûÇﬁ
+	// ÁπùÊáä„ÅõÁ∏∫ÔΩÆDepthË≠ñÔΩ∏Á∏∫Â¥éÔΩæÔΩºÁπß¬Ä
 	mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
 	mBoss->DrawModel();
 	mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
@@ -62,21 +62,21 @@ void PostEffectManager::EffectBloomDrawPass()
 	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass"));
 
-	// ÉGÉtÉFÉNÉg
+	// ÁπßÔΩ®ÁπùËºî„ÅâÁπßÔΩØÁπù„Éª
 	EffectManager::GetInstance()->DrawEffect(true);
 	mEffectBloom->PostSceneDraw(Bloom::PassType::HighLumi);
 
-	// ÉKÉEÉVÉAÉìÉuÉâÅ[ÇÇ©ÇØÇÈ
+	// ÁπßÔΩ¨ÁπßÔΩ¶ÁπßÔΩ∑ÁπßÔΩ¢ÁπùÔΩ≥ÁπùÊÇ∂ŒõÁπùÔΩºÁπßÂÅµ¬∞Á∏∫‰ª£ÔΩã
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::GaussianBlur);
 	mEffectBloom->DrawPass(Bloom::PassType::HighLumi);
 	mEffectBloom->PostSceneDraw(Bloom::PassType::GaussianBlur);
 
-	// ÉuÉâÅ[ÇÇ©ÇØÇÈÇΩÇ‚Ç¬
+	// ÁπùÊÇ∂ŒõÁπùÔΩºÁπßÂÅµ¬∞Á∏∫‰ª£ÔΩãÁ∏∫Ê∫òÔΩÑÁ∏∫ÔΩ§
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::Bloom);
 	mEffectBloom->DrawPass(Bloom::PassType::GaussianBlur);
 	mEffectBloom->PostSceneDraw(Bloom::PassType::Bloom);
 
-	// åªç›ÇÃÉVÅ[Éì
+	// Ëø¥ÔΩæËù®ÔΩ®Á∏∫ÔΩÆÁπßÔΩ∑ÁπùÔΩºÁπùÔΩ≥
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::Target);
 	mField->DrawSkydome();
 	mField->DrawModel();
@@ -86,7 +86,7 @@ void PostEffectManager::EffectBloomDrawPass()
 	mEffectBloom->PostSceneDraw(Bloom::PassType::Target);
 }
 
-// ÉZÉbÉ^Å[
+// ÁπßÔΩªÁπù„Éª„Å°ÁπùÔΩº
 void PostEffectManager::SetPlayer(Player* player)
 {
 	mPlayer = player;
@@ -99,3 +99,4 @@ void PostEffectManager::SetField(Field* field)
 {
 	mField = field;
 }
+

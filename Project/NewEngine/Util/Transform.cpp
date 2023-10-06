@@ -17,17 +17,17 @@ Transform::Transform(const Vec3 pos, const Vec3 scale, const Vec3 rot) :
 
 void Transform::Update()
 {
-	mScaleMat = ConvertScalingMat(scale); // ƒXƒP[ƒŠƒ“ƒO
+	mScaleMat = ConvertScalingMat(scale); // ç¹§ï½¹ç¹§ï½±ç¹ï½¼ç¹ï½ªç¹ï½³ç¹§ï½°
 	mRotMat = Mat4::Identity();
-	mRotMat *= ConvertRotationZAxisMat(rot.z); // z²‰ñ“]
-	mRotMat *= ConvertRotationXAxisMat(rot.x); // x²‰ñ“]
-	mRotMat *= ConvertRotationYAxisMat(rot.y); // y²‰ñ“]
-	mTransMat = ConvertTranslationMat(pos);	 // •½sˆÚ“®
+	mRotMat *= ConvertRotationZAxisMat(rot.z); // zéœ†ï½¸è—æ«ï½»ï½¢
+	mRotMat *= ConvertRotationXAxisMat(rot.x); // xéœ†ï½¸è—æ«ï½»ï½¢
+	mRotMat *= ConvertRotationYAxisMat(rot.y); // yéœ†ï½¸è—æ«ï½»ï½¢
+	mTransMat = ConvertTranslationMat(pos);	 // èŸ·ï½³é™¦æªï½§ï½»èœãƒ»
 
-	// ƒrƒ‹ƒ{[ƒhs—ñŒvZ
+	// ç¹è–™Îç¹æ‡Šãƒ»ç¹èŠ½ï½¡æ‚Ÿãƒ»éšªè‚²ï½®ãƒ»
 	mBillboard.CalculateBillboardMat();
 
-	// ƒ[ƒ‹ƒhs—ñŒvZ
+	// ç¹ï½¯ç¹ï½¼ç¹ï½«ç¹èŠ½ï½¡æ‚Ÿãƒ»éšªè‚²ï½®ãƒ»
 	mWorldMat = Mat4::Identity();
 
 	if (mBillboard.GetBillboardType() != BillboardType::None)
@@ -40,20 +40,12 @@ void Transform::Update()
 	mWorldMat *= mTransMat;
 }
 
-#pragma region ƒZƒbƒ^[
+// ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
+Mat4 Transform::GetTransMat() { return mTransMat; }	// é˜ï½»èœæˆŠï½¡æ‚Ÿãƒ»
+Mat4 Transform::GetScaleMat() { return mScaleMat; }	// ç¹§ï½¹ç¹§ï½±ç¹ï½¼ç¹ï½«é™¦æ‚Ÿãƒ»
+Mat4 Transform::GetRotMat() { return mRotMat; }		// è—æ«ï½»ï½¢é™¦æ‚Ÿãƒ»
+Mat4 Transform::GetWorldMat() { return mWorldMat; }	// ç¹ï½¯ç¹ï½¼ç¹ï½«ç¹èŠ½ï½¡æ‚Ÿãƒ»
 
-Mat4 Transform::GetTransMat() { return mTransMat; }	// ˆÚ“®s—ñ
-Mat4 Transform::GetScaleMat() { return mScaleMat; }	// ƒXƒP[ƒ‹s—ñ
-Mat4 Transform::GetRotMat() { return mRotMat; }		// ‰ñ“]s—ñ
-Mat4 Transform::GetWorldMat() { return mWorldMat; }	// ƒ[ƒ‹ƒhs—ñ
-
-#pragma endregion
-
-#pragma region ƒZƒbƒ^[
-
+// ç¹§ï½»ç¹ãƒ»ã¡ç¹ï½¼
 void Transform::SetWorldMat(Mat4 worldMat) { mWorldMat = worldMat; }
-
 void Transform::SetBillboardType(const BillboardType type) { mBillboard.SetBillboardType(type); }
-
-#pragma endregion
-

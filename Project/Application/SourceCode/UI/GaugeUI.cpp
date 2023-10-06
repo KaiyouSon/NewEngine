@@ -20,7 +20,7 @@ GaugeUI::GaugeUI()
 
 void GaugeUI::Init()
 {
-	// •`‰æ”ÍˆÍ
+	// æç”»ç¯„å›²
 	mSprites[FrontColor]->SetTextureRect(Vec2(160, 0), Vec2(191, 31));
 	mSprites[CurrentPos]->SetTextureRect(Vec2(192, 0), Vec2(223, 31));
 	mSprites[FrontFrame]->SetTextureRect(Vec2(64, 0), Vec2(95, 31));
@@ -69,14 +69,14 @@ void GaugeUI::DrawFrontSprite()
 
 void GaugeUI::CalcPosUpdate()
 {
-	// ‰Â•Ï
+	// å¯å¤‰
 	for (uint32_t i = 0; i <= BackFrame; i++)
 	{
 		mSprites[i]->pos = mBasePos;
 	}
 	mSprites[CurrentPos]->pos = mBasePos + Vec2(mGaugeSize.x, 0.5f);
 
-	// •s•Ï
+	// ä¸å¤‰
 	const float kOffset = -20.f;
 	mSprites[BackFrame]->pos = mBasePos + Vec2(0, 1);
 	mSprites[FrontFrame]->pos = mBasePos + Vec2(0, 1);
@@ -86,7 +86,7 @@ void GaugeUI::CalcPosUpdate()
 
 void GaugeUI::CalcSizeUpdate()
 {
-	// ƒTƒCƒY
+	// ã‚µã‚¤ã‚º
 	const Vec2 kLeftRightSize(32, 16);
 	mSprites[BackFrame]->SetSize(mConstGaugeSize + Vec2(6, 0));
 	mSprites[FrontFrame]->SetSize(mConstGaugeSize);
@@ -99,14 +99,14 @@ void GaugeUI::SetPos(const Vec2 pos)
 {
 	mBasePos = pos;
 
-	// ‰Â•Ï
+	// å¯å¤‰
 	for (uint32_t i = 0; i <= BackFrame; i++)
 	{
 		mSprites[i]->pos = mBasePos;
 	}
 	mSprites[CurrentPos]->pos = mBasePos + Vec2(mGaugeSize.x, 0.5f);
 
-	// •s•Ï
+	// ä¸å¤‰
 	const float kOffset = -20.f;
 	mSprites[FrontFrame]->pos = mBasePos + Vec2(0, 1);
 	mSprites[FrontLeftFrame]->pos = mBasePos + Vec2(kOffset, 0);
@@ -129,7 +129,7 @@ void GaugeUI::SetGaugePrame(const GaugeParam gaugeParam)
 
 	mConstGaugeSize = Vec2(mGaugeWidthMax, mGaugeSize.y);
 
-	// CurrentPos‚Ì‰æ‘œ‚ÌƒTƒCƒY‚Í•s•ÏAÀ•W‚ğ‰Â•Ï
+	// CurrentPosã®ç”»åƒã®ã‚µã‚¤ã‚ºã¯ä¸å¤‰ã€åº§æ¨™ã‚’å¯å¤‰
 	mGaugeSize.x = gaugeParam.rate * mGaugeWidthMax;
 	mSprites[FrontColor]->SetSize(mGaugeSize);
 }

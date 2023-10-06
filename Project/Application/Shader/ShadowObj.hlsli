@@ -1,4 +1,4 @@
-// 3D•ÏŠ·s—ñ
+// 3Då¤‰æ›è¡Œåˆ—
 cbuffer ConstantBufferDataTransform : register(b0)
 {
     matrix viewProjMat;
@@ -20,9 +20,9 @@ struct Appdata
 
 struct V2P
 {
-    float4 svpos : SV_POSITION; // ƒVƒXƒeƒ€—p’¸“_À•W
-    float4 wpos : POSITION0; // ƒ[ƒ‹ƒhÀ•W
-    float3 normal : NORMAL; // –@üƒxƒNƒgƒ‹
-    float2 uv : TEXCOORD0; // uv’l
+    float4 svpos : SV_POSITION; // ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+    float4 wpos : POSITION0; // ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™
+    float3 normal : NORMAL; // æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+    float2 uv : TEXCOORD0; // uvå€¤
     float2 depth : TEXCOORD1;
 };

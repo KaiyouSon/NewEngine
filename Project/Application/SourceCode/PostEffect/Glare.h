@@ -24,4 +24,3 @@ public:
 	void PostSceneDraw(const uint32_t index);
 	void DrawDebugGui();
 };
-

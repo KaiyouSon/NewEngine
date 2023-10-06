@@ -13,15 +13,14 @@ public:
 	Viewport();
 	void Update();
 
-public: // ÉZÉbÉ^Å[
+public: // ÁπßÔΩªÁπù„Éª„Å°ÁπùÔΩº
 	void SetViewport(
 		const Vec2 leftTopPos, const Vec2 size,
 		const float MinDepth = 0.0f, const float MaxDepth = 1.0f);
 
-public: // ÉQÉbÉ^Å[
+public: // ÁπßÔΩ≤Áπù„Éª„Å°ÁπùÔΩº
 	Vec2 GetLeftTopPos();
 	Vec2 GetSize();
 	float GetMinDepth();
 	float GetMaxDepth();
 };
-

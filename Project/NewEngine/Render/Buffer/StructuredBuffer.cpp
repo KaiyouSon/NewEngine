@@ -10,21 +10,21 @@ void StructuredBuffer::Create(const uint32_t dataSize)
 
 	HRESULT result;
 
-	// ƒq[ƒv‚ÌÝ’è
+	// ç¹åµãƒ»ç¹åŠ±ãƒ»éšªï½­èž³ãƒ»
 	D3D12_HEAP_PROPERTIES heapProp =
 		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 
-	// ƒŠƒ\[ƒXÝ’è
+	// ç¹ï½ªç¹§ï½½ç¹ï½¼ç¹§ï½¹éšªï½­èž³ãƒ»
 	D3D12_RESOURCE_DESC resourceDesc =
-		CD3DX12_RESOURCE_DESC::Buffer(dataSize + 0xff & ~0xff,	// 256ƒoƒCƒgƒAƒ‰ƒCƒ“ƒƒ“ƒg
-			D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS);			// UAVŽg—p‚ð‹–‰Â
+		CD3DX12_RESOURCE_DESC::Buffer(dataSize + 0xff & ~0xff,	// 256ç¹èˆŒã†ç¹åŒ»ã„ç¹ï½©ç¹§ï½¤ç¹ï½³ç¹ï½¡ç¹ï½³ç¹ãƒ»
+			D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS);			// UAVè´ï½¿é€•ï½¨ç¹§å®šï½¨ï½±èœ¿ï½¯
 
-	// ƒoƒbƒtƒ@‚Ì¶¬
+	// ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½®é€•æ»“ãƒ»
 	result = RenderBase::GetInstance()->GetDevice()->
 		CreateCommittedResource(
-			&heapProp,	// ƒq[ƒv‚ÌÝ’è
+			&heapProp,	// ç¹åµãƒ»ç¹åŠ±ãƒ»éšªï½­èž³ãƒ»
 			D3D12_HEAP_FLAG_NONE,
-			&resourceDesc, // ƒŠƒ\[ƒX‚ÌÝ’è
+			&resourceDesc, // ç¹ï½ªç¹§ï½½ç¹ï½¼ç¹§ï½¹ç¸ºï½®éšªï½­èž³ãƒ»
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
 			IID_PPV_ARGS(&mBufferResource->buffer));

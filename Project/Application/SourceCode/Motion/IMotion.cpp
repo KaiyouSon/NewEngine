@@ -15,7 +15,7 @@ void IMotion::BaseInit(HumanoidBody* human)
 		//human->pos.y = 4.75f;
 		//human->GetPart(PartID::Body)->pos.y = 0.f;
 
-		// Œ»Žž“_‚Ìƒ‚[ƒVƒ‡ƒ“‚Ì‰Šú‰»
+		// è¿´ï½¾è­Žã‚‰ã›ç¸ºï½®ç¹ï½¢ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 		mCurRots = human->CalcCurRots();
 		MotionData current = mMotion->data[mStep];
 		for (uint32_t i = 0; i < current.endRots.size(); i++)
@@ -76,3 +76,4 @@ bool IMotion::GetisCanChangeMotion()
 {
 	return mIsCanChangeMotion;
 }
+

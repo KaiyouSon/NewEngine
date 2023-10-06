@@ -90,7 +90,7 @@ void PlayerBody::DrawDebugGui()
 	BaseDrawDebugGui();
 }
 
-// ƒ‚[ƒVƒ‡ƒ“ŠÖ˜A
+// ç¹ï½¢ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³é«¢ï½¢é¨¾ï½£
 void PlayerBody::IdleMotion()
 {
 	//for (uint32_t i = 1; i < mParts.size(); i++)
@@ -108,12 +108,12 @@ void PlayerBody::RunMotion()
 }
 void PlayerBody::AttackR1MotionUpdate()
 {
-	// ŒãPlayer.cpp‚ÉˆÚ‚·
+	// è •è¨“layer.cppç¸ºï½«é˜ï½»ç¸ºãƒ»
 	if (mWeapons[(uint32_t)WeaponPartID::Right]->motion->GetisPlay() == true)
 	{
 		if (mWeapons[(uint32_t)WeaponPartID::Right]->motion->GetisCanChangeMotion() == true)
 		{
-			// ƒRƒ“ƒ{‚Å‚«‚é‚½‚ß
+			// ç¹§ï½³ç¹ï½³ç¹æ‡Šã€’ç¸ºé˜ªï½‹ç¸ºæº˜ï½
 			if (Pad::GetButtonDown(PadCode::ButtonR1))
 			{
 				if (parent->mGaugePrames[(uint32_t)GaugeType::Stamina].value - 20 >= 0)
@@ -134,7 +134,7 @@ void PlayerBody::AttackR2MotionUpdate()
 	{
 		//if (mWeapons[0]->motion->GetisCanChangeMotion() == true)
 		//{
-		//	// ƒRƒ“ƒ{‚Å‚«‚é‚½‚ß
+		//	// ç¹§ï½³ç¹ï½³ç¹æ‡Šã€’ç¸ºé˜ªï½‹ç¸ºæº˜ï½
 		//	if (Pad::GetButtonDown(PadCode::Butto))
 		//	{
 		//		mWeapons[0]->motion->Init(this);
@@ -241,4 +241,3 @@ uint32_t PlayerBody::GetWeaponPartsSize()
 {
 	return (uint32_t)mWeapons.size();
 }
-

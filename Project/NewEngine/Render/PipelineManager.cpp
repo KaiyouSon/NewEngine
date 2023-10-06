@@ -3,7 +3,7 @@
 std::unordered_map<std::string, std::unique_ptr<GraphicsPipeline>> PipelineManager::sGraphicsPipelineMap;
 std::unordered_map<std::string, std::unique_ptr<ComputePipeline>> PipelineManager::sComputePipelineMap;
 
-// GraphicsPipeline�̍쐬
+// GraphicsPipeline縺ｮ菴懈・
 void PipelineManager::CreateGraphicsPipeline(const GraphicsPipelineSetting& setting, const std::string tag)
 {
 	std::unique_ptr<GraphicsPipeline> gp = std::make_unique<GraphicsPipeline>();
@@ -12,7 +12,7 @@ void PipelineManager::CreateGraphicsPipeline(const GraphicsPipelineSetting& sett
 	sGraphicsPipelineMap.insert(std::make_pair(tag, std::move(gp)));
 }
 
-// ComputePipeline�̍쐬
+// ComputePipeline縺ｮ菴懈・
 void PipelineManager::CreateComputePipeline(const ComputePipelineSetting& setting, const std::string tag)
 {
 	std::unique_ptr<ComputePipeline> cp = std::make_unique<ComputePipeline>();
@@ -21,7 +21,7 @@ void PipelineManager::CreateComputePipeline(const ComputePipelineSetting& settin
 	sComputePipelineMap.insert(std::make_pair(tag, std::move(cp)));
 }
 
-// �Q�b�^�[
+// 繧ｲ繝・ち繝ｼ
 GraphicsPipeline* PipelineManager::GetGraphicsPipeline(const std::string tag)
 {
 	auto it = sGraphicsPipelineMap.find(tag);
@@ -43,3 +43,4 @@ ComputePipeline* PipelineManager::GetComputePipeline(const std::string tag)
 
 	return sComputePipelineMap[tag].get();
 }
+

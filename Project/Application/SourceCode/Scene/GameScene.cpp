@@ -36,7 +36,7 @@ void GameScene::Load()
 	TextureManager::LoadTexture("UI/Result/ResultBack.png", "ResultBack");
 	TextureManager::LoadTexture("UI/RespawnPoint/RespawnBack.png", "RespawnBack");
 
-	// ƒeƒLƒXƒg
+	// ç¹ãƒ»ãç¹§ï½¹ç¹ãƒ»
 	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");
 	TextureManager::LoadTexture("Text/Negotiation/ReadMessageStr.png", "ReadMessageStr");
 	TextureManager::LoadTexture("Text/Negotiation/RestInLightStr.png", "RestInLightStr");
@@ -54,16 +54,16 @@ void GameScene::Load()
 	TextureManager::LoadTexture("Text/RespawnPoint/DecisionCloseStr.png", "DecisionCloseStr");
 	TextureManager::LoadTexture("Text/NumberSheets.png", "NumberSheets");
 
-	// ƒp[ƒeƒBƒNƒ‹
+	// ç¹ä»£ãƒ»ç¹ãƒ»ã…ç¹§ï½¯ç¹ï½«
 	TextureManager::LoadTexture("Particle/Particle1.png", "Particle1");
 	TextureManager::LoadTexture("Particle/Particle2.png", "Particle2");
 	TextureManager::LoadTexture("Particle/Line.png", "Line");
 
-	// ‘
+	// é—•ãƒ»
 	TextureManager::LoadTexture("Grass/Weed.png", "Weed");
 	TextureManager::LoadTexture("Branch.png", "Branch");
 
-	// “V‹…
+	// èŸï½©é€…ãƒ»
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Skydome");
 }
 
@@ -85,7 +85,7 @@ void GameScene::UnLoad()
 	TextureManager::UnLoadTexture("ResultBack");
 	TextureManager::UnLoadTexture("RespawnBack");
 
-	// ƒeƒLƒXƒg
+	// ç¹ãƒ»ãç¹§ï½¹ç¹ãƒ»
 	TextureManager::UnLoadTexture("ColonStr");
 	TextureManager::UnLoadTexture("ReadMessageStr");
 	TextureManager::UnLoadTexture("RestInLightStr");
@@ -103,12 +103,12 @@ void GameScene::UnLoad()
 	TextureManager::UnLoadTexture("DecisionCloseStr");
 	TextureManager::UnLoadTexture("NumberSheets");
 
-	// ƒp[ƒeƒBƒNƒ‹
+	// ç¹ä»£ãƒ»ç¹ãƒ»ã…ç¹§ï½¯ç¹ï½«
 	TextureManager::UnLoadTexture("Particle1");
 	TextureManager::UnLoadTexture("Particle2");
 	TextureManager::UnLoadTexture("Line");
 
-	// ‘
+	// é—•ãƒ»
 	TextureManager::UnLoadTexture("Weed");
 	TextureManager::UnLoadTexture("Branch");
 
@@ -232,17 +232,17 @@ void GameScene::Update()
 		LogoutMenu::GetisEnd() == true &&
 		LogoutMenu::GetSelect() == LogoutMenu::Select::BackToTitle;
 
-	// ‘JˆÚ‚Ìˆ—
+	// é©•ï½·é˜ï½»ç¸ºï½®èœƒï½¦é€…ãƒ»
 	auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
 	if (currentTransition == nullptr)
 	{
-		// ƒ^ƒCƒgƒ‹‚É‚à‚Ç‚é
+		// ç¹§ï½¿ç¹§ï½¤ç¹åŒ»Îç¸ºï½«ç¹§ã‚…â†ç¹§åŒºå‡¾
 		if (isBackToTitle == true)
 		{
 			TransitionManager::GetInstance()->Start(TransitionType::Scene);
 			SceneChanger::GetInstance()->SetisEaseGameBGM(true);
 		}
-		// ƒŠƒUƒ‹ƒg‚Ì
+		// ç¹ï½ªç¹§ï½¶ç¹ï½«ç¹åŒ»ãƒ»è­ãƒ»
 		else if (ResultUI::GetisEnd() == true)
 		{
 			TransitionManager::GetInstance()->Start(TransitionType::Scene);
@@ -251,7 +251,7 @@ void GameScene::Update()
 	}
 	else
 	{
-		// ƒV[ƒ“‚Ì‘JˆÚ
+		// ç¹§ï½·ç¹ï½¼ç¹ï½³ç¸ºï½®é©•ï½·é˜ï½»
 		if (currentTransition->GetType() == TransitionType::Scene &&
 			currentTransition->GetStep() == TransitionStep::Progress)
 		{
@@ -262,16 +262,16 @@ void GameScene::Update()
 			}
 			else
 			{
-				// ƒvƒŒƒCƒ„[‚ª€‚ñ‚¾ê‡
+				// ç¹åŠ±Îç¹§ï½¤ç¹ï½¤ç¹ï½¼ç¸ºæ¢§ï½­ï½»ç¹§è–™â–¡è£ï½´èœ·ãƒ»
 				if (mPlayer->GetisDissolve() == true)
 				{
-					// ƒV[ƒ“‚¾‚çƒQ[ƒ€ƒV[ƒ“‚ğ‰Šú‰»
+					// ç¹§ï½·ç¹ï½¼ç¹ï½³ç¸ºï£°ç¹§å³¨ã”ç¹ï½¼ç¹ï£°ç¹§ï½·ç¹ï½¼ç¹ï½³ç¹§è²ãƒ»è­›æº·å–§
 					SceneManager::ChangeScene<GameScene>();
 					mIsChangeScene = true;
 				}
 				else if (mBoss->GetisDissolve() == true)
 				{
-					// ƒNƒŠƒA‚µ‚½‚çƒ^ƒCƒgƒ‹‚É–ß‚·
+					// ç¹§ï½¯ç¹ï½ªç¹§ï½¢ç¸ºåŠ±â—†ç¹§å³¨ã¡ç¹§ï½¤ç¹åŒ»Îç¸ºï½«è¬Œï½»ç¸ºãƒ»
 					SceneManager::ChangeScene<TitleScene>();
 					mIsChangeScene = true;
 				}
@@ -294,7 +294,7 @@ void GameScene::Update()
 			}
 		}
 
-		// ƒŠƒXƒ|[ƒ“‚Ì‘JˆÚ
+		// ç¹ï½ªç¹§ï½¹ç¹æ˜´ãƒ»ç¹ï½³ç¸ºï½®é©•ï½·é˜ï½»
 		if (currentTransition->GetType() == TransitionType::Respawn &&
 			currentTransition->GetStep() == TransitionStep::Progress)
 		{

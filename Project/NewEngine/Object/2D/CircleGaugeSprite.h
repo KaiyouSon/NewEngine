@@ -27,7 +27,7 @@ public:
 	float startRadian;
 	float endRadian;
 
-private: // ƒ}ƒeƒŠƒAƒ‹ŠÖ˜A
+private: // ãƒãƒ†ãƒªã‚¢ãƒ«é–¢é€£
 	void MaterialInit();
 	void MaterialTransfer();
 	void MaterialDrawCommands();
@@ -42,19 +42,19 @@ public:
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 
 
-public:	// ƒZƒbƒ^[
-	// ƒeƒNƒXƒ`ƒƒ[
+public:	// ã‚»ãƒƒã‚¿ãƒ¼
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼
 	void SetTexture(Texture* texture);
 
-	// •`‰æ”ÍˆÍ
+	// æç”»ç¯„å›²
 	void SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos);
 
-	//@ƒTƒCƒY
+	//ã€€ã‚µã‚¤ã‚º
 	void SetSize(const Vec2 size);
 
-	// ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg
+	// ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ
 	void SetAnchorPoint(const Vec2 anchorPoint);
 
-	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“
+	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 };

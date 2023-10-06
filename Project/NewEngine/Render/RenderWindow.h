@@ -7,30 +7,30 @@
 class RenderWindow : public Singleton<RenderWindow>
 {
 private:
-	Vec2 mSize;			// ƒTƒCƒY
-	std::string mTitle;	// ƒ^ƒCƒgƒ‹
+	Vec2 mSize;			// ç¹§ï½µç¹§ï½¤ç¹§ï½º
+	std::string mTitle;	// ç¹§ï½¿ç¹§ï½¤ç¹åŒ»Î
 
-	WNDCLASSEX mWndClass;	// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX
-	HWND mHwnd;			// ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
-	MSG mMsg;				//ƒƒbƒZ[ƒW
+	WNDCLASSEX mWndClass;	// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹§ï½¯ç¹ï½©ç¹§ï½¹
+	HWND mHwnd;			// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹ä¸ŠÎ¦ç¹å³¨Î
+	MSG mMsg;				//ç¹ï½¡ç¹ãƒ»ãç¹ï½¼ç¹§ï½¸
 
 public:
 	RenderWindow();
 
-	// ƒQ[ƒ€ƒEƒBƒ“ƒhƒE‚Ìì¬ 
+	// ç¹§ï½²ç¹ï½¼ç¹ï£°ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¸ºï½®è´æ‡ˆãƒ» 
 	void CreateGameWindow();
 
-	// ƒQ[ƒ€ƒEƒBƒ“ƒhƒE‚Ì”jŠü
+	// ç¹§ï½²ç¹ï½¼ç¹ï£°ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¸ºï½®éï½´è­½ãƒ»
 	void TerminateGameWindow();
 
-	// ƒEƒBƒ“ƒhƒEƒƒbƒZ[ƒWˆ—
+	// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹ï½¡ç¹ãƒ»ãç¹ï½¼ç¹§ï½¸èœƒï½¦é€…ãƒ»
 	uint32_t ProcessMessage();
 
-public: // ƒZƒbƒ^[
+public: // ç¹§ï½»ç¹ãƒ»ã¡ç¹ï½¼
 	void SetWindowTitle(const std::string& title);
 	void SetWindowSize(const Vec2 size);
 
-public: // ƒQƒbƒ^[
+public: // ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
 	Vec2 GetWindowSize();
 	HWND GetHwnd();
 	HINSTANCE GetHInstance();
@@ -39,5 +39,5 @@ private:
 	friend Singleton<RenderWindow>;
 };
 
-// ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ
+// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹åŠ±ÎŸç¹§ï½·ç¹ï½¼ç¹§ï½¸ç¹ï½£
 LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);

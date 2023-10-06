@@ -4,7 +4,7 @@ void Bloom::CreateGraphicsPipeline()
 {
 	std::string path = "Application/Shader/";
 
-	// ‚‹P“x’Šo—p
+	// é¬®å€©ï½¼æ™ï½ºï½¦è¬šï½½èœƒï½ºé€•ï½¨
 	ShaderObjectManager::Create("HighLumi");
 	ShaderObjectManager::GetShaderObject("HighLumi")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("HighLumi")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
@@ -16,7 +16,7 @@ void Bloom::CreateGraphicsPipeline()
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "HighLumi");
 
-	// ƒKƒEƒVƒAƒ“ƒuƒ‰[—p
+	// ç¹§ï½¬ç¹§ï½¦ç¹§ï½·ç¹§ï½¢ç¹ï½³ç¹æ‚¶Î›ç¹ï½¼é€•ï½¨
 	ShaderObjectManager::Create("GaussianBlur");
 	ShaderObjectManager::GetShaderObject("GaussianBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("GaussianBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
@@ -28,7 +28,7 @@ void Bloom::CreateGraphicsPipeline()
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "GaussianBlur");
 
-	// ‡¬—p
+	// èœ·åŸŸãƒ»é€•ï½¨
 	ShaderObjectManager::Create("Composite");
 	ShaderObjectManager::GetShaderObject("Composite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Composite")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
@@ -43,7 +43,7 @@ void Bloom::CreateGraphicsPipeline()
 
 Bloom::Bloom()
 {
-	// ƒeƒNƒXƒ`ƒƒ[‚ÌƒZƒbƒg
+	// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®ç¹§ï½»ç¹ãƒ»ãƒ¨
 	mTexs[(uint32_t)PassType::HighLumi] = TextureManager::GetRenderTexture("HighLumi");
 	mTexs[(uint32_t)PassType::GaussianBlur] = TextureManager::GetRenderTexture("GaussianBlur");
 	mTexs[(uint32_t)PassType::Bloom] = TextureManager::GetRenderTexture("Bloom");
@@ -58,13 +58,13 @@ Bloom::Bloom()
 	mPasses[(uint32_t)PassType::HighLumi]->AddRenderTexture(mTexs[(uint32_t)PassType::HighLumi]);
 	mPasses[(uint32_t)PassType::GaussianBlur]->AddRenderTexture(mTexs[(uint32_t)PassType::GaussianBlur]);
 
-	// ƒpƒCƒvƒ‰ƒCƒ“İ’è
+	// ç¹ä»£ã†ç¹åŠ±Î›ç¹§ï½¤ç¹ï½³éšªï½­è³ãƒ»
 	mPasses[(uint32_t)PassType::HighLumi]->
 		SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("HighLumi"));
 	mPasses[(uint32_t)PassType::GaussianBlur]->
 		SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GaussianBlur"));
 
-	// ‡¬—pƒpƒX
+	// èœ·åŸŸãƒ»é€•ï½¨ç¹ä»£ã›
 	mCompositePass = std::make_unique<PostEffect>();
 	mCompositePass->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Composite"));
 	mCompositePass->AddRenderTexture(mTexs[(uint32_t)PassType::Bloom]);
@@ -101,3 +101,4 @@ void Bloom::PostSceneDraw(const PassType passType)
 {
 	mTexs[(uint32_t)passType]->PostDrawScene();
 }
+

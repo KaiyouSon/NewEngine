@@ -1,5 +1,5 @@
 #pragma once
-// ©ì
+// é–¾ï½ªè´ãƒ»
 #include "Object3D.h"
 #include "Sprite.h"
 #include "Camera.h"
@@ -48,10 +48,10 @@
 
 struct NewEngineSetting
 {
-	std::string windowTitle;	// ƒEƒBƒ“ƒhƒEƒ^ƒCƒgƒ‹
-	Vec2 windowSize;			// ƒEƒBƒ“ƒhƒEƒTƒCƒY
-	Color bgColor;				// ”wŒiF
-	float frameRate;			// ƒtƒŒ[ƒ€ƒŒ[ƒg
+	std::string windowTitle;	// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹§ï½¿ç¹§ï½¤ç¹åŒ»Î
+	Vec2 windowSize;			// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹§ï½µç¹§ï½¤ç¹§ï½º
+	Color bgColor;				// é–­æ¢§å‹¹æ¿¶ï½²
+	float frameRate;			// ç¹è¼”Îç¹ï½¼ç¹ï£°ç¹ï½¬ç¹ï½¼ç¹ãƒ»
 };
 
 class NewEngine
@@ -77,7 +77,7 @@ public:
 	void FrameControl();
 	
 public:
-	// ƒEƒCƒ“ƒhƒEŠÖ˜A
+	// ç¹§ï½¦ç¹§ï½¤ç¹ï½³ç¹å³¨ãˆé«¢ï½¢é¨¾ï½£
 	bool ProcessMessage();
 
 };
@@ -85,6 +85,7 @@ public:
 Vec2 GetWindowSize();
 Vec2 GetWindowHalfSize();
 
-// FPSŠÖ˜A
+// FPSé«¢ï½¢é¨¾ï½£
 void SetFrameRate(const float& frameRate);
 void FrameRateUpdate();
+

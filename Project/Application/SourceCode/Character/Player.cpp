@@ -50,10 +50,10 @@ void Player::PrevUpdate()
 
 	if (mIsAlive == true)
 	{
-		// ŠÖ”ƒ|ƒCƒ“ƒ^
+		// é«¢ï½¢è¬¨ï½°ç¹æ˜´ã†ç¹ï½³ç¹§ï½¿
 		void (Player:: * pFunc[])() =
 		{
-			// “o˜^
+			// é€‹ï½»éª­ï½²
 			&Player::IdleUpdate,
 			&Player::JoggingUpdate,
 			&Player::RunUpdate,
@@ -67,7 +67,7 @@ void Player::PrevUpdate()
 			&Player::OpenGateUpdate,
 		};
 
-		// Às
+		// è³æº¯ï½¡ãƒ»
 		(this->*pFunc[(int)mState])();
 	}
 
@@ -126,14 +126,14 @@ void Player::Damage(const float damage)
 	}
 }
 
-// ƒRƒ‰ƒCƒ_[ŠÖ˜A
+// ç¹§ï½³ç¹ï½©ç¹§ï½¤ç¹Â€ç¹ï½¼é«¢ï½¢é¨¾ï½£
 void Player::CalcFrontVec()
 {
-	// ƒJƒƒ‰‚Ì‘OƒxƒNƒgƒ‹
+	// ç¹§ï½«ç¹ï½¡ç¹ï½©ç¸ºï½®èœ‘é˜ªãƒ»ç¹§ï½¯ç¹åŒ»Î
 	Vec3 cameForward = mPlayer->pos - Camera::current.pos;
 	cameForward.y = 0.f;
 
-	// ƒJƒƒ‰‚Ì‰EƒxƒNƒgƒ‹
+	// ç¹§ï½«ç¹ï½¡ç¹ï½©ç¸ºï½®èœ¿ï½³ç¹å¶ã‘ç¹åŒ»Î
 	Vec3 cameRight = Vec3::Cross(cameForward, Vec3::up);
 
 	Vec3 stick =
@@ -158,7 +158,7 @@ void Player::CalcBodyCollider()
 }
 void Player::ColliderUpdate()
 {
-	// ƒhƒA‚ğŠJ‚¯‚é
+	// ç¹å³¨ã„ç¹§å¸å¹•ç¸ºä»£ï½‹è­ãƒ»
 	if (mState == State::OpenGate)
 	{
 		mBodyCollider.isActive = false;
@@ -175,16 +175,16 @@ void Player::ColliderUpdate()
 	mWeapon->ColliderUpdate();
 }
 
-// ƒQ[ƒWŠÖ˜A
+// ç¹§ï½²ç¹ï½¼ç¹§ï½¸é«¢ï½¢é¨¾ï½£
 void Player::GaugeParamInit()
 {
-	// HPƒQ[ƒW
+	// HPç¹§ï½²ç¹ï½¼ç¹§ï½¸
 	mGaugePrames[(uint32_t)GaugeType::Hp].CalcRate(256.f, 256.f);
 
-	// MPƒQ[ƒW
+	// MPç¹§ï½²ç¹ï½¼ç¹§ï½¸
 	mGaugePrames[(uint32_t)GaugeType::Mp].CalcRate(64.f, 64.f);
 
-	// ƒXƒ^ƒ~ƒiƒQ[ƒW
+	// ç¹§ï½¹ç¹§ï½¿ç¹æº˜ãƒªç¹§ï½²ç¹ï½¼ç¹§ï½¸
 	mGaugePrames[(uint32_t)GaugeType::Stamina].CalcRate(160.f, 160.f);
 }
 void Player::GaugeParamUpdate()
@@ -200,7 +200,7 @@ void Player::GaugeParamUpdate()
 	}
 }
 
-// ƒXƒe[ƒgŠÖ˜A
+// ç¹§ï½¹ç¹ãƒ»ãƒ»ç¹ç£¯æœªé¨¾ï½£
 void Player::MoveUpdate()
 {
 	CalcFrontVec();
@@ -285,7 +285,7 @@ void Player::JoggingUpdate()
 	}
 	else if (Pad::GetButton(PadCode::ButtonA))
 	{
-		// ‰½ƒtƒŒ[ƒ€‰Ÿ‚µ‚½‚©‚ğ‹L˜^‚·‚é
+		// è´è¼”ãƒµç¹ï½¬ç¹ï½¼ç¹ï£°è¬šï½¼ç¸ºåŠ±â—†ç¸ºä¹ï½’éšªå€¬é¹¸ç¸ºå¶ï½‹
 		mPushTimer.Update();
 		if (mPushTimer == true)
 		{
@@ -303,7 +303,7 @@ void Player::JoggingUpdate()
 		mState = State::Drink;
 	}
 
-	// —£‚µ‚½
+	// é«®ï½¢ç¸ºåŠ±â—†è­ãƒ»
 	if (Pad::GetButtonUp(PadCode::ButtonA))
 	{
 		if (mPushTimer.GetisTimeOut() == false)
@@ -606,7 +606,7 @@ void Player::SetMovieEvent(MovieEvent* movieEvent)
 	mMovieEvent = movieEvent;
 }
 
-// ƒZƒbƒ^[
+// ç¹§ï½»ç¹ãƒ»ã¡ç¹ï½¼
 void Player::SetPos(const Vec3 pos)
 {
 	mPlayer->pos = pos;
@@ -632,7 +632,7 @@ void Player::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 	mWeapon->SetGraphicsPipeline(graphicsPipeline);
 }
 
-// ƒQƒbƒ^[
+// ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
 GaugeParam Player::GetGaugeParam(const uint32_t index)
 {
 	return mGaugePrames[index];
@@ -693,3 +693,4 @@ uint32_t Player::GetBottleNum()
 {
 	return mBottleNum;
 }
+

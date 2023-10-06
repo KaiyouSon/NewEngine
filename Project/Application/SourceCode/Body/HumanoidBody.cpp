@@ -46,14 +46,14 @@ void HumanoidBody::BaseUpdate()
 	mParts[(uint32_t)PartID::Transform]->Update();
 	Transform transform = mParts[(uint32_t)PartID::Transform]->GetTransform();
 
-	// ‘Ì
+	// è´ãƒ»
 	mParts[(uint32_t)PartID::Body]->Update(&transform);
 	Transform body = mParts[(uint32_t)PartID::Body]->GetTransform();
 
-	// “ª
+	// é¬†ï½­
 	mParts[(uint32_t)PartID::Head]->Update(&body);
 
-	// ¶è
+	// èŸ¾ï½¦è¬‡ãƒ»
 	mParts[(uint32_t)PartID::LeftArm]->Update(&body);
 	Transform leftArm = mParts[(uint32_t)PartID::LeftArm]->GetTransform();
 	mParts[(uint32_t)PartID::LeftHand]->Update(&leftArm);
@@ -62,12 +62,12 @@ void HumanoidBody::BaseUpdate()
 		Transform leftHand = mParts[(uint32_t)PartID::LeftHand]->GetTransform();
 		mWeapons[0]->Update(&leftHand);
 	}
-	// ¶‘«
+	// èŸ¾ï½¦é›œï½³
 	mParts[(uint32_t)PartID::LeftThigh]->Update(&body);
 	Transform leftThigh = mParts[(uint32_t)PartID::LeftThigh]->GetTransform();
 	mParts[(uint32_t)PartID::LeftLeg]->Update(&leftThigh);
 
-	// ‰Eè
+	// èœ¿ï½³è¬‡ãƒ»
 	mParts[(uint32_t)PartID::RightArm]->Update(&body);
 	Transform rightArm = mParts[(uint32_t)PartID::RightArm]->GetTransform();
 	mParts[(uint32_t)PartID::RightHand]->Update(&rightArm);
@@ -77,7 +77,7 @@ void HumanoidBody::BaseUpdate()
 		mWeapons[1]->Update(&rightHand);
 	}
 
-	// ‰E‘«
+	// èœ¿ï½³é›œï½³
 	mParts[(uint32_t)PartID::RightThigh]->Update(&body);
 	Transform rightThigh = mParts[(uint32_t)PartID::RightThigh]->GetTransform();
 	mParts[(uint32_t)PartID::RightLeg]->Update(&rightThigh);
@@ -192,7 +192,7 @@ void HumanoidBody::DrawWeapon(const WeaponPartID partID)
 	}
 }
 
-// Œ»İ‚ÌŠp“x
+// è¿´ï½¾è¨ï½¨ç¸ºï½®éš—è²ï½ºï½¦
 std::vector<Vec3> HumanoidBody::CalcCurRots()
 {
 	std::vector<Vec3> result;
@@ -267,4 +267,3 @@ uint32_t HumanoidBody::GetWeaponPartsSize()
 {
 	return (uint32_t)mWeapons.size();
 }
-

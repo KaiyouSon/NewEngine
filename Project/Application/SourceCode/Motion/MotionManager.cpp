@@ -4,47 +4,47 @@ std::unordered_map<std::string, std::unique_ptr<Motion>> MotionManager::sMotionM
 
 Motion* MotionManager::Load(const std::string filename, const std::string tag)
 {
-	// ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€
+	// ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¹§ï½¹ç¹åŒ»Îœç¹ï½¼ç¹ï£°
 	std::ifstream file;
 
 	std::string directoryPath = "Application/Data/MotionData/";
 	std::string format = ".json";
 	std::string fullPath = directoryPath + filename + format;
 
-	// ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	// ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¹§å¸å¹•ç¸ºãƒ»
 	file.open(fullPath);
-	// ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“¸”s‚ğƒ`ƒFƒbƒNs
+	// ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¹§ï½ªç¹ï½¼ç¹åŠ±Î¦èŸï½±è¬¨åŠ±ï½’ç¹âˆšã‰ç¹ãƒ»ã‘s
 	if (file.fail())
 	{
 		assert(0);
 	}
 
-	// JSON•¶š—ñ‚©‚ç‰ğ“€‚µ‚½ƒf[ƒ^
+	// JSONè­ãƒ»ï½­æ€œãƒ»ç¸ºä¹ï½‰éš—ï½£èœƒé˜ªï¼ ç¸ºæº˜ãƒ§ç¹ï½¼ç¹§ï½¿
 	nlohmann::json deserialized;
 
-	// ‰ğ“€
+	// éš—ï½£èœƒãƒ»
 	file >> deserialized;
 
-	// ³‚µ‚¢ƒŒƒxƒ‹ƒGƒfƒBƒ^[ƒf[ƒ^ƒtƒ@ƒCƒ‹‚©ƒ`ƒFƒbƒN
+	// è±ï½£ç¸ºåŠ±ï¼ç¹ï½¬ç¹å¶Îç¹§ï½¨ç¹ãƒ»ã…ç¹§ï½¿ç¹ï½¼ç¹ãƒ»ãƒ»ç¹§ï½¿ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¸ºä¹ãƒ¡ç¹§ï½§ç¹ãƒ»ã‘
 	assert(deserialized.is_object());
 	assert(deserialized.contains("name"));
 	assert(deserialized["name"].is_string());
 
-	// "name"‚ğ•¶š—ñ‚Æ‚µ‚Äæ“¾
+	// "name"ç¹§å‘ˆæšèŸ„æ€œãƒ»ç¸ºï½¨ç¸ºåŠ±â€»èœ¿é–€ï½¾ãƒ»
 	std::string name = deserialized["name"].get<std::string>();
-	// ³‚µ‚¢ƒŒƒxƒ‹ƒGƒfƒBƒ^[ƒf[ƒ^ƒtƒ@ƒCƒ‹‚©ƒ`ƒFƒbƒN
+	// è±ï½£ç¸ºåŠ±ï¼ç¹ï½¬ç¹å¶Îç¹§ï½¨ç¹ãƒ»ã…ç¹§ï½¿ç¹ï½¼ç¹ãƒ»ãƒ»ç¹§ï½¿ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¸ºä¹ãƒ¡ç¹§ï½§ç¹ãƒ»ã‘
 	assert(name.compare("scene") == 0);
 
 	std::unique_ptr<Motion> motion = std::make_unique<Motion>();
 
-	// "objects"‚Ì‘SƒIƒuƒWƒFƒNƒg‚ğ‘–¸
+	// "objects"ç¸ºï½®èœˆï½¨ç¹§ï½ªç¹æ‚¶ãšç¹§ï½§ç¹§ï½¯ç¹åŒ»ï½’è¥ï½°è­Ÿï½»
 	for (nlohmann::json& object : deserialized["object"])
 	{
 		motion->data.emplace_back();
 		ParseRecursive(&motion->data.back(), object);
 	}
 
-	// map‚ÉŠi”[
+	// mapç¸ºï½«è­¬ï½¼é‚ãƒ»
 	sMotionMap.insert(std::make_pair(tag, std::move(motion)));
 	return sMotionMap[tag].get();
 }
@@ -59,7 +59,7 @@ void MotionManager::ParseRecursive(MotionData* data, nlohmann::json jsonObj)
 	std::string name = jsonObj["name"].get<std::string>();
 	data->name.emplace_back(name);
 
-	// ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ìƒpƒ‰ƒ[ƒ^“Ç‚İ‚İ
+	// ç¹åŒ»Î›ç¹ï½³ç¹§ï½¹ç¹è¼”ã‹ç¹ï½¼ç¹ï£°ç¸ºï½®ç¹ä»£Î›ç¹ï½¡ç¹ï½¼ç¹§ï½¿éš±ï½­ç¸ºï½¿éœï½¼ç¸ºï½¿
 	nlohmann::json transform = jsonObj["transform"];
 	if (jsonObj.contains("is_weapon"))
 	{
@@ -75,7 +75,7 @@ void MotionManager::ParseRecursive(MotionData* data, nlohmann::json jsonObj)
 	}
 	else
 	{
-		// ‰ñ“]Šp
+		// è—æ«ï½»ï½¢éš—ãƒ»
 		data->endRots.emplace_back();
 		data->endRots.back().x = Radian((float)transform["rotation"][0]);
 		data->endRots.back().y = Radian((float)transform["rotation"][1]);
@@ -84,7 +84,7 @@ void MotionManager::ParseRecursive(MotionData* data, nlohmann::json jsonObj)
 
 	if (jsonObj.contains("parameter"))
 	{
-		// ƒG[ƒWƒ“ƒO
+		// ç¹§ï½¨ç¹ï½¼ç¹§ï½¸ç¹ï½³ç¹§ï½°
 		nlohmann::json parameter = jsonObj["parameter"];
 		std::string easeType = parameter["ease_type"].get<std::string>();
 		if (easeType == "Lerp")
@@ -107,7 +107,7 @@ void MotionManager::ParseRecursive(MotionData* data, nlohmann::json jsonObj)
 		data->ease.SetEaseTimer(parameter["ease_time"]);
 	}
 
-	// q‚ª‚ ‚ê‚Î
+	// èŸ„èˆŒâ€²ç¸ºã‚…ï½Œç¸ºï½°
 	if (jsonObj.contains("children"))
 	{
 		nlohmann::json children = jsonObj["children"];

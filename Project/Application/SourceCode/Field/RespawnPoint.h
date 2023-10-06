@@ -21,13 +21,12 @@ public:
 	void DrawModel();
 
 public:
-	// ƒZƒbƒ^[
+	// ç¹§ï½»ç¹ãƒ»ã¡ç¹ï½¼
 	void SetParent(const Transform parent);
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
 public:
-	// ƒQƒbƒ^[
+	// ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
 	Vec3 GetPos();
 	SphereCollider GetCollider();
 };
-

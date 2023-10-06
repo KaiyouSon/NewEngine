@@ -8,7 +8,7 @@ void IWeaponMotion::BaseInit(HumanoidBody* human, const uint32_t index)
 	{
 		human->pos.y = 4.75f;
 
-		// Œ»Žž“_‚Ìƒ‚[ƒVƒ‡ƒ“‚Ì‰Šú‰»
+		// è¿´ï½¾è­Žã‚‰ã›ç¸ºï½®ç¹ï½¢ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 		mCurRots = human->CalcCurRots();
 		MotionData current = mMotions[(uint32_t)index]->data[mStep];
 		for (uint32_t i = 0; i < current.endRots.size(); i++)
@@ -91,3 +91,4 @@ AttackType IWeaponMotion::GetAttackType()
 {
 	return mAttackType;
 }
+

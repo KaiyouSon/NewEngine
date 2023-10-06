@@ -10,7 +10,7 @@ PostEffect::PostEffect() :
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("RenderTexture")),
 	pos(0), scale(1), rot(0), mAnchorPoint(0.5f), rtvIndex(0)
 {
-	// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+	// é¬†ã‚‰ã›ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½®é€•æ»“ãƒ»
 	mVertices.resize(4);
 	mVertices[0].uv = { 0.0f,1.0f };
 	mVertices[1].uv = { 0.0f,0.0f };
@@ -18,7 +18,7 @@ PostEffect::PostEffect() :
 	mVertices[3].uv = { 1.0f,0.0f };
 	mVertexBuffer->Create(mVertices);
 
-	// ƒoƒbƒtƒ@¶¬
+	// ç¹èˆŒãƒ£ç¹è¼”ãƒé€•æ»“ãƒ»
 	MaterialInit();
 
 }
@@ -30,7 +30,7 @@ void PostEffect::Update()
 	mTransform.rot = { 0.f,0.f,rot };
 	mTransform.Update();
 
-	// “]‘—ˆ—
+	// éœ†ï½¢é¨¾âˆãƒ»é€…ãƒ»
 	MaterialTransfer();
 
 	mVertexBuffer->TransferToBuffer(mVertices);
@@ -41,16 +41,16 @@ void PostEffect::Draw()
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// GraphicsPipeline•`‰æƒRƒ}ƒ“ƒh
+	// GraphicsPipelineè¬ å†—åˆ¤ç¹§ï½³ç¹æ§­Î¦ç¹ãƒ»
 	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
 
-	// VBV‚ÆIBV‚Ìİ’èƒRƒ}ƒ“ƒh
+	// VBVç¸ºï½¨IBVç¸ºï½®éšªï½­è³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ìİ’èƒRƒ}ƒ“ƒh
+	// ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«ç¸ºï½®éšªï½­è³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 	MaterialDrawCommands();
 
-	// SRVİ’èƒRƒ}ƒ“ƒh
+	// SRVéšªï½­è³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	for (uint32_t i = 0; i < mRenderTextures.size(); i++)
 	{
@@ -100,33 +100,33 @@ void PostEffect::Draw()
 	}
 }
 
-// --- ƒ}ƒeƒŠƒAƒ‹ŠÖ˜A --------------------------------------------------- //
+// --- ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«é«¢ï½¢é¨¾ï½£ --------------------------------------------------- //
 void PostEffect::MaterialInit()
 {
-	// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	// ç¹§ï½¤ç¹ï½³ç¹§ï½¹ç¹§ï½¿ç¹ï½³ç¹§ï½¹é€•æ»“ãƒ»
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3Ds—ñ
+	// 3Dé™¦æ‚Ÿãƒ»
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform2D>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// F
+	// æ¿¶ï½²
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ‰Šú‰»
+	// è›»æ™„æ‚„è›¹ãƒ»
 	mMaterial.Init();
 }
 void PostEffect::MaterialTransfer()
 {
-	// ƒ}ƒgƒŠƒbƒNƒX
+	// ç¹æ§­ãƒ¨ç¹ï½ªç¹ãƒ»ã‘ç¹§ï½¹
 	CTransform2D transform3DData =
 	{
 		mTransform.GetWorldMat() * Camera::current.GetOrthoGrphicProjectionMat()
 	};
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transform3DData);
 
-	// Fƒf[ƒ^
+	// æ¿¶ï½²ç¹ãƒ»ãƒ»ç¹§ï½¿
 	CColor colorData = { color / 255 };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[1].get(), colorData);
 }
@@ -136,23 +136,23 @@ void PostEffect::MaterialDrawCommands()
 
 	for (uint32_t i = 0; i < mMaterial.constantBuffers.size(); i++)
 	{
-		// CBV‚Ìİ’èƒRƒ}ƒ“ƒh
+		// CBVç¸ºï½®éšªï½­è³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 			i, mMaterial.constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
 	}
 }
 
-// --- ’¸“_ƒf[ƒ^ŠÖ˜A --------------------------------------------------- //
+// --- é¬†ã‚‰ã›ç¹ãƒ»ãƒ»ç¹§ï½¿é«¢ï½¢é¨¾ï½£ --------------------------------------------------- //
 void PostEffect::TransferTexturePos()
 {
-	// ƒeƒNƒXƒ`ƒƒ[‚ÌƒTƒCƒY
+	// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®ç¹§ï½µç¹§ï½¤ç¹§ï½º
 	float width = mRenderTextures.front()->size.x;
 	float height = mRenderTextures.front()->size.y;
 
-	mVertices[0].pos = { (0.0f - mAnchorPoint.x) * width,(1.0f - mAnchorPoint.y) * height,0.0f }; //¶‰º
-	mVertices[1].pos = { (0.0f - mAnchorPoint.x) * width,(0.0f - mAnchorPoint.y) * height,0.0f }; //¶ã
-	mVertices[2].pos = { (1.0f - mAnchorPoint.x) * width,(1.0f - mAnchorPoint.y) * height,0.0f }; //‰E‰º
-	mVertices[3].pos = { (1.0f - mAnchorPoint.x) * width,(0.0f - mAnchorPoint.y) * height,0.0f }; //‰Eã
+	mVertices[0].pos = { (0.0f - mAnchorPoint.x) * width,(1.0f - mAnchorPoint.y) * height,0.0f }; //èŸ¾ï½¦è³ãƒ»
+	mVertices[1].pos = { (0.0f - mAnchorPoint.x) * width,(0.0f - mAnchorPoint.y) * height,0.0f }; //èŸ¾ï½¦è³ãƒ»
+	mVertices[2].pos = { (1.0f - mAnchorPoint.x) * width,(1.0f - mAnchorPoint.y) * height,0.0f }; //èœ¿ï½³è³ãƒ»
+	mVertices[3].pos = { (1.0f - mAnchorPoint.x) * width,(0.0f - mAnchorPoint.y) * height,0.0f }; //èœ¿ï½³è³ãƒ»
 
 	mVertexBuffer->TransferToBuffer(mVertices);
 }
@@ -160,7 +160,7 @@ void PostEffect::TransferVertexCoord()
 {
 	enum class Point { LD, LU, RD, RU };
 
-	// l•Ó
+	// è—å¹„ï½¾ï½º
 	float left = (0.f - mAnchorPoint.x) * mSize.x;
 	float right = (1.f - mAnchorPoint.x) * mSize.x;
 	float up = (0.f - mAnchorPoint.y) * mSize.y;
@@ -189,26 +189,26 @@ void PostEffect::TransferVertexCoord()
 		break;
 	}*/
 
-	// ’¸“_À•W
-	mVertices[(uint32_t)Point::LD].pos = Vec3(left, down, 0.f);	  //¶‰º
-	mVertices[(uint32_t)Point::LU].pos = Vec3(left, up, 0.f);	  //¶ã
-	mVertices[(uint32_t)Point::RD].pos = Vec3(right, down, 0.f);  //‰E‰º
-	mVertices[(uint32_t)Point::RU].pos = Vec3(right, up, 0.f);	  //‰Eã
+	// é¬†ã‚‰ã›è ï½§è®“ãƒ»
+	mVertices[(uint32_t)Point::LD].pos = Vec3(left, down, 0.f);	  //èŸ¾ï½¦è³ãƒ»
+	mVertices[(uint32_t)Point::LU].pos = Vec3(left, up, 0.f);	  //èŸ¾ï½¦è³ãƒ»
+	mVertices[(uint32_t)Point::RD].pos = Vec3(right, down, 0.f);  //èœ¿ï½³è³ãƒ»
+	mVertices[(uint32_t)Point::RU].pos = Vec3(right, up, 0.f);	  //èœ¿ï½³è³ãƒ»
 }
 
-// --- ‚»‚Ì‘¼‚ÌŠÖ” ----------------------------------------------------- //
+// --- ç¸ºæ˜´ãƒ»è‰æ‚¶ãƒ»é«¢ï½¢è¬¨ï½° ----------------------------------------------------- //
 void PostEffect::AddRenderTexture(RenderTexture* renderTexture)
 {
 	mRenderTextures.push_back(renderTexture);
 
-	// ƒeƒNƒXƒ`ƒƒ[‚ªˆê–‡‚Ì‚É‚µ‚©’¸“_À•W•Ï‚¦‚È‚¢
+	// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºå¾¡ï½¸Â€è­«å£¹ãƒ»è­ã‚…â†“ç¸ºåŠ±Â°é¬†ã‚‰ã›è ï½§è®“åï½¤å³¨âˆ´ç¸ºï½ªç¸ºãƒ»
 	if (mRenderTextures.size() == 1)
 	{
 		TransferTexturePos();
 	}
 }
 
-// --- ƒZƒbƒ^[ --------------------------------------------------------- //
+// --- ç¹§ï½»ç¹ãƒ»ã¡ç¹ï½¼ --------------------------------------------------------- //
 void PostEffect::SetSize(const Vec2 size)
 {
 	mSize = size;
@@ -221,12 +221,13 @@ void PostEffect::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 }
 void PostEffect::SetDrawCommands(const uint32_t registerNum, const uint32_t bufferNum)
 {
-	// GraphicsPipeline•`‰æƒRƒ}ƒ“ƒh
+	// GraphicsPipelineè¬ å†—åˆ¤ç¹§ï½³ç¹æ§­Î¦ç¹ãƒ»
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
 	uint32_t bNum = Min<uint32_t>(bufferNum, (uint32_t)mMaterial.constantBuffers.size());
 
-	// CBV‚Ìİ’èƒRƒ}ƒ“ƒh
+	// CBVç¸ºï½®éšªï½­è³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		registerNum, mMaterial.constantBuffers[bNum]->bufferResource->buffer->GetGPUVirtualAddress());
 }
+

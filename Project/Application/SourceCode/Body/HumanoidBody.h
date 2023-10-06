@@ -9,18 +9,18 @@ enum class PartID
 {
 	Transform,
 
-	Body,	// ‘Ì
-	Head,	// “ª
+	Body,	// è´ãƒ»
+	Head,	// é¬†ï½­
 
-	LeftArm,	// ¶˜r
-	LeftHand,	// ¶è
-	LeftThigh,	 // ¶‘¾‚à‚à
-	LeftLeg,	 // ¶‘«
+	LeftArm,	// èŸ¾ï½¦é–»ãƒ»
+	LeftHand,	// èŸ¾ï½¦è¬‡ãƒ»
+	LeftThigh,	 // èŸ¾ï½¦èŸï½ªç¹§ã‚…ï½‚
+	LeftLeg,	 // èŸ¾ï½¦é›œï½³
 
-	RightArm,	// ‰E˜r
-	RightHand,	// ‰Eè
-	RightThigh,	 // ‰E‘¾‚à‚à
-	RightLeg,	 // ‰E‘«
+	RightArm,	// èœ¿ï½³é–»ãƒ»
+	RightHand,	// èœ¿ï½³è¬‡ãƒ»
+	RightThigh,	 // èœ¿ï½³èŸï½ªç¹§ã‚…ï½‚
+	RightLeg,	 // èœ¿ï½³é›œï½³
 };
 
 enum class WeaponPartID

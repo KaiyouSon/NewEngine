@@ -3,13 +3,13 @@
 void Cloud::CreateGraphicsPipeline()
 {
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
-	depthStencilDesc.DepthEnable = true; // [“xƒeƒXƒg‚ðs‚¤
-	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// ‘‚«ž‚Ý‹–‰Â
-	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// ¬‚³‚¢‚Ù‚¤‚ðÌ—p
+	depthStencilDesc.DepthEnable = true; // è±ºï½±è Žï½¦ç¹ãƒ»ã›ç¹åŒ»ï½’é™¦å¾Œâ‰§
+	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// è­–ï½¸ç¸ºå´Žï½¾ï½¼ç¸ºï½¿éšªï½±èœ¿ï½¯
+	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// èŸ†ä¸Šï¼†ç¸ºãƒ»âŠ‡ç¸ºãƒ»ï½’è¬—ï½¡é€•ï½¨
 
 	std::string path = "Application/Shader/";
 
-	// ‚‹P“x’Šo—p
+	// é¬®å€©ï½¼æ™ï½ºï½¦è¬šï½½èœƒï½ºé€•ï½¨
 	ShaderObjectManager::Create("Cloud");
 	ShaderObjectManager::GetShaderObject("Cloud")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Cloud")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -24,7 +24,6 @@ void Cloud::CreateGraphicsPipeline()
 	setting.depthStencilDesc = depthStencilDesc;
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Cloud");
-
 }
 
 Cloud::Cloud() :

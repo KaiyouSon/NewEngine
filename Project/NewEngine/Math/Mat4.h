@@ -12,9 +12,9 @@ struct Mat4
 		float _20, float _21, float _22, float _23,
 		float _30, float _31, float _32, float _33);
 
-	static Mat4 Zero();		// ƒ[ƒs—ñ‚ğ•Ô‚·ŠÖ”
-	static Mat4 Identity();	// ’PˆÊs—ñ‚ğ•Ô‚·ŠÖ”
-	Mat4 Inverse();			// ‹ts—ñ‚ğ•Ô‚·ŠÖ”
+	static Mat4 Zero();		// ç¹§ï½¼ç¹ï½­é™¦æ‚Ÿãƒ»ç¹§å®šï½¿æ–â˜†é«¢ï½¢è¬¨ï½°
+	static Mat4 Identity();	// èœŠå€…ï½½å´ï½¡æ‚Ÿãƒ»ç¹§å®šï½¿æ–â˜†é«¢ï½¢è¬¨ï½°
+	Mat4 Inverse();			// é¨¾ãƒ»ï½¡æ‚Ÿãƒ»ç¹§å®šï½¿æ–â˜†é«¢ï½¢è¬¨ï½°
 	Mat4 Transpose();
 
 	void SetXAxis(const Vec3 xAxis);
@@ -28,14 +28,14 @@ struct Mat4
 	Vec3 GetTrans() const;
 	Vec3 GetScale() const;
 
-	// ’P€‰‰ZqƒI[ƒo[ƒ[ƒh
+	// èœŠå€¬ï£°ãƒ»ï½¼çš®ï½®æ€œï½­èˆŒãŒç¹ï½¼ç¹èˆŒãƒ»ç¹ï½­ç¹ï½¼ç¹ãƒ»
 	Mat4 operator*(const Mat4& other) const;
 	Mat4 operator*(const float num);
 
-	// ‘ã“ü‰‰ZqƒI[ƒo[ƒ[ƒh
+	// è‰ï½£èœˆï½¥è²çš®ï½®æ€œï½­èˆŒãŒç¹ï½¼ç¹èˆŒãƒ»ç¹ï½­ç¹ï½¼ç¹ãƒ»
 	Mat4& operator*=(const Mat4& other);
 
-	// ”äŠr‰‰Zq‚ÌƒI[ƒo[ƒ[ƒh
+	// è±ˆç¢‘ï½¼ãƒ»ï½¼çš®ï½®æ€œï½­èˆŒãƒ»ç¹§ï½ªç¹ï½¼ç¹èˆŒãƒ»ç¹ï½­ç¹ï½¼ç¹ãƒ»
 	bool operator!=(const Mat4& other) const;
 
 };

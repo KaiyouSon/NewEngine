@@ -28,4 +28,3 @@ private:
 	friend Singleton<DebugManager>;
 	DebugManager();
 };
-

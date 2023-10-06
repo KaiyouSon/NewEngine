@@ -39,7 +39,7 @@ namespace ConstantBufferData
 
 	struct CTransform2D
 	{
-		Mat4 mat;	//3D•ÏŠ·s—ñ
+		Mat4 mat;	//3Då¤‰æ›è¡Œåˆ—
 	};
 
 	struct CCircleGauge
@@ -56,14 +56,14 @@ namespace ConstantBufferData
 
 	struct CColor
 	{
-		Color color;// F
+		Color color;// è‰²
 	};
 
 	struct CMaterialColor
 	{
-		Color ambient;// ƒAƒ“ƒrƒGƒ“ƒgŒW”
-		Color diffuse;// ƒfƒBƒtƒ…[ƒYŒW”
-		Color specular;	// ƒXƒyƒLƒ…ƒ‰[ŒW”
+		Color ambient;// ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆä¿‚æ•°
+		Color diffuse;// ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºä¿‚æ•°
+		Color specular;	// ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼ä¿‚æ•°
 	};
 
 	struct CDirectionalLight

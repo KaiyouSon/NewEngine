@@ -2,8 +2,8 @@
 
 V2P main(Appdata i)
 {
-    V2P o; // ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚É“n‚·’l
-    o.svpos = mul(mat, i.pos); // À•W‚És—ñ‚ðæŽZ
+    V2P o; // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«æ¸¡ã™å€¤
+    o.svpos = mul(mat, i.pos); // åº§æ¨™ã«è¡Œåˆ—ã‚’ä¹—ç®—
     o.uv = i.uv;
     return o;
 }

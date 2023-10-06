@@ -14,7 +14,7 @@ GPUEmitter::GPUEmitter() :
 	mTexture(TextureManager::GetTexture("White")),
 	mStructuredBuffer(std::make_unique<StructuredBuffer>())
 {
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰Šú‰»
+	// ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 	MaterialInit();
 	mTexture->isMaterial = true;
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
@@ -36,7 +36,7 @@ void GPUEmitter::Update(Transform* parent)
 		mTransform.SetWorldMat(mat);
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì“]‘—
+	// ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«ç¸ºï½®éœ†ï½¢é¨¾ãƒ»
 	MaterialTransfer();
 }
 void GPUEmitter::Draw(const BlendMode blendMode)
@@ -53,7 +53,7 @@ void GPUEmitter::Draw(const BlendMode blendMode)
 
 	if (mStructuredBuffer->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_GENERIC_READ)
 	{
-		// GENERIC_READ -> UNORDERED_ACCESS ‚É‚µ‚ÄSRV‚ğİ’è‚·‚é
+		// GENERIC_READ -> UNORDERED_ACCESS ç¸ºï½«ç¸ºåŠ±â€»SRVç¹§å®šï½¨ï½­è³å£¹â˜†ç¹§ãƒ»
 		renderBase->TransitionBufferState(
 			mStructuredBuffer->GetBufferResource(),
 			D3D12_RESOURCE_STATE_GENERIC_READ,
@@ -64,10 +64,10 @@ void GPUEmitter::Draw(const BlendMode blendMode)
 	uint32_t index = mComputePipeline->GetRootSignature()->GetUAVStartIndex();
 	cmdList->SetComputeRootDescriptorTable(index, mStructuredBuffer->GetBufferResource()->uavHandle.gpu);
 
-	// ƒfƒBƒXƒpƒbƒ`
+	// ç¹ãƒ»ã…ç¹§ï½¹ç¹ä»£ãƒ£ç¹ãƒ»
 	cmdList->Dispatch(1, 1, 1);
 
-	// GraphicsPipeline•`‰æƒRƒ}ƒ“ƒh
+	// GraphicsPipelineè¬ å†—åˆ¤ç¹§ï½³ç¹æ§­Î¦ç¹ãƒ»
 	mGraphicsPipeline->DrawCommand(blendMode);
 
 	auto descriptorHeap2 = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
@@ -75,14 +75,14 @@ void GPUEmitter::Draw(const BlendMode blendMode)
 
 	MaterialDrawCommands();
 
-	// SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ğƒ‹[ƒgƒpƒ‰ƒ[ƒ^2”Ô‚Éİ’è
+	// SRVç¹åµãƒ»ç¹åŠ±ãƒ»èœˆç£¯ï£°ï½­ç¸ºï½«ç¸ºã‚…ï½‹SRVç¹§åµÎç¹ï½¼ç¹åŒ»ãƒ±ç¹ï½©ç¹ï½¡ç¹ï½¼ç¹§ï½¿2é€¡ï½ªç¸ºï½«éšªï½­è³ãƒ»
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	cmdList->SetGraphicsRootDescriptorTable(
 		startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
 
 	if (mStructuredBuffer->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_UNORDERED_ACCESS)
 	{
-		// GENERIC_READ -> UNORDERED_ACCESS ‚É‚µ‚ÄSRV‚ğİ’è‚·‚é
+		// GENERIC_READ -> UNORDERED_ACCESS ç¸ºï½«ç¸ºåŠ±â€»SRVç¹§å®šï½¨ï½­è³å£¹â˜†ç¹§ãƒ»
 		renderBase->TransitionBufferState(
 			mStructuredBuffer->GetBufferResource(),
 			D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
@@ -95,32 +95,32 @@ void GPUEmitter::Draw(const BlendMode blendMode)
 	cmdList->DrawInstanced((uint32_t)mVertices.size(), 1, 0, 0);
 }
 
-// --- ƒ}ƒeƒŠƒAƒ‹ŠÖ˜A --------------------------------------------------- //
+// --- ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«é«¢ï½¢é¨¾ï½£ --------------------------------------------------- //
 void GPUEmitter::MaterialInit()
 {
-	// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	// ç¹§ï½¤ç¹ï½³ç¹§ï½¹ç¹§ï½¿ç¹ï½³ç¹§ï½¹é€•æ»“ãƒ»
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3Ds—ñ
+	// 3Dé™¦æ‚Ÿãƒ»
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransformP>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// F
+	// æ¿¶ï½²
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// UVî•ñ
+	// UVè« ãƒ»ï£°ï½±
 	iConstantBuffer = std::make_unique<ConstantBuffer<CUVParameter>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ‰Šú‰»
+	// è›»æ™„æ‚„è›¹ãƒ»
 	mMaterial.Init();
 }
 void GPUEmitter::MaterialTransfer()
 {
 	mBillboard.CalculateBillboardMat();
 
-	// ƒ}ƒgƒŠƒbƒNƒX
+	// ç¹æ§­ãƒ¨ç¹ï½ªç¹ãƒ»ã‘ç¹§ï½¹
 	CTransformP transformPData =
 	{
 		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
@@ -129,11 +129,11 @@ void GPUEmitter::MaterialTransfer()
 	};
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformPData);
 
-	// Fƒf[ƒ^
+	// æ¿¶ï½²ç¹ãƒ»ãƒ»ç¹§ï½¿
 	CColor colorData = { color / 255 };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[1].get(), colorData);
 
-	// UVƒf[ƒ^
+	// UVç¹ãƒ»ãƒ»ç¹§ï½¿
 	CUVParameter uvData = { offset,tiling };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[2].get(), uvData);
 }
@@ -143,34 +143,34 @@ void GPUEmitter::MaterialDrawCommands()
 
 	for (uint32_t i = 0; i < mMaterial.constantBuffers.size(); i++)
 	{
-		// CBV‚Ìİ’èƒRƒ}ƒ“ƒh
+		// CBVç¸ºï½®éšªï½­è³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 			i, mMaterial.constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
 	}
 }
 
-// --- ƒZƒbƒ^[ -------------------------------------------------------- //ko
+// --- ç¹§ï½»ç¹ãƒ»ã¡ç¹ï½¼ -------------------------------------------------------- //ko
 
-// ƒeƒNƒXƒ`ƒƒ[
+// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼
 void GPUEmitter::SetTexture(Texture* texture) { mTexture = texture; }
 
-// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“
+// ç¹§ï½°ç¹ï½©ç¹è¼”ã…ç¹ãƒ»ã‘ç¹§ï½¹ç¹ä»£ã†ç¹åŠ±Î›ç¹§ï½¤ç¹ï½³
 void GPUEmitter::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline) { mGraphicsPipeline = graphicsPipeline; }
 
-// ƒp[ƒeƒBƒNƒ‹‚Ì”
+// ç¹ä»£ãƒ»ç¹ãƒ»ã…ç¹§ï½¯ç¹ï½«ç¸ºï½®è¬¨ï½°
 void GPUEmitter::SetMaxParticle(const uint32_t max)
 {
 	pParam.resize(max);
 	mVertices.resize(max);
 
-	// SRV‚ÆUAV‚ğì¬
+	// SRVç¸ºï½¨UAVç¹§å‰ƒï½½æ‡ˆãƒ»
 	uint32_t dataSize = sizeof(ParticleParameter::PParam0) * max;
 	mStructuredBuffer->Create(dataSize);
 
 	DescriptorHeapManager::GetDescriptorHeap("SRV")->
 		CreateSRV(mStructuredBuffer->GetBufferResource(), max, sizeof(ParticleParameter::PParam0));
 
-	// GENERIC_READ -> UNORDERED_ACCESS ‚É‚µ‚ÄUAV‚ğì¬
+	// GENERIC_READ -> UNORDERED_ACCESS ç¸ºï½«ç¸ºåŠ±â€»UAVç¹§å‰ƒï½½æ‡ˆãƒ»
 	RenderBase::GetInstance()->TransitionBufferState(
 		mStructuredBuffer->GetBufferResource(),
 		D3D12_RESOURCE_STATE_GENERIC_READ,
@@ -181,21 +181,24 @@ void GPUEmitter::SetMaxParticle(const uint32_t max)
 		CreateUAV(mStructuredBuffer->GetBufferResource(), max, sizeof(ParticleParameter::PParam0));
 }
 
-// --- ƒQƒbƒ^[ -------------------------------------------------------- //
+// --- ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼ -------------------------------------------------------- //
 
-// ƒ[ƒ‹ƒhÀ•W
+// ç¹ï½¯ç¹ï½¼ç¹ï½«ç¹ç‰™ï½ºï½§è®“ãƒ»
 Vec3 GPUEmitter::GetWorldPos()
 {
 	Vec3 worldPos = Vec3MulMat4(pos, mTransform.GetWorldMat(), true);
 	return worldPos;
 }
 
-// ƒ[ƒ‹ƒhƒXƒP[ƒ‹
+// ç¹ï½¯ç¹ï½¼ç¹ï½«ç¹å³¨ã›ç¹§ï½±ç¹ï½¼ç¹ï½«
 Vec3 GPUEmitter::GetWorldScale()
 {
 	Vec3 worldScale = mTransform.GetWorldMat().GetScale();
 	return worldScale;
 }
 
-// ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
-Transform GPUEmitter::GetTransform() { return mTransform; }
+// ç¹åŒ»Î›ç¹ï½³ç¹§ï½¹ç¹è¼”ã‹ç¹ï½¼ç¹ï£°
+Transform GPUEmitter::GetTransform()
+{
+	return mTransform;
+}

@@ -11,8 +11,8 @@ void Viewport::Update()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	//----------------------- ÉrÉÖÅ[É|Å[ÉgÇÃê›íËÉRÉ}ÉìÉh -----------------------//
-	// ÉrÉÖÅ[É|Å[Égê›íËÉRÉ}ÉìÉh
+	//----------------------- ÁπùËñôŒóÁπùÔΩºÁπùÊò¥„ÉªÁπùÂåª„ÉªÈö™ÔΩ≠Ëû≥Â£π„ÅïÁπùÊß≠Œ¶Áπù„Éª-----------------------//
+	// ÁπùËñôŒóÁπùÔΩºÁπùÊò¥„ÉªÁπùÈÉÅÔΩ®ÔΩ≠Ëû≥Â£π„ÅïÁπùÊß≠Œ¶Áπù„Éª
 	D3D12_VIEWPORT viewport;
 	viewport.TopLeftX = mLeftTopPos.x;
 	viewport.TopLeftY = mLeftTopPos.y;
@@ -21,11 +21,11 @@ void Viewport::Update()
 	viewport.MinDepth = mMinDepth;
 	viewport.MaxDepth = mMaxDepth;
 
-	// ÉrÉÖÅ[É|Å[Égê›íËÉRÉ}ÉìÉhÇÅAÉRÉ}ÉìÉhÉäÉXÉgÇ…êœÇﬁ
+	// ÁπùËñôŒóÁπùÔΩºÁπùÊò¥„ÉªÁπùÈÉÅÔΩ®ÔΩ≠Ëû≥Â£π„ÅïÁπùÊß≠Œ¶ÁπùÂ≥®ÔΩíÁ∏≤‚àö„ÅïÁπùÊß≠Œ¶ÁπùÂ≥®ŒúÁπßÔΩπÁπùÂåª‚ÜìÈÅ®Èò™„Éª
 	renderBase->GetCommandList()->RSSetViewports(1, &viewport);
 }
 
-// ÉZÉbÉ^Å[
+// ÁπßÔΩªÁπù„Éª„Å°ÁπùÔΩº
 void Viewport::SetViewport(
 	const Vec2 leftTopPos, const Vec2 size,
 	const float MinDepth, const float MaxDepth)
@@ -37,7 +37,7 @@ void Viewport::SetViewport(
 	mMaxDepth = MaxDepth;
 }
 
-// ÉQÉbÉ^Å[
+// ÁπßÔΩ≤Áπù„Éª„Å°ÁπùÔΩº
 Vec2 Viewport::GetLeftTopPos()
 {
 	return mLeftTopPos;

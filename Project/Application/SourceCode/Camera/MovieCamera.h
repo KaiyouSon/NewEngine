@@ -17,4 +17,3 @@ public:
 public:
 	static void SetMovieEvent(MovieEvent* movieEvent);
 };
-

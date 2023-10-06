@@ -10,29 +10,29 @@ void ComputePipeline::Create(const ComputePipelineSetting& setting)
 {
 	mSetting = setting;
 
-	// RootSignature‚Ì¶¬
+	// RootSignatureç¸ºï½®é€•æ»“ãƒ»
 	mRootSignature = std::make_unique<RootSignature>();
 	mRootSignature->Create(mSetting.rootSignatureSetting);
 
 	ID3D12Device* device = RenderBase::GetInstance()->GetDevice();
 
-	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“İ’è
+	// ç¹§ï½°ç¹ï½©ç¹è¼”ã…ç¹ãƒ»ã‘ç¹§ï½¹ç¹ä»£ã†ç¹åŠ±Î›ç¹§ï½¤ç¹ï½³éšªï½­è³ãƒ»
 	D3D12_COMPUTE_PIPELINE_STATE_DESC pipelineDesc{};
 
-	// ƒVƒF[ƒ_[‚Ìİ’è
+	// ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼ç¸ºï½®éšªï½­è³ãƒ»
 	if (mSetting.shaderObject->GetCSBlob() != nullptr)
 	{
 		pipelineDesc.CS = CD3DX12_SHADER_BYTECODE(mSetting.shaderObject->GetCSBlob());
 	}
 
-	// ‚»‚Ì‘¼‚Ìİ’èiƒIƒvƒVƒ‡ƒ“j
-	pipelineDesc.NodeMask = 0;							// ƒm[ƒhƒ}ƒXƒN‚Ìİ’è
-	pipelineDesc.CachedPSO.pCachedBlob = nullptr;		// ƒLƒƒƒbƒVƒ…‚³‚ê‚½PSO‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	pipelineDesc.CachedPSO.CachedBlobSizeInBytes = 0;	// ƒLƒƒƒbƒVƒ…‚³‚ê‚½PSO‚ÌƒTƒCƒY
+	// ç¸ºæ˜´ãƒ»è‰æ‚¶ãƒ»éšªï½­è³å¤²ï½¼åŒ»ãŒç¹åŠ±ã™ç¹ï½§ç¹ï½³ãƒ»ãƒ»
+	pipelineDesc.NodeMask = 0;							// ç¹å¼±ãƒ»ç¹å³¨ãƒ»ç¹§ï½¹ç¹§ï½¯ç¸ºï½®éšªï½­è³ãƒ»
+	pipelineDesc.CachedPSO.pCachedBlob = nullptr;		// ç¹§ï½­ç¹ï½£ç¹ãƒ»ã™ç¹ï½¥ç¸ºè¼”ï½Œç¸ºè˜–SOç¸ºï½¸ç¸ºï½®ç¹æ˜´ã†ç¹ï½³ç¹§ï½¿
+	pipelineDesc.CachedPSO.CachedBlobSizeInBytes = 0;	// ç¹§ï½­ç¹ï½£ç¹ãƒ»ã™ç¹ï½¥ç¸ºè¼”ï½Œç¸ºè˜–SOç¸ºï½®ç¹§ï½µç¹§ï½¤ç¹§ï½º
 
 	pipelineDesc.pRootSignature = mRootSignature->GetRootSignature();
 
-	// PSOì¬
+	// PSOè´æ‡ˆãƒ»
 	mResult = device->CreateComputePipelineState(&pipelineDesc, IID_PPV_ARGS(&mPSO));
 }
 
@@ -40,7 +40,7 @@ void ComputePipeline::DrawCommand()
 {
 	auto* cmdList = RenderBase::GetInstance()->GetCommandList();
 
-	// ƒ‹[ƒgƒVƒOƒl[ƒ`ƒƒ
+	// ç¹ï½«ç¹ï½¼ç¹åŒ»ã™ç¹§ï½°ç¹é˜ªãƒ»ç¹âˆšÎ•
 	cmdList->SetComputeRootSignature(mRootSignature->GetRootSignature());
 
 	// PSO
@@ -51,3 +51,4 @@ RootSignature* ComputePipeline::GetRootSignature()
 {
 	return mRootSignature.get();
 }
+

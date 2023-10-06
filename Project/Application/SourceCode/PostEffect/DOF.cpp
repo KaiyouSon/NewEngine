@@ -17,11 +17,11 @@ DOF::DOF() :
 void DOF::CreateGraphicsPipeline()
 {
 	//D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
-	//depthStencilDesc.DepthEnable = false; // [“xƒeƒXƒg‚ðs‚¤
+	//depthStencilDesc.DepthEnable = false; // è±ºï½±è Žï½¦ç¹ãƒ»ã›ç¹åŒ»ï½’é™¦å¾Œâ‰§
 
 	//std::string path = "Application/Shader/";
 
-	//// ”íŽÊŠE[“x—p
+	//// é™²ï½«èœ€å’é˜œè±ºï½±è Žï½¦é€•ï½¨
 	//ShaderObjectManager::Create("DOF");
 	//ShaderObjectManager::GetShaderObject("DOF")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	//ShaderObjectManager::GetShaderObject("DOF")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
@@ -69,3 +69,4 @@ void DOF::DrawDebugGui()
 	Gui::DrawCheckBox("isRGB", &flag);
 	dofData_.isRGB = flag;
 }
+

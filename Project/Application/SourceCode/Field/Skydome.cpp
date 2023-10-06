@@ -4,14 +4,14 @@ void Skydome::CreateGraphicsPipeline()
 {
 	std::string path = "Application/Shader/";
 
-	// ƒrƒlƒbƒg—p
+	// ç¹è–™ãƒ­ç¹ãƒ»ãƒ¨é€•ï½¨
 	ShaderObjectManager::Create("Skydome");
 	ShaderObjectManager::GetShaderObject("Skydome")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Skydome")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Skydome")->CompileVertexShader(path + "SkydomeVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Skydome")->CompilePixelShader(path + "SkydomePS.hlsl", "main");
 
-	// 3DƒIƒuƒWƒFƒNƒg—p
+	// 3Dç¹§ï½ªç¹æ‚¶ãšç¹§ï½§ç¹§ï½¯ç¹è‚²ç•‘
 	GraphicsPipelineSetting setting =
 		PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Skydome");
@@ -122,3 +122,4 @@ void Skydome::DrawDebugGui()
 		Gui::EndWindow();
 	}
 }
+

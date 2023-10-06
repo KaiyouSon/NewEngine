@@ -115,3 +115,4 @@ void LogoutMenu::SetisEnd(const bool isEnd)
 {
 	sIsEnd = isEnd;
 }
+

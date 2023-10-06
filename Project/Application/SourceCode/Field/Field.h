@@ -13,7 +13,7 @@ private:
 	std::array<std::unique_ptr<MessageSign>, 5> mMessageSigns;
 
 private:
-	// ƒfƒoƒbƒO—p
+	// ç¹ãƒ»ãƒ°ç¹ãƒ»ã’é€•ï½¨
 	std::unique_ptr<Object3D> mSphere;
 
 public:
@@ -35,4 +35,3 @@ public:
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 	void SetWeedGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 };
-

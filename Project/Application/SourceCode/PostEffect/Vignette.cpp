@@ -17,7 +17,7 @@ Vignette::Vignette() :
 void Vignette::CreateGraphicsPipeline()
 {
 	//D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
-	//depthStencilDesc.DepthEnable = false; // [“xƒeƒXƒg‚ğs‚¤
+	//depthStencilDesc.DepthEnable = false; // è±ºï½±è ï½¦ç¹ãƒ»ã›ç¹åŒ»ï½’é™¦å¾Œâ‰§
 
 	//std::string path = "Application/Shader/";
 
@@ -65,3 +65,4 @@ void Vignette::DrawDebugGui()
 	vignetteData.color = vignetteData.color.To01();
 	Gui::DrawSlider2("Vignette Range", vignetteData.range, 0.01f);
 }
+

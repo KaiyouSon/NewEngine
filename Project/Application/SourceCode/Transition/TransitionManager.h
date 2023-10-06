@@ -4,7 +4,7 @@
 
 template<typename T> class Singleton;
 
-// 後トランジション全部このクラスのまとめる
+// 蠕後ヨ繝ｩ繝ｳ繧ｸ繧ｷ繝ｧ繝ｳ蜈ｨ驛ｨ縺薙�ｮ繧ｯ繝ｩ繧ｹ縺ｮ縺ｾ縺ｨ繧√ｋ
 class TransitionManager : public Singleton<TransitionManager>
 {
 private:

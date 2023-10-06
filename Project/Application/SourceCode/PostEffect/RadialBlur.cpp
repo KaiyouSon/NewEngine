@@ -15,11 +15,11 @@ RadialBlur::RadialBlur() :
 void RadialBlur::CreateGraphicsPipeline()
 {
 	//D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
-	//depthStencilDesc.DepthEnable = false; // [“xƒeƒXƒg‚ðs‚¤
+	//depthStencilDesc.DepthEnable = false; // è±ºï½±è Žï½¦ç¹ãƒ»ã›ç¹åŒ»ï½’é™¦å¾Œâ‰§
 
 	//std::string path = "Application/Shader/";
 
-	//// ‚‹P“x’Šo—p
+	//// é¬®å€©ï½¼æ™ï½ºï½¦è¬šï½½èœƒï½ºé€•ï½¨
 	//ShaderObjectManager::Create("RadialBlur");
 	//ShaderObjectManager::GetShaderObject("RadialBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	//ShaderObjectManager::GetShaderObject("RadialBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
@@ -66,3 +66,4 @@ void RadialBlur::DrawDebugGui()
 	Gui::DrawSlider1("LoopNum", data_.loopNum, 1.f);
 	data_.loopNum = Clamp<float>(data_.loopNum, 1, 16);
 }
+

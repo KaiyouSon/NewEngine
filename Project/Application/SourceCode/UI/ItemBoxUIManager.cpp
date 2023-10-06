@@ -15,7 +15,7 @@ ItemBoxUIManager::ItemBoxUIManager() :
 
 void ItemBoxUIManager::Init()
 {
-	// ’†SÀ•W
+	// ä¸­å¿ƒåº§æ¨™
 	mParent.pos = Vec2(288, GetWindowSize().y - 256);
 	mParent.scale = 1.25f;
 	mParent.Update();

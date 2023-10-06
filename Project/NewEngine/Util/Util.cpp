@@ -63,7 +63,7 @@ Vec2 WorldToScreen(const Vec3 worldPos)
 	return { result.x,result.y };
 }
 
-// OŠpŒ`‚Ì–@ü‚ğ‹‚ß‚é
+// è³èŠ½ï½§è²ï½½ï½¢ç¸ºï½®è±•æ…•ï½·å£¹ï½’è±ã‚…ï½ç¹§ãƒ»
 Vec3 GetTriangleNormal(const Vec3 p0, const Vec3 p1, const Vec3 p2)
 {
 	Vec3 v1 = p1 - p0;
@@ -74,7 +74,7 @@ Vec3 GetTriangleNormal(const Vec3 p0, const Vec3 p1, const Vec3 p2)
 	return normal.Norm();
 }
 
-// Debugƒrƒ‹ƒh‚Ì‚İÀs‚·‚é
+// Debugç¹è–™Îç¹å³¨ãƒ»ç¸ºï½¿è³æº¯ï½¡å¾Œâ˜†ç¹§ãƒ»
 void ProcessAtDebugBulid(std::function<void()> lambdaFunc)
 {
 #ifdef _DEBUG
@@ -84,7 +84,7 @@ void ProcessAtDebugBulid(std::function<void()> lambdaFunc)
 #endif
 }
 
-// Releaseƒrƒ‹ƒhg‚ÌÀs‚·‚é
+// Releaseç¹è–™Îç¹èŠ½ï½ºï½«ç¸ºï½®è³æº¯ï½¡å¾Œâ˜†ç¹§ãƒ»
 void ProcessAtReleaseBulid(std::function<void()> lambdaFunc)
 {
 #ifdef NDEBUG
@@ -99,19 +99,19 @@ void OutputDebugLog(const char* fmt ...)
 #ifdef _DEBUG
 	char buffer[1024]{};
 
-	// ‰Â•Ï’·ˆø”‚ğæ“¾‚·‚é‚½‚ß‚Ìˆ—
+	// èœ¿ï½¯èŸè›¾èè ‘å¢“ç„šç¹§è²å™è •åŠ±â˜†ç¹§ä¹â—†ç¹§âˆšãƒ»èœƒï½¦é€…ãƒ»
 	va_list args;
 	va_start(args, fmt);
 
-	// ƒtƒH[ƒ}ƒbƒg‚³‚ê‚½•¶š—ñ‚ğbuffer‚ÉŠi”[‚µ‚Ü‚·
+	// ç¹è¼”ã‹ç¹ï½¼ç¹æ§­ãƒ£ç¹åŒ»ï¼†ç¹§å¾Œâ—†è­ãƒ»ï½­æ€œãƒ»ç¹§é›ufferç¸ºï½«è­¬ï½¼é‚é˜ªï¼ ç¸ºï½¾ç¸ºãƒ»
 	vsnprintf(buffer, sizeof(buffer), fmt, args);
 
-	// ‰Â•Ï’·ˆø”‚Ìˆ—‚ğI—¹‚µ‚Ü‚·
+	// èœ¿ï½¯èŸè›¾èè ‘å¢“ç„šç¸ºï½®èœƒï½¦é€…ãƒ»ï½’é‚¨ã‚†ï½ºãƒ»ï¼ ç¸ºï½¾ç¸ºãƒ»
 	va_end(args);
 
-	// ÅŒã‚É‰üs‚ğ’Ç‰Á‚µ‚Ü‚·
+	// è­›Â€è •å¾Œâ†“è¬¾ï½¹é™¦å¾Œï½’éœ‘ï½½èœ‰ï£°ç¸ºåŠ±âˆªç¸ºãƒ»
 	uint32_t len = (uint32_t)strlen(buffer);
-	// ƒoƒbƒtƒ@‚É\•ª‚È—]—T‚ª‚ ‚éê‡‚Ì‚İ‰üs‚ğ’Ç‰Á‚µ‚Ü‚·
+	// ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½«èœŠâˆãƒ»ç¸ºï½ªè´å‘µï½£è¼”â€²ç¸ºã‚…ï½‹è£ï½´èœ·åŒ»ãƒ»ç¸ºï½¿è¬¾ï½¹é™¦å¾Œï½’éœ‘ï½½èœ‰ï£°ç¸ºåŠ±âˆªç¸ºãƒ»
 	if (len < sizeof(buffer) - 2)
 	{
 		buffer[len] = '\n';
@@ -121,3 +121,4 @@ void OutputDebugLog(const char* fmt ...)
 	OutputDebugStringA(buffer);
 #endif
 }
+

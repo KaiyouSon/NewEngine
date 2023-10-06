@@ -6,7 +6,7 @@ void ShadowObj::CreateGraphicsPipeline()
 {
 	std::string path = "Application/Shader/";
 
-	// ShadowObj—p
+	// ShadowObjç”¨
 	ShaderObjectManager::Create("ShadowObj");
 	ShaderObjectManager::GetShaderObject("ShadowObj")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("ShadowObj")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -14,7 +14,7 @@ void ShadowObj::CreateGraphicsPipeline()
 	ShaderObjectManager::GetShaderObject("ShadowObj")->CompileVertexShader(path + "ShadowObjVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("ShadowObj")->CompilePixelShader(path + "ShadowObjPS.hlsl", "main");
 
-	// 3DƒIƒuƒWƒFƒNƒg—p
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”¨
 	GraphicsPipelineSetting setting =
 		PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("ShadowObj");
@@ -29,12 +29,12 @@ ShadowObj::ShadowObj() :
 	mCamera(&Camera::current), mModel(nullptr), mParent(nullptr),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ShadowObj"))
 {
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰Šú‰»
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®åˆæœŸåŒ–
 	MaterialInit();
 }
 void ShadowObj::Update(Transform* parent)
 {
-	// ƒJƒƒ‰‚ªİ’è‚µ‚Ä‚È‚¢ê‡
+	// ã‚«ãƒ¡ãƒ©ãŒè¨­å®šã—ã¦ãªã„å ´åˆ
 	if (mCamera == nullptr || mCamera == &Camera::current)
 	{
 		mCamera = &Camera::current;
@@ -60,7 +60,7 @@ void ShadowObj::Update(Transform* parent)
 		mTransform.SetWorldMat(mat);
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì“]‘—
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®è»¢é€
 	MaterialTransfer();
 }
 void ShadowObj::Draw()
@@ -69,42 +69,42 @@ void ShadowObj::Draw()
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// GraphicsPipeline•`‰æƒRƒ}ƒ“ƒh
+	// GraphicsPipelineæç”»ã‚³ãƒãƒ³ãƒ‰
 	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
 
-	// VBV‚ÆIBV‚Ìİ’èƒRƒ}ƒ“ƒh
+	// VBVã¨IBVã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mModel->mesh.vertexBuffer.GetvbViewAddress());
 	renderBase->GetCommandList()->IASetIndexBuffer(mModel->mesh.indexBuffer.GetibViewAddress());
 
 	MaterialDrawCommands();
 
-	// SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ğƒ‹[ƒgƒpƒ‰ƒ[ƒ^2”Ô‚Éİ’è
+	// SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿2ç•ªã«è¨­å®š
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mModel->texture->GetBufferResource()->srvHandle.gpu);
 
 	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModel->mesh.indices.size(), 1, 0, 0, 0);
 }
 
-// --- ƒ}ƒeƒŠƒAƒ‹ŠÖ˜A --------------------------------------------------- //
+// --- ãƒãƒ†ãƒªã‚¢ãƒ«é–¢é€£ --------------------------------------------------- //
 void ShadowObj::MaterialInit()
 {
-	// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3Ds—ñ
+	// 3Dè¡Œåˆ—
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransformShadowObj>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// 3Ds—ñ
+	// 3Dè¡Œåˆ—
 	iConstantBuffer = std::make_unique<ConstantBuffer<CLightView>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	mMaterial.Init();
 }
 void ShadowObj::MaterialTransfer()
 {
-	// ƒ}ƒgƒŠƒbƒNƒX
+	// ãƒãƒˆãƒªãƒƒã‚¯ã‚¹
 	CTransformShadowObj transformShadowObjData =
 	{
 		mCamera->GetViewLookToMat() * mCamera->GetOrthoGrphicProjectionMat(),
@@ -124,27 +124,27 @@ void ShadowObj::MaterialDrawCommands()
 
 	for (uint32_t i = 0; i < mMaterial.constantBuffers.size(); i++)
 	{
-		// CBV‚Ìİ’èƒRƒ}ƒ“ƒh
+		// CBVã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 			i, mMaterial.constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
 	}
 }
 
-// --- ƒZƒbƒ^[ -------------------------------------------------------- //
+// --- ã‚»ãƒƒã‚¿ãƒ¼ -------------------------------------------------------- //
 
-// ƒ‚ƒfƒ‹
+// ãƒ¢ãƒ‡ãƒ«
 void ShadowObj::SetModel(Model* model)
 {
 	mModel = model;
 }
 
-// ƒJƒƒ‰
+// ã‚«ãƒ¡ãƒ©
 void ShadowObj::SetCamera(Camera* camera)
 {
 	mCamera = camera;
 }
 
-// e
+// è¦ª
 void ShadowObj::SetParent(Transform* parent)
 {
 	mParent = parent;

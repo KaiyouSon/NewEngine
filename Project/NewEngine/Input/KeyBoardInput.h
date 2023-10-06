@@ -9,22 +9,22 @@ template<typename T> class Singleton;
 class KeyBoardInput : public Singleton<KeyBoardInput>
 {
 private:
-	Microsoft::WRL::ComPtr<IDirectInputDevice8> keyboard_;
+	Microsoft::WRL::ComPtr<IDirectInputDevice8> mKeyboard;
 
-	std::array<unsigned char, 256> keys_;
-	std::array<unsigned char, 256> prevKeys_;
+	std::array<unsigned char, 256> mKeys;
+	std::array<unsigned char, 256> mPrevKeys;
 
 public:
-	void Init();	// ‰Šú‰»
-	void Update();	// XVˆ—
+	void Init();	// è›»æ™„æ‚„è›¹ãƒ»
+	void Update();	// è­–ï½´è­ï½°èœƒï½¦é€…ãƒ»
 
-	// ƒL[‚ª‰Ÿ‚³‚ê‚Ä‚é
+	// ç¹§ï½­ç¹ï½¼ç¸ºæ¢§æ¬¾ç¸ºè¼”ï½Œç¸ºï½¦ç¹§åŒºå‡¾
 	static bool GetKey(const uint32_t key);
 
-	// ƒL[‚ğ‰Ÿ‚µ‚½uŠÔ
+	// ç¹§ï½­ç¹ï½¼ç¹§å‘ˆæ¬¾ç¸ºåŠ±â—†è¿¸ï½¬é«¢ãƒ»
 	static bool GetKeyDown(const uint32_t key);
 
-	// ƒL[‚ğ—£‚µ‚½uŠÔ
+	// ç¹§ï½­ç¹ï½¼ç¹§å¸å±¬ç¸ºåŠ±â—†è¿¸ï½¬é«¢ãƒ»
 	static bool GetKeyUp(const uint32_t key);
 
 private:

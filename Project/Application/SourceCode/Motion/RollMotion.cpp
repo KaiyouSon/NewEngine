@@ -83,15 +83,15 @@ void RollMotion::Step0Init(HumanoidBody* human)
 
 	mMoveEase.Reset();
 
-	// UŒ‚ƒ‚[ƒVƒ‡ƒ“‚Åi‚Þ‹——£‚ÌŒvŽZ
+	// è¬¾ï½»è¬¦ãƒ»Î”ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³ç¸ºï½§é¨¾ï½²ç¹§Â€éœæ™žå±¬ç¸ºï½®éšªè‚²ï½®ãƒ»
 	player->CalcFrontVec();
 	mLength = 30;// CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->mFrontVec, 30);
 
-	// Œ»Ý‚ÌÀ•W‚ðŽæ“¾
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®è Žï½§è®“å¶ï½’èœ¿é–€ï½¾ãƒ»
 	mStartPos = human->pos;
 	mEndPos = mStartPos + player->mFrontVec.Norm() * mLength;
 
-	// “ü—Í‚µ‚½Œã‚Ì‰ñ“]Šp‚ðŽæ“¾
+	// èœˆï½¥èœ‰å¸™ï¼ ç¸ºæº·ï½¾å¾Œãƒ»è—æ«ï½»ï½¢éš—åµï½’èœ¿é–€ï½¾ãƒ»
 	mRotY = atan2f(player->mFrontVec.x, player->mFrontVec.z);
 }
 void RollMotion::Step0Update(HumanoidBody* human)
@@ -154,3 +154,4 @@ void RollMotion::Step3Update(HumanoidBody* human)
 		human->GetPart(PartID::Body)->rot.x = 0;
 	}
 }
+

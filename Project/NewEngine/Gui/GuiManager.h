@@ -25,7 +25,7 @@ namespace Gui
 
 	bool DrawCollapsingHeader(const char* name);
 
-	// ƒƒjƒ…[ŠÖ˜A
+	// ç¹ï½¡ç¹ä¹Î—ç¹ï½¼é«¢ï½¢é¨¾ï½£
 	bool BeginMenuBar();
 	void EndMenuBar();
 	bool BeginMenu(const char* name);

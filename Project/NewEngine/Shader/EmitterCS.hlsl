@@ -21,13 +21,13 @@ RWStructuredBuffer<Data> outputData : register(u0);
 void main(uint3 DTid : SV_DispatchThreadID)
 {
     Data result = inputData[0];
-    // —á: o—Íƒf[ƒ^‚ğİ’è
+    // ä¾‹: å‡ºåŠ›ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
     for (uint i = 0; i < 2; i++)
     {
         result.data[i].curPos.y = 5.f + i * 5.f;
         result.data[i].curPos.z += 0.001f;
     }
-    // o—Íƒf[ƒ^‚ğ‘‚«‚Ş
+    // å‡ºåŠ›ãƒ‡ãƒ¼ã‚¿ã‚’æ›¸ãè¾¼ã‚€
     outputData[0] = result;
     
     //outputData[0].curPos = 10.f;

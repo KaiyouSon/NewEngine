@@ -74,3 +74,4 @@ void OpenGateMotion::CurrentStepUpdate(HumanoidBody* human)
 	human->pos = mMoveEase.InOut(mStartPos, mEndPos);
 	mMoveEase.Update();
 }
+

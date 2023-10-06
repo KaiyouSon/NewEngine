@@ -87,3 +87,4 @@ Vec3 Coffin::GetTopPos()
 {
 	return mCoffinTop->pos;
 }
+

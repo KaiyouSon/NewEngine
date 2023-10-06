@@ -30,7 +30,7 @@ void DefaultCamera::Update()
 
 	const Vec2 rate = (Absolut(stick) - deadZone) / (Absolut(max) - deadZone);
 
-	// �X�e�B�b�N�œ|���Ɖ�]���鏈��
+	// 繧ｹ繝・ぅ繝・け縺ｧ蛟偵☆縺ｨ蝗櫁ｻ｢縺吶ｋ蜃ｦ逅・
 	if (stick != 0)
 	{
 		mControlYaw += stick.Norm().x * moveSpeed * rate.x;
@@ -38,7 +38,7 @@ void DefaultCamera::Update()
 	}
 	mControlPitch = Clamp<float>(mControlPitch, -35, 80);
 
-	// ���W
+	// 蠎ｧ讓・
 	const float angleOffset = 20.f;
 	bool frontRange =
 		mPlayer->GetRot().y <= mCamera->rot.y + Radian(angleOffset) &&
@@ -63,7 +63,7 @@ void DefaultCamera::Update()
 		mAssistYaw += (mTargetYaw - mAssistYaw) * 0.05f;
 	}
 
-	// ���W�̐ݒ�
+	// 蠎ｧ讓吶・險ｭ螳・
 	mVec =
 	{
 		-sinf(Radian(mControlYaw + mAssistYaw)) * cosf(Radian(mControlPitch)),
@@ -75,7 +75,7 @@ void DefaultCamera::Update()
 	Vec3 curPos = mPlayer->GetPos() * Vec3(1.f, 0.f, 1.f) + Vec3(0.f, 9.5f, 0.f);
 	mCamera->pos = curPos + mVec.Norm() * length;
 
-	// ��]�̏���
+	// 蝗櫁ｻ｢縺ｮ蜃ｦ逅・
 	mRot =
 	{
 		Radian(mControlPitch),
@@ -83,19 +83,19 @@ void DefaultCamera::Update()
 		0.f
 	};
 
-	// �p�x�̐ݒ�
+	// 隗貞ｺｦ縺ｮ險ｭ螳・
 	mCamera->rot = mRot;
 
 	if (mIsEase == true)
 	{
-		// �؂�ւ���Ƃ��ɃC�[�W���O���邽�߂̏���
+		// 蛻・ｊ譖ｿ縺医ｋ縺ｨ縺阪↓繧､繝ｼ繧ｸ繝ｳ繧ｰ縺吶ｋ縺溘ａ縺ｮ蜃ｦ逅・
 		mCamera->pos = Camera::current.pos;
 		mCamera->rot = Camera::current.rot;
-		// ���݂̍��W (y���W�Œ�)
+		// 迴ｾ蝨ｨ縺ｮ蠎ｧ讓・(y蠎ｧ讓吝崋螳・
 		Vec3 targetPos = curPos + -mPlayer->GetFrontVec() * length;
 		Vec3 targetRot = { 0,mPlayer->GetRot().y,0 };
 
-		// ���]���Ȃ��悤�ɂ��邽�߂̏���
+		// 荳蝗櫁ｻ｢縺励↑縺・ｈ縺・↓縺吶ｋ縺溘ａ縺ｮ蜃ｦ逅・
 		if (Camera::current.rot.y - targetRot.y >= Radian(180))
 		{
 			float diff = Radian(360) - mCamera->rot.y;
@@ -112,7 +112,7 @@ void DefaultCamera::Update()
 
 		EaseCamera();
 
-		// ���݂��̃J�����ɑ��
+		// 迴ｾ蝨ｨ縺・・繧ｫ繝｡繝ｩ縺ｫ莉｣蜈･
 		Camera::current = *mCamera;
 		mTargetYaw = 0;
 		mAssistYaw = 0;
@@ -121,7 +121,8 @@ void DefaultCamera::Update()
 	}
 	else
 	{
-		// ���݂��̃J�����ɑ��
+		// 迴ｾ蝨ｨ縺・・繧ｫ繝｡繝ｩ縺ｫ莉｣蜈･
 		Camera::current = *mCamera;
 	}
 }
+

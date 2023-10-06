@@ -16,19 +16,18 @@ public:
 	void Reset();
 	void Update(const int32_t addTimer = 1);
 
-public:	// ƒZƒbƒ^[
+public:	// ç¹§ï½»ç¹ãƒ»ã¡ç¹ï½¼
 	void SetLimitTimer(const int32_t maxTimer);
 	void SetTimer(const int32_t timer);
 
-public:	// ƒQƒbƒ^[
+public:	// ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
 	int32_t GetTimer();
 	float GetTimeRate();
 	bool GetisTimeOut();
 
 public:
 	/// <summary>
-	/// bool GetisTimeOut()‚Æ“¯‚¶
+	/// bool GetisTimeOut()ç¸ºï½¨èœ·å¾ŒÂ§
 	/// </summary>
 	bool operator==(const bool flag);
 };
-

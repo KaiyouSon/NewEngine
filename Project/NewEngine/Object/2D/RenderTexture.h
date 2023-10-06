@@ -15,8 +15,8 @@ DirectX12WarningDisableEnd
 class RenderTexture
 {
 private:
-	std::vector<CD3DX12_VIEWPORT> mViewports;	// ƒrƒ…[ƒ|[ƒg
-	std::vector<CD3DX12_RECT> mScissorRects;	// ƒVƒU[‹éŒ`
+	std::vector<CD3DX12_VIEWPORT> mViewports;	// ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆ
+	std::vector<CD3DX12_RECT> mScissorRects;	// ã‚·ã‚¶ãƒ¼çŸ©å½¢
 
 private:
 	std::vector<BufferResource> mBufferResources;
@@ -32,6 +32,6 @@ public:
 	void PrevDrawScene();
 	void PostDrawScene();
 
-public: // ƒQƒbƒ^[
+public: // ã‚²ãƒƒã‚¿ãƒ¼
 	std::vector<BufferResource>* GetBufferResources();
 };

@@ -4,16 +4,16 @@
 
 void IndexBuffer::Create(const std::vector<uint16_t>& indices)
 {
-	// ’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY
+	// é¬†ã‚‰ã›ç¹ãƒ»ãƒ»ç¹§ï½¿èœˆï½¨è´è–™ãƒ»ç¹§ï½µç¹§ï½¤ç¹§ï½º
 	uint32_t sizeIB = static_cast<uint32_t>(sizeof(uint16_t) * indices.size());
 
-	// ’¸“_ƒoƒbƒtƒ@‚Ìİ’è
-	D3D12_HEAP_PROPERTIES heapProp{}; // ƒq[ƒvİ’è
-	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPU‚Ö‚Ì“]‘——p
-	// ƒŠƒ\[ƒXİ’è
+	// é¬†ã‚‰ã›ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½®éšªï½­è³ãƒ»
+	D3D12_HEAP_PROPERTIES heapProp{}; // ç¹åµãƒ»ç¹è‹“ï½¨ï½­è³ãƒ»
+	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUç¸ºï½¸ç¸ºï½®éœ†ï½¢é¨¾âˆ«ç•‘
+	// ç¹ï½ªç¹§ï½½ç¹ï½¼ç¹§ï½¹éšªï½­è³ãƒ»
 	D3D12_RESOURCE_DESC resDesc{};
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	resDesc.Width = sizeIB; // ’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY
+	resDesc.Width = sizeIB; // é¬†ã‚‰ã›ç¹ãƒ»ãƒ»ç¹§ï½¿èœˆï½¨è´è–™ãƒ»ç¹§ï½µç¹§ï½¤ç¹§ï½º
 	resDesc.Height = 1;
 	resDesc.DepthOrArraySize = 1;
 	resDesc.MipLevels = 1;
@@ -22,33 +22,36 @@ void IndexBuffer::Create(const std::vector<uint16_t>& indices)
 
 	HRESULT result;
 
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ì¶¬
+	// ç¹§ï½¤ç¹ï½³ç¹ãƒ»ãƒ£ç¹§ï½¯ç¹§ï½¹ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½®é€•æ»“ãƒ»
 	result = RenderBase::GetInstance()->GetDevice()->
 		CreateCommittedResource(
-			&heapProp, // ƒq[ƒvİ’è
+			&heapProp, // ç¹åµãƒ»ç¹è‹“ï½¨ï½­è³ãƒ»
 			D3D12_HEAP_FLAG_NONE,
-			&resDesc, // ƒŠƒ\[ƒXİ’è
+			&resDesc, // ç¹ï½ªç¹§ï½½ç¹ï½¼ç¹§ï½¹éšªï½­è³ãƒ»
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
 			IID_PPV_ARGS(&mIndexBuffer));
 	assert(SUCCEEDED(result));
 
-	//------------------- ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ö‚Ìƒf[ƒ^“]‘— -------------------//
+	//------------------- ç¹§ï½¤ç¹ï½³ç¹ãƒ»ãƒ£ç¹§ï½¯ç¹§ï½¹ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½¸ç¸ºï½®ç¹ãƒ»ãƒ»ç¹§ï½¿éœ†ï½¢é¨¾ãƒ»-------------------//
 	uint16_t* indexMap = nullptr;
 	result = mIndexBuffer->Map(0, nullptr, (void**)&indexMap);
 	assert(SUCCEEDED(result));
-	// ‘S’¸“_‚É‘Î‚µ‚Ä
+	// èœˆï½¨é¬†ã‚‰ã›ç¸ºï½«èŸ‡ï½¾ç¸ºåŠ±â€»
 	for (int i = 0; i < indices.size(); i++)
 	{
-		indexMap[i] = indices[i]; // À•W‚ğƒRƒs[
+		indexMap[i] = indices[i]; // è ï½§è®“å¶ï½’ç¹§ï½³ç¹æ–ãƒ»
 	}
-	// Œq‚ª‚è‚ğ‰ğœ
+	// éƒ¢ä¹â€²ç¹§ç¿«ï½’éš—ï½£é«¯ï½¤
 	mIndexBuffer->Unmap(0, nullptr);
 
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	// ç¹§ï½¤ç¹ï½³ç¹ãƒ»ãƒ£ç¹§ï½¯ç¹§ï½¹ç¹èˆŒãƒ£ç¹è¼”ãƒç¹è–™Î—ç¹ï½¼ç¸ºï½®è´æ‡ˆãƒ»
 	mIndexBufferView.BufferLocation = mIndexBuffer->GetGPUVirtualAddress();
 	mIndexBufferView.Format = DXGI_FORMAT_R16_UINT;
 	mIndexBufferView.SizeInBytes = sizeIB;
 }
 
-D3D12_INDEX_BUFFER_VIEW* IndexBuffer::GetibViewAddress() { return &mIndexBufferView; }
+D3D12_INDEX_BUFFER_VIEW* IndexBuffer::GetibViewAddress()
+{
+	return &mIndexBufferView;
+}

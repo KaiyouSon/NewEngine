@@ -40,7 +40,7 @@ void Gui::PreDraw()
 void Gui::PostDraw()
 {
 	ImGui::Render();
-	// SRVƒq[ƒv‚Ìİ’èƒRƒ}ƒ“ƒh
+	// SRVç¹åµãƒ»ç¹åŠ±ãƒ»éšªï½­è³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 	auto srvDescHeap = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
 	renderBase->GetCommandList()->SetDescriptorHeaps(1, &srvDescHeap);
@@ -73,19 +73,19 @@ bool Gui::BeginWindow(const char* name, const Vec2& size, bool* isOpen)
 
 void Gui::BeginFullWindow(const char* name)
 {
-	// ƒEƒBƒ“ƒhƒE‚Ìİ’è
+	// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¸ºï½®éšªï½­è³ãƒ»
 	const ImGuiViewport* viewport = ImGui::GetMainViewport();
 	ImGui::SetNextWindowPos(viewport->WorkPos);
 	ImGui::SetNextWindowSize(viewport->WorkSize);
 	ImGui::SetNextWindowViewport(viewport->ID);
 
 	ImGuiWindowFlags windowFlags =
-		ImGuiWindowFlags_NoTitleBar |				// ƒ^ƒCƒgƒ‹ƒo[•\¦‚µ‚È‚¢
-		ImGuiWindowFlags_NoResize |					// ƒTƒCƒY•ÏX‚µ‚È‚¢
-		ImGuiWindowFlags_NoMove |					// À•W•ÏX‚µ‚È‚¢
-		ImGuiWindowFlags_MenuBar |					// ƒƒjƒ…[ƒo[•\¦
-		ImGuiWindowFlags_NoBringToFrontOnFocus |	// ƒNƒŠƒbƒN‚µ‚½‚çÅ‘O–Ê‚É•\¦‚µ‚È‚¢
-		ImGuiWindowFlags_NoCollapse;				// Ü‚èô‚İ‚µ‚È‚¢
+		ImGuiWindowFlags_NoTitleBar |				// ç¹§ï½¿ç¹§ï½¤ç¹åŒ»Îç¹èˆŒãƒ»é™¦ï½¨é‰ï½ºç¸ºåŠ±â†‘ç¸ºãƒ»
+		ImGuiWindowFlags_NoResize |					// ç¹§ï½µç¹§ï½¤ç¹§ï½ºèŸç”»å³©ç¸ºåŠ±â†‘ç¸ºãƒ»
+		ImGuiWindowFlags_NoMove |					// è ï½§è®“åï½¤ç”»å³©ç¸ºåŠ±â†‘ç¸ºãƒ»
+		ImGuiWindowFlags_MenuBar |					// ç¹ï½¡ç¹ä¹Î—ç¹ï½¼ç¹èˆŒãƒ»é™¦ï½¨é‰ï½º
+		ImGuiWindowFlags_NoBringToFrontOnFocus |	// ç¹§ï½¯ç¹ï½ªç¹ãƒ»ã‘ç¸ºåŠ±â—†ç¹§ç”»æ€™èœ‘åŸ¼æ“‡ç¸ºï½«é™¦ï½¨é‰ï½ºç¸ºåŠ±â†‘ç¸ºãƒ»
+		ImGuiWindowFlags_NoCollapse;				// è¬šå€¥ï½Šé€¡ï½³ç¸ºï½¿ç¸ºåŠ±â†‘ç¸ºãƒ»
 
 	static ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_None;
 	if (dockspaceFlags & ImGuiDockNodeFlags_PassthruCentralNode)
@@ -277,3 +277,4 @@ bool Gui::DrawImageButton(Texture* texture, const Vec2& size)
 	ImVec2 buttonSize = { size.x,size.y };
 	return ImGui::ImageButton(gpuHandle, buttonSize);
 }
+

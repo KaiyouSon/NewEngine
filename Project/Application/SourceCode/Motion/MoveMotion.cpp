@@ -23,10 +23,10 @@ void MoveMotion::Init(PlayerBody* human)
 	//RotsInit(human);
 }
 
-// ƒWƒ‡ƒMƒ“ƒOƒ‚[ƒVƒ‡ƒ“
+// ç¹§ï½¸ç¹ï½§ç¹§ï½®ç¹ï½³ç¹§ï½°ç¹ï½¢ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³
 void MoveMotion::JoggingMotion(PlayerBody* human)
 {
-	// Å‰‚Ìˆê‰ñ‚µ‚©’Ê‚ç‚È‚¢‰Šú‰»
+	// è­›Â€è›»æ˜´ãƒ»è³Â€è—æ§­ï¼ ç¸ºçŸ©Â€å£¹ï½‰ç¸ºï½ªç¸ºãƒ»ãƒ»è­›æº·å–§
 	if (mIsPlay == false)
 	{
 		JoggingInit(human);
@@ -71,13 +71,13 @@ void MoveMotion::JoggingMotion(PlayerBody* human)
 	}
 }
 
-// ‘–‚èƒ‚[ƒVƒ‡ƒ“
+// è¥ï½°ç¹§ç¿«Î”ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³
 void MoveMotion::RunMotion(PlayerBody* human)
 {
-	// Å‰‚Ìˆê‰ñ‚µ‚©’Ê‚ç‚È‚¢‰Šú‰»
+	// è­›Â€è›»æ˜´ãƒ»è³Â€è—æ§­ï¼ ç¸ºçŸ©Â€å£¹ï½‰ç¸ºï½ªç¸ºãƒ»ãƒ»è­›æº·å–§
 	if (mIsPlay == false)
 	{
-		// Še•”ˆÊ‚ÌŠp“x‚Ì‰Šú‰»
+		// èœ·ãƒ»Îšè´é˜ªãƒ»éš—è²ï½ºï½¦ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 		RunInit(human);
 		mIsPlay = true;
 	}
@@ -120,7 +120,7 @@ void MoveMotion::RunMotion(PlayerBody* human)
 	}
 }
 
-// Œ»İ‚Ìp¨‚©‚ç‘–‚èƒ‚[ƒVƒ‡ƒ“‚É•âŠÔ
+// è¿´ï½¾è¨ï½¨ç¸ºï½®èŸ‹ï½¿èœï½¢ç¸ºä¹ï½‰è¥ï½°ç¹§ç¿«Î”ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³ç¸ºï½«é™¬æ†ºä¿£
 void MoveMotion::Step0Init()
 {
 	mEase.SetEaseTimer(10);
@@ -153,7 +153,7 @@ void MoveMotion::Step0Update(PlayerBody* human)
 	}
 }
 
-// ‘–‚èƒ‚[ƒVƒ‡ƒ“
+// è¥ï½°ç¹§ç¿«Î”ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³
 void MoveMotion::Step1Init(PlayerBody* human)
 {
 	human = nullptr;
@@ -186,7 +186,7 @@ void MoveMotion::Step1Update(PlayerBody* human)
 	}
 }
 
-// ‘Ò‹@p¨‚É–ß‚é
+// è •ãƒ»ï½©æº·ï½§ï½¿èœï½¢ç¸ºï½«è¬Œï½»ç¹§ãƒ»
 void MoveMotion::Step2Init(PlayerBody* human)
 {
 	mEase.SetEaseTimer(10);
@@ -213,7 +213,7 @@ void MoveMotion::Step2Update(PlayerBody* human)
 	}
 }
 
-// ƒ€[ƒuƒ‚[ƒVƒ‡ƒ“‚ª•Ï‚í‚Á‚½‚É•âŠÔ‚·‚é
+// ç¹ï£°ç¹ï½¼ç¹æ‚¶Î”ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³ç¸ºæ‚Ÿï½¤å³¨ï½ç¸ºï½£ç¸ºæ»“å‡¾ç¸ºï½«é™¬æ†ºä¿£ç¸ºå¶ï½‹
 void MoveMotion::Step3Init(PlayerBody* human)
 {
 	mEase.SetEaseTimer(10);
@@ -250,19 +250,19 @@ void MoveMotion::Step3Update(PlayerBody* human)
 	}
 }
 
-// ƒWƒ‡ƒMƒ“ƒO‚Ì‰Šú‰»
+// ç¹§ï½¸ç¹ï½§ç¹§ï½®ç¹ï½³ç¹§ï½°ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 void MoveMotion::JoggingInit(PlayerBody* human)
 {
 	mIsInit = false;
 
 	mStep = mIsPlay ? 3 : 0;
 
-	// Œ»İ‚ÌŠp“x‚ğŒvZ
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®éš—è²ï½ºï½¦ç¹§å®šï½¨è‚²ï½®ãƒ»
 	mCurRots = human->CalcCurRots();
-	// I—¹‘¬“x‚Ìæ“¾
+	// é‚¨ã‚†ï½ºãƒ»Â€æº·ï½ºï½¦ç¸ºï½®èœ¿é–€ï½¾ãƒ»
 	mEndSpeed = human->parent->mJoggingSpeed;
 
-	// Še•”ˆÊ‚ÌŠp“x‚Ì‰Šú‰»
+	// èœ·ãƒ»Îšè´é˜ªãƒ»éš—è²ï½ºï½¦ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 	mStartRots[(uint32_t)PartID::Head] = Radian(Vec3(0, -2, 0));
 	mStartRots[(uint32_t)PartID::Body] = Radian(Vec3(5, 10, 0));
 	mStartRots[(uint32_t)PartID::RightArm] = Radian(Vec3(45, 0, 5));
@@ -286,19 +286,19 @@ void MoveMotion::JoggingInit(PlayerBody* human)
 	mEndRots[(uint32_t)PartID::LeftLeg] = Radian(Vec3(10, 0, 0));
 }
 
-// ‘–‚è‚Ì‰Šú‰»
+// è¥ï½°ç¹§ç¿«ãƒ»è›»æ™„æ‚„è›¹ãƒ»
 void MoveMotion::RunInit(PlayerBody* human)
 {
 	mIsInit = false;
 
 	mStep = mIsPlay ? 3 : 0;
 
-	// Œ»İ‚ÌŠp“x‚ğŒvZ
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®éš—è²ï½ºï½¦ç¹§å®šï½¨è‚²ï½®ãƒ»
 	mCurRots = human->CalcCurRots();
-	// I—¹‘¬“x‚Ìæ“¾
+	// é‚¨ã‚†ï½ºãƒ»Â€æº·ï½ºï½¦ç¸ºï½®èœ¿é–€ï½¾ãƒ»
 	mEndSpeed = human->parent->mRunSpeed;
 
-	// Še•”ˆÊ‚ÌŠp“x‚Ì‰Šú‰»
+	// èœ·ãƒ»Îšè´é˜ªãƒ»éš—è²ï½ºï½¦ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 	mStartRots[(uint32_t)PartID::Head] = Radian(Vec3(0, -10, 0));
 	mStartRots[(uint32_t)PartID::Body] = Radian(Vec3(15, 10, 0));
 	mStartRots[(uint32_t)PartID::RightArm] = Radian(Vec3(60, 0, 10));
@@ -322,7 +322,7 @@ void MoveMotion::RunInit(PlayerBody* human)
 	mEndRots[(uint32_t)PartID::LeftLeg] = Radian(Vec3(15, 0, 0));
 }
 
-// Œ»İ‚ÌŠp“x‚ğŒvZ‚·‚é
+// è¿´ï½¾è¨ï½¨ç¸ºï½®éš—è²ï½ºï½¦ç¹§å®šï½¨è‚²ï½®åŠ±â˜†ç¹§ãƒ»
 void MoveMotion::CalcCurrentRot(PlayerBody* human)
 {
 	mCurRots.resize(human->GetPartsSize());
@@ -333,7 +333,7 @@ void MoveMotion::CalcCurrentRot(PlayerBody* human)
 	}
 }
 
-// ŠJn‰ñ“]Šp“x‚ÆI—¹‰ñ“]Šp“x‚ğ”½“]‚·‚é
+// é«¢å¥ï½§å¥å±“éœ†ï½¢éš—è²ï½ºï½¦ç¸ºï½¨é‚¨ã‚†ï½ºãƒ»å±“éœ†ï½¢éš—è²ï½ºï½¦ç¹§è²æ¸šéœ†ï½¢ç¸ºå¶ï½‹
 void MoveMotion::ReverceRots()
 {
 	std::vector<Vec3> temp;
@@ -341,13 +341,13 @@ void MoveMotion::ReverceRots()
 
 	for (uint32_t i = 0; i < mStartRots.size(); i++)
 	{
-		// ƒXƒ^[ƒg‚ğŠi”[‚·‚é
+		// ç¹§ï½¹ç¹§ï½¿ç¹ï½¼ç¹åŒ»ï½’è­¬ï½¼é‚é˜ªâ˜†ç¹§ãƒ»
 		temp[i] = mStartRots[i];
 
-		// ƒGƒ“ƒh‚ğƒXƒ^[ƒg‚Éã‘‚«‚·‚é
+		// ç¹§ï½¨ç¹ï½³ç¹å³¨ï½’ç¹§ï½¹ç¹§ï½¿ç¹ï½¼ç¹åŒ»â†“è³é ‘å¶Œç¸ºé˜ªâ˜†ç¹§ãƒ»
 		mStartRots[i] = mEndRots[i];
 
-		//Ši”[‚µ‚½ƒXƒ^[ƒg‚ğƒGƒ“ƒh‚Éã‘‚«‚·‚é
+		//è­¬ï½¼é‚é˜ªï¼ ç¸ºæº˜ã›ç¹§ï½¿ç¹ï½¼ç¹åŒ»ï½’ç¹§ï½¨ç¹ï½³ç¹å³¨â†“è³é ‘å¶Œç¸ºé˜ªâ˜†ç¹§ãƒ»
 		mEndRots[i] = temp[i];
 	}
 }
@@ -356,3 +356,4 @@ bool MoveMotion::GetisPlay()
 {
 	return mIsPlay;
 }
+

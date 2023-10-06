@@ -1,7 +1,7 @@
 #pragma once
 #include "IWeaponMotion.h"
 
-// ’ÆŠÖ˜A‚Ìƒ‚[ƒVƒ‡ƒ“
+// è®’ç¢æœªé¨¾ï½£ç¸ºï½®ç¹ï½¢ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³
 class MalletMotion : public IWeaponMotion
 {
 private:
@@ -15,16 +15,16 @@ private:
 	float endPosY;
 
 
-private:// ƒRƒ“ƒ{ 1 ` 4
+private:// ç¹§ï½³ç¹ï½³ç¹ãƒ»1 ãƒ»ãƒ»4
 
 	void CurrentStepInit(PlayerBody* human);
 	void CurrentStepUpdate(PlayerBody* human);
 
-	// ãUŒ‚
+	// è ‘ï½±è¬¾ï½»è¬¦ãƒ»
 	void WeakStep1Init(PlayerBody* human);
 	void WeakStep1Update(PlayerBody* human);
 
-	// ‹­UŒ‚
+	// è ‘ï½·è¬¾ï½»è¬¦ãƒ»
 	void HeavyStep0Init(PlayerBody* human);
 	void HeavyStep0Update(PlayerBody* human);
 	void HeavyStep1Init();
@@ -40,14 +40,14 @@ private:// ƒRƒ“ƒ{ 1 ` 4
 	void HeavyStep6Init();
 	void HeavyStep6Update(PlayerBody* human);
 
-	// ƒoƒbƒNUŒ‚
+	// ç¹èˆŒãƒ£ç¹§ï½¯è¬¾ï½»è¬¦ãƒ»
 	void BackStep0Init(PlayerBody* human);
 	void BackStep0Update(PlayerBody* human);
 	void BackStep2Init(PlayerBody* human);
 	void BackStep2Update(PlayerBody* human);
 	void BackStep3Update(PlayerBody* human);
 
-	// ‰ñ“]UŒ‚
+	// è—æ«ï½»ï½¢è¬¾ï½»è¬¦ãƒ»
 	void RollStep0Init(PlayerBody* human);
 	void RollStep0Update(PlayerBody* human);
 	void RollStep1Update(PlayerBody* human);
@@ -60,4 +60,3 @@ public:
 	void BackMotion(PlayerBody* human) override;
 	void RollMotion(PlayerBody* human) override;
 };
-

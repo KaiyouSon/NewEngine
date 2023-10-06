@@ -11,67 +11,67 @@ template<typename T> class VertexBuffer
 private:
 	HRESULT result;
 
-	D3D12_VERTEX_BUFFER_VIEW vbView{};						// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[
-	Microsoft::WRL::ComPtr<ID3D12Resource> vertexBuffer;	// ’¸“_ƒoƒbƒtƒ@
+	D3D12_VERTEX_BUFFER_VIEW vbView{};						// é¬†ã‚‰ã›ç¹èˆŒãƒ£ç¹è¼”ãƒç¹è–™Î—ç¹ï½¼
+	Microsoft::WRL::ComPtr<ID3D12Resource> vertexBuffer;	// é¬†ã‚‰ã›ç¹èˆŒãƒ£ç¹è¼”ãƒ
 	T* vertMap;
 
 public:
-	// ‰Šú‰»
+	// è›»æ™„æ‚„è›¹ãƒ»
 	void Create(const std::vector<T>& vertices)
 	{
-		// ’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY = ’¸“_ƒf[ƒ^ˆê‚Â•ª‚ÌƒTƒCƒY * ’¸“_ƒf[ƒ^‚Ì—v‘f”
+		// é¬†ã‚‰ã›ç¹ãƒ»ãƒ»ç¹§ï½¿èœˆï½¨è´è–™ãƒ»ç¹§ï½µç¹§ï½¤ç¹§ï½º = é¬†ã‚‰ã›ç¹ãƒ»ãƒ»ç¹§ï½¿è³Â€ç¸ºï½¤è›»ãƒ»ãƒ»ç¹§ï½µç¹§ï½¤ç¹§ï½º * é¬†ã‚‰ã›ç¹ãƒ»ãƒ»ç¹§ï½¿ç¸ºï½®éš•âˆ«ï½´ï£°è¬¨ï½°
 		unsigned int sizeVB = static_cast<unsigned int>(sizeof(T) * vertices.size());
 
-		// ’¸“_ƒoƒbƒtƒ@‚Ìİ’è
-		D3D12_HEAP_PROPERTIES heapProp{}; // ƒq[ƒvİ’è
-		heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPU‚Ö‚Ì“]‘——p
+		// é¬†ã‚‰ã›ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½®éšªï½­è³ãƒ»
+		D3D12_HEAP_PROPERTIES heapProp{}; // ç¹åµãƒ»ç¹è‹“ï½¨ï½­è³ãƒ»
+		heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUç¸ºï½¸ç¸ºï½®éœ†ï½¢é¨¾âˆ«ç•‘
 
-		// ƒŠƒ\[ƒXİ’è
+		// ç¹ï½ªç¹§ï½½ç¹ï½¼ç¹§ï½¹éšªï½­è³ãƒ»
 		D3D12_RESOURCE_DESC resDesc{};
 		resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-		resDesc.Width = sizeVB; // ’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY
+		resDesc.Width = sizeVB; // é¬†ã‚‰ã›ç¹ãƒ»ãƒ»ç¹§ï½¿èœˆï½¨è´è–™ãƒ»ç¹§ï½µç¹§ï½¤ç¹§ï½º
 		resDesc.Height = 1;
 		resDesc.DepthOrArraySize = 1;
 		resDesc.MipLevels = 1;
 		resDesc.SampleDesc.Count = 1;
 		resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-		// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+		// é¬†ã‚‰ã›ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½®é€•æ»“ãƒ»
 		result = RenderBase::GetInstance()->GetDevice()->
 			CreateCommittedResource(
-				&heapProp, // ƒq[ƒvİ’è
+				&heapProp, // ç¹åµãƒ»ç¹è‹“ï½¨ï½­è³ãƒ»
 				D3D12_HEAP_FLAG_NONE,
-				&resDesc, // ƒŠƒ\[ƒXİ’è
+				&resDesc, // ç¹ï½ªç¹§ï½½ç¹ï½¼ç¹§ï½¹éšªï½­è³ãƒ»
 				D3D12_RESOURCE_STATE_GENERIC_READ,
 				nullptr,
 				IID_PPV_ARGS(&vertexBuffer));
 		assert(SUCCEEDED(result));
 
-		//----------------------- ’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒf[ƒ^“]‘— -----------------------//
-		// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ğæ“¾
+		//----------------------- é¬†ã‚‰ã›ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½¸ç¸ºï½®ç¹ãƒ»ãƒ»ç¹§ï½¿éœ†ï½¢é¨¾ãƒ»-----------------------//
+		// GPUè³ç¿«ãƒ»ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½«èŸ‡ï½¾è ¢æ‡Šï¼ ç¸ºæ»‰ï½»ï½®è« ï½³ç¹ï½¡ç¹ï½¢ç¹ï½ª(ç¹ï½¡ç¹§ï½¤ç¹ï½³ç¹ï½¡ç¹ï½¢ç¹ï½ªè³ãƒ»ç¹§è²å™è •ãƒ»
 		vertMap = nullptr;
 		result = vertexBuffer->Map(0, nullptr, (void**)&vertMap);
 		assert(SUCCEEDED(result));
-		// ‘S’¸“_‚É‘Î‚µ‚Ä
+		// èœˆï½¨é¬†ã‚‰ã›ç¸ºï½«èŸ‡ï½¾ç¸ºåŠ±â€»
 		copy(vertices.begin(), vertices.end(), vertMap);
 
-		// GPU‰¼‘zƒAƒhƒŒƒX
+		// GPUè‰ï½®è« ï½³ç¹§ï½¢ç¹å³¨Îç¹§ï½¹
 		vbView.BufferLocation = vertexBuffer->GetGPUVirtualAddress();
-		// ’¸“_ƒoƒbƒtƒ@‚ÌƒTƒCƒY
+		// é¬†ã‚‰ã›ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½®ç¹§ï½µç¹§ï½¤ç¹§ï½º
 		vbView.SizeInBytes = sizeVB;
-		// ’¸“_‚P‚Â•ª‚Ìƒf[ƒ^ƒTƒCƒY
+		// é¬†ã‚‰ã›ãƒ»ä»£â–½è›»ãƒ»ãƒ»ç¹ãƒ»ãƒ»ç¹§ï½¿ç¹§ï½µç¹§ï½¤ç¹§ï½º
 		vbView.StrideInBytes = sizeof(vertices[0]);
 	}
 
-	// “]‘—
+	// éœ†ï½¢é¨¾ãƒ»
 	void TransferToBuffer(const std::vector<T>& vertices)
 	{
-		// ‘S’¸“_‚É‘Î‚µ‚ÄƒRƒs[
+		// èœˆï½¨é¬†ã‚‰ã›ç¸ºï½«èŸ‡ï½¾ç¸ºåŠ±â€»ç¹§ï½³ç¹æ–ãƒ»
 		copy(vertices.begin(), vertices.end(), vertMap);
 	}
 
 public:
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚ÌƒAƒhƒŒƒX‚ğæ“¾‚·‚éŠÖ”
+	// é¬†ã‚‰ã›ç¹èˆŒãƒ£ç¹è¼”ãƒç¹è–™Î—ç¹ï½¼ç¸ºï½®ç¹§ï½¢ç¹å³¨Îç¹§ï½¹ç¹§è²å™è •åŠ±â˜†ç¹§çŸ©æœªè¬¨ï½°
 	inline D3D12_VERTEX_BUFFER_VIEW* GetvbViewAddress() { return &vbView; }
 	inline ID3D12Resource* GetVertexBuffer() { return vertexBuffer.Get(); }
 

@@ -8,13 +8,13 @@ Camera::Camera() :
 	oNearZ(0), oFarZ(1), rect(0, 1920, 0, 1080),
 	pNearZ(0.1f), pFarZ(10000.0f)
 {
-	// ˆê‰ñŒÄ‚Ô
+	// è³Â€è—æ§«ä»–ç¸ºï½¶
 	Update();
 }
 
 void Camera::Update()
 {
-	// ‰ñ“]ŠÖ˜A
+	// è—æ«ï½»ï½¢é«¢ï½¢é¨¾ï½£
 	Transform transform;
 	transform.rot = rot;
 	transform.Update();
@@ -22,17 +22,17 @@ void Camera::Update()
 	Vec3 v2 = transform.GetWorldMat().GetZAxis();
 	Vec3 v3 = transform.GetWorldMat().GetYAxis();
 
-	// ƒrƒ…[•ÏŠ·s—ñ
+	// ç¹è–™Î—ç¹ï½¼èŸç”»é‹¤é™¦æ‚Ÿãƒ»
 	mViewLookToMat = ConvertViewProjectionMatLookTo(v1, v2, v3);
 	mViewLookAtMat = ConvertViewProjectionMatLookAt(v1, v1 * 10, { 0,1,0 });
 
-	// •½s“Š‰es—ñ‚ÌŒvZ
+	// èŸ·ï½³é™¦æ¢§å…œè –ï½±é™¦æ‚Ÿãƒ»ç¸ºï½®éšªè‚²ï½®ãƒ»
 	mOrthoGrphicProjectionMat = ConvertOrthoGrphicProjectionMat(
 		GetWindowSize().x, GetWindowSize().y);
 
 	mOrthoGrphicProjectionMat = ConvertOrthoGrphicProjectionMat(rect, oNearZ, oFarZ);
 
-	// “§‹“Š‰es—ñ‚ÌŒvZ
+	// é¨¾å‰°ï½¦åŒå…œè –ï½±é™¦æ‚Ÿãƒ»ç¸ºï½®éšªè‚²ï½®ãƒ»
 	mPerspectiveProjectionMat = ConvertPerspectiveProjectionMat(
 		fov, (float)GetWindowSize().x / GetWindowSize().y, pNearZ, pFarZ);
 }
@@ -46,7 +46,7 @@ void Camera::DebugCameraUpdate()
 		cosf(current.rot.y),
 	};
 
-	// ‰ñ“]
+	// è—æ«ï½»ï½¢
 	if (Mouse::GetClick(MouseCode::Wheel) && !Key::GetKey(DIK_LSHIFT))
 	{
 		if (Mouse::GetMoveVec().x != 0 || Mouse::GetMoveVec().y != 0)
@@ -57,7 +57,7 @@ void Camera::DebugCameraUpdate()
 		}
 	}
 
-	// •½sˆÚ“®
+	// èŸ·ï½³é™¦æªï½§ï½»èœãƒ»
 	if (Mouse::GetClick(MouseCode::Wheel) && Key::GetKey(DIK_LSHIFT))
 	{
 		if (Mouse::GetMoveVec().x != 0 || Mouse::GetMoveVec().y != 0)
@@ -67,10 +67,27 @@ void Camera::DebugCameraUpdate()
 		}
 	}
 
-	// ‰œs
+	// è‚ï½¥é™¦ãƒ»
 	if (Mouse::GetWheelMoveVec() != 0)
 	{
 		const float moveSpeed = 0.025f;
 		current.pos += frontVec * Mouse::GetWheelMoveVec() * moveSpeed;
 	}
+}
+
+Mat4 Camera::GetViewLookToMat()
+{
+	return mViewLookToMat;
+}
+Mat4 Camera::GetViewLookAtMat()
+{
+	return mViewLookAtMat;
+}
+Mat4 Camera::GetOrthoGrphicProjectionMat()
+{
+	return mOrthoGrphicProjectionMat;
+}
+Mat4 Camera::GetPerspectiveProjectionMat()
+{
+	return mPerspectiveProjectionMat;
 }

@@ -42,7 +42,7 @@ void PlayerRecoveryEffect::Update()
 		}
 	}
 
-	// ó±
+	// ÈÇä„Éª
 	for (uint32_t i = 0; i < mCirclePParam.size(); i++)
 	{
 		mCircleEmitter->pParam[i].curPos = mCirclePParam[i].startPos;
@@ -62,7 +62,7 @@ void PlayerRecoveryEffect::Update()
 
 	mCircleEmitter->pSize = (uint32_t)mCirclePParam.size();
 
-	// ê¸
+	// ÈÇ±„Éª
 	for (uint32_t i = 0; i < mLinePParam.size(); i++)
 	{
 		mLineEmitter->pParam[i].curPos = mLinePParam[i].startPos;
@@ -100,7 +100,7 @@ void PlayerRecoveryEffect::GenerateUpdate()
 	float height = 0.5f;
 	float depth = 2;
 
-	// ó±
+	// ÈÇä„Éª
 	for (uint32_t i = 0; i < 8; i++)
 	{
 		Vec3 offset =
@@ -127,7 +127,7 @@ void PlayerRecoveryEffect::GenerateUpdate()
 	height = 0.5f;
 	depth = 1.5f;
 
-	// ê¸
+	// ÈÇ±„Éª
 	for (uint32_t i = 0; i < 2; i++)
 	{
 		Vec3 offset =

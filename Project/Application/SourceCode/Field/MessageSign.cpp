@@ -65,3 +65,4 @@ void MessageSign::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
 	mMessageSign->SetGraphicsPipeline(graphicsPipeline);
 }
+

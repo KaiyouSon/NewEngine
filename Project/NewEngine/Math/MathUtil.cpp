@@ -170,28 +170,28 @@ Mat4 ConvertBillBoardAllAxis()
 
 Mat4 ConvertViewProjectionMatLookAt(const Vec3 pos, const Vec3 target, const Vec3 up)
 {
-	// ’PˆÊs—ñ‚Å‰Šú‰»
+	// èœŠå€…ï½½å´ï½¡æ‚Ÿãƒ»ç¸ºï½§è›»æ™„æ‚„è›¹ãƒ»
 	Mat4 view = Mat4::Identity();
 
-	// ‚š²
+	// ãƒ»å¤Šï½»ï½¸
 	Vec3 zAxis = target - pos;
 	view.m[2][0] = zAxis.Norm().x;
 	view.m[2][1] = zAxis.Norm().y;
 	view.m[2][2] = zAxis.Norm().z;
 
-	// ‚˜²
+	// ãƒ»å€©ï½»ï½¸
 	Vec3 xAxis = Vec3::Cross(up, zAxis);
 	view.m[0][0] = xAxis.Norm().x;
 	view.m[0][1] = xAxis.Norm().y;
 	view.m[0][2] = xAxis.Norm().z;
 
-	// ‚™²
+	// ãƒ»å‘µï½»ï½¸
 	Vec3 yAxis = Vec3::Cross(zAxis, xAxis);
 	view.m[1][0] = yAxis.Norm().x;
 	view.m[1][1] = yAxis.Norm().y;
 	view.m[1][2] = yAxis.Norm().z;
 
-	// •½sˆÚ“®
+	// èŸ·ï½³é™¦æªï½§ï½»èœãƒ»
 	view.m[3][0] = Vec3::Dot(pos, xAxis.Norm());
 	view.m[3][1] = Vec3::Dot(pos, yAxis.Norm());
 	view.m[3][2] = -Vec3::Dot(pos, zAxis.Norm());
@@ -200,7 +200,7 @@ Mat4 ConvertViewProjectionMatLookAt(const Vec3 pos, const Vec3 target, const Vec
 }
 Mat4 ConvertViewProjectionMatLookTo(const Vec3 pos, const Vec3 zAxis, const Vec3 yAxis)
 {
-	// ’PˆÊs—ñ‚Å‰Šú‰»
+	// èœŠå€…ï½½å´ï½¡æ‚Ÿãƒ»ç¸ºï½§è›»æ™„æ‚„è›¹ãƒ»
 	Mat4 view = Mat4::Identity();
 
 	Vec3 xAxisVec = Vec3::Cross(yAxis, zAxis).Norm();
@@ -216,7 +216,7 @@ Mat4 ConvertViewProjectionMatLookTo(const Vec3 pos, const Vec3 zAxis, const Vec3
 }
 Mat4 ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, float farZ)
 {
-	// ’PˆÊs—ñ‚Å‰Šú‰»
+	// èœŠå€…ï½½å´ï½¡æ‚Ÿãƒ»ç¸ºï½§è›»æ™„æ‚„è›¹ãƒ»
 	Mat4 perspective = Mat4::Zero();
 
 	float scaleY = 1 / tanf(fovAngle / 2);
@@ -273,16 +273,16 @@ Mat4 CalculateWorldMat(const Vec3 pos, const Vec3 scale, const Vec3 rot)
 {
 	Mat4 result = Mat4::Identity();
 
-	// •½sˆÚ“®AƒXƒP[ƒŠƒ“ƒOA‰ñ“]s—ñì¬
+	// èŸ·ï½³é™¦æªï½§ï½»èœè¼”Â€âˆšã›ç¹§ï½±ç¹ï½¼ç¹ï½ªç¹ï½³ç¹§ï½°ç¸²âˆå±“éœ†ï½¢é™¦æ‚Ÿãƒ»è´æ‡ˆãƒ»
 	Mat4 transMat = Mat4::Identity();
 	Mat4 scaleMat = Mat4::Identity();
 	Mat4 rotMat = Mat4::Identity();
 
-	transMat = ConvertTranslationMat(pos);	// •½sˆÚ“®
-	scaleMat = ConvertScalingMat(scale);		// ƒXƒP[ƒŠƒ“ƒO
-	rotMat *= ConvertRotationZAxisMat(rot.z);	// z²‰ñ“]
-	rotMat *= ConvertRotationXAxisMat(rot.x);	// x²‰ñ“]
-	rotMat *= ConvertRotationYAxisMat(rot.y);	// y²‰ñ“]
+	transMat = ConvertTranslationMat(pos);	// èŸ·ï½³é™¦æªï½§ï½»èœãƒ»
+	scaleMat = ConvertScalingMat(scale);		// ç¹§ï½¹ç¹§ï½±ç¹ï½¼ç¹ï½ªç¹ï½³ç¹§ï½°
+	rotMat *= ConvertRotationZAxisMat(rot.z);	// zéœ†ï½¸è—æ«ï½»ï½¢
+	rotMat *= ConvertRotationXAxisMat(rot.x);	// xéœ†ï½¸è—æ«ï½»ï½¢
+	rotMat *= ConvertRotationYAxisMat(rot.y);	// yéœ†ï½¸è—æ«ï½»ï½¢
 
 	result = scaleMat * rotMat * transMat;
 
@@ -292,14 +292,14 @@ Mat4 CalculateWorldMat(const Vec3 pos, const Vec3 scale, const Quaternion rot)
 {
 	Mat4 result = Mat4::Identity();
 
-	// •½sˆÚ“®AƒXƒP[ƒŠƒ“ƒOA‰ñ“]s—ñì¬
+	// èŸ·ï½³é™¦æªï½§ï½»èœè¼”Â€âˆšã›ç¹§ï½±ç¹ï½¼ç¹ï½ªç¹ï½³ç¹§ï½°ç¸²âˆå±“éœ†ï½¢é™¦æ‚Ÿãƒ»è´æ‡ˆãƒ»
 	Mat4 transMat = Mat4::Identity();
 	Mat4 scaleMat = Mat4::Identity();
 	Mat4 rotMat = Mat4::Identity();
 
-	transMat = ConvertTranslationMat(pos);	// •½sˆÚ“®
-	scaleMat = ConvertScalingMat(scale);	// ƒXƒP[ƒŠƒ“ƒO
-	rotMat = ConvertRotationMat(rot);		// ‰ñ“]
+	transMat = ConvertTranslationMat(pos);	// èŸ·ï½³é™¦æªï½§ï½»èœãƒ»
+	scaleMat = ConvertScalingMat(scale);	// ç¹§ï½¹ç¹§ï½±ç¹ï½¼ç¹ï½ªç¹ï½³ç¹§ï½°
+	rotMat = ConvertRotationMat(rot);		// è—æ«ï½»ï½¢
 
 	result = scaleMat * rotMat * transMat;
 
@@ -310,3 +310,4 @@ Vec3 operator+(const float num, const Vec3 v) { return { num + v.x,num + v.y,num
 Vec3 operator-(const float num, const Vec3 v) { return { num - v.x,num - v.y,num - v.z }; }
 Vec3 operator*(const float num, const Vec3 v) { return { num * v.x,num * v.y,num * v.z }; }
 Vec3 operator/(const float num, const Vec3 v) { return { num / v.x,num / v.y,num / v.z }; }
+

@@ -1,5 +1,5 @@
 #pragma once
-#define DIRECTINPUT_VERSION 0x0800	// DirectInput‚Ìƒo[ƒWƒ‡ƒ“w’è
+#define DIRECTINPUT_VERSION 0x0800	// DirectInputç¸ºï½®ç¹èˆŒãƒ»ç¹§ï½¸ç¹ï½§ç¹ï½³è¬–ãƒ»ï½®ãƒ»
 #include "JoypadInput.h"
 #include "KeyBoardInput.h"
 #include "MouseInput.h"
@@ -12,12 +12,12 @@ class InputManager : public Singleton<InputManager>
 {
 private:
 	friend Singleton<InputManager>;
-	Microsoft::WRL::ComPtr<IDirectInput8> directInput_;
+	Microsoft::WRL::ComPtr<IDirectInput8> mDirectInput;
 
 public:
 	void Init();
 	void Update();
 
-public: // ƒQƒbƒ^[
-	inline Microsoft::WRL::ComPtr<IDirectInput8> GetDirectInput() { return directInput_; }
+public: // ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
+	IDirectInput8* GetDirectInput();
 };

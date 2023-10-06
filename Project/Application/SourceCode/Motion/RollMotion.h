@@ -26,4 +26,3 @@ public:
 	void Update(HumanoidBody* human) override;
 
 };
-

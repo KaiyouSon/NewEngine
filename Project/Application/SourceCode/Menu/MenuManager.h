@@ -22,4 +22,3 @@ public:
 public:
 	bool GetisActive();
 };
-

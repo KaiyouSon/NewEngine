@@ -32,7 +32,7 @@ template<typename T> class Singleton;
 class JoypadInput : public Singleton<JoypadInput>
 {
 private:
-	// \‘¢‘Ì
+	// è®’çŸ©Â€ï£°è´ãƒ»
 	struct JoypadObj
 	{
 		Microsoft::WRL::ComPtr<IDirectInputDevice8> joypad;
@@ -40,45 +40,45 @@ private:
 		DIJOYSTATE2 prevPadInput;
 	};
 
-private:// ƒ{ƒ^ƒ“ŠÖ˜A
-	std::vector<JoypadObj> joypadObjs_;
+private:// ç¹æ‡Šã¡ç¹ï½³é«¢ï½¢é¨¾ï½£
+	std::vector<JoypadObj> mJoypadObjs;
 	static bool sIsInsertPad;
 	static uint32_t sPadIndex;
 
 private:
-	// ƒRƒ“ƒgƒ[ƒ‰[Ú‘±‚µ‚½‚ÌƒR[ƒ‹ƒoƒbƒN
+	// ç¹§ï½³ç¹ï½³ç¹åŒ»ÎŸç¹ï½¼ç¹ï½©ç¹ï½¼è¬—ï½¥é‚¯å£¹ï¼ ç¸ºæ»“å‡¾ç¸ºï½®ç¹§ï½³ç¹ï½¼ç¹ï½«ç¹èˆŒãƒ£ç¹§ï½¯
 	static BOOL CALLBACK DeviceFindCallBack(const DIDEVICEINSTANCE* pdidInstance, VOID* pContext);
 
-	// ƒRƒ“ƒgƒ[ƒ‰[‚ğÚ‘±‚·‚éˆ—
+	// ç¹§ï½³ç¹ï½³ç¹åŒ»ÎŸç¹ï½¼ç¹ï½©ç¹ï½¼ç¹§å‘ˆç£é‚¯å£¹â˜†ç¹§å¥ãƒ»é€…ãƒ»
 	void SetJoyStick();
 
 public:
 	void Init();
 	void Update();
 
-public: // ƒ{ƒ^ƒ“ŠÖ˜A
+public: // ç¹æ‡Šã¡ç¹ï½³é«¢ï½¢é¨¾ï½£
 	static bool GetButton(const PadCode padCode, const int padIndex = 0);
 	static bool GetButtonDown(const PadCode padCode, const int padIndex = 0);
 	static bool GetButtonUp(const PadCode padCode, const int padIndex = 0);
 
 	static bool GetAnyButtonDown(const int padIndex = 0);
 
-public: // ƒXƒeƒBƒbƒNŠÖ˜A
+public: // ç¹§ï½¹ç¹ãƒ»ã…ç¹ãƒ»ã‘é«¢ï½¢é¨¾ï½£
 	static Vec2 GetStick(const PadCode padCode, const float length = 0, const int padIndex = 0);
 	static Vec2 GetStickDown(const PadCode padCode, const float length = 0, const int padIndex = 0);
 	static Vec2 GetStickUp(const PadCode padCode, const float length = 0, const int padIndex = 0);
 	static Vec3 GetStickVec3(const PadCode padCode, const float length = 0, const int padIndex = 0);
 
 
-public:	// ƒgƒŠƒK[ŠÖ˜A
+public:	// ç¹åŒ»Îœç¹§ï½¬ç¹ï½¼é«¢ï½¢é¨¾ï½£
 	static float GetTrigger(const PadCode padCode, const float length = 0, const int padIndex = 0);
 	static bool GetTriggerDown(const PadCode padCode, const float length = 0, const int padIndex = 0);
 	static bool GetTriggerUp(const PadCode padCode, const float length = 0, const int padIndex = 0);
 
-public: // ‚»‚Ì‘¼æ“¾ŠÖ˜A
+public: // ç¸ºæ˜´ãƒ»è‰é–€å™è •éˆ´æœªé¨¾ï½£
 	static bool GetisLinkPad();
 
-public: // ƒAƒTƒbƒg
+public: // ç¹§ï½¢ç¹§ï½µç¹ãƒ»ãƒ¨
 	static inline void SetisInsertPad(const bool isInsertPad) { JoypadInput::sIsInsertPad = isInsertPad; }
 	static inline bool GetisInsertPad() { return JoypadInput::sIsInsertPad; }
 

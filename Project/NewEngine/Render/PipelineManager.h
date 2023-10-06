@@ -12,14 +12,13 @@ private:
 	static std::unordered_map<std::string, std::unique_ptr<ComputePipeline>> sComputePipelineMap;
 
 public:
-	// GraphicsPipeline�̍쐬
+	// GraphicsPipeline縺ｮ菴懈・
 	static void CreateGraphicsPipeline(const GraphicsPipelineSetting& setting, const std::string tag);
 
-	// ComputePipeline�̍쐬
+	// ComputePipeline縺ｮ菴懈・
 	static void CreateComputePipeline(const ComputePipelineSetting& setting, const std::string tag);
 
-	// �擾
+	// 蜿門ｾ・
 	static GraphicsPipeline* GetGraphicsPipeline(const std::string tag);
 	static ComputePipeline* GetComputePipeline(const std::string tag);
 };
-

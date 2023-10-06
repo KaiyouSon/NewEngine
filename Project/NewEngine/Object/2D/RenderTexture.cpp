@@ -12,7 +12,7 @@ void RenderTexture::PrevDrawScene()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();
 
-	// ƒŠƒ\[ƒXƒoƒŠƒA‚ğ•ÏXiƒVƒF[ƒ_[ƒŠƒ\[ƒX -> •`‰æ‰Â”\j
+	// ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’å¤‰æ›´ï¼ˆã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ -> æç”»å¯èƒ½ï¼‰
 	for (uint32_t i = 0; i < mBufferResources.size(); i++)
 	{
 		CD3DX12_RESOURCE_BARRIER resourceBarrier =
@@ -23,21 +23,21 @@ void RenderTexture::PrevDrawScene()
 		renderBase->GetCommandList()->ResourceBarrier(1, &resourceBarrier);
 	}
 
-	// RTV CPUƒnƒ“ƒhƒ‹
+	// RTV CPUãƒãƒ³ãƒ‰ãƒ«
 	std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> rtvCpuHandle;
 	for (uint32_t i = 0; i < mBufferResources.size(); i++)
 	{
 		rtvCpuHandle.push_back(mBufferResources[i].rtvHandle.cpu);
 	}
 
-	// DSV CPUƒnƒ“ƒhƒ‹
+	// DSV CPUãƒãƒ³ãƒ‰ãƒ«
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvCpuHandle = depthBuffer.GetBufferResource()->dsvHandle.cpu;
 
-	// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğƒZƒbƒg
+	// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ã‚»ãƒƒãƒˆ
 	renderBase->GetCommandList()->OMSetRenderTargets(
 		(uint32_t)mBufferResources.size(), rtvCpuHandle.data(), false, &dsvCpuHandle);
 
-	// ƒrƒ…[ƒ|[ƒg‚Ìİ’è
+	// ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã®è¨­å®š
 	mViewports.resize(mBufferResources.size());
 	for (int i = 0; i < mBufferResources.size(); i++)
 	{
@@ -49,7 +49,7 @@ void RenderTexture::PrevDrawScene()
 	}
 	renderBase->GetCommandList()->RSSetViewports((uint32_t)mViewports.size(), mViewports.data());
 
-	// ƒVƒU[‹éŒ`‚Ìİ’è
+	// ã‚·ã‚¶ãƒ¼çŸ©å½¢ã®è¨­å®š
 	mScissorRects.resize(mBufferResources.size());
 	for (int i = 0; i < mBufferResources.size(); i++)
 	{
@@ -61,20 +61,20 @@ void RenderTexture::PrevDrawScene()
 	}
 	renderBase->GetCommandList()->RSSetScissorRects((uint32_t)mScissorRects.size(), mScissorRects.data());
 
-	// ‘S‰æ–ÊƒNƒŠƒA
+	// å…¨ç”»é¢ã‚¯ãƒªã‚¢
 	for (int i = 0; i < rtvCpuHandle.size(); i++)
 	{
 		renderBase->GetCommandList()->ClearRenderTargetView(rtvCpuHandle[i], sClearColor, 0, nullptr);
 	}
 
-	// [“xƒoƒbƒtƒ@‚ÌƒNƒŠƒA
+	// æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã®ã‚¯ãƒªã‚¢
 	renderBase->GetCommandList()->ClearDepthStencilView(dsvCpuHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 void RenderTexture::PostDrawScene()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();
 
-	// ƒŠƒ\[ƒXƒoƒŠƒA‚ğ•ÏXi•`‰æ‰Â”\ -> ƒVƒF[ƒ_[ƒŠƒ\[ƒXj
+	// ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’å¤‰æ›´ï¼ˆæç”»å¯èƒ½ -> ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ï¼‰
 	for (int i = 0; i < mBufferResources.size(); i++)
 	{
 		CD3DX12_RESOURCE_BARRIER resourceBarrier =

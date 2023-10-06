@@ -5,16 +5,16 @@
 
 struct DescriptorHandle
 {
-	D3D12_CPU_DESCRIPTOR_HANDLE cpu; // CPU僴儞僪儖
-	D3D12_GPU_DESCRIPTOR_HANDLE gpu; // GPU僴儞僪儖
+	D3D12_CPU_DESCRIPTOR_HANDLE cpu; // CPU绻濅笂桅绻濆敞螡
+	D3D12_GPU_DESCRIPTOR_HANDLE gpu; // GPU绻濅笂桅绻濆敞螡
 };
 
 struct BufferResource
 {
-	DescriptorHandle srvHandle;		// SRV梡
-	DescriptorHandle rtvHandle;		// RTV梡
-	DescriptorHandle dsvHandle;		// DSV梡
-	DescriptorHandle uavHandle;		// UAV梡
+	DescriptorHandle srvHandle;		// SRV閫曪建
+	DescriptorHandle rtvHandle;		// RTV閫曪建
+	DescriptorHandle dsvHandle;		// DSV閫曪建
+	DescriptorHandle uavHandle;		// UAV閫曪建
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> buffer;
 	uint32_t index;

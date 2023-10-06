@@ -67,5 +67,4 @@ void DrinkMotion::CurrentStepUpdate(HumanoidBody* human)
 			EffectManager::GetInstance()->GeneratePlayerRecoveryEffect(pos);
 		}
 	}
-
 }

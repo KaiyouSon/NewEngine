@@ -30,7 +30,7 @@ public:
 	float rot;
 	Color color;
 
-private: // ƒ}ƒeƒŠƒAƒ‹ŠÖ˜A
+private: // ãƒãƒ†ãƒªã‚¢ãƒ«é–¢é€£
 	void MaterialInit();
 	void MaterialTransfer();
 	void MaterialDrawCommands();
@@ -52,24 +52,24 @@ public:
 		mMaterial->constantBuffers.push_back(std::move(iConstatnBuffer));
 	}
 
-public: //ƒZƒbƒ^[
+public: //ã‚»ãƒƒã‚¿ãƒ¼
 
-	// ƒeƒNƒXƒ`ƒƒ[
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼
 	void SetTexture(Texture* texture);
 
-	// •`‰æ”ÍˆÍ
+	// æç”»ç¯„å›²
 	void SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos);
 
-	//@ƒTƒCƒY
+	//ã€€ã‚µã‚¤ã‚º
 	void SetSize(const Vec2 size);
 
-	// ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg
+	// ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ
 	void SetAnchorPoint(const Vec2 anchorPoint);
 
-	// ‰æ‘œ”½“]
+	// ç”»åƒåè»¢
 	void SetFlipType(const FlipType flipType);
 
-	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“
+	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
 	template<typename T>

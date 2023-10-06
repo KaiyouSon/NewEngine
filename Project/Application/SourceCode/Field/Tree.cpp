@@ -4,7 +4,7 @@ void Tree::CreateGraphicsPipeline()
 {
 	std::string path = "Application/Shader/";
 
-	// ShadowObj—p
+	// ShadowObjé€•ï½¨
 	ShaderObjectManager::Create("Branch");
 	ShaderObjectManager::GetShaderObject("Branch")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Branch")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -12,7 +12,7 @@ void Tree::CreateGraphicsPipeline()
 	ShaderObjectManager::GetShaderObject("Branch")->CompileVertexShader(path + "BranchVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Branch")->CompilePixelShader(path + "BranchPS.hlsl", "main");
 
-	// 3DƒIƒuƒWƒFƒNƒg—p
+	// 3Dç¹§ï½ªç¹æ‚¶ãšç¹§ï½§ç¹§ï½¯ç¹è‚²ç•‘
 	GraphicsPipelineSetting setting =
 		PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Branch");
@@ -35,7 +35,6 @@ void Tree::Init()
 {
 	mTree->SetisShadow(false, true);
 	mBranch->SetisShadow(false, true);
-	//mBranch->rot.y = Radian(286);
 	mBranch->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Branch"));
 }
 

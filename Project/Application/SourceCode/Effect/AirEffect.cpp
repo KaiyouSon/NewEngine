@@ -30,7 +30,7 @@ void AirEffect::Generate(const Vec3 pos)
 
 void AirEffect::Update()
 {
-	// —±
+	// é‚Šãƒ»
 	for (uint32_t i = 0; i < mPParam.size(); i++)
 	{
 		mPParam[i].ease.Update();
@@ -87,7 +87,7 @@ void AirEffect::GenerateUpdate()
 	float height = 20.f;
 	float depth = 100.f;
 
-	// —±
+	// é‚Šãƒ»
 	for (uint32_t i = 0; i < 10; i++)
 	{
 		Vec3 offset =
@@ -128,3 +128,4 @@ void AirEffect::GenerateUpdate()
 		mPParam.back().ease.SetEaseTimer(1200);
 	}
 }
+

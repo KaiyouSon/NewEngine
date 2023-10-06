@@ -12,32 +12,32 @@ void DepthBuffer::Create(const Vec2 size)
 	Vec2 depthResourceSize = size;
 	depthResourceSize = (depthResourceSize != -1) ? size : RenderWindow::GetInstance()->GetWindowSize();
 
-	// ÉäÉ\Å[ÉXÇÃê›íË
+	// ÁπùÔΩ™ÁπßÔΩΩÁπùÔΩºÁπßÔΩπÁ∏∫ÔΩÆÈö™ÔΩ≠Ëû≥„Éª
 	D3D12_RESOURCE_DESC depthResourceDesc{};
 	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	depthResourceDesc.Width = (uint32_t)depthResourceSize.x;		// ïù
-	depthResourceDesc.Height = (uint32_t)depthResourceSize.y; // çÇÇ≥
+	depthResourceDesc.Width = (uint32_t)depthResourceSize.x;		// Ëü∑„Éª
+	depthResourceDesc.Height = (uint32_t)depthResourceSize.y; // È¨ÆÂÄ•ÔºÜ
 	depthResourceDesc.DepthOrArraySize = 1;
-	depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;	// ê[ìxílÉfÉtÉHÉãÉg
+	depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;	// Ë±∫ÔΩ±Ë†éÔΩ¶ËõüÔΩ§Áπù„Éª„ÉµÁπßÔΩ©ÁπùÔΩ´Áπù„Éª
 	depthResourceDesc.SampleDesc.Count = 1;
 	depthResourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 	depthResourceDesc.MipLevels = 1;
 
-	// ê[ìxópÉqÅ[ÉvÉvÉçÉpÉeÉB
+	// Ë±∫ÔΩ±Ë†éÔΩ¶ÈÄïÔΩ®ÁπùÂÅµ„ÉªÁπùÂä±„ÉªÁπùÔΩ≠Áπù‰ª£„É¶ÁπßÔΩ£
 	D3D12_HEAP_PROPERTIES depthHeapProp{};
 	depthHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
-	// ê[ìxílÇÃÉNÉäÉAê›íË
+	// Ë±∫ÔΩ±Ë†éÔΩ¶ËõüÔΩ§Á∏∫ÔΩÆÁπßÔΩØÁπùÔΩ™ÁπßÔΩ¢Èö™ÔΩ≠Ëû≥„Éª
 	D3D12_CLEAR_VALUE depthClearValue{};
-	depthClearValue.DepthStencil.Depth = 1.0f;	// ê[ìxíl1.0f(ç≈ëÂíl)Ç≈ÉNÉäÉA
-	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	// ê[ìxílÉtÉHÅ[É}ÉbÉg
+	depthClearValue.DepthStencil.Depth = 1.0f;	// Ë±∫ÔΩ±Ë†éÔΩ¶ËõüÔΩ§1.0f(Ë≠õ¬ÄËûüÔΩßËõüÔΩ§)Á∏∫ÔΩßÁπßÔΩØÁπùÔΩ™ÁπßÔΩ¢
+	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	// Ë±∫ÔΩ±Ë†éÔΩ¶ËõüÔΩ§ÁπùËºî„ÅãÁπùÔΩºÁπùÊß≠„É£Áπù„Éª
 
-	// ÉäÉ\Å[ÉXÇÃê∂ê¨
+	// ÁπùÔΩ™ÁπßÔΩΩÁπùÔΩºÁπßÔΩπÁ∏∫ÔΩÆÈÄïÊªì„Éª
 	result = RenderBase::GetInstance()->GetDevice()->
 		CreateCommittedResource(
 			&depthHeapProp,
 			D3D12_HEAP_FLAG_NONE,
 			&depthResourceDesc,
-			D3D12_RESOURCE_STATE_DEPTH_WRITE, // ê[ìxílèëÇ´çûÇ›Ç…égóp
+			D3D12_RESOURCE_STATE_DEPTH_WRITE, // Ë±∫ÔΩ±Ë†éÔΩ¶ËõüÔΩ§Ë≠ñÔΩ∏Á∏∫Â¥éÔΩæÔΩºÁ∏∫ÔΩøÁ∏∫ÔΩ´Ëè¥ÔΩøÈÄïÔΩ®
 			&depthClearValue,
 			IID_PPV_ARGS(&mBufferResource->buffer));
 	assert(SUCCEEDED(result));
@@ -45,7 +45,7 @@ void DepthBuffer::Create(const Vec2 size)
 	mBufferResource->bufferState = D3D12_RESOURCE_STATE_DEPTH_WRITE;
 }
 
-// ÉQÉbÉ^Å[
+// ÁπßÔΩ≤Áπù„Éª„Å°ÁπùÔΩº
 BufferResource* DepthBuffer::GetBufferResource()
 {
 	return mBufferResource.get();

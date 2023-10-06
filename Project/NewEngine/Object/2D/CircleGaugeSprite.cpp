@@ -17,7 +17,7 @@ CircleGaugeSprite::CircleGaugeSprite() :
 	mVertices[3].uv = { 1.0f,0.0f };
 	mVertexBuffer->Create(mVertices);
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰Šú‰»
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®åˆæœŸåŒ–
 	MaterialInit();
 }
 
@@ -39,67 +39,67 @@ void CircleGaugeSprite::Update(Transform* parent)
 
 	endRadian = Clamp<float>(endRadian, 0, Radian(360));
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì“]‘—
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®è»¢é€
 	MaterialTransfer();
 
-	// ’¸“_ƒf[ƒ^‚Ì“]‘—
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®è»¢é€
 	mVertexBuffer->TransferToBuffer(mVertices);
 }
 void CircleGaugeSprite::Draw(const BlendMode blendMode)
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// GraphicsPipeline•`‰æƒRƒ}ƒ“ƒh
+	// GraphicsPipelineæç”»ã‚³ãƒãƒ³ãƒ‰
 	mGraphicsPipeline->DrawCommand(blendMode);
 
-	// VBV‚ÆIBV‚Ìİ’èƒRƒ}ƒ“ƒh
+	// VBVã¨IBVã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì•`‰æƒRƒ}ƒ“ƒh
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®æç”»ã‚³ãƒãƒ³ãƒ‰
 	MaterialDrawCommands();
 
-	// SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ğƒ‹[ƒgƒpƒ‰ƒ[ƒ^2”Ô‚Éİ’è
+	// SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿2ç•ªã«è¨­å®š
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
 
 	renderBase->GetCommandList()->DrawInstanced((unsigned short)mVertices.size(), 1, 0, 0);
 }
 
-// --- ƒ}ƒeƒŠƒAƒ‹ŠÖ˜A --------------------------------------------------- //
+// --- ãƒãƒ†ãƒªã‚¢ãƒ«é–¢é€£ --------------------------------------------------- //
 void CircleGaugeSprite::MaterialInit()
 {
-	// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 2Ds—ñ
+	// 2Dè¡Œåˆ—
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform2D>>();
 	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// F
+	// è‰²
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
 	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ‰~ƒQ[ƒW
+	// å††ã‚²ãƒ¼ã‚¸
 	iConstantBuffer = std::make_unique<ConstantBuffer<CCircleGauge>>();
 	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	mMaterial->Init();
 }
 void CircleGaugeSprite::MaterialTransfer()
 {
-	// ƒ}ƒgƒŠƒbƒNƒX
+	// ãƒãƒˆãƒªãƒƒã‚¯ã‚¹
 	CTransform2D transform2DData =
 	{
 		mTransform.GetWorldMat() * Camera::current.GetOrthoGrphicProjectionMat()
 	};
 	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), transform2DData);
 
-	// Fƒf[ƒ^
+	// è‰²ãƒ‡ãƒ¼ã‚¿
 	CColor colorData = { color.To01() };
 	TransferDataToConstantBuffer(mMaterial->constantBuffers[1].get(), colorData);
 
-	// ‰~ƒQ[ƒW
+	// å††ã‚²ãƒ¼ã‚¸
 	CCircleGauge circleGaugeData = { startRadian ,endRadian };
 	TransferDataToConstantBuffer(mMaterial->constantBuffers[2].get(), circleGaugeData);
 }
@@ -109,63 +109,63 @@ void CircleGaugeSprite::MaterialDrawCommands()
 
 	for (uint32_t i = 0; i < mMaterial->constantBuffers.size(); i++)
 	{
-		// CBV‚Ìİ’èƒRƒ}ƒ“ƒh
+		// CBVã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 			i, mMaterial->constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
 	}
 }
 
-// --- ’¸“_ƒf[ƒ^ŠÖ˜A --------------------------------------------------- //
+// --- é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿é–¢é€£ --------------------------------------------------- //
 void CircleGaugeSprite::TransferVertexCoord()
 {
 	enum { LD, LU, RD, RU };
 
-	// l•Ó
+	// å››è¾º
 	float left = (0.f - mAnchorPoint.x) * mSize.x;
 	float right = (1.f - mAnchorPoint.x) * mSize.x;
 	float up = (0.f - mAnchorPoint.y) * mSize.y;
 	float down = (1.f - mAnchorPoint.y) * mSize.y;
 
-	// ’¸“_À•W
-	mVertices[LD].pos = Vec3(left, down, 0.f);	  //¶‰º
-	mVertices[LU].pos = Vec3(left, up, 0.f);	  //¶ã
-	mVertices[RD].pos = Vec3(right, down, 0.f);  //‰E‰º
-	mVertices[RU].pos = Vec3(right, up, 0.f);	  //‰Eã
+	// é ‚ç‚¹åº§æ¨™
+	mVertices[LD].pos = Vec3(left, down, 0.f);	  //å·¦ä¸‹
+	mVertices[LU].pos = Vec3(left, up, 0.f);	  //å·¦ä¸Š
+	mVertices[RD].pos = Vec3(right, down, 0.f);  //å³ä¸‹
+	mVertices[RU].pos = Vec3(right, up, 0.f);	  //å³ä¸Š
 }
 void CircleGaugeSprite::TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightDownPos)
 {
 	enum { LD, LU, RD, RU };
 
-	// l•Ó
+	// å››è¾º
 	float left = leftTopPos.x / mTexture->size.x;
 	float right = rightDownPos.x / mTexture->size.x;
 	float up = leftTopPos.y / mTexture->size.y;
 	float down = rightDownPos.y / mTexture->size.y;
 
-	// uvÀ•W
-	mVertices[LD].uv = Vec2(left, down);	 //¶‰º
-	mVertices[LU].uv = Vec2(left, up);		 //¶ã
-	mVertices[RD].uv = Vec2(right, down);	 //‰E‰º
-	mVertices[RU].uv = Vec2(right, up);	 //‰Eã
+	// uvåº§æ¨™
+	mVertices[LD].uv = Vec2(left, down);	 //å·¦ä¸‹
+	mVertices[LU].uv = Vec2(left, up);		 //å·¦ä¸Š
+	mVertices[RD].uv = Vec2(right, down);	 //å³ä¸‹
+	mVertices[RU].uv = Vec2(right, up);	 //å³ä¸Š
 }
 
-// --- ƒZƒbƒ^[ -------------------------------------------------------- //
+// --- ã‚»ãƒƒã‚¿ãƒ¼ -------------------------------------------------------- //
 
-// ƒeƒNƒXƒ`ƒƒ[
+// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼
 void CircleGaugeSprite::SetTexture(Texture* texture)
 {
 	mTexture = texture;
 	SetSize(texture->size);
 }
 
-// •`‰æ”ÍˆÍ
+// æç”»ç¯„å›²
 void CircleGaugeSprite::SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos)
 {
 	TransferUVCoord(leftTopPos, rightDownPos);
 	mVertexBuffer->TransferToBuffer(mVertices);
 }
 
-// ƒTƒCƒY
+// ã‚µã‚¤ã‚º
 void CircleGaugeSprite::SetSize(const Vec2 size)
 {
 	mSize = size;
@@ -174,7 +174,7 @@ void CircleGaugeSprite::SetSize(const Vec2 size)
 	mVertexBuffer->TransferToBuffer(mVertices);
 }
 
-// ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg
+// ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ
 void CircleGaugeSprite::SetAnchorPoint(const Vec2 anchorPoint)
 {
 	mAnchorPoint = anchorPoint;
@@ -183,7 +183,7 @@ void CircleGaugeSprite::SetAnchorPoint(const Vec2 anchorPoint)
 	mVertexBuffer->TransferToBuffer(mVertices);
 }
 
-// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“
+// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 void CircleGaugeSprite::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
 	mGraphicsPipeline = graphicsPipeline;

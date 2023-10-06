@@ -21,10 +21,10 @@ float RenderBase::sClearColor[4] = { 0.1f,0.25f,0.5f,0.0f };
 
 void RenderBase::Init()
 {
-	// ƒfƒoƒbƒO‚Ì‚İÀs
+	// ç¹ãƒ»ãƒ°ç¹ãƒ»ã’è­ã‚…ãƒ»ç¸ºï½¿è³æº¯ï½¡ãƒ»
 	ProcessAtDebugBulid([]()
 		{
-			//ƒfƒoƒbƒOƒŒƒCƒ„[‚ğƒIƒ“‚É
+			//ç¹ãƒ»ãƒ°ç¹ãƒ»ã’ç¹ï½¬ç¹§ï½¤ç¹ï½¤ç¹ï½¼ç¹§åµãŒç¹ï½³ç¸ºï½«
 			ComPtr<ID3D12Debug1> debugController;
 			if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(debugController.GetAddressOf()))))
 			{
@@ -33,33 +33,33 @@ void RenderBase::Init()
 			}
 		});
 
-	DeviceInit();	// ƒfƒoƒCƒX‚Ì‰Šú‰»
+	DeviceInit();	// ç¹ãƒ»ãƒ°ç¹§ï½¤ç¹§ï½¹ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 
-	// ƒfƒoƒbƒO‚Ì‚İÀs
+	// ç¹ãƒ»ãƒ°ç¹ãƒ»ã’è­ã‚…ãƒ»ç¸ºï½¿è³æº¯ï½¡ãƒ»
 	ProcessAtDebugBulid([]()
 		{
 			ComPtr<ID3D12InfoQueue> infoQueue;
 			if (SUCCEEDED(RenderBase::GetInstance()->
 				GetDevice()->QueryInterface(IID_PPV_ARGS(&infoQueue))))
 			{
-				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);	// ‚â‚Î‚¢ƒGƒ‰[ˆê‚É~‚Ü‚é
-				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);		// ƒGƒ‰[‚É~‚Ü‚é
-				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);	// ƒ[ƒjƒ“ƒO‚É~‚Ü‚é
+				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);	// ç¹§ãƒ»ãƒ»ç¸ºãƒ»ãŠç¹ï½©ç¹ï½¼è³Â€è­ã‚…â†“è±ï½¢ç¸ºï½¾ç¹§ãƒ»
+				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);		// ç¹§ï½¨ç¹ï½©ç¹ï½¼è­ã‚…â†“è±ï½¢ç¸ºï½¾ç¹§ãƒ»
+				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);	// ç¹ï½¯ç¹ï½¼ç¹ä¹Î¦ç¹§ï½°è­ã‚…â†“è±ï½¢ç¸ºï½¾ç¹§ãƒ»
 			}
 
-			//@—}§‚·‚éƒGƒ‰[
+			//ç¸²Â€è¬šå¤§å®›ç¸ºå¶ï½‹ç¹§ï½¨ç¹ï½©ç¹ï½¼
 			D3D12_MESSAGE_ID denyIds[] = {
 				D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE
 			};
 
-			//@—}§‚³‚ê‚é•\¦ƒŒƒxƒ‹
+			//ç¸²Â€è¬šå¤§å®›ç¸ºè¼”ï½Œç¹§ç–ï½¡ï½¨é‰ï½ºç¹ï½¬ç¹å¶Î
 			D3D12_MESSAGE_SEVERITY severities[] = { D3D12_MESSAGE_SEVERITY_INFO };
 			D3D12_INFO_QUEUE_FILTER filter{};
 			filter.DenyList.NumIDs = _countof(denyIds);
 			filter.DenyList.pIDList = denyIds;
 			filter.DenyList.NumSeverities = _countof(severities);
 			filter.DenyList.pSeverityList = severities;
-			//@w’è‚µ‚½ƒGƒ‰[‚Ì•\¦‚ğ—}§‚·‚é
+			//ç¸²Â€è¬–ãƒ»ï½®å£¹ï¼ ç¸ºæº˜ãŠç¹ï½©ç¹ï½¼ç¸ºï½®é™¦ï½¨é‰ï½ºç¹§å‘ˆæ¤›è›»ï½¶ç¸ºå¶ï½‹
 			infoQueue->PushStorageFilter(&filter);
 		});
 
@@ -69,42 +69,42 @@ void RenderBase::Init()
 
 	mFenceValue = 0;
 
-	DescriptorHeapInit();	// ƒeƒBƒXƒNƒŠƒvƒ^[ƒq[ƒv‚Ì‰Šú‰»
-	CommandInit();			// ƒRƒ}ƒ“ƒhŠÖ˜A‚Ì‰Šú‰»
-	SwapChainInit();		// ƒXƒƒbƒvƒ`ƒFƒ“‚Ì‰Šú‰»
-	FenceInit();			// ƒtƒFƒ“ƒX‚Ì‰Šú‰»
-	DepthBufferInit();		// [“xƒoƒbƒtƒ@‚Ì‰Šú‰»
-	ShaderCompilerInit();	// ƒVƒF[ƒ_[ƒRƒ“ƒpƒCƒ‰[‚Ì‰Šú‰»
-	GraphicsPipelineInit();	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“‚Ì‰Šú‰»
-	ComputePipelineInit();	// ƒRƒ“ƒsƒ…[ƒgƒpƒCƒvƒ‰ƒCƒ“‚Ì‰Šú‰»
+	DescriptorHeapInit();	// ç¹ãƒ»ã…ç¹§ï½¹ç¹§ï½¯ç¹ï½ªç¹åŠ±ã¡ç¹ï½¼ç¹åµãƒ»ç¹åŠ±ãƒ»è›»æ™„æ‚„è›¹ãƒ»
+	CommandInit();			// ç¹§ï½³ç¹æ§­Î¦ç¹è›¾æœªé¨¾ï½£ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
+	SwapChainInit();		// ç¹§ï½¹ç¹ï½¯ç¹ãƒ»ãƒ»ç¹âˆšã‰ç¹ï½³ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
+	FenceInit();			// ç¹è¼”ã‰ç¹ï½³ç¹§ï½¹ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
+	DepthBufferInit();		// è±ºï½±è ï½¦ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
+	ShaderCompilerInit();	// ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼ç¹§ï½³ç¹ï½³ç¹ä»£ã†ç¹ï½©ç¹ï½¼ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
+	GraphicsPipelineInit();	// ç¹§ï½°ç¹ï½©ç¹è¼”ã…ç¹ãƒ»ã‘ç¹§ï½¹ç¹ä»£ã†ç¹åŠ±Î›ç¹§ï½¤ç¹ï½³ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
+	ComputePipelineInit();	// ç¹§ï½³ç¹ï½³ç¹æ–Î—ç¹ï½¼ç¹åŒ»ãƒ±ç¹§ï½¤ç¹åŠ±Î›ç¹§ï½¤ç¹ï½³ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 }
 void RenderBase::PreDraw()
 {
-	//---------------------- ƒŠƒ\[ƒXƒoƒŠƒA‚Ì•ÏXƒRƒ}ƒ“ƒh ----------------------//
-	// ƒoƒbƒNƒoƒbƒtƒ@‚Ì”Ô†‚ğæ“¾
+	//---------------------- ç¹ï½ªç¹§ï½½ç¹ï½¼ç¹§ï½¹ç¹èˆŒÎœç¹§ï½¢ç¸ºï½®èŸç”»å³©ç¹§ï½³ç¹æ§­Î¦ç¹ãƒ»----------------------//
+	// ç¹èˆŒãƒ£ç¹§ï½¯ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½®é€¡ï½ªèœ¿ï½·ç¹§è²å™è •ãƒ»
 	UINT bbIndex = mSwapChain->GetCurrentBackBufferIndex();
-	// ‚PDƒŠƒ\[ƒXƒoƒŠƒA‚Å‘‚«‚İ‰Â”\‚É•ÏX
-	mBarrierDesc.Transition.pResource = mBackBuffers[bbIndex]->GetBufferResource()->buffer.Get();	// ƒoƒbƒNƒoƒbƒtƒ@‚ğw’è
-	mBarrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;	// •\¦ó‘Ô‚©‚ç
-	mBarrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // •`‰æó‘Ô‚Ö
+	// ãƒ»æ‰˜ï½¼å¼±Îœç¹§ï½½ç¹ï½¼ç¹§ï½¹ç¹èˆŒÎœç¹§ï½¢ç¸ºï½§è­–ï½¸ç¸ºå´ï½¾ï½¼ç¸ºï½¿èœ¿ï½¯é–­ï½½ç¸ºï½«èŸç”»å³©
+	mBarrierDesc.Transition.pResource = mBackBuffers[bbIndex]->GetBufferResource()->buffer.Get();	// ç¹èˆŒãƒ£ç¹§ï½¯ç¹èˆŒãƒ£ç¹è¼”ãƒç¹§å‘ˆæ¬ è³ãƒ»
+	mBarrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;	// é™¦ï½¨é‰ï½ºè¿¥ï½¶è«·ä¹Â°ç¹§ãƒ»
+	mBarrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // è¬ å†—åˆ¤è¿¥ï½¶è«·ä¹âˆˆ
 	mCommandList->ResourceBarrier(1, &mBarrierDesc);
 
-	//--------------------------- •`‰ææw’èƒRƒ}ƒ“ƒh ---------------------------//
-	// ‚QD•`‰ææ‚Ì•ÏX
-	// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
+	//--------------------------- è¬ å†—åˆ¤èœˆåŸŸæ¬ è³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»---------------------------//
+	// ãƒ»æŠµï½¼å–ç·’é€•ï½»èœˆåŒ»ãƒ»èŸç”»å³©
+	// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹§ï½¿ç¹ï½¼ç¹§ï½²ç¹ãƒ»ãƒ¨ç¹è–™Î—ç¹ï½¼ç¸ºï½®ç¹ä¸ŠÎ¦ç¹å³¨Îç¹§è²å™è •ãƒ»
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = mBackBuffers[bbIndex]->GetBufferResource()->rtvHandle.cpu;
 
-	// [“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
+	// è±ºï½±è ï½¦ç¹§ï½¹ç¹ãƒ»Î¦ç¹§ï½·ç¹ï½«ç¹è–™Î—ç¹ï½¼é€•ï½¨ç¹ãƒ»ã›ç¹§ï½¯ç¹ï½ªç¹åŠ±ã¡ç¹åµãƒ»ç¹åŠ±ãƒ»ç¹ä¸ŠÎ¦ç¹å³¨Îç¹§è²å™è •ãƒ»
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = mDepthBuffer->GetBufferResource()->dsvHandle.cpu;
 	mCommandList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
 
-	// ‰æ–ÊƒNƒŠƒA R G B A
+	// é€•ï½»é«±ï½¢ç¹§ï½¯ç¹ï½ªç¹§ï½¢ R G B A
 	mCommandList->ClearRenderTargetView(rtvHandle, sClearColor, 0, nullptr);
 
-	// [“xƒoƒbƒtƒ@ƒNƒŠƒA
+	// è±ºï½±è ï½¦ç¹èˆŒãƒ£ç¹è¼”ãƒç¹§ï½¯ç¹ï½ªç¹§ï½¢
 	mCommandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
-	// ƒrƒ…[ƒ|[ƒg‚Ìˆ—
+	// ç¹è–™Î—ç¹ï½¼ç¹æ˜´ãƒ»ç¹åŒ»ãƒ»èœƒï½¦é€…ãƒ»
 	mViewport->SetViewport(
 		{ 0,0 },
 		{
@@ -113,32 +113,32 @@ void RenderBase::PreDraw()
 		});
 	mViewport->Update();
 
-	// ƒVƒU[‹éŒ`‚Ìˆ—
+	// ç¹§ï½·ç¹§ï½¶ç¹ï½¼éï½©è –ï½¢ç¸ºï½®èœƒï½¦é€…ãƒ»
 	mScissorRectangle->Update();
 }
 void RenderBase::PostDraw()
 {
 	HRESULT result;
 
-	//---------------------- ƒŠƒ\[ƒXƒoƒŠƒA‚Ì•œ‹AƒRƒ}ƒ“ƒh ----------------------//
-	// ‚TDƒŠƒ\[ƒXƒoƒŠƒA‚ğ–ß‚·
-	mBarrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // •`‰æó‘Ô‚©‚ç
-	mBarrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT; // •\¦ó‘Ô‚Ö
+	//---------------------- ç¹ï½ªç¹§ï½½ç¹ï½¼ç¹§ï½¹ç¹èˆŒÎœç¹§ï½¢ç¸ºï½®è •ï½©èŸ¶ï½°ç¹§ï½³ç¹æ§­Î¦ç¹ãƒ»----------------------//
+	// ãƒ»åŒ…ï½¼å¼±Îœç¹§ï½½ç¹ï½¼ç¹§ï½¹ç¹èˆŒÎœç¹§ï½¢ç¹§å‘ˆç¶¾ç¸ºãƒ»
+	mBarrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // è¬ å†—åˆ¤è¿¥ï½¶è«·ä¹Â°ç¹§ãƒ»
+	mBarrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT; // é™¦ï½¨é‰ï½ºè¿¥ï½¶è«·ä¹âˆˆ
 	mCommandList->ResourceBarrier(1, &mBarrierDesc);
 
-	//-------------------------- ƒRƒ}ƒ“ƒh‚Ìƒtƒ‰ƒbƒVƒ… --------------------------//
-	// –½—ß‚ÌƒNƒ[ƒY
+	//-------------------------- ç¹§ï½³ç¹æ§­Î¦ç¹å³¨ãƒ»ç¹è¼”Î›ç¹ãƒ»ã™ç¹ï½¥ --------------------------//
+	// èœ»ï½½è‰ï½¤ç¸ºï½®ç¹§ï½¯ç¹ï½­ç¹ï½¼ç¹§ï½º
 	result = mCommandList->Close();
 	assert(SUCCEEDED(result));
-	// ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÌÀs
+	// ç¹§ï½³ç¹æ§­Î¦ç¹å³¨Îœç¹§ï½¹ç¹åŒ»ãƒ»è³æº¯ï½¡ãƒ»
 	ID3D12CommandList* mCommandLists[] = { mCommandList.Get() };
 	mCommandQueue->ExecuteCommandLists(1, mCommandLists);
 
-	// ‰æ–Ê‚É•\¦‚·‚éƒoƒbƒtƒ@‚ğƒtƒŠƒbƒvi— •\‚Ì“ü‘Ö‚¦j
+	// é€•ï½»é«±ï½¢ç¸ºï½«é™¦ï½¨é‰ï½ºç¸ºå¶ï½‹ç¹èˆŒãƒ£ç¹è¼”ãƒç¹§åµãƒµç¹ï½ªç¹ãƒ»ãƒ»ãƒ»éƒï½£å‰°ï½¡ï½¨ç¸ºï½®èœˆï½¥è­–ï½¿ç¸ºèŒ¨ï½¼ãƒ»
 	result = mSwapChain->Present(1, 0);
 	assert(SUCCEEDED(result));
 
-	// ƒRƒ}ƒ“ƒh‚ÌÀsŠ®—¹‚ğ‘Ò‚Â
+	// ç¹§ï½³ç¹æ§­Î¦ç¹å³¨ãƒ»è³æº¯ï½¡æ‚Ÿï½®å¾¡ï½ºãƒ»ï½’è •ãƒ»â–½
 	mCommandQueue->Signal(mFence.Get(), ++mFenceValue);
 	if (mFence.Get()->GetCompletedValue() != mFenceValue)
 	{
@@ -148,10 +148,10 @@ void RenderBase::PostDraw()
 		CloseHandle(event);
 	}
 
-	// ƒLƒ…[‚ğƒNƒŠƒA
+	// ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹§åµã‘ç¹ï½ªç¹§ï½¢
 	result = mCommandAllocator->Reset();
 	assert(SUCCEEDED(result));
-	// Ä‚ÑƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğ’™‚ß‚é€”õ
+	// èœ€é˜ªãƒ»ç¹§ï½³ç¹æ§­Î¦ç¹å³¨Îœç¹§ï½¹ç¹åŒ»ï½’é›‹ï½¯ç¹§âˆšï½‹è²…é–€ï½™
 	result = mCommandList.Get()->Reset(mCommandAllocator.Get(), nullptr);
 	assert(SUCCEEDED(result));
 }
@@ -171,47 +171,47 @@ void RenderBase::TransitionBufferState(
 	mCommandList->ResourceBarrier(1, &barrier);
 }
 
-// --- ‰Šú‰»ŠÖ˜A ------------------------------------------------------------ //
+// --- è›»æ™„æ‚„è›¹å¤œæœªé¨¾ï½£ ------------------------------------------------------------ //
 void RenderBase::DeviceInit()
 {
 	HRESULT result;
 
-	// DXGIƒtƒ@ƒNƒgƒŠ[‚Ì¶¬
+	// DXGIç¹è¼”ãƒç¹§ï½¯ç¹åŒ»Îœç¹ï½¼ç¸ºï½®é€•æ»“ãƒ»
 	result = CreateDXGIFactory(IID_PPV_ARGS(&mDxgiFactory));
 	assert(SUCCEEDED(result));
 
-	// ƒAƒ_ƒvƒ^[‚Ì—ñ‹“—p
+	// ç¹§ï½¢ç¹Â€ç¹åŠ±ã¡ç¹ï½¼ç¸ºï½®è›»ç²å«Œé€•ï½¨
 	std::vector<ComPtr<IDXGIAdapter4>> adapters;
-	// ‚±‚±‚É“Á’è‚Ì–¼‘O‚ğ‚ÂƒAƒ_ƒvƒ^[ƒIƒuƒWƒFƒNƒg‚ª“ü‚é
+	// ç¸ºè–™ï¼…ç¸ºï½«è¿šï½¹è³å£¹ãƒ»èœ·æ¦Šç‡•ç¹§å‘ˆæˆŸç¸ºï½¤ç¹§ï½¢ç¹Â€ç¹åŠ±ã¡ç¹ï½¼ç¹§ï½ªç¹æ‚¶ãšç¹§ï½§ç¹§ï½¯ç¹åŒ»â€²èœˆï½¥ç¹§ãƒ»
 	ComPtr<IDXGIAdapter4> tmpAdapter;
 
-	// ƒpƒtƒH[ƒ}ƒ“ƒX‚ª‚‚¢‚à‚Ì‚©‚ç‡‚ÉA‘S‚Ä‚ÌƒAƒ_ƒvƒ^[‚ğ—ñ‹“‚·‚é
+	// ç¹ä»£ãƒµç¹§ï½©ç¹ï½¼ç¹æ§­Î¦ç¹§ï½¹ç¸ºç¢ï½«å€¥ï¼ç¹§ã‚…ãƒ»ç¸ºä¹ï½‰é¬†ãƒ»â†“ç¸²âˆãƒ»ç¸ºï½¦ç¸ºï½®ç¹§ï½¢ç¹Â€ç¹åŠ±ã¡ç¹ï½¼ç¹§è²ãƒ»è¬–å¶â˜†ç¹§ãƒ»
 	for (UINT i = 0;
 		mDxgiFactory->EnumAdapterByGpuPreference(i,
 			DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE,
 			IID_PPV_ARGS(&tmpAdapter)) != DXGI_ERROR_NOT_FOUND;
 		i++)
 	{
-		// “®“I”z—ñ‚É’Ç‰Á‚·‚é
+		// èœæ…•å™ªé©Ÿæ¦Šãƒ»ç¸ºï½«éœ‘ï½½èœ‰ï£°ç¸ºå¶ï½‹
 		adapters.push_back(tmpAdapter);
 	}
 
-	// ‘Ã“–‚ÈƒAƒ_ƒvƒ^‚ğ‘I•Ê‚·‚é
+	// è¯ï½¥è –è–™â†‘ç¹§ï½¢ç¹Â€ç¹åŠ±ã¡ç¹§å¸âˆˆè›»ï½¥ç¸ºå¶ï½‹
 	for (size_t i = 0; i < adapters.size(); i++)
 	{
 		DXGI_ADAPTER_DESC3 adapterDesc;
-		// ƒAƒ_ƒvƒ^[‚Ìî•ñ‚ğæ“¾‚·‚é
+		// ç¹§ï½¢ç¹Â€ç¹åŠ±ã¡ç¹ï½¼ç¸ºï½®è« ãƒ»ï£°ï½±ç¹§è²å™è •åŠ±â˜†ç¹§ãƒ»
 		adapters[i]->GetDesc3(&adapterDesc);
-		// ƒ\ƒtƒgƒEƒFƒAƒfƒoƒCƒX‚ğ‰ñ”ğ
+		// ç¹§ï½½ç¹è¼”ãƒ¨ç¹§ï½¦ç¹§ï½§ç¹§ï½¢ç¹ãƒ»ãƒ°ç¹§ï½¤ç¹§ï½¹ç¹§è²å±“é©•ï½¿
 		if (!(adapterDesc.Flags & DXGI_ADAPTER_FLAG3_SOFTWARE))
 		{
-			// ƒfƒoƒCƒX‚ğÌ—p‚µ‚Äƒ‹[ƒv‚ğ”²‚¯‚é
+			// ç¹ãƒ»ãƒ°ç¹§ï½¤ç¹§ï½¹ç¹§å‘ˆæ²»é€•ï½¨ç¸ºåŠ±â€»ç¹ï½«ç¹ï½¼ç¹åŠ±ï½’è¬šæ‡Šï¿ ç¹§ãƒ»
 			tmpAdapter = adapters[i].Get();
 			break;
 		}
 	}
 
-	// ‘Î‰ƒŒƒxƒ‹‚Ì”z—ñ
+	// èŸ‡ï½¾è ¢æ‡ŠÎç¹å¶Îç¸ºï½®é©Ÿæ¦Šãƒ»
 	D3D_FEATURE_LEVEL levels[] =
 	{
 		D3D_FEATURE_LEVEL_12_1,
@@ -223,11 +223,11 @@ void RenderBase::DeviceInit()
 	D3D_FEATURE_LEVEL featureLevel;
 	for (size_t i = 0; i < _countof(levels); i++)
 	{
-		// Ì—p‚µ‚½ƒAƒ_ƒvƒ^[‚ÅƒfƒoƒCƒX‚ğ¶¬
+		// è¬—ï½¡é€•ï½¨ç¸ºåŠ±â—†ç¹§ï½¢ç¹Â€ç¹åŠ±ã¡ç¹ï½¼ç¸ºï½§ç¹ãƒ»ãƒ°ç¹§ï½¤ç¹§ï½¹ç¹§å ¤å‡½è¬Œãƒ»
 		result = D3D12CreateDevice(tmpAdapter.Get(), levels[i],
 			IID_PPV_ARGS(mDevice.GetAddressOf()));
 		if (result == S_OK) {
-			// ƒfƒoƒCƒX‚ğ¶¬‚Å‚«‚½“_‚Åƒ‹[ƒv‚ğ”²‚¯‚é
+			// ç¹ãƒ»ãƒ°ç¹§ï½¤ç¹§ï½¹ç¹§å ¤å‡½è¬ŒèˆŒã€’ç¸ºé˜ªâ—†è­ã‚‰ã›ç¸ºï½§ç¹ï½«ç¹ï½¼ç¹åŠ±ï½’è¬šæ‡Šï¿ ç¹§ãƒ»
 			featureLevel = levels[i];
 			break;
 		}
@@ -237,23 +237,23 @@ void RenderBase::DeviceInit()
 void RenderBase::DescriptorHeapInit()
 {
 	DescriptorHeapSetting setting;
-	// SRVŠi”[—p
+	// SRVè­¬ï½¼é‚å’²ç•‘
 	setting.maxSize = 2048;
 	setting.startIndex = 1;
 	setting.heapType = DescriptorHeapSetting::CBV_SRV_UAV;
 	DescriptorHeapManager::Create(setting, "SRV");
 
-	// RTVŠi”[—p
+	// RTVè­¬ï½¼é‚å’²ç•‘
 	setting.maxSize = 64;
 	setting.heapType = DescriptorHeapSetting::RTV;
 	DescriptorHeapManager::Create(setting, "RTV");
 
-	// DSVŠi”[—p
+	// DSVè­¬ï½¼é‚å’²ç•‘
 	setting.maxSize = 64;
 	setting.heapType = DescriptorHeapSetting::DSV;
 	DescriptorHeapManager::Create(setting, "DSV");
 
-	// SRV_UAVŠi”[—p
+	// SRV_UAVè­¬ï½¼é‚å’²ç•‘
 	setting.maxSize = 512;
 	setting.heapType = DescriptorHeapSetting::CBV_SRV_UAV;
 	DescriptorHeapManager::Create(setting, "SRV_UAV");
@@ -262,7 +262,7 @@ void RenderBase::CommandInit()
 {
 	HRESULT result;
 
-	// ƒRƒ}ƒ“ƒhƒAƒƒP[ƒ^‚ğ¶¬
+	// ç¹§ï½³ç¹æ§­Î¦ç¹å³¨ã„ç¹ï½­ç¹§ï½±ç¹ï½¼ç¹§ï½¿ç¹§å ¤å‡½è¬Œãƒ»
 	result = mDevice->CreateCommandAllocator
 	(
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
@@ -270,7 +270,7 @@ void RenderBase::CommandInit()
 	);
 	assert(SUCCEEDED(result));
 
-	// ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğ¶¬
+	// ç¹§ï½³ç¹æ§­Î¦ç¹å³¨Îœç¹§ï½¹ç¹åŒ»ï½’é€•æ»“ãƒ»
 	result = mDevice->CreateCommandList
 	(
 		0,
@@ -280,9 +280,9 @@ void RenderBase::CommandInit()
 	);
 	assert(SUCCEEDED(result));
 
-	//ƒRƒ}ƒ“ƒhƒLƒ…[‚Ìİ’è
+	//ç¹§ï½³ç¹æ§­Î¦ç¹å³¨ãç¹ï½¥ç¹ï½¼ç¸ºï½®éšªï½­è³ãƒ»
 	D3D12_COMMAND_QUEUE_DESC mCommandQueueDesc{};
-	//ƒRƒ}ƒ“ƒhƒLƒ…[‚ğ¶¬
+	//ç¹§ï½³ç¹æ§­Î¦ç¹å³¨ãç¹ï½¥ç¹ï½¼ç¹§å ¤å‡½è¬Œãƒ»
 	result = mDevice.Get()->CreateCommandQueue(&mCommandQueueDesc, IID_PPV_ARGS(&mCommandQueue));
 	assert(SUCCEEDED(result));
 }
@@ -293,18 +293,18 @@ void RenderBase::SwapChainInit()
 	mBackBuffers[0] = std::make_unique<RenderTarget>();
 	mBackBuffers[1] = std::make_unique<RenderTarget>();
 
-	// ƒŠƒ\[ƒX‚Ìİ’è
+	// ç¹ï½ªç¹§ï½½ç¹ï½¼ç¹§ï½¹ç¸ºï½®éšªï½­è³ãƒ»
 	DXGI_SWAP_CHAIN_DESC1 mSwapChainDesc{};
 	mSwapChainDesc.Width = (UINT)mRenderWindow->GetWindowSize().x;
 	mSwapChainDesc.Height = (UINT)mRenderWindow->GetWindowSize().y;
-	mSwapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;				 // Fî•ñ‚Ì‘®
-	mSwapChainDesc.SampleDesc.Count = 1;							 // ƒ}ƒ‹ƒ`ƒTƒ“ƒvƒ‹‚µ‚È‚¢
-	mSwapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER;			 // ƒoƒbƒNƒoƒbƒtƒ@—p
-	mSwapChainDesc.BufferCount = 2;									 // ƒoƒbƒtƒ@”‚ğ‚Q‚Â‚Éİ’è
-	mSwapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;		 // ƒtƒŠƒbƒvŒã‚Í”jŠü
+	mSwapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;				 // æ¿¶ï½²è« ãƒ»ï£°ï½±ç¸ºï½®è­–ï½¸è ‘ãƒ»
+	mSwapChainDesc.SampleDesc.Count = 1;							 // ç¹æ§­Îç¹âˆšã—ç¹ï½³ç¹åŠ±Îç¸ºåŠ±â†‘ç¸ºãƒ»
+	mSwapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER;			 // ç¹èˆŒãƒ£ç¹§ï½¯ç¹èˆŒãƒ£ç¹è¼”ãƒé€•ï½¨
+	mSwapChainDesc.BufferCount = 2;									 // ç¹èˆŒãƒ£ç¹è¼”ãƒè¬¨ï½°ç¹§æŠµï½¼åµâ–½ç¸ºï½«éšªï½­è³ãƒ»
+	mSwapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;		 // ç¹è¼”Îœç¹ãƒ»ãƒ»è •å¾Œãƒ»éï½´è­½ãƒ»
 	mSwapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-	// ƒXƒƒbƒvƒ`ƒF[ƒ“‚Ì¶¬
+	// ç¹§ï½¹ç¹ï½¯ç¹ãƒ»ãƒ»ç¹âˆšã‰ç¹ï½¼ç¹ï½³ç¸ºï½®é€•æ»“ãƒ»
 	ComPtr<IDXGISwapChain1> mSwapChain1;
 	result = mDxgiFactory->CreateSwapChainForHwnd
 	(
@@ -318,19 +318,19 @@ void RenderBase::SwapChainInit()
 	mSwapChain1.As(&mSwapChain);
 	assert(SUCCEEDED(result));
 
-	// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Ìİ’è
+	// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹§ï½¿ç¹ï½¼ç¹§ï½²ç¹ãƒ»ãƒ¨ç¹è–™Î—ç¹ï½¼ç¸ºï½®éšªï½­è³ãƒ»
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
-	// ƒVƒF[ƒ_[‚ÌŒvZŒ‹‰Ê‚ğSRGB‚É•ÏŠ·‚µ‚Ä‘‚«‚Ş
+	// ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼ç¸ºï½®éšªè‚²ï½®ç¤¼ï½µå…ˆæ£¡ç¹§æ‹…RGBç¸ºï½«èŸç”»é‹¤ç¸ºåŠ±â€»è­–ï½¸ç¸ºå´ï½¾ï½¼ç¹§Â€
 	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
-	// ƒXƒƒbƒvƒ`ƒF[ƒ“‚Ì‘S‚Ä‚Ìƒoƒbƒtƒ@‚É‚Â‚¢‚Äˆ—‚·‚é
+	// ç¹§ï½¹ç¹ï½¯ç¹ãƒ»ãƒ»ç¹âˆšã‰ç¹ï½¼ç¹ï½³ç¸ºï½®èœˆï½¨ç¸ºï½¦ç¸ºï½®ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½«ç¸ºï½¤ç¸ºãƒ»â€»èœƒï½¦é€…ãƒ»â˜†ç¹§ãƒ»
 	for (size_t i = 0; i < mBackBuffers.size(); i++)
 	{
-		// ƒXƒƒbƒvƒ`ƒF[ƒ“‚©‚çƒoƒbƒtƒ@‚ğæ“¾
+		// ç¹§ï½¹ç¹ï½¯ç¹ãƒ»ãƒ»ç¹âˆšã‰ç¹ï½¼ç¹ï½³ç¸ºä¹ï½‰ç¹èˆŒãƒ£ç¹è¼”ãƒç¹§è²å™è •ãƒ»
 		mSwapChain->GetBuffer((UINT)i, IID_PPV_ARGS(mBackBuffers[i]->GetBufferResource()->buffer.GetAddressOf()));
 
-		// RTVì¬
+		// RTVè´æ‡ˆãƒ»
 		DescriptorHeapManager::GetDescriptorHeap("RTV")->CreateRTV(mBackBuffers[i]->GetBufferResource());
 	}
 }
@@ -338,7 +338,7 @@ void RenderBase::FenceInit()
 {
 	HRESULT result;
 
-	// ƒtƒFƒ“ƒX‚Ì¶¬
+	// ç¹è¼”ã‰ç¹ï½³ç¹§ï½¹ç¸ºï½®é€•æ»“ãƒ»
 	result = mDevice->CreateFence(
 		mFenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(mFence.GetAddressOf()));
 }
@@ -353,7 +353,7 @@ void RenderBase::ShaderCompilerInit()
 	std::string path1 = "NewEngine/Shader/";
 	std::string path2 = "Application/Shader/";
 
-	// Object3D—pƒVƒF[ƒ_[
+	// Object3Dé€•ï½¨ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼
 	ShaderObjectManager::Create("Object3D");
 	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -361,7 +361,7 @@ void RenderBase::ShaderCompilerInit()
 	ShaderObjectManager::GetShaderObject("Object3D")->CompileVertexShader(path1 + "Object3DVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Object3D")->CompilePixelShader(path1 + "Object3DPS.hlsl", "main");
 
-	// Fbxƒ‚ƒfƒ‹—pƒVƒF[ƒ_[
+	// Fbxç¹ï½¢ç¹ãƒ»Îé€•ï½¨ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼
 	ShaderObjectManager::Create("FbxModel");
 	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -371,28 +371,28 @@ void RenderBase::ShaderCompilerInit()
 	ShaderObjectManager::GetShaderObject("FbxModel")->CompileVertexShader(path1 + "FbxModelVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("FbxModel")->CompilePixelShader(path1 + "FbxModelPS.hlsl", "main");
 
-	// ƒXƒvƒ‰ƒCƒg—pƒVƒF[ƒ_[
+	// ç¹§ï½¹ç¹åŠ±Î›ç¹§ï½¤ç¹è‚²ç•‘ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼
 	ShaderObjectManager::Create("Sprite");
 	ShaderObjectManager::GetShaderObject("Sprite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Sprite")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Sprite")->CompileVertexShader(path1 + "SpriteVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Sprite")->CompilePixelShader(path1 + "SpritePS.hlsl", "main");
 
-	// ‰~ƒQ[ƒWƒXƒvƒ‰ƒCƒg—pƒVƒF[ƒ_[
+	// èœ€ãƒ»ã”ç¹ï½¼ç¹§ï½¸ç¹§ï½¹ç¹åŠ±Î›ç¹§ï½¤ç¹è‚²ç•‘ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼
 	ShaderObjectManager::Create("CircleGaugeSprite");
 	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
 	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->CompileVertexShader(path1 + "CircleGaugeSpriteVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->CompilePixelShader(path1 + "CircleGaugeSpritePS.hlsl", "main");
 
-	// ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ[‚ÌƒVƒF[ƒ_[
+	// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼
 	ShaderObjectManager::Create("RenderTexture");
 	ShaderObjectManager::GetShaderObject("RenderTexture")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("RenderTexture")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
 	ShaderObjectManager::GetShaderObject("RenderTexture")->CompileVertexShader(path1 + "RenderTextureVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("RenderTexture")->CompilePixelShader(path1 + "RenderTexturePS.hlsl", "main");
 
-	// ƒVƒ‹ƒGƒbƒg—pƒVƒF[ƒ_[
+	// ç¹§ï½·ç¹ï½«ç¹§ï½¨ç¹ãƒ»ãƒ¨é€•ï½¨ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼
 	ShaderObjectManager::Create("Silhouette");
 	ShaderObjectManager::GetShaderObject("Silhouette")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Silhouette")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -400,14 +400,14 @@ void RenderBase::ShaderCompilerInit()
 	ShaderObjectManager::GetShaderObject("Silhouette")->CompileVertexShader(path1 + "SilhouetteVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Silhouette")->CompilePixelShader(path1 + "SilhouettePS.hlsl", "main");
 
-	// ƒAƒEƒgƒ‰ƒCƒ“Object—pƒVƒF[ƒ_[
+	// ç¹§ï½¢ç¹§ï½¦ç¹åŒ»Î›ç¹§ï½¤ç¹ï½³Objecté€•ï½¨ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼
 	ShaderObjectManager::Create("Outline");
 	ShaderObjectManager::GetShaderObject("Outline")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Outline")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Outline")->CompileVertexShader(path1 + "OutLineVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Outline")->CompilePixelShader(path1 + "OutLinePS.hlsl", "main");
 
-	// ƒgƒD[ƒ“ƒŒƒ“ƒ_[ƒŠƒ“ƒO—p
+	// ç¹åŒ»ã‡ç¹ï½¼ç¹ï½³ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ï½ªç¹ï½³ç¹§ï½°é€•ï½¨
 	ShaderObjectManager::Create("ToonRendering");
 	ShaderObjectManager::GetShaderObject("ToonRendering")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("ToonRendering")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -415,32 +415,32 @@ void RenderBase::ShaderCompilerInit()
 	ShaderObjectManager::GetShaderObject("ToonRendering")->CompileVertexShader(path1 + "ToonRenderVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("ToonRendering")->CompilePixelShader(path1 + "ToonRenderPS.hlsl", "main");
 
-	// ƒ‰ƒCƒ“—p
+	// ç¹ï½©ç¹§ï½¤ç¹ï½³é€•ï½¨
 	ShaderObjectManager::Create("Line");
 	ShaderObjectManager::GetShaderObject("Line")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Line")->CompileVertexShader(path1 + "LineVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Line")->CompilePixelShader(path1 + "LinePS.hlsl", "main");
 
-	// ƒGƒ~ƒbƒ^[—p
+	// ç¹§ï½¨ç¹æº˜ãƒ£ç¹§ï½¿ç¹ï½¼é€•ï½¨
 	ShaderObjectManager::Create("Emitter");
-	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);	// À•W
-	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);		// ƒXƒP[ƒ‹
-	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 1);		// ‰ñ“]
-	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 2);		// ‹P‚«“x
-	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);	// F
+	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);	// è ï½§è®“ãƒ»
+	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);		// ç¹§ï½¹ç¹§ï½±ç¹ï½¼ç¹ï½«
+	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 1);		// è—æ«ï½»ï½¢
+	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 2);		// éœˆæ˜´â€³è ï½¦
+	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);	// æ¿¶ï½²
 	ShaderObjectManager::GetShaderObject("Emitter")->CompileComputeShader(path1 + "EmitterCS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Emitter")->CompileVertexShader(path1 + "EmitterVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Emitter")->CompileGeometryShader(path1 + "EmitterGS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("Emitter")->CompilePixelShader(path1 + "EmitterPS.hlsl", "main");
 
-	// GPUƒGƒ~ƒbƒ^[—p
+	// GPUç¹§ï½¨ç¹æº˜ãƒ£ç¹§ï½¿ç¹ï½¼é€•ï½¨
 	ShaderObjectManager::Create("GPUEmitter");
 	ShaderObjectManager::GetShaderObject("GPUEmitter")->CompileComputeShader(path2 + "RespawnPointEffectCS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("GPUEmitter")->CompileVertexShader(path2 + "RespawnPointEffectVS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("GPUEmitter")->CompileGeometryShader(path1 + "EmitterGS.hlsl", "main");
 	ShaderObjectManager::GetShaderObject("GPUEmitter")->CompilePixelShader(path1 + "EmitterPS.hlsl", "main");
 
-	// ColliderObject—pƒVƒF[ƒ_[
+	// ColliderObjecté€•ï½¨ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¹ï½¼
 	ShaderObjectManager::Create("ColliderObject");
 	ShaderObjectManager::GetShaderObject("ColliderObject")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("ColliderObject")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -451,26 +451,26 @@ void RenderBase::ShaderCompilerInit()
 void RenderBase::GraphicsPipelineInit()
 {
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc1{};
-	depthStencilDesc1.DepthEnable = true; // [“xƒeƒXƒg‚ğs‚¤
-	depthStencilDesc1.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// ‘‚«‚İ‹–‰Â
-	depthStencilDesc1.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// ¬‚³‚¢‚Ù‚¤‚ğÌ—p
+	depthStencilDesc1.DepthEnable = true; // è±ºï½±è ï½¦ç¹ãƒ»ã›ç¹åŒ»ï½’é™¦å¾Œâ‰§
+	depthStencilDesc1.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// è­–ï½¸ç¸ºå´ï½¾ï½¼ç¸ºï½¿éšªï½±èœ¿ï½¯
+	depthStencilDesc1.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// èŸ†ä¸Šï¼†ç¸ºãƒ»âŠ‡ç¸ºãƒ»ï½’è¬—ï½¡é€•ï½¨
 
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc2{};
-	depthStencilDesc2.DepthEnable = false; // [“xƒeƒXƒg‚ğs‚í‚È‚¢
+	depthStencilDesc2.DepthEnable = false; // è±ºï½±è ï½¦ç¹ãƒ»ã›ç¹åŒ»ï½’é™¦å¾Œï½ç¸ºï½ªç¸ºãƒ»
 
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc3{};
-	depthStencilDesc3.DepthEnable = true; // [“xƒeƒXƒg‚ğs‚¤
-	depthStencilDesc3.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// ‘‚«‚İ•s‰Â
-	depthStencilDesc3.DepthFunc = D3D12_COMPARISON_FUNC_GREATER;	// ‘å‚«‚¢‚Ù‚¤‚ğÌ—p
+	depthStencilDesc3.DepthEnable = true; // è±ºï½±è ï½¦ç¹ãƒ»ã›ç¹åŒ»ï½’é™¦å¾Œâ‰§
+	depthStencilDesc3.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// è­–ï½¸ç¸ºå´ï½¾ï½¼ç¸ºï½¿è³æ¦Šåº„
+	depthStencilDesc3.DepthFunc = D3D12_COMPARISON_FUNC_GREATER;	// èŸï½§ç¸ºé˜ªï¼ç¸ºï½»ç¸ºãƒ»ï½’è¬—ï½¡é€•ï½¨
 
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc4{};
-	depthStencilDesc4.DepthEnable = true; // [“xƒeƒXƒg‚ğs‚¤
-	depthStencilDesc4.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// ‘‚«‚İ‹–‰Â
-	depthStencilDesc4.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// ¬‚³‚¢‚Ù‚¤‚ğÌ—p
+	depthStencilDesc4.DepthEnable = true; // è±ºï½±è ï½¦ç¹ãƒ»ã›ç¹åŒ»ï½’é™¦å¾Œâ‰§
+	depthStencilDesc4.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// è­–ï½¸ç¸ºå´ï½¾ï½¼ç¸ºï½¿éšªï½±èœ¿ï½¯
+	depthStencilDesc4.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// èŸ†ä¸Šï¼†ç¸ºãƒ»âŠ‡ç¸ºãƒ»ï½’è¬—ï½¡é€•ï½¨
 
 	GraphicsPipelineSetting setting;
 
-	// 3DƒIƒuƒWƒFƒNƒg—p
+	// 3Dç¹§ï½ªç¹æ‚¶ãšç¹§ï½§ç¹§ï½¯ç¹è‚²ç•‘
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Object3D");
 	setting.cullMode = CullMode::Back;
@@ -481,7 +481,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "Object3D");
 
-	// FBXƒ‚ƒfƒ‹—p
+	// FBXç¹ï½¢ç¹ãƒ»Îé€•ï½¨
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("FbxModel");
 	setting.cullMode = CullMode::Back;
@@ -492,7 +492,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "FbxModel");
 
-	// ƒXƒvƒ‰ƒCƒg—p
+	// ç¹§ï½¹ç¹åŠ±Î›ç¹§ï½¤ç¹è‚²ç•‘
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Sprite");
 	setting.cullMode = CullMode::None;
@@ -503,7 +503,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Sprite");
 
-	// ‰~Œ`ƒQ[ƒWƒXƒvƒ‰ƒCƒg—p
+	// èœ€ãƒ»ï½½ï½¢ç¹§ï½²ç¹ï½¼ç¹§ï½¸ç¹§ï½¹ç¹åŠ±Î›ç¹§ï½¤ç¹è‚²ç•‘
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("CircleGaugeSprite");
 	setting.cullMode = CullMode::None;
@@ -514,7 +514,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "CircleGaugeSprite");
 
-	// ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ—p
+	// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•é€•ï½¨
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("RenderTexture");
 	setting.cullMode = CullMode::None;
@@ -525,7 +525,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "RenderTexture");
 
-	// ƒVƒ‹ƒGƒbƒg—p
+	// ç¹§ï½·ç¹ï½«ç¹§ï½¨ç¹ãƒ»ãƒ¨é€•ï½¨
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Silhouette");
 	setting.cullMode = CullMode::Back;
@@ -536,7 +536,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Silhouette");
 
-	// ƒAƒEƒgƒ‰ƒCƒ“—p
+	// ç¹§ï½¢ç¹§ï½¦ç¹åŒ»Î›ç¹§ï½¤ç¹ï½³é€•ï½¨
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Outline");
 	setting.cullMode = CullMode::Front;
@@ -547,7 +547,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Outline");
 
-	// ƒgƒD[ƒ“ƒŒƒ“ƒ_ƒŠƒ“ƒO—p
+	// ç¹åŒ»ã‡ç¹ï½¼ç¹ï½³ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½ªç¹ï½³ç¹§ï½°é€•ï½¨
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("ToonRendering");
 	setting.cullMode = CullMode::Back;
@@ -558,7 +558,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "ToonRendering");
 
-	// ƒ‰ƒCƒ“—p
+	// ç¹ï½©ç¹§ï½¤ç¹ï½³é€•ï½¨
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Line");
 	setting.cullMode = CullMode::None;
@@ -569,7 +569,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	PipelineManager::CreateGraphicsPipeline(setting, "Line");
 
-	// ƒGƒ~ƒbƒ^[—p
+	// ç¹§ï½¨ç¹æº˜ãƒ£ç¹§ï½¿ç¹ï½¼é€•ï½¨
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("Emitter");
 	setting.cullMode = CullMode::None;
@@ -580,7 +580,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Emitter");
 
-	// GPUƒGƒ~ƒbƒ^[—p
+	// GPUç¹§ï½¨ç¹æº˜ãƒ£ç¹§ï½¿ç¹ï½¼é€•ï½¨
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("GPUEmitter");
 	setting.cullMode = CullMode::None;
@@ -591,7 +591,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "GPUEmitter");
 
-	// ColliderObject—p
+	// ColliderObjecté€•ï½¨
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderObjectManager::GetShaderObject("ColliderObject");
 	setting.cullMode = CullMode::None;
@@ -613,7 +613,7 @@ void RenderBase::ComputePipelineInit()
 	PipelineManager::CreateComputePipeline(setting, "GPUEmitter");
 }
 
-// --- ƒQƒbƒ^[ -------------------------------------------------------------- //
+// --- ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼ -------------------------------------------------------------- //
 ID3D12Device* RenderBase::GetDevice() const
 {
 	return mDevice.Get();

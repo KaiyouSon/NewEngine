@@ -15,16 +15,16 @@ void TargetCamera::Update()
 {
 	Vec3 target = mLockonPos;
 
-	// À•W‚Ìİ’è
-	const float length = 30.f;	// ’·‚³
-	// Œ»İ‚ÌÀ•W (yÀ•WŒÅ’è)
+	// è ï½§è®“å¶ãƒ»éšªï½­è³ãƒ»
+	const float length = 30.f;	// é«Ÿï½·ç¸ºãƒ»
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®è ï½§è®“ãƒ»(yè ï½§è®“åå´‹è³ãƒ»
 	Vec3 curPos = mPlayer->GetPos() * Vec3(1.f, 0.f, 1.f) + Vec3(0.f, 9.5f, 0.f);
-	// ƒ^[ƒQƒbƒg‚©‚ç‚ÌƒxƒNƒgƒ‹ (ƒ^[ƒQƒbƒg‚Ì‚‚³‚ÉˆË‘¶‚µ‚È‚¢‚½‚ßAy²‚ğ–³‹‚·‚é)
+	// ç¹§ï½¿ç¹ï½¼ç¹§ï½²ç¹ãƒ»ãƒ¨ç¸ºä¹ï½‰ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Î (ç¹§ï½¿ç¹ï½¼ç¹§ï½²ç¹ãƒ»ãƒ¨ç¸ºï½®é¬®å€¥ï¼†ç¸ºï½«è“æ™ï½­å€¥ï¼ ç¸ºï½ªç¸ºãƒ»â—†ç¹§âˆšÂ€ã€éœ†ï½¸ç¹§å ¤â”Œéš•æ‚¶â˜†ç¹§ãƒ»
 	Vec3 vec = (curPos - target) * Vec3(1.f, 0.f, 1.f);
 
 	const float pitchRad = Radian(22.5f);
 
-	// ‰EƒxƒNƒgƒ‹‚ğŠî€‚É‰ñ“]‚·‚é(ã‚©‚çŒ©‰º‚ë‚·‚æ‚¤‚É‚·‚é‚½‚ß)
+	// èœ¿ï½³ç¹å¶ã‘ç¹åŒ»Îç¹§è²æ¸•è²…æ‚¶â†“è—æ«ï½»ï½¢ç¸ºå¶ï½‹(è³ç¿«Â°ç¹§èŠ½ï½¦å€¶ï½¸ä¹ï½ç¸ºå¶ï½ˆç¸ºãƒ»â†“ç¸ºå¶ï½‹ç¸ºæº˜ï½)
 	Quaternion q = vec;
 	Vec3 rightVec = Vec3::Cross(vec, Vec3::up);
 	vec = q.AnyAxisRotation(rightVec, pitchRad);
@@ -36,21 +36,21 @@ void TargetCamera::Update()
 	Vec3 disToCamera = target - curPos;
 	float yawRad = atan2f(disToCamera.x, disToCamera.z);
 
-	// ‰ñ“]‚Ìˆ—
+	// è—æ«ï½»ï½¢ç¸ºï½®èœƒï½¦é€…ãƒ»
 	Vec3 rot =
 	{
 		pitchRad,
 		yawRad,
 		0.f,
 	};
-	// Šp“x‚Ìİ’è
+	// éš—è²ï½ºï½¦ç¸ºï½®éšªï½­è³ãƒ»
 	mCamera->rot = rot;
 
-	// Ø‚è‘Ö‚¦‚é‚Æ‚«‚ÉƒC[ƒWƒ“ƒO‚·‚é‚½‚ß‚Ìˆ—
+	// è›»ãƒ»ï½Šè­–ï½¿ç¸ºåŒ»ï½‹ç¸ºï½¨ç¸ºé˜ªâ†“ç¹§ï½¤ç¹ï½¼ç¹§ï½¸ç¹ï½³ç¹§ï½°ç¸ºå¶ï½‹ç¸ºæº˜ï½ç¸ºï½®èœƒï½¦é€…ãƒ»
 	mCamera->pos = Camera::current.pos;
 	mCamera->rot = Camera::current.rot;
 
-	// ˆê‰ñ“]‚µ‚È‚¢‚æ‚¤‚É‚·‚é‚½‚ß‚Ìˆ—
+	// è³Â€è—æ«ï½»ï½¢ç¸ºåŠ±â†‘ç¸ºãƒ»ï½ˆç¸ºãƒ»â†“ç¸ºå¶ï½‹ç¸ºæº˜ï½ç¸ºï½®èœƒï½¦é€…ãƒ»
 	if (Camera::current.rot.y - rot.y >= Radian(180))
 	{
 		float diff = Radian(360) - mCamera->rot.y;
@@ -66,6 +66,7 @@ void TargetCamera::Update()
 	mTargetRot = rot;
 	EaseCamera();
 
-	// Œ»İ‚¢‚ÌƒJƒƒ‰‚É‘ã“ü
+	// è¿´ï½¾è¨ï½¨ç¸ºãƒ»ãƒ»ç¹§ï½«ç¹ï½¡ç¹ï½©ç¸ºï½«è‰ï½£èœˆï½¥
 	Camera::current = *mCamera;
 }
+

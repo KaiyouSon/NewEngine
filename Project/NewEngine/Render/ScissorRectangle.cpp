@@ -7,13 +7,14 @@ void ScissorRectangle::Update()
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
 
-	//------------------------ ƒVƒU[‹éŒ`‚ÌÝ’èƒRƒ}ƒ“ƒh ------------------------//
-	// ƒVƒU[‹éŒ`
+	//------------------------ ç¹§ï½·ç¹§ï½¶ç¹ï½¼éï½©è –ï½¢ç¸ºï½®éšªï½­èž³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»------------------------//
+	// ç¹§ï½·ç¹§ï½¶ç¹ï½¼éï½©è –ï½¢
 	D3D12_RECT scissorRect{};
-	scissorRect.left = 0; // Ø‚è”²‚«À•W¶
-	scissorRect.right = scissorRect.left + (LONG)renderWindow->GetWindowSize().x; // Ø‚è”²‚«À•W‰E
-	scissorRect.top = 0; // Ø‚è”²‚«À•Wã
-	scissorRect.bottom = scissorRect.top + (LONG)renderWindow->GetWindowSize().y; // Ø‚è”²‚«À•W‰º
-	// ƒVƒU[‹éŒ`Ý’èƒRƒ}ƒ“ƒh‚ðAƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÉÏ‚Þ
+	scissorRect.left = 0; // è›»ãƒ»ï½Šè¬šæ‡Šâ€³è Žï½§è®“åï½·ï½¦
+	scissorRect.right = scissorRect.left + (LONG)renderWindow->GetWindowSize().x; // è›»ãƒ»ï½Šè¬šæ‡Šâ€³è Žï½§è®“åæ‰¿
+	scissorRect.top = 0; // è›»ãƒ»ï½Šè¬šæ‡Šâ€³è Žï½§è®“å©ï½¸ãƒ»
+	scissorRect.bottom = scissorRect.top + (LONG)renderWindow->GetWindowSize().y; // è›»ãƒ»ï½Šè¬šæ‡Šâ€³è Žï½§è®“å©ï½¸ãƒ»
+	// ç¹§ï½·ç¹§ï½¶ç¹ï½¼éï½©è –ï½¢éšªï½­èž³å£¹ã•ç¹æ§­Î¦ç¹å³¨ï½’ç¸²âˆšã•ç¹æ§­Î¦ç¹å³¨Îœç¹§ï½¹ç¹åŒ»â†“é¨é˜ªãƒ»
 	renderBase->GetCommandList()->RSSetScissorRects(1, &scissorRect);
 }
+

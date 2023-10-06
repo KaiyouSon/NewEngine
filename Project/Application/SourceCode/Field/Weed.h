@@ -18,4 +18,3 @@ public:
 	void SetGenerateSize(const Vec2 size);
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 };
-

@@ -40,4 +40,3 @@ public:
 	void Draw() override;
 	void DrawDebugGui() override;
 };
-

@@ -3,7 +3,6 @@
 SkyIsland::SkyIsland() :
 	mSkyIsland(std::make_unique<Object3D>())
 {
-	//mSkyIsland->SetModel(ModelManager::GetModel("SkyIsland"));
 }
 
 void SkyIsland::Init()

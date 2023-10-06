@@ -13,7 +13,6 @@ private:
 	GraphicsPipeline* mGraphicsPipeline;
 	Billboard mBillboard;
 
-
 public:
 	Vec3 pos;
 	Vec3 scale;

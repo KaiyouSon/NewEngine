@@ -11,4 +11,3 @@ public:
 	void Init(HumanoidBody* human) override;
 	void Update(HumanoidBody* human) override;
 };
-

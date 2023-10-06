@@ -27,15 +27,15 @@ public:
 	void Update(Transform* parent = nullptr);
 	void Draw();
 
-public: //セッター
+public: //繧ｻ繝�繧ｿ繝ｼ
 
-	// モデル
+	// 繝｢繝�繝ｫ
 	void SetModel(Model* model);
 
-	// カメラ
+	// 繧ｫ繝｡繝ｩ
 	void SetCamera(Camera* camera = nullptr);
 
-	// 親
+	// 隕ｪ
 	void SetParent(Transform* parent);
 
 };

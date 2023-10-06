@@ -1,4 +1,4 @@
-// --- ’¸“_ƒVƒF[ƒ_[“ü—Í\‘¢‘Ì ----------------------------- //
+// --- é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼å…¥åŠ›æ§‹é€ ä½“ ----------------------------- //
 struct VSInputPos
 {
     float4 pos : POSITION;
@@ -28,33 +28,33 @@ struct VSInputPosNormalUvBone
     float4 pos : POSITION;
     float3 normal : NORMAL;
     float2 uv : TEXCOORD;
-    uint4 boneIndices : BONEINDICES; // ƒ{[ƒ“‚Ì”Ô†
-    float4 boneWeights : BONEWEIGHTS; // ƒ{[ƒ“‚ÌƒXƒLƒ“ƒEƒFƒCƒg
+    uint4 boneIndices : BONEINDICES; // ãƒœãƒ¼ãƒ³ã®ç•ªå·
+    float4 boneWeights : BONEWEIGHTS; // ãƒœãƒ¼ãƒ³ã®ã‚¹ã‚­ãƒ³ã‚¦ã‚§ã‚¤ãƒˆ
 };
 
-// --- ’¸“_ƒVƒF[ƒ_[o—Í\‘¢‘Ì ----------------------------- //
+// --- é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼å‡ºåŠ›æ§‹é€ ä½“ ----------------------------- //
 struct VSOutputSvpos
 {
-    float4 svpos : SV_POSITION; // ƒVƒXƒeƒ€—p’¸“_À•W
+    float4 svpos : SV_POSITION; // ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
 };
 
 struct VSOutputSvposUv
 {
-    float4 svpos : SV_POSITION; // ƒVƒXƒeƒ€—p’¸“_À•W
-    float2 uv : TEXCOORD; // uv’l
+    float4 svpos : SV_POSITION; // ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+    float2 uv : TEXCOORD; // uvå€¤
 };
 
 struct VSOutputSvposNormalUv
 {
-    float4 svpos : SV_POSITION; // ƒVƒXƒeƒ€—p’¸“_À•W
-    float3 normal : NORMAL; // –@üƒxƒNƒgƒ‹
-    float2 uv : TEXCOORD; // uv’l
+    float4 svpos : SV_POSITION; // ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+    float3 normal : NORMAL; // æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+    float2 uv : TEXCOORD; // uvå€¤
 };
 
 struct VSOutputSvposPosNormalUv
 {
-    float4 svpos : SV_POSITION; // ƒVƒXƒeƒ€—p’¸“_À•W
-    float4 worldPos : POSITION; // ƒ[ƒ‹ƒhÀ•W
-    float3 normal : NORMAL; // –@üƒxƒNƒgƒ‹
-    float2 uv : TEXCOORD; // uv’l
+    float4 svpos : SV_POSITION; // ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+    float4 worldPos : POSITION; // ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™
+    float3 normal : NORMAL; // æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+    float2 uv : TEXCOORD; // uvå€¤
 };

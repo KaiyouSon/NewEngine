@@ -5,17 +5,16 @@
 class Billboard
 {
 private:
-	Mat4 mat_; // ƒrƒ‹ƒ{[ƒhs—ñ
+	Mat4 mat_; // ç¹è–™Îç¹æ‡Šãƒ»ç¹èŠ½ï½¡æ‚Ÿãƒ»
 	BillboardType type_ = BillboardType::None;
 
 public:
 	void CalculateBillboardMat();
 
-public: //ƒZƒbƒ^[
+public: //ç¹§ï½»ç¹ãƒ»ã¡ç¹ï½¼
 	inline void SetBillboardType(const BillboardType type) { type_ = type; }
 
-public:	// ƒQƒbƒ^[
+public:	// ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
 	inline Mat4 GetMat() { return mat_; }
 	inline BillboardType GetBillboardType() {return type_; }
 };
-

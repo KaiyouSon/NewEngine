@@ -29,7 +29,7 @@ void LeadEffect::Generate(const Vec3 pos, const Vec3 frontVec)
 
 void LeadEffect::Update()
 {
-	// —±
+	// é‚Šãƒ»
 	for (uint32_t i = 0; i < mPParam.size(); i++)
 	{
 		mPParam[i].ease.Update();
@@ -47,15 +47,15 @@ void LeadEffect::Update()
 
 				Vec3 vec = mFrontVec;
 
-				// ‰EƒxƒNƒgƒ‹‚ð‹‚ß‚é
+				// èœ¿ï½³ç¹å¶ã‘ç¹åŒ»Îç¹§å‘ˆï½±ã‚…ï½ç¹§ãƒ»
 				Vec3 rightVec = Vec3::Cross(mFrontVec, Vec3::up);
 
-				// ƒNƒH[ƒ^ƒjƒIƒ“‚ðŽg‚Á‚Ä‰EƒxƒNƒgƒ‹‚ðŠî€‚É‚Ü‚¸ã‰º‚É‰ñ“]
+				// ç¹§ï½¯ç¹§ï½©ç¹ï½¼ç¹§ï½¿ç¹ä¹ãŒç¹ï½³ç¹§å‰ƒï½½ï½¿ç¸ºï½£ç¸ºï½¦èœ¿ï½³ç¹å¶ã‘ç¹åŒ»Îç¹§è²žæ¸•è²…æ‚¶â†“ç¸ºï½¾ç¸ºå£»ï½¸è´‹ï½¸ä¹â†“è—æ«ï½»ï½¢
 				Quaternion q1;
 				q1 = vec;
 				vec = q1.AnyAxisRotation(rightVec, Radian(Random::RangeAngle(-15, 15)));
 
-				// ‘OƒxƒNƒgƒ‹‚ðŠî€‚É‚à‚¤ˆê‰ñ‰ñ“]‚·‚é
+				// èœ‘é˜ªãƒ»ç¹§ï½¯ç¹åŒ»Îç¹§è²žæ¸•è²…æ‚¶â†“ç¹§ã‚…â‰§è³Â€è—æ§«å±“éœ†ï½¢ç¸ºå¶ï½‹
 				Quaternion q2;
 				q2 = vec;
 				vec = q2.AnyAxisRotation(mFrontVec, Random::RangeRadian());
@@ -103,7 +103,7 @@ void LeadEffect::GenerateUpdate()
 	float height = 0.5f;
 	float depth = 0.5f;
 
-	// —±
+	// é‚Šãƒ»
 	for (uint32_t i = 0; i < 1; i++)
 	{
 		Vec3 offset =
@@ -118,15 +118,15 @@ void LeadEffect::GenerateUpdate()
 
 		Vec3 vec = mFrontVec;
 
-		// ‰EƒxƒNƒgƒ‹‚ð‹‚ß‚é
+		// èœ¿ï½³ç¹å¶ã‘ç¹åŒ»Îç¹§å‘ˆï½±ã‚…ï½ç¹§ãƒ»
 		Vec3 rightVec = Vec3::Cross(mFrontVec, Vec3::up);
 
-		// ƒNƒH[ƒ^ƒjƒIƒ“‚ðŽg‚Á‚Ä‰EƒxƒNƒgƒ‹‚ðŠî€‚É‚Ü‚¸ã‰º‚É‰ñ“]
+		// ç¹§ï½¯ç¹§ï½©ç¹ï½¼ç¹§ï½¿ç¹ä¹ãŒç¹ï½³ç¹§å‰ƒï½½ï½¿ç¸ºï½£ç¸ºï½¦èœ¿ï½³ç¹å¶ã‘ç¹åŒ»Îç¹§è²žæ¸•è²…æ‚¶â†“ç¸ºï½¾ç¸ºå£»ï½¸è´‹ï½¸ä¹â†“è—æ«ï½»ï½¢
 		Quaternion q1;
 		q1 = vec;
 		vec = q1.AnyAxisRotation(rightVec, Radian(Random::RangeAngle(-15, 15)));
 
-		// ‘OƒxƒNƒgƒ‹‚ðŠî€‚É‚à‚¤ˆê‰ñ‰ñ“]‚·‚é
+		// èœ‘é˜ªãƒ»ç¹§ï½¯ç¹åŒ»Îç¹§è²žæ¸•è²…æ‚¶â†“ç¹§ã‚…â‰§è³Â€è—æ§«å±“éœ†ï½¢ç¸ºå¶ï½‹
 		Quaternion q2;
 		q2 = vec;
 		vec = q2.AnyAxisRotation(mFrontVec, Random::RangeRadian());
@@ -145,3 +145,4 @@ void LeadEffect::GenerateUpdate()
 		mPParam.back().ease.SetEaseTimer(1200);
 	}
 }
+

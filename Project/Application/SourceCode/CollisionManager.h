@@ -17,7 +17,7 @@ private:
 	MovieEvent* mMovieEvent;
 
 private:
-	// ƒvƒŒƒCƒ„[‚Ì‰Ÿ‚µ–ß‚µˆ—
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æŠ¼ã—æˆ»ã—å‡¦ç†
 	void PushBackPlayer();
 
 private:

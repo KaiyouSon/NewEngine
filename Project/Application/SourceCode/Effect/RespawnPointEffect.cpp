@@ -28,7 +28,7 @@ void RespawnPointEffect::Generate(const Vec3 pos)
 
 void RespawnPointEffect::Update()
 {
-	// —±
+	// é‚Šãƒ»
 	for (uint32_t i = 0; i < mCirclePParam.size(); i++)
 	{
 		mCircleEmitter->pParam[i].curPos = mCirclePParam[i].startPos;
@@ -63,7 +63,7 @@ void RespawnPointEffect::GenerateUpdate()
 	float height = 1.0f;
 	float depth = 2.0f;
 
-	// —±
+	// é‚Šãƒ»
 	for (uint32_t i = 0; i < 1; i++)
 	{
 		Vec3 offset =

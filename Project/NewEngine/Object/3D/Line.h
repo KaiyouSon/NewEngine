@@ -22,7 +22,7 @@ public:
 	Vec3 rot;
 	Color color;
 
-private: // マテリアル関連
+private: // 繝槭ユ繝ｪ繧｢繝ｫ髢｢騾｣
 	void MaterialInit();
 	void MaterialTransfer();
 	void MaterialDrawCommands();

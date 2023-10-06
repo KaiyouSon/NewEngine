@@ -18,4 +18,3 @@ public:
 public:
 	void SetPos(const Vec3 pos);
 };
-

@@ -31,4 +31,3 @@ public:
 	void SetisShow(const bool isShow);
 	bool GetisShow();
 };
-

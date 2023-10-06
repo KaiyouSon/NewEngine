@@ -13,26 +13,26 @@
 
 static const int maxBoneIndices = 4;
 
-// ”äŠr‚µ‚Ä‘å‚«‚¢•û‚ğ•Ô‚·
+// è±ˆç¢‘ï½¼ãƒ»ï¼ ç¸ºï½¦èŸï½§ç¸ºé˜ªï¼è­ï½¹ç¹§å®šï½¿æ–â˜†
 template<typename T>
 T Max(const T a, const T b)
 {
 	return a >= b ? a : b;
 }
 
-// ”äŠr‚µ‚Ä¬‚³‚¢•û‚ğ•Ô‚·
+// è±ˆç¢‘ï½¼ãƒ»ï¼ ç¸ºï½¦èŸ†ä¸Šï¼†ç¸ºãƒ»å©¿ç¹§å®šï½¿æ–â˜†
 template<typename T>
 T Min(const T a, const T b)
 {
 	return a <= b ? a : b;
 }
 
-// •„†‚ğ•Ô‚·i -1, 0, 1 j
+// éš¨ï½¦èœ¿ï½·ç¹§å®šï½¿æ–â˜†ãƒ»ãƒ»-1, 0, 1 ãƒ»ãƒ»
 uint32_t Sign(const float a);
 Vec2 Sign(const Vec2 a);
 Vec3 Sign(const Vec3 a);
 
-// ’l‚ğMin‚ÆMax‚ÌŠÔ‚É§ŒÀ‚·‚éŠÖ”
+// è›Ÿï½¤ç¹§æ¨½inç¸ºï½¨Maxç¸ºï½®é«¢è–™â†“è›»ï½¶é«¯èˆŒâ˜†ç¹§çŸ©æœªè¬¨ï½°
 template<typename T>
 T Clamp(const T value, const T min = 0, const T max = 1)
 {
@@ -47,7 +47,7 @@ T Clamp(const T value, const T min = 0, const T max = 1)
 	return value;
 }
 
-// ’l‚ªû‘©‚·‚éŠÖ”
+// è›Ÿï½¤ç¸ºæ‚Ÿåº¶è­šæº˜â˜†ç¹§çŸ©æœªè¬¨ï½°
 template<typename T>
 T Convergence(const T value, const T speed, const T origin = 0)
 {
@@ -70,7 +70,7 @@ T Convergence(const T value, const T speed, const T origin = 0)
 	return -1;
 }
 
-// ’l‚ğ’´‚¦‚½‚ç–ß‚·
+// è›Ÿï½¤ç¹§å®šï½¶ãƒ»âˆ´ç¸ºæº˜ï½‰è¬Œï½»ç¸ºãƒ»
 template<typename T>
 T Restore(const T value, const T limit, const T origin = 0)
 {
@@ -81,23 +81,23 @@ T Restore(const T value, const T limit, const T origin = 0)
 	return value;
 }
 
-// Œ…”‚ğæ“¾
+// è­¯âˆµç„šç¹§è²å™è •ãƒ»
 uint32_t GetDight(const uint32_t value);
 
-// Œ»İŠÔ‚ğ•Ô‚·ŠÖ”
+// è¿´ï½¾è¨ï½¨è­ã‚‹ä¿£ç¹§å®šï½¿æ–â˜†é«¢ï½¢è¬¨ï½°
 unsigned long GetNowTime(const TimeUnit timeUnit = TimeUnit::MilliSecond);
 
-// ƒ[ƒ‹ƒhÀ•W‚ğƒXƒNƒŠ[ƒ“À•W‚É•ÏŠ·‚·‚é
+// ç¹ï½¯ç¹ï½¼ç¹ï½«ç¹ç‰™ï½ºï½§è®“å¶ï½’ç¹§ï½¹ç¹§ï½¯ç¹ï½ªç¹ï½¼ç¹ï½³è ï½§è®“å¶â†“èŸç”»é‹¤ç¸ºå¶ï½‹
 Vec2 WorldToScreen(const Vec3 worldPos);
 
-// OŠpŒ`‚Ì–@ü‚ğ‹‚ß‚é
+// è³èŠ½ï½§è²ï½½ï½¢ç¸ºï½®è±•æ…•ï½·å£¹ï½’è±ã‚…ï½ç¹§ãƒ»
 Vec3 GetTriangleNormal(const Vec3 p0, const Vec3 p1, const Vec3 p2);
 
-// Debugƒrƒ‹ƒh‚Ì‚İÀs‚·‚é
+// Debugç¹è–™Îç¹å³¨ãƒ»ç¸ºï½¿è³æº¯ï½¡å¾Œâ˜†ç¹§ãƒ»
 void ProcessAtDebugBulid(std::function<void()> lambdaFunc);
 
-// Releaseƒrƒ‹ƒhg‚ÌÀs‚·‚é
+// Releaseç¹è–™Îç¹èŠ½ï½ºï½«ç¸ºï½®è³æº¯ï½¡å¾Œâ˜†ç¹§ãƒ»
 void ProcessAtReleaseBulid(std::function<void()> lambdaFunc);
 
-// o—ÍƒEƒBƒ“ƒhƒE‚Éo—Í‚·‚é
+// èœƒï½ºèœ‰å¸™ãˆç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¸ºï½«èœƒï½ºèœ‰å¸™â˜†ç¹§ãƒ»
 void OutputDebugLog(const char* fmt...);

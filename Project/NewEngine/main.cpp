@@ -1,7 +1,7 @@
 #include "NewEngine.h"
 #include "LogoutMenu.h"
 
-// WindowsƒAƒvƒŠ‚Å‚ÌƒGƒ“ƒgƒŠ[ƒ|ƒCƒ“ƒg(mainŠÖ”)
+// Windowsç¹§ï½¢ç¹åŠ±Îœç¸ºï½§ç¸ºï½®ç¹§ï½¨ç¹ï½³ç¹åŒ»Îœç¹ï½¼ç¹æ˜´ã†ç¹ï½³ç¹ãƒ»mainé«¢ï½¢è¬¨ï½°)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	NewEngineSetting setting;
@@ -11,15 +11,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	setting.frameRate = 60.f;
 
 	std::unique_ptr<NewEngine> newEngine = std::make_unique<NewEngine>(setting);
-	newEngine->Init();	// ƒGƒ“ƒWƒ“‚Ì‰Šú‰»
+	newEngine->Init();	// ç¹§ï½¨ç¹ï½³ç¹§ï½¸ç¹ï½³ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 
-	// ƒQ[ƒ€ƒ‹[ƒv
+	// ç¹§ï½²ç¹ï½¼ç¹ï£°ç¹ï½«ç¹ï½¼ç¹ãƒ»
 	while (true)
 	{
-		newEngine->Update();	// ƒGƒ“ƒWƒ“‚ÌXVˆ—
-		newEngine->PrevDraw();	// ƒGƒ“ƒWƒ“•`‰æ‘Oˆ—
-		newEngine->Draw();		// ƒGƒ“ƒWƒ“‚Ì•`‰æˆ—
-		newEngine->PostDraw();	// ƒGƒ“ƒWƒ“•`‰æŒãˆ—
+		newEngine->Update();	// ç¹§ï½¨ç¹ï½³ç¹§ï½¸ç¹ï½³ç¸ºï½®è­–ï½´è­ï½°èœƒï½¦é€…ãƒ»
+		newEngine->PrevDraw();	// ç¹§ï½¨ç¹ï½³ç¹§ï½¸ç¹ï½³è¬ å†—åˆ¤èœ‘æ¦Šãƒ»é€…ãƒ»
+		newEngine->Draw();		// ç¹§ï½¨ç¹ï½³ç¹§ï½¸ç¹ï½³ç¸ºï½®è¬ å†—åˆ¤èœƒï½¦é€…ãƒ»
+		newEngine->PostDraw();	// ç¹§ï½¨ç¹ï½³ç¹§ï½¸ç¹ï½³è¬ å†—åˆ¤è •æ‚Ÿãƒ»é€…ãƒ»
 
 		bool isCloseGame =
 			LogoutMenu::GetisEnd() == true &&
@@ -36,7 +36,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 
 #ifdef _DEBUG
-		// ESCƒL[‚ÅƒQ[ƒ€ƒ‹[ƒv‚ğ”²‚¯‚é
+		// ESCç¹§ï½­ç¹ï½¼ç¸ºï½§ç¹§ï½²ç¹ï½¼ç¹ï£°ç¹ï½«ç¹ï½¼ç¹åŠ±ï½’è¬šæ‡Šï¿ ç¹§ãƒ»
 		if (Key::GetKey(DIK_ESCAPE))
 		{
 			break;
@@ -46,6 +46,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		newEngine->FrameControl();
 	}
 
-	// ³íI—¹
+	// è±ï½£èŸ¶ï½¸é‚¨ã‚†ï½ºãƒ»
 	return 0;
 }

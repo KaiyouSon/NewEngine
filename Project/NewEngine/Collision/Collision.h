@@ -3,22 +3,22 @@
 
 namespace Collision
 {
-	// ‰~‚Æ‰~
+	// èœ€ãƒ»â†’èœ€ãƒ»
 	bool CircleHitCircle(
 		const CircleCollider& circle1,
 		const CircleCollider& circle2);
 
-	// ‹…‚Æ‹…
+	// é€…ãƒ»â†’é€…ãƒ»
 	bool SphereHitSphere(
 		const SphereCollider& sphere1,
 		const SphereCollider& sphere2);
 
-	// ƒLƒ…[ƒu‚ÆƒLƒ…[ƒu
+	// ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹æ‚¶â†’ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹ãƒ»
 	bool CubeHitCube(
 		const CubeCollider& cube1,
 		const CubeCollider& cube2);
 
-	// ƒLƒ…[ƒu‚ÆƒJƒvƒZƒ‹
+	// ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹æ‚¶â†’ç¹§ï½«ç¹åŠ±ãç¹ï½«
 	bool CubeHitCapsule(
 		CubeCollider& cube,
 		CapsuleCollider& capsule);
@@ -28,19 +28,19 @@ namespace Collision
 		const CapsuleCollider& capsule,
 		Vec3& hitPoint);
 
-	// ‹…‚Æ•½–Ê
+	// é€…ãƒ»â†’èŸ·ï½³é«±ï½¢
 	bool SphereHitPlane(
 		const SphereCollider& sphere,
 		const PlaneCollider& plane,
 		Vec3* hitPoint = nullptr);
 
-	// ‹…‚ÆOŠpŒ`
+	// é€…ãƒ»â†’è³èŠ½ï½§è²ï½½ï½¢
 	bool SphereHitTriangle(
 		const SphereCollider& sphere,
 		const TriangleCollider& triangle,
 		Vec3* hitPoint = nullptr);
 
-	// ‹…‚ÆƒJƒvƒZƒ‹
+	// é€…ãƒ»â†’ç¹§ï½«ç¹åŠ±ãç¹ï½«
 	bool SphereHitCapsule(
 		const SphereCollider& sphere,
 		const CapsuleCollider& capsule);
@@ -50,17 +50,17 @@ namespace Collision
 		const CapsuleCollider& capsule,
 		Vec3& hitPoint);
 
-	// ƒŒƒC‚Æ•½–Ê
+	// ç¹ï½¬ç¹§ï½¤ç¸ºï½¨èŸ·ï½³é«±ï½¢
 	bool RayHitPlane(
 		const RayCollider& ray,
 		const PlaneCollider& plane);
 
-	// ƒŒƒC‚Æ‹…
+	// ç¹ï½¬ç¹§ï½¤ç¸ºï½¨é€…ãƒ»
 	bool RayHitSphere(
 		const RayCollider& ray,
 		const SphereCollider& sphere);
 
-	// ƒJƒvƒZƒ‹‚ÆƒJƒvƒZƒ‹
+	// ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½¨ç¹§ï½«ç¹åŠ±ãç¹ï½«
 	bool CapsuleHitCapsule(
 		const CapsuleCollider& capsule1,
 		const CapsuleCollider& capsule2);
@@ -70,7 +70,7 @@ namespace Collision
 		const CapsuleCollider& capsule2,
 		Vec3& hitPoint);
 
-	// “_‚ÆOŠpŒ`‚ÌÅ‹ßÚ“_
+	// è½¤ï½¹ç¸ºï½¨è³èŠ½ï½§è²ï½½ï½¢ç¸ºï½®è­›Â€éœ‘ç¬¬ç£è½¤ï½¹
 	Vec3 ClosestPointOfPointAndTriangle(
 		const Vec3 point,
 		const TriangleCollider& triangle);

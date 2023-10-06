@@ -1,4 +1,4 @@
-// ƒ‚ƒmƒNƒ
+// ãƒ¢ãƒã‚¯ãƒ­
 float4 Monochrome(Texture2D<float4> tex, SamplerState smp, float2 uv)
 {
     float3 monochromeColor = tex.Sample(smp, uv).rgb;
@@ -12,7 +12,7 @@ float4 Monochrome(Texture2D<float4> tex, SamplerState smp, float2 uv)
     return float4(monochromeColor.rgb, 1);
 }
 
-// •½‹Ïƒuƒ‰[
+// å¹³å‡ãƒ–ãƒ©ãƒ¼
 float4 ShiftBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float shiftNum, float shiftWidth)
 {
     float4 result = float4(0, 0, 0, 0);
@@ -30,19 +30,19 @@ float4 ShiftBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float shift
     return float4(result.rgb, 1);
 }
 
-// ‰¡ƒuƒ‰[
+// æ¨ªãƒ–ãƒ©ãƒ¼
 float4 HorizontalBlur(float width, Texture2D<float4> tex, SamplerState smp, float2 uv)
 {
     const float weight[3] = { 0.7f, 0.2f, 0.1f };
 
     float3 blurColor = 0;
         
-    // Šî€ƒeƒNƒZƒ‹‚©‚ç‰E‚É3ƒeƒNƒZƒ‹Ad‚İ•t‚«‚ÅƒTƒ“ƒvƒŠƒ“ƒO
+    // åŸºæº–ãƒ†ã‚¯ã‚»ãƒ«ã‹ã‚‰å³ã«3ãƒ†ã‚¯ã‚»ãƒ«ã€é‡ã¿ä»˜ãã§ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°
     blurColor += weight[0] * tex.Sample(smp, uv + float2(+1 / width, 0.f)).rgb;
     blurColor += weight[1] * tex.Sample(smp, uv + float2(+2 / width, 0.f)).rgb;
     blurColor += weight[2] * tex.Sample(smp, uv + float2(+3 / width, 0.f)).rgb;
     
-    // Šî€ƒeƒNƒZƒ‹‚©‚ç¶‚É3ƒeƒNƒZƒ‹Ad‚İ•t‚«‚ÅƒTƒ“ƒvƒŠƒ“ƒO
+    // åŸºæº–ãƒ†ã‚¯ã‚»ãƒ«ã‹ã‚‰å·¦ã«3ãƒ†ã‚¯ã‚»ãƒ«ã€é‡ã¿ä»˜ãã§ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°
     blurColor += weight[0] * tex.Sample(smp, uv + float2(-1 / width, 0.f)).rgb;
     blurColor += weight[1] * tex.Sample(smp, uv + float2(-2 / width, 0.f)).rgb;
     blurColor += weight[2] * tex.Sample(smp, uv + float2(-3 / width, 0.f)).rgb;
@@ -50,19 +50,19 @@ float4 HorizontalBlur(float width, Texture2D<float4> tex, SamplerState smp, floa
     return float4(blurColor, 1);
 }
 
-// cƒuƒ‰[
+// ç¸¦ãƒ–ãƒ©ãƒ¼
 float4 VerticalBlur(float height, Texture2D<float4> tex, SamplerState smp, float2 uv)
 {
     const float weight[3] = { 0.7f, 0.2f, 0.1f };
 
     float3 blurColor = 0;
         
-    // Šî€ƒeƒNƒZƒ‹‚©‚ç‰º‚É3ƒeƒNƒZƒ‹Ad‚İ•t‚«‚ÅƒTƒ“ƒvƒŠƒ“ƒO
+    // åŸºæº–ãƒ†ã‚¯ã‚»ãƒ«ã‹ã‚‰ä¸‹ã«3ãƒ†ã‚¯ã‚»ãƒ«ã€é‡ã¿ä»˜ãã§ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°
     blurColor += weight[0] * tex.Sample(smp, uv + float2(0.f, +1 / height)).rgb;
     blurColor += weight[1] * tex.Sample(smp, uv + float2(0.f, +2 / height)).rgb;
     blurColor += weight[2] * tex.Sample(smp, uv + float2(0.f, +3 / height)).rgb;
     
-    // Šî€ƒeƒNƒZƒ‹‚©‚çã‚É3ƒeƒNƒZƒ‹Ad‚İ•t‚«‚ÅƒTƒ“ƒvƒŠƒ“ƒO
+    // åŸºæº–ãƒ†ã‚¯ã‚»ãƒ«ã‹ã‚‰ä¸Šã«3ãƒ†ã‚¯ã‚»ãƒ«ã€é‡ã¿ä»˜ãã§ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°
     blurColor += weight[0] * tex.Sample(smp, uv + float2(0.f, -1 / height)).rgb;
     blurColor += weight[1] * tex.Sample(smp, uv + float2(0.f, -2 / height)).rgb;
     blurColor += weight[2] * tex.Sample(smp, uv + float2(0.f, -3 / height)).rgb;
@@ -70,15 +70,15 @@ float4 VerticalBlur(float height, Texture2D<float4> tex, SamplerState smp, float
     return float4(blurColor, 1);
 }
 
-// ƒKƒEƒXŠÖ”
+// ã‚¬ã‚¦ã‚¹é–¢æ•°
 float Gaussian(float2 drawUV, float2 pickUV, float sigma)
 {
-    // •`‰æƒsƒNƒZƒ‹‚ÆFæ“¾À•W‚Æ‚Ì‹——£
+    // æç”»ãƒ”ã‚¯ã‚»ãƒ«ã¨è‰²å–å¾—åº§æ¨™ã¨ã®è·é›¢
     float d = distance(drawUV, pickUV);
     return exp(-(d * d) / (2 * sigma * sigma));
 }
 
-// ƒKƒEƒVƒAƒ“ƒuƒ‰[
+// ã‚¬ã‚¦ã‚·ã‚¢ãƒ³ãƒ–ãƒ©ãƒ¼
 float4 GaussianBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float sigma, float loopNum)
 {
     float4 result = float4(0, 0, 0, 0);
@@ -90,10 +90,10 @@ float4 GaussianBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float si
 				[loop]
         for (float px = -sigma * 2; px <= sigma * 2; px += stepWidth)
         {
-					// Fæ“¾‚·‚éUVÀ•W
+					// è‰²å–å¾—ã™ã‚‹UVåº§æ¨™
             float2 pickUV = uv + float2(px, py);
 
-					// ƒEƒFƒCƒg
+					// ã‚¦ã‚§ã‚¤ãƒˆ
             float weight = Gaussian(uv, pickUV, sigma);
             totalWeight += weight;
 
@@ -106,7 +106,7 @@ float4 GaussianBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float si
     return result;
 }
 
-// ‚‹P“x’Šo
+// é«˜è¼åº¦æŠ½å‡º
 float4 ExtractionBrightness(float4 color, float min, float max, float power)
 {
     float grayScale = color.r * 0.299 + color.g * 0.587 + color.b * 0.114;

@@ -3,11 +3,11 @@
 
 VSOutputSvpos main(VSInputPosNormal vsInput)
 {
-    // ƒ[ƒ‹ƒhs—ñ‚Æƒrƒ…[s—ñ‚ğ‚©‚¯‚½    
+    // ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã¨ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã‚’ã‹ã‘ãŸ    
     matrix mat = mul(viewMat, worldMat);
     float4 pos = vsInput.pos + float4(vsInput.normal, 0) * 0.1f;
     
-    // o—Í\‘¢‘Ì
+    // å‡ºåŠ›æ§‹é€ ä½“
     VSOutputSvpos output; 
     output.svpos = mul(mat, pos);
 

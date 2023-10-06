@@ -28,7 +28,7 @@ void CameraManager::Update()
 		Camera::current.rot.y += Radian(360);
 	}
 
-	// ƒJƒƒ‰Ø‚è‘Ö‚¦‚éˆ—
+	// ç¹§ï½«ç¹ï½¡ç¹ï½©è›»ãƒ»ï½Šè­–ï½¿ç¸ºåŒ»ï½‹èœƒï½¦é€…ãƒ»
 	bool isRightStickDown = Pad::GetButtonDown(PadCode::RightStick);
 	if (mCameraType == CameraType::Default)
 	{
@@ -111,3 +111,4 @@ void CameraManager::SetBoss(Boss* boss)
 {
 	mBoss = boss;
 }
+

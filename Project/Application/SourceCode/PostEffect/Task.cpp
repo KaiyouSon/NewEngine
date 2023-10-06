@@ -42,3 +42,4 @@ void Task::PostSceneDraw()
 {
 	tex_->PostDrawScene();
 }
+

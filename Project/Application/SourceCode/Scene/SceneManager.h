@@ -47,7 +47,7 @@ public:
 		{
 		case CreateInstance:
 		{
-			// Ÿ‚ÌƒV[ƒ“‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğì¬
+			// è°ºï½¡ç¸ºï½®ç¹§ï½·ç¹ï½¼ç¹ï½³ç¸ºï½®ç¹§ï½¤ç¹ï½³ç¹§ï½¹ç¹§ï½¿ç¹ï½³ç¹§ï½¹ç¹§å‰ƒï½½æ‡ˆãƒ»
 			sNextScene = std::make_unique<T>();
 			GetInstance()->mChangeStep = Loading;
 		}
@@ -60,16 +60,16 @@ public:
 			std::future<bool> ftr = std::async(std::launch::async,
 				[]()
 				{
-					// Œ»İ‚ÌƒV[ƒ“‚ÌƒAƒZƒbƒg‚ğƒAƒ“ƒ[ƒh‚·‚é
+					// è¿´ï½¾è¨ï½¨ç¸ºï½®ç¹§ï½·ç¹ï½¼ç¹ï½³ç¸ºï½®ç¹§ï½¢ç¹§ï½»ç¹ãƒ»ãƒ¨ç¹§åµã„ç¹ï½³ç¹ï½­ç¹ï½¼ç¹å³¨â˜†ç¹§ãƒ»
 					sCurrentScene->UnLoad();
 
-					// ƒV[ƒ““à‚Åg‚¤ƒAƒZƒbƒg‚Ìƒ[ƒh
+					// ç¹§ï½·ç¹ï½¼ç¹ï½³èœ€ãƒ»ã€’è´ï½¿ç¸ºãƒ»ã„ç¹§ï½»ç¹ãƒ»ãƒ¨ç¸ºï½®ç¹ï½­ç¹ï½¼ç¹ãƒ»
 					sNextScene->Load();
 
-					// ƒV[ƒ““à‚Åg‚¤ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+					// ç¹§ï½·ç¹ï½¼ç¹ï½³èœ€ãƒ»ã€’è´ï½¿ç¸ºãƒ»ã†ç¹ï½³ç¹§ï½¹ç¹§ï½¿ç¹ï½³ç¹§ï½¹é€•æ»“ãƒ»
 					sNextScene->CreateInstance();
 
-					// ƒV[ƒ“‰Šú‰»
+					// ç¹§ï½·ç¹ï½¼ç¹ï½³è›»æ™„æ‚„è›¹ãƒ»
 					sNextScene->Init();
 
 					return true;
@@ -91,4 +91,3 @@ public:
 
 	static void SetChangeStepToCreateInstance();
 };
-

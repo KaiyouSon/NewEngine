@@ -1,10 +1,10 @@
 struct V2G
 {
-    float4 pos : SV_POSITION; // ƒVƒXƒeƒ€—p’¸“_À•W
-    float2 scale : TEXCOORD0; // ƒXƒP[ƒ‹
-    float rot : TEXCOORD1; // ‰ñ“]
+    float4 pos : SV_POSITION; // ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+    float2 scale : TEXCOORD0; // ã‚¹ã‚±ãƒ¼ãƒ«
+    float rot : TEXCOORD1; // å›è»¢
     float shininess : TEXCOORD2;
-    float4 color : COLOR; //F
+    float4 color : COLOR; //è‰²
 };
 
 struct ParticleParam

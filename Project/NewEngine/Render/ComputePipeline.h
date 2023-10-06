@@ -5,10 +5,10 @@
 
 struct ComputePipelineSetting
 {
-	// ƒVƒFƒ_[ƒIƒuƒWƒFƒNƒg
+	// ç¹§ï½·ç¹§ï½§ç¹Â€ç¹ï½¼ç¹§ï½ªç¹æ‚¶ãšç¹§ï½§ç¹§ï½¯ç¹ãƒ»
 	ShaderObject* shaderObject;
 
-	// RootParamterŠÖ˜A
+	// RootParamteré«¢ï½¢é¨¾ï½£
 	RootSignatureSetting rootSignatureSetting;
 };
 
@@ -18,7 +18,7 @@ private:
 	HRESULT mResult;
 	ComputePipelineSetting mSetting;
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> mPSO;
-	std::unique_ptr<RootSignature> mRootSignature;	// ƒ‹[ƒgƒVƒOƒl[ƒ`ƒƒ[
+	std::unique_ptr<RootSignature> mRootSignature;	// ç¹ï½«ç¹ï½¼ç¹åŒ»ã™ç¹§ï½°ç¹é˜ªãƒ»ç¹âˆšÎ•ç¹ï½¼
 
 public:
 	ComputePipeline();
@@ -28,4 +28,3 @@ public:
 public:
 	RootSignature* GetRootSignature();
 };
-

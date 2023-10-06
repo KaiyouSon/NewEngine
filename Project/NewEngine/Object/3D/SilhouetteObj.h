@@ -6,7 +6,7 @@
 #include "Util.h"
 #include "Object3D.h"
 
-// �ŋߎg���ĂȂ����߃��t�@�N�^�����O�͌��
+// 譛霑台ｽｿ縺｣縺ｦ縺ｪ縺・◆繧√Μ繝輔ぃ繧ｯ繧ｿ繝ｪ繝ｳ繧ｰ縺ｯ蠕悟屓縺・
 class SilhouetteObj
 {
 private:
@@ -25,4 +25,3 @@ public:
 	void Update(Transform* parent = nullptr);
 	void Draw(const BlendMode& blendMode = BlendMode::Alpha);
 };
-

@@ -1,8 +1,8 @@
 #include "CircleGaugeSprite.hlsli"
 #include "ShaderIO.hlsli"
 
-Texture2D<float4> tex : register(t0); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ
-SamplerState smp : register(s0); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒTƒ“ƒvƒ‰[
+Texture2D<float4> tex : register(t0); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+SamplerState smp : register(s0); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©ãƒ¼
 
 float Float2Cross(float2 v1, float2 v2);
 
@@ -12,42 +12,42 @@ float4 main(VSOutputSvposUv vsOutput) : SV_TARGET
     
     float2 center = 0.5f;
 
-    float2 v1 = { cos(startRadian), sin(startRadian) }; // n“_‚ÌƒxƒNƒgƒ‹
-    float2 v2 = { cos(endRadian), sin(endRadian) }; // I“_‚ÌƒxƒNƒgƒ‹
-    float2 v3 = vsOutput.uv - center; // ŠeƒsƒNƒZƒ‹‚ÌƒxƒNƒgƒ‹
+    float2 v1 = { cos(startRadian), sin(startRadian) }; // å§‹ç‚¹ã®ãƒ™ã‚¯ãƒˆãƒ«
+    float2 v2 = { cos(endRadian), sin(endRadian) }; // çµ‚ç‚¹ã®ãƒ™ã‚¯ãƒˆãƒ«
+    float2 v3 = vsOutput.uv - center; // å„ãƒ”ã‚¯ã‚»ãƒ«ã®ãƒ™ã‚¯ãƒˆãƒ«
     
-    // ³‹K‰»
+    // æ­£è¦åŒ–
     v1 = normalize(v1);
     v2 = normalize(v2);
     v3 = normalize(v3);
     
-    float cross1 = Float2Cross(v1, v3); // ŠOÏi¶‰E”»’è—pj
+    float cross1 = Float2Cross(v1, v3); // å¤–ç©ï¼ˆå·¦å³åˆ¤å®šç”¨ï¼‰
     if (endRadian - startRadian <= radians(180))
     {
-        float dot1 = dot(v1, v2); // n“_‚ÌƒxƒNƒgƒ‹‚ÆI“_‚ÌƒxƒNƒgƒ‹‚Ì“àÏ
-        float dot2 = dot(v1, v3); // n“_‚ÌƒxƒNƒgƒ‹‚ÆŠeƒsƒNƒZƒ‹‚ÌƒxƒNƒgƒ‹‚Ì“àÏ
+        float dot1 = dot(v1, v2); // å§‹ç‚¹ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨çµ‚ç‚¹ã®ãƒ™ã‚¯ãƒˆãƒ«ã®å†…ç©
+        float dot2 = dot(v1, v3); // å§‹ç‚¹ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨å„ãƒ”ã‚¯ã‚»ãƒ«ã®ãƒ™ã‚¯ãƒˆãƒ«ã®å†…ç©
         
-        // ƒsƒNƒZƒ‹‚ÌƒxƒNƒgƒ‹‚ÌŠp“x‚ªAI“_‚ÌƒxƒNƒgƒ‹‚ÌŠp“x‚æ‚è¬‚³‚¢
+        // ãƒ”ã‚¯ã‚»ãƒ«ã®ãƒ™ã‚¯ãƒˆãƒ«ã®è§’åº¦ãŒã€çµ‚ç‚¹ã®ãƒ™ã‚¯ãƒˆãƒ«ã®è§’åº¦ã‚ˆã‚Šå°ã•ã„æ™‚
         if (dot1 <= dot2)
         {
-            // ƒsƒNƒZƒ‹‚ÌÀ•W‚ªn“_‚ÌƒxƒNƒgƒ‹‚Ì‰E‘¤‚É‚ ‚é
+            // ãƒ”ã‚¯ã‚»ãƒ«ã®åº§æ¨™ãŒå§‹ç‚¹ã®ãƒ™ã‚¯ãƒˆãƒ«ã®å³å´ã«ã‚ã‚‹æ™‚
             if (cross1 >= 0.001)
             {
                 clip(-1);
             }
         }
     }
-    else // 180“x’´‚¦‚½‚Ìˆ—
+    else // 180åº¦è¶…ãˆãŸæ™‚ã®å‡¦ç†
     {
-        float dot1 = dot(-v1, v2); // [180“x‚ğn“_‚Æ‚µ‚½‚ÌƒxƒNƒgƒ‹]‚Æ[I“_‚ÌƒxƒNƒgƒ‹]‚Ì“àÏ
-        float dot2 = dot(-v1, v3); // [180“x‚ğn“_‚Æ‚µ‚½‚ÌƒxƒNƒgƒ‹]‚Æ[ŠeƒsƒNƒZƒ‹‚ÌƒxƒNƒgƒ‹]‚Ì“àÏ
+        float dot1 = dot(-v1, v2); // [180åº¦ã‚’å§‹ç‚¹ã¨ã—ãŸã®ãƒ™ã‚¯ãƒˆãƒ«]ã¨[çµ‚ç‚¹ã®ãƒ™ã‚¯ãƒˆãƒ«]ã®å†…ç©
+        float dot2 = dot(-v1, v3); // [180åº¦ã‚’å§‹ç‚¹ã¨ã—ãŸã®ãƒ™ã‚¯ãƒˆãƒ«]ã¨[å„ãƒ”ã‚¯ã‚»ãƒ«ã®ãƒ™ã‚¯ãƒˆãƒ«]ã®å†…ç©
         
-        float cross2 = Float2Cross(-v1, v3); // ŠOÏi¶‰E”»’è—pj
+        float cross2 = Float2Cross(-v1, v3); // å¤–ç©ï¼ˆå·¦å³åˆ¤å®šç”¨ï¼‰
         
-        // ƒsƒNƒZƒ‹‚ÌÀ•W‚ªn“_‚ÌƒxƒNƒgƒ‹‚Ì‰E‘¤‚É‚ ‚é
+        // ãƒ”ã‚¯ã‚»ãƒ«ã®åº§æ¨™ãŒå§‹ç‚¹ã®ãƒ™ã‚¯ãƒˆãƒ«ã®å³å´ã«ã‚ã‚‹æ™‚
         if (dot1 <= dot2)
         {
-            // [ƒsƒNƒZƒ‹‚ÌÀ•W]‚ª[180“x‚ğn“_‚Æ‚µ‚½‚ÌƒxƒNƒgƒ‹]‚Ì‰E‘¤‚É‚ ‚é
+            // [ãƒ”ã‚¯ã‚»ãƒ«ã®åº§æ¨™]ãŒ[180åº¦ã‚’å§‹ç‚¹ã¨ã—ãŸã®ãƒ™ã‚¯ãƒˆãƒ«]ã®å³å´ã«ã‚ã‚‹æ™‚
             if (cross2 >= 0)
             {
                 clip(-1);

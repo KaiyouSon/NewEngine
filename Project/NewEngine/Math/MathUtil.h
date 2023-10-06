@@ -9,41 +9,41 @@
 
 constexpr float PI = 3.141592f;
 
-// â‘Î’l‚ğ•Ô‚·ŠÖ”
+// é‚¨ï½¶èŸ‡ï½¾è›Ÿï½¤ç¹§å®šï½¿æ–â˜†é«¢ï½¢è¬¨ï½°
 inline float Absolut(const float num) { return num >= 0 ? num : num * -1; }
 inline Vec2 Absolut(const Vec2 num) { return { Absolut(num.x),Absolut(num.y) }; }
 inline Vec3 Absolut(const Vec3 num) { return { Absolut(num.x),Absolut(num.y),Absolut(num.z) }; }
-// ŒÊ“x–@‚ğ“x”–@‚É•ÏŠ·‚·‚éŠÖ”
+// è ‘ï½§è ï½¦è±•è¼”ï½’è ï½¦è¬¨ï½°è±•è¼”â†“èŸç”»é‹¤ç¸ºå¶ï½‹é«¢ï½¢è¬¨ï½°
 inline float Angle(const float radian) { return radian * 180 / PI; }
 inline Vec2 Angle(const Vec2 radian) { return { Angle(radian.x),Angle(radian.y) }; }
 inline Vec3 Angle(const Vec3 radian) { return { Angle(radian.x),Angle(radian.y),Angle(radian.z) }; }
-// “x”–@‚©‚çŒÊ“x–@‚É•ÏŠ·‚·‚éŠÖ”
+// è ï½¦è¬¨ï½°è±•è¼”Â°ç¹§ç‰™ï½¼ï½§è ï½¦è±•è¼”â†“èŸç”»é‹¤ç¸ºå¶ï½‹é«¢ï½¢è¬¨ï½°
 inline float Radian(const float angle) { return angle * PI / 180; }
 inline Vec2 Radian(const Vec2 angle) { return { Radian(angle.x),Radian(angle.y) }; }
 inline Vec3 Radian(const Vec3 angle) { return { Radian(angle.x),Radian(angle.y),Radian(angle.z) }; }
 
-// 3ŸŒ³ƒxƒNƒgƒ‹‚Æ4x4s—ñ‚ÌŠ|‚¯Z
+// 3è°ºï½¡èœˆãƒ»ãƒ»ç¹§ï½¯ç¹åŒ»Îç¸ºï½¨4x4é™¦æ‚Ÿãƒ»ç¸ºï½®è¬—å¸™ï¿ é‚‚ãƒ»
 Vec3 Vec3MulMat4(const Vec3 v, const Mat4& m, const bool isMulW = false);
 
-Mat4 ConvertScalingMat(Vec3 scale);		// ƒXƒP[ƒŠƒ“ƒOs—ñ‚ğ•Ô‚·ŠÖ”
-Mat4 ConvertRotationXAxisMat(float angle);	// ‰ñ“]s—ñ‚˜²‚ğ•Ô‚·ŠÖ”
-Mat4 ConvertRotationYAxisMat(float angle);	// ‰ñ“]s—ñ‚™²‚ğ•Ô‚·ŠÖ”
-Mat4 ConvertRotationZAxisMat(float angle);	// ‰ñ“]s—ñ‚š²‚ğ•Ô‚·ŠÖ”
-Mat4 ConvertTranslationMat(const Vec3 pos);	// •½sˆÚ“®‚ğ•Ô‚·ŠÖ”
+Mat4 ConvertScalingMat(Vec3 scale);		// ç¹§ï½¹ç¹§ï½±ç¹ï½¼ç¹ï½ªç¹ï½³ç¹§ï½°é™¦æ‚Ÿãƒ»ç¹§å®šï½¿æ–â˜†é«¢ï½¢è¬¨ï½°
+Mat4 ConvertRotationXAxisMat(float angle);	// è—æ«ï½»ï½¢é™¦æ‚Ÿãƒ»ãƒ»å€©ï½»ï½¸ç¹§å®šï½¿æ–â˜†é«¢ï½¢è¬¨ï½°
+Mat4 ConvertRotationYAxisMat(float angle);	// è—æ«ï½»ï½¢é™¦æ‚Ÿãƒ»ãƒ»å‘µï½»ï½¸ç¹§å®šï½¿æ–â˜†é«¢ï½¢è¬¨ï½°
+Mat4 ConvertRotationZAxisMat(float angle);	// è—æ«ï½»ï½¢é™¦æ‚Ÿãƒ»ãƒ»å¤Šï½»ï½¸ç¹§å®šï½¿æ–â˜†é«¢ï½¢è¬¨ï½°
+Mat4 ConvertTranslationMat(const Vec3 pos);	// èŸ·ï½³é™¦æªï½§ï½»èœè¼”ï½’éœ‘æ–â˜†é«¢ï½¢è¬¨ï½°
 
-Mat4 ConvertRotationMat(const Quaternion q); // ƒNƒH[ƒ^ƒjƒIƒ“‚Å‰ñ“]s—ñ‚ğ¶¬‚·‚éŠÖ”
+Mat4 ConvertRotationMat(const Quaternion q); // ç¹§ï½¯ç¹§ï½©ç¹ï½¼ç¹§ï½¿ç¹ä¹ãŒç¹ï½³ç¸ºï½§è—æ«ï½»ï½¢é™¦æ‚Ÿãƒ»ç¹§å ¤å‡½è¬ŒèˆŒâ˜†ç¹§çŸ©æœªè¬¨ï½°
 
-// ƒrƒ‹ƒ{[ƒhs—ñ•ÏŠ·
+// ç¹è–™Îç¹æ‡Šãƒ»ç¹èŠ½ï½¡æ‚Ÿãƒ»èŸç”»é‹¤
 Mat4 ConvertBillBoardXAxis();
 Mat4 ConvertBillBoardYAxis();
 Mat4 ConvertBillBoardZAxis();
 Mat4 ConvertBillBoardAllAxis();
 
-Mat4 ConvertViewProjectionMatLookAt(const Vec3 pos, const Vec3 target, const Vec3 up);		// ƒrƒ…[•ÏŠ·
-Mat4 ConvertViewProjectionMatLookTo(const Vec3 pos, const Vec3 zAxis, const Vec3 yAxis);		// ƒrƒ…[•ÏŠ·
-Mat4 ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, float farZ);	// “§‹Ë‰e•ÏŠ·
-Mat4 ConvertOrthoGrphicProjectionMat(float WIN_WIDTH, float WIN_HEIGHT);						// •½sË‰e•ÏŠ·
-Mat4 ConvertOrthoGrphicProjectionMat(const RectAngle rect, const float nearZ, const float farZ);		// •½sË‰e•ÏŠ·
+Mat4 ConvertViewProjectionMatLookAt(const Vec3 pos, const Vec3 target, const Vec3 up);		// ç¹è–™Î—ç¹ï½¼èŸç”»é‹¤
+Mat4 ConvertViewProjectionMatLookTo(const Vec3 pos, const Vec3 zAxis, const Vec3 yAxis);		// ç¹è–™Î—ç¹ï½¼èŸç”»é‹¤
+Mat4 ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, float farZ);	// é¨¾å‰°ï½¦é–€ï½°ãƒ»ï½½ï½±èŸç”»é‹¤
+Mat4 ConvertOrthoGrphicProjectionMat(float WIN_WIDTH, float WIN_HEIGHT);						// èŸ·ï½³é™¦æ‚Ÿï½°ãƒ»ï½½ï½±èŸç”»é‹¤
+Mat4 ConvertOrthoGrphicProjectionMat(const RectAngle rect, const float nearZ, const float farZ);		// èŸ·ï½³é™¦æ‚Ÿï½°ãƒ»ï½½ï½±èŸç”»é‹¤
 Mat4 ConvertViewportMat(Viewport& viewport);
 
 Mat4 CalculateWorldMat(const Vec3 pos, const Vec3 scale, const Vec3 rot);
@@ -53,3 +53,4 @@ Vec3 operator+(const float num, const Vec3 v);
 Vec3 operator-(const float num, const Vec3 v);
 Vec3 operator*(const float num, const Vec3 v);
 Vec3 operator/(const float num, const Vec3 v);
+

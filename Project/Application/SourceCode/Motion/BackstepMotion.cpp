@@ -77,11 +77,11 @@ void BackstepMotion::Step0Init(HumanoidBody* human)
 
 	mStep = 0;
 
-	// UŒ‚ƒ‚[ƒVƒ‡ƒ“‚Åi‚Þ‹——£‚ÌŒvŽZ
+	// è¬¾ï½»è¬¦ãƒ»Î”ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³ç¸ºï½§é¨¾ï½²ç¹§Â€éœæ™žå±¬ç¸ºï½®éšªè‚²ï½®ãƒ»
 	player->CalcFrontVec();
 	mLength = CollisionManager::GetInstance()->CalcPlayerDisToFront(-player->mFrontVec, 15);
 
-	// Œ»Ý‚ÌÀ•W‚ðŽæ“¾
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®è Žï½§è®“å¶ï½’èœ¿é–€ï½¾ãƒ»
 	mStartPos = human->pos;
 	mEndPos = mStartPos - player->mFrontVec.Norm() * mLength;
 
@@ -123,3 +123,4 @@ void BackstepMotion::Step2Update(HumanoidBody* human)
 		mIsCanChangeMotion = false;
 	}
 }
+

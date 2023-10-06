@@ -15,18 +15,18 @@ public:
 	static Camera current;
 
 private:
-	Mat4 mViewLookToMat;			// ƒrƒ…[•ÏŠ·s—ñi LookTo j
-	Mat4 mViewLookAtMat;			// ƒrƒ…[•ÏŠ·s—ñi LookAt j
-	Mat4 mOrthoGrphicProjectionMat;	// •½s“Š‰es—ñ
-	Mat4 mPerspectiveProjectionMat;	// “§‹“Š‰es—ñ
+	Mat4 mViewLookToMat;			// ç¹è–™Î—ç¹ï½¼èŸç”»é‹¤é™¦æ‚Ÿãƒ»ãƒ»ãƒ»LookTo ãƒ»ãƒ»
+	Mat4 mViewLookAtMat;			// ç¹è–™Î—ç¹ï½¼èŸç”»é‹¤é™¦æ‚Ÿãƒ»ãƒ»ãƒ»LookAt ãƒ»ãƒ»
+	Mat4 mOrthoGrphicProjectionMat;	// èŸ·ï½³é™¦æ¢§å…œè –ï½±é™¦æ‚Ÿãƒ»
+	Mat4 mPerspectiveProjectionMat;	// é¨¾å‰°ï½¦åŒå…œè –ï½±é™¦æ‚Ÿãƒ»
 
 public:
 	Camera();
 	void Update();
 	static void DebugCameraUpdate();
 
-	inline Mat4 GetViewLookToMat() { return mViewLookToMat; }
-	inline Mat4 GetViewLookAtMat() { return mViewLookAtMat; }
-	inline Mat4 GetOrthoGrphicProjectionMat() { return mOrthoGrphicProjectionMat; }
-	inline Mat4 GetPerspectiveProjectionMat() { return mPerspectiveProjectionMat; }
+	Mat4 GetViewLookToMat();
+	Mat4 GetViewLookAtMat();
+	Mat4 GetOrthoGrphicProjectionMat();
+	Mat4 GetPerspectiveProjectionMat();
 };

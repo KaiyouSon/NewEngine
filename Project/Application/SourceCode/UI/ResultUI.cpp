@@ -98,7 +98,7 @@ void ResultUI::EnemyFelledUpdate()
 		}
 
 		mTimer.Update();
-		// 90“x‚Ì
+		// 90åº¦ã®æ™‚
 		if (mTimer.GetTimer() == 90)
 		{
 			if (mIsAfterImage == false)
@@ -164,7 +164,7 @@ void ResultUI::YouDiedUpdate()
 		mText->scale += 0.001f;
 
 		mTimer.Update();
-		// 90“x‚Ì
+		// 90åº¦ã®æ™‚
 		if (mTimer.GetTimer() == 90)
 		{
 			if (mIsWait == false)

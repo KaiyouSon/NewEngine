@@ -3,10 +3,10 @@
 
 VSOutputSvpos main(VSInputPos vsInput)
 {
-	// 法線にワールド行列によるスケーリング・回転を適用		
+	// 豕慕ｷ壹↓繝ｯ繝ｼ繝ｫ繝芽｡悟�励↓繧医ｋ繧ｹ繧ｱ繝ｼ繝ｪ繝ｳ繧ｰ繝ｻ蝗櫁ｻ｢繧帝←逕ｨ		
     float4 vertexPos = mul(mul(viewMat, worldMat), vsInput.pos);
 
-    VSOutputSvpos output; // ピクセルシェーダーに渡す値
+    VSOutputSvpos output; // 繝斐け繧ｻ繝ｫ繧ｷ繧ｧ繝ｼ繝繝ｼ縺ｫ貂｡縺吝､
     output.svpos = vertexPos;
     return output;
 }

@@ -8,12 +8,12 @@ class GaugeUI
 public:
 	enum
 	{
-		// ‰Â•Ï
+		// å¯å¤‰
 		CurrentPos,
 		FrontColor,
 		BackColor,
 
-		// •s•Ï
+		// ä¸å¤‰
 		BackFrame,
 		FrontFrame,
 		FrontLeftFrame,

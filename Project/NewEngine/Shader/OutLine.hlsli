@@ -1,4 +1,4 @@
-// 3D•ÏŠ·s—ñ
+// 3Då¤‰æ›è¡Œåˆ—
 cbuffer ConstantBufferDataTransform : register(b0)
 {
     matrix viewMat;
@@ -6,8 +6,8 @@ cbuffer ConstantBufferDataTransform : register(b0)
     float3 cameraPos;
 }
 
-// F
+// è‰²
 cbuffer ConstantBufferDataColor : register(b1)
 {
-    float4 color; // F
+    float4 color; // è‰²
 }

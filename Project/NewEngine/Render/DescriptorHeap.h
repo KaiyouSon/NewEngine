@@ -15,12 +15,12 @@ struct DescriptorHeapSetting
 		DSV,
 	};
 
-	// ƒTƒCƒY
+	// ç¹§ï½µç¹§ï½¤ç¹§ï½º
 	uint32_t maxSize;
 
 	uint32_t startIndex;
 
-	// ƒq[ƒv‚Ìí—Ş
+	// ç¹åµãƒ»ç¹åŠ±ãƒ»éï½®é¬˜ãƒ»
 	HeapType heapType;
 
 	DescriptorHeapSetting();
@@ -29,7 +29,7 @@ struct DescriptorHeapSetting
 class DescriptorHeap
 {
 private:
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mDescriptorHeap;		// Srv‚ÆUav—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv(ComputShader—p)
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mDescriptorHeap;		// Srvç¸ºï½¨Uavé€•ï½¨ç¹ãƒ»ã›ç¹§ï½¯ç¹ï½ªç¹åŠ±ã¡ç¹åµãƒ»ç¹ãƒ»ComputShaderé€•ï½¨)
 	std::vector<bool> mCheckIndex;
 	DescriptorHeapSetting mSetting;
 	HRESULT mResult;
@@ -52,4 +52,3 @@ public:
 	ID3D12DescriptorHeap* GetDescriptorHeap();
 
 };
-

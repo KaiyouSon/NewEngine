@@ -9,9 +9,9 @@ OutLineObj::OutLineObj() :
 	mConstantBufferColor(std::make_unique<ConstantBuffer<CColor>>()),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Outline"))
 {
-	// ’è”ƒoƒbƒtƒ@‰Šú‰»
-	mConstantBufferTransform->Create();	// 3Ds—ñ
-	mConstantBufferColor->Create();		// F
+	// èž³å£½ç„šç¹èˆŒãƒ£ç¹è¼”ãƒè›»æ™„æ‚„è›¹ãƒ»
+	mConstantBufferTransform->Create();	// 3Dé™¦æ‚Ÿãƒ»
+	mConstantBufferColor->Create();		// æ¿¶ï½²
 }
 
 void OutLineObj::Update(Transform* parent)
@@ -31,14 +31,14 @@ void OutLineObj::Update(Transform* parent)
 		mat *= mParent->GetWorldMat();
 		mTransform.SetWorldMat(mat);
 	}
-	// ƒ}ƒgƒŠƒbƒNƒX“]‘—
+	// ç¹æ§­ãƒ¨ç¹ï½ªç¹ãƒ»ã‘ç¹§ï½¹éœ†ï½¢é¨¾ãƒ»
 	mConstantBufferTransform->constantBufferMap->viewMat =
 		Camera::current.GetViewLookToMat() *
 		Camera::current.GetPerspectiveProjectionMat();
 	mConstantBufferTransform->constantBufferMap->worldMat = mTransform.GetWorldMat();
 	mConstantBufferTransform->constantBufferMap->cameraPos = Camera::current.pos;
 
-	// F“]‘—
+	// æ¿¶ï½²éœ†ï½¢é¨¾ãƒ»
 	mConstantBufferColor->constantBufferMap->color = color / 255;
 	mConstantBufferColor->constantBufferMap->color.a = color.a / 255;
 }
@@ -47,14 +47,14 @@ void OutLineObj::Draw()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// GraphicsPipeline•`‰æƒRƒ}ƒ“ƒh
+	// GraphicsPipelineè¬ å†—åˆ¤ç¹§ï½³ç¹æ§­Î¦ç¹ãƒ»
 	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
 
-	// VBV‚ÆIBV‚ÌÝ’èƒRƒ}ƒ“ƒh
+	// VBVç¸ºï½¨IBVç¸ºï½®éšªï½­èž³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, obj->GetModel()->mesh.vertexBuffer.GetvbViewAddress());
 	renderBase->GetCommandList()->IASetIndexBuffer(obj->GetModel()->mesh.indexBuffer.GetibViewAddress());
 
-	// CBV‚ÌÝ’èƒRƒ}ƒ“ƒh
+	// CBVç¸ºï½®éšªï½­èž³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		0, mConstantBufferTransform->bufferResource->buffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(

@@ -6,7 +6,7 @@ Texture::Texture() :
 {
 }
 
-// ÉQÉbÉ^Å[
+// „Ç≤„ÉÉ„Çø„Éº
 BufferResource* Texture::GetBufferResource()
 {
 	return mBufferResource.get();

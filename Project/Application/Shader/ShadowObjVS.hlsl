@@ -2,12 +2,12 @@
 
 V2P main(Appdata i)
 {
-    // 法線にワールド行列によるスケーリング・回転を適用		
+    // 豕慕ｷ壹↓繝ｯ繝ｼ繝ｫ繝芽｡悟�励↓繧医ｋ繧ｹ繧ｱ繝ｼ繝ｪ繝ｳ繧ｰ繝ｻ蝗櫁ｻ｢繧帝←逕ｨ		
     float4 wnormal = normalize(mul(worldMat, float4(i.normal, 0)));
     float4 wpos = mul(worldMat, i.pos);
     float4 vpos = mul(mul(viewProjMat, worldMat), i.pos);
 
-    // ピクセルシェーダーに渡す値
+    // 繝斐け繧ｻ繝ｫ繧ｷ繧ｧ繝ｼ繝繝ｼ縺ｫ貂｡縺吝､
     V2P output = (V2P) 0;
     output.svpos = vpos;
     output.wpos = wpos;

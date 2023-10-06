@@ -9,10 +9,10 @@ LightManager::LightManager()
 
 void LightManager::Init()
 {
-	// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3Ds—ñ
+	// 3Dè¡Œåˆ—
 	iConstantBuffer = std::make_unique<ConstantBuffer<CDirectionalLight>>();
 	material_.constantBuffers.push_back(std::move(iConstantBuffer));
 
@@ -21,7 +21,7 @@ void LightManager::Init()
 
 void LightManager::Update()
 {
-	// ƒ}ƒgƒŠƒbƒNƒX
+	// ãƒãƒˆãƒªãƒƒã‚¯ã‚¹
 	CDirectionalLight directionalLightData;
 	directionalLightData.color = directionalLight.color.To01();
 	directionalLightData.dir = directionalLight.pos.Norm();
@@ -32,7 +32,7 @@ void LightManager::DrawCommand(const uint32_t index)
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Æƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚ÌCBV‚Ìİ’èƒRƒ}ƒ“ƒh
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã¨ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã®CBVã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		index, material_.constantBuffers[0]->bufferResource->buffer->GetGPUVirtualAddress());
 }

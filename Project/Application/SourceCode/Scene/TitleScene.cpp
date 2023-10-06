@@ -74,7 +74,7 @@ void TitleScene::Update()
 	{
 		auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
 
-		// ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚ªnull‚©‚Âƒ{ƒ^ƒ“‰Ÿ‚µ‚Ä‚È‚¢ê‡
+		// ç¹åŒ»Î›ç¹ï½³ç¹§ï½¸ç¹§ï½·ç¹ï½§ç¹ï½³ç¸ºç³»ullç¸ºä¹â–½ç¹æ‡Šã¡ç¹ï½³è¬šï½¼ç¸ºåŠ±â€»ç¸ºï½ªç¸ºãƒ»ï£°ï½´èœ·ãƒ»
 		if (currentTransition == nullptr)
 		{
 			if (mIsPush == true)
@@ -110,3 +110,4 @@ void TitleScene::Draw()
 void TitleScene::DrawDebugGui()
 {
 }
+

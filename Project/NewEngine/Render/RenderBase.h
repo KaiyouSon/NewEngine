@@ -28,32 +28,32 @@ public:
 	static float sClearColor[4];
 
 private:
-	// ƒfƒoƒCƒXŠÖ˜A
+	// ç¹ãƒ»ãƒ°ç¹§ï½¤ç¹§ï½¹é«¢ï½¢é¨¾ï½£
 	ComPtr<ID3D12Device> mDevice;
 	ComPtr<IDXGIFactory7> mDxgiFactory;
 
-	// ƒRƒ}ƒ“ƒhŠÖ˜A
+	// ç¹§ï½³ç¹æ§­Î¦ç¹è›¾æœªé¨¾ï½£
 	ComPtr<ID3D12CommandAllocator> mCommandAllocator;
 	ComPtr<ID3D12GraphicsCommandList> mCommandList;
 	ComPtr<ID3D12CommandQueue> mCommandQueue;
 
-	// ƒXƒƒbƒvƒ`ƒF[ƒ“
+	// ç¹§ï½¹ç¹ï½¯ç¹ãƒ»ãƒ»ç¹âˆšã‰ç¹ï½¼ç¹ï½³
 	ComPtr<IDXGISwapChain4> mSwapChain;
-	D3D12_DESCRIPTOR_HEAP_DESC mRtvHeapDesc;		 // rtvİ’è\‘¢‘Ì
+	D3D12_DESCRIPTOR_HEAP_DESC mRtvHeapDesc;		 // rtvéšªï½­è³å£½ï½§çŸ©Â€ï£°è´ãƒ»
 	std::array<std::unique_ptr<RenderTarget>, 2> mBackBuffers;
 
-	// ƒtƒFƒ“ƒX
+	// ç¹è¼”ã‰ç¹ï½³ç¹§ï½¹
 	ComPtr<ID3D12Fence> mFence;
 	UINT64 mFenceValue;
 
-	// [“xƒoƒbƒtƒ@
+	// è±ºï½±è ï½¦ç¹èˆŒãƒ£ç¹è¼”ãƒ
 	std::unique_ptr<DepthBuffer> mDepthBuffer;
 
-	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ[ŠÖ˜A
-	ComPtr<ID3DBlob> mErrorBlob;	// ƒGƒ‰[ƒIƒuƒWƒFƒNƒg
+	// ç¹ï½«ç¹ï½¼ç¹åŒ»ã™ç¹§ï½°ç¹é˜ªãƒ¡ç¹ï½£ç¹ï½¼é«¢ï½¢é¨¾ï½£
+	ComPtr<ID3DBlob> mErrorBlob;	// ç¹§ï½¨ç¹ï½©ç¹ï½¼ç¹§ï½ªç¹æ‚¶ãšç¹§ï½§ç¹§ï½¯ç¹ãƒ»
 
-	// •`‰æˆ—ŠÖ˜A
-	D3D12_RESOURCE_BARRIER mBarrierDesc;	// ƒŠƒ\[ƒXƒoƒŠƒA
+	// è¬ å†—åˆ¤èœƒï½¦é€…ãƒ»æœªé¨¾ï½£
+	D3D12_RESOURCE_BARRIER mBarrierDesc;	// ç¹ï½ªç¹§ï½½ç¹ï½¼ç¹§ï½¹ç¹èˆŒÎœç¹§ï½¢
 	std::unique_ptr<Viewport> mViewport;
 	std::unique_ptr<ScissorRectangle> mScissorRectangle;
 
@@ -72,7 +72,7 @@ public:
 		const D3D12_RESOURCE_STATES targetState);
 
 private:
-	// ‰Šú‰»ŠÖ˜A
+	// è›»æ™„æ‚„è›¹å¤œæœªé¨¾ï½£
 	void DeviceInit();
 	void CommandInit();
 	void SwapChainInit();

@@ -104,3 +104,4 @@ void LogoScene::Draw()
 void LogoScene::DrawDebugGui()
 {
 }
+

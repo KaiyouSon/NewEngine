@@ -9,13 +9,13 @@ ColliderObject::ColliderObject() :
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ColliderObject")),
 	model(nullptr), mCamera(&Camera::current), is3D(true)
 {
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰Šú‰»
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®åˆæœŸåŒ–
 	MaterialInit();
 }
 
 void ColliderObject::Update()
 {
-	// ƒJƒƒ‰‚ªİ’è‚µ‚Ä‚È‚¢ê‡
+	// ã‚«ãƒ¡ãƒ©ãŒè¨­å®šã—ã¦ãªã„å ´åˆ
 	if (mCamera == nullptr || mCamera == &Camera::current)
 	{
 		mCamera = &Camera::current;
@@ -28,7 +28,7 @@ void ColliderObject::Update()
 
 	transform.Update();
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì“]‘—
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®è»¢é€
 	MaterialTransfer();
 }
 void ColliderObject::Draw()
@@ -40,10 +40,10 @@ void ColliderObject::Draw()
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// GraphicsPipeline•`‰æƒRƒ}ƒ“ƒh
+	// GraphicsPipelineæç”»ã‚³ãƒãƒ³ãƒ‰
 	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
 
-	// VBV‚ÆIBV‚Ìİ’èƒRƒ}ƒ“ƒh
+	// VBVã¨IBVã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, model->mesh.vertexBuffer.GetvbViewAddress());
 	renderBase->GetCommandList()->IASetIndexBuffer(model->mesh.indexBuffer.GetibViewAddress());
 
@@ -52,40 +52,40 @@ void ColliderObject::Draw()
 	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)model->mesh.indices.size(), 1, 0, 0, 0);
 }
 
-// --- ƒ}ƒeƒŠƒAƒ‹ŠÖ˜A --------------------------------------------------- //
+// --- ãƒãƒ†ãƒªã‚¢ãƒ«é–¢é€£ --------------------------------------------------- //
 void ColliderObject::MaterialInit()
 {
-	// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3Ds—ñ
+	// 3Dè¡Œåˆ—
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransformCollider>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// F
+	// è‰²
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	mMaterial.Init();
 }
 void ColliderObject::MaterialTransfer()
 {
-	// ƒ}ƒgƒŠƒbƒNƒX
+	// ãƒãƒˆãƒªãƒƒã‚¯ã‚¹
 	CTransformCollider transformColliderData =
 	{
 		is3D == true ?
-		// 3D‚Ìê‡
+		// 3Dã®å ´åˆ
 		transform.GetWorldMat() *
 		mCamera->GetViewLookToMat() *
 		mCamera->GetPerspectiveProjectionMat():
-		// 2D‚Ìê‡
+		// 2Dã®å ´åˆ
 		transform.GetWorldMat() *
 		mCamera->GetOrthoGrphicProjectionMat()
 	};
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformColliderData);
 
-	// Fƒf[ƒ^
+	// è‰²ãƒ‡ãƒ¼ã‚¿
 	CColor colorData = { color / 255 };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[1].get(), colorData);
 }
@@ -95,15 +95,15 @@ void ColliderObject::MaterialDrawCommands()
 
 	for (uint32_t i = 0; i < mMaterial.constantBuffers.size(); i++)
 	{
-		// CBV‚Ìİ’èƒRƒ}ƒ“ƒh
+		// CBVã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 			i, mMaterial.constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
 	}
 }
 
-// --- ƒZƒbƒ^[ -------------------------------------------------------- //
+// --- ã‚»ãƒƒã‚¿ãƒ¼ -------------------------------------------------------- //
 
-// ƒJƒƒ‰
+// ã‚«ãƒ¡ãƒ©
 void ColliderObject::SetCamera(Camera* camera)
 {
 	mCamera = camera;

@@ -29,12 +29,12 @@ private:
 	float mDamage;
 
 private:
-	// �_���[�W�֘A
+	// 繝繝｡繝ｼ繧ｸ髢｢騾｣
 	bool mIsDamage;
 	Timer mDamageCoolTimer;
 
 private:
-	// ���[�V�����؂�ւ��֘A
+	// 繝｢繝ｼ繧ｷ繝ｧ繝ｳ蛻・ｊ譖ｿ縺磯未騾｣
 	Timer mCoolTimer;
 	uint32_t mMotionNum;
 
@@ -75,4 +75,3 @@ private:
 	friend BossAttack2Motion;
 	friend BossAttack3Motion;
 };
-

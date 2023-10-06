@@ -7,79 +7,79 @@ struct Quaternion;
 
 struct Vec3
 {
-	// •Ï”
-	float x; // ƒxƒNƒgƒ‹‚Ì x ¬•ª
-	float y; // ƒxƒNƒgƒ‹‚Ì y ¬•ª
-	float z; // ƒxƒNƒgƒ‹‚Ì z ¬•ª
+	// èžŸç”»ç„š
+	float x; // ç¹å¶ã‘ç¹åŒ»Îç¸ºï½® x è¬Œä»™ãƒ»
+	float y; // ç¹å¶ã‘ç¹åŒ»Îç¸ºï½® y è¬Œä»™ãƒ»
+	float z; // ç¹å¶ã‘ç¹åŒ»Îç¸ºï½® z è¬Œä»™ãƒ»
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ç¹§ï½³ç¹ï½³ç¹§ï½¹ç¹åŒ»Î›ç¹§ï½¯ç¹§ï½¿
 	constexpr Vec3() : x(0), y(0), z(0) {};
 	constexpr Vec3(const float num) : x(num), y(num), z(num) {};
 	constexpr Vec3(const float x, const float y, const float z) : x(x), y(y), z(z) {};
 
-	// static•Ï”
-	const static Vec3 left;    // Vec3(-1,0,0) ‚Æ“¯‚¶ˆÓ–¡
-	const static Vec3 right;   // Vec3(1,0,0) ‚Æ“¯‚¶ˆÓ–¡
-	const static Vec3 up;      // Vec3(0,1,0) ‚Æ“¯‚¶ˆÓ–¡
-	const static Vec3 down;    // Vec3(0,-1,0) ‚Æ“¯‚¶ˆÓ–¡
-	const static Vec3 front;	// Vec3(0,0,1) ‚Æ“¯‚¶ˆÓ–¡
-	const static Vec3 back;    // Vec3(0,0,-1)‚Æ“¯‚¶ˆÓ–¡
-	const static Vec3 one;     // Vec3(1,1,1) ‚Æ“¯‚¶ˆÓ–¡
-	const static Vec3 zero;    // Vec3(0,0,0) ‚Æ“¯‚¶ˆÓ–¡
+	// staticèžŸç”»ç„š
+	const static Vec3 left;    // Vec3(-1,0,0) ç¸ºï½¨èœ·å¾ŒÂ§è«¢ä¸žè¢–
+	const static Vec3 right;   // Vec3(1,0,0) ç¸ºï½¨èœ·å¾ŒÂ§è«¢ä¸žè¢–
+	const static Vec3 up;      // Vec3(0,1,0) ç¸ºï½¨èœ·å¾ŒÂ§è«¢ä¸žè¢–
+	const static Vec3 down;    // Vec3(0,-1,0) ç¸ºï½¨èœ·å¾ŒÂ§è«¢ä¸žè¢–
+	const static Vec3 front;	// Vec3(0,0,1) ç¸ºï½¨èœ·å¾ŒÂ§è«¢ä¸žè¢–
+	const static Vec3 back;    // Vec3(0,0,-1)ç¸ºï½¨èœ·å¾ŒÂ§è«¢ä¸žè¢–
+	const static Vec3 one;     // Vec3(1,1,1) ç¸ºï½¨èœ·å¾ŒÂ§è«¢ä¸žè¢–
+	const static Vec3 zero;    // Vec3(0,0,0) ç¸ºï½¨èœ·å¾ŒÂ§è«¢ä¸žè¢–
 
-	// ŠÖ”
-	float Length() const;    // ƒxƒNƒgƒ‹‚Ì‘å‚«‚³
-	float LengthSq() const;    // ƒxƒNƒgƒ‹‚Ì‘å‚«‚³
-	Vec3 Norm() const;    // ³‹K‰»‚É‚µ‚½ƒxƒNƒgƒ‹
+	// é«¢ï½¢è¬¨ï½°
+	float Length() const;    // ç¹å¶ã‘ç¹åŒ»Îç¸ºï½®èžŸï½§ç¸ºé˜ªï¼†
+	float LengthSq() const;    // ç¹å¶ã‘ç¹åŒ»Îç¸ºï½®èžŸï½§ç¸ºé˜ªï¼†
+	Vec3 Norm() const;    // è±ï½£éš•ä¸žå–§ç¸ºï½«ç¸ºåŠ±â—†ç¹å¶ã‘ç¹åŒ»Î
 
 	static Vec3 Lerp(const Vec3 s, const Vec3 e, const float f);
 
-	// staticŠÖ”
-	static float Dot(const Vec3 v1, const Vec3 v2);		// “ñ‚Â‚ÌƒxƒNƒgƒ‹‚Ì“àÏ
-	static Vec3 Cross(const Vec3 v1, const Vec3 v2);		// “ñ‚Â‚ÌƒxƒNƒgƒ‹‚ÌŠOÏ
-	static float Distance(const Vec3 v1, const Vec3 v2);	// “ñ‚Â‚ÌƒxƒNƒgƒ‹‚Ì‹——£
-	static float DistanceSq(const Vec3 v1, const Vec3 v2);	// “ñ‚Â‚ÌƒxƒNƒgƒ‹‚Ì‹——£
+	// staticé«¢ï½¢è¬¨ï½°
+	static float Dot(const Vec3 v1, const Vec3 v2);		// èŽ å¾Œâ–½ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½®èœ€ãƒ»ï½©ãƒ»
+	static Vec3 Cross(const Vec3 v1, const Vec3 v2);		// èŽ å¾Œâ–½ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½®èžŸä¹Ÿï½©ãƒ»
+	static float Distance(const Vec3 v1, const Vec3 v2);	// èŽ å¾Œâ–½ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½®éœæ™žå±¬
+	static float DistanceSq(const Vec3 v1, const Vec3 v2);	// èŽ å¾Œâ–½ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½®éœæ™žå±¬
 
-	// “ñ‚Â‚ÌƒxƒNƒgƒ‹‚ÅŠe¬•ª‚Ìˆê”Ô‘å‚«‚È’l‚ðŽg—p‚µ‚ÄƒxƒNƒgƒ‹‚ðì¬‚·‚é
+	// èŽ å¾Œâ–½ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½§èœ·ãƒ»ãƒ»è›»ãƒ»ãƒ»è³Â€é€¡ï½ªèžŸï½§ç¸ºé˜ªâ†‘è›Ÿï½¤ç¹§å‰ƒï½½ï½¿é€•ï½¨ç¸ºåŠ±â€»ç¹å¶ã‘ç¹åŒ»Îç¹§å‰ƒï½½æ‡ˆãƒ»ç¸ºå¶ï½‹
 	static Vec3 Max(const Vec3 v1, const Vec3 v2);
-	// “ñ‚Â‚ÌƒxƒNƒgƒ‹‚ÅŠe¬•ª‚Ìˆê”Ô¬‚³‚È’l‚ðŽg—p‚µ‚ÄƒxƒNƒgƒ‹‚ðì¬‚·‚é
+	// èŽ å¾Œâ–½ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½§èœ·ãƒ»ãƒ»è›»ãƒ»ãƒ»è³Â€é€¡ï½ªèŸ†ä¸Šï¼†ç¸ºï½ªè›Ÿï½¤ç¹§å‰ƒï½½ï½¿é€•ï½¨ç¸ºåŠ±â€»ç¹å¶ã‘ç¹åŒ»Îç¹§å‰ƒï½½æ‡ˆãƒ»ç¸ºå¶ï½‹
 	static Vec3 Min(const Vec3 v1, const Vec3 v2);
 
-	// ŽZp‰‰ŽZŽq‚ÌƒI[ƒo[ƒ[ƒh
-	Vec3 operator+(const Vec3 other) const; // ‚à‚¤ˆê•û‚ÌƒxƒNƒgƒ‹‚Æ‚Ì‘«‚µŽZ
-	Vec3 operator-(const Vec3 other) const; // ‚à‚¤ˆê•û‚ÌƒxƒNƒgƒ‹‚Æ‚Ìˆø‚«ŽZ
-	Vec3 operator*(const Vec3 other) const; // ‚à‚¤ˆê•û‚ÌƒxƒNƒgƒ‹‚Æ‚ÌŠ|‚¯ŽZ
-	Vec3 operator/(const Vec3 other) const; // ‚à‚¤ˆê•û‚ÌƒxƒNƒgƒ‹‚Æ‚ÌŠ„‚èŽZ
-	Vec3 operator+(const Vec2 other) const; // ‚à‚¤ˆê•û‚ÌƒxƒNƒgƒ‹‚Æ‚Ì‘«‚µŽZ
-	Vec3 operator-(const Vec2 other) const; // ‚à‚¤ˆê•û‚ÌƒxƒNƒgƒ‹‚Æ‚Ìˆø‚«ŽZ
-	Vec3 operator*(const Vec2 other) const; // ˆê‚Â‚Ì’l‚Æ‚ÌŠ|‚¯ŽZ
-	Vec3 operator/(const Vec2 other) const; // ˆê‚Â‚Ì’l‚Æ‚ÌŠ„‚èŽZ
-	Vec3 operator+(float num) const;		 // ˆê‚Â‚Ì’l‚Æ‚Ì‘«‚µŽZ
-	Vec3 operator-(float num) const;		 // ˆê‚Â‚Ì’l‚Æ‚Ìˆø‚«ŽZ
-	Vec3 operator*(float num) const;         // ˆê‚Â‚Ì’l‚Æ‚ÌŠ|‚¯ŽZ
-	Vec3 operator/(float num) const;         // ˆê‚Â‚Ì’l‚Æ‚ÌŠ„‚èŽZ
+	// é‚‚è‹“ï½¡æºï½¼çš®ï½®æ€œï½­èˆŒãƒ»ç¹§ï½ªç¹ï½¼ç¹èˆŒãƒ»ç¹ï½­ç¹ï½¼ç¹ãƒ»
+	Vec3 operator+(const Vec3 other) const; // ç¹§ã‚…â‰§è³Â€è­ï½¹ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½¨ç¸ºï½®é›œï½³ç¸ºç¤¼ï½®ãƒ»
+	Vec3 operator-(const Vec3 other) const; // ç¹§ã‚…â‰§è³Â€è­ï½¹ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½¨ç¸ºï½®è ‘è¼”â€³é‚‚ãƒ»
+	Vec3 operator*(const Vec3 other) const; // ç¹§ã‚…â‰§è³Â€è­ï½¹ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½¨ç¸ºï½®è¬—å¸™ï¿ é‚‚ãƒ»
+	Vec3 operator/(const Vec3 other) const; // ç¹§ã‚…â‰§è³Â€è­ï½¹ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½¨ç¸ºï½®èœ‘ï½²ç¹§é¡”ï½®ãƒ»
+	Vec3 operator+(const Vec2 other) const; // ç¹§ã‚…â‰§è³Â€è­ï½¹ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½¨ç¸ºï½®é›œï½³ç¸ºç¤¼ï½®ãƒ»
+	Vec3 operator-(const Vec2 other) const; // ç¹§ã‚…â‰§è³Â€è­ï½¹ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½¨ç¸ºï½®è ‘è¼”â€³é‚‚ãƒ»
+	Vec3 operator*(const Vec2 other) const; // è³Â€ç¸ºï½¤ç¸ºï½®è›Ÿï½¤ç¸ºï½¨ç¸ºï½®è¬—å¸™ï¿ é‚‚ãƒ»
+	Vec3 operator/(const Vec2 other) const; // è³Â€ç¸ºï½¤ç¸ºï½®è›Ÿï½¤ç¸ºï½¨ç¸ºï½®èœ‘ï½²ç¹§é¡”ï½®ãƒ»
+	Vec3 operator+(float num) const;		 // è³Â€ç¸ºï½¤ç¸ºï½®è›Ÿï½¤ç¸ºï½¨ç¸ºï½®é›œï½³ç¸ºç¤¼ï½®ãƒ»
+	Vec3 operator-(float num) const;		 // è³Â€ç¸ºï½¤ç¸ºï½®è›Ÿï½¤ç¸ºï½¨ç¸ºï½®è ‘è¼”â€³é‚‚ãƒ»
+	Vec3 operator*(float num) const;         // è³Â€ç¸ºï½¤ç¸ºï½®è›Ÿï½¤ç¸ºï½¨ç¸ºï½®è¬—å¸™ï¿ é‚‚ãƒ»
+	Vec3 operator/(float num) const;         // è³Â€ç¸ºï½¤ç¸ºï½®è›Ÿï½¤ç¸ºï½¨ç¸ºï½®èœ‘ï½²ç¹§é¡”ï½®ãƒ»
 	Vec3 operator-() const;
 
-	// •¡‡‘ã“ü‰‰ŽZŽq‚ÌƒI[ƒo[ƒ[ƒh
-	Vec3& operator+=(const Vec3 other); // •¡‡‘ã“ü‰‰ŽZ +=
-	Vec3& operator-=(const Vec3 other); // •¡‡‘ã“ü‰‰ŽZ -=
-	Vec3& operator+=(float num);         // •¡‡‘ã“ü‰‰ŽZ +=
-	Vec3& operator-=(float num);         // •¡‡‘ã“ü‰‰ŽZ -=
-	Vec3& operator*=(float num);         // •¡‡‘ã“ü‰‰ŽZ *=
-	Vec3& operator/=(float num);         // •¡‡‘ã“ü‰‰ŽZ /=
+	// éšãƒ»ç²‹èŽ‰ï½£èœˆï½¥è²çš®ï½®æ€œï½­èˆŒãƒ»ç¹§ï½ªç¹ï½¼ç¹èˆŒãƒ»ç¹ï½­ç¹ï½¼ç¹ãƒ»
+	Vec3& operator+=(const Vec3 other); // éšãƒ»ç²‹èŽ‰ï½£èœˆï½¥è²çš®ï½®ãƒ»+=
+	Vec3& operator-=(const Vec3 other); // éšãƒ»ç²‹èŽ‰ï½£èœˆï½¥è²çš®ï½®ãƒ»-=
+	Vec3& operator+=(float num);         // éšãƒ»ç²‹èŽ‰ï½£èœˆï½¥è²çš®ï½®ãƒ»+=
+	Vec3& operator-=(float num);         // éšãƒ»ç²‹èŽ‰ï½£èœˆï½¥è²çš®ï½®ãƒ»-=
+	Vec3& operator*=(float num);         // éšãƒ»ç²‹èŽ‰ï½£èœˆï½¥è²çš®ï½®ãƒ»*=
+	Vec3& operator/=(float num);         // éšãƒ»ç²‹èŽ‰ï½£èœˆï½¥è²çš®ï½®ãƒ»/=
 
-	// ‘ã“ü‰‰ŽZŽq‚ÌƒI[ƒo[ƒ[ƒh
-	Vec3& operator=(float num);			// ˆê‚Â‚Ì’l‚ð‘ã“ü
-	Vec3& operator=(const Vec2 other); // Vec2‚ðVec3‚É•ÏŠ·
-	Vec3& operator=(const Quaternion& q); // Quaternion‚ðVec3‚É•ÏŠ·
+	// èŽ‰ï½£èœˆï½¥è²çš®ï½®æ€œï½­èˆŒãƒ»ç¹§ï½ªç¹ï½¼ç¹èˆŒãƒ»ç¹ï½­ç¹ï½¼ç¹ãƒ»
+	Vec3& operator=(float num);			// è³Â€ç¸ºï½¤ç¸ºï½®è›Ÿï½¤ç¹§å‰ƒï½»ï½£èœˆï½¥
+	Vec3& operator=(const Vec2 other); // Vec2ç¹§æ­Žec3ç¸ºï½«èžŸç”»é‹¤
+	Vec3& operator=(const Quaternion& q); // Quaternionç¹§æ­Žec3ç¸ºï½«èžŸç”»é‹¤
 
-	// ƒCƒ“ƒNƒŠƒƒ“ƒg/ƒfƒNƒŠƒƒ“ƒg‰‰ŽZŽq‚ÌƒI[ƒo[ƒ[ƒh
-	Vec3& operator++();   // ‘O’uƒCƒ“ƒNƒŠƒƒ“ƒg
-	Vec3 operator++(int); // Œã’uƒCƒ“ƒNƒŠƒƒ“ƒg
-	Vec3& operator--();   // ‘O’uƒfƒNƒŠƒƒ“ƒg
-	Vec3 operator--(int); // Œã’uƒfƒNƒŠƒƒ“ƒg
+	// ç¹§ï½¤ç¹ï½³ç¹§ï½¯ç¹ï½ªç¹ï½¡ç¹ï½³ç¹ãƒ»ç¹ãƒ»ã‘ç¹ï½ªç¹ï½¡ç¹ï½³ç¹åŸŸï½¼çš®ï½®æ€œï½­èˆŒãƒ»ç¹§ï½ªç¹ï½¼ç¹èˆŒãƒ»ç¹ï½­ç¹ï½¼ç¹ãƒ»
+	Vec3& operator++();   // èœ‘å’²ï½½ï½®ç¹§ï½¤ç¹ï½³ç¹§ï½¯ç¹ï½ªç¹ï½¡ç¹ï½³ç¹ãƒ»
+	Vec3 operator++(int); // è •æªŽï½½ï½®ç¹§ï½¤ç¹ï½³ç¹§ï½¯ç¹ï½ªç¹ï½¡ç¹ï½³ç¹ãƒ»
+	Vec3& operator--();   // èœ‘å’²ï½½ï½®ç¹ãƒ»ã‘ç¹ï½ªç¹ï½¡ç¹ï½³ç¹ãƒ»
+	Vec3 operator--(int); // è •æªŽï½½ï½®ç¹ãƒ»ã‘ç¹ï½ªç¹ï½¡ç¹ï½³ç¹ãƒ»
 
-	// ”äŠr‰‰ŽZŽq‚ÌƒI[ƒo[ƒ[ƒh
+	// è±ˆç¢‘ï½¼ãƒ»ï½¼çš®ï½®æ€œï½­èˆŒãƒ»ç¹§ï½ªç¹ï½¼ç¹èˆŒãƒ»ç¹ï½­ç¹ï½¼ç¹ãƒ»
 	bool operator==(const Vec3 other);
 	bool operator!=(const Vec3 other);
 	bool operator>=(const Vec3 other);

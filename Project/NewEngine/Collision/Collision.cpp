@@ -1,7 +1,7 @@
 #include "Collision.h"
 #include "Util.h"
 
-// ‰~‚Æ‰~
+// èœ€ãƒ»â†’èœ€ãƒ»
 bool Collision::CircleHitCircle(const CircleCollider& circle1, const CircleCollider& circle2)
 {
 	if (circle1.isActive == false || circle2.isActive == false)
@@ -20,7 +20,7 @@ bool Collision::CircleHitCircle(const CircleCollider& circle1, const CircleColli
 	};
 }
 
-// ‹…‚Æ‹…
+// é€…ãƒ»â†’é€…ãƒ»
 bool Collision::SphereHitSphere(const SphereCollider& sphere1, const SphereCollider& sphere2)
 {
 	if (sphere1.isActive == false || sphere2.isActive == false)
@@ -41,7 +41,7 @@ bool Collision::SphereHitSphere(const SphereCollider& sphere1, const SphereColli
 	};
 }
 
-// ƒLƒ…[ƒu‚ÆƒLƒ…[ƒu
+// ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹æ‚¶â†’ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹ãƒ»
 bool Collision::CubeHitCube(const CubeCollider& cube1, const CubeCollider& cube2)
 {
 	if (cube1.isActive == false || cube2.isActive == false)
@@ -49,7 +49,7 @@ bool Collision::CubeHitCube(const CubeCollider& cube1, const CubeCollider& cube2
 		return false;
 	}
 
-	// d‚È‚è”»’è
+	// é©¥é˜ªâ†‘ç¹§é›æ„›è³ãƒ»
 	for (int i = 0; i < 8; ++i)
 	{
 		for (int j = 0; j < 8; ++j)
@@ -65,15 +65,15 @@ bool Collision::CubeHitCube(const CubeCollider& cube1, const CubeCollider& cube2
 
 			if (isXHit && isYHit && isZHit)
 			{
-				return true;  // d‚È‚è‚ª‚ ‚éê‡‚Í“–‚½‚è‚Æ‚·‚é
+				return true;  // é©¥é˜ªâ†‘ç¹§ç¿«â€²ç¸ºã‚…ï½‹è£ï½´èœ·åŒ»ãƒ»è –è–™â—†ç¹§ç¿«â†’ç¸ºå¶ï½‹
 			}
 		}
 	}
 
-	return false;  // d‚È‚è‚ª‚È‚¢ê‡‚Í“–‚½‚è‚Æ‚µ‚È‚¢
+	return false;  // é©¥é˜ªâ†‘ç¹§ç¿«â€²ç¸ºï½ªç¸ºãƒ»ï£°ï½´èœ·åŒ»ãƒ»è –è–™â—†ç¹§ç¿«â†’ç¸ºåŠ±â†‘ç¸ºãƒ»
 }
 
-// ƒLƒ…[ƒu‚ÆƒJƒvƒZƒ‹
+// ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹æ‚¶â†’ç¹§ï½«ç¹åŠ±ãç¹ï½«
 bool Collision::CubeHitCapsule(CubeCollider& cube, CapsuleCollider& capsule)
 {
 	if (cube.isActive == false || capsule.isActive == false)
@@ -81,14 +81,14 @@ bool Collision::CubeHitCapsule(CubeCollider& cube, CapsuleCollider& capsule)
 		return false;
 	}
 
-	// ƒJƒvƒZƒ‹‚Ìn“_‚ÆI“_‚ğƒxƒNƒgƒ‹Œ`®‚É•ÏŠ·
+	// ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½®èŸ‹ç‹—ã›ç¸ºï½¨é‚¨ã‚‰ã›ç¹§åµãƒ»ç¹§ï½¯ç¹åŒ»Îè –ï½¢è ‘ä¸Šâ†“èŸç”»é‹¤
 	Vec3 capsuleDir = capsule.endPos - capsule.startPos;
 	Vec3 capsuleStartToEnd = capsule.endPos - capsule.startPos;
 
-	// ƒJƒvƒZƒ‹‚Ìn“_‚©‚çƒLƒ…[ƒu‚Ì’†S‚Ü‚Å‚ÌƒxƒNƒgƒ‹
+	// ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½®èŸ‹ç‹—ã›ç¸ºä¹ï½‰ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹æ‚¶ãƒ»è³ï½­è ¢ãƒ»âˆªç¸ºï½§ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Î
 	Vec3 capsuleToCube = cube.centerPos - capsule.startPos;
 
-	// ƒJƒvƒZƒ‹‚Ìn“_‚©‚çƒLƒ…[ƒu‚ÌÅ‹ßÚ“_‚ğŒvZ
+	// ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½®èŸ‹ç‹—ã›ç¸ºä¹ï½‰ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹æ‚¶ãƒ»è­›Â€éœ‘ç¬¬ç£è½¤ï½¹ç¹§å®šï½¨è‚²ï½®ãƒ»
 	Vec3 closestPoint;
 	float d1 = Vec3::Dot(capsuleToCube, capsuleDir);
 	float d2 = Vec3::Dot(capsuleDir, capsuleDir);
@@ -96,16 +96,16 @@ bool Collision::CubeHitCapsule(CubeCollider& cube, CapsuleCollider& capsule)
 	float t = Clamp<float>(d1 / d2, 0.0f, 1.0f);
 	closestPoint = capsule.startPos + t * capsuleDir;
 
-	// ƒLƒ…[ƒu‚ÌŠe•Ó‚É‘Î‚·‚éÅ‹ßÚ“_‚ğŒvZ
+	// ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹æ‚¶ãƒ»èœ·ãƒ»ï½¾ï½ºç¸ºï½«èŸ‡ï½¾ç¸ºå¶ï½‹è­›Â€éœ‘ç¬¬ç£è½¤ï½¹ç¹§å®šï½¨è‚²ï½®ãƒ»
 	Vec3 closestCubePoint = closestPoint;
 	closestCubePoint.x = Clamp(closestCubePoint.x, cube.centerPos.x - cube.size.x / 2.0f, cube.centerPos.x + cube.size.x / 2.0f);
 	closestCubePoint.y = Clamp(closestCubePoint.y, cube.centerPos.y - cube.size.y / 2.0f, cube.centerPos.y + cube.size.y / 2.0f);
 	closestCubePoint.z = Clamp(closestCubePoint.z, cube.centerPos.z - cube.size.z / 2.0f, cube.centerPos.z + cube.size.z / 2.0f);
 
-	// ƒJƒvƒZƒ‹‚ÆƒLƒ…[ƒu‚ÌÅ‹ßÚ“_ŠÔ‚Ì‹——£‚ğŒvZ
+	// ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½¨ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹æ‚¶ãƒ»è­›Â€éœ‘ç¬¬ç£è½¤ï½¹é«¢è–™ãƒ»éœæ™å±¬ç¹§å®šï½¨è‚²ï½®ãƒ»
 	float distanceSq = Vec3::Dot(closestCubePoint - closestPoint, closestCubePoint - closestPoint);
 
-	// ‹——£‚ªƒJƒvƒZƒ‹”¼Œa‚ÆƒLƒ…[ƒu‘ÎŠpü‚Ì”¼•ª‚Ì˜a‚æ‚è¬‚³‚¢ê‡AÕ“Ë‚µ‚Ä‚¢‚é‚Æ‚İ‚È‚·
+	// éœæ™å±¬ç¸ºå¾Œãç¹åŠ±ãç¹ï½«èœŠé›ï½¾ãƒ»â†’ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹é–€ï½¯ï½¾éš—å ¤ï½·å£¹ãƒ»èœŠé›ãƒ»ç¸ºï½®èœ¥å¾Œï½ˆç¹§é›ï½°ä¸Šï¼†ç¸ºãƒ»ï£°ï½´èœ·åŒ»Â€âˆ¬ï½¡æ™‰ï½ªâˆšï¼ ç¸ºï½¦ç¸ºãƒ»ï½‹ç¸ºï½¨ç¸ºï½¿ç¸ºï½ªç¸ºãƒ»
 	float capsuleRadius = capsule.radius;
 	float cubeDiagonal = sqrtf(cube.size.Length()) / 2.0f;
 
@@ -121,13 +121,13 @@ bool Collision::CubeHitCapsule(const CubeCollider& cube, const CapsuleCollider& 
 		return false;
 	}
 
-	// ƒJƒvƒZƒ‹‚Ìn“_‚ÆI“_‚ğƒxƒNƒgƒ‹Œ`®‚É•ÏŠ·
+	// ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½®èŸ‹ç‹—ã›ç¸ºï½¨é‚¨ã‚‰ã›ç¹§åµãƒ»ç¹§ï½¯ç¹åŒ»Îè –ï½¢è ‘ä¸Šâ†“èŸç”»é‹¤
 	Vec3 capsuleDir = capsule.endPos - capsule.startPos;
 
-	// ƒJƒvƒZƒ‹‚Ìn“_‚©‚çƒLƒ…[ƒu‚Ì’†S‚Ü‚Å‚ÌƒxƒNƒgƒ‹
+	// ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½®èŸ‹ç‹—ã›ç¸ºä¹ï½‰ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹æ‚¶ãƒ»è³ï½­è ¢ãƒ»âˆªç¸ºï½§ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Î
 	Vec3 capsuleToCube = cube.centerPos - capsule.startPos;
 
-	// ƒJƒvƒZƒ‹‚Ìn“_‚©‚çƒLƒ…[ƒu‚ÌÅ‹ßÚ“_‚ğŒvZ
+	// ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½®èŸ‹ç‹—ã›ç¸ºä¹ï½‰ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹æ‚¶ãƒ»è­›Â€éœ‘ç¬¬ç£è½¤ï½¹ç¹§å®šï½¨è‚²ï½®ãƒ»
 	Vec3 closestPoint;
 	float d1 = Vec3::Dot(capsuleToCube, capsuleDir);
 	float d2 = Vec3::Dot(capsuleDir, capsuleDir);
@@ -135,16 +135,16 @@ bool Collision::CubeHitCapsule(const CubeCollider& cube, const CapsuleCollider& 
 	float t = Clamp<float>(d1 / d2, 0.0f, 1.0f);
 	closestPoint = capsule.startPos + t * capsuleDir;
 
-	// ƒLƒ…[ƒu‚ÌŠe•Ó‚É‘Î‚·‚éÅ‹ßÚ“_‚ğŒvZ
+	// ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹æ‚¶ãƒ»èœ·ãƒ»ï½¾ï½ºç¸ºï½«èŸ‡ï½¾ç¸ºå¶ï½‹è­›Â€éœ‘ç¬¬ç£è½¤ï½¹ç¹§å®šï½¨è‚²ï½®ãƒ»
 	Vec3 closestCubePoint = closestPoint;
 	closestCubePoint.x = Clamp(closestCubePoint.x, cube.centerPos.x - cube.size.x, cube.centerPos.x + cube.size.x);
 	closestCubePoint.y = Clamp(closestCubePoint.y, cube.centerPos.y - cube.size.y, cube.centerPos.y + cube.size.y);
 	closestCubePoint.z = Clamp(closestCubePoint.z, cube.centerPos.z - cube.size.z, cube.centerPos.z + cube.size.z);
 
-	// ƒJƒvƒZƒ‹‚ÆƒLƒ…[ƒu‚ÌÅ‹ßÚ“_ŠÔ‚Ì‹——£‚ğŒvZ
+	// ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½¨ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹æ‚¶ãƒ»è­›Â€éœ‘ç¬¬ç£è½¤ï½¹é«¢è–™ãƒ»éœæ™å±¬ç¹§å®šï½¨è‚²ï½®ãƒ»
 	float distanceSq = Vec3::Dot(closestCubePoint - closestPoint, closestCubePoint - closestPoint);
 
-	// ‹——£‚ªƒJƒvƒZƒ‹”¼Œa‚ÆƒLƒ…[ƒu‘ÎŠpü‚Ì”¼•ª‚Ì˜a‚æ‚è¬‚³‚¢ê‡AÕ“Ë‚µ‚Ä‚¢‚é‚Æ‚İ‚È‚·
+	// éœæ™å±¬ç¸ºå¾Œãç¹åŠ±ãç¹ï½«èœŠé›ï½¾ãƒ»â†’ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹é–€ï½¯ï½¾éš—å ¤ï½·å£¹ãƒ»èœŠé›ãƒ»ç¸ºï½®èœ¥å¾Œï½ˆç¹§é›ï½°ä¸Šï¼†ç¸ºãƒ»ï£°ï½´èœ·åŒ»Â€âˆ¬ï½¡æ™‰ï½ªâˆšï¼ ç¸ºï½¦ç¸ºãƒ»ï½‹ç¸ºï½¨ç¸ºï½¿ç¸ºï½ªç¸ºãƒ»
 	float capsuleRadius = capsule.radius;
 	float cubeDiagonal = cube.size.Length() / 2;
 
@@ -152,7 +152,7 @@ bool Collision::CubeHitCapsule(const CubeCollider& cube, const CapsuleCollider& 
 
 	if (isHit)
 	{
-		// Õ“Ë‚µ‚½À•W‚ğŒvZ‚µAˆø”‚É‘ã“ü
+		// é™¦æ™‰ï½ªâˆšï¼ ç¸ºæº·ï½ºï½§è®“å¶ï½’éšªè‚²ï½®åŠ±ï¼ ç¸²âˆï½¼å¢“ç„šç¸ºï½«è‰ï½£èœˆï½¥
 		hitPoint = closestCubePoint;
 		return true;
 	}
@@ -161,7 +161,7 @@ bool Collision::CubeHitCapsule(const CubeCollider& cube, const CapsuleCollider& 
 
 }
 
-// ‹…‚Æ•½–Ê
+// é€…ãƒ»â†’èŸ·ï½³é«±ï½¢
 bool Collision::SphereHitPlane(const SphereCollider& sphere, const PlaneCollider& plane, Vec3* hitPoint)
 {
 	if (sphere.isActive == false || plane.isActive == false)
@@ -169,9 +169,9 @@ bool Collision::SphereHitPlane(const SphereCollider& sphere, const PlaneCollider
 		return false;
 	}
 
-	// À•WŒn‚ÌŒ´“_‚©‚ç‹…‚Ì’†SÀ•W‚Ö‚Ì‹——£
+	// è ï½§è®“å’ï½³ï½»ç¸ºï½®èœ´æº½ã›ç¸ºä¹ï½‰é€…ãƒ»ãƒ»è³ï½­è ¢ãƒ»ï½ºï½§è®“å¶âˆˆç¸ºï½®éœæ™å±¬
 	float dot1 = Vec3::Dot(sphere.centerPos, plane.normal);
-	// •½–Ê‚ÌŒ´“_‹——£
+	// èŸ·ï½³é«±ï½¢ç¸ºï½®èœ´æº½ã›éœæ™å±¬
 	float dot2 = Vec3::Dot(plane.centerPos, plane.normal);
 	float dis = dot1 - dot2;
 
@@ -188,7 +188,7 @@ bool Collision::SphereHitPlane(const SphereCollider& sphere, const PlaneCollider
 	return true;
 }
 
-// ‹…‚ÆOŠpŒ`
+// é€…ãƒ»â†’è³èŠ½ï½§è²ï½½ï½¢
 bool Collision::SphereHitTriangle(const SphereCollider& sphere, const TriangleCollider& triangle, Vec3* hitPoint)
 {
 	if (sphere.isActive == false || triangle.isActive == false)
@@ -215,7 +215,7 @@ bool Collision::SphereHitTriangle(const SphereCollider& sphere, const TriangleCo
 	return true;
 }
 
-// ‹…‚ÆƒJƒvƒZƒ‹
+// é€…ãƒ»â†’ç¹§ï½«ç¹åŠ±ãç¹ï½«
 bool Collision::SphereHitCapsule(const SphereCollider& sphere, const CapsuleCollider& capsule)
 {
 	if (sphere.isActive == false || capsule.isActive == false)
@@ -223,13 +223,13 @@ bool Collision::SphereHitCapsule(const SphereCollider& sphere, const CapsuleColl
 		return false;
 	}
 
-	// ƒJƒvƒZƒ‹‚Ì²ƒxƒNƒgƒ‹‚Æ‹…‚Ì’†SˆÊ’uƒxƒNƒgƒ‹‚Ì·‚ğŒvZ
+	// ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½®éœ†ï½¸ç¹å¶ã‘ç¹åŒ»Îç¸ºï½¨é€…ãƒ»ãƒ»è³ï½­è ¢ãƒ»ï½½å’²ï½½ï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½®èŸ¾ï½®ç¹§å®šï½¨è‚²ï½®ãƒ»
 	Vec3 capsuleAxis = capsule.endPos - capsule.startPos;
 	Vec3 sphereToCapsule = sphere.centerPos - capsule.startPos;
 
 	Vec3 n = capsuleAxis.Norm();
 
-	// ƒJƒvƒZƒ‹‚Ì²ƒxƒNƒgƒ‹ã‚ÌÅ‹ßÚ“_‚ğŒvZ
+	// ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½®éœ†ï½¸ç¹å¶ã‘ç¹åŒ»Îè³ç¿«ãƒ»è­›Â€éœ‘ç¬¬ç£è½¤ï½¹ç¹§å®šï½¨è‚²ï½®ãƒ»
 	float dot = Vec3::Dot(sphereToCapsule, n);
 	float lengthRate = dot * dot / capsuleAxis.LengthSq();
 
@@ -248,7 +248,7 @@ bool Collision::SphereHitCapsule(const SphereCollider& sphere, const CapsuleColl
 		dis = Vec3::DistanceSq(capsule.endPos, sphere.centerPos);
 	}
 
-	// ‹——£‚ª”¼Œa‚Ì‡Œv‚æ‚è‚à¬‚³‚¢ê‡‚ÍÕ“Ë‚µ‚Ä‚¢‚é‚Æ‚İ‚È‚·
+	// éœæ™å±¬ç¸ºæ‚Ÿæ¿ è •ãƒ»ãƒ»èœ·éƒï½¨åŒ»ï½ˆç¹§ç¿«ï½‚èŸ†ä¸Šï¼†ç¸ºãƒ»ï£°ï½´èœ·åŒ»ãƒ»é™¦æ™‰ï½ªâˆšï¼ ç¸ºï½¦ç¸ºãƒ»ï½‹ç¸ºï½¨ç¸ºï½¿ç¸ºï½ªç¸ºãƒ»
 	float totalRadius = sphere.radius + capsule.radius;
 
 	if (dis <= totalRadius * totalRadius)
@@ -266,13 +266,13 @@ bool Collision::SphereHitCapsule(const SphereCollider& sphere, const CapsuleColl
 		return false;
 	}
 
-	// ƒJƒvƒZƒ‹‚Ì²ƒxƒNƒgƒ‹‚Æ‹…‚Ì’†SˆÊ’uƒxƒNƒgƒ‹‚Ì·‚ğŒvZ
+	// ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½®éœ†ï½¸ç¹å¶ã‘ç¹åŒ»Îç¸ºï½¨é€…ãƒ»ãƒ»è³ï½­è ¢ãƒ»ï½½å’²ï½½ï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½®èŸ¾ï½®ç¹§å®šï½¨è‚²ï½®ãƒ»
 	Vec3 capsuleAxis = capsule.endPos - capsule.startPos;
 	Vec3 sphereToCapsule = sphere.centerPos - capsule.startPos;
 
 	Vec3 n = capsuleAxis.Norm();
 
-	// ƒJƒvƒZƒ‹‚Ì²ƒxƒNƒgƒ‹ã‚ÌÅ‹ßÚ“_‚ğŒvZ
+	// ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½®éœ†ï½¸ç¹å¶ã‘ç¹åŒ»Îè³ç¿«ãƒ»è­›Â€éœ‘ç¬¬ç£è½¤ï½¹ç¹§å®šï½¨è‚²ï½®ãƒ»
 	float dot = Vec3::Dot(sphereToCapsule, n);
 	Vec3 closestPoint = capsule.startPos + n * dot;
 
@@ -291,7 +291,7 @@ bool Collision::SphereHitCapsule(const SphereCollider& sphere, const CapsuleColl
 		dis = Vec3::DistanceSq(capsule.endPos, sphere.centerPos);
 	}
 
-	// ‹——£‚ª”¼Œa‚Ì‡Œv‚æ‚è‚à¬‚³‚¢ê‡‚ÍÕ“Ë‚µ‚Ä‚¢‚é‚Æ‚İ‚È‚·
+	// éœæ™å±¬ç¸ºæ‚Ÿæ¿ è •ãƒ»ãƒ»èœ·éƒï½¨åŒ»ï½ˆç¹§ç¿«ï½‚èŸ†ä¸Šï¼†ç¸ºãƒ»ï£°ï½´èœ·åŒ»ãƒ»é™¦æ™‰ï½ªâˆšï¼ ç¸ºï½¦ç¸ºãƒ»ï½‹ç¸ºï½¨ç¸ºï½¿ç¸ºï½ªç¸ºãƒ»
 	float totalRadius = sphere.radius + capsule.radius;
 
 	if (dis <= totalRadius * totalRadius)
@@ -304,7 +304,7 @@ bool Collision::SphereHitCapsule(const SphereCollider& sphere, const CapsuleColl
 	return false;
 }
 
-// ƒŒƒC‚Æ•½–Ê
+// ç¹ï½¬ç¹§ï½¤ç¸ºï½¨èŸ·ï½³é«±ï½¢
 bool Collision::RayHitPlane(const RayCollider& ray, const PlaneCollider& plane)
 {
 	if (ray.isActive == false || plane.isActive == false)
@@ -314,16 +314,16 @@ bool Collision::RayHitPlane(const RayCollider& ray, const PlaneCollider& plane)
 
 	const float epsilon = 1.0e-5f;
 
-	// À•WŒn‚ÌŒ´“_‚©‚çƒŒƒC‚Ìn“_À•W‚Ö‚Ì‹——£
+	// è ï½§è®“å’ï½³ï½»ç¸ºï½®èœ´æº½ã›ç¸ºä¹ï½‰ç¹ï½¬ç¹§ï½¤ç¸ºï½®èŸ‹ç‹—ã›è ï½§è®“å¶âˆˆç¸ºï½®éœæ™å±¬
 	float dot1 = Vec3::Dot(plane.normal, ray.dirVec);
 
-	// — –Ê”»’è
+	// é™¬åŸæ“‡è›»ï½¤è³ãƒ»
 	if (dot1 > -epsilon)
 	{
 		return false;
 	}
 
-	// •½–Ê‚ÌŒ´“_‹——£
+	// èŸ·ï½³é«±ï½¢ç¸ºï½®èœ´æº½ã›éœæ™å±¬
 	float dot2 = Vec3::Dot(plane.normal, ray.startPos);
 
 	float dis = dot2 - Vec3::Dot(plane.centerPos, plane.normal);
@@ -337,7 +337,7 @@ bool Collision::RayHitPlane(const RayCollider& ray, const PlaneCollider& plane)
 	return true;
 }
 
-// ƒŒƒC‚Æ‹…
+// ç¹ï½¬ç¹§ï½¤ç¸ºï½¨é€…ãƒ»
 bool Collision::RayHitSphere(const RayCollider& ray, const SphereCollider& sphere)
 {
 	if (ray.isActive == false || sphere.isActive == false)
@@ -349,13 +349,13 @@ bool Collision::RayHitSphere(const RayCollider& ray, const SphereCollider& spher
 	float dot1 = Vec3::Dot(v, ray.dirVec);
 	float dot2 = Vec3::Dot(v, v) - (sphere.radius * sphere.radius);
 
-	// ƒŒƒC‚ª‹…‚©‚ç—£‚ê‚Ä‚¢‚­•ûŒü‚ğw‚µ‚Ä‚¢‚éê‡(b > 0)AƒŒƒC‚Ìn“_‚ªsphere‚ÌŠO‘¤‚É‚ ‚è(c > 0)
+	// ç¹ï½¬ç¹§ï½¤ç¸ºæªå¸¥ç¸ºä¹ï½‰é«®ï½¢ç¹§å¾Œâ€»ç¸ºãƒ»ï¿¥è­ï½¹èœ·ä»£ï½’è¬–ãƒ»ï¼ ç¸ºï½¦ç¸ºãƒ»ï½‹è£ï½´èœ·ãƒ»b > 0)ç¸²âˆšÎç¹§ï½¤ç¸ºï½®èŸ‹ç‹—ã›ç¸ºèŒphereç¸ºï½®èŸé–€ãƒ»ç¸ºï½«ç¸ºã‚…ï½Š(c > 0)
 	if (dot1 > 0.f && dot2 > 0.f)
 	{
 		return false;
 	}
 
-	// •‰‚Ì”»•Ê®‚ÍƒŒƒC‚ª‹…‚ğŠO‚ê‚Ä‚¢‚é‚±‚Æ‚Éˆê’v
+	// é›‹ï£°ç¸ºï½®è›»ï½¤è›»ï½¥è ‘ä¸Šãƒ»ç¹ï½¬ç¹§ï½¤ç¸ºæªå¸¥ç¹§è²ï½¤æ‚¶ï½Œç¸ºï½¦ç¸ºãƒ»ï½‹ç¸ºè–™â†’ç¸ºï½«è³Â€é–¾ï½´
 	float discr = (dot1 * dot1) - dot2;
 	if (discr < 0.f)
 	{
@@ -365,7 +365,7 @@ bool Collision::RayHitSphere(const RayCollider& ray, const SphereCollider& spher
 	return true;
 }
 
-// ƒJƒvƒZƒ‹‚ÆƒJƒvƒZƒ‹‚Ì“–‚½‚è”»’è
+// ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½¨ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½®è –è–™â—†ç¹§é›æ„›è³ãƒ»
 bool Collision::CapsuleHitCapsule(const CapsuleCollider& capsule1, const CapsuleCollider& capsule2)
 {
 	if (capsule1.isActive == false || capsule2.isActive == false)
@@ -377,7 +377,7 @@ bool Collision::CapsuleHitCapsule(const CapsuleCollider& capsule1, const Capsule
 	return CapsuleHitCapsule(capsule1, capsule2, empty);
 }
 
-// ƒJƒvƒZƒ‹‚ÆƒJƒvƒZƒ‹
+// ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½¨ç¹§ï½«ç¹åŠ±ãç¹ï½«
 bool Collision::CapsuleHitCapsule(const CapsuleCollider& capsule1, const CapsuleCollider& capsule2, Vec3& hitPoint)
 {
 	if (capsule1.isActive == false || capsule2.isActive == false)
@@ -402,7 +402,7 @@ bool Collision::CapsuleHitCapsule(const CapsuleCollider& capsule1, const Capsule
 
 	float denominator = a * e - b * b;
 
-	// s ‚Ì’l‚ğ‹‚ß‚é
+	// s ç¸ºï½®è›Ÿï½¤ç¹§å‘ˆï½±ã‚…ï½ç¹§ãƒ»
 	if (denominator != 0.0f)
 	{
 		s = (b * f - c * e) / denominator;
@@ -413,10 +413,10 @@ bool Collision::CapsuleHitCapsule(const CapsuleCollider& capsule1, const Capsule
 		s = 0;
 	}
 
-	// t ‚Ì’l‚ğ‹‚ß‚é
+	// t ç¸ºï½®è›Ÿï½¤ç¹§å‘ˆï½±ã‚…ï½ç¹§ãƒ»
 	t = (f + b * s) / e;
 
-	// t ‚ª[ 0.0, 1.0 ]‚Ì”ÍˆÍ‚Å‚ ‚ê‚ÎAs ‚ğÄŒvZ
+	// t ç¸ºå•“ 0.0, 1.0 ]ç¸ºï½®é½ãƒ»å³‡ç¸ºï½§ç¸ºã‚…ï½Œç¸ºï½°ç¸²ã€Š ç¹§è²ãƒ»éšªè‚²ï½®ãƒ»
 	if (t < 0.0f)
 	{
 		t = 0.0f;
@@ -436,7 +436,7 @@ bool Collision::CapsuleHitCapsule(const CapsuleCollider& capsule1, const Capsule
 		((c2.y - c1.y) * (c2.y - c1.y)) +
 		((c2.z - c1.z) * (c2.z - c1.z));
 
-	// “ñ‚Â‚ÌƒJƒvƒZƒ‹‚Ì”¼Œa‚Ì˜a
+	// è å¾Œâ–½ç¸ºï½®ç¹§ï½«ç¹åŠ±ãç¹ï½«ç¸ºï½®èœŠé›ï½¾ãƒ»ãƒ»èœ¥ãƒ»
 	float radius = capsule1.radius + capsule2.radius;
 
 	if (disPow2 < radius * radius)
@@ -454,7 +454,7 @@ bool Collision::CapsuleHitCapsule(const CapsuleCollider& capsule1, const Capsule
 	return false;
 }
 
-// “_‚ÆOŠpŒ`‚ÌÅ‹ßÚ“_
+// è½¤ï½¹ç¸ºï½¨è³èŠ½ï½§è²ï½½ï½¢ç¸ºï½®è­›Â€éœ‘ç¬¬ç£è½¤ï½¹
 Vec3 Collision::ClosestPointOfPointAndTriangle(const Vec3 point, const TriangleCollider& triangle)
 {
 	if (triangle.isActive == false)
@@ -462,7 +462,7 @@ Vec3 Collision::ClosestPointOfPointAndTriangle(const Vec3 point, const TriangleC
 		return false;
 	}
 
-	// point‚ªp0‚ÌŠO‘¤‚Ì’¸“_—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN
+	// pointç¸ºç¶™0ç¸ºï½®èŸé–€ãƒ»ç¸ºï½®é¬†ã‚‰ã›é¬†ä¼œæ²ºç¸ºï½®è³ï½­ç¸ºï½«ç¸ºã‚…ï½‹ç¸ºä¹â†ç¸ºãƒ»Â°ç¹âˆšã‰ç¹ãƒ»ã‘
 	Vec3 p0_p1 = triangle.p1 - triangle.p0;
 	Vec3 p0_p2 = triangle.p2 - triangle.p0;
 	Vec3 p0_pt = point - triangle.p0;
@@ -472,11 +472,11 @@ Vec3 Collision::ClosestPointOfPointAndTriangle(const Vec3 point, const TriangleC
 
 	if (d1 <= 0.0f && d2 <= 0.0f)
 	{
-		// p0‚ªÅ‹ß–T
+		// p0ç¸ºæ¢§æ€™éœ‘å¤§ï½
 		return triangle.p0;
 	}
 
-	// point‚ªp1‚ÌŠO‘¤‚Ì’¸“_—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN
+	// pointç¸ºç¶™1ç¸ºï½®èŸé–€ãƒ»ç¸ºï½®é¬†ã‚‰ã›é¬†ä¼œæ²ºç¸ºï½®è³ï½­ç¸ºï½«ç¸ºã‚…ï½‹ç¸ºä¹â†ç¸ºãƒ»Â°ç¹âˆšã‰ç¹ãƒ»ã‘
 	Vec3 p1_pt = point - triangle.p1;
 
 	float d3 = Vec3::Dot(p0_p1, p1_pt);
@@ -484,11 +484,11 @@ Vec3 Collision::ClosestPointOfPointAndTriangle(const Vec3 point, const TriangleC
 
 	if (d3 >= 0.0f && d4 <= d3)
 	{
-		// p1‚ªÅ‹ß–T
+		// p1ç¸ºæ¢§æ€™éœ‘å¤§ï½
 		return triangle.p1;
 	}
 
-	// point‚ªp0_p1‚Ì•Ó—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚µA‚ ‚ê‚Îpoint‚Ìp0_p1ã‚É‘Î‚·‚éË‰e‚ğ•Ô‚·
+	// pointç¸ºç¶™0_p1ç¸ºï½®éœï½ºé¬†ä¼œæ²ºç¸ºï½®è³ï½­ç¸ºï½«ç¸ºã‚…ï½‹ç¸ºä¹â†ç¸ºãƒ»Â°ç¹âˆšã‰ç¹ãƒ»ã‘ç¸ºåŠ±Â€âˆšâ‰ ç¹§å¾Œãƒ»pointç¸ºï½®p0_p1è³ç¿«â†“èŸ‡ï½¾ç¸ºå¶ï½‹èŸ†ãƒ»ï½½ï½±ç¹§å®šï½¿æ–â˜†
 	float vc = d1 * d4 - d3 * d2;
 	if (vc <= 0.0f && d1 >= 0.0f && d3 <= 0.0f)
 	{
@@ -496,7 +496,7 @@ Vec3 Collision::ClosestPointOfPointAndTriangle(const Vec3 point, const TriangleC
 		return triangle.p0 + p0_p1 * v;
 	}
 
-	// point‚ªp2‚ÌŠO‘¤‚Ì’¸“_—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN
+	// pointç¸ºç¶™2ç¸ºï½®èŸé–€ãƒ»ç¸ºï½®é¬†ã‚‰ã›é¬†ä¼œæ²ºç¸ºï½®è³ï½­ç¸ºï½«ç¸ºã‚…ï½‹ç¸ºä¹â†ç¸ºãƒ»Â°ç¹âˆšã‰ç¹ãƒ»ã‘
 	Vec3 p2_pt = point - triangle.p2;
 
 	float d5 = Vec3::Dot(p0_p1, p2_pt);
@@ -506,7 +506,7 @@ Vec3 Collision::ClosestPointOfPointAndTriangle(const Vec3 point, const TriangleC
 		return triangle.p2;
 	}
 
-	// point‚ªp0_p2‚Ì•Ó—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚µA‚ ‚ê‚Îpoint‚Ìp0_p2ã‚É‘Î‚·‚éË‰e‚ğ•Ô‚·
+	// pointç¸ºç¶™0_p2ç¸ºï½®éœï½ºé¬†ä¼œæ²ºç¸ºï½®è³ï½­ç¸ºï½«ç¸ºã‚…ï½‹ç¸ºä¹â†ç¸ºãƒ»Â°ç¹âˆšã‰ç¹ãƒ»ã‘ç¸ºåŠ±Â€âˆšâ‰ ç¹§å¾Œãƒ»pointç¸ºï½®p0_p2è³ç¿«â†“èŸ‡ï½¾ç¸ºå¶ï½‹èŸ†ãƒ»ï½½ï½±ç¹§å®šï½¿æ–â˜†
 	float vb = d5 * d2 - d1 * d6;
 	if (vb <= 0.0f && d2 >= 0.0f && d6 <= 0.0f)
 	{
@@ -514,7 +514,7 @@ Vec3 Collision::ClosestPointOfPointAndTriangle(const Vec3 point, const TriangleC
 		return triangle.p0 + p0_p2 * w;
 	}
 
-	// point‚ªp1_p2‚Ì•Ó—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚µA‚ ‚ê‚Îpoint‚Ìp1_p2ã‚É‘Î‚·‚éË‰e‚ğ•Ô‚·
+	// pointç¸ºç¶™1_p2ç¸ºï½®éœï½ºé¬†ä¼œæ²ºç¸ºï½®è³ï½­ç¸ºï½«ç¸ºã‚…ï½‹ç¸ºä¹â†ç¸ºãƒ»Â°ç¹âˆšã‰ç¹ãƒ»ã‘ç¸ºåŠ±Â€âˆšâ‰ ç¹§å¾Œãƒ»pointç¸ºï½®p1_p2è³ç¿«â†“èŸ‡ï½¾ç¸ºå¶ï½‹èŸ†ãƒ»ï½½ï½±ç¹§å®šï½¿æ–â˜†
 	float va = d3 * d6 - d5 * d4;
 	if (va <= 0.0f && (d4 - d3) >= 0.0f && (d5 - d6) >= 0.0f)
 	{
@@ -528,3 +528,4 @@ Vec3 Collision::ClosestPointOfPointAndTriangle(const Vec3 point, const TriangleC
 
 	return triangle.p0 + p0_p1 * v + p0_p2 * w;
 }
+

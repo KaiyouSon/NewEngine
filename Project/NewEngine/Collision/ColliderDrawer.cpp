@@ -6,7 +6,7 @@ uint32_t ColliderDrawer::index = 0;
 
 void ColliderDrawer::Load()
 {
-	// ƒRƒ‰ƒCƒ_[ƒ‚ƒfƒ‹‚Ìƒ[ƒh
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ãƒ¢ãƒ‡ãƒ«ã®ãƒ­ãƒ¼ãƒ‰
 	ModelManager::LoadObjModel("Collider/CircleCollider", "CircleCollider");
 	ModelManager::LoadObjModel("Collider/SquareCollider", "SquareCollider");
 	ModelManager::LoadObjModel("Collider/SphereCollider", "SphereCollider");
@@ -14,22 +14,22 @@ void ColliderDrawer::Load()
 	ModelManager::LoadObjModel("Collider/CapsuleColliderParts1", "CapsuleColliderParts1");
 	ModelManager::LoadObjModel("Collider/CapsuleColliderParts2", "CapsuleColliderParts2");
 
-	// ‰~
+	// å††
 	mModels.insert(std::make_pair("CircleCollider", ModelManager::GetModel("CircleCollider")));
 
-	// ‹éŒ`
+	// çŸ©å½¢
 	mModels.insert(std::make_pair("SquareCollider", ModelManager::GetModel("SquareCollider")));
 
-	// ‹…‘Ì
+	// çƒä½“
 	mModels.insert(std::make_pair("SphereCollider", ModelManager::GetModel("SphereCollider")));
 
-	// ƒLƒ…[ƒu
+	// ã‚­ãƒ¥ãƒ¼ãƒ–
 	mModels.insert(std::make_pair("CubeCollider", ModelManager::GetModel("CubeCollider")));
 
-	// ”¼‹…‘Ì
+	// åŠçƒä½“
 	mModels.insert(std::make_pair("CapsuleColliderParts1", ModelManager::GetModel("CapsuleColliderParts1")));
 
-	// ‰~’Œ(ã‰º‚É–Ê‚ª‚È‚¢)
+	// å††æŸ±(ä¸Šä¸‹ã«é¢ãŒãªã„)
 	mModels.insert(std::make_pair("CapsuleColliderParts2", ModelManager::GetModel("CapsuleColliderParts2")));
 }
 
@@ -71,7 +71,7 @@ void ColliderDrawer::DrawCollider()
 		colliderObjcet->Draw();
 	}
 
-	// ŽŸ‚ÌƒtƒŒ[ƒ€‚Ì€”õ
+	// æ¬¡ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã®æº–å‚™
 	index = 0;
 }
 
@@ -89,28 +89,28 @@ void ColliderDrawer::Bind(ICollider* collider)
 {
 	if (index >= mMaxColliderNum)
 	{
-		OutputDebugLog("MaxColliderNum‚Ì”‚ª‘«‚è‚Ü‚¹‚ñ");
+		OutputDebugLog("MaxColliderNumã®æ•°ãŒè¶³ã‚Šã¾ã›ã‚“");
 		return;
 	}
 
 	if (collider == nullptr)
 	{
-		OutputDebugLog("Bind‚µ‚Ä‚¢‚éCollider‚ªnullptr‚Å‚·");
+		OutputDebugLog("Bindã—ã¦ã„ã‚‹ColliderãŒnullptrã§ã™");
 		return;
 	}
 
 	if (collider->isActive == false)
 	{
-		OutputDebugLog("Collider->isActive‚ªfalse‚Å‚·");
+		OutputDebugLog("Collider->isActiveãŒfalseã§ã™");
 		return;
 	}
 
-	// ƒRƒ‰ƒCƒ_[‚ð\¬‚·‚é‚½‚ß‚É•K—v‚È”•ªŠi”[‚·‚é
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’æ§‹æˆã™ã‚‹ãŸã‚ã«å¿…è¦ãªæ•°åˆ†æ ¼ç´ã™ã‚‹
 	switch (collider->primitive)
 	{
 	case ColliderPrimitive::Circle:
 	{
-		// ƒLƒƒƒXƒg
+		// ã‚­ãƒ£ã‚¹ãƒˆ
 		CircleCollider* castCollider = dynamic_cast<CircleCollider*>(collider);
 		mColliderObjects[index]->model = mModels["CircleCollider"];
 		mColliderObjects[index]->transform.pos = castCollider->centerPos;
@@ -124,7 +124,7 @@ void ColliderDrawer::Bind(ICollider* collider)
 
 	case ColliderPrimitive::Square:
 	{
-		// ƒLƒƒƒXƒg
+		// ã‚­ãƒ£ã‚¹ãƒˆ
 		SquareCollider* castCollider = dynamic_cast<SquareCollider*>(collider);
 		mColliderObjects[index]->model = mModels["SquareCollider"];
 		mColliderObjects[index]->transform.pos = castCollider->centerPos;
@@ -138,7 +138,7 @@ void ColliderDrawer::Bind(ICollider* collider)
 
 	case ColliderPrimitive::Sphere:
 	{
-		// ƒLƒƒƒXƒg
+		// ã‚­ãƒ£ã‚¹ãƒˆ
 		SphereCollider* castCollider = dynamic_cast<SphereCollider*>(collider);
 		mColliderObjects[index]->model = mModels["SphereCollider"];
 		mColliderObjects[index]->transform.pos = castCollider->centerPos;
@@ -151,7 +151,7 @@ void ColliderDrawer::Bind(ICollider* collider)
 
 	case ColliderPrimitive::Cube:
 	{
-		// ƒLƒƒƒXƒg
+		// ã‚­ãƒ£ã‚¹ãƒˆ
 		CubeCollider* castCollider = dynamic_cast<CubeCollider*>(collider);
 		mColliderObjects[index]->model = mModels["CubeCollider"];
 		mColliderObjects[index]->transform.pos = castCollider->centerPos;
@@ -165,7 +165,7 @@ void ColliderDrawer::Bind(ICollider* collider)
 
 	case ColliderPrimitive::Capsule:
 	{
-		// ƒLƒƒƒXƒg
+		// ã‚­ãƒ£ã‚¹ãƒˆ
 		CapsuleCollider* castCollider = dynamic_cast<CapsuleCollider*>(collider);
 
 		Color col = Color::white;
@@ -178,7 +178,7 @@ void ColliderDrawer::Bind(ICollider* collider)
 			atan2f(v.x,-v.y),
 		};
 
-		// ‰º‚Ì”¼‹…
+		// ä¸‹ã®åŠçƒ
 		mColliderObjects[index]->model = mModels["CapsuleColliderParts1"];
 		mColliderObjects[index]->transform.pos = castCollider->startPos;
 		mColliderObjects[index]->transform.scale = castCollider->radius;
@@ -186,7 +186,7 @@ void ColliderDrawer::Bind(ICollider* collider)
 		mColliderObjects[index]->color = col;
 		index++;
 
-		// ã”¼‹…
+		// ä¸ŠåŠçƒ
 		mColliderObjects[index]->model = mModels["CapsuleColliderParts1"];
 		mColliderObjects[index]->transform.pos = castCollider->endPos;
 		mColliderObjects[index]->transform.scale = castCollider->radius;
@@ -194,7 +194,7 @@ void ColliderDrawer::Bind(ICollider* collider)
 		mColliderObjects[index]->color = Color::white;
 		index++;
 
-		// ‰~’Œ
+		// å††æŸ±
 		Vec3 halfPos = v / 2;
 		float length = v.Length() / 2;
 

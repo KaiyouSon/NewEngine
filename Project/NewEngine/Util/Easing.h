@@ -17,27 +17,27 @@ public:
 	Easing();
 	Easing(const int32_t limitTimer);
 	Easing(const int32_t limitTimer, const float powNum);
-	void Reset();		// ƒŠƒZƒbƒg
-	void Update();		// •âŠÔ
+	void Reset();		// ç¹ï½ªç¹§ï½»ç¹ãƒ»ãƒ¨
+	void Update();		// é™¬æ†ºä¿£
 
-public: // ƒZƒbƒ^[
+public: // ç¹§ï½»ç¹ãƒ»ã¡ç¹ï½¼
 
-	// •âŠÔŠÔ‚ğƒZƒbƒg‚·‚é
+	// é™¬æ†ºä¿£è­ã‚‹ä¿£ç¹§åµãç¹ãƒ»ãƒ¨ç¸ºå¶ï½‹
 	inline void SetEaseTimer(const int32_t limitTimer) { mLimitTimer = limitTimer; }
-	// Næ‚ğƒZƒbƒg‚·‚é
+	// NèµåŠ±ï½’ç¹§ï½»ç¹ãƒ»ãƒ¨ç¸ºå¶ï½‹
 	inline void SetPowNum(const float powNum) { mPowNum = powNum; }
 	inline void SetEaseType(const EaseType easeType) { mEaseType = easeType; }
 	inline void SetisEnd(const bool isEnd) { mIsEnd = isEnd; }
 
-public: // ƒQƒbƒ^[
+public: // ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
 
-	// ƒC[ƒWƒ“ƒOI‚í‚è
+	// ç¹§ï½¤ç¹ï½¼ç¹§ï½¸ç¹ï½³ç¹§ï½°é‚¨ã‚…ï½ç¹§ãƒ»
 	bool GetisEnd();
-	// ƒ^ƒCƒ}[æ“¾
+	// ç¹§ï½¿ç¹§ï½¤ç¹æ§­ãƒ»èœ¿é–€ï½¾ãƒ»
 	int32_t GetTimer();
-	// ƒ^ƒCƒ€ƒŒ[ƒg‚ğæ“¾
+	// ç¹§ï½¿ç¹§ï½¤ç¹ï£°ç¹ï½¬ç¹ï½¼ç¹åŒ»ï½’èœ¿é–€ï½¾ãƒ»
 	float GetTimeRate();
-	// •âŠÔƒ^ƒCƒ€‚ğæ“¾
+	// é™¬æ†ºä¿£ç¹§ï½¿ç¹§ï½¤ç¹ï£°ç¹§è²å™è •ãƒ»
 	uint32_t GetEaseTimer();
 
 public:
@@ -46,28 +46,29 @@ public:
 	Vec2 Interpolation(const Vec2 startPos, const Vec2 endPos);
 	Vec3 Interpolation(const Vec3 startPos, const Vec3 endPos);
 
-	// ƒ‰[ƒv
+	// ç¹ï½©ç¹ï½¼ç¹ãƒ»
 	float Lerp(const float startPos, const float endPos);
 	Vec2 Lerp(const Vec2 startPos, const Vec2 endPos);
 	Vec3 Lerp(const Vec3 startPos, const Vec3 endPos);
 
-	// ƒC[ƒYƒCƒ“
+	// ç¹§ï½¤ç¹ï½¼ç¹§ï½ºç¹§ï½¤ç¹ï½³
 	float In(const float startPos, const float endPos);
 	Vec2 In(const Vec2 startPos, const Vec2 endPos);
 	Vec3 In(const Vec3 startPos, const Vec3 endPos);
 
-	// ƒC[ƒYƒAƒEƒg
+	// ç¹§ï½¤ç¹ï½¼ç¹§ï½ºç¹§ï½¢ç¹§ï½¦ç¹ãƒ»
 	float Out(const float startPos, const float endPos);
 	Vec2 Out(const Vec2 startPos, const Vec2 endPos);
 	Vec3 Out(const Vec3 startPos, const Vec3 endPos);
 
-	// ƒCƒ“ƒAƒEƒg
+	// ç¹§ï½¤ç¹ï½³ç¹§ï½¢ç¹§ï½¦ç¹ãƒ»
 	float InOut(const float startPos, const float endPos);
 	Vec2 InOut(const Vec2 startPos, const Vec2 endPos);
 	Vec3 InOut(const Vec3 startPos, const Vec3 endPos);
 
-	// ƒCƒ“ƒoƒbƒN
+	// ç¹§ï½¤ç¹ï½³ç¹èˆŒãƒ£ç¹§ï½¯
 	float InBack(const float startPos, const float endPos);
 	Vec2 InBack(const Vec2 startPos, const Vec2 endPos);
 	Vec3 InBack(const Vec3 startPos, const Vec3 endPos);
 };
+

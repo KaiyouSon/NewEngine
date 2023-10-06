@@ -7,7 +7,7 @@
 
 struct GraphicsPipelineSetting
 {
-	// ƒpƒCƒvƒ‰ƒCƒ“¶¬—p
+	// ç¹ä»£ã†ç¹åŠ±Î›ç¹§ï½¤ç¹ï½³é€•æ»“ãƒ»é€•ï½¨
 	enum PipelineBlend
 	{
 		Alpha = 0b0001,
@@ -16,14 +16,14 @@ struct GraphicsPipelineSetting
 		Inv = 0b1000,
 	};
 
-	// “h‚è‚Â‚Ô‚µ
+	// èªåŠ±ï½Šç¸ºï½¤ç¸ºï½¶ç¸ºãƒ»
 	enum FillMode
 	{
 		Solid,
 		Wireframe,
 	};
 
-	// ‘‚«‚İ
+	// è­–ï½¸ç¸ºå´ï½¾ï½¼ç¸ºï½¿
 	enum RenderTargetBlendMask
 	{
 		WriteNone = 0,
@@ -34,34 +34,34 @@ struct GraphicsPipelineSetting
 		WriteAll = ((WriteRed | WriteGreen) | WriteBlue) | WriteAlpha,
 	};
 
-	// ¶¬‚·‚éƒpƒCƒvƒ‰ƒCƒ“‚Ìí—Ş
+	// é€•æ»“ãƒ»ç¸ºå¶ï½‹ç¹ä»£ã†ç¹åŠ±Î›ç¹§ï½¤ç¹ï½³ç¸ºï½®éï½®é¬˜ãƒ»
 	uint8_t pipelineBlend;
 
-	// “h‚è‚Â‚Ô‚µ
+	// èªåŠ±ï½Šç¸ºï½¤ç¸ºï½¶ç¸ºãƒ»
 	FillMode fillMode;
 
-	// ‘‚«‚İ
+	// è­–ï½¸ç¸ºå´ï½¾ï½¼ç¸ºï½¿
 	RenderTargetBlendMask renderTargetBlendMask;
 
-	// ƒJ[ƒŠƒ“ƒOƒ‚[ƒh
+	// ç¹§ï½«ç¹ï½¼ç¹ï½ªç¹ï½³ç¹§ï½°ç¹ï½¢ç¹ï½¼ç¹ãƒ»
 	CullMode cullMode;
 
-	// ƒgƒ|ƒƒW[ƒ^ƒCƒv
+	// ç¹åŒ»ãƒ»ç¹ï½­ç¹§ï½¸ç¹ï½¼ç¹§ï½¿ç¹§ï½¤ç¹ãƒ»
 	TopologyType topologyType;
 
-	// ƒVƒFƒ_[ƒIƒuƒWƒFƒNƒg
+	// ç¹§ï½·ç¹§ï½§ç¹Â€ç¹ï½¼ç¹§ï½ªç¹æ‚¶ãšç¹§ï½§ç¹§ï½¯ç¹ãƒ»
 	ShaderObject* shaderObject;
 
-	// [“xİ’è
+	// è±ºï½±è ï½¦éšªï½­è³ãƒ»
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc;
 
-	// RTV‚Ì”
+	// RTVç¸ºï½®è¬¨ï½°
 	uint32_t rtvNum;
 
-	// RootParamterŠÖ˜A
+	// RootParamteré«¢ï½¢é¨¾ï½£
 	RootSignatureSetting rootSignatureSetting;
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ç¹§ï½³ç¹ï½³ç¹§ï½¹ç¹åŒ»Î›ç¹§ï½¯ç¹§ï½¿
 	GraphicsPipelineSetting();
 };
 
@@ -71,7 +71,7 @@ private:
 	HRESULT mResult;
 	GraphicsPipelineSetting mSetting;
 	std::vector<Microsoft::WRL::ComPtr<ID3D12PipelineState>> mPSOs;
-	std::unique_ptr<RootSignature> mRootSignature;	// ƒ‹[ƒgƒVƒOƒl[ƒ`ƒƒ[
+	std::unique_ptr<RootSignature> mRootSignature;	// ç¹ï½«ç¹ï½¼ç¹åŒ»ã™ç¹§ï½°ç¹é˜ªãƒ»ç¹âˆšÎ•ç¹ï½¼
 
 private:
 	void CreatePipelineState(const GraphicsPipelineSetting::PipelineBlend pipelineBlend);
@@ -82,9 +82,8 @@ public:
 	void DrawCommand(const BlendMode blendMode);
 
 public:
-	// ƒQƒbƒ^[
+	// ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
 	RootSignature* GetRootSignature();
 	GraphicsPipelineSetting GetSetting();
 	ID3D12PipelineState* GetPSO(const BlendMode blendMode);
 };
-

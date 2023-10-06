@@ -1,6 +1,6 @@
 #include "Ripple.hlsli"
 
-// ƒ}ƒeƒŠƒAƒ‹
+// ãƒãƒ†ãƒªã‚¢ãƒ«
 struct Material
 {
     float3 ambient;
@@ -8,28 +8,28 @@ struct Material
     float3 specular;
 };
 
-Texture2D<float4> tex : register(t0); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ
-Texture2D<float4> dissolveTex : register(t1); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ
-Texture2D<float4> shadowMapTex : register(t2); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ
-SamplerState smp : register(s0); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒTƒ“ƒvƒ‰[
+Texture2D<float4> tex : register(t0); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+Texture2D<float4> dissolveTex : register(t1); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+Texture2D<float4> shadowMapTex : register(t2); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+SamplerState smp : register(s0); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©ãƒ¼
 
 float4 main(V2P i) : SV_TARGET
 {
     float2 newUV = (i.uv + offset) * tiling;
     
-    // ‰~
+    // å††
     float len = distance(i.uv, float2(0.5f, 0.5f));
     
-    // ‰~‚ªŠO‘¤‚És‚­‚æ‚¤‚É
+    // å††ãŒå¤–å´ã«è¡Œãã‚ˆã†ã«
     float2 move = 0;
     move.x = cos(((len + offset.x) * 40.f) * 0.2);
     move.y = 0;
     
-    // ƒeƒNƒXƒ`ƒƒ[ƒ}ƒbƒsƒ“ƒO
+    // ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ãƒãƒƒãƒ”ãƒ³ã‚°
     float4 texColor = tex.Sample(smp, i.uv + move);
     texColor.a = (1 - smoothstep(0.0f, 0.5f, len)) * 0.9f;
     
-	// Œõ‘ò“x
+	// å…‰æ²¢åº¦
     const float shininess = 3.0f;
     float4 shainColor = color;
     shainColor.rgb *= shininess;
@@ -38,27 +38,27 @@ float4 main(V2P i) : SV_TARGET
     
 
 
-    // ƒ}ƒeƒŠƒAƒ‹
+    // ãƒãƒ†ãƒªã‚¢ãƒ«
     Material material = { ambient, diffuse, specular };
     
-    // ƒVƒF[ƒ_[ƒJƒ‰[
+    // ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‚«ãƒ©ãƒ¼
     float4 shaderColor = 0;
     
     float4 adsColor = float4(0, 0, 0, 1);
     if (isActiveDirLight == true)
     {
-        // ƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚Æ–@ü‚Ì“àÏ
+        // ãƒ©ã‚¤ãƒˆã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«ã¨æ³•ç·šã®å†…ç©
         float dotLightNormal = dot(dirLightVec, i.normal);
         
-        // ƒAƒ“ƒrƒGƒ“ƒg
+        // ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆ
         float3 ambient = texColor.rgb * 0.6f * material.ambient.rgb;
      
-        // ƒfƒBƒtƒ…[ƒY
+        // ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚º
         float intensity = saturate(dot(normalize(i.normal), dirLightVec));
         float4 diffuse = intensity * dirLightColor * float4(material.diffuse.rgb, 1);
     
-        // ƒXƒyƒLƒ…ƒ‰[
-        float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // ’¸“_‚©‚ç‹“_‚Ö‚ÌƒxƒNƒgƒ‹
+        // ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼
+        float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // é ‚ç‚¹ã‹ã‚‰è¦–ç‚¹ã¸ã®ãƒ™ã‚¯ãƒˆãƒ«
         float3 reflectDir = -dirLightVec + 2 * i.normal * dot(i.normal, dirLightVec);
         float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
     

@@ -29,14 +29,13 @@ struct Color
 
 	Color operator=(const Color other);
 
-	// ��r���Z�q�̃I�[�o�[���[�h
+	// 豈碑ｼ・ｼ皮ｮ怜ｭ舌・繧ｪ繝ｼ繝舌・繝ｭ繝ｼ繝・
 	bool operator!=(const Color other) const;
 	Color& operator++();
 
-	Color operator+(const float num) const;	// ��̒l�Ƃ̑����Z
-	Color operator-(const float num) const;	// ��̒l�Ƃ̈����Z
-	Color operator*(const float num) const; // ��̒l�Ƃ̊|���Z
-	Color operator/(const float num) const; // ��̒l�Ƃ̊���Z
+	Color operator+(const float num) const;	// 荳縺､縺ｮ蛟､縺ｨ縺ｮ雜ｳ縺礼ｮ・
+	Color operator-(const float num) const;	// 荳縺､縺ｮ蛟､縺ｨ縺ｮ蠑輔″邂・
+	Color operator*(const float num) const; // 荳縺､縺ｮ蛟､縺ｨ縺ｮ謗帙￠邂・
+	Color operator/(const float num) const; // 荳縺､縺ｮ蛟､縺ｨ縺ｮ蜑ｲ繧顔ｮ・
 
 };
-

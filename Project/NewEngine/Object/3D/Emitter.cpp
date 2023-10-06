@@ -13,7 +13,7 @@ Emitter::Emitter() :
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Emitter")),
 	mTexture(TextureManager::GetTexture("White"))
 {
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰Šú‰»
+	// ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 	MaterialInit();
 	mTexture->isMaterial = true;
 
@@ -36,7 +36,7 @@ void Emitter::Update(Transform* parent)
 		mTransform.SetWorldMat(mat);
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì“]‘—
+	// ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«ç¸ºï½®éœ†ï½¢é¨¾ãƒ»
 	MaterialTransfer();
 
 
@@ -57,10 +57,10 @@ void Emitter::Draw(const BlendMode blendMode)
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
 
-	// GraphicsPipeline•`‰æƒRƒ}ƒ“ƒh
+	// GraphicsPipelineè¬ å†—åˆ¤ç¹§ï½³ç¹æ§­Î¦ç¹ãƒ»
 	mGraphicsPipeline->DrawCommand(blendMode);
 
-	// VBV‚ÆIBV‚Ìİ’èƒRƒ}ƒ“ƒh
+	// VBVç¸ºï½¨IBVç¸ºï½®éšªï½­è³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 	cmdList->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
 
 	ID3D12DescriptorHeap* descriptorHeap2[] =
@@ -71,7 +71,7 @@ void Emitter::Draw(const BlendMode blendMode)
 
 	MaterialDrawCommands();
 
-	// SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ğƒ‹[ƒgƒpƒ‰ƒ[ƒ^2”Ô‚Éİ’è
+	// SRVç¹åµãƒ»ç¹åŠ±ãƒ»èœˆç£¯ï£°ï½­ç¸ºï½«ç¸ºã‚…ï½‹SRVç¹§åµÎç¹ï½¼ç¹åŒ»ãƒ±ç¹ï½©ç¹ï½¡ç¹ï½¼ç¹§ï½¿2é€¡ï½ªç¸ºï½«éšªï½­è³ãƒ»
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
 		startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
@@ -79,32 +79,32 @@ void Emitter::Draw(const BlendMode blendMode)
 	renderBase->GetCommandList()->DrawInstanced(pSize, 1, 0, 0);
 }
 
-// --- ƒ}ƒeƒŠƒAƒ‹ŠÖ˜A --------------------------------------------------- //
+// --- ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«é«¢ï½¢é¨¾ï½£ --------------------------------------------------- //
 void Emitter::MaterialInit()
 {
-	// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	// ç¹§ï½¤ç¹ï½³ç¹§ï½¹ç¹§ï½¿ç¹ï½³ç¹§ï½¹é€•æ»“ãƒ»
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3Ds—ñ
+	// 3Dé™¦æ‚Ÿãƒ»
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransformP>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// F
+	// æ¿¶ï½²
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// UVî•ñ
+	// UVè« ãƒ»ï£°ï½±
 	iConstantBuffer = std::make_unique<ConstantBuffer<CUVParameter>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ‰Šú‰»
+	// è›»æ™„æ‚„è›¹ãƒ»
 	mMaterial.Init();
 }
 void Emitter::MaterialTransfer()
 {
 	mBillboard.CalculateBillboardMat();
 
-	// ƒ}ƒgƒŠƒbƒNƒX
+	// ç¹æ§­ãƒ¨ç¹ï½ªç¹ãƒ»ã‘ç¹§ï½¹
 	CTransformP transformPData =
 	{
 		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
@@ -113,11 +113,11 @@ void Emitter::MaterialTransfer()
 	};
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformPData);
 
-	// Fƒf[ƒ^
+	// æ¿¶ï½²ç¹ãƒ»ãƒ»ç¹§ï½¿
 	CColor colorData = { color / 255 };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[1].get(), colorData);
 
-	// UVƒf[ƒ^
+	// UVç¹ãƒ»ãƒ»ç¹§ï½¿
 	CUVParameter uvData = { offset,tiling };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[2].get(), uvData);
 }
@@ -127,21 +127,21 @@ void Emitter::MaterialDrawCommands()
 
 	for (uint32_t i = 0; i < mMaterial.constantBuffers.size(); i++)
 	{
-		// CBV‚Ìİ’èƒRƒ}ƒ“ƒh
+		// CBVç¸ºï½®éšªï½­è³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 			i, mMaterial.constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
 	}
 }
 
-// --- ƒZƒbƒ^[ -------------------------------------------------------- //ko
+// --- ç¹§ï½»ç¹ãƒ»ã¡ç¹ï½¼ -------------------------------------------------------- //ko
 
-// ƒeƒNƒXƒ`ƒƒ[
+// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼
 void Emitter::SetTexture(Texture* texture) { mTexture = texture; }
 
-// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“
+// ç¹§ï½°ç¹ï½©ç¹è¼”ã…ç¹ãƒ»ã‘ç¹§ï½¹ç¹ä»£ã†ç¹åŠ±Î›ç¹§ï½¤ç¹ï½³
 void Emitter::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline) { mGraphicsPipeline = graphicsPipeline; }
 
-// ƒp[ƒeƒBƒNƒ‹‚Ì”
+// ç¹ä»£ãƒ»ç¹ãƒ»ã…ç¹§ï½¯ç¹ï½«ç¸ºï½®è¬¨ï½°
 void Emitter::SetMaxParticle(const uint32_t max)
 {
 	pParam.resize(max);
@@ -149,21 +149,24 @@ void Emitter::SetMaxParticle(const uint32_t max)
 	mVertexBuffer->Create(mVertices);
 }
 
-// --- ƒQƒbƒ^[ -------------------------------------------------------- //
+// --- ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼ -------------------------------------------------------- //
 
-// ƒ[ƒ‹ƒhÀ•W
+// ç¹ï½¯ç¹ï½¼ç¹ï½«ç¹ç‰™ï½ºï½§è®“ãƒ»
 Vec3 Emitter::GetWorldPos()
 {
 	Vec3 worldPos = Vec3MulMat4(pos, mTransform.GetWorldMat(), true);
 	return worldPos;
 }
 
-// ƒ[ƒ‹ƒhƒXƒP[ƒ‹
+// ç¹ï½¯ç¹ï½¼ç¹ï½«ç¹å³¨ã›ç¹§ï½±ç¹ï½¼ç¹ï½«
 Vec3 Emitter::GetWorldScale()
 {
 	Vec3 worldScale = mTransform.GetWorldMat().GetScale();
 	return worldScale;
 }
 
-// ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
-Transform Emitter::GetTransform() { return mTransform; }
+// ç¹åŒ»Î›ç¹ï½³ç¹§ï½¹ç¹è¼”ã‹ç¹ï½¼ç¹ï£°
+Transform Emitter::GetTransform()
+{
+	return mTransform;
+}

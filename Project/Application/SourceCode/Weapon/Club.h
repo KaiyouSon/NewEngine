@@ -13,4 +13,3 @@ public:
 	void Update(Transform* parent = nullptr) override;
 	void DrawModel() override;
 };
-

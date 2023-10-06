@@ -7,25 +7,25 @@ void Billboard::CalculateBillboardMat()
 
 	switch (type_)
 	{
-	case BillboardType::XAxisBillboard:	// X²ƒrƒ‹ƒ{[ƒh
+	case BillboardType::XAxisBillboard:	// Xè»¸ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰
 	{
 		mat_ *= ConvertBillBoardXAxis();
 		break;
 	}
 
-	case BillboardType::YAxisBillboard:	// Y²ƒrƒ‹ƒ{[ƒh
+	case BillboardType::YAxisBillboard:	// Yè»¸ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰
 	{
 		mat_ *= ConvertBillBoardYAxis();
 		break;
 	}
 
-	case BillboardType::ZAxisBillboard:	// Z²ƒrƒ‹ƒ{[ƒh
+	case BillboardType::ZAxisBillboard:	// Zè»¸ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰
 	{
 		mat_ *= ConvertBillBoardZAxis();
 		break;
 	}
 
-	case BillboardType::AllAxisBillboard:	// ‘S•ûˆÊƒrƒ‹ƒ{[ƒh
+	case BillboardType::AllAxisBillboard:	// å…¨æ–¹ä½ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰
 	{
 		mat_ *= ConvertBillBoardAllAxis();
 		break;

@@ -13,7 +13,7 @@ GaussianBlur::GaussianBlur() :
 void GaussianBlur::CreateGraphicsPipeline()
 {
 	//D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
-	//depthStencilDesc.DepthEnable = false; // [“xƒeƒXƒg‚ðs‚¤
+	//depthStencilDesc.DepthEnable = false; // è±ºï½±è Žï½¦ç¹ãƒ»ã›ç¹åŒ»ï½’é™¦å¾Œâ‰§
 
 	//std::string path = "Application/Shader/";
 
@@ -52,3 +52,4 @@ void GaussianBlur::PostSceneDraw()
 {
 	tex_->PostDrawScene();
 }
+

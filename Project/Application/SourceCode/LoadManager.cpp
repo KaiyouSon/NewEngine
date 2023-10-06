@@ -39,24 +39,24 @@ bool LoadManager::ModelLoad()
 
 	ModelManager::LoadObjModel("Capsule", "Capsule");
 	ModelManager::LoadObjModel("MainGateWall", "MainGateWall");
-	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
+	// èœƒï½¦é€…ãƒ»â€²é‚¨ã‚…ï½ç¸ºï½£ç¸ºæº˜ãƒ»ç¹§å‘ˆè•—ç¸ºåŒ»ï½‹ç¸ºæº˜ï½ç¸²âˆï½¿ãƒ»â˜…trueç¹§å®šï½¿æ–â˜†
 	return true;
 }
 
 bool LoadManager::TextureLoad()
 {
-	// ƒV[ƒ“‘JˆÚ‚Ég‚¤‚©‚çUnLoad‚µ‚È‚¢
+	// ç¹§ï½·ç¹ï½¼ç¹ï½³é©•ï½·é˜ï½»ç¸ºï½«è´ï½¿ç¸ºãƒ»Â°ç¹§è”šnLoadç¸ºåŠ±â†‘ç¸ºãƒ»
 	TextureManager::LoadTexture("Title/TitleLogo.png", "TitleLogo");
 	TextureManager::LoadTexture("DissolveTexture.png", "DissolveTexture");
 
-	// ƒmƒCƒYƒeƒNƒXƒ`ƒƒ
+	// ç¹å¼±ã†ç¹§ï½ºç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•
 	TextureManager::LoadTexture("Noice/BlurNoice.png", "BlurNoice");
 	TextureManager::LoadTexture("Noice/ScreenNoice.png", "ScreenNoice");
 
-	// ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ[
+	// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼
 	TextureManager::CreateDepthTexture();
 
-	// Œ»İ‚ÌƒV[ƒ“•`‰æî•ñ
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®ç¹§ï½·ç¹ï½¼ç¹ï½³è¬ å†—åˆ¤è« ãƒ»ï£°ï½±
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMap");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMapBlur");
 
@@ -65,10 +65,10 @@ bool LoadManager::TextureLoad()
 
 	//TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Skydome");
 
-	// Œ»İ‚ÌƒV[ƒ“
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®ç¹§ï½·ç¹ï½¼ç¹ï½³
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "CurrentScene");
 
-	// ƒuƒ‹[ƒ€
+	// ç¹æ‚¶Îç¹ï½¼ç¹ï£°
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "HighLumi");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "GaussianBlur");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
@@ -77,7 +77,7 @@ bool LoadManager::TextureLoad()
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectBloom");
 
 
-	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
+	// èœƒï½¦é€…ãƒ»â€²é‚¨ã‚…ï½ç¸ºï½£ç¸ºæº˜ãƒ»ç¹§å‘ˆè•—ç¸ºåŒ»ï½‹ç¸ºæº˜ï½ç¸²âˆï½¿ãƒ»â˜…trueç¹§å®šï½¿æ–â˜†
 	return true;
 }
 
@@ -97,7 +97,7 @@ bool LoadManager::SoundLoad()
 
 	SoundManager::LoadSound("SE/BossAttackSE.wav", "BossAttackSE");
 
-	// ˆ—‚ªI‚í‚Á‚½‚Ì‚ğ‹³‚¦‚é‚½‚ßA•K‚¸true‚ğ•Ô‚·
+	// èœƒï½¦é€…ãƒ»â€²é‚¨ã‚…ï½ç¸ºï½£ç¸ºæº˜ãƒ»ç¹§å‘ˆè•—ç¸ºåŒ»ï½‹ç¸ºæº˜ï½ç¸²âˆï½¿ãƒ»â˜…trueç¹§å®šï½¿æ–â˜†
 	return true;
 }
 
@@ -127,23 +127,23 @@ LoadManager::LoadManager() : mIsLoaded(false)
 
 void LoadManager::Load()
 {
-	// ƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚É“ü‚é‘O‚Éì‚Á‚Æ‚­
+	// ç¹æ§­Îç¹âˆšã›ç¹ï½¬ç¹ãƒ»ãƒ©ç¸ºï½«èœˆï½¥ç¹§å¥ç‡•ç¸ºï½«è´æ‡Šâ–²ç¸ºï½¨ç¸ºãƒ»
 	TextureManager::CreateTexture(Color::white, "White");
 
-	// ”ñ“¯Šú
+	// é«±æ§«é…”è­›ãƒ»
 	std::future<bool> textureFtr = std::async(std::launch::async, [this] { return TextureLoad(); });
 	std::future<bool> modelFtr = std::async(std::launch::async, [this] { return ModelLoad(); });
 	std::future<bool> soundFtr = std::async(std::launch::async, [this] { return SoundLoad(); });
 	std::future<bool> motionFtr = std::async(std::launch::async, [this] { return MotionLoad(); });
 
-	// ƒ[ƒhŠ®—¹
-	if (textureFtr.get() == true &&	// ƒeƒNƒXƒ`ƒƒ[
-		modelFtr.get() == true &&	// ƒ‚ƒfƒ‹
+	// ç¹ï½­ç¹ï½¼ç¹ç‰™ï½®å¾¡ï½ºãƒ»
+	if (textureFtr.get() == true &&	// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼
+		modelFtr.get() == true &&	// ç¹ï½¢ç¹ãƒ»Î
 		soundFtr.get() == true &&
-		motionFtr.get() == true)	// ƒTƒEƒ“ƒh
+		motionFtr.get() == true)	// ç¹§ï½µç¹§ï½¦ç¹ï½³ç¹ãƒ»
 	{
 		mIsLoaded = true;
-		// ƒRƒ}ƒ“ƒhÀs
+		// ç¹§ï½³ç¹æ§­Î¦ç¹ç‰™ï½®æº¯ï½¡ãƒ»
 		TextureManager::ExcuteComandList();
 	}
 }

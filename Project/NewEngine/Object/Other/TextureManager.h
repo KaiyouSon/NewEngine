@@ -12,62 +12,61 @@ template<typename T> class Singleton;
 class TextureManager : public Singleton<TextureManager>
 {
 private:
-	std::unordered_map<std::string, std::unique_ptr<Texture>> mTextureMap;				// ƒeƒNƒXƒ`ƒƒ[‚Ìƒ}ƒbƒv
-	std::unordered_map<std::string, std::unique_ptr<Texture>> mMaterialTextureMap;		// ƒ}ƒeƒŠƒAƒ‹ƒeƒNƒXƒ`ƒƒ[‚Ìƒ}ƒbƒv
-	std::unordered_map<std::string, std::unique_ptr<RenderTexture>> mRenderTextureMap;	// ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ[‚Ìƒ}ƒbƒv
+	std::unordered_map<std::string, std::unique_ptr<Texture>> mTextureMap;				// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®ç¹æ§­ãƒ£ç¹ãƒ»
+	std::unordered_map<std::string, std::unique_ptr<Texture>> mMaterialTextureMap;		// ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®ç¹æ§­ãƒ£ç¹ãƒ»
+	std::unordered_map<std::string, std::unique_ptr<RenderTexture>> mRenderTextureMap;	// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®ç¹æ§­ãƒ£ç¹ãƒ»
 
-	std::vector<bool> mCheckSRVIndex; // index”Ô‚ÌSRV‚ªŠJ‚¢‚Ä‚é‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚é‚½‚ß
+	std::vector<bool> mCheckSRVIndex; // indexé€¡ï½ªç¸ºï½®SRVç¸ºç¢å¹•ç¸ºãƒ»â€»ç¹§ä¹Â°ç¸ºï½©ç¸ºãƒ»Â°ç¹§åµãƒ¡ç¹§ï½§ç¹ãƒ»ã‘ç¸ºå¶ï½‹ç¸ºæº˜ï½
 
-	std::mutex mMutex;	// ”r‘¼§Œä
+	std::mutex mMutex;	// è¬—å‰ƒï½»é–€å®›è •ï½¡
 
 private:
 	void Init();
 
-public:	// ƒeƒNƒXƒ`ƒƒ[ŠÖ˜A
+public:	// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼é«¢ï½¢é¨¾ï½£
 
-	// ƒeƒNƒXƒ`ƒƒ[‚Ìæ“¾
+	// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®èœ¿é–€ï½¾ãƒ»
 	static Texture* GetTexture(const std::string tag);
 
-	// F‚ğw’è‚µ‚ÄƒeƒNƒXƒ`ƒƒ‚ğ¶¬‚µƒ}ƒbƒv‚ÉŠi”[‚·‚é
+	// æ¿¶ï½²ç¹§å‘ˆæ¬ è³å£¹ï¼ ç¸ºï½¦ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹§å ¤å‡½è¬ŒèˆŒï¼ ç¹æ§­ãƒ£ç¹åŠ±â†“è­¬ï½¼é‚é˜ªâ˜†ç¹§ãƒ»
 	static Texture* CreateTexture(const Color color, const std::string tag);
 
-	// ƒtƒ@ƒCƒ‹ƒpƒX‚ğw’è‚µ‚ÄƒeƒNƒXƒ`ƒƒ‚ğ¶¬‚µƒ}ƒbƒv‚ÌŠi”[‚·‚é
+	// ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¹ä»£ã›ç¹§å‘ˆæ¬ è³å£¹ï¼ ç¸ºï½¦ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹§å ¤å‡½è¬ŒèˆŒï¼ ç¹æ§­ãƒ£ç¹åŠ±ãƒ»è­¬ï½¼é‚é˜ªâ˜†ç¹§ãƒ»
 	static Texture* LoadTexture(const std::string filePath, const std::string tag);
 
-	// objƒtƒ@ƒCƒ‹‚©‚çƒ[ƒh‚µ‚½ƒeƒNƒXƒ`ƒƒ[‚ğƒ[ƒh‚·‚éê—pŠÖ”
+	// objç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¸ºä¹ï½‰ç¹ï½­ç¹ï½¼ç¹å³¨ï¼ ç¸ºæº˜ãƒ¦ç¹§ï½¯ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¹§åµÎŸç¹ï½¼ç¹å³¨â˜†ç¹§å¥ï½°ã‚‰ç•‘é«¢ï½¢è¬¨ï½°
 	static Texture* LoadMaterialTexture(const std::string filePath, const std::string tag);
 
-	// ƒeƒNƒXƒ`ƒƒ[‚ÌƒAƒ“ƒ[ƒhŠÖ”
+	// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®ç¹§ï½¢ç¹ï½³ç¹ï½­ç¹ï½¼ç¹è›¾æœªè¬¨ï½°
 	static void UnLoadTexture(const std::string tag);
 
-public: // ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ[ŠÖ˜A
+public: // ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼é«¢ï½¢é¨¾ï½£
 
-	// ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ[‚Ìæ“¾
+	// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®èœ¿é–€ï½¾ãƒ»
 	static RenderTexture* GetRenderTexture(const std::string tag);
 
-	// ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ[‚ğ¶¬‚µƒ}ƒbƒv‚ÉŠi”[‚·‚é
+	// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¹§å ¤å‡½è¬ŒèˆŒï¼ ç¹æ§­ãƒ£ç¹åŠ±â†“è­¬ï½¼é‚é˜ªâ˜†ç¹§ãƒ»
 	static RenderTexture* CreateRenderTexture(const Vec2 size, const uint32_t num, const std::string tag);
 
-	// ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ[‚ÌƒAƒ“ƒ[ƒhŠÖ”
+	// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®ç¹§ï½¢ç¹ï½³ç¹ï½­ç¹ï½¼ç¹è›¾æœªè¬¨ï½°
 	static void UnLoadRenderTexture(const std::string tag);
 
 public:
-	// ƒ}ƒbƒv
+	// ç¹æ§­ãƒ£ç¹ãƒ»
 	static std::unordered_map<std::string, std::unique_ptr<Texture>>* GetTextureMap();
 	static std::unordered_map<std::string, std::unique_ptr<Texture>>* GetMaterialTextureMap();
 	static std::unordered_map<std::string, std::unique_ptr<RenderTexture>>* GetRenderTextureMap();
 
 public:
-	// [“xƒeƒNƒXƒ`ƒƒ[‚ğ¶¬
+	// è±ºï½±è ï½¦ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¹§å ¤å‡½è¬Œãƒ»
 	static Texture* CreateDepthTexture();
 
-public:	// ‚»‚Ì‘¼‚Ìˆ—
-	// ƒeƒNƒXƒ`ƒƒ[ƒ[ƒhŒã‚ÌƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÌÀs
+public:	// ç¸ºæ˜´ãƒ»è‰æ‚¶ãƒ»èœƒï½¦é€…ãƒ»
+	// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¹ï½­ç¹ï½¼ç¹ç‰™ï½¾å¾Œãƒ»ç¹§ï½³ç¹æ§­Î¦ç¹å³¨Îœç¹§ï½¹ç¹åŒ»ãƒ»è³æº¯ï½¡ãƒ»
 	static void ExcuteComandList();
 
 private:
-	// ƒVƒ“ƒOƒ‹ƒgƒ“
+	// ç¹§ï½·ç¹ï½³ç¹§ï½°ç¹ï½«ç¹åŒ»Î¦
 	friend Singleton<TextureManager>;
 	TextureManager();
 };
-

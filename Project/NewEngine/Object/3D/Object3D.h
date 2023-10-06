@@ -25,7 +25,7 @@ private:
 	bool mIsWriteDepth;
 
 private:
-	// Œã®—‚·‚é
+	// è •æ¢§ç´›é€…ãƒ»â˜†ç¹§ãƒ»
 	Texture* mWhiteTex;
 
 public:
@@ -54,47 +54,47 @@ public:
 	void Update(Transform* parent = nullptr);
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 
-public: //ƒZƒbƒ^[
+public: //ç¹§ï½»ç¹ãƒ»ã¡ç¹ï½¼
 
-	// ƒ‚ƒfƒ‹
+	// ç¹ï½¢ç¹ãƒ»Î
 	void SetModel(Model* model);
 
-	// ƒeƒNƒXƒ`ƒƒ[
+	// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼
 	void SetTexture(Texture* texture);
 
-	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“
+	// ç¹§ï½°ç¹ï½©ç¹è¼”ã…ç¹ãƒ»ã‘ç¹§ï½¹ç¹ä»£ã†ç¹åŠ±Î›ç¹§ï½¤ç¹ï½³
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
-	// ƒAƒjƒ[ƒVƒ‡ƒ“
+	// ç¹§ï½¢ç¹ä¹Î“ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³
 	void SetAnimation(const uint32_t animationIndex, const uint32_t maxFrame, const bool isPlay = true);
 
-	// ƒJƒƒ‰
+	// ç¹§ï½«ç¹ï½¡ç¹ï½©
 	void SetCamera(Camera* camera = nullptr);
 
-	// ‰e
+	// è –ï½±
 	void SetisShadow(const bool isWriteShadow, const bool isWriteDepth);
 
-	// e
+	// éš•ï½ª
 	void SetParent(Transform* parent);
 
-	// ƒrƒ‹ƒ{[ƒh
+	// ç¹è–™Îç¹æ‡Šãƒ»ç¹ãƒ»
 	void SetBillboardType(const BillboardType type);
 
-public: // ƒQƒbƒ^[
+public: // ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
 
-	// ƒ[ƒ‹ƒhÀ•W
+	// ç¹ï½¯ç¹ï½¼ç¹ï½«ç¹ç‰™ï½ºï½§è®“ãƒ»
 	Vec3 GetWorldPos();
 
-	// ƒ[ƒ‹ƒhƒXƒP[ƒ‹
+	// ç¹ï½¯ç¹ï½¼ç¹ï½«ç¹å³¨ã›ç¹§ï½±ç¹ï½¼ç¹ï½«
 	Vec3 GetWorldScale();
 
-	// ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
+	// ç¹åŒ»Î›ç¹ï½³ç¹§ï½¹ç¹è¼”ã‹ç¹ï½¼ç¹ï£°
 	Transform GetTransform();
 
-	// e‚Ìƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
+	// éš•ï½ªç¸ºï½®ç¹åŒ»Î›ç¹ï½³ç¹§ï½¹ç¹è¼”ã‹ç¹ï½¼ç¹ï£°
 	Transform* GetParent();
 
-	// ƒ‚ƒfƒ‹
+	// ç¹ï½¢ç¹ãƒ»Î
 	Model* GetModel();
 };
 

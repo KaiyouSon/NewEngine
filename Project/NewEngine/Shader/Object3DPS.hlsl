@@ -1,21 +1,21 @@
 #include "Object3D.hlsli"
 #include "ShaderIO.hlsli"
 
-Texture2D<float4> tex : register(t0); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ
-Texture2D<float4> dissolveTex : register(t1); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ
-Texture2D<float4> shadowMapTex : register(t2); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ
-SamplerState smp : register(s0); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒTƒ“ƒvƒ‰[
+Texture2D<float4> tex : register(t0); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+Texture2D<float4> dissolveTex : register(t1); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+Texture2D<float4> shadowMapTex : register(t2); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+SamplerState smp : register(s0); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©ãƒ¼
 
 float4 CalcShadowColor(V2P i, float4 color)
 {
     float4 resultColor = color;
     
-    // ƒ‰ƒCƒgƒrƒ…[ƒXƒNƒŠ[ƒ“‹óŠÔ‚©‚çUV‹óŠÔ‚ÉÀ•W•ÏŠ·
+    // ãƒ©ã‚¤ãƒˆãƒ“ãƒ¥ãƒ¼ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ç©ºé–“ã‹ã‚‰UVç©ºé–“ã«åº§æ¨™å¤‰æ›
     float2 shadowTexUV = i.spos.xy / i.spos.w;
     shadowTexUV *= float2(0.5f, -0.5f);
     shadowTexUV += 0.5f;
         
-    // ƒ‰ƒCƒgƒrƒ…[‚Å‚ÌƒXƒNƒŠ[ƒ“‹óŠÔ‚Å‚Ìz’l‚ğŒvZ‚·‚é
+    // ãƒ©ã‚¤ãƒˆãƒ“ãƒ¥ãƒ¼ã§ã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ç©ºé–“ã§ã®zå€¤ã‚’è¨ˆç®—ã™ã‚‹
     float z = i.spos.z;
     
     if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
@@ -60,7 +60,7 @@ float CalcShadow(float4 spos)
     shadowTexUV *= float2(0.5f, -0.5f);
     shadowTexUV += 0.5f;
         
-    // ƒ‰ƒCƒgƒrƒ…[‚Å‚ÌƒXƒNƒŠ[ƒ“‹óŠÔ‚Å‚Ìz’l‚ğŒvZ‚·‚é
+    // ãƒ©ã‚¤ãƒˆãƒ“ãƒ¥ãƒ¼ã§ã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ç©ºé–“ã§ã®zå€¤ã‚’è¨ˆç®—ã™ã‚‹
     float z = spos.z / spos.w;
         
     if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
@@ -80,37 +80,37 @@ PSOutput main(V2P i)// : SV_TARGET
 {
     float2 newUV = (i.uv + offset) * tiling;
     
-	// ƒeƒNƒXƒ`ƒƒ[ƒ}ƒbƒsƒ“ƒO
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ãƒãƒƒãƒ”ãƒ³ã‚°
     float4 texColor = tex.Sample(smp, newUV);
     float4 mask = dissolveTex.Sample(smp, newUV);
     
     float maskIntensity = smoothstep(0.1, 0.25, (0.5f + mask.r) - dissolve);
     clip(maskIntensity - 0.01f);
     
-	// Œõ‘ò“x
+	// å…‰æ²¢åº¦
     const float shininess = 4.0f;
 
-    // ƒ}ƒeƒŠƒAƒ‹
+    // ãƒãƒ†ãƒªã‚¢ãƒ«
     Material material = { ambient, diffuse, specular };
     
-    // ƒVƒF[ƒ_[ƒJƒ‰[
+    // ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‚«ãƒ©ãƒ¼
     float4 shaderColor = 0;
     
     float4 adsColor = float4(0, 0, 0, 1);
     if (isActiveDirLight == true)
     {
-        // ƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚Æ–@ü‚Ì“àÏ
+        // ãƒ©ã‚¤ãƒˆã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«ã¨æ³•ç·šã®å†…ç©
         float dotLightNormal = dot(dirLightVec, i.normal);
         
-        // ƒAƒ“ƒrƒGƒ“ƒg
+        // ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆ
         float3 ambient = /*texColor.rgb **/material.ambient.rgb;
      
-        // ƒfƒBƒtƒ…[ƒY
+        // ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚º
         float intensity = saturate(dot(normalize(i.normal), dirLightVec));
         float4 diffuse = intensity * dirLightColor * float4(material.diffuse.rgb, 1);
     
-        // ƒXƒyƒLƒ…ƒ‰[
-        float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // ’¸“_‚©‚ç‹“_‚Ö‚ÌƒxƒNƒgƒ‹
+        // ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼
+        float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // é ‚ç‚¹ã‹ã‚‰è¦–ç‚¹ã¸ã®ãƒ™ã‚¯ãƒˆãƒ«
         float3 reflectDir = -dirLightVec + 2 * i.normal * dot(i.normal, dirLightVec);
         float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
     

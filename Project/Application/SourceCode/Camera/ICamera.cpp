@@ -29,3 +29,4 @@ Vec3 ICamera::GetLockonPos()
 {
 	return mLockonPos;
 }
+

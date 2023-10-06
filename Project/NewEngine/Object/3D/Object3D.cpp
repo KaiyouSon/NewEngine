@@ -19,7 +19,7 @@ Object3D::Object3D() :
 	mCamera(&Camera::current),
 	isUseDissolve(false), dissolve(0.f), colorPower(1), dissolveColor(Color::red)
 {
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰Šú‰»
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®åˆæœŸåŒ–
 	MaterialInit();
 
 	mTexture->isMaterial = true;
@@ -34,7 +34,7 @@ Object3D::Object3D() :
 
 void Object3D::Update(Transform* parent)
 {
-	// ƒJƒƒ‰‚ªİ’è‚µ‚Ä‚È‚¢ê‡
+	// ã‚«ãƒ¡ãƒ©ãŒè¨­å®šã—ã¦ãªã„å ´åˆ
 	if (mCamera == nullptr || mCamera == &Camera::current)
 	{
 		mCamera = &Camera::current;
@@ -65,7 +65,7 @@ void Object3D::Update(Transform* parent)
 		ShadowMap::GetInstance()->Bind(*this);
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì“]‘—
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®è»¢é€
 	MaterialTransfer();
 }
 void Object3D::Draw(const BlendMode blendMode)
@@ -74,17 +74,17 @@ void Object3D::Draw(const BlendMode blendMode)
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// GraphicsPipeline•`‰æƒRƒ}ƒ“ƒh
+	// GraphicsPipelineæç”»ã‚³ãƒãƒ³ãƒ‰
 	mGraphicsPipeline->DrawCommand(blendMode);
 
-	// VBV‚ÆIBV‚Ìİ’èƒRƒ}ƒ“ƒh
+	// VBVã¨IBVã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mModel->mesh.vertexBuffer.GetvbViewAddress());
 	renderBase->GetCommandList()->IASetIndexBuffer(mModel->mesh.indexBuffer.GetibViewAddress());
 
 	MaterialDrawCommands();
 	LightManager::GetInstance()->DrawCommand(5);
 
-	// SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ğƒ‹[ƒgƒpƒ‰ƒ[ƒ^2”Ô‚Éİ’è
+	// SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿2ç•ªã«è¨­å®š
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
 
@@ -131,48 +131,48 @@ void Object3D::Draw(const BlendMode blendMode)
 	}
 }
 
-// --- ƒ}ƒeƒŠƒAƒ‹ŠÖ˜A --------------------------------------------------- //
+// --- ãƒãƒ†ãƒªã‚¢ãƒ«é–¢é€£ --------------------------------------------------- //
 void Object3D::MaterialInit()
 {
-	// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3Ds—ñ
+	// 3Dè¡Œåˆ—
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform3DShadow>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ƒ}ƒeƒŠƒAƒ‹ƒJƒ‰[
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã‚«ãƒ©ãƒ¼
 	iConstantBuffer = std::make_unique<ConstantBuffer<CMaterialColor>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// F
+	// è‰²
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ƒXƒLƒjƒ“ƒO
+	// ã‚¹ã‚­ãƒ‹ãƒ³ã‚°
 	iConstantBuffer = std::make_unique<ConstantBuffer<CSkin>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// UVî•ñ
+	// UVæƒ…å ±
 	iConstantBuffer = std::make_unique<ConstantBuffer<CUVParameter>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ƒfƒBƒ]ƒ‹ƒu
+	// ãƒ‡ã‚£ã‚¾ãƒ«ãƒ–
 	iConstantBuffer = std::make_unique<ConstantBuffer<CDissolve>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ‰e
+	// å½±
 	iConstantBuffer = std::make_unique<ConstantBuffer<CShadowMap>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	mMaterial.Init();
 }
 void Object3D::MaterialTransfer()
 {
 	Camera lightViewCamera = ShadowMap::GetInstance()->GetLightCamera();
 
-	// ƒ}ƒgƒŠƒbƒNƒX
+	// ãƒãƒˆãƒªãƒƒã‚¯ã‚¹
 	CTransform3DShadow transform3DShadowData =
 	{
 		mCamera->GetViewLookToMat() * mCamera->GetPerspectiveProjectionMat(),
@@ -188,7 +188,7 @@ void Object3D::MaterialTransfer()
 		return;
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹ƒJƒ‰[
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã‚«ãƒ©ãƒ¼
 	CMaterialColor materialColorData;
 	if (isLighting == true && isAllLighting == true)
 	{
@@ -205,11 +205,11 @@ void Object3D::MaterialTransfer()
 	}
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[1].get(), materialColorData);
 
-	// Fƒf[ƒ^
+	// è‰²ãƒ‡ãƒ¼ã‚¿
 	CColor colorData = { color / 255 };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[2].get(), colorData);
 
-	// ƒXƒLƒ“î•ñ
+	// ã‚¹ã‚­ãƒ³æƒ…å ±
 	if (mModel->format == ModelFormat::Fbx)
 	{
 		auto fbxModel = static_cast<FbxModel*>(mModel);
@@ -223,15 +223,15 @@ void Object3D::MaterialTransfer()
 		TransferDataToConstantBuffer(mMaterial.constantBuffers[3].get(), skinData);
 	}
 
-	// UVƒf[ƒ^
+	// UVãƒ‡ãƒ¼ã‚¿
 	CUVParameter uvData = { offset,tiling };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[4].get(), uvData);
 
-	// ƒfƒBƒ]ƒ‹ƒu
+	// ãƒ‡ã‚£ã‚¾ãƒ«ãƒ–
 	CDissolve dissolveData = { dissolve,colorPower,Vec2(0,0), dissolveColor.To01() };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[5].get(), dissolveData);
 
-	// ƒfƒBƒ]ƒ‹ƒu
+	// ãƒ‡ã‚£ã‚¾ãƒ«ãƒ–
 	CShadowMap shadowMapData = { mIsWriteShadow };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[6].get(), shadowMapData);
 }
@@ -239,7 +239,7 @@ void Object3D::MaterialDrawCommands()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// CBV‚Ìİ’èƒRƒ}ƒ“ƒh
+	// CBVã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 		0, mMaterial.constantBuffers[0]->bufferResource->buffer->GetGPUVirtualAddress());
 
@@ -262,15 +262,15 @@ void Object3D::MaterialDrawCommands()
 		7, mMaterial.constantBuffers[6]->bufferResource->buffer->GetGPUVirtualAddress());
 }
 
-// --- ƒZƒbƒ^[ -------------------------------------------------------- //
+// --- ã‚»ãƒƒã‚¿ãƒ¼ -------------------------------------------------------- //
 
-// ƒ‚ƒfƒ‹
+// ãƒ¢ãƒ‡ãƒ«
 void Object3D::SetModel(Model* model)
 {
 	mModel = model;
 	mTexture = mModel->texture;
 
-	// ƒpƒCƒvƒ‰ƒCƒ“•ÏX
+	// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³å¤‰æ›´
 	if (mModel->format == ModelFormat::Obj)
 	{
 		mGraphicsPipeline = PipelineManager::GetGraphicsPipeline("Object3D");
@@ -281,16 +281,16 @@ void Object3D::SetModel(Model* model)
 	}
 }
 
-// ƒeƒNƒXƒ`ƒƒ[
+// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼
 void Object3D::SetTexture(Texture* texture) { mTexture = texture; }
 
-// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“
+// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 void Object3D::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline) { mGraphicsPipeline = graphicsPipeline; }
 
-// ƒAƒjƒ[ƒVƒ‡ƒ“
+// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 void Object3D::SetAnimation(const uint32_t animationIndex, const uint32_t maxFrame, const bool isPlay)
 {
-	// ƒXƒLƒ“î•ñ
+	// ã‚¹ã‚­ãƒ³æƒ…å ±
 	if (mModel->format == ModelFormat::Fbx)
 	{
 		auto fbxModel = static_cast<FbxModel*>(mModel);
@@ -301,20 +301,20 @@ void Object3D::SetAnimation(const uint32_t animationIndex, const uint32_t maxFra
 	}
 }
 
-// ƒJƒƒ‰
+// ã‚«ãƒ¡ãƒ©
 void Object3D::SetCamera(Camera* camera)
 {
 	mCamera = camera;
 }
 
-// ‰e
+// å½±
 void Object3D::SetisShadow(const bool isWriteShadow, const bool isWriteDepth)
 {
 	mIsWriteShadow = isWriteShadow;
 	mIsWriteDepth = isWriteDepth;
 }
 
-// e
+// è¦ª
 void Object3D::SetParent(Transform* parent)
 {
 	mParent = parent;
@@ -325,33 +325,33 @@ void Object3D::SetBillboardType(const BillboardType type)
 	mTransform.SetBillboardType(type);
 }
 
-// --- ƒQƒbƒ^[ -------------------------------------------------------- //
+// --- ã‚²ãƒƒã‚¿ãƒ¼ -------------------------------------------------------- //
 
-// ƒ[ƒ‹ƒhÀ•W
+// ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™
 Vec3 Object3D::GetWorldPos()
 {
 	Vec3 worldPos = Vec3MulMat4(pos, mTransform.GetWorldMat(), true);
 	return worldPos;
 }
 
-// ƒ[ƒ‹ƒhƒXƒP[ƒ‹
+// ãƒ¯ãƒ¼ãƒ«ãƒ‰ã‚¹ã‚±ãƒ¼ãƒ«
 Vec3 Object3D::GetWorldScale()
 {
 	Vec3 worldScale = mTransform.GetWorldMat().GetScale();
 	return worldScale;
 }
 
-// ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
+// ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ 
 Transform Object3D::GetTransform()
 {
 	return mTransform;
 }
 
-// e
+// è¦ª
 Transform* Object3D::GetParent()
 {
 	return mParent;
 }
 
-// ƒ‚ƒfƒ‹
+// ãƒ¢ãƒ‡ãƒ«
 Model* Object3D::GetModel() { return mModel; }

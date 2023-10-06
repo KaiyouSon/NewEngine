@@ -34,17 +34,17 @@ private:
 	Camera mCamera;
 
 private:
-	// カメラズーム関連
+	// 繧ｫ繝｡繝ｩ繧ｺ繝ｼ繝髢｢騾｣
 	Timer mTimer;
 
 private:
-	// 棺桶を開く関連
+	// 譽ｺ譯ｶ繧帝幕縺城未騾｣
 	Easing mEase;
 	Vec3 mStartPos;
 	Vec3 mEndPos;
 
 private:
-	// インスタンス
+	// 繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ
 	Player* mPlayer;
 	Coffin* mPlayerCoffin;
 

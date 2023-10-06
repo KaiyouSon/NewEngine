@@ -7,7 +7,7 @@ Sword::Sword()
 	weapon->SetModel(ModelManager::GetModel("Sword"));
 	weapon->SetisShadow(false, true);
 
-	// ’Æ‚Ìƒ‚[ƒVƒ‡ƒ“
+	// æ§Œã®ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³
 	motion = std::make_unique<MalletMotion>();
 
 	mLocalPos = Vec3(0.f, -1.5f, 0.f);

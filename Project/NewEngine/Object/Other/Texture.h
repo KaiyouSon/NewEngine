@@ -18,7 +18,7 @@ public:
 public:
 	Texture();
 
-public: // ƒQƒbƒ^[
+public: // ã‚²ãƒƒã‚¿ãƒ¼
 	BufferResource* GetBufferResource();
 
 };

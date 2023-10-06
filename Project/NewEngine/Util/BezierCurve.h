@@ -22,23 +22,23 @@ public:
 	BezierCurve(const int32_t easeTimer, const float powNum);
 	void Reset();
 	void Update();
-	Vec3 InterPolation(const BezierType type = BezierType::Lerp);	// •âŠÔ
+	Vec3 InterPolation(const BezierType type = BezierType::Lerp);	// é™¬æ†ºä¿£
 
 public:
 
-	// §Œä“_‚ğ’Ç‰Á
+	// è›»ï½¶è •ï½¡è½¤ï½¹ç¹§å®šï½¿ï½½èœ‰ï£°
 	inline void AddPoint(const Vec3& pos) { mPoints.push_back(pos); }
 
-	// •âŠÔŠÔ‚ğƒZƒbƒg‚·‚é
+	// é™¬æ†ºä¿£è­ã‚‹ä¿£ç¹§åµãç¹ãƒ»ãƒ¨ç¸ºå¶ï½‹
 	inline void SetEaseTime(const int32_t easeTime) { mEase.SetEaseTimer(easeTime); }
 
-	// Næ‚ğƒZƒbƒg‚·‚é
+	// NèµåŠ±ï½’ç¹§ï½»ç¹ãƒ»ãƒ¨ç¸ºå¶ï½‹
 	inline void SetEasePowNum(const float pownum) { mEase.SetPowNum(pownum); }
 
-	// §Œä“_íœ
+	// è›»ï½¶è •ï½¡è½¤ï½¹èœ‘ä¼å‹
 	inline void ClearPoints() { mPoints.clear(); }
 
-	// I—¹ƒtƒ‰ƒO
+	// é‚¨ã‚†ï½ºãƒ»ãƒµç¹ï½©ç¹§ï½°
 	inline bool GetisEnd() { return mIsEnd; }
 
 private:

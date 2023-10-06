@@ -15,7 +15,7 @@ Line::Line() :
 	mVertices[1] = { { 1.f,0.f,0.f} };
 	mVertexBuffer->Create(mVertices);
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰Šú‰»
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®åˆæœŸåŒ–
 	MaterialInit();
 }
 
@@ -35,52 +35,52 @@ void Line::Update(Transform* parent)
 		mTransform.SetWorldMat(mat);
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì“]‘—
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®è»¢é€
 	MaterialTransfer();
 
 	mVertices[0].pos = startPos;
 	mVertices[1].pos = endPos;
 
-	// ’¸“_ƒf[ƒ^‚Ì“]‘—
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®è»¢é€
 	mVertexBuffer->TransferToBuffer(mVertices);
 }
 void Line::Draw()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();
 
-	// GraphicsPipeline•`‰æƒRƒ}ƒ“ƒh
+	// GraphicsPipelineæç”»ã‚³ãƒãƒ³ãƒ‰
 	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
 
-	// VBV‚ÆIBV‚Ìİ’èƒRƒ}ƒ“ƒh
+	// VBVã¨IBVã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì•`‰æƒRƒ}ƒ“ƒh
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®æç”»ã‚³ãƒãƒ³ãƒ‰
 	MaterialDrawCommands();
 
-	// •`‰æƒRƒ}ƒ“ƒh
+	// æç”»ã‚³ãƒãƒ³ãƒ‰
 	renderBase->GetCommandList()->DrawInstanced((UINT)mVertices.size(), 1, 0, 0);
 }
 
-// --- ƒ}ƒeƒŠƒAƒ‹ŠÖ˜A --------------------------------------------------- //
+// --- ãƒãƒ†ãƒªã‚¢ãƒ«é–¢é€£ --------------------------------------------------- //
 void Line::MaterialInit()
 {
-	// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 2Ds—ñ
+	// 2Dè¡Œåˆ—
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform3D>>();
 	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// F
+	// è‰²
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
 	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	mMaterial->Init();
 }
 void Line::MaterialTransfer()
 {
-	// ƒ}ƒgƒŠƒbƒNƒX
+	// ãƒãƒˆãƒªãƒƒã‚¯ã‚¹
 	CTransform3D transform3DData =
 	{
 		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
@@ -89,7 +89,7 @@ void Line::MaterialTransfer()
 	};
 	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), transform3DData);
 
-	// Fƒf[ƒ^
+	// è‰²ãƒ‡ãƒ¼ã‚¿
 	CColor colorData = { color.To01() };
 	TransferDataToConstantBuffer(mMaterial->constantBuffers[1].get(), colorData);
 }
@@ -99,7 +99,7 @@ void Line::MaterialDrawCommands()
 
 	for (uint32_t i = 0; i < mMaterial->constantBuffers.size(); i++)
 	{
-		// CBV‚Ìİ’èƒRƒ}ƒ“ƒh
+		// CBVã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 			0, mMaterial->constantBuffers[0]->bufferResource->buffer->GetGPUVirtualAddress());
 	}

@@ -18,4 +18,3 @@ public:
 	void SetModel(Model* model);
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 };
-

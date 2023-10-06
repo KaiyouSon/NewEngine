@@ -3,13 +3,13 @@
 #include "Lighting.hlsli"
 #include "ShaderIO.hlsli"
 
-Texture2D<float4> tex1 : register(t0); // 0�ԃX���b�g�ɐݒ肳�ꂽ�e�N�X�`��
-Texture2D<float4> depthTex : register(t1); // 1�ԃX���b�g�ɐݒ肳�ꂽ�e�N�X�`��
-SamplerState smp : register(s0); // 0�ԃX���b�g�ɐݒ肳�ꂽ�T���v���[
+Texture2D<float4> tex1 : register(t0); // 0番スロットに設定されたテクスチャ
+Texture2D<float4> depthTex : register(t1); // 1番スロットに設定されたテクスチャ
+SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
 
 float4 main(VSOutputSvposUv vsOutput) : SV_TARGET
 {
-    // �e�N�X�`���[�}�b�s���O
+    // テクスチャーマッピング
     float4 texColor1 = tex1.Sample(smp, vsOutput.uv);
     float d = depthTex.Sample(smp, vsOutput.uv).r;
     

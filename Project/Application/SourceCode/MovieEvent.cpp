@@ -68,7 +68,7 @@ void MovieEvent::PlayMovieUpdate()
 	switch (mPlayStep)
 	{
 	case PlayStep::CameraZoom:
-		// ƒJƒƒ‰‚Ìˆ—‚ÍMovieCamera‚Ì•û‚Åˆ—‚ğ‚µ‚Ä‚¢‚é
+		// ã‚«ãƒ¡ãƒ©ã®å‡¦ç†ã¯MovieCameraã®æ–¹ã§å‡¦ç†ã‚’ã—ã¦ã„ã‚‹
 		mTimer.Update();
 		if (mTimer.GetisTimeOut() == true)
 		{

@@ -5,13 +5,13 @@ SceneTransition::SceneTransition() :
 	mLoadSprite(std::make_unique<Sprite>())
 {
 
-	// í—Şİ’è
+	// ç¨®é¡è¨­å®š
 	mType = TransitionType::Scene;
 }
 
 void SceneTransition::Generate()
 {
-	// ‰Šúİ’è
+	// åˆæœŸè¨­å®š
 	mTransition->SetTexture(TextureManager::GetTexture("White"));
 	mTransition->pos = GetWindowHalfSize();
 	mTransition->scale = GetWindowSize();
@@ -34,7 +34,7 @@ void SceneTransition::Update()
 {
 	switch (mStep)
 	{
-	case TransitionStep::In: // ‘JˆÚ‚ªƒCƒ“‚Ì
+	case TransitionStep::In: // é·ç§»ãŒã‚¤ãƒ³ã®æ™‚
 	{
 		mTransition->color.a = mEase.InOut(0, 255);
 		mLoadSprite->color.a = mEase.InOut(0, 255);
@@ -56,7 +56,7 @@ void SceneTransition::Update()
 		{
 			mStep = TransitionStep::Progress;
 
-			// ƒAƒEƒg‚Ì‚¿‚å‚Á‚Æ‘‚­Š´‚¶‚½‚Ì‚ÅŠÔ‚ğL‚Î‚µ‚½
+			// ã‚¢ã‚¦ãƒˆã®æ™‚ã¡ã‚‡ã£ã¨æ—©ãæ„Ÿã˜ãŸã®ã§æ™‚é–“ã‚’ä¼¸ã°ã—ãŸ
 			mEase.SetEaseTimer(100);
 			mEase.Reset();
 		}
@@ -87,7 +87,7 @@ void SceneTransition::Update()
 	}
 	break;
 
-	case TransitionStep::Out: // ‘JˆÚ‚ªƒAƒEƒg‚Ì
+	case TransitionStep::Out: // é·ç§»ãŒã‚¢ã‚¦ãƒˆã®æ™‚
 	{
 		SceneManager::SetChangeStepToCreateInstance();
 

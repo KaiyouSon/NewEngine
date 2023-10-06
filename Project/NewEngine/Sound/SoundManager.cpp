@@ -52,10 +52,10 @@ void SoundManager::Init()
 {
 	HRESULT result;
 
-	// XAudioƒGƒ“ƒWƒ“‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ð¶¬
+	// XAudioç¹§ï½¨ç¹ï½³ç¹§ï½¸ç¹ï½³ç¸ºï½®ç¹§ï½¤ç¹ï½³ç¹§ï½¹ç¹§ï½¿ç¹ï½³ç¹§ï½¹ç¹§å ¤å‡½è¬Œãƒ»
 	result = XAudio2Create(&sXAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR);
 
-	// ƒ}ƒXƒ^[ƒ{ƒCƒX‚ð¶¬
+	// ç¹æ§­ã›ç¹§ï½¿ç¹ï½¼ç¹æ‡Šã†ç¹§ï½¹ç¹§å ¤å‡½è¬Œãƒ»
 	result = sXAudio2->CreateMasteringVoice(&sMasterVoice);
 }
 
@@ -68,3 +68,4 @@ void SoundManager::Destroy()
 		sSoundMap[sound.first]->UnLoad();
 	}
 }
+

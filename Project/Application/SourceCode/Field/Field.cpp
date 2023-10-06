@@ -48,43 +48,43 @@ void Field::Init()
 
 	if (mFieldData)
 	{
-		// Š»‰±
+		// è­½ï½ºè­¯ï½¶
 		for (uint32_t i = 0; i < mFieldData->coffins.size(); i++)
 		{
 			mFieldData->coffins[i]->Init();
 		}
 
-		// •‚“‡
+		// è±¬ï½®èŸ²ï½¶
 		for (uint32_t i = 0; i < mFieldData->skyIslands.size(); i++)
 		{
 			mFieldData->skyIslands[i]->Init();
 		}
 
-		// –Ø
+		// è­›ï½¨
 		for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
 		{
 			mFieldData->trees[i]->Init();
 		}
 
-		// G‘
+		// é«®é¡Œæ‹·
 		for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
 		{
 			mFieldData->weeds[i]->Init();
 		}
 
-		// •Ç
+		// è¢ãƒ»
 		for (uint32_t i = 0; i < mFieldData->walls.size(); i++)
 		{
 			mFieldData->walls[i]->Init();
 		}
 
-		// ³–å
+		// è±ï½£é«¢Â€
 		for (uint32_t i = 0; i < mFieldData->gates.size(); i++)
 		{
 			mFieldData->gates[i]->Init();
 		}
 
-		// ƒŠƒXƒ|[ƒ“’n“_
+		// ç¹ï½ªç¹§ï½¹ç¹æ˜´ãƒ»ç¹ï½³è¨ï½°è½¤ï½¹
 		for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
 		{
 			mFieldData->respawnPoints[i]->Init();
@@ -107,43 +107,43 @@ void Field::Update()
 
 	if (mFieldData)
 	{
-		// Š»‰±
+		// è­½ï½ºè­¯ï½¶
 		for (uint32_t i = 0; i < mFieldData->coffins.size(); i++)
 		{
 			mFieldData->coffins[i]->Update();
 		}
 
-		// •‚“‡
+		// è±¬ï½®èŸ²ï½¶
 		for (uint32_t i = 0; i < mFieldData->skyIslands.size(); i++)
 		{
 			mFieldData->skyIslands[i]->Update();
 		}
 
-		// –Ø
+		// è­›ï½¨
 		for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
 		{
 			mFieldData->trees[i]->Update();
 		}
 
-		// G‘
+		// é«®é¡Œæ‹·
 		for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
 		{
 			mFieldData->weeds[i]->Update();
 		}
 
-		// •Ç
+		// è¢ãƒ»
 		for (uint32_t i = 0; i < mFieldData->walls.size(); i++)
 		{
 			mFieldData->walls[i]->Update();
 		}
 
-		// ³–å
+		// è±ï½£é«¢Â€
 		for (uint32_t i = 0; i < mFieldData->gates.size(); i++)
 		{
 			mFieldData->gates[i]->Update();
 		}
 
-		// ƒŠƒXƒ|[ƒ“’n“_
+		// ç¹ï½ªç¹§ï½¹ç¹æ˜´ãƒ»ç¹ï½³è¨ï½°è½¤ï½¹
 		for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
 		{
 			mFieldData->respawnPoints[i]->Update();
@@ -167,43 +167,43 @@ void Field::DrawModel()
 
 	if (mFieldData)
 	{
-		// Š»‰±
+		// è­½ï½ºè­¯ï½¶
 		for (uint32_t i = 0; i < mFieldData->coffins.size(); i++)
 		{
 			mFieldData->coffins[i]->DrawModel();
 		}
 
-		// •‚“‡
+		// è±¬ï½®èŸ²ï½¶
 		for (uint32_t i = 0; i < mFieldData->skyIslands.size(); i++)
 		{
 			mFieldData->skyIslands[i]->DrawModel();
 		}
 
-		// –Ø
+		// è­›ï½¨
 		for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
 		{
 			mFieldData->trees[i]->DrawModel();
 		}
 
-		// G‘
+		// é«®é¡Œæ‹·
 		for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
 		{
 			mFieldData->weeds[i]->DrawModel();
 		}
 
-		// •Ç
+		// è¢ãƒ»
 		for (uint32_t i = 0; i < mFieldData->walls.size(); i++)
 		{
 			mFieldData->walls[i]->DrawModel();
 		}
 
-		// ³–å
+		// è±ï½£é«¢Â€
 		for (uint32_t i = 0; i < mFieldData->gates.size(); i++)
 		{
 			mFieldData->gates[i]->DrawModel();
 		}
 
-		// ƒŠƒXƒ|[ƒ“’n“_
+		// ç¹ï½ªç¹§ï½¹ç¹æ˜´ãƒ»ç¹ï½³è¨ï½°è½¤ï½¹
 		for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
 		{
 			mFieldData->respawnPoints[i]->DrawModel();
@@ -249,41 +249,35 @@ void Field::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 
 	if (mFieldData)
 	{
-		// Š»‰±
+		// è­½ï½ºè­¯ï½¶
 		for (uint32_t i = 0; i < mFieldData->coffins.size(); i++)
 		{
 			mFieldData->coffins[i]->SetGraphicsPipeline(graphicsPipeline);
 		}
 
-		// •‚“‡
+		// è±¬ï½®èŸ²ï½¶
 		for (uint32_t i = 0; i < mFieldData->skyIslands.size(); i++)
 		{
 			mFieldData->skyIslands[i]->SetGraphicsPipeline(graphicsPipeline);
 		}
 
-		// –Ø
+		// è­›ï½¨
 		for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
 		{
 			mFieldData->trees[i]->SetGraphicsPipeline(graphicsPipeline);
 		}
 
-		// •Ç
+		// è¢ãƒ»
 		for (uint32_t i = 0; i < mFieldData->walls.size(); i++)
 		{
 			mFieldData->walls[i]->SetGraphicsPipeline(graphicsPipeline);
 		}
 
-		// ³–å
+		// è±ï½£é«¢Â€
 		for (uint32_t i = 0; i < mFieldData->gates.size(); i++)
 		{
 			mFieldData->gates[i]->SetGraphicsPipeline(graphicsPipeline);
 		}
-
-		//// ƒŠƒXƒ|[ƒ“’n“_
-		//for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
-		//{
-		//	mFieldData->respawnPoints[i]->SetGraphicsPipeline(graphicsPipeline);
-		//}
 	}
 }
 
@@ -291,10 +285,11 @@ void Field::SetWeedGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
 	if (mFieldData)
 	{
-		// G‘
+		// é«®é¡Œæ‹·
 		for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
 		{
 			mFieldData->weeds[i]->SetGraphicsPipeline(graphicsPipeline);
 		}
 	}
 }
+

@@ -1402,6 +1402,7 @@
     <None Include="NewEngine\Shader\ToonRender.hlsli">
       <Filter>Shader\Engine\ToonRender</Filter>
     </None>
+    <None Include=".editorconfig" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Application\Shader\BloomPS.hlsl">

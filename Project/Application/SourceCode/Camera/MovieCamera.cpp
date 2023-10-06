@@ -10,9 +10,6 @@ void MovieCamera::Init(Player* player)
 {
 	mPlayer = player;
 
-	//mCamera->pos = Vec3(45.f, 1.5f, 20.f);
-	//mCamera->rot = Radian(Vec3(-90, -90, 0));
-
 	mCamera->pos = Vec3(-65.f, 75.f, -85.f);
 	mCamera->rot = Radian(Vec3(25, 40, 0));
 }
@@ -30,7 +27,7 @@ void MovieCamera::Update()
 		mCamera->rot = Radian(Vec3(40, -30, 0));
 	}
 
-	// 尰嵼偺僇儊儔偵戙擖
+	// 杩达骄铦建绺猴疆绻э将绻濓健绻濓僵绺猴将鑾夛剑铚堬渐
 	Camera::current = *mCamera;
 }
 

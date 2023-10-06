@@ -24,4 +24,3 @@ public:
 	void Draw();
 	void DrawDebugGui();
 };
-

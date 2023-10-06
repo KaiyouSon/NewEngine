@@ -4,40 +4,40 @@ std::unordered_map<std::string, std::unique_ptr<FieldData>> FieldDataManager::sF
 
 FieldData* FieldDataManager::Load(const std::string filename, const std::string tag)
 {
-	// ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€
+	// ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¹§ï½¹ç¹åŒ»Îœç¹ï½¼ç¹ï£°
 	std::ifstream file;
 
 	std::string directoryPath = "Application/Data/FieldData/";
 	std::string format = ".json";
 	std::string fullPath = directoryPath + filename + format;
 
-	// ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	// ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¹§å¸å¹•ç¸ºãƒ»
 	file.open(fullPath);
-	// ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“¸”s‚ğƒ`ƒFƒbƒNs
+	// ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¹§ï½ªç¹ï½¼ç¹åŠ±Î¦èŸï½±è¬¨åŠ±ï½’ç¹âˆšã‰ç¹ãƒ»ã‘s
 	if (file.fail())
 	{
 		assert(0);
 	}
 
-	// JSON•¶š—ñ‚©‚ç‰ğ“€‚µ‚½ƒf[ƒ^
+	// JSONè­ãƒ»ï½­æ€œãƒ»ç¸ºä¹ï½‰éš—ï½£èœƒé˜ªï¼ ç¸ºæº˜ãƒ§ç¹ï½¼ç¹§ï½¿
 	nlohmann::json deserialized;
 
-	// ‰ğ“€
+	// éš—ï½£èœƒãƒ»
 	file >> deserialized;
 
-	// ³‚µ‚¢ƒŒƒxƒ‹ƒGƒfƒBƒ^[ƒf[ƒ^ƒtƒ@ƒCƒ‹‚©ƒ`ƒFƒbƒN
+	// è±ï½£ç¸ºåŠ±ï¼ç¹ï½¬ç¹å¶Îç¹§ï½¨ç¹ãƒ»ã…ç¹§ï½¿ç¹ï½¼ç¹ãƒ»ãƒ»ç¹§ï½¿ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¸ºä¹ãƒ¡ç¹§ï½§ç¹ãƒ»ã‘
 	assert(deserialized.is_object());
 	assert(deserialized.contains("name"));
 	assert(deserialized["name"].is_string());
 
-	// "name"‚ğ•¶š—ñ‚Æ‚µ‚Äæ“¾
+	// "name"ç¹§å‘ˆæšèŸ„æ€œãƒ»ç¸ºï½¨ç¸ºåŠ±â€»èœ¿é–€ï½¾ãƒ»
 	std::string name = deserialized["name"].get<std::string>();
-	// ³‚µ‚¢ƒŒƒxƒ‹ƒGƒfƒBƒ^[ƒf[ƒ^ƒtƒ@ƒCƒ‹‚©ƒ`ƒFƒbƒN
+	// è±ï½£ç¸ºåŠ±ï¼ç¹ï½¬ç¹å¶Îç¹§ï½¨ç¹ãƒ»ã…ç¹§ï½¿ç¹ï½¼ç¹ãƒ»ãƒ»ç¹§ï½¿ç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¸ºä¹ãƒ¡ç¹§ï½§ç¹ãƒ»ã‘
 	assert(name.compare("scene") == 0);
 
 	std::unique_ptr<FieldData> fieldData = std::make_unique<FieldData>();
 
-	// "objects"‚Ì‘SƒIƒuƒWƒFƒNƒg‚ğ‘–¸
+	// "objects"ç¸ºï½®èœˆï½¨ç¹§ï½ªç¹æ‚¶ãšç¹§ï½§ç¹§ï½¯ç¹åŒ»ï½’è¥ï½°è­Ÿï½»
 	for (nlohmann::json& object : deserialized["object"])
 	{
 		if (object["obj_name"] == nullptr)
@@ -82,7 +82,7 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 		}
 	}
 
-	// map‚ÉŠi”[
+	// mapç¸ºï½«è­¬ï½¼é‚ãƒ»
 	sFieldDataMap.insert(std::make_pair(tag, std::move(fieldData)));
 	return sFieldDataMap[tag].get();
 }
@@ -94,7 +94,7 @@ FieldData* FieldDataManager::GetFieldData(const std::string tag)
 void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<Coffin> coffin = std::make_unique<Coffin>();
-	// ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ìƒpƒ‰ƒ[ƒ^“Ç‚İ‚İ
+	// ç¹åŒ»Î›ç¹ï½³ç¹§ï½¹ç¹è¼”ã‹ç¹ï½¼ç¹ï£°ç¸ºï½®ç¹ä»£Î›ç¹ï½¡ç¹ï½¼ç¹§ï½¿éš±ï½­ç¸ºï½¿éœï½¼ç¸ºï½¿
 	nlohmann::json transform = jsonObj["transform"];
 	Vec3 pos =
 	{
@@ -116,7 +116,7 @@ void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 	};
 	coffin->SetParent(Transform(pos, scale, Radian(angle)));
 
-	// q‚ª‚ ‚ê‚Î
+	// èŸ„èˆŒâ€²ç¸ºã‚…ï½Œç¸ºï½°
 	if (jsonObj.contains("children"))
 	{
 		nlohmann::json children = jsonObj["children"];
@@ -194,7 +194,7 @@ void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 void FieldDataManager::LoadSkyIslandData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<SkyIsland> skyIsland = std::make_unique<SkyIsland>();
-	// ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ìƒpƒ‰ƒ[ƒ^“Ç‚İ‚İ
+	// ç¹åŒ»Î›ç¹ï½³ç¹§ï½¹ç¹è¼”ã‹ç¹ï½¼ç¹ï£°ç¸ºï½®ç¹ä»£Î›ç¹ï½¡ç¹ï½¼ç¹§ï½¿éš±ï½­ç¸ºï½¿éœï½¼ç¸ºï½¿
 	nlohmann::json transform = jsonObj["transform"];
 	Vec3 pos =
 	{
@@ -222,7 +222,7 @@ void FieldDataManager::LoadSkyIslandData(FieldData* data, nlohmann::json jsonObj
 void FieldDataManager::LoadTreeData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<Tree> tree = std::make_unique<Tree>();
-	// ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ìƒpƒ‰ƒ[ƒ^“Ç‚İ‚İ
+	// ç¹åŒ»Î›ç¹ï½³ç¹§ï½¹ç¹è¼”ã‹ç¹ï½¼ç¹ï£°ç¸ºï½®ç¹ä»£Î›ç¹ï½¡ç¹ï½¼ç¹§ï½¿éš±ï½­ç¸ºï½¿éœï½¼ç¸ºï½¿
 	nlohmann::json transform = jsonObj["transform"];
 	Vec3 pos =
 	{
@@ -262,7 +262,7 @@ void FieldDataManager::LoadTreeData(FieldData* data, nlohmann::json jsonObj)
 void FieldDataManager::LoadRespawnPointData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<RespawnPoint> respawnPoint = std::make_unique<RespawnPoint>();
-	// ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ìƒpƒ‰ƒ[ƒ^“Ç‚İ‚İ
+	// ç¹åŒ»Î›ç¹ï½³ç¹§ï½¹ç¹è¼”ã‹ç¹ï½¼ç¹ï£°ç¸ºï½®ç¹ä»£Î›ç¹ï½¡ç¹ï½¼ç¹§ï½¿éš±ï½­ç¸ºï½¿éœï½¼ç¸ºï½¿
 	nlohmann::json transform = jsonObj["transform"];
 	Vec3 pos =
 	{
@@ -289,7 +289,7 @@ void FieldDataManager::LoadRespawnPointData(FieldData* data, nlohmann::json json
 void FieldDataManager::LoadWeedData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<Weed> weed = std::make_unique<Weed>();
-	// ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ìƒpƒ‰ƒ[ƒ^“Ç‚İ‚İ
+	// ç¹åŒ»Î›ç¹ï½³ç¹§ï½¹ç¹è¼”ã‹ç¹ï½¼ç¹ï£°ç¸ºï½®ç¹ä»£Î›ç¹ï½¡ç¹ï½¼ç¹§ï½¿éš±ï½­ç¸ºï½¿éœï½¼ç¸ºï½¿
 	nlohmann::json transform = jsonObj["transform"];
 	Vec3 pos =
 	{
@@ -311,7 +311,7 @@ void FieldDataManager::LoadWeedData(FieldData* data, nlohmann::json jsonObj)
 void FieldDataManager::LoadWallData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<Wall> wall = std::make_unique<Wall>();
-	// ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ìƒpƒ‰ƒ[ƒ^“Ç‚İ‚İ
+	// ç¹åŒ»Î›ç¹ï½³ç¹§ï½¹ç¹è¼”ã‹ç¹ï½¼ç¹ï£°ç¸ºï½®ç¹ä»£Î›ç¹ï½¡ç¹ï½¼ç¹§ï½¿éš±ï½­ç¸ºï½¿éœï½¼ç¸ºï½¿
 	nlohmann::json transform = jsonObj["transform"];
 	Vec3 pos =
 	{
@@ -334,7 +334,7 @@ void FieldDataManager::LoadWallData(FieldData* data, nlohmann::json jsonObj)
 	wall->SetParent(Transform(pos, scale, Radian(angle)));
 	wall->SetModel(ModelManager::GetModel(jsonObj["obj_name"]));
 
-	// Collider‚ª‚ ‚ê‚Î
+	// Colliderç¸ºå¾Œâ‰ ç¹§å¾Œãƒ»
 	if (jsonObj.contains("collider"))
 	{
 		nlohmann::json collider = jsonObj["collider"];
@@ -362,7 +362,7 @@ void FieldDataManager::LoadWallData(FieldData* data, nlohmann::json jsonObj)
 void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<Gate> gate = std::make_unique<Gate>();
-	// ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ìƒpƒ‰ƒ[ƒ^“Ç‚İ‚İ
+	// ç¹åŒ»Î›ç¹ï½³ç¹§ï½¹ç¹è¼”ã‹ç¹ï½¼ç¹ï£°ç¸ºï½®ç¹ä»£Î›ç¹ï½¡ç¹ï½¼ç¹§ï½¿éš±ï½­ç¸ºï½¿éœï½¼ç¸ºï½¿
 	nlohmann::json transform = jsonObj["transform"];
 	Vec3 pos =
 	{
@@ -387,7 +387,7 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 	Transform parent = Transform(pos, scale, Radian(angle));
 	parent.Update();
 
-	// Collider‚ª‚ ‚ê‚Î
+	// Colliderç¸ºå¾Œâ‰ ç¹§å¾Œãƒ»
 	if (jsonObj.contains("collider"))
 	{
 		nlohmann::json collider = jsonObj["collider"];
@@ -404,7 +404,7 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 		}
 	}
 
-	// q‚ª‚ ‚ê‚Î
+	// èŸ„èˆŒâ€²ç¸ºã‚…ï½Œç¸ºï½°
 	if (jsonObj.contains("children"))
 	{
 		nlohmann::json children = jsonObj["children"];
@@ -469,3 +469,4 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 
 	data->gates.push_back(std::move(gate));
 }
+

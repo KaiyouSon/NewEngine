@@ -5,7 +5,7 @@ void RespawnPoint::CreateGraphicsPipeline()
 {
 	std::string path = "Application/Shader/";
 
-	// ����p
+	// 豌ｴ邏狗畑
 	ShaderObjectManager::Create("Ripple");
 	ShaderObjectManager::GetShaderObject("Ripple")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Ripple")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -20,7 +20,7 @@ void RespawnPoint::CreateGraphicsPipeline()
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Ripple");
 
-	// ����p
+	// 豌ｴ邏狗畑
 	ShaderObjectManager::Create("Rhombus");
 	ShaderObjectManager::GetShaderObject("Rhombus")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	ShaderObjectManager::GetShaderObject("Rhombus")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -77,7 +77,7 @@ void RespawnPoint::Update()
 		mAngle.Reset();
 	}
 
-	// �֐��̒��g�Ń^�C�}�[�ݒ肵�Ă��邽�߃��\�b�h�ĂԂ����ł���
+	// 髢｢謨ｰ縺ｮ荳ｭ霄ｫ縺ｧ繧ｿ繧､繝槭・險ｭ螳壹＠縺ｦ縺・ｋ縺溘ａ繝｡繧ｽ繝・ラ蜻ｼ縺ｶ縺縺代〒縺・＞
 	EffectManager::GetInstance()->GenerateRespawnPointEffect(mParent.pos);
 	EffectManager::GetInstance()->GenerateLeadEffect(mParent.pos + Vec3::up * 5.f, Vec3::front + Vec3(0, 0.5, 0));
 
@@ -118,3 +118,4 @@ SphereCollider RespawnPoint::GetCollider()
 {
 	return mCollider;
 }
+

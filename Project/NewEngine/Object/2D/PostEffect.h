@@ -39,7 +39,7 @@ public:
 	void Update();
 	void Draw();
 
-public: // ‚»‚Ì‘¼
+public: // ç¸ºæ˜´ãƒ»è‰ãƒ»
 	void AddRenderTexture(RenderTexture* renderTexture);
 
 	template<typename T>
@@ -50,7 +50,7 @@ public: // ‚»‚Ì‘¼
 		mMaterial.constantBuffers.push_back(std::move(iConstatnBuffer));
 	}
 
-public: // ƒQƒbƒ^[
+public: // ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
 	void SetSize(const Vec2 size);
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 	void SetDrawCommands(const uint32_t registerNum, const uint32_t bufferNum);
@@ -62,4 +62,3 @@ public: // ƒQƒbƒ^[
 		TransferDataToConstantBuffer(mMaterial.constantBuffers[bNum].get(), data);
 	}
 };
-

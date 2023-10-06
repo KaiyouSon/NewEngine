@@ -11,7 +11,6 @@ private:
 public:
 	void Create(const Vec2 size = -1);
 
-public: // ƒQƒbƒ^[
+public: // ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
 	BufferResource* GetBufferResource();
 };
-

@@ -8,16 +8,16 @@
 class AssimpLoader : public Singleton<AssimpLoader>
 {
 private:
-	void ParseMesh(FbxModel* model, aiMesh* mesh);	// ƒƒbƒVƒ…‚Ì‰ğÍ
-	void ParseMeshVertices(FbxModel* model, aiMesh* mesh);	// ’¸“_ƒf[ƒ^‚Ì‰ğÍ
-	void ParseMeshFaces(FbxModel* model, aiMesh* mesh);		// ƒtƒFƒ“ƒX‚Ì‰ğÍ
-	void ParseSkin(FbxModel* model, aiMesh* mesh);			// ƒXƒLƒ“î•ñ‚Ì‰ğÍ
+	void ParseMesh(FbxModel* model, aiMesh* mesh);	// ãƒ¡ãƒƒã‚·ãƒ¥ã®è§£æ
+	void ParseMeshVertices(FbxModel* model, aiMesh* mesh);	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®è§£æ
+	void ParseMeshFaces(FbxModel* model, aiMesh* mesh);		// ãƒ•ã‚§ãƒ³ã‚¹ã®è§£æ
+	void ParseSkin(FbxModel* model, aiMesh* mesh);			// ã‚¹ã‚­ãƒ³æƒ…å ±ã®è§£æ
 
 public:
 	static Mat4 ConvertMat4FromAssimpMat(const aiMatrix4x4& mat);
 	std::string ExractFileName(const std::string& path);
 
-	void ParseMaterial(FbxModel* model, const aiScene* scene);		// ƒ}ƒeƒŠƒAƒ‹ƒJƒ‰[‚Ì‰ğÍ
+	void ParseMaterial(FbxModel* model, const aiScene* scene);		// ãƒãƒ†ãƒªã‚¢ãƒ«ã‚«ãƒ©ãƒ¼ã®è§£æ
 	void ParseNodeRecursive(FbxModel* model, FbxNode* parent, const aiNode* node);
 
 private:

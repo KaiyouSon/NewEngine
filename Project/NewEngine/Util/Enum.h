@@ -1,6 +1,6 @@
 #pragma once
 
-// ƒuƒŒƒ“ƒhƒ‚[ƒh
+// ç¹æ‚¶Îç¹ï½³ç¹å³¨Î”ç¹ï½¼ç¹ãƒ»
 enum class BlendMode
 {
 	Alpha,
@@ -9,26 +9,26 @@ enum class BlendMode
 	Inv,
 };
 
-// ŠÔ’PˆÊ
+// è­ã‚‹ä¿£èœŠå€…ï½½ãƒ»
 enum class TimeUnit
 {
-	MilliSecond,	// ƒ~ƒŠ•b
-	Second,			// •b
-	Minute			// •ª
+	MilliSecond,	// ç¹æº˜Îœé˜ãƒ»
+	Second,			// é˜ãƒ»
+	Minute			// è›»ãƒ»
 };
 
-// ƒxƒWƒG‹Èü‚Ìí—Ş
+// ç¹å¶ãšç¹§ï½¨è­–ï½²é‚±å£¹ãƒ»éï½®é¬˜ãƒ»
 enum class BezierType
 {
-	// ƒC[ƒWƒ“ƒO‚È‚µ
+	// ç¹§ï½¤ç¹ï½¼ç¹§ï½¸ç¹ï½³ç¹§ï½°ç¸ºï½ªç¸ºãƒ»
 	Lerp,
 
-	// ƒC[ƒWƒ“ƒO‚ ‚è
+	// ç¹§ï½¤ç¹ï½¼ç¹§ï½¸ç¹ï½³ç¹§ï½°ç¸ºã‚…ï½Š
 	EaseIn,
 	EaseOut,
 };
 
-// ƒC[ƒWƒ“ƒOí—Ş
+// ç¹§ï½¤ç¹ï½¼ç¹§ï½¸ç¹ï½³ç¹§ï½°éï½®é¬˜ãƒ»
 enum class EaseType
 {
 	Lerp,
@@ -37,7 +37,7 @@ enum class EaseType
 	InOut,
 };
 
-// ƒrƒ‹ƒ{[ƒh‚Ìí—Ş
+// ç¹è–™Îç¹æ‡Šãƒ»ç¹å³¨ãƒ»éï½®é¬˜ãƒ»
 enum class BillboardType
 {
 	None,
@@ -47,7 +47,7 @@ enum class BillboardType
 	AllAxisBillboard,
 };
 
-// ƒgƒ|ƒƒW[ƒ^ƒCƒv
+// ç¹åŒ»ãƒ»ç¹ï½­ç¹§ï½¸ç¹ï½¼ç¹§ï½¿ç¹§ï½¤ç¹ãƒ»
 enum class TopologyType
 {
 	Point,
@@ -57,7 +57,7 @@ enum class TopologyType
 	TriangleStrip,
 };
 
-// ƒJ[ƒŠƒ“ƒOƒ‚[ƒh
+// ç¹§ï½«ç¹ï½¼ç¹ï½ªç¹ï½³ç¹§ï½°ç¹ï½¢ç¹ï½¼ç¹ãƒ»
 enum class CullMode
 {
 	None,
@@ -65,14 +65,14 @@ enum class CullMode
 	Back,
 };
 
-// ƒ‚ƒfƒ‹‚ÌƒtƒH[ƒ}ƒbƒg
+// ç¹ï½¢ç¹ãƒ»Îç¸ºï½®ç¹è¼”ã‹ç¹ï½¼ç¹æ§­ãƒ£ç¹ãƒ»
 enum class ModelFormat
 {
 	Obj,
 	Fbx,
 };
 
-// ”½“]ƒtƒ‰ƒO
+// èœ¿å´ï½»ï½¢ç¹è¼”Î›ç¹§ï½°
 enum class FlipType
 {
 	None,
@@ -81,7 +81,7 @@ enum class FlipType
 	XY
 };
 
-// ƒRƒ‰ƒCƒ_[‚Ìí—Ş
+// ç¹§ï½³ç¹ï½©ç¹§ï½¤ç¹Â€ç¹ï½¼ç¸ºï½®éï½®é¬˜ãƒ»
 enum class ColliderPrimitive
 {
 	// 2D
@@ -97,7 +97,7 @@ enum class ColliderPrimitive
 	Capsule,
 };
 
-// ƒLƒ…[ƒu‚Ì”ª’¸“_
+// ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹æ‚¶ãƒ»èœˆï½«é¬†ã‚‰ã›
 enum class CubePoints
 {
 	FLT, FLD,

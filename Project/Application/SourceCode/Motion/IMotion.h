@@ -38,4 +38,3 @@ public:
 	bool GetisPlay();
 	bool GetisCanChangeMotion();
 };
-

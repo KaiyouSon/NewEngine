@@ -28,10 +28,10 @@ void MalletMotion::Init(HumanoidBody* human)
 	mCurWeaponRots.resize(human->GetWeaponPartsSize());
 	mEndWeaponRots.resize(human->GetWeaponPartsSize());
 
-	// Ä¶I‚í‚Á‚½‚Ì‰Šú‰»
+	// èœ€å’²å‡½é‚¨ã‚…ï½ç¸ºï½£ç¸ºæ»“å‡¾ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
 	if (mComboCount > mComboMaxCount)
 	{
-		// ƒRƒ“ƒ{’†‚Ì‰Šú‰»‚µ‚È‚¢‚½‚ß
+		// ç¹§ï½³ç¹ï½³ç¹æ‡‰ï½¸ï½­ç¸ºï½®è›»æ™„æ‚„è›¹æ‚¶ï¼ ç¸ºï½ªç¸ºãƒ»â—†ç¹§ãƒ»
 		ResetComboCount();
 	}
 
@@ -280,28 +280,28 @@ void MalletMotion::CurrentStepUpdate(PlayerBody* human)
 	}
 }
 
-// ãUŒ‚
+// è ‘ï½±è¬¾ï½»è¬¦ãƒ»
 void MalletMotion::WeakStep1Init(PlayerBody* human)
 {
-	// ‘OƒxƒNƒgƒ‹‚ÌŒvZ
+	// èœ‘é˜ªãƒ»ç¹§ï½¯ç¹åŒ»Îç¸ºï½®éšªè‚²ï½®ãƒ»
 	human->parent->CalcFrontVec();
 
-	// UŒ‚ƒ‚[ƒVƒ‡ƒ“‚Åi‚Ş‹——£‚ÌŒvZ
+	// è¬¾ï½»è¬¦ãƒ»Î”ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³ç¸ºï½§é¨¾ï½²ç¹§Â€éœæ™å±¬ç¸ºï½®éšªè‚²ï½®ãƒ»
 	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->mFrontVec, 8);
 
-	// Œ»İ‚ÌÀ•W‚ğæ“¾
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®è ï½§è®“å¶ï½’èœ¿é–€ï½¾ãƒ»
 	startPos_ = human->pos;
 
-	// “ü—Í‚µ‚½Œã‚Ì‰ñ“]Šp‚ğæ“¾
+	// èœˆï½¥èœ‰å¸™ï¼ ç¸ºæº·ï½¾å¾Œãƒ»è—æ«ï½»ï½¢éš—åµï½’èœ¿é–€ï½¾ãƒ»
 	startRotY_ = human->rot.y;
 	endRotY_ = atan2f(human->parent->mFrontVec.x, human->parent->mFrontVec.z);
 
-	// “–‚½‚è”»’è—LŒø
+	// è –è–™â—†ç¹§é›æ„›è³å£½æ€èœ‰ï½¹
 	mIsCalcCollider = true;
 }
 void MalletMotion::WeakStep1Update(PlayerBody* human)
 {
-	// ­‚µ‘O‚ÉˆÚ“®‚·‚éˆ—
+	// èŸ†ä»£ï¼ èœ‘é˜ªâ†“é˜ï½»èœè¼”â˜†ç¹§å¥ãƒ»é€…ãƒ»
 	const Vec3 endPos = startPos_ + human->parent->mFrontVec.Norm() * length_;
 	human->pos = mEase.InOut(startPos_, endPos);
 	human->rot.y = mEase.InOut(startRotY_, endRotY_);
@@ -316,16 +316,16 @@ void MalletMotion::WeakStep1Update(PlayerBody* human)
 	{
 		if (mComboCount < mComboMaxCount)
 		{
-			// ƒRƒ“ƒ{‚Å‚«‚éƒtƒ‰ƒt
+			// ç¹§ï½³ç¹ï½³ç¹æ‡Šã€’ç¸ºé˜ªï½‹ç¹è¼”Î›ç¹ãƒ»
 			mIsCanChangeMotion = true;
 		}
 
-		// “–‚½‚è”»’è–³Œø
+		// è –è–™â—†ç¹§é›æ„›è³å¤‚â”Œèœ‰ï½¹
 		mIsCalcCollider = false;
 	}
 }
 
-// ‹­UŒ‚
+// è ‘ï½·è¬¾ï½»è¬¦ãƒ»
 void MalletMotion::HeavyStep0Init(PlayerBody* human)
 {
 	startPosY = human->GetPart(PartID::Body)->pos.y;
@@ -357,16 +357,16 @@ void MalletMotion::HeavyStep1Update(PlayerBody* human)
 }
 void MalletMotion::HeavyStep2Init(PlayerBody* human)
 {
-	// ‘OƒxƒNƒgƒ‹‚ÌŒvZ
+	// èœ‘é˜ªãƒ»ç¹§ï½¯ç¹åŒ»Îç¸ºï½®éšªè‚²ï½®ãƒ»
 	human->parent->CalcFrontVec();
 
-	// UŒ‚ƒ‚[ƒVƒ‡ƒ“‚Åi‚Ş‹——£‚ÌŒvZ
+	// è¬¾ï½»è¬¦ãƒ»Î”ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³ç¸ºï½§é¨¾ï½²ç¹§Â€éœæ™å±¬ç¸ºï½®éšªè‚²ï½®ãƒ»
 	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->mFrontVec, 10);
 
-	// Œ»İ‚ÌÀ•W‚ğæ“¾
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®è ï½§è®“å¶ï½’èœ¿é–€ï½¾ãƒ»
 	startPos_ = human->pos;
 
-	// “ü—Í‚µ‚½Œã‚Ì‰ñ“]Šp‚ğæ“¾
+	// èœˆï½¥èœ‰å¸™ï¼ ç¸ºæº·ï½¾å¾Œãƒ»è—æ«ï½»ï½¢éš—åµï½’èœ¿é–€ï½¾ãƒ»
 	startRotY_ = human->rot.y;
 	endRotY_ = atan2f(human->parent->mFrontVec.x, human->parent->mFrontVec.z);
 
@@ -377,7 +377,7 @@ void MalletMotion::HeavyStep2Update(PlayerBody* human)
 {
 	human->GetPart(PartID::Body)->pos.y = mEase.In(startPosY, endPosY);
 
-	// ­‚µ‘O‚ÉˆÚ“®‚·‚éˆ—
+	// èŸ†ä»£ï¼ èœ‘é˜ªâ†“é˜ï½»èœè¼”â˜†ç¹§å¥ãƒ»é€…ãƒ»
 	const Vec3 endPos = startPos_ + human->parent->mFrontVec.Norm() * length_;
 	human->pos = mEase.InOut(startPos_, endPos);
 	human->rot.y = mEase.InOut(startRotY_, endRotY_);
@@ -386,11 +386,11 @@ void MalletMotion::HeavyStep2Update(PlayerBody* human)
 	if (mEase.GetisEnd() == true)
 	{
 		SoundManager::Play("WeakAttackSE");
-		// “–‚½‚è”»’è—LŒø
+		// è –è–™â—†ç¹§é›æ„›è³å£½æ€èœ‰ï½¹
 		mIsCalcCollider = true;
 		//if (mComboCount < mComboMaxCount)
 		//{
-		//	// ƒRƒ“ƒ{‚Å‚«‚éƒtƒ‰ƒt
+		//	// ç¹§ï½³ç¹ï½³ç¹æ‡Šã€’ç¸ºé˜ªï½‹ç¹è¼”Î›ç¹ãƒ»
 		//	mIsCanChangeMotion = true;
 		//}
 	}
@@ -406,7 +406,7 @@ void MalletMotion::HeavyStep3Update(PlayerBody* human)
 
 	if (mEase.GetisEnd() == true)
 	{
-		// “–‚½‚è”»’è–³Œø
+		// è –è–™â—†ç¹§é›æ„›è³å¤‚â”Œèœ‰ï½¹
 		mIsCalcCollider = false;
 	}
 }
@@ -443,19 +443,19 @@ void MalletMotion::HeavyStep6Update(PlayerBody* human)
 	human->GetPart(PartID::Body)->pos.y = mEase.In(startPosY, endPosY);
 }
 
-// ƒoƒbƒNUŒ‚
+// ç¹èˆŒãƒ£ç¹§ï½¯è¬¾ï½»è¬¦ãƒ»
 void MalletMotion::BackStep0Init(PlayerBody* human)
 {
-	// ‘OƒxƒNƒgƒ‹‚ÌŒvZ
+	// èœ‘é˜ªãƒ»ç¹§ï½¯ç¹åŒ»Îç¸ºï½®éšªè‚²ï½®ãƒ»
 	human->parent->CalcFrontVec();
 
-	// UŒ‚ƒ‚[ƒVƒ‡ƒ“‚Åi‚Ş‹——£‚ÌŒvZ
+	// è¬¾ï½»è¬¦ãƒ»Î”ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³ç¸ºï½§é¨¾ï½²ç¹§Â€éœæ™å±¬ç¸ºï½®éšªè‚²ï½®ãƒ»
 	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(-human->parent->mFrontVec, 2);
 
-	// Œ»İ‚ÌÀ•W‚ğæ“¾
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®è ï½§è®“å¶ï½’èœ¿é–€ï½¾ãƒ»
 	startPos_ = human->pos;
 
-	// “ü—Í‚µ‚½Œã‚Ì‰ñ“]Šp‚ğæ“¾
+	// èœˆï½¥èœ‰å¸™ï¼ ç¸ºæº·ï½¾å¾Œãƒ»è—æ«ï½»ï½¢éš—åµï½’èœ¿é–€ï½¾ãƒ»
 	startRotY_ = human->rot.y;
 	endRotY_ = atan2f(human->parent->mFrontVec.x, human->parent->mFrontVec.z);
 
@@ -467,27 +467,27 @@ void MalletMotion::BackStep0Update(PlayerBody* human)
 {
 	moveEase_.Update();
 
-	// ­‚µ‘O‚ÉˆÚ“®‚·‚éˆ—
+	// èŸ†ä»£ï¼ èœ‘é˜ªâ†“é˜ï½»èœè¼”â˜†ç¹§å¥ãƒ»é€…ãƒ»
 	const Vec3 endPos = startPos_ - human->parent->mFrontVec.Norm() * length_;
 	human->pos = moveEase_.InOut(startPos_, endPos);
 	human->parent->mMoveVel = endPos - startPos_;
 }
 void MalletMotion::BackStep2Init(PlayerBody* human)
 {
-	// ‘OƒxƒNƒgƒ‹‚ÌŒvZ
+	// èœ‘é˜ªãƒ»ç¹§ï½¯ç¹åŒ»Îç¸ºï½®éšªè‚²ï½®ãƒ»
 	human->parent->CalcFrontVec();
 
-	// UŒ‚ƒ‚[ƒVƒ‡ƒ“‚Åi‚Ş‹——£‚ÌŒvZ
+	// è¬¾ï½»è¬¦ãƒ»Î”ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³ç¸ºï½§é¨¾ï½²ç¹§Â€éœæ™å±¬ç¸ºï½®éšªè‚²ï½®ãƒ»
 	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->mFrontVec, 17.5);
 
-	// Œ»İ‚ÌÀ•W‚ğæ“¾
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®è ï½§è®“å¶ï½’èœ¿é–€ï½¾ãƒ»
 	startPos_ = human->pos;
 
-	// “ü—Í‚µ‚½Œã‚Ì‰ñ“]Šp‚ğæ“¾
+	// èœˆï½¥èœ‰å¸™ï¼ ç¸ºæº·ï½¾å¾Œãƒ»è—æ«ï½»ï½¢éš—åµï½’èœ¿é–€ï½¾ãƒ»
 	startRotY_ = human->rot.y;
 	endRotY_ = atan2f(human->parent->mFrontVec.x, human->parent->mFrontVec.z);
 
-	// “–‚½‚è”»’è—LŒø
+	// è –è–™â—†ç¹§é›æ„›è³å£½æ€èœ‰ï½¹
 	mIsCalcCollider = true;
 
 	moveEase_.SetEaseTimer(15);
@@ -498,7 +498,7 @@ void MalletMotion::BackStep2Update(PlayerBody* human)
 {
 	moveEase_.Update();
 
-	// ­‚µ‘O‚ÉˆÚ“®‚·‚éˆ—
+	// èŸ†ä»£ï¼ èœ‘é˜ªâ†“é˜ï½»èœè¼”â˜†ç¹§å¥ãƒ»é€…ãƒ»
 	const Vec3 endPos = startPos_ + human->parent->mFrontVec.Norm() * length_;
 	human->pos = moveEase_.InOut(startPos_, endPos);
 	human->parent->mMoveVel = endPos - startPos_;
@@ -512,36 +512,36 @@ void MalletMotion::BackStep3Update(PlayerBody* human)
 {
 	moveEase_.Update();
 
-	// ­‚µ‘O‚ÉˆÚ“®‚·‚éˆ—
+	// èŸ†ä»£ï¼ èœ‘é˜ªâ†“é˜ï½»èœè¼”â˜†ç¹§å¥ãƒ»é€…ãƒ»
 	const Vec3 endPos = startPos_ + human->parent->mFrontVec.Norm() * length_;
 	human->pos = moveEase_.InOut(startPos_, endPos);
 	human->parent->mMoveVel = endPos - startPos_;
 
 	if (mEase.GetisEnd() == true)
 	{
-		// “–‚½‚è”»’è–³Œø
+		// è –è–™â—†ç¹§é›æ„›è³å¤‚â”Œèœ‰ï½¹
 		mIsCalcCollider = false;
 	}
 
 }
 
-// ‰ñ“]UŒ‚
+// è—æ«ï½»ï½¢è¬¾ï½»è¬¦ãƒ»
 void MalletMotion::RollStep0Init(PlayerBody* human)
 {
-	// ‘OƒxƒNƒgƒ‹‚ÌŒvZ
+	// èœ‘é˜ªãƒ»ç¹§ï½¯ç¹åŒ»Îç¸ºï½®éšªè‚²ï½®ãƒ»
 	human->parent->CalcFrontVec();
 
-	// UŒ‚ƒ‚[ƒVƒ‡ƒ“‚Åi‚Ş‹——£‚ÌŒvZ
+	// è¬¾ï½»è¬¦ãƒ»Î”ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³ç¸ºï½§é¨¾ï½²ç¹§Â€éœæ™å±¬ç¸ºï½®éšªè‚²ï½®ãƒ»
 	length_ = CollisionManager::GetInstance()->CalcPlayerDisToFront(-human->parent->mFrontVec, 8);
 
-	// Œ»İ‚ÌÀ•W‚ğæ“¾
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®è ï½§è®“å¶ï½’èœ¿é–€ï½¾ãƒ»
 	startPos_ = human->pos;
 
-	// “ü—Í‚µ‚½Œã‚Ì‰ñ“]Šp‚ğæ“¾
+	// èœˆï½¥èœ‰å¸™ï¼ ç¸ºæº·ï½¾å¾Œãƒ»è—æ«ï½»ï½¢éš—åµï½’èœ¿é–€ï½¾ãƒ»
 	startRotY_ = human->rot.y;
 	endRotY_ = atan2f(human->parent->mFrontVec.x, human->parent->mFrontVec.z);
 
-	// “–‚½‚è”»’è—LŒø
+	// è –è–™â—†ç¹§é›æ„›è³å£½æ€èœ‰ï½¹
 	mIsCalcCollider = true;
 
 	moveEase_.SetEaseTimer(30);
@@ -552,7 +552,7 @@ void MalletMotion::RollStep0Update(PlayerBody* human)
 {
 	moveEase_.Update();
 
-	// ­‚µ‘O‚ÉˆÚ“®‚·‚éˆ—
+	// èŸ†ä»£ï¼ èœ‘é˜ªâ†“é˜ï½»èœè¼”â˜†ç¹§å¥ãƒ»é€…ãƒ»
 	const Vec3 endPos = startPos_ + human->parent->mFrontVec.Norm() * length_;
 	human->pos = moveEase_.InOut(startPos_, endPos);
 	human->parent->mMoveVel = endPos - startPos_;
@@ -566,14 +566,14 @@ void MalletMotion::RollStep1Update(PlayerBody* human)
 {
 	moveEase_.Update();
 
-	// ­‚µ‘O‚ÉˆÚ“®‚·‚éˆ—
+	// èŸ†ä»£ï¼ èœ‘é˜ªâ†“é˜ï½»èœè¼”â˜†ç¹§å¥ãƒ»é€…ãƒ»
 	const Vec3 endPos = startPos_ + human->parent->mFrontVec.Norm() * length_;
 	human->pos = moveEase_.InOut(startPos_, endPos);
 	human->parent->mMoveVel = endPos - startPos_;
 
 	if (mEase.GetisEnd() == true)
 	{
-		// “–‚½‚è”»’è–³Œø
+		// è –è–™â—†ç¹§é›æ„›è³å¤‚â”Œèœ‰ï½¹
 		mIsCalcCollider = false;
 	}
 }

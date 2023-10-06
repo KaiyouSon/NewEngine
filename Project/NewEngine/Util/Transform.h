@@ -5,31 +5,30 @@
 class Transform
 {
 private:
-	Mat4 mScaleMat;	// ƒXƒP[ƒ‹s—ñ
-	Mat4 mRotMat;	// ‰ñ“]s—ñ
-	Mat4 mTransMat;	// •½sˆÚ“®s—ñ
-	Mat4 mWorldMat;	// ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	Mat4 mScaleMat;	// ç¹§ï½¹ç¹§ï½±ç¹ï½¼ç¹ï½«é™¦æ‚Ÿãƒ»
+	Mat4 mRotMat;	// è—æ«ï½»ï½¢é™¦æ‚Ÿãƒ»
+	Mat4 mTransMat;	// èŸ·ï½³é™¦æªï½§ï½»èœæˆŠï½¡æ‚Ÿãƒ»
+	Mat4 mWorldMat;	// ç¹ï½¯ç¹ï½¼ç¹ï½«ç¹ç‰™ï½¤ç”»é‹¤é™¦æ‚Ÿãƒ»
 
 	Billboard mBillboard;
 
 public:
-	Vec3 pos;	// À•W
-	Vec3 scale;	// ƒXƒP[ƒ‹
-	Vec3 rot;	// ‰ñ“]
+	Vec3 pos;	// è ï½§è®“ãƒ»
+	Vec3 scale;	// ç¹§ï½¹ç¹§ï½±ç¹ï½¼ç¹ï½«
+	Vec3 rot;	// è—æ«ï½»ï½¢
 
 public:
 	Transform();
 	Transform(const Vec3 pos, const Vec3 scale, const Vec3 rot);
 	void Update();
 
-public: // ƒQƒbƒ^[
+public: // ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
 	Mat4 GetTransMat();
 	Mat4 GetScaleMat();
 	Mat4 GetRotMat();
 	Mat4 GetWorldMat();
 
-public: // ƒZƒbƒ^[
+public: // ç¹§ï½»ç¹ãƒ»ã¡ç¹ï½¼
 	void SetWorldMat(Mat4 worldMat);
 	void SetBillboardType(const BillboardType type);
 };
-

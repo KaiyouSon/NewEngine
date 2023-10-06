@@ -11,7 +11,7 @@ public:
 	RenderTarget();
 
 public:
-	// ƒQƒbƒ^[
+	// ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
 	BufferResource* GetBufferResource();
 
 };
