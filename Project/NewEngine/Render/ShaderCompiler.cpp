@@ -1,17 +1,17 @@
-#include "ShaderObject.h"
+#include "ShaderCompiler.h"
 #include "Util.h"
 #include <d3dcompiler.h>
 #include <string>
 #include <cassert>
 #pragma comment(lib,"d3dcompiler.lib")
 
-Microsoft::WRL::ComPtr <ID3DBlob> ShaderObject::sErrorBlob = nullptr;
+Microsoft::WRL::ComPtr <ID3DBlob> ShaderCompiler::sErrorBlob = nullptr;
 
-ShaderObject::ShaderObject() : mResult(HRESULT())
+ShaderCompiler::ShaderCompiler() : mResult(HRESULT())
 {
 }
 
-void ShaderObject::ShowErrorDetails()
+void ShaderCompiler::ShowErrorDetails()
 {
 	// シェーダのエラー内容を表示
 	if (FAILED(mResult))
@@ -30,7 +30,7 @@ void ShaderObject::ShowErrorDetails()
 }
 
 // コンピュートシェーダー
-void ShaderObject::CompileComputeShader(const std::string& filePath, const std::string& entryPointName)
+void ShaderCompiler::CompileComputeShader(const std::string& filePath, const std::string& entryPointName)
 {
 	// stringをwstringに変換
 	std::wstring wFilePath(filePath.begin(), filePath.end());
@@ -68,7 +68,7 @@ void ShaderObject::CompileComputeShader(const std::string& filePath, const std::
 }
 
 // 頂点シェーダー
-void ShaderObject::CompileVertexShader(
+void ShaderCompiler::CompileVertexShader(
 	const std::string& filePath, const std::string& entryPointName)
 {
 	// stringをwstringに変換
@@ -107,7 +107,7 @@ void ShaderObject::CompileVertexShader(
 }
 
 // ジオメトリシェーダー
-void ShaderObject::CompileGeometryShader(
+void ShaderCompiler::CompileGeometryShader(
 	const std::string& filePath, const std::string& entryPointName)
 {
 	// stringをwstringに変換
@@ -146,7 +146,7 @@ void ShaderObject::CompileGeometryShader(
 }
 
 // ピクセルシェーダー
-void ShaderObject::CompilePixelShader(
+void ShaderCompiler::CompilePixelShader(
 	const std::string& filePath, const std::string& entryPointName)
 {
 	// stringをwstringに変換
@@ -186,7 +186,7 @@ void ShaderObject::CompilePixelShader(
 }
 
 // インプットレイアウトの追加
-void ShaderObject::AddInputLayout(const LPCSTR& semanticName, const DXGI_FORMAT format, const uint32_t index)
+void ShaderCompiler::AddInputLayout(const LPCSTR& semanticName, const DXGI_FORMAT format, const uint32_t index)
 {
 	mInputLayout.push_back(
 		{	// xyz座標
@@ -197,27 +197,27 @@ void ShaderObject::AddInputLayout(const LPCSTR& semanticName, const DXGI_FORMAT 
 }
 
 // ゲッター
-ID3DBlob* ShaderObject::GetErrorBlob()
+ID3DBlob* ShaderCompiler::GetErrorBlob()
 {
 	return  sErrorBlob.Get();
 }
-ID3DBlob* ShaderObject::GetCSBlob()
+ID3DBlob* ShaderCompiler::GetCSBlob()
 {
 	return mCsBlob.Get();
 }
-ID3DBlob* ShaderObject::GetVSBlob()
+ID3DBlob* ShaderCompiler::GetVSBlob()
 {
 	return mVsBlob.Get();
 }
-ID3DBlob* ShaderObject::GetGSBlob()
+ID3DBlob* ShaderCompiler::GetGSBlob()
 {
 	return mGsBlob.Get();
 }
-ID3DBlob* ShaderObject::GetPSBlob()
+ID3DBlob* ShaderCompiler::GetPSBlob()
 {
 	return mPsBlob.Get();
 }
-const std::vector <D3D12_INPUT_ELEMENT_DESC>& ShaderObject::GetInputLayout()
+const std::vector <D3D12_INPUT_ELEMENT_DESC>& ShaderCompiler::GetInputLayout()
 {
 	return mInputLayout;
 }

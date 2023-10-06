@@ -5,16 +5,16 @@ void Skydome::CreateGraphicsPipeline()
 	std::string path = "Application/Shader/";
 
 	// 繝薙ロ繝・ヨ逕ｨ
-	ShaderObjectManager::Create("Skydome");
-	ShaderObjectManager::GetShaderObject("Skydome")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Skydome")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Skydome")->CompileVertexShader(path + "SkydomeVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Skydome")->CompilePixelShader(path + "SkydomePS.hlsl", "main");
+	ShaderCompilerManager::Create("Skydome");
+	ShaderCompilerManager::GetShaderCompiler("Skydome")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Skydome")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Skydome")->CompileVertexShader(path + "SkydomeVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("Skydome")->CompilePixelShader(path + "SkydomePS.hlsl", "main");
 
 	// 3D繧ｪ繝悶ず繧ｧ繧ｯ繝育畑
 	GraphicsPipelineSetting setting =
 		PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("Skydome");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Skydome");
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "Skydome");

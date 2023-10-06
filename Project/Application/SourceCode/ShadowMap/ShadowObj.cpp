@@ -7,17 +7,17 @@ void ShadowObj::CreateGraphicsPipeline()
 	std::string path = "Application/Shader/";
 
 	// ShadowObj用
-	ShaderObjectManager::Create("ShadowObj");
-	ShaderObjectManager::GetShaderObject("ShadowObj")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ShadowObj")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ShadowObj")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ShadowObj")->CompileVertexShader(path + "ShadowObjVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("ShadowObj")->CompilePixelShader(path + "ShadowObjPS.hlsl", "main");
+	ShaderCompilerManager::Create("ShadowObj");
+	ShaderCompilerManager::GetShaderCompiler("ShadowObj")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("ShadowObj")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("ShadowObj")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("ShadowObj")->CompileVertexShader(path + "ShadowObjVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("ShadowObj")->CompilePixelShader(path + "ShadowObjPS.hlsl", "main");
 
 	// 3Dオブジェクト用
 	GraphicsPipelineSetting setting =
 		PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("ShadowObj");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ShadowObj");
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;

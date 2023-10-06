@@ -6,31 +6,31 @@ void ShadowMap::CreateGraphicsPipeline()
 	std::string path = "Application/Shader/";
 
 	// ShadowObj用
-	ShaderObjectManager::Create("ShadowMap");
-	ShaderObjectManager::GetShaderObject("ShadowMap")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ShadowMap")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ShadowMap")->CompileVertexShader(path + "ShadowMapVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("ShadowMap")->CompilePixelShader(path + "ShadowMapPS.hlsl", "main");
+	ShaderCompilerManager::Create("ShadowMap");
+	ShaderCompilerManager::GetShaderCompiler("ShadowMap")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("ShadowMap")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("ShadowMap")->CompileVertexShader(path + "ShadowMapVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("ShadowMap")->CompilePixelShader(path + "ShadowMapPS.hlsl", "main");
 
 	// 3Dオブジェクト用
 	GraphicsPipelineSetting setting =
 		PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("ShadowMap");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ShadowMap");
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "ShadowMap");
 
 	// ShadowObj用
-	ShaderObjectManager::Create("ShadowMapBlur");
-	ShaderObjectManager::GetShaderObject("ShadowMapBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ShadowMapBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ShadowMapBlur")->CompileVertexShader(path + "GaussianBlurVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("ShadowMapBlur")->CompilePixelShader(path + "GaussianBlurPS.hlsl", "main");
+	ShaderCompilerManager::Create("ShadowMapBlur");
+	ShaderCompilerManager::GetShaderCompiler("ShadowMapBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("ShadowMapBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("ShadowMapBlur")->CompileVertexShader(path + "GaussianBlurVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("ShadowMapBlur")->CompilePixelShader(path + "GaussianBlurPS.hlsl", "main");
 
 	// 3Dオブジェクト用
 	setting =
 		PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("ShadowMapBlur");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ShadowMapBlur");
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "ShadowMapBlur");
 

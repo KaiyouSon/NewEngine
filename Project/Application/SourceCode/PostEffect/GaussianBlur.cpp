@@ -17,14 +17,14 @@ void GaussianBlur::CreateGraphicsPipeline()
 
 	//std::string path = "Application/Shader/";
 
-	//ShaderObjectManager::Create("GaussianBlur");
-	//ShaderObjectManager::GetShaderObject("GaussianBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	//ShaderObjectManager::GetShaderObject("GaussianBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	//ShaderObjectManager::GetShaderObject("GaussianBlur")->CompileVertexShader(path + "GaussianBlurVS.hlsl", "main");
-	//ShaderObjectManager::GetShaderObject("GaussianBlur")->CompilePixelShader(path + "GaussianBlurPS.hlsl", "main");
+	//ShaderCompilerManager::Create("GaussianBlur");
+	//ShaderCompilerManager::GetShaderCompiler("GaussianBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("GaussianBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("GaussianBlur")->CompileVertexShader(path + "GaussianBlurVS.hlsl", "main");
+	//ShaderCompilerManager::GetShaderCompiler("GaussianBlur")->CompilePixelShader(path + "GaussianBlurPS.hlsl", "main");
 
 	//PipelineManager::CreateGraphicsPipeline(
-	//	ShaderObjectManager::GetShaderObject("GaussianBlur"),
+	//	ShaderCompilerManager::GetShaderCompiler("GaussianBlur"),
 	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
 	//	CullMode::None,
 	//	depthStencilDesc,

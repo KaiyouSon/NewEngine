@@ -20,14 +20,14 @@ void RadialBlur::CreateGraphicsPipeline()
 	//std::string path = "Application/Shader/";
 
 	//// 鬮倩ｼ晏ｺｦ謚ｽ蜃ｺ逕ｨ
-	//ShaderObjectManager::Create("RadialBlur");
-	//ShaderObjectManager::GetShaderObject("RadialBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	//ShaderObjectManager::GetShaderObject("RadialBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	//ShaderObjectManager::GetShaderObject("RadialBlur")->CompileVertexShader(path + "RadialBlurVS.hlsl", "main");
-	//ShaderObjectManager::GetShaderObject("RadialBlur")->CompilePixelShader(path + "RadialBlurPS.hlsl", "main");
+	//ShaderCompilerManager::Create("RadialBlur");
+	//ShaderCompilerManager::GetShaderCompiler("RadialBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("RadialBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("RadialBlur")->CompileVertexShader(path + "RadialBlurVS.hlsl", "main");
+	//ShaderCompilerManager::GetShaderCompiler("RadialBlur")->CompilePixelShader(path + "RadialBlurPS.hlsl", "main");
 
 	//PipelineManager::CreateGraphicsPipeline(
-	//	ShaderObjectManager::GetShaderObject("RadialBlur"),
+	//	ShaderCompilerManager::GetShaderCompiler("RadialBlur"),
 	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
 	//	CullMode::None,
 	//	depthStencilDesc,

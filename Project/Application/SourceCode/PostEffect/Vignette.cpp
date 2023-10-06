@@ -21,14 +21,14 @@ void Vignette::CreateGraphicsPipeline()
 
 	//std::string path = "Application/Shader/";
 
-	//ShaderObjectManager::Create("Vignette");
-	//ShaderObjectManager::GetShaderObject("Vignette")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	//ShaderObjectManager::GetShaderObject("Vignette")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	//ShaderObjectManager::GetShaderObject("Vignette")->CompileVertexShader(path + "VignetteVS.hlsl", "main");
-	//ShaderObjectManager::GetShaderObject("Vignette")->CompilePixelShader(path + "VignettePS.hlsl", "main");
+	//ShaderCompilerManager::Create("Vignette");
+	//ShaderCompilerManager::GetShaderCompiler("Vignette")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("Vignette")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("Vignette")->CompileVertexShader(path + "VignetteVS.hlsl", "main");
+	//ShaderCompilerManager::GetShaderCompiler("Vignette")->CompilePixelShader(path + "VignettePS.hlsl", "main");
 
 	//PipelineManager::CreateGraphicsPipeline(
-	//	ShaderObjectManager::GetShaderObject("Vignette"),
+	//	ShaderCompilerManager::GetShaderCompiler("Vignette"),
 	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
 	//	CullMode::None,
 	//	depthStencilDesc,

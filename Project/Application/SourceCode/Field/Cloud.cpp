@@ -10,15 +10,15 @@ void Cloud::CreateGraphicsPipeline()
 	std::string path = "Application/Shader/";
 
 	// 鬮倩ｼ晏ｺｦ謚ｽ蜃ｺ逕ｨ
-	ShaderObjectManager::Create("Cloud");
-	ShaderObjectManager::GetShaderObject("Cloud")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Cloud")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Cloud")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Cloud")->CompileVertexShader(path + "CloudVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Cloud")->CompilePixelShader(path + "CloudPS.hlsl", "main");
+	ShaderCompilerManager::Create("Cloud");
+	ShaderCompilerManager::GetShaderCompiler("Cloud")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Cloud")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Cloud")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Cloud")->CompileVertexShader(path + "CloudVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("Cloud")->CompilePixelShader(path + "CloudPS.hlsl", "main");
 
 	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("Cloud");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Cloud");
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc;

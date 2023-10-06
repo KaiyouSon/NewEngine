@@ -1,12 +1,12 @@
 #pragma once
-#include "ShaderObject.h"
+#include "ShaderCompiler.h"
 #include "RootSignature.h"
 #include <memory>
 
 struct ComputePipelineSetting
 {
 	// 繧ｷ繧ｧ繝繝ｼ繧ｪ繝悶ず繧ｧ繧ｯ繝・
-	ShaderObject* shaderObject;
+	ShaderCompiler* shaderObject;
 
 	// RootParamter髢｢騾｣
 	RootSignatureSetting rootSignatureSetting;

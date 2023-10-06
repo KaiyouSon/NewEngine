@@ -3,7 +3,7 @@
 #include "Viewport.h"
 #include "ScissorRectangle.h"
 #include "TextureManager.h"
-#include "ShaderObjectManager.h"
+#include "ShaderCompilerManager.h"
 #include <cassert>
 #include <string>
 #include <d3dcompiler.h>
@@ -354,99 +354,99 @@ void RenderBase::ShaderCompilerInit()
 	std::string path2 = "Application/Shader/";
 
 	// Object3D逕ｨ繧ｷ繧ｧ繝ｼ繝繝ｼ
-	ShaderObjectManager::Create("Object3D");
-	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Object3D")->CompileVertexShader(path1 + "Object3DVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Object3D")->CompilePixelShader(path1 + "Object3DPS.hlsl", "main");
+	ShaderCompilerManager::Create("Object3D");
+	ShaderCompilerManager::GetShaderCompiler("Object3D")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Object3D")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Object3D")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Object3D")->CompileVertexShader(path1 + "Object3DVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("Object3D")->CompilePixelShader(path1 + "Object3DPS.hlsl", "main");
 
 	// Fbx繝｢繝・Ν逕ｨ繧ｷ繧ｧ繝ｼ繝繝ｼ
-	ShaderObjectManager::Create("FbxModel");
-	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("BONEINDICES", DXGI_FORMAT_R32G32B32A32_UINT);
-	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("BONEWEIGHTS", DXGI_FORMAT_R32G32B32A32_FLOAT);
-	ShaderObjectManager::GetShaderObject("FbxModel")->CompileVertexShader(path1 + "FbxModelVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("FbxModel")->CompilePixelShader(path1 + "FbxModelPS.hlsl", "main");
+	ShaderCompilerManager::Create("FbxModel");
+	ShaderCompilerManager::GetShaderCompiler("FbxModel")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("FbxModel")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("FbxModel")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("FbxModel")->AddInputLayout("BONEINDICES", DXGI_FORMAT_R32G32B32A32_UINT);
+	ShaderCompilerManager::GetShaderCompiler("FbxModel")->AddInputLayout("BONEWEIGHTS", DXGI_FORMAT_R32G32B32A32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("FbxModel")->CompileVertexShader(path1 + "FbxModelVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("FbxModel")->CompilePixelShader(path1 + "FbxModelPS.hlsl", "main");
 
 	// 繧ｹ繝励Λ繧､繝育畑繧ｷ繧ｧ繝ｼ繝繝ｼ
-	ShaderObjectManager::Create("Sprite");
-	ShaderObjectManager::GetShaderObject("Sprite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Sprite")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Sprite")->CompileVertexShader(path1 + "SpriteVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Sprite")->CompilePixelShader(path1 + "SpritePS.hlsl", "main");
+	ShaderCompilerManager::Create("Sprite");
+	ShaderCompilerManager::GetShaderCompiler("Sprite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Sprite")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Sprite")->CompileVertexShader(path1 + "SpriteVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("Sprite")->CompilePixelShader(path1 + "SpritePS.hlsl", "main");
 
 	// 蜀・ご繝ｼ繧ｸ繧ｹ繝励Λ繧､繝育畑繧ｷ繧ｧ繝ｼ繝繝ｼ
-	ShaderObjectManager::Create("CircleGaugeSprite");
-	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->CompileVertexShader(path1 + "CircleGaugeSpriteVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->CompilePixelShader(path1 + "CircleGaugeSpritePS.hlsl", "main");
+	ShaderCompilerManager::Create("CircleGaugeSprite");
+	ShaderCompilerManager::GetShaderCompiler("CircleGaugeSprite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("CircleGaugeSprite")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("CircleGaugeSprite")->CompileVertexShader(path1 + "CircleGaugeSpriteVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("CircleGaugeSprite")->CompilePixelShader(path1 + "CircleGaugeSpritePS.hlsl", "main");
 
 	// 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ縺ｮ繧ｷ繧ｧ繝ｼ繝繝ｼ
-	ShaderObjectManager::Create("RenderTexture");
-	ShaderObjectManager::GetShaderObject("RenderTexture")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("RenderTexture")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("RenderTexture")->CompileVertexShader(path1 + "RenderTextureVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("RenderTexture")->CompilePixelShader(path1 + "RenderTexturePS.hlsl", "main");
+	ShaderCompilerManager::Create("RenderTexture");
+	ShaderCompilerManager::GetShaderCompiler("RenderTexture")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("RenderTexture")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("RenderTexture")->CompileVertexShader(path1 + "RenderTextureVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("RenderTexture")->CompilePixelShader(path1 + "RenderTexturePS.hlsl", "main");
 
 	// 繧ｷ繝ｫ繧ｨ繝・ヨ逕ｨ繧ｷ繧ｧ繝ｼ繝繝ｼ
-	ShaderObjectManager::Create("Silhouette");
-	ShaderObjectManager::GetShaderObject("Silhouette")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Silhouette")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Silhouette")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Silhouette")->CompileVertexShader(path1 + "SilhouetteVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Silhouette")->CompilePixelShader(path1 + "SilhouettePS.hlsl", "main");
+	ShaderCompilerManager::Create("Silhouette");
+	ShaderCompilerManager::GetShaderCompiler("Silhouette")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Silhouette")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Silhouette")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Silhouette")->CompileVertexShader(path1 + "SilhouetteVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("Silhouette")->CompilePixelShader(path1 + "SilhouettePS.hlsl", "main");
 
 	// 繧｢繧ｦ繝医Λ繧､繝ｳObject逕ｨ繧ｷ繧ｧ繝ｼ繝繝ｼ
-	ShaderObjectManager::Create("Outline");
-	ShaderObjectManager::GetShaderObject("Outline")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Outline")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Outline")->CompileVertexShader(path1 + "OutLineVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Outline")->CompilePixelShader(path1 + "OutLinePS.hlsl", "main");
+	ShaderCompilerManager::Create("Outline");
+	ShaderCompilerManager::GetShaderCompiler("Outline")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Outline")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Outline")->CompileVertexShader(path1 + "OutLineVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("Outline")->CompilePixelShader(path1 + "OutLinePS.hlsl", "main");
 
 	// 繝医ぇ繝ｼ繝ｳ繝ｬ繝ｳ繝繝ｼ繝ｪ繝ｳ繧ｰ逕ｨ
-	ShaderObjectManager::Create("ToonRendering");
-	ShaderObjectManager::GetShaderObject("ToonRendering")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ToonRendering")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ToonRendering")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ToonRendering")->CompileVertexShader(path1 + "ToonRenderVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("ToonRendering")->CompilePixelShader(path1 + "ToonRenderPS.hlsl", "main");
+	ShaderCompilerManager::Create("ToonRendering");
+	ShaderCompilerManager::GetShaderCompiler("ToonRendering")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("ToonRendering")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("ToonRendering")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("ToonRendering")->CompileVertexShader(path1 + "ToonRenderVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("ToonRendering")->CompilePixelShader(path1 + "ToonRenderPS.hlsl", "main");
 
 	// 繝ｩ繧､繝ｳ逕ｨ
-	ShaderObjectManager::Create("Line");
-	ShaderObjectManager::GetShaderObject("Line")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Line")->CompileVertexShader(path1 + "LineVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Line")->CompilePixelShader(path1 + "LinePS.hlsl", "main");
+	ShaderCompilerManager::Create("Line");
+	ShaderCompilerManager::GetShaderCompiler("Line")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Line")->CompileVertexShader(path1 + "LineVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("Line")->CompilePixelShader(path1 + "LinePS.hlsl", "main");
 
 	// 繧ｨ繝溘ャ繧ｿ繝ｼ逕ｨ
-	ShaderObjectManager::Create("Emitter");
-	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);	// 蠎ｧ讓・
-	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);		// 繧ｹ繧ｱ繝ｼ繝ｫ
-	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 1);		// 蝗櫁ｻ｢
-	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 2);		// 霈昴″蠎ｦ
-	ShaderObjectManager::GetShaderObject("Emitter")->AddInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);	// 濶ｲ
-	ShaderObjectManager::GetShaderObject("Emitter")->CompileComputeShader(path1 + "EmitterCS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Emitter")->CompileVertexShader(path1 + "EmitterVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Emitter")->CompileGeometryShader(path1 + "EmitterGS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Emitter")->CompilePixelShader(path1 + "EmitterPS.hlsl", "main");
+	ShaderCompilerManager::Create("Emitter");
+	ShaderCompilerManager::GetShaderCompiler("Emitter")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);	// 蠎ｧ讓・
+	ShaderCompilerManager::GetShaderCompiler("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);		// 繧ｹ繧ｱ繝ｼ繝ｫ
+	ShaderCompilerManager::GetShaderCompiler("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 1);		// 蝗櫁ｻ｢
+	ShaderCompilerManager::GetShaderCompiler("Emitter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 2);		// 霈昴″蠎ｦ
+	ShaderCompilerManager::GetShaderCompiler("Emitter")->AddInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);	// 濶ｲ
+	ShaderCompilerManager::GetShaderCompiler("Emitter")->CompileComputeShader(path1 + "EmitterCS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("Emitter")->CompileVertexShader(path1 + "EmitterVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("Emitter")->CompileGeometryShader(path1 + "EmitterGS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("Emitter")->CompilePixelShader(path1 + "EmitterPS.hlsl", "main");
 
 	// GPU繧ｨ繝溘ャ繧ｿ繝ｼ逕ｨ
-	ShaderObjectManager::Create("GPUEmitter");
-	ShaderObjectManager::GetShaderObject("GPUEmitter")->CompileComputeShader(path2 + "RespawnPointEffectCS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("GPUEmitter")->CompileVertexShader(path2 + "RespawnPointEffectVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("GPUEmitter")->CompileGeometryShader(path1 + "EmitterGS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("GPUEmitter")->CompilePixelShader(path1 + "EmitterPS.hlsl", "main");
+	ShaderCompilerManager::Create("GPUEmitter");
+	ShaderCompilerManager::GetShaderCompiler("GPUEmitter")->CompileComputeShader(path2 + "RespawnPointEffectCS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("GPUEmitter")->CompileVertexShader(path2 + "RespawnPointEffectVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("GPUEmitter")->CompileGeometryShader(path1 + "EmitterGS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("GPUEmitter")->CompilePixelShader(path1 + "EmitterPS.hlsl", "main");
 
 	// ColliderObject逕ｨ繧ｷ繧ｧ繝ｼ繝繝ｼ
-	ShaderObjectManager::Create("ColliderObject");
-	ShaderObjectManager::GetShaderObject("ColliderObject")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ColliderObject")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ColliderObject")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ColliderObject")->CompileVertexShader(path1 + "ColliderObjectVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("ColliderObject")->CompilePixelShader(path1 + "ColliderObjectPS.hlsl", "main");
+	ShaderCompilerManager::Create("ColliderObject");
+	ShaderCompilerManager::GetShaderCompiler("ColliderObject")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("ColliderObject")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("ColliderObject")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("ColliderObject")->CompileVertexShader(path1 + "ColliderObjectVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("ColliderObject")->CompilePixelShader(path1 + "ColliderObjectPS.hlsl", "main");
 }
 void RenderBase::GraphicsPipelineInit()
 {
@@ -472,7 +472,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// 3D繧ｪ繝悶ず繧ｧ繧ｯ繝育畑
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("Object3D");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Object3D");
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
@@ -483,7 +483,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// FBX繝｢繝・Ν逕ｨ
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("FbxModel");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("FbxModel");
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
@@ -494,7 +494,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// 繧ｹ繝励Λ繧､繝育畑
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("Sprite");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Sprite");
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
@@ -505,7 +505,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// 蜀・ｽ｢繧ｲ繝ｼ繧ｸ繧ｹ繝励Λ繧､繝育畑
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("CircleGaugeSprite");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("CircleGaugeSprite");
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
@@ -516,7 +516,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε逕ｨ
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("RenderTexture");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("RenderTexture");
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
@@ -527,7 +527,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// 繧ｷ繝ｫ繧ｨ繝・ヨ逕ｨ
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("Silhouette");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Silhouette");
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc3;
@@ -538,7 +538,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// 繧｢繧ｦ繝医Λ繧､繝ｳ逕ｨ
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("Outline");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Outline");
 	setting.cullMode = CullMode::Front;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc4;
@@ -549,7 +549,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// 繝医ぇ繝ｼ繝ｳ繝ｬ繝ｳ繝繝ｪ繝ｳ繧ｰ逕ｨ
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("ToonRendering");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ToonRendering");
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc4;
@@ -560,7 +560,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// 繝ｩ繧､繝ｳ逕ｨ
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("Line");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Line");
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::LineStrip;
 	setting.depthStencilDesc = depthStencilDesc1;
@@ -571,7 +571,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// 繧ｨ繝溘ャ繧ｿ繝ｼ逕ｨ
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("Emitter");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Emitter");
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc1;
@@ -582,7 +582,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// GPU繧ｨ繝溘ャ繧ｿ繝ｼ逕ｨ
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("GPUEmitter");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("GPUEmitter");
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc1;
@@ -593,7 +593,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// ColliderObject逕ｨ
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("ColliderObject");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ColliderObject");
 	setting.cullMode = CullMode::None;
 	setting.fillMode = GraphicsPipelineSetting::Wireframe;
 	setting.topologyType = TopologyType::TriangleList;
@@ -606,7 +606,7 @@ void RenderBase::GraphicsPipelineInit()
 void RenderBase::ComputePipelineInit()
 {
 	ComputePipelineSetting setting;
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("GPUEmitter");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("GPUEmitter");
 	setting.rootSignatureSetting.maxCbvRootParameter = 0;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 1;

@@ -6,29 +6,29 @@ void RespawnPoint::CreateGraphicsPipeline()
 	std::string path = "Application/Shader/";
 
 	// 豌ｴ邏狗畑
-	ShaderObjectManager::Create("Ripple");
-	ShaderObjectManager::GetShaderObject("Ripple")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Ripple")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Ripple")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Ripple")->CompileVertexShader(path + "RippleVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Ripple")->CompilePixelShader(path + "RipplePS.hlsl", "main");
+	ShaderCompilerManager::Create("Ripple");
+	ShaderCompilerManager::GetShaderCompiler("Ripple")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Ripple")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Ripple")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Ripple")->CompileVertexShader(path + "RippleVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("Ripple")->CompilePixelShader(path + "RipplePS.hlsl", "main");
 
 	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("Ripple");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Ripple");
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Ripple");
 
 	// 豌ｴ邏狗畑
-	ShaderObjectManager::Create("Rhombus");
-	ShaderObjectManager::GetShaderObject("Rhombus")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Rhombus")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Rhombus")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Rhombus")->CompileVertexShader(path + "RhombusVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Rhombus")->CompilePixelShader(path + "RhombusPS.hlsl", "main");
+	ShaderCompilerManager::Create("Rhombus");
+	ShaderCompilerManager::GetShaderCompiler("Rhombus")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Rhombus")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Rhombus")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	ShaderCompilerManager::GetShaderCompiler("Rhombus")->CompileVertexShader(path + "RhombusVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("Rhombus")->CompilePixelShader(path + "RhombusPS.hlsl", "main");
 
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("Rhombus");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Rhombus");
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.rtvNum = 1;

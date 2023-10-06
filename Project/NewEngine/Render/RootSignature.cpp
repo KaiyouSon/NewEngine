@@ -1,5 +1,5 @@
 #include "RootSignature.h"
-#include "ShaderObject.h"
+#include "ShaderCompiler.h"
 #include "RenderBase.h"
 #include <d3dcompiler.h>
 #include <cassert>
@@ -44,7 +44,7 @@ void RootSignature::Create(const RootSignatureSetting setting)
 	rootSignatureDesc.NumStaticSamplers = 1;
 
 	// 繝ｫ繝ｼ繝医す繧ｰ繝阪メ繝｣縺ｮ繧ｷ繝ｪ繧｢繝ｩ繧､繧ｺ
-	auto errorBlob = ShaderObject::GetErrorBlob();
+	auto errorBlob = ShaderCompiler::GetErrorBlob();
 	Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob;
 	mResult = D3D12SerializeRootSignature(
 		&rootSignatureDesc,

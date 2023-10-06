@@ -7,16 +7,16 @@ void Grass::CreateGraphicsPipeline()
 	std::string path = "Application/Shader/";
 
 	// 繧ｨ繝溘ャ繧ｿ繝ｼ逕ｨ
-	ShaderObjectManager::Create("Grass");
-	ShaderObjectManager::GetShaderObject("Grass")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);	// 蠎ｧ讓・
-	ShaderObjectManager::GetShaderObject("Grass")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);	// 繧ｹ繧ｱ繝ｼ繝ｫ
-	ShaderObjectManager::GetShaderObject("Grass")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT, 1);	// 繧ｿ繧､繝槭・
-	ShaderObjectManager::GetShaderObject("Grass")->CompileVertexShader(path + "GrassVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Grass")->CompileGeometryShader(path + "GrassGS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Grass")->CompilePixelShader(path + "GrassPS.hlsl", "main");
+	ShaderCompilerManager::Create("Grass");
+	ShaderCompilerManager::GetShaderCompiler("Grass")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);	// 蠎ｧ讓・
+	ShaderCompilerManager::GetShaderCompiler("Grass")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);	// 繧ｹ繧ｱ繝ｼ繝ｫ
+	ShaderCompilerManager::GetShaderCompiler("Grass")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT, 1);	// 繧ｿ繧､繝槭・
+	ShaderCompilerManager::GetShaderCompiler("Grass")->CompileVertexShader(path + "GrassVS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("Grass")->CompileGeometryShader(path + "GrassGS.hlsl", "main");
+	ShaderCompilerManager::GetShaderCompiler("Grass")->CompilePixelShader(path + "GrassPS.hlsl", "main");
 
 	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Emitter")->GetSetting();
-	setting.shaderObject = ShaderObjectManager::GetShaderObject("Grass");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Grass");
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;

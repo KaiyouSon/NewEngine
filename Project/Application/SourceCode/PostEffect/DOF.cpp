@@ -22,14 +22,14 @@ void DOF::CreateGraphicsPipeline()
 	//std::string path = "Application/Shader/";
 
 	//// 陲ｫ蜀咏阜豺ｱ蠎ｦ逕ｨ
-	//ShaderObjectManager::Create("DOF");
-	//ShaderObjectManager::GetShaderObject("DOF")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	//ShaderObjectManager::GetShaderObject("DOF")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	//ShaderObjectManager::GetShaderObject("DOF")->CompileVertexShader(path + "DOFVS.hlsl", "main");
-	//ShaderObjectManager::GetShaderObject("DOF")->CompilePixelShader(path + "DOFPS.hlsl", "main");
+	//ShaderCompilerManager::Create("DOF");
+	//ShaderCompilerManager::GetShaderCompiler("DOF")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("DOF")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("DOF")->CompileVertexShader(path + "DOFVS.hlsl", "main");
+	//ShaderCompilerManager::GetShaderCompiler("DOF")->CompilePixelShader(path + "DOFPS.hlsl", "main");
 
 	//PipelineManager::CreateGraphicsPipeline(
-	//	ShaderObjectManager::GetShaderObject("DOF"),
+	//	ShaderCompilerManager::GetShaderCompiler("DOF"),
 	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
 	//	CullMode::None,
 	//	depthStencilDesc,

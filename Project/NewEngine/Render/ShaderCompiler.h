@@ -5,7 +5,7 @@
 #include <string>
 #include <wrl.h>
 
-class ShaderObject
+class ShaderCompiler
 {
 private:
 	static Microsoft::WRL::ComPtr <ID3DBlob> sErrorBlob;	// 繧ｨ繝ｩ繝ｼ繧ｪ繝悶ず繧ｧ繧ｯ繝・
@@ -21,7 +21,7 @@ private:
 	void ShowErrorDetails();
 
 public:
-	ShaderObject();
+	ShaderCompiler();
 
 	// 繧ｳ繝ｳ繝斐Η繝ｼ繝医す繧ｧ繝ｼ繝繝ｼ縺ｮ繧ｳ繝ｳ繝代う繝ｫ
 	void CompileComputeShader(

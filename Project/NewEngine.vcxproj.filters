@@ -289,12 +289,6 @@
     <Filter Include="NewEngine\Header\Render\Pipeline">
       <UniqueIdentifier>{6c0ecbe1-4d46-4067-9f3f-60015c3b5633}</UniqueIdentifier>
     </Filter>
-    <Filter Include="NewEngine\Source\Render\ShaderObject">
-      <UniqueIdentifier>{476a86bb-2911-4c35-83df-34e09e6cec09}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header\Render\ShaderObject">
-      <UniqueIdentifier>{ede8b782-52bf-48fb-9310-c6ec24d25802}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader\Application\Effect">
       <UniqueIdentifier>{7db4ec5d-312e-40f4-88b3-294aaa6f4cd0}</UniqueIdentifier>
     </Filter>
@@ -330,6 +324,12 @@
     </Filter>
     <Filter Include="Shader\Engine\ToonRender">
       <UniqueIdentifier>{8852c9eb-228e-4eff-8841-c20c923f557d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Render\ShaderCompiler">
+      <UniqueIdentifier>{476a86bb-2911-4c35-83df-34e09e6cec09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Render\ShaderCompiler">
+      <UniqueIdentifier>{ede8b782-52bf-48fb-9310-c6ec24d25802}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -774,11 +774,11 @@
     <ClCompile Include="NewEngine\Render\PipelineManager.cpp">
       <Filter>NewEngine\Source\Render\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Render\ShaderObject.cpp">
-      <Filter>NewEngine\Source\Render\ShaderObject</Filter>
+    <ClCompile Include="NewEngine\Render\ShaderCompiler.cpp">
+      <Filter>NewEngine\Source\Render\ShaderCompiler</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Render\ShaderObjectManager.cpp">
-      <Filter>NewEngine\Source\Render\ShaderObject</Filter>
+    <ClCompile Include="NewEngine\Render\ShaderCompilerManager.cpp">
+      <Filter>NewEngine\Source\Render\ShaderCompiler</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Render\ComputePipeline.cpp">
       <Filter>NewEngine\Source\Render\Pipeline</Filter>
@@ -1280,11 +1280,11 @@
     <ClInclude Include="NewEngine\Render\GraphicsPipeline.h">
       <Filter>NewEngine\Header\Render\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Render\ShaderObject.h">
-      <Filter>NewEngine\Header\Render\ShaderObject</Filter>
+    <ClInclude Include="NewEngine\Render\ShaderCompiler.h">
+      <Filter>NewEngine\Header\Render\ShaderCompiler</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Render\ShaderObjectManager.h">
-      <Filter>NewEngine\Header\Render\ShaderObject</Filter>
+    <ClInclude Include="NewEngine\Render\ShaderCompilerManager.h">
+      <Filter>NewEngine\Header\Render\ShaderCompiler</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Render\ComputePipeline.h">
       <Filter>NewEngine\Header\Render\Pipeline</Filter>

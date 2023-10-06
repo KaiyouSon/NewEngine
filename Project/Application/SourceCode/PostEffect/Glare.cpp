@@ -54,14 +54,14 @@ void Glare::CreateGraphicsPipeline()
 	//std::string path = "Application/Shader/";
 
 	//// 繝ｩ繧､繝ｳ繝悶Λ繝ｼ逕ｨ
-	//ShaderObjectManager::Create("GLineBlur");
-	//ShaderObjectManager::GetShaderObject("GLineBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	//ShaderObjectManager::GetShaderObject("GLineBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	//ShaderObjectManager::GetShaderObject("GLineBlur")->CompileVertexShader(path + "GLineBlurVS.hlsl", "main");
-	//ShaderObjectManager::GetShaderObject("GLineBlur")->CompilePixelShader(path + "GLineBlurPS.hlsl", "main");
+	//ShaderCompilerManager::Create("GLineBlur");
+	//ShaderCompilerManager::GetShaderCompiler("GLineBlur")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("GLineBlur")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("GLineBlur")->CompileVertexShader(path + "GLineBlurVS.hlsl", "main");
+	//ShaderCompilerManager::GetShaderCompiler("GLineBlur")->CompilePixelShader(path + "GLineBlurPS.hlsl", "main");
 
 	//PipelineManager::CreateGraphicsPipeline(
-	//	ShaderObjectManager::GetShaderObject("GLineBlur"),
+	//	ShaderCompilerManager::GetShaderCompiler("GLineBlur"),
 	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
 	//	CullMode::None,
 	//	depthStencilDesc,
@@ -70,14 +70,14 @@ void Glare::CreateGraphicsPipeline()
 	//	"GLineBlur");
 
 	//// 繧ｰ繝ｬ繧｢逕ｨ
-	//ShaderObjectManager::Create("Glare");
-	//ShaderObjectManager::GetShaderObject("Glare")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	//ShaderObjectManager::GetShaderObject("Glare")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	//ShaderObjectManager::GetShaderObject("Glare")->CompileVertexShader(path + "GlareVS.hlsl", "main");
-	//ShaderObjectManager::GetShaderObject("Glare")->CompilePixelShader(path + "GlarePS.hlsl", "main");
+	//ShaderCompilerManager::Create("Glare");
+	//ShaderCompilerManager::GetShaderCompiler("Glare")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("Glare")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("Glare")->CompileVertexShader(path + "GlareVS.hlsl", "main");
+	//ShaderCompilerManager::GetShaderCompiler("Glare")->CompilePixelShader(path + "GlarePS.hlsl", "main");
 
 	//PipelineManager::CreateGraphicsPipeline(
-	//	ShaderObjectManager::GetShaderObject("Glare"),
+	//	ShaderCompilerManager::GetShaderCompiler("Glare"),
 	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
 	//	CullMode::None,
 	//	depthStencilDesc,
@@ -86,14 +86,14 @@ void Glare::CreateGraphicsPipeline()
 	//	"Glare");
 
 	//// 繝峨ャ繝医ヵ繧｣繝ｫ繧ｿ繝ｼ逕ｨ
-	//ShaderObjectManager::Create("DotFilter");
-	//ShaderObjectManager::GetShaderObject("DotFilter")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	//ShaderObjectManager::GetShaderObject("DotFilter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	//ShaderObjectManager::GetShaderObject("DotFilter")->CompileVertexShader(path + "DotFilterVS.hlsl", "main");
-	//ShaderObjectManager::GetShaderObject("DotFilter")->CompilePixelShader(path + "DotFilterPS.hlsl", "main");
+	//ShaderCompilerManager::Create("DotFilter");
+	//ShaderCompilerManager::GetShaderCompiler("DotFilter")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("DotFilter")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	//ShaderCompilerManager::GetShaderCompiler("DotFilter")->CompileVertexShader(path + "DotFilterVS.hlsl", "main");
+	//ShaderCompilerManager::GetShaderCompiler("DotFilter")->CompilePixelShader(path + "DotFilterPS.hlsl", "main");
 
 	//PipelineManager::CreateGraphicsPipeline(
-	//	ShaderObjectManager::GetShaderObject("DotFilter"),
+	//	ShaderCompilerManager::GetShaderCompiler("DotFilter"),
 	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
 	//	CullMode::None,
 	//	depthStencilDesc,

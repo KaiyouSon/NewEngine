@@ -1,5 +1,5 @@
 #pragma once
-#include "ShaderObject.h"
+#include "ShaderCompiler.h"
 #include "RootSignature.h"
 #include "Enum.h"
 #include <wrl.h>
@@ -50,7 +50,7 @@ struct GraphicsPipelineSetting
 	TopologyType topologyType;
 
 	// 繧ｷ繧ｧ繝繝ｼ繧ｪ繝悶ず繧ｧ繧ｯ繝・
-	ShaderObject* shaderObject;
+	ShaderCompiler* shaderObject;
 
 	// 豺ｱ蠎ｦ險ｭ螳・
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc;
