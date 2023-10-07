@@ -1,6 +1,6 @@
 #pragma once
 #include "Mat4.h"
-#include "Enum.h"
+#include "NewEngineEnum.h"
 
 class Billboard
 {

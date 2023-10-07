@@ -6,16 +6,6 @@ DirectX12WarningDisableBegin
 #include <d3dx12.h>
 DirectX12WarningDisableEnd
 
-GraphicsPipelineSetting::GraphicsPipelineSetting() :
-	pipelineBlend(PipelineBlend::Alpha),
-	fillMode(FillMode::Solid), cullMode(CullMode::Back),
-	renderTargetBlendMask(WriteAll),
-	topologyType(TopologyType::TriangleList), shaderObject(nullptr),
-	depthStencilDesc(D3D12_DEPTH_STENCIL_DESC()), rtvNum(1),
-	rootSignatureSetting(RootSignatureSetting())
-{
-}
-
 GraphicsPipeline::GraphicsPipeline() : mResult(HRESULT())
 {
 	// 繝・ヵ繧ｩ繝ｫ繝・

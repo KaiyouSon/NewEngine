@@ -2,7 +2,7 @@
 #include "MaterialColor.h"
 #include "TextureManager.h"
 #include "Mesh.h"
-#include "Enum.h"
+#include "NewEngineEnum.h"
 #include <string>
 
 struct Model

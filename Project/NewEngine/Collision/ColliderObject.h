@@ -5,7 +5,6 @@
 #include "Util.h"
 #include "GraphicsPipeline.h"
 #include "Camera.h"
-#include "Enum.h"
 #include "ICollider.h"
 
 class ColliderObject

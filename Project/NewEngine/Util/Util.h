@@ -7,9 +7,10 @@
 #include "Timer.h"
 #include "Easing.h"
 #include "BezierCurve.h"
-#include "Enum.h"
 #include "Rect.h"
-#include "Setting.h"
+#include "NewEngineDefine.h"
+#include "NewEngineEnum.h"
+#include "NewEngineSetting.h"
 #include <functional>
 
 static const int maxBoneIndices = 4;

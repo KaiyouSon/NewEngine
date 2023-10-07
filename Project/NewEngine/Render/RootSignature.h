@@ -1,5 +1,6 @@
 #pragma once
 #include "NewEngineDefine.h"
+#include "NewEngineSetting.h"
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <wrl.h>
@@ -8,14 +9,6 @@
 DirectX12WarningDisableBegin
 #include <d3dx12.h>
 DirectX12WarningDisableEnd
-
-struct RootSignatureSetting
-{
-	uint32_t maxCbvRootParameter;
-	uint32_t maxSrvDescritorRange;
-	uint32_t maxUavDescritorRange;
-	RootSignatureSetting();
-};
 
 class RootSignature
 {

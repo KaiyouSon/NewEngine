@@ -5,7 +5,7 @@
 #include "Transform.h"
 #include "Material.h"
 #include "TextureManager.h"
-#include "Enum.h"
+#include "NewEngineEnum.h"
 #include <vector>
 
 class TextureAnimeiton;

@@ -266,7 +266,7 @@
     <ClCompile Include="NewEngine\Util\Random.cpp" />
     <ClCompile Include="NewEngine\Sound\Sound.cpp" />
     <ClCompile Include="NewEngine\Util\Rect.cpp" />
-    <ClCompile Include="NewEngine\Util\Setting.cpp" />
+    <ClCompile Include="NewEngine\Util\NewEngineSetting.cpp" />
     <ClCompile Include="NewEngine\Util\Timer.cpp" />
     <ClCompile Include="NewEngine\Util\Transform.cpp" />
     <ClCompile Include="NewEngine\Util\Util.cpp" />
@@ -430,11 +430,11 @@
     <ClInclude Include="NewEngine\Util\Color.h" />
     <ClInclude Include="NewEngine\Util\Easing.h" />
     <ClInclude Include="NewEngine\Light\Fog.h" />
-    <ClInclude Include="NewEngine\Util\Enum.h" />
+    <ClInclude Include="NewEngine\Util\NewEngineEnum.h" />
     <ClInclude Include="NewEngine\Util\FrameRate.h" />
     <ClInclude Include="NewEngine\Util\Random.h" />
     <ClInclude Include="NewEngine\Util\Rect.h" />
-    <ClInclude Include="NewEngine\Util\Setting.h" />
+    <ClInclude Include="NewEngine\Util\NewEngineSetting.h" />
     <ClInclude Include="NewEngine\Util\Singleton.h" />
     <ClInclude Include="NewEngine\Sound\Sound.h" />
     <ClInclude Include="NewEngine\Util\Timer.h" />

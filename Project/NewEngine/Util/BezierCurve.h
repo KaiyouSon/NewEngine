@@ -1,7 +1,7 @@
 #pragma once
 #include "Vec3.h"
 #include "Easing.h"
-#include "Enum.h"
+#include "NewEngineEnum.h"
 #include <vector>
 #include <cstdint>
 

@@ -12,9 +12,8 @@ DirectX12WarningDisableBegin
 #include <d3dx12.h>
 DirectX12WarningDisableEnd
 
-#pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi.lib")
-#pragma comment(lib,"d3dcompiler.lib")
+DirectX12CompileLib
+
 using namespace Microsoft::WRL;
 
 float RenderBase::sClearColor[4] = { 0.1f,0.25f,0.5f,0.0f };

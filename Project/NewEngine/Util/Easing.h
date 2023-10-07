@@ -1,6 +1,6 @@
 #pragma once
 #include "Vec3.h"
-#include "Enum.h"
+#include "NewEngineEnum.h"
 #include <cstdint>
 
 class Easing

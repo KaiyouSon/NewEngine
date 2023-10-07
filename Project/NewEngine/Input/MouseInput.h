@@ -1,7 +1,7 @@
 #pragma once
 #include "MathUtil.h"
 #include "Singleton.h"
-#include "Enum.h"
+#include "NewEngineEnum.h"
 #include <dinput.h>
 #include <wrl.h>
 

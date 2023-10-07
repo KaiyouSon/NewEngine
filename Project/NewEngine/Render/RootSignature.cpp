@@ -4,12 +4,6 @@
 #include <d3dcompiler.h>
 #include <cassert>
 
-RootSignatureSetting::RootSignatureSetting() :
-	maxCbvRootParameter(1), maxSrvDescritorRange(1), maxUavDescritorRange(0)
-{
-}
-
-
 void RootSignature::Create(const RootSignatureSetting setting)
 {
 	mSetting = setting;
