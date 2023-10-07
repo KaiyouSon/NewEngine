@@ -11,7 +11,6 @@ private:
 	float mAlpha;
 
 public:
-	static void CreateGraphicsPipeline();
 	RespawnPointUI();
 	void Init();
 	void Update();

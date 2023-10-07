@@ -26,8 +26,6 @@ private:
 	void MaterialDrawCommands();
 
 public:
-	static void CreateGraphicsPipeline();
-
 	Grass();
 	void GenerateGrassToSquare(const Vec2 size, const uint32_t maxNum);
 	void Update(Transform* parent = nullptr);

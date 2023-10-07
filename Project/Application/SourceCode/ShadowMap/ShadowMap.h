@@ -18,11 +18,7 @@ private:
 	std::unique_ptr<PostEffect> mShadowMap;
 	RenderTexture* mShadowMapRT;
 
-	std::unique_ptr<PostEffect> mBlur;
-	RenderTexture* mBlurRT;
-
 public:
-	static void CreateGraphicsPipeline();
 	ShadowMap();
 	void Init();
 	void Register(const uint32_t size);

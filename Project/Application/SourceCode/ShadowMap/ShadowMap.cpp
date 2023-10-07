@@ -1,42 +1,17 @@
 #include "ShadowMap.h"
 using namespace ConstantBufferData;
 
-void ShadowMap::CreateGraphicsPipeline()
-{
-	std::string path = "Application/Shader/";
-
-	// ShadowObj用
-
-	// 3Dオブジェクト用
-	GraphicsPipelineSetting setting =
-		PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ShadowMap");
-	setting.rtvNum = 1;
-	setting.rootSignatureSetting.maxCbvRootParameter = 3;
-	PipelineManager::CreateGraphicsPipeline(setting, "ShadowMap");
-}
-
 ShadowMap::ShadowMap() :
 	mShadowMap(std::make_unique<PostEffect>()),
-	mShadowMapRT(TextureManager::GetRenderTexture("ShadowMap")),
-	mBlur(std::make_unique<PostEffect>()),
-	mBlurRT(TextureManager::GetRenderTexture("ShadowMapBlur"))
+	mShadowMapRT(TextureManager::GetRenderTexture("ShadowMap"))
 {
 	mShadowMapRT->useDepth = true;
 
 	mShadowMap->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ShadowMap"));
 	mShadowMap->AddRenderTexture(mShadowMapRT);
-	//mShadowMap->scale = 1.f / 32.f;
-	//mShadowMap->pos = GetWindowHalfSize() / 2;
 	mShadowMap->scale = 1.f / 32.f;
 	mShadowMap->pos = GetWindowHalfSize();
 	mShadowMap->AddMaterial<ConstantBuffer<CTransformShadowObj>>();
-
-	mBlur->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ShadowMapBlur"));
-	mBlur->AddRenderTexture(mBlurRT);
-	//mBlur->scale = 1.f / 4.f;
-	mBlur->scale = 1.f / 4.f;
-	mBlur->pos = GetWindowHalfSize() / 2;
 
 	mIndex = 0;
 
@@ -67,17 +42,6 @@ void ShadowMap::Init()
 
 void ShadowMap::Update()
 {
-	//if (Key::GetKeyDown(DIK_Q))
-	//{
-	//	mBlur->scale = 1.f / 32.f;
-	//	mBlur->pos = GetWindowHalfSize() / 2;
-	//}
-	//if (Key::GetKeyDown(DIK_E))
-	//{
-	//	mBlur->scale = 1.f / 8.f;
-	//	mBlur->pos = GetWindowHalfSize();
-	//}
-
 	mLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
 
 	// カメラの設定
@@ -97,8 +61,6 @@ void ShadowMap::Update()
 
 	mShadowMap->SetTransferBuffer(2, data);
 	mShadowMap->Update();
-
-	mBlur->Update();
 }
 
 void ShadowMap::RenderTextureSetting()

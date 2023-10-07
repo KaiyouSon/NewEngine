@@ -1,18 +1,6 @@
 #include "RespawnPointUI.h"
 using namespace ConstantBufferData;
 
-void RespawnPointUI::CreateGraphicsPipeline()
-{
-	std::string path = "Application/Shader/";
-
-	
-	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Sprite")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("RespawnTransition");
-	setting.rtvNum = 1;
-	setting.rootSignatureSetting.maxCbvRootParameter = 4;
-	PipelineManager::CreateGraphicsPipeline(setting, "RespawnTransition");
-}
-
 RespawnPointUI::RespawnPointUI() :
 	mBack(std::make_unique<Sprite>())
 {

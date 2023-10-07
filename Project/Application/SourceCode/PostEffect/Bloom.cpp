@@ -1,28 +1,5 @@
 #include "Bloom.h"
 
-void Bloom::CreateGraphicsPipeline()
-{
-	std::string path = "Application/Shader/";
-
-	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("HighLumi");
-	setting.rtvNum = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "HighLumi");
-
-
-	setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("GaussianBlur");
-	setting.rtvNum = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "GaussianBlur");
-
-
-
-	setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Composite");
-	setting.rtvNum = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "Composite");
-}
-
 Bloom::Bloom()
 {
 	// 繝・け繧ｹ繝√Ε繝ｼ縺ｮ繧ｻ繝・ヨ

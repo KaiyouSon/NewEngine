@@ -1,27 +1,6 @@
 #include "RespawnPoint.h"
 #include "EffectManager.h"
 
-void RespawnPoint::CreateGraphicsPipeline()
-{
-	std::string path = "Application/Shader/";
-
-	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Ripple");
-	setting.cullMode = CullMode::Back;
-	setting.topologyType = TopologyType::TriangleList;
-	setting.rtvNum = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "Ripple");
-
-	// 豌ｴ邏狗畑
-
-
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Rhombus");
-	setting.cullMode = CullMode::None;
-	setting.topologyType = TopologyType::TriangleList;
-	setting.rtvNum = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "Rhombus");
-}
-
 RespawnPoint::RespawnPoint() :
 	mRipple(std::make_unique<Object3D>()),
 	mRhombus(std::make_unique<Object3D>())
@@ -31,7 +10,6 @@ RespawnPoint::RespawnPoint() :
 
 	mRhombus->SetModel(ModelManager::GetModel("Plane"));
 	mRhombus->SetTexture(TextureManager::GetTexture("BlurNoice"));
-
 }
 
 void RespawnPoint::Init()

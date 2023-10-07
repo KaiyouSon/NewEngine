@@ -1,21 +1,6 @@
 #include "PostEffectManager.h"
 #include "EffectManager.h"
 
-void PostEffectManager::CreateGraphicsPipeline()
-{
-	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
-
-	// 3D繧ｪ繝悶ず繧ｧ繧ｯ繝育畑
-	setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
-	PipelineManager::CreateGraphicsPipeline(setting, "Object3DWriteNone");
-
-	setting = PipelineManager::GetGraphicsPipeline("Grass")->GetSetting();
-
-	// 3D繧ｪ繝悶ず繧ｧ繧ｯ繝育畑
-	setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
-	PipelineManager::CreateGraphicsPipeline(setting, "GrassWriteNone");
-}
-
 PostEffectManager::PostEffectManager() :
 	mEffectBloom(std::make_unique<Bloom>())
 {

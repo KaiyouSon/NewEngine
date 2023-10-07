@@ -1,18 +1,5 @@
 #include "Skydome.h"
 
-void Skydome::CreateGraphicsPipeline()
-{
-	std::string path = "Application/Shader/";
-
-	// 3D繧ｪ繝悶ず繧ｧ繧ｯ繝育畑
-	GraphicsPipelineSetting setting =
-		PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Skydome");
-	setting.rtvNum = 1;
-	setting.rootSignatureSetting.maxCbvRootParameter = 3;
-	PipelineManager::CreateGraphicsPipeline(setting, "Skydome");
-}
-
 Skydome::Skydome() :
 	mSkydome(std::make_unique<Object3D>()),
 	mPostEffect(std::make_unique<PostEffect>())

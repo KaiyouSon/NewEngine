@@ -14,7 +14,6 @@ private:
 	void ColliderUpdatge();
 
 public:
-	static void CreateGraphicsPipeline();
 	RespawnPoint();
 	void Init();
 	void Update();

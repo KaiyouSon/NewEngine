@@ -7,9 +7,6 @@ private:
 	std::unique_ptr<Object3D> mCloud;
 
 public:
-	static void CreateGraphicsPipeline();
-
-public:
 	Cloud();
 	void Init();
 	void Update();

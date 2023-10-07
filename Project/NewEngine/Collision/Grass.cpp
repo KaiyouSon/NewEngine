@@ -2,20 +2,6 @@
 using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
-void Grass::CreateGraphicsPipeline()
-{
-	std::string path = "Application/Shader/";
-
-
-
-	GraphicsPipelineSetting setting = PipelineManager::GetGraphicsPipeline("Emitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Grass");
-	setting.rtvNum = 1;
-	setting.rootSignatureSetting.maxCbvRootParameter = 2;
-	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "Grass");
-}
-
 Grass::Grass() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
 	mVertexBuffer(std::make_unique <VertexBuffer<VGrass>>()),

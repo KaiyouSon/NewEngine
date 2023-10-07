@@ -23,7 +23,6 @@ private:
 
 public:
 	ShadowObj();
-	static void CreateGraphicsPipeline();
 	void Update(Transform* parent = nullptr);
 	void Draw();
 

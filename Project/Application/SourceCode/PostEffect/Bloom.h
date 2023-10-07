@@ -22,7 +22,6 @@ private:
 
 public:
 	Bloom();
-	static void CreateGraphicsPipeline();
 	void Update();
 	void DrawPostEffect();
 	void DrawPass(const PassType passType);

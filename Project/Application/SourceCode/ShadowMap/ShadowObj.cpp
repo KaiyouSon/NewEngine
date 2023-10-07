@@ -2,20 +2,6 @@
 
 using namespace ConstantBufferData;
 
-void ShadowObj::CreateGraphicsPipeline()
-{
-	std::string path = "Application/Shader/";
-
-	// 3Dオブジェクト用
-	GraphicsPipelineSetting setting =
-		PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ShadowObj");
-	setting.rtvNum = 1;
-	setting.rootSignatureSetting.maxCbvRootParameter = 2;
-	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "ShadowObj");
-}
-
 ShadowObj::ShadowObj() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
 	mCamera(&Camera::current), mModel(nullptr), mParent(nullptr),

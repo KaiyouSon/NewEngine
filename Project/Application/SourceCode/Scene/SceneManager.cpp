@@ -31,19 +31,6 @@ SceneManager::SceneManager()
 
 	CreateManager::GetInstance()->Create();
 
-	ShadowMap::CreateGraphicsPipeline();
-	ShadowObj::CreateGraphicsPipeline();
-	Cloud::CreateGraphicsPipeline();
-	RespawnPoint::CreateGraphicsPipeline();
-	RespawnPointUI::CreateGraphicsPipeline();
-	Tree::CreateGraphicsPipeline();
-	Grass::CreateGraphicsPipeline();
-	Skydome::CreateGraphicsPipeline();
-	PostEffectManager::CreateGraphicsPipeline();
-
-	Bloom::CreateGraphicsPipeline();
-
-
 	// 繝・ヰ繝・げ譎・
 	ProcessAtDebugBulid([]()
 		{

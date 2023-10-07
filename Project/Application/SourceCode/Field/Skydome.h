@@ -15,8 +15,6 @@ private:
 	bool test;
 
 public:
-	static void CreateGraphicsPipeline();
-
 	Skydome();
 	void Init();
 	void Update();

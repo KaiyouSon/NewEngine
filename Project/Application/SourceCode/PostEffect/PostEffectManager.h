@@ -19,8 +19,6 @@ private:
 	void EffectBloomDrawPass();
 
 public:
-	static void CreateGraphicsPipeline();
-
 	PostEffectManager();
 	void Init();
 	void Update();

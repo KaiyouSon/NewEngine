@@ -11,8 +11,11 @@ private:
 	// シェダーコンパイラーの生成
 	void CreateShaderCompiler();
 
-	// パイプラインの生成
-	void CreatePipeline();
+	// Graphicsパイプライン生成
+	void CreateGraphicsPipeline();
+
+	// Computeパイプラインの生成
+	void CreateComputePipeline();
 
 public:
 	// 全部生成する関数

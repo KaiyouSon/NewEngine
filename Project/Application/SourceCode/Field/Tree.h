@@ -10,8 +10,6 @@ private:
 	SphereCollider mCollider;
 
 public:
-	static void CreateGraphicsPipeline();
-
 	Tree();
 	void Init();
 	void Update();
