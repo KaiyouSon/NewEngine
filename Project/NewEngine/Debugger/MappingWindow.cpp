@@ -56,7 +56,11 @@ void MappingWindow::ShowTextureMap()
 	{
 		if (Gui::DrawCollapsingHeader(pair.first.c_str()))
 		{
-			Vec2 size = pair.second->GetInitalSize();
+			Vec2 size =
+			{
+				pair.second->GetInitalSize().x,
+				pair.second->GetInitalSize().y,
+			};
 			Gui::DrawString("Texture Size : (%f,%f)", size.x, size.y);
 			size = size >= 1000 ? size / 10.f : size;
 			Gui::DrawImage(pair.second.get(), size);

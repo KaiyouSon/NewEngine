@@ -13,12 +13,12 @@ Texture::Texture() :
 
 void Texture::Create(const D3D12_RESOURCE_DESC& resourceDesc, uint32_t mipLevels)
 {
+	// サイズ設定
+	mInitalSize = Vec2((float)resourceDesc.Width, (float)resourceDesc.Height);
+
 	// ヒープ設定
 	D3D12_HEAP_PROPERTIES heapProp =
 		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-
-	// サイズ設定
-	mInitalSize = Vec2((float)resourceDesc.Width, (float)resourceDesc.Height);
 
 	// バッファ生成
 	mResult = RenderBase::GetInstance()->GetDevice()->

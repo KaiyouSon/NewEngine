@@ -1,5 +1,6 @@
 #pragma once
 #include "Texture.h"
+#include "DepthTexture.h"
 #include "TextureAnimeiton.h"
 #include "RenderTexture.h"
 #include "Singleton.h"
@@ -13,7 +14,7 @@ template<typename T> class Singleton;
 class TextureManager : public Singleton<TextureManager>
 {
 private:
-	std::unordered_map<std::string, std::unique_ptr<Texture>> mTextureMap;				// 繝・け繧ｹ繝√Ε繝ｼ縺ｮ繝槭ャ繝・
+	std::unordered_map<std::string, std::unique_ptr<ITexture>> mTextureMap;				// 繝・け繧ｹ繝√Ε繝ｼ縺ｮ繝槭ャ繝・
 	std::unordered_map<std::string, std::unique_ptr<Texture>> mMaterialTextureMap;		// 繝槭ユ繝ｪ繧｢繝ｫ繝・け繧ｹ繝√Ε繝ｼ縺ｮ繝槭ャ繝・
 	std::unordered_map<std::string, std::unique_ptr<RenderTexture>> mRenderTextureMap;	// 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ縺ｮ繝槭ャ繝・
 
@@ -26,20 +27,26 @@ private:
 
 public:	// テクスチャー関連
 
-	// テクスチャーを取得する関数
-	static Texture* GetTexture(const std::string tag);
-
 	// 1x1の色テクスチャーを生成する関数
-	static Texture* CreateTexture(const Color color, const std::string tag);
+	static void CreateTexture(const Color color, const std::string tag);
 
 	// テクスチャーをロードする関数
-	static Texture* LoadTexture(const std::string filePath, const std::string tag);
+	static void LoadTexture(const std::string filePath, const std::string tag);
 
 	// mtlファイルのテクスチャーをロードする関数
 	static Texture* LoadMaterialTexture(const std::string filePath, const std::string tag);
+	
+	// 深度テクスチャの生成
+	static void CreateDepthTexture(DepthBuffer* depthBuffer, const std::string tag);
 
 	// アンロード
 	static void UnLoadTexture(const std::string tag);
+
+	// テクスチャーを取得する関数
+	static Texture* GetTexture(const std::string tag);
+
+	// 深度テクスチャーを取得する関数
+	static DepthTexture* GetDepthTexture(const std::string tag);
 
 public: // 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ髢｢騾｣
 
@@ -54,13 +61,12 @@ public: // 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ髢｢騾｣
 
 public:
 	// 繝槭ャ繝・
-	static std::unordered_map<std::string, std::unique_ptr<Texture>>* GetTextureMap();
+	static std::unordered_map<std::string, std::unique_ptr<ITexture>>* GetTextureMap();
 	static std::unordered_map<std::string, std::unique_ptr<Texture>>* GetMaterialTextureMap();
 	static std::unordered_map<std::string, std::unique_ptr<RenderTexture>>* GetRenderTextureMap();
 
 public:
-	// 豺ｱ蠎ｦ繝・け繧ｹ繝√Ε繝ｼ繧堤函謌・
-	static Texture* CreateDepthTexture();
+
 
 public:	// 縺昴・莉悶・蜃ｦ逅・
 	// 繝・け繧ｹ繝√Ε繝ｼ繝ｭ繝ｼ繝牙ｾ後・繧ｳ繝槭Φ繝峨Μ繧ｹ繝医・螳溯｡・

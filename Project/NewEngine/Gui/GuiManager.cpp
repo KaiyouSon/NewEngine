@@ -253,7 +253,7 @@ bool Gui::DrawInputText(const char* label, const std::string& str)
 	return ImGui::InputText(label, const_cast<char*>(str.c_str()), 30);
 }
 
-void Gui::DrawImage(Texture* texture, const Vec2& size)
+void Gui::DrawImage(ITexture* texture, const Vec2& size)
 {
 	if (texture == nullptr) return;
 
@@ -269,7 +269,7 @@ void Gui::DrawImage(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle, const Vec2& si
 	ImGui::Image(handle, textureSize);
 }
 
-bool Gui::DrawImageButton(Texture* texture, const Vec2& size)
+bool Gui::DrawImageButton(ITexture* texture, const Vec2& size)
 {
 	if (texture == nullptr) return false;
 

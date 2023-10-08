@@ -16,30 +16,8 @@ void TextureManager::Init()
 {
 }
 
-// テクスチャーを取得する関数
-Texture* TextureManager::GetTexture(const std::string tag)
-{
-	// 謗剃ｻ門宛蠕｡
-	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
-
-	// 繝ｭ繧ｰ
-	std::string log = "Error";
-
-	if (GetInstance()->mTextureMap[tag].get() == nullptr)
-	{
-		log = "[Texture Use] Tag : " + tag + ", does not exist";
-	}
-	else
-	{
-		log = "[Texture Use] Tag : " + tag + ", was used";
-	}
-	OutputDebugLog(log.c_str());
-
-	return GetInstance()->mTextureMap[tag].get();
-}
-
 // 1x1の色テクスチャーを生成する関数
-Texture* TextureManager::CreateTexture(const Color color, const std::string tag)
+void TextureManager::CreateTexture(const Color color, const std::string tag)
 {
 	// 排他制御
 	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
@@ -48,7 +26,7 @@ Texture* TextureManager::CreateTexture(const Color color, const std::string tag)
 	GetInstance()->mTextureMap.
 		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
 
-	Texture* texture = GetInstance()->mTextureMap[tag].get();
+	Texture* texture = dynamic_cast<Texture*>(GetInstance()->mTextureMap[tag].get());
 
 	// リソース設定
 	D3D12_RESOURCE_DESC resourceDesc =
@@ -87,12 +65,10 @@ Texture* TextureManager::CreateTexture(const Color color, const std::string tag)
 	// Log出力
 	std::string log = "[Texture Create] ColorTexture, Tag : " + tag + ", created";
 	OutputDebugLog(log.c_str());
-
-	return GetInstance()->mTextureMap[tag].get();
 }
 
 // テクスチャーをロードする関数
-Texture* TextureManager::LoadTexture(const std::string filePath, const std::string tag)
+void TextureManager::LoadTexture(const std::string filePath, const std::string tag)
 {
 	// 排他制御
 	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
@@ -101,7 +77,7 @@ Texture* TextureManager::LoadTexture(const std::string filePath, const std::stri
 	GetInstance()->mTextureMap.
 		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
 
-	Texture* texture = GetInstance()->mTextureMap[tag].get();
+	Texture* texture = dynamic_cast<Texture*>(GetInstance()->mTextureMap[tag].get());
 
 	std::string path = "Application/Resources/Texture/" + filePath;
 
@@ -187,8 +163,6 @@ Texture* TextureManager::LoadTexture(const std::string filePath, const std::stri
 	// Log出力
 	std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + tag + ", was loaded successfully";
 	OutputDebugLog(log.c_str());
-
-	return GetInstance()->mTextureMap[tag].get();
 }
 
 // mtlファイルのテクスチャーをロードする関数
@@ -285,7 +259,29 @@ Texture* TextureManager::LoadMaterialTexture(const std::string filePath, const s
 	std::string log = "[MaterialTexture Load] FilePath : " + filePath + ", Tag : " + tag + ", was loaded successfully";
 	OutputDebugLog(log.c_str());
 
-	return GetInstance()->mMaterialTextureMap[tag].get();
+	return texture;
+}
+
+// 深度テクスチャの生成
+void TextureManager::CreateDepthTexture(DepthBuffer* depthBuffer, const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	// マップに格納
+	GetInstance()->mTextureMap.
+		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
+
+	DepthTexture* texture = dynamic_cast<DepthTexture*>(GetInstance()->mTextureMap[tag].get());
+
+	// 深度テクスチャのバッファ生成
+	texture->Create(depthBuffer);
+
+	// SRV作成
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(texture->GetBufferResource());
+
+	std::string log = "[Texture Create] DepthTexture, Tag : " + tag + ", created";
+	OutputDebugLog(log.c_str());
 }
 
 // アンロード
@@ -305,26 +301,52 @@ void TextureManager::UnLoadTexture(const std::string tag)
 	GetInstance()->mTextureMap.erase(tag);
 }
 
-// 豺ｱ蠎ｦ繝・け繧ｹ繝√Ε繝ｼ繧堤函謌・
-Texture* TextureManager::CreateDepthTexture()
+// テクスチャーを取得する関数
+Texture* TextureManager::GetTexture(const std::string tag)
 {
-	// 謗剃ｻ門宛蠕｡
+	// 排他制御
 	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
-	std::string tag = "DepthTexture";
-	GetInstance()->mTextureMap.insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
+	// ログ
+	std::string log = "Error";
 
-	// 豺ｱ蠎ｦ繝舌ャ繝輔ぃ縺ｮ繝ｪ繧ｽ繝ｼ繧ｹ
-	GetInstance()->mTextureMap[tag]->GetBufferResource()->buffer = RenderBase::GetInstance()->GetDepthBuffer()->GetBufferResource()->buffer;
-
-	// SRV菴懈・
-	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(GetInstance()->mTextureMap[tag]->GetBufferResource());
-
-	std::string log = "[Texture Create] DepthTexture, Tag : " + tag + ", created";
+	ITexture* iTexture = GetInstance()->mTextureMap[tag].get();
+	if (iTexture == nullptr)
+	{
+		log = "[Texture Use] Tag : " + tag + ", does not exist";
+	}
+	else
+	{
+		log = "[Texture Use] Tag : " + tag + ", was used";
+	}
 	OutputDebugLog(log.c_str());
 
-	return GetInstance()->mTextureMap[tag].get();
+	return dynamic_cast<Texture*>(iTexture);
 }
+
+// 深度テクスチャーを取得する関数
+DepthTexture* TextureManager::GetDepthTexture(const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	// ログ
+	std::string log = "Error";
+
+	ITexture* iTexture = GetInstance()->mTextureMap[tag].get();
+	if (iTexture == nullptr)
+	{
+		log = "[DepthTexture Use] Tag : " + tag + ", does not exist";
+	}
+	else
+	{
+		log = "[DepthTexture Use] Tag : " + tag + ", was used";
+	}
+	OutputDebugLog(log.c_str());
+
+	return dynamic_cast<DepthTexture*>(iTexture);
+}
+
 
 // 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ縺ｮ蜿門ｾ・
 RenderTexture* TextureManager::GetRenderTexture(const std::string tag)
@@ -432,7 +454,7 @@ void TextureManager::UnLoadRenderTexture(const std::string tag)
 }
 
 // 繝・け繧ｹ繝√Ε繝槭ャ繝励・蜿門ｾ・
-std::unordered_map<std::string, std::unique_ptr<Texture>>* TextureManager::GetTextureMap()
+std::unordered_map<std::string, std::unique_ptr<ITexture>>* TextureManager::GetTextureMap()
 {
 	return &GetInstance()->mTextureMap;
 }

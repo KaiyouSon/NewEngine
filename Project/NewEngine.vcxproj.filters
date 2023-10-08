@@ -531,7 +531,7 @@
     <ClCompile Include="NewEngine\Object\Other\Model\ObjModel.cpp">
       <Filter>NewEngine\Source\Object\Other\Model</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\Other\Model.cpp">
+    <ClCompile Include="NewEngine\Object\Other\Model\Model.cpp">
       <Filter>NewEngine\Source\Object\Other\Model</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\FbxModel.cpp">
@@ -813,11 +813,17 @@
     <ClCompile Include="NewEngine\Object\Other\Texture\ITexture.cpp">
       <Filter>NewEngine\Source\Object\Other\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\Other\Texture.cpp">
+    <ClCompile Include="NewEngine\Object\Other\Texture\Texture.cpp">
       <Filter>NewEngine\Source\Object\Other\Texture</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Render\Buffer\UploadBuffer.cpp">
       <Filter>NewEngine\Source\Render\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\Texture\VolumeTexture.cpp">
+      <Filter>NewEngine\Source\Object\Other\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\Texture\DepthTexture.cpp">
+      <Filter>Uncategorized\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -956,7 +962,7 @@
     <ClInclude Include="NewEngine\Object\Other\Material.h">
       <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\Other\Texture.h">
+    <ClInclude Include="NewEngine\Object\Other\Texture\Texture.h">
       <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\TextureManager.h">
@@ -1028,7 +1034,7 @@
     <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\Other\Model.h">
+    <ClInclude Include="NewEngine\Object\Other\Model\Model.h">
       <Filter>NewEngine\Header\Object\Other\Model</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\Model\ObjModel.h">
@@ -1336,6 +1342,12 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Render\Buffer\UploadBuffer.h">
       <Filter>NewEngine\Header\Render\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\Texture\VolumeTexture.h">
+      <Filter>NewEngine\Header\Object\Other\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\Texture\DepthTexture.h">
+      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

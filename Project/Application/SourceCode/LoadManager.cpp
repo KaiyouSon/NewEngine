@@ -53,9 +53,6 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Noice/BlurNoice.png", "BlurNoice");
 	TextureManager::LoadTexture("Noice/ScreenNoice.png", "ScreenNoice");
 
-	// 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ
-	TextureManager::CreateDepthTexture();
-
 	// 迴ｾ蝨ｨ縺ｮ繧ｷ繝ｼ繝ｳ謠冗判諠・ｱ
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMap");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMapBlur");
