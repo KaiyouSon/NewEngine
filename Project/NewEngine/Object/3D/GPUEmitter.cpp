@@ -64,7 +64,7 @@ void GPUEmitter::Draw(const BlendMode blendMode)
 	// その他のデータ
 	for (uint32_t i = 0; i < mStructuredBuffers.size(); i++)
 	{
-		cmdList->SetComputeRootDescriptorTable(index + i, mStructuredBuffers[i]->GetBufferResource()->uavHandle.gpu);
+		cmdList->SetComputeRootDescriptorTable(index + i + 1, mStructuredBuffers[i]->GetBufferResource()->uavHandle.gpu);
 	}
 
 	// 繝・ぅ繧ｹ繝代ャ繝・
@@ -156,6 +156,9 @@ void GPUEmitter::SetTexture(Texture* texture) { mTexture = texture; }
 
 // 繧ｰ繝ｩ繝輔ぅ繝・け繧ｹ繝代う繝励Λ繧､繝ｳ
 void GPUEmitter::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline) { mGraphicsPipeline = graphicsPipeline; }
+
+// Computeパイプラインを設定
+void GPUEmitter::SetComputePipeline(ComputePipeline* computePipeline) { mComputePipeline = computePipeline; }
 
 // --- 繧ｲ繝・ち繝ｼ -------------------------------------------------------- //
 

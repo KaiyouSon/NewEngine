@@ -183,6 +183,15 @@ void DescriptorHeap::CreateUAV(BufferResource* bufferResource, const uint32_t ar
 		return;
 	}
 
+	// ステートが合わない場合は変更する
+	if (bufferResource->bufferState != D3D12_RESOURCE_STATE_UNORDERED_ACCESS)
+	{
+		RenderBase::GetInstance()->TransitionBufferState(
+			bufferResource,
+			bufferResource->bufferState,
+			D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+	}
+
 	// 繧､繝ｳ繝・ャ繧ｯ繧ｹ繧貞叙蠕・
 	uint32_t incrementIndex = mSetting.startIndex + GetIncrementIndex();
 

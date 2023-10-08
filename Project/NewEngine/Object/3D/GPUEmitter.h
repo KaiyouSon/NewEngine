@@ -69,6 +69,9 @@ public: //繧ｻ繝・ち繝ｼ
 	// 繧ｰ繝ｩ繝輔ぅ繝・け繧ｹ繝代う繝励Λ繧､繝ｳ
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
+	// Computeパイプラインを設定
+	void SetComputePipeline(ComputePipeline* computePipeline);
+	
 	// パーティクルのデータ
 	template<typename T>
 	void SetParticleData(const uint32_t maxParticle)

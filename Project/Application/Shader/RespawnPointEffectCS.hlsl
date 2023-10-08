@@ -13,10 +13,12 @@ struct TimerData
 {
     uint timer;
     uint maxTimer;
+    float timerRate;
 };
 
 static const uint MaxNum = 64;
 RWStructuredBuffer<ParticleData> inputData : register(u0);
+RWStructuredBuffer<TimerData> timerData : register(u1);
 
 ParticleData InitParticleData(const uint index)
 {
@@ -25,7 +27,7 @@ ParticleData InitParticleData(const uint index)
     result.isActive = true;
     result.pos = 0;
     result.moveVec = float3(1, 1, 1);
-    result.moveAccel = float3(1, 1, 1);
+    result.moveAccel = float3(0.25f, 0.25f, 0.25f);
     result.scale = float2(1, 1);
     result.shininess = 2.f;
     result.color = float4(1, 1, 1, 1);
@@ -34,28 +36,27 @@ ParticleData InitParticleData(const uint index)
 }
 
 static uint init = false;
-static uint timer = 0;
-static const uint maxTimer = 30;
 
 [numthreads(1, 1, 1)]
 void main(uint3 DTid : SV_DispatchThreadID)
 {
-    if (init == false)
-    {
-        for (uint i = 0; i < MaxNum; i++)
-        {
-            inputData[i].isActive = false;
-            //inputData[i].pos = 0;
-            inputData[i].moveVec = float3(1, 1, 1);
-            inputData[i].moveAccel = float3(1, 1, 1);
-            inputData[i].scale = float2(1, 1);
-            inputData[i].shininess = 2.f;
-            inputData[i].color = float4(1, 1, 1, 1);
-        }
-        init = true;
-    }
+    //if (init == false)
+    //{
+    //    for (uint i = 0; i < MaxNum; i++)
+    //    {
+    //        inputData[i].isActive = false;
+    //        //inputData[i].pos = 0;
+    //        inputData[i].moveVec = float3(1, 1, 1);
+    //        inputData[i].moveAccel = float3(0.25f, 0.25f, 0.25f);
+    //        inputData[i].scale = float2(1, 1);
+    //        inputData[i].shininess = 2.f;
+    //        inputData[i].color = float4(1, 1, 1, 1);
+    //    }
+    //    init = true;
+    //}
 
 
+    
     //if (timer >= maxTimer)
     //{
     //    for (uint i = 0; i < MaxNum; i++)
@@ -71,20 +72,34 @@ void main(uint3 DTid : SV_DispatchThreadID)
     //}
     
     // 生成処理
-    timer++;
+    timerData[0].timer++;
+    timerData[0].maxTimer = 30;
+    if (timerData[0].timer >= timerData[0].maxTimer)
+    {
+        for (uint i = 0; i < MaxNum; i++)
+        {
+            if (inputData[i].isActive == true)
+            {
+                continue;
+            }
+            inputData[i] = InitParticleData(0);
+        }
+        timerData[0].timer = 0; // timer をリセット
+    }
     
     // 出力データを設定
     for (uint i = 0; i < MaxNum; i++)
     {
         ParticleData result = inputData[i];
         
-        // 更新処理
-        if (timer >= 30)
+        if (result.isActive == false)
         {
-            result.pos += normalize(result.moveVec) * result.moveAccel;
-            result.scale -= 0.001f;
-            timer = 0;
+            continue;
         }
+        
+        // 更新処理
+        result.pos += normalize(result.moveVec) * result.moveAccel;
+        result.scale -= 0.1f;
             
         if (result.scale.x <= 0)
         {

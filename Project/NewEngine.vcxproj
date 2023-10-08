@@ -408,6 +408,7 @@
     <ClInclude Include="NewEngine\Render\Buffer\IConstantBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\IndexBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\StructuredBuffer.h" />
+    <ClInclude Include="NewEngine\Render\Buffer\StructuredBufferData.h" />
     <ClInclude Include="NewEngine\Render\Buffer\VertexBuffer.h" />
     <ClInclude Include="NewEngine\Render\ComputePipeline.h" />
     <ClInclude Include="NewEngine\Render\DescriptorHeap.h" />

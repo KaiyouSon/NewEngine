@@ -331,6 +331,9 @@
     <Filter Include="Shader\Engine\ToonRendering">
       <UniqueIdentifier>{8852c9eb-228e-4eff-8841-c20c923f557d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NewEngine\Header\Render\Buffer\BufferData">
+      <UniqueIdentifier>{7264da7f-75a8-4b8d-a336-4b90d5d5b07a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -914,9 +917,6 @@
     <ClInclude Include="NewEngine\Util\Timer.h">
       <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Render\Buffer\ConstantBufferData.h">
-      <Filter>NewEngine\Header\Render\Buffer</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Math\Quaternion.h">
       <Filter>NewEngine\Header\Math</Filter>
     </ClInclude>
@@ -961,9 +961,6 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Object\2D\CircleGaugeSprite.h">
       <Filter>NewEngine\Header\Object\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Render\VertexBufferData.h">
-      <Filter>NewEngine\Header\Render\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Sound\SoundManager.h">
       <Filter>NewEngine\Header\Sound</Filter>
@@ -1312,6 +1309,15 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Util\NewEngineEnum.h">
       <Filter>NewEngine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\Buffer\ConstantBufferData.h">
+      <Filter>NewEngine\Header\Render\Buffer\BufferData</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\VertexBufferData.h">
+      <Filter>NewEngine\Header\Render\Buffer\BufferData</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\Buffer\StructuredBufferData.h">
+      <Filter>NewEngine\Header\Render\Buffer\BufferData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

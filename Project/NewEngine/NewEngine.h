@@ -26,8 +26,10 @@
 #include "OutLineObj.h"
 #include "Fog.h"
 #include "PostEffect.h"
-#include "ConstantBufferData.h"
 #include "ColliderDrawer.h"
+
+#include "ConstantBufferData.h"
+#include "StructuredBufferData.h"
 
 #include "RenderBase.h"
 #include "RenderWindow.h"
@@ -75,7 +77,7 @@ public:
 	void PostDraw();
 
 	void FrameControl();
-	
+
 public:
 	// 繧ｦ繧､繝ｳ繝峨え髢｢騾｣
 	bool ProcessMessage();

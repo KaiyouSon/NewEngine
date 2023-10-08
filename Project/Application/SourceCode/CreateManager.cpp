@@ -240,6 +240,12 @@ void CreateManager::CreateGraphicsPipeline()
 		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
 		PipelineManager::CreateGraphicsPipeline(setting, "GrassWriteNone");
 	}
+
+	// リスポーンエフェクト用
+	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("RespawnPointEffect");
+	setting.rtvNum = 1;
+	PipelineManager::CreateGraphicsPipeline(setting, "RespawnPointEffect");
 }
 
 void CreateManager::CreateComputePipeline()
@@ -249,7 +255,7 @@ void CreateManager::CreateComputePipeline()
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("RespawnPointEffect");
 	setting.rootSignatureSetting.maxCbvRootParameter = 0;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
-	setting.rootSignatureSetting.maxUavDescritorRange = 1;
+	setting.rootSignatureSetting.maxUavDescritorRange = 2;
 	PipelineManager::CreateComputePipeline(setting, "RespawnPointEffect");
 }
 

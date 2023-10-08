@@ -1,4 +1,6 @@
 #include "RespawnPointEffect.h"
+using namespace StructuredBufferData;
+using namespace ParticleParameter;
 
 RespawnPointEffect::RespawnPointEffect() :
 	//mCircleEmitter(std::make_unique<Emitter>())
@@ -9,8 +11,11 @@ RespawnPointEffect::RespawnPointEffect() :
 void RespawnPointEffect::Init()
 {
 	mCirclePParam.clear();
-	mCircleEmitter->SetParticleData<ParticleParameter::RespawnPointParticle>(64);
+	mCircleEmitter->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("RespawnPointEffect"));
+	mCircleEmitter->SetComputePipeline(PipelineManager::GetComputePipeline("RespawnPointEffect"));
+	mCircleEmitter->SetParticleData<RespawnPointParticle>(64);
 	mCircleEmitter->SetTexture(TextureManager::GetTexture("Particle2"));
+	mCircleEmitter->AddStructuredBuffer<STimer>();
 	mTimer.SetLimitTimer(20);
 	mTimer.Reset();
 }
