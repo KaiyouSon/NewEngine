@@ -22,8 +22,6 @@ Object3D::Object3D() :
 	// マテリアルの初期化
 	MaterialInit();
 
-	mTexture->isMaterial = true;
-
 	if (isAllLighting == true)
 	{
 		isLighting = true;

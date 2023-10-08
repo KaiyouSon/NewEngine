@@ -137,10 +137,10 @@ void CircleGaugeSprite::TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightD
 	enum { LD, LU, RD, RU };
 
 	// 四辺
-	float left = leftTopPos.x / mTexture->size.x;
-	float right = rightDownPos.x / mTexture->size.x;
-	float up = leftTopPos.y / mTexture->size.y;
-	float down = rightDownPos.y / mTexture->size.y;
+	float left = leftTopPos.x / mTexture->GetInitalSize().x;
+	float right = rightDownPos.x / mTexture->GetInitalSize().x;
+	float up = leftTopPos.y / mTexture->GetInitalSize().y;
+	float down = rightDownPos.y / mTexture->GetInitalSize().y;
 
 	// uv座標
 	mVertices[LD].uv = Vec2(left, down);	 //左下
@@ -155,7 +155,7 @@ void CircleGaugeSprite::TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightD
 void CircleGaugeSprite::SetTexture(Texture* texture)
 {
 	mTexture = texture;
-	SetSize(texture->size);
+	SetSize(texture->GetInitalSize());
 }
 
 // 描画範囲

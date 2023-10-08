@@ -334,6 +334,12 @@
     <Filter Include="NewEngine\Header\Render\Buffer\BufferData">
       <UniqueIdentifier>{7264da7f-75a8-4b8d-a336-4b90d5d5b07a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NewEngine\Source\Object\Other\Texture">
+      <UniqueIdentifier>{2014ce91-c51c-46bc-8144-dab5226ce0af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Object\Other\Texture">
+      <UniqueIdentifier>{86011f1d-0db5-43b7-9e87-8e27bdc8bbec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -747,9 +753,6 @@
     <ClCompile Include="Application\SourceCode\Field\Gate.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\Other\Texture.cpp">
-      <Filter>NewEngine\Source\Object\Other</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\Transition\SceneTransition.cpp">
       <Filter>Application\Source\Transition</Filter>
     </ClCompile>
@@ -806,6 +809,15 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Util\NewEngineSetting.cpp">
       <Filter>NewEngine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\Texture\ITexture.cpp">
+      <Filter>NewEngine\Source\Object\Other\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\Texture.cpp">
+      <Filter>NewEngine\Source\Object\Other\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\Buffer\UploadBuffer.cpp">
+      <Filter>NewEngine\Source\Render\Buffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1318,6 +1330,12 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Render\Buffer\StructuredBufferData.h">
       <Filter>NewEngine\Header\Render\Buffer\BufferData</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\Texture\ITexture.h">
+      <Filter>NewEngine\Header\Object\Other\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\Buffer\UploadBuffer.h">
+      <Filter>NewEngine\Header\Render\Buffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

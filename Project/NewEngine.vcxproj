@@ -64,7 +64,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Weapon;$(ProjectDir)Application/SourceCode/UI;$(ProjectDir)Application/SourceCode/Transition;$(ProjectDir)Application/SourceCode/ShadowMap;$(ProjectDir)Application/SourceCode/PostEffect;$(ProjectDir)Application/SourceCode/Motion;$(ProjectDir)Application/SourceCode/Menu;$(ProjectDir)Application/SourceCode/Field;$(ProjectDir)Application/SourceCode/Effect;$(ProjectDir)Application/SourceCode/Character;$(ProjectDir)Application/SourceCode/Camera;$(ProjectDir)Application/SourceCode/Body;$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Debugger;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Weapon;$(ProjectDir)Application/SourceCode/UI;$(ProjectDir)Application/SourceCode/Transition;$(ProjectDir)Application/SourceCode/ShadowMap;$(ProjectDir)Application/SourceCode/PostEffect;$(ProjectDir)Application/SourceCode/Motion;$(ProjectDir)Application/SourceCode/Menu;$(ProjectDir)Application/SourceCode/Field;$(ProjectDir)Application/SourceCode/Effect;$(ProjectDir)Application/SourceCode/Character;$(ProjectDir)Application/SourceCode/Camera;$(ProjectDir)Application/SourceCode/Body;$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Debugger;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/Other/Texture;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -89,7 +89,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Weapon;$(ProjectDir)Application/SourceCode/UI;$(ProjectDir)Application/SourceCode/Transition;$(ProjectDir)Application/SourceCode/ShadowMap;$(ProjectDir)Application/SourceCode/PostEffect;$(ProjectDir)Application/SourceCode/Motion;$(ProjectDir)Application/SourceCode/Menu;$(ProjectDir)Application/SourceCode/Field;$(ProjectDir)Application/SourceCode/Effect;$(ProjectDir)Application/SourceCode/Character;$(ProjectDir)Application/SourceCode/Camera;$(ProjectDir)Application/SourceCode/Body;$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Debugger;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Weapon;$(ProjectDir)Application/SourceCode/UI;$(ProjectDir)Application/SourceCode/Transition;$(ProjectDir)Application/SourceCode/ShadowMap;$(ProjectDir)Application/SourceCode/PostEffect;$(ProjectDir)Application/SourceCode/Motion;$(ProjectDir)Application/SourceCode/Menu;$(ProjectDir)Application/SourceCode/Field;$(ProjectDir)Application/SourceCode/Effect;$(ProjectDir)Application/SourceCode/Character;$(ProjectDir)Application/SourceCode/Camera;$(ProjectDir)Application/SourceCode/Body;$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Debugger;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/Other/Texture;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -221,6 +221,7 @@
     <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp" />
     <ClCompile Include="NewEngine\Object\2D\RenderTexture.cpp" />
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\Texture\ITexture.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Camera.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Emitter.cpp" />
     <ClCompile Include="NewEngine\Object\3D\GPUEmitter.cpp" />
@@ -243,6 +244,7 @@
     <ClCompile Include="NewEngine\Render\Buffer\DepthBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\StructuredBuffer.cpp" />
+    <ClCompile Include="NewEngine\Render\Buffer\UploadBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\ComputePipeline.cpp" />
     <ClCompile Include="NewEngine\Render\DescriptorHeap.cpp" />
     <ClCompile Include="NewEngine\Render\DescriptorHeapManager.cpp" />
@@ -382,6 +384,7 @@
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h" />
     <ClInclude Include="NewEngine\Object\2D\RenderTexture.h" />
     <ClInclude Include="NewEngine\Object\2D\Sprite.h" />
+    <ClInclude Include="NewEngine\Object\Other\Texture\ITexture.h" />
     <ClInclude Include="NewEngine\Object\3D\Emitter.h" />
     <ClInclude Include="NewEngine\Object\3D\GPUEmitter.h" />
     <ClInclude Include="NewEngine\Object\3D\ParticleParam.h" />
@@ -409,6 +412,7 @@
     <ClInclude Include="NewEngine\Render\Buffer\IndexBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\StructuredBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\StructuredBufferData.h" />
+    <ClInclude Include="NewEngine\Render\Buffer\UploadBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\VertexBuffer.h" />
     <ClInclude Include="NewEngine\Render\ComputePipeline.h" />
     <ClInclude Include="NewEngine\Render\DescriptorHeap.h" />

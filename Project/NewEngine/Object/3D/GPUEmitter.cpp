@@ -16,7 +16,6 @@ GPUEmitter::GPUEmitter() :
 {
 	// 繝槭ユ繝ｪ繧｢繝ｫ縺ｮ蛻晄悄蛹・
 	MaterialInit();
-	mTexture->isMaterial = true;
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
 }
 

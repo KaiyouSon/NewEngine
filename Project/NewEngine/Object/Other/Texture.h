@@ -1,24 +1,27 @@
 #pragma once
-#include "BufferResource.h"
-#include "MathUtil.h"
-#include "Color.h"
-#include <string>
-#include <memory>
+#include "ITexture.h"
+#include "UploadBuffer.h"
+#include "Vec2.h"
 
-class Texture
+class Texture : public ITexture
 {
 private:
-	std::unique_ptr<BufferResource> mBufferResource;
+	HRESULT mResult;
+
+	std::unique_ptr<UploadBuffer> mUploadBuffer;
+	Vec2 mInitalSize;	// 初期値のサイズ
 
 public:
-	Microsoft::WRL::ComPtr<ID3D12Resource> uploadBuffer;
-	Vec2 size = 0;
-	bool isMaterial = false;
-
-public:
+	// コンストラクタ
 	Texture();
 
-public: // ゲッター
-	BufferResource* GetBufferResource();
+	// テクスチャーのバッファ生成する関数
+	void Create(const D3D12_RESOURCE_DESC& resourceDesc, uint32_t mipLevels = 1);
 
+public:
+	// アップロードバッファの取得
+	UploadBuffer* GetUploadBuffer();
+
+	// 初期値のサイズ取得
+	Vec2 GetInitalSize();
 };

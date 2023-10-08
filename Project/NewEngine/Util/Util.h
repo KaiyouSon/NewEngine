@@ -1,4 +1,5 @@
 #pragma once
+#include "MathUtil.h"
 #include "Color.h"
 #include "FrameRate.h"
 #include "Random.h"

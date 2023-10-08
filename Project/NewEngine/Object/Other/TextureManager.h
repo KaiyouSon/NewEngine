@@ -9,6 +9,7 @@
 
 template<typename T> class Singleton;
 
+// テクスチャーを管理するクラス
 class TextureManager : public Singleton<TextureManager>
 {
 private:
@@ -23,21 +24,21 @@ private:
 private:
 	void Init();
 
-public:	// 繝・け繧ｹ繝√Ε繝ｼ髢｢騾｣
+public:	// テクスチャー関連
 
-	// 繝・け繧ｹ繝√Ε繝ｼ縺ｮ蜿門ｾ・
+	// テクスチャーを取得する関数
 	static Texture* GetTexture(const std::string tag);
 
-	// 濶ｲ繧呈欠螳壹＠縺ｦ繝・け繧ｹ繝√Ε繧堤函謌舌＠繝槭ャ繝励↓譬ｼ邏阪☆繧・
+	// 1x1の色テクスチャーを生成する関数
 	static Texture* CreateTexture(const Color color, const std::string tag);
 
-	// 繝輔ぃ繧､繝ｫ繝代せ繧呈欠螳壹＠縺ｦ繝・け繧ｹ繝√Ε繧堤函謌舌＠繝槭ャ繝励・譬ｼ邏阪☆繧・
+	// テクスチャーをロードする関数
 	static Texture* LoadTexture(const std::string filePath, const std::string tag);
 
-	// obj繝輔ぃ繧､繝ｫ縺九ｉ繝ｭ繝ｼ繝峨＠縺溘ユ繧ｯ繧ｹ繝√Ε繝ｼ繧偵Ο繝ｼ繝峨☆繧句ｰら畑髢｢謨ｰ
+	// mtlファイルのテクスチャーをロードする関数
 	static Texture* LoadMaterialTexture(const std::string filePath, const std::string tag);
 
-	// 繝・け繧ｹ繝√Ε繝ｼ縺ｮ繧｢繝ｳ繝ｭ繝ｼ繝蛾未謨ｰ
+	// アンロード
 	static void UnLoadTexture(const std::string tag);
 
 public: // 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ髢｢騾｣
