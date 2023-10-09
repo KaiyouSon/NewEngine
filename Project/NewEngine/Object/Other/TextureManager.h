@@ -1,6 +1,7 @@
 #pragma once
 #include "Texture.h"
 #include "DepthTexture.h"
+#include "VolumeTexture.h"
 #include "TextureAnimeiton.h"
 #include "RenderTexture.h"
 #include "Singleton.h"
@@ -35,9 +36,12 @@ public:	// テクスチャー関連
 
 	// mtlファイルのテクスチャーをロードする関数
 	static Texture* LoadMaterialTexture(const std::string filePath, const std::string tag);
-	
+
 	// 深度テクスチャの生成
 	static void CreateDepthTexture(DepthBuffer* depthBuffer, const std::string tag);
+
+	// ボリュームテクスチャの生成
+	static void CreateVolumeTexture(const Vec2 size, const std::string tag);
 
 	// アンロード
 	static void UnLoadTexture(const std::string tag);
@@ -47,6 +51,10 @@ public:	// テクスチャー関連
 
 	// 深度テクスチャーを取得する関数
 	static DepthTexture* GetDepthTexture(const std::string tag);
+
+	// ボリュームテクスチャを取得する関数
+	static VolumeTexture* GetVolumeTexture(const std::string tag);
+
 
 public: // 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ髢｢騾｣
 

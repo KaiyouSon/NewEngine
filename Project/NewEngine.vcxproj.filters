@@ -480,9 +480,6 @@
     <ClCompile Include="NewEngine\Object\2D\CircleGaugeSprite.cpp">
       <Filter>NewEngine\Source\Object\2D</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\2D\RenderTexture.cpp">
-      <Filter>NewEngine\Source\Object\Other</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\LoadManager.cpp">
       <Filter>Application\Source</Filter>
     </ClCompile>
@@ -798,9 +795,6 @@
     <ClCompile Include="Application\SourceCode\MovieEvent.cpp">
       <Filter>Application\Source</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Render\RenderTarget.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\GPUEmitter.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
@@ -822,8 +816,14 @@
     <ClCompile Include="NewEngine\Object\Other\Texture\VolumeTexture.cpp">
       <Filter>NewEngine\Source\Object\Other\Texture</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Object\2D\RenderTexture.cpp">
+      <Filter>NewEngine\Source\Object\Other\Texture</Filter>
+    </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\Texture\DepthTexture.cpp">
-      <Filter>Uncategorized\Source</Filter>
+      <Filter>NewEngine\Source\Object\Other\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\RenderTarget.cpp">
+      <Filter>NewEngine\Source\Render\Buffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -879,9 +879,6 @@
       <Filter>NewEngine\Header\Math</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\2D\Sprite.h">
-      <Filter>NewEngine\Header\Object\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Object\2D\RenderTexture.h">
       <Filter>NewEngine\Header\Object\2D</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\Camera.h">
@@ -960,9 +957,6 @@
       <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\Material.h">
-      <Filter>NewEngine\Header\Object\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Object\Other\Texture\Texture.h">
       <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\TextureManager.h">
@@ -1346,8 +1340,14 @@
     <ClInclude Include="NewEngine\Object\Other\Texture\VolumeTexture.h">
       <Filter>NewEngine\Header\Object\Other\Texture</Filter>
     </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\Texture\Texture.h">
+      <Filter>NewEngine\Header\Object\Other\Texture</Filter>
+    </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\Texture\DepthTexture.h">
-      <Filter>Uncategorized\Header</Filter>
+      <Filter>NewEngine\Header\Object\Other\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\2D\RenderTexture.h">
+      <Filter>NewEngine\Header\Object\Other\Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

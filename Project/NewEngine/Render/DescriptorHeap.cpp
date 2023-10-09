@@ -72,25 +72,34 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 
 	// SRV縺ｮ險ｭ螳・
 	D3D12_SHADER_RESOURCE_VIEW_DESC desc{};	// srv險ｭ螳壽ｧ矩菴・
-	if (bufferResource->buffer->GetDesc().Format == DXGI_FORMAT_D32_FLOAT)
+
+	// 2Dテクスチャ
+	D3D12_RESOURCE_DESC bufferDesc = bufferResource->buffer->GetDesc();
+	if (bufferDesc.Dimension == D3D12_RESOURCE_DIMENSION_TEXTURE2D)
 	{
-		desc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-		desc.Format = DXGI_FORMAT_R32_FLOAT;
-		desc.Texture2D.MipLevels = bufferResource->buffer->GetDesc().MipLevels;
+		// 深度テクスチャ
+		if (bufferDesc.Format == DXGI_FORMAT_D32_FLOAT)
+		{
+			desc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+			desc.Format = DXGI_FORMAT_R32_FLOAT;
+			desc.Texture2D.MipLevels = bufferDesc.MipLevels;
+		}
+		// テクスチャ
+		else
+		{
+			desc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+			desc.Format = bufferDesc.Format;
+			desc.Texture2D.MipLevels = bufferDesc.MipLevels;
+		}
 	}
-	else if (bufferResource->buffer->GetDesc().Format == DXGI_FORMAT_UNKNOWN)
+	// バッファ
+	else
 	{
 		desc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
-		desc.Format = bufferResource->buffer->GetDesc().Format;
+		desc.Format = bufferDesc.Format;
 		desc.Buffer.FirstElement = 0;				// 譛蛻昴・隕∫ｴ縺ｮ繧､繝ｳ繝・ャ繧ｯ繧ｹ
 		desc.Buffer.NumElements = arraySize;		// 繝舌ャ繝輔ぃ蜀・・隕∫ｴ謨ｰ
 		desc.Buffer.StructureByteStride = byteSize;	// 隕∫ｴ1縺､縺ｮ繝舌う繝域焚
-	}
-	else
-	{
-		desc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-		desc.Format = bufferResource->buffer->GetDesc().Format;
-		desc.Texture2D.MipLevels = bufferResource->buffer->GetDesc().MipLevels;
 	}
 	desc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 
@@ -127,11 +136,12 @@ void DescriptorHeap::CreateRTV(BufferResource* bufferResource)
 
 	// 繝ｬ繝ｳ繝繝ｼ繧ｿ繝ｼ繧ｲ繝・ヨ繝薙Η繝ｼ縺ｮ險ｭ螳・
 	D3D12_RENDER_TARGET_VIEW_DESC desc{};
-	// 繧ｷ繧ｧ繝ｼ繝繝ｼ縺ｮ險育ｮ礼ｵ先棡繧担RGB縺ｫ螟画鋤縺励※譖ｸ縺崎ｾｼ繧
+
+	D3D12_RESOURCE_DESC bufferDesc = bufferResource->buffer->GetDesc();
 	desc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 
-	// 繝上Φ繝峨Ν縺ｮ謖・☆菴咲ｽｮ縺ｫRTV繧剃ｽ懈・
+	// バッファ生成
 	RenderBase::GetInstance()->GetDevice()->
 		CreateRenderTargetView(
 			bufferResource->buffer.Get(),

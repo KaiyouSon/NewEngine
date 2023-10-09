@@ -14,6 +14,6 @@ public:
 	VolumeTexture();
 
 	// テクスチャーのバッファ生成する関数
-	void Create(const Vec3 size);
+	void Create(const Vec2 size);
 };
 

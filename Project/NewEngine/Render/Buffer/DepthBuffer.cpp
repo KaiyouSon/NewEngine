@@ -9,40 +9,44 @@ void DepthBuffer::Create(const Vec2 size)
 
 	HRESULT result;
 
-	Vec2 depthResourceSize = size;
-	depthResourceSize = (depthResourceSize != -1) ? size : RenderWindow::GetInstance()->GetWindowSize();
+	Vec2 resourceSize = (size.x <= -1.f) ?
+		RenderWindow::GetInstance()->GetWindowSize() : size;
 
-	// 繝ｪ繧ｽ繝ｼ繧ｹ縺ｮ險ｭ螳・
-	D3D12_RESOURCE_DESC depthResourceDesc{};
-	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	depthResourceDesc.Width = (uint32_t)depthResourceSize.x;		// 蟷・
-	depthResourceDesc.Height = (uint32_t)depthResourceSize.y; // 鬮倥＆
-	depthResourceDesc.DepthOrArraySize = 1;
-	depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;	// 豺ｱ蠎ｦ蛟､繝・ヵ繧ｩ繝ｫ繝・
-	depthResourceDesc.SampleDesc.Count = 1;
-	depthResourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
-	depthResourceDesc.MipLevels = 1;
+	// リソース設定
+	D3D12_RESOURCE_DESC depthResourceDesc =
+		CD3DX12_RESOURCE_DESC::Tex2D(
+			DXGI_FORMAT_D32_FLOAT,
+			(uint32_t)resourceSize.x,
+			(uint32_t)resourceSize.y,
+			1,
+			1,
+			1,
+			0,
+			D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
 
-	// 豺ｱ蠎ｦ逕ｨ繝偵・繝励・繝ｭ繝代ユ繧｣
-	D3D12_HEAP_PROPERTIES depthHeapProp{};
-	depthHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
-	// 豺ｱ蠎ｦ蛟､縺ｮ繧ｯ繝ｪ繧｢險ｭ螳・
-	D3D12_CLEAR_VALUE depthClearValue{};
-	depthClearValue.DepthStencil.Depth = 1.0f;	// 豺ｱ蠎ｦ蛟､1.0f(譛螟ｧ蛟､)縺ｧ繧ｯ繝ｪ繧｢
-	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	// 豺ｱ蠎ｦ蛟､繝輔か繝ｼ繝槭ャ繝・
+	// ヒープ設定
+	D3D12_HEAP_PROPERTIES depthHeapProp =
+		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 
-	// 繝ｪ繧ｽ繝ｼ繧ｹ縺ｮ逕滓・
+	// クリア
+	D3D12_CLEAR_VALUE clearValue =
+		CD3DX12_CLEAR_VALUE(DXGI_FORMAT_D32_FLOAT, 1.f, 0);
+
+	// バッファ生成
 	result = RenderBase::GetInstance()->GetDevice()->
 		CreateCommittedResource(
 			&depthHeapProp,
 			D3D12_HEAP_FLAG_NONE,
 			&depthResourceDesc,
-			D3D12_RESOURCE_STATE_DEPTH_WRITE, // 豺ｱ蠎ｦ蛟､譖ｸ縺崎ｾｼ縺ｿ縺ｫ菴ｿ逕ｨ
-			&depthClearValue,
+			D3D12_RESOURCE_STATE_DEPTH_WRITE, // 書き込み可能
+			&clearValue,
 			IID_PPV_ARGS(&mBufferResource->buffer));
 	assert(SUCCEEDED(result));
 
 	mBufferResource->bufferState = D3D12_RESOURCE_STATE_DEPTH_WRITE;
+
+	// 名前設定
+	mBufferResource->buffer->SetName(L"DepthBuffer");
 }
 
 // 繧ｲ繝・ち繝ｼ

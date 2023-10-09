@@ -270,7 +270,7 @@ void TextureManager::CreateDepthTexture(DepthBuffer* depthBuffer, const std::str
 
 	// マップに格納
 	GetInstance()->mTextureMap.
-		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
+		insert(std::make_pair(tag, std::move(std::make_unique<DepthTexture>())));
 
 	DepthTexture* texture = dynamic_cast<DepthTexture*>(GetInstance()->mTextureMap[tag].get());
 
@@ -284,6 +284,24 @@ void TextureManager::CreateDepthTexture(DepthBuffer* depthBuffer, const std::str
 	OutputDebugLog(log.c_str());
 }
 
+// ボリュームテクスチャの生成
+void TextureManager::CreateVolumeTexture(const Vec2 size, const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	// マップに格納
+	GetInstance()->mTextureMap.
+		insert(std::make_pair(tag, std::move(std::make_unique<VolumeTexture>())));
+
+	VolumeTexture* texture = dynamic_cast<VolumeTexture*>(GetInstance()->mTextureMap[tag].get());
+
+	texture->Create(size);
+
+	std::string log = "[Texture Create] VolumeTexture, Tag : " + tag + ", created";
+	OutputDebugLog(log.c_str());
+}
+
 // アンロード
 void TextureManager::UnLoadTexture(const std::string tag)
 {
@@ -293,11 +311,11 @@ void TextureManager::UnLoadTexture(const std::string tag)
 		return;
 	}
 
-	// 繝薙Η繝ｼ蜑企勁
+	// SRVを上書きできる状態にする
 	DescriptorHeapManager::GetDescriptorHeap("SRV")->DestroyView(
 		GetInstance()->mTextureMap[tag]->GetBufferResource());
 
-	// 繝槭ャ繝励°繧牙炎髯､
+	// Mapから削除
 	GetInstance()->mTextureMap.erase(tag);
 }
 
@@ -345,6 +363,29 @@ DepthTexture* TextureManager::GetDepthTexture(const std::string tag)
 	OutputDebugLog(log.c_str());
 
 	return dynamic_cast<DepthTexture*>(iTexture);
+}
+
+// ボリュームテクスチャを取得する関数
+VolumeTexture* TextureManager::GetVolumeTexture(const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	// ログ
+	std::string log = "Error";
+
+	ITexture* iTexture = GetInstance()->mTextureMap[tag].get();
+	if (iTexture == nullptr)
+	{
+		log = "[VolumeTexture Use] Tag : " + tag + ", does not exist";
+	}
+	else
+	{
+		log = "[VolumeTexture Use] Tag : " + tag + ", was used";
+	}
+	OutputDebugLog(log.c_str());
+
+	return dynamic_cast<VolumeTexture*>(iTexture);
 }
 
 

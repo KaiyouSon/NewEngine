@@ -344,7 +344,7 @@ void RenderBase::FenceInit()
 void RenderBase::DepthBufferInit()
 {
 	mDepthBuffer = std::make_unique<DepthBuffer>();
-	mDepthBuffer->Create();
+	mDepthBuffer->Create(RenderWindow::GetInstance()->GetWindowSize());
 	DescriptorHeapManager::GetDescriptorHeap("DSV")->CreateDSV(mDepthBuffer->GetBufferResource());
 }
 void RenderBase::ShaderCompilerInit()

@@ -11,7 +11,7 @@ VolumeTexture::VolumeTexture() :
 {
 }
 
-void VolumeTexture::Create(const Vec3 size)
+void VolumeTexture::Create(const Vec2 size)
 {
 	// ヒープ設定
 	D3D12_HEAP_PROPERTIES heapProp =
@@ -19,12 +19,11 @@ void VolumeTexture::Create(const Vec3 size)
 
 	// リソース設定
 	D3D12_RESOURCE_DESC resourceDesc =
-		CD3DX12_RESOURCE_DESC::Tex3D(
-			DXGI_FORMAT_R8G8B8A8_UNORM,
+		CD3DX12_RESOURCE_DESC::Tex2D(
+			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 			static_cast<uint64_t>(size.x),
 			static_cast<uint32_t>(size.y),
-			static_cast<uint16_t>(size.z),
-			1);
+			1, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
 
 	// バッファ生成
 	mResult = RenderBase::GetInstance()->GetDevice()->
