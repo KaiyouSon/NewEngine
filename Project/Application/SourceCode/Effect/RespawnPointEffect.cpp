@@ -33,8 +33,8 @@ void RespawnPointEffect::Generate(const Vec3 pos)
 
 void RespawnPointEffect::Update()
 {
-	mCircleEmitter->pos.x += (float)(Key::GetKey(DIK_RIGHT) - Key::GetKey(DIK_LEFT));
-	mCircleEmitter->pos.z += (float)(Key::GetKey(DIK_UP) - Key::GetKey(DIK_DOWN));
+	//mCircleEmitter->pos.x += (float)(Key::GetKey(DIK_RIGHT) - Key::GetKey(DIK_LEFT));
+	//mCircleEmitter->pos.z += (float)(Key::GetKey(DIK_UP) - Key::GetKey(DIK_DOWN));
 
 	// 邊・
 	//for (uint32_t i = 0; i < mCirclePParam.size(); i++)

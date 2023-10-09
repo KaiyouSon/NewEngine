@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Emitter.h"
 #include "GPUEmitter.h"
+#include "ParticleMesh.h"
 
 #include "TextureManager.h"
 #include "ModelManager.h"	

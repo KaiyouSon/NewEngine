@@ -127,9 +127,9 @@ Vec3& Vec3::operator*=(float num)
 // 隍・粋莉｣蜈･貍皮ｮ・/=
 Vec3& Vec3::operator/=(float num)
 {
-	x += num;
-	y += num;
-	z += num;
+	x /= num;
+	y /= num;
+	z /= num;
 	return *this;
 }
 

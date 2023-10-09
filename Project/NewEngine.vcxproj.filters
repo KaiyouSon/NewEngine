@@ -340,6 +340,9 @@
     <Filter Include="NewEngine\Header\Object\Other\Texture">
       <UniqueIdentifier>{86011f1d-0db5-43b7-9e87-8e27bdc8bbec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Engine\ParticleMesh">
+      <UniqueIdentifier>{4908bbdd-ab21-4590-8e02-a06db5ffc383}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -824,6 +827,9 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Render\RenderTarget.cpp">
       <Filter>NewEngine\Source\Render\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\ParticleMesh.cpp">
+      <Filter>Uncategorized\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1349,6 +1355,9 @@
     <ClInclude Include="NewEngine\Object\2D\RenderTexture.h">
       <Filter>NewEngine\Header\Object\Other\Texture</Filter>
     </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\ParticleMesh.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1451,6 +1460,9 @@
       <Filter>Shader\Engine\ToonRendering</Filter>
     </None>
     <None Include=".editorconfig" />
+    <None Include="NewEngine\Shader\ParticleMesh.hlsli">
+      <Filter>Shader\Engine\ParticleMesh</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Application\Shader\BloomPS.hlsl">
@@ -1656,6 +1668,18 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\RespawnPointEffectVS.hlsl">
       <Filter>Shader\Application\Effect</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ParticleMeshPS.hlsl">
+      <Filter>Shader\Engine\ParticleMesh</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ParticleMeshVS.hlsl">
+      <Filter>Shader\Engine\ParticleMesh</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ParticleMeshGS.hlsl">
+      <Filter>Shader\Engine\ParticleMesh</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ParticleMeshCS.hlsl">
+      <Filter>Shader\Engine\ParticleMesh</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

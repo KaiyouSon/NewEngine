@@ -170,4 +170,10 @@ namespace ConstantBufferData
 		Mat4 worldMat;
 		Mat4 billboardMat;
 	};
+
+	struct CTextureSizeData
+	{
+		Vec2 size;
+		float area;
+	};
 }

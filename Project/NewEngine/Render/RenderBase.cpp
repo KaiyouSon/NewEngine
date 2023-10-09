@@ -461,14 +461,6 @@ void RenderBase::ShaderCompilerInit()
 	ShaderCompilerManager::Create(setting, "GPUEmitter");
 
 	// ColliderObject用
-
-	//ShaderCompilerManager::Create("ColliderObject");
-	//ShaderCompilerManager::GetShaderCompiler("ColliderObject")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	//ShaderCompilerManager::GetShaderCompiler("ColliderObject")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	//ShaderCompilerManager::GetShaderCompiler("ColliderObject")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	//ShaderCompilerManager::GetShaderCompiler("ColliderObject")->CompileVertexShader(path1 + "ColliderObjectVS.hlsl", "main");
-	//ShaderCompilerManager::GetShaderCompiler("ColliderObject")->CompilePixelShader(path1 + "ColliderObjectPS.hlsl", "main");
-
 	setting = ShaderCompilerSetting();
 	setting.mInputLayoutSettings.resize(3);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -477,6 +469,14 @@ void RenderBase::ShaderCompilerInit()
 	setting.vsFilePath = path1 + "ColliderObjectVS.hlsl";
 	setting.psFilePath = path1 + "ColliderObjectPS.hlsl";
 	ShaderCompilerManager::Create(setting, "ColliderObject");
+
+	// ParticleMesh用
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path1 + "ParticleMeshCS.hlsl";
+	setting.vsFilePath = path1 + "ParticleMeshVS.hlsl";
+	setting.gsFilePath = path1 + "ParticleMeshGS.hlsl";
+	setting.psFilePath = path1 + "ParticleMeshPS.hlsl";
+	ShaderCompilerManager::Create(setting, "ParticleMesh");
 
 }
 void RenderBase::GraphicsPipelineInit()
@@ -633,15 +633,38 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	PipelineManager::CreateGraphicsPipeline(setting, "ColliderObject");
+
+	// ParticleMesh用
+	setting = GraphicsPipelineSetting();
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ParticleMesh");
+	setting.cullMode = CullMode::None;
+	setting.topologyType = TopologyType::Point;
+	setting.depthStencilDesc = depthStencilDesc1;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
+	PipelineManager::CreateGraphicsPipeline(setting, "ParticleMesh");
 }
 void RenderBase::ComputePipelineInit()
 {
 	ComputePipelineSetting setting;
+
+	// GPUエミッター用
+	setting = ComputePipelineSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("GPUEmitter");
 	setting.rootSignatureSetting.maxCbvRootParameter = 0;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 1;
 	PipelineManager::CreateComputePipeline(setting, "GPUEmitter");
+
+	// ParticleMesh用
+	setting = ComputePipelineSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ParticleMesh");
+	setting.rootSignatureSetting.maxCbvRootParameter = 1;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	setting.rootSignatureSetting.maxUavDescritorRange = 1;
+	PipelineManager::CreateComputePipeline(setting, "ParticleMesh");
 }
 
 // --- 繧ｲ繝・ち繝ｼ -------------------------------------------------------------- //

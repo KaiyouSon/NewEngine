@@ -11,6 +11,8 @@ private:
 	Player* mPlayer;
 	Boss* mBoss;
 	Field* mField;
+	std::unique_ptr<ParticleMesh> mParticleMesh;
+
 
 private:
 	std::unique_ptr<Bloom> mEffectBloom;

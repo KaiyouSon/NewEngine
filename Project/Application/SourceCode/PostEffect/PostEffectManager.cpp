@@ -8,9 +8,17 @@ PostEffectManager::PostEffectManager() :
 
 void PostEffectManager::Init()
 {
+	mParticleMesh = std::make_unique<ParticleMesh>();
+	mParticleMesh->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ParticleMesh"));
+	mParticleMesh->SetComputePipeline(PipelineManager::GetComputePipeline("ParticleMesh"));
+	//mParticleMesh->SetMeshTexture(TextureManager::GetTexture("Test"));
+	mParticleMesh->SetMeshTexture(TextureManager::GetTexture("Test1"));
+	mParticleMesh->SetParticleTexture(TextureManager::GetTexture("StarParticle"));
+	mParticleMesh->SetParticleData<ParticleParameter::ParticleMesh>();
 }
 void PostEffectManager::Update()
 {
+	mParticleMesh->Update();
 	mEffectBloom->Update();
 }
 void PostEffectManager::RenderTextureSetting()
@@ -32,9 +40,9 @@ void PostEffectManager::EffectBloomDrawPass()
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::HighLumi);
 
 	// 繝励Ξ繧､繝､繝ｼ縺ｮDepth譖ｸ縺崎ｾｼ繧
-	mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
-	mPlayer->DrawModel();
-	mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
+	//mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+	//mPlayer->DrawModel();
+	//mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 
 	// 繝懊せ縺ｮDepth譖ｸ縺崎ｾｼ繧
 	mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
@@ -47,8 +55,10 @@ void PostEffectManager::EffectBloomDrawPass()
 	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass"));
 
+	mParticleMesh->Draw();
 	// 繧ｨ繝輔ぉ繧ｯ繝・
 	EffectManager::GetInstance()->DrawEffect(true);
+
 	mEffectBloom->PostSceneDraw(Bloom::PassType::HighLumi);
 
 	// 繧ｬ繧ｦ繧ｷ繧｢繝ｳ繝悶Λ繝ｼ繧偵°縺代ｋ
@@ -65,7 +75,9 @@ void PostEffectManager::EffectBloomDrawPass()
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::Target);
 	mField->DrawSkydome();
 	mField->DrawModel();
-	mPlayer->DrawModel();
+	mParticleMesh->Draw();
+
+	//mPlayer->DrawModel();
 	mBoss->DrawModel();
 	EffectManager::GetInstance()->DrawEffect(false);
 	mEffectBloom->PostSceneDraw(Bloom::PassType::Target);

@@ -38,6 +38,14 @@ namespace ParticleParameter
 		PParam1();
 	};
 
+	struct ParticleMesh
+	{
+		Vec3 pos;
+		Vec2 scale;
+		float shininess;
+		Color color;
+	};
+
 	struct GPUParticleTimer
 	{
 		uint32_t timer;

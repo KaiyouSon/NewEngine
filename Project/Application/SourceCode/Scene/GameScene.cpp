@@ -225,7 +225,7 @@ void GameScene::Update()
 
 	if (mMenuManager->GetisActive() == false)
 	{
-		CameraManager::GetInstance()->Update();
+		//CameraManager::GetInstance()->Update();
 	}
 
 	bool isBackToTitle =

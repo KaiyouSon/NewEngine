@@ -45,6 +45,10 @@ bool LoadManager::ModelLoad()
 
 bool LoadManager::TextureLoad()
 {
+	TextureManager::LoadTexture("Test.png", "Test");
+	TextureManager::LoadTexture("Test1.png", "Test1");
+	TextureManager::LoadTexture("Particle/StarParticle.png", "StarParticle");
+
 	// 繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ縺ｫ菴ｿ縺・°繧蔚nLoad縺励↑縺・
 	TextureManager::LoadTexture("Title/TitleLogo.png", "TitleLogo");
 	TextureManager::LoadTexture("DissolveTexture.png", "DissolveTexture");

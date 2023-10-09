@@ -31,8 +31,6 @@ void EffectManager::Update()
 
 void EffectManager::DrawModel()
 {
-	//mBloom->DrawPostEffect();
-
 	// 陦
 	mBloodSprayEffect->DrawModel();
 
@@ -70,10 +68,10 @@ void EffectManager::DrawEffect(const bool isBloom)
 		//mBloodSprayEffect->DrawModel();
 
 		//// 蝗槫ｾｩ
-		//mPlayerRecoveryEffect->DrawModel();
+		mPlayerRecoveryEffect->DrawModel();
 
 		// 繝ｪ繧ｹ繝昴・繝ｳ蝨ｰ轤ｹ縺ｮ繧ｨ繝輔ぉ繧ｯ繝・
-		mRespawnPointEffect->DrawModel();
+		//mRespawnPointEffect->DrawModel();
 
 		//// 蟆手勠縺ｿ縺溘＞縺ｪ繧ｨ繝輔ぉ繧ｯ繝・
 		//mLeadEffect->DrawModel();
