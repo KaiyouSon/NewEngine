@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 
+// タイマークラス
 class Timer
 {
 private:
@@ -16,18 +17,18 @@ public:
 	void Reset();
 	void Update(const int32_t addTimer = 1);
 
-public:	// 繧ｻ繝・ち繝ｼ
+public:	// セッター
 	void SetLimitTimer(const int32_t maxTimer);
 	void SetTimer(const int32_t timer);
 
-public:	// 繧ｲ繝・ち繝ｼ
+public:	// ゲッター
 	int32_t GetTimer();
 	float GetTimeRate();
 	bool GetisTimeOut();
 
 public:
 	/// <summary>
-	/// bool GetisTimeOut()縺ｨ蜷後§
+	/// bool GetisTimeOut()と一緒
 	/// </summary>
 	bool operator==(const bool flag);
 };

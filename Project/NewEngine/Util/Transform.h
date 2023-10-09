@@ -2,33 +2,34 @@
 #include "Vec3.h"
 #include "Billboard.h"
 
+// トランスフォームクラス
 class Transform
 {
 private:
-	Mat4 mScaleMat;	// 繧ｹ繧ｱ繝ｼ繝ｫ陦悟・
-	Mat4 mRotMat;	// 蝗櫁ｻ｢陦悟・
-	Mat4 mTransMat;	// 蟷ｳ陦檎ｧｻ蜍戊｡悟・
-	Mat4 mWorldMat;	// 繝ｯ繝ｼ繝ｫ繝牙､画鋤陦悟・
+	Mat4 mScaleMat;  // スケール行列
+	Mat4 mRotMat;    // 回転行列
+	Mat4 mTransMat;  // 位置変換行列
+	Mat4 mWorldMat;  // ワールド行列
 
 	Billboard mBillboard;
 
 public:
-	Vec3 pos;	// 蠎ｧ讓・
-	Vec3 scale;	// 繧ｹ繧ｱ繝ｼ繝ｫ
-	Vec3 rot;	// 蝗櫁ｻ｢
+	Vec3 pos;     // 位置
+	Vec3 scale;   // スケール
+	Vec3 rot;     // 回転
 
 public:
 	Transform();
 	Transform(const Vec3 pos, const Vec3 scale, const Vec3 rot);
 	void Update();
 
-public: // 繧ｲ繝・ち繝ｼ
+public: // 行列取得
 	Mat4 GetTransMat();
 	Mat4 GetScaleMat();
 	Mat4 GetRotMat();
 	Mat4 GetWorldMat();
 
-public: // 繧ｻ繝・ち繝ｼ
+public: // ワールド行列設定
 	void SetWorldMat(Mat4 worldMat);
 	void SetBillboardType(const BillboardType type);
 };

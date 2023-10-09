@@ -16,91 +16,91 @@
 
 static const int maxBoneIndices = 4;
 
-// 豈碑ｼ・＠縺ｦ螟ｧ縺阪＞譁ｹ繧定ｿ斐☆
+// 2つの値の最大値を返す
 template<typename T>
 T Max(const T a, const T b)
 {
-	return a >= b ? a : b;
+    return a >= b ? a : b;
 }
 
-// 豈碑ｼ・＠縺ｦ蟆上＆縺・婿繧定ｿ斐☆
+// 2つの値の最小値を返す
 template<typename T>
 T Min(const T a, const T b)
 {
-	return a <= b ? a : b;
+    return a <= b ? a : b;
 }
 
-// 隨ｦ蜿ｷ繧定ｿ斐☆・・-1, 0, 1 ・・
+// 浮動小数点数の符号を取得する（-1, 0, 1）
 uint32_t Sign(const float a);
 Vec2 Sign(const Vec2 a);
 Vec3 Sign(const Vec3 a);
 
-// 蛟､繧樽in縺ｨMax縺ｮ髢薙↓蛻ｶ髯舌☆繧矩未謨ｰ
+// 値を指定範囲内にクランプする
 template<typename T>
 T Clamp(const T value, const T min = 0, const T max = 1)
 {
-	if (value < min)
-	{
-		return min;
-	}
-	if (value > max)
-	{
-		return max;
-	}
-	return value;
+    if (value < min)
+    {
+        return min;
+    }
+    if (value > max)
+    {
+        return max;
+    }
+    return value;
 }
 
-// 蛟､縺悟庶譚溘☆繧矩未謨ｰ
+// 値を指定された速度で収束させる
 template<typename T>
 T Convergence(const T value, const T speed, const T origin = 0)
 {
-	float temp = value;
-	if (value == origin)
-	{
-		return origin;
-	}
-	else if (value > origin)
-	{
-		temp -= fabs(speed);
-		return Max(temp, origin);
-	}
-	else if (value < origin)
-	{
-		temp += fabs(speed);
-		return Min(temp, origin);
-	}
+    float temp = value;
+    if (value == origin)
+    {
+        return origin;
+    }
+    else if (value > origin)
+    {
+        temp -= fabs(speed);
+        return Max(temp, origin);
+    }
+    else if (value < origin)
+    {
+        temp += fabs(speed);
+        return Min(temp, origin);
+    }
 
-	return -1;
+    return -1;
 }
 
-// 蛟､繧定ｶ・∴縺溘ｉ謌ｻ縺・
+// 値を指定された制限内で復元する
 template<typename T>
 T Restore(const T value, const T limit, const T origin = 0)
 {
-	if (value >= limit)
-	{
-		return origin + value - limit;
-	}
-	return value;
+    if (value >= limit)
+    {
+        return origin + value - limit;
+    }
+    return value;
 }
 
-// 譯∵焚繧貞叙蠕・
-uint32_t GetDight(const uint32_t value);
+// 整数の桁数を取得する
+uint32_t GetDigit(const uint32_t value);
 
-// 迴ｾ蝨ｨ譎る俣繧定ｿ斐☆髢｢謨ｰ
+// 現在の時間を取得する
 unsigned long GetNowTime(const TimeUnit timeUnit = TimeUnit::MilliSecond);
 
-// 繝ｯ繝ｼ繝ｫ繝牙ｺｧ讓吶ｒ繧ｹ繧ｯ繝ｪ繝ｼ繝ｳ蠎ｧ讓吶↓螟画鋤縺吶ｋ
+// 3D座標をスクリーン座標に変換する
 Vec2 WorldToScreen(const Vec3 worldPos);
 
-// 荳芽ｧ貞ｽ｢縺ｮ豕慕ｷ壹ｒ豎ゅａ繧・
+// 3つの点から三角形の法線ベクトルを計算する
 Vec3 GetTriangleNormal(const Vec3 p0, const Vec3 p1, const Vec3 p2);
 
-// Debug繝薙Ν繝峨・縺ｿ螳溯｡後☆繧・
+// デバッグビルドでのみ実行される処理
 void ProcessAtDebugBuild(std::function<void()> lambdaFunc);
 
-// Release繝薙Ν繝芽ｺｫ縺ｮ螳溯｡後☆繧・
+// リリースビルドでのみ実行される処理
 void ProcessAtReleaseBuild(std::function<void()> lambdaFunc);
 
-// 蜃ｺ蜉帙え繧｣繝ｳ繝峨え縺ｫ蜃ｺ蜉帙☆繧・
-void OutputDebugLog(const char* fmt...);
+// デバッグログを出力する
+void OutputDebugLog(const char* fmt, ...);

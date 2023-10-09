@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 
+// 別クラスをシングルトーンにするクラス
 template<typename T> class Singleton
 {
 protected:

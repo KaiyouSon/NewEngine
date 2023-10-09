@@ -498,9 +498,6 @@
     <ClCompile Include="Application\SourceCode\Scene\LogoScene.cpp">
       <Filter>Application\Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\Other\Billboard.cpp">
-      <Filter>NewEngine\Source\Object\Other</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\AssimpLoader.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
@@ -831,6 +828,9 @@
     <ClCompile Include="NewEngine\Object\3D\ParticleMesh.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\Billboard.cpp">
+      <Filter>NewEngine\Source\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1000,9 +1000,6 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Sound\WaveSound.h">
       <Filter>NewEngine\Header\Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Object\Other\Billboard.h">
-      <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\AssimpLoader.h">
       <Filter>NewEngine\Header\Object\Other</Filter>
@@ -1357,6 +1354,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\ParticleMesh.h">
       <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\Billboard.h">
+      <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

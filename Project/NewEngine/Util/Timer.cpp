@@ -38,7 +38,7 @@ bool Timer::operator==(const bool flag)
 	return mIsTimeOut == flag;
 }
 
-// 繧ｻ繝・ち繝ｼ
+// セッター
 void Timer::SetTimer(const int32_t timer)
 {
 	mTimer = timer;
@@ -48,7 +48,7 @@ void Timer::SetLimitTimer(const int32_t maxTimer)
 	mLimitTimer = maxTimer;
 }
 
-// 繧ｲ繝・ち繝ｼ
+// ゲッター
 int32_t Timer::GetTimer()
 {
 	return mTimer;
