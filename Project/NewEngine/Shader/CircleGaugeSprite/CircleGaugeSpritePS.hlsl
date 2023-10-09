@@ -1,20 +1,18 @@
 #include "CircleGaugeSprite.hlsli"
-#include "ShaderIO.hlsli"
+#include "../Util/Util.hlsli"
 
 Texture2D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
 SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
 
-float Float2Cross(float2 v1, float2 v2);
-
-float4 main(VSOutputSvposUv vsOutput) : SV_TARGET
-{   
+float4 main(V2P i) : SV_TARGET
+{
     const float PI = 3.14159f;
     
     float2 center = 0.5f;
 
     float2 v1 = { cos(startRadian), sin(startRadian) }; // 始点のベクトル
     float2 v2 = { cos(endRadian), sin(endRadian) }; // 終点のベクトル
-    float2 v3 = vsOutput.uv - center; // 各ピクセルのベクトル
+    float2 v3 = i.uv - center; // 各ピクセルのベクトル
     
     // 正規化
     v1 = normalize(v1);
@@ -60,10 +58,5 @@ float4 main(VSOutputSvposUv vsOutput) : SV_TARGET
         }
     }
     
-    return float4(tex.Sample(smp, vsOutput.uv)) * color;
-}
-
-float Float2Cross(float2 v1, float2 v2)
-{
-    return v1.x * v2.y - v1.y * v2.x;
+    return float4(tex.Sample(smp, i.uv)) * color;
 }

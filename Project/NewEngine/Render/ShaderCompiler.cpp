@@ -65,7 +65,7 @@ void ShaderCompiler::CompileComputeShader(const std::string& filePath)
 	std::wstring wFilePath(filePath.begin(), filePath.end());
 
 	// デバッグのみ実行
-	ProcessAtDebugBulid([&]()
+	ProcessAtDebugBuild([&]()
 		{
 			// シェーダの読み込みとコンパイル
 			mResult = D3DCompileFromFile(
@@ -80,7 +80,7 @@ void ShaderCompiler::CompileComputeShader(const std::string& filePath)
 		});
 
 	// リリースのみ実行
-	ProcessAtReleaseBulid([&]()
+	ProcessAtReleaseBuild([&]()
 		{
 			// シェーダの読み込みとコンパイル
 			mResult = D3DCompileFromFile(
@@ -111,7 +111,7 @@ void ShaderCompiler::CompileVertexShader(const std::string& filePath)
 	std::wstring wFilePath(filePath.begin(), filePath.end());
 
 	// デバッグのみ実行
-	ProcessAtDebugBulid([&]()
+	ProcessAtDebugBuild([&]()
 		{
 			// シェーダの読み込みとコンパイル
 			mResult = D3DCompileFromFile(
@@ -126,7 +126,7 @@ void ShaderCompiler::CompileVertexShader(const std::string& filePath)
 		});
 
 	// リリースのみ実行
-	ProcessAtReleaseBulid([&]()
+	ProcessAtReleaseBuild([&]()
 		{
 			// シェーダの読み込みとコンパイル
 			mResult = D3DCompileFromFile(
@@ -157,7 +157,7 @@ void ShaderCompiler::CompileGeometryShader(const std::string& filePath)
 	std::wstring wFilePath(filePath.begin(), filePath.end());
 
 	// デバッグのみ実行
-	ProcessAtDebugBulid([&]()
+	ProcessAtDebugBuild([&]()
 		{
 			// シェーダの読み込みとコンパイル
 			mResult = D3DCompileFromFile(
@@ -172,7 +172,7 @@ void ShaderCompiler::CompileGeometryShader(const std::string& filePath)
 		});
 
 	// リリースのみ実行
-	ProcessAtReleaseBulid([&]()
+	ProcessAtReleaseBuild([&]()
 		{
 			// シェーダの読み込みとコンパイル
 			mResult = D3DCompileFromFile(
@@ -203,7 +203,7 @@ void ShaderCompiler::CompilePixelShader(const std::string& filePath)
 	std::wstring wFilePath(filePath.begin(), filePath.end());
 
 	// デバッグのみ実行
-	ProcessAtDebugBulid([&]()
+	ProcessAtDebugBuild([&]()
 		{
 			// シェーダの読み込みとコンパイル
 			mResult = D3DCompileFromFile(
@@ -219,7 +219,7 @@ void ShaderCompiler::CompilePixelShader(const std::string& filePath)
 
 
 	// リリースのみ実行
-	ProcessAtReleaseBulid([&]()
+	ProcessAtReleaseBuild([&]()
 		{
 			// シェーダの読み込みとコンパイル
 			mResult = D3DCompileFromFile(

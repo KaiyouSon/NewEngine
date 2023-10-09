@@ -20,10 +20,10 @@ float RenderBase::sClearColor[4] = { 0.1f,0.25f,0.5f,0.0f };
 
 void RenderBase::Init()
 {
-	// 繝・ヰ繝・げ譎ゅ・縺ｿ螳溯｡・
-	ProcessAtDebugBulid([]()
+	// デバッグビルド時に処理を実行
+	ProcessAtDebugBuild([]()
 		{
-			//繝・ヰ繝・げ繝ｬ繧､繝､繝ｼ繧偵が繝ｳ縺ｫ
+			// デバッグレイヤーを有効化
 			ComPtr<ID3D12Debug1> debugController;
 			if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(debugController.GetAddressOf()))))
 			{
@@ -32,33 +32,32 @@ void RenderBase::Init()
 			}
 		});
 
-	DeviceInit();	// 繝・ヰ繧､繧ｹ縺ｮ蛻晄悄蛹・
+	DeviceInit(); // デバイスの初期化
 
-	// 繝・ヰ繝・げ譎ゅ・縺ｿ螳溯｡・
-	ProcessAtDebugBulid([]()
+	// デバッグビルド時に処理を実行
+	ProcessAtDebugBuild([]()
 		{
 			ComPtr<ID3D12InfoQueue> infoQueue;
-			if (SUCCEEDED(RenderBase::GetInstance()->
-				GetDevice()->QueryInterface(IID_PPV_ARGS(&infoQueue))))
+			if (SUCCEEDED(RenderBase::GetInstance()->GetDevice()->QueryInterface(IID_PPV_ARGS(&infoQueue))))
 			{
-				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);	// 繧・・縺・お繝ｩ繝ｼ荳譎ゅ↓豁｢縺ｾ繧・
-				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);		// 繧ｨ繝ｩ繝ｼ譎ゅ↓豁｢縺ｾ繧・
-				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);	// 繝ｯ繝ｼ繝九Φ繧ｰ譎ゅ↓豁｢縺ｾ繧・
+				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true); // 重大なエラーでブレーク
+				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);      // エラーでブレーク
+				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);    // 警告でブレーク
 			}
 
-			//縲謚大宛縺吶ｋ繧ｨ繝ｩ繝ｼ
+			// 特定の警告メッセージをフィルタリング
 			D3D12_MESSAGE_ID denyIds[] = {
 				D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE
 			};
 
-			//縲謚大宛縺輔ｌ繧玖｡ｨ遉ｺ繝ｬ繝吶Ν
+			// 特定の警告メッセージを無効化
 			D3D12_MESSAGE_SEVERITY severities[] = { D3D12_MESSAGE_SEVERITY_INFO };
 			D3D12_INFO_QUEUE_FILTER filter{};
 			filter.DenyList.NumIDs = _countof(denyIds);
 			filter.DenyList.pIDList = denyIds;
 			filter.DenyList.NumSeverities = _countof(severities);
 			filter.DenyList.pSeverityList = severities;
-			//縲謖・ｮ壹＠縺溘お繝ｩ繝ｼ縺ｮ陦ｨ遉ｺ繧呈椛蛻ｶ縺吶ｋ
+			// 特定の警告メッセージをフィルタに追加
 			infoQueue->PushStorageFilter(&filter);
 		});
 
@@ -68,76 +67,70 @@ void RenderBase::Init()
 
 	mFenceValue = 0;
 
-	DescriptorHeapInit();	// 繝・ぅ繧ｹ繧ｯ繝ｪ繝励ち繝ｼ繝偵・繝励・蛻晄悄蛹・
-	CommandInit();			// 繧ｳ繝槭Φ繝蛾未騾｣縺ｮ蛻晄悄蛹・
-	SwapChainInit();		// 繧ｹ繝ｯ繝・・繝√ぉ繝ｳ縺ｮ蛻晄悄蛹・
-	FenceInit();			// 繝輔ぉ繝ｳ繧ｹ縺ｮ蛻晄悄蛹・
-	DepthBufferInit();		// 豺ｱ蠎ｦ繝舌ャ繝輔ぃ縺ｮ蛻晄悄蛹・
-	ShaderCompilerInit();	// 繧ｷ繧ｧ繝ｼ繝繝ｼ繧ｳ繝ｳ繝代う繝ｩ繝ｼ縺ｮ蛻晄悄蛹・
-	GraphicsPipelineInit();	// 繧ｰ繝ｩ繝輔ぅ繝・け繧ｹ繝代う繝励Λ繧､繝ｳ縺ｮ蛻晄悄蛹・
-	ComputePipelineInit();	// 繧ｳ繝ｳ繝斐Η繝ｼ繝医ヱ繧､繝励Λ繧､繝ｳ縺ｮ蛻晄悄蛹・
+	DescriptorHeapInit();   // ディスクリプタヒープの初期化
+	CommandInit();          // コマンドの初期化
+	SwapChainInit();        // スワップチェインの初期化
+	FenceInit();            // フェンスの初期化
+	DepthBufferInit();      // デプスバッファの初期化
+	ShaderCompilerInit();   // シェーダーコンパイラの初期化
+	GraphicsPipelineInit(); // グラフィックスパイプラインの初期化
+	ComputePipelineInit();  // コンピュートパイプラインの初期化
 }
 void RenderBase::PreDraw()
 {
-	//---------------------- 繝ｪ繧ｽ繝ｼ繧ｹ繝舌Μ繧｢縺ｮ螟画峩繧ｳ繝槭Φ繝・----------------------//
-	// 繝舌ャ繧ｯ繝舌ャ繝輔ぃ縺ｮ逡ｪ蜿ｷ繧貞叙蠕・
-	UINT bbIndex = mSwapChain->GetCurrentBackBufferIndex();
-	// ・托ｼ弱Μ繧ｽ繝ｼ繧ｹ繝舌Μ繧｢縺ｧ譖ｸ縺崎ｾｼ縺ｿ蜿ｯ閭ｽ縺ｫ螟画峩
-	mBarrierDesc.Transition.pResource = mBackBuffers[bbIndex]->GetBufferResource()->buffer.Get();	// 繝舌ャ繧ｯ繝舌ャ繝輔ぃ繧呈欠螳・
-	mBarrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;	// 陦ｨ遉ｺ迥ｶ諷九°繧・
-	mBarrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // 謠冗判迥ｶ諷九∈
-	mCommandList->ResourceBarrier(1, &mBarrierDesc);
+	// バックバッファのインデックスを取得
+	uint32_t bbIndex = mSwapChain->GetCurrentBackBufferIndex();
+	// バックバッファをレンダーターゲットに遷移
+	TransitionBufferState(
+		mBackBuffers[bbIndex]->GetBufferResource(),
+		D3D12_RESOURCE_STATE_PRESENT,
+		D3D12_RESOURCE_STATE_RENDER_TARGET);
 
-	//--------------------------- 謠冗判蜈域欠螳壹さ繝槭Φ繝・---------------------------//
-	// ・抵ｼ取緒逕ｻ蜈医・螟画峩
-	// 繝ｬ繝ｳ繝繝ｼ繧ｿ繝ｼ繧ｲ繝・ヨ繝薙Η繝ｼ縺ｮ繝上Φ繝峨Ν繧貞叙蠕・
+	// ハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = mBackBuffers[bbIndex]->GetBufferResource()->rtvHandle.cpu;
-
-	// 豺ｱ蠎ｦ繧ｹ繝・Φ繧ｷ繝ｫ繝薙Η繝ｼ逕ｨ繝・せ繧ｯ繝ｪ繝励ち繝偵・繝励・繝上Φ繝峨Ν繧貞叙蠕・
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = mDepthBuffer->GetBufferResource()->dsvHandle.cpu;
 	mCommandList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
 
-	// 逕ｻ髱｢繧ｯ繝ｪ繧｢ R G B A
+	// クリア
 	mCommandList->ClearRenderTargetView(rtvHandle, sClearColor, 0, nullptr);
-
-	// 豺ｱ蠎ｦ繝舌ャ繝輔ぃ繧ｯ繝ｪ繧｢
 	mCommandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
-	// 繝薙Η繝ｼ繝昴・繝医・蜃ｦ逅・
+	// ビューポートの設定
 	mViewport->SetViewport(
 		{ 0,0 },
-		{
-			(float)mRenderWindow->GetWindowSize().x,
-			(float)mRenderWindow->GetWindowSize().y
-		});
+	{
+		(float)mRenderWindow->GetWindowSize().x,
+		(float)mRenderWindow->GetWindowSize().y
+	});
 	mViewport->Update();
 
-	// 繧ｷ繧ｶ繝ｼ遏ｩ蠖｢縺ｮ蜃ｦ逅・
+	// シザーレクタングルの更新
 	mScissorRectangle->Update();
 }
 void RenderBase::PostDraw()
 {
 	HRESULT result;
 
-	//---------------------- 繝ｪ繧ｽ繝ｼ繧ｹ繝舌Μ繧｢縺ｮ蠕ｩ蟶ｰ繧ｳ繝槭Φ繝・----------------------//
-	// ・包ｼ弱Μ繧ｽ繝ｼ繧ｹ繝舌Μ繧｢繧呈綾縺・
-	mBarrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // 謠冗判迥ｶ諷九°繧・
-	mBarrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT; // 陦ｨ遉ｺ迥ｶ諷九∈
-	mCommandList->ResourceBarrier(1, &mBarrierDesc);
+	// バックバッファのインデックスを取得
+	uint32_t bbIndex = mSwapChain->GetCurrentBackBufferIndex();
+	// バックバッファから画面表示状態への遷移
+	TransitionBufferState(
+		mBackBuffers[bbIndex]->GetBufferResource(),
+		D3D12_RESOURCE_STATE_RENDER_TARGET,
+		D3D12_RESOURCE_STATE_PRESENT);
 
-	//-------------------------- 繧ｳ繝槭Φ繝峨・繝輔Λ繝・す繝･ --------------------------//
-	// 蜻ｽ莉､縺ｮ繧ｯ繝ｭ繝ｼ繧ｺ
+	// コマンドリストを閉じる
 	result = mCommandList->Close();
 	assert(SUCCEEDED(result));
-	// 繧ｳ繝槭Φ繝峨Μ繧ｹ繝医・螳溯｡・
+	// コマンドリストの実行
 	ID3D12CommandList* mCommandLists[] = { mCommandList.Get() };
 	mCommandQueue->ExecuteCommandLists(1, mCommandLists);
 
-	// 逕ｻ髱｢縺ｫ陦ｨ遉ｺ縺吶ｋ繝舌ャ繝輔ぃ繧偵ヵ繝ｪ繝・・・郁｣剰｡ｨ縺ｮ蜈･譖ｿ縺茨ｼ・
+	// 画面を表示
 	result = mSwapChain->Present(1, 0);
 	assert(SUCCEEDED(result));
 
-	// 繧ｳ繝槭Φ繝峨・螳溯｡悟ｮ御ｺ・ｒ蠕・▽
+	// コマンドの実行を待機
 	mCommandQueue->Signal(mFence.Get(), ++mFenceValue);
 	if (mFence.Get()->GetCompletedValue() != mFenceValue)
 	{
@@ -147,10 +140,10 @@ void RenderBase::PostDraw()
 		CloseHandle(event);
 	}
 
-	// 繧ｭ繝･繝ｼ繧偵け繝ｪ繧｢
+	// コマンドアロケータをリセット
 	result = mCommandAllocator->Reset();
 	assert(SUCCEEDED(result));
-	// 蜀阪・繧ｳ繝槭Φ繝峨Μ繧ｹ繝医ｒ雋ｯ繧√ｋ貅門ｙ
+	// コマンドリストをリセット
 	result = mCommandList.Get()->Reset(mCommandAllocator.Get(), nullptr);
 	assert(SUCCEEDED(result));
 }
@@ -170,47 +163,45 @@ void RenderBase::TransitionBufferState(
 	mCommandList->ResourceBarrier(1, &barrier);
 }
 
-// --- 蛻晄悄蛹夜未騾｣ ------------------------------------------------------------ //
+// --- 初期化関連 ------------------------------------------------------------ //
 void RenderBase::DeviceInit()
 {
 	HRESULT result;
 
-	// DXGI繝輔ぃ繧ｯ繝医Μ繝ｼ縺ｮ逕滓・
+	// DXGIファクトリの初期化
 	result = CreateDXGIFactory(IID_PPV_ARGS(&mDxgiFactory));
 	assert(SUCCEEDED(result));
 
-	// 繧｢繝繝励ち繝ｼ縺ｮ蛻玲嫌逕ｨ
+	// 利用可能なアダプタのリストを取得
 	std::vector<ComPtr<IDXGIAdapter4>> adapters;
-	// 縺薙％縺ｫ迚ｹ螳壹・蜷榊燕繧呈戟縺､繧｢繝繝励ち繝ｼ繧ｪ繝悶ず繧ｧ繧ｯ繝医′蜈･繧・
 	ComPtr<IDXGIAdapter4> tmpAdapter;
 
-	// 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ縺碁ｫ倥＞繧ゅ・縺九ｉ鬆・↓縲∝・縺ｦ縺ｮ繧｢繝繝励ち繝ｼ繧貞・謖吶☆繧・
-	for (UINT i = 0;
+	// 高性能なGPUを優先してアダプタを列挙し、リストに追加
+	for (uint32_t i = 0;
 		mDxgiFactory->EnumAdapterByGpuPreference(i,
 			DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE,
 			IID_PPV_ARGS(&tmpAdapter)) != DXGI_ERROR_NOT_FOUND;
 		i++)
 	{
-		// 蜍慕噪驟榊・縺ｫ霑ｽ蜉縺吶ｋ
 		adapters.push_back(tmpAdapter);
 	}
 
-	// 螯･蠖薙↑繧｢繝繝励ち繧帝∈蛻･縺吶ｋ
+	// 選択したアダプタを特定
 	for (size_t i = 0; i < adapters.size(); i++)
 	{
 		DXGI_ADAPTER_DESC3 adapterDesc;
-		// 繧｢繝繝励ち繝ｼ縺ｮ諠・ｱ繧貞叙蠕励☆繧・
+		// アダプタの詳細情報を取得
 		adapters[i]->GetDesc3(&adapterDesc);
-		// 繧ｽ繝輔ヨ繧ｦ繧ｧ繧｢繝・ヰ繧､繧ｹ繧貞屓驕ｿ
+		// ソフトウェアアダプタでない場合
 		if (!(adapterDesc.Flags & DXGI_ADAPTER_FLAG3_SOFTWARE))
 		{
-			// 繝・ヰ繧､繧ｹ繧呈治逕ｨ縺励※繝ｫ繝ｼ繝励ｒ謚懊￠繧・
+			// 選択したアダプタを保持
 			tmpAdapter = adapters[i].Get();
 			break;
 		}
 	}
 
-	// 蟇ｾ蠢懊Ξ繝吶Ν縺ｮ驟榊・
+	// デバイスの初期化
 	D3D_FEATURE_LEVEL levels[] =
 	{
 		D3D_FEATURE_LEVEL_12_1,
@@ -222,56 +213,48 @@ void RenderBase::DeviceInit()
 	D3D_FEATURE_LEVEL featureLevel;
 	for (size_t i = 0; i < _countof(levels); i++)
 	{
-		// 謗｡逕ｨ縺励◆繧｢繝繝励ち繝ｼ縺ｧ繝・ヰ繧､繧ｹ繧堤函謌・
+		// デバイスの作成を試み、対応する機能レベルを取得
 		result = D3D12CreateDevice(tmpAdapter.Get(), levels[i],
 			IID_PPV_ARGS(mDevice.GetAddressOf()));
 		if (result == S_OK) {
-			// 繝・ヰ繧､繧ｹ繧堤函謌舌〒縺阪◆譎らせ縺ｧ繝ｫ繝ｼ繝励ｒ謚懊￠繧・
+			// デバイスが作成された場合、対応する機能レベルを保持
 			featureLevel = levels[i];
 			break;
 		}
 	}
-
 }
 void RenderBase::DescriptorHeapInit()
 {
 	DescriptorHeapSetting setting;
-	// SRV譬ｼ邏咲畑
+	// SRV用
 	setting.maxSize = 2048;
 	setting.startIndex = 1;
 	setting.heapType = DescriptorHeapSetting::CBV_SRV_UAV;
 	DescriptorHeapManager::Create(setting, "SRV");
 
-	// RTV譬ｼ邏咲畑
+	// RTV用
 	setting.maxSize = 64;
 	setting.heapType = DescriptorHeapSetting::RTV;
 	DescriptorHeapManager::Create(setting, "RTV");
 
-	// DSV譬ｼ邏咲畑
+	// DSV用
 	setting.maxSize = 64;
 	setting.heapType = DescriptorHeapSetting::DSV;
 	DescriptorHeapManager::Create(setting, "DSV");
-
-	// SRV_UAV譬ｼ邏咲畑
-	setting.maxSize = 512;
-	setting.heapType = DescriptorHeapSetting::CBV_SRV_UAV;
-	DescriptorHeapManager::Create(setting, "SRV_UAV");
 }
 void RenderBase::CommandInit()
 {
 	HRESULT result;
 
-	// 繧ｳ繝槭Φ繝峨い繝ｭ繧ｱ繝ｼ繧ｿ繧堤函謌・
-	result = mDevice->CreateCommandAllocator
-	(
+	// コマンドアロケータの作成
+	result = mDevice->CreateCommandAllocator(
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
 		IID_PPV_ARGS(&mCommandAllocator)
 	);
 	assert(SUCCEEDED(result));
 
-	// 繧ｳ繝槭Φ繝峨Μ繧ｹ繝医ｒ逕滓・
-	result = mDevice->CreateCommandList
-	(
+	// コマンドリストの作成
+	result = mDevice->CreateCommandList(
 		0,
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
 		mCommandAllocator.Get(), nullptr,
@@ -279,9 +262,8 @@ void RenderBase::CommandInit()
 	);
 	assert(SUCCEEDED(result));
 
-	//繧ｳ繝槭Φ繝峨く繝･繝ｼ縺ｮ險ｭ螳・
+	// コマンドキューの設定
 	D3D12_COMMAND_QUEUE_DESC mCommandQueueDesc{};
-	//繧ｳ繝槭Φ繝峨く繝･繝ｼ繧堤函謌・
 	result = mDevice.Get()->CreateCommandQueue(&mCommandQueueDesc, IID_PPV_ARGS(&mCommandQueue));
 	assert(SUCCEEDED(result));
 }
@@ -289,24 +271,24 @@ void RenderBase::SwapChainInit()
 {
 	HRESULT result;
 
+	// スワップチェインの初期化
 	mBackBuffers[0] = std::make_unique<RenderTarget>();
 	mBackBuffers[1] = std::make_unique<RenderTarget>();
 
-	// 繝ｪ繧ｽ繝ｼ繧ｹ縺ｮ險ｭ螳・
+	// スワップチェインの設定
 	DXGI_SWAP_CHAIN_DESC1 mSwapChainDesc{};
 	mSwapChainDesc.Width = (UINT)mRenderWindow->GetWindowSize().x;
 	mSwapChainDesc.Height = (UINT)mRenderWindow->GetWindowSize().y;
-	mSwapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;				 // 濶ｲ諠・ｱ縺ｮ譖ｸ蠑・
-	mSwapChainDesc.SampleDesc.Count = 1;							 // 繝槭Ν繝√し繝ｳ繝励Ν縺励↑縺・
-	mSwapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER;			 // 繝舌ャ繧ｯ繝舌ャ繝輔ぃ逕ｨ
-	mSwapChainDesc.BufferCount = 2;									 // 繝舌ャ繝輔ぃ謨ｰ繧抵ｼ偵▽縺ｫ險ｭ螳・
-	mSwapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;		 // 繝輔Μ繝・・蠕後・遐ｴ譽・
+	mSwapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM; // 色のフォーマット
+	mSwapChainDesc.SampleDesc.Count = 1; // マルチサンプリングの設定
+	mSwapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER; // バックバッファとして使用
+	mSwapChainDesc.BufferCount = 2; // ダブルバッファリング
+	mSwapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD; // フリップモード
 	mSwapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-	// 繧ｹ繝ｯ繝・・繝√ぉ繝ｼ繝ｳ縺ｮ逕滓・
+	// スワップチェインの作成
 	ComPtr<IDXGISwapChain1> mSwapChain1;
-	result = mDxgiFactory->CreateSwapChainForHwnd
-	(
+	result = mDxgiFactory->CreateSwapChainForHwnd(
 		mCommandQueue.Get(),
 		mRenderWindow->GetHwnd(),
 		&mSwapChainDesc,
@@ -317,19 +299,19 @@ void RenderBase::SwapChainInit()
 	mSwapChain1.As(&mSwapChain);
 	assert(SUCCEEDED(result));
 
-	// 繝ｬ繝ｳ繝繝ｼ繧ｿ繝ｼ繧ｲ繝・ヨ繝薙Η繝ｼ縺ｮ險ｭ螳・
+	// レンダーターゲットビューの設定
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
-	// 繧ｷ繧ｧ繝ｼ繝繝ｼ縺ｮ險育ｮ礼ｵ先棡繧担RGB縺ｫ螟画鋤縺励※譖ｸ縺崎ｾｼ繧
+	// レンダーターゲットビューのフォーマットを設定
 	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
-	// 繧ｹ繝ｯ繝・・繝√ぉ繝ｼ繝ｳ縺ｮ蜈ｨ縺ｦ縺ｮ繝舌ャ繝輔ぃ縺ｫ縺､縺・※蜃ｦ逅・☆繧・
+	// バックバッファに対する設定
 	for (size_t i = 0; i < mBackBuffers.size(); i++)
 	{
-		// 繧ｹ繝ｯ繝・・繝√ぉ繝ｼ繝ｳ縺九ｉ繝舌ャ繝輔ぃ繧貞叙蠕・
+		// バックバッファを取得
 		mSwapChain->GetBuffer((UINT)i, IID_PPV_ARGS(mBackBuffers[i]->GetBufferResource()->buffer.GetAddressOf()));
 
-		// RTV菴懈・
+		// レンダーターゲットビューを作成
 		DescriptorHeapManager::GetDescriptorHeap("RTV")->CreateRTV(mBackBuffers[i]->GetBufferResource());
 	}
 }
@@ -337,12 +319,13 @@ void RenderBase::FenceInit()
 {
 	HRESULT result;
 
-	// 繝輔ぉ繝ｳ繧ｹ縺ｮ逕滓・
+	// フェンスの初期化
 	result = mDevice->CreateFence(
 		mFenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(mFence.GetAddressOf()));
 }
 void RenderBase::DepthBufferInit()
 {
+	// 深度バッファの初期化
 	mDepthBuffer = std::make_unique<DepthBuffer>();
 	mDepthBuffer->Create(RenderWindow::GetInstance()->GetWindowSize());
 	DescriptorHeapManager::GetDescriptorHeap("DSV")->CreateDSV(mDepthBuffer->GetBufferResource());
@@ -388,8 +371,8 @@ void RenderBase::ShaderCompilerInit()
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path1 + "CircleGaugeSpriteVS.hlsl";
-	setting.psFilePath = path1 + "CircleGaugeSpritePS.hlsl";
+	setting.vsFilePath = path1 + "CircleGaugeSprite/CircleGaugeSpriteVS.hlsl";
+	setting.psFilePath = path1 + "CircleGaugeSprite/CircleGaugeSpritePS.hlsl";
 	ShaderCompilerManager::Create(setting, "CircleGaugeSprite");
 
 	// レンダーテクスチャ用（デフォルトシェーダー）
@@ -501,7 +484,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	GraphicsPipelineSetting setting;
 
-	// 3D繧ｪ繝悶ず繧ｧ繧ｯ繝育畑
+	// 3Dオブジェクト用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Object3D");
 	setting.cullMode = CullMode::Back;
@@ -512,7 +495,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "Object3D");
 
-	// FBX繝｢繝・Ν逕ｨ
+	// FBXモデル用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("FbxModel");
 	setting.cullMode = CullMode::Back;
@@ -523,7 +506,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "FbxModel");
 
-	// 繧ｹ繝励Λ繧､繝育畑
+	// スプライト用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Sprite");
 	setting.cullMode = CullMode::None;
@@ -534,7 +517,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Sprite");
 
-	// 蜀・ｽ｢繧ｲ繝ｼ繧ｸ繧ｹ繝励Λ繧､繝育畑
+	// 円ゲージスプライト用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("CircleGaugeSprite");
 	setting.cullMode = CullMode::None;
@@ -545,7 +528,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "CircleGaugeSprite");
 
-	// 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε逕ｨ
+	// レンダーテクスチャ用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("RenderTexture");
 	setting.cullMode = CullMode::None;
@@ -556,7 +539,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "RenderTexture");
 
-	// 繧ｷ繝ｫ繧ｨ繝・ヨ逕ｨ
+	// シルエット用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Silhouette");
 	setting.cullMode = CullMode::Back;
@@ -567,7 +550,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Silhouette");
 
-	// 繧｢繧ｦ繝医Λ繧､繝ｳ逕ｨ
+	// アウトライン用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Outline");
 	setting.cullMode = CullMode::Front;
@@ -578,7 +561,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Outline");
 
-	// 繝医ぇ繝ｼ繝ｳ繝ｬ繝ｳ繝繝ｪ繝ｳ繧ｰ逕ｨ
+	// トゥーンレンダリング用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ToonRendering");
 	setting.cullMode = CullMode::Back;
@@ -589,7 +572,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "ToonRendering");
 
-	// 繝ｩ繧､繝ｳ逕ｨ
+	// 線用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Line");
 	setting.cullMode = CullMode::None;
@@ -600,7 +583,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	PipelineManager::CreateGraphicsPipeline(setting, "Line");
 
-	// 繧ｨ繝溘ャ繧ｿ繝ｼ逕ｨ
+	// エミッタ用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Emitter");
 	setting.cullMode = CullMode::None;
@@ -611,7 +594,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Emitter");
 
-	// GPU繧ｨ繝溘ャ繧ｿ繝ｼ逕ｨ
+	// GPUエミッタ用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("GPUEmitter");
 	setting.cullMode = CullMode::None;
@@ -622,7 +605,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "GPUEmitter");
 
-	// ColliderObject逕ｨ
+	// ColliderObject用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ColliderObject");
 	setting.cullMode = CullMode::None;
@@ -667,7 +650,7 @@ void RenderBase::ComputePipelineInit()
 	PipelineManager::CreateComputePipeline(setting, "ParticleMesh");
 }
 
-// --- 繧ｲ繝・ち繝ｼ -------------------------------------------------------------- //
+// --- ゲッター -------------------------------------------------------------- //
 ID3D12Device* RenderBase::GetDevice() const
 {
 	return mDevice.Get();

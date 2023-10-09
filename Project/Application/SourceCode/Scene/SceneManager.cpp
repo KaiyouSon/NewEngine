@@ -32,13 +32,13 @@ SceneManager::SceneManager()
 	CreateManager::GetInstance()->Create();
 
 	// 繝・ヰ繝・げ譎・
-	ProcessAtDebugBulid([]()
+	ProcessAtDebugBuild([]()
 		{
 			sCurrentScene = std::make_unique<GameScene>();
 		});
 
 	// 繝ｪ繝ｪ繝ｼ繧ｹ譎・
-	ProcessAtReleaseBulid([]()
+	ProcessAtReleaseBuild([]()
 		{
 			sCurrentScene = std::make_unique<LogoScene>();
 		});
@@ -81,7 +81,7 @@ void SceneManager::RenderTextureSetting()
 void SceneManager::DrawDebugGui()
 {
 	// 繝・ヰ繝・げ譎ゅ・縺ｿ螳溯｡・
-	ProcessAtDebugBulid([&]()
+	ProcessAtDebugBuild([&]()
 		{
 			sCurrentScene->DrawDebugGui();
 		});

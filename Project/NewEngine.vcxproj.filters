@@ -1429,7 +1429,7 @@
     <None Include="NewEngine\Shader\Emitter.hlsli">
       <Filter>Shader\Engine\Emitter</Filter>
     </None>
-    <None Include="NewEngine\Shader\CircleGaugeSprite.hlsli">
+    <None Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSprite.hlsli">
       <Filter>Shader\Engine\CircleGaugeSprite</Filter>
     </None>
     <None Include="NewEngine\Shader\Line.hlsli">
@@ -1462,6 +1462,9 @@
     <None Include=".editorconfig" />
     <None Include="NewEngine\Shader\ParticleMesh.hlsli">
       <Filter>Shader\Engine\ParticleMesh</Filter>
+    </None>
+    <None Include="NewEngine\Shader\Util\Util.hlsli">
+      <Filter>Shader\Engine\Util</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1606,10 +1609,10 @@
     <FxCompile Include="NewEngine\Shader\GPUEmitterVS.hlsl">
       <Filter>Shader\Engine\Emitter</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\CircleGaugeSpritePS.hlsl">
+    <FxCompile Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSpritePS.hlsl">
       <Filter>Shader\Engine\CircleGaugeSprite</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\CircleGaugeSpriteVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSpriteVS.hlsl">
       <Filter>Shader\Engine\CircleGaugeSprite</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\LinePS.hlsl">

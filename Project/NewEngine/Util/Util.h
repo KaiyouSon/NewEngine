@@ -97,10 +97,10 @@ Vec2 WorldToScreen(const Vec3 worldPos);
 Vec3 GetTriangleNormal(const Vec3 p0, const Vec3 p1, const Vec3 p2);
 
 // Debug繝薙Ν繝峨・縺ｿ螳溯｡後☆繧・
-void ProcessAtDebugBulid(std::function<void()> lambdaFunc);
+void ProcessAtDebugBuild(std::function<void()> lambdaFunc);
 
 // Release繝薙Ν繝芽ｺｫ縺ｮ螳溯｡後☆繧・
-void ProcessAtReleaseBulid(std::function<void()> lambdaFunc);
+void ProcessAtReleaseBuild(std::function<void()> lambdaFunc);
 
 // 蜃ｺ蜉帙え繧｣繝ｳ繝峨え縺ｫ蜃ｺ蜉帙☆繧・
 void OutputDebugLog(const char* fmt...);

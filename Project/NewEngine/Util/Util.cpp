@@ -75,7 +75,7 @@ Vec3 GetTriangleNormal(const Vec3 p0, const Vec3 p1, const Vec3 p2)
 }
 
 // Debug繝薙Ν繝峨・縺ｿ螳溯｡後☆繧・
-void ProcessAtDebugBulid(std::function<void()> lambdaFunc)
+void ProcessAtDebugBuild(std::function<void()> lambdaFunc)
 {
 #ifdef _DEBUG
 
@@ -85,7 +85,7 @@ void ProcessAtDebugBulid(std::function<void()> lambdaFunc)
 }
 
 // Release繝薙Ν繝芽ｺｫ縺ｮ螳溯｡後☆繧・
-void ProcessAtReleaseBulid(std::function<void()> lambdaFunc)
+void ProcessAtReleaseBuild(std::function<void()> lambdaFunc)
 {
 #ifdef NDEBUG
 
