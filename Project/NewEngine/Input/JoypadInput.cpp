@@ -3,17 +3,11 @@
 #include "RenderWindow.h"
 #include <cassert>
 #include <dbt.h>
-#pragma comment(lib, "xinput.lib")
 
-#pragma region Ã“Iƒƒ“ƒo•Ï”
+bool JoypadInput::sIsInsertPad = false;
+uint32_t JoypadInput::sPadIndex = 0;
 
-bool JoypadInput::sIsInsertPad_ = false;
-uint32_t JoypadInput::sPadIndex_ = 0;
-
-#pragma endregion
-
-#pragma region ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ
-
+// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹åŠ±ÎŸç¹§ï½·ç¹ï½¼ç¹§ï½¸ç¹ï½£
 LRESULT SubWindowProc(int code, WPARAM wParam, LPARAM lParam)
 {
 	if (code < 0)
@@ -36,19 +30,14 @@ LRESULT SubWindowProc(int code, WPARAM wParam, LPARAM lParam)
 	return CallNextHookEx(NULL, code, wParam, lParam);
 }
 
-#pragma endregion
-
-#pragma region ‚»‚Ì‘¼‚Ìˆ—
-
-JoypadInput::JoypadInput() :
-	minButton_((int)PadCode::ButtonA), maxButton_((int)PadCode::ButtonR1)
+JoypadInput::JoypadInput()
 {
 }
 void JoypadInput::Init()
 {
 	SetJoyStick();
 
-	// ”²‚«·‚µŒŸ’m
+	// è¬šæ‡Šâ€³èŸ¾ï½®ç¸ºç²ï½¤æ‡ƒè¡
 	DEV_BROADCAST_DEVICEINTERFACE notificationFilter{};
 	notificationFilter.dbcc_devicetype = DBT_DEVTYP_DEVICEINTERFACE;
 	notificationFilter.dbcc_size = sizeof(notificationFilter);
@@ -56,6 +45,7 @@ void JoypadInput::Init()
 	HDEVNOTIFY notifyResult = RegisterDeviceNotification(
 		RenderWindow::GetInstance()->GetHwnd(), &notificationFilter,
 		DEVICE_NOTIFY_WINDOW_HANDLE | DEVICE_NOTIFY_ALL_INTERFACE_CLASSES);
+	notifyResult;
 	assert(!!notifyResult);
 
 	SetWindowsHookExW(
@@ -63,32 +53,32 @@ void JoypadInput::Init()
 }
 void JoypadInput::Update()
 {
-	if (sIsInsertPad_ == true)
+	if (sIsInsertPad == true)
 	{
-		joypadObjs_.clear();
+		mJoypadObjs.clear();
 		SetJoyStick();
-		sIsInsertPad_ = false;
+		sIsInsertPad = false;
 	}
 
-	for (int i = 0; i < joypadObjs_.size(); i++)
+	for (int i = 0; i < mJoypadObjs.size(); i++)
 	{
-		if (joypadObjs_[i].joypad == nullptr) continue;
+		if (mJoypadObjs[i].joypad == nullptr) continue;
 
-		// ƒWƒ‡ƒCƒpƒbƒgî•ñ‚Ìæ“¾ŠJn
-		joypadObjs_[i].joypad->Acquire();
+		// ç¹§ï½¸ç¹ï½§ç¹§ï½¤ç¹ä»£ãƒ£ç¹åŸŸãƒ¥è£ï½±ç¸ºï½®èœ¿é–€ï½¾éˆ´å¹•èŸ‹ãƒ»
+		mJoypadObjs[i].joypad->Acquire();
 
-		// ƒfƒoƒCƒX‚Ìƒ|[ƒŠƒ“ƒO‚ğs‚¤
-		joypadObjs_[i].joypad->Poll();
+		// ç¹ãƒ»ãƒ°ç¹§ï½¤ç¹§ï½¹ç¸ºï½®ç¹æ˜´ãƒ»ç¹ï½ªç¹ï½³ç¹§ï½°ç¹§å®šï½¡å¾Œâ‰§
+		mJoypadObjs[i].joypad->Poll();
 
-		// ÅV‚Ìƒpƒbƒgî•ñ‚¾‚Á‚½‚à‚Ì‚Í1ƒtƒŒ[ƒ€‘O‚ÌƒL[ƒ{[ƒhî•ñ‚Æ‚µ‚Ä•Û‘¶
-		joypadObjs_[i].prevPadInput = joypadObjs_[i].padInput;
+		// è­›Â€è­ï½°ç¸ºï½®ç¹ä»£ãƒ£ç¹åŸŸãƒ¥è£ï½±ç¸ºï£°ç¸ºï½£ç¸ºæº˜ï½‚ç¸ºï½®ç¸ºï½¯1ç¹è¼”Îç¹ï½¼ç¹ï£°èœ‘é˜ªãƒ»ç¹§ï½­ç¹ï½¼ç¹æ‡Šãƒ»ç¹ç”»ãƒ¥è£ï½±ç¸ºï½¨ç¸ºåŠ±â€»è«æ™ï½­ãƒ»
+		mJoypadObjs[i].prevPadInput = mJoypadObjs[i].padInput;
 
-		// ÅV‚ÌƒWƒ‡ƒCƒpƒbƒgî•ñ‚ğæ“¾‚·‚é
-		joypadObjs_[i].joypad->GetDeviceState(sizeof(joypadObjs_[i].padInput), &joypadObjs_[i].padInput);
+		// è­›Â€è­ï½°ç¸ºï½®ç¹§ï½¸ç¹ï½§ç¹§ï½¤ç¹ä»£ãƒ£ç¹åŸŸãƒ¥è£ï½±ç¹§è²å™è •åŠ±â˜†ç¹§ãƒ»
+		mJoypadObjs[i].joypad->GetDeviceState(sizeof(mJoypadObjs[i].padInput), &mJoypadObjs[i].padInput);
 	}
 }
 
-// ƒRƒ“ƒgƒ[ƒ‰[Ú‘±‚µ‚½‚ÌƒR[ƒ‹ƒoƒbƒN
+// ç¹§ï½³ç¹ï½³ç¹åŒ»ÎŸç¹ï½¼ç¹ï½©ç¹ï½¼è¬—ï½¥é‚¯å£¹ï¼ ç¸ºæ»“å‡¾ç¸ºï½®ç¹§ï½³ç¹ï½¼ç¹ï½«ç¹èˆŒãƒ£ç¹§ï½¯
 BOOL CALLBACK JoypadInput::DeviceFindCallBack(const DIDEVICEINSTANCE* pdidInstance, VOID* pContext)
 {
 	HRESULT result;
@@ -101,19 +91,19 @@ BOOL CALLBACK JoypadInput::DeviceFindCallBack(const DIDEVICEINSTANCE* pdidInstan
 
 	DIDEVICEINSTANCE instance;
 	joypad->GetDeviceInfo(&instance);
-	joypadInput->joypadObjs_.emplace_back(joypad);
+	joypadInput->mJoypadObjs.emplace_back(joypad);
 
-	// “ü—Íƒf[ƒ^Œ`®‚ÌƒZƒbƒg
+	// èœˆï½¥èœ‰å¸™ãƒ§ç¹ï½¼ç¹§ï½¿è –ï½¢è ‘ä¸Šãƒ»ç¹§ï½»ç¹ãƒ»ãƒ¨
 	result = joypad->SetDataFormat(&c_dfDIJoystick2);
 	assert(SUCCEEDED(result));
 
-	// ”r‘¼§ŒäƒŒƒxƒ‹‚ÌƒZƒbƒg
+	// è¬—å‰ƒï½»é–€å®›è •ï½¡ç¹ï½¬ç¹å¶Îç¸ºï½®ç¹§ï½»ç¹ãƒ»ãƒ¨
 	result = joypad->SetCooperativeLevel(
 		RenderWindow::GetInstance()->GetHwnd(),
 		DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	assert(SUCCEEDED(result));
 
-	// ²‚Ìƒ‚[ƒh‚ğâ‘Î²‚Éİ’è
+	// éœ†ï½¸ç¸ºï½®ç¹ï½¢ç¹ï½¼ç¹å³¨ï½’é‚¨ï½¶èŸ‡ï½¾éœ†ï½¸ç¸ºï½«éšªï½­è³ãƒ»
 	DIPROPDWORD diprop;
 	diprop.diph.dwSize = sizeof(DIPROPDWORD);
 	diprop.diph.dwHeaderSize = sizeof(DIPROPHEADER);
@@ -122,7 +112,7 @@ BOOL CALLBACK JoypadInput::DeviceFindCallBack(const DIDEVICEINSTANCE* pdidInstan
 	diprop.dwData = DIPROPAXISMODE_ABS;
 	joypad->SetProperty(DIPROP_AXISMODE, &diprop.diph);
 
-	//²‚Ì“–‚½‚è‚Ì”ÍˆÍ‚ğİ’è
+	//éœ†ï½¸ç¸ºï½®è –è–™â—†ç¹§ç¿«ãƒ»é½ãƒ»å³‡ç¹§å®šï½¨ï½­è³ãƒ»
 	DIPROPRANGE diprg;
 	diprg.diph.dwSize = sizeof(DIPROPRANGE);
 	diprg.diph.dwHeaderSize = sizeof(DIPROPHEADER);
@@ -139,19 +129,19 @@ BOOL CALLBACK JoypadInput::DeviceFindCallBack(const DIDEVICEINSTANCE* pdidInstan
 	joypad->SetProperty(DIPROP_RANGE, &diprg.diph);
 	diprg.diph.dwObj = DIJOFS_RY;
 	joypad->SetProperty(DIPROP_RANGE, &diprg.diph);
+	diprg.diph.dwObj = DIJOFS_RZ;
+	joypad->SetProperty(DIPROP_RANGE, &diprg.diph);
 
-	sPadIndex_++;
+	sPadIndex++;
 
 	return DIENUM_CONTINUE;
 }
 
-// ƒRƒ“ƒgƒ[ƒ‰[‚ğÚ‘±‚·‚éˆ—
+// ç¹§ï½³ç¹ï½³ç¹åŒ»ÎŸç¹ï½¼ç¹ï½©ç¹ï½¼ç¹§å‘ˆç£é‚¯å£¹â˜†ç¹§å¥ãƒ»é€…ãƒ»
 void JoypadInput::SetJoyStick()
 {
-	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
-
 	HRESULT result;
-	// ƒWƒ‡ƒCƒpƒbƒgƒfƒoƒCƒX‚Ì—ñ‹“
+	// ç¹§ï½¸ç¹ï½§ç¹§ï½¤ç¹ä»£ãƒ£ç¹åŒ»ãƒ§ç¹èˆŒã†ç¹§ï½¹ç¸ºï½®è›»ç²å«Œ
 	result = InputManager::GetInstance()->GetDirectInput()->
 		EnumDevices(
 			DI8DEVCLASS_GAMECTRL,
@@ -161,97 +151,130 @@ void JoypadInput::SetJoyStick()
 	assert(SUCCEEDED(result));
 }
 
-#pragma endregion
-
-#pragma region ƒ{ƒ^ƒ“ŠÖ˜A
-
-// ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ä‚éŠÔ
-bool JoypadInput::GetButton(const PadCode padCode, const int sPadIndex_)
+// ç¹æ‡Šã¡ç¹ï½³ç¹§å‘ˆæ¬¾ç¸ºåŠ±â€»ç¹§çŸ©ä¿£
+bool JoypadInput::GetButton(const PadCode padCode, const int padIndex)
 {
-	// Ú‘±‚µ‚Ä‚¢‚é‚©
+	// è¬—ï½¥é‚¯å£¹ï¼ ç¸ºï½¦ç¸ºãƒ»ï½‹ç¸ºãƒ»
 	if (GetisLinkPad() == false) return false;
 
-	// “Y‚¦š‚ÌƒNƒ‰ƒ“ƒvˆ—
-	int min = GetInstance()->minButton_;
-	int max = GetInstance()->maxButton_;
-	PadCode codo = (PadCode)Clamp((float)padCode, (float)min, (float)max);
+	if (padCode == PadCode::ButtonLeft)
+	{
+		return GetInstance()->mJoypadObjs[padIndex].padInput.rgdwPOV[0] == 27000;
+	}
+	else if (padCode == PadCode::ButtonRight)
+	{
+		return GetInstance()->mJoypadObjs[padIndex].padInput.rgdwPOV[0] == 9000;
+	}
+	else if (padCode == PadCode::ButtonUp)
+	{
+		return GetInstance()->mJoypadObjs[padIndex].padInput.rgdwPOV[0] == 0;
+	}
+	else if (padCode == PadCode::ButtonDown)
+	{
+		return GetInstance()->mJoypadObjs[padIndex].padInput.rgdwPOV[0] == 18000;
+	}
 
-	return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgbButtons[(int)codo] & 0x80;
-
-	//if (padCode == PadCodo::ButtonLeft)
-	//{
-	//	return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 27000;
-	//}
-	//else if (padCode == PadCodo::ButtonRight)
-	//{
-	//	return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 9000;
-	//}
-	//else if (padCode == PadCodo::ButtonUp)
-	//{
-	//	return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 0;
-	//}
-	//else if (padCode == PadCodo::ButtonDown)
-	//{
-	//	return GetInstance()->joypadObjs_[sPadIndex_].padInput.rgdwPOV[0] == 18000;
-	//}
-	//else
-	//{
-	//}
+	return GetInstance()->mJoypadObjs[padIndex].padInput.rgbButtons[(uint32_t)padCode] & 0x80;
 }
 
-// ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½uŠÔ
-bool JoypadInput::GetButtonDown(const PadCode padCode, const int sPadIndex_)
+// ç¹æ‡Šã¡ç¹ï½³ç¹§å‘ˆæ¬¾ç¸ºåŠ±â—†è¿¸ï½¬é«¢ãƒ»
+bool JoypadInput::GetButtonDown(const PadCode padCode, const int padIndex)
 {
-	// Ú‘±‚µ‚Ä‚¢‚é‚©
+	// è¬—ï½¥é‚¯å£¹ï¼ ç¸ºï½¦ç¸ºãƒ»ï½‹ç¸ºãƒ»
 	if (GetisLinkPad() == false) return false;
 
-	// “Y‚¦š‚ÌƒNƒ‰ƒ“ƒvˆ—
-	int min = GetInstance()->minButton_;
-	int max = GetInstance()->maxButton_;
-	PadCode codo = (PadCode)Clamp((float)padCode, (float)min, (float)max);
+	if (padCode == PadCode::ButtonLeft)
+	{
+		return (GetInstance()->mJoypadObjs[padIndex].padInput.rgdwPOV[0] == 27000) &&
+			!(GetInstance()->mJoypadObjs[padIndex].prevPadInput.rgdwPOV[0] == 27000);
+	}
+	else if (padCode == PadCode::ButtonRight)
+	{
+		return GetInstance()->mJoypadObjs[padIndex].padInput.rgdwPOV[0] == 9000 &&
+			!(GetInstance()->mJoypadObjs[padIndex].prevPadInput.rgdwPOV[0] == 9000);
+	}
+	else if (padCode == PadCode::ButtonUp)
+	{
+		return GetInstance()->mJoypadObjs[padIndex].padInput.rgdwPOV[0] == 0 &&
+			!(GetInstance()->mJoypadObjs[padIndex].prevPadInput.rgdwPOV[0] == 0);
+	}
+	else if (padCode == PadCode::ButtonDown)
+	{
+		return GetInstance()->mJoypadObjs[padIndex].padInput.rgdwPOV[0] == 18000 &&
+			!(GetInstance()->mJoypadObjs[padIndex].prevPadInput.rgdwPOV[0] == 18000);
+	}
 
-	return (GetInstance()->joypadObjs_[sPadIndex_].padInput.rgbButtons[(int)codo] & 0x80) &&
-		!(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgbButtons[(int)codo] & 0x80);
+	if (padCode == PadCode::RightStick)
+	{
+		return (GetInstance()->mJoypadObjs[padIndex].padInput.rgbButtons[9] & 0x80) &&
+			!(GetInstance()->mJoypadObjs[padIndex].prevPadInput.rgbButtons[9] & 0x80);
+	}
+
+	return (GetInstance()->mJoypadObjs[padIndex].padInput.rgbButtons[(uint32_t)padCode] & 0x80) &&
+		!(GetInstance()->mJoypadObjs[padIndex].prevPadInput.rgbButtons[(uint32_t)padCode] & 0x80);
 }
 
-// ƒ{ƒ^ƒ“‚ğ—£‚µ‚½uŠÔ
-bool JoypadInput::GetButtonUp(const PadCode padCode, const int sPadIndex_)
+// ç¹æ‡Šã¡ç¹ï½³ç¹§å¸å±¬ç¸ºåŠ±â—†è¿¸ï½¬é«¢ãƒ»
+bool JoypadInput::GetButtonUp(const PadCode padCode, const int padIndex)
 {
-	// Ú‘±‚µ‚Ä‚¢‚é‚©
+	// è¬—ï½¥é‚¯å£¹ï¼ ç¸ºï½¦ç¸ºãƒ»ï½‹ç¸ºãƒ»
 	if (GetisLinkPad() == false) return false;
 
-	// “Y‚¦š‚ÌƒNƒ‰ƒ“ƒvˆ—
-	int min = GetInstance()->minButton_;
-	int max = GetInstance()->maxButton_;
-	PadCode codo = (PadCode)Clamp((float)padCode, (float)min, (float)max);
-
-	return !(GetInstance()->joypadObjs_[sPadIndex_].padInput.rgbButtons[(int)codo] & 0x80) &&
-		(GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.rgbButtons[(int)codo] & 0x80);
+	return !(GetInstance()->mJoypadObjs[padIndex].padInput.rgbButtons[(uint32_t)padCode] & 0x80) &&
+		(GetInstance()->mJoypadObjs[padIndex].prevPadInput.rgbButtons[(uint32_t)padCode] & 0x80);
 }
 
-#pragma endregion
-
-#pragma region ƒXƒeƒBƒbƒNŠÖ˜A
-
-// ƒXƒeƒBƒbƒN‚ğ“|‚µ‚Ä‚¢‚éŠÔ
-Vec2 JoypadInput::GetStick(const PadCode padCode, const float length, const int sPadIndex_)
+// è´è¼”Â°ç¸ºï½®ç¹æ‡Šã¡ç¹ï½³ç¹§å‘ˆæ¬¾ç¸ºåŠ±â—†è¿¸ï½¬é«¢ãƒ»
+bool JoypadInput::GetAnyButtonDown(const int padIndex)
 {
-	// Ú‘±‚µ‚Ä‚¢‚é‚©
+	// è¬—ï½¥é‚¯å£¹ï¼ ç¸ºï½¦ç¸ºãƒ»ï½‹ç¸ºãƒ»
+	if (GetisLinkPad() == false) return false;
+
+	// ç¹æ‡Šã¡ç¹ï½³ç¸ºï½®è¿¥ï½¶è«·ä¹ï½’è­–ï½´è­ï½°
+	for (uint32_t i = 0; i < 16; ++i)
+	{
+		bool down = (GetInstance()->mJoypadObjs[padIndex].padInput.rgbButtons[i] & 0x80);
+		bool up = !(GetInstance()->mJoypadObjs[padIndex].prevPadInput.rgbButtons[i] & 0x80);
+
+		if (down == true && up == true)
+		{
+			return true;
+		}
+	}
+
+	for (uint32_t i = 1; i < 5; i++)
+	{
+		bool down = (GetInstance()->mJoypadObjs[padIndex].padInput.rgdwPOV[0] == i * 9000);
+		bool up = !(GetInstance()->mJoypadObjs[padIndex].prevPadInput.rgdwPOV[0] == i * 9000);
+
+		if (down == true && up == true)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+// ç¹§ï½¹ç¹ãƒ»ã…ç¹ãƒ»ã‘ç¹§è²Â€åµï¼ ç¸ºï½¦ç¸ºãƒ»ï½‹é«¢ãƒ»
+Vec2 JoypadInput::GetStick(const PadCode padCode, const float length, const int padIndex)
+{
+	// è¬—ï½¥é‚¯å£¹ï¼ ç¸ºï½¦ç¸ºãƒ»ï½‹ç¸ºãƒ»
 	if (GetisLinkPad() == false) return 0;
 
 	Vec2 stick = 0;
 	if (padCode == PadCode::LeftStick)
 	{
-		stick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lX;
-		stick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lY;
+		stick.x = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lX;
+		stick.y = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lY;
 	}
 	else if (padCode == PadCode::RightStick)
 	{
-		stick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lRx;
-		stick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lRy;
+		stick.x = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lRx;
+		stick.y = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lRy;
 	}
 
-	// w’è‚µ‚½’·‚³‚ğ’´‚¦‚½ê‡‚É‚µ‚©•Ô‚³‚È‚¢
+	// è¬–ãƒ»ï½®å£¹ï¼ ç¸ºæ»„èç¸ºè¼”ï½’é›œãƒ»âˆ´ç¸ºæº·ï£°ï½´èœ·åŒ»â†“ç¸ºåŠ±Â°éœ‘æ–ï¼†ç¸ºï½ªç¸ºãƒ»
 	if (stick.Length() > fabsf(length))
 	{
 		return stick;
@@ -259,93 +282,24 @@ Vec2 JoypadInput::GetStick(const PadCode padCode, const float length, const int 
 
 	return 0;
 }
-
-// ƒXƒeƒBƒbƒN‚ğ“|‚µ‚½uŠÔ
-Vec2 JoypadInput::GetStickDown(const PadCode padCode, const float length, const int sPadIndex_)
-{
-	// Ú‘±‚µ‚Ä‚¢‚é‚©
-	if (GetisLinkPad() == false) return 0;
-
-	Vec2 stick = 0;
-	Vec2 prevStick = 0;
-	if (padCode == PadCode::LeftStick)
-	{
-		stick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lX;
-		stick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lY;
-
-		prevStick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lX;
-		prevStick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lY;
-	}
-	else if (padCode == PadCode::RightStick)
-	{
-		stick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lRx;
-		stick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lRy;
-
-		prevStick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lRx;
-		prevStick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lRy;
-	}
-
-	// w’è‚µ‚½’·‚³‚ğ’´‚¦‚½ê‡‚É‚µ‚©•Ô‚³‚È‚¢
-	if (!(stick.Length() > fabsf(length)) && (prevStick.Length() > fabsf(length)))
-	{
-		return stick;
-	}
-
-	return 0;
-}
-
-// ƒXƒeƒBƒbƒN‚ğ—£‚µ‚½uŠÔ
-Vec2 JoypadInput::GetStickUp(const PadCode padCode, const float length, const int sPadIndex_)
-{
-	// Ú‘±‚µ‚Ä‚¢‚é‚©
-	if (GetisLinkPad() == false) return 0;
-
-	Vec2 stick = 0;
-	Vec2 prevStick = 0;
-	if (padCode == PadCode::LeftStick)
-	{
-		stick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lX;
-		stick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lY;
-
-		prevStick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lX;
-		prevStick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lY;
-	}
-	else if (padCode == PadCode::RightStick)
-	{
-		stick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lRx;
-		stick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lRy;
-
-		prevStick.x = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lRx;
-		prevStick.y = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lRy;
-	}
-
-	// w’è‚µ‚½’·‚³‚ğ’´‚¦‚½ê‡‚É‚µ‚©•Ô‚³‚È‚¢
-	if (!(stick.Length() > fabsf(length)) && (prevStick.Length() > fabsf(length)))
-	{
-		return stick;
-	}
-
-	return 0;
-}
-
 Vec3 JoypadInput::GetStickVec3(const PadCode padCode, const float length, const int padIndex)
 {
-	// Ú‘±‚µ‚Ä‚¢‚é‚©
+	// è¬—ï½¥é‚¯å£¹ï¼ ç¸ºï½¦ç¸ºãƒ»ï½‹ç¸ºãƒ»
 	if (GetisLinkPad() == false) return 0;
 
 	Vec3 stick = 0;
 	if (padCode == PadCode::LeftStick)
 	{
-		stick.x = (float)GetInstance()->joypadObjs_[padIndex].padInput.lX;
-		stick.z = (float)GetInstance()->joypadObjs_[padIndex].padInput.lY;
+		stick.x = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lX;
+		stick.z = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lY;
 	}
 	else if (padCode == PadCode::RightStick)
 	{
-		stick.x = (float)GetInstance()->joypadObjs_[padIndex].padInput.lRx;
-		stick.z = (float)GetInstance()->joypadObjs_[padIndex].padInput.lRy;
+		stick.x = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lRx;
+		stick.z = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lRy;
 	}
 
-	// w’è‚µ‚½’·‚³‚ğ’´‚¦‚½ê‡‚É‚µ‚©•Ô‚³‚È‚¢
+	// è¬–ãƒ»ï½®å£¹ï¼ ç¸ºæ»„èç¸ºè¼”ï½’é›œãƒ»âˆ´ç¸ºæº·ï£°ï½´èœ·åŒ»â†“ç¸ºåŠ±Â°éœ‘æ–ï¼†ç¸ºï½ªç¸ºãƒ»
 	if (stick.Length() > fabsf(length))
 	{
 		return stick;
@@ -354,32 +308,108 @@ Vec3 JoypadInput::GetStickVec3(const PadCode padCode, const float length, const 
 	return 0;
 }
 
-#pragma endregion
-
-#pragma region ƒgƒŠƒK[ŠÖ˜A
-
-// ƒgƒŠƒK[‚ğ‰Ÿ‚µ‚½‚éŠÔ
-float JoypadInput::GetTrigger(const PadCode padCode, const int sPadIndex_)
+// ç¹§ï½¹ç¹ãƒ»ã…ç¹ãƒ»ã‘ç¹§è²Â€åµï¼ ç¸ºæº½æ¤ªé«¢ãƒ»
+Vec2 JoypadInput::GetStickDown(const PadCode padCode, const float length, const int padIndex)
 {
-	if (padCode == PadCode::LeftTrigger)
+	// è¬—ï½¥é‚¯å£¹ï¼ ç¸ºï½¦ç¸ºãƒ»ï½‹ç¸ºãƒ»
+	if (GetisLinkPad() == false) return 0;
+
+	Vec2 stick = 0;
+	Vec2 prevStick = 0;
+	if (padCode == PadCode::LeftStick)
 	{
-		return (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ;
+		stick.x = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lX;
+		stick.y = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lY;
+
+		prevStick.x = (float)GetInstance()->mJoypadObjs[padIndex].prevPadInput.lX;
+		prevStick.y = (float)GetInstance()->mJoypadObjs[padIndex].prevPadInput.lY;
 	}
-	else if (padCode == PadCode::RightTrigger)
+	else if (padCode == PadCode::RightStick)
 	{
-		return -(float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ;
+		stick.x = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lRx;
+		stick.y = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lRy;
+
+		prevStick.x = (float)GetInstance()->mJoypadObjs[padIndex].prevPadInput.lRx;
+		prevStick.y = (float)GetInstance()->mJoypadObjs[padIndex].prevPadInput.lRy;
+	}
+
+	// è¬–ãƒ»ï½®å£¹ï¼ ç¸ºæ»„èç¸ºè¼”ï½’é›œãƒ»âˆ´ç¸ºæº·ï£°ï½´èœ·åŒ»â†“ç¸ºåŠ±Â°éœ‘æ–ï¼†ç¸ºï½ªç¸ºãƒ»
+	if (!(stick.Length() > fabsf(length)) && (prevStick.Length() > fabsf(length)))
+	{
+		return prevStick;
 	}
 
 	return 0;
 }
 
-// ƒgƒŠƒK[‚ğ‰Ÿ‚µ‚½uŠÔ
-bool JoypadInput::GetTriggerDown(const PadCode padCode, const float length, const int sPadIndex_)
+// ç¹§ï½¹ç¹ãƒ»ã…ç¹ãƒ»ã‘ç¹§å¸å±¬ç¸ºåŠ±â—†è¿¸ï½¬é«¢ãƒ»
+Vec2 JoypadInput::GetStickUp(const PadCode padCode, const float length, const int padIndex)
+{
+	// è¬—ï½¥é‚¯å£¹ï¼ ç¸ºï½¦ç¸ºãƒ»ï½‹ç¸ºãƒ»
+	if (GetisLinkPad() == false) return 0;
+
+	Vec2 stick = 0;
+	Vec2 prevStick = 0;
+	if (padCode == PadCode::LeftStick)
+	{
+		stick.x = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lX;
+		stick.y = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lY;
+
+		prevStick.x = (float)GetInstance()->mJoypadObjs[padIndex].prevPadInput.lX;
+		prevStick.y = (float)GetInstance()->mJoypadObjs[padIndex].prevPadInput.lY;
+	}
+	else if (padCode == PadCode::RightStick)
+	{
+		stick.x = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lRx;
+		stick.y = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lRy;
+
+		prevStick.x = (float)GetInstance()->mJoypadObjs[padIndex].prevPadInput.lRx;
+		prevStick.y = (float)GetInstance()->mJoypadObjs[padIndex].prevPadInput.lRy;
+	}
+
+	// è¬–ãƒ»ï½®å£¹ï¼ ç¸ºæ»„èç¸ºè¼”ï½’é›œãƒ»âˆ´ç¸ºæº·ï£°ï½´èœ·åŒ»â†“ç¸ºåŠ±Â°éœ‘æ–ï¼†ç¸ºï½ªç¸ºãƒ»
+	if (!(stick.Length() > fabsf(length)) && (prevStick.Length() > fabsf(length)))
+	{
+		return stick;
+	}
+
+	return 0;
+}
+
+// ç¹åŒ»Îœç¹§ï½¬ç¹ï½¼ç¹§å‘ˆæ¬¾ç¸ºåŠ±â—†ç¹§çŸ©ä¿£
+float JoypadInput::GetTrigger(const PadCode padCode, const float length, const int padIndex)
+{
+	// è¬—ï½¥é‚¯å£¹ï¼ ç¸ºï½¦ç¸ºãƒ»ï½‹ç¸ºãƒ»
+	if (GetisLinkPad() == false) return 0;
+
+	float trigger = 0;
+	if (padCode == PadCode::LeftTrigger)
+	{
+		trigger = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lZ;
+		if (trigger > length)
+		{
+			return trigger;
+		}
+	}
+	else if (padCode == PadCode::RightTrigger)
+	{
+		trigger = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lZ;
+		if (trigger < -length)
+		{
+			return trigger;
+		}
+	}
+
+	return 0;
+}
+
+// ç¹åŒ»Îœç¹§ï½¬ç¹ï½¼ç¹§å‘ˆæ¬¾ç¸ºåŠ±â—†è¿¸ï½¬é«¢ãƒ»
+bool JoypadInput::GetTriggerDown(const PadCode padCode, const float length, const int padIndex)
 {
 	if (padCode == PadCode::LeftTrigger)
 	{
-		bool isGreater = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ > length;
-		bool isPrevGreater = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lZ > length;
+		bool isGreater = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lZ > length;
+		bool isPrevGreater = (float)GetInstance()->mJoypadObjs[padIndex].prevPadInput.lZ > length;
 
 		if (isGreater && !isPrevGreater)
 		{
@@ -388,8 +418,8 @@ bool JoypadInput::GetTriggerDown(const PadCode padCode, const float length, cons
 	}
 	else if (padCode == PadCode::RightTrigger)
 	{
-		bool isLess = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ < -length;
-		bool isPrevLess = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ < -length;
+		bool isLess = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lZ < -length;
+		bool isPrevLess = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lZ < -length;
 
 		if (isLess && !isPrevLess)
 		{
@@ -400,13 +430,13 @@ bool JoypadInput::GetTriggerDown(const PadCode padCode, const float length, cons
 	return false;
 }
 
-// ƒgƒŠƒK[‚ğ—£‚µ‚½uŠÔ
-bool JoypadInput::GetTriggerUp(const PadCode padCode, const float length, const int sPadIndex_)
+// ç¹åŒ»Îœç¹§ï½¬ç¹ï½¼ç¹§å¸å±¬ç¸ºåŠ±â—†è¿¸ï½¬é«¢ãƒ»
+bool JoypadInput::GetTriggerUp(const PadCode padCode, const float length, const int padIndex)
 {
 	if (padCode == PadCode::LeftTrigger)
 	{
-		bool isGreater = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ > length;
-		bool isPrevGreater = (float)GetInstance()->joypadObjs_[sPadIndex_].prevPadInput.lZ > length;
+		bool isGreater = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lZ > length;
+		bool isPrevGreater = (float)GetInstance()->mJoypadObjs[padIndex].prevPadInput.lZ > length;
 
 		if (!isGreater && isPrevGreater)
 		{
@@ -415,8 +445,8 @@ bool JoypadInput::GetTriggerUp(const PadCode padCode, const float length, const 
 	}
 	else if (padCode == PadCode::RightTrigger)
 	{
-		bool isLess = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ < -length;
-		bool isPrevLess = (float)GetInstance()->joypadObjs_[sPadIndex_].padInput.lZ < -length;
+		bool isLess = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lZ < -length;
+		bool isPrevLess = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lZ < -length;
 
 		if (!isLess && isPrevLess)
 		{
@@ -427,15 +457,9 @@ bool JoypadInput::GetTriggerUp(const PadCode padCode, const float length, const 
 	return false;
 }
 
-#pragma endregion
-
-#pragma region ‚»‚Ì‘¼æ“¾ŠÖ˜A
-
-// ƒRƒ“ƒgƒ[ƒ‰[Ú‘±‚µ‚Ä‚¢‚é‚©
-bool JoypadInput::GetisLinkPad(const int sPadIndex_)
+// ç¹§ï½³ç¹ï½³ç¹åŒ»ÎŸç¹ï½¼ç¹ï½©ç¹ï½¼è¬—ï½¥é‚¯å£¹ï¼ ç¸ºï½¦ç¸ºãƒ»ï½‹ç¸ºãƒ»
+bool JoypadInput::GetisLinkPad()
 {
-	// ‰¼
-	return GetInstance()->joypadObjs_.size() > 0;
+	// è‰ï½®
+	return GetInstance()->mJoypadObjs.size() > 0;
 }
-
-#pragma endregion

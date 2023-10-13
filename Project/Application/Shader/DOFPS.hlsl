@@ -1,18 +1,18 @@
 #include "DOF.hlsli"
 
-Texture2D<float4> tex1 : register(t0); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ
-Texture2D<float4> depthTex : register(t1); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ
-SamplerState smp : register(s0); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒTƒ“ƒvƒ‰[
+Texture2D<float4> tex1 : register(t0); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+Texture2D<float4> depthTex : register(t1); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+SamplerState smp : register(s0); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©ãƒ¼
 
-// ƒKƒEƒXŠÖ”
+// ã‚¬ã‚¦ã‚¹é–¢æ•°
 float Gaussian(float2 drawUV, float2 pickUV, float sigma)
 {
-    // •`‰æƒsƒNƒZƒ‹‚ÆFæ“¾À•W‚Æ‚Ì‹——£
+    // æç”»ãƒ”ã‚¯ã‚»ãƒ«ã¨è‰²å–å¾—åº§æ¨™ã¨ã®è·é›¢
     float d = distance(drawUV, pickUV);
     return exp(-(d * d) / (2 * sigma * sigma));
 }
 
-// ƒKƒEƒVƒAƒ“ƒuƒ‰[
+// ã‚¬ã‚¦ã‚·ã‚¢ãƒ³ãƒ–ãƒ©ãƒ¼
 float4 GaussianBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float sigma, float loopNum)
 {
     float4 result = float4(0, 0, 0, 0);
@@ -25,17 +25,17 @@ float4 GaussianBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float si
     {
         for (float px = -sigma * 2; px <= sigma * 2; px += stepWidth)
         {
-		    // Fæ“¾‚·‚éUVÀ•W
+		    // è‰²å–å¾—ã™ã‚‹UVåº§æ¨™
             float2 pickUV = uv + float2(px, py);
             
-            // ‰æ–ÊŠO‚ÌF‚ğæ“¾‚µ‚È‚¢‚æ‚¤‚É
+            // ç”»é¢å¤–ã®è‰²ã‚’å–å¾—ã—ãªã„ã‚ˆã†ã«
             pickUV = clamp(pickUV, 0.001, 0.999);
             
             float pickDepth = depthTex.Sample(smp, pickUV).r;
             float diff = abs(curDepth - pickDepth);
 
-			// ƒEƒFƒCƒg
-            // ƒ‚ƒfƒ‹‚Ì[“x·‚ªˆê’è’lˆÈã‚Ìê‡‚Í0‚É‚·‚é
+			// ã‚¦ã‚§ã‚¤ãƒˆ
+            // ãƒ¢ãƒ‡ãƒ«ã®æ·±åº¦å·®ãŒä¸€å®šå€¤ä»¥ä¸Šã®å ´åˆã¯0ã«ã™ã‚‹
             float weight = (diff > 0.0001) ? 0.0 : Gaussian(uv, pickUV, sigma) * (1 - diff);
             totalWeight += weight;
 

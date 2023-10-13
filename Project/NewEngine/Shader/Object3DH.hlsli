@@ -1,55 +1,55 @@
-// 3D•ÏŠ·s—ñ
+// 3Då¤‰æ›è¡Œåˆ—
 cbuffer ConstantBufferDataTransform : register(b0)
 {
-	//matrix mat;// 3D•ÏŠ·s—ñ
+	//matrix mat;// 3Då¤‰æ›è¡Œåˆ—
 	matrix viewMat;
 	matrix worldMat;
 	float3 cameraPos;
 }
 
-// ƒ}ƒeƒŠƒAƒ‹
+// ãƒãƒ†ãƒªã‚¢ãƒ«
 cbuffer ConstantBufferDataMaterial : register(b1)
 {
-	float3 ambient : packoffset(c0);	// ƒAƒ“ƒrƒGƒ“ƒgŒW”
-	float3 diffuse : packoffset(c1);	// ƒfƒBƒtƒ…[ƒYŒW”
-	float3 specular : packoffset(c2);	// ƒXƒyƒLƒ…ƒ‰[ŒW”
-	float alpha : packoffset(c2.w);		// ƒAƒ‹ƒtƒ@
+	float3 ambient : packoffset(c0);	// ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆä¿‚æ•°
+	float3 diffuse : packoffset(c1);	// ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºä¿‚æ•°
+	float3 specular : packoffset(c2);	// ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼ä¿‚æ•°
+	float alpha : packoffset(c2.w);		// ã‚¢ãƒ«ãƒ•ã‚¡
 }
 
-// F
+// è‰²
 cbuffer ConstantBufferDataColor : register(b2)
 {
-	float4 color;	// F
+	float4 color;	// è‰²
 }
 
-// --- •½sŒõŒ¹ ---------------------------- //
+// --- å¹³è¡Œå…‰æº ---------------------------- //
 static const int DirectionalLightNum = 1;
 struct DirectionalLight
 {
-	float3 lightVec;	// •ûŒü
-	float3 color;		// F
+	float3 lightVec;	// æ–¹å‘
+	float3 color;		// è‰²
 	uint isActive;
 };
 
-// --- “_ŒõŒ¹ ------------------------------ //
+// --- ç‚¹å…‰æº ------------------------------ //
 static const int PointLightNum = 3;
 struct PointLight
 {
-	float3 pos;		// À•W
-	float3 color;	// F
-	float3 atten;	// ƒ‰ƒCƒg‹——£Œ¸ŠŒW”
+	float3 pos;		// åº§æ¨™
+	float3 color;	// è‰²
+	float3 atten;	// ãƒ©ã‚¤ãƒˆè·é›¢æ¸›è¡°ä¿‚æ•°
 	uint isActive;
 };
 
-// --- ƒXƒ|ƒbƒgƒ‰ƒCƒg ---------------------- //
+// --- ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ ---------------------- //
 static const int spotLightNum = 3;
 struct SpotLight
 {
-	float3 vec;		// ‹tƒxƒNƒgƒ‹
-	float3 pos;		// À•W
-	float3 color;	// F
-	float3 atten;	// ƒ‰ƒCƒg‹——£Œ¸ŠŒW”
-	float2 factorAngleCos;	// ƒ‰ƒCƒg‚ÌŒ¸ŠŠp“x‚ÌƒRƒTƒCƒ“
+	float3 vec;		// é€†ãƒ™ã‚¯ãƒˆãƒ«
+	float3 pos;		// åº§æ¨™
+	float3 color;	// è‰²
+	float3 atten;	// ãƒ©ã‚¤ãƒˆè·é›¢æ¸›è¡°ä¿‚æ•°
+	float2 factorAngleCos;	// ãƒ©ã‚¤ãƒˆã®æ¸›è¡°è§’åº¦ã®ã‚³ã‚µã‚¤ãƒ³
 	uint isActive;
 };
 
@@ -60,7 +60,7 @@ cbuffer ConstantBufferDataLightManager : register(b3)
 	SpotLight spotLights[spotLightNum];
 };
 
-// --- ƒtƒHƒO ---------------------- //
+// --- ãƒ•ã‚©ã‚° ---------------------- //
 cbuffer ConstantBufferDataFog : register(b4)
 {
 	uint isActiveFog;
@@ -69,15 +69,15 @@ cbuffer ConstantBufferDataFog : register(b4)
 	float4 fogColor;
 };
 
-// --- ŠÛ‰e ----------------------------------------------------- //
+// --- ä¸¸å½± ----------------------------------------------------- //
 static const int circleShadowNum = 1;
 struct CircleShadow
 {
-	float3 vec;		// ‹tƒxƒNƒgƒ‹
-	float3 pos;		// À•W
-	float disCasterLight;	// ƒLƒƒƒXƒ^[‚Æƒ‰ƒCƒg‚Ì‹——£
-	float3 atten;	// ‹——£Œ¸ŠŒW”
-	float2 factorAngleCos;	// Œ¸ŠŠp“x‚ÌƒRƒTƒCƒ“
+	float3 vec;		// é€†ãƒ™ã‚¯ãƒˆãƒ«
+	float3 pos;		// åº§æ¨™
+	float disCasterLight;	// ã‚­ãƒ£ã‚¹ã‚¿ãƒ¼ã¨ãƒ©ã‚¤ãƒˆã®è·é›¢
+	float3 atten;	// è·é›¢æ¸›è¡°ä¿‚æ•°
+	float2 factorAngleCos;	// æ¸›è¡°è§’åº¦ã®ã‚³ã‚µã‚¤ãƒ³
 	uint isActive;
 };
 
@@ -86,11 +86,11 @@ cbuffer ConstantBufferDataCircleShadow : register(b6)
 	CircleShadow circleShadows[circleShadowNum];
 }
 
-// ’¸“_ƒVƒF[ƒ_[‚Ìo—Í\‘¢‘Ì
+// é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®å‡ºåŠ›æ§‹é€ ä½“
 struct VSOutput
 {
-	float4 svpos : SV_POSITION;	// ƒVƒXƒeƒ€—p’¸“_À•W
-	float4 worldPos : POSITION;	// ƒ[ƒ‹ƒhÀ•W
-	float3 normal : NORMAL;		// –@üƒxƒNƒgƒ‹
-	float2 uv : TEXCOORD;		// uv’l
+	float4 svpos : SV_POSITION;	// ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+	float4 worldPos : POSITION;	// ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™
+	float3 normal : NORMAL;		// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+	float2 uv : TEXCOORD;		// uvå€¤
 };

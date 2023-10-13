@@ -8,14 +8,14 @@ FbxModel::FbxModel()
 
 void FbxModel::PlayAnimetion()
 {
-	// ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶‚µ‚È‚¢
+	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿã—ãªã„
 	if (animation.isPlay == false)
 	{
 		ParseNodeHeirarchy(0.f, 0, Mat4::Identity(), scene->mRootNode);
 		return;
 	}
 
-	// Œ»İ‚ÌƒtƒŒ[ƒ€
+	// ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ 
 	float endTime = (float)scene->mAnimations[animation.index]->mDuration;
 	float currentTime = animation.timer.GetTimeRate() * endTime;
 	ParseNodeHeirarchy(currentTime, animation.index, Mat4::Identity(), scene->mRootNode);
@@ -29,25 +29,25 @@ void FbxModel::ParseNodeHeirarchy(
 
 	Mat4 currentPoseMat = AssimpLoader::ConvertMat4FromAssimpMat(aiMat).Transpose();
 
-	// ƒm[ƒhƒAƒjƒ[ƒVƒ‡ƒ“‚ğæ“¾‚·‚é
+	// ãƒãƒ¼ãƒ‰ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å–å¾—ã™ã‚‹
 	std::string nodeName = rootNode->mName.C_Str();
-	aiAnimation* animation = scene->mAnimations[index];  // “KØ‚ÈƒAƒjƒ[ƒVƒ‡ƒ“‚ğ‘I‘ğ‚·‚é•K—v‚ª‚ ‚è‚Ü‚·
+	aiAnimation* aiAnimation = scene->mAnimations[index];  // é©åˆ‡ãªã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’é¸æŠã™ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™
 
-	const aiNodeAnim* nodeAnim = FindNodeAnim(nodeName, animation);
+	const aiNodeAnim* nodeAnim = FindNodeAnim(nodeName, aiAnimation);
 
-	// ƒm[ƒhƒAƒjƒ[ƒVƒ‡ƒ“‚ª‚ ‚éê‡Aƒm[ƒh‚Ì•ÏŠ·s—ñ‚ğ•âŠ®‚·‚é
+	// ãƒãƒ¼ãƒ‰ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒã‚ã‚‹å ´åˆã€ãƒãƒ¼ãƒ‰ã®å¤‰æ›è¡Œåˆ—ã‚’è£œå®Œã™ã‚‹
 	if (nodeAnim)
 	{
-		// ƒXƒP[ƒŠƒ“ƒO‚ğ•âŠ®
+		// ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã‚’è£œå®Œ
 		Vec3 scale = CalcCurrentScale(nodeAnim, currentTime);
 
-		// ‰ñ“]‚ğ•âŠ®
+		// å›è»¢ã‚’è£œå®Œ
 		Quaternion rot = CalcCurrentRot(nodeAnim, currentTime);
 
-		// À•W‚ğ•âŠ®
+		// åº§æ¨™ã‚’è£œå®Œ
 		Vec3 pos = CalcCurrentPos(nodeAnim, currentTime);
 
-		// s—ñ‚Ì‡¬
+		// è¡Œåˆ—ã®åˆæˆ
 		currentPoseMat = CalculateWorldMat(pos, scale, rot);
 	}
 
@@ -69,12 +69,12 @@ void FbxModel::ParseNodeHeirarchy(
 	}
 }
 
-// ƒm[ƒhƒAƒjƒ[ƒVƒ‡ƒ“‚ğŒŸõ‚·‚éŠÖ”
-aiNodeAnim* FbxModel::FindNodeAnim(const std::string& nodeName, aiAnimation* animation)
+// ãƒãƒ¼ãƒ‰ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’æ¤œç´¢ã™ã‚‹é–¢æ•°
+aiNodeAnim* FbxModel::FindNodeAnim(const std::string& nodeName, aiAnimation* aiAnimation)
 {
-	for (unsigned int i = 0; i < animation->mNumChannels; i++)
+	for (unsigned int i = 0; i < aiAnimation->mNumChannels; i++)
 	{
-		aiNodeAnim* nodeAnim = animation->mChannels[i];
+		aiNodeAnim* nodeAnim = aiAnimation->mChannels[i];
 		if (nodeAnim->mNodeName.data == nodeName)
 		{
 			return nodeAnim;

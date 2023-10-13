@@ -3,6 +3,13 @@
 
 namespace ConstantBufferData
 {
+	struct CTransformP
+	{
+		Mat4 viewMat;
+		Mat4 worldMat;
+		Mat4 billboardMat;
+	};
+
 	struct CTransform3D
 	{
 		Mat4 viewMat;
@@ -10,9 +17,29 @@ namespace ConstantBufferData
 		Vec3 cameraPos;
 	};
 
+	struct CTransformCollider
+	{
+		Mat4 wvpMat;
+	};
+
+	struct CTransformShadowObj
+	{
+		Mat4 viewProjMat;
+		Mat4 worldMat;
+	};
+
+	struct CTransform3DShadow
+	{
+		Mat4 viewProjMat;
+		Mat4 shadowMat;
+		Mat4 worldMat;
+		Vec3 cameraPos;
+		Vec3 lightCameraPos;
+	};
+
 	struct CTransform2D
 	{
-		Mat4 mat;	//3D•ÏŠ·s—ñ
+		Mat4 mat;	//3Då¤‰æ›è¡Œåˆ—
 	};
 
 	struct CCircleGauge
@@ -27,22 +54,28 @@ namespace ConstantBufferData
 		Vec2 tiling;
 	};
 
+	struct CUVWParameter
+	{
+		Vec3 offset;
+		Vec3 tiling;
+	};
+
 	struct CColor
 	{
-		Color color;// F
+		Color color;// è‰²
 	};
 
 	struct CMaterialColor
 	{
-		Color ambient;// ƒAƒ“ƒrƒGƒ“ƒgŒW”
-		Color diffuse;// ƒfƒBƒtƒ…[ƒYŒW”
-		Color specular;	// ƒXƒyƒLƒ…ƒ‰[ŒW”
+		Color ambient;// ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆä¿‚æ•°
+		Color diffuse;// ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºä¿‚æ•°
+		Color specular;	// ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼ä¿‚æ•°
 	};
 
 	struct CDirectionalLight
 	{
-		Vec3 dir;		float pad1;
-		Vec3 color;
+		Color color;
+		Vec3 dir;
 		uint32_t isActive;
 	};
 
@@ -110,5 +143,43 @@ namespace ConstantBufferData
 	{
 		Color color;
 		Vec2 range;
+	};
+
+	struct CDissolve
+	{
+		float dissolve;
+		float colorPower;
+		Vec2 pad;
+		Color dissolveColor;
+	};
+
+	struct CShadowMap
+	{
+		bool isWrite;
+	};
+
+	struct CRespawnTransition
+	{
+		float min;
+		float max;
+	};
+
+	struct CLightView
+	{
+		Mat4 viewProjView;
+		Vec3 cameraPos;
+	};
+
+	struct CTransformGrass
+	{
+		Mat4 viewMat;
+		Mat4 worldMat;
+		Mat4 billboardMat;
+	};
+
+	struct CTextureSizeData
+	{
+		Vec2 size;
+		float area;
 	};
 }

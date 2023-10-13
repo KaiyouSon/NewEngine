@@ -7,126 +7,130 @@ using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
 Sprite::Sprite() :
-	texture_(TextureManager::GetTexture("White")),
+	mTexture(TextureManager::GetTexture("White")),
 	pos(0), scale(1), rot(0), color(Color::white),
-	anchorPoint_(0.5f), flipType_(FlipType::None),
-	vertexBuffer_(std::make_unique<VertexBuffer<VSprite>>()),
-	material_(std::make_unique<Material>()),
-	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("Sprite"))
+	mAnchorPoint(0.5f), mFlipType(FlipType::None),
+	mVertexBuffer(std::make_unique<VertexBuffer<VSprite>>()),
+	mMaterial(std::make_unique<Material>()),
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Sprite"))
 {
-	vertices_.resize(4);
-	vertices_[0].uv = { 0.0f,1.0f };
-	vertices_[1].uv = { 0.0f,0.0f };
-	vertices_[2].uv = { 1.0f,1.0f };
-	vertices_[3].uv = { 1.0f,0.0f };
-	vertexBuffer_->Create(vertices_);
+	mVertices.resize(4);
+	mVertices[0].uv = { 0.0f,1.0f };
+	mVertices[1].uv = { 0.0f,0.0f };
+	mVertices[2].uv = { 1.0f,1.0f };
+	mVertices[3].uv = { 1.0f,0.0f };
+	mVertexBuffer->Create(mVertices);
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰Šú‰»
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®åˆæœŸåŒ–
 	MaterialInit();
 }
 
 void Sprite::Update(Transform* parent)
 {
-	transform_.pos = pos;
-	transform_.scale = { scale.x,scale.y,1 };
-	transform_.rot = { 0,0,rot };
-	transform_.Update();
+	mTransform.pos = pos;
+	mTransform.scale = { scale.x,scale.y,1 };
+	mTransform.rot = { 0,0,rot };
+	mTransform.Update();
 
 	if (parent != nullptr)
 	{
-		parent_ = parent;
+		mParent = parent;
 
-		Mat4 mat = transform_.GetWorldMat();
-		mat *= parent_->GetWorldMat();
-		transform_.SetWorldMat(mat);
+		Mat4 mat = mTransform.GetWorldMat();
+		mat *= mParent->GetWorldMat();
+		mTransform.SetWorldMat(mat);
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì“]‘—
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®è»¢é€
 	MaterialTransfer();
 
-
-	vertexBuffer_->TransferToBuffer(vertices_);
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®è»¢é€
+	mVertexBuffer->TransferToBuffer(mVertices);
 }
 void Sprite::Draw(const BlendMode blendMode)
 {
-	SetBlendMode(blendMode);
+	if (mTexture == nullptr)
+	{
+		return;
+	}
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	// GraphicsPipelineæç”»ã‚³ãƒãƒ³ãƒ‰
+	mGraphicsPipeline->DrawCommand(blendMode);
 
-	// VBV‚ÆIBV‚Ìİ’èƒRƒ}ƒ“ƒh
-	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, vertexBuffer_->GetvbViewAddress());
+	// VBVã¨IBVã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
+	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì•`‰æƒRƒ}ƒ“ƒh
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®æç”»ã‚³ãƒãƒ³ãƒ‰
 	MaterialDrawCommands();
 
-	size_t max = renderBase->GetSpriteRootSignature()->GetConstantBufferNum();
+	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
+	uint32_t endIndex = mGraphicsPipeline->GetRootSignature()->GetUAVStartIndex();
 
-	for (int i = 0; i < 1; i++)
+	for (uint32_t i = startIndex; i < endIndex; i++)
 	{
-		// SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ğƒ‹[ƒgƒpƒ‰ƒ[ƒ^2”Ô‚Éİ’è
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			UINT(max + i), texture_->GetGpuHandle());
+		// SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿2ç•ªã«è¨­å®š
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
 	}
 
-	renderBase->GetCommandList()->DrawInstanced((uint16_t)vertices_.size(), 1, 0, 0);
+	renderBase->GetCommandList()->DrawInstanced((uint16_t)mVertices.size(), 1, 0, 0);
 }
 
-// --- ƒ}ƒeƒŠƒAƒ‹ŠÖ˜A --------------------------------------------------- //
+// --- ãƒãƒ†ãƒªã‚¢ãƒ«é–¢é€£ --------------------------------------------------- //
 void Sprite::MaterialInit()
 {
-	// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3Ds—ñ
+	// 2Dè¡Œåˆ—
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform2D>>();
-	material_->constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// F
+	// è‰²
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
-	material_->constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ‰Šú‰»
-	material_->Init();
+	// åˆæœŸåŒ–
+	mMaterial->Init();
 }
 void Sprite::MaterialTransfer()
 {
-	// ƒ}ƒgƒŠƒbƒNƒX
+	// ãƒãƒˆãƒªãƒƒã‚¯ã‚¹
 	CTransform2D transform2DData =
 	{
-		transform_.GetWorldMat() * Camera::current.GetOrthoGrphicProjectionMat()
+		mTransform.GetWorldMat() * Camera::current.GetOrthoGrphicProjectionMat()
 	};
-	TransferDataToConstantBuffer(material_->constantBuffers[0].get(), transform2DData);
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), transform2DData);
 
-	// Fƒf[ƒ^
-	CColor colorData = { color / 255 };
-	TransferDataToConstantBuffer(material_->constantBuffers[1].get(), colorData);
+	// è‰²ãƒ‡ãƒ¼ã‚¿
+	CColor colorData = { color.To01() };
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[1].get(), colorData);
 }
 void Sprite::MaterialDrawCommands()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// CBV‚Ìİ’èƒRƒ}ƒ“ƒh
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, material_->constantBuffers[0]->constantBuffer->GetGPUVirtualAddress());
-
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, material_->constantBuffers[1]->constantBuffer->GetGPUVirtualAddress());
+	for (uint32_t i = 0; i < mMaterial->constantBuffers.size(); i++)
+	{
+		// CBVã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
+		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+			i, mMaterial->constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
+	}
 }
 
-// --- ’¸“_ƒf[ƒ^ŠÖ˜A --------------------------------------------------- //
+// --- é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿é–¢é€£ --------------------------------------------------- //
 void Sprite::TransferVertexCoord()
 {
 	enum class Point { LD, LU, RD, RU };
 
-	// l•Ó
-	float left = (0.f - anchorPoint_.x) * size_.x;
-	float right = (1.f - anchorPoint_.x) * size_.x;
-	float up = (0.f - anchorPoint_.y) * size_.y;
-	float down = (1.f - anchorPoint_.y) * size_.y;
+	// å››è¾º
+	float left = (0.f - mAnchorPoint.x) * mSize.x;
+	float right = (1.f - mAnchorPoint.x) * mSize.x;
+	float up = (0.f - mAnchorPoint.y) * mSize.y;
+	float down = (1.f - mAnchorPoint.y) * mSize.y;
 
-	switch (flipType_)
+	switch (mFlipType)
 	{
 	case FlipType::X:
 		left = -left;
@@ -149,102 +153,74 @@ void Sprite::TransferVertexCoord()
 		break;
 	}
 
-	// ’¸“_À•W
-	vertices_[(uint32_t)Point::LD].pos = Vec3(left, down, 0.f);	  //¶‰º
-	vertices_[(uint32_t)Point::LU].pos = Vec3(left, up, 0.f);	  //¶ã
-	vertices_[(uint32_t)Point::RD].pos = Vec3(right, down, 0.f);  //‰E‰º
-	vertices_[(uint32_t)Point::RU].pos = Vec3(right, up, 0.f);	  //‰Eã
+	// é ‚ç‚¹åº§æ¨™
+	mVertices[(uint32_t)Point::LD].pos = Vec3(left, down, 0.f);	  //å·¦ä¸‹
+	mVertices[(uint32_t)Point::LU].pos = Vec3(left, up, 0.f);	  //å·¦ä¸Š
+	mVertices[(uint32_t)Point::RD].pos = Vec3(right, down, 0.f);  //å³ä¸‹
+	mVertices[(uint32_t)Point::RU].pos = Vec3(right, up, 0.f);	  //å³ä¸Š
 }
 void Sprite::TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightDownPos)
 {
 	enum class Point { LD, LU, RD, RU };
 
-	// l•Ó
-	float left = leftTopPos.x / texture_->size.x;
-	float right = rightDownPos.x / texture_->size.x;
-	float up = leftTopPos.y / texture_->size.y;
-	float down = rightDownPos.y / texture_->size.y;
+	// å››è¾º
+	float left = leftTopPos.x / mTexture->GetInitalSize().x;
+	float right = rightDownPos.x / mTexture->GetInitalSize().x;
+	float up = leftTopPos.y / mTexture->GetInitalSize().y;
+	float down = rightDownPos.y / mTexture->GetInitalSize().y;
 
-	// uvÀ•W
-	vertices_[(uint32_t)Point::LD].uv = Vec2(left, down);	 //¶‰º
-	vertices_[(uint32_t)Point::LU].uv = Vec2(left, up);		 //¶ã
-	vertices_[(uint32_t)Point::RD].uv = Vec2(right, down);	 //‰E‰º
-	vertices_[(uint32_t)Point::RU].uv = Vec2(right, up);	 //‰Eã
+	// uvåº§æ¨™
+	mVertices[(uint32_t)Point::LD].uv = Vec2(left, down);	 //å·¦ä¸‹
+	mVertices[(uint32_t)Point::LU].uv = Vec2(left, up);		 //å·¦ä¸Š
+	mVertices[(uint32_t)Point::RD].uv = Vec2(right, down);	 //å³ä¸‹
+	mVertices[(uint32_t)Point::RU].uv = Vec2(right, up);	 //å³ä¸Š
 }
 
-// --- ƒZƒbƒ^[ -------------------------------------------------------- //
+// --- ã‚»ãƒƒã‚¿ãƒ¼ -------------------------------------------------------- //
 
-// ƒeƒNƒXƒ`ƒƒ[
+// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼
 void Sprite::SetTexture(Texture* texture)
 {
-	texture_ = texture;
-	SetSize(texture->size);
+	mTexture = texture;
+	SetSize(texture->GetInitalSize());
 }
 
-// •`‰æ”ÍˆÍ
+// æç”»ç¯„å›²
 void Sprite::SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos)
 {
 	TransferUVCoord(leftTopPos, rightDownPos);
-	vertexBuffer_->TransferToBuffer(vertices_);
+	mVertexBuffer->TransferToBuffer(mVertices);
 }
 
-// ƒTƒCƒY
+// ã‚µã‚¤ã‚º
 void Sprite::SetSize(const Vec2 size)
 {
-	size_ = size;
+	mSize = size;
 
 	TransferVertexCoord();
-	vertexBuffer_->TransferToBuffer(vertices_);
+	mVertexBuffer->TransferToBuffer(mVertices);
 }
 
-// ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg
+// ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ
 void Sprite::SetAnchorPoint(const Vec2 anchorPoint)
 {
-	anchorPoint_ = anchorPoint;
+	mAnchorPoint = anchorPoint;
 
 	TransferVertexCoord();
-	vertexBuffer_->TransferToBuffer(vertices_);
+	mVertexBuffer->TransferToBuffer(mVertices);
 }
 
-// ‰æ‘œ”½“]
+// ç”»åƒåè»¢
 void Sprite::SetFlipType(const FlipType flipType)
 {
-	flipType_ = flipType;
+	mFlipType = flipType;
 
 	TransferVertexCoord();
-	vertexBuffer_->TransferToBuffer(vertices_);
+	mVertexBuffer->TransferToBuffer(mVertices);
 }
 
-// ƒuƒŒƒ“ƒh
-void Sprite::SetBlendMode(const BlendMode blendMode)
-{
-	RenderBase* renderBase = RenderBase::GetInstance();//.get();
-
-	switch (blendMode)
-	{
-	case BlendMode::Alpha: // ƒ¿ƒuƒŒƒ“ƒh
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetAlphaPipeline());
-		break;
-
-	case BlendMode::Add:	// ‰ÁZƒuƒŒƒ“ƒh
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetAddPipeline());
-		break;
-
-	case BlendMode::Sub:	// Œ¸ZƒuƒŒƒ“ƒh
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetSubPipeline());
-		break;
-
-	case BlendMode::Inv:	// ”½“]
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetInvPipeline());
-		break;
-
-	default:
-		break;
-	}
-}
-
-// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“
+// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 void Sprite::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
-	graphicsPipeline_ = graphicsPipeline;
+	mGraphicsPipeline = graphicsPipeline;
 }

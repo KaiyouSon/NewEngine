@@ -5,7 +5,7 @@
 #include "Transform.h"
 #include "Material.h"
 #include "TextureManager.h"
-#include "Enum.h"
+#include "NewEngineEnum.h"
 #include <vector>
 
 class TextureAnimeiton;
@@ -13,16 +13,16 @@ class TextureAnimeiton;
 class Sprite
 {
 private:
-	std::vector<VertexBufferData::VSprite> vertices_;
-	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> vertexBuffer_;
-	std::unique_ptr<Material> material_;
-	GraphicsPipeline* graphicsPipeline_;
-	Transform transform_;
-	Transform* parent_;
-	Texture* texture_;
-	Vec2 anchorPoint_;
-	Vec2 size_;
-	FlipType flipType_;
+	std::vector<VertexBufferData::VSprite> mVertices;
+	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> mVertexBuffer;
+	std::unique_ptr<Material> mMaterial;
+	GraphicsPipeline* mGraphicsPipeline;
+	Transform mTransform;
+	Transform* mParent;
+	Texture* mTexture;
+	Vec2 mAnchorPoint;
+	Vec2 mSize;
+	FlipType mFlipType;
 
 public:
 	Vec2 pos;
@@ -30,7 +30,7 @@ public:
 	float rot;
 	Color color;
 
-private: // ƒ}ƒeƒŠƒAƒ‹ŠÖ˜A
+private: // ãƒãƒ†ãƒªã‚¢ãƒ«é–¢é€£
 	void MaterialInit();
 	void MaterialTransfer();
 	void MaterialDrawCommands();
@@ -44,28 +44,40 @@ public:
 	void Update(Transform* parent = nullptr);
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 
-public: //ƒZƒbƒ^[
+	template<typename T>
+	void AddMaterial()
+	{
+		std::unique_ptr<IConstantBuffer> iConstatnBuffer = std::make_unique<T>();
+		iConstatnBuffer->Create();
+		mMaterial->constantBuffers.push_back(std::move(iConstatnBuffer));
+	}
 
-	// ƒeƒNƒXƒ`ƒƒ[
+public: //ã‚»ãƒƒã‚¿ãƒ¼
+
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼
 	void SetTexture(Texture* texture);
 
-	// •`‰æ”ÍˆÍ
+	// æç”»ç¯„å›²
 	void SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos);
 
-	//@ƒTƒCƒY
+	//ã€€ã‚µã‚¤ã‚º
 	void SetSize(const Vec2 size);
 
-	// ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg
+	// ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ
 	void SetAnchorPoint(const Vec2 anchorPoint);
 
-	// ‰æ‘œ”½“]
+	// ç”»åƒåè»¢
 	void SetFlipType(const FlipType flipType);
 
-	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“
+	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
-	// ƒuƒŒƒ“ƒh
-	void SetBlendMode(const BlendMode blendMode);
+	template<typename T>
+	void SetTransferBuffer(const uint32_t bufferNum, const T& data)
+	{
+		uint32_t bNum = Min<uint32_t>(bufferNum, (uint32_t)mMaterial->constantBuffers.size());
+		TransferDataToConstantBuffer(mMaterial->constantBuffers[bNum].get(), data);
+	}
 
 private:
 	friend TextureAnimeiton;

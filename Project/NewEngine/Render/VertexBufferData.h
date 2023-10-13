@@ -4,38 +4,62 @@
 
 namespace VertexBufferData
 {
-	// ’¸“_ƒf[ƒ^ƒNƒ‰ƒX
+	// é¬†ã‚‰ã›ç¹ãƒ»ãƒ»ç¹§ï½¿ç¹§ï½¯ç¹ï½©ç¹§ï½¹
 	struct VObjModel
 	{
-		Vec3 pos;	 // xyzÀ•W
-		Vec3 normal; // –@üƒxƒNƒgƒ‹
-		Vec2 uv;	 // uvÀ•W
+		Vec3 pos;	 // xyzè ï½§è®“ãƒ»
+		Vec3 normal; // è±•æ…•ï½·å£¹ãƒ»ç¹§ï½¯ç¹åŒ»Î
+		Vec2 uv;	 // uvè ï½§è®“ãƒ»
 	};
 
 	struct VFbxModel
 	{
-		Vec3 pos;	 // xyzÀ•W
-		Vec3 normal; // –@üƒxƒNƒgƒ‹
-		Vec2 uv;	 // uvÀ•W
+		Vec3 pos;	 // xyzè ï½§è®“ãƒ»
+		Vec3 normal; // è±•æ…•ï½·å£¹ãƒ»ç¹§ï½¯ç¹åŒ»Î
+		Vec2 uv;	 // uvè ï½§è®“ãƒ»
 		unsigned int boneIndex[maxBoneIndices];
 		float boneWeight[maxBoneIndices];
 	};
 
+	struct VBoundingBox
+	{
+		Vec3 pos;
+		Vec3 normal;
+		Vec3 uv;
+	};
+
 	struct VSprite
 	{
-		Vec3 pos;	 // xyzÀ•W
-		Vec2 uv;	 // uvÀ•W
+		Vec3 pos;	 // xyzè ï½§è®“ãƒ»
+		Vec2 uv;	 // uvè ï½§è®“ãƒ»
 	};
 
 	struct VLine
 	{
-		Vec3 pos;	 // xyzÀ•W
+		Vec3 pos;	 // xyzè ï½§è®“ãƒ»
 	};
 
 	struct VParticle
 	{
 		Vec3 pos;
-		float scale;
-		Color color;
+		Vec2 scale;
+		float rot;
+		float shininess = 1.0f;
+		Color color = Color::zero;
 	};
+
+	struct VBranch
+	{
+		Vec3 pos;
+		Vec2 scale;
+		Vec3 rot;
+	};
+
+	struct VGrass
+	{
+		Vec3 pos;
+		Vec2 scale;
+		Vec2 timer;
+	};
+
 }

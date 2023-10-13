@@ -4,29 +4,23 @@
 class Viewport
 {
 private:
-	Vec2 leftTopPos_;
-	Vec2 size_;
-	float minDepth_;
-	float maxDepth_;
+	Vec2 mLeftTopPos;
+	Vec2 mSize;
+	float mMinDepth;
+	float mMaxDepth;
 
 public:
 	Viewport();
 	void Update();
 
-public: // ÉZÉbÉ^Å[
-	inline void SetViewport(const Vec2& leftTopPos, const Vec2& size, float MinDepth = 0.0f, float MaxDepth = 1.0f)
-	{
-		leftTopPos_ = leftTopPos;
-		size_ = size;
+public: // ÁπßÔΩªÁπù„Éª„Å°ÁπùÔΩº
+	void SetViewport(
+		const Vec2 leftTopPos, const Vec2 size,
+		const float MinDepth = 0.0f, const float MaxDepth = 1.0f);
 
-		minDepth_ = MinDepth;
-		maxDepth_ = MaxDepth;
-	}
-
-public: // ÉQÉbÉ^Å[
-	inline Vec2 GetLeftTopPos() { return leftTopPos_; }
-	inline Vec2 GetSize() { return size_; }
-	inline float GetMinDepth() { return minDepth_; }
-	inline float GetMaxDepth() { return maxDepth_; }
+public: // ÁπßÔΩ≤Áπù„Éª„Å°ÁπùÔΩº
+	Vec2 GetLeftTopPos();
+	Vec2 GetSize();
+	float GetMinDepth();
+	float GetMaxDepth();
 };
-

@@ -4,42 +4,50 @@
 using namespace std::chrono;
 using namespace std::this_thread;
 
-FrameRate::FrameRate() : frameRate_(0)
+FrameRate::FrameRate() : mFrameRate(0)
 {
 }
 
 void FrameRate::Init(const float frameRate)
 {
-	reference_ = steady_clock::now();
-	this->frameRate_ = frameRate;
+	mReference = steady_clock::now();
+	mFrameRate = frameRate;
 }
 
 void FrameRate::Update()
 {
-	// ‚P/‚U‚O•b‚Ò‚Á‚½‚è‚ÌŠÔ
-	const microseconds minTime(uint64_t(1000000.0f / frameRate_));
+	// ãƒ»ãƒ» mFrameRateé˜åµãƒ»ç¸ºï½£ç¸ºæº˜ï½Šç¸ºï½®è­ã‚‹ä¿£
+	const microseconds minTime(uint64_t(1000000.0f / mFrameRate));
 
-	// ‚P/‚U‚O•b‚æ‚è‚í‚¸‚©‚É’Z‚¢ŠÔ
-	const microseconds minCheckTime(uint64_t(1000000.0f / (frameRate_ + 5)));
+	// ãƒ»ãƒ» mFrameRateé˜åµï½ˆç¹§ç¿«ï½ç¸ºå£¹Â°ç¸ºï½«éï½­ç¸ºãƒ»å‡¾é«¢ãƒ»
+	const microseconds minCheckTime(uint64_t(1000000.0f / (mFrameRate + 5)));
 
-	// Œ»İ‚ÌŠÔ‚ğæ“¾
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®è­ã‚‹ä¿£ç¹§è²å™è •ãƒ»
 	steady_clock::time_point nowTime = steady_clock::now();
 
-	// ‘O‰ñ‚Ì‹L˜^‚©‚çŒo‰ßŠÔ‚ğæ“¾‚·‚é
-	microseconds elapsedTime = duration_cast<microseconds>(nowTime - reference_);
+	// èœ‘æ¦Šå±“ç¸ºï½®éšªå€¬é¹¸ç¸ºä¹ï½‰é‚¨ç¢â„ƒè­ã‚‹ä¿£ç¹§è²å™è •åŠ±â˜†ç¹§ãƒ»
+	microseconds elapsedTime = duration_cast<microseconds>(nowTime - mReference);
 
-	// ‚P/‚U‚O•bŒo‚Á‚Ä‚È‚¢ê‡
+	// ãƒ»ãƒ»mFrameRateé˜å ¤ï½µå¾Œâ–²ç¸ºï½¦ç¸ºï½ªç¸ºãƒ»ï£°ï½´èœ·ãƒ»
 	if (elapsedTime < minCheckTime)
 	{
-		// ‚P/‚U‚O•bŒo‰ß‚·‚é‚Ü‚Å”÷¬‚ÈƒXƒŠ[ƒv‚ğŒJ‚è•Ô‚·
-		while (steady_clock::now() - reference_ < minTime)
+		// ãƒ»ãƒ»mFrameRateé˜å ¤ï½µç¢â„ƒç¸ºå¶ï½‹ç¸ºï½¾ç¸ºï½§è •ï½®èŸ†ä¸Šâ†‘ç¹§ï½¹ç¹ï½ªç¹ï½¼ç¹åŠ±ï½’éƒ¢ï½°ç¹§é¡˜ï½¿æ–â˜†
+		while (steady_clock::now() - mReference < minTime)
 		{
 			sleep_for(microseconds(1));
+			nowTime = steady_clock::now();
 		}
 	}
 
-	// Œ»İ‚ÌŠÔ‚ğ‹L˜^‚·‚é
-	reference_ = steady_clock::now();
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®FPS
+	mCurrentFPS = 1.0f / static_cast<float>(elapsedTime.count() / 1000000.0f);
 
-
+	// è¿´ï½¾è¨ï½¨ç¸ºï½®è­ã‚‹ä¿£ç¹§å®šï½¨å€¬é¹¸ç¸ºå¶ï½‹
+	mReference = steady_clock::now();
 }
+
+float FrameRate::GetCurrentFPS()
+{
+	return mCurrentFPS;
+}
+

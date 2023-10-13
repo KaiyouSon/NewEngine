@@ -10,19 +10,19 @@
 class PostEffect
 {
 private:
-	std::vector<VertexBufferData::VSprite> vertices_;
-	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> vertexBuffer_;
-	std::vector<RenderTexture*> renderTextures_;
-	GraphicsPipeline* graphicsPipeline_;
-	Texture* depthTexture_;
-	Material material_;
-	Transform transform_;
-	Vec2 size_;
+	std::vector<VertexBufferData::VSprite> mVertices;
+	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> mVertexBuffer;
+	std::vector<RenderTexture*> mRenderTextures;
+	GraphicsPipeline* mGraphicsPipeline;
+	Material mMaterial;
+	Transform mTransform;
+	Texture* mDepthTexture;
+	Vec2 mAnchorPoint;
+	Vec2 mSize;
 
 public:
 	Vec2 pos;
 	Vec2 scale;
-	Vec2 anchorPoint;
 	float rot;
 	Color color;
 	uint32_t rtvIndex;
@@ -32,34 +32,33 @@ private:
 	void MaterialTransfer();
 	void MaterialDrawCommands();
 	void TransferTexturePos();
+	void TransferVertexCoord();
 
 public:
 	PostEffect();
 	void Update();
 	void Draw();
 
-public: // ÇªÇÃëº
+public: // Á∏∫Êò¥„ÉªËéâ„Éª
 	void AddRenderTexture(RenderTexture* renderTexture);
 
 	template<typename T>
-	void AddMaterial(const T& constantBuffer)
+	void AddMaterial()
 	{
 		std::unique_ptr<IConstantBuffer> iConstatnBuffer = std::make_unique<T>();
 		iConstatnBuffer->Create();
-		material_.constantBuffers.push_back(std::move(iConstatnBuffer));
+		mMaterial.constantBuffers.push_back(std::move(iConstatnBuffer));
 	}
 
-	void UseDepthTexture();
-
-public: 	// ÉQÉbÉ^Å[
+public: // ÁπßÔΩ≤Áπù„Éª„Å°ÁπùÔΩº
+	void SetSize(const Vec2 size);
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 	void SetDrawCommands(const uint32_t registerNum, const uint32_t bufferNum);
 
 	template<typename T>
 	void SetTransferBuffer(const uint32_t bufferNum, const T& data)
 	{
-		uint32_t bNum = Min<uint32_t>(bufferNum, (uint32_t)material_.constantBuffers.size());
-		TransferDataToConstantBuffer(material_.constantBuffers[bNum].get(), data);
+		uint32_t bNum = Min<uint32_t>(bufferNum, (uint32_t)mMaterial.constantBuffers.size());
+		TransferDataToConstantBuffer(mMaterial.constantBuffers[bNum].get(), data);
 	}
 };
-

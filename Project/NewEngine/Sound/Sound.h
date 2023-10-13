@@ -5,18 +5,19 @@
 class Sound
 {
 private:
-	HRESULT result_;
-	WaveData waveData_;
-	float volume_;
-	float pitch_;
+	HRESULT mResult;
+	WaveData mWaveData;
+	float mVolume;
+	float mPitch;
 
 public:
 	Sound();
 	Sound(std::string filePath);
-	void Play(bool isRoop = false);
+	void Play(const bool isRoop = false);
 	void Stop();
 	bool GetIsPlaying();
-	void SetVolume(float volume);
-	void SetPitch(float pitch);
+	void SetVolume(const float volume);
+	void SetPitch(const float pitch);
 	void UnLoad();
 };
+

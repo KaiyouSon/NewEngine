@@ -3,211 +3,205 @@
 #include "Viewport.h"
 #include "ScissorRectangle.h"
 #include "TextureManager.h"
-#include "ShaderObjectManager.h"
+#include "ShaderCompilerManager.h"
 #include <cassert>
 #include <string>
 #include <d3dcompiler.h>
+
+DirectX12WarningDisableBegin
 #include <d3dx12.h>
-#pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi.lib")
-#pragma comment(lib,"d3dcompiler.lib")
+DirectX12WarningDisableEnd
+
+DirectX12CompileLib
+
 using namespace Microsoft::WRL;
 
-float RenderBase::sClearColor_[4] = { 0.1f,0.25f,0.5f,0.0f };
+float RenderBase::sClearColor[4] = { 0.1f,0.25f,0.5f,0.0f };
 
 void RenderBase::Init()
 {
-	renderWindow_ = RenderWindow::GetInstance().get();
-	viewport_ = std::make_unique<Viewport>();
-	scissorRectangle_ = std::make_unique<ScissorRectangle>();
+	// ãƒ‡ãƒãƒƒã‚°ãƒ“ãƒ«ãƒ‰æ™‚ã«å‡¦ç†ã‚’å®Ÿè¡Œ
+	ProcessAtDebugBuild([]()
+		{
+			// ãƒ‡ãƒãƒƒã‚°ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’æœ‰åŠ¹åŒ–
+			ComPtr<ID3D12Debug1> debugController;
+			if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(debugController.GetAddressOf()))))
+			{
+				debugController->EnableDebugLayer();
+				debugController->SetEnableGPUBasedValidation(false);
+			}
+		});
 
-	rtvIncrementIndex_ = 0;
-	dsvIncrementIndex_ = 0;
+	DeviceInit(); // ãƒ‡ãƒã‚¤ã‚¹ã®åˆæœŸåŒ–
 
-	DeviceInit();			// ƒfƒoƒCƒX‚Ì‰Šú‰»
-	DescriptorHeapInit();	// ƒeƒBƒXƒNƒŠƒvƒ^[ƒq[ƒv‚Ì‰Šú‰»
-	CommandInit();			// ƒRƒ}ƒ“ƒhŠÖ˜A‚Ì‰Šú‰»
-	SwapChainInit();		// ƒXƒƒbƒvƒ`ƒFƒ“‚Ì‰Šú‰»
-	FenceInit();			// ƒtƒFƒ“ƒX‚Ì‰Šú‰»
-	DepthBufferInit();		// [“xƒoƒbƒtƒ@‚Ì‰Šú‰»
-	ShaderCompilerInit();	// ƒVƒF[ƒ_[ƒRƒ“ƒpƒCƒ‰[‚Ì‰Šú‰»
-	RootSignatureInit();	// ƒ‹[ƒhƒVƒOƒlƒ`ƒƒ[‚Ì‰Šú‰»
-	GraphicsPipelineInit();	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“‚Ì‰Šú‰»
+	// ãƒ‡ãƒãƒƒã‚°ãƒ“ãƒ«ãƒ‰æ™‚ã«å‡¦ç†ã‚’å®Ÿè¡Œ
+	ProcessAtDebugBuild([]()
+		{
+			ComPtr<ID3D12InfoQueue> infoQueue;
+			if (SUCCEEDED(RenderBase::GetInstance()->GetDevice()->QueryInterface(IID_PPV_ARGS(&infoQueue))))
+			{
+				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true); // é‡å¤§ãªã‚¨ãƒ©ãƒ¼ã§ãƒ–ãƒ¬ãƒ¼ã‚¯
+				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);      // ã‚¨ãƒ©ãƒ¼ã§ãƒ–ãƒ¬ãƒ¼ã‚¯
+				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);    // è­¦å‘Šã§ãƒ–ãƒ¬ãƒ¼ã‚¯
+			}
+
+			// ç‰¹å®šã®è­¦å‘Šãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°
+			D3D12_MESSAGE_ID denyIds[] = {
+				D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE
+			};
+
+			// ç‰¹å®šã®è­¦å‘Šãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ç„¡åŠ¹åŒ–
+			D3D12_MESSAGE_SEVERITY severities[] = { D3D12_MESSAGE_SEVERITY_INFO };
+			D3D12_INFO_QUEUE_FILTER filter{};
+			filter.DenyList.NumIDs = _countof(denyIds);
+			filter.DenyList.pIDList = denyIds;
+			filter.DenyList.NumSeverities = _countof(severities);
+			filter.DenyList.pSeverityList = severities;
+			// ç‰¹å®šã®è­¦å‘Šãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ãƒ•ã‚£ãƒ«ã‚¿ã«è¿½åŠ 
+			infoQueue->PushStorageFilter(&filter);
+		});
+
+	mRenderWindow = RenderWindow::GetInstance().get();
+	mViewport = std::make_unique<Viewport>();
+	mScissorRectangle = std::make_unique<ScissorRectangle>();
+
+	mFenceValue = 0;
+
+	DescriptorHeapInit();   // ãƒ‡ã‚£ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®åˆæœŸåŒ–
+	CommandInit();          // ã‚³ãƒãƒ³ãƒ‰ã®åˆæœŸåŒ–
+	SwapChainInit();        // ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ã®åˆæœŸåŒ–
+	FenceInit();            // ãƒ•ã‚§ãƒ³ã‚¹ã®åˆæœŸåŒ–
+	DepthBufferInit();      // ãƒ‡ãƒ—ã‚¹ãƒãƒƒãƒ•ã‚¡ã®åˆæœŸåŒ–
+	ShaderCompilerInit();   // ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ã®åˆæœŸåŒ–
+	GraphicsPipelineInit(); // ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã®åˆæœŸåŒ–
+	ComputePipelineInit();  // ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ãƒˆãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã®åˆæœŸåŒ–
 }
 void RenderBase::PreDraw()
 {
-	//---------------------- ƒŠƒ\[ƒXƒoƒŠƒA‚Ì•ÏXƒRƒ}ƒ“ƒh ----------------------//
-	// ƒoƒbƒNƒoƒbƒtƒ@‚Ì”Ô†‚ğæ“¾i2‚Â‚È‚Ì‚Å0”Ô‚©1”Ôj
-	UINT bbIndex = swapChain_->GetCurrentBackBufferIndex();
-	// ‚PDƒŠƒ\[ƒXƒoƒŠƒA‚Å‘‚«‚İ‰Â”\‚É•ÏX
-	barrierDesc_.Transition.pResource = backBuffers_[bbIndex]->GetBuffer();	// ƒoƒbƒNƒoƒbƒtƒ@‚ğw’è
-	barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;	// •\¦ó‘Ô‚©‚ç
-	barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // •`‰æó‘Ô‚Ö
-	commandList_->ResourceBarrier(1, &barrierDesc_);
+	// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—
+	uint32_t bbIndex = mSwapChain->GetCurrentBackBufferIndex();
+	// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«é·ç§»
+	TransitionBufferState(
+		mBackBuffers[bbIndex]->GetBufferResource(),
+		D3D12_RESOURCE_STATE_PRESENT,
+		D3D12_RESOURCE_STATE_RENDER_TARGET);
 
-	//--------------------------- •`‰ææw’èƒRƒ}ƒ“ƒh ---------------------------//
-	// ‚QD•`‰ææ‚Ì•ÏX
-	// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = backBuffers_[bbIndex]->GetCpuHandle();
+	// ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = mBackBuffers[bbIndex]->GetBufferResource()->rtvHandle.cpu;
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = mDepthBuffer->GetBufferResource()->dsvHandle.cpu;
+	mCommandList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
 
-	// [“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = depthBuffer_->GetCpuHandle();
-	commandList_->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
+	// ã‚¯ãƒªã‚¢
+	mCommandList->ClearRenderTargetView(rtvHandle, sClearColor, 0, nullptr);
+	mCommandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
-	// ‰æ–ÊƒNƒŠƒA R G B A
-	commandList_->ClearRenderTargetView(rtvHandle, sClearColor_, 0, nullptr);
-
-	// [“xƒoƒbƒtƒ@ƒNƒŠƒA
-	commandList_->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
-
-	// ƒrƒ…[ƒ|[ƒg‚Ìˆ—
-	viewport_->SetViewport(
+	// ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã®è¨­å®š
+	mViewport->SetViewport(
 		{ 0,0 },
-		{
-			(float)renderWindow_->GetWindowSize().x,
-			(float)renderWindow_->GetWindowSize().y
-		});
-	viewport_->Update();
+	{
+		(float)mRenderWindow->GetWindowSize().x,
+		(float)mRenderWindow->GetWindowSize().y
+	});
+	mViewport->Update();
 
-	// ƒVƒU[‹éŒ`‚Ìˆ—
-	scissorRectangle_->Update();
-
-	//commandList_->SetDescriptorHeaps(1, srvDescHeap.GetAddressOf());
-
-
-	// SRVƒq[ƒv‚Ìİ’èƒRƒ}ƒ“ƒh
-	//auto temp = renderBase->GetSrvDescHeap();
+	// ã‚·ã‚¶ãƒ¼ãƒ¬ã‚¯ã‚¿ãƒ³ã‚°ãƒ«ã®æ›´æ–°
+	mScissorRectangle->Update();
 }
 void RenderBase::PostDraw()
 {
 	HRESULT result;
 
-	//---------------------- ƒŠƒ\[ƒXƒoƒŠƒA‚Ì•œ‹AƒRƒ}ƒ“ƒh ----------------------//
-	// ‚TDƒŠƒ\[ƒXƒoƒŠƒA‚ğ–ß‚·
-	barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // •`‰æó‘Ô‚©‚ç
-	barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT; // •\¦ó‘Ô‚Ö
-	commandList_->ResourceBarrier(1, &barrierDesc_);
+	// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—
+	uint32_t bbIndex = mSwapChain->GetCurrentBackBufferIndex();
+	// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰ç”»é¢è¡¨ç¤ºçŠ¶æ…‹ã¸ã®é·ç§»
+	TransitionBufferState(
+		mBackBuffers[bbIndex]->GetBufferResource(),
+		D3D12_RESOURCE_STATE_RENDER_TARGET,
+		D3D12_RESOURCE_STATE_PRESENT);
 
-	//-------------------------- ƒRƒ}ƒ“ƒh‚Ìƒtƒ‰ƒbƒVƒ… --------------------------//
-	// –½—ß‚ÌƒNƒ[ƒY
-	result = commandList_->Close();
+	// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’é–‰ã˜ã‚‹
+	result = mCommandList->Close();
 	assert(SUCCEEDED(result));
-	// ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÌÀs
-	ID3D12CommandList* commandList_s[] = { commandList_.Get() };
-	commandQueue_->ExecuteCommandLists(1, commandList_s);
+	// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã®å®Ÿè¡Œ
+	ID3D12CommandList* mCommandLists[] = { mCommandList.Get() };
+	mCommandQueue->ExecuteCommandLists(1, mCommandLists);
 
-	// ‰æ–Ê‚É•\¦‚·‚éƒoƒbƒtƒ@‚ğƒtƒŠƒbƒvi— •\‚Ì“ü‘Ö‚¦j
-	result = swapChain_->Present(1, 0);
+	// ç”»é¢ã‚’è¡¨ç¤º
+	result = mSwapChain->Present(1, 0);
 	assert(SUCCEEDED(result));
 
-	// ƒRƒ}ƒ“ƒh‚ÌÀsŠ®—¹‚ğ‘Ò‚Â
-	commandQueue_->Signal(fence_.Get(), ++fenceVal_);
-	if (fence_.Get()->GetCompletedValue() != fenceVal_)
+	// ã‚³ãƒãƒ³ãƒ‰ã®å®Ÿè¡Œã‚’å¾…æ©Ÿ
+	mCommandQueue->Signal(mFence.Get(), ++mFenceValue);
+	if (mFence.Get()->GetCompletedValue() != mFenceValue)
 	{
 		HANDLE event = CreateEvent(nullptr, false, false, nullptr);
-		fence_->SetEventOnCompletion(fenceVal_, event);
+		mFence->SetEventOnCompletion(mFenceValue, event);
 		WaitForSingleObject(event, INFINITE);
 		CloseHandle(event);
 	}
 
-	// ƒLƒ…[‚ğƒNƒŠƒA
-	result = commandAllocator_->Reset();
+	// ã‚³ãƒãƒ³ãƒ‰ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã‚’ãƒªã‚»ãƒƒãƒˆ
+	result = mCommandAllocator->Reset();
 	assert(SUCCEEDED(result));
-	// Ä‚ÑƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğ’™‚ß‚é€”õ
-	result = commandList_.Get()->Reset(commandAllocator_.Get(), nullptr);
+	// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’ãƒªã‚»ãƒƒãƒˆ
+	result = mCommandList.Get()->Reset(mCommandAllocator.Get(), nullptr);
 	assert(SUCCEEDED(result));
 }
-void RenderBase::SetObject3DDrawCommand()
+
+void RenderBase::TransitionBufferState(
+	BufferResource* bufferResource,
+	const D3D12_RESOURCE_STATES currentState,
+	const D3D12_RESOURCE_STATES targetState)
 {
-	commandList_->SetGraphicsRootSignature(object3DRootSignature_->GetRootSignature());
-}
-void RenderBase::SetSpriteDrawCommand()
-{
-	commandList_->SetGraphicsRootSignature(spriteRootSignature_->GetRootSignature());
-}
-void RenderBase::SetRenderTextureDrawCommand()
-{
-	commandList_->SetGraphicsRootSignature(renderTextureRootSignature_->GetRootSignature());
-}
-
-void RenderBase::CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC* rtvDesc)
-{
-	// RTVƒq[ƒv‚Ìæ“ªƒnƒ“ƒhƒ‹‚ğæ“¾
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvCpuHandle = rtvDescHeap_->GetCPUDescriptorHandleForHeapStart();
-
-	UINT descriptorSize = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-
-	rtvCpuHandle.ptr += descriptorSize * rtvIncrementIndex_;
-
-	renderTarget.SetCpuHandle(rtvCpuHandle);
-
-	// ƒnƒ“ƒhƒ‹‚Ìw‚·ˆÊ’u‚ÉRTVì¬
-	device_->CreateRenderTargetView(renderTarget.GetBuffer(), rtvDesc, rtvCpuHandle);
-
-	rtvIncrementIndex_++;
-}
-void RenderBase::CreateDSV(DepthBuffer& depthBuffer_)
-{
-	// RTVƒq[ƒv‚Ìæ“ªƒnƒ“ƒhƒ‹‚ğæ“¾
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvCpuHandle = dsvDescHeap_->GetCPUDescriptorHandleForHeapStart();
-
-	UINT descriptorSize = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
-
-	dsvCpuHandle.ptr += descriptorSize * dsvIncrementIndex_;
-
-	depthBuffer_.SetCpuHandle(dsvCpuHandle);
-
-	// [“xƒrƒ…[ì¬
-	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
-	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;	// [“x’lƒtƒH[ƒ}ƒbƒg
-	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
-
-	// ƒnƒ“ƒhƒ‹‚Ìw‚·ˆÊ’u‚ÉRTVì¬
-	device_->CreateDepthStencilView(depthBuffer_.GetBuffer(), &dsvDesc, dsvCpuHandle);
-
-	dsvIncrementIndex_++;
+	CD3DX12_RESOURCE_BARRIER barrier =
+		CD3DX12_RESOURCE_BARRIER::Transition(
+			bufferResource->buffer.Get(),
+			currentState,
+			targetState,
+			D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+	bufferResource->bufferState = targetState;
+	mCommandList->ResourceBarrier(1, &barrier);
 }
 
+// --- åˆæœŸåŒ–é–¢é€£ ------------------------------------------------------------ //
 void RenderBase::DeviceInit()
 {
 	HRESULT result;
 
-	// DXGIƒtƒ@ƒNƒgƒŠ[‚Ì¶¬
-	result = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory_));
+	// DXGIãƒ•ã‚¡ã‚¯ãƒˆãƒªã®åˆæœŸåŒ–
+	result = CreateDXGIFactory(IID_PPV_ARGS(&mDxgiFactory));
 	assert(SUCCEEDED(result));
 
-	// ƒAƒ_ƒvƒ^[‚Ì—ñ‹“—p
+	// åˆ©ç”¨å¯èƒ½ãªã‚¢ãƒ€ãƒ—ã‚¿ã®ãƒªã‚¹ãƒˆã‚’å–å¾—
 	std::vector<ComPtr<IDXGIAdapter4>> adapters;
-	// ‚±‚±‚É“Á’è‚Ì–¼‘O‚ğ‚ÂƒAƒ_ƒvƒ^[ƒIƒuƒWƒFƒNƒg‚ª“ü‚é
 	ComPtr<IDXGIAdapter4> tmpAdapter;
 
-	// ƒpƒtƒH[ƒ}ƒ“ƒX‚ª‚‚¢‚à‚Ì‚©‚ç‡‚ÉA‘S‚Ä‚ÌƒAƒ_ƒvƒ^[‚ğ—ñ‹“‚·‚é
-	for (UINT i = 0;
-		dxgiFactory_->EnumAdapterByGpuPreference(i,
+	// é«˜æ€§èƒ½ãªGPUã‚’å„ªå…ˆã—ã¦ã‚¢ãƒ€ãƒ—ã‚¿ã‚’åˆ—æŒ™ã—ã€ãƒªã‚¹ãƒˆã«è¿½åŠ 
+	for (uint32_t i = 0;
+		mDxgiFactory->EnumAdapterByGpuPreference(i,
 			DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE,
 			IID_PPV_ARGS(&tmpAdapter)) != DXGI_ERROR_NOT_FOUND;
 		i++)
 	{
-		// “®“I”z—ñ‚É’Ç‰Á‚·‚é
 		adapters.push_back(tmpAdapter);
 	}
 
-	// ‘Ã“–‚ÈƒAƒ_ƒvƒ^‚ğ‘I•Ê‚·‚é
+	// é¸æŠã—ãŸã‚¢ãƒ€ãƒ—ã‚¿ã‚’ç‰¹å®š
 	for (size_t i = 0; i < adapters.size(); i++)
 	{
 		DXGI_ADAPTER_DESC3 adapterDesc;
-		// ƒAƒ_ƒvƒ^[‚Ìî•ñ‚ğæ“¾‚·‚é
+		// ã‚¢ãƒ€ãƒ—ã‚¿ã®è©³ç´°æƒ…å ±ã‚’å–å¾—
 		adapters[i]->GetDesc3(&adapterDesc);
-		// ƒ\ƒtƒgƒEƒFƒAƒfƒoƒCƒX‚ğ‰ñ”ğ
+		// ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚¢ãƒ€ãƒ—ã‚¿ã§ãªã„å ´åˆ
 		if (!(adapterDesc.Flags & DXGI_ADAPTER_FLAG3_SOFTWARE))
 		{
-			// ƒfƒoƒCƒX‚ğÌ—p‚µ‚Äƒ‹[ƒv‚ğ”²‚¯‚é
+			// é¸æŠã—ãŸã‚¢ãƒ€ãƒ—ã‚¿ã‚’ä¿æŒ
 			tmpAdapter = adapters[i].Get();
 			break;
 		}
 	}
 
-	// ‘Î‰ƒŒƒxƒ‹‚Ì”z—ñ
+	// ãƒ‡ãƒã‚¤ã‚¹ã®åˆæœŸåŒ–
 	D3D_FEATURE_LEVEL levels[] =
 	{
 		D3D_FEATURE_LEVEL_12_1,
@@ -219,336 +213,493 @@ void RenderBase::DeviceInit()
 	D3D_FEATURE_LEVEL featureLevel;
 	for (size_t i = 0; i < _countof(levels); i++)
 	{
-		// Ì—p‚µ‚½ƒAƒ_ƒvƒ^[‚ÅƒfƒoƒCƒX‚ğ¶¬
+		// ãƒ‡ãƒã‚¤ã‚¹ã®ä½œæˆã‚’è©¦ã¿ã€å¯¾å¿œã™ã‚‹æ©Ÿèƒ½ãƒ¬ãƒ™ãƒ«ã‚’å–å¾—
 		result = D3D12CreateDevice(tmpAdapter.Get(), levels[i],
-			IID_PPV_ARGS(device_.GetAddressOf()));
+			IID_PPV_ARGS(mDevice.GetAddressOf()));
 		if (result == S_OK) {
-			// ƒfƒoƒCƒX‚ğ¶¬‚Å‚«‚½“_‚Åƒ‹[ƒv‚ğ”²‚¯‚é
+			// ãƒ‡ãƒã‚¤ã‚¹ãŒä½œæˆã•ã‚ŒãŸå ´åˆã€å¯¾å¿œã™ã‚‹æ©Ÿèƒ½ãƒ¬ãƒ™ãƒ«ã‚’ä¿æŒ
 			featureLevel = levels[i];
 			break;
 		}
 	}
-
 }
 void RenderBase::DescriptorHeapInit()
 {
-	HRESULT result;
+	DescriptorHeapSetting setting;
+	// SRVç”¨
+	setting.maxSize = 2048;
+	setting.startIndex = 1;
+	setting.heapType = DescriptorHeapSetting::CBV_SRV_UAV;
+	DescriptorHeapManager::Create(setting, "SRV");
 
-	TextureManager::CreateDescriptorHeap();
+	// RTVç”¨
+	setting.maxSize = 64;
+	setting.heapType = DescriptorHeapSetting::RTV;
+	DescriptorHeapManager::Create(setting, "RTV");
 
-	// --- RTV ------------------------------------------------------ //
-	const size_t maxRTVCount = 64;	// RTV‚ÌÅ‘åŒÂ”
-
-	// RTV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìİ’è
-	rtvHeapDesc_.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;		// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[
-	//rtvHeapDesc_.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;	// ƒVƒF[ƒ_‚©‚çŒ©‚¦‚é‚æ‚¤‚É
-	rtvHeapDesc_.NumDescriptors = maxRTVCount; // — •\‚Ì‚Q‚Â
-
-	// RTV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ì¶¬
-	result = device_->CreateDescriptorHeap(&rtvHeapDesc_, IID_PPV_ARGS(&rtvDescHeap_));
-	assert(SUCCEEDED(result));
-
-
-	// --- DSV ------------------------------------------------------ //
-	const size_t maxDSVCount = 64;	// DSV‚ÌÅ‘åŒÂ”
-
-	// DSV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìİ’è
-	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
-	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;		// ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒrƒ…[
-	//dsvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;	// ƒVƒF[ƒ_‚©‚çŒ©‚¦‚é‚æ‚¤‚É
-	dsvHeapDesc.NumDescriptors = maxDSVCount;	// [“xƒrƒ…[‚Íˆê‚Â
-
-	// DSV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ì¶¬
-	result = device_->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvDescHeap_));
-	assert(SUCCEEDED(result));
+	// DSVç”¨
+	setting.maxSize = 64;
+	setting.heapType = DescriptorHeapSetting::DSV;
+	DescriptorHeapManager::Create(setting, "DSV");
 }
 void RenderBase::CommandInit()
 {
 	HRESULT result;
 
-	// ƒRƒ}ƒ“ƒhƒAƒƒP[ƒ^‚ğ¶¬
-	result = device_->CreateCommandAllocator
-	(
+	// ã‚³ãƒãƒ³ãƒ‰ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã®ä½œæˆ
+	result = mDevice->CreateCommandAllocator(
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
-		IID_PPV_ARGS(&commandAllocator_)
+		IID_PPV_ARGS(&mCommandAllocator)
 	);
 	assert(SUCCEEDED(result));
 
-	// ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğ¶¬
-	result = device_->CreateCommandList
-	(
+	// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã®ä½œæˆ
+	result = mDevice->CreateCommandList(
 		0,
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
-		commandAllocator_.Get(), nullptr,
-		IID_PPV_ARGS(&commandList_)
+		mCommandAllocator.Get(), nullptr,
+		IID_PPV_ARGS(&mCommandList)
 	);
 	assert(SUCCEEDED(result));
 
-	//ƒRƒ}ƒ“ƒhƒLƒ…[‚Ìİ’è
-	D3D12_COMMAND_QUEUE_DESC commandQueue_Desc{};
-	//ƒRƒ}ƒ“ƒhƒLƒ…[‚ğ¶¬
-	result = device_.Get()->CreateCommandQueue(&commandQueue_Desc, IID_PPV_ARGS(&commandQueue_));
+	// ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼ã®è¨­å®š
+	D3D12_COMMAND_QUEUE_DESC mCommandQueueDesc{};
+	result = mDevice.Get()->CreateCommandQueue(&mCommandQueueDesc, IID_PPV_ARGS(&mCommandQueue));
 	assert(SUCCEEDED(result));
 }
 void RenderBase::SwapChainInit()
 {
 	HRESULT result;
 
-	backBuffers_[0] = std::make_unique<RenderTarget>();
-	backBuffers_[1] = std::make_unique<RenderTarget>();
+	// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ã®åˆæœŸåŒ–
+	mBackBuffers[0] = std::make_unique<RenderTarget>();
+	mBackBuffers[1] = std::make_unique<RenderTarget>();
 
-	// ƒŠƒ\[ƒX‚Ìİ’è
-	DXGI_SWAP_CHAIN_DESC1 swapChain_Desc{};
-	swapChain_Desc.Width = (UINT)renderWindow_->GetWindowSize().x;
-	swapChain_Desc.Height = (UINT)renderWindow_->GetWindowSize().y;
-	swapChain_Desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;				 // Fî•ñ‚Ì‘®
-	swapChain_Desc.SampleDesc.Count = 1;								 // ƒ}ƒ‹ƒ`ƒTƒ“ƒvƒ‹‚µ‚È‚¢
-	swapChain_Desc.BufferUsage = DXGI_USAGE_BACK_BUFFER;				 // ƒoƒbƒNƒoƒbƒtƒ@—p
-	swapChain_Desc.BufferCount = 2;									 // ƒoƒbƒtƒ@”‚ğ‚Q‚Â‚Éİ’è
-	swapChain_Desc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;		 // ƒtƒŠƒbƒvŒã‚Í”jŠü
-	swapChain_Desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+	// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ã®è¨­å®š
+	DXGI_SWAP_CHAIN_DESC1 mSwapChainDesc{};
+	mSwapChainDesc.Width = (UINT)mRenderWindow->GetWindowSize().x;
+	mSwapChainDesc.Height = (UINT)mRenderWindow->GetWindowSize().y;
+	mSwapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM; // è‰²ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+	mSwapChainDesc.SampleDesc.Count = 1; // ãƒãƒ«ãƒã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ã®è¨­å®š
+	mSwapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER; // ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã¨ã—ã¦ä½¿ç”¨
+	mSwapChainDesc.BufferCount = 2; // ãƒ€ãƒ–ãƒ«ãƒãƒƒãƒ•ã‚¡ãƒªãƒ³ã‚°
+	mSwapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD; // ãƒ•ãƒªãƒƒãƒ—ãƒ¢ãƒ¼ãƒ‰
+	mSwapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-	// ƒXƒƒbƒvƒ`ƒF[ƒ“‚Ì¶¬
-	ComPtr<IDXGISwapChain1> swapChain_1;
-	result = dxgiFactory_->CreateSwapChainForHwnd
-	(
-		commandQueue_.Get(),
-		renderWindow_->GetHwnd(),
-		&swapChain_Desc,
+	// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ã®ä½œæˆ
+	ComPtr<IDXGISwapChain1> mSwapChain1;
+	result = mDxgiFactory->CreateSwapChainForHwnd(
+		mCommandQueue.Get(),
+		mRenderWindow->GetHwnd(),
+		&mSwapChainDesc,
 		nullptr,
 		nullptr,
-		&swapChain_1
+		&mSwapChain1
 	);
-	swapChain_1.As(&swapChain_);
+	mSwapChain1.As(&mSwapChain);
 	assert(SUCCEEDED(result));
 
-	// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Ìİ’è
+	// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ã®è¨­å®š
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
-	// ƒVƒF[ƒ_[‚ÌŒvZŒ‹‰Ê‚ğSRGB‚É•ÏŠ·‚µ‚Ä‘‚«‚Ş
+	// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’è¨­å®š
 	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
-	// ƒXƒƒbƒvƒ`ƒF[ƒ“‚Ì‘S‚Ä‚Ìƒoƒbƒtƒ@‚É‚Â‚¢‚Äˆ—‚·‚é
-	for (size_t i = 0; i < backBuffers_.size(); i++)
+	// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã«å¯¾ã™ã‚‹è¨­å®š
+	for (size_t i = 0; i < mBackBuffers.size(); i++)
 	{
-		// ƒXƒƒbƒvƒ`ƒF[ƒ“‚©‚çƒoƒbƒtƒ@‚ğæ“¾
-		swapChain_->GetBuffer((UINT)i, IID_PPV_ARGS(backBuffers_[i]->GetBufferAddress()));
+		// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã‚’å–å¾—
+		mSwapChain->GetBuffer((UINT)i, IID_PPV_ARGS(mBackBuffers[i]->GetBufferResource()->buffer.GetAddressOf()));
 
-		CreateRTV(*backBuffers_[i], &rtvDesc);
+		// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ã‚’ä½œæˆ
+		DescriptorHeapManager::GetDescriptorHeap("RTV")->CreateRTV(mBackBuffers[i]->GetBufferResource());
 	}
 }
 void RenderBase::FenceInit()
 {
 	HRESULT result;
 
-	// ƒtƒFƒ“ƒX‚Ì¶¬
-	result = device_->CreateFence(
-		fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(fence_.GetAddressOf()));
+	// ãƒ•ã‚§ãƒ³ã‚¹ã®åˆæœŸåŒ–
+	result = mDevice->CreateFence(
+		mFenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(mFence.GetAddressOf()));
 }
 void RenderBase::DepthBufferInit()
 {
-	depthBuffer_ = std::make_unique<DepthBuffer>();
-	depthBuffer_->Create();
+	// æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã®åˆæœŸåŒ–
+	mDepthBuffer = std::make_unique<DepthBuffer>();
+	mDepthBuffer->Create(RenderWindow::GetInstance()->GetWindowSize());
+	DescriptorHeapManager::GetDescriptorHeap("DSV")->CreateDSV(mDepthBuffer->GetBufferResource());
 }
 void RenderBase::ShaderCompilerInit()
 {
-	std::string path = "NewEngine/Shader/";
+	std::string path1 = "NewEngine/Shader/";
 
-	// Object3D—pƒVƒF[ƒ_[
-	ShaderObjectManager::Create("Object3D");
-	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Object3D")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Object3D")->CompileVertexShader(path + "Object3DVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Object3D")->CompilePixelShader(path + "Object3DPS.hlsl", "main");
+	ShaderCompilerSetting setting;
 
-	// Fbxƒ‚ƒfƒ‹—pƒVƒF[ƒ_[
-	ShaderObjectManager::Create("FbxModel");
-	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("BONEINDICES", DXGI_FORMAT_R32G32B32A32_UINT);
-	ShaderObjectManager::GetShaderObject("FbxModel")->AddInputLayout("BONEWEIGHTS", DXGI_FORMAT_R32G32B32A32_FLOAT);
-	ShaderObjectManager::GetShaderObject("FbxModel")->CompileVertexShader(path + "FbxModelVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("FbxModel")->CompilePixelShader(path + "FbxModelPS.hlsl", "main");
+	// Object3Dç”¨
+	setting.mInputLayoutSettings.resize(3);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.vsFilePath = path1 + "Object3DVS.hlsl";
+	setting.psFilePath = path1 + "Object3DPS.hlsl";
+	ShaderCompilerManager::Create(setting, "Object3D");
 
-	// ƒXƒvƒ‰ƒCƒg—pƒVƒF[ƒ_[
-	ShaderObjectManager::Create("Sprite");
-	ShaderObjectManager::GetShaderObject("Sprite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Sprite")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Sprite")->CompileVertexShader(path + "SpriteVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Sprite")->CompilePixelShader(path + "SpritePS.hlsl", "main");
+	// Fbxãƒ¢ãƒ‡ãƒ«ç”¨
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(5);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.mInputLayoutSettings[3] = InputLayoutSetting("BONEINDICES", DXGI_FORMAT_R32G32B32A32_UINT);
+	setting.mInputLayoutSettings[4] = InputLayoutSetting("BONEWEIGHTS", DXGI_FORMAT_R32G32B32A32_FLOAT);
+	setting.vsFilePath = path1 + "FbxModelVS.hlsl";
+	setting.psFilePath = path1 + "FbxModelPS.hlsl";
+	ShaderCompilerManager::Create(setting, "FbxModel");
 
-	// ‰~ƒQ[ƒWƒXƒvƒ‰ƒCƒg—pƒVƒF[ƒ_[
-	ShaderObjectManager::Create("CircleGaugeSprite");
-	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->CompileVertexShader(path + "CircleGaugeSpriteVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("CircleGaugeSprite")->CompilePixelShader(path + "CircleGaugeSpritePS.hlsl", "main");
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”¨
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(2);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.vsFilePath = path1 + "SpriteVS.hlsl";
+	setting.psFilePath = path1 + "SpritePS.hlsl";
+	ShaderCompilerManager::Create(setting, "Sprite");
 
-	// ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ[‚ÌƒVƒF[ƒ_[
-	ShaderObjectManager::Create("RenderTexture");
-	ShaderObjectManager::GetShaderObject("RenderTexture")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("RenderTexture")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("RenderTexture")->CompileVertexShader(path + "RenderTextureVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("RenderTexture")->CompilePixelShader(path + "RenderTexturePS.hlsl", "main");
+	// å††ã‚²ãƒ¼ã‚¸ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”¨
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(2);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.vsFilePath = path1 + "CircleGaugeSprite/CircleGaugeSpriteVS.hlsl";
+	setting.psFilePath = path1 + "CircleGaugeSprite/CircleGaugeSpritePS.hlsl";
+	ShaderCompilerManager::Create(setting, "CircleGaugeSprite");
 
-	// ƒVƒ‹ƒGƒbƒg—pƒVƒF[ƒ_[
-	ShaderObjectManager::Create("Silhouette");
-	ShaderObjectManager::GetShaderObject("Silhouette")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Silhouette")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Silhouette")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Silhouette")->CompileVertexShader(path + "SilhouetteVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Silhouette")->CompilePixelShader(path + "SilhouettePS.hlsl", "main");
+	// ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ï¼‰
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(2);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.vsFilePath = path1 + "RenderTextureVS.hlsl";
+	setting.psFilePath = path1 + "RenderTexturePS.hlsl";
+	ShaderCompilerManager::Create(setting, "RenderTexture");
 
-	// ƒAƒEƒgƒ‰ƒCƒ“Object—pƒVƒF[ƒ_[
-	ShaderObjectManager::Create("Outline");
-	ShaderObjectManager::GetShaderObject("Outline")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Outline")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Outline")->CompileVertexShader(path + "OutLineVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Outline")->CompilePixelShader(path + "OutLinePS.hlsl", "main");
+	// ã‚·ãƒ«ã‚¨ãƒƒãƒˆç”¨
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(3);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.vsFilePath = path1 + "SilhouetteVS.hlsl";
+	setting.psFilePath = path1 + "SilhouettePS.hlsl";
+	ShaderCompilerManager::Create(setting, "Silhouette");
 
-	// ƒgƒD[ƒ“ƒŒƒ“ƒ_[ƒŠƒ“ƒO—p
-	ShaderObjectManager::Create("ToonRender");
-	ShaderObjectManager::GetShaderObject("ToonRender")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ToonRender")->AddInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ToonRender")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	ShaderObjectManager::GetShaderObject("ToonRender")->CompileVertexShader(path + "ToonRenderVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("ToonRender")->CompilePixelShader(path + "ToonRenderPS.hlsl", "main");
+	// ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³ç”¨
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(2);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.vsFilePath = path1 + "OutlineVS.hlsl";
+	setting.psFilePath = path1 + "OutlinePS.hlsl";
+	ShaderCompilerManager::Create(setting, "Outline");
 
-	// ƒ‰ƒCƒ“—p
-	ShaderObjectManager::Create("Line");
-	ShaderObjectManager::GetShaderObject("Line")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	ShaderObjectManager::GetShaderObject("Line")->CompileVertexShader(path + "LineVS.hlsl", "main");
-	ShaderObjectManager::GetShaderObject("Line")->CompilePixelShader(path + "LinePS.hlsl", "main");
-}
-void RenderBase::RootSignatureInit()
-{
-	// 3DƒIƒuƒWƒFƒNƒg—p
-	object3DRootSignature_ = std::make_unique<RootSignature>();
-	object3DRootSignature_->AddConstantBufferViewToRootRrameter(7);
-	object3DRootSignature_->AddDescriptorRangeToRootPrameter(1);
-	object3DRootSignature_->Create(1);
+	// ãƒˆã‚¥ãƒ¼ãƒ³ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ç”¨
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(3);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.vsFilePath = path1 + "ToonRenderingVS.hlsl";
+	setting.psFilePath = path1 + "ToonRenderingPS.hlsl";
+	ShaderCompilerManager::Create(setting, "ToonRendering");
 
-	// ƒXƒvƒ‰ƒCƒg—p
-	spriteRootSignature_ = std::make_unique<RootSignature>();
-	spriteRootSignature_->AddConstantBufferViewToRootRrameter(3);
-	spriteRootSignature_->AddDescriptorRangeToRootPrameter(1);
-	spriteRootSignature_->Create(1);
+	// ç·šç”¨
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(1);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.vsFilePath = path1 + "LineVS.hlsl";
+	setting.psFilePath = path1 + "LinePS.hlsl";
+	ShaderCompilerManager::Create(setting, "Line");
 
-	// ƒXƒvƒ‰ƒCƒg—p
-	renderTextureRootSignature_ = std::make_unique<RootSignature>();
-	renderTextureRootSignature_->AddConstantBufferViewToRootRrameter(5);
-	renderTextureRootSignature_->AddDescriptorRangeToRootPrameter(1);
-	renderTextureRootSignature_->Create(2);
+	// ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ç”¨
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(5);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);	// åº§æ¨™
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);		// ã‚¹ã‚±ãƒ¼ãƒ«
+	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 1);		// zè»¸å›è»¢
+	setting.mInputLayoutSettings[3] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 2);		// è¼åº¦
+	setting.mInputLayoutSettings[4] = InputLayoutSetting("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);	// è‰²
+	setting.vsFilePath = path1 + "EmitterVS.hlsl";
+	setting.gsFilePath = path1 + "EmitterGS.hlsl";
+	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	ShaderCompilerManager::Create(setting, "Emitter");
+
+	// GPUã‚¨ãƒŸãƒƒã‚¿ãƒ¼ç”¨
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.clear();
+	setting.csFilePath = path1 + "EmitterCS.hlsl";
+	setting.vsFilePath = path1 + "GPUEmitterVS.hlsl";
+	setting.gsFilePath = path1 + "EmitterGS.hlsl";
+	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	ShaderCompilerManager::Create(setting, "GPUEmitter");
+
+	// ColliderObjectç”¨
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(3);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.vsFilePath = path1 + "ColliderObjectVS.hlsl";
+	setting.psFilePath = path1 + "ColliderObjectPS.hlsl";
+	ShaderCompilerManager::Create(setting, "ColliderObject");
+
+	// ParticleMeshç”¨
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path1 + "ParticleMeshCS.hlsl";
+	setting.vsFilePath = path1 + "ParticleMeshVS.hlsl";
+	setting.gsFilePath = path1 + "ParticleMeshGS.hlsl";
+	setting.psFilePath = path1 + "ParticleMeshPS.hlsl";
+	ShaderCompilerManager::Create(setting, "ParticleMesh");
+
+	// ãƒã‚¦ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ãƒœãƒƒã‚¯ã‚¹ç”¨
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(2);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.vsFilePath = path1 + "BoundingBox/BoundingBoxVS.hlsl";
+	setting.psFilePath = path1 + "BoundingBox/BoundingBoxPS.hlsl";
+	ShaderCompilerManager::Create(setting, "BoundingBox");
 }
 void RenderBase::GraphicsPipelineInit()
 {
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc1{};
-	depthStencilDesc1.DepthEnable = true; // [“xƒeƒXƒg‚ğs‚¤
-	depthStencilDesc1.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// ‘‚«‚İ‹–‰Â
-	depthStencilDesc1.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// ¬‚³‚¢‚Ù‚¤‚ğÌ—p
+	depthStencilDesc1.DepthEnable = true; // è±ºï½±è ï½¦ç¹ãƒ»ã›ç¹åŒ»ï½’é™¦å¾Œâ‰§
+	depthStencilDesc1.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// è­–ï½¸ç¸ºå´ï½¾ï½¼ç¸ºï½¿éšªï½±èœ¿ï½¯
+	depthStencilDesc1.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// èŸ†ä¸Šï¼†ç¸ºãƒ»âŠ‡ç¸ºãƒ»ï½’è¬—ï½¡é€•ï½¨
 
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc2{};
-	depthStencilDesc2.DepthEnable = false; // [“xƒeƒXƒg‚ğs‚í‚È‚¢
+	depthStencilDesc2.DepthEnable = false; // è±ºï½±è ï½¦ç¹ãƒ»ã›ç¹åŒ»ï½’é™¦å¾Œï½ç¸ºï½ªç¸ºãƒ»
 
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc3{};
-	depthStencilDesc3.DepthEnable = true; // [“xƒeƒXƒg‚ğs‚¤
-	depthStencilDesc3.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// ‘‚«‚İ•s‰Â
-	depthStencilDesc3.DepthFunc = D3D12_COMPARISON_FUNC_GREATER;	// ‘å‚«‚¢‚Ù‚¤‚ğÌ—p
+	depthStencilDesc3.DepthEnable = true; // è±ºï½±è ï½¦ç¹ãƒ»ã›ç¹åŒ»ï½’é™¦å¾Œâ‰§
+	depthStencilDesc3.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// è­–ï½¸ç¸ºå´ï½¾ï½¼ç¸ºï½¿è³æ¦Šåº„
+	depthStencilDesc3.DepthFunc = D3D12_COMPARISON_FUNC_GREATER;	// èŸï½§ç¸ºé˜ªï¼ç¸ºï½»ç¸ºãƒ»ï½’è¬—ï½¡é€•ï½¨
 
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc4{};
-	depthStencilDesc4.DepthEnable = true; // [“xƒeƒXƒg‚ğs‚¤
-	depthStencilDesc4.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// ‘‚«‚İ‹–‰Â
-	depthStencilDesc4.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// ¬‚³‚¢‚Ù‚¤‚ğÌ—p
+	depthStencilDesc4.DepthEnable = true; // è±ºï½±è ï½¦ç¹ãƒ»ã›ç¹åŒ»ï½’é™¦å¾Œâ‰§
+	depthStencilDesc4.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// è­–ï½¸ç¸ºå´ï½¾ï½¼ç¸ºï½¿éšªï½±èœ¿ï½¯
+	depthStencilDesc4.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// èŸ†ä¸Šï¼†ç¸ºãƒ»âŠ‡ç¸ºãƒ»ï½’è¬—ï½¡é€•ï½¨
 
-	// 3DƒIƒuƒWƒFƒNƒg—p
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("Object3D"),
-		object3DRootSignature_->GetRootSignature(),
-		CullMode::Back,
-		depthStencilDesc1,
-		TopologyType::Triangle,
-		2,
-		"Object3D");
+	GraphicsPipelineSetting setting;
 
-	// 3DƒIƒuƒWƒFƒNƒg—p
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("FbxModel"),
-		object3DRootSignature_->GetRootSignature(),
-		CullMode::Back,
-		depthStencilDesc1,
-		TopologyType::Triangle,
-		1,
-		"FbxModel");
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”¨
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Object3D");
+	setting.cullMode = CullMode::Back;
+	setting.topologyType = TopologyType::TriangleList;
+	setting.depthStencilDesc = depthStencilDesc1;
+	setting.rtvNum = 2;
+	setting.rootSignatureSetting.maxCbvRootParameter = 8;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 3;
+	PipelineManager::CreateGraphicsPipeline(setting, "Object3D");
 
-	// ƒXƒvƒ‰ƒCƒg—p
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("Sprite"),
-		spriteRootSignature_->GetRootSignature(),
-		CullMode::None,
-		depthStencilDesc2,
-		TopologyType::Triangle,
-		2,
-		"Sprite");
+	// FBXãƒ¢ãƒ‡ãƒ«ç”¨
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("FbxModel");
+	setting.cullMode = CullMode::Back;
+	setting.topologyType = TopologyType::TriangleList;
+	setting.depthStencilDesc = depthStencilDesc1;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 7;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
+	PipelineManager::CreateGraphicsPipeline(setting, "FbxModel");
 
-	// ‰~Œ`ƒQ[ƒWƒXƒvƒ‰ƒCƒg—p
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("CircleGaugeSprite"),
-		spriteRootSignature_->GetRootSignature(),
-		CullMode::None,
-		depthStencilDesc2,
-		TopologyType::Triangle,
-		1,
-		"CircleGaugeSprite");
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”¨
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Sprite");
+	setting.cullMode = CullMode::None;
+	setting.topologyType = TopologyType::TriangleStrip;
+	setting.depthStencilDesc = depthStencilDesc2;
+	setting.rtvNum = 2;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	PipelineManager::CreateGraphicsPipeline(setting, "Sprite");
 
-	// ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ—p
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("RenderTexture"),
-		renderTextureRootSignature_->GetRootSignature(),
-		CullMode::None,
-		depthStencilDesc2,
-		TopologyType::Triangle,
-		2,
-		"RenderTexture");
+	// å††ã‚²ãƒ¼ã‚¸ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”¨
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("CircleGaugeSprite");
+	setting.cullMode = CullMode::None;
+	setting.topologyType = TopologyType::TriangleStrip;
+	setting.depthStencilDesc = depthStencilDesc2;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	PipelineManager::CreateGraphicsPipeline(setting, "CircleGaugeSprite");
 
-	// ƒVƒ‹ƒGƒbƒg—p
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("Silhouette"),
-		object3DRootSignature_->GetRootSignature(),
-		CullMode::Back,
-		depthStencilDesc3,
-		TopologyType::Triangle,
-		1,
-		"Silhouette");
+	// ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("RenderTexture");
+	setting.cullMode = CullMode::None;
+	setting.topologyType = TopologyType::TriangleStrip;
+	setting.depthStencilDesc = depthStencilDesc2;
+	setting.rtvNum = 2;
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
+	PipelineManager::CreateGraphicsPipeline(setting, "RenderTexture");
 
-	// ƒAƒEƒgƒ‰ƒCƒ“—p
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("Outline"),
-		object3DRootSignature_->GetRootSignature(),
-		CullMode::Front,
-		depthStencilDesc4,
-		TopologyType::Triangle,
-		1,
-		"Outline");
+	// ã‚·ãƒ«ã‚¨ãƒƒãƒˆç”¨
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Silhouette");
+	setting.cullMode = CullMode::Back;
+	setting.topologyType = TopologyType::TriangleList;
+	setting.depthStencilDesc = depthStencilDesc3;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 7;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
+	PipelineManager::CreateGraphicsPipeline(setting, "Silhouette");
 
-	// ƒgƒD[ƒ“ƒŒƒ“ƒ_ƒŠƒ“ƒO—p
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("ToonRender"),
-		object3DRootSignature_->GetRootSignature(),
-		CullMode::Back,
-		depthStencilDesc1,
-		TopologyType::Triangle,
-		1,
-		"ToonRendering");
+	// ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³ç”¨
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Outline");
+	setting.cullMode = CullMode::Front;
+	setting.topologyType = TopologyType::TriangleList;
+	setting.depthStencilDesc = depthStencilDesc4;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 7;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
+	PipelineManager::CreateGraphicsPipeline(setting, "Outline");
 
-	// ƒ‰ƒCƒ“—p
-	GraphicsPipelineManager::Create(
-		ShaderObjectManager::GetShaderObject("Line"),
-		object3DRootSignature_->GetRootSignature(),
-		CullMode::None,
-		depthStencilDesc1,
-		TopologyType::Line,
-		1,
-		"Line");
+	// ãƒˆã‚¥ãƒ¼ãƒ³ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ç”¨
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ToonRendering");
+	setting.cullMode = CullMode::Back;
+	setting.topologyType = TopologyType::TriangleList;
+	setting.depthStencilDesc = depthStencilDesc4;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 7;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
+	PipelineManager::CreateGraphicsPipeline(setting, "ToonRendering");
+
+	// ç·šç”¨
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Line");
+	setting.cullMode = CullMode::None;
+	setting.topologyType = TopologyType::LineStrip;
+	setting.depthStencilDesc = depthStencilDesc1;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
+	PipelineManager::CreateGraphicsPipeline(setting, "Line");
+
+	// ã‚¨ãƒŸãƒƒã‚¿ç”¨
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Emitter");
+	setting.cullMode = CullMode::None;
+	setting.topologyType = TopologyType::Point;
+	setting.depthStencilDesc = depthStencilDesc1;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
+	PipelineManager::CreateGraphicsPipeline(setting, "Emitter");
+
+	// GPUã‚¨ãƒŸãƒƒã‚¿ç”¨
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("GPUEmitter");
+	setting.cullMode = CullMode::None;
+	setting.topologyType = TopologyType::Point;
+	setting.depthStencilDesc = depthStencilDesc1;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
+	PipelineManager::CreateGraphicsPipeline(setting, "GPUEmitter");
+
+	// ColliderObjectç”¨
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ColliderObject");
+	setting.cullMode = CullMode::None;
+	setting.fillMode = GraphicsPipelineSetting::Wireframe;
+	setting.topologyType = TopologyType::TriangleList;
+	setting.depthStencilDesc = depthStencilDesc1;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
+	PipelineManager::CreateGraphicsPipeline(setting, "ColliderObject");
+
+	// ParticleMeshç”¨
+	setting = GraphicsPipelineSetting();
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ParticleMesh");
+	setting.cullMode = CullMode::None;
+	setting.topologyType = TopologyType::Point;
+	setting.depthStencilDesc = depthStencilDesc1;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
+	PipelineManager::CreateGraphicsPipeline(setting, "ParticleMesh");
+
+	// ãƒã‚¦ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ãƒœãƒƒã‚¯ã‚¹ç”¨
+	setting = GraphicsPipelineSetting();
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BoundingBox");
+	setting.cullMode = CullMode::Back;
+	setting.topologyType = TopologyType::TriangleList;
+	setting.depthStencilDesc = depthStencilDesc1;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	PipelineManager::CreateGraphicsPipeline(setting, "BoundingBox");
+}
+void RenderBase::ComputePipelineInit()
+{
+	ComputePipelineSetting setting;
+
+	// GPUã‚¨ãƒŸãƒƒã‚¿ãƒ¼ç”¨
+	setting = ComputePipelineSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("GPUEmitter");
+	setting.rootSignatureSetting.maxCbvRootParameter = 0;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
+	setting.rootSignatureSetting.maxUavDescritorRange = 1;
+	PipelineManager::CreateComputePipeline(setting, "GPUEmitter");
+
+	// ParticleMeshç”¨
+	setting = ComputePipelineSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ParticleMesh");
+	setting.rootSignatureSetting.maxCbvRootParameter = 1;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	setting.rootSignatureSetting.maxUavDescritorRange = 1;
+	PipelineManager::CreateComputePipeline(setting, "ParticleMesh");
+}
+
+// --- ã‚²ãƒƒã‚¿ãƒ¼ -------------------------------------------------------------- //
+ID3D12Device* RenderBase::GetDevice() const
+{
+	return mDevice.Get();
+}
+ID3D12GraphicsCommandList* RenderBase::GetCommandList() const
+{
+	return mCommandList.Get();
+}
+ID3D12CommandQueue* RenderBase::GetCommandQueue() const
+{
+	return mCommandQueue.Get();
+}
+ID3D12CommandAllocator* RenderBase::GetCommandAllocator() const
+{
+	return mCommandAllocator.Get();
+}
+ID3D12Fence* RenderBase::GetFence() const
+{
+	return mFence.Get();
+}
+DepthBuffer* RenderBase::GetDepthBuffer() const
+{
+	return mDepthBuffer.get();
+}
+Viewport* RenderBase::GetViewport() const
+{
+	return mViewport.get();
+}
+UINT64 RenderBase::GetFenceValue() const
+{
+	return mFenceValue;
 }

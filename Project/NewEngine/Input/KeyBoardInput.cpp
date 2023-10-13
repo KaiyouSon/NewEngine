@@ -4,77 +4,68 @@
 #include <cassert>
 #include <memory>
 
-#pragma region ‚»‚Ì‘¼‚Ìˆ—
-
 KeyBoardInput::KeyBoardInput()
 {
 }
-
 void KeyBoardInput::Init()
 {
 	HRESULT result;
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
 
-	// ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬
+	// ç¹§ï½­ç¹ï½¼ç¹æ‡Šãƒ»ç¹å³¨ãƒ§ç¹èˆŒã†ç¹§ï½¹ç¸ºï½®é€•æ»“ãƒ»
 	result = InputManager::GetInstance()->GetDirectInput()->
-		CreateDevice(GUID_SysKeyboard, &keyboard_, nullptr);
+		CreateDevice(GUID_SysKeyboard, &mKeyboard, nullptr);
 	assert(SUCCEEDED(result));
 
-	// “ü—Íƒf[ƒ^Œ`®‚ÌƒZƒbƒg
-	result = keyboard_->SetDataFormat(&c_dfDIKeyboard);	// •W€Œ`®
+	// èœˆï½¥èœ‰å¸™ãƒ§ç¹ï½¼ç¹§ï½¿è –ï½¢è ‘ä¸Šãƒ»ç¹§ï½»ç¹ãƒ»ãƒ¨
+	result = mKeyboard->SetDataFormat(&c_dfDIKeyboard);	// è®“å‘ï½ºé–€ï½½ï½¢è ‘ãƒ»
 	assert(SUCCEEDED(result));
 
-	// ”r‘¼§ŒäƒŒƒxƒ‹‚ÌƒZƒbƒg
-	result = keyboard_->SetCooperativeLevel(
+	// è¬—å‰ƒï½»é–€å®›è •ï½¡ç¹ï½¬ç¹å¶Îç¸ºï½®ç¹§ï½»ç¹ãƒ»ãƒ¨
+	result = mKeyboard->SetCooperativeLevel(
 		renderWindow->GetHwnd(),
 		DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
 }
-
 void KeyBoardInput::Update()
 {
-	// ƒL[ƒ{[ƒgî•ñ‚Ìæ“¾ŠJn
-	keyboard_->Acquire();
+	// ç¹§ï½­ç¹ï½¼ç¹æ‡Šãƒ»ç¹åŸŸãƒ¥è£ï½±ç¸ºï½®èœ¿é–€ï½¾éˆ´å¹•èŸ‹ãƒ»
+	mKeyboard->Acquire();
 
-	// ÅV‚ÌƒL[ƒ{[ƒhî•ñ‚¾‚Á‚½‚à‚Ì‚Í1ƒtƒŒ[ƒ€‘O‚ÌƒL[ƒ{[ƒhî•ñ‚Æ‚µ‚Ä•Û‘¶
+	// è­›Â€è­ï½°ç¸ºï½®ç¹§ï½­ç¹ï½¼ç¹æ‡Šãƒ»ç¹ç”»ãƒ¥è£ï½±ç¸ºï£°ç¸ºï½£ç¸ºæº˜ï½‚ç¸ºï½®ç¸ºï½¯1ç¹è¼”Îç¹ï½¼ç¹ï£°èœ‘é˜ªãƒ»ç¹§ï½­ç¹ï½¼ç¹æ‡Šãƒ»ç¹ç”»ãƒ¥è£ï½±ç¸ºï½¨ç¸ºåŠ±â€»è«æ™ï½­ãƒ»
 	for (uint32_t i = 0; i < 256; ++i)
 	{
-		prevKeys_[i] = keys_[i];
+		mPrevKeys[i] = mKeys[i];
 	}
 
-	// ÅV‚ÌƒL[ƒ{[ƒhî•ñ‚ğæ“¾‚·‚é
-	keyboard_->GetDeviceState(sizeof(keys_), keys_.data());
+	// è­›Â€è­ï½°ç¸ºï½®ç¹§ï½­ç¹ï½¼ç¹æ‡Šãƒ»ç¹ç”»ãƒ¥è£ï½±ç¹§è²å™è •åŠ±â˜†ç¹§ãƒ»
+	mKeyboard->GetDeviceState(sizeof(mKeys), mKeys.data());
 }
 
-#pragma endregion
-
-#pragma region ƒL[ƒ{[ƒh‚Ìˆ—
-
-// ƒL[‚ª‰Ÿ‚³‚ê‚Ä‚é
-bool KeyBoardInput::GetKey(const unsigned int key)
+// ç¹§ï½­ç¹ï½¼ç¸ºæ¢§æ¬¾ç¸ºè¼”ï½Œç¸ºï½¦ç¹§åŒºå‡¾
+bool KeyBoardInput::GetKey(const uint32_t key)
 {
-	// —áŠOƒXƒ[‚µ‚È‚¢‚æ‚¤‚É
-	int index = Clamp<int>(key, 0, 256);
+	// è“å¥ï½¤æ‚¶ã›ç¹ï½­ç¹ï½¼ç¸ºåŠ±â†‘ç¸ºãƒ»ï½ˆç¸ºãƒ»â†“
+	uint32_t index = Clamp<uint32_t>(key, 0, 256);
 
-	return (bool)GetInstance()->keys_[index];
+	return (bool)GetInstance()->mKeys[index];
 }
 
-// ƒL[‚ğ‰Ÿ‚µ‚½uŠÔ
-bool KeyBoardInput::GetKeyDown(const unsigned int key)
+// ç¹§ï½­ç¹ï½¼ç¹§å‘ˆæ¬¾ç¸ºåŠ±â—†è¿¸ï½¬é«¢ãƒ»
+bool KeyBoardInput::GetKeyDown(const uint32_t key)
 {
-	// —áŠOƒXƒ[‚µ‚È‚¢‚æ‚¤‚É
-	int index = Clamp<int>(key, 0, 256);
+	// è“å¥ï½¤æ‚¶ã›ç¹ï½­ç¹ï½¼ç¸ºåŠ±â†‘ç¸ºãƒ»ï½ˆç¸ºãƒ»â†“
+	uint32_t index = Clamp<uint32_t>(key, 0, 256);
 
-	return (bool)(GetInstance()->keys_[key] && !GetInstance()->prevKeys_[key]);
+	return (bool)(GetInstance()->mKeys[index] && !GetInstance()->mPrevKeys[index]);
 }
 
-// ƒL[‚ğ—£‚µ‚½uŠÔ
-bool KeyBoardInput::GetKeyUp(const unsigned int key)
+// ç¹§ï½­ç¹ï½¼ç¹§å¸å±¬ç¸ºåŠ±â—†è¿¸ï½¬é«¢ãƒ»
+bool KeyBoardInput::GetKeyUp(const uint32_t key)
 {
-	// —áŠOƒXƒ[‚µ‚È‚¢‚æ‚¤‚É
-	int index = Clamp<int>(key, 0, 256);
+	// è“å¥ï½¤æ‚¶ã›ç¹ï½­ç¹ï½¼ç¸ºåŠ±â†‘ç¸ºãƒ»ï½ˆç¸ºãƒ»â†“
+	uint32_t index = Clamp<uint32_t>(key, 0, 256);
 
-	return (bool)(!GetInstance()->keys_[key] && GetInstance()->prevKeys_[key]);
+	return (bool)(!GetInstance()->mKeys[index] && GetInstance()->mPrevKeys[index]);
 }
 
-#pragma endregion

@@ -4,26 +4,26 @@
 class LogoScene : public IScene
 {
 private:
-	std::unique_ptr<Sprite> logoSprite;
-	std::unique_ptr<Sprite> backSprite;
+	std::unique_ptr<Sprite> mLogoSprite;
+	std::unique_ptr<Sprite> mBackSprite;
+	Texture mLogoTex;
+	Texture mBackTex;
 
-	Timer stayTimer;
+	Timer mStayTimer;
 
-	Easing alphaEase;
-	bool isRevercr;
-	bool isEnd;
+	Easing mAlphaEase;
+	bool mIsReverce;
+	bool mIsEnd;
 
 public:
 	LogoScene();
 	~LogoScene();
+	void Load() override;
+	void UnLoad() override;
+	void CreateInstance() override;
 	void Init() override;
 	void Update() override;
 	void RenderTextureSetting() override;
-	void DrawBackSprite() override;
-	void DrawModel() override;
-	void DrawFrontSprite() override;
-	void DrawRenderTexture() override;
+	void Draw() override;
 	void DrawDebugGui() override;
-
 };
-

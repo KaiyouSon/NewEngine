@@ -1,97 +1,139 @@
 #include "Object3D.hlsli"
 #include "ShaderIO.hlsli"
 
-Texture2D<float4> tex : register(t0); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ
-SamplerState smp : register(s0); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒTƒ“ƒvƒ‰[
+Texture2D<float4> tex : register(t0); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+Texture2D<float4> dissolveTex : register(t1); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+Texture2D<float4> shadowMapTex : register(t2); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+SamplerState smp : register(s0); // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©ãƒ¼
 
-PSOutput main(VSOutputSvposPosNormalUv vsOutput)// : SV_TARGET
+float4 CalcShadowColor(V2P i, float4 color)
 {
-    float2 newUV = (vsOutput.uv + offset) * tiling;
+    float4 resultColor = color;
     
-	// ƒeƒNƒXƒ`ƒƒ[ƒ}ƒbƒsƒ“ƒO
+    // ãƒ©ã‚¤ãƒˆãƒ“ãƒ¥ãƒ¼ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ç©ºé–“ã‹ã‚‰UVç©ºé–“ã«åº§æ¨™å¤‰æ›
+    float2 shadowTexUV = i.spos.xy / i.spos.w;
+    shadowTexUV *= float2(0.5f, -0.5f);
+    shadowTexUV += 0.5f;
+        
+    // ãƒ©ã‚¤ãƒˆãƒ“ãƒ¥ãƒ¼ã§ã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ç©ºé–“ã§ã®zå€¤ã‚’è¨ˆç®—ã™ã‚‹
+    float z = i.spos.z;
+    
+    if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
+        shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
+    {
+        float2 shadowValue = shadowMapTex.Sample(smp, shadowTexUV).rg;
+        
+        if (shadowValue.r < z && z <= 1.0f)
+        {
+            float depthSq = shadowValue.x * shadowValue.x;
+            
+            float variance = min(max(shadowValue.y - depthSq, 0.0001f), 1.0f);
+            
+            float md = z - shadowValue.x;
+            
+            float lightFactor = variance / (variance + md * md);
+            
+            float3 shadowColor = resultColor.rgb * 0.5f;
+            
+            shadowColor.rgb = lerp(shadowColor, color.xyz, lightFactor);
+        }
+        
+        //float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV).r;
+        //if (shadowDepth < z)
+        //{
+         
+            
+        //    resultColor = lerp(color * shadow, color, lightFactor);
+            
+        //    shadow *= 0.5f;
+        //}
+    }
+    
+    return resultColor;
+}
+
+float CalcShadow(float4 spos)
+{
+    float shadow = 1;
+    
+    float2 shadowTexUV = spos.xy / spos.w;
+    shadowTexUV *= float2(0.5f, -0.5f);
+    shadowTexUV += 0.5f;
+        
+    // ãƒ©ã‚¤ãƒˆãƒ“ãƒ¥ãƒ¼ã§ã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ç©ºé–“ã§ã®zå€¤ã‚’è¨ˆç®—ã™ã‚‹
+    float z = spos.z / spos.w;
+        
+    if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
+        shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
+    {
+        float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV).r;
+        if (shadowDepth < z)
+        {
+            shadow *= 0.5f;
+        }
+    }
+    
+    return shadow;
+}
+
+PSOutput main(V2P i)// : SV_TARGET
+{
+    float2 newUV = (i.uv + offset) * tiling;
+    
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ãƒãƒƒãƒ”ãƒ³ã‚°
     float4 texColor = tex.Sample(smp, newUV);
+    float4 mask = dissolveTex.Sample(smp, newUV);
     
-	// Œõ‘ò“x
+    float maskIntensity = smoothstep(0.1, 0.25, (0.5f + mask.r) - dissolve);
+    clip(maskIntensity - 0.01f);
+    
+	// å…‰æ²¢åº¦
     const float shininess = 4.0f;
 
-	// ’¸“_‚©‚ç‹“_‚Ö‚ÌƒxƒNƒgƒ‹
-    float3 eyeDir = normalize(cameraPos - vsOutput.worldPos.xyz);
-
-    // ƒ}ƒeƒŠƒAƒ‹
+    // ãƒãƒ†ãƒªã‚¢ãƒ«
     Material material = { ambient, diffuse, specular };
     
-    // ƒVƒF[ƒ_[ƒJƒ‰[
-    float4 shaderColor = float4(float3(1, 1, 1) * material.ambient, alpha);
+    // ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‚«ãƒ©ãƒ¼
+    float4 shaderColor = 0;
     
-    int i = 0;
-    
-	// •½sŒõŒ¹
-    for (i = 0; i < directionalLightNum; i++)
+    float4 adsColor = float4(0, 0, 0, 1);
+    if (isActiveDirLight == true)
     {
-		// ƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚Æ–@ü‚Ì“àÏ
-        float3 lightNormal = dot(directionalLights[i].vec, vsOutput.normal);
+        // ãƒ©ã‚¤ãƒˆã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«ã¨æ³•ç·šã®å†…ç©
+        float dotLightNormal = dot(dirLightVec, i.normal);
         
-        float3 color = CalculateDirectionalLight(
-            directionalLights[i], material, vsOutput.normal, lightNormal, eyeDir, shininess);
-        shaderColor.rgb += color;
-    }
-
-    // ŒõŒ¹ŒvZ—pƒf[ƒ^
-    LightCalculateData lightCalculateData;
+        // ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆ
+        float3 ambient = /*texColor.rgb **/material.ambient.rgb;
+     
+        // ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚º
+        float intensity = saturate(dot(normalize(i.normal), dirLightVec));
+        float4 diffuse = intensity * dirLightColor * float4(material.diffuse.rgb, 1);
     
-	// “_ŒõŒ¹
-    for (i = 0; i < pointLightNum; i++)
-    {
-        // ’¸“_‚Ìƒ[ƒ‹ƒhÀ•W
-        lightCalculateData.vertexPos = vsOutput.worldPos.xyz;
-        // ’¸“_–@ü
-        lightCalculateData.vertexNormal = vsOutput.normal;
-        // ’¸“_‚Ìƒ[ƒ‹ƒhÀ•W‚©‚çƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹
-        lightCalculateData.lightVec = normalize(pointLights[i].pos - vsOutput.worldPos.xyz);
-        // ƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚Æ–@ü‚Ì“àÏ
-        lightCalculateData.lightNormal = dot(lightCalculateData.lightVec, vsOutput.normal);
-        
-        float3 color = CalculatePointLight(
-            pointLights[i], material, lightCalculateData, eyeDir, shininess);
-        shaderColor.rgb += color;
-    }
-
-	// ƒXƒ|ƒbƒgƒ‰ƒCƒg
-    for (i = 0; i < spotLightNum; i++)
-    {
-        // ’¸“_‚Ìƒ[ƒ‹ƒhÀ•W
-        lightCalculateData.vertexPos = vsOutput.worldPos.xyz;
-        // ’¸“_–@ü
-        lightCalculateData.vertexNormal = vsOutput.normal;
-        // ’¸“_‚Ìƒ[ƒ‹ƒhÀ•W‚©‚çƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹
-        lightCalculateData.lightVec = normalize(spotLights[i].pos - vsOutput.worldPos.xyz);
-        // ƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚Æ–@ü‚Ì“àÏ
-        lightCalculateData.lightNormal = dot(lightCalculateData.lightVec, vsOutput.normal);
-        
-        float3 color = CalculateSpotLight(
-            spotLights[i], material, lightCalculateData, eyeDir, shininess);
-        shaderColor.rgb += color;
-    }
-
-	// ŠÛ‰e
-    for (i = 0; i < circleShadowNum; i++)
-    {
-        float3 color = CalculateCircleShadow(circleShadows[i], vsOutput.worldPos.xyz);
-        shaderColor.rgb += color;
-    }
-
-    //float dis = distance(vsOutput.worldPos.xyz, cameraPos);
-    //float rate = smoothstep(fog.nearDis, fog.farDis, dis);
-    //float4 currentColor = shaderColor * texColor * color;
-    //float4 outputColor = CalculateFog(fog, dis, currentColor);
-    //return outputColor;
+        // ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼
+        float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // é ‚ç‚¹ã‹ã‚‰è¦–ç‚¹ã¸ã®ãƒ™ã‚¯ãƒˆãƒ«
+        float3 reflectDir = -dirLightVec + 2 * i.normal * dot(i.normal, dirLightVec);
+        float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
     
-    float4 resultColor = shaderColor * texColor * color;
+        adsColor.rgb = ambient + diffuse + specular * dirLightColor;
+    }
+    
+    float4 resultColor = (adsColor * texColor * color);
+    
+    
+    float shadow = 1.0f;
+   //float4 shadowColor = 1.0f;
+    if (isWriteShadow == true)
+    {
+        shadow = CalcShadow(i.spos);
+        //shadowColor = CalcShadowColor(i, resultColor);
+        //resultColor.rgb = shadowColor;
+    }
+    
+    resultColor.rgb *= shadow;
+    //resultColor.rgb = shadowColor;
     
     PSOutput output;
-    output.target0 = resultColor;
+    output.target0 = resultColor * maskIntensity + dissolveColor * colorPower * (1 - maskIntensity);
     output.target1 = float4(1 - resultColor.rgb, color.a);
     return output;
-    
-    //return shaderColor * texColor * color;
 }

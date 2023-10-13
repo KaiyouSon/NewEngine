@@ -1,115 +1,21 @@
 #pragma once
-#include "RenderBase.h"
-#include <cassert>
-#include <wrl.h>
-#include <d3dx12.h>
+#include "BufferResource.h"
+#include <memory>
 
-template<typename T>
+// ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ãƒãƒƒãƒ•ã‚¡ã®ã‚¯ãƒ©ã‚¹
 class UploadBuffer
 {
 private:
-	HRESULT result;
-
-	Microsoft::WRL::ComPtr<ID3D12Resource> uploadBuffer;//	’è”ƒoƒbƒtƒ@
-	D3D12_PLACED_SUBRESOURCE_FOOTPRINT  footprint;
-	T* uploadBufferMap = nullptr;	// ƒ}ƒbƒsƒ“ƒO—p
+	HRESULT mResult;
+	std::unique_ptr<BufferResource> mBufferResource;
 
 public:
-	void Create(const CD3DX12_RESOURCE_DESC& textureResourcesDesc)
-	{
-		UINT64 uploadSize;
+	UploadBuffer();
 
-		// ƒŒƒCƒAƒEƒg‚ÌŽæ“¾
-		RenderBase::GetInstance()->GetDevice()->
-			GetCopyableFootprints(
-				&textureResourcesDesc,
-				0,
-				1,
-				0,
-				&footprint,
-				nullptr,
-				nullptr,
-				&uploadSize);
+	// ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆã™ã‚‹é–¢æ•°
+	void Create(const uint64_t uploadSize);
 
-		// ƒq[ƒv‚ÌÝ’è
-		CD3DX12_HEAP_PROPERTIES uploadHeapProp =
-			CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-
-		// ƒ\[ƒX‚ÌÝ’è
-		CD3DX12_RESOURCE_DESC uploadResourceDesc =
-			CD3DX12_RESOURCE_DESC::Buffer(uploadSize);
-
-		// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
-		result = RenderBase::GetInstance()->GetDevice()->
-			CreateCommittedResource(
-				&uploadHeapProp,
-				D3D12_HEAP_FLAG_NONE,
-				&uploadResourceDesc,
-				D3D12_RESOURCE_STATE_GENERIC_READ,
-				nullptr,
-				IID_PPV_ARGS(&uploadBuffer));
-		assert(SUCCEEDED(result));
-	}
-
-	void Transfer(ID3D12Resource* textureBuffer, const T& data)
-	{
-		uploadBuffer->Map(0, nullptr, (void**)&uploadBufferMap);
-		assert(SUCCEEDED(result));
-		Color col = { 1,1,1,1 };
-		memcpy(uploadBufferMap, &data, sizeof(T));
-
-		D3D12_TEXTURE_COPY_LOCATION destLocation;
-		destLocation.pResource = textureBuffer;
-		destLocation.Type = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX;
-		destLocation.SubresourceIndex = 0;
-
-		D3D12_TEXTURE_COPY_LOCATION sourceLocation;
-		sourceLocation.pResource = uploadBuffer.Get();
-		sourceLocation.Type = D3D12_TEXTURE_COPY_TYPE_PLACED_FOOTPRINT;
-		sourceLocation.PlacedFootprint = footprint;
-
-		RenderBase::GetInstance()->GetCommandList()->
-			CopyTextureRegion(&destLocation, 0, 0, 0, &sourceLocation, nullptr);
-
-		D3D12_RESOURCE_BARRIER  barrier{};
-		barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-		barrier.Transition.pResource = textureBuffer;
-		barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-		barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
-		barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
-	}
-
-	static void ExecutionCommand()
-	{
-		RenderBase::GetInstance()->GetCommandList()->Close();
-
-		ID3D12CommandList* list[] = { RenderBase::GetInstance()->GetCommandList() };
-		RenderBase::GetInstance()->GetCommandQueue()->ExecuteCommandLists(1, list);
-
-		RenderBase::GetInstance()->PreIncrimentFenceValue();
-
-		// ƒRƒ}ƒ“ƒh‚ÌŽÀsŠ®—¹‚ð‘Ò‚Â
-		RenderBase::GetInstance()->GetCommandQueue()->Signal(
-			RenderBase::GetInstance()->GetFence(),
-			RenderBase::GetInstance()->GetFenceValue());
-
-		auto test = RenderBase::GetInstance()->GetFence()->GetCompletedValue();
-		if (RenderBase::GetInstance()->GetFence()->GetCompletedValue() != RenderBase::GetInstance()->GetFenceValue())
-		{
-			HANDLE event = CreateEvent(nullptr, false, false, nullptr);
-			RenderBase::GetInstance()->GetFence()->SetEventOnCompletion(RenderBase::GetInstance()->GetFenceValue(), event);
-			WaitForSingleObject(event, INFINITE);
-			CloseHandle(event);
-		}
-
-		HRESULT result;
-		// ƒLƒ…[‚ðƒNƒŠƒA
-		result = RenderBase::GetInstance()->GetCommandAllocator()->Reset();
-		assert(SUCCEEDED(result));
-		// Ä‚ÑƒRƒ}ƒ“ƒhƒŠƒXƒg‚ð’™‚ß‚é€”õ
-		result = RenderBase::GetInstance()->GetCommandList()->
-			Reset(RenderBase::GetInstance()->GetCommandAllocator(), nullptr);
-		assert(SUCCEEDED(result));
-	}
+public:
+	// ã‚²ãƒƒã‚¿ãƒ¼
+	BufferResource* GetBufferResource();
 };
-

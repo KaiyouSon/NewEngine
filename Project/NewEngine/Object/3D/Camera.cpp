@@ -3,31 +3,18 @@
 
 Camera Camera::current = {};
 
-Camera::Camera() : pos(0, 0, 0), rot(0, 0, 0), fov(Radian(45)), nearZ(0.1f), farZ(10000.0f)
+Camera::Camera() :
+	pos(0, 0, -30), rot(0, 0, 0), fov(Radian(45)),
+	oNearZ(0), oFarZ(1), rect(0, 1920, 0, 1080),
+	pNearZ(0.1f), pFarZ(10000.0f)
 {
-	// ‰ñ“]ŠÖ˜A
-	Transform transform;
-	transform.rot = rot;
-	transform.Update();
-	Vec3 v1 = pos;
-	Vec3 v2 = transform.GetWorldMat().GetZAxis();
-	Vec3 v3 = transform.GetWorldMat().GetYAxis();
-
-	// ƒrƒ…[•ÏŠ·s—ñ
-	viewLookToMat_ = ConvertViewProjectionMatLookTo(v1, v2, v3);
-	viewLookAtMat_ = ConvertViewProjectionMatLookAt(v1, v1 * 10, { 0,1,0 });
-
-	// •Às“Š‰es—ñ‚ÌŒvZ
-	orthoGrphicProjectionMat_ = ConvertOrthoGrphicProjectionMat(GetWindowSize().x, GetWindowSize().y);
-
-	// “§‹“Š‰es—ñ‚ÌŒvZ
-	perspectiveProjectionMat_ = ConvertPerspectiveProjectionMat(
-		fov, (float)GetWindowSize().x / GetWindowSize().y, nearZ, farZ);
+	// è³Â€è—æ§«ä»–ç¸ºï½¶
+	Update();
 }
 
 void Camera::Update()
 {
-	// ‰ñ“]ŠÖ˜A
+	// è—æ«ï½»ï½¢é«¢ï½¢é¨¾ï½£
 	Transform transform;
 	transform.rot = rot;
 	transform.Update();
@@ -35,16 +22,19 @@ void Camera::Update()
 	Vec3 v2 = transform.GetWorldMat().GetZAxis();
 	Vec3 v3 = transform.GetWorldMat().GetYAxis();
 
-	// ƒrƒ…[•ÏŠ·s—ñ
-	viewLookToMat_ = ConvertViewProjectionMatLookTo(v1, v2, v3);
-	viewLookAtMat_ = ConvertViewProjectionMatLookAt(v1, v1 * 10, { 0,1,0 });
+	// ç¹è–™Î—ç¹ï½¼èŸç”»é‹¤é™¦æ‚Ÿãƒ»
+	mViewLookToMat = ConvertViewProjectionMatLookTo(v1, v2, v3);
+	mViewLookAtMat = ConvertViewProjectionMatLookAt(v1, v1 * 10, { 0,1,0 });
 
-	// •½s“Š‰es—ñ‚ÌŒvZ
-	orthoGrphicProjectionMat_ = ConvertOrthoGrphicProjectionMat(GetWindowSize().x, GetWindowSize().y);
+	// èŸ·ï½³é™¦æ¢§å…œè –ï½±é™¦æ‚Ÿãƒ»ç¸ºï½®éšªè‚²ï½®ãƒ»
+	mOrthoGrphicProjectionMat = ConvertOrthoGrphicProjectionMat(
+		GetWindowSize().x, GetWindowSize().y);
 
-	// “§‹“Š‰es—ñ‚ÌŒvZ
-	perspectiveProjectionMat_ = ConvertPerspectiveProjectionMat(
-		fov, (float)GetWindowSize().x / GetWindowSize().y, nearZ, farZ);
+	mOrthoGrphicProjectionMat = ConvertOrthoGrphicProjectionMat(rect, oNearZ, oFarZ);
+
+	// é¨¾å‰°ï½¦åŒå…œè –ï½±é™¦æ‚Ÿãƒ»ç¸ºï½®éšªè‚²ï½®ãƒ»
+	mPerspectiveProjectionMat = ConvertPerspectiveProjectionMat(
+		fov, (float)GetWindowSize().x / GetWindowSize().y, pNearZ, pFarZ);
 }
 
 void Camera::DebugCameraUpdate()
@@ -56,8 +46,8 @@ void Camera::DebugCameraUpdate()
 		cosf(current.rot.y),
 	};
 
-	// ‰ñ“]
-	if (Mouse::GetClick(MouseCodo::Wheel) && !Key::GetKey(DIK_LSHIFT))
+	// è—æ«ï½»ï½¢
+	if (Mouse::GetClick(MouseCode::Wheel) && !Key::GetKey(DIK_LSHIFT))
 	{
 		if (Mouse::GetMoveVec().x != 0 || Mouse::GetMoveVec().y != 0)
 		{
@@ -67,8 +57,8 @@ void Camera::DebugCameraUpdate()
 		}
 	}
 
-	// •½sˆÚ“®
-	if (Mouse::GetClick(MouseCodo::Wheel) && Key::GetKey(DIK_LSHIFT))
+	// èŸ·ï½³é™¦æªï½§ï½»èœãƒ»
+	if (Mouse::GetClick(MouseCode::Wheel) && Key::GetKey(DIK_LSHIFT))
 	{
 		if (Mouse::GetMoveVec().x != 0 || Mouse::GetMoveVec().y != 0)
 		{
@@ -77,10 +67,27 @@ void Camera::DebugCameraUpdate()
 		}
 	}
 
-	// ‰œs
+	// è‚ï½¥é™¦ãƒ»
 	if (Mouse::GetWheelMoveVec() != 0)
 	{
 		const float moveSpeed = 0.025f;
-		current.pos += frontVec * Mouse::GetWheelMoveVec() * 0.025f;
+		current.pos += frontVec * Mouse::GetWheelMoveVec() * moveSpeed;
 	}
+}
+
+Mat4 Camera::GetViewLookToMat()
+{
+	return mViewLookToMat;
+}
+Mat4 Camera::GetViewLookAtMat()
+{
+	return mViewLookAtMat;
+}
+Mat4 Camera::GetOrthoGrphicProjectionMat()
+{
+	return mOrthoGrphicProjectionMat;
+}
+Mat4 Camera::GetPerspectiveProjectionMat()
+{
+	return mPerspectiveProjectionMat;
 }

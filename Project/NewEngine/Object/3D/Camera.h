@@ -4,26 +4,29 @@
 class Camera
 {
 public:
-	Vec3 pos = { 0,0,-30 };		// ‹“_À•W
-	Vec3 rot = { 0,0,0 };
-	float nearZ;
-	float farZ;
+	Vec3 pos;
+	Vec3 rot;
+	float oNearZ;
+	float oFarZ;
+	float pNearZ;
+	float pFarZ;
 	float fov;
+	RectAngle rect;
 	static Camera current;
 
 private:
-	Mat4 viewLookToMat_;			// ƒrƒ…[•ÏŠ·s—ñi LookTo j
-	Mat4 viewLookAtMat_;			// ƒrƒ…[•ÏŠ·s—ñi LookAt j
-	Mat4 orthoGrphicProjectionMat_;	// •½s“Š‰es—ñ
-	Mat4 perspectiveProjectionMat_;	// “§‹“Š‰es—ñ
-	
+	Mat4 mViewLookToMat;			// ç¹è–™Î—ç¹ï½¼èŸç”»é‹¤é™¦æ‚Ÿãƒ»ãƒ»ãƒ»LookTo ãƒ»ãƒ»
+	Mat4 mViewLookAtMat;			// ç¹è–™Î—ç¹ï½¼èŸç”»é‹¤é™¦æ‚Ÿãƒ»ãƒ»ãƒ»LookAt ãƒ»ãƒ»
+	Mat4 mOrthoGrphicProjectionMat;	// èŸ·ï½³é™¦æ¢§å…œè –ï½±é™¦æ‚Ÿãƒ»
+	Mat4 mPerspectiveProjectionMat;	// é¨¾å‰°ï½¦åŒå…œè –ï½±é™¦æ‚Ÿãƒ»
+
 public:
 	Camera();
 	void Update();
 	static void DebugCameraUpdate();
 
-	inline Mat4 GetViewLookToMat() { return viewLookToMat_; }
-	inline Mat4 GetViewLookAtMat() { return viewLookAtMat_; }
-	inline Mat4 GetOrthoGrphicProjectionMat() { return orthoGrphicProjectionMat_; }
-	inline Mat4 GetPerspectiveProjectionMat() { return perspectiveProjectionMat_; }
+	Mat4 GetViewLookToMat();
+	Mat4 GetViewLookAtMat();
+	Mat4 GetOrthoGrphicProjectionMat();
+	Mat4 GetPerspectiveProjectionMat();
 };

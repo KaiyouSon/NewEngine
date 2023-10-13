@@ -1,23 +1,16 @@
 #pragma once
-#include <d3d12.h>
-#include <wrl.h>
+#include "BufferResource.h"
+#include "Vec2.h"
+#include <memory>
 
 class DepthBuffer
 {
 private:
-	HRESULT result_;
-	Microsoft::WRL::ComPtr<ID3D12Resource> buffer_;
-	D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle_ = D3D12_CPU_DESCRIPTOR_HANDLE(); //RTVÇÃÉnÉìÉhÉã(CPUë§)
+	std::unique_ptr<BufferResource> mBufferResource;
 
 public:
-	void Create();
+	void Create(const Vec2 size = -1);
 
-public: // ÉZÉbÉ^Å[
-	inline void SetCpuHandle(const D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle) { this->cpuHandle_ = cpuHandle; }
-
-public: // ÉQÉbÉ^Å[
-	inline ID3D12Resource* GetBuffer() { return buffer_.Get(); }
-	inline ID3D12Resource** GetBufferAddress() { return buffer_.GetAddressOf(); }
-	inline D3D12_CPU_DESCRIPTOR_HANDLE GetCpuHandle() { return cpuHandle_; }
+public: // ÁπßÔΩ≤Áπù„Éª„Å°ÁπùÔΩº
+	BufferResource* GetBufferResource();
 };
-

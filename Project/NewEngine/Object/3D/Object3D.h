@@ -5,20 +5,28 @@
 #include "Material.h"
 #include "Util.h"
 #include "GraphicsPipeline.h"
+#include "Camera.h"
 
 class Object3D
 {
 private:
-	Vec3 worldPos_;
-	Vec3 worldScale_;
-	Transform transform_;
-	Transform* parent_;
-	Model* model_;
-	Texture* texture_;
-	Material material_;
-	GraphicsPipeline* graphicsPipeline_;
+	Vec3 mWorldPos;
+	Vec3 mWorldScale;
+	Transform mTransform;
+	Transform* mParent;
+	Model* mModel;
+	Texture* mTexture;
+	Texture* mDissolveTex;
+	Texture* mDepthTex;
+	Material mMaterial;
+	GraphicsPipeline* mGraphicsPipeline;
+	Camera* mCamera;
+	bool mIsWriteShadow;
+	bool mIsWriteDepth;
 
-	FbxAnimation animation;
+private:
+	// è •æ¢§ç´›é€…ãƒ»â˜†ç¹§ãƒ»
+	Texture* mWhiteTex;
 
 public:
 	Vec3 pos;
@@ -28,7 +36,12 @@ public:
 	Vec2 tiling;
 	Vec2 offset;
 
+	float dissolve;
+	float colorPower;
+	Color dissolveColor;
+
 	bool isLighting;
+	bool isUseDissolve;
 	static bool isAllLighting;
 
 private:
@@ -36,43 +49,52 @@ private:
 	void MaterialTransfer();
 	void MaterialDrawCommands();
 
-private:
-	//  ƒuƒŒƒ“ƒhİ’è
-	void SetBlendMode(const BlendMode blendMode);
-
 public:
 	Object3D();
 	void Update(Transform* parent = nullptr);
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 
-public: //ƒZƒbƒ^[
+public: //ç¹§ï½»ç¹ãƒ»ã¡ç¹ï½¼
 
-	// ƒ‚ƒfƒ‹
+	// ç¹ï½¢ç¹ãƒ»Î
 	void SetModel(Model* model);
 
-	// ƒeƒNƒXƒ`ƒƒ[
+	// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼
 	void SetTexture(Texture* texture);
 
-	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“
+	// ç¹§ï½°ç¹ï½©ç¹è¼”ã…ç¹ãƒ»ã‘ç¹§ï½¹ç¹ä»£ã†ç¹åŠ±Î›ç¹§ï½¤ç¹ï½³
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
-	// ƒAƒjƒ[ƒVƒ‡ƒ“
+	// ç¹§ï½¢ç¹ä¹Î“ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³
 	void SetAnimation(const uint32_t animationIndex, const uint32_t maxFrame, const bool isPlay = true);
 
-public: // ƒQƒbƒ^[
+	// ç¹§ï½«ç¹ï½¡ç¹ï½©
+	void SetCamera(Camera* camera = nullptr);
 
-	// ƒ[ƒ‹ƒhÀ•W
+	// è –ï½±
+	void SetisShadow(const bool isWriteShadow, const bool isWriteDepth);
+
+	// éš•ï½ª
+	void SetParent(Transform* parent);
+
+	// ç¹è–™Îç¹æ‡Šãƒ»ç¹ãƒ»
+	void SetBillboardType(const BillboardType type);
+
+public: // ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
+
+	// ç¹ï½¯ç¹ï½¼ç¹ï½«ç¹ç‰™ï½ºï½§è®“ãƒ»
 	Vec3 GetWorldPos();
 
-	// ƒ[ƒ‹ƒhƒXƒP[ƒ‹
+	// ç¹ï½¯ç¹ï½¼ç¹ï½«ç¹å³¨ã›ç¹§ï½±ç¹ï½¼ç¹ï½«
 	Vec3 GetWorldScale();
 
-	// ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
+	// ç¹åŒ»Î›ç¹ï½³ç¹§ï½¹ç¹è¼”ã‹ç¹ï½¼ç¹ï£°
 	Transform GetTransform();
 
-	// ƒ‚ƒfƒ‹
+	// éš•ï½ªç¸ºï½®ç¹åŒ»Î›ç¹ï½³ç¹§ï½¹ç¹è¼”ã‹ç¹ï½¼ç¹ï£°
+	Transform* GetParent();
+
+	// ç¹ï½¢ç¹ãƒ»Î
 	Model* GetModel();
-
-
 };
 

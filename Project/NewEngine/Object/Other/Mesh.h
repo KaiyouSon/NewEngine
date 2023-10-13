@@ -6,7 +6,7 @@
 class Mesh
 {
 private:
-	// ’¸“_–@üƒXƒ€[ƒWƒ“ƒO—pƒf[ƒ^
+	// é¬†ã‚‰ã›è±•æ…•ï½·å£¹ã›ç¹ï£°ç¹ï½¼ç¹§ï½¸ç¹ï½³ç¹§ï½°é€•ï½¨ç¹ãƒ»ãƒ»ç¹§ï½¿
 	std::unordered_map<uint16_t, std::vector<uint16_t>> smoothData;
 
 public:
@@ -16,19 +16,18 @@ public:
 	IndexBuffer indexBuffer;
 
 public:
-	// ƒXƒ€[ƒWƒ“ƒOƒf[ƒ^‚Ì’Ç‰Á
+	// ç¹§ï½¹ç¹ï£°ç¹ï½¼ç¹§ï½¸ç¹ï½³ç¹§ï½°ç¹ãƒ»ãƒ»ç¹§ï½¿ç¸ºï½®éœ‘ï½½èœ‰ï£°
 	void AddSmoothData(const uint16_t indexPos, const uint16_t indexVertex);
 
-	// Vertex‚Ì’Ç‰Á
+	// Vertexç¸ºï½®éœ‘ï½½èœ‰ï£°
 	void AddVertex(const VertexBufferData::VFbxModel vertex);
 
-	// Index‚Ì’Ç‰Á
+	// Indexç¸ºï½®éœ‘ï½½èœ‰ï£°
 	void AddIndex(const uint16_t index);
 
-	// ƒoƒbƒtƒ@[‚Ì¶¬
+	// ç¹èˆŒãƒ£ç¹è¼”ãƒç¹ï½¼ç¸ºï½®é€•æ»“ãƒ»
 	void CreateBuffer();
 
-	// •½ŠŠ‰»‚³‚ê‚½’¸“_–@ü‚ÌŒvZ
+	// èŸ·ï½³è²Šå¤§å–§ç¸ºè¼”ï½Œç¸ºæ»„ï£°ã‚‰ã›è±•æ…•ï½·å£¹ãƒ»éšªè‚²ï½®ãƒ»
 	void CalculateSmoothedVertexNormals();
 };
-

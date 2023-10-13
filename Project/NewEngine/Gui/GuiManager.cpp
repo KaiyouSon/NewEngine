@@ -7,31 +7,28 @@
 #include <imgui_impl_dx12.h>
 #include <imgui_impl_win32.h>
 
-const uint32_t GuiManager::sNumFramesInFlight_ = 3;
+using namespace Gui;
 
-void GuiManager::Init()
+void Gui::Init()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
 
-	// Setup Platform/Renderer backends
 	ImGui_ImplWin32_Init(RenderWindow::GetInstance()->GetHwnd());
 	ImGui_ImplDX12_Init(
 		renderBase->GetDevice(),
-		sNumFramesInFlight_,
+		sNumFramesInFlight,
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
-		TextureManager::GetSrvDescHeap(),
-		TextureManager::GetSrvDescHeap()->GetCPUDescriptorHandleForHeapStart(),
-		TextureManager::GetSrvDescHeap()->GetGPUDescriptorHandleForHeapStart());
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap(),
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap()->GetCPUDescriptorHandleForHeapStart(),
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap()->GetGPUDescriptorHandleForHeapStart());
 }
 
-void GuiManager::PreDraw()
+void Gui::PreDraw()
 {
-	// Start the Dear ImGui frame
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGuiIO& io = ImGui::GetIO();
@@ -40,17 +37,17 @@ void GuiManager::PreDraw()
 	ImGui::NewFrame();
 }
 
-void GuiManager::PostDraw()
+void Gui::PostDraw()
 {
 	ImGui::Render();
-	// SRVƒq[ƒv‚Ìİ’èƒRƒ}ƒ“ƒh
+	// SRVç¹åµãƒ»ç¹åŠ±ãƒ»éšªï½­è³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
-	auto srvDescHeap = TextureManager::GetSrvDescHeap();
+	auto srvDescHeap = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
 	renderBase->GetCommandList()->SetDescriptorHeaps(1, &srvDescHeap);
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), renderBase->GetCommandList());
 }
 
-void GuiManager::Destroy()
+void Gui::Destroy()
 {
 	// Cleanup
 	ImGui_ImplDX12_Shutdown();
@@ -58,32 +55,37 @@ void GuiManager::Destroy()
 	ImGui::DestroyContext();
 }
 
-bool GuiManager::BeginWindow(const char* name, const Vec2& size)
+bool Gui::BeginWindow(const char* name, const Vec2& size, bool* isOpen)
 {
 	if (size.x != -1 && size.y != -1)
 	{
 		ImGui::SetNextWindowSize({ size.x,size.y });
-		return ImGui::Begin(name, nullptr, ImGuiWindowFlags_NoResize);
+
+		ImGuiWindowFlags windowFlags =
+			ImGuiWindowFlags_MenuBar |
+			ImGuiWindowFlags_NoResize;
+		return ImGui::Begin(name, isOpen, windowFlags);
 	}
 
-	return ImGui::Begin(name);
+	ImGuiWindowFlags windowFlags = ImGuiWindowFlags_MenuBar;
+	return ImGui::Begin(name, isOpen, windowFlags);
 }
 
-void GuiManager::BeginFullWindow(const char* name)
+void Gui::BeginFullWindow(const char* name)
 {
-	// ƒEƒBƒ“ƒhƒE‚Ìİ’è
+	// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¸ºï½®éšªï½­è³ãƒ»
 	const ImGuiViewport* viewport = ImGui::GetMainViewport();
 	ImGui::SetNextWindowPos(viewport->WorkPos);
 	ImGui::SetNextWindowSize(viewport->WorkSize);
 	ImGui::SetNextWindowViewport(viewport->ID);
 
 	ImGuiWindowFlags windowFlags =
-		ImGuiWindowFlags_NoTitleBar |				// ƒ^ƒCƒgƒ‹ƒo[•\¦‚µ‚È‚¢
-		ImGuiWindowFlags_NoResize |					// ƒTƒCƒY•ÏX‚µ‚È‚¢
-		ImGuiWindowFlags_NoMove |					// À•W•ÏX‚µ‚È‚¢
-		ImGuiWindowFlags_MenuBar |					// ƒƒjƒ…[ƒo[•\¦
-		ImGuiWindowFlags_NoBringToFrontOnFocus |	// ƒNƒŠƒbƒN‚µ‚½‚çÅ‘O–Ê‚É•\¦‚µ‚È‚¢
-		ImGuiWindowFlags_NoCollapse;				// Ü‚èô‚İ‚µ‚È‚¢
+		ImGuiWindowFlags_NoTitleBar |				// ç¹§ï½¿ç¹§ï½¤ç¹åŒ»Îç¹èˆŒãƒ»é™¦ï½¨é‰ï½ºç¸ºåŠ±â†‘ç¸ºãƒ»
+		ImGuiWindowFlags_NoResize |					// ç¹§ï½µç¹§ï½¤ç¹§ï½ºèŸç”»å³©ç¸ºåŠ±â†‘ç¸ºãƒ»
+		ImGuiWindowFlags_NoMove |					// è ï½§è®“åï½¤ç”»å³©ç¸ºåŠ±â†‘ç¸ºãƒ»
+		ImGuiWindowFlags_MenuBar |					// ç¹ï½¡ç¹ä¹Î—ç¹ï½¼ç¹èˆŒãƒ»é™¦ï½¨é‰ï½º
+		ImGuiWindowFlags_NoBringToFrontOnFocus |	// ç¹§ï½¯ç¹ï½ªç¹ãƒ»ã‘ç¸ºåŠ±â—†ç¹§ç”»æ€™èœ‘åŸ¼æ“‡ç¸ºï½«é™¦ï½¨é‰ï½ºç¸ºåŠ±â†‘ç¸ºãƒ»
+		ImGuiWindowFlags_NoCollapse;				// è¬šå€¥ï½Šé€¡ï½³ç¸ºï½¿ç¸ºåŠ±â†‘ç¸ºãƒ»
 
 	static ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_None;
 	if (dockspaceFlags & ImGuiDockNodeFlags_PassthruCentralNode)
@@ -102,80 +104,110 @@ void GuiManager::BeginFullWindow(const char* name)
 	}
 }
 
-void GuiManager::EndFullWindow()
+void Gui::EndFullWindow()
 {
 	ImGui::End();
 	ImGui::PopStyleVar();
 }
 
-void GuiManager::OpenPopModal(const char* tag)
+void Gui::OpenPopModal(const char* tag)
 {
 	ImGui::OpenPopup(tag);
 }
 
-void GuiManager::ClosePopModal()
+void Gui::ClosePopModal()
 {
 	ImGui::CloseCurrentPopup();
 }
 
-bool GuiManager::BeginPopModal(const char* tag)
+bool Gui::BeginPopModal(const char* tag)
 {
 	return ImGui::BeginPopupModal(tag);
 }
 
-void GuiManager::EndPopModal()
+void Gui::EndPopModal()
 {
 	ImGui::EndPopup();
 }
 
-void GuiManager::EndWindow()
+bool Gui::DrawCollapsingHeader(const char* name)
+{
+	return ImGui::CollapsingHeader(name);
+}
+
+bool Gui::BeginMenuBar()
+{
+	return ImGui::BeginMenuBar();
+}
+
+void Gui::EndMenuBar()
+{
+	ImGui::EndMenuBar();
+}
+
+bool Gui::BeginMenu(const char* name)
+{
+	return ImGui::BeginMenu(name);
+}
+
+void Gui::EndMenu()
+{
+	ImGui::EndMenu();
+}
+
+bool Gui::MenuItem(const char* name)
+{
+	return ImGui::MenuItem(name);
+}
+
+void Gui::EndWindow()
 {
 	ImGui::End();
 }
 
-void GuiManager::DrawDemoWindow(bool& flag)
+void Gui::DrawDemoWindow(bool& flag)
 {
 	ImGui::ShowDemoWindow(&flag);
 }
 
-bool GuiManager::DrawButton(const char* label, const Vec2& size)
+bool Gui::DrawButton(const char* label, const Vec2& size)
 {
 	return ImGui::Button(label, { size.x,size.y });
 }
 
-void GuiManager::DrawTab()
+void Gui::DrawTab()
 {
 	ImGui::SameLine();
 }
 
-void GuiManager::DrawColumns(uint32_t space, const bool& isBorder)
+void Gui::DrawColumns(uint32_t space, const bool& isBorder)
 {
 	ImGui::Columns(space, 0, isBorder);
 }
 
-void GuiManager::NextColumn()
+void Gui::NextColumn()
 {
 	ImGui::NextColumn();
 }
 
-void GuiManager::DrawLine()
+void Gui::DrawLine()
 {
 	ImGui::Separator();
 }
 
-void GuiManager::DrawString(const char* fmt, ...)
+void Gui::DrawString(const char* fmt, ...)
 {
 	ImGui::Text(fmt);
 }
 
-void GuiManager::DrawCheckBox(const char* label, bool* flag)
+void Gui::DrawCheckBox(const char* label, bool* flag)
 {
 	ImGui::Checkbox(label, flag);
 }
 
-bool GuiManager::DrawRadioButton(const char* label, int& current, const int& index, const bool& isTab)
+bool Gui::DrawRadioButton(const char* label, uint32_t* current, const uint32_t index, const bool isTab)
 {
-	bool flag = ImGui::RadioButton(label, &current, index);
+	bool flag = ImGui::RadioButton(label, (int*)current, (int)index);
 	if (isTab == true)
 	{
 		ImGui::SameLine();
@@ -184,57 +216,65 @@ bool GuiManager::DrawRadioButton(const char* label, int& current, const int& ind
 	return flag;
 }
 
-void GuiManager::DrawSlider1(const char* label, float& v, const float& moveSpeed)
+void Gui::DrawSlider1(const char* label, float& v, const float& moveSpeed)
 {
 	ImGui::DragFloat(label, &v, moveSpeed);
 }
 
-void GuiManager::DrawSlider2(const char* label, Vec2& v, const float& moveSpeed)
+void Gui::DrawSlider2(const char* label, Vec2& v, const float& moveSpeed)
 {
 	float temp[2] = { v.x,v.y };
 	ImGui::DragFloat2(label, temp, moveSpeed);
 	v.x = temp[0]; v.y = temp[1];
 }
 
-void GuiManager::DrawSlider3(const char* label, Vec3& v, const float& moveSpeed)
+void Gui::DrawSlider3(const char* label, Vec3& v, const float& moveSpeed)
 {
 	float temp[3] = { v.x,v.y,v.z };
 	ImGui::DragFloat3(label, temp, moveSpeed);
 	v.x = temp[0];	v.y = temp[1];	v.z = temp[2];
 }
 
-void GuiManager::DrawColorEdit(const char* label, Color& color)
+void Gui::DrawColorEdit(const char* label, Color& color)
 {
 	float temp[4] = { color.r / 255,color.g / 255,color.b / 255,color.a / 255 };
 	ImGui::ColorEdit4(label, temp);
 	color.r = temp[0] * 255; color.g = temp[1] * 255; color.b = temp[2] * 255; color.a = temp[3] * 255;
 }
 
-bool GuiManager::DrawInputInt(const char* label, int& v)
+bool Gui::DrawInputInt(const char* label, int& v)
 {
 	bool flag = ImGui::InputInt(label, &v);
 	return flag;
 }
 
-bool GuiManager::DrawInputText(const char* label, const std::string& str)
+bool Gui::DrawInputText(const char* label, const std::string& str)
 {
 	return ImGui::InputText(label, const_cast<char*>(str.c_str()), 30);
 }
 
-void GuiManager::DrawImage(Texture* texture, const Vec2& size)
+void Gui::DrawImage(ITexture* texture, const Vec2& size)
 {
 	if (texture == nullptr) return;
 
-	ImTextureID gpuHandle = (ImTextureID)texture->GetGpuHandle().ptr;
+	ImTextureID gpuHandle = (ImTextureID)texture->GetBufferResource()->srvHandle.gpu.ptr;
 	ImVec2 textureSize = { size.x,size.y };
 	ImGui::Image(gpuHandle, textureSize);
 }
 
-bool GuiManager::DrawImageButton(Texture* texture, const Vec2& size)
+void Gui::DrawImage(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle, const Vec2& size)
+{
+	ImTextureID handle = (ImTextureID)gpuHandle.ptr;
+	ImVec2 textureSize = { size.x,size.y };
+	ImGui::Image(handle, textureSize);
+}
+
+bool Gui::DrawImageButton(ITexture* texture, const Vec2& size)
 {
 	if (texture == nullptr) return false;
 
-	ImTextureID gpuHandle = (ImTextureID)texture->GetGpuHandle().ptr;
+	ImTextureID gpuHandle = (ImTextureID)texture->GetBufferResource()->srvHandle.gpu.ptr;
 	ImVec2 buttonSize = { size.x,size.y };
 	return ImGui::ImageButton(gpuHandle, buttonSize);
 }
+

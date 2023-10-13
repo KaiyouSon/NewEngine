@@ -7,15 +7,14 @@
 class IndexBuffer
 {
 private:
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[
-	D3D12_INDEX_BUFFER_VIEW ibView_{};
-	Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff_;
+	// ç¹§ï½¤ç¹ï½³ç¹ãƒ»ãƒ£ç¹§ï½¯ç¹§ï½¹ç¹èˆŒãƒ£ç¹è¼”ãƒç¹è–™Î—ç¹ï½¼
+	D3D12_INDEX_BUFFER_VIEW mIndexBufferView;
+	Microsoft::WRL::ComPtr<ID3D12Resource> mIndexBuffer;
 
 public:
 	void Create(const std::vector<uint16_t>& indices);
 
 public:
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[‚ğæ“¾‚·‚éŠÖ”
-	inline D3D12_INDEX_BUFFER_VIEW* GetibViewAddress() { return &ibView_; }
+	// ç¹§ï½¤ç¹ï½³ç¹ãƒ»ãƒ£ç¹§ï½¯ç¹§ï½¹ç¹èˆŒãƒ£ç¹è¼”ãƒç¹è–™Î—ç¹ï½¼ç¹§è²å™è •åŠ±â˜†ç¹§çŸ©æœªè¬¨ï½°
+	D3D12_INDEX_BUFFER_VIEW* GetibViewAddress();
 };
-

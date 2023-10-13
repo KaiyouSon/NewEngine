@@ -1,15 +1,48 @@
 #include "SceneManager.h"
+#include "SceneChanger.h"
 #include "TitleScene.h"
 #include "GameScene.h"
 #include "LogoScene.h"
+#include "Bloom.h"
+#include "GaussianBlur.h"
+#include "Glare.h"
+#include "RadialBlur.h"
+#include "Vignette.h"
+#include "ShadowMap.h"
+#include "Cloud.h"
+#include "RespawnPoint.h"
+#include "RespawnPointUI.h"
+#include "Tree.h"
+#include "Grass.h"
+#include "Skydome.h"
+#include "FieldDataManager.h"
+#include "TransitionManager.h"
+#include "PostEffectManager.h"
+#include "CreateManager.h"
 
-std::unique_ptr<IScene> SceneManager::currentScene = nullptr;
+std::unique_ptr<IScene> SceneManager::sCurrentScene = nullptr;
+std::unique_ptr<IScene> SceneManager::sNextScene = nullptr;
+bool SceneManager::sIsChanged = false;
 
 SceneManager::SceneManager()
 {
 	Object3D::isAllLighting = true;
 
-	currentScene = std::move(std::make_unique<GameScene>());
+	CreateManager::GetInstance()->Create();
+
+	// 繝・ヰ繝・げ譎・
+	ProcessAtDebugBuild([]()
+		{
+			sCurrentScene = std::make_unique<GameScene>();
+		});
+
+	// 繝ｪ繝ｪ繝ｼ繧ｹ譎・
+	ProcessAtReleaseBuild([]()
+		{
+			sCurrentScene = std::make_unique<LogoScene>();
+		});
+
+	FieldDataManager::Load("SkyIsland", "SkyIsland");
 }
 
 SceneManager::~SceneManager()
@@ -18,40 +51,71 @@ SceneManager::~SceneManager()
 
 void SceneManager::Init()
 {
-	currentScene->Init();
+	sCurrentScene->Load();
+	sCurrentScene->CreateInstance();
+	sCurrentScene->Init();
+
+	mChangeStep = CreateInstance;
+	mTestTimer.SetLimitTimer(300);
+
+	mIsReturn = false;
 }
 
 void SceneManager::Update()
 {
-	currentScene->Update();
+	//mChangeStep = CreateInstance;
+
 	Camera::current.Update();
+	sCurrentScene->Update();
+	TransitionManager::GetInstance()->Update();
+
+	SceneChanger::GetInstance()->Update();
 }
 
 void SceneManager::RenderTextureSetting()
 {
-	currentScene->RenderTextureSetting();
+	sCurrentScene->RenderTextureSetting();
 }
 
-void SceneManager::DrawBackSprite()
+void SceneManager::DrawDebugGui()
 {
-	currentScene->DrawBackSprite();
+	// 繝・ヰ繝・げ譎ゅ・縺ｿ螳溯｡・
+	ProcessAtDebugBuild([&]()
+		{
+			sCurrentScene->DrawDebugGui();
+		});
 }
 
-void SceneManager::DrawModel()
+void SceneManager::Draw()
 {
-	currentScene->DrawModel();
+	//if (mIsReturn == true)
+	//{
+	//	return;
+	//}
+
+	if (SceneManager::GetisLoading() == false &&
+		SceneManager::GetisChanged() == false)
+	{
+		sCurrentScene->Draw();
+	}
+
+	SceneChanger::GetInstance()->Draw();
+	TransitionManager::GetInstance()->DrawFrontSprite();
 }
 
-void SceneManager::DrawFrontSprite()
+bool SceneManager::GetisLoading()
 {
-	currentScene->DrawFrontSprite();
-
-#ifdef _DEBUG
-	currentScene->DrawDebugGui();
-#endif
+	return GetInstance()->mChangeStep == Loading;
 }
 
-void SceneManager::DrawRenderTexture()
+bool SceneManager::GetisChanged()
 {
-	currentScene->DrawRenderTexture();
+	return GetInstance()->mChangeStep == Changed;
 }
+
+void SceneManager::SetChangeStepToCreateInstance()
+{
+	GetInstance()->mIsReturn = false;
+	GetInstance()->mChangeStep = CreateInstance;
+}
+

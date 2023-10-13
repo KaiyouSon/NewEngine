@@ -1,33 +1,51 @@
 #include "NewEngine.h"
+#include "LogoutMenu.h"
 
-// WindowsƒAƒvƒŠ‚Å‚ÌƒGƒ“ƒgƒŠ[ƒ|ƒCƒ“ƒg(mainŠÖ”)
+// Windowsç¹§ï½¢ç¹åŠ±Îœç¸ºï½§ç¸ºï½®ç¹§ï½¨ç¹ï½³ç¹åŒ»Îœç¹ï½¼ç¹æ˜´ã†ç¹ï½³ç¹ãƒ»mainé«¢ï½¢è¬¨ï½°)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-	SetWindowTitle("NewEngine");
-	SetWindowSize({ 1920, 1080 });
-	SetBackGroundColor(25.5, 63.75, 127.5);
-	SetFrameRate(60);
-	NewEngineInit();	// ƒGƒ“ƒWƒ“‚Ì‰Šú‰»
+	NewEngineSetting setting;
+	setting.windowTitle = "PON_DE_RING";
+	setting.windowSize = Vec2(1920, 1080);
+	setting.bgColor = Color::black;
+	setting.frameRate = 60.f;
 
-	// ƒQ[ƒ€ƒ‹[ƒv
+	std::unique_ptr<NewEngine> newEngine = std::make_unique<NewEngine>(setting);
+	newEngine->Init();	// ç¹§ï½¨ç¹ï½³ç¹§ï½¸ç¹ï½³ç¸ºï½®è›»æ™„æ‚„è›¹ãƒ»
+
+	// ç¹§ï½²ç¹ï½¼ç¹ï£°ç¹ï½«ç¹ï½¼ç¹ãƒ»
 	while (true)
 	{
-		NewEngineUpda();		// ƒGƒ“ƒWƒ“‚ÌXVˆ—
-		NewEnginePreDraw();		// ƒGƒ“ƒWƒ“•`‰æ‘Oˆ—
-		NewEneineDraw();		// ƒGƒ“ƒWƒ“‚Ì•`‰æˆ—
-		NewEnginePostDraw();	// ƒGƒ“ƒWƒ“•`‰æŒãˆ—
+		newEngine->Update();	// ç¹§ï½¨ç¹ï½³ç¹§ï½¸ç¹ï½³ç¸ºï½®è­–ï½´è­ï½°èœƒï½¦é€…ãƒ»
+		newEngine->PrevDraw();	// ç¹§ï½¨ç¹ï½³ç¹§ï½¸ç¹ï½³è¬ å†—åˆ¤èœ‘æ¦Šãƒ»é€…ãƒ»
+		newEngine->Draw();		// ç¹§ï½¨ç¹ï½³ç¹§ï½¸ç¹ï½³ç¸ºï½®è¬ å†—åˆ¤èœƒï½¦é€…ãƒ»
+		newEngine->PostDraw();	// ç¹§ï½¨ç¹ï½³ç¹§ï½¸ç¹ï½³è¬ å†—åˆ¤è •æ‚Ÿãƒ»é€…ãƒ»
 
-		// Xƒ{ƒ^ƒ“‚à‚µ‚­‚ÍESCƒL[‚ÅƒQ[ƒ€ƒ‹[ƒv‚ğ”²‚¯‚é
-		if (ProcessMessage() || Key::GetKey(DIK_ESCAPE))
+		bool isCloseGame =
+			LogoutMenu::GetisEnd() == true &&
+			LogoutMenu::GetSelect() == LogoutMenu::Select::CloseGame;
+
+		if (isCloseGame == true)
 		{
 			break;
 		}
 
-		FrameRateUpdate();
+		if (newEngine->ProcessMessage())
+		{
+			break;
+		}
+
+#ifdef _DEBUG
+		// ESCç¹§ï½­ç¹ï½¼ç¸ºï½§ç¹§ï½²ç¹ï½¼ç¹ï£°ç¹ï½«ç¹ï½¼ç¹åŠ±ï½’è¬šæ‡Šï¿ ç¹§ãƒ»
+		if (Key::GetKey(DIK_ESCAPE))
+		{
+			break;
+		}
+#endif // DEBUG
+
+		newEngine->FrameControl();
 	}
 
-	NewEngineEnd();	// ƒGƒ“ƒWƒ“‚ÌƒGƒ“ƒhˆ—
-
-	// ³íI—¹
+	// è±ï½£èŸ¶ï½¸é‚¨ã‚†ï½ºãƒ»
 	return 0;
 }

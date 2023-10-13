@@ -9,10 +9,10 @@ void Mesh::CalculateSmoothedVertexNormals()
 {
 	for (auto& currentData : smoothData)
 	{
-		// Še–Ê—p‚Ì‹¤’Ê’¸“_ƒRƒŒƒNƒVƒ‡ƒ“
+		// èœ·ãƒ»æ“‡é€•ï½¨ç¸ºï½®èœˆï½±é¨¾å¤ï£°ã‚‰ã›ç¹§ï½³ç¹ï½¬ç¹§ï½¯ç¹§ï½·ç¹ï½§ç¹ï½³
 		std::vector<uint16_t> v = currentData.second;
 
-		// ‘S’¸“_‚Ì–@ü‚ğ•½‹Ï‚·‚é
+		// èœˆï½¨é¬†ã‚‰ã›ç¸ºï½®è±•æ…•ï½·å£¹ï½’èŸ·ï½³è®ãƒ»â˜†ç¹§ãƒ»
 		Vec3 normal;
 		for (uint16_t index : v)
 		{
@@ -20,7 +20,7 @@ void Mesh::CalculateSmoothedVertexNormals()
 		}
 		normal = (normal / (float)v.size()).Norm();
 
-		// ‹¤’Ê–@ü‚ğg—p‚·‚é‚·‚×‚Ä‚Ì’¸“_ƒf[ƒ^‚É‘‚«‚Ş
+		// èœˆï½±é¨¾å£½ï½³æ…•ï½·å£¹ï½’è´ï½¿é€•ï½¨ç¸ºå¶ï½‹ç¸ºå¶âˆ‹ç¸ºï½¦ç¸ºï½®é¬†ã‚‰ã›ç¹ãƒ»ãƒ»ç¹§ï½¿ç¸ºï½«è­–ï½¸ç¸ºå´ï½¾ï½¼ç¹§Â€
 		for (uint16_t index : v)
 		{
 			vertices[index].normal = { normal.x,normal.y,normal.z };
@@ -43,3 +43,4 @@ void Mesh::CreateBuffer()
 	vertexBuffer.Create(vertices);
 	indexBuffer.Create(indices);
 }
+

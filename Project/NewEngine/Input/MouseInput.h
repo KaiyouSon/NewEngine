@@ -1,46 +1,40 @@
 #pragma once
 #include "MathUtil.h"
 #include "Singleton.h"
+#include "NewEngineEnum.h"
 #include <dinput.h>
 #include <wrl.h>
-
-enum class MouseCodo
-{
-	Left = 0,
-	Right = 1,
-	Wheel = 2,
-};
 
 template<typename T> class Singleton;
 
 class MouseInput : public Singleton<MouseInput>
 {
 private:
-	Microsoft::WRL::ComPtr<IDirectInputDevice8> mouse_;
-	Vec2 mousePos_;
-	DIMOUSESTATE2 mouseInput_;
-	DIMOUSESTATE2 prevMouseInput_;
+	Microsoft::WRL::ComPtr<IDirectInputDevice8> mMouse;
+	Vec2 mMousePos;
+	DIMOUSESTATE2 mMouseInput;
+	DIMOUSESTATE2 mPrevMouseInput;
 
 public:
 	void Init();
 	void Update();
 
-	// ƒNƒŠƒbƒN‚µ‚Ä‚é
-	static bool GetClick(const MouseCodo mouseCodo);
+	// ç¹§ï½¯ç¹ï½ªç¹ãƒ»ã‘ç¸ºåŠ±â€»ç¹§åŒºå‡¾
+	static bool GetClick(const MouseCode mouseCode);
 
-	// ƒNƒŠƒbƒN‚µ‚½uŠÔ
-	static bool GetClickDown(const MouseCodo mouseCodo);
+	// ç¹§ï½¯ç¹ï½ªç¹ãƒ»ã‘ç¸ºåŠ±â—†è¿¸ï½¬é«¢ãƒ»
+	static bool GetClickDown(const MouseCode mouseCode);
 
-	// ƒNƒŠƒbƒN‚µI‚í‚Á‚½uŠÔ
-	static bool GetClickUp(const MouseCodo mouseCodo);
+	// ç¹§ï½¯ç¹ï½ªç¹ãƒ»ã‘ç¸ºç¤¼ï½µã‚…ï½ç¸ºï½£ç¸ºæº½æ¤ªé«¢ãƒ»
+	static bool GetClickUp(const MouseCode mouseCode);
 
-	// ƒ}ƒEƒX‚ÌÀ•W
+	// ç¹æ§­ãˆç¹§ï½¹ç¸ºï½®è ï½§è®“ãƒ»
 	static Vec2 GetPos();
 
-	// ƒ}ƒEƒX‚Ì“®‚¢‚Ä‚¢‚éƒxƒNƒgƒ‹
+	// ç¹æ§­ãˆç¹§ï½¹ç¸ºï½®èœè¼”ï¼ç¸ºï½¦ç¸ºãƒ»ï½‹ç¹å¶ã‘ç¹åŒ»Î
 	static Vec2 GetMoveVec();
 
-	// ƒ}ƒEƒXƒzƒCƒ‹‚Ì“®‚¢‚Ä‚¢‚éƒxƒNƒgƒ‹
+	// ç¹æ§­ãˆç¹§ï½¹ç¹å¸™ã†ç¹ï½«ç¸ºï½®èœè¼”ï¼ç¸ºï½¦ç¸ºãƒ»ï½‹ç¹å¶ã‘ç¹åŒ»Î
 	static float GetWheelMoveVec();
 
 private:

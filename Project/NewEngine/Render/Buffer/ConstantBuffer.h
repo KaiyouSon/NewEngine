@@ -1,69 +1,68 @@
 #pragma once
 #include "RenderBase.h"
+#include "IConstantBuffer.h"
 #include "ConstantBufferData.h"
 #include <d3d12.h>
 #include <cassert>
 #include <wrl.h>
-
-class IConstantBuffer
-{
-public:
-	Microsoft::WRL::ComPtr<ID3D12Resource> constantBuffer;	//	’è”ƒoƒbƒtƒ@
-
-public:
-	virtual void Create() = 0;
-	virtual ~IConstantBuffer() {}
-};
+#include <memory>
 
 template<typename T>
 class ConstantBuffer : public IConstantBuffer
 {
 public:
-	T* constantBufferMap;	// ƒ}ƒbƒsƒ“ƒO—p
+	T* constantBufferMap;	// ç¹æ§­ãƒ£ç¹æ–Î¦ç¹§ï½°é€•ï½¨
 
 public:
-	ConstantBuffer() :constantBufferMap(nullptr) {}
+	ConstantBuffer() : constantBufferMap(nullptr)
+	{
+		bufferResource = nullptr;
+	}
 	~ConstantBuffer()
 	{
-		if (constantBuffer == nullptr)
+		if (bufferResource == nullptr)
 		{
 			return;
 		}
-		constantBuffer->Unmap(0, nullptr);
+		bufferResource->buffer->Unmap(0, nullptr);
 	}
 
 	void Create() override
 	{
+		bufferResource = std::make_unique<BufferResource>();
+
 		HRESULT result;
 
-		// ƒq[ƒv‚Ìİ’è
+		// ç¹åµãƒ»ç¹åŠ±ãƒ»éšªï½­è³ãƒ»
 		D3D12_HEAP_PROPERTIES cbHeapProp{};
-		cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	// GPU‚Ö‚Ì“]‘——p
-		// ƒŠƒ\[ƒXİ’è
+		cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	// GPUç¸ºï½¸ç¸ºï½®éœ†ï½¢é¨¾âˆ«ç•‘
+		// ç¹ï½ªç¹§ï½½ç¹ï½¼ç¹§ï½¹éšªï½­è³ãƒ»
 		D3D12_RESOURCE_DESC cbResourceDesc{};
 		cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-		cbResourceDesc.Width = (sizeof(T) + 0xff) & ~0xff; // 256ƒoƒCƒgƒAƒ‰ƒCƒ“ƒƒ“ƒg
+		cbResourceDesc.Width = (sizeof(T) + 0xff) & ~0xff; // 256ç¹èˆŒã†ç¹åŒ»ã„ç¹ï½©ç¹§ï½¤ç¹ï½³ç¹ï½¡ç¹ï½³ç¹ãƒ»
 		cbResourceDesc.Height = 1;
 		cbResourceDesc.DepthOrArraySize = 1;
 		cbResourceDesc.MipLevels = 1;
 		cbResourceDesc.SampleDesc.Count = 1;
 		cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-		// ’è”ƒoƒbƒtƒ@‚Ì¶¬
+		// è³å£½ç„šç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½®é€•æ»“ãƒ»
 		result = RenderBase::GetInstance()->GetDevice()->
 			CreateCommittedResource(
-				&cbHeapProp,	// ƒq[ƒv‚Ìİ’è
+				&cbHeapProp,	// ç¹åµãƒ»ç¹åŠ±ãƒ»éšªï½­è³ãƒ»
 				D3D12_HEAP_FLAG_NONE,
-				&cbResourceDesc, // ƒŠƒ\[ƒX‚Ìİ’è
+				&cbResourceDesc, // ç¹ï½ªç¹§ï½½ç¹ï½¼ç¹§ï½¹ç¸ºï½®éšªï½­è³ãƒ»
 				D3D12_RESOURCE_STATE_GENERIC_READ,
 				nullptr,
-				IID_PPV_ARGS(&constantBuffer));
+				IID_PPV_ARGS(&bufferResource->buffer));
 		assert(SUCCEEDED(result));
 
-		//constantBuffer->SetName(L"ConstantBuffer");
+		bufferResource->bufferState = D3D12_RESOURCE_STATE_GENERIC_READ;
 
-		// ’è”ƒoƒbƒtƒ@‚Ìƒ}ƒbƒsƒ“ƒO
-		result = constantBuffer->Map(0, nullptr, (void**)&constantBufferMap);	// ƒ}ƒbƒsƒ“ƒO
+		bufferResource->buffer->SetName(L"ConstantBuffer");
+
+		// è³å£½ç„šç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½®ç¹æ§­ãƒ£ç¹æ–Î¦ç¹§ï½°
+		result = bufferResource->buffer->Map(0, nullptr, (void**)&constantBufferMap);	// ç¹æ§­ãƒ£ç¹æ–Î¦ç¹§ï½°
 		assert(SUCCEEDED(result));
 	}
 };
@@ -71,9 +70,9 @@ public:
 template<typename T>
 void TransferDataToConstantBuffer(IConstantBuffer* iCBuffer, const T& data)
 {
-	// ƒLƒƒƒXƒg
+	// ç¹§ï½­ç¹ï½£ç¹§ï½¹ç¹ãƒ»
 	auto buffer = dynamic_cast<ConstantBuffer<T>*>(iCBuffer);
 
-	// “]‘—
+	// éœ†ï½¢é¨¾ãƒ»
 	*(buffer->constantBufferMap) = data;
 }

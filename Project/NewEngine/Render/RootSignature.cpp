@@ -1,132 +1,123 @@
 #include "RootSignature.h"
-#include "ShaderObject.h"
+#include "ShaderCompiler.h"
 #include "RenderBase.h"
 #include <d3dcompiler.h>
 #include <cassert>
 
-void RootSignature::Create(const uint32_t number)
+void RootSignature::Create(const RootSignatureSetting setting)
 {
-	//// ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW‚Ìİ’è
-	//CD3DX12_DESCRIPTOR_RANGE descriptorRange{};
-	//descriptorRange.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
-	////descriptorRange.NumDescriptors = 1;			// ˆê“x‚Ì•`‰æ‚Ég‚¤ƒeƒNƒXƒ`ƒƒ‚ª1–‡‚È‚Ì‚Å‚P
-	////descriptorRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-	////descriptorRange.BaseShaderRegister = 0;		// ƒeƒNƒXƒ`ƒƒƒŒƒWƒXƒ^0”Ô
-	////descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
-	//
-	//D3D12_ROOT_PARAMETER rootParam;
-	//rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE; // í—Ş
-	//rootParam.DescriptorTable.pDescriptorRanges = &descriptorRange;		  // ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW
-	//rootParam.DescriptorTable.NumDescriptorRanges = 1;					  // ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW”
-	//rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;			  // ‘S‚Ä‚ÌƒVƒF[ƒ_‚©‚çŒ©‚¦‚é
-	//
-	//// ƒeƒNƒXƒ`ƒƒƒŒƒWƒXƒ^0”ÔiSRVj
-	//rootParameters.emplace_back(rootParam);
+	mSetting = setting;
 
-	if (number == 1)
-	{
-		// ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW‚Ìİ’è
-		CD3DX12_DESCRIPTOR_RANGE descriptorRange1{};
-		descriptorRange1.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
+	// RootParameterç¸ºï½«ConstantBufferViewç¹§å®šï½¿ï½½èœ‰ï£°
+	AddCbvToRootRrameter(mSetting.maxCbvRootParameter);
 
-		CD3DX12_ROOT_PARAMETER rootParam;
-		rootParam.InitAsDescriptorTable(1, &descriptorRange1, D3D12_SHADER_VISIBILITY_ALL);
-		rootParameters_.emplace_back(rootParam);
+	// RootParameterç¸ºï½«SRVç¸ºï½®DescriptorRangeç¹§å®šï½¿ï½½èœ‰ï£°
+	AddSrvToRootPrameter(mSetting.maxSrvDescritorRange);
 
-		descriptorRangeNum_ = 1;
-	}
-	else if (number == 2)
-	{
-		// ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW‚Ìİ’è
-		CD3DX12_DESCRIPTOR_RANGE descriptorRange1{};
-		descriptorRange1.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
+	// RootParameterç¸ºï½«UAVç¸ºï½®DescriptorRangeç¹§å®šï½¿ï½½èœ‰ï£°
+	AddUavToRootPrameter(mSetting.maxUavDescritorRange);
 
-		CD3DX12_ROOT_PARAMETER rootParam1;
-		rootParam1.InitAsDescriptorTable(1, &descriptorRange1, D3D12_SHADER_VISIBILITY_ALL);
-		rootParameters_.emplace_back(rootParam1);
-
-		// ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW‚Ìİ’è
-		CD3DX12_DESCRIPTOR_RANGE descriptorRange2{};
-		descriptorRange2.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1);
-
-		CD3DX12_ROOT_PARAMETER rootParam2;
-		rootParam2.InitAsDescriptorTable(1, &descriptorRange2, D3D12_SHADER_VISIBILITY_ALL);
-		rootParameters_.emplace_back(rootParam2);
-
-		descriptorRangeNum_ = 2;
-	}
-
-	// ƒeƒNƒXƒ`ƒƒƒTƒ“ƒvƒ‰[‚Ìİ’è
+	// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹§ï½µç¹ï½³ç¹åŠ±Î›ç¹ï½¼ç¸ºï½®éšªï½­è³ãƒ»
 	D3D12_STATIC_SAMPLER_DESC samplerDesc{};
-	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// ‰¡ŒJ‚è•Ô‚µ(ƒ^ƒCƒŠƒ“ƒO)
-	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// cŒJ‚è•Ô‚µ(ƒ^ƒCƒŠƒ“ƒO)
-	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// ‰œsŒJ‚è•Ô‚µ(ƒ^ƒCƒŠƒ“ƒO)
-	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;	// ƒ{[ƒ_[‚Ì‚Í•
-	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;					// ‘S‚Ä‚ÌƒŠƒjƒA•âŠÔ
-	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;									// ƒ~ƒbƒvƒ}ƒbƒvÅ‘å’l
-	samplerDesc.MinLOD = 0.0f;												// ƒ~ƒbƒvƒ}ƒbƒvÅ¬’l
+	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// è®“ï½ªéƒ¢ï½°ç¹§é¡˜ï½¿æ–ï¼ (ç¹§ï½¿ç¹§ï½¤ç¹ï½ªç¹ï½³ç¹§ï½°)
+	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// é‚µï½¦éƒ¢ï½°ç¹§é¡˜ï½¿æ–ï¼ (ç¹§ï½¿ç¹§ï½¤ç¹ï½ªç¹ï½³ç¹§ï½°)
+	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					// è‚ï½¥é™¦æªï½¹ï½°ç¹§é¡˜ï½¿æ–ï¼ (ç¹§ï½¿ç¹§ï½¤ç¹ï½ªç¹ï½³ç¹§ï½°)
+	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;	// ç¹æ‡Šãƒ»ç¹Â€ç¹ï½¼ç¸ºï½®è­ã‚…ãƒ»é®Ÿãƒ»
+	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;					// èœˆï½¨ç¸ºï½¦ç¸ºï½®ç¹ï½ªç¹ä¹ã„é™¬æ†ºä¿£
+	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;									// ç¹æº˜ãƒ£ç¹åŠ±ãƒ»ç¹ãƒ»ãƒ»è­›Â€èŸï½§è›Ÿï½¤
+	samplerDesc.MinLOD = 0.0f;												// ç¹æº˜ãƒ£ç¹åŠ±ãƒ»ç¹ãƒ»ãƒ»è­›Â€èŸ†ä¸Â€ï½¤
 	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;			// ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚©‚ç‚Ì‚İg—p‰Â”\
+	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;			// ç¹æ–ã‘ç¹§ï½»ç¹ï½«ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¸ºä¹ï½‰ç¸ºï½®ç¸ºï½¿è´ï½¿é€•ï½¨èœ¿ï½¯é–­ï½½
 
-	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ìİ’è
+	// ç¹ï½«ç¹ï½¼ç¹åŒ»ã™ç¹§ï½°ç¹é˜ªãƒ¡ç¹ï½£ç¸ºï½®éšªï½­è³ãƒ»
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
 	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-	rootSignatureDesc.pParameters = rootParameters_.data();	// ƒ‹[ƒgƒpƒ‰ƒ[ƒ^‚Ìæ“ªƒAƒhƒŒƒX
-	rootSignatureDesc.NumParameters = (UINT)rootParameters_.size();		// ƒ‹[ƒgƒpƒ‰ƒ[ƒ^”
+	rootSignatureDesc.pParameters = mRootParameters.data();					// ç¹ï½«ç¹ï½¼ç¹åŒ»ãƒ±ç¹ï½©ç¹ï½¡ç¹ï½¼ç¹§ï½¿ç¸ºï½®èœˆç£¯ï£°ï½­ç¹§ï½¢ç¹å³¨Îç¹§ï½¹
+	rootSignatureDesc.NumParameters = (uint32_t)mRootParameters.size();		// ç¹ï½«ç¹ï½¼ç¹åŒ»ãƒ±ç¹ï½©ç¹ï½¡ç¹ï½¼ç¹§ï½¿è¬¨ï½°
 	rootSignatureDesc.pStaticSamplers = &samplerDesc;
 	rootSignatureDesc.NumStaticSamplers = 1;
 
-	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ÌƒVƒŠƒAƒ‰ƒCƒY
-	auto errorBlob = ShaderObject::GetErrorBlob();
+	// ç¹ï½«ç¹ï½¼ç¹åŒ»ã™ç¹§ï½°ç¹é˜ªãƒ¡ç¹ï½£ç¸ºï½®ç¹§ï½·ç¹ï½ªç¹§ï½¢ç¹ï½©ç¹§ï½¤ç¹§ï½º
+	auto errorBlob = ShaderCompiler::GetErrorBlob();
 	Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob;
-	result_ = D3D12SerializeRootSignature(
+	mResult = D3D12SerializeRootSignature(
 		&rootSignatureDesc,
 		D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob,
 		&errorBlob);
-	assert(SUCCEEDED(result_));
+	assert(SUCCEEDED(mResult));
 
-	result_ = RenderBase::GetInstance()->GetDevice()->CreateRootSignature(
+	mResult = RenderBase::GetInstance()->GetDevice()->CreateRootSignature(
 		0,
 		rootSigBlob->GetBufferPointer(),
 		rootSigBlob->GetBufferSize(),
-		IID_PPV_ARGS(&rootSignature_));
+		IID_PPV_ARGS(&mRootSignature));
 
-	assert(SUCCEEDED(result_));
+	assert(SUCCEEDED(mResult));
 }
 
-void RootSignature::AddConstantBufferViewToRootRrameter(const uint32_t number)
+void RootSignature::AddCbvToRootRrameter(const uint32_t maxCbvRootParameter)
 {
-	for (uint32_t i = 0; i < number; i++)
+	for (uint32_t i = 0; i < maxCbvRootParameter; i++)
 	{
 		D3D12_ROOT_PARAMETER rootParam;
-		rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// í—Ş
-		rootParam.Descriptor.ShaderRegister = (UINT)rootParameters_.size();	// ’è”ƒoƒbƒtƒ@”Ô†
-		rootParam.Descriptor.RegisterSpace = 0;						// ƒfƒtƒHƒ‹ƒg’l
-		rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// ‘S‚Ä‚ÌƒVƒF[ƒ_‚©‚çŒ©‚¦‚é
+		rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	// éï½®é¬˜ãƒ»
+		rootParam.Descriptor.ShaderRegister = (uint32_t)mRootParameters.size();	// è³å£½ç„šç¹èˆŒãƒ£ç¹è¼”ãƒé€¡ï½ªèœ¿ï½·
+		rootParam.Descriptor.RegisterSpace = 0;						// ç¹ãƒ»ãƒµç¹§ï½©ç¹ï½«ç¹äº¥Â€ï½¤
+		rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	// èœˆï½¨ç¸ºï½¦ç¸ºï½®ç¹§ï½·ç¹§ï½§ç¹ï½¼ç¹Â€ç¸ºä¹ï½‰éš•ä¹âˆ´ç¹§ãƒ»
 
-		rootParameters_.emplace_back(rootParam);
-		constantBufferNum_++;
+		mRootParameters.emplace_back(rootParam);
+	}
+}
+void RootSignature::AddSrvToRootPrameter(const uint32_t maxSrvDescritorRange)
+{
+	for (uint32_t i = 0; i < maxSrvDescritorRange; i++)
+	{
+		mSrvDescriptorRanges.emplace_back();
+		mSrvDescriptorRanges.back().Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, (uint32_t)i);
+	}
+
+	for (uint32_t i = 0; i < maxSrvDescritorRange; i++)
+	{
+		mRootParameters.emplace_back();
+		mRootParameters.back().InitAsDescriptorTable(1, &mSrvDescriptorRanges[i]);
 	}
 }
 
-void RootSignature::AddDescriptorRangeToRootPrameter(const uint32_t number)
+void RootSignature::AddUavToRootPrameter(const uint32_t maxUavDescritorRange)
 {
-	//for (int i = 0; i < number; i++)
-	//{
-	//	// ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW‚Ìİ’è
-	//	CD3DX12_DESCRIPTOR_RANGE descriptorRange{};
-	//	descriptorRange.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, (UINT)descriptorRangeNum);
+	for (uint32_t i = 0; i < maxUavDescritorRange; i++)
+	{
+		mUavDescriptorRanges.emplace_back();
+		mUavDescriptorRanges.back().Init(D3D12_DESCRIPTOR_RANGE_TYPE_UAV, 1, (uint32_t)i);
+	}
 
-	//	D3D12_ROOT_PARAMETER rootParam;
-	//	rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE; // í—Ş
-	//	rootParam.DescriptorTable.pDescriptorRanges = &descriptorRange;		  // ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW
-	//	rootParam.DescriptorTable.NumDescriptorRanges = 1;					  // ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW”
-	//	rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;			  // ‘S‚Ä‚ÌƒVƒF[ƒ_‚©‚çŒ©‚¦‚é
-
-	//	// ƒeƒNƒXƒ`ƒƒƒŒƒWƒXƒ^0”ÔiSRVj
-	//	rootParameters.emplace_back(rootParam);
-
-	//	descriptorRangeNum++;
-	//}
+	for (uint32_t i = 0; i < maxUavDescritorRange; i++)
+	{
+		mRootParameters.emplace_back();
+		mRootParameters.back().InitAsDescriptorTable(1, &mUavDescriptorRanges[i]);
+	}
 }
+
+ID3D12RootSignature* RootSignature::GetRootSignature()
+{
+	return mRootSignature.Get();
+}
+uint32_t RootSignature::GetCBVStartIndex()
+{
+	// è ¢ãƒ»â˜…0é€¡ï½ªé€¶ï½®ç¸ºä¹ï½‰è´æ‡Šï½‹ç¹§åŒ»â‰§ç¸ºï½«ç¸ºå¶ï½‹ç¸ºæº˜ï½0ç¹§å®šï½¿æ–â˜†
+	return 0;
+}
+uint32_t RootSignature::GetSRVStartIndex()
+{
+	// maxCbvRootParameterç¸ºéƒ¡RVç¸ºï½®è­›Â€è›»æ˜´ãƒ»Indexç¸ºï½«ç¸ºï½ªç¹§ãƒ»
+	return mSetting.maxCbvRootParameter;
+}
+uint32_t RootSignature::GetUAVStartIndex()
+{
+	// maxSrvDescritorRangeç¸ºè¢ˆAVç¸ºï½®è­›Â€è›»æ˜´ãƒ»Indexç¸ºï½«ç¸ºï½ªç¹§ãƒ»
+	return
+		mSetting.maxCbvRootParameter +
+		mSetting.maxSrvDescritorRange;
+}
+

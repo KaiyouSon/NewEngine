@@ -12,6 +12,8 @@ const Vec3 Vec3::zero(0.f, 0.f, 0.f);
 
 float Vec3::Length() const { return sqrtf(x * x + y * y + z * z); }
 
+float Vec3::LengthSq() const { return x * x + y * y + z * z; }
+
 Vec3 Vec3::Norm() const
 {
 	if (x == 0 && y == 0 && z == 0)
@@ -46,6 +48,14 @@ float Vec3::Distance(const Vec3 v1, const Vec3 v2)
 		(v2.z - v1.z) * (v2.z - v1.z));
 }
 
+float Vec3::DistanceSq(const Vec3 v1, const Vec3 v2)
+{
+	return
+		(v2.x - v1.x) * (v2.x - v1.x) +
+		(v2.y - v1.y) * (v2.y - v1.y) +
+		(v2.z - v1.z) * (v2.z - v1.z);
+}
+
 Vec3 Vec3::Max(const Vec3 v1, const Vec3 v2)
 {
 	return Vec3(v1.x >= v2.x ? v1.x : v2.x, v1.y >= v2.y ? v1.y : v2.y, v1.z >= v2.z ? v1.z : v2.z);
@@ -64,14 +74,14 @@ Vec3 Vec3::operator+(const Vec2 other) const { return { x + other.x, y + other.y
 Vec3 Vec3::operator-(const Vec2 other) const { return { x - other.x, y - other.y ,z }; }
 Vec3 Vec3::operator*(const Vec2 other) const { return { x * other.x, y * other.y ,z }; }
 Vec3 Vec3::operator/(const Vec2 other) const { return { x / other.x, y / other.y ,z }; }
-Vec3 Vec3::operator+(float num) const { return { x + num, y + num, z + num }; }	// ˆê‚Â‚Ì’l‚Æ‚Ì‘«‚µZ
-Vec3 Vec3::operator-(float num) const { return { x - num, y - num, z - num }; }	// ˆê‚Â‚Ì’l‚Æ‚Ìˆø‚«Z
-Vec3 Vec3::operator*(float num) const { return { x * num, y * num, z * num }; }	// ˆê‚Â‚Ì’l‚Æ‚ÌŠ|‚¯Z
-Vec3 Vec3::operator/(float num) const { return { x / num, y / num, z / num }; }	// ˆê‚Â‚Ì’l‚Æ‚ÌŠ„‚èZ
+Vec3 Vec3::operator+(float num) const { return { x + num, y + num, z + num }; }	// è³Â€ç¸ºï½¤ç¸ºï½®è›Ÿï½¤ç¸ºï½¨ç¸ºï½®é›œï½³ç¸ºç¤¼ï½®ãƒ»
+Vec3 Vec3::operator-(float num) const { return { x - num, y - num, z - num }; }	// è³Â€ç¸ºï½¤ç¸ºï½®è›Ÿï½¤ç¸ºï½¨ç¸ºï½®è ‘è¼”â€³é‚‚ãƒ»
+Vec3 Vec3::operator*(float num) const { return { x * num, y * num, z * num }; }	// è³Â€ç¸ºï½¤ç¸ºï½®è›Ÿï½¤ç¸ºï½¨ç¸ºï½®è¬—å¸™ï¿ é‚‚ãƒ»
+Vec3 Vec3::operator/(float num) const { return { x / num, y / num, z / num }; }	// è³Â€ç¸ºï½¤ç¸ºï½®è›Ÿï½¤ç¸ºï½¨ç¸ºï½®èœ‘ï½²ç¹§é¡”ï½®ãƒ»
 
 Vec3 Vec3::operator-() const { return { -x,-y,-z }; }
 
-// •¡‡‘ã“ü‰‰Z +=
+// éšãƒ»ç²‹è‰ï½£èœˆï½¥è²çš®ï½®ãƒ»+=
 Vec3& Vec3::operator+=(const Vec3 other)
 {
 	x += other.x;
@@ -80,7 +90,7 @@ Vec3& Vec3::operator+=(const Vec3 other)
 	return *this;
 }
 
-// •¡‡‘ã“ü‰‰Z -=
+// éšãƒ»ç²‹è‰ï½£èœˆï½¥è²çš®ï½®ãƒ»-=
 Vec3& Vec3::operator-=(const Vec3 other)
 {
 	x -= other.x;
@@ -105,7 +115,7 @@ Vec3& Vec3::operator-=(float num)
 	return *this;
 }
 
-// •¡‡‘ã“ü‰‰Z *=
+// éšãƒ»ç²‹è‰ï½£èœˆï½¥è²çš®ï½®ãƒ»*=
 Vec3& Vec3::operator*=(float num)
 {
 	x *= num;
@@ -114,12 +124,12 @@ Vec3& Vec3::operator*=(float num)
 	return *this;
 }
 
-// •¡‡‘ã“ü‰‰Z /=
+// éšãƒ»ç²‹è‰ï½£èœˆï½¥è²çš®ï½®ãƒ»/=
 Vec3& Vec3::operator/=(float num)
 {
-	x += num;
-	y += num;
-	z += num;
+	x /= num;
+	y /= num;
+	z /= num;
 	return *this;
 }
 

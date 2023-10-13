@@ -3,6 +3,7 @@
 #include "LightManager.h"
 #include "Camera.h"
 #include "FbxModel.h"
+#include "ShadowMap.h"
 
 using namespace ConstantBufferData;
 
@@ -10,138 +11,206 @@ bool Object3D::isAllLighting = false;
 
 Object3D::Object3D() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0), offset(0, 0), tiling(1, 1),
-	graphicsPipeline_(GraphicsPipelineManager::GetGraphicsPipeline("Object3D")),
-	texture_(TextureManager::GetTexture("White")),
-	isLighting(false)
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D")),
+	mTexture(TextureManager::GetTexture("White")), mModel(nullptr), mParent(nullptr),
+	mDissolveTex(TextureManager::GetTexture("DissolveTexture")),
+	mDepthTex(TextureManager::GetRenderTexture("ShadowMap")->depthTexture.get()),
+	isLighting(false), mIsWriteShadow(false), mIsWriteDepth(false),
+	mCamera(&Camera::current),
+	isUseDissolve(false), dissolve(0.f), colorPower(1), dissolveColor(Color::red)
 {
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰Šú‰»
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®åˆæœŸåŒ–
 	MaterialInit();
-
-	texture_->isMaterial = true;
 
 	if (isAllLighting == true)
 	{
 		isLighting = true;
 	}
+
+	mWhiteTex = TextureManager::GetTexture("White");
 }
 
 void Object3D::Update(Transform* parent)
 {
-	transform_.pos = pos;
-	transform_.scale = scale;
-	transform_.rot = rot;
-	transform_.Update();
+	// ã‚«ãƒ¡ãƒ©ãŒè¨­å®šã—ã¦ãªã„å ´åˆ
+	if (mCamera == nullptr || mCamera == &Camera::current)
+	{
+		mCamera = &Camera::current;
+	}
+
+	mTransform.pos = pos;
+	mTransform.scale = scale;
+	mTransform.rot = rot;
+	mTransform.Update();
 
 	if (parent != nullptr)
 	{
-		parent_ = parent;
+		mParent = parent;
 
-		Mat4 mat = transform_.GetWorldMat();
-		mat *= parent_->GetWorldMat();
-		transform_.SetWorldMat(mat);
+		Mat4 mat = mTransform.GetWorldMat();
+		mat *= mParent->GetWorldMat();
+		mTransform.SetWorldMat(mat);
+	}
+	else if (mParent != nullptr)
+	{
+		Mat4 mat = mTransform.GetWorldMat();
+		mat *= mParent->GetWorldMat();
+		mTransform.SetWorldMat(mat);
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì“]‘—
+	if (mIsWriteDepth == true)
+	{
+		ShadowMap::GetInstance()->Bind(*this);
+	}
+
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®è»¢é€
 	MaterialTransfer();
 }
 void Object3D::Draw(const BlendMode blendMode)
 {
-	if (texture_ == nullptr || model_ == nullptr) return;
-
-	SetBlendMode(blendMode);
+	if (mTexture == nullptr || mModel == nullptr) return;
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	// GraphicsPipelineæç”»ã‚³ãƒãƒ³ãƒ‰
+	mGraphicsPipeline->DrawCommand(blendMode);
 
-	// VBV‚ÆIBV‚Ìİ’èƒRƒ}ƒ“ƒh
-	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, model_->mesh.vertexBuffer.GetvbViewAddress());
-	renderBase->GetCommandList()->IASetIndexBuffer(model_->mesh.indexBuffer.GetibViewAddress());
+	// VBVã¨IBVã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
+	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mModel->mesh.vertexBuffer.GetvbViewAddress());
+	renderBase->GetCommandList()->IASetIndexBuffer(mModel->mesh.indexBuffer.GetibViewAddress());
 
 	MaterialDrawCommands();
+	LightManager::GetInstance()->DrawCommand(5);
 
-	//renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-	//	5, constantBufferSkin_->constantBuffer->GetGPUVirtualAddress());
-	//LightManager::GetInstance()->Draw();
+	// SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿2ç•ªã«è¨­å®š
+	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
 
-	size_t index = renderBase->GetObject3DRootSignature()->GetConstantBufferNum();
-	// SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ğƒ‹[ƒgƒpƒ‰ƒ[ƒ^2”Ô‚Éİ’è
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable((UINT)index, texture_->GetGpuHandle());
+	if (isUseDissolve == true)
+	{
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+			(uint32_t)startIndex + 1, mDissolveTex->GetBufferResource()->srvHandle.gpu);
+	}
+	else
+	{
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+			(uint32_t)startIndex + 1, mWhiteTex->GetBufferResource()->srvHandle.gpu);
+	}
 
-	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)model_->mesh.indices.size(), 1, 0, 0, 0);
+	if (mIsWriteShadow == true)
+	{
+		CD3DX12_RESOURCE_BARRIER barrier =
+			CD3DX12_RESOURCE_BARRIER::Transition(
+				mDepthTex->GetBufferResource()->buffer.Get(),
+				D3D12_RESOURCE_STATE_DEPTH_WRITE,
+				D3D12_RESOURCE_STATE_GENERIC_READ,
+				D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
+
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+			(uint32_t)startIndex + 2, mDepthTex->GetBufferResource()->srvHandle.gpu);
+	}
+	else
+	{
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+			(uint32_t)startIndex + 2, mWhiteTex->GetBufferResource()->srvHandle.gpu);
+	}
+
+	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModel->mesh.indices.size(), 1, 0, 0, 0);
+	if (mIsWriteShadow == true)
+	{
+		CD3DX12_RESOURCE_BARRIER barrier =
+			CD3DX12_RESOURCE_BARRIER::Transition(
+				mDepthTex->GetBufferResource()->buffer.Get(),
+				D3D12_RESOURCE_STATE_GENERIC_READ,
+				D3D12_RESOURCE_STATE_DEPTH_WRITE,
+				D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
+	}
 }
 
-// --- ƒ}ƒeƒŠƒAƒ‹ŠÖ˜A --------------------------------------------------- //
+// --- ãƒãƒ†ãƒªã‚¢ãƒ«é–¢é€£ --------------------------------------------------- //
 void Object3D::MaterialInit()
 {
-	// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3Ds—ñ
-	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform3D>>();
-	material_.constantBuffers.push_back(std::move(iConstantBuffer));
+	// 3Dè¡Œåˆ—
+	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform3DShadow>>();
+	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ƒ}ƒeƒŠƒAƒ‹ƒJƒ‰[
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã‚«ãƒ©ãƒ¼
 	iConstantBuffer = std::make_unique<ConstantBuffer<CMaterialColor>>();
-	material_.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// F
+	// è‰²
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
-	material_.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ƒXƒLƒjƒ“ƒO
+	// ã‚¹ã‚­ãƒ‹ãƒ³ã‚°
 	iConstantBuffer = std::make_unique<ConstantBuffer<CSkin>>();
-	material_.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// UVî•ñ
+	// UVæƒ…å ±
 	iConstantBuffer = std::make_unique<ConstantBuffer<CUVParameter>>();
-	material_.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// ‰Šú‰»
-	material_.Init();
+	// ãƒ‡ã‚£ã‚¾ãƒ«ãƒ–
+	iConstantBuffer = std::make_unique<ConstantBuffer<CDissolve>>();
+	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+
+	// å½±
+	iConstantBuffer = std::make_unique<ConstantBuffer<CShadowMap>>();
+	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+
+	// åˆæœŸåŒ–
+	mMaterial.Init();
 }
 void Object3D::MaterialTransfer()
 {
-	// ƒ}ƒgƒŠƒbƒNƒX
-	CTransform3D transform3DData =
-	{
-		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
-		transform_.GetWorldMat(),
-		Camera::current.pos
-	};
-	TransferDataToConstantBuffer(material_.constantBuffers[0].get(), transform3DData);
+	Camera lightViewCamera = ShadowMap::GetInstance()->GetLightCamera();
 
-	if (model_ == nullptr)
+	// ãƒãƒˆãƒªãƒƒã‚¯ã‚¹
+	CTransform3DShadow transform3DShadowData =
+	{
+		mCamera->GetViewLookToMat() * mCamera->GetPerspectiveProjectionMat(),
+		lightViewCamera.GetViewLookToMat() * lightViewCamera.GetOrthoGrphicProjectionMat(),
+		mTransform.GetWorldMat(),
+		mCamera->pos,
+		lightViewCamera.pos
+	};
+	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transform3DShadowData);
+
+	if (mModel == nullptr)
 	{
 		return;
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹ƒJƒ‰[
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã‚«ãƒ©ãƒ¼
 	CMaterialColor materialColorData;
 	if (isLighting == true && isAllLighting == true)
 	{
 		materialColorData =
 		{
-			Color(1, 1, 1) - 0.5f,
-			//model_->material.ambient,
-			model_->material.diffuse,
-			model_->material.specular,
+			Color::one - 0.4f,
+			mModel->material.diffuse,
+			mModel->material.specular,
 		};
 	}
 	else
 	{
 		materialColorData = { Color::one, Color::zero, Color::zero };
 	}
-	TransferDataToConstantBuffer(material_.constantBuffers[1].get(), materialColorData);
+	TransferDataToConstantBuffer(mMaterial.constantBuffers[1].get(), materialColorData);
 
-	// Fƒf[ƒ^
+	// è‰²ãƒ‡ãƒ¼ã‚¿
 	CColor colorData = { color / 255 };
-	TransferDataToConstantBuffer(material_.constantBuffers[2].get(), colorData);
+	TransferDataToConstantBuffer(mMaterial.constantBuffers[2].get(), colorData);
 
-	// ƒXƒLƒ“î•ñ
-	if (model_->format == ModelFormat::Fbx)
+	// ã‚¹ã‚­ãƒ³æƒ…å ±
+	if (mModel->format == ModelFormat::Fbx)
 	{
-		auto fbxModel = static_cast<FbxModel*>(model_);
+		auto fbxModel = static_cast<FbxModel*>(mModel);
 		fbxModel->PlayAnimetion();
 
 		CSkin skinData{};
@@ -149,97 +218,80 @@ void Object3D::MaterialTransfer()
 		{
 			skinData.bones[i] = fbxModel->bones[i].currentMat;
 		}
-		TransferDataToConstantBuffer(material_.constantBuffers[3].get(), skinData);
+		TransferDataToConstantBuffer(mMaterial.constantBuffers[3].get(), skinData);
 	}
 
-	// Fƒf[ƒ^
+	// UVãƒ‡ãƒ¼ã‚¿
 	CUVParameter uvData = { offset,tiling };
-	TransferDataToConstantBuffer(material_.constantBuffers[4].get(), uvData);
+	TransferDataToConstantBuffer(mMaterial.constantBuffers[4].get(), uvData);
+
+	// ãƒ‡ã‚£ã‚¾ãƒ«ãƒ–
+	CDissolve dissolveData = { dissolve,colorPower,Vec2(0,0), dissolveColor.To01() };
+	TransferDataToConstantBuffer(mMaterial.constantBuffers[5].get(), dissolveData);
+
+	// ãƒ‡ã‚£ã‚¾ãƒ«ãƒ–
+	CShadowMap shadowMapData = { mIsWriteShadow };
+	TransferDataToConstantBuffer(mMaterial.constantBuffers[6].get(), shadowMapData);
 }
 void Object3D::MaterialDrawCommands()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// CBV‚Ìİ’èƒRƒ}ƒ“ƒh
+	// CBVã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, material_.constantBuffers[0]->constantBuffer->GetGPUVirtualAddress());
+		0, mMaterial.constantBuffers[0]->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, material_.constantBuffers[1]->constantBuffer->GetGPUVirtualAddress());
+		1, mMaterial.constantBuffers[1]->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		2, material_.constantBuffers[2]->constantBuffer->GetGPUVirtualAddress());
+		2, mMaterial.constantBuffers[2]->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		3, material_.constantBuffers[3]->constantBuffer->GetGPUVirtualAddress());
+		3, mMaterial.constantBuffers[3]->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		4, material_.constantBuffers[4]->constantBuffer->GetGPUVirtualAddress());
+		4, mMaterial.constantBuffers[4]->bufferResource->buffer->GetGPUVirtualAddress());
 
+	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+		6, mMaterial.constantBuffers[5]->bufferResource->buffer->GetGPUVirtualAddress());
+
+	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+		7, mMaterial.constantBuffers[6]->bufferResource->buffer->GetGPUVirtualAddress());
 }
 
-// --- ƒZƒbƒ^[ -------------------------------------------------------- //
+// --- ã‚»ãƒƒã‚¿ãƒ¼ -------------------------------------------------------- //
 
-//  ƒuƒŒƒ“ƒh
-void Object3D::SetBlendMode(const BlendMode blendMode)
-{
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
-
-	switch (blendMode)
-	{
-	case BlendMode::Alpha: // ƒ¿ƒuƒŒƒ“ƒh
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetAlphaPipeline());
-		break;
-
-	case BlendMode::Add:	// ‰ÁZƒuƒŒƒ“ƒh
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetAddPipeline());
-		break;
-
-	case BlendMode::Sub:	// Œ¸ZƒuƒŒƒ“ƒh
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetSubPipeline());
-		break;
-
-	case BlendMode::Inv:	// ”½“]
-		renderBase->GetCommandList()->SetPipelineState(graphicsPipeline_->GetInvPipeline());
-		break;
-
-	default:
-		break;
-	}
-}
-
-// ƒ‚ƒfƒ‹
+// ãƒ¢ãƒ‡ãƒ«
 void Object3D::SetModel(Model* model)
 {
-	model_ = model;
-	texture_ = model_->texture;
+	mModel = model;
+	mTexture = mModel->texture;
 
-	// ƒpƒCƒvƒ‰ƒCƒ“•ÏX
-	if (model_->format == ModelFormat::Obj)
+	// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³å¤‰æ›´
+	if (mModel->format == ModelFormat::Obj)
 	{
-		graphicsPipeline_ = GraphicsPipelineManager::GetGraphicsPipeline("Object3D");
+		mGraphicsPipeline = PipelineManager::GetGraphicsPipeline("Object3D");
 	}
-	if (model_->format == ModelFormat::Fbx ||
-		model_->format == ModelFormat::DFbx)
+	if (mModel->format == ModelFormat::Fbx)
 	{
-		//graphicsPipeline_ = GraphicsPipelineManager::GetGraphicsPipeline("Object3D");
-		graphicsPipeline_ = GraphicsPipelineManager::GetGraphicsPipeline("FbxModel");
+		mGraphicsPipeline = PipelineManager::GetGraphicsPipeline("FbxModel");
 	}
 }
 
-// ƒeƒNƒXƒ`ƒƒ[
-void Object3D::SetTexture(Texture* texture) { texture_ = texture; }
+// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼
+void Object3D::SetTexture(Texture* texture) { mTexture = texture; }
 
-// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“
-void Object3D::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline) { graphicsPipeline_ = graphicsPipeline; }
+// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
+void Object3D::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline) { mGraphicsPipeline = graphicsPipeline; }
 
-// ƒAƒjƒ[ƒVƒ‡ƒ“
+// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 void Object3D::SetAnimation(const uint32_t animationIndex, const uint32_t maxFrame, const bool isPlay)
 {
-	// ƒXƒLƒ“î•ñ
-	if (model_->format == ModelFormat::Fbx)
+	// ã‚¹ã‚­ãƒ³æƒ…å ±
+	if (mModel->format == ModelFormat::Fbx)
 	{
-		auto fbxModel = static_cast<FbxModel*>(model_);
+		auto fbxModel = static_cast<FbxModel*>(mModel);
 
 		fbxModel->animation.index = animationIndex;
 		fbxModel->animation.timer.SetLimitTimer(maxFrame);
@@ -247,24 +299,57 @@ void Object3D::SetAnimation(const uint32_t animationIndex, const uint32_t maxFra
 	}
 }
 
-// --- ƒQƒbƒ^[ -------------------------------------------------------- //
+// ã‚«ãƒ¡ãƒ©
+void Object3D::SetCamera(Camera* camera)
+{
+	mCamera = camera;
+}
 
-// ƒ[ƒ‹ƒhÀ•W
+// å½±
+void Object3D::SetisShadow(const bool isWriteShadow, const bool isWriteDepth)
+{
+	mIsWriteShadow = isWriteShadow;
+	mIsWriteDepth = isWriteDepth;
+}
+
+// è¦ª
+void Object3D::SetParent(Transform* parent)
+{
+	mParent = parent;
+}
+
+void Object3D::SetBillboardType(const BillboardType type)
+{
+	mTransform.SetBillboardType(type);
+}
+
+// --- ã‚²ãƒƒã‚¿ãƒ¼ -------------------------------------------------------- //
+
+// ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™
 Vec3 Object3D::GetWorldPos()
 {
-	Vec3 worldPos = Vec3MulMat4(pos, transform_.GetWorldMat(), true);
+	Vec3 worldPos = Vec3MulMat4(pos, mTransform.GetWorldMat(), true);
 	return worldPos;
 }
 
-// ƒ[ƒ‹ƒhƒXƒP[ƒ‹
+// ãƒ¯ãƒ¼ãƒ«ãƒ‰ã‚¹ã‚±ãƒ¼ãƒ«
 Vec3 Object3D::GetWorldScale()
 {
-	Vec3 worldScale = transform_.GetWorldMat().GetScale();
+	Vec3 worldScale = mTransform.GetWorldMat().GetScale();
 	return worldScale;
 }
 
-// ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
-Transform Object3D::GetTransform() { return transform_; }
+// ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ 
+Transform Object3D::GetTransform()
+{
+	return mTransform;
+}
 
-// ƒ‚ƒfƒ‹
-Model* Object3D::GetModel() { return model_; }
+// è¦ª
+Transform* Object3D::GetParent()
+{
+	return mParent;
+}
+
+// ãƒ¢ãƒ‡ãƒ«
+Model* Object3D::GetModel() { return mModel; }

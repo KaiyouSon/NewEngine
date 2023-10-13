@@ -3,35 +3,35 @@
 #include <wrl.h>
 #include <xaudio2.h>
 
-// ƒ`ƒƒƒ“ƒNƒwƒbƒ_
+// ç¹âˆšÎ•ç¹ï½³ç¹§ï½¯ç¹å€¥ãƒ£ç¹Â€
 struct ChunkHeader
 {
-	char id[4];		// ƒ`ƒƒƒ“ƒN–ˆ‚ÌID
-	int32_t size;	// ƒ`ƒƒƒ“ƒNƒTƒCƒY
+	char id[4];		// ç¹âˆšÎ•ç¹ï½³ç¹§ï½¯è±ˆå¼±ãƒ»ID
+	int32_t size;	// ç¹âˆšÎ•ç¹ï½³ç¹§ï½¯ç¹§ï½µç¹§ï½¤ç¹§ï½º
 };
 
-// RIFFƒwƒbƒ_ƒ`ƒƒƒ“ƒN
+// RIFFç¹å€¥ãƒ£ç¹Â€ç¹âˆšÎ•ç¹ï½³ç¹§ï½¯
 struct RiffHeader
 {
 	ChunkHeader chunk;	// "RIFF"
 	char type[4];		// "WAVE"
 };
 
-// FMTƒ`ƒƒƒ“ƒN
+// FMTç¹âˆšÎ•ç¹ï½³ç¹§ï½¯
 struct FormatChunk
 {
 	ChunkHeader chunk;	// "fmt"
-	WAVEFORMATEX fmt;	// ”gŒ`ƒtƒH[ƒ}ƒbƒg
+	WAVEFORMATEX fmt;	// è±•ï½¢è –ï½¢ç¹è¼”ã‹ç¹ï½¼ç¹æ§­ãƒ£ç¹ãƒ»
 };
 
-// ‰¹ºƒf[ƒ^
+// é«»ï½³è¢ï½°ç¹ãƒ»ãƒ»ç¹§ï½¿
 struct WaveData
 {
-	// ”gŒ`ƒtƒH[ƒ}ƒbƒg
+	// è±•ï½¢è –ï½¢ç¹è¼”ã‹ç¹ï½¼ç¹æ§­ãƒ£ç¹ãƒ»
 	WAVEFORMATEX wfex;
-	// ƒoƒbƒtƒ@‚Ìæ“ªƒAƒhƒŒƒX
+	// ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½®èœˆç£¯ï£°ï½­ç¹§ï½¢ç¹å³¨Îç¹§ï½¹
 	BYTE* pBuffer;
-	// ƒoƒbƒtƒ@‚ÌƒTƒCƒY
+	// ç¹èˆŒãƒ£ç¹è¼”ãƒç¸ºï½®ç¹§ï½µç¹§ï½¤ç¹§ï½º
 	uint32_t bufferSize;
 
 	IXAudio2SourceVoice* pSourceVoice;

@@ -1,4 +1,4 @@
-// 3D•ÏŠ·s—ñ
+// 3Då¤‰æ›è¡Œåˆ—
 cbuffer ConstantBufferDataTransform : register(b0)
 {
     matrix viewMat;
@@ -6,18 +6,18 @@ cbuffer ConstantBufferDataTransform : register(b0)
     float3 cameraPos;
 }
 
-// F
+// è‰²
 cbuffer ConstantBufferDataColor : register(b2)
 {
-    float4 color; // F
+    float4 color; // è‰²
 }
 
-// ’¸“_ƒVƒF[ƒ_[‚Ìo—Í\‘¢‘Ì
-// i’¸“_ƒVƒF[ƒ_[‚©‚çƒsƒNƒZƒ‹ƒVƒF[ƒ_[ƒw‚Ì‚â‚èæ‚è‚Ég—p‚·‚éj
+// é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®å‡ºåŠ›æ§‹é€ ä½“
+// ï¼ˆé ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‹ã‚‰ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ˜ã®ã‚„ã‚Šå–ã‚Šã«ä½¿ç”¨ã™ã‚‹ï¼‰
 struct VSOutput
 {
-    float4 svpos : SV_POSITION; // ƒVƒXƒeƒ€—p’¸“_À•W
-    float4 worldPos : POSITION; // ƒ[ƒ‹ƒhÀ•W
-    float3 normal : NORMAL; // –@üƒxƒNƒgƒ‹
-    float2 uv : TEXCOORD; // uv’l
+    float4 svpos : SV_POSITION; // ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+    float4 worldPos : POSITION; // ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™
+    float3 normal : NORMAL; // æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+    float2 uv : TEXCOORD; // uvå€¤
 };

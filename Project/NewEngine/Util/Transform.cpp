@@ -2,58 +2,50 @@
 #include "MathUtil.h"
 
 Transform::Transform() :
-	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
-	worldMat_(Mat4::Identity()), scaleMat_(Mat4::Identity()),
-	rotMat_(Mat4::Identity()), transMat_(Mat4::Identity())
+    pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
+    mWorldMat(Mat4::Identity()), mScaleMat(Mat4::Identity()),
+    mRotMat(Mat4::Identity()), mTransMat(Mat4::Identity())
 {
 }
 
 Transform::Transform(const Vec3 pos, const Vec3 scale, const Vec3 rot) :
-	pos(pos), scale(scale), rot(rot),
-	worldMat_(Mat4::Identity()), scaleMat_(Mat4::Identity()),
-	rotMat_(Mat4::Identity()), transMat_(Mat4::Identity())
+    pos(pos), scale(scale), rot(rot),
+    mWorldMat(Mat4::Identity()), mScaleMat(Mat4::Identity()),
+    mRotMat(Mat4::Identity()), mTransMat(Mat4::Identity())
 {
 }
 
 void Transform::Update()
 {
-	scaleMat_ = ConvertScalingMat(scale);		 // ƒXƒP[ƒŠƒ“ƒO
-	rotMat_ = Mat4::Identity();
-	rotMat_ *= ConvertRotationZAxisMat(rot.z); // z²‰ñ“]
-	rotMat_ *= ConvertRotationXAxisMat(rot.x); // x²‰ñ“]
-	rotMat_ *= ConvertRotationYAxisMat(rot.y); // y²‰ñ“]
-	transMat_ = ConvertTranslationMat(pos);	 // •½sˆÚ“®
+    mScaleMat = ConvertScalingMat(scale); // ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°è¡Œåˆ—
+    mRotMat = Mat4::Identity();
+    mRotMat *= ConvertRotationZAxisMat(rot.z); // Zè»¸å›è»¢è¡Œåˆ—
+    mRotMat *= ConvertRotationXAxisMat(rot.x); // Xè»¸å›è»¢è¡Œåˆ—
+    mRotMat *= ConvertRotationYAxisMat(rot.y); // Yè»¸å›è»¢è¡Œåˆ—
+    mTransMat = ConvertTranslationMat(pos);    // ä½ç½®è¡Œåˆ—
 
-	// ƒrƒ‹ƒ{[ƒhs—ñŒvZ
-	billboard_.CalculateBillboardMat();
+    // ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—ã®è¨ˆç®—
+    mBillboard.CalculateBillboardMat();
 
-	// ƒ[ƒ‹ƒhs—ñŒvZ
-	worldMat_ = Mat4::Identity();
+    // ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®è¨ˆç®—
+    mWorldMat = Mat4::Identity();
 
-	if (billboard_.GetBillboardType() != BillboardType::None)
-	{
-		worldMat_ *= billboard_.GetMat();
-	}
+    if (mBillboard.GetBillboardType() != BillboardType::None)
+    {
+        mWorldMat *= mBillboard.GetMat();
+    }
 
-	worldMat_ *= scaleMat_;
-	worldMat_ *= rotMat_;
-	worldMat_ *= transMat_;
+    mWorldMat *= mScaleMat;
+    mWorldMat *= mRotMat;
+    mWorldMat *= mTransMat;
 }
 
-#pragma region ƒZƒbƒ^[
+// ä»¥ä¸‹ã€è¡Œåˆ—ã®å–å¾—é–¢æ•°
+Mat4 Transform::GetTransMat() { return mTransMat; }    // ä½ç½®è¡Œåˆ—
+Mat4 Transform::GetScaleMat() { return mScaleMat; }    // ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°è¡Œåˆ—
+Mat4 Transform::GetRotMat() { return mRotMat; }        // å›è»¢è¡Œåˆ—
+Mat4 Transform::GetWorldMat() { return mWorldMat; }    // ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
 
-Mat4 Transform::GetTransMat() { return transMat_; }	// ˆÚ“®s—ñ
-Mat4 Transform::GetScaleMat() { return scaleMat_; }	// ƒXƒP[ƒ‹s—ñ
-Mat4 Transform::GetRotMat() { return rotMat_; }		// ‰ñ“]s—ñ
-Mat4 Transform::GetWorldMat() { return worldMat_; }	// ƒ[ƒ‹ƒhs—ñ
-
-#pragma endregion
-
-#pragma region ƒZƒbƒ^[
-
-void Transform::SetWorldMat(Mat4 worldMat) { worldMat_ = worldMat; }
-
-void Transform::SetBillboardType(const BillboardType type) { billboard_.SetBillboardType(type); }
-
-#pragma endregion
-
+// ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¨­å®šé–¢æ•°
+void Transform::SetWorldMat(Mat4 worldMat) { mWorldMat = worldMat; }
+void Transform::SetBillboardType(const BillboardType type) { mBillboard.SetBillboardType(type); }

@@ -60,14 +60,15 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Weapon;$(ProjectDir)Application/SourceCode/UI;$(ProjectDir)Application/SourceCode/Transition;$(ProjectDir)Application/SourceCode/ShadowMap;$(ProjectDir)Application/SourceCode/PostEffect;$(ProjectDir)Application/SourceCode/Motion;$(ProjectDir)Application/SourceCode/Menu;$(ProjectDir)Application/SourceCode/Field;$(ProjectDir)Application/SourceCode/Effect;$(ProjectDir)Application/SourceCode/Character;$(ProjectDir)Application/SourceCode/Camera;$(ProjectDir)Application/SourceCode/Body;$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Debugger;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/Other/Texture;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -77,23 +78,26 @@
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy /y $(SolutionDir)..\Generated\Outputs\assimp\$(Configuration)\assimp-vc143-mtd.dll $(SolutionDir)..\Generated\Outputs\NewEngine\$(Configuration)\</Command>
     </PostBuildEvent>
+    <FxCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)NewEngine\Shader\CircleGaugeSprite;$(ProjectDir)NewEngine\Shader\Util;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Weapon;$(ProjectDir)Application/SourceCode/UI;$(ProjectDir)Application/SourceCode/Transition;$(ProjectDir)Application/SourceCode/ShadowMap;$(ProjectDir)Application/SourceCode/PostEffect;$(ProjectDir)Application/SourceCode/Motion;$(ProjectDir)Application/SourceCode/Menu;$(ProjectDir)Application/SourceCode/Field;$(ProjectDir)Application/SourceCode/Effect;$(ProjectDir)Application/SourceCode/Character;$(ProjectDir)Application/SourceCode/Camera;$(ProjectDir)Application/SourceCode/Body;$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Debugger;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/Other/Texture;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -105,18 +109,101 @@
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy /y $(SolutionDir)..\Generated\Outputs\assimp\$(Configuration)\assimp-vc143-mt.dll $(SolutionDir)..\Generated\Outputs\NewEngine\$(Configuration)\</Command>
     </PostBuildEvent>
+    <FxCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)NewEngine\Shader\CircleGaugeSprite;$(ProjectDir)NewEngine\Shader\Util;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\SourceCode\CreateManager.cpp" />
+    <ClCompile Include="Application\SourceCode\Effect\AirEffect.cpp" />
+    <ClCompile Include="Application\SourceCode\Motion\BackstepMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\PostEffect\Bloom.cpp" />
+    <ClCompile Include="Application\SourceCode\Character\Boss.cpp" />
+    <ClCompile Include="Application\SourceCode\Motion\BossAttack3Motion.cpp" />
+    <ClCompile Include="Application\SourceCode\Motion\BossAttack2Motion.cpp" />
+    <ClCompile Include="Application\SourceCode\Body\BossBody.cpp" />
+    <ClCompile Include="Application\SourceCode\Motion\BossGrabAttackMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\Camera\CameraManager.cpp" />
+    <ClCompile Include="Application\SourceCode\Character\Character.cpp" />
+    <ClCompile Include="Application\SourceCode\Field\Cloud.cpp" />
+    <ClCompile Include="Application\SourceCode\Weapon\Club.cpp" />
+    <ClCompile Include="Application\SourceCode\Field\Coffin.cpp" />
+    <ClCompile Include="Application\SourceCode\CollisionManager.cpp" />
+    <ClCompile Include="Application\SourceCode\Camera\DefaultCamera.cpp" />
+    <ClCompile Include="Application\SourceCode\Motion\DrinkMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\Effect\EffectManager.cpp" />
+    <ClCompile Include="Application\SourceCode\Field\FieldData.cpp" />
+    <ClCompile Include="Application\SourceCode\Field\Field.cpp" />
+    <ClCompile Include="Application\SourceCode\Field\FieldDataManager.cpp" />
+    <ClCompile Include="Application\SourceCode\Field\Gate.cpp" />
+    <ClCompile Include="Application\SourceCode\GaugeParam.cpp" />
+    <ClCompile Include="Application\SourceCode\UI\GaugeUI.cpp" />
+    <ClCompile Include="Application\SourceCode\PostEffect\GaussianBlur.cpp" />
+    <ClCompile Include="Application\SourceCode\PostEffect\Glare.cpp" />
+    <ClCompile Include="Application\SourceCode\Body\HumanoidBody.cpp" />
+    <ClCompile Include="Application\SourceCode\Camera\ICamera.cpp" />
+    <ClCompile Include="Application\SourceCode\Menu\IMenu.cpp" />
+    <ClCompile Include="Application\SourceCode\Motion\IMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\UI\ItemBoxUI.cpp" />
+    <ClCompile Include="Application\SourceCode\UI\ItemBoxUIManager.cpp" />
+    <ClCompile Include="Application\SourceCode\UI\ItemUI.cpp" />
+    <ClCompile Include="Application\SourceCode\Transition\ITransition.cpp" />
+    <ClCompile Include="Application\SourceCode\Motion\IWeaponMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\Effect\LeadEffect.cpp" />
+    <ClCompile Include="Application\SourceCode\Menu\LogoutMenu.cpp" />
+    <ClCompile Include="Application\SourceCode\Menu\MenuManager.cpp" />
+    <ClCompile Include="Application\SourceCode\Motion\MotionManager.cpp" />
+    <ClCompile Include="Application\SourceCode\Motion\MoveMotion.cpp" />
     <ClCompile Include="Application\SourceCode\LoadManager.cpp" />
+    <ClCompile Include="Application\SourceCode\Motion\MalletMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\Camera\MovieCamera.cpp" />
+    <ClCompile Include="Application\SourceCode\MovieEvent.cpp" />
+    <ClCompile Include="Application\SourceCode\UI\NegotiationUI.cpp" />
+    <ClCompile Include="Application\SourceCode\Motion\OpenGateMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\Character\Player.cpp" />
+    <ClCompile Include="Application\SourceCode\Effect\PlayerRecoveryEffect.cpp" />
+    <ClCompile Include="Application\SourceCode\PostEffect\PostEffectManager.cpp" />
+    <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp" />
+    <ClCompile Include="Application\SourceCode\Field\RespawnPoint.cpp" />
+    <ClCompile Include="Application\SourceCode\Effect\RespawnPointEffect.cpp" />
+    <ClCompile Include="Application\SourceCode\UI\RespawnPointUI.cpp" />
+    <ClCompile Include="Application\SourceCode\Transition\RespawnTransition.cpp" />
+    <ClCompile Include="Application\SourceCode\UI\ResultUI.cpp" />
+    <ClCompile Include="Application\SourceCode\Motion\RollMotion.cpp" />
+    <ClCompile Include="Application\SourceCode\Transition\SceneTransition.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\GameScene.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\LogoScene.cpp" />
+    <ClCompile Include="Application\SourceCode\Body\PlayerBody.cpp" />
+    <ClCompile Include="Application\SourceCode\Scene\SceneChanger.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\SceneManager.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\TitleScene.cpp" />
+    <ClCompile Include="Application\SourceCode\Field\MessageSign.cpp" />
+    <ClCompile Include="Application\SourceCode\ShadowMap\ShadowMap.cpp" />
+    <ClCompile Include="Application\SourceCode\ShadowMap\ShadowObj.cpp" />
+    <ClCompile Include="Application\SourceCode\Field\Skydome.cpp" />
+    <ClCompile Include="Application\SourceCode\Weapon\Sword.cpp" />
+    <ClCompile Include="Application\SourceCode\Camera\TargetCamera.cpp" />
+    <ClCompile Include="Application\SourceCode\PostEffect\Task.cpp" />
+    <ClCompile Include="Application\SourceCode\UI\TitleUI.cpp" />
+    <ClCompile Include="Application\SourceCode\UI\MessageUI.cpp" />
+    <ClCompile Include="Application\SourceCode\Transition\TransitionManager.cpp" />
+    <ClCompile Include="Application\SourceCode\Field\Tree.cpp" />
+    <ClCompile Include="Application\SourceCode\UI\UIManager.cpp" />
+    <ClCompile Include="Application\SourceCode\PostEffect\Vignette.cpp" />
+    <ClCompile Include="Application\SourceCode\Field\Wall.cpp" />
+    <ClCompile Include="Application\SourceCode\Weapon\Weapon.cpp" />
+    <ClCompile Include="Application\SourceCode\Effect\BloodSprayEffect.cpp" />
+    <ClCompile Include="Application\SourceCode\Field\Weed.cpp" />
     <ClCompile Include="NewEngine\Collision\Collider.cpp" />
+    <ClCompile Include="NewEngine\Collision\ColliderDrawer.cpp" />
+    <ClCompile Include="NewEngine\Collision\ColliderObject.cpp" />
     <ClCompile Include="NewEngine\Collision\Collision.cpp" />
+    <ClCompile Include="NewEngine\Collision\Grass.cpp" />
+    <ClCompile Include="NewEngine\Collision\ICollider.cpp" />
+    <ClCompile Include="NewEngine\Collision\SkyIsland.cpp" />
+    <ClCompile Include="NewEngine\Debugger\DebugManager.cpp" />
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp" />
     <ClCompile Include="NewEngine\Input\InputManager.cpp" />
     <ClCompile Include="NewEngine\Input\JoypadInput.cpp" />
@@ -125,6 +212,7 @@
     <ClCompile Include="NewEngine\Light\CircleShadow.cpp" />
     <ClCompile Include="NewEngine\Light\LightManager.cpp" />
     <ClCompile Include="NewEngine\main.cpp" />
+    <ClCompile Include="NewEngine\Debugger\MappingWindow.cpp" />
     <ClCompile Include="NewEngine\Math\Mat4.cpp" />
     <ClCompile Include="NewEngine\Math\MathUtil.cpp" />
     <ClCompile Include="NewEngine\Math\Quaternion.cpp" />
@@ -138,30 +226,46 @@
     <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp" />
     <ClCompile Include="NewEngine\Object\2D\RenderTexture.cpp" />
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp" />
+    <ClCompile Include="NewEngine\Object\3D\BoundingBox.cpp" />
+    <ClCompile Include="NewEngine\Object\3D\ParticleMesh.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\Texture\DepthTexture.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\Texture\ITexture.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Camera.cpp" />
+    <ClCompile Include="NewEngine\Object\3D\Emitter.cpp" />
+    <ClCompile Include="NewEngine\Object\3D\GPUEmitter.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Line.cpp" />
+    <ClCompile Include="NewEngine\Object\3D\ParticleParam.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Model\ObjModel.cpp" />
     <ClCompile Include="NewEngine\Object\Other\AssimpLoader.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Billboard.cpp" />
     <ClCompile Include="NewEngine\Object\Other\FbxModel.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Material.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Mesh.cpp" />
-    <ClCompile Include="NewEngine\Object\Other\Model.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\Model\Model.cpp" />
     <ClCompile Include="NewEngine\Object\Other\ModelManager.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Object3D.cpp" />
     <ClCompile Include="NewEngine\Object\3D\OutLineObj.cpp" />
     <ClCompile Include="NewEngine\Object\3D\SilhouetteObj.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\Texture\Texture.cpp" />
     <ClCompile Include="NewEngine\Object\Other\TextureAnimeiton.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\Texture\VolumeTexture.cpp" />
+    <ClCompile Include="NewEngine\Render\Buffer\BufferResource.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\DepthBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp" />
+    <ClCompile Include="NewEngine\Render\Buffer\StructuredBuffer.cpp" />
+    <ClCompile Include="NewEngine\Render\Buffer\UploadBuffer.cpp" />
+    <ClCompile Include="NewEngine\Render\ComputePipeline.cpp" />
+    <ClCompile Include="NewEngine\Render\DescriptorHeap.cpp" />
+    <ClCompile Include="NewEngine\Render\DescriptorHeapManager.cpp" />
     <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp" />
-    <ClCompile Include="NewEngine\Render\GraphicsPipelineManager.cpp" />
+    <ClCompile Include="NewEngine\Render\PipelineManager.cpp" />
     <ClCompile Include="NewEngine\Render\RenderBase.cpp" />
+    <ClCompile Include="NewEngine\Render\RenderTarget.cpp" />
     <ClCompile Include="NewEngine\Render\RenderWindow.cpp" />
     <ClCompile Include="NewEngine\Render\RootSignature.cpp" />
     <ClCompile Include="NewEngine\Render\ScissorRectangle.cpp" />
-    <ClCompile Include="NewEngine\Render\ShaderObject.cpp" />
-    <ClCompile Include="NewEngine\Render\ShaderObjectManager.cpp" />
+    <ClCompile Include="NewEngine\Render\ShaderCompiler.cpp" />
+    <ClCompile Include="NewEngine\Render\ShaderCompilerManager.cpp" />
     <ClCompile Include="NewEngine\Render\Viewport.cpp" />
     <ClCompile Include="NewEngine\Object\Other\TextureManager.cpp" />
     <ClCompile Include="NewEngine\Sound\SoundManager.cpp" />
@@ -172,20 +276,104 @@
     <ClCompile Include="NewEngine\Util\FrameRate.cpp" />
     <ClCompile Include="NewEngine\Util\Random.cpp" />
     <ClCompile Include="NewEngine\Sound\Sound.cpp" />
+    <ClCompile Include="NewEngine\Util\Rect.cpp" />
+    <ClCompile Include="NewEngine\Util\NewEngineSetting.cpp" />
     <ClCompile Include="NewEngine\Util\Timer.cpp" />
     <ClCompile Include="NewEngine\Util\Transform.cpp" />
     <ClCompile Include="NewEngine\Util\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\1.School\3.3年前期\TL1\CG5_Task01\Project\External\nlohmann\json.hpp" />
+    <ClInclude Include="Application\SourceCode\CreateManager.h" />
+    <ClInclude Include="Application\SourceCode\Effect\AirEffect.h" />
+    <ClInclude Include="Application\SourceCode\Motion\BackstepMotion.h" />
+    <ClInclude Include="Application\SourceCode\Effect\BloodSprayEffect.h" />
+    <ClInclude Include="Application\SourceCode\PostEffect\Bloom.h" />
+    <ClInclude Include="Application\SourceCode\Character\Boss.h" />
+    <ClInclude Include="Application\SourceCode\Motion\BossAttack3Motion.h" />
+    <ClInclude Include="Application\SourceCode\Motion\BossAttack2Motion.h" />
+    <ClInclude Include="Application\SourceCode\Body\BossBody.h" />
+    <ClInclude Include="Application\SourceCode\Motion\BossGrabAttackMotion.h" />
+    <ClInclude Include="Application\SourceCode\Camera\CameraManager.h" />
+    <ClInclude Include="Application\SourceCode\Character\Character.h" />
+    <ClInclude Include="Application\SourceCode\Field\Cloud.h" />
+    <ClInclude Include="Application\SourceCode\Weapon\Club.h" />
+    <ClInclude Include="Application\SourceCode\Field\Coffin.h" />
+    <ClInclude Include="Application\SourceCode\CollisionManager.h" />
+    <ClInclude Include="Application\SourceCode\Camera\DefaultCamera.h" />
+    <ClInclude Include="Application\SourceCode\Motion\DrinkMotion.h" />
+    <ClInclude Include="Application\SourceCode\Effect\EffectManager.h" />
+    <ClInclude Include="Application\SourceCode\Field\FieldData.h" />
+    <ClInclude Include="Application\SourceCode\Field\Field.h" />
+    <ClInclude Include="Application\SourceCode\Field\FieldDataManager.h" />
+    <ClInclude Include="Application\SourceCode\Field\Gate.h" />
+    <ClInclude Include="Application\SourceCode\GaugeParam.h" />
+    <ClInclude Include="Application\SourceCode\GaugeType.h" />
+    <ClInclude Include="Application\SourceCode\UI\GaugeUI.h" />
+    <ClInclude Include="Application\SourceCode\PostEffect\GaussianBlur.h" />
+    <ClInclude Include="Application\SourceCode\PostEffect\Glare.h" />
+    <ClInclude Include="Application\SourceCode\Body\HumanoidBody.h" />
+    <ClInclude Include="Application\SourceCode\Camera\ICamera.h" />
+    <ClInclude Include="Application\SourceCode\Menu\IMenu.h" />
+    <ClInclude Include="Application\SourceCode\Motion\IMotion.h" />
+    <ClInclude Include="Application\SourceCode\UI\ItemBoxUI.h" />
+    <ClInclude Include="Application\SourceCode\UI\ItemBoxUIManager.h" />
+    <ClInclude Include="Application\SourceCode\UI\ItemUI.h" />
+    <ClInclude Include="Application\SourceCode\Transition\ITransition.h" />
+    <ClInclude Include="Application\SourceCode\Motion\IWeaponMotion.h" />
+    <ClInclude Include="Application\SourceCode\Effect\LeadEffect.h" />
+    <ClInclude Include="Application\SourceCode\Menu\LogoutMenu.h" />
+    <ClInclude Include="Application\SourceCode\Menu\MenuManager.h" />
+    <ClInclude Include="Application\SourceCode\Motion\MotionManager.h" />
+    <ClInclude Include="Application\SourceCode\Motion\MoveMotion.h" />
     <ClInclude Include="Application\SourceCode\LoadManager.h" />
+    <ClInclude Include="Application\SourceCode\Motion\MalletMotion.h" />
+    <ClInclude Include="Application\SourceCode\Camera\MovieCamera.h" />
+    <ClInclude Include="Application\SourceCode\MovieEvent.h" />
+    <ClInclude Include="Application\SourceCode\UI\NegotiationUI.h" />
+    <ClInclude Include="Application\SourceCode\Motion\OpenGateMotion.h" />
+    <ClInclude Include="Application\SourceCode\Character\Player.h" />
+    <ClInclude Include="Application\SourceCode\Body\PlayerBody.h" />
+    <ClInclude Include="Application\SourceCode\Effect\PlayerRecoveryEffect.h" />
+    <ClInclude Include="Application\SourceCode\PostEffect\PostEffectManager.h" />
+    <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h" />
+    <ClInclude Include="Application\SourceCode\Field\RespawnPoint.h" />
+    <ClInclude Include="Application\SourceCode\Effect\RespawnPointEffect.h" />
+    <ClInclude Include="Application\SourceCode\UI\RespawnPointUI.h" />
+    <ClInclude Include="Application\SourceCode\Transition\RespawnTransition.h" />
+    <ClInclude Include="Application\SourceCode\UI\ResultUI.h" />
+    <ClInclude Include="Application\SourceCode\Motion\RollMotion.h" />
+    <ClInclude Include="Application\SourceCode\Transition\SceneTransition.h" />
     <ClInclude Include="Application\SourceCode\Scene\GameScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\IScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\LogoScene.h" />
+    <ClInclude Include="Application\SourceCode\Scene\SceneChanger.h" />
     <ClInclude Include="Application\SourceCode\Scene\SceneManager.h" />
     <ClInclude Include="Application\SourceCode\Scene\TitleScene.h" />
-    <ClInclude Include="External\nlohmann\json.hpp" />
+    <ClInclude Include="Application\SourceCode\Field\MessageSign.h" />
+    <ClInclude Include="Application\SourceCode\ShadowMap\ShadowMap.h" />
+    <ClInclude Include="Application\SourceCode\ShadowMap\ShadowObj.h" />
+    <ClInclude Include="Application\SourceCode\Field\Skydome.h" />
+    <ClInclude Include="Application\SourceCode\Weapon\Sword.h" />
+    <ClInclude Include="Application\SourceCode\Camera\TargetCamera.h" />
+    <ClInclude Include="Application\SourceCode\PostEffect\Task.h" />
+    <ClInclude Include="Application\SourceCode\UI\TitleUI.h" />
+    <ClInclude Include="Application\SourceCode\UI\MessageUI.h" />
+    <ClInclude Include="Application\SourceCode\Transition\TransitionManager.h" />
+    <ClInclude Include="Application\SourceCode\Field\Tree.h" />
+    <ClInclude Include="Application\SourceCode\UI\UIManager.h" />
+    <ClInclude Include="Application\SourceCode\PostEffect\Vignette.h" />
+    <ClInclude Include="Application\SourceCode\Field\Wall.h" />
+    <ClInclude Include="Application\SourceCode\Weapon\Weapon.h" />
+    <ClInclude Include="Application\SourceCode\Field\Weed.h" />
     <ClInclude Include="NewEngine\Collision\Collider.h" />
+    <ClInclude Include="NewEngine\Collision\ColliderDrawer.h" />
+    <ClInclude Include="NewEngine\Collision\ColliderObject.h" />
     <ClInclude Include="NewEngine\Collision\Collision.h" />
+    <ClInclude Include="NewEngine\Collision\Grass.h" />
+    <ClInclude Include="NewEngine\Collision\ICollider.h" />
+    <ClInclude Include="NewEngine\Collision\SkyIsland.h" />
+    <ClInclude Include="NewEngine\Debugger\DebugManager.h" />
     <ClInclude Include="NewEngine\Gui\GuiManager.h" />
     <ClInclude Include="NewEngine\Input\InputManager.h" />
     <ClInclude Include="NewEngine\Input\JoypadInput.h" />
@@ -193,6 +381,7 @@
     <ClInclude Include="NewEngine\Input\MouseInput.h" />
     <ClInclude Include="NewEngine\Light\CircleShadow.h" />
     <ClInclude Include="NewEngine\Light\LightManager.h" />
+    <ClInclude Include="NewEngine\Debugger\MappingWindow.h" />
     <ClInclude Include="NewEngine\Math\Mat4.h" />
     <ClInclude Include="NewEngine\Math\MathUtil.h" />
     <ClInclude Include="NewEngine\Math\Quaternion.h" />
@@ -203,36 +392,52 @@
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h" />
     <ClInclude Include="NewEngine\Object\2D\RenderTexture.h" />
     <ClInclude Include="NewEngine\Object\2D\Sprite.h" />
+    <ClInclude Include="NewEngine\Object\3D\BoundingBox.h" />
+    <ClInclude Include="NewEngine\Object\3D\ParticleMesh.h" />
+    <ClInclude Include="NewEngine\Object\Other\Texture\DepthTexture.h" />
+    <ClInclude Include="NewEngine\Object\Other\Texture\ITexture.h" />
+    <ClInclude Include="NewEngine\Object\3D\Emitter.h" />
+    <ClInclude Include="NewEngine\Object\3D\GPUEmitter.h" />
+    <ClInclude Include="NewEngine\Object\3D\ParticleParam.h" />
     <ClInclude Include="NewEngine\Object\Other\Model\ObjModel.h" />
     <ClInclude Include="NewEngine\Object\Other\AssimpLoader.h" />
     <ClInclude Include="NewEngine\Object\Other\Billboard.h" />
     <ClInclude Include="NewEngine\Object\Other\FbxModel.h" />
     <ClInclude Include="NewEngine\Object\Other\MaterialColor.h" />
     <ClInclude Include="NewEngine\Object\Other\TextureAnimeiton.h" />
-    <ClInclude Include="NewEngine\Object\Other\Texture.h" />
+    <ClInclude Include="NewEngine\Object\Other\Texture\Texture.h" />
     <ClInclude Include="NewEngine\Object\3D\Camera.h" />
     <ClInclude Include="NewEngine\Object\3D\Line.h" />
     <ClInclude Include="NewEngine\Object\Other\Material.h" />
     <ClInclude Include="NewEngine\Object\Other\Mesh.h" />
-    <ClInclude Include="NewEngine\Object\Other\Model.h" />
+    <ClInclude Include="NewEngine\Object\Other\Model\Model.h" />
     <ClInclude Include="NewEngine\Object\Other\ModelManager.h" />
     <ClInclude Include="NewEngine\Object\3D\Object3D.h" />
     <ClInclude Include="NewEngine\Object\3D\OutLineObj.h" />
     <ClInclude Include="NewEngine\Object\3D\SilhouetteObj.h" />
+    <ClInclude Include="NewEngine\Object\Other\Texture\VolumeTexture.h" />
+    <ClInclude Include="NewEngine\Render\Buffer\BufferResource.h" />
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBufferData.h" />
     <ClInclude Include="NewEngine\Render\Buffer\DepthBuffer.h" />
+    <ClInclude Include="NewEngine\Render\Buffer\IConstantBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\IndexBuffer.h" />
+    <ClInclude Include="NewEngine\Render\Buffer\StructuredBuffer.h" />
+    <ClInclude Include="NewEngine\Render\Buffer\StructuredBufferData.h" />
+    <ClInclude Include="NewEngine\Render\Buffer\UploadBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\VertexBuffer.h" />
+    <ClInclude Include="NewEngine\Render\ComputePipeline.h" />
+    <ClInclude Include="NewEngine\Render\DescriptorHeap.h" />
+    <ClInclude Include="NewEngine\Render\DescriptorHeapManager.h" />
     <ClInclude Include="NewEngine\Render\GraphicsPipeline.h" />
-    <ClInclude Include="NewEngine\Render\GraphicsPipelineManager.h" />
+    <ClInclude Include="NewEngine\Render\PipelineManager.h" />
     <ClInclude Include="NewEngine\Render\RenderBase.h" />
     <ClInclude Include="NewEngine\Render\RenderTarget.h" />
     <ClInclude Include="NewEngine\Render\RenderWindow.h" />
     <ClInclude Include="NewEngine\Render\RootSignature.h" />
     <ClInclude Include="NewEngine\Render\ScissorRectangle.h" />
-    <ClInclude Include="NewEngine\Render\ShaderObject.h" />
-    <ClInclude Include="NewEngine\Render\ShaderObjectManager.h" />
+    <ClInclude Include="NewEngine\Render\ShaderCompiler.h" />
+    <ClInclude Include="NewEngine\Render\ShaderCompilerManager.h" />
     <ClInclude Include="NewEngine\Render\VertexBufferData.h" />
     <ClInclude Include="NewEngine\Render\Viewport.h" />
     <ClInclude Include="NewEngine\Object\Other\TextureManager.h" />
@@ -242,38 +447,56 @@
     <ClInclude Include="NewEngine\Util\Color.h" />
     <ClInclude Include="NewEngine\Util\Easing.h" />
     <ClInclude Include="NewEngine\Light\Fog.h" />
-    <ClInclude Include="NewEngine\Util\Enum.h" />
+    <ClInclude Include="NewEngine\Util\NewEngineEnum.h" />
     <ClInclude Include="NewEngine\Util\FrameRate.h" />
     <ClInclude Include="NewEngine\Util\Random.h" />
+    <ClInclude Include="NewEngine\Util\Rect.h" />
+    <ClInclude Include="NewEngine\Util\NewEngineSetting.h" />
     <ClInclude Include="NewEngine\Util\Singleton.h" />
     <ClInclude Include="NewEngine\Sound\Sound.h" />
     <ClInclude Include="NewEngine\Util\Timer.h" />
     <ClInclude Include="NewEngine\Util\Transform.h" />
     <ClInclude Include="NewEngine\Util\Util.h" />
+    <ClInclude Include="NewEngine\NewEngineDefine.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="Application\Shader\Bloom.hlsli" />
     <None Include="Application\Shader\BGaussainBlur.hlsli" />
+    <None Include="Application\Shader\Branch.hlsli" />
+    <None Include="Application\Shader\Cloud.hlsli" />
+    <None Include="Application\Shader\Composite.hlsli" />
     <None Include="Application\Shader\DOF.hlsli" />
     <None Include="Application\Shader\DotFilter.hlsli" />
     <None Include="Application\Shader\Glare.hlsli" />
     <None Include="Application\Shader\GLineBlur.hlsli" />
+    <None Include="Application\Shader\Grass.hlsli" />
     <None Include="Application\Shader\HighLumi.hlsli" />
     <None Include="Application\Shader\GaussianBlur.hlsli" />
     <None Include="Application\Shader\RadialBlur.hlsli" />
+    <None Include="Application\Shader\RespawnTransition.hlsli" />
+    <None Include="Application\Shader\Ripple.hlsli" />
+    <None Include="Application\Shader\ShadowMap.hlsli" />
+    <None Include="Application\Shader\ShadowObj.hlsli" />
+    <None Include="Application\Shader\Skydome.hlsli" />
     <None Include="Application\Shader\Vignette.hlsli" />
     <None Include="NewEngine\Shader\Blur.hlsli" />
-    <None Include="NewEngine\Shader\CircleGaugeSprite.hlsli" />
+    <None Include="NewEngine\Shader\BoundingBox\BoundingBox.hlsli" />
+    <None Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSprite.hlsli" />
+    <None Include="NewEngine\Shader\ColliderObject.hlsli" />
+    <None Include="NewEngine\Shader\Emitter.hlsli" />
     <None Include="NewEngine\Shader\FbxModel.hlsli" />
     <None Include="NewEngine\Shader\Lighting.hlsli" />
     <None Include="NewEngine\Shader\Line.hlsli" />
     <None Include="NewEngine\Shader\Object3D.hlsli" />
     <None Include="NewEngine\Shader\OutLine.hlsli" />
+    <None Include="NewEngine\Shader\ParticleMesh.hlsli" />
     <None Include="NewEngine\Shader\RenderTexture.hlsli" />
     <None Include="NewEngine\Shader\ShaderIO.hlsli" />
     <None Include="NewEngine\Shader\Silhouette.hlsli" />
     <None Include="NewEngine\Shader\Sprite.hlsli" />
-    <None Include="NewEngine\Shader\ToonRender.hlsli" />
+    <None Include="NewEngine\Shader\ToonRendering.hlsli" />
+    <None Include="NewEngine\Shader\Util\Util.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Application\Shader\BloomPS.hlsl">
@@ -295,6 +518,34 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\BranchPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\BranchVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\CloudPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\CloudVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\CompositePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\CompositeVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Application\Shader\DOFPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -340,6 +591,20 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="Application\Shader\GrassGS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\GrassPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\GrassVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="Application\Shader\HighLumiPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -376,6 +641,76 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="Application\Shader\RespawnPointEffectCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RespawnPointEffectVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RespawnTransitionPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RespawnTransitionVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RhombusPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RhombusVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RipplePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RippleVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\ShadowMapPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\ShadowMapVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\ShadowObjPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\ShadowObjVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\SkydomePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\SkydomeVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="Application\Shader\VignettePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -384,17 +719,57 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\CircleGaugeSpritePS.hlsl">
+    <FxCompile Include="NewEngine\Shader\BoundingBox\BoundingBoxPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\BoundingBox\BoundingBoxVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSpritePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\CircleGaugeSpriteVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSpriteVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ColliderObjectPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ColliderObjectVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\EmitterCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\EmitterGS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\EmitterPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\EmitterVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\FbxModelPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -403,6 +778,12 @@
     <FxCompile Include="NewEngine\Shader\FbxModelVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\GPUEmitterVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\LinePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -426,6 +807,30 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ParticleMeshCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ParticleMeshGS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ParticleMeshPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ParticleMeshVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\SilhouettePS.hlsl">
@@ -474,13 +879,13 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ToonRenderPS.hlsl">
+    <FxCompile Include="NewEngine\Shader\ToonRenderingPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ToonRenderVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\ToonRenderingVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>

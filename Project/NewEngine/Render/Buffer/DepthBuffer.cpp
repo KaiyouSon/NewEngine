@@ -3,36 +3,54 @@
 #include "RenderWindow.h"
 #include <cassert>
 
-void DepthBuffer::Create()
+void DepthBuffer::Create(const Vec2 size)
 {
-	// ÉäÉ\Å[ÉXÇÃê›íË
-	D3D12_RESOURCE_DESC depthResourceDesc{};
-	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	depthResourceDesc.Width = (UINT)RenderWindow::GetInstance()->GetWindowSize().x;		// ïù
-	depthResourceDesc.Height = (UINT)RenderWindow::GetInstance()->GetWindowSize().y; // çÇÇ≥
-	depthResourceDesc.DepthOrArraySize = 1;
-	depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;	// ê[ìxílÉfÉtÉHÉãÉg
-	depthResourceDesc.SampleDesc.Count = 1;
-	depthResourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+	mBufferResource = std::make_unique<BufferResource>();
 
-	// ê[ìxópÉqÅ[ÉvÉvÉçÉpÉeÉB
-	D3D12_HEAP_PROPERTIES depthHeapProp{};
-	depthHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
-	// ê[ìxílÇÃÉNÉäÉAê›íË
-	D3D12_CLEAR_VALUE depthClearValue{};
-	depthClearValue.DepthStencil.Depth = 1.0f;	// ê[ìxíl1.0f(ç≈ëÂíl)Ç≈ÉNÉäÉA
-	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	// ê[ìxílÉtÉHÅ[É}ÉbÉg
+	HRESULT result;
 
-	// ÉäÉ\Å[ÉXÇÃê∂ê¨
-	result_ = RenderBase::GetInstance()->GetDevice()->
+	Vec2 resourceSize = (size.x <= -1.f) ?
+		RenderWindow::GetInstance()->GetWindowSize() : size;
+
+	// „É™„ÇΩ„Éº„ÇπË®≠ÂÆö
+	D3D12_RESOURCE_DESC depthResourceDesc =
+		CD3DX12_RESOURCE_DESC::Tex2D(
+			DXGI_FORMAT_D32_FLOAT,
+			(uint32_t)resourceSize.x,
+			(uint32_t)resourceSize.y,
+			1,
+			1,
+			1,
+			0,
+			D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
+
+	// „Éí„Éº„ÉóË®≠ÂÆö
+	D3D12_HEAP_PROPERTIES depthHeapProp =
+		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+
+	// „ÇØ„É™„Ç¢
+	D3D12_CLEAR_VALUE clearValue =
+		CD3DX12_CLEAR_VALUE(DXGI_FORMAT_D32_FLOAT, 1.f, 0);
+
+	// „Éê„ÉÉ„Éï„Ç°ÁîüÊàê
+	result = RenderBase::GetInstance()->GetDevice()->
 		CreateCommittedResource(
 			&depthHeapProp,
 			D3D12_HEAP_FLAG_NONE,
 			&depthResourceDesc,
-			D3D12_RESOURCE_STATE_DEPTH_WRITE, // ê[ìxílèëÇ´çûÇ›Ç…égóp
-			&depthClearValue,
-			IID_PPV_ARGS(&buffer_));
-	assert(SUCCEEDED(result_));
+			D3D12_RESOURCE_STATE_DEPTH_WRITE, // Êõ∏„ÅçËæº„ÅøÂèØËÉΩ
+			&clearValue,
+			IID_PPV_ARGS(&mBufferResource->buffer));
+	assert(SUCCEEDED(result));
 
-	RenderBase::GetInstance()->CreateDSV(*this);
+	mBufferResource->bufferState = D3D12_RESOURCE_STATE_DEPTH_WRITE;
+
+	// ÂêçÂâçË®≠ÂÆö
+	mBufferResource->buffer->SetName(L"DepthBuffer");
+}
+
+// ÁπßÔΩ≤Áπù„Éª„Å°ÁπùÔΩº
+BufferResource* DepthBuffer::GetBufferResource()
+{
+	return mBufferResource.get();
 }

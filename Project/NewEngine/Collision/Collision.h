@@ -1,58 +1,77 @@
 #pragma once
 #include "Collider.h"
 
-class Collision
+namespace Collision
 {
-public:
-	// �~�Ɖ~
-	static bool CircleHitCircle(
+	// 蜀・→蜀・
+	bool CircleHitCircle(
 		const CircleCollider& circle1,
 		const CircleCollider& circle2);
 
-	// ���Ƌ�
-	static bool SphereHitSphere(
+	// 逅・→逅・
+	bool SphereHitSphere(
 		const SphereCollider& sphere1,
 		const SphereCollider& sphere2);
 
-	// �L���[�u�ƃL���[�u
-	static bool CubeHitCube(
+	// 繧ｭ繝･繝ｼ繝悶→繧ｭ繝･繝ｼ繝・
+	bool CubeHitCube(
 		const CubeCollider& cube1,
 		const CubeCollider& cube2);
 
-	// ���ƕ���
-	static bool SphereHitPlane(
+	// 繧ｭ繝･繝ｼ繝悶→繧ｫ繝励そ繝ｫ
+	bool CubeHitCapsule(
+		CubeCollider& cube,
+		CapsuleCollider& capsule);
+
+	bool CubeHitCapsule(
+		const CubeCollider& cube,
+		const CapsuleCollider& capsule,
+		Vec3& hitPoint);
+
+	// 逅・→蟷ｳ髱｢
+	bool SphereHitPlane(
 		const SphereCollider& sphere,
 		const PlaneCollider& plane,
-		Vec3* hitPos = nullptr);
+		Vec3* hitPoint = nullptr);
 
-	// ���ƎO�p�`
-	static bool SphereHitTriangle(
+	// 逅・→荳芽ｧ貞ｽ｢
+	bool SphereHitTriangle(
 		const SphereCollider& sphere,
 		const TriangleCollider& triangle,
-		Vec3* hitPos = nullptr);
+		Vec3* hitPoint = nullptr);
 
-	// ���ƃJ�v�Z��
-	static bool SphereHitCapsule(
+	// 逅・→繧ｫ繝励そ繝ｫ
+	bool SphereHitCapsule(
 		const SphereCollider& sphere,
 		const CapsuleCollider& capsule);
 
-	// ���C�ƕ���
-	static bool RayHitPlane(
+	bool SphereHitCapsule(
+		const SphereCollider& sphere,
+		const CapsuleCollider& capsule,
+		Vec3& hitPoint);
+
+	// 繝ｬ繧､縺ｨ蟷ｳ髱｢
+	bool RayHitPlane(
 		const RayCollider& ray,
 		const PlaneCollider& plane);
 
-	// ���C�Ƌ�
-	static bool RayHitSphere(
+	// 繝ｬ繧､縺ｨ逅・
+	bool RayHitSphere(
 		const RayCollider& ray,
 		const SphereCollider& sphere);
 
-	// �J�v�Z���ƃJ�v�Z��
-	static bool CapsuleHitCapsule(
+	// 繧ｫ繝励そ繝ｫ縺ｨ繧ｫ繝励そ繝ｫ
+	bool CapsuleHitCapsule(
 		const CapsuleCollider& capsule1,
 		const CapsuleCollider& capsule2);
 
-	// �_�ƎO�p�`�̍ŋߐړ_
-	static Vec3 ClosestPointOfPointAndTriangle(
+	bool CapsuleHitCapsule(
+		const CapsuleCollider& capsule1,
+		const CapsuleCollider& capsule2,
+		Vec3& hitPoint);
+
+	// 轤ｹ縺ｨ荳芽ｧ貞ｽ｢縺ｮ譛霑第磁轤ｹ
+	Vec3 ClosestPointOfPointAndTriangle(
 		const Vec3 point,
 		const TriangleCollider& triangle);
 

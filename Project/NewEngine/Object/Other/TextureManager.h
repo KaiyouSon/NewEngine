@@ -1,70 +1,87 @@
 #pragma once
 #include "Texture.h"
+#include "DepthTexture.h"
+#include "VolumeTexture.h"
 #include "TextureAnimeiton.h"
 #include "RenderTexture.h"
+#include "Singleton.h"
 #include <DirectXTex.h>
 #include <mutex>
 #include <unordered_map>
 
-class TextureManager
+template<typename T> class Singleton;
+
+// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
+class TextureManager : public Singleton<TextureManager>
 {
 private:
+	std::unordered_map<std::string, std::unique_ptr<ITexture>> mTextureMap;				// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®ç¹æ§­ãƒ£ç¹ãƒ»
+	std::unordered_map<std::string, std::unique_ptr<Texture>> mMaterialTextureMap;		// ç¹æ§­ãƒ¦ç¹ï½ªç¹§ï½¢ç¹ï½«ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®ç¹æ§­ãƒ£ç¹ãƒ»
+	std::unordered_map<std::string, std::unique_ptr<RenderTexture>> mRenderTextureMap;	// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®ç¹æ§­ãƒ£ç¹ãƒ»
 
-	static std::unordered_map<std::string, std::unique_ptr<Texture>> textureMap_;					// ƒeƒNƒXƒ`ƒƒ[‚Ìƒ}ƒbƒv
-	static std::unordered_map<std::string, std::unique_ptr<RenderTexture>> renderTextureMap_;		// ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ[‚Ìƒ}ƒbƒv
+	std::vector<bool> mCheckSRVIndex; // indexé€¡ï½ªç¸ºï½®SRVç¸ºç¢å¹•ç¸ºãƒ»â€»ç¹§ä¹Â°ç¸ºï½©ç¸ºãƒ»Â°ç¹§åµãƒ¡ç¹§ï½§ç¹ãƒ»ã‘ç¸ºå¶ï½‹ç¸ºæº˜ï½
 
-	static std::mutex mtx_;	// ”r‘¼§Œä
+	std::mutex mMutex;	// è¬—å‰ƒï½»é–€å®›è •ï½¡
 
-public:	// ƒeƒNƒXƒ`ƒƒ[ŠÖ˜A
+private:
+	void Init();
 
-	static UINT srvIncrementIndex_;	// srvì¬‚ÉƒCƒ“ƒNƒŠƒƒ“ƒg—p
-	static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvDescHeap_;	// srv—pƒfƒBƒXƒNƒŠƒvƒ^ƒq[ƒv
+public:	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼é–¢é€£
+
+	// 1x1ã®è‰²ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’ç”Ÿæˆã™ã‚‹é–¢æ•°
+	static void CreateTexture(const Color color, const std::string tag);
+
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹é–¢æ•°
+	static void LoadTexture(const std::string filePath, const std::string tag);
+
+	// mtlãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹é–¢æ•°
+	static Texture* LoadMaterialTexture(const std::string filePath, const std::string tag);
+
+	// æ·±åº¦ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç”Ÿæˆ
+	static void CreateDepthTexture(DepthBuffer* depthBuffer, const std::string tag);
+
+	// ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç”Ÿæˆ
+	static void CreateVolumeTexture(const std::vector<std::string>& filePathes, const Vec3 size, const std::string tag);
+
+	// ã‚¢ãƒ³ãƒ­ãƒ¼ãƒ‰
+	static void UnLoadTexture(const std::string tag);
+
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+	static Texture* GetTexture(const std::string tag);
+
+	// æ·±åº¦ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+	static DepthTexture* GetDepthTexture(const std::string tag);
+
+	// ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+	static VolumeTexture* GetVolumeTexture(const std::string tag);
 
 
-	// ƒeƒNƒXƒ`ƒƒ[‚Ìæ“¾
-	static Texture* GetTexture(std::string textureTag);
+public: // ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼é«¢ï½¢é¨¾ï½£
 
-	// F‚ğw’è‚µ‚ÄƒeƒNƒXƒ`ƒƒ‚ğ¶¬‚·‚é
-	static Texture CreateTexture(Color color);
+	// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®èœ¿é–€ï½¾ãƒ»
+	static RenderTexture* GetRenderTexture(const std::string tag);
 
-	// F‚ğw’è‚µ‚ÄƒeƒNƒXƒ`ƒƒ‚ğ¶¬‚µƒ}ƒbƒv‚ÉŠi”[‚·‚é
-	static Texture* CreateTexture(Color color, std::string textureTag);
+	// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¹§å ¤å‡½è¬ŒèˆŒï¼ ç¹æ§­ãƒ£ç¹åŠ±â†“è­¬ï½¼é‚é˜ªâ˜†ç¹§ãƒ»
+	static RenderTexture* CreateRenderTexture(const Vec2 size, const uint32_t num, const std::string tag);
 
-	// ƒtƒ@ƒCƒ‹ƒpƒX‚ğw’è‚µ‚ÄƒeƒNƒXƒ`ƒƒ‚ğ¶¬‚·‚é
-	static Texture LoadTexture(std::string filePath);
-
-	// ƒtƒ@ƒCƒ‹ƒpƒX‚ğw’è‚µ‚ÄƒeƒNƒXƒ`ƒƒ‚ğ¶¬‚µƒ}ƒbƒv‚ÌŠi”[‚·‚é
-	static Texture* LoadTexture(std::string filePath, std::string textureTag);
-
-	// objƒtƒ@ƒCƒ‹‚©‚çƒ[ƒh‚µ‚½ƒeƒNƒXƒ`ƒƒ[‚ğƒ[ƒh‚·‚éê—pŠÖ”
-	static Texture* LoadMaterialTexture(std::string filePath, std::string textureTag);
-
-public: // ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ[ŠÖ˜A
-
-	// ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ[‚Ìæ“¾
-	static RenderTexture* GetRenderTexture(std::string textureTag);
-
-	// ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ[‚ğ¶¬‚µƒ}ƒbƒv‚ÉŠi”[‚·‚é
-	static RenderTexture* CreateRenderTexture(Vec2 size, uint32_t num, std::string textureTag);
+	// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®ç¹§ï½¢ç¹ï½³ç¹ï½­ç¹ï½¼ç¹è›¾æœªè¬¨ï½°
+	static void UnLoadRenderTexture(const std::string tag);
 
 public:
-	// [“xƒeƒNƒXƒ`ƒƒ[‚ğ¶¬
-	static Texture* CreateDepthTexture(Vec2 size);
+	// ç¹æ§­ãƒ£ç¹ãƒ»
+	static std::unordered_map<std::string, std::unique_ptr<ITexture>>* GetTextureMap();
+	static std::unordered_map<std::string, std::unique_ptr<Texture>>* GetMaterialTextureMap();
+	static std::unordered_map<std::string, std::unique_ptr<RenderTexture>>* GetRenderTextureMap();
 
-public:	// ‚»‚Ì‘¼‚Ìˆ—
-	// ƒfƒBƒXƒNƒŠƒvƒ^[ƒq[ƒv‚ğì¬‚·‚éˆ—
-	static void CreateDescriptorHeap();
+public:
 
-	// SRV‚ğì¬‚·‚éˆ—
-	static void CreateSRV(Texture& texture, ID3D12Resource* buffer);
-	static void CreateSRV(RenderTexture& texture, ID3D12Resource* buffer, uint32_t index);
 
-	// ƒeƒNƒXƒ`ƒƒ[ƒ[ƒhŒã‚ÌƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÌÀs
+public:	// ç¸ºæ˜´ãƒ»è‰æ‚¶ãƒ»èœƒï½¦é€…ãƒ»
+	// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¹ï½­ç¹ï½¼ç¹ç‰™ï½¾å¾Œãƒ»ç¹§ï½³ç¹æ§­Î¦ç¹å³¨Îœç¹§ï½¹ç¹åŒ»ãƒ»è³æº¯ï½¡ãƒ»
 	static void ExcuteComandList();
 
-public:
-	// SRV—p‚ÌƒfƒBƒXƒNƒŠƒvƒ^[ƒq[ƒv‚ğæ“¾
-	static inline ID3D12DescriptorHeap* GetSrvDescHeap() { return srvDescHeap_.Get(); }
-
+private:
+	// ç¹§ï½·ç¹ï½³ç¹§ï½°ç¹ï½«ç¹åŒ»Î¦
+	friend Singleton<TextureManager>;
+	TextureManager();
 };
-

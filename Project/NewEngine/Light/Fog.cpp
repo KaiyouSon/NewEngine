@@ -22,7 +22,7 @@ void Fog::Draw()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Æƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚ÌCBV‚ÌÝ’èƒRƒ}ƒ“ƒh
+	// ãƒžãƒ†ãƒªã‚¢ãƒ«ã¨ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã®CBVã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		4, constantBufferFog_->constantBuffer->GetGPUVirtualAddress());
+		4, constantBufferFog_->bufferResource->buffer->GetGPUVirtualAddress());
 }

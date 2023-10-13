@@ -1,220 +1,93 @@
 #include "TextureManager.h"
 #include "RenderBase.h"
 #include <DirectXTex.h>
+
+DirectX12WarningDisableBegin
 #include <d3dx12.h>
+DirectX12WarningDisableEnd
+
 using namespace DirectX;
 
-#pragma region Ã“Iƒƒ“ƒo[•Ï”
-
-// srvì¬‚ÉƒCƒ“ƒNƒŠƒƒ“ƒg—p
-UINT TextureManager::srvIncrementIndex_ = 1;
-
-// srv—pƒfƒBƒXƒNƒŠƒvƒ^ƒq[ƒv
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> TextureManager::srvDescHeap_;
-
-// ƒeƒNƒXƒ`ƒƒ[‚Ìƒ}ƒbƒv
-std::unordered_map<std::string, std::unique_ptr<Texture>> TextureManager::textureMap_;
-
-// ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ[‚Ìƒ}ƒbƒv
-std::unordered_map<std::string, std::unique_ptr<RenderTexture>> TextureManager::renderTextureMap_;
-
-// ”r‘¼§Œä
-std::mutex TextureManager::mtx_ = std::mutex{};
-
-#pragma endregion
-
-#pragma region ƒeƒNƒXƒ`ƒƒ[ŠÖ˜A
-
-// ƒeƒNƒXƒ`ƒƒ[‚Ìæ“¾
-Texture* TextureManager::GetTexture(std::string textureTag)
+TextureManager::TextureManager() : mMutex(std::mutex{})
 {
-	return textureMap_[textureTag].get();
 }
 
-// F‚ğw’è‚µ‚ÄƒeƒNƒXƒ`ƒƒ‚ğ¶¬‚·‚é
-Texture TextureManager::CreateTexture(Color color)
+void TextureManager::Init()
 {
-	Texture tex;
+}
 
-	HRESULT result;
+// 1x1ã®è‰²ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’ç”Ÿæˆã™ã‚‹é–¢æ•°
+void TextureManager::CreateTexture(const Color color, const std::string tag)
+{
+	// æ’ä»–åˆ¶å¾¡
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
-	// ƒq[ƒv‚Ìİ’è
-	D3D12_HEAP_PROPERTIES textureHeapProp{};
-	textureHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
+	// ãƒãƒƒãƒ—ã«æ ¼ç´
+	GetInstance()->mTextureMap.
+		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
 
-	// ƒŠƒ\[ƒXİ’è
-	D3D12_RESOURCE_DESC textureResourceDesc{};
-	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	textureResourceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	textureResourceDesc.Width = 1; // •
-	textureResourceDesc.Height = 1; // ‚‚³
-	textureResourceDesc.DepthOrArraySize = 1;
-	textureResourceDesc.MipLevels = 1;
-	textureResourceDesc.SampleDesc.Count = 1;
+	Texture* texture = dynamic_cast<Texture*>(GetInstance()->mTextureMap[tag].get());
 
-	// ƒeƒNƒXƒ`ƒƒ‚ÌƒTƒCƒY‚ğƒZƒbƒg
-	tex.size = { (float)textureResourceDesc.Width, (float)textureResourceDesc.Height };
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
+	D3D12_RESOURCE_DESC resourceDesc =
+		CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 1, 1, 1, 1);
 
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc,
-			D3D12_RESOURCE_STATE_COPY_DEST,
-			nullptr,
-			IID_PPV_ARGS(&tex.buffer));
-	assert(SUCCEEDED(result));
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã®ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
+	texture->Create(resourceDesc);
 
-	CreateSRV(tex, tex.buffer.Get());
+	// SRVä½œæˆ
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(texture->GetBufferResource());
 
-	Color col = Color(color.r / 255, color.g / 255, color.b / 255, color.a / 255);
-
-	D3D12_SUBRESOURCE_DATA subResourcesData{};
+	// ã‚µãƒ–ãƒªã‚½ãƒ¼ã‚¹ãƒ‡ãƒ¼ã‚¿ã‚’åˆæœŸåŒ–
+	Color col = color / 255.f;
+	Vec2 size = texture->GetInitalSize();
+	D3D12_SUBRESOURCE_DATA subResourcesData;
 	subResourcesData.pData = (void**)&col;
-	subResourcesData.RowPitch = (LONG_PTR)(sizeof(Color) * tex.size.x);
-	subResourcesData.SlicePitch = (LONG_PTR)(sizeof(Color) * tex.size.x * tex.size.y);
+	subResourcesData.RowPitch = static_cast<int64_t>(sizeof(Color) * size.x);
+	subResourcesData.SlicePitch = static_cast<int64_t>(sizeof(Color) * size.x * size.y);
 
-	uint64_t uploadSize = GetRequiredIntermediateSize(tex.buffer.Get(), 0, 1);
-
-	// ƒq[ƒv‚Ìİ’è
-	D3D12_HEAP_PROPERTIES textureHeapProp1{};
-	textureHeapProp1.Type = D3D12_HEAP_TYPE_UPLOAD;
-	CD3DX12_RESOURCE_DESC textureResourceDesc1 =
-		CD3DX12_RESOURCE_DESC::Buffer(uploadSize);
-
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp1,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc1,
-			D3D12_RESOURCE_STATE_GENERIC_READ,
-			nullptr,
-			IID_PPV_ARGS(&tex.uploadBuffer));
-	assert(SUCCEEDED(result));
-
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰
 	UpdateSubresources(
 		RenderBase::GetInstance()->GetCommandList(),
-		tex.buffer.Get(),
-		tex.uploadBuffer.Get(),
+		texture->GetBufferResource()->buffer.Get(),
+		texture->GetUploadBuffer()->GetBufferResource()->buffer.Get(),
 		0,
 		0,
 		1,
 		&subResourcesData);
 
-	D3D12_RESOURCE_BARRIER  barrier{};
-	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	barrier.Transition.pResource = tex.buffer.Get();
-	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
-	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
+	// ãƒªã‚½ãƒ¼ã‚¹ã®çŠ¶æ…‹å¤‰æ›´
+	RenderBase::GetInstance()->TransitionBufferState(
+		texture->GetBufferResource(),
+		D3D12_RESOURCE_STATE_COPY_DEST,
+		D3D12_RESOURCE_STATE_GENERIC_READ);
 
-	ExcuteComandList();
-
-	return tex;
+	// Logå‡ºåŠ›
+	std::string log = "[Texture Create] ColorTexture, Tag : " + tag + ", created";
+	OutputDebugLog(log.c_str());
 }
 
-// F‚ğw’è‚µ‚ÄƒeƒNƒXƒ`ƒƒ‚ğ¶¬‚µƒ}ƒbƒv‚ÉŠi”[‚·‚é
-Texture* TextureManager::CreateTexture(Color color, std::string textureTag)
+// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹é–¢æ•°
+void TextureManager::LoadTexture(const std::string filePath, const std::string tag)
 {
-	// ”r‘¼§Œä
-	std::lock_guard<std::mutex> lock(mtx_);
+	// æ’ä»–åˆ¶å¾¡
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
-	textureMap_.insert(std::make_pair(textureTag, std::move(std::make_unique<Texture>())));
+	// ãƒãƒƒãƒ—ã«æ ¼ç´
+	GetInstance()->mTextureMap.
+		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
 
-	HRESULT result;
-
-	// ƒq[ƒv‚Ìİ’è
-	CD3DX12_HEAP_PROPERTIES textureHeapProp =
-		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-
-	// ƒŠƒ\[ƒXİ’è
-	CD3DX12_RESOURCE_DESC textureResourceDesc =
-		CD3DX12_RESOURCE_DESC::Tex2D(
-			DXGI_FORMAT_R32G32B32A32_FLOAT,
-			1, 1, 1, 1, 1);
-
-	// ƒeƒNƒXƒ`ƒƒ‚ÌƒTƒCƒY‚ğƒZƒbƒg
-	textureMap_[textureTag]->size = { (float)textureResourceDesc.Width, (float)textureResourceDesc.Height };
-
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc,
-			D3D12_RESOURCE_STATE_COPY_DEST,
-			nullptr,
-			IID_PPV_ARGS(&textureMap_[textureTag]->buffer));
-	assert(SUCCEEDED(result));
-
-	CreateSRV(*textureMap_[textureTag], textureMap_[textureTag]->buffer.Get());
-
-	Color col = Color(color.r / 255, color.g / 255, color.b / 255, color.a / 255);
-
-	D3D12_SUBRESOURCE_DATA subResourcesData{};
-	subResourcesData.pData = (void**)&col;
-	subResourcesData.RowPitch = (LONG_PTR)(sizeof(Color) * textureMap_[textureTag]->size.x);
-	subResourcesData.SlicePitch = (LONG_PTR)(sizeof(Color) * textureMap_[textureTag]->size.x * textureMap_[textureTag]->size.y);
-
-	uint64_t uploadSize = GetRequiredIntermediateSize(textureMap_[textureTag]->buffer.Get(), 0, 1);
-
-	// ƒq[ƒv‚Ìİ’è
-	D3D12_HEAP_PROPERTIES textureHeapProp1{};
-	textureHeapProp1.Type = D3D12_HEAP_TYPE_UPLOAD;
-	CD3DX12_RESOURCE_DESC textureResourceDesc1 =
-		CD3DX12_RESOURCE_DESC::Buffer(uploadSize);
-
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp1,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc1,
-			D3D12_RESOURCE_STATE_GENERIC_READ,
-			nullptr,
-			IID_PPV_ARGS(&textureMap_[textureTag]->uploadBuffer));
-	assert(SUCCEEDED(result));
-
-	UpdateSubresources(
-		RenderBase::GetInstance()->GetCommandList(),
-		textureMap_[textureTag]->buffer.Get(),
-		textureMap_[textureTag]->uploadBuffer.Get(),
-		0,
-		0,
-		1,
-		&subResourcesData);
-
-	textureMap_[textureTag]->buffer->SetName(L"ResourceBuffer");
-	textureMap_[textureTag]->uploadBuffer->SetName(L"UploadBuffer");
-
-	D3D12_RESOURCE_BARRIER  barrier{};
-	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	barrier.Transition.pResource = textureMap_[textureTag]->buffer.Get();
-	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
-	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
-
-	ExcuteComandList();
-
-	return textureMap_[textureTag].get();
-}
-
-// ƒtƒ@ƒCƒ‹ƒpƒX‚ğw’è‚µ‚ÄƒeƒNƒXƒ`ƒƒ‚ğ¶¬‚·‚é
-Texture TextureManager::LoadTexture(std::string filePath)
-{
-	Texture tex;
+	Texture* texture = dynamic_cast<Texture*>(GetInstance()->mTextureMap[tag].get());
 
 	std::string path = "Application/Resources/Texture/" + filePath;
+
+	HRESULT result;
 
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
 	std::wstring wfilePath(path.begin(), path.end());
 
-	HRESULT result;
-
-	// WICƒeƒNƒXƒ`ƒƒ‚Ìƒ[ƒh
+	// WICã‚’ä½¿ç”¨ã—ã¦ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
 	result = LoadFromWICFile(
 		wfilePath.c_str(),
 		WIC_FLAGS_NONE,
@@ -222,10 +95,13 @@ Texture TextureManager::LoadTexture(std::string filePath)
 
 	if (result != S_OK)
 	{
-		assert(0 && "ƒeƒNƒXƒ`ƒƒ[‚Ì“Ç‚İ‚İ‚ª¸”s‚µ‚Ü‚µ‚½");
+		std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + tag + ", is,failed to load";
+		OutputDebugLog(log.c_str());
+
+		assert(0 && "ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸ");
 	}
 
-	// ƒ~ƒbƒvƒ}ƒbƒv¶¬
+	// ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—ã‚’ç”Ÿæˆã™ã‚‹
 	ScratchImage mipChain{};
 	result = GenerateMipMaps(
 		scratchImg.GetImages(),
@@ -238,225 +114,71 @@ Texture TextureManager::LoadTexture(std::string filePath)
 		metadata = scratchImg.GetMetadata();
 	}
 
-	// “Ç‚İ‚ñ‚¾ƒfƒBƒtƒ…[ƒYƒeƒNƒXƒ`ƒƒ‚ğSRGB‚Æ‚µ‚Äˆµ‚¤
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’SRGBã«è¨­å®š
 	metadata.format = MakeSRGB(metadata.format);
 
-	// ƒq[ƒv‚Ìİ’è
-	CD3DX12_HEAP_PROPERTIES textureHeapProp =
-		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-
-	// ƒŠƒ\[ƒXİ’è
-	CD3DX12_RESOURCE_DESC textureResourceDesc =
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
+	D3D12_RESOURCE_DESC resourceDesc =
 		CD3DX12_RESOURCE_DESC::Tex2D(
 			metadata.format,
-			(UINT64)metadata.width,
-			(UINT)metadata.height,
-			(UINT16)metadata.arraySize,
-			(UINT16)metadata.mipLevels,
+			static_cast<uint64_t>(metadata.width),
+			static_cast<uint32_t>(metadata.height),
+			static_cast<uint16_t>(metadata.arraySize),
+			static_cast<uint16_t>(metadata.mipLevels),
 			1);
 
-	// ƒeƒNƒXƒ`ƒƒ‚ÌƒTƒCƒY‚ğƒZƒbƒg
-	tex.size = { (float)textureResourceDesc.Width, (float)textureResourceDesc.Height };
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã®ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
+	texture->Create(resourceDesc, static_cast<uint32_t>(metadata.mipLevels));
 
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc,
-			D3D12_RESOURCE_STATE_COPY_DEST,
-			nullptr,
-			IID_PPV_ARGS(&tex.buffer));
-	assert(SUCCEEDED(result));
+	// SRVä½œæˆ
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(texture->GetBufferResource());
 
-	CreateSRV(tex, tex.buffer.Get());
-
-	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas{};
-	subResourcesDatas.resize(metadata.mipLevels);
-
+	// ã‚µãƒ–ãƒªã‚½ãƒ¼ã‚¹ãƒ‡ãƒ¼ã‚¿ã‚’åˆæœŸåŒ–
+	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas(metadata.mipLevels);
 	for (size_t i = 0; i < subResourcesDatas.size(); i++)
 	{
-		// ‘Sƒ~ƒbƒvƒ}ƒbƒvƒŒƒxƒ‹‚ğw’è‚µ‚ÄƒCƒ[ƒW‚ğæ“¾
+		// ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã¦ã‚µãƒ–ãƒªã‚½ãƒ¼ã‚¹ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
 		const Image* img = scratchImg.GetImage(i, 0, 0);
-
 		subResourcesDatas[i].pData = img->pixels;
 		subResourcesDatas[i].RowPitch = img->rowPitch;
 		subResourcesDatas[i].SlicePitch = img->slicePitch;
+
 	}
-
-	uint64_t uploadSize = GetRequiredIntermediateSize(tex.buffer.Get(), 0, (UINT)metadata.mipLevels);
-
-	// ƒq[ƒv‚Ìİ’è
-	D3D12_HEAP_PROPERTIES textureHeapProp1{};
-	textureHeapProp1.Type = D3D12_HEAP_TYPE_UPLOAD;
-	CD3DX12_RESOURCE_DESC textureResourceDesc1 =
-		CD3DX12_RESOURCE_DESC::Buffer(uploadSize);
-
-	Microsoft::WRL::ComPtr<ID3D12Resource> uploadBuffer;
-
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp1,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc1,
-			D3D12_RESOURCE_STATE_GENERIC_READ,
-			nullptr,
-			IID_PPV_ARGS(&uploadBuffer));
-	assert(SUCCEEDED(result));
-
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰
 	UpdateSubresources(
 		RenderBase::GetInstance()->GetCommandList(),
-		tex.buffer.Get(),
-		uploadBuffer.Get(),
+		texture->GetBufferResource()->buffer.Get(),
+		texture->GetUploadBuffer()->GetBufferResource()->buffer.Get(),
 		0,
 		0,
-		(UINT)metadata.mipLevels,
+		static_cast<uint32_t>(metadata.mipLevels),
 		subResourcesDatas.data());
 
-	D3D12_RESOURCE_BARRIER  barrier{};
-	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	barrier.Transition.pResource = tex.buffer.Get();
-	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
-	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
+	// ãƒªã‚½ãƒ¼ã‚¹ã®çŠ¶æ…‹å¤‰æ›´
+	RenderBase::GetInstance()->TransitionBufferState(
+		texture->GetBufferResource(),
+		D3D12_RESOURCE_STATE_COPY_DEST,
+		D3D12_RESOURCE_STATE_GENERIC_READ);
 
-	ExcuteComandList();
+	// ä½¿ã„çµ‚ã‚ã£ãŸãªã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£ã«move
+	texture->SetScratchImage(&scratchImg);
 
-	return tex;
+	// Logå‡ºåŠ›
+	std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + tag + ", was loaded successfully";
+	OutputDebugLog(log.c_str());
 }
 
-// ƒtƒ@ƒCƒ‹ƒpƒX‚ğw’è‚µ‚ÄƒeƒNƒXƒ`ƒƒ‚ğ¶¬‚µƒ}ƒbƒv‚ÌŠi”[‚·‚é
-Texture* TextureManager::LoadTexture(std::string filePath, std::string textureTag)
+// mtlãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹é–¢æ•°
+Texture* TextureManager::LoadMaterialTexture(const std::string filePath, const std::string tag)
 {
-	// ”r‘¼§Œä
-	std::lock_guard<std::mutex> lock(mtx_);
+	// æ’ä»–åˆ¶å¾¡
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
-	textureMap_.insert(std::make_pair(textureTag, std::move(std::make_unique<Texture>())));
+	// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼è´æ‡ˆãƒ»
+	GetInstance()->mMaterialTextureMap.
+		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
 
-	std::string path = "Application/Resources/Texture/" + filePath;
-
-	TexMetadata metadata{};
-	ScratchImage scratchImg{};
-	std::wstring wfilePath(path.begin(), path.end());
-
-	HRESULT result;
-
-	// WICƒeƒNƒXƒ`ƒƒ‚Ìƒ[ƒh
-	result = LoadFromWICFile(
-		wfilePath.c_str(),
-		WIC_FLAGS_NONE,
-		&metadata, scratchImg);
-
-	if (result != S_OK)
-	{
-		assert(0 && "ƒeƒNƒXƒ`ƒƒ[‚Ì“Ç‚İ‚İ‚ª¸”s‚µ‚Ü‚µ‚½");
-	}
-
-	// ƒ~ƒbƒvƒ}ƒbƒv¶¬
-	ScratchImage mipChain{};
-	result = GenerateMipMaps(
-		scratchImg.GetImages(),
-		scratchImg.GetImageCount(),
-		scratchImg.GetMetadata(),
-		TEX_FILTER_DEFAULT, 0, mipChain);
-	if (SUCCEEDED(result))
-	{
-		scratchImg = std::move(mipChain);
-		metadata = scratchImg.GetMetadata();
-	}
-
-	// “Ç‚İ‚ñ‚¾ƒfƒBƒtƒ…[ƒYƒeƒNƒXƒ`ƒƒ‚ğSRGB‚Æ‚µ‚Äˆµ‚¤
-	metadata.format = MakeSRGB(metadata.format);
-
-	// ƒq[ƒv‚Ìİ’è
-	CD3DX12_HEAP_PROPERTIES textureHeapProp =
-		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-
-	// ƒŠƒ\[ƒXİ’è
-	CD3DX12_RESOURCE_DESC textureResourceDesc =
-		CD3DX12_RESOURCE_DESC::Tex2D(
-			metadata.format,
-			(UINT64)metadata.width,
-			(UINT)metadata.height,
-			(UINT16)metadata.arraySize,
-			(UINT16)metadata.mipLevels,
-			1);
-
-	// ƒeƒNƒXƒ`ƒƒ‚ÌƒTƒCƒY‚ğƒZƒbƒg
-	textureMap_[textureTag]->size = { (float)textureResourceDesc.Width, (float)textureResourceDesc.Height };
-
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc,
-			D3D12_RESOURCE_STATE_COPY_DEST,
-			nullptr,
-			IID_PPV_ARGS(&textureMap_[textureTag]->buffer));
-	assert(SUCCEEDED(result));
-
-	CreateSRV(*textureMap_[textureTag], textureMap_[textureTag]->buffer.Get());
-
-	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas{};
-	subResourcesDatas.resize(metadata.mipLevels);
-
-	for (size_t i = 0; i < subResourcesDatas.size(); i++)
-	{
-		// ‘Sƒ~ƒbƒvƒ}ƒbƒvƒŒƒxƒ‹‚ğw’è‚µ‚ÄƒCƒ[ƒW‚ğæ“¾
-		const Image* img = scratchImg.GetImage(i, 0, 0);
-
-		subResourcesDatas[i].pData = img->pixels;
-		subResourcesDatas[i].RowPitch = img->rowPitch;
-		subResourcesDatas[i].SlicePitch = img->slicePitch;
-	}
-
-	uint64_t uploadSize = GetRequiredIntermediateSize(textureMap_[textureTag]->buffer.Get(), 0, (UINT)metadata.mipLevels);
-
-	// ƒq[ƒv‚Ìİ’è
-	D3D12_HEAP_PROPERTIES textureHeapProp1{};
-	textureHeapProp1.Type = D3D12_HEAP_TYPE_UPLOAD;
-	CD3DX12_RESOURCE_DESC textureResourceDesc1 =
-		CD3DX12_RESOURCE_DESC::Buffer(uploadSize);
-
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp1,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc1,
-			D3D12_RESOURCE_STATE_GENERIC_READ,
-			nullptr,
-			IID_PPV_ARGS(&textureMap_[textureTag]->uploadBuffer));
-	assert(SUCCEEDED(result));
-
-	UpdateSubresources(
-		RenderBase::GetInstance()->GetCommandList(),
-		textureMap_[textureTag]->buffer.Get(),
-		textureMap_[textureTag]->uploadBuffer.Get(),
-		0,
-		0,
-		(UINT)metadata.mipLevels,
-		subResourcesDatas.data());
-
-	D3D12_RESOURCE_BARRIER  barrier{};
-	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	barrier.Transition.pResource = textureMap_[textureTag]->buffer.Get();
-	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
-	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
-
-	return textureMap_[textureTag].get();
-}
-
-// objƒtƒ@ƒCƒ‹‚©‚çƒ[ƒh‚µ‚½ƒeƒNƒXƒ`ƒƒ[‚ğƒ[ƒh‚·‚éê—pŠÖ”
-Texture* TextureManager::LoadMaterialTexture(std::string filePath, std::string textureTag)
-{
-	// ”r‘¼§Œä
-	std::lock_guard<std::mutex> lock(mtx_);
-
-	textureMap_.insert(std::make_pair(textureTag, std::move(std::make_unique<Texture>())));
+	Texture* texture = GetInstance()->mMaterialTextureMap[tag].get();
 
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
@@ -464,7 +186,7 @@ Texture* TextureManager::LoadMaterialTexture(std::string filePath, std::string t
 
 	HRESULT result;
 
-	// WICƒeƒNƒXƒ`ƒƒ‚Ìƒ[ƒh
+	// WICã‚’ä½¿ç”¨ã—ã¦ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
 	result = LoadFromWICFile(
 		wfilePath.c_str(),
 		WIC_FLAGS_NONE,
@@ -472,10 +194,13 @@ Texture* TextureManager::LoadMaterialTexture(std::string filePath, std::string t
 
 	if (result != S_OK)
 	{
-		assert(0 && "ƒeƒNƒXƒ`ƒƒ[‚Ì“Ç‚İ‚İ‚ª¸”s‚µ‚Ü‚µ‚½");
+		std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + tag + ", is,failed to load";
+		OutputDebugLog(log.c_str());
+
+		assert(0 && "mtlãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸ");
 	}
 
-	// ƒ~ƒbƒvƒ}ƒbƒv¶¬
+	// ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—ã‚’ç”Ÿæˆã™ã‚‹
 	ScratchImage mipChain{};
 	result = GenerateMipMaps(
 		scratchImg.GetImages(),
@@ -488,288 +213,364 @@ Texture* TextureManager::LoadMaterialTexture(std::string filePath, std::string t
 		metadata = scratchImg.GetMetadata();
 	}
 
-	// “Ç‚İ‚ñ‚¾ƒfƒBƒtƒ…[ƒYƒeƒNƒXƒ`ƒƒ‚ğSRGB‚Æ‚µ‚Äˆµ‚¤
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’SRGBã«è¨­å®š
 	metadata.format = MakeSRGB(metadata.format);
 
-	// ƒq[ƒv‚Ìİ’è
-	CD3DX12_HEAP_PROPERTIES textureHeapProp =
-		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-
-	// ƒŠƒ\[ƒXİ’è
-	CD3DX12_RESOURCE_DESC textureResourceDesc =
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
+	D3D12_RESOURCE_DESC resourceDesc =
 		CD3DX12_RESOURCE_DESC::Tex2D(
 			metadata.format,
-			(UINT64)metadata.width,
-			(UINT)metadata.height,
-			(UINT16)metadata.arraySize,
-			(UINT16)metadata.mipLevels,
+			static_cast<uint64_t>(metadata.width),
+			static_cast<uint32_t>(metadata.height),
+			static_cast<uint16_t>(metadata.arraySize),
+			static_cast<uint16_t>(metadata.mipLevels),
 			1);
 
-	// ƒeƒNƒXƒ`ƒƒ‚ÌƒTƒCƒY‚ğƒZƒbƒg
-	textureMap_[textureTag]->size = { (float)textureResourceDesc.Width, (float)textureResourceDesc.Height };
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã®ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
+	texture->Create(resourceDesc, static_cast<uint32_t>(metadata.mipLevels));
 
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc,
-			D3D12_RESOURCE_STATE_COPY_DEST,
-			nullptr,
-			IID_PPV_ARGS(&textureMap_[textureTag]->buffer));
-	assert(SUCCEEDED(result));
+	// SRVä½œæˆ
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(texture->GetBufferResource());
 
-	CreateSRV(*textureMap_[textureTag], textureMap_[textureTag]->buffer.Get());
-
-	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas{};
-	subResourcesDatas.resize(metadata.mipLevels);
-
+	// ã‚µãƒ–ãƒªã‚½ãƒ¼ã‚¹ãƒ‡ãƒ¼ã‚¿ã‚’åˆæœŸåŒ–
+	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas(metadata.mipLevels);
 	for (size_t i = 0; i < subResourcesDatas.size(); i++)
 	{
-		// ‘Sƒ~ƒbƒvƒ}ƒbƒvƒŒƒxƒ‹‚ğw’è‚µ‚ÄƒCƒ[ƒW‚ğæ“¾
+		// ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã¦ã‚µãƒ–ãƒªã‚½ãƒ¼ã‚¹ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
 		const Image* img = scratchImg.GetImage(i, 0, 0);
-
 		subResourcesDatas[i].pData = img->pixels;
 		subResourcesDatas[i].RowPitch = img->rowPitch;
 		subResourcesDatas[i].SlicePitch = img->slicePitch;
 	}
 
-	uint64_t uploadSize =
-		GetRequiredIntermediateSize(textureMap_[textureTag]->buffer.Get(), 0, (UINT)metadata.mipLevels);
-
-	// ƒq[ƒv‚Ìİ’è
-	D3D12_HEAP_PROPERTIES textureHeapProp1{};
-	textureHeapProp1.Type = D3D12_HEAP_TYPE_UPLOAD;
-	CD3DX12_RESOURCE_DESC textureResourceDesc1 =
-		CD3DX12_RESOURCE_DESC::Buffer(uploadSize);
-
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateCommittedResource(
-			&textureHeapProp1,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc1,
-			D3D12_RESOURCE_STATE_GENERIC_READ,
-			nullptr,
-			IID_PPV_ARGS(&textureMap_[textureTag]->uploadBuffer));
-	assert(SUCCEEDED(result));
-
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰
 	UpdateSubresources(
 		RenderBase::GetInstance()->GetCommandList(),
-		textureMap_[textureTag]->buffer.Get(),
-		textureMap_[textureTag]->uploadBuffer.Get(),
+		texture->GetBufferResource()->buffer.Get(),
+		texture->GetUploadBuffer()->GetBufferResource()->buffer.Get(),
 		0,
 		0,
-		(UINT)metadata.mipLevels,
+		static_cast<uint32_t>(metadata.mipLevels),
 		subResourcesDatas.data());
 
-	D3D12_RESOURCE_BARRIER  barrier{};
-	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	barrier.Transition.pResource = textureMap_[textureTag]->buffer.Get();
-	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
-	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
+	// ãƒªã‚½ãƒ¼ã‚¹ã®çŠ¶æ…‹å¤‰æ›´
+	RenderBase::GetInstance()->TransitionBufferState(
+		texture->GetBufferResource(),
+		D3D12_RESOURCE_STATE_COPY_DEST,
+		D3D12_RESOURCE_STATE_GENERIC_READ);
 
-	ExcuteComandList();
+	std::string log = "[MaterialTexture Load] FilePath : " + filePath + ", Tag : " + tag + ", was loaded successfully";
+	OutputDebugLog(log.c_str());
 
-	return textureMap_[textureTag].get();
+	return texture;
 }
 
-// [“xƒeƒNƒXƒ`ƒƒ[‚ğ¶¬
-Texture* TextureManager::CreateDepthTexture(Vec2 size)
+// æ·±åº¦ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç”Ÿæˆ
+void TextureManager::CreateDepthTexture(DepthBuffer* depthBuffer, const std::string tag)
 {
-	// ”r‘¼§Œä
-	std::lock_guard<std::mutex> lock(mtx_);
+	// æ’ä»–åˆ¶å¾¡
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
-	std::string tag = "DepthTexture";
-	textureMap_.insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
+	// ãƒãƒƒãƒ—ã«æ ¼ç´
+	GetInstance()->mTextureMap.
+		insert(std::make_pair(tag, std::move(std::make_unique<DepthTexture>())));
 
-	// [“xƒoƒbƒtƒ@‚ÌƒŠƒ\[ƒX
-	textureMap_[tag]->buffer = RenderBase::GetInstance()->GetDepthBuffer()->GetBuffer();
+	DepthTexture* texture = dynamic_cast<DepthTexture*>(GetInstance()->mTextureMap[tag].get());
 
-	// SRVì¬
-	CreateSRV(*textureMap_[tag], textureMap_[tag]->buffer.Get());
+	// æ·±åº¦ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
+	texture->Create(depthBuffer);
 
-	return textureMap_[tag].get();
+	// SRVä½œæˆ
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(texture->GetBufferResource());
+
+	std::string log = "[Texture Create] DepthTexture, Tag : " + tag + ", created";
+	OutputDebugLog(log.c_str());
 }
 
-#pragma endregion
-
-#pragma region ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ[ŠÖ˜A
-
-// ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ[‚Ìæ“¾
-RenderTexture* TextureManager::GetRenderTexture(std::string textureTag)
+// ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç”Ÿæˆ
+void TextureManager::CreateVolumeTexture(const std::vector<std::string>& filePathes, const Vec3 size, const std::string tag)
 {
-	return renderTextureMap_[textureTag].get();
+	// æ’ä»–åˆ¶å¾¡
+	//std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	// ãƒãƒƒãƒ—ã«æ ¼ç´
+	GetInstance()->mTextureMap.
+		insert(std::make_pair(tag, std::move(std::make_unique<VolumeTexture>())));
+
+	VolumeTexture* texture = dynamic_cast<VolumeTexture*>(GetInstance()->mTextureMap[tag].get());
+
+	HRESULT result;
+	std::vector<TexMetadata> metadatas(filePathes.size());
+	std::vector<ScratchImage> scratchImgs(filePathes.size());
+
+	for (uint32_t i = 0; i < filePathes.size(); i++)
+	{
+		std::string path = "Application/Resources/Texture/" + filePathes[i];
+		std::wstring wfilePath(path.begin(), path.end());
+
+		// WICã‚’ä½¿ç”¨ã—ã¦ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
+		result = LoadFromWICFile(
+			wfilePath.c_str(),
+			WIC_FLAGS_NONE,
+			&metadatas[i], scratchImgs[i]);
+	}
+
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
+	D3D12_RESOURCE_DESC resourceDesc =
+		CD3DX12_RESOURCE_DESC::Tex3D(
+			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
+			static_cast<uint64_t>(size.x),
+			static_cast<uint32_t>(size.y),
+			static_cast<uint16_t>(size.z),
+			1);
+	// ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
+	texture->Create(size, resourceDesc);
+
+	// SRVä½œæˆ
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(texture->GetBufferResource());
+
+	// ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã¦ã‚µãƒ–ãƒªã‚½ãƒ¼ã‚¹ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
+	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas(3);
+	for (uint32_t i = 0; i < subResourcesDatas.size(); i++)
+	{
+		// ã‚µãƒ–ãƒªã‚½ãƒ¼ã‚¹ãƒ‡ãƒ¼ã‚¿ã«ãƒãƒƒãƒ•ã‚¡ã‚’è¨­å®š
+		const Image* img = scratchImgs[i].GetImage(0, 0, 0);
+		subResourcesDatas[i].pData = img->pixels;
+		subResourcesDatas[i].RowPitch = img->rowPitch;
+		subResourcesDatas[i].SlicePitch = img->slicePitch;
+
+	}
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰
+	UpdateSubresources(
+		RenderBase::GetInstance()->GetCommandList(),
+		texture->GetBufferResource()->buffer.Get(),
+		texture->GetUploadBuffer()->GetBufferResource()->buffer.Get(),
+		0,
+		0,
+		1,
+		subResourcesDatas.data());
+
+	// ãƒªã‚½ãƒ¼ã‚¹ã®çŠ¶æ…‹å¤‰æ›´
+	RenderBase::GetInstance()->TransitionBufferState(
+		texture->GetBufferResource(),
+		D3D12_RESOURCE_STATE_COPY_DEST,
+		D3D12_RESOURCE_STATE_GENERIC_READ);
+
+	std::string log = "[Texture Create] VolumeTexture, Tag : " + tag + ", created";
+	OutputDebugLog(log.c_str());
 }
 
-// ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ[‚ğ¶¬‚µƒ}ƒbƒv‚ÉŠi”[‚·‚é
-RenderTexture* TextureManager::CreateRenderTexture(Vec2 size, uint32_t num, std::string textureTag)
+// ã‚¢ãƒ³ãƒ­ãƒ¼ãƒ‰
+void TextureManager::UnLoadTexture(const std::string tag)
 {
-	// ”r‘¼§Œä
-	std::lock_guard<std::mutex> lock(mtx_);
+	auto it = GetInstance()->mTextureMap.find(tag);
+	if (it == GetInstance()->mTextureMap.end())
+	{
+		return;
+	}
+
+	// SRVã‚’ä¸Šæ›¸ãã§ãã‚‹çŠ¶æ…‹ã«ã™ã‚‹
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->DestroyView(
+		GetInstance()->mTextureMap[tag]->GetBufferResource());
+
+	// Mapã‹ã‚‰å‰Šé™¤
+	GetInstance()->mTextureMap.erase(tag);
+}
+
+// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+Texture* TextureManager::GetTexture(const std::string tag)
+{
+	// æ’ä»–åˆ¶å¾¡
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	// ãƒ­ã‚°
+	std::string log = "Error";
+
+	ITexture* iTexture = GetInstance()->mTextureMap[tag].get();
+	if (iTexture == nullptr)
+	{
+		log = "[Texture Use] Tag : " + tag + ", does not exist";
+	}
+	else
+	{
+		log = "[Texture Use] Tag : " + tag + ", was used";
+	}
+	OutputDebugLog(log.c_str());
+
+	return dynamic_cast<Texture*>(iTexture);
+}
+
+// æ·±åº¦ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+DepthTexture* TextureManager::GetDepthTexture(const std::string tag)
+{
+	// æ’ä»–åˆ¶å¾¡
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	// ãƒ­ã‚°
+	std::string log = "Error";
+
+	ITexture* iTexture = GetInstance()->mTextureMap[tag].get();
+	if (iTexture == nullptr)
+	{
+		log = "[DepthTexture Use] Tag : " + tag + ", does not exist";
+	}
+	else
+	{
+		log = "[DepthTexture Use] Tag : " + tag + ", was used";
+	}
+	OutputDebugLog(log.c_str());
+
+	return dynamic_cast<DepthTexture*>(iTexture);
+}
+
+// ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+VolumeTexture* TextureManager::GetVolumeTexture(const std::string tag)
+{
+	// æ’ä»–åˆ¶å¾¡
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	// ãƒ­ã‚°
+	std::string log = "Error";
+
+	ITexture* iTexture = GetInstance()->mTextureMap[tag].get();
+	if (iTexture == nullptr)
+	{
+		log = "[VolumeTexture Use] Tag : " + tag + ", does not exist";
+	}
+	else
+	{
+		log = "[VolumeTexture Use] Tag : " + tag + ", was used";
+	}
+	OutputDebugLog(log.c_str());
+
+	return dynamic_cast<VolumeTexture*>(iTexture);
+}
+
+
+// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®èœ¿é–€ï½¾ãƒ»
+RenderTexture* TextureManager::GetRenderTexture(const std::string tag)
+{
+	std::string log;
+	if (GetInstance()->mRenderTextureMap[tag].get() == nullptr)
+	{
+		log = "[RenderTexture Use] Tag : " + tag + ", does not exist";
+	}
+	else
+	{
+		log = "[RenderTexture Use] Tag : " + tag + ", was used";
+	}
+	OutputDebugLog(log.c_str());
+
+	return GetInstance()->mRenderTextureMap[tag].get();
+}
+
+// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¹§å ¤å‡½è¬ŒèˆŒï¼ ç¹æ§­ãƒ£ç¹åŠ±â†“è­¬ï½¼é‚é˜ªâ˜†ç¹§ãƒ»
+RenderTexture* TextureManager::CreateRenderTexture(const Vec2 size, const uint32_t num, const std::string tag)
+{
+	// è¬—å‰ƒï½»é–€å®›è •ï½¡
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
 	std::unique_ptr<RenderTexture> renderTex = std::make_unique<RenderTexture>();
-	renderTex->buffers.resize(num);
+	renderTex->size = size;
+	renderTex->GetBufferResources()->resize(num);
 
 	HRESULT result;
 	RenderBase* renderBase = RenderBase::GetInstance();
 
-	// ƒq[ƒvİ’è
-	CD3DX12_HEAP_PROPERTIES texturenResourceHeapProp =
+	// ç¹åµãƒ»ç¹è‹“ï½¨ï½­è³ãƒ»
+	CD3DX12_HEAP_PROPERTIES heapProp =
 		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 
-	// ƒŠƒ\[ƒXİ’è
-	CD3DX12_RESOURCE_DESC texturenResourceDesc =
+	// ç¹ï½ªç¹§ï½½ç¹ï½¼ç¹§ï½¹éšªï½­è³ãƒ»
+	CD3DX12_RESOURCE_DESC resourceDesc =
 		CD3DX12_RESOURCE_DESC::Tex2D(
 			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 			(UINT64)size.x, (UINT)size.y,
 			1, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
 
-	CD3DX12_CLEAR_VALUE textureResourceClearValue =
+	CD3DX12_CLEAR_VALUE clearValue =
 		CD3DX12_CLEAR_VALUE(
 			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 			RenderTexture::sClearColor);
-
-	renderTex->size = size;
 
 	for (uint32_t i = 0; i < num; i++)
 	{
 		result = renderBase->GetDevice()->
 			CreateCommittedResource(
-				&texturenResourceHeapProp,
+				&heapProp,
 				D3D12_HEAP_FLAG_NONE,
-				&texturenResourceDesc,
+				&resourceDesc,
 				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-				&textureResourceClearValue,
-				IID_PPV_ARGS(&renderTex->buffers[i]));
+				&clearValue,
+				IID_PPV_ARGS(&renderTex->GetBufferResources()->at(i).buffer));
 		assert(SUCCEEDED(result));
 	}
 
-	// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Ìİ’è
-	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
-	// ƒVƒF[ƒ_[‚ÌŒvZŒ‹‰Ê‚ğSRGB‚É•ÏŠ·‚µ‚Ä‘‚«‚Ş
-	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
-
-	renderTex->renderTargets.resize(num);
-	renderTex->cpuHandles.resize(num);
-	renderTex->gpuHandles.resize(num);
 	for (uint32_t i = 0; i < num; i++)
 	{
-		// SRVì¬
-		CreateSRV(*renderTex, renderTex->buffers[i].Get(), i);
+		// SRVè´æ‡ˆãƒ»
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(&renderTex->GetBufferResources()->at(i));
 
-		// RTVì¬
-		renderTex->renderTargets[i].buffer_ = renderTex->buffers[i];
-		renderBase->CreateRTV(renderTex->renderTargets[i], &rtvDesc);
+		// RTVè´æ‡ˆãƒ»
+		DescriptorHeapManager::GetDescriptorHeap("RTV")->CreateRTV(&renderTex->GetBufferResources()->at(i));
 	}
 
-	// DSVì¬
-	renderTex->depthBuffer.Create();
-	renderBase->CreateDSV(renderTex->depthBuffer);
+	// DSVè´æ‡ˆãƒ»
+	renderTex->depthBuffer.Create(size);
+	DescriptorHeapManager::GetDescriptorHeap("DSV")->CreateDSV(renderTex->depthBuffer.GetBufferResource());
 
 	renderTex->depthTexture = std::make_unique<Texture>();
-	renderTex->depthTexture->buffer = renderTex->depthBuffer.GetBuffer();
-	CreateSRV(*renderTex->depthTexture, renderTex->depthTexture->buffer.Get());
+	renderTex->depthTexture->GetBufferResource()->buffer = renderTex->depthBuffer.GetBufferResource()->buffer;
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(renderTex->depthTexture->GetBufferResource());
 
-	renderTextureMap_.insert(std::make_pair(textureTag, std::move(renderTex)));
+	GetInstance()->mRenderTextureMap.insert(std::make_pair(tag, std::move(renderTex)));
 
-	return renderTextureMap_[textureTag].get();
+	std::string log = "[RenderTexture Create] Tag : " + tag + ", created";
+	OutputDebugLog(log.c_str());
+
+	return GetInstance()->mRenderTextureMap[tag].get();
 }
 
-#pragma endregion
-
-#pragma region ‚»‚Ì‘¼‚Ìˆ—
-
-// ƒfƒBƒXƒNƒŠƒvƒ^[ƒq[ƒv‚ğì¬‚·‚éˆ—
-void TextureManager::CreateDescriptorHeap()
+// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¸ºï½®ç¹§ï½¢ç¹ï½³ç¹ï½­ç¹ï½¼ç¹è›¾æœªè¬¨ï½°
+void TextureManager::UnLoadRenderTexture(const std::string tag)
 {
-	HRESULT result;
-
-	// --- SRV ------------------------------------------------------ //
-	size_t maxSRVCount = 2056;	// SRV‚ÌÅ‘åŒÂ”
-
-	// SRV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìİ’è
-	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
-	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;	// ƒVƒF[ƒ_‚©‚çŒ©‚¦‚é‚æ‚¤‚É
-	srvHeapDesc.NumDescriptors = (UINT)maxSRVCount;
-
-	// SRV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğ¶¬
-	result = RenderBase::GetInstance()->GetDevice()->
-		CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvDescHeap_));
-	assert(SUCCEEDED(result));
-
-}
-
-// SRV‚ğì¬‚·‚éˆ—
-void TextureManager::CreateSRV(Texture& texture, ID3D12Resource* buffer)
-{
-	// SRVƒq[ƒv‚Ìæ“ªƒnƒ“ƒhƒ‹‚ğæ“¾
-	D3D12_CPU_DESCRIPTOR_HANDLE srvCpuHandle = srvDescHeap_->GetCPUDescriptorHandleForHeapStart();
-	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvDescHeap_->GetGPUDescriptorHandleForHeapStart();
-
-	UINT descriptorSize = RenderBase::GetInstance()->GetDevice()->
-		GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-
-	srvCpuHandle.ptr += (SIZE_T)(descriptorSize * srvIncrementIndex_);
-	srvGpuHandle.ptr += (SIZE_T)(descriptorSize * srvIncrementIndex_);
-
-	texture.SetCpuHandle(srvCpuHandle);
-	texture.SetGpuHandle(srvGpuHandle);
-
-	// ƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[İ’è
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	// srvİ’è\‘¢‘Ì
-	if (buffer->GetDesc().Format == DXGI_FORMAT_D32_FLOAT)
+	auto it = GetInstance()->mRenderTextureMap.find(tag);
+	if (it == GetInstance()->mRenderTextureMap.end())
 	{
-		srvDesc.Format = DXGI_FORMAT_R32_FLOAT;
+		return;
 	}
-	else
+
+
+	for (uint32_t i = 0; i < GetInstance()->mRenderTextureMap[tag]->GetBufferResources()->size(); i++)
 	{
-		srvDesc.Format = buffer->GetDesc().Format;
+		// ç¹è–™Î—ç¹ï½¼èœ‘ä¼å‹
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->DestroyView(
+			&GetInstance()->mRenderTextureMap[tag]->GetBufferResources()->at(i));
+
+		// ç¹æ§­ãƒ£ç¹åŠ±Â°ç¹§ç‰™ç‚é«¯ï½¤
+		GetInstance()->mTextureMap.erase(tag);
 	}
-	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	// 2DƒeƒNƒXƒ`ƒƒ
-	//srvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;	// 2DƒeƒNƒXƒ`ƒƒ
-	srvDesc.Texture2D.MipLevels = buffer->GetDesc().MipLevels;
-
-	// ƒnƒ“ƒhƒ‹‚Ìw‚·ˆÊ’u‚ÉƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[ì¬
-	RenderBase::GetInstance()->GetDevice()->
-		CreateShaderResourceView(buffer, &srvDesc, srvCpuHandle);
-
-	srvIncrementIndex_++;
 }
-void TextureManager::CreateSRV(RenderTexture& texture, ID3D12Resource* buffer, uint32_t index)
+
+// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹æ§­ãƒ£ç¹åŠ±ãƒ»èœ¿é–€ï½¾ãƒ»
+std::unordered_map<std::string, std::unique_ptr<ITexture>>* TextureManager::GetTextureMap()
 {
-	// SRVƒq[ƒv‚Ìæ“ªƒnƒ“ƒhƒ‹‚ğæ“¾
-	D3D12_CPU_DESCRIPTOR_HANDLE srvCpuHandle = srvDescHeap_->GetCPUDescriptorHandleForHeapStart();
-	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvDescHeap_->GetGPUDescriptorHandleForHeapStart();
-
-	UINT descriptorSize = RenderBase::GetInstance()->GetDevice()->
-		GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-
-	srvCpuHandle.ptr += (SIZE_T)(descriptorSize * srvIncrementIndex_);
-	srvGpuHandle.ptr += (SIZE_T)(descriptorSize * srvIncrementIndex_);
-
-	texture.cpuHandles[index] = srvCpuHandle;
-	texture.gpuHandles[index] = srvGpuHandle;
-
-	// ƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[İ’è
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	// srvİ’è\‘¢‘Ì
-	srvDesc.Format = buffer->GetDesc().Format;
-	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	// 2DƒeƒNƒXƒ`ƒƒ
-	srvDesc.Texture2D.MipLevels = buffer->GetDesc().MipLevels;
-
-	// ƒnƒ“ƒhƒ‹‚Ìw‚·ˆÊ’u‚ÉƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[ì¬
-	RenderBase::GetInstance()->GetDevice()->
-		CreateShaderResourceView(buffer, &srvDesc, srvCpuHandle);
-
-	srvIncrementIndex_++;
+	return &GetInstance()->mTextureMap;
 }
 
-// ƒeƒNƒXƒ`ƒƒ[ƒ[ƒhŒã‚ÌƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÌÀs
+// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹æ§­ãƒ£ç¹åŠ±ãƒ»èœ¿é–€ï½¾ãƒ»
+std::unordered_map<std::string, std::unique_ptr<Texture>>* TextureManager::GetMaterialTextureMap()
+{
+	return &GetInstance()->mMaterialTextureMap;
+}
+
+// ç¹ï½¬ç¹ï½³ç¹Â€ç¹ï½¼ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹æ§­ãƒ£ç¹åŠ±ãƒ»èœ¿é–€ï½¾ãƒ»
+std::unordered_map<std::string, std::unique_ptr<RenderTexture>>* TextureManager::GetRenderTextureMap()
+{
+	return &GetInstance()->mRenderTextureMap;
+}
+
+// ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•ç¹ï½¼ç¹ï½­ç¹ï½¼ç¹ç‰™ï½¾å¾Œãƒ»ç¹§ï½³ç¹æ§­Î¦ç¹å³¨Îœç¹§ï½¹ç¹åŒ»ãƒ»è³æº¯ï½¡ãƒ»
 void TextureManager::ExcuteComandList()
 {
 	ID3D12GraphicsCommandList* iCommandList = RenderBase::GetInstance()->GetCommandList();
@@ -783,10 +584,9 @@ void TextureManager::ExcuteComandList()
 
 	RenderBase::GetInstance()->PreIncrimentFenceValue();
 
-	// ƒRƒ}ƒ“ƒh‚ÌÀsŠ®—¹‚ğ‘Ò‚Â
+	// ç¹§ï½³ç¹æ§­Î¦ç¹å³¨ãƒ»è³æº¯ï½¡æ‚Ÿï½®å¾¡ï½ºãƒ»ï½’è •ãƒ»â–½
 	iCommandQueue->Signal(RenderBase::GetInstance()->GetFence(), RenderBase::GetInstance()->GetFenceValue());
 
-	auto test = RenderBase::GetInstance()->GetFence()->GetCompletedValue();
 	if (RenderBase::GetInstance()->GetFence()->GetCompletedValue() != RenderBase::GetInstance()->GetFenceValue())
 	{
 		HANDLE event = CreateEvent(nullptr, false, false, nullptr);
@@ -797,12 +597,11 @@ void TextureManager::ExcuteComandList()
 
 	HRESULT result;
 
-	// ƒLƒ…[‚ğƒNƒŠƒA
+	// ç¹§ï½­ç¹ï½¥ç¹ï½¼ç¹§åµã‘ç¹ï½ªç¹§ï½¢
 	result = RenderBase::GetInstance()->GetCommandAllocator()->Reset();
 	assert(SUCCEEDED(result));
-	// Ä‚ÑƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğ’™‚ß‚é€”õ
+	// èœ€é˜ªãƒ»ç¹§ï½³ç¹æ§­Î¦ç¹å³¨Îœç¹§ï½¹ç¹åŒ»ï½’é›‹ï½¯ç¹§âˆšï½‹è²…é–€ï½™
 	result = iCommandList->Reset(RenderBase::GetInstance()->GetCommandAllocator(), nullptr);
 	assert(SUCCEEDED(result));
 }
 
-#pragma endregion

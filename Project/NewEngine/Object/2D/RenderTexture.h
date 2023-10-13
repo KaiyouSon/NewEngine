@@ -3,30 +3,35 @@
 #include "IndexBuffer.h"
 #include "ConstantBuffer.h"
 #include "RenderTarget.h"
-#include "MathUtil.h"
+#include "Vec2.h"
 #include <vector>
 #include <memory>
-#include <d3dx12.h>
 #include <wrl.h>
 
-class RenderTexture// : public Texture
+DirectX12WarningDisableBegin
+#include <d3dx12.h>
+DirectX12WarningDisableEnd
+
+class RenderTexture
 {
 private:
-	std::vector<CD3DX12_VIEWPORT> viewports_;	// ƒrƒ…[ƒ|[ƒg
-	std::vector<CD3DX12_RECT> scissorRects_;		// ƒVƒU[‹éŒ`
+	std::vector<CD3DX12_VIEWPORT> mViewports;	// ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆ
+	std::vector<CD3DX12_RECT> mScissorRects;	// ã‚·ã‚¶ãƒ¼çŸ©å½¢
+
+private:
+	std::vector<BufferResource> mBufferResources;
 
 public:
 	static const float sClearColor[4];
-	std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> cpuHandles; //SRV‚Ìƒnƒ“ƒhƒ‹(CPU‘¤)
-	std::vector<D3D12_GPU_DESCRIPTOR_HANDLE> gpuHandles; //SRV‚Ìƒnƒ“ƒhƒ‹(GPU‘¤)
-	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> buffers; //ƒeƒNƒXƒ`ƒƒ‚ÌƒŠƒ\[ƒX
-	std::vector<RenderTarget> renderTargets;
-	DepthBuffer depthBuffer;
 	std::unique_ptr<Texture> depthTexture;
+	DepthBuffer depthBuffer;
 	Vec2 size;
 	bool useDepth = false;
 
 public:
 	void PrevDrawScene();
 	void PostDrawScene();
+
+public: // ã‚²ãƒƒã‚¿ãƒ¼
+	std::vector<BufferResource>* GetBufferResources();
 };

@@ -7,19 +7,21 @@
 class ModelManager
 {
 private:
-	static std::unordered_map<std::string, std::unique_ptr<Model>> sModelMap_;	// ƒ‚ƒfƒ‹‚Ìƒ}ƒbƒv
-	static std::mutex sMtx_;	// ”r‘¼§Œä
-	static std::string sDirectoryPath_;
+	static std::unordered_map<std::string, std::unique_ptr<Model>> sModelMap;	// ç¹ï½¢ç¹ãƒ»Îç¸ºï½®ç¹æ§­ãƒ£ç¹ãƒ»
+	static std::mutex sMtx;	// è¬—å‰ƒï½»é–€å®›è •ï½¡
+	static std::string sDirectoryPath;
 
-public:	// ƒ‚ƒfƒ‹ŠÖ˜A
-	// ƒ‚ƒfƒ‹‚Ìæ“¾
+public:	// ç¹ï½¢ç¹ãƒ»Îé«¢ï½¢é¨¾ï½£
+	// ç¹ï½¢ç¹ãƒ»Îç¸ºï½®èœ¿é–€ï½¾ãƒ»
 	static Model* GetModel(const std::string modelTag);
 
-	// objƒtƒ@ƒCƒ‹‚©‚çƒ‚ƒfƒ‹‚ğƒ[ƒh‚µƒ}ƒbƒv‚ÌŠi”[‚·‚é
+	// objç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¸ºä¹ï½‰ç¹ï½¢ç¹ãƒ»Îç¹§åµÎŸç¹ï½¼ç¹å³¨ï¼ ç¹æ§­ãƒ£ç¹åŠ±ãƒ»è­¬ï½¼é‚é˜ªâ˜†ç¹§ãƒ»
 	static Model* LoadObjModel(const std::string fileName, const std::string modelTag, const bool isSmoothing = false);
 
-	// fbxƒtƒ@ƒCƒ‹‚©‚çƒ‚ƒfƒ‹‚ğƒ[ƒh‚µƒ}ƒbƒv‚ÌŠi”[‚·‚é
+	// fbxç¹è¼”ãƒç¹§ï½¤ç¹ï½«ç¸ºä¹ï½‰ç¹ï½¢ç¹ãƒ»Îç¹§åµÎŸç¹ï½¼ç¹å³¨ï¼ ç¹æ§­ãƒ£ç¹åŠ±ãƒ»è­¬ï½¼é‚é˜ªâ˜†ç¹§ãƒ»
 	static Model* LoadFbxModel(const std::string fileName, const std::string modelTag);
+
+	static std::unordered_map<std::string, std::unique_ptr<Model>>* GetModelMap();
 
 	static void LoadMaterialColor(std::string filePath, Model* model);
 };

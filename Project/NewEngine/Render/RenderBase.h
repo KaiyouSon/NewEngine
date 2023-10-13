@@ -1,13 +1,17 @@
 #pragma once
 #include "RenderWindow.h"
-#include "ShaderObject.h"
+#include "ShaderCompiler.h"
 #include "RootSignature.h"
-#include "GraphicsPipelineManager.h"
+#include "PipelineManager.h"
 #include "Texture.h"
 #include "RenderTarget.h"
 #include "DepthBuffer.h"
+#include "IConstantBuffer.h"
+#include "BufferResource.h"
 #include "Viewport.h"
 #include "ScissorRectangle.h"
+#include "DescriptorHeapManager.h"
+#include "NewEngineDefine.h"
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <vector>
@@ -21,20 +25,54 @@ class RenderBase// : public Singleton<RenderBase>
 {
 public:
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr <T>;
-	static float sClearColor_[4];
+	static float sClearColor[4];
+
+private:
+	// ç¹ãƒ»ãƒ°ç¹§ï½¤ç¹§ï½¹é«¢ï½¢é¨¾ï½£
+	ComPtr<ID3D12Device> mDevice;
+	ComPtr<IDXGIFactory7> mDxgiFactory;
+
+	// ç¹§ï½³ç¹æ§­Î¦ç¹è›¾æœªé¨¾ï½£
+	ComPtr<ID3D12CommandAllocator> mCommandAllocator;
+	ComPtr<ID3D12GraphicsCommandList> mCommandList;
+	ComPtr<ID3D12CommandQueue> mCommandQueue;
+
+	// ç¹§ï½¹ç¹ï½¯ç¹ãƒ»ãƒ»ç¹âˆšã‰ç¹ï½¼ç¹ï½³
+	ComPtr<IDXGISwapChain4> mSwapChain;
+	D3D12_DESCRIPTOR_HEAP_DESC mRtvHeapDesc;		 // rtvéšªï½­è³å£½ï½§çŸ©Â€ï£°è´ãƒ»
+	std::array<std::unique_ptr<RenderTarget>, 2> mBackBuffers;
+
+	// ç¹è¼”ã‰ç¹ï½³ç¹§ï½¹
+	ComPtr<ID3D12Fence> mFence;
+	UINT64 mFenceValue;
+
+	// è±ºï½±è ï½¦ç¹èˆŒãƒ£ç¹è¼”ãƒ
+	std::unique_ptr<DepthBuffer> mDepthBuffer;
+
+	// ç¹ï½«ç¹ï½¼ç¹åŒ»ã™ç¹§ï½°ç¹é˜ªãƒ¡ç¹ï½£ç¹ï½¼é«¢ï½¢é¨¾ï½£
+	ComPtr<ID3DBlob> mErrorBlob;	// ç¹§ï½¨ç¹ï½©ç¹ï½¼ç¹§ï½ªç¹æ‚¶ãšç¹§ï½§ç¹§ï½¯ç¹ãƒ»
+
+	// è¬ å†—åˆ¤èœƒï½¦é€…ãƒ»æœªé¨¾ï½£
+	D3D12_RESOURCE_BARRIER mBarrierDesc;	// ç¹ï½ªç¹§ï½½ç¹ï½¼ç¹§ï½¹ç¹èˆŒÎœç¹§ï½¢
+	std::unique_ptr<Viewport> mViewport;
+	std::unique_ptr<ScissorRectangle> mScissorRectangle;
+
+	RenderWindow* mRenderWindow;
 
 public:
 	void Init();
 	void PreDraw();
 	void PostDraw();
-	void SetObject3DDrawCommand();
-	void SetSpriteDrawCommand();
-	void SetRenderTextureDrawCommand();
-	void CreateRTV(RenderTarget& renderTarget, const D3D12_RENDER_TARGET_VIEW_DESC* rtvDesc);
-	void CreateDSV(DepthBuffer& depthBuffer);
+	void PreIncrimentFenceValue() { ++mFenceValue; }
+
+public:
+	void TransitionBufferState(
+		BufferResource* bufferResource,
+		const D3D12_RESOURCE_STATES currentState,
+		const D3D12_RESOURCE_STATES targetState);
 
 private:
-	// ‰Šú‰»ŠÖ˜A
+	// è›»æ™„æ‚„è›¹å¤œæœªé¨¾ï½£
 	void DeviceInit();
 	void CommandInit();
 	void SwapChainInit();
@@ -42,67 +80,18 @@ private:
 	void DepthBufferInit();
 	void DescriptorHeapInit();
 	void ShaderCompilerInit();
-	void RootSignatureInit();
 	void GraphicsPipelineInit();
+	void ComputePipelineInit();
 
 public:
-	inline ID3D12Device* GetDevice() const { return device_.Get(); }
-	inline ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
-	inline ID3D12CommandQueue* GetCommandQueue() const { return commandQueue_.Get(); }
-	inline ID3D12CommandAllocator* GetCommandAllocator() const { return commandAllocator_.Get(); }
-	inline ID3D12Fence* GetFence() const { return fence_.Get(); }
-
-	inline RootSignature* GetObject3DRootSignature() const { return object3DRootSignature_.get(); }
-	inline RootSignature* GetSpriteRootSignature() const { return spriteRootSignature_.get(); }
-	inline RootSignature* GetRenderTextureRootSignature() const { return renderTextureRootSignature_.get(); }
-
-	inline DepthBuffer* GetDepthBuffer() const { return depthBuffer_.get(); }
-
-	inline Viewport* GetViewport() const { return viewport_.get(); }
-
-	inline void PreIncrimentFenceValue() { ++fenceVal_; }
-	inline UINT64 GetFenceValue() { return fenceVal_; }
-private:
-
-	// ƒfƒoƒCƒXŠÖ˜A
-	ComPtr<ID3D12Device> device_;
-	ComPtr<IDXGIFactory7> dxgiFactory_;
-
-	// ƒRƒ}ƒ“ƒhŠÖ˜A
-	ComPtr<ID3D12CommandAllocator> commandAllocator_;
-	ComPtr<ID3D12GraphicsCommandList> commandList_;
-	ComPtr<ID3D12CommandQueue> commandQueue_;
-
-	// ƒXƒƒbƒvƒ`ƒF[ƒ“
-	ComPtr<IDXGISwapChain4> swapChain_;
-	D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc_;		 // rtvİ’è\‘¢‘Ì
-	std::array<std::unique_ptr<RenderTarget>, 2> backBuffers_;
-
-	// ƒtƒFƒ“ƒX
-	ComPtr<ID3D12Fence> fence_;
-	UINT64 fenceVal_ = 0;
-
-	// [“xƒoƒbƒtƒ@
-	std::unique_ptr<DepthBuffer> depthBuffer_;
-
-	// ƒeƒBƒXƒNƒŠƒvƒ^ƒq[ƒv
-	ComPtr<ID3D12DescriptorHeap> rtvDescHeap_;		// rtv—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
-	ComPtr<ID3D12DescriptorHeap> dsvDescHeap_;		// dsv—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
-	UINT rtvIncrementIndex_;
-	UINT dsvIncrementIndex_;
-
-	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ[ŠÖ˜A
-	ComPtr <ID3DBlob> errorBlob_;	// ƒGƒ‰[ƒIƒuƒWƒFƒNƒg
-	std::unique_ptr<RootSignature> object3DRootSignature_;
-	std::unique_ptr<RootSignature> spriteRootSignature_;
-	std::unique_ptr<RootSignature> renderTextureRootSignature_;
-
-	// •`‰æˆ—ŠÖ˜A
-	D3D12_RESOURCE_BARRIER barrierDesc_;	// ƒŠƒ\[ƒXƒoƒŠƒA
-	std::unique_ptr<Viewport> viewport_;
-	std::unique_ptr<ScissorRectangle> scissorRectangle_;
-
-	RenderWindow* renderWindow_;
+	ID3D12Device* GetDevice() const;
+	ID3D12GraphicsCommandList* GetCommandList() const;
+	ID3D12CommandQueue* GetCommandQueue() const;
+	ID3D12CommandAllocator* GetCommandAllocator() const;
+	ID3D12Fence* GetFence() const;
+	DepthBuffer* GetDepthBuffer() const;
+	Viewport* GetViewport() const;
+	UINT64 GetFenceValue() const;
 
 private:
 	RenderBase() {}

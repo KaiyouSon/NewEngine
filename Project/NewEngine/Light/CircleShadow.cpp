@@ -24,7 +24,7 @@ void CircleShadow::Draw()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Æƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚ÌCBV‚ÌÝ’èƒRƒ}ƒ“ƒh
+	// ãƒžãƒ†ãƒªã‚¢ãƒ«ã¨ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã®CBVã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		6, constantBufferCircleShadow_->constantBuffer->GetGPUVirtualAddress());
+		6, constantBufferCircleShadow_->bufferResource->buffer->GetGPUVirtualAddress());
 }

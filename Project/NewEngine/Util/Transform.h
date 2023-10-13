@@ -2,34 +2,34 @@
 #include "Vec3.h"
 #include "Billboard.h"
 
+// ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã‚¯ãƒ©ã‚¹
 class Transform
 {
 private:
-	Mat4 scaleMat_;	// ƒXƒP[ƒ‹s—ñ
-	Mat4 rotMat_;	// ‰ñ“]s—ñ
-	Mat4 transMat_;	// •½sˆÚ“®s—ñ
-	Mat4 worldMat_;	// ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	Mat4 mScaleMat;  // ã‚¹ã‚±ãƒ¼ãƒ«è¡Œåˆ—
+	Mat4 mRotMat;    // å›è»¢è¡Œåˆ—
+	Mat4 mTransMat;  // ä½ç½®å¤‰æ›è¡Œåˆ—
+	Mat4 mWorldMat;  // ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
 
-	Billboard billboard_;
+	Billboard mBillboard;
 
 public:
-	Vec3 pos;	// À•W
-	Vec3 scale;	// ƒXƒP[ƒ‹
-	Vec3 rot;	// ‰ñ“]
+	Vec3 pos;     // ä½ç½®
+	Vec3 scale;   // ã‚¹ã‚±ãƒ¼ãƒ«
+	Vec3 rot;     // å›è»¢
 
 public:
 	Transform();
 	Transform(const Vec3 pos, const Vec3 scale, const Vec3 rot);
 	void Update();
 
-public: // ƒQƒbƒ^[
+public: // è¡Œåˆ—å–å¾—
 	Mat4 GetTransMat();
 	Mat4 GetScaleMat();
 	Mat4 GetRotMat();
 	Mat4 GetWorldMat();
 
-public: // ƒZƒbƒ^[
+public: // ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—è¨­å®š
 	void SetWorldMat(Mat4 worldMat);
 	void SetBillboardType(const BillboardType type);
 };
-

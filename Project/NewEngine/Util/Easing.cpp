@@ -3,183 +3,237 @@
 #include <math.h>
 
 Easing::Easing() :
-	timer_(0), timeRate_(0),
-	limitTimer_(0), powNum_(1), isEnd_(false)
+	mTimer(0), mTimeRate(0),
+	mLimitTimer(0), mPowNum(1), mIsEnd(false)
 {
 }
 Easing::Easing(const int32_t easeTimer) :
-	timer_(0), timeRate_(0),
-	limitTimer_(easeTimer), powNum_(1), isEnd_(false)
+	mTimer(0), mTimeRate(0),
+	mLimitTimer(easeTimer), mPowNum(1), mIsEnd(false)
 {
 }
 Easing::Easing(const int32_t easeTimer, const float powNum) :
-	timer_(0), timeRate_(0),
-	limitTimer_(easeTimer), powNum_(powNum), isEnd_(false)
+	mTimer(0), mTimeRate(0),
+	mLimitTimer(easeTimer), mPowNum(powNum), mIsEnd(false)
 {
 }
 
 void Easing::Reset()
 {
-	timer_ = 0;
-	timeRate_ = 0;
-	isEnd_ = false;
+	mTimer = 0;
+	mTimeRate = 0;
+	mIsEnd = false;
 }
 
 void Easing::Update()
 {
-	timer_++;
-	if (timeRate_ >= 1)
+	mTimer++;
+	if (mTimeRate >= 1)
 	{
-		isEnd_ = true;
+		mIsEnd = true;
 	}
 
-	timer_ = Min<int32_t>(timer_, limitTimer_);
-	timeRate_ = Min<float>((float)timer_ / limitTimer_, 1);
+	mTimer = Min<int32_t>(mTimer, mLimitTimer);
+	mTimeRate = Min<float>((float)mTimer / mLimitTimer, 1);
 }
 
-// ���[�v
+// 繧､繝ｼ繧ｸ繝ｳ繧ｰ邨ゅｏ繧・
+bool Easing::GetisEnd()
+{
+	return mIsEnd;
+}
+// 繧ｿ繧､繝槭・蜿門ｾ・
+int32_t Easing::GetTimer()
+{
+	return mTimer;
+}
+// 繧ｿ繧､繝繝ｬ繝ｼ繝医ｒ蜿門ｾ・
+float Easing::GetTimeRate()
+{
+	return mTimeRate;
+}
+// 陬憺俣繧ｿ繧､繝繧貞叙蠕・
+uint32_t Easing::GetEaseTimer()
+{
+	return mLimitTimer;
+}
+
+float Easing::Interpolation(const float startPos, const float endPos)
+{
+	switch (mEaseType)
+	{
+	case EaseType::Lerp:
+		return Lerp(startPos, endPos);
+
+	case EaseType::In:
+		return In(startPos, endPos);
+
+	case EaseType::Out:
+		return Out(startPos, endPos);
+
+	case EaseType::InOut:
+		return InOut(startPos, endPos);
+
+	default:
+		return 0;
+	}
+}
+
+Vec2 Easing::Interpolation(const Vec2 startPos, const Vec2 endPos)
+{
+	switch (mEaseType)
+	{
+	case EaseType::Lerp:
+		return Lerp(startPos, endPos);
+
+	case EaseType::In:
+		return In(startPos, endPos);
+
+	case EaseType::Out:
+		return Out(startPos, endPos);
+
+	case EaseType::InOut:
+		return InOut(startPos, endPos);
+
+	default:
+		return 0;
+	}
+}
+
+Vec3 Easing::Interpolation(const Vec3 startPos, const Vec3 endPos)
+{
+	switch (mEaseType)
+	{
+	case EaseType::Lerp:
+		return Lerp(startPos, endPos);
+
+	case EaseType::In:
+		return In(startPos, endPos);
+
+	case EaseType::Out:
+		return Out(startPos, endPos);
+
+	case EaseType::InOut:
+		return InOut(startPos, endPos);
+
+	default:
+		return 0;
+	}
+}
+// 繝ｩ繝ｼ繝・
 float Easing::Lerp(const float startPos, const float endPos)
 {
 	float dis = endPos - startPos;
-	return dis * timeRate_ + startPos;
+	return dis * mTimeRate + startPos;
 }
 Vec2 Easing::Lerp(const Vec2 startPos, const Vec2 endPos)
 {
 	Vec2 dis = endPos - startPos;
-	return dis * timeRate_ + startPos;
+	return dis * mTimeRate + startPos;
 }
 Vec3 Easing::Lerp(const Vec3 startPos, const Vec3 endPos)
 {
 	Vec3 dis = endPos - startPos;
-	return dis * timeRate_ + startPos;
+	return dis * mTimeRate + startPos;
 }
 
-// �C�[�Y�C��
+// 繧､繝ｼ繧ｺ繧､繝ｳ
 float Easing::In(const float startPos, const float endPos)
 {
 	float dis = endPos - startPos;
-	return dis * powf(timeRate_, powNum_) + startPos;
+	return dis * powf(mTimeRate, mPowNum) + startPos;
 }
 Vec2 Easing::In(const Vec2 startPos, const Vec2 endPos)
 {
 	Vec2 dis = endPos - startPos;
-	return dis * powf(timeRate_, powNum_) + startPos;
+	return dis * powf(mTimeRate, mPowNum) + startPos;
 }
 Vec3 Easing::In(const Vec3 startPos, const Vec3 endPos)
 {
 	Vec3 dis = endPos - startPos;
-	return dis * powf(timeRate_, powNum_) + startPos;
+	return dis * powf(mTimeRate, mPowNum) + startPos;
 }
 
-// �C�[�Y�A�E�g
+// 繧､繝ｼ繧ｺ繧｢繧ｦ繝・
 float Easing::Out(const float startPos, const float endPos)
 {
 	float dis = endPos - startPos;
-	if ((int32_t)powNum_ % 2 == 1)
+	if ((int32_t)mPowNum % 2 == 1)
 	{
-		return dis * (powf(timeRate_ - 1, powNum_) + 1) + startPos;
+		return dis * (powf(mTimeRate - 1, mPowNum) + 1) + startPos;
 	}
-	else if ((int32_t)powNum_ % 2 == 0)
-	{
-		return dis * -1 * (powf(timeRate_ - 1, powNum_) - 1) + startPos;
-	}
-
-	return -1;
+	return dis * -1 * (powf(mTimeRate - 1, mPowNum) - 1) + startPos;
 }
 Vec2 Easing::Out(const Vec2 startPos, const Vec2 endPos)
 {
 	Vec2 dis = endPos - startPos;
-	if ((int32_t)powNum_ % 2 == 1)
+	if ((int32_t)mPowNum % 2 == 1)
 	{
-		return dis * (powf(timeRate_ - 1, powNum_) + 1) + startPos;
+		return dis * (powf(mTimeRate - 1, mPowNum) + 1) + startPos;
 	}
-	else if ((int32_t)powNum_ % 2 == 0)
-	{
-		return dis * -1 * (powf(timeRate_ - 1, powNum_) - 1) + startPos;
-	}
-
-	return -1;
+	return dis * -1 * (powf(mTimeRate - 1, mPowNum) - 1) + startPos;
 }
 Vec3 Easing::Out(const Vec3 startPos, const Vec3 endPos)
 {
 	Vec3 dis = endPos - startPos;
-	if ((int32_t)powNum_ % 2 == 1)
+	if ((int32_t)mPowNum % 2 == 1)
 	{
-		return dis * (powf(timeRate_ - 1, powNum_) + 1) + startPos;
+		return dis * (powf(mTimeRate - 1, mPowNum) + 1) + startPos;
 	}
-	else if ((int32_t)powNum_ % 2 == 0)
-	{
-		return dis * -1 * (powf(timeRate_ - 1, powNum_) - 1) + startPos;
-	}
-
-	return -1;
+	return dis * -1 * (powf(mTimeRate - 1, mPowNum) - 1) + startPos;
 }
 
-// �C���A�E�g
+// 繧､繝ｳ繧｢繧ｦ繝・
 float Easing::InOut(const float startPos, const float endPos)
 {
 	float dis = (endPos - startPos);
 
-	if (timeRate_ < 0.5f)
+	if (mTimeRate < 0.5f)
 	{
-		return dis / 2.f * powf(timeRate_ * 2.f, powNum_) + startPos;
+		return dis / 2.f * powf(mTimeRate * 2.f, mPowNum) + startPos;
 	}
-	else
-	{
-		return -dis / 2.f * (powf((1.f - (timeRate_ - 0.5f) * 2.f), powNum_) - 2.f) + startPos;
-	}
+	return -dis / 2.f * (powf((1.f - (mTimeRate - 0.5f) * 2.f), mPowNum) - 2.f) + startPos;
 
-	return -1;
 }
 Vec2 Easing::InOut(const Vec2 startPos, const Vec2 endPos)
 {
 	Vec2 dis = (endPos - startPos) / 2;
-	if (timeRate_ < 0.5f)
+	if (mTimeRate < 0.5f)
 	{
 		return In(startPos, endPos);
 	}
-	else
-	{
-		return Out(startPos, endPos);
-	}
-
-	return -1;
+	return Out(startPos, endPos);
 }
 Vec3 Easing::InOut(const Vec3 startPos, const Vec3 endPos)
 {
 	Vec3 dis = (endPos - startPos);
 
-	if (timeRate_ < 0.5f)
+	if (mTimeRate < 0.5f)
 	{
-		return dis / 2.f * powf(timeRate_ * 2.f, powNum_) + startPos;
+		return dis / 2.f * powf(mTimeRate * 2.f, mPowNum) + startPos;
 	}
-	else
-	{
-		return -dis / 2.f * (powf((1.f - (timeRate_ - 0.5f) * 2.f), powNum_) - 2.f) + startPos;
-	}
-
-	return -1;
+	return -dis / 2.f * (powf((1.f - (mTimeRate - 0.5f) * 2.f), mPowNum) - 2.f) + startPos;
 }
 
-// �C���o�b�N
+// 繧､繝ｳ繝舌ャ繧ｯ
 float Easing::InBack(const float startPos, const float endPos)
 {
 	const float back1 = 1.70154f;
 
 	float dis = endPos - startPos;
-	return dis * powf(timeRate_, powNum_) * ((back1 + 1.0f) * timeRate_ - back1) + startPos;
+	return dis * powf(mTimeRate, mPowNum) * ((back1 + 1.0f) * mTimeRate - back1) + startPos;
 }
 Vec2 Easing::InBack(const Vec2 startPos, const Vec2 endPos)
 {
 	const float back1 = 1.70154f;
 
 	Vec2 dis = endPos - startPos;
-	return dis * powf(timeRate_, powNum_) * ((back1 + 1.0f) * timeRate_ - back1) + startPos;
+	return dis * powf(mTimeRate, mPowNum) * ((back1 + 1.0f) * mTimeRate - back1) + startPos;
 }
 Vec3 Easing::InBack(const Vec3 startPos, const Vec3 endPos)
 {
 	const float back1 = 1.70154f;
 
 	Vec3 dis = endPos - startPos;
-	return dis * powf(timeRate_, powNum_) * ((back1 + 1.0f) * timeRate_ - back1) + startPos;
+	return dis * powf(mTimeRate, mPowNum) * ((back1 + 1.0f) * mTimeRate - back1) + startPos;
 }

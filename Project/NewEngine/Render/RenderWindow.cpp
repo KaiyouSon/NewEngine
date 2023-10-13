@@ -3,66 +3,80 @@
 #include <Windows.h>
 #pragma comment(lib,"winmm.lib")
 
+RenderWindow::RenderWindow() :
+	mSize(Vec2(1920, 1080)), mTitle("empty")
+{
+}
+
 void RenderWindow::CreateGameWindow()
 {
-	// ƒVƒXƒeƒ€ƒ^ƒCƒ}[‚Ì•ª‰ğ”\‚ğã‚°‚é
+	// ç¹§ï½·ç¹§ï½¹ç¹ãƒ»Î’ç¹§ï½¿ç¹§ï½¤ç¹æ§­ãƒ»ç¸ºï½®è›»ãƒ»ï½§ï½£é–­ï½½ç¹§å‰ƒï½¸ç¿«ï¿¡ç¹§ãƒ»
 	timeBeginPeriod(1);
 
-	// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚Ìİ’è
-	wndClass_.cbSize = sizeof(WNDCLASSEX);
-	wndClass_.lpfnWndProc = (WNDPROC)WindowProc;		// ƒEƒCƒ“ƒhƒEƒvƒƒV[ƒWƒƒ‚ğİ’è
-	wndClass_.lpszClassName = L"DirectXGame";		// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX–¼
-	wndClass_.hInstance = GetModuleHandle(nullptr);	// ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
-	wndClass_.hCursor = LoadCursor(NULL, IDC_ARROW);	// ƒJ[ƒ\ƒ‹w’è
+	// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹§ï½¯ç¹ï½©ç¹§ï½¹ç¸ºï½®éšªï½­è³ãƒ»
+	mWndClass.cbSize = sizeof(WNDCLASSEX);
+	mWndClass.lpfnWndProc = (WNDPROC)WindowProc;		// ç¹§ï½¦ç¹§ï½¤ç¹ï½³ç¹å³¨ãˆç¹åŠ±ÎŸç¹§ï½·ç¹ï½¼ç¹§ï½¸ç¹ï½£ç¹§å®šï½¨ï½­è³ãƒ»
+	mWndClass.lpszClassName = L"DirectXGame";		// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹§ï½¯ç¹ï½©ç¹§ï½¹èœ·ãƒ»
+	mWndClass.hInstance = GetModuleHandle(nullptr);	// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹ä¸ŠÎ¦ç¹å³¨Î
+	mWndClass.hCursor = LoadCursor(NULL, IDC_ARROW);	// ç¹§ï½«ç¹ï½¼ç¹§ï½½ç¹ï½«è¬–ãƒ»ï½®ãƒ»
 
-	// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚ğOS‚É“o˜^
-	RegisterClassEx(&wndClass_);
-	// ƒEƒBƒ“ƒhƒEƒTƒCƒY{ XÀ•W YÀ•W c• ‰¡• }
-	RECT wrc = { 0,0,(LONG)size_.x,(LONG)size_.y };
-	// ©“®‚ÅƒTƒCƒY•â³‚·‚é
+	// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹§ï½¯ç¹ï½©ç¹§ï½¹ç¹§ä¸¹Sç¸ºï½«é€‹ï½»éª­ï½²
+	RegisterClassEx(&mWndClass);
+	// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹§ï½µç¹§ï½¤ç¹§ï½º{ Xè ï½§è®“ãƒ»Yè ï½§è®“ãƒ»é‚µï½¦èŸ·ãƒ»è®“ï½ªèŸ·ãƒ»}
+	RECT wrc = { 0,0,(LONG)mSize.x,(LONG)mSize.y };
+	// é–¾ï½ªèœè¼”ã€’ç¹§ï½µç¹§ï½¤ç¹§ï½ºé™¬æ‡ˆï½­ï½£ç¸ºå¶ï½‹
 	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
 
-	std::wstring wTITLE(title_.begin(), title_.end());
+	std::wstring wTtile(mTitle.begin(), mTitle.end());
 
-	// ƒEƒBƒ“ƒhƒEƒIƒuƒWƒFƒNƒg‚Ì¶¬
-	hwnd_ = (HWND)CreateWindow(
-		wndClass_.lpszClassName, // ƒNƒ‰ƒX–¼
-		wTITLE.c_str(),			// ƒ^ƒCƒgƒ‹ƒo[‚Ì•¶š
-		WS_OVERLAPPEDWINDOW,	// •W€“I‚ÈƒEƒBƒ“ƒhƒEƒXƒ^ƒCƒ‹
-		wrc.left,				// •\¦XÀ•W(OS‚É”C‚¹‚é)
-		0,						// •\¦YÀ•W(OS‚É”C‚¹‚é)
-		wrc.right - wrc.left,	// ƒEƒBƒ“ƒhƒE‰¡•
-		wrc.bottom - wrc.top,	// ƒEƒBƒ“ƒhƒEc•
-		nullptr,				// eƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
-		nullptr,				// ƒƒjƒ…[ƒnƒ“ƒhƒ‹
-		wndClass_.hInstance,		// ŒÄ‚Ño‚µƒAƒvƒŠƒP[ƒVƒ‡ƒ“ƒnƒ“ƒhƒ‹
-		nullptr);				// ƒIƒvƒVƒ‡ƒ“
+	// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹§ï½ªç¹æ‚¶ãšç¹§ï½§ç¹§ï½¯ç¹åŒ»ãƒ»é€•æ»“ãƒ»
+	mHwnd = (HWND)CreateWindow(
+		mWndClass.lpszClassName, // ç¹§ï½¯ç¹ï½©ç¹§ï½¹èœ·ãƒ»
+		wTtile.c_str(),			 // ç¹§ï½¿ç¹§ï½¤ç¹åŒ»Îç¹èˆŒãƒ»ç¸ºï½®è­ãƒ»ï½­ãƒ»
+		WS_OVERLAPPEDWINDOW,	 // è®“å‘ï½ºä¹Ÿå™ªç¸ºï½ªç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹§ï½¹ç¹§ï½¿ç¹§ï½¤ç¹ï½«
+		wrc.left,				 // é™¦ï½¨é‰ï½ºXè ï½§è®“ãƒ»OSç¸ºï½«è‰ï½»ç¸ºå¸™ï½‹)
+		0,						 // é™¦ï½¨é‰ï½ºYè ï½§è®“ãƒ»OSç¸ºï½«è‰ï½»ç¸ºå¸™ï½‹)
+		wrc.right - wrc.left,	 // ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆè®“ï½ªèŸ·ãƒ»
+		wrc.bottom - wrc.top,	 // ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆé‚µï½¦èŸ·ãƒ»
+		nullptr,				 // éš•ï½ªç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹ä¸ŠÎ¦ç¹å³¨Î
+		nullptr,				 // ç¹ï½¡ç¹ä¹Î—ç¹ï½¼ç¹ä¸ŠÎ¦ç¹å³¨Î
+		mWndClass.hInstance,	 // èœ»ï½¼ç¸ºï½³èœƒï½ºç¸ºåŠ±ã„ç¹åŠ±Îœç¹§ï½±ç¹ï½¼ç¹§ï½·ç¹ï½§ç¹ï½³ç¹ä¸ŠÎ¦ç¹å³¨Î
+		nullptr);				 // ç¹§ï½ªç¹åŠ±ã™ç¹ï½§ç¹ï½³
 
-	// ƒEƒBƒ“ƒhƒE‚ğ•\¦ó‘Ô‚É‚·‚é
-	ShowWindow(hwnd_, SW_SHOW);
+	// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹§å®šï½¡ï½¨é‰ï½ºè¿¥ï½¶è«·ä¹â†“ç¸ºå¶ï½‹
+	ShowWindow(mHwnd, SW_SHOW);
 }
 
 void RenderWindow::TerminateGameWindow()
 {
-	// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚ğ“o˜^‰ğœ
-	UnregisterClass(wndClass_.lpszClassName, wndClass_.hInstance);
+	// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹§ï½¯ç¹ï½©ç¹§ï½¹ç¹§å ¤åŒ³éª­ï½²éš—ï½£é«¯ï½¤
+	UnregisterClass(mWndClass.lpszClassName, mWndClass.hInstance);
 }
 
 unsigned int RenderWindow::ProcessMessage()
 {
-	// ƒƒbƒZ[ƒW‚ª‚ ‚é?
-	if (PeekMessage(&msg_, nullptr, 0, 0, PM_REMOVE))
+	// ç¹ï½¡ç¹ãƒ»ãç¹ï½¼ç¹§ï½¸ç¸ºå¾Œâ‰ ç¹§ãƒ»
+	if (PeekMessage(&mMsg, nullptr, 0, 0, PM_REMOVE))
 	{
-		TranslateMessage(&msg_);	// ƒL[“ü—ÍƒƒbƒZ[ƒW‚Ìˆ—
-		DispatchMessage(&msg_);		// ƒvƒƒV[ƒWƒƒ‚ÉƒƒbƒZ[ƒW‚ğ‘—‚é
+		TranslateMessage(&mMsg);	// ç¹§ï½­ç¹ï½¼èœˆï½¥èœ‰å¸™Î“ç¹ãƒ»ãç¹ï½¼ç¹§ï½¸ç¸ºï½®èœƒï½¦é€…ãƒ»
+		DispatchMessage(&mMsg);		// ç¹åŠ±ÎŸç¹§ï½·ç¹ï½¼ç¹§ï½¸ç¹ï½£ç¸ºï½«ç¹ï½¡ç¹ãƒ»ãç¹ï½¼ç¹§ï½¸ç¹§å¸Â€âˆšï½‹
 	}
 
-	return msg_.message;
+	return mMsg.message;
 }
 
+// ç¹§ï½»ç¹ãƒ»ã¡ç¹ï½¼
+void RenderWindow::SetWindowTitle(const std::string& title) { mTitle = title; }
+void RenderWindow::SetWindowSize(const Vec2 size) { mSize = size; }
+
+// ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
+Vec2 RenderWindow::GetWindowSize() { return mSize; }
+HWND RenderWindow::GetHwnd() { return mHwnd; }
+HINSTANCE RenderWindow::GetHInstance() { return mWndClass.hInstance; }
+
+// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¹åŠ±ÎŸç¹§ï½·ç¹ï½¼ç¹§ï½¸ç¹ï½£
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
 	HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-// ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
 	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
@@ -70,17 +84,17 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		return true;
 	}
 
-	// ƒƒbƒZ[ƒW‚É‰‚¶‚ÄƒQ[ƒ€ŒÅ—L‚Ìˆ—‚ğs‚¤
+	// ç¹ï½¡ç¹ãƒ»ãç¹ï½¼ç¹§ï½¸ç¸ºï½«è ¢æ‡ŠÂ§ç¸ºï½¦ç¹§ï½²ç¹ï½¼ç¹ï£°è—ï½ºè­›å³¨ãƒ»èœƒï½¦é€…ãƒ»ï½’é™¦å¾Œâ‰§
 	switch (msg)
 	{
 	case WM_SIZE:
 		break;
-	case WM_DESTROY:			// ƒEƒBƒ“ƒhƒE‚ª”j‰ó‚³‚ê‚½
-		// OS‚É‘Î‚µ‚ÄAƒAƒvƒŠ‚ÌI—¹‚ğ“`‚¦‚é
+	case WM_DESTROY:			// ç¹§ï½¦ç¹§ï½£ç¹ï½³ç¹å³¨ãˆç¸ºæªï£°ï½´è¢ç¿«ï¼†ç¹§å¾Œâ—†
+		// OSç¸ºï½«èŸ‡ï½¾ç¸ºåŠ±â€»ç¸²âˆšã„ç¹åŠ±Îœç¸ºï½®é‚¨ã‚†ï½ºãƒ»ï½’è¨æ˜´âˆ´ç¹§ãƒ»
 		PostQuitMessage(0);
 		return 0;
 	}
 
-	// •W€‚ÌƒƒbƒZ[ƒWˆ—‚ğs‚¤
+	// è®“å‘ï½ºæ‚¶ãƒ»ç¹ï½¡ç¹ãƒ»ãç¹ï½¼ç¹§ï½¸èœƒï½¦é€…ãƒ»ï½’é™¦å¾Œâ‰§
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 }

@@ -1,19 +1,20 @@
 #pragma once
 #include "MathUtil.h"
+#include "ICollider.h"
 #include <array>
 
-// ----- ‰~ƒRƒ‰ƒCƒ_[ ------------------- //
-struct CircleCollider
+// ----- å††ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ ------------------- //
+struct CircleCollider : public ICollider
 {
 	Vec2 centerPos = 0;
 	float radius = 0;
 
 	CircleCollider();
-	CircleCollider(const Vec2& centerPos, const float& radius);
+	CircleCollider(const Vec2 centerPos, const float radius);
 };
 
-// ----- ‹éŒ`ƒRƒ‰ƒCƒ_[ ----------------- //
-struct SquareCollider
+// ----- çŸ©å½¢ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ ----------------- //
+struct SquareCollider : public ICollider
 {
 	Vec2 centerPos;
 	Vec2 size;
@@ -23,67 +24,71 @@ struct SquareCollider
 	Vec2 rightDown;
 
 	SquareCollider();
-	SquareCollider(const Vec2& centerPos, const Vec2& size);
+	SquareCollider(const Vec2 centerPos, const Vec2 size);
 };
 
-struct CubeCollider
+// ----- ã‚­ãƒ¥ãƒ¼ãƒ–ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ ------------- //
+struct CubeCollider : public ICollider
 {
 	Vec3 centerPos;
 	Vec3 size;
 	std::array<Vec3, 8> points;
 
+	CubeCollider();
+	CubeCollider(const Vec3 centerPos, const Vec3 size);
+
 	void CalcPoints();
 };
 
-// ----- ‹…ƒRƒ‰ƒCƒ_[ ------------------- //
-struct SphereCollider
+// ----- çƒã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ ------------------- //
+struct SphereCollider : public ICollider
 {
 	Vec3 centerPos = 0;
 	float radius = 0;
 
 	SphereCollider();
-	SphereCollider(const Vec3& centerPos, const float& radius);
+	SphereCollider(const Vec3 centerPos, const float radius);
 };
 
-// ----- ƒŒƒCƒRƒ‰ƒCƒ_[ ----------------- //
-struct RayCollider
+// ----- ãƒ¬ã‚¤ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ ----------------- //
+struct RayCollider : public ICollider
 {
 	Vec3 startPos;
 	Vec3 dirVec;
 
 	RayCollider();
-	RayCollider(const Vec3& startPos, const Vec3& dirVec);
+	RayCollider(const Vec3 startPos, const Vec3 dirVec);
 };
 
-// ----- •½–ÊƒRƒ‰ƒCƒ_[ ------------- //
-struct PlaneCollider
+// ----- å¹³é¢ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ ------------- //
+struct PlaneCollider : public ICollider
 {
-	Vec3 centerPos;		// ’†SÀ•W
-	Vec3 normal;		// –@üƒxƒNƒgƒ‹
+	Vec3 centerPos;		// ä¸­å¿ƒåº§æ¨™
+	Vec3 normal;		// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 
 	PlaneCollider();
-	PlaneCollider(const Vec3& centerPos, const Vec3& normal);
+	PlaneCollider(const Vec3 centerPos, const Vec3 normal);
 };
 
-// ----- OŠpŒ`ƒRƒ‰ƒCƒ_[ ----------- //
-struct TriangleCollider
+// ----- ä¸‰è§’å½¢ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ ----------- //
+struct TriangleCollider : public ICollider
 {
 	Vec3 p0;
 	Vec3 p1;
 	Vec3 p2;
-	Vec3 normal;		// –@üƒxƒNƒgƒ‹
+	Vec3 normal;		// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 
 	TriangleCollider();
-	TriangleCollider(const Vec3& p0, const Vec3& p1, const Vec3& p2);
+	TriangleCollider(const Vec3 p0, const Vec3 p1, const Vec3 p2);
 };
 
-// ----- ƒJƒvƒZƒ‹ƒRƒ‰ƒCƒ_[ --------- //
-struct CapsuleCollider
+// ----- ã‚«ãƒ—ã‚»ãƒ«ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ --------- //
+struct CapsuleCollider : public ICollider
 {
 	Vec3 startPos;
 	Vec3 endPos;
 	float radius;
 
 	CapsuleCollider();
-	CapsuleCollider(const Vec3& startPos, const Vec3& endPos, const float& radius);
+	CapsuleCollider(const Vec3 startPos, const Vec3 endPos, const float radius);
 };

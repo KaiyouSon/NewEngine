@@ -3,61 +3,61 @@
 using namespace std;
 
 BezierCurve::BezierCurve() :
-	timer_(0), timeRate_(0), isEnd_(false), startIndex_(1)
+	mTimer(0), mTimeRate(0), mIsEnd(false), mStartIndex(1)
 {
-	ease_.SetEaseTimer(0);
-	ease_.SetPowNum(1);
+	mEase.SetEaseTimer(0);
+	mEase.SetPowNum(1);
 }
 
-BezierCurve::BezierCurve(const int32_t ease_Timer) :
-	timer_(0), timeRate_(0), isEnd_(false), startIndex_(1)
+BezierCurve::BezierCurve(const int32_t mEaseTimer) :
+	mTimer(0), mTimeRate(0), mIsEnd(false), mStartIndex(1)
 {
-	ease_.SetEaseTimer(ease_Timer);
-	ease_.SetPowNum(1);
+	mEase.SetEaseTimer(mEaseTimer);
+	mEase.SetPowNum(1);
 }
 
-BezierCurve::BezierCurve(const int32_t ease_Timer, const float powNum) :
-	timer_(0), timeRate_(0), isEnd_(false), startIndex_(1)
+BezierCurve::BezierCurve(const int32_t mEaseTimer, const float powNum) :
+	mTimer(0), mTimeRate(0), mIsEnd(false), mStartIndex(1)
 {
-	ease_.SetEaseTimer(ease_Timer);
-	ease_.SetPowNum(powNum);
+	mEase.SetEaseTimer(mEaseTimer);
+	mEase.SetPowNum(powNum);
 }
 
 void BezierCurve::Reset()
 {
-	timer_ = 0;
-	timeRate_ = 0;
-	ease_.Reset();
-	isEnd_ = false;
+	mTimer = 0;
+	mTimeRate = 0;
+	mEase.Reset();
+	mIsEnd = false;
 }
 
 void BezierCurve::Update()
 {
-	if (points_.size() < 2) return;
+	if (mPoints.size() < 2) return;
 
-	ease_.Update();
-	if (ease_.GetisEnd() == true)
+	mEase.Update();
+	if (mEase.GetisEnd() == true)
 	{
-		ease_.Reset();
-		isEnd_ = true;
+		mEase.Reset();
+		mIsEnd = true;
 	}
 }
 
 Vec3 BezierCurve::InterPolation(const BezierType type)
 {
-	if (RecursiveLerp(points_, type).size() < 2) return { 0,0,0 };
+	if (RecursiveLerp(mPoints, type).size() < 2) return { 0,0,0 };
 
-	// “ñ‰ñ
+	// èŽ æ‚Ÿå±“
 	switch (type)
 	{
 	case BezierType::Lerp:
-		return ease_.Lerp(RecursiveLerp(points_, type)[0], RecursiveLerp(points_, type)[1]);
+		return mEase.Lerp(RecursiveLerp(mPoints, type)[0], RecursiveLerp(mPoints, type)[1]);
 		break;
 	case BezierType::EaseIn:
-		return ease_.In(RecursiveLerp(points_, type)[0], RecursiveLerp(points_, type)[1]);
+		return mEase.In(RecursiveLerp(mPoints, type)[0], RecursiveLerp(mPoints, type)[1]);
 		break;
 	case BezierType::EaseOut:
-		return ease_.Out(RecursiveLerp(points_, type)[0], RecursiveLerp(points_, type)[1]);
+		return mEase.Out(RecursiveLerp(mPoints, type)[0], RecursiveLerp(mPoints, type)[1]);
 		break;
 	default:
 		return Vec3::zero;
@@ -65,38 +65,38 @@ Vec3 BezierCurve::InterPolation(const BezierType type)
 	}
 }
 
-vector<Vec3> BezierCurve::RecursiveLerp(const vector<Vec3>& points_, const BezierType type)
+vector<Vec3> BezierCurve::RecursiveLerp(const vector<Vec3>& points, const BezierType type)
 {
 	vector<Vec3> tempPoints;
 
-	if (points_.size() < 3)
+	if (points.size() < 3)
 	{
-		return points_;
+		return points;
 	}
 	else
 	{
 		switch (type)
 		{
 		case BezierType::Lerp:
-			for (size_t i = 0; i < points_.size() - 1; i++)
+			for (size_t i = 0; i < points.size() - 1; i++)
 			{
-				tempPoints.push_back(ease_.Lerp(points_[i], points_[i + 1]));
+				tempPoints.push_back(mEase.Lerp(points[i], points[i + 1]));
 			}
 			return RecursiveLerp(tempPoints, type);
 			break;
 
 		case BezierType::EaseIn:
-			for (size_t i = 0; i < points_.size() - 1; i++)
+			for (size_t i = 0; i < points.size() - 1; i++)
 			{
-				tempPoints.push_back(ease_.In(points_[i], points_[i + 1]));
+				tempPoints.push_back(mEase.In(points[i], points[i + 1]));
 			}
 			return RecursiveLerp(tempPoints, type);
 			break;
 
 		case BezierType::EaseOut:
-			for (size_t i = 0; i < points_.size() - 1; i++)
+			for (size_t i = 0; i < points.size() - 1; i++)
 			{
-				tempPoints.push_back(ease_.Out(points_[i], points_[i + 1]));
+				tempPoints.push_back(mEase.Out(points[i], points[i + 1]));
 			}
 			return RecursiveLerp(tempPoints, type);
 			break;

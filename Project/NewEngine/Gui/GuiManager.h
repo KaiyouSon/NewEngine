@@ -2,58 +2,60 @@
 #include "imgui.h"
 #include "Util.h"
 #include "Texture.h"
+#include <stdint.h>
 
-template<typename T> class Singleton;
-
-class GuiManager : public Singleton<GuiManager>
+namespace Gui
 {
-private:
-	static const uint32_t sNumFramesInFlight_;
+	static const uint32_t sNumFramesInFlight = 3;;
 
-public:
 	void Init();
 	void PreDraw();
 	void PostDraw();
 	void Destroy();
 
-	static bool BeginWindow(const char* name, const Vec2& size = -1);
-	static void EndWindow();
-	static void BeginFullWindow(const char* name);
-	static void EndFullWindow();
+	bool BeginWindow(const char* name, const Vec2& size = -1, bool* isOpen = nullptr);
+	void EndWindow();
+	void BeginFullWindow(const char* name);
+	void EndFullWindow();
 
-	static void OpenPopModal(const char* tag);
-	static void ClosePopModal();
-	static bool BeginPopModal(const char* tag);
-	static void EndPopModal();
+	void OpenPopModal(const char* tag);
+	void ClosePopModal();
+	bool BeginPopModal(const char* tag);
+	void EndPopModal();
 
-	static void DrawDemoWindow(bool& flag);
+	bool DrawCollapsingHeader(const char* name);
 
-	static bool DrawButton(const char* label, const Vec2& size);
+	// 繝｡繝九Η繝ｼ髢｢騾｣
+	bool BeginMenuBar();
+	void EndMenuBar();
+	bool BeginMenu(const char* name);
+	void EndMenu();
+	bool MenuItem(const char* name);
 
-	static void DrawTab();
-	static void DrawLine();
+	void DrawDemoWindow(bool& flag);
 
-	static void DrawColumns(uint32_t space = 1, const bool& isBorder = false);
-	static void NextColumn();
+	bool DrawButton(const char* label, const Vec2& size);
 
-	static void DrawString(const char* fmt, ...);
-	static void DrawCheckBox(const char* label, bool* flag);
+	void DrawTab();
+	void DrawLine();
 
-	static bool DrawRadioButton(const char* label, int& current, const int& index, const bool& isTab = true);
+	void DrawColumns(uint32_t space = 1, const bool& isBorder = false);
+	void NextColumn();
 
-	static void DrawSlider1(const char* label, float& v, const float& moveSpeed = 1.f);
-	static void DrawSlider2(const char* label, Vec2& v, const float& moveSpeed = 1.f);
-	static void DrawSlider3(const char* label, Vec3& v, const float& moveSpeed = 1.f);
-	static void DrawColorEdit(const char* label, Color& color);
+	void DrawString(const char* fmt, ...);
+	void DrawCheckBox(const char* label, bool* flag);
 
-	static bool DrawInputInt(const char* label, int& v);
-	static bool DrawInputText(const char* label, const std::string& str);
+	bool DrawRadioButton(const char* label, uint32_t* current, const uint32_t index, const bool isTab = true);
 
-	static void DrawImage(Texture* texture, const Vec2& size);
-	static bool DrawImageButton(Texture* texture, const Vec2& size);
+	void DrawSlider1(const char* label, float& v, const float& moveSpeed = 1.f);
+	void DrawSlider2(const char* label, Vec2& v, const float& moveSpeed = 1.f);
+	void DrawSlider3(const char* label, Vec3& v, const float& moveSpeed = 1.f);
+	void DrawColorEdit(const char* label, Color& color);
 
+	bool DrawInputInt(const char* label, int& v);
+	bool DrawInputText(const char* label, const std::string& str);
 
-private:
-	friend Singleton<GuiManager>;
-	GuiManager() {};
+	void DrawImage(ITexture* texture, const Vec2& size);
+	void DrawImage(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle, const Vec2& size);
+	bool DrawImageButton(ITexture* texture, const Vec2& size);
 };

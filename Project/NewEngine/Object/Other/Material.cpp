@@ -2,7 +2,7 @@
 
 void Material::Init()
 {
-	// バッファの生成
+	// 繝舌ャ繝輔ぃ縺ｮ逕滓��
 	for (const auto& buffer : constantBuffers)
 	{
 		buffer->Create();

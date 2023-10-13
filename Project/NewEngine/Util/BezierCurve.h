@@ -1,20 +1,20 @@
 #pragma once
 #include "Vec3.h"
 #include "Easing.h"
-#include "Enum.h"
+#include "NewEngineEnum.h"
 #include <vector>
 #include <cstdint>
 
 class BezierCurve
 {
 private:
-	std::vector<Vec3> points_;
-	uint32_t startIndex_;
-	int32_t timer_;
-	float timeRate_;
-	bool isEnd_;
+	std::vector<Vec3> mPoints;
+	uint32_t mStartIndex;
+	int32_t mTimer;
+	float mTimeRate;
+	bool mIsEnd;
 
-	Easing ease_;
+	Easing mEase;
 
 public:
 	BezierCurve();
@@ -22,24 +22,24 @@ public:
 	BezierCurve(const int32_t easeTimer, const float powNum);
 	void Reset();
 	void Update();
-	Vec3 InterPolation(const BezierType type = BezierType::Lerp);	// •âŠÔ
+	Vec3 InterPolation(const BezierType type = BezierType::Lerp);	// é™¬æ†ºä¿£
 
 public:
 
-	// §Œä“_‚ğ’Ç‰Á
-	inline void AddPoint(const Vec3& pos) { points_.push_back(pos); }
+	// è›»ï½¶è •ï½¡è½¤ï½¹ç¹§å®šï½¿ï½½èœ‰ï£°
+	inline void AddPoint(const Vec3& pos) { mPoints.push_back(pos); }
 
-	// •âŠÔŠÔ‚ğƒZƒbƒg‚·‚é
-	inline void SetEaseTime(const int32_t easeTime) { ease_.SetEaseTimer(easeTime); }
+	// é™¬æ†ºä¿£è­ã‚‹ä¿£ç¹§åµãç¹ãƒ»ãƒ¨ç¸ºå¶ï½‹
+	inline void SetEaseTime(const int32_t easeTime) { mEase.SetEaseTimer(easeTime); }
 
-	// Næ‚ğƒZƒbƒg‚·‚é
-	inline void SetEasePowNum(const float pownum) { ease_.SetPowNum(pownum); }
+	// NèµåŠ±ï½’ç¹§ï½»ç¹ãƒ»ãƒ¨ç¸ºå¶ï½‹
+	inline void SetEasePowNum(const float pownum) { mEase.SetPowNum(pownum); }
 
-	// §Œä“_íœ
-	inline void ClearPoints() { points_.clear(); }
+	// è›»ï½¶è •ï½¡è½¤ï½¹èœ‘ä¼å‹
+	inline void ClearPoints() { mPoints.clear(); }
 
-	// I—¹ƒtƒ‰ƒO
-	inline bool GetisEnd() { return isEnd_; }
+	// é‚¨ã‚†ï½ºãƒ»ãƒµç¹ï½©ç¹§ï½°
+	inline bool GetisEnd() { return mIsEnd; }
 
 private:
 	std::vector<Vec3> RecursiveLerp(const std::vector<Vec3>& points, const BezierType type);

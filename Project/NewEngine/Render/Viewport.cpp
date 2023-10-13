@@ -3,7 +3,7 @@
 #include "RenderWindow.h"
 
 Viewport::Viewport() :
-	leftTopPos_(0), size_(0), minDepth_(0), maxDepth_(0)
+	mLeftTopPos(0), mSize(0), mMinDepth(0), mMaxDepth(0)
 {
 }
 
@@ -11,16 +11,46 @@ void Viewport::Update()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	//----------------------- ÉrÉÖÅ[É|Å[ÉgÇÃê›íËÉRÉ}ÉìÉh -----------------------//
-	// ÉrÉÖÅ[É|Å[Égê›íËÉRÉ}ÉìÉh
+	//----------------------- ÁπùËñôŒóÁπùÔΩºÁπùÊò¥„ÉªÁπùÂåª„ÉªÈö™ÔΩ≠Ëû≥Â£π„ÅïÁπùÊß≠Œ¶Áπù„Éª-----------------------//
+	// ÁπùËñôŒóÁπùÔΩºÁπùÊò¥„ÉªÁπùÈÉÅÔΩ®ÔΩ≠Ëû≥Â£π„ÅïÁπùÊß≠Œ¶Áπù„Éª
 	D3D12_VIEWPORT viewport;
-	viewport.TopLeftX = leftTopPos_.x;
-	viewport.TopLeftY = leftTopPos_.y;
-	viewport.Width = size_.x;
-	viewport.Height = size_.y;
-	viewport.MinDepth = minDepth_;
-	viewport.MaxDepth = maxDepth_;
+	viewport.TopLeftX = mLeftTopPos.x;
+	viewport.TopLeftY = mLeftTopPos.y;
+	viewport.Width = mSize.x;
+	viewport.Height = mSize.y;
+	viewport.MinDepth = mMinDepth;
+	viewport.MaxDepth = mMaxDepth;
 
-	// ÉrÉÖÅ[É|Å[Égê›íËÉRÉ}ÉìÉhÇÅAÉRÉ}ÉìÉhÉäÉXÉgÇ…êœÇﬁ
+	// ÁπùËñôŒóÁπùÔΩºÁπùÊò¥„ÉªÁπùÈÉÅÔΩ®ÔΩ≠Ëû≥Â£π„ÅïÁπùÊß≠Œ¶ÁπùÂ≥®ÔΩíÁ∏≤‚àö„ÅïÁπùÊß≠Œ¶ÁπùÂ≥®ŒúÁπßÔΩπÁπùÂåª‚ÜìÈÅ®Èò™„Éª
 	renderBase->GetCommandList()->RSSetViewports(1, &viewport);
+}
+
+// ÁπßÔΩªÁπù„Éª„Å°ÁπùÔΩº
+void Viewport::SetViewport(
+	const Vec2 leftTopPos, const Vec2 size,
+	const float MinDepth, const float MaxDepth)
+{
+	mLeftTopPos = leftTopPos;
+	mSize = size;
+
+	mMinDepth = MinDepth;
+	mMaxDepth = MaxDepth;
+}
+
+// ÁπßÔΩ≤Áπù„Éª„Å°ÁπùÔΩº
+Vec2 Viewport::GetLeftTopPos()
+{
+	return mLeftTopPos;
+}
+Vec2 Viewport::GetSize()
+{
+	return mSize;
+}
+float Viewport::GetMinDepth()
+{
+	return mMinDepth;
+}
+float Viewport::GetMaxDepth()
+{
+	return mMaxDepth;
 }

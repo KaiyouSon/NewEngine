@@ -5,64 +5,64 @@ using namespace ConstantBufferData;
 
 OutLineObj::OutLineObj() :
 	color(Color::black),
-	constantBufferTransform_(std::make_unique<ConstantBuffer<CTransform3D>>()),
-	constantBufferColor_(std::make_unique<ConstantBuffer<CColor>>())
+	mConstantBufferTransform(std::make_unique<ConstantBuffer<CTransform3D>>()),
+	mConstantBufferColor(std::make_unique<ConstantBuffer<CColor>>()),
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Outline"))
 {
-	// ’è”ƒoƒbƒtƒ@‰Šú‰»
-	constantBufferTransform_->Create();	// 3Ds—ñ
-	constantBufferColor_->Create();		// F
+	// èž³å£½ç„šç¹èˆŒãƒ£ç¹è¼”ãƒè›»æ™„æ‚„è›¹ãƒ»
+	mConstantBufferTransform->Create();	// 3Dé™¦æ‚Ÿãƒ»
+	mConstantBufferColor->Create();		// æ¿¶ï½²
 }
 
 void OutLineObj::Update(Transform* parent)
 {
 	obj->Update();
 
-	transform_.pos = obj->pos;
-	transform_.scale = obj->scale;
-	transform_.rot = obj->rot;
-	transform_.Update();
+	mTransform.pos = obj->pos;
+	mTransform.scale = obj->scale;
+	mTransform.rot = obj->rot;
+	mTransform.Update();
 
 	if (parent != nullptr)
 	{
-		parent_ = parent;
+		mParent = parent;
 
-		Mat4 mat = transform_.GetWorldMat();
-		mat *= parent_->GetWorldMat();
-		transform_.SetWorldMat(mat);
+		Mat4 mat = mTransform.GetWorldMat();
+		mat *= mParent->GetWorldMat();
+		mTransform.SetWorldMat(mat);
 	}
-	// ƒ}ƒgƒŠƒbƒNƒX“]‘—
-	constantBufferTransform_->constantBufferMap->viewMat =
+	// ç¹æ§­ãƒ¨ç¹ï½ªç¹ãƒ»ã‘ç¹§ï½¹éœ†ï½¢é¨¾ãƒ»
+	mConstantBufferTransform->constantBufferMap->viewMat =
 		Camera::current.GetViewLookToMat() *
 		Camera::current.GetPerspectiveProjectionMat();
-	constantBufferTransform_->constantBufferMap->worldMat = transform_.GetWorldMat();
-	constantBufferTransform_->constantBufferMap->cameraPos = Camera::current.pos;
+	mConstantBufferTransform->constantBufferMap->worldMat = mTransform.GetWorldMat();
+	mConstantBufferTransform->constantBufferMap->cameraPos = Camera::current.pos;
 
-	// F“]‘—
-	constantBufferColor_->constantBufferMap->color = color / 255;
-	constantBufferColor_->constantBufferMap->color.a = color.a / 255;
+	// æ¿¶ï½²éœ†ï½¢é¨¾ãƒ»
+	mConstantBufferColor->constantBufferMap->color = color / 255;
+	mConstantBufferColor->constantBufferMap->color.a = color.a / 255;
 }
 
 void OutLineObj::Draw()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	renderBase->GetCommandList()->SetPipelineState(
-		GraphicsPipelineManager::GetGraphicsPipeline("Outline")->GetAlphaPipeline());
-	renderBase->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	// GraphicsPipelineè¬ å†—åˆ¤ç¹§ï½³ç¹æ§­Î¦ç¹ãƒ»
+	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
 
-	// VBV‚ÆIBV‚ÌÝ’èƒRƒ}ƒ“ƒh
+	// VBVç¸ºï½¨IBVç¸ºï½®éšªï½­èž³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, obj->GetModel()->mesh.vertexBuffer.GetvbViewAddress());
 	renderBase->GetCommandList()->IASetIndexBuffer(obj->GetModel()->mesh.indexBuffer.GetibViewAddress());
 
-	// CBV‚ÌÝ’èƒRƒ}ƒ“ƒh
+	// CBVç¸ºï½®éšªï½­èž³å£¹ã•ç¹æ§­Î¦ç¹ãƒ»
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, constantBufferTransform_->constantBuffer->GetGPUVirtualAddress());
+		0, mConstantBufferTransform->bufferResource->buffer->GetGPUVirtualAddress());
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, constantBufferColor_->constantBuffer->GetGPUVirtualAddress());
+		1, mConstantBufferColor->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->DrawIndexedInstanced(
 		(uint16_t)obj->GetModel()->mesh.indices.size(), 1, 0, 0, 0);
 
-	obj->SetGraphicsPipeline(GraphicsPipelineManager::GetGraphicsPipeline("ToonRendering"));
+	obj->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ToonRendering"));
 	obj->Draw(BlendMode::Alpha);
 }

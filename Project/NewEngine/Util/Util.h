@@ -1,4 +1,5 @@
 #pragma once
+#include "MathUtil.h"
 #include "Color.h"
 #include "FrameRate.h"
 #include "Random.h"
@@ -7,86 +8,99 @@
 #include "Timer.h"
 #include "Easing.h"
 #include "BezierCurve.h"
-#include "Enum.h"
+#include "Rect.h"
+#include "NewEngineDefine.h"
+#include "NewEngineEnum.h"
+#include "NewEngineSetting.h"
+#include <functional>
 
 static const int maxBoneIndices = 4;
 
-// ”äŠr‚µ‚Ä‘å‚«‚¢•û‚ğ•Ô‚·
+// 2ã¤ã®å€¤ã®æœ€å¤§å€¤ã‚’è¿”ã™
 template<typename T>
 T Max(const T a, const T b)
 {
-	return a >= b ? a : b;
+    return a >= b ? a : b;
 }
 
-// ”äŠr‚µ‚Ä¬‚³‚¢•û‚ğ•Ô‚·
+// 2ã¤ã®å€¤ã®æœ€å°å€¤ã‚’è¿”ã™
 template<typename T>
 T Min(const T a, const T b)
 {
-	return a <= b ? a : b;
+    return a <= b ? a : b;
 }
 
-// •„†‚ğ•Ô‚·i -1, 0, 1 j
-int Sign(const float a);
+// æµ®å‹•å°æ•°ç‚¹æ•°ã®ç¬¦å·ã‚’å–å¾—ã™ã‚‹ï¼ˆ-1, 0, 1ï¼‰
+uint32_t Sign(const float a);
 Vec2 Sign(const Vec2 a);
 Vec3 Sign(const Vec3 a);
 
-// ’l‚ğMin‚ÆMax‚ÌŠÔ‚É§ŒÀ‚·‚éŠÖ”
+// å€¤ã‚’æŒ‡å®šç¯„å›²å†…ã«ã‚¯ãƒ©ãƒ³ãƒ—ã™ã‚‹
 template<typename T>
 T Clamp(const T value, const T min = 0, const T max = 1)
 {
-	if (value < min)
-	{
-		return min;
-	}
-	if (value > max)
-	{
-		return max;
-	}
-	return value;
+    if (value < min)
+    {
+        return min;
+    }
+    if (value > max)
+    {
+        return max;
+    }
+    return value;
 }
 
-// ’l‚ªû‘©‚·‚éŠÖ”
+// å€¤ã‚’æŒ‡å®šã•ã‚ŒãŸé€Ÿåº¦ã§åæŸã•ã›ã‚‹
 template<typename T>
 T Convergence(const T value, const T speed, const T origin = 0)
 {
-	float temp = value;
-	if (value == origin)
-	{
-		return origin;
-	}
-	else if (value > origin)
-	{
-		temp -= fabs(speed);
-		return Max(temp, origin);
-	}
-	else if (value < origin)
-	{
-		temp += fabs(speed);
-		return Min(temp, origin);
-	}
+    float temp = value;
+    if (value == origin)
+    {
+        return origin;
+    }
+    else if (value > origin)
+    {
+        temp -= fabs(speed);
+        return Max(temp, origin);
+    }
+    else if (value < origin)
+    {
+        temp += fabs(speed);
+        return Min(temp, origin);
+    }
 
-	return -1;
+    return -1;
 }
 
-// ’l‚ğ’´‚¦‚½‚ç–ß‚·
+// å€¤ã‚’æŒ‡å®šã•ã‚ŒãŸåˆ¶é™å†…ã§å¾©å…ƒã™ã‚‹
 template<typename T>
 T Restore(const T value, const T limit, const T origin = 0)
 {
-	if (value >= limit)
-	{
-		return origin + value - limit;
-	}
-	return value;
+    if (value >= limit)
+    {
+        return origin + value - limit;
+    }
+    return value;
 }
 
-// Œ…”‚ğæ“¾
-int GetDight(const int value);
+// æ•´æ•°ã®æ¡æ•°ã‚’å–å¾—ã™ã‚‹
+uint32_t GetDigit(const uint32_t value);
 
-// Œ»İŠÔ‚ğ•Ô‚·ŠÖ”
+// ç¾åœ¨ã®æ™‚é–“ã‚’å–å¾—ã™ã‚‹
 unsigned long GetNowTime(const TimeUnit timeUnit = TimeUnit::MilliSecond);
 
-// ƒ[ƒ‹ƒhÀ•W‚ğƒXƒNƒŠ[ƒ“À•W‚É•ÏŠ·‚·‚é
+// 3Dåº§æ¨™ã‚’ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã«å¤‰æ›ã™ã‚‹
 Vec2 WorldToScreen(const Vec3 worldPos);
 
-// OŠpŒ`‚Ì–@ü‚ğ‹‚ß‚é
+// 3ã¤ã®ç‚¹ã‹ã‚‰ä¸‰è§’å½¢ã®æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—ã™ã‚‹
 Vec3 GetTriangleNormal(const Vec3 p0, const Vec3 p1, const Vec3 p2);
+
+// ãƒ‡ãƒãƒƒã‚°ãƒ“ãƒ«ãƒ‰ã§ã®ã¿å®Ÿè¡Œã•ã‚Œã‚‹å‡¦ç†
+void ProcessAtDebugBuild(std::function<void()> lambdaFunc);
+
+// ãƒªãƒªãƒ¼ã‚¹ãƒ“ãƒ«ãƒ‰ã§ã®ã¿å®Ÿè¡Œã•ã‚Œã‚‹å‡¦ç†
+void ProcessAtReleaseBuild(std::function<void()> lambdaFunc);
+
+// ãƒ‡ãƒãƒƒã‚°ãƒ­ã‚°ã‚’å‡ºåŠ›ã™ã‚‹
+void OutputDebugLog(const char* fmt, ...);

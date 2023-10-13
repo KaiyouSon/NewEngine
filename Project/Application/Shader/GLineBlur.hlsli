@@ -1,19 +1,19 @@
-// 3D•ÏŠ·s—ñ
+// 3Då¤‰æ›è¡Œåˆ—
 cbuffer ConstBufferDataTransform : register(b0)
 {
-    matrix mat; // 3D•ÏŠ·s—ñ
+    matrix mat; // 3Då¤‰æ›è¡Œåˆ—
 }
 
-// F
+// è‰²
 cbuffer ConstBufferDataMaterial : register(b1)
 {
-    float4 color; // F(RGBA)
+    float4 color; // è‰²(RGBA)
 };
 
-// F
+// è‰²
 cbuffer ConstBufferDataLineBlur : register(b2)
 {
-    float angle; // F(RGBA)
+    float angle; // è‰²(RGBA)
 };
 
 struct AppData

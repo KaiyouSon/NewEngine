@@ -1,57 +1,78 @@
 #include "Lighting.hlsli"
 
-// 3D•ÏŠ·s—ñ
+// 3Då¤‰æ›è¡Œåˆ—
 cbuffer ConstantBufferDataTransform : register(b0)
 {
-    matrix viewMat;
+    matrix viewProjMat;
+    matrix lightViewProjMat;
     matrix worldMat;
     float3 cameraPos;
+    float3 lightCameraPos;
 }
 
-// ƒ}ƒeƒŠƒAƒ‹
+// ãƒãƒ†ãƒªã‚¢ãƒ«
 cbuffer ConstantBufferDataMaterial : register(b1)
 {
-    float3 ambient : packoffset(c0); // ƒAƒ“ƒrƒGƒ“ƒgŒW”
-    float3 diffuse : packoffset(c1); // ƒfƒBƒtƒ…[ƒYŒW”
-    float3 specular : packoffset(c2); // ƒXƒyƒLƒ…ƒ‰[ŒW”
-    float alpha : packoffset(c2.w); // ƒAƒ‹ƒtƒ@
+    float3 ambient : packoffset(c0); // ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆä¿‚æ•°
+    float3 diffuse : packoffset(c1); // ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºä¿‚æ•°
+    float3 specular : packoffset(c2); // ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼ä¿‚æ•°
+    float alpha : packoffset(c2.w); // ã‚¢ãƒ«ãƒ•ã‚¡
 }
 
-// F
+// è‰²
 cbuffer ConstantBufferDataColor : register(b2)
 {
-    float4 color; // F
+    float4 color; // è‰²
 }
 
-static const int directionalLightNum = 1;
-static const int pointLightNum = 3;
-static const int spotLightNum = 3;
-cbuffer ConstantBufferDataLightManager : register(b3)
+static const int maxBones = 32;
+cbuffer ConstantBufferDataSkinning : register(b3)
 {
-    DirectionalLight directionalLights[directionalLightNum];
-    PointLight pointLights[pointLightNum];
-    SpotLight spotLights[spotLightNum];
-};
+    matrix skinningMat[maxBones];
+}
 
-// --- ƒtƒHƒO ---------------------- //
+// --- ãƒ•ã‚©ã‚° ---------------------- //
 cbuffer ConstantBufferDataUVParameter : register(b4)
 {
     float2 offset;
     float2 tiling;
 };
 
-
-static const int circleShadowNum = 1;
-cbuffer ConstantBufferDataCircleShadow : register(b6)
+// å¹³è¡Œå…‰æº
+cbuffer ConstantBufferDirectionalLight : register(b5)
 {
-    CircleShadow circleShadows[circleShadowNum];
+    float4 dirLightColor; // è‰²
+    float3 dirLightVec; // æ–¹å‘
+    uint isActiveDirLight;
 }
 
-static const int maxBones = 32;
-cbuffer ConstantBufferDataSkinning : register(b5)
+cbuffer ConstantBufferDissolve : register(b6)
 {
-    matrix skinningMat[maxBones];
+    float dissolve;
+    float colorPower;
+    float4 dissolveColor;
 }
+
+cbuffer ConstantBufferShadow : register(b7)
+{
+    uint isWriteShadow;
+}
+
+struct Appdata
+{
+    float4 pos : POSITION;
+    float3 normal : NORMAL;
+    float2 uv : TEXCOORD;
+};
+
+struct V2P
+{
+    float4 svpos : SV_POSITION; // ã‚·ã‚¹ãƒ†ãƒ ç”¨é ‚ç‚¹åº§æ¨™
+    float4 wpos : POSITION0; // ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™
+    float3 normal : NORMAL; // æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+    float2 uv : TEXCOORD; // uvå€¤
+    float4 spos : POSITIONT1;
+};
 
 struct PSOutput
 {

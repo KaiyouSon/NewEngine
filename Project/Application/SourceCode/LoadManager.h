@@ -6,18 +6,22 @@ template<typename T> class Singleton;
 class LoadManager :public Singleton<LoadManager>
 {
 private:
-	bool isLoaded;
+	bool mIsLoaded;
 
 private:
 	bool ModelLoad();
 	bool TextureLoad();
 	bool SoundLoad();
+	bool MotionLoad();
 
 public:
+	void GameSceneLoad();
+	void GameSceneUnLoad();
+
 	void Load();
 
 public:
-	inline bool GetisLoaded() { return isLoaded; }
+	inline bool GetisLoaded() { return mIsLoaded; }
 
 private:
 	friend Singleton<LoadManager>;

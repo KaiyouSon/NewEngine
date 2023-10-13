@@ -1,28 +1,27 @@
 #pragma once
-#include "Vec3.h"
-
 struct Vec3;
 
 struct Quaternion
 {
 	float x, y, z, w;
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ç¹§ï½³ç¹ï½³ç¹§ï½¹ç¹åŒ»Î›ç¹§ï½¯ç¹§ï½¿
 	Quaternion() : x(0), y(0), z(0), w(0) {}
+	Quaternion(const Vec3 v);
 	Quaternion(const float x, const float y, const float z) : x(x), y(y), z(z), w(0) {}
 	Quaternion(const float x, const float y, const float z, const float w) : x(x), y(y), z(z), w(w) {}
 
-	// ŠÖ”
-	float Length() const;			// ƒNƒI[ƒ^ƒjƒIƒ“‚Ì‘å‚«‚³
-	Quaternion Norm() const;		// ³‹K‰»ƒNƒI[ƒ^ƒjƒIƒ“
-	Quaternion Conjugate() const;	// ‹¤–ğƒNƒI[ƒ^ƒjƒIƒ“
-	Quaternion Inverse() const;		// ‹tƒNƒI[ƒ^ƒjƒIƒ“
+	// é«¢ï½¢è¬¨ï½°
+	float Length() const;			// ç¹§ï½¯ç¹§ï½ªç¹ï½¼ç¹§ï½¿ç¹ä¹ãŒç¹ï½³ç¸ºï½®èŸï½§ç¸ºé˜ªï¼†
+	Quaternion Norm() const;		// è±ï½£éš•ä¸å–§ç¹§ï½¯ç¹§ï½ªç¹ï½¼ç¹§ï½¿ç¹ä¹ãŒç¹ï½³
+	Quaternion Conjugate() const;	// èœˆï½±è –ï½¹ç¹§ï½¯ç¹§ï½ªç¹ï½¼ç¹§ï½¿ç¹ä¹ãŒç¹ï½³
+	Quaternion Inverse() const;		// é¨¾ãƒ»ã‘ç¹§ï½ªç¹ï½¼ç¹§ï½¿ç¹ä¹ãŒç¹ï½³
 
-	// ”CˆÓ²‰ñ“]
+	// è‰ï½»è«¢å‰°ï½»ï½¸è—æ«ï½»ï½¢
 	Quaternion AnyAxisRotation(const Vec3 v, const float radian);
 
-	static float Dot(const Quaternion q1, const Quaternion q2);		// “ñ‚Â‚ÌƒNƒI[ƒ^ƒjƒIƒ“‚Ì“àÏ
-	static Quaternion Identity();	// ’PˆÊƒNƒI[ƒ^ƒjƒIƒ“
+	static float Dot(const Quaternion q1, const Quaternion q2);		// è å¾Œâ–½ç¸ºï½®ç¹§ï½¯ç¹§ï½ªç¹ï½¼ç¹§ï½¿ç¹ä¹ãŒç¹ï½³ç¸ºï½®èœ€ãƒ»ï½©ãƒ»
+	static Quaternion Identity();	// èœŠå€…ï½½é˜ªã‘ç¹§ï½ªç¹ï½¼ç¹§ï½¿ç¹ä¹ãŒç¹ï½³
 	static Quaternion Slerp(const Quaternion q1, const Quaternion q2, float t);
 	static Quaternion MakeAxisAngle(const Vec3 v, const float radian);
 	static Quaternion DirectionToDirection(const Vec3 v1, const Vec3 v2);
@@ -30,20 +29,19 @@ struct Quaternion
 
 	Quaternion operator-() const;
 
-	// Zp‰‰Zq‚ÌƒI[ƒo[ƒ[ƒh
-	Quaternion operator+(const Quaternion other) const;	// ‚à‚¤ˆê‚Â‚ÌƒNƒI[ƒ^ƒjƒIƒ“‚Æ‚Ì‘«‚µZ
-	Quaternion operator-(const Quaternion other) const;	// ‚à‚¤ˆê‚Â‚ÌƒNƒI[ƒ^ƒjƒIƒ“‚Æ‚Ìˆø‚«Z
-	Quaternion operator*(const Quaternion other) const;	// ‚à‚¤ˆê‚Â‚ÌƒNƒI[ƒ^ƒjƒIƒ“‚Æ‚ÌŠ|‚¯Z
-	Quaternion operator/(const Quaternion other) const;	// ‚à‚¤ˆê‚Â‚ÌƒNƒI[ƒ^ƒjƒIƒ“‚Æ‚ÌŠ„‚èZ
-	Quaternion operator*(const float num) const;			// ˆê‚Â‚Ì’l‚Æ‚ÌŠ|‚¯Z
-	Quaternion operator/(const float num) const;			// ˆê‚Â‚Ì’l‚Æ‚ÌŠ„‚èZ
+	// é‚‚è‹“ï½¡æºï½¼çš®ï½®æ€œï½­èˆŒãƒ»ç¹§ï½ªç¹ï½¼ç¹èˆŒãƒ»ç¹ï½­ç¹ï½¼ç¹ãƒ»
+	Quaternion operator+(const Quaternion other) const;	// ç¹§ã‚…â‰§è³Â€ç¸ºï½¤ç¸ºï½®ç¹§ï½¯ç¹§ï½ªç¹ï½¼ç¹§ï½¿ç¹ä¹ãŒç¹ï½³ç¸ºï½¨ç¸ºï½®é›œï½³ç¸ºç¤¼ï½®ãƒ»
+	Quaternion operator-(const Quaternion other) const;	// ç¹§ã‚…â‰§è³Â€ç¸ºï½¤ç¸ºï½®ç¹§ï½¯ç¹§ï½ªç¹ï½¼ç¹§ï½¿ç¹ä¹ãŒç¹ï½³ç¸ºï½¨ç¸ºï½®è ‘è¼”â€³é‚‚ãƒ»
+	Quaternion operator*(const Quaternion other) const;	// ç¹§ã‚…â‰§è³Â€ç¸ºï½¤ç¸ºï½®ç¹§ï½¯ç¹§ï½ªç¹ï½¼ç¹§ï½¿ç¹ä¹ãŒç¹ï½³ç¸ºï½¨ç¸ºï½®è¬—å¸™ï¿ é‚‚ãƒ»
+	Quaternion operator*(const float num) const;			// è³Â€ç¸ºï½¤ç¸ºï½®è›Ÿï½¤ç¸ºï½¨ç¸ºï½®è¬—å¸™ï¿ é‚‚ãƒ»
+	Quaternion operator/(const float num) const;			// è³Â€ç¸ºï½¤ç¸ºï½®è›Ÿï½¤ç¸ºï½¨ç¸ºï½®èœ‘ï½²ç¹§é¡”ï½®ãƒ»
 
-	// •¡‡‘ã“ü‰‰Zq‚ÌƒI[ƒo[ƒ[ƒh
-	Quaternion& operator+=(const Quaternion other);	// •¡‡‘ã“ü‰‰Z +=
-	Quaternion& operator-=(const Quaternion other);	// •¡‡‘ã“ü‰‰Z -=
-	Quaternion& operator*=(const Quaternion other);	// •¡‡‘ã“ü‰‰Z *=
-	Quaternion& operator*=(const float num);			// •¡‡‘ã“ü‰‰Z *=
-	Quaternion& operator/=(const float num);			// •¡‡‘ã“ü‰‰Z /=
+	// éšãƒ»ç²‹è‰ï½£èœˆï½¥è²çš®ï½®æ€œï½­èˆŒãƒ»ç¹§ï½ªç¹ï½¼ç¹èˆŒãƒ»ç¹ï½­ç¹ï½¼ç¹ãƒ»
+	Quaternion& operator+=(const Quaternion other);	// éšãƒ»ç²‹è‰ï½£èœˆï½¥è²çš®ï½®ãƒ»+=
+	Quaternion& operator-=(const Quaternion other);	// éšãƒ»ç²‹è‰ï½£èœˆï½¥è²çš®ï½®ãƒ»-=
+	Quaternion& operator*=(const Quaternion other);	// éšãƒ»ç²‹è‰ï½£èœˆï½¥è²çš®ï½®ãƒ»*=
+	Quaternion& operator*=(const float num);			// éšãƒ»ç²‹è‰ï½£èœˆï½¥è²çš®ï½®ãƒ»*=
+	Quaternion& operator/=(const float num);			// éšãƒ»ç²‹è‰ï½£èœˆï½¥è²çš®ï½®ãƒ»/=
 };
 
 Quaternion operator*(const float num, const Quaternion q);

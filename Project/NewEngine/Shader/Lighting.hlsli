@@ -1,6 +1,6 @@
-// \‘¢‘Ì
+// æ§‹é€ ä½“
 
-// ƒ}ƒeƒŠƒAƒ‹
+// ãƒãƒ†ãƒªã‚¢ãƒ«
 struct Material
 {
     float3 ambient;
@@ -8,35 +8,35 @@ struct Material
     float3 specular;
 };
 
-// •½sŒõŒ¹
+// å¹³è¡Œå…‰æº
 struct DirectionalLight
 {
-    float3 vec; // •ûŒü
-    float3 color; // F
+    float3 vec; // æ–¹å‘
+    float3 color; // è‰²
     uint isActive;
 };
 
-// “_ŒõŒ¹
+// ç‚¹å…‰æº
 struct PointLight
 {
-    float3 pos; // À•W
-    float3 color; // F
-    float3 atten; // ƒ‰ƒCƒg‹——£Œ¸ŠŒW”
+    float3 pos; // åº§æ¨™
+    float3 color; // è‰²
+    float3 atten; // ãƒ©ã‚¤ãƒˆè·é›¢æ¸›è¡°ä¿‚æ•°
     uint isActive;
 };
 
-// ƒXƒ|ƒbƒgƒ‰ƒCƒg
+// ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ
 struct SpotLight
 {
-    float3 vec; // ‹tƒxƒNƒgƒ‹
-    float3 pos; // À•W
-    float3 color; // F
-    float3 atten; // ƒ‰ƒCƒg‹——£Œ¸ŠŒW”
-    float2 factorAngleCos; // ƒ‰ƒCƒg‚ÌŒ¸ŠŠp“x‚ÌƒRƒTƒCƒ“
+    float3 vec; // é€†ãƒ™ã‚¯ãƒˆãƒ«
+    float3 pos; // åº§æ¨™
+    float3 color; // è‰²
+    float3 atten; // ãƒ©ã‚¤ãƒˆè·é›¢æ¸›è¡°ä¿‚æ•°
+    float2 factorAngleCos; // ãƒ©ã‚¤ãƒˆã®æ¸›è¡°è§’åº¦ã®ã‚³ã‚µã‚¤ãƒ³
     uint isActive;
 };
 
-// ŒõŒ¹ŒvZ—pƒf[ƒ^
+// å…‰æºè¨ˆç®—ç”¨ãƒ‡ãƒ¼ã‚¿
 struct LightCalculateData
 {
     float3 vertexPos;
@@ -45,18 +45,18 @@ struct LightCalculateData
     float3 lightNormal;
 };
 
-// ŠÛ‰e
+// ä¸¸å½±
 struct CircleShadow
 {
-    float3 vec; // ‹tƒxƒNƒgƒ‹
-    float3 pos; // À•W
-    float disCasterLight; // ƒLƒƒƒXƒ^[‚Æƒ‰ƒCƒg‚Ì‹——£
-    float3 atten; // ‹——£Œ¸ŠŒW”
-    float2 factorAngleCos; // Œ¸ŠŠp“x‚ÌƒRƒTƒCƒ“
+    float3 vec; // é€†ãƒ™ã‚¯ãƒˆãƒ«
+    float3 pos; // åº§æ¨™
+    float disCasterLight; // ã‚­ãƒ£ã‚¹ã‚¿ãƒ¼ã¨ãƒ©ã‚¤ãƒˆã®è·é›¢
+    float3 atten; // è·é›¢æ¸›è¡°ä¿‚æ•°
+    float2 factorAngleCos; // æ¸›è¡°è§’åº¦ã®ã‚³ã‚µã‚¤ãƒ³
     uint isActive;
 };
 
-// ƒtƒHƒO
+// ãƒ•ã‚©ã‚°
 struct Fog
 {
     uint isActive;
@@ -65,7 +65,7 @@ struct Fog
     float4 color;
 };
 
-// ƒ‰ƒ“ƒo[ƒg”½Ë
+// ãƒ©ãƒ³ãƒãƒ¼ãƒˆåå°„
 float3 Lambert(float3 lightV, float3 normal)
 {
     float3 lightDir = normalize(float3(lightV));
@@ -75,24 +75,24 @@ float3 Lambert(float3 lightV, float3 normal)
     return resultColor;
 }
 
-// ƒtƒH[ƒ“”½Ë
+// ãƒ•ã‚©ãƒ¼ãƒ³åå°„
 float3 Phone(float3 _lightV, float3 _normal, float3 _eyeDir, float _shininess, float3 _ambient, float3 _diffuse)
 {
-    // ’¸“_‚©‚ç‹“_‚Ö‚ÌƒxƒNƒgƒ‹
+    // é ‚ç‚¹ã‹ã‚‰è¦–ç‚¹ã¸ã®ãƒ™ã‚¯ãƒˆãƒ«
     float3 lightDir = normalize(_lightV);
     
-    // ƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚Æ–@ü‚Ì“àÏ
+    // ãƒ©ã‚¤ãƒˆã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«ã¨æ³•ç·šã®å†…ç©
     float3 dotLightNormal = dot(_lightV, _normal);
     
-    // ”½ËŒõƒxƒNƒgƒ‹
+    // åå°„å…‰ãƒ™ã‚¯ãƒˆãƒ«
     float3 reflect = normalize(_lightV + 2 * dotLightNormal * _normal);
     
-    // ŠÂ‹«”½ËŒõ
+    // ç’°å¢ƒåå°„å…‰
     float3 ambient = _ambient;
-    // ŠgU”½ËŒõ
+    // æ‹¡æ•£åå°„å…‰
     float3 diffuse = dotLightNormal * _diffuse;
     
-    // ‹¾–Ê”½ËŒõ
+    // é¡é¢åå°„å…‰
     float3 specular = pow(saturate(dot(reflect, _eyeDir)), _shininess);
     
     float3 resultColor = ambient + diffuse + specular;
@@ -100,7 +100,7 @@ float3 Phone(float3 _lightV, float3 _normal, float3 _eyeDir, float _shininess, f
     return resultColor;
 }
 
-// •½sŒõŒ¹
+// å¹³è¡Œå…‰æº
 float3 CalculateDirectionalLight(DirectionalLight _directionalLight, Material _material,
     float3 _normal, float3 _lightNormal, float3 _eyeDir, float _shininess)
 {
@@ -108,22 +108,22 @@ float3 CalculateDirectionalLight(DirectionalLight _directionalLight, Material _m
     
     if (_directionalLight.isActive == (uint) true)
     {
-		// ”½ËŒõƒxƒNƒgƒ‹
+		// åå°„å…‰ãƒ™ã‚¯ãƒˆãƒ«
         float3 reflect = normalize(-_directionalLight.vec + 2 * _lightNormal * _normal);
 
-		// ŠgU”½ËŒõ
+		// æ‹¡æ•£åå°„å…‰
         float3 diffuse = _lightNormal * _material.diffuse;
-		// ‹¾–Ê”½ËŒõ
+		// é¡é¢åå°„å…‰
         float3 specular = pow(saturate(dot(reflect, _eyeDir)), _shininess) * _material.specular;
 
-		// ‘S‚Ä‰ÁZ‚·‚é
+		// å…¨ã¦åŠ ç®—ã™ã‚‹
         resultColor.rgb += (diffuse + specular) * _directionalLight.color;
     }
     
     return resultColor;
 }
 
-// “_ŒõŒ¹
+// ç‚¹å…‰æº
 float3 CalculatePointLight(PointLight _pointLight, Material _material,
     LightCalculateData _lightCalculateData, float3 _eyeDir, float _shininess)
 {
@@ -131,34 +131,34 @@ float3 CalculatePointLight(PointLight _pointLight, Material _material,
     
     if (_pointLight.isActive == (uint) true)
     {
-		// ƒxƒNƒgƒ‹‚Ì’·‚³
+		// ãƒ™ã‚¯ãƒˆãƒ«ã®é•·ã•
         float d = length(_lightCalculateData.lightVec);
 
-		// ‹——£Œ¸ŠŒW”
+		// è·é›¢æ¸›è¡°ä¿‚æ•°
         float atten = 1.0f /
 				(_pointLight.atten.x +
 				_pointLight.atten.y * d +
 				_pointLight.atten.z * d * d);
 
-		// ”½ËŒõƒxƒNƒgƒ‹
+		// åå°„å…‰ãƒ™ã‚¯ãƒˆãƒ«
         float3 reflect = normalize(
         -_lightCalculateData.lightVec + 2 *
         _lightCalculateData.lightNormal *
         _lightCalculateData.vertexNormal);
         
-		// ŠgU”½ËŒõ
+		// æ‹¡æ•£åå°„å…‰
         float3 diffuse = _lightCalculateData.lightNormal * _material.diffuse;
-		// ‹¾–Ê”½ËŒõ
+		// é¡é¢åå°„å…‰
         float3 specular = pow(saturate(dot(reflect, _eyeDir)), _shininess) * _material.specular;
 
-		// ‘S‚Ä‰ÁZ‚·‚é
+		// å…¨ã¦åŠ ç®—ã™ã‚‹
         resultColor += atten * (diffuse + specular) * _pointLight.color;
     }
     
     return resultColor;
 }
 
-// ƒXƒ|ƒbƒgƒ‰ƒCƒg
+// ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ
 float3 CalculateSpotLight(SpotLight _spotLight, Material _material,
     LightCalculateData _lightCalculateData, float3 _eyeDir, float _shininess)
 {
@@ -166,77 +166,77 @@ float3 CalculateSpotLight(SpotLight _spotLight, Material _material,
     
     if (_spotLight.isActive == (uint) true)
     {
-		// ƒxƒNƒgƒ‹‚Ì’·‚³
+		// ãƒ™ã‚¯ãƒˆãƒ«ã®é•·ã•
         float d = length(_lightCalculateData.lightVec);
 
-		// ‹——£Œ¸ŠŒW”
+		// è·é›¢æ¸›è¡°ä¿‚æ•°
         float atten = saturate(1.0f /
 				(_spotLight.atten.x +
 					_spotLight.atten.y * d +
 					_spotLight.atten.z * d * d));
 
-		// Šp“xŒ¸Š
+		// è§’åº¦æ¸›è¡°
         float cos = dot(_lightCalculateData.lightVec, _spotLight.vec);
-		// Œ¸ŠŠJnŠp“x‚©‚çAŒ¸ŠI—¹Šp“x‚É‚©‚¯‚ÄŒ¸Š
-		// Œ¸ŠŠJnŠp“x‚Ì“à‘¤‚Í‚P”{AŒ¸ŠI—¹Šp“x‚ÌŠO‘¤‚Í‚O”{‚Ì‹P“x
+		// æ¸›è¡°é–‹å§‹è§’åº¦ã‹ã‚‰ã€æ¸›è¡°çµ‚äº†è§’åº¦ã«ã‹ã‘ã¦æ¸›è¡°
+		// æ¸›è¡°é–‹å§‹è§’åº¦ã®å†…å´ã¯ï¼‘å€ã€æ¸›è¡°çµ‚äº†è§’åº¦ã®å¤–å´ã¯ï¼å€ã®è¼åº¦
         float angleAtten = smoothstep(_spotLight.factorAngleCos.y, _spotLight.factorAngleCos.x, cos);
-		// Šp“xŒ¸Š‚ğæZ
+		// è§’åº¦æ¸›è¡°ã‚’ä¹—ç®—
         atten *= angleAtten;
 
-		// ”½ËŒõƒxƒNƒgƒ‹
+		// åå°„å…‰ãƒ™ã‚¯ãƒˆãƒ«
         float3 reflect = normalize(
             -_lightCalculateData.lightVec + 2 *
             _lightCalculateData.lightNormal *
             _lightCalculateData.vertexNormal);
 
-		// ŠgU”½ËŒõ
+		// æ‹¡æ•£åå°„å…‰
         float3 diffuse = _lightCalculateData.lightNormal * _material.diffuse;
-		// ‹¾–Ê”½ËŒõ
+		// é¡é¢åå°„å…‰
         float3 specular = pow(saturate(dot(reflect, _eyeDir)), _shininess) * _material.specular;
 
-	    // ‘S‚Ä‰ÁZ‚·‚é
+	    // å…¨ã¦åŠ ç®—ã™ã‚‹
         resultColor += atten * (diffuse + specular) * _spotLight.color;
     }
 
     return resultColor;
 }
 
-// ŠÛ‰e
+// ä¸¸å½±
 float3 CalculateCircleShadow(CircleShadow _circleShadow, float3 _pos)
 {
     float3 resultColor = 0;
     
     if (_circleShadow.isActive == (uint) true)
     {
-			// ƒIƒuƒWƒFƒNƒg•\–Ê‚©‚çƒLƒƒƒXƒ^[‚Ö‚ÌƒxƒNƒgƒ‹
+			// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆè¡¨é¢ã‹ã‚‰ã‚­ãƒ£ã‚¹ã‚¿ãƒ¼ã¸ã®ãƒ™ã‚¯ãƒˆãƒ«
         float3 casterV = _circleShadow.pos - _pos;
 
-			// “Š‰e•ûŒü‚Å‚Ì‹——£
+			// æŠ•å½±æ–¹å‘ã§ã®è·é›¢
         float d = dot(casterV, _circleShadow.vec);
 
-			// ‹——£Œ¸ŠŒW”
+			// è·é›¢æ¸›è¡°ä¿‚æ•°
         float atten = saturate(1.0f /
 				(_circleShadow.atten.x +
 					_circleShadow.atten.y * d +
 					_circleShadow.atten.z * d * d));
-			// ‹——£‚ªƒ}ƒCƒiƒX‚È‚ç‚O‚É‚·‚é
+			// è·é›¢ãŒãƒã‚¤ãƒŠã‚¹ãªã‚‰ï¼ã«ã™ã‚‹
         atten *= step(0, d);
 
-			// ‰¼‘zƒ‰ƒCƒg‚ÌÀ•W
+			// ä»®æƒ³ãƒ©ã‚¤ãƒˆã®åº§æ¨™
         float3 lightPos = _circleShadow.pos + _circleShadow.vec * _circleShadow.disCasterLight;
 
-			// ƒIƒuƒWƒFƒNƒg•\–Ê‚©‚çƒ‰ƒCƒg‚Ö‚ÌƒxƒNƒgƒ‹
+			// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆè¡¨é¢ã‹ã‚‰ãƒ©ã‚¤ãƒˆã¸ã®ãƒ™ã‚¯ãƒˆãƒ«
         float3 lightV = normalize(lightPos - _pos);
 
-			// Šp“xŒvZ
+			// è§’åº¦è¨ˆç®—
         float cos = dot(lightV, _circleShadow.vec);
-			// Œ¸ŠŠJnŠp“x‚©‚çAŒ¸ŠI—¹Šp“x‚É‚©‚¯‚ÄŒ¸Š
-			// Œ¸ŠŠJnŠp“x‚Ì“à‘¤‚Í‚P”{AŒ¸ŠI—¹Šp“x‚ÌŠO‘¤‚Í‚O”{‚Ì‹P“x
+			// æ¸›è¡°é–‹å§‹è§’åº¦ã‹ã‚‰ã€æ¸›è¡°çµ‚äº†è§’åº¦ã«ã‹ã‘ã¦æ¸›è¡°
+			// æ¸›è¡°é–‹å§‹è§’åº¦ã®å†…å´ã¯ï¼‘å€ã€æ¸›è¡°çµ‚äº†è§’åº¦ã®å¤–å´ã¯ï¼å€ã®è¼åº¦
         float angleAtten = smoothstep(_circleShadow.factorAngleCos.y, _circleShadow.factorAngleCos.x, cos);
-			// Šp“xŒ¸Š‚ğæZ
+			// è§’åº¦æ¸›è¡°ã‚’ä¹—ç®—
         atten *= angleAtten;
 
-		// ‘S‚ÄŒ¸Z‚·‚é
+		// å…¨ã¦æ¸›ç®—ã™ã‚‹
         resultColor -= atten;
     }
     
@@ -247,10 +247,10 @@ float4 CalculateFog(Fog fog, float dis, float4 currentColor)
 {
     if (fog.isActive == (uint) true)
     {
-		// ƒJƒƒ‰‚ÌÀ•W‚Æ’¸“_‚Ì‹——£
+		// ã‚«ãƒ¡ãƒ©ã®åº§æ¨™ã¨é ‚ç‚¹ã®è·é›¢
         float rate = smoothstep(fog.nearDis, fog.farDis, dis);
 
-		// ƒtƒHƒO‚ÌF
+		// ãƒ•ã‚©ã‚°ã®è‰²
         return fog.color * rate + currentColor * (1 - rate);
     }
     

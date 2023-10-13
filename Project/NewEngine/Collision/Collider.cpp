@@ -1,87 +1,48 @@
 #include "Collider.h"
 #include "Util.h"
 
-// ----- â~ÉRÉâÉCÉ_Å[ ------------------- //
+// ----- ÂÜÜ„Ç≥„É©„Ç§„ÉÄ„Éº ------------------- //
 CircleCollider::CircleCollider() :
 	centerPos(0), radius(1)
 {
+	primitive = ColliderPrimitive::Circle;
 }
-
-CircleCollider::CircleCollider(const Vec2& centerPos, const float& radius) :
+CircleCollider::CircleCollider(const Vec2 centerPos, const float radius) :
 	centerPos(centerPos), radius(radius)
 {
+	primitive = ColliderPrimitive::Circle;
 }
 
-// ----- ãÈå`ÉRÉâÉCÉ_Å[ ----------------- //
+// ----- Áü©ÂΩ¢„Ç≥„É©„Ç§„ÉÄ„Éº ----------------- //
 SquareCollider::SquareCollider() :
 	centerPos(0), size(0), leftTop(0), leftDown(0), rightTop(0), rightDown(0)
 {
+	primitive = ColliderPrimitive::Square;
 }
-
-SquareCollider::SquareCollider(const Vec2& centerPos, const Vec2& size) :
+SquareCollider::SquareCollider(const Vec2 centerPos, const Vec2 size) :
 	centerPos(centerPos), size(size),
 	leftTop({ centerPos.x - size.x, centerPos.y - size.y }),
 	leftDown({ centerPos.x - size.x, centerPos.y + size.y }),
 	rightTop({ centerPos.x + size.x, centerPos.y - size.y }),
 	rightDown({ centerPos.x + size.x, centerPos.y + size.y })
 {
+	primitive = ColliderPrimitive::Square;
 }
 
-// ----- ãÖÉRÉâÉCÉ_Å[ ------------------- //
-SphereCollider::SphereCollider()
+// ----- „Ç≠„É•„Éº„Éñ„Ç≥„É©„Ç§„ÉÄ„Éº ------------- //
+CubeCollider::CubeCollider() :
+	centerPos(0), size(0)
 {
+	primitive = ColliderPrimitive::Cube;
 }
-SphereCollider::SphereCollider(const Vec3& centerPos, const float& radius) :
-	centerPos(centerPos), radius(radius)
+CubeCollider::CubeCollider(const Vec3 centerPos, const Vec3 size) :
+	centerPos(centerPos), size(size)
 {
+	primitive = ColliderPrimitive::Cube;
 }
-
-// ----- ÉåÉCÉRÉâÉCÉ_Å[ ----------------- //
-RayCollider::RayCollider() :
-	startPos(0, 0, 0), dirVec(0, 0, 1)
-{
-}
-RayCollider::RayCollider(const Vec3& startPos, const Vec3& dirVec) :
-	startPos(startPos), dirVec(dirVec)
-{
-}
-
-// ----- ïΩñ ÉRÉâÉCÉ_Å[ ------------- //
-PlaneCollider::PlaneCollider() :
-	centerPos(0, 0, 0), normal(0, 0, 0)
-{
-}
-
-PlaneCollider::PlaneCollider(const Vec3& centerPos, const Vec3& normal) :
-	centerPos(centerPos), normal(normal)
-{
-}
-
-// ----- éOäpå`ÉRÉâÉCÉ_Å[ ----------- //
-TriangleCollider::TriangleCollider() :
-	p0(0), p1(0), p2(0), normal(0)
-{
-}
-
-TriangleCollider::TriangleCollider(const Vec3& p0, const Vec3& p1, const Vec3& p2) :
-	p0(p0), p1(p1), p2(p2), normal(GetTriangleNormal(p0, p1, p2))
-{
-}
-
-// ----- ÉJÉvÉZÉãÉRÉâÉCÉ_Å[ --------- //
-CapsuleCollider::CapsuleCollider() :
-	startPos(0), endPos(0), radius(0)
-{
-}
-
-CapsuleCollider::CapsuleCollider(const Vec3& startPos, const Vec3& endPos, const float& radius) :
-	startPos(startPos), endPos(endPos), radius(radius)
-{
-}
-
 void CubeCollider::CalcPoints()
 {
-	// ç∂è„ëO
+	// Â∑¶‰∏äÂâç
 	points[(uint32_t)CubePoints::FLT] =
 	{
 		centerPos.x - size.x,
@@ -89,7 +50,7 @@ void CubeCollider::CalcPoints()
 		centerPos.z + size.z,
 	};
 
-	// ç∂â∫ëO
+	// Â∑¶‰∏ãÂâç
 	points[(uint32_t)CubePoints::FLD] =
 	{
 		centerPos.x - size.x,
@@ -97,7 +58,7 @@ void CubeCollider::CalcPoints()
 		centerPos.z + size.z,
 	};
 
-	// âEè„ëO
+	// Âè≥‰∏äÂâç
 	points[(uint32_t)CubePoints::FRT] =
 	{
 		centerPos.x + size.x,
@@ -105,7 +66,7 @@ void CubeCollider::CalcPoints()
 		centerPos.z + size.z,
 	};
 
-	// âEâ∫ëO
+	// Âè≥‰∏ãÂâç
 	points[(uint32_t)CubePoints::FRD] =
 	{
 		centerPos.x + size.x,
@@ -113,7 +74,7 @@ void CubeCollider::CalcPoints()
 		centerPos.z + size.z,
 	};
 
-	// ç∂è„å„
+	// Â∑¶‰∏äÂæå
 	points[(uint32_t)CubePoints::BLT] =
 	{
 		centerPos.x - size.x,
@@ -121,7 +82,7 @@ void CubeCollider::CalcPoints()
 		centerPos.z - size.z,
 	};
 
-	// ç∂â∫å„
+	// Â∑¶‰∏ãÂæå
 	points[(uint32_t)CubePoints::BLD] =
 	{
 		centerPos.x - size.x,
@@ -129,7 +90,7 @@ void CubeCollider::CalcPoints()
 		centerPos.z - size.z,
 	};
 
-	// âEè„å„
+	// Âè≥‰∏äÂæå
 	points[(uint32_t)CubePoints::BRT] =
 	{
 		centerPos.x + size.x,
@@ -137,11 +98,71 @@ void CubeCollider::CalcPoints()
 		centerPos.z - size.z,
 	};
 
-	// âEâ∫å„
+	// Âè≥‰∏ãÂæå
 	points[(uint32_t)CubePoints::BRD] =
 	{
 		centerPos.x + size.x,
 		centerPos.y - size.y,
 		centerPos.z - size.z,
 	};
+}
+
+// ----- ÁêÉ„Ç≥„É©„Ç§„ÉÄ„Éº ------------------- //
+SphereCollider::SphereCollider() :
+	centerPos(0), radius(0)
+{
+	primitive = ColliderPrimitive::Sphere;
+}
+SphereCollider::SphereCollider(const Vec3 centerPos, const float radius) :
+	centerPos(centerPos), radius(radius)
+{
+	primitive = ColliderPrimitive::Sphere;
+}
+
+// ----- „É¨„Ç§„Ç≥„É©„Ç§„ÉÄ„Éº ----------------- //
+RayCollider::RayCollider() :
+	startPos(0, 0, 0), dirVec(0, 0, 1)
+{
+	primitive = ColliderPrimitive::Ray;
+}
+RayCollider::RayCollider(const Vec3 startPos, const Vec3 dirVec) :
+	startPos(startPos), dirVec(dirVec)
+{
+	primitive = ColliderPrimitive::Ray;
+}
+
+// ----- Âπ≥Èù¢„Ç≥„É©„Ç§„ÉÄ„Éº ----------------- //
+PlaneCollider::PlaneCollider() :
+	centerPos(0, 0, 0), normal(0, 0, 0)
+{
+	primitive = ColliderPrimitive::Plane;
+}
+PlaneCollider::PlaneCollider(const Vec3 centerPos, const Vec3 normal) :
+	centerPos(centerPos), normal(normal)
+{
+	primitive = ColliderPrimitive::Plane;
+}
+
+// ----- ‰∏âËßíÂΩ¢„Ç≥„É©„Ç§„ÉÄ„Éº --------------- //
+TriangleCollider::TriangleCollider() :
+	p0(0), p1(0), p2(0), normal(0)
+{
+	primitive = ColliderPrimitive::Triangle;
+}
+TriangleCollider::TriangleCollider(const Vec3 p0, const Vec3 p1, const Vec3 p2) :
+	p0(p0), p1(p1), p2(p2), normal(GetTriangleNormal(p0, p1, p2))
+{
+	primitive = ColliderPrimitive::Triangle;
+}
+
+// ----- „Ç´„Éó„Çª„É´„Ç≥„É©„Ç§„ÉÄ„Éº ------------- //
+CapsuleCollider::CapsuleCollider() :
+	startPos(0), endPos(0), radius(0)
+{
+	primitive = ColliderPrimitive::Capsule;
+}
+CapsuleCollider::CapsuleCollider(const Vec3 startPos, const Vec3 endPos, const float radius) :
+	startPos(startPos), endPos(endPos), radius(radius)
+{
+	primitive = ColliderPrimitive::Capsule;
 }

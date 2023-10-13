@@ -1,20 +1,18 @@
 #pragma once
-#include <d3d12.h>
-#include <wrl.h>
+#include "BufferResource.h"
+#include <memory>
 
 class RenderTarget
 {
 private:
-	D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle_ = D3D12_CPU_DESCRIPTOR_HANDLE(); //RTV‚Ìƒnƒ“ƒhƒ‹(CPU‘¤)
+	std::unique_ptr<BufferResource> mBufferResource;
 
-public: // ƒZƒbƒ^[
-	Microsoft::WRL::ComPtr<ID3D12Resource> buffer_; // ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ÌƒŠƒ\[ƒX
-	inline void SetCpuHandle(const D3D12_CPU_DESCRIPTOR_HANDLE& cpuHandle) { this->cpuHandle_ = cpuHandle; }
+public:
+	RenderTarget();
 
-public: // ƒQƒbƒ^[
-	inline D3D12_CPU_DESCRIPTOR_HANDLE GetCpuHandle() { return cpuHandle_; }
-	inline ID3D12Resource* GetBuffer() { return buffer_.Get(); }
-	inline ID3D12Resource** GetBufferAddress() { return buffer_.GetAddressOf(); }
+public:
+	// ç¹§ï½²ç¹ãƒ»ã¡ç¹ï½¼
+	BufferResource* GetBufferResource();
 
 };
 

@@ -1,27 +1,34 @@
 #pragma once
 #include <cstdint>
 
+// タイマークラス
 class Timer
 {
 private:
-	int32_t timer_;
-	int32_t limitTimer_;
-	float timeRate_;
-	bool isTimeOut_;
+	int32_t mTimer;
+	int32_t mLimitTimer;
+	float mTimeRate;
+	bool mIsTimeOut;
 
 public:
 	Timer();
 	Timer(const int32_t maxTimer);
 
 	void Reset();
-	void Update(const bool isRoop, const int32_t addTimer = 1);
+	void Update(const int32_t addTimer = 1);
 
-public:	// �Z�b�^�[
-	inline void SetLimitTimer(const int32_t maxTimer) { limitTimer_ = maxTimer; }
+public:	// セッター
+	void SetLimitTimer(const int32_t maxTimer);
+	void SetTimer(const int32_t timer);
 
-public:	// �Q�b�^�[
-	inline int32_t GetTimer() { return timer_; }
-	inline float GetTimeRate() { return timeRate_; }
-	inline bool GetisTimeOut() { return isTimeOut_; }
+public:	// ゲッター
+	int32_t GetTimer();
+	float GetTimeRate();
+	bool GetisTimeOut();
+
+public:
+	/// <summary>
+	/// bool GetisTimeOut()と一緒
+	/// </summary>
+	bool operator==(const bool flag);
 };
-

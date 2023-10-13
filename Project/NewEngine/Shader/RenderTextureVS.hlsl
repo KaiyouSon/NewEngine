@@ -3,8 +3,8 @@
 
 VSOutputSvposUv main(VSInputPosUv vsInput)
 {
-    VSOutputSvposUv output; // ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚É“n‚·’l
-    output.svpos = mul(mat, vsInput.pos); // À•W‚És—ñ‚ğæZ
+    VSOutputSvposUv output; // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«æ¸¡ã™å€¤
+    output.svpos = mul(mat, vsInput.pos); // åº§æ¨™ã«è¡Œåˆ—ã‚’ä¹—ç®—
     output.uv = vsInput.uv;
     return output;
 }

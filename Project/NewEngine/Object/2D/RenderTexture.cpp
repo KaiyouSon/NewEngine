@@ -6,83 +6,87 @@
 #include <memory>
 using namespace std;
 
-//const float RenderTexture::sClearColor[4] = { 0.25f,0.5f,0.1f,1.0f };
 const float RenderTexture::sClearColor[4] = { 0.f,0.f,0.f,1.0f };
 
 void RenderTexture::PrevDrawScene()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();
-	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
 
-	// ƒŠƒ\[ƒXƒoƒŠƒA‚ğ•ÏXiƒVƒF[ƒ_[ƒŠƒ\[ƒX -> •`‰æ‰Â”\j
-	for (int i = 0; i < buffers.size(); i++)
+	// ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’å¤‰æ›´ï¼ˆã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ -> æç”»å¯èƒ½ï¼‰
+	for (uint32_t i = 0; i < mBufferResources.size(); i++)
 	{
 		CD3DX12_RESOURCE_BARRIER resourceBarrier =
 			CD3DX12_RESOURCE_BARRIER::Transition(
-				buffers[i].Get(),
+				mBufferResources[i].buffer.Get(),
 				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 				D3D12_RESOURCE_STATE_RENDER_TARGET);
 		renderBase->GetCommandList()->ResourceBarrier(1, &resourceBarrier);
 	}
 
-	// RTV CPUƒnƒ“ƒhƒ‹
+	// RTV CPUãƒãƒ³ãƒ‰ãƒ«
 	std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> rtvCpuHandle;
-	for (int i = 0; i < buffers.size(); i++)
+	for (uint32_t i = 0; i < mBufferResources.size(); i++)
 	{
-		rtvCpuHandle.push_back(renderTargets[i].GetCpuHandle());
+		rtvCpuHandle.push_back(mBufferResources[i].rtvHandle.cpu);
 	}
 
-	// DSV CPUƒnƒ“ƒhƒ‹
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvCpuHandle = depthBuffer.GetCpuHandle();
+	// DSV CPUãƒãƒ³ãƒ‰ãƒ«
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvCpuHandle = depthBuffer.GetBufferResource()->dsvHandle.cpu;
 
-	// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğƒZƒbƒg
-	renderBase->GetCommandList()->OMSetRenderTargets((UINT)renderTargets.size(), rtvCpuHandle.data(), false, &dsvCpuHandle);
+	// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ã‚»ãƒƒãƒˆ
+	renderBase->GetCommandList()->OMSetRenderTargets(
+		(uint32_t)mBufferResources.size(), rtvCpuHandle.data(), false, &dsvCpuHandle);
 
-	// ƒrƒ…[ƒ|[ƒg‚Ìİ’è
-	viewports_.resize(buffers.size());
-	for (int i = 0; i < buffers.size(); i++)
+	// ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã®è¨­å®š
+	mViewports.resize(mBufferResources.size());
+	for (int i = 0; i < mBufferResources.size(); i++)
 	{
-		viewports_[i] =
+		mViewports[i] =
 			CD3DX12_VIEWPORT(
 				0.f, 0.f,
-				renderWindow->GetWindowSize().x,
-				renderWindow->GetWindowSize().y);
+				size.x,
+				size.y);
 	}
-	renderBase->GetCommandList()->RSSetViewports((UINT)viewports_.size(), viewports_.data());
+	renderBase->GetCommandList()->RSSetViewports((uint32_t)mViewports.size(), mViewports.data());
 
-	// ƒVƒU[‹éŒ`‚Ìİ’è
-	scissorRects_.resize(buffers.size());
-	for (int i = 0; i < buffers.size(); i++)
+	// ã‚·ã‚¶ãƒ¼çŸ©å½¢ã®è¨­å®š
+	mScissorRects.resize(mBufferResources.size());
+	for (int i = 0; i < mBufferResources.size(); i++)
 	{
-		scissorRects_[i] =
+		mScissorRects[i] =
 			CD3DX12_RECT(
 				0, 0,
-				(LONG)renderWindow->GetWindowSize().x,
-				(LONG)renderWindow->GetWindowSize().y);
+				(LONG)size.x,
+				(LONG)size.y);
 	}
-	renderBase->GetCommandList()->RSSetScissorRects((UINT)scissorRects_.size(), scissorRects_.data());
+	renderBase->GetCommandList()->RSSetScissorRects((uint32_t)mScissorRects.size(), mScissorRects.data());
 
-	// ‘S‰æ–ÊƒNƒŠƒA
+	// å…¨ç”»é¢ã‚¯ãƒªã‚¢
 	for (int i = 0; i < rtvCpuHandle.size(); i++)
 	{
 		renderBase->GetCommandList()->ClearRenderTargetView(rtvCpuHandle[i], sClearColor, 0, nullptr);
 	}
 
-	// [“xƒoƒbƒtƒ@‚ÌƒNƒŠƒA
+	// æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã®ã‚¯ãƒªã‚¢
 	renderBase->GetCommandList()->ClearDepthStencilView(dsvCpuHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 void RenderTexture::PostDrawScene()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();
 
-	// ƒŠƒ\[ƒXƒoƒŠƒA‚ğ•ÏXi•`‰æ‰Â”\ -> ƒVƒF[ƒ_[ƒŠƒ\[ƒXj
-	for (int i = 0; i < buffers.size(); i++)
+	// ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’å¤‰æ›´ï¼ˆæç”»å¯èƒ½ -> ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ï¼‰
+	for (int i = 0; i < mBufferResources.size(); i++)
 	{
 		CD3DX12_RESOURCE_BARRIER resourceBarrier =
 			CD3DX12_RESOURCE_BARRIER::Transition(
-				buffers[i].Get(),
+				mBufferResources[i].buffer.Get(),
 				D3D12_RESOURCE_STATE_RENDER_TARGET,
 				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 		renderBase->GetCommandList()->ResourceBarrier(1, &resourceBarrier);
 	}
+}
+
+std::vector<BufferResource>* RenderTexture::GetBufferResources()
+{
+	return &mBufferResources;
 }

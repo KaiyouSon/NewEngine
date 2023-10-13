@@ -5,8 +5,9 @@
 struct MaterialColor
 {
 public:
-	Color ambient;		// ƒAƒ“ƒrƒGƒ“ƒg
-	Color diffuse;		// ƒfƒBƒtƒ…[ƒY
-	Color specular;		// ƒXƒyƒLƒ…ƒ‰[
+	Color ambient;		// ç¹§ï½¢ç¹ï½³ç¹è–™ãŠç¹ï½³ç¹ãƒ»
+	Color diffuse;		// ç¹ãƒ»ã…ç¹è¼”Î—ç¹ï½¼ç¹§ï½º
+	Color specular;		// ç¹§ï½¹ç¹å£¹ãç¹ï½¥ç¹ï½©ç¹ï½¼
 	std::string name;
 };
+

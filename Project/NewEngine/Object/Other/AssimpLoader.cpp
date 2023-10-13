@@ -3,26 +3,6 @@
 
 using namespace VertexBufferData;
 
-void AssimpLoader::LoadFbxModel(const std::string filePath, FbxModel* model)
-{
-	// ƒtƒ‰ƒO
-	uint32_t flags = aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs;
-
-	// ƒV[ƒ“‚Ì“Ç‚İ‚İ
-	model->scene = model->importer.ReadFile(filePath, flags);
-
-	if (model->scene == nullptr)
-	{
-		assert(0 && "ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ‚ª¸”s‚µ‚Ü‚µ‚½");
-	}
-
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰ğÍ
-	ParseMaterial(model, model->scene);
-
-	ParseNodeRecursive(model, nullptr, model->scene->mRootNode);
-
-}
-
 void AssimpLoader::ParseMesh(FbxModel* model, aiMesh* mesh)
 {
 	ParseMeshVertices(model, mesh);
@@ -36,17 +16,17 @@ void AssimpLoader::ParseMeshVertices(FbxModel* model, aiMesh* mesh)
 
 	for (uint32_t i = 0; i < mesh->mNumVertices; i++)
 	{
-		// ’¸“_À•W
+		// é ‚ç‚¹åº§æ¨™
 		vertex[i].pos.x = mesh->mVertices[i].x;
 		vertex[i].pos.y = mesh->mVertices[i].y;
 		vertex[i].pos.z = mesh->mVertices[i].z;
 
-		// –@üƒxƒNƒgƒ‹
+		// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 		vertex[i].normal.x = mesh->mNormals[i].x;
 		vertex[i].normal.y = mesh->mNormals[i].y;
 		vertex[i].normal.z = mesh->mNormals[i].z;
 
-		// uvÀ•W
+		// uvåº§æ¨™
 		vertex[i].uv.x = mesh->mTextureCoords[0][i].x;
 		vertex[i].uv.y = -mesh->mTextureCoords[0][i].y;
 	}
@@ -56,67 +36,67 @@ void AssimpLoader::ParseMeshFaces(FbxModel* model, aiMesh* mesh)
 	std::vector<uint16_t>& indices = model->mesh.indices;
 	indices.resize(mesh->mNumFaces * 3);
 
-	// ƒtƒFƒ“ƒX
+	// ãƒ•ã‚§ãƒ³ã‚¹
 	for (uint32_t i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
 
 		for (uint32_t j = 0; j < face.mNumIndices; j++)
 		{
-			indices[i * 3 + j] = face.mIndices[j];
+			indices[i * 3 + j] = static_cast<uint16_t>(face.mIndices[j]);
 		}
 	}
 }
 void AssimpLoader::ParseSkin(FbxModel* model, aiMesh* mesh)
 {
-	// ƒXƒLƒjƒ“ƒOî•ñ‚ğ‚ÂƒƒbƒVƒ…‚©‚Ç‚¤‚©‚ğŠm”F‚µ‚Ü‚·
+	// ã‚¹ã‚­ãƒ‹ãƒ³ã‚°æƒ…å ±ã‚’æŒã¤ãƒ¡ãƒƒã‚·ãƒ¥ã‹ã©ã†ã‹ã‚’ç¢ºèªã—ã¾ã™
 	if (mesh->HasBones() == true)
 	{
-		// ƒ{[ƒ“”Ô†‚ÆƒXƒLƒ“ƒEƒFƒCƒg‚ÌƒyƒA
+		// ãƒœãƒ¼ãƒ³ç•ªå·ã¨ã‚¹ã‚­ãƒ³ã‚¦ã‚§ã‚¤ãƒˆã®ãƒšã‚¢
 		struct WeightSet
 		{
 			uint32_t index;
 			float weight;
 		};
 
-		// “ñŸŒ³”z—ñiƒWƒƒƒO”z—ñj list:’¸“_‚ª‰e‹¿‚ğó‚¯‚éƒ{[ƒ“‚Ì‘SƒŠƒXƒg vector:‚»‚ê‚ğ‘S’¸“_•ª
+		// äºŒæ¬¡å…ƒé…åˆ—ï¼ˆã‚¸ãƒ£ã‚°é…åˆ—ï¼‰ list:é ‚ç‚¹ãŒå½±éŸ¿ã‚’å—ã‘ã‚‹ãƒœãƒ¼ãƒ³ã®å…¨ãƒªã‚¹ãƒˆ vector:ãã‚Œã‚’å…¨é ‚ç‚¹åˆ†
 		std::vector<std::list<WeightSet>> weightLists(model->mesh.vertices.size());
 
-		// ƒ{[ƒ“‚ÌÅ‘å”İ’è
+		// ãƒœãƒ¼ãƒ³ã®æœ€å¤§æ•°è¨­å®š
 		model->bones.resize(mesh->mNumBones);
 
-		// ƒXƒLƒjƒ“ƒOî•ñ‚Ìˆ—
+		// ã‚¹ã‚­ãƒ‹ãƒ³ã‚°æƒ…å ±ã®å‡¦ç†
 		for (uint32_t i = 0; i < mesh->mNumBones; i++)
 		{
 			aiBone* bone = mesh->mBones[i];
 
-			// ƒ{[ƒ“‚Ì–¼‘O
+			// ãƒœãƒ¼ãƒ³ã®åå‰
 			model->bones[i].name = bone->mName.C_Str();
 
-			// ƒ{[ƒ“‚Ì‰Šúp¨s—ñ(ƒoƒCƒ“ƒhƒ|[ƒYs—ñ)
+			// ãƒœãƒ¼ãƒ³ã®åˆæœŸå§¿å‹¢è¡Œåˆ—(ãƒã‚¤ãƒ³ãƒ‰ãƒãƒ¼ã‚ºè¡Œåˆ—)
 			Mat4 initalMat = ConvertMat4FromAssimpMat(bone->mOffsetMatrix);
 			model->bones[i].offsetMat = initalMat.Transpose();
 
-			// ƒEƒFƒCƒg‚Ì“Ç‚İæ‚è
+			// ã‚¦ã‚§ã‚¤ãƒˆã®èª­ã¿å–ã‚Š
 			for (uint32_t j = 0; j < bone->mNumWeights; j++)
 			{
-				// ’¸“_”Ô†
+				// é ‚ç‚¹ç•ªå·
 				int vertexIndex = bone->mWeights[j].mVertexId;
-				// ƒXƒLƒ“ƒEƒFƒCƒg
+				// ã‚¹ã‚­ãƒ³ã‚¦ã‚§ã‚¤ãƒˆ
 				float weight = bone->mWeights[j].mWeight;
-				// ‚»‚Ì’¸“_‚Ì‰e‹¿‚ğó‚¯‚éƒ{[ƒ“ƒŠƒXƒg‚ÉAƒ{[ƒ“‚ÆƒEƒFƒCƒg‚ÌƒyƒA‚ğ’Ç‰Á
+				// ãã®é ‚ç‚¹ã®å½±éŸ¿ã‚’å—ã‘ã‚‹ãƒœãƒ¼ãƒ³ãƒªã‚¹ãƒˆã«ã€ãƒœãƒ¼ãƒ³ã¨ã‚¦ã‚§ã‚¤ãƒˆã®ãƒšã‚¢ã‚’è¿½åŠ 
 				weightLists[vertexIndex].emplace_back(WeightSet{ i,weight });
 			}
 		}
 
-		// ƒEƒFƒCƒg‚Ì®—
+		// ã‚¦ã‚§ã‚¤ãƒˆã®æ•´ç†
 		auto& vertices = model->mesh.vertices;
-		// Še’¸“_‚É‚Â‚¢‚Äˆ—
+		// å„é ‚ç‚¹ã«ã¤ã„ã¦å‡¦ç†
 		for (uint32_t i = 0; i < vertices.size(); i++)
 		{
-			// ’¸“_‚ÌƒEƒFƒCƒg‚©‚çÅ‚à‘å‚«‚¢4‚Â‚ğ‘I‘ğ
+			// é ‚ç‚¹ã®ã‚¦ã‚§ã‚¤ãƒˆã‹ã‚‰æœ€ã‚‚å¤§ãã„4ã¤ã‚’é¸æŠ
 			auto& weightList = weightLists[i];
-			// ‘å¬”äŠr—p‚Ìƒ‰ƒ€ƒ_®‚ğw’è‚µ‚Ä~‡‚Éƒ\[ƒg
+			// å¤§å°æ¯”è¼ƒç”¨ã®ãƒ©ãƒ ãƒ€å¼ã‚’æŒ‡å®šã—ã¦é™é †ã«ã‚½ãƒ¼ãƒˆ
 			weightList.sort(
 				[](auto const& lhs, auto const& rhs)
 				{
@@ -124,22 +104,22 @@ void AssimpLoader::ParseSkin(FbxModel* model, aiMesh* mesh)
 				});
 
 			int weightArrayIndex = 0;
-			// ~‡ƒ\[ƒgÏ‚İ‚ÌƒEƒFƒCƒgƒŠƒXƒg‚©‚ç
+			// é™é †ã‚½ãƒ¼ãƒˆæ¸ˆã¿ã®ã‚¦ã‚§ã‚¤ãƒˆãƒªã‚¹ãƒˆã‹ã‚‰
 			for (auto& weightSet : weightList)
 			{
-				// ’¸“_ƒf[ƒ^‚É‘‚«‚İ
+				// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã«æ›¸ãè¾¼ã¿
 				vertices[i].boneIndex[weightArrayIndex] = weightSet.index;
 				vertices[i].boneWeight[weightArrayIndex] = weightSet.weight;
-				// 4‚Â‚É’B‚µ‚½‚çI—¹
+				// 4ã¤ã«é”ã—ãŸã‚‰çµ‚äº†
 				if (++weightArrayIndex >= maxBoneIndices)
 				{
 					float weight = 0.f;
-					// 2”Ô–ÚˆÈ~‚ÌƒEƒFƒCƒg‚ğ‡Œv
+					// 2ç•ªç›®ä»¥é™ã®ã‚¦ã‚§ã‚¤ãƒˆã‚’åˆè¨ˆ
 					for (size_t j = 1; j < maxBoneIndices; j++)
 					{
 						weight += vertices[i].boneWeight[j];
 					}
-					// ‡Œv‚Å1,f(100%)‚É‚È‚é‚æ‚¤‚É’²®
+					// åˆè¨ˆã§1,f(100%)ã«ãªã‚‹ã‚ˆã†ã«èª¿æ•´
 					vertices[i].boneWeight[0] = 1.f - weight;
 					break;
 				}
@@ -153,14 +133,14 @@ void AssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 	{
 		aiMaterial* material = scene->mMaterials[i];
 
-		// ƒ}ƒeƒŠƒAƒ‹–¼
+		// ãƒãƒ†ãƒªã‚¢ãƒ«å
 		aiString materialName;
 		if (material->Get(AI_MATKEY_NAME, materialName) == AI_SUCCESS)
 		{
 			model->material.name = materialName.C_Str();
 		}
 
-		// ƒAƒ“ƒrƒGƒ“ƒgƒJƒ‰[
+		// ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆã‚«ãƒ©ãƒ¼
 		aiColor3D ambientColor;
 		if (material->Get(AI_MATKEY_COLOR_AMBIENT, ambientColor) == AI_SUCCESS)
 		{
@@ -169,7 +149,7 @@ void AssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 			model->material.ambient.b = ambientColor.b;
 		}
 
-		// ƒfƒBƒtƒ…[ƒYƒJƒ‰[
+		// ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºã‚«ãƒ©ãƒ¼
 		aiColor3D diffuseColor;
 		if (material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuseColor) == AI_SUCCESS)
 		{
@@ -178,13 +158,13 @@ void AssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 			model->material.diffuse.b = diffuseColor.b;
 		}
 
-		// ƒeƒNƒXƒ`ƒƒ[
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼
 		int textureCount = material->GetTextureCount(aiTextureType_DIFFUSE);
-		for (int i = 0; i < textureCount; i++)
+		for (int j = 0; j < textureCount; j++)
 		{
 			aiString texturePath;
 
-			if (material->GetTexture(aiTextureType_DIFFUSE, i, &texturePath) == AI_SUCCESS)
+			if (material->GetTexture(aiTextureType_DIFFUSE, j, &texturePath) == AI_SUCCESS)
 			{
 				const std::string filePath = texturePath.C_Str();
 
@@ -194,7 +174,7 @@ void AssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 				std::string fullPath = baseDirectory + model->name + "/" + name;
 				std::string textureTag = model->name + "Texture";
 
-				// ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+				// ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 				model->texture = TextureManager::LoadMaterialTexture(fullPath, textureTag);
 			}
 		}
@@ -204,22 +184,22 @@ void AssimpLoader::ParseNodeRecursive(FbxModel* model, FbxNode* parent, const ai
 {
 	aiString nodeName = node->mName;
 
-	// ƒ‚ƒfƒ‹‚Éƒm[ƒh‚ğ’Ç‰Á
+	// ãƒ¢ãƒ‡ãƒ«ã«ãƒãƒ¼ãƒ‰ã‚’è¿½åŠ 
 	model->nodes.emplace_back();
 	FbxNode& modelNode = model->nodes.back();
 
-	// ƒm[ƒh–¼‚ğæ“¾
+	// ãƒãƒ¼ãƒ‰åã‚’å–å¾—
 	modelNode.name = node->mName.C_Str();
 
-	// ƒ[ƒJƒ‹s—ñ
+	// ãƒ­ãƒ¼ã‚«ãƒ«è¡Œåˆ—
 	modelNode.localTransformMat = ConvertMat4FromAssimpMat(node->mTransformation);
 
-	// ƒOƒ[ƒoƒ‹s—ñ
+	// ã‚°ãƒ­ãƒ¼ãƒãƒ«è¡Œåˆ—
 	modelNode.globalTransformMat = modelNode.localTransformMat;
 	if (parent)
 	{
 		modelNode.parent = parent;
-		// e‚Ì•ÏŒ`‚ğæZ
+		// è¦ªã®å¤‰å½¢ã‚’ä¹—ç®—
 		modelNode.globalTransformMat *= parent->globalTransformMat;
 	}
 
@@ -232,7 +212,7 @@ void AssimpLoader::ParseNodeRecursive(FbxModel* model, FbxNode* parent, const ai
 		}
 	}
 
-	// Ä‹A
+	// å†å¸°
 	for (uint32_t i = 0; i < node->mNumChildren; i++)
 	{
 		ParseNodeRecursive(model, &modelNode, node->mChildren[i]);
@@ -257,13 +237,13 @@ Mat4 AssimpLoader::ConvertMat4FromAssimpMat(const aiMatrix4x4& mat)
 std::string AssimpLoader::ExractFileName(const std::string& path)
 {
 	size_t pos1;
-	// ‹æØ‚è•¶š '\\' ‚ªo‚Ä‚­‚éˆê”ÔÅŒã‚Ì•”•ª‚ğŒŸõ
+	// åŒºåˆ‡ã‚Šæ–‡å­— '\\' ãŒå‡ºã¦ãã‚‹ä¸€ç•ªæœ€å¾Œã®éƒ¨åˆ†ã‚’æ¤œç´¢
 	pos1 = path.rfind('\\');
 	if (pos1 != std::string::npos)
 	{
 		return path.substr(pos1 + 1, path.size() - pos1 - 1);
 	}
-	// ‹æØ‚è•¶š '/' ‚ªo‚Ä‚­‚éˆê”ÔÅŒã‚Ì•”•ª‚ğŒŸõ
+	// åŒºåˆ‡ã‚Šæ–‡å­— '/' ãŒå‡ºã¦ãã‚‹ä¸€ç•ªæœ€å¾Œã®éƒ¨åˆ†ã‚’æ¤œç´¢
 	pos1 = path.rfind('/');
 	if (pos1 != std::string::npos)
 	{

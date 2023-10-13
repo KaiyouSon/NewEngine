@@ -1,29 +1,35 @@
 #pragma once
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
-#include "ConstantBuffer.h"
+#include "Material.h"
 #include <vector>
 #include <memory>
 
 class Line
 {
 private:
-	std::vector<VertexBufferData::VLine> vertices_;
-	std::unique_ptr<VertexBuffer<VertexBufferData::VLine>> vertexBuffer_;
-	std::unique_ptr<ConstantBuffer<ConstantBufferData::CTransform3D>> constantBufferTransform_;
-	std::unique_ptr<ConstantBuffer<ConstantBufferData::CColor>> constantBufferColor_;
-	GraphicsPipeline* graphicsPipeline_;
-	Transform transform_;
+	std::vector<VertexBufferData::VLine> mVertices;
+	std::unique_ptr<VertexBuffer<VertexBufferData::VLine>> mVertexBuffer;
+	std::unique_ptr<Material> mMaterial;
+	GraphicsPipeline* mGraphicsPipeline;
+	Transform mTransform;
+	Transform* mParent;
 
 public:
+	Vec3 startPos;
+	Vec3 endPos;
 	Vec3 pos;
-	float scale;
 	Vec3 rot;
 	Color color;
 
+private: // マテリアル関連
+	void MaterialInit();
+	void MaterialTransfer();
+	void MaterialDrawCommands();
+
 public:
 	Line();
-	void Update();
+	void Update(Transform* parent);
 	void Draw();
 };
 

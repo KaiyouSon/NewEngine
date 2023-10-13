@@ -8,10 +8,10 @@ const Vec2 Vec2::down(0.f, -1.f);
 const Vec2 Vec2::one(1.f, 1.f);
 const Vec2 Vec2::zero(0.f, 0.f);
 
-// ƒxƒNƒgƒ‹‚Ì‘å‚«‚³
+// ç¹å¶ã‘ç¹åŒ»Îç¸ºï½®èŸï½§ç¸ºé˜ªï¼†
 float Vec2::Length() const { return sqrtf(x * x + y * y); }
 
-// ³‹K‰»i’·‚³‚ğ‚P‚É‚µ‚½jƒxƒNƒgƒ‹
+// è±ï½£éš•ä¸å–§ãƒ»ç£¯èç¸ºè¼”ï½’ãƒ»ä»£â†“ç¸ºåŠ±â—†ãƒ»å³¨ãƒ»ç¹§ï½¯ç¹åŒ»Î
 Vec2 Vec2::Norm() const
 {
 	if (x == 0 && y == 0)
@@ -22,19 +22,19 @@ Vec2 Vec2::Norm() const
 	return{ x / Length() , y / Length() };
 }
 
-// “ñ‚Â‚ÌƒxƒNƒgƒ‹‚Ì“àÏ
+// è å¾Œâ–½ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½®èœ€ãƒ»ï½©ãƒ»
 float Vec2::Dot(const Vec2 v1, const Vec2 v2) { return v1.x * v2.x + v1.y * v2.y; }
 
-// “ñ‚Â‚ÌƒxƒNƒgƒ‹‚ÌŠOÏ
+// è å¾Œâ–½ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½®èŸä¹Ÿï½©ãƒ»
 float Vec2::Cross(const Vec2 v1, const Vec2 v2) { return v1.x * v2.y - v1.y * v2.x; }
 
-// “ñ‚Â‚ÌƒxƒNƒgƒ‹‚Ì‹——£
+// è å¾Œâ–½ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½®éœæ™å±¬
 float Vec2::Distance(const Vec2 v1, const Vec2 v2)
 {
 	return sqrtf((v2.x - v1.x) * (v2.x - v1.x) + (v2.y - v1.y) * (v2.y - v1.y));
 }
 
-// “ñ‚Â‚ÌƒxƒNƒgƒ‹‚ÅŠe¬•ª‚Ìˆê”Ô‘å‚«‚È’l‚ğg—p‚µ‚ÄƒxƒNƒgƒ‹‚ğì¬‚·‚é
+// è å¾Œâ–½ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½§èœ·ãƒ»ãƒ»è›»ãƒ»ãƒ»è³Â€é€¡ï½ªèŸï½§ç¸ºé˜ªâ†‘è›Ÿï½¤ç¹§å‰ƒï½½ï½¿é€•ï½¨ç¸ºåŠ±â€»ç¹å¶ã‘ç¹åŒ»Îç¹§å‰ƒï½½æ‡ˆãƒ»ç¸ºå¶ï½‹
 Vec2 Vec2::Max(const Vec2 v1, const Vec2 v2)
 {
 	return Vec2(
@@ -42,7 +42,7 @@ Vec2 Vec2::Max(const Vec2 v1, const Vec2 v2)
 		v1.y >= v2.y ? v1.y : v2.y);
 }
 
-// “ñ‚Â‚ÌƒxƒNƒgƒ‹‚ÅŠe¬•ª‚Ìˆê”Ô¬‚³‚È’l‚ğg—p‚µ‚ÄƒxƒNƒgƒ‹‚ğì¬‚·‚é
+// è å¾Œâ–½ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½§èœ·ãƒ»ãƒ»è›»ãƒ»ãƒ»è³Â€é€¡ï½ªèŸ†ä¸Šï¼†ç¸ºï½ªè›Ÿï½¤ç¹§å‰ƒï½½ï½¿é€•ï½¨ç¸ºåŠ±â€»ç¹å¶ã‘ç¹åŒ»Îç¹§å‰ƒï½½æ‡ˆãƒ»ç¸ºå¶ï½‹
 Vec2 Vec2::Min(const Vec2 v1, const Vec2 v2)
 {
 	return Vec2(
@@ -50,43 +50,43 @@ Vec2 Vec2::Min(const Vec2 v1, const Vec2 v2)
 		v1.y <= v2.y ? v1.y : v2.y);
 }
 
-// ‚à‚¤ˆê•û‚ÌƒxƒNƒgƒ‹‚Æ‚Ì‘«‚µZ
+// ç¹§ã‚…â‰§è³Â€è­ï½¹ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½¨ç¸ºï½®é›œï½³ç¸ºç¤¼ï½®ãƒ»
 Vec2 Vec2::operator+(const Vec2 other) const
 {
 	return { x + other.x , y + other.y };
 }
 
-// ‚à‚¤ˆê•û‚ÌƒxƒNƒgƒ‹‚Æ‚Ìˆø‚«Z
+// ç¹§ã‚…â‰§è³Â€è­ï½¹ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½¨ç¸ºï½®è ‘è¼”â€³é‚‚ãƒ»
 Vec2 Vec2::operator-(const Vec2 other) const
 {
 	return { x - other.x , y - other.y };
 }
 
-// ‚à‚¤ˆê•û‚ÌƒxƒNƒgƒ‹‚Æ‚ÌŠ|‚¯Z
+// ç¹§ã‚…â‰§è³Â€è­ï½¹ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½¨ç¸ºï½®è¬—å¸™ï¿ é‚‚ãƒ»
 Vec2 Vec2::operator*(const Vec2 other) const
 {
 	return { x * other.x , y * other.y };
 }
 
-// ‚à‚¤ˆê•û‚ÌƒxƒNƒgƒ‹‚Æ‚ÌŠ„‚èZ
+// ç¹§ã‚…â‰§è³Â€è­ï½¹ç¸ºï½®ç¹å¶ã‘ç¹åŒ»Îç¸ºï½¨ç¸ºï½®èœ‘ï½²ç¹§é¡”ï½®ãƒ»
 Vec2 Vec2::operator/(const Vec2 other) const
 {
 	return { x / other.x , y / other.y };
 }
 
-// ˆê‚Â‚Ì’l‚Æ‚ÌŠ|‚¯Z
+// è³Â€ç¸ºï½¤ç¸ºï½®è›Ÿï½¤ç¸ºï½¨ç¸ºï½®è¬—å¸™ï¿ é‚‚ãƒ»
 Vec2 Vec2:: operator*(float num)const
 {
 	return { x * num,y * num };
 }
 
-// ˆê‚Â‚Ì’l‚Æ‚ÌŠ„‚èZ
+// è³Â€ç¸ºï½¤ç¸ºï½®è›Ÿï½¤ç¸ºï½¨ç¸ºï½®èœ‘ï½²ç¹§é¡”ï½®ãƒ»
 Vec2 Vec2::operator/(float num)const
 {
 	return { x / num,y / num };
 }
 
-// •¡‡‘ã“ü‰‰Z +=
+// éšãƒ»ç²‹è‰ï½£èœˆï½¥è²çš®ï½®ãƒ»+=
 Vec2& Vec2::operator+=(const Vec2 other)
 {
 	x += other.x;
@@ -94,7 +94,7 @@ Vec2& Vec2::operator+=(const Vec2 other)
 	return *this;
 }
 
-// •¡‡‘ã“ü‰‰Z -=
+// éšãƒ»ç²‹è‰ï½£èœˆï½¥è²çš®ï½®ãƒ»-=
 Vec2& Vec2::operator-=(const Vec2 other)
 {
 	x -= other.x;
@@ -116,7 +116,7 @@ Vec2& Vec2::operator-=(float num)
 	return *this;
 }
 
-// •¡‡‘ã“ü‰‰Z *=
+// éšãƒ»ç²‹è‰ï½£èœˆï½¥è²çš®ï½®ãƒ»*=
 Vec2& Vec2::operator*=(float num)
 {
 	x *= num;
@@ -124,7 +124,7 @@ Vec2& Vec2::operator*=(float num)
 	return *this;
 }
 
-// •¡‡‘ã“ü‰‰Z /=
+// éšãƒ»ç²‹è‰ï½£èœˆï½¥è²çš®ï½®ãƒ»/=
 Vec2& Vec2::operator/=(float num)
 {
 	x += num;
@@ -214,3 +214,4 @@ bool Vec2::operator<=(float num)
 	return x <= num && y <= num;
 
 }
+

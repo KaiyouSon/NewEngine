@@ -1,27 +1,36 @@
 #pragma once
+#include "NewEngineDefine.h"
+#include "NewEngineSetting.h"
 #include <d3d12.h>
-#include <d3dx12.h>
 #include <dxgi1_6.h>
 #include <wrl.h>
 #include <vector>
 
+DirectX12WarningDisableBegin
+#include <d3dx12.h>
+DirectX12WarningDisableEnd
+
 class RootSignature
 {
 private:
-	std::vector<D3D12_ROOT_PARAMETER> rootParameters_;	// ƒ‹[ƒgƒpƒ‰ƒ[ƒ^[‚Ìİ’è
-	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_;
-	//std::vector<CD3DX12_DESCRIPTOR_RANGE> descriptorRanges;
-	HRESULT result_;
-	uint32_t constantBufferNum_;
-	uint32_t descriptorRangeNum_;
+	HRESULT mResult;
+	std::vector<CD3DX12_DESCRIPTOR_RANGE> mSrvDescriptorRanges;
+	std::vector<CD3DX12_DESCRIPTOR_RANGE> mUavDescriptorRanges;
+	std::vector<CD3DX12_ROOT_PARAMETER> mRootParameters;	// ç¹ï½«ç¹ï½¼ç¹åŒ»ãƒ±ç¹ï½©ç¹ï½¡ç¹ï½¼ç¹§ï½¿ç¹ï½¼ç¸ºï½®éšªï½­è³ãƒ»
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> mRootSignature;
+	RootSignatureSetting mSetting;
+
+private:
+	void AddCbvToRootRrameter(const uint32_t maxCbvRootParameter);
+	void AddSrvToRootPrameter(const uint32_t maxSrvDescritorRange);
+	void AddUavToRootPrameter(const uint32_t maxUavDescritorRange);
 
 public:
-	void Create(const uint32_t number);
-	void AddConstantBufferViewToRootRrameter(const uint32_t number);
-	void AddDescriptorRangeToRootPrameter(const uint32_t number);
+	void Create(const RootSignatureSetting setting);
 
-	inline ID3D12RootSignature* GetRootSignature() { return rootSignature_.Get(); }
-	inline uint32_t GetConstantBufferNum() { return constantBufferNum_; }
-	inline uint32_t GetRootDescriptorTableIndex() { return (uint32_t)(rootParameters_.size() - 1); }
+	ID3D12RootSignature* GetRootSignature();
+
+	uint32_t GetCBVStartIndex();
+	uint32_t GetSRVStartIndex();
+	uint32_t GetUAVStartIndex();
 };
-

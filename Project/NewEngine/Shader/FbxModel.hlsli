@@ -1,6 +1,6 @@
 #include "Lighting.hlsli"
 
-// 3D•ÏŠ·s—ñ
+// 3Då¤‰æ›è¡Œåˆ—
 cbuffer ConstantBufferDataTransform : register(b0)
 {
     matrix viewMat;
@@ -8,19 +8,19 @@ cbuffer ConstantBufferDataTransform : register(b0)
     float3 cameraPos;
 }
 
-// ƒ}ƒeƒŠƒAƒ‹
+// ãƒžãƒ†ãƒªã‚¢ãƒ«
 cbuffer ConstantBufferDataMaterial : register(b1)
 {
-    float3 ambient : packoffset(c0); // ƒAƒ“ƒrƒGƒ“ƒgŒW”
-    float3 diffuse : packoffset(c1); // ƒfƒBƒtƒ…[ƒYŒW”
-    float3 specular : packoffset(c2); // ƒXƒyƒLƒ…ƒ‰[ŒW”
-    float alpha : packoffset(c2.w); // ƒAƒ‹ƒtƒ@
+    float3 ambient : packoffset(c0); // ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆä¿‚æ•°
+    float3 diffuse : packoffset(c1); // ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºä¿‚æ•°
+    float3 specular : packoffset(c2); // ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼ä¿‚æ•°
+    float alpha : packoffset(c2.w); // ã‚¢ãƒ«ãƒ•ã‚¡
 }
 
-// F
+// è‰²
 cbuffer ConstantBufferDataColor : register(b2)
 {
-    float4 color; // F
+    float4 color; // è‰²
 }
 
 static const int maxBones = 32;

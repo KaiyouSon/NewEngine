@@ -7,12 +7,12 @@ class Sprite;
 class TextureAnimeiton
 {
 private:
-	Timer animetionTimer_;
-	Vec2 initLeftTopPos_;
-	Vec2 initRightDownPos_;
-	Vec2 leftTopPos_;
-	Vec2 rightDownPos_;
-	float width_;
+	Timer mAnimetionTimer;
+	Vec2 mInitLeftTopPos;
+	Vec2 mInitRightDownPos;
+	Vec2 mLeftTopPos;
+	Vec2 mRightDownPos;
+	float mWidth;
 
 public:
 	bool isPlay;
