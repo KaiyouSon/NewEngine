@@ -33,11 +33,11 @@ void ResultUI::Update()
 	{
 		switch (mResultType)
 		{
-		case ResultType::EnemyFelledStr:
+		case ResultType::EnemyFelledText:
 			EnemyFelledUpdate();
 			break;
 
-		case ResultType::YouDiedStr:
+		case ResultType::YouDiedText:
 			YouDiedUpdate();
 			break;
 
@@ -50,17 +50,17 @@ void ResultUI::Update()
 	mText->Update(&mParent);
 	mTextAfterImage->Update(&mParent);
 }
-void ResultUI::DrawFrontSprite()
+void ResultUI::Draw()
 {
 	mBack->Draw();
 
 	switch (mResultType)
 	{
-	case ResultType::EnemyFelledStr:
+	case ResultType::EnemyFelledText:
 		EnemyFelledDraw();
 		break;
 
-	case ResultType::YouDiedStr:
+	case ResultType::YouDiedText:
 		YouDiedDraw();
 		break;
 
@@ -70,6 +70,7 @@ void ResultUI::DrawFrontSprite()
 
 }
 
+// 敵を倒した時の処理
 void ResultUI::EnemyFelledUpdate()
 {
 	if (sIsEnd == true)
@@ -139,6 +140,7 @@ void ResultUI::EnemyFelledDraw()
 	mText->Draw();
 }
 
+// プレイヤーが死んだ時の処理
 void ResultUI::YouDiedUpdate()
 {
 	if (sIsEnd == true)
@@ -190,21 +192,17 @@ void ResultUI::YouDiedDraw()
 	mText->Draw();
 }
 
-void ResultUI::SetisActive(const bool isActive)
-{
-	mIsActive = isActive;
-}
 void ResultUI::SetResultType(const ResultType resultType)
 {
 	mResultType = resultType;
 
 	switch (mResultType)
 	{
-	case ResultType::EnemyFelledStr:
+	case ResultType::EnemyFelledText:
 		mText->SetTexture(TextureManager::GetTexture("EnemyFelledStr"));
 		break;
 
-	case ResultType::YouDiedStr:
+	case ResultType::YouDiedText:
 		mText->SetTexture(TextureManager::GetTexture("YouDiedStr"));
 		break;
 

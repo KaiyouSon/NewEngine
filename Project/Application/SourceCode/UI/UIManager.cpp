@@ -1,48 +1,37 @@
 #include "UIManager.h"
+#include "ItemBoxUIGroup.h"
+#include "PlayerGaugeUI.h"
+#include "BossGaugeUI.h"
 
 UIManager::UIManager() :
-	mBossHPGauge(std::make_unique<GaugeUI>()),
-	mNegotiationUI(std::make_unique<NegotiationUI>()),
-	mMessageUI(std::make_unique<MessageUI>()),
-	mItemBoxUiManager(std::make_unique<ItemBoxUIManager>()),
-	mResultUI(std::make_unique<ResultUI>()),
 	mRespawnPointUI(std::make_unique<RespawnPointUI>())
 {
-	for (uint32_t i = 0; i < mGauges.size(); i++)
-	{
-		mGauges[i] = std::make_unique<GaugeUI>();
-	}
+	// 交渉UI
+	mUI.push_back(std::move(std::make_unique<NegotiationUI>()));
+
+	// メッセージUI
+	mUI.push_back(std::move(std::make_unique<MessageUI>()));
+
+	// メッセージUI
+	mUI.push_back(std::move(std::make_unique<ResultUI>()));
+
+	// アイテムボックスのUIのグループ
+	mUI.push_back(std::move(std::make_unique<ItemBoxUIGroup>()));
+
+	// プレイヤーのゲージUI
+	mUI.push_back(std::move(std::make_unique<PlayerGaugeUI>()));
+
+	// ボスのゲージUI
+	mUI.push_back(std::move(std::make_unique<BossGaugeUI>()));
 }
 
 void UIManager::Init()
 {
-	for (uint32_t i = 0; i < mGauges.size(); i++)
+	for (uint32_t i = 0; i < mUI.size(); i++)
 	{
-		mGauges[i]->SetGaugePrame(mPlayer->GetGaugeParam(i));
-		mGauges[i]->SetPos(Vec2(144.f, (float)(48.f + i * 18.f)));
-		mGauges[i]->Init();
+		mUI[i]->Init();
 	}
-
-	mGauges[(uint32_t)GaugeType::Hp]->SetColor(GaugeUI::FrontColor, Color::red);
-	mGauges[(uint32_t)GaugeType::Mp]->SetColor(GaugeUI::FrontColor, Color::blue);
-	mGauges[(uint32_t)GaugeType::Stamina]->SetColor(GaugeUI::FrontColor, Color::green);
-
-	mBossHPGauge->SetGaugePrame(mBoss->GetHpGaugeParam());
-	mBossHPGauge->SetPos(Vec2(GetWindowHalfSize().x - 448.f, 880.f));
-	mBossHPGauge->SetColor(GaugeUI::FrontColor, Color::red);
-	mBossHPGauge->Init();
-
-	mNegotiationUI->Init();
-	mNegotiationUI->SetUIManager(this);
-
-	mMessageUI->Init();
-
-	mItemBoxUiManager->Init();
-	mItemBoxUiManager->SetPlayer(mPlayer);
-
-	mResultUI->Init();
 }
-
 void UIManager::Update()
 {
 	if (mMovieEvent->GetisPlaying() == true)
@@ -50,43 +39,28 @@ void UIManager::Update()
 		return;
 	}
 
-	if (mPlayer->GetisDissolve() == true)
+	// 交渉UIの処理
+	NegotiationUIUpdate();
+
+	// リザルトUIの処理
+	ResultUIUpdate();
+
+	// アイテムボックスUIのグループの処理
+	ItemBoxUIGroupUpdate();
+
+	// プレイヤーのゲージのUI
+	PlayerGaugeUIUpdate();
+
+	// ボスのゲージUI
+	BossGaugeUIUpdate();
+
+	for (uint32_t i = 0; i < mUI.size(); i++)
 	{
-		mResultUI->SetisActive(true);
-		mResultUI->SetResultType(ResultUI::ResultType::YouDiedStr);
+		mUI[i]->Update();
 	}
-	else if (mBoss->GetisDissolve() == true)
-	{
-		mResultUI->SetisActive(true);
-		mResultUI->SetResultType(ResultUI::ResultType::EnemyFelledStr);
-	}
-
-	// アイテムボックス(左下のやつ)
-	mItemBoxUiManager->Update();
-
-	// プレイヤーのゲージ
-	for (uint32_t i = 0; i < mGauges.size(); i++)
-	{
-		mGauges[i]->SetGaugePrame(mPlayer->GetGaugeParam(i));
-		mGauges[i]->Update();
-	}
-
-	// 戦闘中の時に更新
-	if (mBoss->GetisFight() == true)
-	{
-		mBossHPGauge->SetGaugePrame(mBoss->GetHpGaugeParam());
-		mBossHPGauge->Update();
-	}
-
-	mNegotiationUI->Update();
-
-	mMessageUI->Update();
-
-	mResultUI->Update();
 
 	//mRespawnPointUI->Update();
 }
-
 void UIManager::DrawFrontSprite()
 {
 	if (mMovieEvent->GetisPlaying() == true)
@@ -94,53 +68,134 @@ void UIManager::DrawFrontSprite()
 		return;
 	}
 
-	for (uint32_t i = 0; i < mGauges.size(); i++)
+	for (uint32_t i = 0; i < mUI.size(); i++)
 	{
-		mGauges[i]->DrawFrontSprite();
+		mUI[i]->Draw();
 	}
-
-	mNegotiationUI->DrawFrontSprite();
-
-	mMessageUI->DrawFrontSprite();
-
-	mItemBoxUiManager->DrawFrontSprite();
-
-	// 戦闘中の時に描画
-	if (mBoss->GetisFight() == true)
-	{
-		mBossHPGauge->DrawFrontSprite();
-	}
-
-	mResultUI->DrawFrontSprite();
-
-	//mRespawnPointUI->DrawFrontSprite();
 }
 
+// 交渉UIの処理
+void UIManager::NegotiationUIUpdate()
+{
+	NegotiationUI* negotiationUI = GetNegotiationUI();
+	if (negotiationUI->GetisActive() == false)
+	{
+		return;
+	}
+
+	// 種類別の処理
+	switch (negotiationUI->GetTextType())
+	{
+	case NegotiationUI::TextType::ReadMessageText:
+		if (Pad::GetButtonDown(PadCode::ButtonB))
+		{
+			MessageUI* messageUI = GetMessageUI();
+			if (messageUI->GetisActive() == true)
+			{
+				messageUI->SetisActive(false);
+			}
+			else
+			{
+				messageUI->SetisActive(true);
+			}
+		}
+		break;
+
+	case  NegotiationUI::TextType::RestInLightText:
+		if (Pad::GetButtonDown(PadCode::ButtonB))
+		{
+			if (mRespawnPointUI->GetisActive() == true)
+			{
+				mRespawnPointUI->SetisActive(false);
+			}
+			else
+			{
+				mRespawnPointUI->SetisActive(true);
+			}
+		}
+		break;
+	}
+
+}
+
+// リザルトUIの処理
+void UIManager::ResultUIUpdate()
+{
+	// インスタンス取得
+	ResultUI* resultUI =
+		dynamic_cast<ResultUI*>(mUI[(uint32_t)UIIndex::ResultUI].get());
+
+	if (mPlayer->GetisDissolve() == true)
+	{
+		resultUI->SetisActive(true);
+		resultUI->SetResultType(ResultUI::ResultType::YouDiedText);
+	}
+	else if (mBoss->GetisDissolve() == true)
+	{
+		resultUI->SetisActive(true);
+		resultUI->SetResultType(ResultUI::ResultType::EnemyFelledText);
+	}
+}
+
+// アイテムボックスUIのグループの処理
+void UIManager::ItemBoxUIGroupUpdate()
+{
+	// インスタンス取得
+	ItemBoxUIGroup* itemBoxUIGroup =
+		dynamic_cast<ItemBoxUIGroup*>(mUI[(uint32_t)UIIndex::ItemBoxUIGroup].get());
+
+	itemBoxUIGroup->SetBottleNum(mPlayer->GetBottleNum());
+}
+
+// プレイヤーのゲージのUI
+void UIManager::PlayerGaugeUIUpdate()
+{
+	// インスタンス取得
+	PlayerGaugeUI* playerGaugeUI =
+		dynamic_cast<PlayerGaugeUI*>(mUI[(uint32_t)UIIndex::PlayerGaugeUI].get());
+
+	for (uint32_t i = 0; i < 3; i++)
+	{
+		playerGaugeUI->SetGaugeParam(mPlayer->GetGaugeParam(i), i);
+	}
+}
+
+// ボスのゲージUI
+void UIManager::BossGaugeUIUpdate()
+{
+	// インスタンス取得
+	BossGaugeUI* bossGaugeUI =
+		dynamic_cast<BossGaugeUI*>(mUI[(uint32_t)UIIndex::BossGaugeUI].get());
+
+	bossGaugeUI->SetisActive(mBoss->GetisFight());
+
+	bossGaugeUI->SetGaugeParam(mBoss->GetHpGaugeParam());
+}
+
+
+// セッター
 void UIManager::SetPlayer(Player* player)
 {
 	mPlayer = player;
 }
-
 void UIManager::SetBoss(Boss* boss)
 {
 	mBoss = boss;
 }
-
 void UIManager::SetMovieEvent(MovieEvent* movieEvent)
 {
 	mMovieEvent = movieEvent;
 }
 
+// ゲッター
 NegotiationUI* UIManager::GetNegotiationUI()
 {
-	return mNegotiationUI.get();
+	return dynamic_cast<NegotiationUI*>(mUI[(uint32_t)UIIndex::NegotiationUI].get());
 }
-
 MessageUI* UIManager::GetMessageUI()
 {
-	return mMessageUI.get();
+	return dynamic_cast<MessageUI*>(mUI[(uint32_t)UIIndex::MessageUI].get());
 }
-
 RespawnPointUI* UIManager::GetRespawnPointUI()
 {
 	return mRespawnPointUI.get();

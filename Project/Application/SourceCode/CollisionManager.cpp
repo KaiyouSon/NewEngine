@@ -114,7 +114,7 @@ void CollisionManager::PlayerHitNegotiation()
 			respawnPoint->GetCollider(), mPlayer->GetBodyCollider()))
 		{
 			mUiManager->GetNegotiationUI()->SetisActive(true);
-			mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::RestInLightStr);
+			mUiManager->GetNegotiationUI()->SetTextType(NegotiationUI::TextType::RestInLightText);
 			isHit = true;
 
 			if (Pad::GetButtonDown(PadCode::ButtonB))
@@ -138,10 +138,14 @@ void CollisionManager::PlayerHitNegotiation()
 			messageSign->GetCollider(), mPlayer->GetBodyCollider()))
 		{
 			mUiManager->GetNegotiationUI()->SetisActive(true);
-			mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::ReadMessageStr);
+			mUiManager->GetNegotiationUI()->SetTextType(NegotiationUI::TextType::ReadMessageText);
 			mUiManager->GetMessageUI()->SetTexture(messageSign->GetMessageTexture());
 			isHit = true;
 			return;
+		}
+		else
+		{
+			mUiManager->GetMessageUI()->SetisActive(false);
 		}
 	}
 
@@ -164,7 +168,7 @@ void CollisionManager::PlayerHitNegotiation()
 			gates[i]->GetNegotiationCollider(), mPlayer->GetBodyCollider()))
 		{
 			mUiManager->GetNegotiationUI()->SetisActive(true);
-			mUiManager->GetNegotiationUI()->SetStrType(NegotiationUI::OpenStr);
+			mUiManager->GetNegotiationUI()->SetTextType(NegotiationUI::TextType::OpenText);
 			isHit = true;
 
 			if (Pad::GetButtonDown(PadCode::ButtonB))

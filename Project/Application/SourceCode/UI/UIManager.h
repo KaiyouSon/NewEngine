@@ -2,23 +2,28 @@
 #include "GaugeUI.h"
 #include "NegotiationUI.h"
 #include "MessageUI.h"
-#include "ItemBoxUIManager.h"
+#include "RespawnPointUI.h"
+
 #include "Player.h"
 #include "Boss.h"
-#include "ResultUI.h"
-#include "RespawnPointUI.h"
 #include "MovieEvent.h"
 
+// 全UIを管理するクラス
 class UIManager
 {
 private:
-	std::array<std::unique_ptr<GaugeUI>, 3> mGauges;
+	enum class UIIndex
+	{
+		NegotiationUI,
+		MessageUI,
+		ResultUI,
+		ItemBoxUIGroup,
+		PlayerGaugeUI,
+		BossGaugeUI
+	};
 
-	std::unique_ptr<ItemBoxUIManager> mItemBoxUiManager;
-	std::unique_ptr<GaugeUI> mBossHPGauge;
-	std::unique_ptr<NegotiationUI> mNegotiationUI;
-	std::unique_ptr<MessageUI> mMessageUI;
-	std::unique_ptr<ResultUI> mResultUI;
+private:
+	std::vector<std::unique_ptr<IUI>> mUI;
 	std::unique_ptr<RespawnPointUI> mRespawnPointUI;
 
 private:
@@ -27,6 +32,23 @@ private:
 	Player* mPlayer;
 	Boss* mBoss;
 	MovieEvent* mMovieEvent;
+
+
+private:
+	// 交渉UIの処理
+	void NegotiationUIUpdate();
+
+	// リザルトUIの処理
+	void ResultUIUpdate();
+
+	// アイテムボックスUIのグループの処理
+	void ItemBoxUIGroupUpdate();
+
+	// プレイヤーのゲージのUI
+	void PlayerGaugeUIUpdate();
+
+	// ボスのゲージUI
+	void BossGaugeUIUpdate();
 
 public:
 	UIManager();

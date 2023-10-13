@@ -5,8 +5,7 @@ NegotiationUI::NegotiationUI() :
 	mBackFrame(std::make_unique<Sprite>()),
 	mButton(std::make_unique<Sprite>()),
 	mColon(std::make_unique<Sprite>()),
-	mText(std::make_unique<Sprite>()),
-	mIsActive(false)
+	mText(std::make_unique<Sprite>())
 {
 	mBackFrame->SetTexture(TextureManager::GetTexture("NegotiationBack"));
 
@@ -21,6 +20,8 @@ NegotiationUI::NegotiationUI() :
 
 void NegotiationUI::Init()
 {
+	mIsActive = false;
+
 	const float height = 928.f;
 
 	mBackFrame->pos = Vec2(GetWindowHalfSize().x, height);
@@ -40,8 +41,8 @@ void NegotiationUI::Init()
 
 void NegotiationUI::Update()
 {
+	// αの処理
 	AlphaUpdate();
-	TutorialMessageUpdate();
 
 	mText->pos.x = GetWindowHalfSize().x - 56;
 
@@ -56,7 +57,7 @@ void NegotiationUI::Update()
 	mText->Update();
 }
 
-void NegotiationUI::DrawFrontSprite()
+void NegotiationUI::Draw()
 {
 	if (mAlpha == 0)
 	{
@@ -84,86 +85,26 @@ void NegotiationUI::AlphaUpdate()
 	mAlpha = Clamp<float>(mAlpha, 0.f, 255.f);
 }
 
-void NegotiationUI::TutorialMessageUpdate()
-{
-	if (mAlpha == 0)
-	{
-		return;
-	}
-
-	MessageUI* messageUI = mUiManager->GetMessageUI();
-	RespawnPointUI* respawnPointUI = mUiManager->GetRespawnPointUI();
-
-	if (mIsActive == false)
-	{
-		messageUI->SetisActive(false);
-	}
-
-	switch (mType)
-	{
-	case ReadMessageStr:
-		if (Pad::GetButtonDown(PadCode::ButtonB))
-		{
-			if (messageUI->GetisActive() == true)
-			{
-				messageUI->SetisActive(false);
-			}
-			else
-			{
-				messageUI->SetisActive(true);
-			}
-		}
-		break;
-
-	case RestInLightStr:
-		if (Pad::GetButtonDown(PadCode::ButtonB))
-		{
-			if (respawnPointUI->GetisActive() == true)
-			{
-				respawnPointUI->SetisActive(false);
-			}
-			else
-			{
-				respawnPointUI->SetisActive(true);
-			}
-		}
-		break;
-	}
-
-
-
-}
-
-void NegotiationUI::SetUIManager(UIManager* uiManager)
-{
-	mUiManager = uiManager;
-}
-
-void NegotiationUI::SetisActive(const bool isActive)
-{
-	mIsActive = isActive;
-}
-
-void NegotiationUI::SetStrType(const StrType type)
+void NegotiationUI::SetTextType(const TextType type)
 {
 	mType = type;
 	switch (mType)
 	{
-	case ReadMessageStr:
+	case TextType::ReadMessageText:
 		mText->SetTexture(TextureManager::GetTexture("ReadMessageStr"));
 		break;
 
-	case RestInLightStr:
+	case TextType::RestInLightText:
 		mText->SetTexture(TextureManager::GetTexture("RestInLightStr"));
 		break;
 
-	case OpenStr:
+	case TextType::OpenText:
 		mText->SetTexture(TextureManager::GetTexture("OpenStr"));
 		break;
 	}
 }
 
-bool NegotiationUI::GetisActive()
+NegotiationUI::TextType NegotiationUI::GetTextType()
 {
-	return mIsActive;
+	return mType;
 }

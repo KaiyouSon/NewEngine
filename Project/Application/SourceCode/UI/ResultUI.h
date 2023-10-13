@@ -1,13 +1,15 @@
 #pragma once
 #include "NewEngine.h"
+#include "IUI.h"
 
-class ResultUI
+// リザルトUIのクラス
+class ResultUI : public IUI
 {
 public:
 	enum ResultType
 	{
-		EnemyFelledStr,
-		YouDiedStr
+		EnemyFelledText,
+		YouDiedText
 	};
 
 private:
@@ -15,7 +17,6 @@ private:
 	std::unique_ptr<Sprite> mText;
 	std::unique_ptr<Sprite> mTextAfterImage;
 	Transform mParent;
-	bool mIsActive;
 	Timer mTimer;
 	bool mIsWait;
 	Timer mWaitTimer;
@@ -26,20 +27,21 @@ private:
 	static bool sIsEnd;
 
 private:
+	// 敵を倒した時の処理
 	void EnemyFelledUpdate();
-	void YouDiedUpdate();
-
 	void EnemyFelledDraw();
+
+	// プレイヤーが死んだ時の処理
+	void YouDiedUpdate();
 	void YouDiedDraw();
 
 public:
 	ResultUI();
 	void Init();
 	void Update();
-	void DrawFrontSprite();
+	void Draw();
 
 public:
-	void SetisActive(const bool isActive);
 	void SetResultType(const ResultType resultType);
 
 	static bool GetisEnd();

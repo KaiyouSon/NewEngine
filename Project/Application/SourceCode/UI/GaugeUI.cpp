@@ -56,7 +56,7 @@ void GaugeUI::Update()
 	}
 }
 
-void GaugeUI::DrawFrontSprite()
+void GaugeUI::Draw()
 {
 	mSprites[BackFrame]->Draw();
 	mSprites[BackColor]->Draw();
@@ -120,6 +120,14 @@ void GaugeUI::SetColor(const uint32_t index, const Color color)
 	if (index == FrontColor)
 	{
 		mSprites[CurrentPos]->color = color;
+	}
+}
+
+void GaugeUI::SetAlpha(const float alpha)
+{
+	for (uint32_t i = 0; i < mSprites.size(); i++)
+	{
+		mSprites[i]->color.a = alpha;
 	}
 }
 

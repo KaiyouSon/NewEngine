@@ -1,7 +1,9 @@
 #pragma once
 #include "NewEngine.h"
+#include "IUI.h"
 
-class MessageUI
+// メッセージUIのクラス
+class MessageUI :public IUI
 {
 private:
 	std::unique_ptr<Sprite> mBack;
@@ -18,15 +20,11 @@ private:
 
 public:
 	MessageUI();
-	void Init();
-	void Update();
-	void DrawFrontSprite();
+	void Init() override;
+	void Update() override;
+	void Draw() override;
 
 public:
-	void SetisActive(const bool isActive);
 	void SetTexture(Texture* texture);
-
-public:
-	bool GetisActive();
 };
 

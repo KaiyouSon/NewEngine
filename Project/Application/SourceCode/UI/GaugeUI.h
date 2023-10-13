@@ -3,6 +3,7 @@
 #include "GaugeParam.h"
 #include "GaugeType.h"
 
+// ゲージUIのクラス
 class GaugeUI
 {
 public:
@@ -38,10 +39,11 @@ public:
 	GaugeUI();
 	void Init();
 	void Update();
-	void DrawFrontSprite();
+	void Draw();
 
 public:
 	void SetPos(const Vec2 pos);
 	void SetColor(const uint32_t index, const Color color);
+	void SetAlpha(const float alpha);
 	void SetGaugePrame(const GaugeParam gaugeParam);
 };

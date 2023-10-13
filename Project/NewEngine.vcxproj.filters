@@ -319,6 +319,18 @@
     <Filter Include="Shader\Engine\BoundingBox">
       <UniqueIdentifier>{d21196f9-28b1-4dea-97db-276762c69927}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Source\UI">
+      <UniqueIdentifier>{fc9e7c8d-bf5e-4039-a407-8e82e96114a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\UI">
+      <UniqueIdentifier>{674e6482-16ec-4ca9-90ba-f4237ac54306}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\UI\Member">
+      <UniqueIdentifier>{93c16d90-802a-49e5-b95e-57062280b7ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\UI\Member">
+      <UniqueIdentifier>{103ee024-9405-4866-9ba3-583c928173b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -729,9 +741,6 @@
     <ClCompile Include="Application\SourceCode\Motion\DrinkMotion.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\UI\GaugeUI.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\PostEffect\GaussianBlur.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
@@ -739,15 +748,6 @@
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Motion\IMotion.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\UI\ItemBoxUI.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\UI\ItemBoxUIManager.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\UI\ItemUI.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Motion\IWeaponMotion.cpp">
@@ -762,9 +762,6 @@
     <ClCompile Include="Application\SourceCode\Motion\MalletMotion.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\UI\NegotiationUI.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\Motion\OpenGateMotion.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
@@ -772,12 +769,6 @@
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\UI\RespawnPointUI.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\UI\ResultUI.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Motion\RollMotion.cpp">
@@ -789,15 +780,6 @@
     <ClCompile Include="Application\SourceCode\PostEffect\Task.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\UI\TitleUI.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\UI\MessageUI.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\UI\UIManager.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\PostEffect\Vignette.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
@@ -806,6 +788,45 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp">
       <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\UI\ItemBoxUIGroup.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\UI\MessageUI.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\UI\NegotiationUI.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\UI\RespawnPointUI.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\UI\ResultUI.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\UI\TitleUI.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\UI\UIManager.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\UI\GaugeUI.cpp">
+      <Filter>Application\Source\UI\Member</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\UI\ItemBoxUI.cpp">
+      <Filter>Application\Source\UI\Member</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\UI\PlayerGaugeUI.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\UI\IUI.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\UI\BossGaugeUI.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\UI\ItemUI.cpp">
+      <Filter>Application\Source\UI\Member</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1277,25 +1298,10 @@
     <ClInclude Include="Application\SourceCode\GaugeType.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\UI\GaugeUI.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\PostEffect\GaussianBlur.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\PostEffect\Glare.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\UI\ItemBoxUI.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\UI\ItemBoxUIManager.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\UI\ItemUI.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\UI\NegotiationUI.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\PostEffect\PostEffectManager.h">
@@ -1304,25 +1310,10 @@
     <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\UI\RespawnPointUI.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\UI\ResultUI.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\Weapon\Sword.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\PostEffect\Task.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\UI\TitleUI.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\UI\MessageUI.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\UI\UIManager.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\PostEffect\Vignette.h">
@@ -1333,6 +1324,45 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h">
       <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UI\ItemBoxUIGroup.h">
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UI\ItemUI.h">
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UI\MessageUI.h">
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UI\NegotiationUI.h">
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UI\RespawnPointUI.h">
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UI\ResultUI.h">
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UI\TitleUI.h">
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UI\UIManager.h">
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UI\IUI.h">
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UI\PlayerGaugeUI.h">
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UI\BossGaugeUI.h">
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UI\GaugeUI.h">
+      <Filter>Application\Header\UI\Member</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UI\ItemBoxUI.h">
+      <Filter>Application\Header\UI\Member</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -62,7 +62,7 @@ void MessageUI::Update()
 	mMessage->Update(&mParent);
 }
 
-void MessageUI::DrawFrontSprite()
+void MessageUI::Draw()
 {
 	if (mAlpha == 0)
 	{
@@ -77,17 +77,7 @@ void MessageUI::DrawFrontSprite()
 	mMessage->Draw();
 }
 
-void MessageUI::SetisActive(const bool isActive)
-{
-	mIsActive = isActive;
-}
-
 void MessageUI::SetTexture(Texture* texture)
 {
 	mMessage->SetTexture(texture);
-}
-
-bool MessageUI::GetisActive()
-{
-	return mIsActive;
 }

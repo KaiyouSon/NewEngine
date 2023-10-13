@@ -1,16 +1,20 @@
 #pragma once
 #include "NewEngine.h"
+#include "IUI.h"
 
+// 前方宣言
 class UIManager;
 
-class NegotiationUI
+// 交渉UIのクラス
+class NegotiationUI : public IUI
 {
 public:
-	enum StrType
+	// 交渉タイプ
+	enum class TextType
 	{
-		ReadMessageStr,
-		RestInLightStr,
-		OpenStr,
+		ReadMessageText,
+		RestInLightText,
+		OpenText,
 	};
 
 private:
@@ -21,26 +25,22 @@ private:
 	std::unique_ptr<Sprite> mColon;
 
 	float mAlpha;
-	bool mIsActive;
 
-	StrType mType;
+	TextType mType;
 
 private:
 	void AlphaUpdate();
-	void TutorialMessageUpdate();
 
 public:
 	NegotiationUI();
-	void Init();
-	void Update();
-	void DrawFrontSprite();
+	void Init() override;
+	void Update() override;
+	void Draw() override;
 
-public:
-	void SetUIManager(UIManager* uiManager);
-	void SetisActive(const bool isActive);
-	void SetStrType(const StrType type);
+public:	// セッター
+	void SetTextType(const TextType type);
 
-public:
-	bool GetisActive();
+public: // ゲッター
+	TextType GetTextType();
 };
 

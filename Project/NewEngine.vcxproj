@@ -128,6 +128,9 @@
     <ClCompile Include="Application\SourceCode\Camera\CameraManager.cpp" />
     <ClCompile Include="Application\SourceCode\Character\Character.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Cloud.cpp" />
+    <ClCompile Include="Application\SourceCode\UI\BossGaugeUI.cpp" />
+    <ClCompile Include="Application\SourceCode\UI\IUI.cpp" />
+    <ClCompile Include="Application\SourceCode\UI\PlayerGaugeUI.cpp" />
     <ClCompile Include="Application\SourceCode\Weapon\Club.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Coffin.cpp" />
     <ClCompile Include="Application\SourceCode\CollisionManager.cpp" />
@@ -147,7 +150,7 @@
     <ClCompile Include="Application\SourceCode\Menu\IMenu.cpp" />
     <ClCompile Include="Application\SourceCode\Motion\IMotion.cpp" />
     <ClCompile Include="Application\SourceCode\UI\ItemBoxUI.cpp" />
-    <ClCompile Include="Application\SourceCode\UI\ItemBoxUIManager.cpp" />
+    <ClCompile Include="Application\SourceCode\UI\ItemBoxUIGroup.cpp" />
     <ClCompile Include="Application\SourceCode\UI\ItemUI.cpp" />
     <ClCompile Include="Application\SourceCode\Transition\ITransition.cpp" />
     <ClCompile Include="Application\SourceCode\Motion\IWeaponMotion.cpp" />
@@ -297,6 +300,9 @@
     <ClInclude Include="Application\SourceCode\Camera\CameraManager.h" />
     <ClInclude Include="Application\SourceCode\Character\Character.h" />
     <ClInclude Include="Application\SourceCode\Field\Cloud.h" />
+    <ClInclude Include="Application\SourceCode\UI\BossGaugeUI.h" />
+    <ClInclude Include="Application\SourceCode\UI\IUI.h" />
+    <ClInclude Include="Application\SourceCode\UI\PlayerGaugeUI.h" />
     <ClInclude Include="Application\SourceCode\Weapon\Club.h" />
     <ClInclude Include="Application\SourceCode\Field\Coffin.h" />
     <ClInclude Include="Application\SourceCode\CollisionManager.h" />
@@ -317,7 +323,7 @@
     <ClInclude Include="Application\SourceCode\Menu\IMenu.h" />
     <ClInclude Include="Application\SourceCode\Motion\IMotion.h" />
     <ClInclude Include="Application\SourceCode\UI\ItemBoxUI.h" />
-    <ClInclude Include="Application\SourceCode\UI\ItemBoxUIManager.h" />
+    <ClInclude Include="Application\SourceCode\UI\ItemBoxUIGroup.h" />
     <ClInclude Include="Application\SourceCode\UI\ItemUI.h" />
     <ClInclude Include="Application\SourceCode\Transition\ITransition.h" />
     <ClInclude Include="Application\SourceCode\Motion\IWeaponMotion.h" />

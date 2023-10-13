@@ -321,7 +321,8 @@ void TextureManager::CreateVolumeTexture(const std::vector<std::string>& filePat
 			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 			static_cast<uint64_t>(size.x),
 			static_cast<uint32_t>(size.y),
-			static_cast<uint16_t>(size.z),
+			//static_cast<uint16_t>(size.z),
+			1,
 			1);
 	// バッファ生成
 	texture->Create(size, resourceDesc);
