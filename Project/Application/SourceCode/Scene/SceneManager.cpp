@@ -11,7 +11,6 @@
 #include "ShadowMap.h"
 #include "Cloud.h"
 #include "RespawnPoint.h"
-#include "RespawnPointUI.h"
 #include "Tree.h"
 #include "Grass.h"
 #include "Skydome.h"

@@ -9,6 +9,7 @@
 #include "CameraManager.h"
 #include "MovieCamera.h"
 #include "LoadManager.h"
+#include "ResultUI.h"
 
 GameScene::GameScene()
 {

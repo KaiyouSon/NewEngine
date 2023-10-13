@@ -798,9 +798,6 @@
     <ClCompile Include="Application\SourceCode\UI\NegotiationUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\UI\RespawnPointUI.cpp">
-      <Filter>Application\Source\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\UI\ResultUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
@@ -1335,9 +1332,6 @@
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\UI\NegotiationUI.h">
-      <Filter>Application\Header\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\UI\RespawnPointUI.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\UI\ResultUI.h">

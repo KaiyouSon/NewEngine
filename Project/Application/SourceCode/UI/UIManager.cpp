@@ -2,9 +2,9 @@
 #include "ItemBoxUIGroup.h"
 #include "PlayerGaugeUI.h"
 #include "BossGaugeUI.h"
+#include "ResultUI.h"
 
-UIManager::UIManager() :
-	mRespawnPointUI(std::make_unique<RespawnPointUI>())
+UIManager::UIManager()
 {
 	// 交渉UI
 	mUI.push_back(std::move(std::make_unique<NegotiationUI>()));
@@ -58,8 +58,6 @@ void UIManager::Update()
 	{
 		mUI[i]->Update();
 	}
-
-	//mRespawnPointUI->Update();
 }
 void UIManager::DrawFrontSprite()
 {
@@ -97,20 +95,6 @@ void UIManager::NegotiationUIUpdate()
 			else
 			{
 				messageUI->SetisActive(true);
-			}
-		}
-		break;
-
-	case  NegotiationUI::TextType::RestInLightText:
-		if (Pad::GetButtonDown(PadCode::ButtonB))
-		{
-			if (mRespawnPointUI->GetisActive() == true)
-			{
-				mRespawnPointUI->SetisActive(false);
-			}
-			else
-			{
-				mRespawnPointUI->SetisActive(true);
 			}
 		}
 		break;
@@ -195,8 +179,4 @@ NegotiationUI* UIManager::GetNegotiationUI()
 MessageUI* UIManager::GetMessageUI()
 {
 	return dynamic_cast<MessageUI*>(mUI[(uint32_t)UIIndex::MessageUI].get());
-}
-RespawnPointUI* UIManager::GetRespawnPointUI()
-{
-	return mRespawnPointUI.get();
 }

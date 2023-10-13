@@ -2,8 +2,6 @@
 #include "GaugeUI.h"
 #include "NegotiationUI.h"
 #include "MessageUI.h"
-#include "RespawnPointUI.h"
-
 #include "Player.h"
 #include "Boss.h"
 #include "MovieEvent.h"
@@ -24,7 +22,6 @@ private:
 
 private:
 	std::vector<std::unique_ptr<IUI>> mUI;
-	std::unique_ptr<RespawnPointUI> mRespawnPointUI;
 
 private:
 	Transform mItemBoxUIParent;
@@ -64,6 +61,5 @@ public:
 public:
 	NegotiationUI* GetNegotiationUI();
 	MessageUI* GetMessageUI();
-	RespawnPointUI* GetRespawnPointUI();
 };
 

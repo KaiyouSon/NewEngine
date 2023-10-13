@@ -171,7 +171,6 @@
     <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp" />
     <ClCompile Include="Application\SourceCode\Field\RespawnPoint.cpp" />
     <ClCompile Include="Application\SourceCode\Effect\RespawnPointEffect.cpp" />
-    <ClCompile Include="Application\SourceCode\UI\RespawnPointUI.cpp" />
     <ClCompile Include="Application\SourceCode\Transition\RespawnTransition.cpp" />
     <ClCompile Include="Application\SourceCode\UI\ResultUI.cpp" />
     <ClCompile Include="Application\SourceCode\Motion\RollMotion.cpp" />
@@ -345,7 +344,6 @@
     <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h" />
     <ClInclude Include="Application\SourceCode\Field\RespawnPoint.h" />
     <ClInclude Include="Application\SourceCode\Effect\RespawnPointEffect.h" />
-    <ClInclude Include="Application\SourceCode\UI\RespawnPointUI.h" />
     <ClInclude Include="Application\SourceCode\Transition\RespawnTransition.h" />
     <ClInclude Include="Application\SourceCode\UI\ResultUI.h" />
     <ClInclude Include="Application\SourceCode\Motion\RollMotion.h" />
