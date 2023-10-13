@@ -3,7 +3,8 @@
 #include "Weapon.h"
 #include "Character.h"
 
-struct Weapon;
+// 前方宣言
+class Weapon;
 
 enum class PartID
 {

@@ -74,10 +74,6 @@ void ShadowMap::RenderTextureSetting()
 
 	// 次のフレームの準備
 	mIndex = 0;
-
-	//mBlurRT->PrevDrawScene();
-	//mShadowMap->Draw();
-	//mBlurRT->PostDrawScene();
 }
 
 void ShadowMap::DrawModel()

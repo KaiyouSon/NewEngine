@@ -6,7 +6,7 @@ class Bloom
 public:
 	enum class PassType
 	{
-		// 謠冗判逕ｨ
+		// パスの種類
 		HighLumi,
 		GaussianBlur,
 		Bloom,

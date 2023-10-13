@@ -2,9 +2,10 @@
 #include "NewEngine.h"
 #include "ITransition.h"
 
+// 前方宣言
 template<typename T> class Singleton;
 
-// 後トランジション全部このクラスのまとめる
+// トランジションを管理するクラス
 class TransitionManager : public Singleton<TransitionManager>
 {
 private:

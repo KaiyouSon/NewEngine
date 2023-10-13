@@ -1,6 +1,7 @@
 #pragma once
 #include "Weapon.h"
 
+// 剣のクラス
 class Sword : public Weapon
 {
 private:

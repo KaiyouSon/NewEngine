@@ -15,6 +15,9 @@ private:
 	bool MotionLoad();
 
 public:
+	// タイトルシーンでのロード・アンロード
+
+	// ゲームシーンでのロード・アンロード
 	void GameSceneLoad();
 	void GameSceneUnLoad();
 

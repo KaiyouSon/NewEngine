@@ -2,6 +2,7 @@
 #include "NewEngine.h"
 #include "ITransition.h"
 
+// シーン遷移のトランジション
 class SceneTransition : public ITransition
 {
 private:
@@ -15,6 +16,4 @@ public:
 	void Generate() override;
 	void Update() override;
 	void DrawFrontSprite() override;
-
 };
-

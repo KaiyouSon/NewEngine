@@ -331,6 +331,12 @@
     <Filter Include="Application\Header\UI\Member">
       <UniqueIdentifier>{103ee024-9405-4866-9ba3-583c928173b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Header\Weapon">
+      <UniqueIdentifier>{3e679d3f-c27c-4189-8b6a-69826956dfc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\Weapon">
+      <UniqueIdentifier>{7b2f016d-4e5c-4324-8195-ffed8019e25c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -735,9 +741,6 @@
     <ClCompile Include="Application\SourceCode\Motion\BossGrabAttackMotion.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Weapon\Club.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\Motion\DrinkMotion.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
@@ -774,16 +777,10 @@
     <ClCompile Include="Application\SourceCode\Motion\RollMotion.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Weapon\Sword.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\PostEffect\Task.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\PostEffect\Vignette.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\Weapon\Weapon.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp">
@@ -824,6 +821,15 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\UI\ItemUI.cpp">
       <Filter>Application\Source\UI\Member</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Weapon\Weapon.cpp">
+      <Filter>Application\Source\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Weapon\Sword.cpp">
+      <Filter>Application\Source\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Weapon\Club.cpp">
+      <Filter>Application\Source\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1289,9 +1295,6 @@
     <ClInclude Include="Application\SourceCode\PostEffect\Bloom.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Weapon\Club.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\GaugeType.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
@@ -1307,16 +1310,10 @@
     <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Weapon\Sword.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\PostEffect\Task.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\PostEffect\Vignette.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Weapon\Weapon.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h">
@@ -1357,6 +1354,15 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\UI\ItemBoxUI.h">
       <Filter>Application\Header\UI\Member</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Weapon\Club.h">
+      <Filter>Application\Header\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Weapon\Sword.h">
+      <Filter>Application\Header\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Weapon\Weapon.h">
+      <Filter>Application\Header\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

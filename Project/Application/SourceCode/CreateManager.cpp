@@ -248,6 +248,7 @@ void CreateManager::CreateGraphicsPipeline()
 	PipelineManager::CreateGraphicsPipeline(setting, "RespawnPointEffect");
 }
 
+// Computeパイプラインの生成
 void CreateManager::CreateComputePipeline()
 {
 	// リスポーンエフェクト用

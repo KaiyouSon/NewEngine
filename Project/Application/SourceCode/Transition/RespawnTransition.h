@@ -2,6 +2,7 @@
 #include "NewEngine.h"
 #include "ITransition.h"
 
+// リスポーンのトランジション
 class RespawnTransition : public ITransition
 {
 private:

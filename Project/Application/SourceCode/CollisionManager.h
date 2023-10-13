@@ -5,8 +5,10 @@
 #include "UIManager.h"
 #include "MovieEvent.h"
 
+// 前方宣言
 template<typename T> class Singleton;
 
+// 当たり判定を処理するクラス
 class CollisionManager : public Singleton<CollisionManager>
 {
 private:

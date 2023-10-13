@@ -6,7 +6,8 @@
 #include "DrinkMotion.h"
 #include "OpenGateMotion.h"
 
-struct Weapon;
+// 前方宣言
+class Weapon;
 class Player;
 
 class PlayerBody : public HumanoidBody

@@ -1,7 +1,8 @@
 #pragma once
 #include "Weapon.h"
 
-struct Club : public Weapon
+// クラブのクラス
+class Club : public Weapon
 {
 private:
 	void ColliderUpdate() override;

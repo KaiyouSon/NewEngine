@@ -1,11 +1,13 @@
 #pragma once
 
+// トランジションの種類
 enum class TransitionType
 {
 	Respawn,
 	Scene,
 };
 
+// トランジションのステップ
 enum class TransitionStep
 {
 	None,
@@ -15,6 +17,7 @@ enum class TransitionStep
 	End,
 };
 
+// トランジションのインターフェース
 class ITransition
 {
 protected:

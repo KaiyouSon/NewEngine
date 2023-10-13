@@ -1,7 +1,8 @@
 #pragma once
 #include "IWeaponMotion.h"
 
-struct Weapon
+// 武器の基底クラス
+class Weapon
 {
 protected:
 	Vec3 mLocalPos;
@@ -43,4 +44,3 @@ public:
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
 };
-
