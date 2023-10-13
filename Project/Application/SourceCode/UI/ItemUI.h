@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+// アイテムUIの種類
 enum class ItemType
 {
 	None,
@@ -14,6 +15,7 @@ enum class ItemType
 	Club,
 };
 
+// アイテムUIのクラス
 class ItemUI
 {
 private:

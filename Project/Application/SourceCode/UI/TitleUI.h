@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+// タイトルUIのクラス
 class TitleUI
 {
 private:

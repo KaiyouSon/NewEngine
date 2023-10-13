@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+// アイテムボックスUIのクラス
 class ItemBoxUI
 {
 private:
@@ -17,6 +18,7 @@ public:
 	void DrawLight();
 
 public:
+	// セッター
 	void SetPos(const Vec2 pos);
 	void SetScale(const Vec2 scale);
 	void SetFrameAlpha(const float alpha);
