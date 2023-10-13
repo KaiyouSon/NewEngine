@@ -120,7 +120,7 @@ void NewEngine::PrevDraw()
 		// SRV繝偵・繝励・險ｭ螳壹さ繝槭Φ繝・
 		auto srvDescHeap = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
 		RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &srvDescHeap);
-		SceneManager::GetInstance()->RenderTextureSetting();
+		SceneManager::GetInstance()->DrawPass();
 
 		RenderBase::GetInstance()->PreDraw();
 		Gui::PreDraw();

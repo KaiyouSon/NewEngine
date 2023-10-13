@@ -31,6 +31,10 @@ private:
 	bool isInit;
 	float mBgmVolume;
 
+private:
+	// シーン切り替えの処理
+	void SceneChangeUpdate();
+
 public:
 	GameScene();
 	~GameScene();
@@ -39,7 +43,7 @@ public:
 	void CreateInstance() override;
 	void Init() override;
 	void Update() override;
-	void RenderTextureSetting() override;
+	void DrawPass() override;
 	void Draw() override;
 	void DrawDebugGui() override;
 };

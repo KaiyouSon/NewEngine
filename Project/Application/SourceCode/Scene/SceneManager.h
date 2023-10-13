@@ -4,16 +4,18 @@
 #include <future>
 #include <thread>
 
+// 前方宣言
 template<typename T> class Singleton;
 
+// シーンを管理するクラス
 class SceneManager : public Singleton<SceneManager>
 {
 private:
 	enum ChangeStep
 	{
-		CreateInstance,
-		Loading,
-		Changed
+		CreateInstance,	// インスタンス生成中
+		Loading,		// ロード中
+		Changed			// シーン切り替え終わった
 	};
 
 private:
@@ -24,8 +26,6 @@ private:
 	ChangeStep mChangeStep;
 	bool mIsReturn;
 
-	Timer mTestTimer;
-
 public:
 	SceneManager();
 	~SceneManager();
@@ -33,7 +33,7 @@ public:
 public:
 	void Init();
 	void Update();
-	void RenderTextureSetting();
+	void DrawPass();
 	void Draw();
 	void DrawDebugGui();
 
@@ -47,7 +47,7 @@ public:
 		{
 		case CreateInstance:
 		{
-			// 谺｡縺ｮ繧ｷ繝ｼ繝ｳ縺ｮ繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ繧剃ｽ懈・
+			// 次のシーンのインスタンスを作成
 			sNextScene = std::make_unique<T>();
 			GetInstance()->mChangeStep = Loading;
 		}
@@ -60,21 +60,22 @@ public:
 			std::future<bool> ftr = std::async(std::launch::async,
 				[]()
 				{
-					// 迴ｾ蝨ｨ縺ｮ繧ｷ繝ｼ繝ｳ縺ｮ繧｢繧ｻ繝・ヨ繧偵い繝ｳ繝ｭ繝ｼ繝峨☆繧・
+					// 現在のシーンのアンロード
 					sCurrentScene->UnLoad();
 
-					// 繧ｷ繝ｼ繝ｳ蜀・〒菴ｿ縺・い繧ｻ繝・ヨ縺ｮ繝ｭ繝ｼ繝・
+					// 次のシーンのロード
 					sNextScene->Load();
 
-					// 繧ｷ繝ｼ繝ｳ蜀・〒菴ｿ縺・う繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ逕滓・
+					// 次のシーンのインスタンス生成
 					sNextScene->CreateInstance();
 
-					// 繧ｷ繝ｼ繝ｳ蛻晄悄蛹・
+					// 次のシーンの初期化
 					sNextScene->Init();
 
 					return true;
 				});
 
+			// スレッド実行終わったらmoveする
 			if (ftr.get() == true)
 			{
 				sCurrentScene = std::move(sNextScene);

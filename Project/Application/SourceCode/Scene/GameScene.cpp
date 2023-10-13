@@ -1,6 +1,5 @@
 #include "GameScene.h"
 #include "TitleScene.h"
-#include "SceneChanger.h"
 #include "CollisionManager.h"
 #include "EffectManager.h"
 #include "LogoutMenu.h"
@@ -13,7 +12,6 @@
 
 GameScene::GameScene()
 {
-	SceneChanger::GetInstance()->SetisEaseTitleBGM(false);
 	mBgmVolume = 0;
 }
 GameScene::~GameScene()
@@ -118,8 +116,10 @@ void GameScene::Update()
 		mBgmVolume = Min<float>(mBgmVolume, 1.f);
 	}
 
+	// ムービーイベント
 	mMovieEvent->Update();
 
+	// ポーズ画面開いてない時のも実行
 	if (mMenuManager->GetisActive() == false)
 	{
 		mPlayer->PrevUpdate();
@@ -129,102 +129,20 @@ void GameScene::Update()
 		mPlayer->PostUpdate();
 	}
 
-	auto collider = mPlayer->GetBodyCollider();
-	ColliderDrawer::GetInstance()->Bind(&collider);
-
 	mField->Update();
 	mMenuManager->Update();
 	mPostEffectManager->Update();
 	mBoundingBox.Update();
 
 	ShadowMap::GetInstance()->Update();
-
 	EffectManager::GetInstance()->Update();
-
 	ColliderDrawer::GetInstance()->Update();
 
-	if (mMenuManager->GetisActive() == false)
-	{
-		CameraManager::GetInstance()->Update();
-	}
-
-	bool isBackToTitle =
-		LogoutMenu::GetisEnd() == true &&
-		LogoutMenu::GetSelect() == LogoutMenu::Select::BackToTitle;
-
-	// 驕ｷ遘ｻ縺ｮ蜃ｦ逅・
-	auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
-	if (currentTransition == nullptr)
-	{
-		// 繧ｿ繧､繝医Ν縺ｫ繧ゅ←繧区凾
-		if (isBackToTitle == true)
-		{
-			TransitionManager::GetInstance()->Start(TransitionType::Scene);
-			SceneChanger::GetInstance()->SetisEaseGameBGM(true);
-		}
-		// 繝ｪ繧ｶ繝ｫ繝医・譎・
-		else if (ResultUI::GetisEnd() == true)
-		{
-			TransitionManager::GetInstance()->Start(TransitionType::Scene);
-			SceneChanger::GetInstance()->SetisEaseGameBGM(true);
-		}
-	}
-	else
-	{
-		// 繧ｷ繝ｼ繝ｳ縺ｮ驕ｷ遘ｻ
-		if (currentTransition->GetType() == TransitionType::Scene &&
-			currentTransition->GetStep() == TransitionStep::Progress)
-		{
-			if (isBackToTitle == true)
-			{
-				SceneManager::ChangeScene<TitleScene>();
-				mIsChangeScene = true;
-			}
-			else
-			{
-				// 繝励Ξ繧､繝､繝ｼ縺梧ｭｻ繧薙□蝣ｴ蜷・
-				if (mPlayer->GetisDissolve() == true)
-				{
-					// 繧ｷ繝ｼ繝ｳ縺繧峨ご繝ｼ繝繧ｷ繝ｼ繝ｳ繧貞・譛溷喧
-					SceneManager::ChangeScene<GameScene>();
-					mIsChangeScene = true;
-				}
-				else if (mBoss->GetisDissolve() == true)
-				{
-					// 繧ｯ繝ｪ繧｢縺励◆繧峨ち繧､繝医Ν縺ｫ謌ｻ縺・
-					SceneManager::ChangeScene<TitleScene>();
-					mIsChangeScene = true;
-				}
-			}
-
-			if (mIsChangeScene == true)
-			{
-				if (SceneManager::GetisChanged() == true)
-				{
-					TransitionManager::GetInstance()->End();
-				}
-			}
-			else
-			{
-				TransitionManager::GetInstance()->End();
-				mPlayer->Init();
-				mMovieEvent->End();
-
-				CameraManager::GetInstance()->ChangeCamera(CameraManager::CameraType::Default);
-			}
-		}
-
-		// 繝ｪ繧ｹ繝昴・繝ｳ縺ｮ驕ｷ遘ｻ
-		if (currentTransition->GetType() == TransitionType::Respawn &&
-			currentTransition->GetStep() == TransitionStep::Progress)
-		{
-			Init();
-			TransitionManager::GetInstance()->End();
-		}
-	}
+	// シーン切り替えの処理
+	SceneChangeUpdate();
 }
 
-void GameScene::RenderTextureSetting()
+void GameScene::DrawPass()
 {
 	ShadowMap::GetInstance()->RenderTextureSetting();
 	mField->RenderTextureSetting();
@@ -280,4 +198,86 @@ void GameScene::DrawDebugGui()
 	//mField->DrawDebugGui();
 
 	//mPlayer->DrawDebugGui();
+}
+
+// シーン切り替えの処理
+void GameScene::SceneChangeUpdate()
+{
+	if (mMenuManager->GetisActive() == false)
+	{
+		CameraManager::GetInstance()->Update();
+	}
+
+	bool isBackToTitle =
+		LogoutMenu::GetisEnd() == true &&
+		LogoutMenu::GetSelect() == LogoutMenu::Select::BackToTitle;
+
+	// 遷移の処理
+	auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
+	if (currentTransition == nullptr)
+	{
+		// タイトルにもどる時
+		if (isBackToTitle == true)
+		{
+			TransitionManager::GetInstance()->Start(TransitionType::Scene);
+		}
+		// リザルトにもどる時
+		else if (ResultUI::GetisEnd() == true)
+		{
+			TransitionManager::GetInstance()->Start(TransitionType::Scene);
+		}
+	}
+	else
+	{
+		// シーンの遷移
+		if (currentTransition->GetType() == TransitionType::Scene &&
+			currentTransition->GetStep() == TransitionStep::Progress)
+		{
+			if (isBackToTitle == true)
+			{
+				SceneManager::ChangeScene<TitleScene>();
+				mIsChangeScene = true;
+			}
+			else
+			{
+				// プレイヤーが死んだ場合
+				if (mPlayer->GetisDissolve() == true)
+				{
+					// ゲームシーン
+					SceneManager::ChangeScene<GameScene>();
+					mIsChangeScene = true;
+				}
+				else if (mBoss->GetisDissolve() == true)
+				{
+					// タイトルシーン
+					SceneManager::ChangeScene<TitleScene>();
+					mIsChangeScene = true;
+				}
+			}
+
+			if (mIsChangeScene == true)
+			{
+				if (SceneManager::GetisChanged() == true)
+				{
+					TransitionManager::GetInstance()->End();
+				}
+			}
+			else
+			{
+				TransitionManager::GetInstance()->End();
+				mPlayer->Init();
+				mMovieEvent->End();
+
+				CameraManager::GetInstance()->ChangeCamera(CameraManager::CameraType::Default);
+			}
+		}
+
+		// リスポーンの遷移処理
+		if (currentTransition->GetType() == TransitionType::Respawn &&
+			currentTransition->GetStep() == TransitionStep::Progress)
+		{
+			Init();
+			TransitionManager::GetInstance()->End();
+		}
+	}
 }

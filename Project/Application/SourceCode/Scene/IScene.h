@@ -1,5 +1,6 @@
 #pragma once
 
+// シーンの基底クラス
 class IScene
 {
 public:
@@ -9,7 +10,7 @@ public:
 	virtual void CreateInstance() = 0;
 	virtual void Init() = 0;
 	virtual void Update() = 0;
-	virtual void RenderTextureSetting() = 0;
+	virtual void DrawPass() = 0;
 	virtual void Draw() = 0;
 	virtual void DrawDebugGui() = 0;
 };

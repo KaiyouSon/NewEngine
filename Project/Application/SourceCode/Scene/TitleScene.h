@@ -1,8 +1,8 @@
 #pragma once
 #include "NewEngine.h"
 #include "TitleUI.h"
-#include "Emitter.h"
 
+// タイトルシーンのクラス
 class TitleScene : public IScene
 {
 private:
@@ -10,13 +10,17 @@ private:
 	float mBgmVolume;
 	bool mIsPush;
 
+private:
+	// シーン切り替えの処理
+	void SceneChangeUpdate();
+
 public:
 	void Load() override;
 	void UnLoad() override;
 	void CreateInstance() override;
 	void Init() override;
 	void Update() override;
-	void RenderTextureSetting() override;
+	void DrawPass() override;
 	void Draw() override;
 	void DrawDebugGui() override;
 };

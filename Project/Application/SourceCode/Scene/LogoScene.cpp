@@ -91,7 +91,7 @@ void LogoScene::Update()
 	}
 }
 
-void LogoScene::RenderTextureSetting()
+void LogoScene::DrawPass()
 {
 }
 

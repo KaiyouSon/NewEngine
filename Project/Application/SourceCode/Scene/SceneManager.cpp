@@ -1,5 +1,4 @@
 #include "SceneManager.h"
-#include "SceneChanger.h"
 #include "TitleScene.h"
 #include "GameScene.h"
 #include "LogoScene.h"
@@ -29,13 +28,13 @@ SceneManager::SceneManager()
 
 	CreateManager::GetInstance()->Create();
 
-	// 繝・ヰ繝・げ譎・
+	// デバッグビルドのも実行
 	ProcessAtDebugBuild([]()
 		{
 			sCurrentScene = std::make_unique<GameScene>();
 		});
 
-	// 繝ｪ繝ｪ繝ｼ繧ｹ譎・
+	// リリースビルドのも実行
 	ProcessAtReleaseBuild([]()
 		{
 			sCurrentScene = std::make_unique<LogoScene>();
@@ -55,30 +54,25 @@ void SceneManager::Init()
 	sCurrentScene->Init();
 
 	mChangeStep = CreateInstance;
-	mTestTimer.SetLimitTimer(300);
 
 	mIsReturn = false;
 }
 
 void SceneManager::Update()
 {
-	//mChangeStep = CreateInstance;
-
 	Camera::current.Update();
 	sCurrentScene->Update();
 	TransitionManager::GetInstance()->Update();
-
-	SceneChanger::GetInstance()->Update();
 }
 
-void SceneManager::RenderTextureSetting()
+void SceneManager::DrawPass()
 {
-	sCurrentScene->RenderTextureSetting();
+	sCurrentScene->DrawPass();
 }
 
 void SceneManager::DrawDebugGui()
 {
-	// 繝・ヰ繝・げ譎ゅ・縺ｿ螳溯｡・
+	// デバッグビルドのも実行
 	ProcessAtDebugBuild([&]()
 		{
 			sCurrentScene->DrawDebugGui();
@@ -87,18 +81,12 @@ void SceneManager::DrawDebugGui()
 
 void SceneManager::Draw()
 {
-	//if (mIsReturn == true)
-	//{
-	//	return;
-	//}
-
 	if (SceneManager::GetisLoading() == false &&
 		SceneManager::GetisChanged() == false)
 	{
 		sCurrentScene->Draw();
 	}
 
-	SceneChanger::GetInstance()->Draw();
 	TransitionManager::GetInstance()->DrawFrontSprite();
 }
 

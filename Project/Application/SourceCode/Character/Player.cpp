@@ -173,6 +173,7 @@ void Player::ColliderUpdate()
 	mBodyCollider.radius = 2.5f;
 
 	mWeapon->ColliderUpdate();
+	ColliderDrawer::GetInstance()->Bind(&mBodyCollider);
 }
 
 // 繧ｲ繝ｼ繧ｸ髢｢騾｣

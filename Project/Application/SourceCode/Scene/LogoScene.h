@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+// ロゴシーンの処理
 class LogoScene : public IScene
 {
 private:
@@ -23,7 +24,7 @@ public:
 	void CreateInstance() override;
 	void Init() override;
 	void Update() override;
-	void RenderTextureSetting() override;
+	void DrawPass() override;
 	void Draw() override;
 	void DrawDebugGui() override;
 };

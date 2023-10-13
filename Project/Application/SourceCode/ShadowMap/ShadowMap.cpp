@@ -82,10 +82,6 @@ void ShadowMap::DrawModel()
 
 void ShadowMap::DrawPostEffect()
 {
-	//mShadowMap->SetDrawCommands(2, 2);
-	//mShadowMap->Draw();
-
-	//mBlur->Draw();
 }
 
 void ShadowMap::Bind(Object3D& object)

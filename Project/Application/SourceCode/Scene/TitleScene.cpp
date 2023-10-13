@@ -1,6 +1,5 @@
 #include "TitleScene.h"
 #include "GameScene.h"
-#include "SceneChanger.h"
 #include "TransitionManager.h"
 #include "MovieEvent.h"
 
@@ -47,15 +46,26 @@ void TitleScene::Update()
 
 	mTitleUI->Update();
 
-	if (Key::GetKeyDown(DIK_S))
-	{
-		TransitionManager::GetInstance()->Start(TransitionType::Scene);
-	}
-	if (Key::GetKeyDown(DIK_E))
-	{
-		TransitionManager::GetInstance()->End();
-	}
+	// シーン切り替えの処理
+	SceneChangeUpdate();
+}
 
+void TitleScene::DrawPass()
+{
+}
+
+void TitleScene::Draw()
+{
+	mTitleUI->DrawFrontSprite();
+}
+
+void TitleScene::DrawDebugGui()
+{
+}
+
+// シーン切り替えの処理
+void TitleScene::SceneChangeUpdate()
+{
 	if (Pad::GetAnyButtonDown())
 	{
 		if (mTitleUI->GetisAfterImage() == false)
@@ -74,7 +84,7 @@ void TitleScene::Update()
 	{
 		auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
 
-		// 繝医Λ繝ｳ繧ｸ繧ｷ繝ｧ繝ｳ縺系ull縺九▽繝懊ち繝ｳ謚ｼ縺励※縺ｪ縺・ｴ蜷・
+		// トランジションがnullかつボタン押してないなら
 		if (currentTransition == nullptr)
 		{
 			if (mIsPush == true)
@@ -97,17 +107,3 @@ void TitleScene::Update()
 		}
 	}
 }
-
-void TitleScene::RenderTextureSetting()
-{
-}
-
-void TitleScene::Draw()
-{
-	mTitleUI->DrawFrontSprite();
-}
-
-void TitleScene::DrawDebugGui()
-{
-}
-

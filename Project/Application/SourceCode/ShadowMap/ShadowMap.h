@@ -4,6 +4,7 @@
 
 template<typename T> class Singleton;
 
+// シャドウマップ制御するクラス
 class ShadowMap : public Singleton<ShadowMap>
 {
 private:

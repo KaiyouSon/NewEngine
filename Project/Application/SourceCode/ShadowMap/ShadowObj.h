@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+// シャドウマップに描画する用のクラス
 class ShadowObj
 {
 private:
