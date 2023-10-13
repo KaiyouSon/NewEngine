@@ -8,6 +8,7 @@
 #include "TransitionManager.h"
 #include "CameraManager.h"
 #include "MovieCamera.h"
+#include "LoadManager.h"
 
 GameScene::GameScene()
 {
@@ -20,99 +21,12 @@ GameScene::~GameScene()
 
 void GameScene::Load()
 {
-	// UI
-	TextureManager::LoadTexture("UI/Gauge.png", "Gauge");
-	TextureManager::LoadTexture("UI/Buttons.png", "Buttons");
-	TextureManager::LoadTexture("UI/Negotiation/NegotiationBack.png", "NegotiationBack");
-	TextureManager::LoadTexture("UI/MessageSign/MessageBack.png", "MessageBack");
-	TextureManager::LoadTexture("UI/MessageSign/MessageSignUI.png", "MessageSignUI");
-	TextureManager::LoadTexture("UI/ItemBoxFrame.png", "ItemBoxFrame");
-	TextureManager::LoadTexture("UI/ItemBoxLight.png", "ItemBoxLight");
-	TextureManager::LoadTexture("UI/ItemUI/BottleUI.png", "BottleUI");
-	TextureManager::LoadTexture("UI/ItemUI/ClubUI.png", "ClubUI");
-	TextureManager::LoadTexture("UI/Menu/TempMenuBack.png", "MenuBack");
-	TextureManager::LoadTexture("UI/Menu/MenuTextFrame.png", "MenuTextFrame");
-	TextureManager::LoadTexture("UI/Menu/MenuTextLight.png", "MenuTextLight");
-	TextureManager::LoadTexture("UI/Result/ResultBack.png", "ResultBack");
-	TextureManager::LoadTexture("UI/RespawnPoint/RespawnBack.png", "RespawnBack");
-
-	// 繝・く繧ｹ繝・
-	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");
-	TextureManager::LoadTexture("Text/Negotiation/ReadMessageStr.png", "ReadMessageStr");
-	TextureManager::LoadTexture("Text/Negotiation/RestInLightStr.png", "RestInLightStr");
-	TextureManager::LoadTexture("Text/Negotiation/OpenStr.png", "OpenStr");
-	TextureManager::LoadTexture("Text/ExitStr.png", "ExitStr");
-	TextureManager::LoadTexture("Text/Tutorial/TutorialStr1.png", "TutorialStr1");
-	TextureManager::LoadTexture("Text/Tutorial/TutorialStr2.png", "TutorialStr2");
-	TextureManager::LoadTexture("Text/Tutorial/TutorialStr3.png", "TutorialStr3");
-	TextureManager::LoadTexture("Text/Tutorial/TutorialStr4.png", "TutorialStr4");
-	TextureManager::LoadTexture("Text/Tutorial/TutorialStr5.png", "TutorialStr5");
-	TextureManager::LoadTexture("Text/Menu/BackToTitleStr.png", "BackToTitleStr");
-	TextureManager::LoadTexture("Text/Menu/CloseGameStr.png", "CloseGameStr");
-	TextureManager::LoadTexture("Text/Result/EnemyFelledStr.png", "EnemyFelledStr");
-	TextureManager::LoadTexture("Text/Result/YouDiedStr.png", "YouDiedStr");
-	TextureManager::LoadTexture("Text/RespawnPoint/DecisionCloseStr.png", "DecisionCloseStr");
-	TextureManager::LoadTexture("Text/NumberSheets.png", "NumberSheets");
-
-	// 繝代・繝・ぅ繧ｯ繝ｫ
-	TextureManager::LoadTexture("Particle/Particle1.png", "Particle1");
-	TextureManager::LoadTexture("Particle/Particle2.png", "Particle2");
-	TextureManager::LoadTexture("Particle/Line.png", "Line");
-
-	// 闕・
-	TextureManager::LoadTexture("Grass/Weed.png", "Weed");
-	TextureManager::LoadTexture("Branch.png", "Branch");
-
-	// 螟ｩ逅・
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Skydome");
+	LoadManager::GetInstance()->GameSceneLoad();
 }
 
 void GameScene::UnLoad()
 {
-	// UI
-	TextureManager::UnLoadTexture("Gauge");
-	TextureManager::UnLoadTexture("Buttons");
-	TextureManager::UnLoadTexture("NegotiationBack");
-	TextureManager::UnLoadTexture("MessageBack");
-	TextureManager::UnLoadTexture("MessageSignUI");
-	TextureManager::UnLoadTexture("ItemBoxFrame");
-	TextureManager::UnLoadTexture("ItemBoxLight");
-	TextureManager::UnLoadTexture("BottleUI");
-	TextureManager::UnLoadTexture("ClubUI");
-	TextureManager::UnLoadTexture("MenuBack");
-	TextureManager::UnLoadTexture("MenuTextFrame");
-	TextureManager::UnLoadTexture("MenuTextLight");
-	TextureManager::UnLoadTexture("ResultBack");
-	TextureManager::UnLoadTexture("RespawnBack");
-
-	// 繝・く繧ｹ繝・
-	TextureManager::UnLoadTexture("ColonStr");
-	TextureManager::UnLoadTexture("ReadMessageStr");
-	TextureManager::UnLoadTexture("RestInLightStr");
-	TextureManager::UnLoadTexture("OpenStr");
-	TextureManager::UnLoadTexture("ExitStr");
-	TextureManager::UnLoadTexture("TutorialStr1");
-	TextureManager::UnLoadTexture("TutorialStr2");
-	TextureManager::UnLoadTexture("TutorialStr3");
-	TextureManager::UnLoadTexture("TutorialStr4");
-	TextureManager::UnLoadTexture("TutorialStr5");
-	TextureManager::UnLoadTexture("BackToTitleStr");
-	TextureManager::UnLoadTexture("CloseGameStr");
-	TextureManager::UnLoadTexture("EnemyFelledStr");
-	TextureManager::UnLoadTexture("YouDiedStr");
-	TextureManager::UnLoadTexture("DecisionCloseStr");
-	TextureManager::UnLoadTexture("NumberSheets");
-
-	// 繝代・繝・ぅ繧ｯ繝ｫ
-	TextureManager::UnLoadTexture("Particle1");
-	TextureManager::UnLoadTexture("Particle2");
-	TextureManager::UnLoadTexture("Line");
-
-	// 闕・
-	TextureManager::UnLoadTexture("Weed");
-	TextureManager::UnLoadTexture("Branch");
-
-	TextureManager::UnLoadRenderTexture("Skydome");
+	LoadManager::GetInstance()->GameSceneUnLoad();
 }
 
 void GameScene::CreateInstance()
@@ -182,6 +96,10 @@ void GameScene::Init()
 	isInit = false;
 
 	mIsChangeScene = false;
+
+	//mBoundingBox.SetTexture(TextureManager::GetVolumeTexture("Volume"));
+	mBoundingBox.SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
+	mBoundingBox.scale = 10.f;
 }
 void GameScene::Update()
 {
@@ -216,6 +134,7 @@ void GameScene::Update()
 	mField->Update();
 	mMenuManager->Update();
 	mPostEffectManager->Update();
+	mBoundingBox.Update();
 
 	ShadowMap::GetInstance()->Update();
 
@@ -225,7 +144,7 @@ void GameScene::Update()
 
 	if (mMenuManager->GetisActive() == false)
 	{
-		//CameraManager::GetInstance()->Update();
+		CameraManager::GetInstance()->Update();
 	}
 
 	bool isBackToTitle =
@@ -318,9 +237,11 @@ void GameScene::Draw()
 
 	mPostEffectManager->DrawEffectBloom();
 
+
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
 
+	mBoundingBox.Draw();
 }
 
 void GameScene::DrawDebugGui()

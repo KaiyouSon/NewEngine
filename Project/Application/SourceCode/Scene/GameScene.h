@@ -8,6 +8,7 @@
 #include "PostEffectManager.h"
 #include "Field.h"
 #include "MovieEvent.h"
+#include "BoundingBox.h"
 
 class GameScene : public IScene
 {
@@ -20,6 +21,8 @@ private:
 	std::unique_ptr<Field> mField;
 
 	std::unique_ptr<MovieEvent> mMovieEvent;
+
+	BoundingBox mBoundingBox;
 
 	RenderTexture* mCurrentScene;
 

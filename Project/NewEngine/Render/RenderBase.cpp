@@ -461,6 +461,14 @@ void RenderBase::ShaderCompilerInit()
 	setting.psFilePath = path1 + "ParticleMeshPS.hlsl";
 	ShaderCompilerManager::Create(setting, "ParticleMesh");
 
+	// バウンディングボックス用
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(2);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.vsFilePath = path1 + "BoundingBox/BoundingBoxVS.hlsl";
+	setting.psFilePath = path1 + "BoundingBox/BoundingBoxPS.hlsl";
+	ShaderCompilerManager::Create(setting, "BoundingBox");
 }
 void RenderBase::GraphicsPipelineInit()
 {
@@ -628,6 +636,18 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "ParticleMesh");
+
+	// バウンディングボックス用
+	setting = GraphicsPipelineSetting();
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BoundingBox");
+	setting.cullMode = CullMode::Back;
+	setting.topologyType = TopologyType::TriangleList;
+	setting.depthStencilDesc = depthStencilDesc1;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	PipelineManager::CreateGraphicsPipeline(setting, "BoundingBox");
 }
 void RenderBase::ComputePipelineInit()
 {

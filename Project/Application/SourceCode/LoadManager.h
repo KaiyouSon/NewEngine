@@ -15,6 +15,9 @@ private:
 	bool MotionLoad();
 
 public:
+	void GameSceneLoad();
+	void GameSceneUnLoad();
+
 	void Load();
 
 public:

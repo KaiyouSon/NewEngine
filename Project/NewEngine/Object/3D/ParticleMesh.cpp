@@ -19,10 +19,38 @@ ParticleMesh::ParticleMesh() :
 {
 	// 繝槭ユ繝ｪ繧｢繝ｫ縺ｮ蛻晄悄蛹・
 	MaterialInit();
-	CSMaterialInit();
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
 
-	scale = 20;
+
+}
+
+void ParticleMesh::ExecuteComputeShader()
+{
+	if (mMeshTexture == nullptr)
+	{
+		return;
+	}
+
+	RenderBase* renderBase = RenderBase::GetInstance();
+	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
+
+	CSMaterialInit();
+	CSMaterialTransfer();
+	mComputePipeline->DrawCommand();
+
+	if (mParticleData->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_GENERIC_READ)
+	{
+		// GENERIC_READ -> UNORDERED_ACCESS 縺ｫ縺励※SRV繧定ｨｭ螳壹☆繧・
+		renderBase->TransitionBufferState(
+			mParticleData->GetBufferResource(),
+			D3D12_RESOURCE_STATE_GENERIC_READ,
+			D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+	}
+
+	CSMaterialDrawCommands();
+
+	// 繝・ぅ繧ｹ繝代ャ繝・
+	cmdList->Dispatch(1, 1, 1);
 }
 
 #include "KeyBoardInput.h"
@@ -50,7 +78,6 @@ void ParticleMesh::Update(Transform* parent)
 
 	rot.y = Radian(180);
 
-	//pos.z += (float)(Key::GetKey(DIK_UP) - Key::GetKey(DIK_DOWN));
 	mTransform.pos = pos;
 	mTransform.scale = scale;
 	mTransform.rot = rot;
@@ -67,7 +94,7 @@ void ParticleMesh::Update(Transform* parent)
 
 	// 繝槭ユ繝ｪ繧｢繝ｫ縺ｮ霆｢騾・
 	MaterialTransfer();
-	CSMaterialTransfer();
+
 }
 void ParticleMesh::Draw(const BlendMode blendMode)
 {
@@ -76,29 +103,6 @@ void ParticleMesh::Draw(const BlendMode blendMode)
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
 
-	static int a = 0;
-
-	if (a == 0)
-	{
-
-		mComputePipeline->DrawCommand();
-
-		if (mParticleData->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_GENERIC_READ)
-		{
-			// GENERIC_READ -> UNORDERED_ACCESS 縺ｫ縺励※SRV繧定ｨｭ螳壹☆繧・
-			renderBase->TransitionBufferState(
-				mParticleData->GetBufferResource(),
-				D3D12_RESOURCE_STATE_GENERIC_READ,
-				D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
-		}
-
-		CSMaterialDrawCommands();
-
-		// 繝・ぅ繧ｹ繝代ャ繝・
-		cmdList->Dispatch(1, 1, 1);
-		a = 1;
-
-	}
 	// GraphicsPipeline謠冗判繧ｳ繝槭Φ繝・
 	mGraphicsPipeline->DrawCommand(blendMode);
 
@@ -202,6 +206,10 @@ void ParticleMesh::CSMaterialDrawCommands()
 {
 	ID3D12GraphicsCommandList* cmdList = RenderBase::GetInstance()->GetCommandList();
 
+	// ディスクリプターヒープ設定
+	auto srvDescHeap = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
+	cmdList->SetDescriptorHeaps(1, &srvDescHeap);
+
 	// CBV
 	uint32_t cbvStartIndex = mComputePipeline->GetRootSignature()->GetCBVStartIndex();
 	for (uint32_t i = 0; i < mCSMaterial->constantBuffers.size(); i++)
@@ -244,21 +252,18 @@ void ParticleMesh::SetComputePipeline(ComputePipeline* computePipeline) { mCompu
 
 // --- 繧ｲ繝・ち繝ｼ -------------------------------------------------------- //
 
-// 繝ｯ繝ｼ繝ｫ繝牙ｺｧ讓・
 Vec3 ParticleMesh::GetWorldPos()
 {
 	Vec3 worldPos = Vec3MulMat4(pos, mTransform.GetWorldMat(), true);
 	return worldPos;
 }
 
-// 繝ｯ繝ｼ繝ｫ繝峨せ繧ｱ繝ｼ繝ｫ
 Vec3 ParticleMesh::GetWorldScale()
 {
 	Vec3 worldScale = mTransform.GetWorldMat().GetScale();
 	return worldScale;
 }
 
-// 繝医Λ繝ｳ繧ｹ繝輔か繝ｼ繝
 Transform ParticleMesh::GetTransform()
 {
 	return mTransform;

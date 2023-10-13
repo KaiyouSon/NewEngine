@@ -54,6 +54,12 @@ namespace ConstantBufferData
 		Vec2 tiling;
 	};
 
+	struct CUVWParameter
+	{
+		Vec3 offset;
+		Vec3 tiling;
+	};
+
 	struct CColor
 	{
 		Color color;// 色

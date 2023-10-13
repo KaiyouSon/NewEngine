@@ -68,7 +68,7 @@ void EffectManager::DrawEffect(const bool isBloom)
 		//mBloodSprayEffect->DrawModel();
 
 		//// 蝗槫ｾｩ
-		mPlayerRecoveryEffect->DrawModel();
+		//mPlayerRecoveryEffect->DrawModel();
 
 		// 繝ｪ繧ｹ繝昴・繝ｳ蝨ｰ轤ｹ縺ｮ繧ｨ繝輔ぉ繧ｯ繝・
 		//mRespawnPointEffect->DrawModel();

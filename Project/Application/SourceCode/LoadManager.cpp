@@ -47,6 +47,7 @@ bool LoadManager::TextureLoad()
 {
 	TextureManager::LoadTexture("Test.png", "Test");
 	TextureManager::LoadTexture("Test1.png", "Test1");
+
 	TextureManager::LoadTexture("Particle/StarParticle.png", "StarParticle");
 
 	// 繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ縺ｫ菴ｿ縺・°繧蔚nLoad縺励↑縺・
@@ -76,7 +77,6 @@ bool LoadManager::TextureLoad()
 
 
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectBloom");
-
 
 	// 蜃ｦ逅・′邨ゅｏ縺｣縺溘・繧呈蕗縺医ｋ縺溘ａ縲∝ｿ・★true繧定ｿ斐☆
 	return true;
@@ -122,6 +122,104 @@ bool LoadManager::MotionLoad()
 	return true;
 }
 
+void LoadManager::GameSceneLoad()
+{
+	// UI
+	TextureManager::LoadTexture("UI/Gauge.png", "Gauge");
+	TextureManager::LoadTexture("UI/Buttons.png", "Buttons");
+	TextureManager::LoadTexture("UI/Negotiation/NegotiationBack.png", "NegotiationBack");
+	TextureManager::LoadTexture("UI/MessageSign/MessageBack.png", "MessageBack");
+	TextureManager::LoadTexture("UI/MessageSign/MessageSignUI.png", "MessageSignUI");
+	TextureManager::LoadTexture("UI/ItemBoxFrame.png", "ItemBoxFrame");
+	TextureManager::LoadTexture("UI/ItemBoxLight.png", "ItemBoxLight");
+	TextureManager::LoadTexture("UI/ItemUI/BottleUI.png", "BottleUI");
+	TextureManager::LoadTexture("UI/ItemUI/ClubUI.png", "ClubUI");
+	TextureManager::LoadTexture("UI/Menu/TempMenuBack.png", "MenuBack");
+	TextureManager::LoadTexture("UI/Menu/MenuTextFrame.png", "MenuTextFrame");
+	TextureManager::LoadTexture("UI/Menu/MenuTextLight.png", "MenuTextLight");
+	TextureManager::LoadTexture("UI/Result/ResultBack.png", "ResultBack");
+	TextureManager::LoadTexture("UI/RespawnPoint/RespawnBack.png", "RespawnBack");
+
+	// テキスト
+	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");
+	TextureManager::LoadTexture("Text/Negotiation/ReadMessageStr.png", "ReadMessageStr");
+	TextureManager::LoadTexture("Text/Negotiation/RestInLightStr.png", "RestInLightStr");
+	TextureManager::LoadTexture("Text/Negotiation/OpenStr.png", "OpenStr");
+	TextureManager::LoadTexture("Text/ExitStr.png", "ExitStr");
+	TextureManager::LoadTexture("Text/Tutorial/TutorialStr1.png", "TutorialStr1");
+	TextureManager::LoadTexture("Text/Tutorial/TutorialStr2.png", "TutorialStr2");
+	TextureManager::LoadTexture("Text/Tutorial/TutorialStr3.png", "TutorialStr3");
+	TextureManager::LoadTexture("Text/Tutorial/TutorialStr4.png", "TutorialStr4");
+	TextureManager::LoadTexture("Text/Tutorial/TutorialStr5.png", "TutorialStr5");
+	TextureManager::LoadTexture("Text/Menu/BackToTitleStr.png", "BackToTitleStr");
+	TextureManager::LoadTexture("Text/Menu/CloseGameStr.png", "CloseGameStr");
+	TextureManager::LoadTexture("Text/Result/EnemyFelledStr.png", "EnemyFelledStr");
+	TextureManager::LoadTexture("Text/Result/YouDiedStr.png", "YouDiedStr");
+	TextureManager::LoadTexture("Text/RespawnPoint/DecisionCloseStr.png", "DecisionCloseStr");
+	TextureManager::LoadTexture("Text/NumberSheets.png", "NumberSheets");
+
+	// パーティクル
+	TextureManager::LoadTexture("Particle/Particle1.png", "Particle1");
+	TextureManager::LoadTexture("Particle/Particle2.png", "Particle2");
+	TextureManager::LoadTexture("Particle/Line.png", "Line");
+
+	// 草
+	TextureManager::LoadTexture("Grass/Weed.png", "Weed");
+	TextureManager::LoadTexture("Branch.png", "Branch");
+
+	// 天球
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Skydome");
+}
+
+void LoadManager::GameSceneUnLoad()
+{
+	// UI
+	TextureManager::UnLoadTexture("Gauge");
+	TextureManager::UnLoadTexture("Buttons");
+	TextureManager::UnLoadTexture("NegotiationBack");
+	TextureManager::UnLoadTexture("MessageBack");
+	TextureManager::UnLoadTexture("MessageSignUI");
+	TextureManager::UnLoadTexture("ItemBoxFrame");
+	TextureManager::UnLoadTexture("ItemBoxLight");
+	TextureManager::UnLoadTexture("BottleUI");
+	TextureManager::UnLoadTexture("ClubUI");
+	TextureManager::UnLoadTexture("MenuBack");
+	TextureManager::UnLoadTexture("MenuTextFrame");
+	TextureManager::UnLoadTexture("MenuTextLight");
+	TextureManager::UnLoadTexture("ResultBack");
+	TextureManager::UnLoadTexture("RespawnBack");
+
+	// テキスト
+	TextureManager::UnLoadTexture("ColonStr");
+	TextureManager::UnLoadTexture("ReadMessageStr");
+	TextureManager::UnLoadTexture("RestInLightStr");
+	TextureManager::UnLoadTexture("OpenStr");
+	TextureManager::UnLoadTexture("ExitStr");
+	TextureManager::UnLoadTexture("TutorialStr1");
+	TextureManager::UnLoadTexture("TutorialStr2");
+	TextureManager::UnLoadTexture("TutorialStr3");
+	TextureManager::UnLoadTexture("TutorialStr4");
+	TextureManager::UnLoadTexture("TutorialStr5");
+	TextureManager::UnLoadTexture("BackToTitleStr");
+	TextureManager::UnLoadTexture("CloseGameStr");
+	TextureManager::UnLoadTexture("EnemyFelledStr");
+	TextureManager::UnLoadTexture("YouDiedStr");
+	TextureManager::UnLoadTexture("DecisionCloseStr");
+	TextureManager::UnLoadTexture("NumberSheets");
+
+	// パーティクル
+	TextureManager::UnLoadTexture("Particle1");
+	TextureManager::UnLoadTexture("Particle2");
+	TextureManager::UnLoadTexture("Line");
+
+	// 草
+	TextureManager::UnLoadTexture("Weed");
+	TextureManager::UnLoadTexture("Branch");
+
+	// 天球
+	TextureManager::UnLoadRenderTexture("Skydome");
+}
+
 LoadManager::LoadManager() : mIsLoaded(false)
 {
 }
@@ -143,6 +241,16 @@ void LoadManager::Load()
 		soundFtr.get() == true &&
 		motionFtr.get() == true)	// 繧ｵ繧ｦ繝ｳ繝・
 	{
+		std::vector<std::string> pathes;
+		//for (uint32_t i = 0; i < 3; i++)
+		//{
+		//}
+		//pathes.push_back("Noice/BlurNoice.png");
+		pathes.push_back("R.png");
+		pathes.push_back("G.png");
+		pathes.push_back("B.png");
+		TextureManager::CreateVolumeTexture(pathes, Vec3(256, 256, 3), "VolumeTexture");
+
 		mIsLoaded = true;
 		// 繧ｳ繝槭Φ繝牙ｮ溯｡・
 		TextureManager::ExcuteComandList();

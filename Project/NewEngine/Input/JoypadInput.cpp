@@ -45,6 +45,7 @@ void JoypadInput::Init()
 	HDEVNOTIFY notifyResult = RegisterDeviceNotification(
 		RenderWindow::GetInstance()->GetHwnd(), &notificationFilter,
 		DEVICE_NOTIFY_WINDOW_HANDLE | DEVICE_NOTIFY_ALL_INTERFACE_CLASSES);
+	notifyResult;
 	assert(!!notifyResult);
 
 	SetWindowsHookExW(

@@ -49,6 +49,7 @@ private:
 
 public:
 	ParticleMesh();
+	void ExecuteComputeShader();
 	void Update(Transform* parent = nullptr);
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 
@@ -66,7 +67,7 @@ public:
 			CreateUAV(mStructuredBuffers.back()->GetBufferResource(), 1, sizeof(T));
 	}
 
-public: //繧ｻ繝・ち繝ｼ
+public: // セッター
 
 	// メッシュのテクスチャー	
 	void SetMeshTexture(Texture* meshTexture);
@@ -74,7 +75,7 @@ public: //繧ｻ繝・ち繝ｼ
 	// パーティクルのテクスチャー
 	void SetParticleTexture(Texture* texture);
 
-	// 繧ｰ繝ｩ繝輔ぅ繝・け繧ｹ繝代う繝励Λ繧､繝ｳ
+	// Graphicsパイプラインを設定
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
 	// Computeパイプラインを設定
@@ -102,7 +103,7 @@ public: //繧ｻ繝・ち繝ｼ
 			CreateUAV(mParticleData->GetBufferResource(), mMaxParticle, sizeof(T));
 	}
 
-public: // 繧ｲ繝・ち繝ｼ
+public: // ゲッター
 
 	// 繝ｯ繝ｼ繝ｫ繝牙ｺｧ讓・
 	Vec3 GetWorldPos();

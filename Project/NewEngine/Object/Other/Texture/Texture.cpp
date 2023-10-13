@@ -42,6 +42,11 @@ void Texture::Create(const D3D12_RESOURCE_DESC& resourceDesc, uint32_t mipLevels
 	mUploadBuffer->Create(uploadSize);
 }
 
+void Texture::SetScratchImage(DirectX::ScratchImage* scratchImage)
+{
+	mScratchImage = std::move(*scratchImage);
+}
+
 UploadBuffer* Texture::GetUploadBuffer()
 {
 	return mUploadBuffer.get();
@@ -50,4 +55,9 @@ UploadBuffer* Texture::GetUploadBuffer()
 Vec2 Texture::GetInitalSize()
 {
 	return mInitalSize;
+}
+
+DirectX::ScratchImage* Texture::GetScratchImage()
+{
+	return &mScratchImage;
 }

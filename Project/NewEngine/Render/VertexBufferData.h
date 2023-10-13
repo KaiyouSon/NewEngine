@@ -21,6 +21,13 @@ namespace VertexBufferData
 		float boneWeight[maxBoneIndices];
 	};
 
+	struct VBoundingBox
+	{
+		Vec3 pos;
+		Vec3 normal;
+		Vec3 uv;
+	};
+
 	struct VSprite
 	{
 		Vec3 pos;	 // xyz蠎ｧ讓・

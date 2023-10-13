@@ -142,8 +142,8 @@ void TextureManager::LoadTexture(const std::string filePath, const std::string t
 		subResourcesDatas[i].pData = img->pixels;
 		subResourcesDatas[i].RowPitch = img->rowPitch;
 		subResourcesDatas[i].SlicePitch = img->slicePitch;
-	}
 
+	}
 	// テクスチャーをアップロード
 	UpdateSubresources(
 		RenderBase::GetInstance()->GetCommandList(),
@@ -159,6 +159,9 @@ void TextureManager::LoadTexture(const std::string filePath, const std::string t
 		texture->GetBufferResource(),
 		D3D12_RESOURCE_STATE_COPY_DEST,
 		D3D12_RESOURCE_STATE_GENERIC_READ);
+
+	// 使い終わったならテクスチャにmove
+	texture->SetScratchImage(&scratchImg);
 
 	// Log出力
 	std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + tag + ", was loaded successfully";
@@ -285,10 +288,10 @@ void TextureManager::CreateDepthTexture(DepthBuffer* depthBuffer, const std::str
 }
 
 // ボリュームテクスチャの生成
-void TextureManager::CreateVolumeTexture(const Vec2 size, const std::string tag)
+void TextureManager::CreateVolumeTexture(const std::vector<std::string>& filePathes, const Vec3 size, const std::string tag)
 {
 	// 排他制御
-	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+	//std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
 	// マップに格納
 	GetInstance()->mTextureMap.
@@ -296,7 +299,62 @@ void TextureManager::CreateVolumeTexture(const Vec2 size, const std::string tag)
 
 	VolumeTexture* texture = dynamic_cast<VolumeTexture*>(GetInstance()->mTextureMap[tag].get());
 
-	texture->Create(size);
+	HRESULT result;
+	std::vector<TexMetadata> metadatas(filePathes.size());
+	std::vector<ScratchImage> scratchImgs(filePathes.size());
+
+	for (uint32_t i = 0; i < filePathes.size(); i++)
+	{
+		std::string path = "Application/Resources/Texture/" + filePathes[i];
+		std::wstring wfilePath(path.begin(), path.end());
+
+		// WICを使用してテクスチャデータを読み込む
+		result = LoadFromWICFile(
+			wfilePath.c_str(),
+			WIC_FLAGS_NONE,
+			&metadatas[i], scratchImgs[i]);
+	}
+
+	// リソース設定
+	D3D12_RESOURCE_DESC resourceDesc =
+		CD3DX12_RESOURCE_DESC::Tex3D(
+			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
+			static_cast<uint64_t>(size.x),
+			static_cast<uint32_t>(size.y),
+			static_cast<uint16_t>(size.z),
+			1);
+	// バッファ生成
+	texture->Create(size, resourceDesc);
+
+	// SRV作成
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(texture->GetBufferResource());
+
+	// イメージデータを取得してサブリソースデータを設定
+	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas(3);
+	for (uint32_t i = 0; i < subResourcesDatas.size(); i++)
+	{
+		// サブリソースデータにバッファを設定
+		const Image* img = scratchImgs[i].GetImage(0, 0, 0);
+		subResourcesDatas[i].pData = img->pixels;
+		subResourcesDatas[i].RowPitch = img->rowPitch;
+		subResourcesDatas[i].SlicePitch = img->slicePitch;
+
+	}
+	// テクスチャーをアップロード
+	UpdateSubresources(
+		RenderBase::GetInstance()->GetCommandList(),
+		texture->GetBufferResource()->buffer.Get(),
+		texture->GetUploadBuffer()->GetBufferResource()->buffer.Get(),
+		0,
+		0,
+		1,
+		subResourcesDatas.data());
+
+	// リソースの状態変更
+	RenderBase::GetInstance()->TransitionBufferState(
+		texture->GetBufferResource(),
+		D3D12_RESOURCE_STATE_COPY_DEST,
+		D3D12_RESOURCE_STATE_GENERIC_READ);
 
 	std::string log = "[Texture Create] VolumeTexture, Tag : " + tag + ", created";
 	OutputDebugLog(log.c_str());

@@ -11,19 +11,13 @@ VolumeTexture::VolumeTexture() :
 {
 }
 
-void VolumeTexture::Create(const Vec2 size)
+void VolumeTexture::Create(const Vec3 size, const D3D12_RESOURCE_DESC& resourceDesc)
 {
+	size;
+
 	// ヒープ設定
 	D3D12_HEAP_PROPERTIES heapProp =
 		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-
-	// リソース設定
-	D3D12_RESOURCE_DESC resourceDesc =
-		CD3DX12_RESOURCE_DESC::Tex2D(
-			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
-			static_cast<uint64_t>(size.x),
-			static_cast<uint32_t>(size.y),
-			1, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
 
 	// バッファ生成
 	mResult = RenderBase::GetInstance()->GetDevice()->
@@ -31,11 +25,23 @@ void VolumeTexture::Create(const Vec2 size)
 			&heapProp,
 			D3D12_HEAP_FLAG_NONE,
 			&resourceDesc,
-			D3D12_RESOURCE_STATE_COMMON,
+			D3D12_RESOURCE_STATE_COPY_DEST,
 			nullptr,
 			IID_PPV_ARGS(&mBufferResource->buffer));
 	assert(SUCCEEDED(mResult));
 
 	// 名前設定
 	mBufferResource->buffer->SetName(L"VolumeTextureBuffer");
+
+	// アップロードサイズを取得
+	uint64_t uploadSize =
+		GetRequiredIntermediateSize(mBufferResource->buffer.Get(), 0, 1);
+
+	// UploadBufferの生成
+	mUploadBuffer->Create(static_cast<uint32_t>(uploadSize));
+}
+
+UploadBuffer* VolumeTexture::GetUploadBuffer()
+{
+	return mUploadBuffer.get();
 }

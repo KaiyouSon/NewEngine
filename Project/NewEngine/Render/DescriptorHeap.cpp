@@ -92,6 +92,13 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 			desc.Texture2D.MipLevels = bufferDesc.MipLevels;
 		}
 	}
+	// 3Dテクスチャ
+	else if (bufferDesc.Dimension == D3D12_RESOURCE_DIMENSION_TEXTURE3D)
+	{
+		desc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE3D;
+		desc.Format = bufferDesc.Format;
+		desc.Texture3D.MipLevels = bufferDesc.MipLevels;
+	}
 	// バッファ
 	else
 	{
