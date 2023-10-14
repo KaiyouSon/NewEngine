@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+// 草のクラス
 class Grass
 {
 private:

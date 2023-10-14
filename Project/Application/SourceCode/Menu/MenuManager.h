@@ -2,6 +2,7 @@
 #include "IMenu.h"
 #include "MovieEvent.h"
 
+// 全メニューを管理するクラス
 class MenuManager
 {
 private:

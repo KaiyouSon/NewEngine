@@ -14,7 +14,7 @@ public:
 	VolumeTexture();
 
 	// テクスチャーのバッファ生成する関数
-	void Create(const Vec3 size, const D3D12_RESOURCE_DESC& resourceDesc);
+	void Create(const D3D12_RESOURCE_DESC& resourceDesc);
 
 public:
 	// ゲッター

@@ -11,10 +11,8 @@ VolumeTexture::VolumeTexture() :
 {
 }
 
-void VolumeTexture::Create(const Vec3 size, const D3D12_RESOURCE_DESC& resourceDesc)
+void VolumeTexture::Create(const D3D12_RESOURCE_DESC& resourceDesc)
 {
-	size;
-
 	// ヒープ設定
 	D3D12_HEAP_PROPERTIES heapProp =
 		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);

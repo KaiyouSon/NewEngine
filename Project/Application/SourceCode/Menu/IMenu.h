@@ -1,11 +1,13 @@
 #pragma once
 #include "NewEngine.h"
 
+// メニューの種類
 enum class MenuType
 {
 	LogoutMenu,
 };
 
+// メニューのインターフェース
 class IMenu
 {
 public:

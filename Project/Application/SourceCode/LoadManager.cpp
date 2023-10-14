@@ -78,6 +78,20 @@ bool LoadManager::TextureLoad()
 
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectBloom");
 
+	TextureManager::LoadTexture("Noice/Noice1.png", "Noice1");
+	TextureManager::LoadTexture("Noice/Noice2.png", "Noice2");
+	TextureManager::LoadTexture("Noice/Noice3.png", "Noice3");
+
+
+	std::vector<Texture*> texs;
+	for (uint32_t i = 0; i < 32; i++)
+	{
+		uint32_t index = Random::Range(1, 3);
+		std::string tag = "Noice" + std::to_string(index);
+		texs.push_back(TextureManager::GetTexture(tag));
+	}
+	TextureManager::CreateVolumeTexture(texs, Vec2(256, 256), "VolumeTexture");
+
 	// 蜃ｦ逅・′邨ゅｏ縺｣縺溘・繧呈蕗縺医ｋ縺溘ａ縲∝ｿ・★true繧定ｿ斐☆
 	return true;
 }
@@ -241,16 +255,6 @@ void LoadManager::Load()
 		soundFtr.get() == true &&
 		motionFtr.get() == true)	// 繧ｵ繧ｦ繝ｳ繝・
 	{
-		std::vector<std::string> pathes;
-		//for (uint32_t i = 0; i < 3; i++)
-		//{
-		//}
-		//pathes.push_back("Noice/BlurNoice.png");
-		pathes.push_back("R.png");
-		pathes.push_back("G.png");
-		pathes.push_back("B.png");
-		TextureManager::CreateVolumeTexture(pathes, Vec3(256, 256, 3), "VolumeTexture");
-
 		mIsLoaded = true;
 		// 繧ｳ繝槭Φ繝牙ｮ溯｡・
 		TextureManager::ExcuteComandList();

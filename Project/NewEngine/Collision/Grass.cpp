@@ -8,13 +8,13 @@ Grass::Grass() :
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass")),
 	texture(TextureManager::GetTexture("White"))
 {
-	// 鬆らせ繝舌ャ繝輔ぃ縺ｮ逕滓・
+	// 頂点バッファの生成
 	mVertices.resize(1);
 	mVertices.front().pos = 0;
 	mVertices.front().scale = 1;
 	mVertexBuffer->Create(mVertices);
 
-	// 繝槭ユ繝ｪ繧｢繝ｫ縺ｮ蛻晄悄蛹・
+	// マテリアルの初期化
 	MaterialInit();
 
 }

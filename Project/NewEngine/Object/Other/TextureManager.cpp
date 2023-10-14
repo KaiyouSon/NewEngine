@@ -288,7 +288,7 @@ void TextureManager::CreateDepthTexture(DepthBuffer* depthBuffer, const std::str
 }
 
 // ボリュームテクスチャの生成
-void TextureManager::CreateVolumeTexture(const std::vector<std::string>& filePathes, const Vec3 size, const std::string tag)
+void TextureManager::CreateVolumeTexture(const std::vector<Texture*>& texs, const Vec2 size, const std::string tag)
 {
 	// 排他制御
 	//std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
@@ -300,20 +300,7 @@ void TextureManager::CreateVolumeTexture(const std::vector<std::string>& filePat
 	VolumeTexture* texture = dynamic_cast<VolumeTexture*>(GetInstance()->mTextureMap[tag].get());
 
 	HRESULT result;
-	std::vector<TexMetadata> metadatas(filePathes.size());
-	std::vector<ScratchImage> scratchImgs(filePathes.size());
-
-	for (uint32_t i = 0; i < filePathes.size(); i++)
-	{
-		std::string path = "Application/Resources/Texture/" + filePathes[i];
-		std::wstring wfilePath(path.begin(), path.end());
-
-		// WICを使用してテクスチャデータを読み込む
-		result = LoadFromWICFile(
-			wfilePath.c_str(),
-			WIC_FLAGS_NONE,
-			&metadatas[i], scratchImgs[i]);
-	}
+	result;
 
 	// リソース設定
 	D3D12_RESOURCE_DESC resourceDesc =
@@ -321,25 +308,33 @@ void TextureManager::CreateVolumeTexture(const std::vector<std::string>& filePat
 			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 			static_cast<uint64_t>(size.x),
 			static_cast<uint32_t>(size.y),
-			//static_cast<uint16_t>(size.z),
-			1,
+			static_cast<uint16_t>(texs.size()),
 			1);
 	// バッファ生成
-	texture->Create(size, resourceDesc);
+	texture->Create(resourceDesc);
 
 	// SRV作成
 	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(texture->GetBufferResource());
 
 	// イメージデータを取得してサブリソースデータを設定
-	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas(3);
-	for (uint32_t i = 0; i < subResourcesDatas.size(); i++)
+	D3D12_SUBRESOURCE_DATA subResourcesData;
+	subResourcesData.pData = nullptr;
+	for (uint32_t i = 0; i < texs.size(); i++)
 	{
-		// サブリソースデータにバッファを設定
-		const Image* img = scratchImgs[i].GetImage(0, 0, 0);
-		subResourcesDatas[i].pData = img->pixels;
-		subResourcesDatas[i].RowPitch = img->rowPitch;
-		subResourcesDatas[i].SlicePitch = img->slicePitch;
+		//texs[0]->GetScratchImage()->GetMetadata().format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+		const Image* img = texs[i]->GetScratchImage()->GetImage(0, 0, 0);
+		subResourcesData.RowPitch = img->rowPitch;
+		subResourcesData.SlicePitch = img->slicePitch;
 
+		// pData の初期化を行う
+		if (subResourcesData.pData == nullptr)
+		{
+			subResourcesData.pData = new BYTE[subResourcesData.SlicePitch * texs.size()];
+		}
+
+		// テクスチャデータを subResourcesData.pData にコピー
+		BYTE* targetData = reinterpret_cast<BYTE*>(const_cast<void*>(subResourcesData.pData)) + i * img->slicePitch;
+		memcpy(targetData, img->pixels, img->slicePitch);
 	}
 	// テクスチャーをアップロード
 	UpdateSubresources(
@@ -349,7 +344,10 @@ void TextureManager::CreateVolumeTexture(const std::vector<std::string>& filePat
 		0,
 		0,
 		1,
-		subResourcesDatas.data());
+		&subResourcesData);
+
+	// アップロード後にdeleteする
+	delete subResourcesData.pData;
 
 	// リソースの状態変更
 	RenderBase::GetInstance()->TransitionBufferState(

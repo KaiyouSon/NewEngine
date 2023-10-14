@@ -1,6 +1,7 @@
 #pragma once
 #include "IMenu.h"
 
+// ログアウト画面のクラス
 class LogoutMenu : public IMenu
 {
 public:
