@@ -22,7 +22,6 @@ void GameScene::Load()
 {
 	LoadManager::GetInstance()->GameSceneLoad();
 }
-
 void GameScene::UnLoad()
 {
 	LoadManager::GetInstance()->GameSceneUnLoad();
@@ -141,15 +140,25 @@ void GameScene::Update()
 	// シーン切り替えの処理
 	SceneChangeUpdate();
 }
-
 void GameScene::DrawPass()
 {
 	ShadowMap::GetInstance()->RenderTextureSetting();
 	mField->RenderTextureSetting();
 
-	mPostEffectManager->RenderTextureSetting();
-}
+	std::function<void()> targetDrawFunc;
+	std::function<void()> sceneDrawFunc;
 
+	// ラムダ式で代入
+	targetDrawFunc = [this]()
+	{
+		DrawDepthToEffectBloom();
+	};
+	sceneDrawFunc = [this]()
+	{
+		CurrentSceneObject3DDraw();
+	};
+	mPostEffectManager->EffectBloomDrawPass(targetDrawFunc, sceneDrawFunc);
+}
 void GameScene::Draw()
 {
 	ShadowMap::GetInstance()->DrawPostEffect();
@@ -162,7 +171,6 @@ void GameScene::Draw()
 
 	mBoundingBox.Draw();
 }
-
 void GameScene::DrawDebugGui()
 {
 	{
@@ -280,4 +288,39 @@ void GameScene::SceneChangeUpdate()
 			TransitionManager::GetInstance()->End();
 		}
 	}
+}
+
+// エフェクトのブルームのポストエフェクトに深度のみ書き込む処理
+void GameScene::DrawDepthToEffectBloom()
+{
+	// プレイヤーの深度のみ書き込む
+	mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+	mPlayer->DrawModel();
+	mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
+
+	// ボスの深度のみ書き込む
+	mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+	mBoss->DrawModel();
+	mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
+
+	// フィールドオブジェクトの深度のみ書き込む
+	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GrassWriteNone"));
+	mField->DrawModel();
+	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
+	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass"));
+
+	// エフェクトの描画(ブルーム書けるため深度以外も書き込む)
+	EffectManager::GetInstance()->DrawEffect(true);
+}
+
+// 3Dオブジェクトの描画
+void GameScene::CurrentSceneObject3DDraw()
+{
+	mField->DrawSkydome();
+	mField->DrawModel();
+
+	mPlayer->DrawModel();
+	mBoss->DrawModel();
+	EffectManager::GetInstance()->DrawEffect(false);
 }

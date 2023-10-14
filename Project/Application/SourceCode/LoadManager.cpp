@@ -77,20 +77,21 @@ bool LoadManager::TextureLoad()
 
 
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectBloom");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "VolumetricFog");
 
-	TextureManager::LoadTexture("Noice/Noice1.png", "Noice1");
-	TextureManager::LoadTexture("Noice/Noice2.png", "Noice2");
-	TextureManager::LoadTexture("Noice/Noice3.png", "Noice3");
-
-
+	// ボリュームテクスチャの作成
 	std::vector<Texture*> texs;
-	for (uint32_t i = 0; i < 32; i++)
+	for (uint32_t i = 0; i < 16; i++)
 	{
-		uint32_t index = Random::Range(1, 3);
-		std::string tag = "Noice" + std::to_string(index);
+		// ボリュームノイズのロード
+		std::string index = std::to_string(i);
+		std::string path = "Noice/VolumeNoice/VolumeNoice" + index + ".png";
+		std::string tag = "Noice" + index;
+		TextureManager::LoadTexture(path, tag);
+
 		texs.push_back(TextureManager::GetTexture(tag));
 	}
-	TextureManager::CreateVolumeTexture(texs, Vec2(256, 256), "VolumeTexture");
+	TextureManager::CreateVolumeTexture(texs, "VolumeTexture");
 
 	// 蜃ｦ逅・′邨ゅｏ縺｣縺溘・繧呈蕗縺医ｋ縺溘ａ縲∝ｿ・★true繧定ｿ斐☆
 	return true;

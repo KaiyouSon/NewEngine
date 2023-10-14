@@ -288,10 +288,10 @@ void TextureManager::CreateDepthTexture(DepthBuffer* depthBuffer, const std::str
 }
 
 // ボリュームテクスチャの生成
-void TextureManager::CreateVolumeTexture(const std::vector<Texture*>& texs, const Vec2 size, const std::string tag)
+void TextureManager::CreateVolumeTexture(const std::vector<Texture*>& texs, const std::string tag)
 {
 	// 排他制御
-	//std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
 	// マップに格納
 	GetInstance()->mTextureMap.
@@ -299,15 +299,12 @@ void TextureManager::CreateVolumeTexture(const std::vector<Texture*>& texs, cons
 
 	VolumeTexture* texture = dynamic_cast<VolumeTexture*>(GetInstance()->mTextureMap[tag].get());
 
-	HRESULT result;
-	result;
-
 	// リソース設定
 	D3D12_RESOURCE_DESC resourceDesc =
 		CD3DX12_RESOURCE_DESC::Tex3D(
 			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
-			static_cast<uint64_t>(size.x),
-			static_cast<uint32_t>(size.y),
+			static_cast<uint64_t>(texs[0]->GetInitalSize().x),
+			static_cast<uint32_t>(texs[0]->GetInitalSize().y),
 			static_cast<uint16_t>(texs.size()),
 			1);
 	// バッファ生成
@@ -321,7 +318,6 @@ void TextureManager::CreateVolumeTexture(const std::vector<Texture*>& texs, cons
 	subResourcesData.pData = nullptr;
 	for (uint32_t i = 0; i < texs.size(); i++)
 	{
-		//texs[0]->GetScratchImage()->GetMetadata().format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 		const Image* img = texs[i]->GetScratchImage()->GetImage(0, 0, 0);
 		subResourcesData.RowPitch = img->rowPitch;
 		subResourcesData.SlicePitch = img->slicePitch;

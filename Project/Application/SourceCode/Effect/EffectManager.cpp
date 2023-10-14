@@ -50,34 +50,34 @@ void EffectManager::DrawEffect(const bool isBloom)
 	if (isBloom == true)
 	{
 		//// 蝗槫ｾｩ
-		//mPlayerRecoveryEffect->DrawModel();
+		mPlayerRecoveryEffect->DrawModel();
 
 		// 繝ｪ繧ｹ繝昴・繝ｳ蝨ｰ轤ｹ縺ｮ繧ｨ繝輔ぉ繧ｯ繝・
 		mRespawnPointEffect->DrawModel();
 
 		//// 蟆手勠縺ｿ縺溘＞縺ｪ繧ｨ繝輔ぉ繧ｯ繝・
-		//mLeadEffect->DrawModel();
+		mLeadEffect->DrawModel();
 
 		//// 遨ｺ荳ｭ縺ｫ縺ゅｋ繧・▽
-		//mAirEffect->DrawModel();
+		mAirEffect->DrawModel();
 	}
 	// 縺昴ｌ莉･螟・
 	else
 	{
 		//// 陦
-		//mBloodSprayEffect->DrawModel();
+		mBloodSprayEffect->DrawModel();
 
 		//// 蝗槫ｾｩ
-		//mPlayerRecoveryEffect->DrawModel();
+		mPlayerRecoveryEffect->DrawModel();
 
 		// 繝ｪ繧ｹ繝昴・繝ｳ蝨ｰ轤ｹ縺ｮ繧ｨ繝輔ぉ繧ｯ繝・
-		//mRespawnPointEffect->DrawModel();
+		mRespawnPointEffect->DrawModel();
 
 		//// 蟆手勠縺ｿ縺溘＞縺ｪ繧ｨ繝輔ぉ繧ｯ繝・
-		//mLeadEffect->DrawModel();
+		mLeadEffect->DrawModel();
 
 		//// 遨ｺ荳ｭ縺ｫ縺ゅｋ繧・▽
-		//mAirEffect->DrawModel();
+		mAirEffect->DrawModel();
 	}
 }
 

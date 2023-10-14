@@ -13,12 +13,13 @@ private:
 	Field* mField;
 	std::unique_ptr<ParticleMesh> mParticleMesh;
 
-
 private:
 	std::unique_ptr<Bloom> mEffectBloom;
 
-private:
-	void EffectBloomDrawPass();
+public:
+	void EffectBloomDrawPass(
+		const std::function<void()>& targetDrawFunc,
+		const std::function<void()>& sceneDrawFunc);
 
 public:
 	PostEffectManager();

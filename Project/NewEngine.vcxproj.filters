@@ -337,6 +337,9 @@
     <Filter Include="Application\Source\Weapon">
       <UniqueIdentifier>{7b2f016d-4e5c-4324-8195-ffed8019e25c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\VolumetricFog">
+      <UniqueIdentifier>{be7d1413-ecdf-4611-9f7c-8882ba21f7b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -827,6 +830,9 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Weapon\Club.cpp">
       <Filter>Application\Source\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\VolumetricFog.cpp">
+      <Filter>Application\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1357,6 +1363,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Weapon\Weapon.h">
       <Filter>Application\Header\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\VolumetricFog.h">
+      <Filter>Application\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

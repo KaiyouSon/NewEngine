@@ -35,6 +35,13 @@ private:
 	// シーン切り替えの処理
 	void SceneChangeUpdate();
 
+private:
+	// エフェクトのブルームのポストエフェクトに深度のみ書き込む処理
+	void DrawDepthToEffectBloom();
+
+	// 3Dオブジェクトの描画
+	void CurrentSceneObject3DDraw();
+
 public:
 	GameScene();
 	~GameScene();

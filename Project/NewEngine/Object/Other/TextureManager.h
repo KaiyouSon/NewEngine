@@ -41,7 +41,7 @@ public:	// テクスチャー関連
 	static void CreateDepthTexture(DepthBuffer* depthBuffer, const std::string tag);
 
 	// ボリュームテクスチャの生成
-	static void CreateVolumeTexture(const std::vector<Texture*>& texs, const Vec2 size, const std::string tag);
+	static void CreateVolumeTexture(const std::vector<Texture*>& texs, const std::string tag);
 
 	// アンロード
 	static void UnLoadTexture(const std::string tag);

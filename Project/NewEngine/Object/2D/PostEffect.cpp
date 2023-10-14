@@ -20,7 +20,6 @@ PostEffect::PostEffect() :
 
 	// 繝舌ャ繝輔ぃ逕滓・
 	MaterialInit();
-
 }
 
 void PostEffect::Update()
