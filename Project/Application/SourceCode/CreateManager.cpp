@@ -130,6 +130,22 @@ void CreateManager::CreateShaderCompiler()
 	setting.gsFilePath = path1 + "EmitterGS.hlsl";
 	setting.psFilePath = path1 + "EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "RespawnPointEffect");
+
+	// ボス攻撃モーション1初期化用
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path2 + "BossAttack1Effect/BossAttack1EffectInitCS.hlsl";
+	setting.vsFilePath = path2 + "BossAttack1Effect/BossAttack1EffectVS.hlsl";
+	setting.gsFilePath = path1 + "ParticleMeshGS.hlsl";
+	setting.psFilePath = path1 + "ParticleMeshPS.hlsl";
+	ShaderCompilerManager::Create(setting, "BossAttack1EffectInit");
+
+	// ボス攻撃モーション1初期化用
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path2 + "BossAttack1Effect/BossAttack1EffectUpdateCS.hlsl";
+	setting.vsFilePath = path2 + "BossAttack1Effect/BossAttack1EffectVS.hlsl";
+	setting.gsFilePath = path1 + "ParticleMeshGS.hlsl";
+	setting.psFilePath = path1 + "ParticleMeshPS.hlsl";
+	ShaderCompilerManager::Create(setting, "BossAttack1EffectUpdate");
 }
 
 // パイプライン生成
@@ -246,6 +262,12 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("RespawnPointEffect");
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "RespawnPointEffect");
+
+	// ボス攻撃モーション1用
+	setting = PipelineManager::GetGraphicsPipeline("ParticleMesh")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttack1EffectInit");
+	setting.rtvNum = 1;
+	PipelineManager::CreateGraphicsPipeline(setting, "BossAttack1Effect");
 }
 
 // Computeパイプラインの生成
@@ -253,11 +275,22 @@ void CreateManager::CreateComputePipeline()
 {
 	// リスポーンエフェクト用
 	ComputePipelineSetting setting;
+	setting = ComputePipelineSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("RespawnPointEffect");
 	setting.rootSignatureSetting.maxCbvRootParameter = 0;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 2;
 	PipelineManager::CreateComputePipeline(setting, "RespawnPointEffect");
+
+	// リスポーンエフェクト用
+	setting = PipelineManager::GetComputePipeline("ParticleMesh")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttack1EffectInit");
+	PipelineManager::CreateComputePipeline(setting, "BossAttack1EffectInit");
+
+	// リスポーンエフェクト用
+	setting = PipelineManager::GetComputePipeline("ParticleMesh")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttack1EffectUpdate");
+	PipelineManager::CreateComputePipeline(setting, "BossAttack1EffectUpdate");
 }
 
 void CreateManager::Create()

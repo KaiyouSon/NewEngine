@@ -67,4 +67,14 @@ namespace ParticleParameter
 
 		RespawnPointParticle();
 	};
+
+	struct BossAttack1Particle
+	{
+		Vec3 pos;
+		Vec3 moveVec;
+		Vec3 moveAccel;
+		Vec2 scale;
+		float shininess;
+		Color color;
+	};
 }

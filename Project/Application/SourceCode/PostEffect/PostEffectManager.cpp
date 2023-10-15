@@ -12,7 +12,7 @@ void PostEffectManager::Init()
 	//mParticleMesh->SetMeshTexture(TextureManager::GetTexture("Test"));
 	mParticleMesh->SetMeshTexture(TextureManager::GetTexture("TitleLogo"));
 	mParticleMesh->SetParticleTexture(TextureManager::GetTexture("StarParticle"));
-	mParticleMesh->SetParticleData<ParticleParameter::ParticleMesh>();
+	mParticleMesh->SetParticleData<ParticleParameter::ParticleMesh>(32);
 	mParticleMesh->ExecuteComputeShader();
 }
 void PostEffectManager::Update()

@@ -20,11 +20,25 @@ void EffectManager::Init()
 
 void EffectManager::Update()
 {
+	if (Key::GetKeyDown(DIK_G))
+	{
+		GenerateBossAttack1Effect(Vec3::zero);
+	}
+	if (Key::GetKeyDown(DIK_C))
+	{
+		mBossAttack1Effect.clear();
+	}
+
 	mBloodSprayEffect->Update();
 	mPlayerRecoveryEffect->Update();
 	mRespawnPointEffect->Update();
 	mLeadEffect->Update();
 	mAirEffect->Update();
+
+	for (uint32_t i = 0; i < mBossAttack1Effect.size(); i++)
+	{
+		mBossAttack1Effect[i]->Update();
+	}
 
 	mAirEffect->Generate(mPlayer->GetPos());
 }
@@ -60,6 +74,11 @@ void EffectManager::DrawEffect(const bool isBloom)
 
 		//// 遨ｺ荳ｭ縺ｫ縺ゅｋ繧・▽
 		mAirEffect->DrawModel();
+
+		for (uint32_t i = 0; i < mBossAttack1Effect.size(); i++)
+		{
+			mBossAttack1Effect[i]->Draw();
+		}
 	}
 	// 縺昴ｌ莉･螟・
 	else
@@ -78,6 +97,11 @@ void EffectManager::DrawEffect(const bool isBloom)
 
 		//// 遨ｺ荳ｭ縺ｫ縺ゅｋ繧・▽
 		mAirEffect->DrawModel();
+
+		for (uint32_t i = 0; i < mBossAttack1Effect.size(); i++)
+		{
+			mBossAttack1Effect[i]->Draw();
+		}
 	}
 }
 
@@ -99,6 +123,12 @@ void EffectManager::GenerateRespawnPointEffect(const Vec3 pos)
 void EffectManager::GenerateLeadEffect(const Vec3 pos, const Vec3 frontVec)
 {
 	mLeadEffect->Generate(pos, frontVec);
+}
+
+void EffectManager::GenerateBossAttack1Effect(const Vec3 pos)
+{
+	mBossAttack1Effect.push_back(std::move(std::make_unique<BossAttack1Effect>()));
+	mBossAttack1Effect.back()->Generate(pos);
 }
 
 void EffectManager::SetPlayer(Player* player)

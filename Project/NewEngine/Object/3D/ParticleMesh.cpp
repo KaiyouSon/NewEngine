@@ -17,11 +17,11 @@ ParticleMesh::ParticleMesh() :
 	mParticleData(std::make_unique<StructuredBuffer>()),
 	mCSMaterial(std::make_unique<Material>())
 {
-	// 繝槭ユ繝ｪ繧｢繝ｫ縺ｮ蛻晄悄蛹・
+	// マテリアルの初期化
 	MaterialInit();
+	CSMaterialInit();
+
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
-
-
 }
 
 void ParticleMesh::ExecuteComputeShader()
@@ -34,13 +34,13 @@ void ParticleMesh::ExecuteComputeShader()
 	RenderBase* renderBase = RenderBase::GetInstance();
 	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
 
-	CSMaterialInit();
 	CSMaterialTransfer();
+
 	mComputePipeline->DrawCommand();
 
 	if (mParticleData->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_GENERIC_READ)
 	{
-		// GENERIC_READ -> UNORDERED_ACCESS 縺ｫ縺励※SRV繧定ｨｭ螳壹☆繧・
+		// GENERIC_READ -> UNORDERED_ACCESS に変更
 		renderBase->TransitionBufferState(
 			mParticleData->GetBufferResource(),
 			D3D12_RESOURCE_STATE_GENERIC_READ,
@@ -49,35 +49,12 @@ void ParticleMesh::ExecuteComputeShader()
 
 	CSMaterialDrawCommands();
 
-	// 繝・ぅ繧ｹ繝代ャ繝・
+	// ディスパッチ
 	cmdList->Dispatch(1, 1, 1);
 }
 
-#include "KeyBoardInput.h"
 void ParticleMesh::Update(Transform* parent)
 {
-	if (Key::GetKeyDown(DIK_Q))
-	{
-		scale *= 2;
-	}
-	if (Key::GetKeyDown(DIK_E))
-	{
-		scale /= 2;
-	}
-	if (Key::GetKey(DIK_A))
-	{
-		scale -= 0.01f;
-		scale.x = Max<float>(scale.x, 0.01f);
-		scale.y = Max<float>(scale.y, 0.01f);
-		scale.z = Max<float>(scale.z, 0.01f);
-	}
-
-	pos.x += (float)(Key::GetKey(DIK_RIGHT) - Key::GetKey(DIK_LEFT));
-	pos.y += (float)(Key::GetKey(DIK_UP) - Key::GetKey(DIK_DOWN));
-	pos.z += (float)(Key::GetKey(DIK_Z) - Key::GetKey(DIK_C));
-
-	rot.y = Radian(180);
-
 	mTransform.pos = pos;
 	mTransform.scale = scale;
 	mTransform.rot = rot;
@@ -92,7 +69,7 @@ void ParticleMesh::Update(Transform* parent)
 		mTransform.SetWorldMat(mat);
 	}
 
-	// 繝槭ユ繝ｪ繧｢繝ｫ縺ｮ霆｢騾・
+	// マテリアルの転送
 	MaterialTransfer();
 
 }
@@ -103,56 +80,57 @@ void ParticleMesh::Draw(const BlendMode blendMode)
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
 
-	// GraphicsPipeline謠冗判繧ｳ繝槭Φ繝・
+	// GraphicsPipeline描画コマンド
 	mGraphicsPipeline->DrawCommand(blendMode);
 
 	MaterialDrawCommands();
 
-	// SRV繝偵・繝励・蜈磯ｭ縺ｫ縺ゅｋSRV繧偵Ν繝ｼ繝医ヱ繝ｩ繝｡繝ｼ繧ｿ2逡ｪ縺ｫ險ｭ螳・
+	// SRVの設定
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	cmdList->SetGraphicsRootDescriptorTable(startIndex, mParticleTexture->GetBufferResource()->srvHandle.gpu);
 
 	if (mParticleData->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_UNORDERED_ACCESS)
 	{
-		// GENERIC_READ -> UNORDERED_ACCESS 縺ｫ縺励※SRV繧定ｨｭ螳壹☆繧・
+		// GENERIC_READ -> UNORDERED_ACCESS に変更
 		renderBase->TransitionBufferState(
 			mParticleData->GetBufferResource(),
 			D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
 			D3D12_RESOURCE_STATE_GENERIC_READ);
 	}
 
+	// CSの結果
 	cmdList->SetGraphicsRootDescriptorTable(
 		startIndex + 1, mParticleData->GetBufferResource()->srvHandle.gpu);
 
 	cmdList->DrawInstanced(mMaxParticle, 1, 0, 0);
 }
 
-// --- 繝槭ユ繝ｪ繧｢繝ｫ髢｢騾｣ --------------------------------------------------- //
+// --- マテリアル関連 --------------------------------------------------- //
 void ParticleMesh::MaterialInit()
 {
-	// 繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ逕滓・
+	// インターフェース
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3D陦悟・
+	// トランスフォーム
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransformP>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// 濶ｲ
+	// 色
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// UV諠・ｱ
+	// UVパラメーター
 	iConstantBuffer = std::make_unique<ConstantBuffer<CUVParameter>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// 蛻晄悄蛹・
+	// 初期化
 	mMaterial.Init();
 }
 void ParticleMesh::MaterialTransfer()
 {
 	mBillboard.CalculateBillboardMat();
 
-	// 繝槭ヨ繝ｪ繝・け繧ｹ
+	// トランスフォーム
 	CTransformP transformPData =
 	{
 		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
@@ -161,11 +139,11 @@ void ParticleMesh::MaterialTransfer()
 	};
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformPData);
 
-	// 濶ｲ繝・・繧ｿ
+	// 色
 	CColor colorData = { color / 255 };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[1].get(), colorData);
 
-	// UV繝・・繧ｿ
+	// UVパラメーター
 	CUVParameter uvData = { offset,tiling };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[2].get(), uvData);
 }
@@ -194,7 +172,7 @@ void ParticleMesh::CSMaterialInit()
 }
 void ParticleMesh::CSMaterialTransfer()
 {
-	// 繝槭ヨ繝ｪ繝・け繧ｹ
+	// メッシュテクスチャ情報
 	CTextureSizeData textureAreaSize =
 	{
 		mMeshTexture->GetInitalSize(),
@@ -232,7 +210,7 @@ void ParticleMesh::CSMaterialDrawCommands()
 	}
 }
 
-// --- 繧ｻ繝・ち繝ｼ -------------------------------------------------------- //ko
+// --- セッター -------------------------------------------------------- //ko
 
 // メッシュのテクスチャー	
 void ParticleMesh::SetMeshTexture(Texture* meshTexture)
@@ -244,13 +222,13 @@ void ParticleMesh::SetMeshTexture(Texture* meshTexture)
 // パーティクルのテクスチャー
 void ParticleMesh::SetParticleTexture(Texture* particleTexture) { mParticleTexture = particleTexture; }
 
-// 繧ｰ繝ｩ繝輔ぅ繝・け繧ｹ繝代う繝励Λ繧､繝ｳ
+// Graphicsパイプラインを設定
 void ParticleMesh::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline) { mGraphicsPipeline = graphicsPipeline; }
 
 // Computeパイプラインを設定
 void ParticleMesh::SetComputePipeline(ComputePipeline* computePipeline) { mComputePipeline = computePipeline; }
 
-// --- 繧ｲ繝・ち繝ｼ -------------------------------------------------------- //
+// --- ゲッター -------------------------------------------------------- //
 
 Vec3 ParticleMesh::GetWorldPos()
 {

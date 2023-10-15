@@ -52,3 +52,8 @@ RootSignature* ComputePipeline::GetRootSignature()
 	return mRootSignature.get();
 }
 
+ComputePipelineSetting ComputePipeline::GetSetting()
+{
+	return mSetting;
+}
+

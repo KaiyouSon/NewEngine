@@ -340,6 +340,9 @@
     <Filter Include="Shader\Application\VolumetricFog">
       <UniqueIdentifier>{be7d1413-ecdf-4611-9f7c-8882ba21f7b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\Effect\BossAttack1Effect">
+      <UniqueIdentifier>{c4793252-73b6-434a-9faa-bff5ca7177b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -833,6 +836,9 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\VolumetricFog.cpp">
       <Filter>Application\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Motion\BossAttack1Effect.cpp">
+      <Filter>Uncategorized\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1367,6 +1373,9 @@
     <ClInclude Include="Application\SourceCode\VolumetricFog.h">
       <Filter>Application\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SourceCode\Motion\BossAttack1Effect.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1701,6 +1710,15 @@
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\BoundingBox\BoundingBoxPS.hlsl">
       <Filter>Shader\Engine\BoundingBox</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\BossAttack1Effect\BossAttack1EffectInitCS.hlsl">
+      <Filter>Shader\Application\Effect\BossAttack1Effect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\BossAttack1Effect\BossAttack1EffectUpdateCS.hlsl">
+      <Filter>Shader\Application\Effect\BossAttack1Effect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\BossAttack1Effect\BossAttack1EffectVS.hlsl">
+      <Filter>Shader\Application\Effect\BossAttack1Effect</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

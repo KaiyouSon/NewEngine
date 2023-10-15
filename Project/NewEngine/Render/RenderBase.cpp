@@ -487,7 +487,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc4{};
 	depthStencilDesc4.DepthEnable = true; // 豺ｱ蠎ｦ繝・せ繝医ｒ陦後≧
-	depthStencilDesc4.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 譖ｸ縺崎ｾｼ縺ｿ險ｱ蜿ｯ
+	depthStencilDesc4.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// 譖ｸ縺崎ｾｼ縺ｿ險ｱ蜿ｯ
 	depthStencilDesc4.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 蟆上＆縺・⊇縺・ｒ謗｡逕ｨ
 
 	GraphicsPipelineSetting setting;
@@ -563,7 +563,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Outline");
 	setting.cullMode = CullMode::Front;
 	setting.topologyType = TopologyType::TriangleList;
-	setting.depthStencilDesc = depthStencilDesc4;
+	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 7;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
@@ -574,7 +574,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ToonRendering");
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
-	setting.depthStencilDesc = depthStencilDesc4;
+	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 7;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
@@ -631,7 +631,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ParticleMesh");
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
-	setting.depthStencilDesc = depthStencilDesc1;
+	setting.depthStencilDesc = depthStencilDesc4;
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;

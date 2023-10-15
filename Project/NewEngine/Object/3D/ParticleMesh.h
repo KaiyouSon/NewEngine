@@ -83,16 +83,21 @@ public: // セッター
 
 	// パーティクルのデータ
 	template<typename T>
-	void SetParticleData()
+	void SetParticleData(const uint32_t maxParticle = 0)
 	{
-		// SRV縺ｨUAV繧剃ｽ懈・
+		if (maxParticle != 0)
+		{
+			mMaxParticle = maxParticle;
+		}
+
+		// SRVとUAVを作成
 		uint32_t dataSize = sizeof(T) * mMaxParticle;
 		mParticleData->Create(dataSize);
 
 		DescriptorHeapManager::GetDescriptorHeap("SRV")->
 			CreateSRV(mParticleData->GetBufferResource(), mMaxParticle, sizeof(T));
 
-		// GENERIC_READ -> UNORDERED_ACCESS 縺ｫ縺励※UAV繧剃ｽ懈・
+		// GENERIC_READ -> UNORDERED_ACCESS に変更
 		RenderBase::GetInstance()->TransitionBufferState(
 			mParticleData->GetBufferResource(),
 			D3D12_RESOURCE_STATE_GENERIC_READ,
@@ -104,13 +109,7 @@ public: // セッター
 	}
 
 public: // ゲッター
-
-	// 繝ｯ繝ｼ繝ｫ繝牙ｺｧ讓・
 	Vec3 GetWorldPos();
-
-	// 繝ｯ繝ｼ繝ｫ繝峨せ繧ｱ繝ｼ繝ｫ
 	Vec3 GetWorldScale();
-
-	// 繝医Λ繝ｳ繧ｹ繝輔か繝ｼ繝
 	Transform GetTransform();
 };
