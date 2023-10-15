@@ -68,7 +68,7 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 	// index蛻・★繧峨☆
 	bufferResource->srvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->srvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->index = incrementIndex;
+	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex, ViewType::SRV));
 
 	// SRV縺ｮ險ｭ螳・
 	D3D12_SHADER_RESOURCE_VIEW_DESC desc{};	// srv險ｭ螳壽ｧ矩菴・
@@ -139,7 +139,7 @@ void DescriptorHeap::CreateRTV(BufferResource* bufferResource)
 	// index蛻・★繧峨☆
 	bufferResource->rtvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->rtvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->index = incrementIndex;
+	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex, ViewType::RTV));
 
 	// 繝ｬ繝ｳ繝繝ｼ繧ｿ繝ｼ繧ｲ繝・ヨ繝薙Η繝ｼ縺ｮ險ｭ螳・
 	D3D12_RENDER_TARGET_VIEW_DESC desc{};
@@ -177,7 +177,7 @@ void DescriptorHeap::CreateDSV(BufferResource* bufferResource)
 	// index蛻・★繧峨☆
 	bufferResource->dsvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->dsvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->index = incrementIndex;
+	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex, ViewType::DSV));
 
 	// 豺ｱ蠎ｦ繝薙Η繝ｼ菴懈・
 	D3D12_DEPTH_STENCIL_VIEW_DESC desc = {};
@@ -222,7 +222,7 @@ void DescriptorHeap::CreateUAV(BufferResource* bufferResource, const uint32_t ar
 	// index蛻・★繧峨☆
 	bufferResource->uavHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->uavHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->index = incrementIndex;
+	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex, ViewType::UAV));
 
 	// UAV縺ｮ險ｭ螳・
 	D3D12_UNORDERED_ACCESS_VIEW_DESC desc{};
@@ -244,18 +244,46 @@ void DescriptorHeap::CreateUAV(BufferResource* bufferResource, const uint32_t ar
 // 繝薙Η繝ｼ繧剃ｸ頑嶌縺阪〒縺阪ｋ繧医≧縺ｫ縺吶ｋ
 void DescriptorHeap::DestroyView(BufferResource* bufferResource)
 {
-	mCheckIndex[bufferResource->index] = false;
+	for (uint32_t i = 0; i < bufferResource->viewIndexes.size(); i++)
+	{
+		ViewIndex viewIndex = bufferResource->viewIndexes[i];
+
+		// CBV_SRV_UAVのとき
+		if (mSetting.heapType == DescriptorHeapSetting::CBV_SRV_UAV)
+		{
+			if (viewIndex.viewType == ViewType::SRV ||
+				viewIndex.viewType == ViewType::UAV)
+			{
+				mCheckIndex[viewIndex.index] = false;
+			}
+		}
+		// RTVのとき
+		else if (mSetting.heapType == DescriptorHeapSetting::RTV)
+		{
+			if (viewIndex.viewType == ViewType::RTV)
+			{
+				mCheckIndex[viewIndex.index] = false;
+			}
+		}
+		// DSVのとき
+		else if (mSetting.heapType == DescriptorHeapSetting::DSV)
+		{
+			if (viewIndex.viewType == ViewType::DSV)
+			{
+				mCheckIndex[viewIndex.index] = false;
+			}
+		}
+	}
 }
 
 uint32_t DescriptorHeap::GetIncrementIndex()
 {
-	// ImGUI縺ｧ0逡ｪ菴ｿ縺｣縺ｦ縺ゅｋ縺九ｉ1縺九ｉ菴ｿ縺・
 	uint32_t index = 0;
 
-	// mCheckSRVIndex菴ｿ縺｣縺ｦ縺ｪ縺・分蜿ｷ縺ｪ縺・°繧偵メ繧ｧ繝・け
+	// mCheckIndex使ってない番号を探す
 	for (uint32_t i = 0; i < mCheckIndex.size(); i++)
 	{
-		// i逡ｪ縺・false 縺縺｣縺溘ｉ
+		// i番がfalseなら
 		if (mCheckIndex[i] == false)
 		{
 			index = i + 1;
@@ -268,7 +296,7 @@ uint32_t DescriptorHeap::GetIncrementIndex()
 	{
 		// 譛蠕悟ｰｾ縺ｫ譁ｰ縺励＞繧・▽繧定ｿｽ蜉
 		mCheckIndex.push_back(true);
-		return (uint32_t)mCheckIndex.size();	// 蜈・°繧永ndex繧医ｊ1螟壹＞縺九ｉ+1縺励↑縺上※縺・＞
+		return (uint32_t)mCheckIndex.size() - 1;	// 蜈・°繧永ndex繧医ｊ1螟壹＞縺九ｉ+1縺励↑縺上※縺・＞
 	}
 
 	return index;

@@ -46,6 +46,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		newEngine->FrameControl();
 	}
 
+	newEngine->SetisClose(true);
+
 	// 豁｣蟶ｸ邨ゆｺ・
 	return 0;
 }

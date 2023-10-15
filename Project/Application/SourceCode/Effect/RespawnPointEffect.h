@@ -4,11 +4,8 @@
 class RespawnPointEffect
 {
 private:
+	std::unique_ptr<GPUEmitter> mEmitter;
 	Timer mTimer;
-
-	std::unique_ptr<GPUEmitter> mCircleEmitter;
-	std::vector<ParticleParameter::PParam1> mCirclePParam;
-
 	Vec3 mStartPos;
 
 private:

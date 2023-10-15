@@ -10,14 +10,6 @@
 #include "LoadManager.h"
 #include "ResultUI.h"
 
-GameScene::GameScene()
-{
-	mBgmVolume = 0;
-}
-GameScene::~GameScene()
-{
-}
-
 void GameScene::Load()
 {
 	LoadManager::GetInstance()->GameSceneLoad();
@@ -40,6 +32,8 @@ void GameScene::CreateInstance()
 
 void GameScene::Init()
 {
+	mBgmVolume = 0;
+
 	mCurrentScene = TextureManager::GetRenderTexture("CurrentScene");
 
 	Camera::current.pos = Vec3(-65, 75, -85);

@@ -17,3 +17,8 @@ DescriptorHeap* DescriptorHeapManager::GetDescriptorHeap(const std::string tag)
 	return sDescriptorHeapMap[tag].get();
 }
 
+std::unordered_map<std::string, std::unique_ptr<DescriptorHeap>>* DescriptorHeapManager::GetDescriptorHeapMap()
+{
+	return &sDescriptorHeapMap;
+}
+

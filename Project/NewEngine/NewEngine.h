@@ -63,6 +63,7 @@ private:
 	NewEngineSetting mSetting;
 	RenderWindow* mRenderWindow;
 	RenderBase* mRenderBase;
+	static bool sIsClose;
 
 private:
 	void Setting();
@@ -83,6 +84,9 @@ public:
 	// 繧ｦ繧､繝ｳ繝峨え髢｢騾｣
 	bool ProcessMessage();
 
+public:
+	static bool GetisClose();
+	static void SetisClose(const bool isClose);
 };
 
 Vec2 GetWindowSize();

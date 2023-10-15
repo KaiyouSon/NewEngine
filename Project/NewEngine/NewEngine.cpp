@@ -6,6 +6,8 @@
 #include <wrl.h>
 using namespace Microsoft::WRL;
 
+bool NewEngine::sIsClose = false;
+
 NewEngine::NewEngine(const NewEngineSetting& setting) :
 	mSetting(setting),
 	mRenderWindow(RenderWindow::GetInstance().get()),
@@ -151,6 +153,16 @@ bool NewEngine::ProcessMessage()
 		return true;
 	}
 	return false;
+}
+
+bool NewEngine::GetisClose()
+{
+	return sIsClose;
+}
+
+void NewEngine::SetisClose(const bool isClose)
+{
+	sIsClose = isClose;
 }
 
 Vec2 GetWindowSize()

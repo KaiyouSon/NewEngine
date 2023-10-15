@@ -112,3 +112,11 @@ enum class MouseCode
 	Right = 1,
 	Wheel = 2,
 };
+
+enum class ViewType
+{
+	SRV,
+	RTV,
+	DSV,
+	UAV
+};

@@ -43,8 +43,6 @@ private:
 	void CurrentSceneObject3DDraw();
 
 public:
-	GameScene();
-	~GameScene();
 	void Load() override;
 	void UnLoad() override;
 	void CreateInstance() override;

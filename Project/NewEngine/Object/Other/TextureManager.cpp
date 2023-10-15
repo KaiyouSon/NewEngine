@@ -526,7 +526,7 @@ RenderTexture* TextureManager::CreateRenderTexture(const Vec2 size, const uint32
 	return GetInstance()->mRenderTextureMap[tag].get();
 }
 
-// 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ縺ｮ繧｢繝ｳ繝ｭ繝ｼ繝蛾未謨ｰ
+// レンダーテクスチャのアンロード関数
 void TextureManager::UnLoadRenderTexture(const std::string tag)
 {
 	auto it = GetInstance()->mRenderTextureMap.find(tag);
@@ -535,16 +535,18 @@ void TextureManager::UnLoadRenderTexture(const std::string tag)
 		return;
 	}
 
-
 	for (uint32_t i = 0; i < GetInstance()->mRenderTextureMap[tag]->GetBufferResources()->size(); i++)
 	{
-		// 繝薙Η繝ｼ蜑企勁
+		// SRV解放
 		DescriptorHeapManager::GetDescriptorHeap("SRV")->DestroyView(
 			&GetInstance()->mRenderTextureMap[tag]->GetBufferResources()->at(i));
 
-		// 繝槭ャ繝励°繧牙炎髯､
-		GetInstance()->mTextureMap.erase(tag);
+		// RTV解放
+		DescriptorHeapManager::GetDescriptorHeap("RTV")->DestroyView(
+			&GetInstance()->mRenderTextureMap[tag]->GetBufferResources()->at(i));
 	}
+	// マップから削除
+	GetInstance()->mRenderTextureMap.erase(tag);
 }
 
 // 繝・け繧ｹ繝√Ε繝槭ャ繝励・蜿門ｾ・

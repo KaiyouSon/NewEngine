@@ -44,6 +44,7 @@ private:
 
 public:
 	GPUEmitter();
+	~GPUEmitter();
 	void Update(Transform* parent = nullptr);
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 
@@ -61,31 +62,25 @@ public:
 			CreateUAV(mStructuredBuffers.back()->GetBufferResource(), 1, sizeof(T));
 	}
 
-public: //繧ｻ繝・ち繝ｼ
-
-	// 繝・け繧ｹ繝√Ε繝ｼ
+public: // セッター
 	void SetTexture(Texture* texture);
-
-	// 繧ｰ繝ｩ繝輔ぅ繝・け繧ｹ繝代う繝励Λ繧､繝ｳ
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
-
-	// Computeパイプラインを設定
 	void SetComputePipeline(ComputePipeline* computePipeline);
-	
+
 	// パーティクルのデータ
 	template<typename T>
 	void SetParticleData(const uint32_t maxParticle)
 	{
 		mVertices.resize(maxParticle);
 
-		// SRV縺ｨUAV繧剃ｽ懈・
+		// SRVとUAVの作成
 		uint32_t dataSize = sizeof(T) * maxParticle;
 		mParticleData->Create(dataSize);
 
 		DescriptorHeapManager::GetDescriptorHeap("SRV")->
 			CreateSRV(mParticleData->GetBufferResource(), maxParticle, sizeof(T));
 
-		// GENERIC_READ -> UNORDERED_ACCESS 縺ｫ縺励※UAV繧剃ｽ懈・
+		// GENERIC_READ -> UNORDERED_ACCESS に変更
 		RenderBase::GetInstance()->TransitionBufferState(
 			mParticleData->GetBufferResource(),
 			D3D12_RESOURCE_STATE_GENERIC_READ,
@@ -96,14 +91,8 @@ public: //繧ｻ繝・ち繝ｼ
 			CreateUAV(mParticleData->GetBufferResource(), maxParticle, sizeof(T));
 	}
 
-public: // 繧ｲ繝・ち繝ｼ
-
-	// 繝ｯ繝ｼ繝ｫ繝牙ｺｧ讓・
+public: // ゲッター
 	Vec3 GetWorldPos();
-
-	// 繝ｯ繝ｼ繝ｫ繝峨せ繧ｱ繝ｼ繝ｫ
 	Vec3 GetWorldScale();
-
-	// 繝医Λ繝ｳ繧ｹ繝輔か繝ｼ繝
 	Transform GetTransform();
 };

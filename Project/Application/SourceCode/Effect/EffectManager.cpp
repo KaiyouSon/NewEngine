@@ -1,16 +1,19 @@
 #include "EffectManager.h"
 
-EffectManager::EffectManager() :
-	mBloodSprayEffect(std::make_unique<BloodSprayEffect>()),
-	mPlayerRecoveryEffect(std::make_unique<PlayerRecoveryEffect>()),
-	mRespawnPointEffect(std::make_unique<RespawnPointEffect>()),
-	mLeadEffect(std::make_unique<LeadEffect>()),
-	mAirEffect(std::make_unique<AirEffect>())
+EffectManager::EffectManager()
 {
 }
 
 void EffectManager::Init()
 {
+	// インスタンス生成
+	mBloodSprayEffect = std::make_unique<BloodSprayEffect>();
+	mPlayerRecoveryEffect = std::make_unique<PlayerRecoveryEffect>();
+	mRespawnPointEffect = std::make_unique<RespawnPointEffect>();
+	mLeadEffect = std::make_unique<LeadEffect>();
+	mAirEffect = std::make_unique<AirEffect>();
+
+	// 初期化
 	mBloodSprayEffect->Init();
 	mPlayerRecoveryEffect->Init();
 	mRespawnPointEffect->Init();

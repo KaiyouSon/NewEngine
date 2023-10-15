@@ -10,9 +10,12 @@ private:
 	static std::unordered_map<std::string, std::unique_ptr<DescriptorHeap>> sDescriptorHeapMap;
 
 public:
-	// 逕滓・
+	// ディスクリプターヒープを作成する
 	static void Create(const DescriptorHeapSetting& setting, const std::string tag);
 
-	// 蜿門ｾ・
+	// ディスクリプターヒープを取得する
 	static DescriptorHeap* GetDescriptorHeap(const std::string tag);
+
+	// ディスクリプターヒープのマップを取得する
+	static std::unordered_map<std::string, std::unique_ptr<DescriptorHeap>>* GetDescriptorHeapMap();
 };

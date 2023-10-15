@@ -3,6 +3,7 @@
 #include "LightManager.h"
 #include "Camera.h"
 #include "FbxModel.h"
+#include "NewEngine.h"
 using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
@@ -14,9 +15,25 @@ GPUEmitter::GPUEmitter() :
 	mTexture(TextureManager::GetTexture("White")),
 	mParticleData(std::make_unique<StructuredBuffer>())
 {
-	// 繝槭ユ繝ｪ繧｢繝ｫ縺ｮ蛻晄悄蛹・
+	// マテリアルの初期化
 	MaterialInit();
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
+}
+GPUEmitter::~GPUEmitter()
+{
+	if (NewEngine::GetisClose() == true)
+	{
+		return;
+	}
+
+	auto* descriptorHeap = DescriptorHeapManager::GetDescriptorHeap("SRV");
+
+	// ビュー解放
+	descriptorHeap->DestroyView(mParticleData->GetBufferResource());
+	for (uint32_t i = 0; i < mStructuredBuffers.size(); i++)
+	{
+		descriptorHeap->DestroyView(mStructuredBuffers[i]->GetBufferResource());
+	}
 }
 
 void GPUEmitter::Update(Transform* parent)
@@ -49,7 +66,7 @@ void GPUEmitter::Draw(const BlendMode blendMode)
 
 	if (mParticleData->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_GENERIC_READ)
 	{
-		// GENERIC_READ -> UNORDERED_ACCESS 縺ｫ縺励※SRV繧定ｨｭ螳壹☆繧・
+		// GENERIC_READ -> UNORDERED_ACCESS に変更
 		renderBase->TransitionBufferState(
 			mParticleData->GetBufferResource(),
 			D3D12_RESOURCE_STATE_GENERIC_READ,
@@ -66,22 +83,23 @@ void GPUEmitter::Draw(const BlendMode blendMode)
 		cmdList->SetComputeRootDescriptorTable(index + i + 1, mStructuredBuffers[i]->GetBufferResource()->uavHandle.gpu);
 	}
 
-	// 繝・ぅ繧ｹ繝代ャ繝・
+	// ディスパッチ
 	cmdList->Dispatch(1, 1, 1);
 
-	// GraphicsPipeline謠冗判繧ｳ繝槭Φ繝・
+	// GraphicsPipeline描画コマンド
 	mGraphicsPipeline->DrawCommand(blendMode);
 
+	// マテリアルの描画コマンド
 	MaterialDrawCommands();
 
-	// SRV繝偵・繝励・蜈磯ｭ縺ｫ縺ゅｋSRV繧偵Ν繝ｼ繝医ヱ繝ｩ繝｡繝ｼ繧ｿ2逡ｪ縺ｫ險ｭ螳・
+	// SRV設定
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	cmdList->SetGraphicsRootDescriptorTable(
 		startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
 
 	if (mParticleData->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_UNORDERED_ACCESS)
 	{
-		// GENERIC_READ -> UNORDERED_ACCESS 縺ｫ縺励※SRV繧定ｨｭ螳壹☆繧・
+		// GENERIC_READ -> UNORDERED_ACCESS に変更
 		renderBase->TransitionBufferState(
 			mParticleData->GetBufferResource(),
 			D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
@@ -94,25 +112,25 @@ void GPUEmitter::Draw(const BlendMode blendMode)
 	cmdList->DrawInstanced((uint32_t)mVertices.size(), 1, 0, 0);
 }
 
-// --- 繝槭ユ繝ｪ繧｢繝ｫ髢｢騾｣ --------------------------------------------------- //
+// --- マテリアル関連 --------------------------------------------------- //
 void GPUEmitter::MaterialInit()
 {
-	// 繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ逕滓・
+	// インターフェース
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3D陦悟・
+	// トランスフォーム
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransformP>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// 濶ｲ
+	// 色
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// UV諠・ｱ
+	// UVパラメータ
 	iConstantBuffer = std::make_unique<ConstantBuffer<CUVParameter>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// 蛻晄悄蛹・
+	// 初期化
 	mMaterial.Init();
 }
 void GPUEmitter::MaterialTransfer()
@@ -148,34 +166,22 @@ void GPUEmitter::MaterialDrawCommands()
 	}
 }
 
-// --- 繧ｻ繝・ち繝ｼ -------------------------------------------------------- //ko
-
-// 繝・け繧ｹ繝√Ε繝ｼ
+// --- セッター --------------------------------------------------------
 void GPUEmitter::SetTexture(Texture* texture) { mTexture = texture; }
-
-// 繧ｰ繝ｩ繝輔ぅ繝・け繧ｹ繝代う繝励Λ繧､繝ｳ
 void GPUEmitter::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline) { mGraphicsPipeline = graphicsPipeline; }
-
-// Computeパイプラインを設定
 void GPUEmitter::SetComputePipeline(ComputePipeline* computePipeline) { mComputePipeline = computePipeline; }
 
-// --- 繧ｲ繝・ち繝ｼ -------------------------------------------------------- //
-
-// 繝ｯ繝ｼ繝ｫ繝牙ｺｧ讓・
+// --- ゲッターｼ -------------------------------------------------------- //
 Vec3 GPUEmitter::GetWorldPos()
 {
 	Vec3 worldPos = Vec3MulMat4(pos, mTransform.GetWorldMat(), true);
 	return worldPos;
 }
-
-// 繝ｯ繝ｼ繝ｫ繝峨せ繧ｱ繝ｼ繝ｫ
 Vec3 GPUEmitter::GetWorldScale()
 {
 	Vec3 worldScale = mTransform.GetWorldMat().GetScale();
 	return worldScale;
 }
-
-// 繝医Λ繝ｳ繧ｹ繝輔か繝ｼ繝
 Transform GPUEmitter::GetTransform()
 {
 	return mTransform;
