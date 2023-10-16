@@ -68,7 +68,7 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 	// index蛻・★繧峨☆
 	bufferResource->srvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->srvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex, ViewType::SRV));
+	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex - mSetting.startIndex, ViewType::SRV));
 
 	// SRV縺ｮ險ｭ螳・
 	D3D12_SHADER_RESOURCE_VIEW_DESC desc{};	// srv險ｭ螳壽ｧ矩菴・
@@ -139,7 +139,7 @@ void DescriptorHeap::CreateRTV(BufferResource* bufferResource)
 	// index蛻・★繧峨☆
 	bufferResource->rtvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->rtvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex, ViewType::RTV));
+	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex - mSetting.startIndex, ViewType::RTV));
 
 	// 繝ｬ繝ｳ繝繝ｼ繧ｿ繝ｼ繧ｲ繝・ヨ繝薙Η繝ｼ縺ｮ險ｭ螳・
 	D3D12_RENDER_TARGET_VIEW_DESC desc{};
@@ -177,7 +177,7 @@ void DescriptorHeap::CreateDSV(BufferResource* bufferResource)
 	// index蛻・★繧峨☆
 	bufferResource->dsvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->dsvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex, ViewType::DSV));
+	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex - mSetting.startIndex, ViewType::DSV));
 
 	// 豺ｱ蠎ｦ繝薙Η繝ｼ菴懈・
 	D3D12_DEPTH_STENCIL_VIEW_DESC desc = {};
@@ -222,7 +222,7 @@ void DescriptorHeap::CreateUAV(BufferResource* bufferResource, const uint32_t ar
 	// index蛻・★繧峨☆
 	bufferResource->uavHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->uavHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex, ViewType::UAV));
+	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex - mSetting.startIndex, ViewType::UAV));
 
 	// UAV縺ｮ險ｭ螳・
 	D3D12_UNORDERED_ACCESS_VIEW_DESC desc{};
@@ -286,7 +286,7 @@ uint32_t DescriptorHeap::GetIncrementIndex()
 		// i番がfalseなら
 		if (mCheckIndex[i] == false)
 		{
-			index = i + 1;
+			index = i;
 			mCheckIndex[i] = true;
 			break;
 		}
