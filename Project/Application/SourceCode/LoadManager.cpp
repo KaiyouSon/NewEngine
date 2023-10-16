@@ -65,8 +65,6 @@ bool LoadManager::TextureLoad()
 	////TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 2, 1, "ShadowMap");
 	////TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 2, 1, "ShadowMapBlur");
 
-	//TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Skydome");
-
 	// 迴ｾ蝨ｨ縺ｮ繧ｷ繝ｼ繝ｳ
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "CurrentScene");
 
@@ -183,7 +181,7 @@ void LoadManager::GameSceneLoad()
 	TextureManager::LoadTexture("Branch.png", "Branch");
 
 	// 天球
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Skydome");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Vignette");
 }
 
 void LoadManager::GameSceneUnLoad()
@@ -232,7 +230,7 @@ void LoadManager::GameSceneUnLoad()
 	TextureManager::UnLoadTexture("Branch");
 
 	// 天球
-	TextureManager::UnLoadRenderTexture("Skydome");
+	TextureManager::UnLoadRenderTexture("Vignette");
 }
 
 LoadManager::LoadManager() : mIsLoaded(false)

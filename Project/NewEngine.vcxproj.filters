@@ -343,6 +343,15 @@
     <Filter Include="Shader\Application\Effect\BossAttack1Effect">
       <UniqueIdentifier>{c4793252-73b6-434a-9faa-bff5ca7177b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\Vignette">
+      <UniqueIdentifier>{8860517a-80d9-4c0a-b4a2-33dbda29c0f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\PostEffect">
+      <UniqueIdentifier>{b2eeff48-1288-4ca2-925d-7923718b908d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\PostEffect">
+      <UniqueIdentifier>{d23e5dc4-a28f-4e2e-a7e8-c5bda6eb47a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -726,13 +735,7 @@
     <ClCompile Include="NewEngine\Object\Other\Billboard.cpp">
       <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\3D\BoundingBox.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\Motion\BackstepMotion.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\PostEffect\Bloom.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Motion\BossAttack3Motion.cpp">
@@ -748,9 +751,6 @@
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\PostEffect\GaussianBlur.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\PostEffect\Glare.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Motion\IMotion.cpp">
@@ -771,9 +771,6 @@
     <ClCompile Include="Application\SourceCode\Motion\OpenGateMotion.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\PostEffect\PostEffectManager.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
@@ -781,12 +778,6 @@
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\PostEffect\Task.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\PostEffect\Vignette.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\UI\ItemBoxUIGroup.cpp">
@@ -839,6 +830,24 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Motion\BossAttack1Effect.cpp">
       <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\PostEffect\Bloom.cpp">
+      <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\PostEffect\Glare.cpp">
+      <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\PostEffect\Vignette.cpp">
+      <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\PostEffect\PostEffectManager.cpp">
+      <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp">
+      <Filter>NewEngine\Source\Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\BoundingBox.cpp">
+      <Filter>Application\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1295,31 +1304,16 @@
     <ClInclude Include="NewEngine\Object\Other\Billboard.h">
       <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\3D\BoundingBox.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\PostEffect\Bloom.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\GaugeType.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\PostEffect\GaussianBlur.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\PostEffect\Glare.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\PostEffect\PostEffectManager.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\PostEffect\Task.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\PostEffect\Vignette.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h">
@@ -1376,6 +1370,21 @@
     <ClInclude Include="Application\SourceCode\Motion\BossAttack1Effect.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SourceCode\PostEffect\Bloom.h">
+      <Filter>Application\Header\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\PostEffect\Glare.h">
+      <Filter>Application\Header\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\PostEffect\Vignette.h">
+      <Filter>Application\Header\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\PostEffect\PostEffectManager.h">
+      <Filter>Application\Header\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\BoundingBox.h">
+      <Filter>Application\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1392,9 +1401,6 @@
     </None>
     <None Include="Application\Shader\BGaussainBlur.hlsli">
       <Filter>Shader\Application\Bloom</Filter>
-    </None>
-    <None Include="Application\Shader\Vignette.hlsli">
-      <Filter>Shader\Application</Filter>
     </None>
     <None Include="Application\Shader\HighLumi.hlsli">
       <Filter>Shader\Application</Filter>
@@ -1487,6 +1493,9 @@
     <None Include="NewEngine\Shader\BoundingBox\BoundingBox.hlsli">
       <Filter>Shader\Engine\BoundingBox</Filter>
     </None>
+    <None Include="Application\Shader\Vignette.hlsli">
+      <Filter>Shader\Application\Vignette</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Application\Shader\BloomPS.hlsl">
@@ -1500,12 +1509,6 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\BGaussainBlurVS.hlsl">
       <Filter>Shader\Application\Bloom</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\VignettePS.hlsl">
-      <Filter>Shader\Application</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\VignetteVS.hlsl">
-      <Filter>Shader\Application</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\HighLumiPS.hlsl">
       <Filter>Shader\Application</Filter>
@@ -1719,6 +1722,12 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\BossAttack1Effect\BossAttack1EffectVS.hlsl">
       <Filter>Shader\Application\Effect\BossAttack1Effect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\VignettePS.hlsl">
+      <Filter>Shader\Application\Vignette</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\VignetteVS.hlsl">
+      <Filter>Shader\Application\Vignette</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

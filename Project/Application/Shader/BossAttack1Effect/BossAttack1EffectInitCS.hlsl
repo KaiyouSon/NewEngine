@@ -33,18 +33,25 @@ RWStructuredBuffer<ParticleData> outputData : register(u0);
 
 Texture2D<float4> tex : register(t0);
 
-[numthreads(1, 1, 1)]
+[numthreads(1000, 1, 1)]
 void main(uint3 DTid : SV_DispatchThreadID)
 {
+    // area == 10wになっているから、[numthreads(1000, 1, 1)]だと1CSに100回for分回す
+    
+    // 100個のデータを処理するためのインデックスを計算
+    uint dataPerThread = area / 1000;
+    uint startIndex = (DTid.x - 1) * dataPerThread;
+    uint endIndex = DTid.x * dataPerThread;
+    
     float2 offsetPos = 0;
     float2 seed = 0;
     
-    for (uint i = 0; i < area; i++)
+    for (uint i = startIndex; i < endIndex; i++)
     {
         ParticleData result = outputData[i];
         
         // インデックス(x,y)
-        uint2 index = uint2(i % 256, i / 256);
+        uint2 index = uint2((startIndex + i) % 256, (startIndex + i) / 256);
         
         // シート初期化
         seed.x = index.x;

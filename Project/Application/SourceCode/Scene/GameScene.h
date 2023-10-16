@@ -19,6 +19,7 @@ private:
 	std::unique_ptr<MenuManager> mMenuManager;
 	std::unique_ptr<PostEffectManager> mPostEffectManager;
 	std::unique_ptr<Field> mField;
+	std::unique_ptr<Skydome> mSkydome;
 
 	std::unique_ptr<MovieEvent> mMovieEvent;
 
@@ -36,11 +37,14 @@ private:
 	void SceneChangeUpdate();
 
 private:
+	// 天球の描画
+	void DrawSkydome();
+
 	// エフェクトのブルームのポストエフェクトに深度のみ書き込む処理
 	void DrawDepthToEffectBloom();
 
-	// 3Dオブジェクトの描画
-	void CurrentSceneObject3DDraw();
+	// 現在のシーンのオブジェクトの描画
+	void DrawCurrentSceneObject();
 
 public:
 	void Load() override;

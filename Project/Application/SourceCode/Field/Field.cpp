@@ -3,7 +3,6 @@
 
 Field::Field() :
 	mSphere(std::make_unique<Object3D>()),
-	mSkydome(std::make_unique<Skydome>()),
 	mFieldData(nullptr)
 {
 	mSphere->SetModel(ModelManager::GetModel("Sphere"));
@@ -44,7 +43,7 @@ void Field::Init()
 	{
 		mMessageSigns[i]->Init();
 	}
-	mSkydome->Init();
+
 
 	if (mFieldData)
 	{
@@ -99,7 +98,7 @@ void Field::Update()
 	mSphere->Update();
 	//mSphere->pos = { 0,8,0 };
 
-	mSkydome->Update();
+
 	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
 	{
 		mMessageSigns[i]->Update();
@@ -149,11 +148,6 @@ void Field::Update()
 			mFieldData->respawnPoints[i]->Update();
 		}
 	}
-}
-
-void Field::RenderTextureSetting()
-{
-	mSkydome->RenderTextureSetting();
 }
 
 void Field::DrawModel()
@@ -213,7 +207,6 @@ void Field::DrawModel()
 
 void Field::DrawSkydome()
 {
-	mSkydome->Draw();
 }
 
 void Field::DrawFrontSprite()
@@ -222,7 +215,6 @@ void Field::DrawFrontSprite()
 
 void Field::DrawDebugGui()
 {
-	mSkydome->DrawDebugGui();
 }
 
 std::array<std::unique_ptr<MessageSign>, 5>* Field::GetMessageSigns()

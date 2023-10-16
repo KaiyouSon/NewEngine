@@ -13,11 +13,11 @@ void DescriptorHeap::Create(const DescriptorHeapSetting setting)
 
 	D3D12_DESCRIPTOR_HEAP_DESC heapDesc{};
 
+	// ディスクリプタヒープ設定
 	switch (mSetting.heapType)
 	{
 	case DescriptorHeapSetting::RTV:
 	{
-		// 繝・せ繧ｯ繝ｪ繝励ち繝偵・繝励・險ｭ螳・
 		heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 		heapDesc.NumDescriptors = mSetting.maxSize;
 	}
@@ -25,7 +25,6 @@ void DescriptorHeap::Create(const DescriptorHeapSetting setting)
 
 	case DescriptorHeapSetting::DSV:
 	{
-		// 繝・せ繧ｯ繝ｪ繝励ち繝偵・繝励・險ｭ螳・
 		heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
 		heapDesc.NumDescriptors = mSetting.maxSize;
 	}
@@ -33,7 +32,6 @@ void DescriptorHeap::Create(const DescriptorHeapSetting setting)
 
 	case DescriptorHeapSetting::CBV_SRV_UAV:
 	{
-		// 繝・せ繧ｯ繝ｪ繝励ち繝偵・繝励・險ｭ螳・
 		heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 		heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 		heapDesc.NumDescriptors = mSetting.maxSize;
@@ -41,10 +39,16 @@ void DescriptorHeap::Create(const DescriptorHeapSetting setting)
 	break;
 	}
 
-	// 繝・せ繧ｯ繝ｪ繝励ち繝偵・繝励・逕滓・
+	// ディスクリプタヒープ生成
 	mResult = RenderBase::GetInstance()->GetDevice()->
 		CreateDescriptorHeap(&heapDesc, IID_PPV_ARGS(&mDescriptorHeap));
 	assert(SUCCEEDED(mResult));
+
+	// 使った分trueにする
+	for (uint32_t i = 0; i < mSetting.startIndex; i++)
+	{
+		mCheckIndex.push_back(true);
+	}
 }
 
 // SRV菴懈・
@@ -68,7 +72,7 @@ void DescriptorHeap::CreateSRV(BufferResource* bufferResource, const uint32_t ar
 	// index蛻・★繧峨☆
 	bufferResource->srvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->srvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex - mSetting.startIndex, ViewType::SRV));
+	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex, ViewType::SRV));
 
 	// SRV縺ｮ險ｭ螳・
 	D3D12_SHADER_RESOURCE_VIEW_DESC desc{};	// srv險ｭ螳壽ｧ矩菴・
@@ -139,7 +143,7 @@ void DescriptorHeap::CreateRTV(BufferResource* bufferResource)
 	// index蛻・★繧峨☆
 	bufferResource->rtvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->rtvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex - mSetting.startIndex, ViewType::RTV));
+	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex, ViewType::RTV));
 
 	// 繝ｬ繝ｳ繝繝ｼ繧ｿ繝ｼ繧ｲ繝・ヨ繝薙Η繝ｼ縺ｮ險ｭ螳・
 	D3D12_RENDER_TARGET_VIEW_DESC desc{};
@@ -177,7 +181,7 @@ void DescriptorHeap::CreateDSV(BufferResource* bufferResource)
 	// index蛻・★繧峨☆
 	bufferResource->dsvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->dsvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex - mSetting.startIndex, ViewType::DSV));
+	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex, ViewType::DSV));
 
 	// 豺ｱ蠎ｦ繝薙Η繝ｼ菴懈・
 	D3D12_DEPTH_STENCIL_VIEW_DESC desc = {};
@@ -222,7 +226,7 @@ void DescriptorHeap::CreateUAV(BufferResource* bufferResource, const uint32_t ar
 	// index蛻・★繧峨☆
 	bufferResource->uavHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->uavHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex - mSetting.startIndex, ViewType::UAV));
+	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex, ViewType::UAV));
 
 	// UAV縺ｮ險ｭ螳・
 	D3D12_UNORDERED_ACCESS_VIEW_DESC desc{};

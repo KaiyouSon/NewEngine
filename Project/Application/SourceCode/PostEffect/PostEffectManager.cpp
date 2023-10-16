@@ -2,7 +2,9 @@
 #include "EffectManager.h"
 
 PostEffectManager::PostEffectManager() :
-	mEffectBloom(std::make_unique<Bloom>())
+	mEffectBloom(std::make_unique<Bloom>()),
+	mSkydomeVignette(std::make_unique<Vignette>()),
+	mVolumetricFog(std::make_unique<VolumetricFog>())
 {
 }
 
@@ -18,21 +20,34 @@ void PostEffectManager::Init()
 void PostEffectManager::Update()
 {
 	mParticleMesh->Update();
+	mSkydomeVignette->Update();
 	mEffectBloom->Update();
-}
-void PostEffectManager::RenderTextureSetting()
-{
-	// 繧ｨ繝輔ぉ繧ｯ繝医・繝代せ
-	//EffectBloomDrawPass();
+	mVolumetricFog->Update();
 }
 
-// 謠冗判
+void PostEffectManager::DrawSkydomeVignette()
+{
+	mSkydomeVignette->DrawPostEffect();
+}
+
+// エフェクトのブルーム
 void PostEffectManager::DrawEffectBloom()
 {
 	mEffectBloom->DrawPostEffect();
 }
 
-// パスの設定
+///--- パスの設定 ------------------------------------------------------------------------------------------------ ///
+
+// 天球のビネットのパス設定
+void PostEffectManager::SkydomeVignetteDrawPass(
+	const std::function<void()>& targetDrawFunc)
+{
+	mSkydomeVignette->PrevSceneDraw();
+	targetDrawFunc();
+	mSkydomeVignette->PostSceneDraw();
+}
+
+// エフェクトのブルームのパス設定
 void PostEffectManager::EffectBloomDrawPass(
 	const std::function<void()>& targetDrawFunc,
 	const std::function<void()>& sceneDrawFunc)
@@ -56,19 +71,5 @@ void PostEffectManager::EffectBloomDrawPass(
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::Target);
 	sceneDrawFunc();
 	mEffectBloom->PostSceneDraw(Bloom::PassType::Target);
-}
-
-// セッター
-void PostEffectManager::SetPlayer(Player* player)
-{
-	mPlayer = player;
-}
-void PostEffectManager::SetBoss(Boss* boss)
-{
-	mBoss = boss;
-}
-void PostEffectManager::SetField(Field* field)
-{
-	mField = field;
 }
 

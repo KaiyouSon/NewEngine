@@ -2,67 +2,43 @@
 using namespace ConstantBufferData;
 
 Vignette::Vignette() :
-	postEffect_(std::make_unique<PostEffect>())
+	mPostEffect(std::make_unique<PostEffect>())
 {
-	tex_ = TextureManager::GetRenderTexture("Vignette");
+	mRenderTexture = TextureManager::GetRenderTexture("Vignette");
 
-	postEffect_->pos = GetWindowHalfSize();
-	postEffect_->AddRenderTexture(tex_);
-	postEffect_->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Vignette"));
-	postEffect_->AddMaterial<ConstantBuffer<CVignette>>();
+	mPostEffect->pos = GetWindowHalfSize();
+	mPostEffect->AddRenderTexture(mRenderTexture);
+	mPostEffect->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Vignette"));
+	mPostEffect->AddMaterial<ConstantBuffer<CVignette>>();
 
-	vignetteData.range = Vec2(0.6f, 1.3f);
-}
-
-void Vignette::CreateGraphicsPipeline()
-{
-	//D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
-	//depthStencilDesc.DepthEnable = false; // 豺ｱ蠎ｦ繝・せ繝医ｒ陦後≧
-
-	//std::string path = "Application/Shader/";
-
-	//ShaderCompilerManager::Create("Vignette");
-	//ShaderCompilerManager::GetShaderCompiler("Vignette")->AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	//ShaderCompilerManager::GetShaderCompiler("Vignette")->AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	//ShaderCompilerManager::GetShaderCompiler("Vignette")->CompileVertexShader(path + "VignetteVS.hlsl", "main");
-	//ShaderCompilerManager::GetShaderCompiler("Vignette")->CompilePixelShader(path + "VignettePS.hlsl", "main");
-
-	//PipelineManager::CreateGraphicsPipeline(
-	//	ShaderCompilerManager::GetShaderCompiler("Vignette"),
-	//	RenderBase::GetInstance()->GetRenderTextureRootSignature()->GetRootSignature(),
-	//	CullMode::None,
-	//	depthStencilDesc,
-	//	TopologyType::Triangle,
-	//	1,
-	//	"Vignette");
+	mVignetteData.range = Vec2(0.2f, 1.7f);
+	mVignetteData.color = Color::black;
 }
 
 void Vignette::Update()
 {
-	postEffect_->SetTransferBuffer(2, vignetteData);
-	postEffect_->Update();
+	mPostEffect->SetTransferBuffer(2, mVignetteData);
+	mPostEffect->Update();
 }
 
 void Vignette::DrawPostEffect()
 {
-	postEffect_->SetDrawCommands(2, 2);
-	postEffect_->Draw();
+	mPostEffect->Draw();
 }
 
 void Vignette::PrevSceneDraw()
 {
-	tex_->PrevDrawScene();
+	mRenderTexture->PrevDrawScene();
 }
 
 void Vignette::PostSceneDraw()
 {
-	tex_->PostDrawScene();
+	mRenderTexture->PostDrawScene();
 }
 
 void Vignette::DrawDebugGui()
 {
-	Gui::DrawColorEdit("Vignette Color", vignetteData.color);
-	vignetteData.color = vignetteData.color.To01();
-	Gui::DrawSlider2("Vignette Range", vignetteData.range, 0.01f);
+	Gui::DrawColorEdit("Vignette Color", mVignetteData.color);
+	mVignetteData.color = mVignetteData.color.To01();
+	Gui::DrawSlider2("Vignette Range", mVignetteData.range, 0.01f);
 }
-

@@ -1,22 +1,25 @@
 #pragma once
 #include "NewEngine.h"
 #include "Bloom.h"
-#include "Player.h"
-#include "Boss.h"
-#include "Field.h"
+#include "Vignette.h"
+#include "VolumetricFog.h"
 
 class PostEffectManager
 {
 private:
-	Player* mPlayer;
-	Boss* mBoss;
-	Field* mField;
 	std::unique_ptr<ParticleMesh> mParticleMesh;
 
 private:
 	std::unique_ptr<Bloom> mEffectBloom;
+	std::unique_ptr<Vignette> mSkydomeVignette;
+	std::unique_ptr<VolumetricFog> mVolumetricFog;
 
 public:
+	// 天球のビネットのパス設定
+	void SkydomeVignetteDrawPass(
+		const std::function<void()>& targetDrawFunc);
+
+	// エフェクトのブルームのパス設定
 	void EffectBloomDrawPass(
 		const std::function<void()>& targetDrawFunc,
 		const std::function<void()>& sceneDrawFunc);
@@ -25,14 +28,13 @@ public:
 	PostEffectManager();
 	void Init();
 	void Update();
-	void RenderTextureSetting();
 
 public:
+
+	// 天球のビネット
+	void DrawSkydomeVignette();
+
+	// エフェクトのブルーム	
 	void DrawEffectBloom();
-
-public:
-	void SetPlayer(Player* player);
-	void SetBoss(Boss* boss);
-	void SetField(Field* field);
 
 };

@@ -29,14 +29,14 @@ void CreateManager::CreateShaderCompiler()
 	setting.psFilePath = path2 + "CloudPS.hlsl";
 	ShaderCompilerManager::Create(setting, "Cloud");
 
-	// 天球用
+	// ビネット用
 	setting = ShaderCompilerSetting();
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "SkydomeVS.hlsl";
-	setting.psFilePath = path2 + "SkydomePS.hlsl";
-	ShaderCompilerManager::Create(setting, "Skydome");
+	setting.vsFilePath = path2 + "VignetteVS.hlsl";
+	setting.psFilePath = path2 + "VignettePS.hlsl";
+	ShaderCompilerManager::Create(setting, "Vignette");
 
 	// 木の枝用
 	setting = ShaderCompilerSetting();
@@ -176,10 +176,10 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// 天球用（RenderTexture）
 	setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Skydome");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Vignette");
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
-	PipelineManager::CreateGraphicsPipeline(setting, "Skydome");
+	PipelineManager::CreateGraphicsPipeline(setting, "Vignette");
 
 	// 木の枝用
 	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();

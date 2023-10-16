@@ -28,9 +28,6 @@ void BossAttack1Effect::Update()
 
 void BossAttack1Effect::Draw()
 {
-	if (Key::GetKeyDown(DIK_UP))
-	{
-		mParticleMesh->ExecuteComputeShader();
-	}
+	mParticleMesh->ExecuteComputeShader();
 	mParticleMesh->Draw();
 }

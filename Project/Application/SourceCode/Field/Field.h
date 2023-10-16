@@ -8,8 +8,6 @@ class Field
 {
 private:
 	FieldData* mFieldData;
-
-	std::unique_ptr<Skydome> mSkydome;
 	std::array<std::unique_ptr<MessageSign>, 5> mMessageSigns;
 
 private:
@@ -20,7 +18,6 @@ public:
 	Field();
 	void Init();
 	void Update();
-	void RenderTextureSetting();
 	void DrawModel();
 	void DrawSkydome();
 	void DrawFrontSprite();

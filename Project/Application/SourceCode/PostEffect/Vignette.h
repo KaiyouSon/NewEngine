@@ -4,14 +4,12 @@
 class Vignette
 {
 private:
-	std::unique_ptr<PostEffect> postEffect_;
-	RenderTexture* tex_;
-	ConstantBufferData::CVignette vignetteData;
-
+	std::unique_ptr<PostEffect> mPostEffect;
+	RenderTexture* mRenderTexture;
+	ConstantBufferData::CVignette mVignetteData;
 
 public:
 	Vignette();
-	static void CreateGraphicsPipeline();
 	void Update();
 	void DrawPostEffect();
 	void PrevSceneDraw();

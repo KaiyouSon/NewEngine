@@ -60,13 +60,10 @@ void PostEffect::Draw()
 
 		if (mRenderTextures[i]->useDepth == true)
 		{
-			CD3DX12_RESOURCE_BARRIER barrier =
-				CD3DX12_RESOURCE_BARRIER::Transition(
-					mRenderTextures[i]->depthTexture->GetBufferResource()->buffer.Get(),
-					D3D12_RESOURCE_STATE_DEPTH_WRITE,
-					D3D12_RESOURCE_STATE_GENERIC_READ,
-					D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
-			renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
+			renderBase->TransitionBufferState(
+				mRenderTextures[i]->depthTexture->GetBufferResource(),
+				D3D12_RESOURCE_STATE_DEPTH_WRITE,
+				D3D12_RESOURCE_STATE_GENERIC_READ);
 
 			renderBase->GetCommandList()->
 				SetGraphicsRootDescriptorTable(
@@ -88,13 +85,10 @@ void PostEffect::Draw()
 	{
 		if (mRenderTextures[i]->useDepth == true)
 		{
-			CD3DX12_RESOURCE_BARRIER barrier =
-				CD3DX12_RESOURCE_BARRIER::Transition(
-					mRenderTextures[i]->depthTexture->GetBufferResource()->buffer.Get(),
-					D3D12_RESOURCE_STATE_GENERIC_READ,
-					D3D12_RESOURCE_STATE_DEPTH_WRITE,
-					D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
-			renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
+			renderBase->TransitionBufferState(
+				mRenderTextures[i]->depthTexture->GetBufferResource(),
+				D3D12_RESOURCE_STATE_GENERIC_READ,
+				D3D12_RESOURCE_STATE_DEPTH_WRITE);
 		}
 	}
 }

@@ -28,6 +28,7 @@ void GameScene::CreateInstance()
 	mField = std::make_unique<Field>();
 	mPostEffectManager = std::make_unique<PostEffectManager>();
 	mMovieEvent = std::make_unique<MovieEvent>();
+	mSkydome = std::make_unique<Skydome>();
 }
 
 void GameScene::Init()
@@ -59,10 +60,8 @@ void GameScene::Init()
 	mMenuManager->SetMovieEvent(mMovieEvent.get());
 
 	mField->Init();
+	mSkydome->Init();
 
-	mPostEffectManager->SetPlayer(mPlayer.get());
-	mPostEffectManager->SetBoss(mBoss.get());
-	mPostEffectManager->SetField(mField.get());
 	mPostEffectManager->Init();
 
 	ShadowMap::GetInstance()->Init();
@@ -123,6 +122,7 @@ void GameScene::Update()
 	}
 
 	mField->Update();
+	mSkydome->Update();
 	mMenuManager->Update();
 	mPostEffectManager->Update();
 	mBoundingBox.Update();
@@ -131,17 +131,30 @@ void GameScene::Update()
 	EffectManager::GetInstance()->Update();
 	ColliderDrawer::GetInstance()->Update();
 
+	if (mMenuManager->GetisActive() == false)
+	{
+		//CameraManager::GetInstance()->Update();
+	}
+
 	// シーン切り替えの処理
 	SceneChangeUpdate();
 }
 void GameScene::DrawPass()
 {
 	ShadowMap::GetInstance()->RenderTextureSetting();
-	mField->RenderTextureSetting();
 
 	std::function<void()> targetDrawFunc;
 	std::function<void()> sceneDrawFunc;
 
+	// --- 天球にベネットをかけるパス ------------------------------//
+	// ラムダ式で代入
+	targetDrawFunc = [this]()
+	{
+		DrawSkydome();
+	};
+	mPostEffectManager->SkydomeVignetteDrawPass(targetDrawFunc);
+
+	// --- エフェクトにブルームをかけるパス ------------------------//
 	// ラムダ式で代入
 	targetDrawFunc = [this]()
 	{
@@ -149,7 +162,7 @@ void GameScene::DrawPass()
 	};
 	sceneDrawFunc = [this]()
 	{
-		CurrentSceneObject3DDraw();
+		DrawCurrentSceneObject();
 	};
 	mPostEffectManager->EffectBloomDrawPass(targetDrawFunc, sceneDrawFunc);
 }
@@ -159,11 +172,10 @@ void GameScene::Draw()
 
 	mPostEffectManager->DrawEffectBloom();
 
-
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
 
-	mBoundingBox.Draw();
+	//mBoundingBox.Draw();
 }
 void GameScene::DrawDebugGui()
 {
@@ -205,11 +217,6 @@ void GameScene::DrawDebugGui()
 // シーン切り替えの処理
 void GameScene::SceneChangeUpdate()
 {
-	if (mMenuManager->GetisActive() == false)
-	{
-		CameraManager::GetInstance()->Update();
-	}
-
 	bool isBackToTitle =
 		LogoutMenu::GetisEnd() == true &&
 		LogoutMenu::GetSelect() == LogoutMenu::Select::BackToTitle;
@@ -284,6 +291,12 @@ void GameScene::SceneChangeUpdate()
 	}
 }
 
+// 天球の描画
+void GameScene::DrawSkydome()
+{
+	mSkydome->Draw();
+}
+
 // エフェクトのブルームのポストエフェクトに深度のみ書き込む処理
 void GameScene::DrawDepthToEffectBloom()
 {
@@ -305,16 +318,16 @@ void GameScene::DrawDepthToEffectBloom()
 	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass"));
 
 	// エフェクトの描画(ブルーム書けるため深度以外も書き込む)
-	EffectManager::GetInstance()->DrawEffect(true);
+	//EffectManager::GetInstance()->DrawEffect(true);
 }
 
-// 3Dオブジェクトの描画
-void GameScene::CurrentSceneObject3DDraw()
+// 現在のシーンのオブジェクトの描画
+void GameScene::DrawCurrentSceneObject()
 {
-	mField->DrawSkydome();
+	mPostEffectManager->DrawSkydomeVignette();
 	mField->DrawModel();
 
 	mPlayer->DrawModel();
 	mBoss->DrawModel();
-	EffectManager::GetInstance()->DrawEffect(false);
+	//EffectManager::GetInstance()->DrawEffect(false);
 }
