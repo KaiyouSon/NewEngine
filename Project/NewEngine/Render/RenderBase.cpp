@@ -344,8 +344,8 @@ void RenderBase::ShaderCompilerInit()
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path1 + "Object3DVS.hlsl";
-	setting.psFilePath = path1 + "Object3DPS.hlsl";
+	setting.vsFilePath = path1 + "Object3D/Object3DVS.hlsl";
+	setting.psFilePath = path1 + "Object3D/Object3DPS.hlsl";
 	ShaderCompilerManager::Create(setting, "Object3D");
 
 	// Fbxモデル用

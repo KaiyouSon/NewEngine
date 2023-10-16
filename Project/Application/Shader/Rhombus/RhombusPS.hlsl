@@ -1,4 +1,4 @@
-#include "Ripple.hlsli"
+#include "Rhombus.hlsli"
 
 // マテリアル
 struct Material

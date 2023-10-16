@@ -1,4 +1,10 @@
-#include "Lighting.hlsli"
+// マテリアル
+struct Material
+{
+    float3 ambient;
+    float3 diffuse;
+    float3 specular;
+};
 
 // 3D変換行列
 cbuffer ConstantBufferDataTransform : register(b0)

@@ -244,9 +244,6 @@
     <Filter Include="Application\Header\Field\Grass">
       <UniqueIdentifier>{796449d9-75b4-489f-8fed-945b7f8f3fb0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\Application\Skydome">
-      <UniqueIdentifier>{146f96ec-24ea-4e76-a9ca-b4b66c7a0476}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Header\Motion\Player">
       <UniqueIdentifier>{1d57f7e9-95ce-47f4-8e7b-a310d7ff9a6e}</UniqueIdentifier>
     </Filter>
@@ -1396,58 +1393,34 @@
     <None Include="NewEngine\Shader\ShaderIO.hlsli">
       <Filter>Shader\Engine\Util</Filter>
     </None>
-    <None Include="Application\Shader\Bloom.hlsli">
-      <Filter>Shader\Application\Bloom</Filter>
-    </None>
-    <None Include="Application\Shader\BGaussainBlur.hlsli">
-      <Filter>Shader\Application\Bloom</Filter>
-    </None>
-    <None Include="Application\Shader\HighLumi.hlsli">
+    <None Include="Application\Shader\HighLumi\HighLumi.hlsli">
       <Filter>Shader\Application</Filter>
     </None>
-    <None Include="Application\Shader\GLineBlur.hlsli">
-      <Filter>Shader\Application\Glare</Filter>
-    </None>
-    <None Include="Application\Shader\Glare.hlsli">
-      <Filter>Shader\Application\Glare</Filter>
-    </None>
-    <None Include="Application\Shader\DotFilter.hlsli">
-      <Filter>Shader\Application\Glare</Filter>
-    </None>
-    <None Include="Application\Shader\DOF.hlsli">
-      <Filter>Shader\Application</Filter>
-    </None>
-    <None Include="Application\Shader\RadialBlur.hlsli">
-      <Filter>Shader\Application</Filter>
-    </None>
-    <None Include="Application\Shader\Cloud.hlsli">
+    <None Include="Application\Shader\Cloud\Cloud.hlsli">
       <Filter>Shader\Application\Cloud</Filter>
     </None>
-    <None Include="Application\Shader\Ripple.hlsli">
+    <None Include="Application\Shader\Ripple\Ripple.hlsli">
       <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
     </None>
-    <None Include="Application\Shader\ShadowObj.hlsli">
+    <None Include="Application\Shader\ShadowObj\ShadowObj.hlsli">
       <Filter>Shader\Application\ShaderMap</Filter>
     </None>
-    <None Include="Application\Shader\ShadowMap.hlsli">
+    <None Include="Application\Shader\ShadowMap\ShadowMap.hlsli">
       <Filter>Shader\Application\ShaderMap</Filter>
     </None>
-    <None Include="Application\Shader\RespawnTransition.hlsli">
+    <None Include="Application\Shader\RespawnTransition\RespawnTransition.hlsli">
       <Filter>Shader\Application\RespawnPoint\Transition</Filter>
     </None>
-    <None Include="Application\Shader\GaussianBlur.hlsli">
+    <None Include="Application\Shader\GaussianBlur\GaussianBlur.hlsli">
       <Filter>Shader\Application\GaussianBlur</Filter>
     </None>
-    <None Include="Application\Shader\Branch.hlsli">
+    <None Include="Application\Shader\Branch\Branch.hlsli">
       <Filter>Shader\Application\Branch</Filter>
     </None>
-    <None Include="Application\Shader\Grass.hlsli">
+    <None Include="Application\Shader\Grass\Grass.hlsli">
       <Filter>Shader\Application\Grass</Filter>
     </None>
-    <None Include="Application\Shader\Skydome.hlsli">
-      <Filter>Shader\Application\Skydome</Filter>
-    </None>
-    <None Include="Application\Shader\Composite.hlsli">
+    <None Include="Application\Shader\Composite\Composite.hlsli">
       <Filter>Shader\Application</Filter>
     </None>
     <None Include="NewEngine\Shader\Emitter.hlsli">
@@ -1465,7 +1438,7 @@
     <None Include="NewEngine\Shader\FbxModel.hlsli">
       <Filter>Shader\Engine\FbxModel</Filter>
     </None>
-    <None Include="NewEngine\Shader\Object3D.hlsli">
+    <None Include="NewEngine\Shader\Object3D\Object3D.hlsli">
       <Filter>Shader\Engine\Object3D</Filter>
     </None>
     <None Include="NewEngine\Shader\OutLine.hlsli">
@@ -1493,129 +1466,82 @@
     <None Include="NewEngine\Shader\BoundingBox\BoundingBox.hlsli">
       <Filter>Shader\Engine\BoundingBox</Filter>
     </None>
-    <None Include="Application\Shader\Vignette.hlsli">
+    <None Include="Application\Shader\Vignette\Vignette.hlsli">
       <Filter>Shader\Application\Vignette</Filter>
     </None>
+    <None Include="Application\Shader\Rhombus\Rhombus.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Application\Shader\BloomPS.hlsl">
-      <Filter>Shader\Application\Bloom</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\BloomVS.hlsl">
-      <Filter>Shader\Application\Bloom</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\BGaussainBlurPS.hlsl">
-      <Filter>Shader\Application\Bloom</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\BGaussainBlurVS.hlsl">
-      <Filter>Shader\Application\Bloom</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\HighLumiPS.hlsl">
+    <FxCompile Include="Application\Shader\HighLumi\HighLumiPS.hlsl">
       <Filter>Shader\Application</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\HighLumiVS.hlsl">
+    <FxCompile Include="Application\Shader\HighLumi\HighLumiVS.hlsl">
       <Filter>Shader\Application</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\GLineBlurPS.hlsl">
-      <Filter>Shader\Application\Glare</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\GLineBlurVS.hlsl">
-      <Filter>Shader\Application\Glare</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\GlarePS.hlsl">
-      <Filter>Shader\Application\Glare</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\GlareVS.hlsl">
-      <Filter>Shader\Application\Glare</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\DotFilterPS.hlsl">
-      <Filter>Shader\Application\Glare</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\DotFilterVS.hlsl">
-      <Filter>Shader\Application\Glare</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\DOFPS.hlsl">
-      <Filter>Shader\Application</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\DOFVS.hlsl">
-      <Filter>Shader\Application</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\RadialBlurPS.hlsl">
-      <Filter>Shader\Application</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\RadialBlurVS.hlsl">
-      <Filter>Shader\Application</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\CloudPS.hlsl">
+    <FxCompile Include="Application\Shader\Cloud\CloudPS.hlsl">
       <Filter>Shader\Application\Cloud</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\CloudVS.hlsl">
+    <FxCompile Include="Application\Shader\Cloud\CloudVS.hlsl">
       <Filter>Shader\Application\Cloud</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RipplePS.hlsl">
+    <FxCompile Include="Application\Shader\Ripple\RipplePS.hlsl">
       <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RippleVS.hlsl">
+    <FxCompile Include="Application\Shader\Ripple\RippleVS.hlsl">
       <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RhombusPS.hlsl">
+    <FxCompile Include="Application\Shader\Rhombus\RhombusPS.hlsl">
       <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RhombusVS.hlsl">
+    <FxCompile Include="Application\Shader\Rhombus\RhombusVS.hlsl">
       <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\ShadowObjVS.hlsl">
+    <FxCompile Include="Application\Shader\ShadowObj\ShadowObjVS.hlsl">
       <Filter>Shader\Application\ShaderMap</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\ShadowObjPS.hlsl">
+    <FxCompile Include="Application\Shader\ShadowObj\ShadowObjPS.hlsl">
       <Filter>Shader\Application\ShaderMap</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\ShadowMapVS.hlsl">
+    <FxCompile Include="Application\Shader\ShadowMap\ShadowMapVS.hlsl">
       <Filter>Shader\Application\ShaderMap</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\ShadowMapPS.hlsl">
+    <FxCompile Include="Application\Shader\ShadowMap\ShadowMapPS.hlsl">
       <Filter>Shader\Application\ShaderMap</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RespawnTransitionPS.hlsl">
+    <FxCompile Include="Application\Shader\RespawnTransition\RespawnTransitionPS.hlsl">
       <Filter>Shader\Application\RespawnPoint\Transition</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RespawnTransitionVS.hlsl">
+    <FxCompile Include="Application\Shader\RespawnTransition\RespawnTransitionVS.hlsl">
       <Filter>Shader\Application\RespawnPoint\Transition</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\GaussianBlurPS.hlsl">
+    <FxCompile Include="Application\Shader\GaussianBlur\GaussianBlurPS.hlsl">
       <Filter>Shader\Application\GaussianBlur</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\GaussianBlurVS.hlsl">
+    <FxCompile Include="Application\Shader\GaussianBlur\GaussianBlurVS.hlsl">
       <Filter>Shader\Application\GaussianBlur</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\BranchVS.hlsl">
+    <FxCompile Include="Application\Shader\Branch\BranchVS.hlsl">
       <Filter>Shader\Application\Branch</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\BranchPS.hlsl">
+    <FxCompile Include="Application\Shader\Branch\BranchPS.hlsl">
       <Filter>Shader\Application\Branch</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\GrassVS.hlsl">
+    <FxCompile Include="Application\Shader\Grass\GrassVS.hlsl">
       <Filter>Shader\Application\Grass</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\GrassPS.hlsl">
+    <FxCompile Include="Application\Shader\Grass\GrassPS.hlsl">
       <Filter>Shader\Application\Grass</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\GrassGS.hlsl">
+    <FxCompile Include="Application\Shader\Grass\GrassGS.hlsl">
       <Filter>Shader\Application\Grass</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\SkydomeVS.hlsl">
-      <Filter>Shader\Application\Skydome</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\SkydomePS.hlsl">
-      <Filter>Shader\Application\Skydome</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\CompositePS.hlsl">
+    <FxCompile Include="Application\Shader\Composite\CompositePS.hlsl">
       <Filter>Shader\Application</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\CompositeVS.hlsl">
+    <FxCompile Include="Application\Shader\Composite\CompositeVS.hlsl">
       <Filter>Shader\Application</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RespawnPointEffectCS.hlsl">
+    <FxCompile Include="Application\Shader\RespawnPointEffect\RespawnPointEffectCS.hlsl">
       <Filter>Shader\Application\Effect</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\EmitterCS.hlsl">
@@ -1657,10 +1583,10 @@
     <FxCompile Include="NewEngine\Shader\FbxModelVS.hlsl">
       <Filter>Shader\Engine\FbxModel</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Object3DPS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Object3D\Object3DPS.hlsl">
       <Filter>Shader\Engine\Object3D</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Object3DVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Object3D\Object3DVS.hlsl">
       <Filter>Shader\Engine\Object3D</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\OutLinePS.hlsl">
@@ -1693,7 +1619,7 @@
     <FxCompile Include="NewEngine\Shader\ToonRenderingVS.hlsl">
       <Filter>Shader\Engine\ToonRendering</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RespawnPointEffectVS.hlsl">
+    <FxCompile Include="Application\Shader\RespawnPointEffect\RespawnPointEffectVS.hlsl">
       <Filter>Shader\Application\Effect</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\ParticleMeshPS.hlsl">
@@ -1723,10 +1649,10 @@
     <FxCompile Include="Application\Shader\BossAttack1Effect\BossAttack1EffectVS.hlsl">
       <Filter>Shader\Application\Effect\BossAttack1Effect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\VignettePS.hlsl">
+    <FxCompile Include="Application\Shader\Vignette\VignettePS.hlsl">
       <Filter>Shader\Application\Vignette</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\VignetteVS.hlsl">
+    <FxCompile Include="Application\Shader\Vignette\VignetteVS.hlsl">
       <Filter>Shader\Application\Vignette</Filter>
     </FxCompile>
   </ItemGroup>

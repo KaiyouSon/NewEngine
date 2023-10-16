@@ -1,5 +1,4 @@
 #include "Object3D.hlsli"
-#include "ShaderIO.hlsli"
 
 Texture2D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
 Texture2D<float4> dissolveTex : register(t1); // 0番スロットに設定されたテクスチャ
@@ -37,16 +36,6 @@ float4 CalcShadowColor(V2P i, float4 color)
             
             shadowColor.rgb = lerp(shadowColor, color.xyz, lightFactor);
         }
-        
-        //float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV).r;
-        //if (shadowDepth < z)
-        //{
-         
-            
-        //    resultColor = lerp(color * shadow, color, lightFactor);
-            
-        //    shadow *= 0.5f;
-        //}
     }
     
     return resultColor;
@@ -107,14 +96,14 @@ PSOutput main(V2P i)// : SV_TARGET
      
         // ディフューズ
         float intensity = saturate(dot(normalize(i.normal), dirLightVec));
-        float4 diffuse = intensity * dirLightColor * float4(material.diffuse.rgb, 1);
+        float3 diffuse = intensity * dirLightColor.rgb * material.diffuse.rgb;
     
         // スペキュラー
         float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // 頂点から視点へのベクトル
         float3 reflectDir = -dirLightVec + 2 * i.normal * dot(i.normal, dirLightVec);
         float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
     
-        adsColor.rgb = ambient + diffuse + specular * dirLightColor;
+        adsColor.rgb = ambient + diffuse + specular * dirLightColor.rgb;
     }
     
     float4 resultColor = (adsColor * texColor * color);

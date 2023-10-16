@@ -14,9 +14,9 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT, 1);
-	setting.vsFilePath = path2 + "GrassVS.hlsl";
-	setting.gsFilePath = path2 + "GrassGS.hlsl";
-	setting.psFilePath = path2 + "GrassPS.hlsl";
+	setting.vsFilePath = path2 + "Grass/GrassVS.hlsl";
+	setting.gsFilePath = path2 + "Grass/GrassGS.hlsl";
+	setting.psFilePath = path2 + "Grass/GrassPS.hlsl";
 	ShaderCompilerManager::Create(setting, "Grass");
 
 	// 雲用
@@ -25,8 +25,8 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "CloudVS.hlsl";
-	setting.psFilePath = path2 + "CloudPS.hlsl";
+	setting.vsFilePath = path2 + "Cloud/CloudVS.hlsl";
+	setting.psFilePath = path2 + "Cloud/CloudPS.hlsl";
 	ShaderCompilerManager::Create(setting, "Cloud");
 
 	// ビネット用
@@ -34,8 +34,8 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "VignetteVS.hlsl";
-	setting.psFilePath = path2 + "VignettePS.hlsl";
+	setting.vsFilePath = path2 + "Vignette/VignetteVS.hlsl";
+	setting.psFilePath = path2 + "Vignette/VignettePS.hlsl";
 	ShaderCompilerManager::Create(setting, "Vignette");
 
 	// 木の枝用
@@ -44,8 +44,8 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "BranchVS.hlsl";
-	setting.psFilePath = path2 + "BranchPS.hlsl";
+	setting.vsFilePath = path2 + "Branch/BranchVS.hlsl";
+	setting.psFilePath = path2 + "Branch/BranchPS.hlsl";
 	ShaderCompilerManager::Create(setting, "Branch");
 
 	// リスポーン地点用（下の波紋用）
@@ -54,8 +54,8 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "RippleVS.hlsl";
-	setting.psFilePath = path2 + "RipplePS.hlsl";
+	setting.vsFilePath = path2 + "Ripple/RippleVS.hlsl";
+	setting.psFilePath = path2 + "Ripple/RipplePS.hlsl";
 	ShaderCompilerManager::Create(setting, "Ripple");
 
 	// リスポーン地点用（浮いてる菱形用）
@@ -64,8 +64,8 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "RhombusVS.hlsl";
-	setting.psFilePath = path2 + "RhombusPS.hlsl";
+	setting.vsFilePath = path2 + "Rhombus/RhombusVS.hlsl";
+	setting.psFilePath = path2 + "Rhombus/RhombusPS.hlsl";
 	ShaderCompilerManager::Create(setting, "Rhombus");
 
 	// 高輝度箇所抽出用（RenderTexture）
@@ -73,8 +73,8 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "HighLumiVS.hlsl";
-	setting.psFilePath = path2 + "HighLumiPS.hlsl";
+	setting.vsFilePath = path2 + "HighLumi/HighLumiVS.hlsl";
+	setting.psFilePath = path2 + "HighLumi/HighLumiPS.hlsl";
 	ShaderCompilerManager::Create(setting, "HighLumi");
 
 	// ガウシアンブラー用（RenderTexture）
@@ -82,8 +82,8 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "GaussianBlurVS.hlsl";
-	setting.psFilePath = path2 + "GaussianBlurPS.hlsl";
+	setting.vsFilePath = path2 + "GaussianBlur/GaussianBlurVS.hlsl";
+	setting.psFilePath = path2 + "GaussianBlur/GaussianBlurPS.hlsl";
 	ShaderCompilerManager::Create(setting, "GaussianBlur");
 
 	// 合成用（RenderTexture）
@@ -91,8 +91,8 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "CompositeVS.hlsl";
-	setting.psFilePath = path2 + "CompositePS.hlsl";
+	setting.vsFilePath = path2 + "Composite/CompositeVS.hlsl";
+	setting.psFilePath = path2 + "Composite/CompositePS.hlsl";
 	ShaderCompilerManager::Create(setting, "Composite");
 
 	// リスポーン時の遷移用
@@ -100,8 +100,8 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "RespawnTransitionVS.hlsl";
-	setting.psFilePath = path2 + "RespawnTransitionPS.hlsl";
+	setting.vsFilePath = path2 + "RespawnTransition/RespawnTransitionVS.hlsl";
+	setting.psFilePath = path2 + "RespawnTransition/RespawnTransitionPS.hlsl";
 	ShaderCompilerManager::Create(setting, "RespawnTransition");
 
 	// ShadowObj用
@@ -110,8 +110,8 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "ShadowObjVS.hlsl";
-	setting.psFilePath = path2 + "ShadowObjPS.hlsl";
+	setting.vsFilePath = path2 + "ShadowObj/ShadowObjVS.hlsl";
+	setting.psFilePath = path2 + "ShadowObj/ShadowObjPS.hlsl";
 	ShaderCompilerManager::Create(setting, "ShadowObj");
 
 	// ShadowMap用
@@ -119,14 +119,14 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "ShadowMapVS.hlsl";
-	setting.psFilePath = path2 + "ShadowMapPS.hlsl";
+	setting.vsFilePath = path2 + "ShadowMap/ShadowMapVS.hlsl";
+	setting.psFilePath = path2 + "ShadowMap/ShadowMapPS.hlsl";
 	ShaderCompilerManager::Create(setting, "ShadowMap");
 
 	// リスポーンエフェクト用
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "RespawnPointEffectCS.hlsl";
-	setting.vsFilePath = path2 + "RespawnPointEffectVS.hlsl";
+	setting.csFilePath = path2 + "RespawnPointEffect/RespawnPointEffectCS.hlsl";
+	setting.vsFilePath = path2 + "RespawnPointEffect/RespawnPointEffectVS.hlsl";
 	setting.gsFilePath = path1 + "EmitterGS.hlsl";
 	setting.psFilePath = path1 + "EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "RespawnPointEffect");

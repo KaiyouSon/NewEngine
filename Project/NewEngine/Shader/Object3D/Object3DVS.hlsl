@@ -1,5 +1,4 @@
 #include "Object3D.hlsli"
-#include "ShaderIO.hlsli"
 
 V2P main(Appdata i)
 {
