@@ -60,6 +60,20 @@ namespace ConstantBufferData
 		Vec3 tiling;
 	};
 
+	struct CScreenToWorldMat
+	{
+		Mat4 screenToWorldMat;
+	};
+
+	struct CVolumetricFog
+	{
+		uint32_t stepCount;
+		float stepLength;
+		Vec2 smoothingClamp;
+		Color fogColor;
+		Color fogColorRate;
+	};
+
 	struct CColor
 	{
 		Color color;// 色

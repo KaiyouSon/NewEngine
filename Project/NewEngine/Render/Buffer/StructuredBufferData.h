@@ -9,4 +9,9 @@ namespace StructuredBufferData
 		uint32_t maxTimer;
 		float timeRate;
 	};
+
+	struct SFog
+	{
+		Color color;
+	};
 }

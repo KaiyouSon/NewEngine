@@ -19,6 +19,15 @@ cbuffer ConstantBufferDataUVParameter : register(b2)
     float2 tiling;
 };
 
+cbuffer ConstantBufferDataScreenToWorldMat : register(b3)
+{
+    uint stepCount;
+    float stepLength;
+    float2 smoothingClamp;
+    float4 fogColor;
+    float4 fogColorRate;
+}
+
 struct Appdata
 {
     float4 pos : POSITION;
@@ -29,4 +38,5 @@ struct V2P
 {
     float4 svpos : SV_POSITION; // システム用頂点座標
     float3 uvw : TEXCOORD; // uv値
+    float3 wpos : POSITION;
 };

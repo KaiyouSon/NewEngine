@@ -7,10 +7,13 @@ using namespace ConstantBufferData;
 
 PostEffect::PostEffect() :
 	mVertexBuffer(std::make_unique<VertexBuffer<VSprite>>()),
+	mMaterial(std::make_unique<Material>()),
+	mCSMaterial(std::make_unique<Material>()),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("RenderTexture")),
+	mComputePipeline(nullptr),
 	pos(0), scale(1), rot(0), mAnchorPoint(0.5f), rtvIndex(0)
 {
-	// 鬆らせ繝舌ャ繝輔ぃ縺ｮ逕滓・
+	// 頂点バッファ生成
 	mVertices.resize(4);
 	mVertices[0].uv = { 0.0f,1.0f };
 	mVertices[1].uv = { 0.0f,0.0f };
@@ -18,7 +21,7 @@ PostEffect::PostEffect() :
 	mVertices[3].uv = { 1.0f,0.0f };
 	mVertexBuffer->Create(mVertices);
 
-	// 繝舌ャ繝輔ぃ逕滓・
+	// マテリアルの初期化
 	MaterialInit();
 }
 
@@ -29,35 +32,53 @@ void PostEffect::Update()
 	mTransform.rot = { 0.f,0.f,rot };
 	mTransform.Update();
 
-	// 霆｢騾∝・逅・
+	// マテリアルの転送
 	MaterialTransfer();
 
 	mVertexBuffer->TransferToBuffer(mVertices);
+}
+void PostEffect::ExecuteCS(const uint32_t threadX, const uint32_t threadY, const uint32_t threadZ)
+{
+	if (mComputePipeline == nullptr) return;
+
+	auto* cmdList = RenderBase::GetInstance()->GetCommandList();
+
+	CSMaterialTransfer();
+
+	mComputePipeline->DrawCommand();
+
+	CSMaterialDrawCommands();
+
+	// ディスパッチ
+	cmdList->Dispatch(threadX, threadY, threadZ);
+
 }
 void PostEffect::Draw()
 {
 	if (mRenderTextures.empty() == true) return;
 
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
+	auto* renderBase = RenderBase::GetInstance();// .get();
+	auto* cmdList = renderBase->GetCommandList();
 
-	// GraphicsPipeline謠冗判繧ｳ繝槭Φ繝・
+	// GraphicsPipelineの描画コマンド
 	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
 
-	// VBV縺ｨIBV縺ｮ險ｭ螳壹さ繝槭Φ繝・
-	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
+	// VBVとのセット
+	cmdList->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
 
-	// 繝槭ユ繝ｪ繧｢繝ｫ縺ｮ險ｭ螳壹さ繝槭Φ繝・
+	// マテリアルの描画コマンド
 	MaterialDrawCommands();
 
-	// SRV險ｭ螳壹さ繝槭Φ繝・
+	// SRVの設定
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	for (uint32_t i = 0; i < mRenderTextures.size(); i++)
 	{
-		renderBase->GetCommandList()->
-			SetGraphicsRootDescriptorTable(
-				startIndex + i,
-				mRenderTextures[i]->GetBufferResources()->at(rtvIndex).srvHandle.gpu);
+		// RenderTexture
+		cmdList->SetGraphicsRootDescriptorTable(
+			startIndex + i,
+			mRenderTextures[i]->GetBufferResources()->at(rtvIndex).srvHandle.gpu);
 
+		// DepthTexture
 		if (mRenderTextures[i]->useDepth == true)
 		{
 			renderBase->TransitionBufferState(
@@ -65,21 +86,28 @@ void PostEffect::Draw()
 				D3D12_RESOURCE_STATE_DEPTH_WRITE,
 				D3D12_RESOURCE_STATE_GENERIC_READ);
 
-			renderBase->GetCommandList()->
-				SetGraphicsRootDescriptorTable(
-					(uint32_t)(startIndex + 1),
-					mRenderTextures[i]->depthTexture->GetBufferResource()->srvHandle.gpu);
+			cmdList->SetGraphicsRootDescriptorTable(
+				(uint32_t)(startIndex + 1),
+				mRenderTextures[i]->depthTexture->GetBufferResource()->srvHandle.gpu);
 		}
 		else
 		{
-			renderBase->GetCommandList()->
-				SetGraphicsRootDescriptorTable(
-					startIndex + 1,
-					mRenderTextures[i]->GetBufferResources()->at(rtvIndex).srvHandle.gpu);
+			cmdList->SetGraphicsRootDescriptorTable(
+				startIndex + 1,
+				mRenderTextures[i]->GetBufferResources()->at(rtvIndex).srvHandle.gpu);
 		}
 	}
 
-	renderBase->GetCommandList()->DrawInstanced((uint16_t)mVertices.size(), 1, 0, 0);
+	// CSOutput
+	uint32_t offsetIndex = startIndex + (uint32_t)mRenderTextures.size();
+	for (uint32_t i = 0; i < mCSMaterial->structuredBuffers.size(); i++)
+	{
+		cmdList->SetGraphicsRootDescriptorTable(
+			offsetIndex + i,
+			mCSMaterial->structuredBuffers[i]->GetBufferResource()->srvHandle.gpu);
+	}
+
+	cmdList->DrawInstanced((uint16_t)mVertices.size(), 1, 0, 0);
 
 	for (uint32_t i = 0; i < mRenderTextures.size(); i++)
 	{
@@ -93,52 +121,82 @@ void PostEffect::Draw()
 	}
 }
 
-// --- 繝槭ユ繝ｪ繧｢繝ｫ髢｢騾｣ --------------------------------------------------- //
+// --- マテリアル関連 --------------------------------------------------- //
 void PostEffect::MaterialInit()
 {
-	// 繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ逕滓・
+	// インターフェース
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3D陦悟・
+	// トランスフォーム
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform2D>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// 濶ｲ
+	// 色
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// 蛻晄悄蛹・
-	mMaterial.Init();
+	// 初期化
+	mMaterial->Init();
 }
 void PostEffect::MaterialTransfer()
 {
-	// 繝槭ヨ繝ｪ繝・け繧ｹ
-	CTransform2D transform3DData =
+	// トランスフォーム
+	CTransform2D transformData =
 	{
 		mTransform.GetWorldMat() * Camera::current.GetOrthoGrphicProjectionMat()
 	};
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transform3DData);
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), transformData);
 
-	// 濶ｲ繝・・繧ｿ
-	CColor colorData = { color / 255 };
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[1].get(), colorData);
+	// 色
+	CColor colorData = { color.To01() };
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[1].get(), colorData);
 }
 void PostEffect::MaterialDrawCommands()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	for (uint32_t i = 0; i < mMaterial.constantBuffers.size(); i++)
+	for (uint32_t i = 0; i < mMaterial->constantBuffers.size(); i++)
 	{
-		// CBV縺ｮ險ｭ螳壹さ繝槭Φ繝・
+		// CBVのセット
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-			i, mMaterial.constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
+			i, mMaterial->constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
 	}
 }
 
-// --- 鬆らせ繝・・繧ｿ髢｢騾｣ --------------------------------------------------- //
+// --- CSマテリアル関連 ------------------------------------------------- //
+void PostEffect::CSMaterialTransfer()
+{
+}
+void PostEffect::CSMaterialDrawCommands()
+{
+	auto* cmdList = RenderBase::GetInstance()->GetCommandList();
+
+	// ディスクリプターヒープ設定
+	auto srvDescHeap = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
+	cmdList->SetDescriptorHeaps(1, &srvDescHeap);
+
+	// CBV
+	uint32_t cbvStartIndex = mComputePipeline->GetRootSignature()->GetCBVStartIndex();
+	for (uint32_t i = 0; i < mCSMaterial->constantBuffers.size(); i++)
+	{
+		cmdList->SetComputeRootConstantBufferView(
+			cbvStartIndex + i, mCSMaterial->constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
+	}
+
+	// UAV
+	uint32_t uavStartIndex = mComputePipeline->GetRootSignature()->GetUAVStartIndex();
+	// その他のUAVデータ
+	for (uint32_t i = 0; i < mCSMaterial->structuredBuffers.size(); i++)
+	{
+		cmdList->SetComputeRootDescriptorTable(
+			uavStartIndex + i, mCSMaterial->structuredBuffers[i]->GetBufferResource()->uavHandle.gpu);
+	}
+}
+
+// --- 頂点データ関連 --------------------------------------------------- //
 void PostEffect::TransferTexturePos()
 {
-	// 繝・け繧ｹ繝√Ε繝ｼ縺ｮ繧ｵ繧､繧ｺ
+	// テクスチャーのサイズ
 	float width = mRenderTextures.front()->size.x;
 	float height = mRenderTextures.front()->size.y;
 
@@ -153,55 +211,32 @@ void PostEffect::TransferVertexCoord()
 {
 	enum class Point { LD, LU, RD, RU };
 
-	// 蝗幄ｾｺ
+	// 四辺
 	float left = (0.f - mAnchorPoint.x) * mSize.x;
 	float right = (1.f - mAnchorPoint.x) * mSize.x;
 	float up = (0.f - mAnchorPoint.y) * mSize.y;
 	float down = (1.f - mAnchorPoint.y) * mSize.y;
 
-	/*switch (mFlipType)
-	{
-	case FlipType::X:
-		left = -left;
-		right = -right;
-		break;
-
-	case FlipType::Y:
-		up = -up;
-		down = -down;
-		break;
-
-	case FlipType::XY:
-		left = -left;
-		right = -right;
-		up = -up;
-		down = -down;
-		break;
-
-	default:
-		break;
-	}*/
-
-	// 鬆らせ蠎ｧ讓・
-	mVertices[(uint32_t)Point::LD].pos = Vec3(left, down, 0.f);	  //蟾ｦ荳・
-	mVertices[(uint32_t)Point::LU].pos = Vec3(left, up, 0.f);	  //蟾ｦ荳・
-	mVertices[(uint32_t)Point::RD].pos = Vec3(right, down, 0.f);  //蜿ｳ荳・
-	mVertices[(uint32_t)Point::RU].pos = Vec3(right, up, 0.f);	  //蜿ｳ荳・
+	// 頂点座標
+	mVertices[(uint32_t)Point::LD].pos = Vec3(left, down, 0.f);	  // 左下
+	mVertices[(uint32_t)Point::LU].pos = Vec3(left, up, 0.f);	  // 左上
+	mVertices[(uint32_t)Point::RD].pos = Vec3(right, down, 0.f);  // 右下
+	mVertices[(uint32_t)Point::RU].pos = Vec3(right, up, 0.f);	  // 右上
 }
 
-// --- 縺昴・莉悶・髢｢謨ｰ ----------------------------------------------------- //
+// --- その他の関数 ----------------------------------------------------- //
 void PostEffect::AddRenderTexture(RenderTexture* renderTexture)
 {
 	mRenderTextures.push_back(renderTexture);
 
-	// 繝・け繧ｹ繝√Ε繝ｼ縺御ｸ譫壹・譎ゅ↓縺励°鬆らせ蠎ｧ讓吝､峨∴縺ｪ縺・
+	// テクスチャが初めて追加されたときにサイズ設定
 	if (mRenderTextures.size() == 1)
 	{
 		TransferTexturePos();
 	}
 }
 
-// --- 繧ｻ繝・ち繝ｼ --------------------------------------------------------- //
+// --- セッター --------------------------------------------------------- //
 void PostEffect::SetSize(const Vec2 size)
 {
 	mSize = size;
@@ -212,15 +247,7 @@ void PostEffect::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
 	mGraphicsPipeline = graphicsPipeline;
 }
-void PostEffect::SetDrawCommands(const uint32_t registerNum, const uint32_t bufferNum)
+void PostEffect::SetComputePipeline(ComputePipeline* computePipeline)
 {
-	// GraphicsPipeline謠冗判繧ｳ繝槭Φ繝・
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
-
-	uint32_t bNum = Min<uint32_t>(bufferNum, (uint32_t)mMaterial.constantBuffers.size());
-
-	// CBV縺ｮ險ｭ螳壹さ繝槭Φ繝・
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		registerNum, mMaterial.constantBuffers[bNum]->bufferResource->buffer->GetGPUVirtualAddress());
+	mComputePipeline = computePipeline;
 }
-

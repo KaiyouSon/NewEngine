@@ -7,7 +7,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	NewEngineSetting setting;
 	setting.windowTitle = "PON_DE_RING";
 	setting.windowSize = Vec2(1920, 1080);
-	setting.bgColor = Color::black;
+	//setting.bgColor = Color::black;
+	setting.bgColor = Color(0xceae90);
 	setting.frameRate = 60.f;
 
 	std::unique_ptr<NewEngine> newEngine = std::make_unique<NewEngine>(setting);

@@ -146,7 +146,6 @@
     <ClCompile Include="Application\SourceCode\GaugeParam.cpp" />
     <ClCompile Include="Application\SourceCode\UI\GaugeUI.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\GaussianBlur.cpp" />
-    <ClCompile Include="Application\SourceCode\PostEffect\Glare.cpp" />
     <ClCompile Include="Application\SourceCode\Body\HumanoidBody.cpp" />
     <ClCompile Include="Application\SourceCode\Camera\ICamera.cpp" />
     <ClCompile Include="Application\SourceCode\Menu\IMenu.cpp" />
@@ -170,7 +169,6 @@
     <ClCompile Include="Application\SourceCode\Character\Player.cpp" />
     <ClCompile Include="Application\SourceCode\Effect\PlayerRecoveryEffect.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\PostEffectManager.cpp" />
-    <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp" />
     <ClCompile Include="Application\SourceCode\Field\RespawnPoint.cpp" />
     <ClCompile Include="Application\SourceCode\Effect\RespawnPointEffect.cpp" />
     <ClCompile Include="Application\SourceCode\Transition\RespawnTransition.cpp" />
@@ -319,7 +317,6 @@
     <ClInclude Include="Application\SourceCode\GaugeType.h" />
     <ClInclude Include="Application\SourceCode\UI\GaugeUI.h" />
     <ClInclude Include="Application\SourceCode\PostEffect\GaussianBlur.h" />
-    <ClInclude Include="Application\SourceCode\PostEffect\Glare.h" />
     <ClInclude Include="Application\SourceCode\Body\HumanoidBody.h" />
     <ClInclude Include="Application\SourceCode\Camera\ICamera.h" />
     <ClInclude Include="Application\SourceCode\Menu\IMenu.h" />
@@ -344,7 +341,6 @@
     <ClInclude Include="Application\SourceCode\Body\PlayerBody.h" />
     <ClInclude Include="Application\SourceCode\Effect\PlayerRecoveryEffect.h" />
     <ClInclude Include="Application\SourceCode\PostEffect\PostEffectManager.h" />
-    <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h" />
     <ClInclude Include="Application\SourceCode\Field\RespawnPoint.h" />
     <ClInclude Include="Application\SourceCode\Effect\RespawnPointEffect.h" />
     <ClInclude Include="Application\SourceCode\Transition\RespawnTransition.h" />
@@ -479,6 +475,7 @@
     <None Include="Application\Shader\ShadowMap\ShadowMap.hlsli" />
     <None Include="Application\Shader\ShadowObj\ShadowObj.hlsli" />
     <None Include="Application\Shader\Vignette\Vignette.hlsli" />
+    <None Include="Application\Shader\VolumetricFog\VolumetricFog.hlsli" />
     <None Include="NewEngine\Shader\Blur.hlsli" />
     <None Include="NewEngine\Shader\BoundingBox\BoundingBox.hlsli" />
     <None Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSprite.hlsli" />
@@ -652,13 +649,35 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+    <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="NewEngine\Shader\BoundingBox\BoundingBoxPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\BoundingBox\BoundingBoxVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSpritePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

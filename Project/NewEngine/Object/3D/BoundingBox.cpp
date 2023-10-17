@@ -19,6 +19,12 @@ BoundingBox::BoundingBox() :
 
 	// マテリアルの初期化
 	MaterialInit();
+
+	fogPrame.stepCount = 32;
+	fogPrame.stepLength = 0.1f;
+	fogPrame.smoothingClamp = Vec2(0.1f, 0.6f);
+	fogPrame.fogColor = Color::white;
+	fogPrame.fogColorRate = Color(0.1f, 0.1f, 0.1f, 0.1f);
 }
 
 void BoundingBox::Update(Transform* parent)
@@ -195,6 +201,10 @@ void BoundingBox::MaterialInit()
 	iConstantBuffer = std::make_unique<ConstantBuffer<CUVWParameter>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
+	// フォグデータ
+	iConstantBuffer = std::make_unique<ConstantBuffer<CVolumetricFog>>();
+	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+
 	// マテリアル初期化
 	mMaterial.Init();
 }
@@ -216,6 +226,17 @@ void BoundingBox::MaterialTransfer()
 	// UVWパラメーター
 	CUVWParameter uvData = { offset,tiling };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[2].get(), uvData);
+
+	// スクリーン座標をワールド座標に変換する行列
+	CVolumetricFog volumetricFogData =
+	{
+		fogPrame.stepCount,
+		fogPrame.stepLength,
+		fogPrame.smoothingClamp,
+		fogPrame.fogColor.To01(),
+		fogPrame.fogColorRate,
+	};
+	TransferDataToConstantBuffer(mMaterial.constantBuffers[3].get(), volumetricFogData);
 }
 void BoundingBox::MaterialDrawCommands()
 {

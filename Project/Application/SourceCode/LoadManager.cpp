@@ -182,6 +182,7 @@ void LoadManager::GameSceneLoad()
 
 	// 天球
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Vignette");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "VolumetricFog");
 }
 
 void LoadManager::GameSceneUnLoad()
@@ -231,6 +232,7 @@ void LoadManager::GameSceneUnLoad()
 
 	// 天球
 	TextureManager::UnLoadRenderTexture("Vignette");
+	TextureManager::UnLoadRenderTexture("VolumetricFog");
 }
 
 LoadManager::LoadManager() : mIsLoaded(false)

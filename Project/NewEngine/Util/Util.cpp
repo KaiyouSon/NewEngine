@@ -53,7 +53,7 @@ unsigned long GetNowTime(const TimeUnit timeUnit)
 	}
 }
 
-// 3D座標をスクリーン座標に変換する
+// ワールド座標をスクリーン座標に変換する
 Vec2 WorldToScreen(const Vec3 worldPos)
 {
 	Mat4 viewportMat =
@@ -67,6 +67,19 @@ Vec2 WorldToScreen(const Vec3 worldPos)
 	Vec3 result = Vec3MulMat4(worldPos, finalMat, true);
 
 	return { result.x, result.y };
+}
+
+// スクリーン座標をワールド座標に変換する
+Vec3 ScreenToWorld(const Vec2 screenPos)
+{
+	Mat4 viewMat = Camera::current.GetViewLookToMat();
+	Mat4 projMat = Camera::current.GetPerspectiveProjectionMat();
+	Mat4 viewportMat = ConvertViewportMat(*RenderBase::GetInstance()->GetViewport());
+	Mat4 conpositeMat = viewMat * projMat * viewportMat;
+
+	Vec3 worldPos = Vec3MulMat4(Vec3(screenPos.x, screenPos.y, 1), conpositeMat.Inverse(), true);
+
+	return worldPos;
 }
 
 // 3つの点から三角形の法線ベクトルを計算する

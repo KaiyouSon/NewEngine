@@ -2,7 +2,7 @@
 
 void Material::Init()
 {
-	// バッファの生成
+	// CBの生成
 	for (const auto& buffer : constantBuffers)
 	{
 		buffer->Create();

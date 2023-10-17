@@ -13,8 +13,10 @@ private:
 	std::vector<VertexBufferData::VSprite> mVertices;
 	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> mVertexBuffer;
 	std::vector<RenderTexture*> mRenderTextures;
+	std::unique_ptr<Material> mMaterial;
+	std::unique_ptr<Material> mCSMaterial;
 	GraphicsPipeline* mGraphicsPipeline;
-	Material mMaterial;
+	ComputePipeline* mComputePipeline;
 	Transform mTransform;
 	Texture* mDepthTexture;
 	Vec2 mAnchorPoint;
@@ -31,34 +33,61 @@ private:
 	void MaterialInit();
 	void MaterialTransfer();
 	void MaterialDrawCommands();
+	void CSMaterialTransfer();
+	void CSMaterialDrawCommands();
 	void TransferTexturePos();
 	void TransferVertexCoord();
 
 public:
 	PostEffect();
 	void Update();
+	void ExecuteCS(const uint32_t threadX = 1, const uint32_t threadY = 1, const uint32_t threadZ = 1);
 	void Draw();
 
-public: // 縺昴・莉・
+public: // レンダーテクスチャ追加
 	void AddRenderTexture(RenderTexture* renderTexture);
 
+	// マテリアル追加
 	template<typename T>
 	void AddMaterial()
 	{
 		std::unique_ptr<IConstantBuffer> iConstatnBuffer = std::make_unique<T>();
 		iConstatnBuffer->Create();
-		mMaterial.constantBuffers.push_back(std::move(iConstatnBuffer));
+		mMaterial->constantBuffers.push_back(std::move(iConstatnBuffer));
 	}
 
-public: // 繧ｲ繝・ち繝ｼ
+	// SBをマテリアルに追加（UAVとしてCS使うSRVとして他のShaderで使う）
+	template<typename T>
+	void AddSBToMaterial(const uint32_t arraySize = 1)
+	{
+		// StructuredBufferの作成
+		mCSMaterial->structuredBuffers.push_back(std::move(std::make_unique<StructuredBuffer>()));
+		mCSMaterial->structuredBuffers.back()->Create(sizeof(T) * arraySize);
+
+		// SRV作成
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->
+			CreateSRV(mCSMaterial->structuredBuffers.back()->GetBufferResource(), arraySize, sizeof(T));
+
+		// GENERIC_READ -> UNORDERED_ACCESS に変更
+		RenderBase::GetInstance()->TransitionBufferState(
+			mCSMaterial->structuredBuffers.back()->GetBufferResource(),
+			D3D12_RESOURCE_STATE_GENERIC_READ,
+			D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+
+		// UAV作成
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->
+			CreateUAV(mCSMaterial->structuredBuffers.back()->GetBufferResource(), arraySize, sizeof(T));
+	}
+
+public: // セッター
 	void SetSize(const Vec2 size);
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
-	void SetDrawCommands(const uint32_t registerNum, const uint32_t bufferNum);
+	void SetComputePipeline(ComputePipeline* computePipeline);
 
 	template<typename T>
 	void SetTransferBuffer(const uint32_t bufferNum, const T& data)
 	{
-		uint32_t bNum = Min<uint32_t>(bufferNum, (uint32_t)mMaterial.constantBuffers.size());
-		TransferDataToConstantBuffer(mMaterial.constantBuffers[bNum].get(), data);
+		uint32_t bNum = Min<uint32_t>(bufferNum, (uint32_t)mMaterial->constantBuffers.size());
+		TransferDataToConstantBuffer(mMaterial->constantBuffers[bNum].get(), data);
 	}
 };

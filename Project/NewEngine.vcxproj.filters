@@ -124,12 +124,6 @@
     <Filter Include="NewEngine\Source\Sound">
       <UniqueIdentifier>{85d7aaa5-e8a8-4a6d-9861-cefb5831292f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\Application\Bloom">
-      <UniqueIdentifier>{7062c03f-aed0-498f-9f48-67d18ffe2c05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shader\Application\Glare">
-      <UniqueIdentifier>{4166cf33-29d2-4eb6-9be3-a430bda43dc5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="NewEngine\Header\Object\Other\Model">
       <UniqueIdentifier>{ddb62283-b17e-457e-b475-903e72ca8b92}</UniqueIdentifier>
     </Filter>
@@ -348,6 +342,18 @@
     </Filter>
     <Filter Include="Application\Header\PostEffect">
       <UniqueIdentifier>{d23e5dc4-a28f-4e2e-a7e8-c5bda6eb47a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\Composite">
+      <UniqueIdentifier>{05e019e1-116d-4440-ae10-a24709307598}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\HighLumi">
+      <UniqueIdentifier>{58bf5c5e-1c46-431e-9006-44fb0dc13d76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\VolumetricFog">
+      <UniqueIdentifier>{aaaa93e5-9305-48fb-b3f1-ab51da8d93fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\VolumetricFog">
+      <UniqueIdentifier>{1223240e-9e89-4bdb-b71a-fd6f45e61fde}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -768,9 +774,6 @@
     <ClCompile Include="Application\SourceCode\Motion\OpenGateMotion.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\Motion\RollMotion.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
@@ -822,16 +825,10 @@
     <ClCompile Include="Application\SourceCode\Weapon\Club.cpp">
       <Filter>Application\Source\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\VolumetricFog.cpp">
-      <Filter>Application\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\Motion\BossAttack1Effect.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\PostEffect\Bloom.cpp">
-      <Filter>Application\Source\PostEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\PostEffect\Glare.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\PostEffect\Vignette.cpp">
@@ -843,8 +840,11 @@
     <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp">
       <Filter>NewEngine\Source\Object\2D</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\VolumetricFog.cpp">
+      <Filter>Application\Source\VolumetricFog</Filter>
+    </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\BoundingBox.cpp">
-      <Filter>Application\Source</Filter>
+      <Filter>Application\Source\VolumetricFog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1307,9 +1307,6 @@
     <ClInclude Include="Application\SourceCode\PostEffect\GaussianBlur.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\PostEffect\Task.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
@@ -1361,16 +1358,10 @@
     <ClInclude Include="Application\SourceCode\Weapon\Weapon.h">
       <Filter>Application\Header\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\VolumetricFog.h">
-      <Filter>Application\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\Motion\BossAttack1Effect.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\PostEffect\Bloom.h">
-      <Filter>Application\Header\PostEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\PostEffect\Glare.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\PostEffect\Vignette.h">
@@ -1379,8 +1370,11 @@
     <ClInclude Include="Application\SourceCode\PostEffect\PostEffectManager.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SourceCode\VolumetricFog.h">
+      <Filter>Application\Header\VolumetricFog</Filter>
+    </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\BoundingBox.h">
-      <Filter>Application\Header</Filter>
+      <Filter>Application\Header\VolumetricFog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1392,9 +1386,6 @@
     </None>
     <None Include="NewEngine\Shader\ShaderIO.hlsli">
       <Filter>Shader\Engine\Util</Filter>
-    </None>
-    <None Include="Application\Shader\HighLumi\HighLumi.hlsli">
-      <Filter>Shader\Application</Filter>
     </None>
     <None Include="Application\Shader\Cloud\Cloud.hlsli">
       <Filter>Shader\Application\Cloud</Filter>
@@ -1419,9 +1410,6 @@
     </None>
     <None Include="Application\Shader\Grass\Grass.hlsli">
       <Filter>Shader\Application\Grass</Filter>
-    </None>
-    <None Include="Application\Shader\Composite\Composite.hlsli">
-      <Filter>Shader\Application</Filter>
     </None>
     <None Include="NewEngine\Shader\Emitter.hlsli">
       <Filter>Shader\Engine\Emitter</Filter>
@@ -1469,15 +1457,20 @@
     <None Include="Application\Shader\Vignette\Vignette.hlsli">
       <Filter>Shader\Application\Vignette</Filter>
     </None>
-    <None Include="Application\Shader\Rhombus\Rhombus.hlsli" />
+    <None Include="Application\Shader\Composite\Composite.hlsli">
+      <Filter>Shader\Application\Composite</Filter>
+    </None>
+    <None Include="Application\Shader\HighLumi\HighLumi.hlsli">
+      <Filter>Shader\Application\HighLumi</Filter>
+    </None>
+    <None Include="Application\Shader\Rhombus\Rhombus.hlsli">
+      <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
+    </None>
+    <None Include="Application\Shader\VolumetricFog\VolumetricFog.hlsli">
+      <Filter>Shader\Application\VolumetricFog</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Application\Shader\HighLumi\HighLumiPS.hlsl">
-      <Filter>Shader\Application</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\HighLumi\HighLumiVS.hlsl">
-      <Filter>Shader\Application</Filter>
-    </FxCompile>
     <FxCompile Include="Application\Shader\Cloud\CloudPS.hlsl">
       <Filter>Shader\Application\Cloud</Filter>
     </FxCompile>
@@ -1534,12 +1527,6 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\Grass\GrassGS.hlsl">
       <Filter>Shader\Application\Grass</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\Composite\CompositePS.hlsl">
-      <Filter>Shader\Application</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\Composite\CompositeVS.hlsl">
-      <Filter>Shader\Application</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\RespawnPointEffect\RespawnPointEffectCS.hlsl">
       <Filter>Shader\Application\Effect</Filter>
@@ -1654,6 +1641,27 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\Vignette\VignetteVS.hlsl">
       <Filter>Shader\Application\Vignette</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Composite\CompositePS.hlsl">
+      <Filter>Shader\Application\Composite</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Composite\CompositeVS.hlsl">
+      <Filter>Shader\Application\Composite</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\HighLumi\HighLumiPS.hlsl">
+      <Filter>Shader\Application\HighLumi</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\HighLumi\HighLumiVS.hlsl">
+      <Filter>Shader\Application\HighLumi</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogVS.hlsl">
+      <Filter>Shader\Application\VolumetricFog</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogPS.hlsl">
+      <Filter>Shader\Application\VolumetricFog</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogCS.hlsl">
+      <Filter>Shader\Application\VolumetricFog</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

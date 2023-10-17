@@ -34,6 +34,8 @@ public:
 	std::vector<ParticleParameter::PParam0> pParam;
 	uint32_t pSize;
 
+	ConstantBufferData::CVolumetricFog fogPrame;
+
 private:
 	void VertexDataInit();
 

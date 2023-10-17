@@ -146,6 +146,16 @@ void CreateManager::CreateShaderCompiler()
 	setting.gsFilePath = path1 + "ParticleMeshGS.hlsl";
 	setting.psFilePath = path1 + "ParticleMeshPS.hlsl";
 	ShaderCompilerManager::Create(setting, "BossAttack1EffectUpdate");
+
+	// ボリューメトリックフォグ用
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(2);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.csFilePath = path2 + "VolumetricFog/VolumetricFogCS.hlsl";
+	setting.vsFilePath = path2 + "VolumetricFog/VolumetricFogVS.hlsl";
+	setting.psFilePath = path2 + "VolumetricFog/VolumetricFogPS.hlsl";
+	ShaderCompilerManager::Create(setting, "VolumetricFog");
 }
 
 // パイプライン生成
@@ -268,6 +278,13 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttack1EffectInit");
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "BossAttack1Effect");
+
+	// ボリューメトリックフォグ用
+	setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("VolumetricFog");
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
+	PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFog");
 }
 
 // Computeパイプラインの生成
@@ -291,6 +308,12 @@ void CreateManager::CreateComputePipeline()
 	setting = PipelineManager::GetComputePipeline("ParticleMesh")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttack1EffectUpdate");
 	PipelineManager::CreateComputePipeline(setting, "BossAttack1EffectUpdate");
+
+	// リスポーンエフェクト用
+	setting = PipelineManager::GetComputePipeline("ParticleMesh")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("VolumetricFog");
+	setting.rootSignatureSetting.maxUavDescritorRange = 1;
+	PipelineManager::CreateComputePipeline(setting, "VolumetricFog");
 }
 
 void CreateManager::Create()

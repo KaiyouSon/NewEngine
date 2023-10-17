@@ -15,7 +15,6 @@ struct ParticleData
     float shininess;
     float4 color;
 };
-
 StructuredBuffer<ParticleData> inputData : register(t1);
 
 V2G main(uint SV_VertexID : SV_VertexID)

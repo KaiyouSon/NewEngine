@@ -29,6 +29,7 @@ void GameScene::CreateInstance()
 	mPostEffectManager = std::make_unique<PostEffectManager>();
 	mMovieEvent = std::make_unique<MovieEvent>();
 	mSkydome = std::make_unique<Skydome>();
+	mVolumetricFog = std::make_unique<VolumetricFog>();
 }
 
 void GameScene::Init()
@@ -88,9 +89,9 @@ void GameScene::Init()
 
 	mIsChangeScene = false;
 
-	//mBoundingBox.SetTexture(TextureManager::GetVolumeTexture("Volume"));
 	mBoundingBox.SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
-	mBoundingBox.scale = 10.f;
+	mBoundingBox.pos.y = 10;
+	//mBoundingBox.scale = 10.f;
 }
 void GameScene::Update()
 {
@@ -126,6 +127,7 @@ void GameScene::Update()
 	mMenuManager->Update();
 	mPostEffectManager->Update();
 	mBoundingBox.Update();
+	mVolumetricFog->Update();
 
 	ShadowMap::GetInstance()->Update();
 	EffectManager::GetInstance()->Update();
@@ -142,6 +144,10 @@ void GameScene::Update()
 void GameScene::DrawPass()
 {
 	ShadowMap::GetInstance()->RenderTextureSetting();
+
+	//mVolumetricFog->PrevDrawScene();
+
+	//mVolumetricFog->PostDrawScene();
 
 	std::function<void()> targetDrawFunc;
 	std::function<void()> sceneDrawFunc;
@@ -172,13 +178,35 @@ void GameScene::Draw()
 
 	mPostEffectManager->DrawEffectBloom();
 
+	//mVolumetricFog->Draw();
+
+	mBoundingBox.Draw();
+
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
-
-	//mBoundingBox.Draw();
 }
 void GameScene::DrawDebugGui()
 {
+	Gui::BeginWindow("Debug");
+
+	//Gui::DrawString("Screen Pos = %f,%f", GetWindowHalfSize().x, GetWindowHalfSize().y);
+	//Vec3 worldPos = ScreenToWorld(GetWindowHalfSize());
+	//Gui::DrawString("World Pos = %f,%f,%f", worldPos.x, worldPos.y, worldPos.z);
+
+	Gui::DrawInputInt("Step Count", (int&)mBoundingBox.fogPrame.stepCount);
+	Gui::DrawSlider1("Step Length", mBoundingBox.fogPrame.stepLength, 0.01f);
+	Gui::DrawSlider2("Smoothing Clamp", mBoundingBox.fogPrame.smoothingClamp, 0.01f);
+	Gui::DrawColorEdit("Fog Color", mBoundingBox.fogPrame.fogColor);
+
+	Gui::DrawLine();
+	Gui::DrawSlider1("Fog Color Rate R", mBoundingBox.fogPrame.fogColorRate.r, 0.01f);
+	Gui::DrawSlider1("Fog Color Rate G", mBoundingBox.fogPrame.fogColorRate.g, 0.01f);
+	Gui::DrawSlider1("Fog Color Rate B", mBoundingBox.fogPrame.fogColorRate.b, 0.01f);
+	Gui::DrawSlider1("Fog Color Rate A", mBoundingBox.fogPrame.fogColorRate.a, 0.01f);
+
+	Gui::EndWindow();
+
+
 	{
 		//GuiManager::BeginWindow("Lighting");
 		////GuiManager::DrawCheckBox("isActive", &LightManager::GetInstance()->directionalLight.isActive);
