@@ -7,7 +7,13 @@ SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
 float2 ClucRayToBoxCrossPoint(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 rayDir);
 
 // レイマーチング
-uint RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 rayDir, Texture3D<float4> tex);
+float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 rayDir);
+
+// 最小値を0に最大値を1にし値をlerpする
+float3 MapValueTo01(float3 boundsMin, float3 boundsMax, float3 value);
+
+// ボックス内にあるかどうかの判定
+uint CheckWithInBox(float3 boundsMin, float3 boundsMax, float3 value);
 
 float4 main(V2P i) : SV_TARGET
 {
@@ -15,13 +21,18 @@ float4 main(V2P i) : SV_TARGET
     float3 rayDir = normalize(i.wpos - cameraPos);
         
     // ボックスの最大最小値
-    float3 boundsMin = float3(-0.5f, -0.5f, -0.5f);
-    float3 boundsMax = float3(+0.5f, +0.5f, +0.5f);
+    float3 boundsMin = objectPos + objectScale * float3(-0.5f, -0.5f, -0.5f);
+    float3 boundsMax = objectPos + objectScale * float3(+0.5f, +0.5f, +0.5f);
 
-    uint hitCount = RayMarching(boundsMin, boundsMax, rayStart, rayDir, tex);
+    //float4 resultColor = texColor * hitCount * fogColorRate /*/ stepCount*/;
+    float4 resultColor = RayMarching(boundsMin, boundsMax, rayStart, rayDir);
     
-    float4 texColor = tex.Sample(smp, i.uvw);
-    float4 resultColor = smoothstep(smoothingClamp.x, smoothingClamp.y, texColor * hitCount * fogColorRate);
+    resultColor = resultColor * fogColor * fogColorRate;
+    
+    //resultColor.a = 1;
+    //clip(resultColor.a - 0.1f);
+    
+    //smoothstep(smoothingClamp.x, smoothingClamp.y, fogColor * hitCount * fogColorRate);
     
     // レイマーチングで球を描画する処理
     //{
@@ -36,14 +47,13 @@ float4 main(V2P i) : SV_TARGET
     //    }
     //    else if (discr < 0)
     //    {
-    //        resultColor = 0;
+    //        resultColor = 0;qq
     //    }
     //    else
     //    {
     //        resultColor = 1;
     //    }
     //}
-    
     
     return resultColor;
 }
@@ -70,7 +80,7 @@ float2 ClucRayToBoxCrossPoint(float3 boundsMin, float3 boundsMax, float3 rayStar
 }
 
 // レイマーチング
-uint RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 rayDir, Texture3D<float4> tex)
+float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 rayDir)
 {
     float2 hitinfo = ClucRayToBoxCrossPoint(boundsMin, boundsMax, rayStart, rayDir);
     
@@ -80,17 +90,47 @@ uint RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 ray
     // 当たった回数を格納する
     uint hitCount = 0;
     
+    float colorDensity = 0;
+    
+    // 光の透過率
+    //float transmittance = 1;
+    
     for (uint step = 0; step < stepCount; step++)
     {
-        //float disToSphere = length(rayPos - float3(0, 10, 0));
-        //if (disToSphere <= 0.5f)
-        //{
-        hitCount++;
-        //}
+        if (CheckWithInBox(boundsMin, boundsMax, rayPos) == true)
+        {
+            float3 uvw = MapValueTo01(boundsMin, boundsMax, rayPos);
+            colorDensity += tex.Sample(smp, (uvw + offset)).r * stepLength * density;
+        
+            //transmittance *= exp(-colorDensity);
+        
+        }
         
         // 次のレイの座標を算出
         rayPos += rayDir * stepLength;
     }
     
-    return hitCount;
+    
+    return colorDensity;
+    //float4 resultColor = tex.Sample(smp, i.uv);
+    
+    //return float4(transmittance.xxx, 1 - transmittance);
+}
+
+// 最小値を0に最大値を1にし値をlerpする
+float3 MapValueTo01(float3 boundsMin, float3 boundsMax, float3 value)
+{
+    float3 result = (value - boundsMin) / (boundsMax - boundsMin);
+    return result;
+}
+
+// ボックス内にあるかどうかの判定
+uint CheckWithInBox(float3 boundsMin, float3 boundsMax, float3 value)
+{
+    uint result = (
+        value.x >= boundsMin.x && value.x <= boundsMax.x &&
+        value.y >= boundsMin.y && value.y <= boundsMax.y &&
+        value.z >= boundsMin.z && value.z <= boundsMax.z) ? 1 : 0;
+    
+    return result;
 }

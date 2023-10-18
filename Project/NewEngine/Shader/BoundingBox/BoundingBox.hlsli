@@ -15,17 +15,24 @@ cbuffer ConstantBufferDataColor : register(b1)
 // UVWパラメーター
 cbuffer ConstantBufferDataUVParameter : register(b2)
 {
-    float2 offset;
-    float2 tiling;
+    float3 offset;
+    float3 tiling;
 };
 
-cbuffer ConstantBufferDataScreenToWorldMat : register(b3)
+cbuffer ConstantBufferDataFogParam : register(b3)
 {
     uint stepCount;
     float stepLength;
-    float2 smoothingClamp;
+    float density;
+
     float4 fogColor;
     float4 fogColorRate;
+}
+
+cbuffer ConstantBufferObjectParam : register(b4)
+{
+    float3 objectPos;
+    float3 objectScale;
 }
 
 struct Appdata

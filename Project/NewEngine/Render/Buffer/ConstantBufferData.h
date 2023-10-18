@@ -69,9 +69,15 @@ namespace ConstantBufferData
 	{
 		uint32_t stepCount;
 		float stepLength;
-		Vec2 smoothingClamp;
+		float dencity;		float pad;
 		Color fogColor;
 		Color fogColorRate;
+	};
+
+	struct CObjectParam
+	{
+		Vec3 pos;	float pad;
+		Vec3 scale;
 	};
 
 	struct CColor

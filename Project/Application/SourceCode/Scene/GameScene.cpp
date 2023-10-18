@@ -90,12 +90,46 @@ void GameScene::Init()
 	mIsChangeScene = false;
 
 	mBoundingBox.SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
-	mBoundingBox.pos.y = 10;
+	//mBoundingBox.pos.y = 10;
 	//mBoundingBox.scale = 10.f;
 }
 void GameScene::Update()
 {
-	if (Key::GetKeyDown(DIK_RETURN))
+	if (Key::GetKey(DIK_RIGHT))
+	{
+		mBoundingBox.pos.x += 0.01f;
+	}
+	if (Key::GetKey(DIK_LEFT))
+	{
+		mBoundingBox.pos.x -= 0.01f;
+	}
+	if (Key::GetKey(DIK_UP))
+	{
+		mBoundingBox.pos.z += 0.01f;
+	}
+	if (Key::GetKey(DIK_DOWN))
+	{
+		mBoundingBox.pos.z -= 0.01f;
+	}
+	if (Key::GetKey(DIK_Q))
+	{
+		mBoundingBox.scale += 0.01f;
+	}
+	if (Key::GetKey(DIK_E))
+	{
+		mBoundingBox.scale -= 0.01f;
+	}
+	if (Key::GetKeyDown(DIK_L))
+	{
+		mBoundingBox.pos.y = 10;
+		//mBoundingBox.scale.x = 1000;
+		//mBoundingBox.scale.y = 25;
+		//mBoundingBox.scale.z = 1000;
+	}
+
+	//mBoundingBox.scale = 2.f;
+
+	if (Key::GetKeyDown(DIK_F10))
 	{
 		mPlayer->Init();
 		mMovieEvent->End();
@@ -180,7 +214,6 @@ void GameScene::Draw()
 
 	//mVolumetricFog->Draw();
 
-	mBoundingBox.Draw();
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
@@ -193,16 +226,21 @@ void GameScene::DrawDebugGui()
 	//Vec3 worldPos = ScreenToWorld(GetWindowHalfSize());
 	//Gui::DrawString("World Pos = %f,%f,%f", worldPos.x, worldPos.y, worldPos.z);
 
-	Gui::DrawInputInt("Step Count", (int&)mBoundingBox.fogPrame.stepCount);
-	Gui::DrawSlider1("Step Length", mBoundingBox.fogPrame.stepLength, 0.01f);
-	Gui::DrawSlider2("Smoothing Clamp", mBoundingBox.fogPrame.smoothingClamp, 0.01f);
-	Gui::DrawColorEdit("Fog Color", mBoundingBox.fogPrame.fogColor);
+	Gui::DrawInputInt("Step Count", (int&)mBoundingBox.fogParam.stepCount);
+	Gui::DrawSlider1("Step Length", mBoundingBox.fogParam.stepLength, 0.01f);
+	Gui::DrawSlider1("Fog Dencity", mBoundingBox.fogParam.dencity, 0.01f);
+	Gui::DrawColorEdit("Fog Color", mBoundingBox.fogParam.fogColor);
+
+	//Gui::DrawLine();
+	//Gui::DrawSlider1("Fog Color Rate R", mBoundingBox.fogParam.fogColorRate.r, 0.01f);
+	//Gui::DrawSlider1("Fog Color Rate G", mBoundingBox.fogParam.fogColorRate.g, 0.01f);
+	//Gui::DrawSlider1("Fog Color Rate B", mBoundingBox.fogParam.fogColorRate.b, 0.01f);
+	//Gui::DrawSlider1("Fog Color Rate A", mBoundingBox.fogParam.fogColorRate.a, 0.01f);
 
 	Gui::DrawLine();
-	Gui::DrawSlider1("Fog Color Rate R", mBoundingBox.fogPrame.fogColorRate.r, 0.01f);
-	Gui::DrawSlider1("Fog Color Rate G", mBoundingBox.fogPrame.fogColorRate.g, 0.01f);
-	Gui::DrawSlider1("Fog Color Rate B", mBoundingBox.fogPrame.fogColorRate.b, 0.01f);
-	Gui::DrawSlider1("Fog Color Rate A", mBoundingBox.fogPrame.fogColorRate.a, 0.01f);
+	Gui::DrawSlider3("Fog Pos", mBoundingBox.pos, 0.01f);
+	Gui::DrawSlider3("Fog Scale", mBoundingBox.scale, 0.01f);
+	Gui::DrawSlider3("Fog Speed", mBoundingBox.moveSpeed, 0.001f);
 
 	Gui::EndWindow();
 
@@ -357,5 +395,8 @@ void GameScene::DrawCurrentSceneObject()
 
 	mPlayer->DrawModel();
 	mBoss->DrawModel();
+
+	mBoundingBox.Draw();
+
 	//EffectManager::GetInstance()->DrawEffect(false);
 }

@@ -648,7 +648,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.maxCbvRootParameter = 4;
+	setting.rootSignatureSetting.maxCbvRootParameter = 5;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "BoundingBox");
 }

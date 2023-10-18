@@ -31,10 +31,10 @@ public:
 	Color color;
 	Vec3 tiling;
 	Vec3 offset;
-	std::vector<ParticleParameter::PParam0> pParam;
+	Vec3 moveSpeed;
 	uint32_t pSize;
 
-	ConstantBufferData::CVolumetricFog fogPrame;
+	ConstantBufferData::CVolumetricFog fogParam;
 
 private:
 	void VertexDataInit();

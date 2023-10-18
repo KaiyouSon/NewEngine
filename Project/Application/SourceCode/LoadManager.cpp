@@ -86,8 +86,9 @@ bool LoadManager::TextureLoad()
 		std::string path = "Noice/VolumeNoice/VolumeNoice" + index + ".png";
 		std::string tag = "Noice" + index;
 		TextureManager::LoadTexture(path, tag);
-
 		texs.push_back(TextureManager::GetTexture(tag));
+		
+		//texs.push_back(TextureManager::GetTexture("Test"));
 	}
 	TextureManager::CreateVolumeTexture(texs, "VolumeTexture");
 

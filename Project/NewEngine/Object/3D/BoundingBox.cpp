@@ -20,15 +20,20 @@ BoundingBox::BoundingBox() :
 	// マテリアルの初期化
 	MaterialInit();
 
-	fogPrame.stepCount = 32;
-	fogPrame.stepLength = 0.1f;
-	fogPrame.smoothingClamp = Vec2(0.1f, 0.6f);
-	fogPrame.fogColor = Color::white;
-	fogPrame.fogColorRate = Color(0.1f, 0.1f, 0.1f, 0.1f);
+	fogParam.stepCount = 1000;
+	fogParam.stepLength = 0.1f;
+	fogParam.dencity = 1.f;
+	fogParam.fogColor = Color::white;
+	fogParam.fogColorRate = Color(1.f, 1.f, 1.f, 1.f);
 }
 
 void BoundingBox::Update(Transform* parent)
 {
+	moveSpeed.x = Clamp<float>(moveSpeed.x, -0.1f, 0.1f);
+	moveSpeed.y = Clamp<float>(moveSpeed.y, -0.1f, 0.1f);
+	moveSpeed.z = Clamp<float>(moveSpeed.z, -0.1f, 0.1f);
+	offset += moveSpeed;
+
 	mTransform.pos = pos;
 	mTransform.scale = scale;
 	mTransform.rot = rot;
@@ -205,6 +210,10 @@ void BoundingBox::MaterialInit()
 	iConstantBuffer = std::make_unique<ConstantBuffer<CVolumetricFog>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
+	// オブジェクトのデータ
+	iConstantBuffer = std::make_unique<ConstantBuffer<CObjectParam>>();
+	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+
 	// マテリアル初期化
 	mMaterial.Init();
 }
@@ -228,15 +237,13 @@ void BoundingBox::MaterialTransfer()
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[2].get(), uvData);
 
 	// スクリーン座標をワールド座標に変換する行列
-	CVolumetricFog volumetricFogData =
-	{
-		fogPrame.stepCount,
-		fogPrame.stepLength,
-		fogPrame.smoothingClamp,
-		fogPrame.fogColor.To01(),
-		fogPrame.fogColorRate,
-	};
+	CVolumetricFog volumetricFogData = fogParam;
+	volumetricFogData.fogColor = fogParam.fogColor.To01();
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[3].get(), volumetricFogData);
+
+	// UVWパラメーター
+	CObjectParam objectParam = { pos,0,scale };
+	TransferDataToConstantBuffer(mMaterial.constantBuffers[4].get(), objectParam);
 }
 void BoundingBox::MaterialDrawCommands()
 {
