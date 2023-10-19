@@ -151,8 +151,7 @@ void CreateManager::CreateShaderCompiler()
 	setting = ShaderCompilerSetting();
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.csFilePath = path2 + "VolumetricFog/VolumetricFogCS.hlsl";
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.vsFilePath = path2 + "VolumetricFog/VolumetricFogVS.hlsl";
 	setting.psFilePath = path2 + "VolumetricFog/VolumetricFogPS.hlsl";
 	ShaderCompilerManager::Create(setting, "VolumetricFog");
@@ -173,6 +172,7 @@ void CreateManager::CreateGraphicsPipeline()
 	PipelineManager::CreateGraphicsPipeline(setting, "Grass");
 
 	// 雲用
+	depthStencilDesc = D3D12_DEPTH_STENCIL_DESC();
 	depthStencilDesc.DepthEnable = true;
 	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
 	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
@@ -280,10 +280,19 @@ void CreateManager::CreateGraphicsPipeline()
 	PipelineManager::CreateGraphicsPipeline(setting, "BossAttack1Effect");
 
 	// ボリューメトリックフォグ用
-	setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
+	depthStencilDesc = D3D12_DEPTH_STENCIL_DESC();
+	depthStencilDesc.DepthEnable = true;
+	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
+	setting = GraphicsPipelineSetting();
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("VolumetricFog");
+	setting.cullMode = CullMode::None;
+	setting.topologyType = TopologyType::TriangleList;
+	setting.depthStencilDesc = depthStencilDesc;
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
+	setting.rootSignatureSetting.maxCbvRootParameter = 5;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFog");
 }
 
@@ -308,12 +317,6 @@ void CreateManager::CreateComputePipeline()
 	setting = PipelineManager::GetComputePipeline("ParticleMesh")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttack1EffectUpdate");
 	PipelineManager::CreateComputePipeline(setting, "BossAttack1EffectUpdate");
-
-	// リスポーンエフェクト用
-	setting = PipelineManager::GetComputePipeline("ParticleMesh")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("VolumetricFog");
-	setting.rootSignatureSetting.maxUavDescritorRange = 1;
-	PipelineManager::CreateComputePipeline(setting, "VolumetricFog");
 }
 
 void CreateManager::Create()

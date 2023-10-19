@@ -2,7 +2,6 @@
 #include "NewEngine.h"
 #include "Bloom.h"
 #include "Vignette.h"
-#include "VolumetricFog.h"
 
 class PostEffectManager
 {
@@ -12,7 +11,6 @@ private:
 private:
 	std::unique_ptr<Bloom> mEffectBloom;
 	std::unique_ptr<Vignette> mSkydomeVignette;
-	std::unique_ptr<VolumetricFog> mVolumetricFog;
 
 public:
 	// 天球のビネットのパス設定

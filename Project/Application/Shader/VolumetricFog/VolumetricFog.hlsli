@@ -1,31 +1,49 @@
 // 3D変換行列
-cbuffer ConstBufferDataTransform : register(b0)
+cbuffer ConstantBufferDataTransform : register(b0)
 {
-    matrix mat; // 3D変換行列
+    matrix viewProjMat;
+    matrix worldMat;
+    float3 cameraPos;
 }
 
 // 色
-cbuffer ConstBufferDataMaterial : register(b1)
+cbuffer ConstantBufferDataColor : register(b1)
 {
-    float4 color; // 色(RGBA)
+    float4 color; // 色
+}
+
+// UVWパラメーター
+cbuffer ConstantBufferDataUVParameter : register(b2)
+{
+    float3 offset;
+    float3 tiling;
 };
 
-struct FogData
+cbuffer ConstantBufferDataFogParam : register(b3)
 {
-    float2 uv;
-    float4 color;
-};
-StructuredBuffer<FogData> csOut : register(t1);
+    uint stepCount;
+    float stepLength;
+    float density;
+
+    float4 fogColor;
+    float4 fogColorRate;
+}
+
+cbuffer ConstantBufferObjectParam : register(b4)
+{
+    float3 objectPos;
+    float3 objectScale;
+}
 
 struct Appdata
 {
     float4 pos : POSITION;
-    float2 uv : TEXCOORD;
+    float3 uvw : TEXCOORD;
 };
 
 struct V2P
 {
-    float4 svpos : SV_POSITION;
-    float2 uv : TEXCOORD;
-    float4 color : COLOR;
+    float4 svpos : SV_POSITION; // システム用頂点座標
+    float3 uvw : TEXCOORD; // uv値
+    float3 wpos : POSITION;
 };

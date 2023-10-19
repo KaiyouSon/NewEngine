@@ -307,9 +307,6 @@
     <Filter Include="Shader\Engine\ParticleMesh">
       <UniqueIdentifier>{4908bbdd-ab21-4590-8e02-a06db5ffc383}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\Engine\BoundingBox">
-      <UniqueIdentifier>{d21196f9-28b1-4dea-97db-276762c69927}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Source\UI">
       <UniqueIdentifier>{fc9e7c8d-bf5e-4039-a407-8e82e96114a1}</UniqueIdentifier>
     </Filter>
@@ -327,9 +324,6 @@
     </Filter>
     <Filter Include="Application\Source\Weapon">
       <UniqueIdentifier>{7b2f016d-4e5c-4324-8195-ffed8019e25c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shader\Application\VolumetricFog">
-      <UniqueIdentifier>{be7d1413-ecdf-4611-9f7c-8882ba21f7b1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Shader\Application\Effect\BossAttack1Effect">
       <UniqueIdentifier>{c4793252-73b6-434a-9faa-bff5ca7177b4}</UniqueIdentifier>
@@ -354,6 +348,9 @@
     </Filter>
     <Filter Include="Application\Header\VolumetricFog">
       <UniqueIdentifier>{1223240e-9e89-4bdb-b71a-fd6f45e61fde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\VolumetricFog">
+      <UniqueIdentifier>{d21196f9-28b1-4dea-97db-276762c69927}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -840,10 +837,7 @@
     <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp">
       <Filter>NewEngine\Source\Object\2D</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\VolumetricFog.cpp">
-      <Filter>Application\Source\VolumetricFog</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Object\3D\BoundingBox.cpp">
+    <ClCompile Include="NewEngine\Object\3D\VolumetricFog.cpp">
       <Filter>Application\Source\VolumetricFog</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1370,10 +1364,7 @@
     <ClInclude Include="Application\SourceCode\PostEffect\PostEffectManager.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\VolumetricFog.h">
-      <Filter>Application\Header\VolumetricFog</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Object\3D\BoundingBox.h">
+    <ClInclude Include="NewEngine\Object\3D\VolumetricFog.h">
       <Filter>Application\Header\VolumetricFog</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1451,8 +1442,8 @@
     <None Include="NewEngine\Shader\Util\Util.hlsli">
       <Filter>Shader\Engine\Util</Filter>
     </None>
-    <None Include="NewEngine\Shader\BoundingBox\BoundingBox.hlsli">
-      <Filter>Shader\Engine\BoundingBox</Filter>
+    <None Include="Application\Shader\VolumetricFog\VolumetricFog.hlsli">
+      <Filter>Shader\Application\VolumetricFog</Filter>
     </None>
     <None Include="Application\Shader\Vignette\Vignette.hlsli">
       <Filter>Shader\Application\Vignette</Filter>
@@ -1465,9 +1456,6 @@
     </None>
     <None Include="Application\Shader\Rhombus\Rhombus.hlsli">
       <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
-    </None>
-    <None Include="Application\Shader\VolumetricFog\VolumetricFog.hlsli">
-      <Filter>Shader\Application\VolumetricFog</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1621,11 +1609,11 @@
     <FxCompile Include="NewEngine\Shader\ParticleMeshCS.hlsl">
       <Filter>Shader\Engine\ParticleMesh</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\BoundingBox\BoundingBoxVS.hlsl">
-      <Filter>Shader\Engine\BoundingBox</Filter>
+    <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogVS.hlsl">
+      <Filter>Shader\Application\VolumetricFog</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\BoundingBox\BoundingBoxPS.hlsl">
-      <Filter>Shader\Engine\BoundingBox</Filter>
+    <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogPS.hlsl">
+      <Filter>Shader\Application\VolumetricFog</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\BossAttack1Effect\BossAttack1EffectInitCS.hlsl">
       <Filter>Shader\Application\Effect\BossAttack1Effect</Filter>
@@ -1653,15 +1641,6 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\HighLumi\HighLumiVS.hlsl">
       <Filter>Shader\Application\HighLumi</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogVS.hlsl">
-      <Filter>Shader\Application\VolumetricFog</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogPS.hlsl">
-      <Filter>Shader\Application\VolumetricFog</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogCS.hlsl">
-      <Filter>Shader\Application\VolumetricFog</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

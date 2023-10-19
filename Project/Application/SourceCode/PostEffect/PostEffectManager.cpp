@@ -3,8 +3,7 @@
 
 PostEffectManager::PostEffectManager() :
 	mEffectBloom(std::make_unique<Bloom>()),
-	mSkydomeVignette(std::make_unique<Vignette>()),
-	mVolumetricFog(std::make_unique<VolumetricFog>())
+	mSkydomeVignette(std::make_unique<Vignette>())
 {
 }
 
@@ -22,7 +21,6 @@ void PostEffectManager::Update()
 	mParticleMesh->Update();
 	mSkydomeVignette->Update();
 	mEffectBloom->Update();
-	mVolumetricFog->Update();
 }
 
 void PostEffectManager::DrawSkydomeVignette()

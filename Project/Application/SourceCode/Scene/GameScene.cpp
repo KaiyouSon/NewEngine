@@ -29,7 +29,6 @@ void GameScene::CreateInstance()
 	mPostEffectManager = std::make_unique<PostEffectManager>();
 	mMovieEvent = std::make_unique<MovieEvent>();
 	mSkydome = std::make_unique<Skydome>();
-	mVolumetricFog = std::make_unique<VolumetricFog>();
 }
 
 void GameScene::Init()
@@ -89,48 +88,48 @@ void GameScene::Init()
 
 	mIsChangeScene = false;
 
-	mBoundingBox.SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
-	//mBoundingBox.pos.y = 10;
-	//mBoundingBox.scale = 10.f;
+	mVolumetricFog.SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
+	//mVolumetricFog.pos.y = 10;
+	//mVolumetricFog.scale = 10.f;
 }
 void GameScene::Update()
 {
 	if (Key::GetKey(DIK_RIGHT))
 	{
-		mBoundingBox.pos.x += 0.01f;
+		mVolumetricFog.pos.x += 0.01f;
 	}
 	if (Key::GetKey(DIK_LEFT))
 	{
-		mBoundingBox.pos.x -= 0.01f;
+		mVolumetricFog.pos.x -= 0.01f;
 	}
 	if (Key::GetKey(DIK_UP))
 	{
-		mBoundingBox.pos.z += 0.01f;
+		mVolumetricFog.pos.z += 0.01f;
 	}
 	if (Key::GetKey(DIK_DOWN))
 	{
-		mBoundingBox.pos.z -= 0.01f;
+		mVolumetricFog.pos.z -= 0.01f;
 	}
 	if (Key::GetKey(DIK_Q))
 	{
-		mBoundingBox.scale += 0.01f;
+		mVolumetricFog.scale += 0.01f;
 	}
 	if (Key::GetKey(DIK_E))
 	{
-		mBoundingBox.scale -= 0.01f;
+		mVolumetricFog.scale -= 0.01f;
 	}
 	if (Key::GetKeyDown(DIK_L))
 	{
 		Camera::current.pos = Vec3(0, 10, -20);
 		Camera::current.rot = Radian(Vec3(0, 0, 0));
 
-		//mBoundingBox.pos.y = 10;
-		//mBoundingBox.scale.x = 1000;
-		//mBoundingBox.scale.y = 25;
-		//mBoundingBox.scale.z = 1000;
+		//mVolumetricFog.pos.y = 10;
+		//mVolumetricFog.scale.x = 1000;
+		//mVolumetricFog.scale.y = 25;
+		//mVolumetricFog.scale.z = 1000;
 	}
 
-	//mBoundingBox.scale = 2.f;
+	//mVolumetricFog.scale = 2.f;
 
 	if (Key::GetKeyDown(DIK_F10))
 	{
@@ -163,8 +162,7 @@ void GameScene::Update()
 	mSkydome->Update();
 	mMenuManager->Update();
 	mPostEffectManager->Update();
-	mBoundingBox.Update();
-	mVolumetricFog->Update();
+	mVolumetricFog.Update();
 
 	ShadowMap::GetInstance()->Update();
 	EffectManager::GetInstance()->Update();
@@ -211,8 +209,6 @@ void GameScene::Draw()
 
 	mPostEffectManager->DrawEffectBloom();
 
-	mVolumetricFog->Draw();
-
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
 }
@@ -220,21 +216,21 @@ void GameScene::DrawDebugGui()
 {
 	Gui::BeginWindow("Debug");
 
-	Gui::DrawInputInt("Step Count", (int&)mBoundingBox.fogParam.stepCount);
-	Gui::DrawSlider1("Step Length", mBoundingBox.fogParam.stepLength, 0.01f);
-	Gui::DrawSlider1("Fog Dencity", mBoundingBox.fogParam.dencity, 0.01f);
-	Gui::DrawColorEdit("Fog Color", mBoundingBox.fogParam.fogColor);
+	Gui::DrawInputInt("Step Count", (int&)mVolumetricFog.fogParam.stepCount);
+	Gui::DrawSlider1("Step Length", mVolumetricFog.fogParam.stepLength, 0.01f);
+	Gui::DrawSlider1("Fog Dencity", mVolumetricFog.fogParam.dencity, 0.01f);
+	Gui::DrawColorEdit("Fog Color", mVolumetricFog.fogParam.fogColor);
 
 	Gui::DrawLine();
-	Gui::DrawSlider1("Fog Color Rate R", mBoundingBox.fogParam.fogColorRate.r, 0.01f);
-	Gui::DrawSlider1("Fog Color Rate G", mBoundingBox.fogParam.fogColorRate.g, 0.01f);
-	Gui::DrawSlider1("Fog Color Rate B", mBoundingBox.fogParam.fogColorRate.b, 0.01f);
-	Gui::DrawSlider1("Fog Color Rate A", mBoundingBox.fogParam.fogColorRate.a, 0.01f);
+	Gui::DrawSlider1("Fog Color Rate R", mVolumetricFog.fogParam.fogColorRate.r, 0.01f);
+	Gui::DrawSlider1("Fog Color Rate G", mVolumetricFog.fogParam.fogColorRate.g, 0.01f);
+	Gui::DrawSlider1("Fog Color Rate B", mVolumetricFog.fogParam.fogColorRate.b, 0.01f);
+	Gui::DrawSlider1("Fog Color Rate A", mVolumetricFog.fogParam.fogColorRate.a, 0.01f);
 
 	Gui::DrawLine();
-	Gui::DrawSlider3("Fog Pos", mBoundingBox.pos, 0.01f);
-	Gui::DrawSlider3("Fog Scale", mBoundingBox.scale, 0.01f);
-	Gui::DrawSlider3("Fog Speed", mBoundingBox.moveSpeed, 0.001f);
+	Gui::DrawSlider3("Fog Pos", mVolumetricFog.pos, 0.01f);
+	Gui::DrawSlider3("Fog Scale", mVolumetricFog.scale, 0.01f);
+	Gui::DrawSlider3("Fog Speed", mVolumetricFog.moveSpeed, 0.001f);
 
 	Gui::EndWindow();
 
@@ -389,7 +385,7 @@ void GameScene::DrawCurrentSceneObject()
 	mPlayer->DrawModel();
 	mBoss->DrawModel();
 
-	mBoundingBox.Draw();
+	mVolumetricFog.Draw();
 
 	EffectManager::GetInstance()->DrawEffect(false);
 }

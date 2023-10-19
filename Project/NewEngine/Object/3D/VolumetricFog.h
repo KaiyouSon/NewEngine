@@ -9,11 +9,11 @@
 #include "ParticleParam.h"
 #include "StructuredBuffer.h"
 
-class BoundingBox
+class VolumetricFog
 {
 private:
-	std::vector<VertexBufferData::VBoundingBox> mVertices;
-	std::unique_ptr<VertexBuffer<VertexBufferData::VBoundingBox>> mVertexBuffer;
+	std::vector<VertexBufferData::VVolumetricFog> mVertices;
+	std::unique_ptr<VertexBuffer<VertexBufferData::VVolumetricFog>> mVertexBuffer;
 	std::vector<uint16_t> mIndices;
 	std::unique_ptr<IndexBuffer> mIndexBuffer;
 	Vec3 mWorldPos;
@@ -45,7 +45,7 @@ private:
 	void MaterialDrawCommands();
 
 public:
-	BoundingBox();
+	VolumetricFog();
 	void Update(Transform* parent = nullptr);
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 

@@ -1,4 +1,4 @@
-#include "BoundingBox.h"
+#include "VolumetricFog.h"
 #include "RenderBase.h"
 #include "LightManager.h"
 #include "Camera.h"
@@ -6,12 +6,12 @@
 using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
-BoundingBox::BoundingBox() :
+VolumetricFog::VolumetricFog() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
 	offset(0), tiling(1), pSize(0),
-	mVertexBuffer(std::make_unique <VertexBuffer<VBoundingBox>>()),
+	mVertexBuffer(std::make_unique <VertexBuffer<VVolumetricFog>>()),
 	mIndexBuffer(std::make_unique<IndexBuffer>()),
-	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("BoundingBox")),
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("VolumetricFog")),
 	mTexture(TextureManager::GetTexture("White"))
 {
 	// 頂点データ
@@ -27,7 +27,7 @@ BoundingBox::BoundingBox() :
 	fogParam.fogColorRate = Color(1.f, 1.f, 1.f, 1.f);
 }
 
-void BoundingBox::Update(Transform* parent)
+void VolumetricFog::Update(Transform* parent)
 {
 	moveSpeed.x = Clamp<float>(moveSpeed.x, -0.1f, 0.1f);
 	moveSpeed.y = Clamp<float>(moveSpeed.y, -0.1f, 0.1f);
@@ -51,7 +51,7 @@ void BoundingBox::Update(Transform* parent)
 	// マテリアルの転送
 	MaterialTransfer();
 }
-void BoundingBox::Draw(const BlendMode blendMode)
+void VolumetricFog::Draw(const BlendMode blendMode)
 {
 	if (mTexture == nullptr) return;
 
@@ -82,7 +82,7 @@ void BoundingBox::Draw(const BlendMode blendMode)
 	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mIndices.size(), 1, 0, 0, 0);
 }
 
-void BoundingBox::VertexDataInit()
+void VolumetricFog::VertexDataInit()
 {
 	// インデックス算出
 	// 四角形(三角形2枚セット)6個追加するから
@@ -189,7 +189,7 @@ void BoundingBox::VertexDataInit()
 }
 
 // --- マテリアル関連 --------------------------------------------------- //
-void BoundingBox::MaterialInit()
+void VolumetricFog::MaterialInit()
 {
 	// インターフェース
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
@@ -217,7 +217,7 @@ void BoundingBox::MaterialInit()
 	// マテリアル初期化
 	mMaterial.Init();
 }
-void BoundingBox::MaterialTransfer()
+void VolumetricFog::MaterialTransfer()
 {
 	// トランスフォーム
 	CTransform3D transform3DData =
@@ -245,7 +245,7 @@ void BoundingBox::MaterialTransfer()
 	CObjectParam objectParam = { pos,0,scale };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[4].get(), objectParam);
 }
-void BoundingBox::MaterialDrawCommands()
+void VolumetricFog::MaterialDrawCommands()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
@@ -258,4 +258,4 @@ void BoundingBox::MaterialDrawCommands()
 }
 
 // --- ゲッター -------------------------------------------------------- //
-void BoundingBox::SetTexture(ITexture* texture) { mTexture = texture; }
+void VolumetricFog::SetTexture(ITexture* texture) { mTexture = texture; }

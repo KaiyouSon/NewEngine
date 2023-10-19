@@ -8,7 +8,7 @@
 #include "PostEffectManager.h"
 #include "Field.h"
 #include "MovieEvent.h"
-#include "BoundingBox.h"
+#include "VolumetricFog.h"
 
 class GameScene : public IScene
 {
@@ -22,9 +22,7 @@ private:
 	std::unique_ptr<Skydome> mSkydome;
 
 	std::unique_ptr<MovieEvent> mMovieEvent;
-
-	std::unique_ptr<VolumetricFog> mVolumetricFog;
-	BoundingBox mBoundingBox;
+	VolumetricFog mVolumetricFog;
 
 	RenderTexture* mCurrentScene;
 

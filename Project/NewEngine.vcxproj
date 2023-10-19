@@ -132,7 +132,6 @@
     <ClCompile Include="Application\SourceCode\UI\BossGaugeUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\IUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\PlayerGaugeUI.cpp" />
-    <ClCompile Include="Application\SourceCode\VolumetricFog.cpp" />
     <ClCompile Include="Application\SourceCode\Weapon\Club.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Coffin.cpp" />
     <ClCompile Include="Application\SourceCode\CollisionManager.cpp" />
@@ -227,7 +226,7 @@
     <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp" />
     <ClCompile Include="NewEngine\Object\2D\RenderTexture.cpp" />
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp" />
-    <ClCompile Include="NewEngine\Object\3D\BoundingBox.cpp" />
+    <ClCompile Include="NewEngine\Object\3D\VolumetricFog.cpp" />
     <ClCompile Include="NewEngine\Object\3D\ParticleMesh.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Texture\DepthTexture.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Texture\ITexture.cpp" />
@@ -302,7 +301,6 @@
     <ClInclude Include="Application\SourceCode\UI\BossGaugeUI.h" />
     <ClInclude Include="Application\SourceCode\UI\IUI.h" />
     <ClInclude Include="Application\SourceCode\UI\PlayerGaugeUI.h" />
-    <ClInclude Include="Application\SourceCode\VolumetricFog.h" />
     <ClInclude Include="Application\SourceCode\Weapon\Club.h" />
     <ClInclude Include="Application\SourceCode\Field\Coffin.h" />
     <ClInclude Include="Application\SourceCode\CollisionManager.h" />
@@ -394,7 +392,7 @@
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h" />
     <ClInclude Include="NewEngine\Object\2D\RenderTexture.h" />
     <ClInclude Include="NewEngine\Object\2D\Sprite.h" />
-    <ClInclude Include="NewEngine\Object\3D\BoundingBox.h" />
+    <ClInclude Include="NewEngine\Object\3D\VolumetricFog.h" />
     <ClInclude Include="NewEngine\Object\3D\ParticleMesh.h" />
     <ClInclude Include="NewEngine\Object\Other\Texture\DepthTexture.h" />
     <ClInclude Include="NewEngine\Object\Other\Texture\ITexture.h" />
@@ -475,9 +473,8 @@
     <None Include="Application\Shader\ShadowMap\ShadowMap.hlsli" />
     <None Include="Application\Shader\ShadowObj\ShadowObj.hlsli" />
     <None Include="Application\Shader\Vignette\Vignette.hlsli" />
-    <None Include="Application\Shader\VolumetricFog\VolumetricFog.hlsli" />
     <None Include="NewEngine\Shader\Blur.hlsli" />
-    <None Include="NewEngine\Shader\BoundingBox\BoundingBox.hlsli" />
+    <None Include="Application\Shader\VolumetricFog\VolumetricFog.hlsli" />
     <None Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSprite.hlsli" />
     <None Include="NewEngine\Shader\ColliderObject.hlsli" />
     <None Include="NewEngine\Shader\Emitter.hlsli" />
@@ -649,12 +646,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogCS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
-    </FxCompile>
     <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -662,18 +653,6 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogVS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\BoundingBox\BoundingBoxPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\BoundingBox\BoundingBoxVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
