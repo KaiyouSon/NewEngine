@@ -387,35 +387,6 @@ void RenderBase::ShaderCompilerInit()
 	setting.psFilePath = path1 + "RenderTexturePS.hlsl";
 	ShaderCompilerManager::Create(setting, "RenderTexture");
 
-	// シルエット用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(3);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path1 + "SilhouetteVS.hlsl";
-	setting.psFilePath = path1 + "SilhouettePS.hlsl";
-	ShaderCompilerManager::Create(setting, "Silhouette");
-
-	// アウトライン用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(2);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.vsFilePath = path1 + "OutlineVS.hlsl";
-	setting.psFilePath = path1 + "OutlinePS.hlsl";
-	ShaderCompilerManager::Create(setting, "Outline");
-
-	// トゥーンレンダリング用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(3);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path1 + "ToonRenderingVS.hlsl";
-	setting.psFilePath = path1 + "ToonRenderingPS.hlsl";
-	ShaderCompilerManager::Create(setting, "ToonRendering");
-
 	// 線用
 	setting = ShaderCompilerSetting();
 	setting.mInputLayoutSettings.resize(1);
@@ -540,39 +511,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "RenderTexture");
-
-	// シルエット用
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Silhouette");
-	setting.cullMode = CullMode::Back;
-	setting.topologyType = TopologyType::TriangleList;
-	setting.depthStencilDesc = depthStencilDesc3;
-	setting.rtvNum = 1;
-	setting.rootSignatureSetting.maxCbvRootParameter = 7;
-	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
-	PipelineManager::CreateGraphicsPipeline(setting, "Silhouette");
-
-	// アウトライン用
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Outline");
-	setting.cullMode = CullMode::Front;
-	setting.topologyType = TopologyType::TriangleList;
-	setting.depthStencilDesc = depthStencilDesc1;
-	setting.rtvNum = 1;
-	setting.rootSignatureSetting.maxCbvRootParameter = 7;
-	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
-	PipelineManager::CreateGraphicsPipeline(setting, "Outline");
-
-	// トゥーンレンダリング用
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ToonRendering");
-	setting.cullMode = CullMode::Back;
-	setting.topologyType = TopologyType::TriangleList;
-	setting.depthStencilDesc = depthStencilDesc1;
-	setting.rtvNum = 1;
-	setting.rootSignatureSetting.maxCbvRootParameter = 7;
-	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
-	PipelineManager::CreateGraphicsPipeline(setting, "ToonRendering");
 
 	// 線用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
