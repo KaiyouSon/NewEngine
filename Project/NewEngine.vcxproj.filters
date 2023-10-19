@@ -274,9 +274,6 @@
     <Filter Include="Shader\Engine\Object3D">
       <UniqueIdentifier>{eb581780-8607-4194-8186-2bc6ae32e159}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\Engine\RenderTexture">
-      <UniqueIdentifier>{8c0398ce-464f-466e-9ace-4048e9dc0cbc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader\Engine\Sprite">
       <UniqueIdentifier>{0be0cd81-a9ac-42a9-87bb-1de3191c8cf7}</UniqueIdentifier>
     </Filter>
@@ -342,6 +339,9 @@
     </Filter>
     <Filter Include="Shader\Application\VolumetricFog">
       <UniqueIdentifier>{d21196f9-28b1-4dea-97db-276762c69927}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\PostEffect">
+      <UniqueIdentifier>{8c0398ce-464f-466e-9ace-4048e9dc0cbc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1399,10 +1399,10 @@
     <None Include="NewEngine\Shader\Object3D\Object3D.hlsli">
       <Filter>Shader\Engine\Object3D</Filter>
     </None>
-    <None Include="NewEngine\Shader\RenderTexture.hlsli">
-      <Filter>Shader\Engine\RenderTexture</Filter>
+    <None Include="NewEngine\Shader\PostEffect\PostEffect.hlsli">
+      <Filter>Shader\Engine\PostEffect</Filter>
     </None>
-    <None Include="NewEngine\Shader\Sprite.hlsli">
+    <None Include="NewEngine\Shader\Sprite\Sprite.hlsli">
       <Filter>Shader\Engine\Sprite</Filter>
     </None>
     <None Include=".editorconfig" />
@@ -1534,16 +1534,16 @@
     <FxCompile Include="NewEngine\Shader\Object3D\Object3DVS.hlsl">
       <Filter>Shader\Engine\Object3D</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\RenderTexturePS.hlsl">
-      <Filter>Shader\Engine\RenderTexture</Filter>
+    <FxCompile Include="NewEngine\Shader\PostEffect\PostEffectPS.hlsl">
+      <Filter>Shader\Engine\PostEffect</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\RenderTextureVS.hlsl">
-      <Filter>Shader\Engine\RenderTexture</Filter>
+    <FxCompile Include="NewEngine\Shader\PostEffect\PostEffectVS.hlsl">
+      <Filter>Shader\Engine\PostEffect</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\SpritePS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Sprite\SpritePS.hlsl">
       <Filter>Shader\Engine\Sprite</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\SpriteVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Sprite\SpriteVS.hlsl">
       <Filter>Shader\Engine\Sprite</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\RespawnPointEffect\RespawnPointEffectVS.hlsl">

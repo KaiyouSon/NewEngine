@@ -9,7 +9,7 @@ PostEffect::PostEffect() :
 	mVertexBuffer(std::make_unique<VertexBuffer<VSprite>>()),
 	mMaterial(std::make_unique<Material>()),
 	mCSMaterial(std::make_unique<Material>()),
-	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("RenderTexture")),
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("PostEffect")),
 	mComputePipeline(nullptr),
 	pos(0), scale(1), rot(0), mAnchorPoint(0.5f), rtvIndex(0)
 {

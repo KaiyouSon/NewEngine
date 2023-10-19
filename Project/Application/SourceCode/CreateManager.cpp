@@ -184,8 +184,8 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Cloud");
 
-	// 天球用（RenderTexture）
-	setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
+	// ビネット用（PostEffect）
+	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Vignette");
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
@@ -214,22 +214,23 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Rhombus");
 
-	// 高輝度箇所抽出用（RenderTexture）
-	setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
+	// 高輝度箇所抽出用（PostEffect）
+	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("HighLumi");
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "HighLumi");
 
-	// ガウシアンブラー用（RenderTexture）
-	setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
+	// ガウシアンブラー用（PostEffect）
+	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("GaussianBlur");
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "GaussianBlur");
 
-	// 合成用（RenderTexture）
-	setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
+	// 合成用（PostEffect）
+	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Composite");
 	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Composite");
 
 	// リスポーン時の遷移用
@@ -248,10 +249,11 @@ void CreateManager::CreateGraphicsPipeline()
 	PipelineManager::CreateGraphicsPipeline(setting, "ShadowObj");
 
 	// ShadowMap用
-	setting = PipelineManager::GetGraphicsPipeline("RenderTexture")->GetSetting();
+	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ShadowMap");
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "ShadowMap");
 
 	// 深度値のみ書き込み用

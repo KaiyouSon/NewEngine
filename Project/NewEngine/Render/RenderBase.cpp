@@ -365,8 +365,8 @@ void RenderBase::ShaderCompilerInit()
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path1 + "SpriteVS.hlsl";
-	setting.psFilePath = path1 + "SpritePS.hlsl";
+	setting.vsFilePath = path1 + "Sprite/SpriteVS.hlsl";
+	setting.psFilePath = path1 + "Sprite/SpritePS.hlsl";
 	ShaderCompilerManager::Create(setting, "Sprite");
 
 	// 円ゲージスプライト用
@@ -378,14 +378,14 @@ void RenderBase::ShaderCompilerInit()
 	setting.psFilePath = path1 + "CircleGaugeSprite/CircleGaugeSpritePS.hlsl";
 	ShaderCompilerManager::Create(setting, "CircleGaugeSprite");
 
-	// レンダーテクスチャ用（デフォルトシェーダー）
+	// ポストエフェクト用（デフォルトシェーダー）
 	setting = ShaderCompilerSetting();
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path1 + "RenderTextureVS.hlsl";
-	setting.psFilePath = path1 + "RenderTexturePS.hlsl";
-	ShaderCompilerManager::Create(setting, "RenderTexture");
+	setting.vsFilePath = path1 + "PostEffect/PostEffectVS.hlsl";
+	setting.psFilePath = path1 + "PostEffect/PostEffectPS.hlsl";
+	ShaderCompilerManager::Create(setting, "PostEffect");
 
 	// 線用
 	setting = ShaderCompilerSetting();
@@ -485,7 +485,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
-	setting.rtvNum = 2;
+	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Sprite");
@@ -501,16 +501,16 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "CircleGaugeSprite");
 
-	// レンダーテクスチャ用
+	// ポストエフェクト用(デフォルト)
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("RenderTexture");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("PostEffect");
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
-	setting.rtvNum = 2;
+	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
-	PipelineManager::CreateGraphicsPipeline(setting, "RenderTexture");
+	PipelineManager::CreateGraphicsPipeline(setting, "PostEffect");
 
 	// 線用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;

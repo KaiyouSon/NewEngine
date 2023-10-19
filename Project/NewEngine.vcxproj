@@ -479,9 +479,9 @@
     <None Include="NewEngine\Shader\Line.hlsli" />
     <None Include="NewEngine\Shader\Object3D\Object3D.hlsli" />
     <None Include="NewEngine\Shader\ParticleMesh.hlsli" />
-    <None Include="NewEngine\Shader\RenderTexture.hlsli" />
+    <None Include="NewEngine\Shader\PostEffect\PostEffect.hlsli" />
     <None Include="NewEngine\Shader\ShaderIO.hlsli" />
-    <None Include="NewEngine\Shader\Sprite.hlsli" />
+    <None Include="NewEngine\Shader\Sprite\Sprite.hlsli" />
     <None Include="NewEngine\Shader\Util\Util.hlsli" />
   </ItemGroup>
   <ItemGroup>
@@ -745,7 +745,7 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\SpritePS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Sprite\SpritePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -763,19 +763,19 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\RenderTexturePS.hlsl">
+    <FxCompile Include="NewEngine\Shader\PostEffect\PostEffectPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\RenderTextureVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\PostEffect\PostEffectVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\SpriteVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Sprite\SpriteVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
