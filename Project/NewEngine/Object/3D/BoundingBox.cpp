@@ -20,7 +20,7 @@ BoundingBox::BoundingBox() :
 	// マテリアルの初期化
 	MaterialInit();
 
-	fogParam.stepCount = 1000;
+	fogParam.stepCount = 10;
 	fogParam.stepLength = 0.1f;
 	fogParam.dencity = 1.f;
 	fogParam.fogColor = Color::white;

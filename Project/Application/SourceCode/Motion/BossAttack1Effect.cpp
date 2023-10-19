@@ -18,10 +18,19 @@ void BossAttack1Effect::Generate(const Vec3 pos)
 	mParticleMesh->scale /= 10.f;
 
 	mParticleMesh->SetComputePipeline(PipelineManager::GetComputePipeline("BossAttack1EffectUpdate"));
+
+	mLifeTimer.SetLimitTimer(120);
+	mIsActive = true;
 }
 
 void BossAttack1Effect::Update()
 {
+	mLifeTimer.Update();
+	if (mLifeTimer == true)
+	{
+		mIsActive = false;
+	}
+
 	//mParticleMesh->rot.y += Radian(1);
 	mParticleMesh->Update();
 }
@@ -30,4 +39,9 @@ void BossAttack1Effect::Draw()
 {
 	mParticleMesh->ExecuteComputeShader();
 	mParticleMesh->Draw();
+}
+
+bool BossAttack1Effect::GetisActive()
+{
+	return mIsActive;
 }

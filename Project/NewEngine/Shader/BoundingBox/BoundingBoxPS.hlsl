@@ -24,7 +24,6 @@ float4 main(V2P i) : SV_TARGET
     float3 boundsMin = objectPos + objectScale * float3(-0.5f, -0.5f, -0.5f);
     float3 boundsMax = objectPos + objectScale * float3(+0.5f, +0.5f, +0.5f);
 
-    //float4 resultColor = texColor * hitCount * fogColorRate /*/ stepCount*/;
     float4 resultColor = RayMarching(boundsMin, boundsMax, rayStart, rayDir);
     
     resultColor = resultColor * fogColor * fogColorRate;
@@ -84,37 +83,31 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
 {
     float2 hitinfo = ClucRayToBoxCrossPoint(boundsMin, boundsMax, rayStart, rayDir);
     
-    // レイの開始点
-    float3 rayPos = rayStart;
-    
     // 当たった回数を格納する
     uint hitCount = 0;
     
     float colorDensity = 0;
     
-    // 光の透過率
-    //float transmittance = 1;
-    
-    for (uint step = 0; step < stepCount; step++)
+    // レイを飛ばして当たっていたら
+    if (hitinfo.x <= hitinfo.y)
     {
-        if (CheckWithInBox(boundsMin, boundsMax, rayPos) == true)
+        // レイの開始点(当たった点から)
+        float3 rayPos = rayStart + rayDir * hitinfo.x;
+        
+        // ステップ分を進む
+        //[unroll(1000)] 
+        [loop]
+        for (uint i = 0; i < stepCount; i++)
         {
             float3 uvw = MapValueTo01(boundsMin, boundsMax, rayPos);
             colorDensity += tex.Sample(smp, (uvw + offset)).r * stepLength * density;
         
-            //transmittance *= exp(-colorDensity);
-        
+            // 次のレイの座標を算出
+            rayPos += rayDir * stepLength;
         }
-        
-        // 次のレイの座標を算出
-        rayPos += rayDir * stepLength;
     }
     
-    
     return colorDensity;
-    //float4 resultColor = tex.Sample(smp, i.uv);
-    
-    //return float4(transmittance.xxx, 1 - transmittance);
 }
 
 // 最小値を0に最大値を1にし値をlerpする

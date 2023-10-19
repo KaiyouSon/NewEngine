@@ -121,7 +121,10 @@ void GameScene::Update()
 	}
 	if (Key::GetKeyDown(DIK_L))
 	{
-		mBoundingBox.pos.y = 10;
+		Camera::current.pos = Vec3(0, 10, -20);
+		Camera::current.rot = Radian(Vec3(0, 0, 0));
+
+		//mBoundingBox.pos.y = 10;
 		//mBoundingBox.scale.x = 1000;
 		//mBoundingBox.scale.y = 25;
 		//mBoundingBox.scale.z = 1000;
@@ -179,10 +182,6 @@ void GameScene::DrawPass()
 {
 	ShadowMap::GetInstance()->RenderTextureSetting();
 
-	//mVolumetricFog->PrevDrawScene();
-
-	//mVolumetricFog->PostDrawScene();
-
 	std::function<void()> targetDrawFunc;
 	std::function<void()> sceneDrawFunc;
 
@@ -212,8 +211,7 @@ void GameScene::Draw()
 
 	mPostEffectManager->DrawEffectBloom();
 
-	//mVolumetricFog->Draw();
-
+	mVolumetricFog->Draw();
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
@@ -222,20 +220,16 @@ void GameScene::DrawDebugGui()
 {
 	Gui::BeginWindow("Debug");
 
-	//Gui::DrawString("Screen Pos = %f,%f", GetWindowHalfSize().x, GetWindowHalfSize().y);
-	//Vec3 worldPos = ScreenToWorld(GetWindowHalfSize());
-	//Gui::DrawString("World Pos = %f,%f,%f", worldPos.x, worldPos.y, worldPos.z);
-
 	Gui::DrawInputInt("Step Count", (int&)mBoundingBox.fogParam.stepCount);
 	Gui::DrawSlider1("Step Length", mBoundingBox.fogParam.stepLength, 0.01f);
 	Gui::DrawSlider1("Fog Dencity", mBoundingBox.fogParam.dencity, 0.01f);
 	Gui::DrawColorEdit("Fog Color", mBoundingBox.fogParam.fogColor);
 
-	//Gui::DrawLine();
-	//Gui::DrawSlider1("Fog Color Rate R", mBoundingBox.fogParam.fogColorRate.r, 0.01f);
-	//Gui::DrawSlider1("Fog Color Rate G", mBoundingBox.fogParam.fogColorRate.g, 0.01f);
-	//Gui::DrawSlider1("Fog Color Rate B", mBoundingBox.fogParam.fogColorRate.b, 0.01f);
-	//Gui::DrawSlider1("Fog Color Rate A", mBoundingBox.fogParam.fogColorRate.a, 0.01f);
+	Gui::DrawLine();
+	Gui::DrawSlider1("Fog Color Rate R", mBoundingBox.fogParam.fogColorRate.r, 0.01f);
+	Gui::DrawSlider1("Fog Color Rate G", mBoundingBox.fogParam.fogColorRate.g, 0.01f);
+	Gui::DrawSlider1("Fog Color Rate B", mBoundingBox.fogParam.fogColorRate.b, 0.01f);
+	Gui::DrawSlider1("Fog Color Rate A", mBoundingBox.fogParam.fogColorRate.a, 0.01f);
 
 	Gui::DrawLine();
 	Gui::DrawSlider3("Fog Pos", mBoundingBox.pos, 0.01f);
@@ -243,7 +237,6 @@ void GameScene::DrawDebugGui()
 	Gui::DrawSlider3("Fog Speed", mBoundingBox.moveSpeed, 0.001f);
 
 	Gui::EndWindow();
-
 
 	{
 		//GuiManager::BeginWindow("Lighting");
@@ -384,7 +377,7 @@ void GameScene::DrawDepthToEffectBloom()
 	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass"));
 
 	// エフェクトの描画(ブルーム書けるため深度以外も書き込む)
-	//EffectManager::GetInstance()->DrawEffect(true);
+	EffectManager::GetInstance()->DrawEffect(true);
 }
 
 // 現在のシーンのオブジェクトの描画
@@ -398,5 +391,5 @@ void GameScene::DrawCurrentSceneObject()
 
 	mBoundingBox.Draw();
 
-	//EffectManager::GetInstance()->DrawEffect(false);
+	EffectManager::GetInstance()->DrawEffect(false);
 }

@@ -64,12 +64,13 @@ void main(uint3 DTid : SV_DispatchThreadID)
         result.pos.z = Random01(seed) * size.y;
 
         // 移動ベクトル
+        int sign = i % 2 == 0 ? 1 : -1;
         seed = RandomSeed(seed, index);
-        result.moveVec.x = Random01(seed);
+        result.moveVec.x = Random01(seed) * sign;
         seed = RandomSeed(seed, index);
-        result.moveVec.y = Random01(seed);
+        result.moveVec.y = Random01(seed) * sign;
         seed = RandomSeed(seed, index);
-        result.moveVec.z = Random01(seed);
+        result.moveVec.z = Random01(seed) * sign;
         
         // 移動速度
         const float rate = 0.5f;

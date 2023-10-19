@@ -62,9 +62,6 @@ bool LoadManager::TextureLoad()
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMap");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMapBlur");
 
-	////TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 2, 1, "ShadowMap");
-	////TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 2, 1, "ShadowMapBlur");
-
 	// 迴ｾ蝨ｨ縺ｮ繧ｷ繝ｼ繝ｳ
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "CurrentScene");
 
@@ -87,7 +84,7 @@ bool LoadManager::TextureLoad()
 		std::string tag = "Noice" + index;
 		TextureManager::LoadTexture(path, tag);
 		texs.push_back(TextureManager::GetTexture(tag));
-		
+
 		//texs.push_back(TextureManager::GetTexture("Test"));
 	}
 	TextureManager::CreateVolumeTexture(texs, "VolumeTexture");

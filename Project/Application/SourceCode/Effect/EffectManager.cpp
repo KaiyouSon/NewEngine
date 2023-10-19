@@ -38,6 +38,12 @@ void EffectManager::Update()
 	mLeadEffect->Update();
 	mAirEffect->Update();
 
+	std::erase_if(mBossAttack1Effect,
+		[](const std::unique_ptr<BossAttack1Effect>& emitter)
+		{
+			return emitter->GetisActive() == false;
+		});
+
 	for (uint32_t i = 0; i < mBossAttack1Effect.size(); i++)
 	{
 		mBossAttack1Effect[i]->Update();
@@ -70,7 +76,7 @@ void EffectManager::DrawEffect(const bool isBloom)
 		mPlayerRecoveryEffect->DrawModel();
 
 		// 繝ｪ繧ｹ繝昴・繝ｳ蝨ｰ轤ｹ縺ｮ繧ｨ繝輔ぉ繧ｯ繝・
-		mRespawnPointEffect->DrawModel();
+		//mRespawnPointEffect->DrawModel();
 
 		//// 蟆手勠縺ｿ縺溘＞縺ｪ繧ｨ繝輔ぉ繧ｯ繝・
 		mLeadEffect->DrawModel();
@@ -93,7 +99,7 @@ void EffectManager::DrawEffect(const bool isBloom)
 		mPlayerRecoveryEffect->DrawModel();
 
 		// 繝ｪ繧ｹ繝昴・繝ｳ蝨ｰ轤ｹ縺ｮ繧ｨ繝輔ぉ繧ｯ繝・
-		mRespawnPointEffect->DrawModel();
+		//mRespawnPointEffect->DrawModel();
 
 		//// 蟆手勠縺ｿ縺溘＞縺ｪ繧ｨ繝輔ぉ繧ｯ繝・
 		mLeadEffect->DrawModel();

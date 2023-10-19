@@ -30,6 +30,8 @@ void Skydome::Init()
 
 void Skydome::Update()
 {
+	mSkydome->scale = 1600.f;
+
 	mSkydome->Update();
 	for (uint32_t i = 0; i < mClouds.size(); i++)
 	{

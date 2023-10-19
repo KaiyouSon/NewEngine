@@ -47,6 +47,11 @@ void main(uint3 DTid : SV_DispatchThreadID)
     {
         ParticleData result = outputData[i];
         
+        if (result.scale.x <= 0)
+        {
+            continue;
+        }
+        
         // ˆÚ“®
         result.pos += normalize(result.moveVec) * result.moveAccel;
         result.scale -= 0.01f;
