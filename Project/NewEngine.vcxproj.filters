@@ -828,6 +828,9 @@
     <ClCompile Include="Application\SourceCode\Motion\BossAttack1Effect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="IEffect.cpp">
+      <Filter>Application\Source\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1347,6 +1350,9 @@
       <Filter>Application\Header\VolumetricFog</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Motion\BossAttack1Effect.h">
+      <Filter>Application\Header\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Effect\IEffect.h">
       <Filter>Application\Header\Effect</Filter>
     </ClInclude>
   </ItemGroup>

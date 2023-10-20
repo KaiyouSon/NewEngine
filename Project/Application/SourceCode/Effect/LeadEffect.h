@@ -1,7 +1,8 @@
 #pragma once
 #include "NewEngine.h"
+#include "IEffect.h"
 
-class LeadEffect
+class LeadEffect : public IEffect
 {
 private:
 	std::unique_ptr<GPUEmitter> mEmitter;
@@ -10,6 +11,6 @@ private:
 public:
 	LeadEffect();
 	void Generate(const Vec3 pos, const Vec3 frontVec);
-	void Update();
-	void Draw();
+	void Update() override;
+	void Draw() override;
 };

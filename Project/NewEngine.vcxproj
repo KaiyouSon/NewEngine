@@ -196,6 +196,7 @@
     <ClCompile Include="Application\SourceCode\Weapon\Weapon.cpp" />
     <ClCompile Include="Application\SourceCode\Effect\BloodSprayEffect.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Weed.cpp" />
+    <ClCompile Include="IEffect.cpp" />
     <ClCompile Include="NewEngine\Collision\Collider.cpp" />
     <ClCompile Include="NewEngine\Collision\ColliderDrawer.cpp" />
     <ClCompile Include="NewEngine\Collision\ColliderObject.cpp" />
@@ -284,6 +285,7 @@
     <ClInclude Include="..\..\1.School\3.3年前期\TL1\CG5_Task01\Project\External\nlohmann\json.hpp" />
     <ClInclude Include="Application\SourceCode\CreateManager.h" />
     <ClInclude Include="Application\SourceCode\Effect\AirEffect.h" />
+    <ClInclude Include="Application\SourceCode\Effect\IEffect.h" />
     <ClInclude Include="Application\SourceCode\Motion\BackstepMotion.h" />
     <ClInclude Include="Application\SourceCode\Effect\BloodSprayEffect.h" />
     <ClInclude Include="Application\SourceCode\Motion\BossAttack1Effect.h" />

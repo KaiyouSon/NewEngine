@@ -18,6 +18,8 @@ void EffectManager::Init()
 	mPlayerRecoveryEffect->Init();
 	//mRespawnPointEffect->Init();
 	mAirEffect->Init();
+
+	mEffects.clear();
 }
 
 void EffectManager::Update()
@@ -44,15 +46,15 @@ void EffectManager::Update()
 			return emitter->GetisActive() == false;
 		});
 
-
-	for (uint32_t i = 0; i < mLeadEffect.size(); i++)
-	{
-		mLeadEffect[i]->Update();
-	}
-
 	for (uint32_t i = 0; i < mBossAttack1Effect.size(); i++)
 	{
 		mBossAttack1Effect[i]->Update();
+	}
+
+
+	for (uint32_t i = 0; i < mEffects.size(); i++)
+	{
+		mEffects[i]->Update();
 	}
 
 	mAirEffect->Generate(mPlayer->GetPos());
@@ -86,11 +88,6 @@ void EffectManager::DrawEffect(const bool isBloom)
 		//// 遨ｺ荳ｭ縺ｫ縺ゅｋ繧・▽
 		mAirEffect->DrawModel();
 
-		for (uint32_t i = 0; i < mLeadEffect.size(); i++)
-		{
-			mLeadEffect[i]->Draw();
-		}
-
 		for (uint32_t i = 0; i < mBossAttack1Effect.size(); i++)
 		{
 			mBossAttack1Effect[i]->Draw();
@@ -112,9 +109,9 @@ void EffectManager::DrawEffect(const bool isBloom)
 		//// 遨ｺ荳ｭ縺ｫ縺ゅｋ繧・▽
 		mAirEffect->DrawModel();
 
-		for (uint32_t i = 0; i < mLeadEffect.size(); i++)
+		for (uint32_t i = 0; i < mEffects.size(); i++)
 		{
-			mLeadEffect[i]->Draw();
+			mEffects[i]->Draw();
 		}
 
 		for (uint32_t i = 0; i < mBossAttack1Effect.size(); i++)
@@ -142,8 +139,12 @@ void EffectManager::GenerateRespawnPointEffect(const Vec3 pos)
 
 void EffectManager::GenerateLeadEffect(const Vec3 pos, const Vec3 frontVec)
 {
-	mLeadEffect.push_back(std::move(std::make_unique<LeadEffect>()));
-	mLeadEffect.back()->Generate(pos, frontVec);
+	// インスタンス生成
+	std::unique_ptr<LeadEffect> effect = std::make_unique<LeadEffect>();
+	effect->Generate(pos, frontVec);
+
+	// ベクターに追加
+	mEffects.push_back(std::move(effect));
 }
 
 void EffectManager::GenerateBossAttack1Effect(const Vec3 pos)
