@@ -28,6 +28,11 @@ void PostEffectManager::DrawEffectBloom()
 	mEffectBloom->DrawPostEffect();
 }
 
+Bloom* PostEffectManager::GetEffectBloom()
+{
+	return mEffectBloom.get();
+}
+
 ///--- パスの設定 ------------------------------------------------------------------------------------------------ ///
 
 // 天球のビネットのパス設定

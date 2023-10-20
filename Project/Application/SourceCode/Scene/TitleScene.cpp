@@ -38,6 +38,8 @@ void TitleScene::Init()
 	EffectManager::GetInstance()->Init();
 	EffectManager::GetInstance()->
 		GenerateLogoExplosionEffect(Vec3::zero, Vec3(0, 0, 0), Vec3::one * 0.01f);
+
+	mTimer.SetLimitTimer(360);
 }
 
 void TitleScene::Update()
@@ -45,6 +47,16 @@ void TitleScene::Update()
 	SoundManager::SetVolume("TitleBGM", mBgmVolume);
 	mBgmVolume += 0.01f;
 	mBgmVolume = Min<float>(mBgmVolume, 1.f);
+
+	mTimer.Update();
+	if (mTimer == true)
+	{
+		mTimer.Reset();
+	}
+
+	Vec2 smoothClamp = mPostEffectManager->GetEffectBloom()->GetHighLumiClmap();
+	smoothClamp.x -= sinf(Radian((float)mTimer.GetTimer())) * 0.005f;
+	mPostEffectManager->GetEffectBloom()->SetHighLumiClmap(smoothClamp);
 
 	mPostEffectManager->Update();
 	mTitleUI->Update();

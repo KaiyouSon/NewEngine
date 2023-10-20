@@ -20,6 +20,8 @@ private:
 	std::array<RenderTexture*, (uint32_t)PassType::Size> mTexs;
 	std::unique_ptr<PostEffect> mCompositePass;
 
+	Vec2 mHighLumiClamp;
+
 public:
 	Bloom();
 	void Update();
@@ -28,4 +30,10 @@ public:
 	void PrevSceneDraw(const PassType passType);
 	void PostSceneDraw(const PassType passType);
 	void DrawDebugGui();
+
+public:
+	void SetHighLumiClmap(const Vec2 highLumiClamp);
+
+public:
+	Vec2 GetHighLumiClmap();
 };

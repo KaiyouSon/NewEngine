@@ -51,7 +51,7 @@ public: // レンダーテクスチャ追加
 	template<typename T>
 	void AddMaterial()
 	{
-		std::unique_ptr<IConstantBuffer> iConstatnBuffer = std::make_unique<T>();
+		std::unique_ptr<IConstantBuffer> iConstatnBuffer = std::make_unique<ConstantBuffer<T>>();
 		iConstatnBuffer->Create();
 		mMaterial->constantBuffers.push_back(std::move(iConstatnBuffer));
 	}

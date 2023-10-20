@@ -73,6 +73,11 @@ void TransferDataToConstantBuffer(IConstantBuffer* iCBuffer, const T& data)
 	// 繧ｭ繝｣繧ｹ繝・
 	auto buffer = dynamic_cast<ConstantBuffer<T>*>(iCBuffer);
 
+	if (buffer == nullptr)
+	{
+		return;
+	}
+
 	// 霆｢騾・
 	*(buffer->constantBufferMap) = data;
 }

@@ -12,7 +12,7 @@ Bloom::Bloom()
 	for (uint32_t i = 0; i < mPasses.size(); i++)
 	{
 		mPasses[i] = std::make_unique<PostEffect>();
-		mPasses[i]->pos = GetWindowHalfSize()/* * -1*/;
+		mPasses[i]->pos = GetWindowHalfSize();
 	}
 	mPasses[(uint32_t)PassType::HighLumi]->AddRenderTexture(mTexs[(uint32_t)PassType::HighLumi]);
 	mPasses[(uint32_t)PassType::GaussianBlur]->AddRenderTexture(mTexs[(uint32_t)PassType::GaussianBlur]);
@@ -29,6 +29,9 @@ Bloom::Bloom()
 	mCompositePass->AddRenderTexture(mTexs[(uint32_t)PassType::Bloom]);
 	mCompositePass->AddRenderTexture(mTexs[(uint32_t)PassType::Target]);
 	mCompositePass->pos = GetWindowHalfSize();
+
+	mHighLumiClamp = Vec2(0.2f, 0.6f);
+	mPasses[(uint32_t)PassType::HighLumi]->AddMaterial<Vec2>();
 }
 
 void Bloom::Update()
@@ -48,6 +51,11 @@ void Bloom::DrawPostEffect()
 
 void Bloom::DrawPass(const PassType passType)
 {
+	if (passType == PassType::HighLumi)
+	{
+		mPasses[(uint32_t)PassType::HighLumi]->SetTransferBuffer(2, mHighLumiClamp);
+	}
+
 	mPasses[(uint32_t)passType]->Draw();
 }
 
@@ -59,5 +67,15 @@ void Bloom::PrevSceneDraw(const PassType passType)
 void Bloom::PostSceneDraw(const PassType passType)
 {
 	mTexs[(uint32_t)passType]->PostDrawScene();
+}
+
+void Bloom::SetHighLumiClmap(const Vec2 highLumiClamp)
+{
+	mHighLumiClamp = highLumiClamp;
+}
+
+Vec2 Bloom::GetHighLumiClmap()
+{
+	return mHighLumiClamp;
 }
 

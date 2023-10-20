@@ -258,6 +258,7 @@ void CreateManager::CreateGraphicsPipeline()
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("HighLumi");
 	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "HighLumi");
 
 	// ガウシアンブラー用（PostEffect）

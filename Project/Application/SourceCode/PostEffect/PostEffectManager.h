@@ -32,4 +32,7 @@ public:
 	// エフェクトのブルーム	
 	void DrawEffectBloom();
 
+public:
+	Bloom* GetEffectBloom();
+
 };

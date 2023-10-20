@@ -13,6 +13,9 @@ private:
 	bool mIsPush;
 
 private:
+	Timer mTimer;
+
+private:
 	// シーン切り替えの処理
 	void SceneChangeUpdate();
 
