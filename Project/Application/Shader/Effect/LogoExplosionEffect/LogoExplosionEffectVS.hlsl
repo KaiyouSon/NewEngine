@@ -14,6 +14,7 @@ struct ParticleData
     float2 scale;
     float shininess;
     float4 color;
+    float timer;
 };
 StructuredBuffer<ParticleData> inputData : register(t1);
 

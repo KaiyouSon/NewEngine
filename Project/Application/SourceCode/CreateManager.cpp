@@ -362,14 +362,16 @@ void CreateManager::CreateComputePipeline()
 	setting.rootSignatureSetting.maxUavDescritorRange = 2;
 	PipelineManager::CreateComputePipeline(setting, "RespawnPointEffect");
 
-	// ボス攻撃1エフェクト用（初期化）
+	// タイトルのロゴ爆散用（初期化）
 	setting = PipelineManager::GetComputePipeline("ParticleMesh")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("LogoExplosionEffectInit");
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	PipelineManager::CreateComputePipeline(setting, "LogoExplosionEffectInit");
 
-	// ボス攻撃1エフェクト用（更新）
+	// タイトルのロゴ爆散用（更新）
 	setting = PipelineManager::GetComputePipeline("ParticleMesh")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("LogoExplosionEffectUpdate");
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	PipelineManager::CreateComputePipeline(setting, "LogoExplosionEffectUpdate");
 
 	// 誘導エフェクト用（初期化）

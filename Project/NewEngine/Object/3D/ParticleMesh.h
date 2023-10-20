@@ -54,6 +54,14 @@ public:
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 
 public:
+	template<typename T>
+	void AddCSConstantBuffer()
+	{
+		std::unique_ptr<IConstantBuffer> iConstatnBuffer = std::make_unique<ConstantBuffer<T>>();
+		iConstatnBuffer->Create();
+		mCSMaterial->constantBuffers.push_back(std::move(iConstatnBuffer));
+	}
+
 	// ComputeShaderのみで使うデータを増やす関数
 	template<typename T>
 	void AddStructuredBuffer()
@@ -65,6 +73,13 @@ public:
 		// UAV作成
 		DescriptorHeapManager::GetDescriptorHeap("SRV")->
 			CreateUAV(mStructuredBuffers.back()->GetBufferResource(), 1, sizeof(T));
+	}
+
+	template<typename T>
+	void TransferCSConstantBuffer(const uint32_t bufferNum, const T& data)
+	{
+		uint32_t bNum = Min<uint32_t>(bufferNum, (uint32_t)mCSMaterial->constantBuffers.size());
+		TransferDataToConstantBuffer(mCSMaterial->constantBuffers[bNum].get(), data);
 	}
 
 public: // セッター

@@ -20,6 +20,11 @@ cbuffer ConstantBufferTextureSizeData : register(b0)
     float area;
 }
 
+cbuffer ConstantBufferIsExplosionFlag: register(b1)
+{
+    uint isExplosion;
+}
+
 struct ParticleData
 {
     float3 pos;
@@ -28,6 +33,7 @@ struct ParticleData
     float2 scale;
     float shininess;
     float4 color;
+    float timer;
 };
 RWStructuredBuffer<ParticleData> outputData : register(u0);
 
@@ -91,6 +97,10 @@ void main(uint3 DTid : SV_DispatchThreadID)
         
         // 色
         result.color = tex.Load(int3(result.pos.x, result.pos.z, 0));
+        
+        // タイマー
+        seed = RandomSeed(seed, index);
+        result.timer = Random01(seed) * 360;
         
         // 中心に
         float2 offsetPos = -size / 2.f;

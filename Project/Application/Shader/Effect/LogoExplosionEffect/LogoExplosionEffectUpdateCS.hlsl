@@ -20,6 +20,11 @@ cbuffer ConstantBufferTextureSizeData : register(b0)
     float area;
 }
 
+cbuffer ConstantBufferIsExplosionFlag : register(b1)
+{
+    uint isExplosion;
+}
+
 struct ParticleData
 {
     float3 pos;
@@ -28,6 +33,7 @@ struct ParticleData
     float2 scale;
     float shininess;
     float4 color;
+    float timer;
 };
 RWStructuredBuffer<ParticleData> outputData : register(u0);
 
@@ -47,15 +53,29 @@ void main(uint3 DTid : SV_DispatchThreadID)
     {
         ParticleData result = outputData[i];
         
-        if (result.scale.x <= 0)
+        if (isExplosion == true)
         {
-            continue;
+            if (result.scale.x <= 0)
+            {
+                continue;
+            }
+            // 移動
+            result.pos += normalize(result.moveVec) * result.moveAccel;
+            result.scale -= 0.01f;
+            result.scale = max(result.scale, 0);
+        
         }
         
-        // 移動
-        result.pos += normalize(result.moveVec) * result.moveAccel;
-        result.scale -= 0.01f;
-        result.scale = max(result.scale, 0);
+        result.timer += 1;
+        if (result.timer >= 360)
+        {
+            result.timer = 0;
+        }
+        
+        result.pos.x += sin(result.timer * 3.1415926f / 180.f) * 0.0075f;
+        result.pos.z += cos(result.timer * 3.1415926f / 180.f) * 0.0075f;
+        
+        result.shininess += sin(result.timer * 3.1415926f / 180.f) * 0.0075f;
         
         // 出力データを書き込む
         outputData[i] = result;

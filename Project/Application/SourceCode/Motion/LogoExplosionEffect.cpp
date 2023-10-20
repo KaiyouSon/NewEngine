@@ -5,7 +5,7 @@ LogoExplosionEffect::LogoExplosionEffect() :
 {
 	mParticleMesh->SetMeshTexture(TextureManager::GetTexture("TitleLogo"));
 	mParticleMesh->SetParticleTexture(TextureManager::GetTexture("Particle1"));
-	mParticleMesh->SetParticleData<ParticleParameter::BossAttack1Particle>(100000);
+	mParticleMesh->SetParticleData<ParticleParameter::LogoExplosionParticle>(100000);
 
 	mParticleMesh->SetComputePipeline(PipelineManager::GetComputePipeline("LogoExplosionEffectInit"));
 	mParticleMesh->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("LogoExplosionEffect"));
@@ -20,6 +20,8 @@ void LogoExplosionEffect::Generate(const Vec3 pos, const Vec3 rot, const Vec3 sc
 	mParticleMesh->pos = pos;
 	mParticleMesh->rot = rot;
 	mParticleMesh->scale = scale;
+
+	mParticleMesh->AddCSConstantBuffer<bool>();
 
 	mActiveTimer.SetLimitTimer(240);
 	mIsActive = true;
@@ -42,11 +44,8 @@ void LogoExplosionEffect::Update()
 
 void LogoExplosionEffect::Draw()
 {
-	if (mIsExplosion == true)
-	{
-		mParticleMesh->ExecuteCS();
-	}
-
+	mParticleMesh->TransferCSConstantBuffer(1, mIsExplosion);
+	mParticleMesh->ExecuteCS();
 	mParticleMesh->Draw();
 }
 

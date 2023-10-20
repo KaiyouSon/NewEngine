@@ -91,7 +91,7 @@ namespace ParticleParameter
 		RespawnPointParticle();
 	};
 
-	struct BossAttack1Particle
+	struct LogoExplosionParticle
 	{
 		Vec3 pos;
 		Vec3 moveVec;
@@ -99,5 +99,6 @@ namespace ParticleParameter
 		Vec2 scale;
 		float shininess;
 		Color color;
+		float timer;
 	};
 }
