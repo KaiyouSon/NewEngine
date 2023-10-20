@@ -7,7 +7,7 @@ struct V2G
     float4 color : COLOR; //êF
 };
 
-struct ParticleParam
+struct ParticleData
 {
     float3 pos;
     float3 moveVec;
@@ -17,8 +17,7 @@ struct ParticleParam
     float shininess;
     float4 color;
 };
-
-StructuredBuffer<ParticleParam> inputData : register(t1);
+StructuredBuffer<ParticleData> inputData : register(t1);
 
 V2G main(uint SV_VertexID : SV_VertexID)
 {

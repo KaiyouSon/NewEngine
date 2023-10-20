@@ -13,6 +13,7 @@ LeadEffect::LeadEffect() :
 
 void LeadEffect::Generate(const Vec3 pos, const Vec3 frontVec)
 {
+	mIsActive = true;
 	mEmitter->pos = pos;
 	mVec = frontVec;
 

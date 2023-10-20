@@ -59,6 +59,9 @@ void GameScene::Init()
 	mMenuManager->Init();
 	mMenuManager->SetMovieEvent(mMovieEvent.get());
 
+	EffectManager::GetInstance()->Init();
+	EffectManager::GetInstance()->SetPlayer(mPlayer.get());
+
 	mField->Init();
 	mSkydome->Init();
 
@@ -72,9 +75,6 @@ void GameScene::Init()
 	CollisionManager::GetInstance()->SetField(mField.get());
 	CollisionManager::GetInstance()->SetUIManager(mUiManager.get());
 	CollisionManager::GetInstance()->SetMovieEvent(mMovieEvent.get());
-
-	EffectManager::GetInstance()->Init();
-	EffectManager::GetInstance()->SetPlayer(mPlayer.get());
 
 	LightManager::GetInstance()->directionalLight.isActive = true;
 	LightManager::GetInstance()->directionalLight.pos = Vec3(-400, 400, -100);
@@ -181,7 +181,7 @@ void GameScene::Update()
 
 	if (mMenuManager->GetisActive() == false)
 	{
-		//CameraManager::GetInstance()->Update();
+		CameraManager::GetInstance()->Update();
 	}
 
 	// シーン切り替えの処理
@@ -434,7 +434,7 @@ void GameScene::DrawCurrentSceneObject()
 	mPostEffectManager->DrawSkydomeVignette();
 	mField->DrawModel();
 
-	//mPlayer->DrawModel();
+	mPlayer->DrawModel();
 	mBoss->DrawModel();
 
 	mVolumetricFog.Draw();

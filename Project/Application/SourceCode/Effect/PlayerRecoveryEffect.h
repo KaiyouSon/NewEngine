@@ -1,26 +1,19 @@
 #pragma once
 #include "NewEngine.h"
+#include "IEffect.h"
 
-class PlayerRecoveryEffect
+class PlayerRecoveryEffect : public IEffect
 {
 private:
-	bool mIsGenerate;
-	Timer mTimer;
+	std::unique_ptr<GPUEmitter> mCircleEmitter;
+	std::unique_ptr<GPUEmitter> mLineEmitter;
 
-	std::unique_ptr<Emitter> mCircleEmitter;
-	std::unique_ptr<Emitter> mLineEmitter;
-	std::vector<ParticleParameter::PParam1> mCirclePParam;
-	std::vector<ParticleParameter::PParam1> mLinePParam;
-
-	Vec3 mStartPos;
-
-private:
-	void GenerateUpdate();
+	ConstantBufferData::CPlayerRecoveryEffect mCircleEmitterParam;
+	ConstantBufferData::CPlayerRecoveryEffect mLineEmitterParam;
 
 public:
 	PlayerRecoveryEffect();
-	void Init();
 	void Generate(const Vec3 pos);
-	void Update();
-	void DrawModel();
+	void Update() override;
+	void Draw() override;
 };

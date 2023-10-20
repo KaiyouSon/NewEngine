@@ -15,7 +15,6 @@ void EffectManager::Init()
 
 	// 初期化
 	mBloodSprayEffect->Init();
-	mPlayerRecoveryEffect->Init();
 	//mRespawnPointEffect->Init();
 	mAirEffect->Init();
 
@@ -26,9 +25,10 @@ void EffectManager::Update()
 {
 	if (Key::GetKeyDown(DIK_G))
 	{
+		GeneratePlayerRecoveryEffect(Vec3::up * 10.f);
 		//GenerateBossAttack1Effect(Vec3::zero);
 
-		GenerateLeadEffect(Vec3::up * 10.f, Vec3::front);
+		//GenerateLeadEffect(Vec3::up * 10.f, Vec3::front);
 	}
 	if (Key::GetKeyDown(DIK_C))
 	{
@@ -36,7 +36,7 @@ void EffectManager::Update()
 	}
 
 	mBloodSprayEffect->Update();
-	mPlayerRecoveryEffect->Update();
+	//mPlayerRecoveryEffect->Update();
 	//mRespawnPointEffect->Update();
 	mAirEffect->Update();
 
@@ -51,6 +51,12 @@ void EffectManager::Update()
 		mBossAttack1Effect[i]->Update();
 	}
 
+	// 削除処理
+	std::erase_if(mEffects,
+		[](const std::unique_ptr<IEffect>& effect)
+		{
+			return effect->GetisActive() == false;
+		});
 
 	for (uint32_t i = 0; i < mEffects.size(); i++)
 	{
@@ -66,7 +72,7 @@ void EffectManager::DrawModel()
 	mBloodSprayEffect->DrawModel();
 
 	// 蝗槫ｾｩ
-	mPlayerRecoveryEffect->DrawModel();
+	//mPlayerRecoveryEffect->DrawModel();
 
 	// 繝ｪ繧ｹ繝昴・繝ｳ蝨ｰ轤ｹ縺ｮ繧ｨ繝輔ぉ繧ｯ繝・
 	//mRespawnPointEffect->DrawModel();
@@ -80,7 +86,7 @@ void EffectManager::DrawEffect(const bool isBloom)
 	if (isBloom == true)
 	{
 		//// 蝗槫ｾｩ
-		mPlayerRecoveryEffect->DrawModel();
+		//mPlayerRecoveryEffect->DrawModel();
 
 		// 繝ｪ繧ｹ繝昴・繝ｳ蝨ｰ轤ｹ縺ｮ繧ｨ繝輔ぉ繧ｯ繝・
 		//mRespawnPointEffect->DrawModel();
@@ -92,6 +98,11 @@ void EffectManager::DrawEffect(const bool isBloom)
 		{
 			mBossAttack1Effect[i]->Draw();
 		}
+
+		for (uint32_t i = 0; i < mEffects.size(); i++)
+		{
+			mEffects[i]->Draw();
+		}
 	}
 	// 縺昴ｌ莉･螟・
 	else
@@ -100,7 +111,7 @@ void EffectManager::DrawEffect(const bool isBloom)
 		mBloodSprayEffect->DrawModel();
 
 		//// 蝗槫ｾｩ
-		mPlayerRecoveryEffect->DrawModel();
+		//mPlayerRecoveryEffect->DrawModel();
 
 		// 繝ｪ繧ｹ繝昴・繝ｳ蝨ｰ轤ｹ縺ｮ繧ｨ繝輔ぉ繧ｯ繝・
 
@@ -128,7 +139,12 @@ void EffectManager::GenerateBloodSprayEffect(const Vec3 pos)
 
 void EffectManager::GeneratePlayerRecoveryEffect(const Vec3 pos)
 {
-	mPlayerRecoveryEffect->Generate(pos);
+	// インスタンス生成
+	std::unique_ptr<PlayerRecoveryEffect> effect = std::make_unique<PlayerRecoveryEffect>();
+	effect->Generate(pos);
+
+	// ベクターに追加
+	mEffects.push_back(std::move(effect));
 }
 
 void EffectManager::GenerateRespawnPointEffect(const Vec3 pos)

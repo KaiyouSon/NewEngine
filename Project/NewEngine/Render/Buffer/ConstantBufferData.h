@@ -207,4 +207,15 @@ namespace ConstantBufferData
 	{
 		uint32_t max;
 	};
+
+	struct CPlayerRecoveryEffect
+	{
+		Vec3 baseSpeed;	float pad1;
+		Vec3 rateSpeed; float pad2;
+		Vec3 baseScale;	float pad3;
+		Vec3 rateScale; float pad4;
+		Vec3 baseScaleAccel; float pad5;
+		Vec3 rateScaleAccel; float pad6;
+		Color baseColor;
+	};
 }

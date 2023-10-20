@@ -66,6 +66,18 @@ namespace ParticleParameter
 		Color color;
 	};
 
+	struct PlayerRecoveryParticle
+	{
+		Vec3 pos;
+		Vec3 moveVec;
+		Vec3 moveAccel;
+		Vec2 scale;
+		float scaleAccel;
+		float shininess;
+		Color color;
+		float alphaAccel;
+	};
+
 	struct RespawnPointParticle
 	{
 		uint32_t isActive;

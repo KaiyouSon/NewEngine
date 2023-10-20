@@ -26,6 +26,8 @@ void RespawnPoint::Init()
 	mRhombus->SetBillboardType(BillboardType::YAxisBillboard);
 
 	mAngle.SetLimitTimer(360);
+
+	EffectManager::GetInstance()->GenerateLeadEffect(mParent.pos + Vec3::up * 5.f, Vec3::front + Vec3(0, 0.5, 0));
 }
 
 void RespawnPoint::Update()

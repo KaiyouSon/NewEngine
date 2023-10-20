@@ -1,10 +1,12 @@
 #pragma once
+#include "Timer.h"
 
 // エフェクトのインタフェース
 class IEffect
 {
 protected:
 	bool mIsActive;
+	Timer mActiveTimer;
 
 public:
 	virtual ~IEffect() {}
