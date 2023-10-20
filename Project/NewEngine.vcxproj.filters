@@ -313,9 +313,6 @@
     <Filter Include="Application\Source\Weapon">
       <UniqueIdentifier>{7b2f016d-4e5c-4324-8195-ffed8019e25c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\Application\Effect\BossAttack1Effect">
-      <UniqueIdentifier>{c4793252-73b6-434a-9faa-bff5ca7177b4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader\Application\Vignette">
       <UniqueIdentifier>{8860517a-80d9-4c0a-b4a2-33dbda29c0f3}</UniqueIdentifier>
     </Filter>
@@ -348,6 +345,9 @@
     </Filter>
     <Filter Include="Shader\Application\Effect\PlayerRecoveryEffect">
       <UniqueIdentifier>{49227445-6a34-4a20-b13c-fcc4c7bba248}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\Effect\LogoExplosionEffect">
+      <UniqueIdentifier>{c4793252-73b6-434a-9faa-bff5ca7177b4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -828,10 +828,10 @@
     <ClCompile Include="NewEngine\Object\3D\VolumetricFog.cpp">
       <Filter>Application\Source\VolumetricFog</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Motion\BossAttack1Effect.cpp">
+    <ClCompile Include="Application\SourceCode\Effect\IEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Effect\IEffect.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\LogoExplosionEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1352,7 +1352,7 @@
     <ClInclude Include="NewEngine\Object\3D\VolumetricFog.h">
       <Filter>Application\Header\VolumetricFog</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Motion\BossAttack1Effect.h">
+    <ClInclude Include="Application\SourceCode\Motion\LogoExplosionEffect.h">
       <Filter>Application\Header\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Effect\IEffect.h">
@@ -1579,14 +1579,14 @@
     <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogPS.hlsl">
       <Filter>Shader\Application\VolumetricFog</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\BossAttack1Effect\BossAttack1EffectInitCS.hlsl">
-      <Filter>Shader\Application\Effect\BossAttack1Effect</Filter>
+    <FxCompile Include="Application\Shader\Effect\LogoExplosionEffect\LogoExplosionEffectInitCS.hlsl">
+      <Filter>Shader\Application\Effect\LogoExplosionEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\BossAttack1Effect\BossAttack1EffectUpdateCS.hlsl">
-      <Filter>Shader\Application\Effect\BossAttack1Effect</Filter>
+    <FxCompile Include="Application\Shader\Effect\LogoExplosionEffect\LogoExplosionEffectUpdateCS.hlsl">
+      <Filter>Shader\Application\Effect\LogoExplosionEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\BossAttack1Effect\BossAttack1EffectVS.hlsl">
-      <Filter>Shader\Application\Effect\BossAttack1Effect</Filter>
+    <FxCompile Include="Application\Shader\Effect\LogoExplosionEffect\LogoExplosionEffectVS.hlsl">
+      <Filter>Shader\Application\Effect\LogoExplosionEffect</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\Vignette\VignettePS.hlsl">
       <Filter>Shader\Application\Vignette</Filter>

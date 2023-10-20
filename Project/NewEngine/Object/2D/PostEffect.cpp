@@ -227,6 +227,11 @@ void PostEffect::TransferVertexCoord()
 // --- その他の関数 ----------------------------------------------------- //
 void PostEffect::AddRenderTexture(RenderTexture* renderTexture)
 {
+	if (renderTexture == nullptr)
+	{
+		return;
+	}
+
 	mRenderTextures.push_back(renderTexture);
 
 	// テクスチャが初めて追加されたときにサイズ設定
@@ -241,7 +246,6 @@ void PostEffect::SetSize(const Vec2 size)
 {
 	mSize = size;
 	TransferVertexCoord();
-
 }
 void PostEffect::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {

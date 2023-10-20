@@ -9,16 +9,10 @@ PostEffectManager::PostEffectManager() :
 
 void PostEffectManager::Init()
 {
-	mParticleMesh = std::make_unique<ParticleMesh>();
-	//mParticleMesh->SetMeshTexture(TextureManager::GetTexture("Test"));
-	mParticleMesh->SetMeshTexture(TextureManager::GetTexture("TitleLogo"));
-	mParticleMesh->SetParticleTexture(TextureManager::GetTexture("StarParticle"));
-	mParticleMesh->SetParticleData<ParticleParameter::ParticleMesh>(32);
-	mParticleMesh->ExecuteCS();
 }
+
 void PostEffectManager::Update()
 {
-	mParticleMesh->Update();
 	mSkydomeVignette->Update();
 	mEffectBloom->Update();
 }

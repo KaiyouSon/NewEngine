@@ -1,9 +1,7 @@
 #include "TitleUI.h"
 
 TitleUI::TitleUI() :
-	mBackColor(std::make_unique<Sprite>()),
 	mGameTitle(std::make_unique<Sprite>()),
-	mTitleLogo(std::make_unique<Sprite>()),
 	mPressButton(std::make_unique<Sprite>()),
 	mPressButtonAfterImage(std::make_unique<Sprite>())
 {
@@ -15,18 +13,9 @@ TitleUI::TitleUI() :
 
 void TitleUI::Init()
 {
-	mBackColor->SetTexture(TextureManager::GetTexture("White"));
-	mBackColor->pos = GetWindowHalfSize();
-	mBackColor->color = Color::black;
-	mBackColor->SetSize(Vec2(1920, 1080));
-
 	mGameTitle->SetTexture(TextureManager::GetTexture("GameTitle"));
 	mGameTitle->pos = Vec2(GetWindowHalfSize().x, 320);
 	mGameTitle->scale = 1.75f;
-
-	mTitleLogo->SetTexture(TextureManager::GetTexture("TitleLogo"));
-	mTitleLogo->pos = Vec2(GetWindowHalfSize().x, GetWindowHalfSize().y - 150);
-	mTitleLogo->scale = 1.25f;
 
 	mPressButton->SetTexture(TextureManager::GetTexture("PressButton"));
 	mPressButton->pos = Vec2(GetWindowHalfSize().x, 900);
@@ -59,11 +48,7 @@ void TitleUI::Update()
 	BackAlphaUpdate();
 	AfterImagaUpdate();
 
-	mTitleLogo->pos = Vec2(GetWindowHalfSize().x, GetWindowHalfSize().y - 100);
-
-	mBackColor->Update();
 	mGameTitle->Update();
-	mTitleLogo->Update();
 	mPressButton->Update();
 	for (uint32_t i = 0; i < mPressButtonBacks.size(); i++)
 	{
@@ -78,8 +63,6 @@ void TitleUI::Update()
 
 void TitleUI::DrawFrontSprite()
 {
-	mBackColor->Draw();
-	mTitleLogo->Draw();
 	mGameTitle->Draw();
 
 	for (uint32_t i = 0; i < mPressButtonBacks.size(); i++)

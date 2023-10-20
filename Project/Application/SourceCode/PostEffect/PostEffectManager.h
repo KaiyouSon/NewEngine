@@ -6,9 +6,6 @@
 class PostEffectManager
 {
 private:
-	std::unique_ptr<ParticleMesh> mParticleMesh;
-
-private:
 	std::unique_ptr<Bloom> mEffectBloom;
 	std::unique_ptr<Vignette> mSkydomeVignette;
 

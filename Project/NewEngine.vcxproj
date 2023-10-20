@@ -119,7 +119,7 @@
     <ClCompile Include="Application\SourceCode\CreateManager.cpp" />
     <ClCompile Include="Application\SourceCode\Effect\AirEffect.cpp" />
     <ClCompile Include="Application\SourceCode\Motion\BackstepMotion.cpp" />
-    <ClCompile Include="Application\SourceCode\Motion\BossAttack1Effect.cpp" />
+    <ClCompile Include="Application\SourceCode\Motion\LogoExplosionEffect.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\Bloom.cpp" />
     <ClCompile Include="Application\SourceCode\Character\Boss.cpp" />
     <ClCompile Include="Application\SourceCode\Motion\BossAttack3Motion.cpp" />
@@ -288,7 +288,7 @@
     <ClInclude Include="Application\SourceCode\Effect\IEffect.h" />
     <ClInclude Include="Application\SourceCode\Motion\BackstepMotion.h" />
     <ClInclude Include="Application\SourceCode\Effect\BloodSprayEffect.h" />
-    <ClInclude Include="Application\SourceCode\Motion\BossAttack1Effect.h" />
+    <ClInclude Include="Application\SourceCode\Motion\LogoExplosionEffect.h" />
     <ClInclude Include="Application\SourceCode\PostEffect\Bloom.h" />
     <ClInclude Include="Application\SourceCode\Character\Boss.h" />
     <ClInclude Include="Application\SourceCode\Motion\BossAttack3Motion.h" />
@@ -487,19 +487,19 @@
     <None Include="NewEngine\Shader\Util\Util.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Application\Shader\BossAttack1Effect\BossAttack1EffectInitCS.hlsl">
+    <FxCompile Include="Application\Shader\Effect\LogoExplosionEffect\LogoExplosionEffectInitCS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Application\Shader\BossAttack1Effect\BossAttack1EffectUpdateCS.hlsl">
+    <FxCompile Include="Application\Shader\Effect\LogoExplosionEffect\LogoExplosionEffectUpdateCS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Application\Shader\BossAttack1Effect\BossAttack1EffectVS.hlsl">
+    <FxCompile Include="Application\Shader\Effect\LogoExplosionEffect\LogoExplosionEffectVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>

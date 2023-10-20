@@ -4,7 +4,7 @@
 #include "RespawnPointEffect.h"
 #include "LeadEffect.h"
 #include "AirEffect.h"
-#include "BossAttack1Effect.h"
+#include "LogoExplosionEffect.h"
 #include "Player.h"
 
 template<typename T> class Singleton;
@@ -19,8 +19,6 @@ private:
 	std::unique_ptr<PlayerRecoveryEffect> mPlayerRecoveryEffect;
 	std::unique_ptr<RespawnPointEffect> mRespawnPointEffect;
 	std::unique_ptr<AirEffect> mAirEffect;
-
-	std::vector<std::unique_ptr<BossAttack1Effect>> mBossAttack1Effect;
 
 private:
 	Player* mPlayer;
@@ -37,7 +35,10 @@ public:
 	void GeneratePlayerRecoveryEffect(const Vec3 pos);
 	void GenerateRespawnPointEffect(const Vec3 pos);
 	void GenerateLeadEffect(const Vec3 pos, const Vec3 frontVec);
-	void GenerateBossAttack1Effect(const Vec3 pos);
+	void GenerateLogoExplosionEffect(const Vec3 pos, const Vec3 rot, const Vec3 scale);
+
+public:
+	void ExplosionLogoExplosionEffect();
 
 public:
 	void SetPlayer(Player* player);

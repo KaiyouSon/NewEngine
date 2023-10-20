@@ -140,21 +140,21 @@ void CreateManager::CreateShaderCompiler()
 	setting.psFilePath = path2 + "VolumetricFog/VolumetricFogPS.hlsl";
 	ShaderCompilerManager::Create(setting, "VolumetricFog");
 
-	// ボス攻撃モーション1用（初期化）
+	// タイトルのロゴ爆散用（初期化）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "BossAttack1Effect/BossAttack1EffectInitCS.hlsl";
-	setting.vsFilePath = path2 + "BossAttack1Effect/BossAttack1EffectVS.hlsl";
+	setting.csFilePath = path2 + "Effect/LogoExplosionEffect/LogoExplosionEffectInitCS.hlsl";
+	setting.vsFilePath = path2 + "Effect/LogoExplosionEffect/LogoExplosionEffectVS.hlsl";
 	setting.gsFilePath = path1 + "ParticleMeshGS.hlsl";
 	setting.psFilePath = path1 + "ParticleMeshPS.hlsl";
-	ShaderCompilerManager::Create(setting, "BossAttack1EffectInit");
+	ShaderCompilerManager::Create(setting, "LogoExplosionEffectInit");
 
-	// ボス攻撃モーション1用（更新）
+	// タイトルのロゴ爆散用（更新）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "BossAttack1Effect/BossAttack1EffectUpdateCS.hlsl";
-	setting.vsFilePath = path2 + "BossAttack1Effect/BossAttack1EffectVS.hlsl";
+	setting.csFilePath = path2 + "Effect/LogoExplosionEffect/LogoExplosionEffectUpdateCS.hlsl";
+	setting.vsFilePath = path2 + "Effect/LogoExplosionEffect/LogoExplosionEffectVS.hlsl";
 	setting.gsFilePath = path1 + "ParticleMeshGS.hlsl";
 	setting.psFilePath = path1 + "ParticleMeshPS.hlsl";
-	ShaderCompilerManager::Create(setting, "BossAttack1EffectUpdate");
+	ShaderCompilerManager::Create(setting, "LogoExplosionEffectUpdate");
 
 	// 誘導エフェクト用（初期化）
 	setting = ShaderCompilerSetting();
@@ -331,11 +331,11 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFog");
 
-	// ボス攻撃モーション1用
+	// タイトルのロゴ爆散用
 	setting = PipelineManager::GetGraphicsPipeline("ParticleMesh")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttack1EffectInit");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("LogoExplosionEffectInit");
 	setting.rtvNum = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "BossAttack1Effect");
+	PipelineManager::CreateGraphicsPipeline(setting, "LogoExplosionEffect");
 
 	// LeadEffect1用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
@@ -364,13 +364,13 @@ void CreateManager::CreateComputePipeline()
 
 	// ボス攻撃1エフェクト用（初期化）
 	setting = PipelineManager::GetComputePipeline("ParticleMesh")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttack1EffectInit");
-	PipelineManager::CreateComputePipeline(setting, "BossAttack1EffectInit");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("LogoExplosionEffectInit");
+	PipelineManager::CreateComputePipeline(setting, "LogoExplosionEffectInit");
 
 	// ボス攻撃1エフェクト用（更新）
 	setting = PipelineManager::GetComputePipeline("ParticleMesh")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttack1EffectUpdate");
-	PipelineManager::CreateComputePipeline(setting, "BossAttack1EffectUpdate");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("LogoExplosionEffectUpdate");
+	PipelineManager::CreateComputePipeline(setting, "LogoExplosionEffectUpdate");
 
 	// 誘導エフェクト用（初期化）
 	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();

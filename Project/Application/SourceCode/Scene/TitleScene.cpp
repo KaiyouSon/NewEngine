@@ -2,33 +2,31 @@
 #include "GameScene.h"
 #include "TransitionManager.h"
 #include "MovieEvent.h"
+#include "EffectManager.h"
+#include "LoadManager.h"
 
 void TitleScene::Load()
 {
-	TextureManager::LoadTexture("Title/GameTitle.png", "GameTitle");
-	TextureManager::LoadTexture("Title/PressButton.png", "PressButton");
-	TextureManager::LoadTexture("Title/PressButtonBack.png", "PressButtonBack");
-
-	TextureManager::ExcuteComandList();
+	LoadManager::GetInstance()->TitleSceneLoad();
 }
 
 void TitleScene::UnLoad()
 {
-	TextureManager::UnLoadTexture("GameTitle");
-	TextureManager::UnLoadTexture("PressButton");
-	TextureManager::UnLoadTexture("PressButtonBack");
+	LoadManager::GetInstance()->TitleSceneUnLoad();
 }
 
 void TitleScene::CreateInstance()
 {
 	mTitleUI = std::make_unique<TitleUI>();
+	mPostEffectManager = std::make_unique<PostEffectManager>();
 }
 
 void TitleScene::Init()
 {
-	Camera::current.pos = { 0,0,-10 };
-	Camera::current.rot = { 0,0,0 };
+	Camera::current.pos = { 0,10,-0.75f };
+	Camera::current.rot = { Radian(90),Radian(5),0 };
 
+	mPostEffectManager->Init();
 	mTitleUI->Init();
 
 	SoundManager::Play("TitleBGM", true);
@@ -36,6 +34,10 @@ void TitleScene::Init()
 	mBgmVolume = 0;
 
 	MovieEvent::SetisPlayOnce(false);
+
+	EffectManager::GetInstance()->Init();
+	EffectManager::GetInstance()->
+		GenerateLogoExplosionEffect(Vec3::zero, Vec3(0, 0, 0), Vec3::one * 0.01f);
 }
 
 void TitleScene::Update()
@@ -44,7 +46,9 @@ void TitleScene::Update()
 	mBgmVolume += 0.01f;
 	mBgmVolume = Min<float>(mBgmVolume, 1.f);
 
+	mPostEffectManager->Update();
 	mTitleUI->Update();
+	EffectManager::GetInstance()->Update();
 
 	// シーン切り替えの処理
 	SceneChangeUpdate();
@@ -52,10 +56,20 @@ void TitleScene::Update()
 
 void TitleScene::DrawPass()
 {
+	mPostEffectManager->EffectBloomDrawPass(
+		[]()
+		{
+			EffectManager::GetInstance()->DrawEffect();
+		},
+		[]()
+		{
+			EffectManager::GetInstance()->DrawEffect();
+		});
 }
 
 void TitleScene::Draw()
 {
+	mPostEffectManager->DrawEffectBloom();
 	mTitleUI->DrawFrontSprite();
 }
 
@@ -72,6 +86,7 @@ void TitleScene::SceneChangeUpdate()
 		{
 			SoundManager::Play("SelectSE");
 			mTitleUI->SetisAfterImage(true);
+			EffectManager::GetInstance()->ExplosionLogoExplosionEffect();
 
 			if (mIsPush == false)
 			{

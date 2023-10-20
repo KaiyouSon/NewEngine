@@ -19,7 +19,7 @@ SceneManager::SceneManager()
 	// デバッグビルドのも実行
 	ProcessAtDebugBuild([]()
 		{
-			sCurrentScene = std::make_unique<GameScene>();
+			sCurrentScene = std::make_unique<TitleScene>();
 		});
 
 	// リリースビルドのも実行
@@ -27,8 +27,6 @@ SceneManager::SceneManager()
 		{
 			sCurrentScene = std::make_unique<LogoScene>();
 		});
-
-	FieldDataManager::Load("SkyIsland", "SkyIsland");
 }
 
 SceneManager::~SceneManager()

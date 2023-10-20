@@ -2,5 +2,10 @@
 
 bool IEffect::GetisActive()
 {
-    return mIsActive;
+	return mIsActive;
+}
+
+EffectType IEffect::GetEffectType()
+{
+	return mEffectType;
 }

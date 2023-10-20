@@ -9,6 +9,8 @@ LeadEffect::LeadEffect() :
 	mEmitter->SetParticleData<LeadParticle>(10000);
 	mEmitter->AddCSConstantBuffer<Vec3>();
 	mEmitter->AddCSStructuredBuffer<SLeadEffect>();
+
+	mEffectType = EffectType::LeadEffect;
 }
 
 void LeadEffect::Generate(const Vec3 pos, const Vec3 frontVec)

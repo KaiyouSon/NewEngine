@@ -9,10 +9,12 @@
 #include "MovieCamera.h"
 #include "LoadManager.h"
 #include "ResultUI.h"
+#include "FieldDataManager.h"
 
 void GameScene::Load()
 {
 	LoadManager::GetInstance()->GameSceneLoad();
+	FieldDataManager::Load("SkyIsland", "SkyIsland");
 }
 void GameScene::UnLoad()
 {

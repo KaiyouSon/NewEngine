@@ -13,6 +13,8 @@ PlayerRecoveryEffect::PlayerRecoveryEffect() :
 
 	mLineEmitter->SetTexture(TextureManager::GetTexture("Line"));
 	mLineEmitter->SetParticleData<PlayerRecoveryParticle>(50);
+
+	mEffectType = EffectType::PlayerRecoveryEffect;
 }
 
 void PlayerRecoveryEffect::Generate(const Vec3 pos)

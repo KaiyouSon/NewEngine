@@ -16,6 +16,8 @@ private:
 
 public:
 	// タイトルシーンでのロード・アンロード
+	void TitleSceneLoad();
+	void TitleSceneUnLoad();
 
 	// ゲームシーンでのロード・アンロード
 	void GameSceneLoad();

@@ -29,6 +29,8 @@ void main(point V2G input[1] : SV_POSITION, inout TriangleStream<G2P> output)
     {
         // 中心からのオフセットをスケーリング
         float4 voffset = offsetArray[i] * float4(input[0].scale, 0, 0);
+        voffset = mul(billboardMat, voffset);
+        
         float4 vpos = input[0].pos + voffset;
         
         element.pos = mul(mul(viewMat, worldMat), vpos);
