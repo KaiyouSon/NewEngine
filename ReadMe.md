@@ -12,9 +12,8 @@
 ## ブランチ詳細
 | ブランチ | 説明 |
 |----------|------|
-| **[NewEngine](https://github.com/KaiyouSon/NewEngine)** | 現状のエンジン |
+| **[NewEngine](https://github.com/KaiyouSon/NewEngine)** | 個人製作の開発状況 |
 | **[EngineProduction](https://github.com/KaiyouSon/NewEngine)** | エンジンの開発状況 |
-| **[PersonalProduction](https://github.com/KaiyouSon/NewEngine)** | 個人製作の開発状況 |
 
 ## ビルド
 **[NewEngine](https://github.com/KaiyouSon/NewEngine)** の 
