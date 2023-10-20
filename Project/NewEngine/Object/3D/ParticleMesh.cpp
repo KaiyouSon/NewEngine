@@ -24,7 +24,7 @@ ParticleMesh::ParticleMesh() :
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
 }
 
-void ParticleMesh::ExecuteComputeShader()
+void ParticleMesh::ExecuteCS()
 {
 	if (mMeshTexture == nullptr)
 	{
@@ -52,7 +52,6 @@ void ParticleMesh::ExecuteComputeShader()
 	// ディスパッチ
 	cmdList->Dispatch(1, 1, 1);
 }
-
 void ParticleMesh::Update(Transform* parent)
 {
 	mTransform.pos = pos;

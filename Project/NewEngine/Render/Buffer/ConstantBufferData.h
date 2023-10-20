@@ -202,4 +202,9 @@ namespace ConstantBufferData
 		Vec2 size;
 		float area;
 	};
+
+	struct CMaxParticle
+	{
+		uint32_t max;
+	};
 }

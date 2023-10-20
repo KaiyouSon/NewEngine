@@ -23,6 +23,8 @@ private:
 
 	std::unique_ptr<MovieEvent> mMovieEvent;
 	VolumetricFog mVolumetricFog;
+	VolumetricFog mVolumetricFog1;
+	VolumetricFog mVolumetricFog2;
 
 	RenderTexture* mCurrentScene;
 

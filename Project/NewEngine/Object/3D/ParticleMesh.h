@@ -49,7 +49,7 @@ private:
 
 public:
 	ParticleMesh();
-	void ExecuteComputeShader();
+	void ExecuteCS();
 	void Update(Transform* parent = nullptr);
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 

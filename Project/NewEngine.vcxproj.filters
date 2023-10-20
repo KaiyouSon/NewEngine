@@ -343,6 +343,9 @@
     <Filter Include="Shader\Engine\PostEffect">
       <UniqueIdentifier>{8c0398ce-464f-466e-9ace-4048e9dc0cbc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\Effect\LeadEffect">
+      <UniqueIdentifier>{1cb795f1-e4bc-4d5a-afa4-c94ef0971f93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -807,9 +810,6 @@
     <ClCompile Include="Application\SourceCode\Weapon\Club.cpp">
       <Filter>Application\Source\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Motion\BossAttack1Effect.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\PostEffect\Bloom.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
@@ -824,6 +824,9 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\VolumetricFog.cpp">
       <Filter>Application\Source\VolumetricFog</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Motion\BossAttack1Effect.cpp">
+      <Filter>Application\Source\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1331,9 +1334,6 @@
     <ClInclude Include="Application\SourceCode\Weapon\Weapon.h">
       <Filter>Application\Header\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Motion\BossAttack1Effect.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\PostEffect\Bloom.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
@@ -1345,6 +1345,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\VolumetricFog.h">
       <Filter>Application\Header\VolumetricFog</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Motion\BossAttack1Effect.h">
+      <Filter>Application\Header\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1593,6 +1596,15 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\HighLumi\HighLumiVS.hlsl">
       <Filter>Shader\Application\HighLumi</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\LeadEffect\LeadEffectInitCS.hlsl">
+      <Filter>Shader\Application\Effect\LeadEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\LeadEffect\LeadEffectVS.hlsl">
+      <Filter>Shader\Application\Effect\LeadEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\LeadEffect\LeadEffectUpdateCS.hlsl">
+      <Filter>Shader\Application\Effect\LeadEffect</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

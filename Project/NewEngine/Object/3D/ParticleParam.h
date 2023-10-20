@@ -55,6 +55,17 @@ namespace ParticleParameter
 		GPUParticleTimer(const uint32_t timer, const uint32_t maxTimer);
 	};
 
+	struct LeadParticle
+	{
+		Vec3 pos;
+		Vec3 moveVec;
+		Vec3 moveAccel;
+		Vec2 scale;
+		float scaleAccel;
+		float shininess;
+		Color color;
+	};
+
 	struct RespawnPointParticle
 	{
 		uint32_t isActive;

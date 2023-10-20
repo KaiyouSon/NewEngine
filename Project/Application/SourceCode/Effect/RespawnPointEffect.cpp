@@ -13,7 +13,7 @@ void RespawnPointEffect::Init()
 	mEmitter->SetComputePipeline(PipelineManager::GetComputePipeline("RespawnPointEffect"));
 	mEmitter->SetParticleData<RespawnPointParticle>(64);
 	mEmitter->SetTexture(TextureManager::GetTexture("Particle2"));
-	mEmitter->AddStructuredBuffer<STimer>();
+	mEmitter->AddCSStructuredBuffer<STimer>();
 	mTimer.SetLimitTimer(20);
 	mTimer.Reset();
 }

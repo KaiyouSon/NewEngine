@@ -131,22 +131,6 @@ void CreateManager::CreateShaderCompiler()
 	setting.psFilePath = path1 + "EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "RespawnPointEffect");
 
-	// ボス攻撃モーション1初期化用
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "BossAttack1Effect/BossAttack1EffectInitCS.hlsl";
-	setting.vsFilePath = path2 + "BossAttack1Effect/BossAttack1EffectVS.hlsl";
-	setting.gsFilePath = path1 + "ParticleMeshGS.hlsl";
-	setting.psFilePath = path1 + "ParticleMeshPS.hlsl";
-	ShaderCompilerManager::Create(setting, "BossAttack1EffectInit");
-
-	// ボス攻撃モーション1初期化用
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "BossAttack1Effect/BossAttack1EffectUpdateCS.hlsl";
-	setting.vsFilePath = path2 + "BossAttack1Effect/BossAttack1EffectVS.hlsl";
-	setting.gsFilePath = path1 + "ParticleMeshGS.hlsl";
-	setting.psFilePath = path1 + "ParticleMeshPS.hlsl";
-	ShaderCompilerManager::Create(setting, "BossAttack1EffectUpdate");
-
 	// ボリューメトリックフォグ用
 	setting = ShaderCompilerSetting();
 	setting.mInputLayoutSettings.resize(2);
@@ -155,6 +139,39 @@ void CreateManager::CreateShaderCompiler()
 	setting.vsFilePath = path2 + "VolumetricFog/VolumetricFogVS.hlsl";
 	setting.psFilePath = path2 + "VolumetricFog/VolumetricFogPS.hlsl";
 	ShaderCompilerManager::Create(setting, "VolumetricFog");
+
+	// ボス攻撃モーション1用（初期化）
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path2 + "BossAttack1Effect/BossAttack1EffectInitCS.hlsl";
+	setting.vsFilePath = path2 + "BossAttack1Effect/BossAttack1EffectVS.hlsl";
+	setting.gsFilePath = path1 + "ParticleMeshGS.hlsl";
+	setting.psFilePath = path1 + "ParticleMeshPS.hlsl";
+	ShaderCompilerManager::Create(setting, "BossAttack1EffectInit");
+
+	// ボス攻撃モーション1用（更新）
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path2 + "BossAttack1Effect/BossAttack1EffectUpdateCS.hlsl";
+	setting.vsFilePath = path2 + "BossAttack1Effect/BossAttack1EffectVS.hlsl";
+	setting.gsFilePath = path1 + "ParticleMeshGS.hlsl";
+	setting.psFilePath = path1 + "ParticleMeshPS.hlsl";
+	ShaderCompilerManager::Create(setting, "BossAttack1EffectUpdate");
+
+	// 誘導エフェクト用（初期化）
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path2 + "Effect/LeadEffect/LeadEffectInitCS.hlsl";
+	setting.vsFilePath = path2 + "Effect/LeadEffect/LeadEffectVS.hlsl";
+	setting.gsFilePath = path1 + "EmitterGS.hlsl";
+	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	ShaderCompilerManager::Create(setting, "LeadEffectInit");
+
+	// 誘導エフェクト用（更新）
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path2 + "Effect/LeadEffect/LeadEffectUpdateCS.hlsl";
+	setting.vsFilePath = path2 + "Effect/LeadEffect/LeadEffectVS.hlsl";
+	setting.gsFilePath = path1 + "EmitterGS.hlsl";
+	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	ShaderCompilerManager::Create(setting, "LeadEffectUpdate");
+
 }
 
 // パイプライン生成
@@ -275,12 +292,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "RespawnPointEffect");
 
-	// ボス攻撃モーション1用
-	setting = PipelineManager::GetGraphicsPipeline("ParticleMesh")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttack1EffectInit");
-	setting.rtvNum = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "BossAttack1Effect");
-
 	// ボリューメトリックフォグ用
 	depthStencilDesc = D3D12_DEPTH_STENCIL_DESC();
 	depthStencilDesc.DepthEnable = true;
@@ -289,13 +300,25 @@ void CreateManager::CreateGraphicsPipeline()
 	setting = GraphicsPipelineSetting();
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("VolumetricFog");
-	setting.cullMode = CullMode::None;
+	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc;
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 5;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFog");
+
+	// ボス攻撃モーション1用
+	setting = PipelineManager::GetGraphicsPipeline("ParticleMesh")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttack1EffectInit");
+	setting.rtvNum = 1;
+	PipelineManager::CreateGraphicsPipeline(setting, "BossAttack1Effect");
+
+	// LeadEffect1用
+	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("LeadEffectInit");
+	setting.rtvNum = 1;
+	PipelineManager::CreateGraphicsPipeline(setting, "LeadEffect");
 }
 
 // Computeパイプラインの生成
@@ -310,15 +333,31 @@ void CreateManager::CreateComputePipeline()
 	setting.rootSignatureSetting.maxUavDescritorRange = 2;
 	PipelineManager::CreateComputePipeline(setting, "RespawnPointEffect");
 
-	// リスポーンエフェクト用
+	// ボス攻撃1エフェクト用（初期化）
 	setting = PipelineManager::GetComputePipeline("ParticleMesh")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttack1EffectInit");
 	PipelineManager::CreateComputePipeline(setting, "BossAttack1EffectInit");
 
-	// リスポーンエフェクト用
+	// ボス攻撃1エフェクト用（更新）
 	setting = PipelineManager::GetComputePipeline("ParticleMesh")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttack1EffectUpdate");
 	PipelineManager::CreateComputePipeline(setting, "BossAttack1EffectUpdate");
+
+	// 誘導エフェクト用（初期化）
+	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("LeadEffectInit");
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
+	setting.rootSignatureSetting.maxUavDescritorRange = 2;
+	PipelineManager::CreateComputePipeline(setting, "LeadEffectInit");
+
+	// 誘導エフェクト用（更新）
+	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("LeadEffectUpdate");
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
+	setting.rootSignatureSetting.maxUavDescritorRange = 2;
+	PipelineManager::CreateComputePipeline(setting, "LeadEffectUpdate");
 }
 
 void CreateManager::Create()

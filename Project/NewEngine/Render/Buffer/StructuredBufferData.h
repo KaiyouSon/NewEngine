@@ -10,6 +10,15 @@ namespace StructuredBufferData
 		float timeRate;
 	};
 
+	struct SLeadEffect
+	{
+		uint32_t timer;
+		uint32_t maxTimer;
+		float timeRate;
+		uint32_t startIndex;
+		uint32_t endIndex;
+	};
+
 	struct SFog
 	{
 		Color color;

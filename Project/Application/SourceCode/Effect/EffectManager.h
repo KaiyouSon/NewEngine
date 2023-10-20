@@ -15,9 +15,9 @@ private:
 	std::unique_ptr<BloodSprayEffect> mBloodSprayEffect;
 	std::unique_ptr<PlayerRecoveryEffect> mPlayerRecoveryEffect;
 	std::unique_ptr<RespawnPointEffect> mRespawnPointEffect;
-	std::unique_ptr<LeadEffect> mLeadEffect;
 	std::unique_ptr<AirEffect> mAirEffect;
 
+	std::vector<std::unique_ptr<LeadEffect>> mLeadEffect;
 	std::vector<std::unique_ptr<BossAttack1Effect>> mBossAttack1Effect;
 
 private:

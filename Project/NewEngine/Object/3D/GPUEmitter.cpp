@@ -9,14 +9,18 @@ using namespace ConstantBufferData;
 
 GPUEmitter::GPUEmitter() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
-	offset(0, 0), tiling(1, 1),
+	offset(0, 0), tiling(1, 1), mMaxParticle(0),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GPUEmitter")),
 	mComputePipeline(PipelineManager::GetComputePipeline("GPUEmitter")),
 	mTexture(TextureManager::GetTexture("White")),
-	mParticleData(std::make_unique<StructuredBuffer>())
+	mParticleData(std::make_unique<StructuredBuffer>()),
+	mMaterial(std::make_unique<Material>()),
+	mCSMaterial(std::make_unique<Material>())
 {
 	// マテリアルの初期化
 	MaterialInit();
+	CSMaterialInit();
+
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
 }
 GPUEmitter::~GPUEmitter()
@@ -36,6 +40,20 @@ GPUEmitter::~GPUEmitter()
 	}
 }
 
+void GPUEmitter::ExecuteCS(const uint32_t threadX, const uint32_t threadY, const uint32_t threadZ)
+{
+	RenderBase* renderBase = RenderBase::GetInstance();
+	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
+
+	CSMaterialTransfer();
+
+	mComputePipeline->DrawCommand();
+
+	CSMaterialDrawCommands();
+
+	// ディスパッチ
+	cmdList->Dispatch(threadX, threadY, threadZ);
+}
 void GPUEmitter::Update(Transform* parent)
 {
 	mTransform.pos = pos;
@@ -59,32 +77,8 @@ void GPUEmitter::Draw(const BlendMode blendMode)
 {
 	if (mTexture == nullptr) return;
 
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
+	RenderBase* renderBase = RenderBase::GetInstance();
 	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
-
-	mComputePipeline->DrawCommand();
-
-	if (mParticleData->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_GENERIC_READ)
-	{
-		// GENERIC_READ -> UNORDERED_ACCESS に変更
-		renderBase->TransitionBufferState(
-			mParticleData->GetBufferResource(),
-			D3D12_RESOURCE_STATE_GENERIC_READ,
-			D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
-	}
-
-	// UAV
-	uint32_t index = mComputePipeline->GetRootSignature()->GetUAVStartIndex();
-	cmdList->SetComputeRootDescriptorTable(index, mParticleData->GetBufferResource()->uavHandle.gpu);
-
-	// その他のデータ
-	for (uint32_t i = 0; i < mStructuredBuffers.size(); i++)
-	{
-		cmdList->SetComputeRootDescriptorTable(index + i + 1, mStructuredBuffers[i]->GetBufferResource()->uavHandle.gpu);
-	}
-
-	// ディスパッチ
-	cmdList->Dispatch(1, 1, 1);
 
 	// GraphicsPipeline描画コマンド
 	mGraphicsPipeline->DrawCommand(blendMode);
@@ -120,49 +114,92 @@ void GPUEmitter::MaterialInit()
 
 	// トランスフォーム
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransformP>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// 色
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// UVパラメータ
 	iConstantBuffer = std::make_unique<ConstantBuffer<CUVParameter>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// 初期化
-	mMaterial.Init();
+	mMaterial->Init();
 }
 void GPUEmitter::MaterialTransfer()
 {
 	mBillboard.CalculateBillboardMat();
 
-	// 繝槭ヨ繝ｪ繝・け繧ｹ
+	// トランスフォーム
 	CTransformP transformPData =
 	{
 		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
 		mTransform.GetWorldMat(),
 		mBillboard.GetMat(),
 	};
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformPData);
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), transformPData);
 
-	// 濶ｲ繝・・繧ｿ
+	// 色
 	CColor colorData = { color / 255 };
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[1].get(), colorData);
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[1].get(), colorData);
 
-	// UV繝・・繧ｿ
+	// UVパラメーター
 	CUVParameter uvData = { offset,tiling };
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[2].get(), uvData);
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[2].get(), uvData);
 }
 void GPUEmitter::MaterialDrawCommands()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	for (uint32_t i = 0; i < mMaterial.constantBuffers.size(); i++)
+	for (uint32_t i = 0; i < mMaterial->constantBuffers.size(); i++)
 	{
-		// CBV縺ｮ險ｭ螳壹さ繝槭Φ繝・
+		// CBVセット
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-			i, mMaterial.constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
+			i, mMaterial->constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
+	}
+}
+void GPUEmitter::CSMaterialInit()
+{
+	// インターフェース
+	std::unique_ptr<IConstantBuffer> iConstantBuffer;
+
+	// パーティクルのマックスサイズ
+	iConstantBuffer = std::make_unique<ConstantBuffer<CMaxParticle>>();
+	mCSMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
+
+	mCSMaterial->Init();
+}
+void GPUEmitter::CSMaterialTransfer()
+{
+	// メッシュテクスチャ情報
+	CMaxParticle maxParticleSize = { mMaxParticle };
+	TransferDataToConstantBuffer(mCSMaterial->constantBuffers[0].get(), maxParticleSize);
+}
+void GPUEmitter::CSMaterialDrawCommands()
+{
+	ID3D12GraphicsCommandList* cmdList = RenderBase::GetInstance()->GetCommandList();
+
+	// ディスクリプターヒープ設定
+	auto srvDescHeap = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
+	cmdList->SetDescriptorHeaps(1, &srvDescHeap);
+
+	// CBV
+	uint32_t cbvStartIndex = mComputePipeline->GetRootSignature()->GetCBVStartIndex();
+	for (uint32_t i = 0; i < mCSMaterial->constantBuffers.size(); i++)
+	{
+		cmdList->SetComputeRootConstantBufferView(
+			cbvStartIndex + i, mCSMaterial->constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
+	}
+
+	// UAV
+	uint32_t uavStartIndex = mComputePipeline->GetRootSignature()->GetUAVStartIndex();
+	cmdList->SetComputeRootDescriptorTable(uavStartIndex, mParticleData->GetBufferResource()->uavHandle.gpu);
+	// その他のUAVデータ
+	for (uint32_t i = 0; i < mStructuredBuffers.size(); i++)
+	{
+		cmdList->SetComputeRootDescriptorTable(
+			uavStartIndex + i + 1, mStructuredBuffers[i]->GetBufferResource()->uavHandle.gpu);
 	}
 }
 

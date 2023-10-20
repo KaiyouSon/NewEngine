@@ -18,13 +18,16 @@ private:
 
 	std::unique_ptr<StructuredBuffer> mParticleData;
 	std::vector<std::unique_ptr<StructuredBuffer>> mStructuredBuffers;
+	std::unique_ptr<Material> mCSMaterial;
+	std::unique_ptr<Material> mMaterial;
+
+	uint32_t mMaxParticle;
 
 	Vec3 mWorldPos;
 	Vec3 mWorldScale;
 	Transform mTransform;
 	Transform* mParent;
 	Texture* mTexture;
-	Material mMaterial;
 	GraphicsPipeline* mGraphicsPipeline;
 	ComputePipeline* mComputePipeline;
 	Billboard mBillboard;
@@ -42,16 +45,29 @@ private:
 	void MaterialTransfer();
 	void MaterialDrawCommands();
 
+	void CSMaterialInit();
+	void CSMaterialTransfer();
+	void CSMaterialDrawCommands();
+
 public:
 	GPUEmitter();
 	~GPUEmitter();
+	void ExecuteCS(const uint32_t threadX = 1, const uint32_t threadY = 1, const uint32_t threadZ = 1);
 	void Update(Transform* parent = nullptr);
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 
 public:
+	template<typename T>
+	void AddCSConstantBuffer()
+	{
+		std::unique_ptr<IConstantBuffer> iConstatnBuffer = std::make_unique<ConstantBuffer<T>>();
+		iConstatnBuffer->Create();
+		mCSMaterial->constantBuffers.push_back(std::move(iConstatnBuffer));
+	}
+
 	// ComputeShaderのみで使うデータを増やす関数
 	template<typename T>
-	void AddStructuredBuffer()
+	void AddCSStructuredBuffer()
 	{
 		// StructuredBufferの作成
 		mStructuredBuffers.push_back(std::move(std::make_unique<StructuredBuffer>()));
@@ -71,6 +87,7 @@ public: // セッター
 	template<typename T>
 	void SetParticleData(const uint32_t maxParticle)
 	{
+		mMaxParticle = maxParticle;
 		mVertices.resize(maxParticle);
 
 		// SRVとUAVの作成
@@ -89,6 +106,13 @@ public: // セッター
 
 		DescriptorHeapManager::GetDescriptorHeap("SRV")->
 			CreateUAV(mParticleData->GetBufferResource(), maxParticle, sizeof(T));
+	}
+
+	template<typename T>
+	void TransferCSConstantBuffer(const uint32_t bufferNum, const T& data)
+	{
+		uint32_t bNum = Min<uint32_t>(bufferNum, (uint32_t)mCSMaterial->constantBuffers.size());
+		TransferDataToConstantBuffer(mCSMaterial->constantBuffers[bNum].get(), data);
 	}
 
 public: // ゲッター
