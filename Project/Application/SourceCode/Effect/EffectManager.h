@@ -16,7 +16,6 @@ private:
 	std::vector<std::unique_ptr<IEffect>> mEffects;
 
 	std::unique_ptr<BloodSprayEffect> mBloodSprayEffect;
-	std::unique_ptr<PlayerRecoveryEffect> mPlayerRecoveryEffect;
 	std::unique_ptr<RespawnPointEffect> mRespawnPointEffect;
 
 private:

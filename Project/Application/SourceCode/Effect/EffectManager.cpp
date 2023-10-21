@@ -8,7 +8,6 @@ void EffectManager::Init()
 {
 	// インスタンス生成
 	mBloodSprayEffect = std::make_unique<BloodSprayEffect>();
-	mPlayerRecoveryEffect = std::make_unique<PlayerRecoveryEffect>();
 	//mRespawnPointEffect = std::make_unique<RespawnPointEffect>();
 
 	// 初期化
