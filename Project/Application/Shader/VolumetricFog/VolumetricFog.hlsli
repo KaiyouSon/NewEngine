@@ -27,6 +27,7 @@ cbuffer ConstantBufferDataFogParam : register(b3)
 
     float4 fogColor;
     float4 fogColorRate;
+    float2 fogClamp;
 }
 
 cbuffer ConstantBufferObjectParam : register(b4)

@@ -232,9 +232,6 @@
     <Filter Include="NewEngine\Source\Debugger">
       <UniqueIdentifier>{cb973788-dcfc-4393-b3b7-b308ef56152c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Source\Field\Grass">
-      <UniqueIdentifier>{fa0aa4ee-a39f-4904-a52c-fc95561f4400}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Header\Field\Grass">
       <UniqueIdentifier>{796449d9-75b4-489f-8fed-945b7f8f3fb0}</UniqueIdentifier>
     </Filter>
@@ -351,6 +348,21 @@
     </Filter>
     <Filter Include="Shader\Application\Effect\AirEffect">
       <UniqueIdentifier>{6115ce58-b5ab-485f-9a89-88629861c5cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\Field\FiedlData">
+      <UniqueIdentifier>{12af270a-12c9-4d54-bbb8-1811e78f1b55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\Field\FiedlObject">
+      <UniqueIdentifier>{fcd631c5-c462-4e42-897d-dc1ae6508aec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\Field\FiedlObject\Grass">
+      <UniqueIdentifier>{fa0aa4ee-a39f-4904-a52c-fc95561f4400}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\Field\FiedlData">
+      <UniqueIdentifier>{118ebf8a-6c4f-4aa9-bf51-5324071b282d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header\Field\FieldObject">
+      <UniqueIdentifier>{92002e78-4a58-4326-ab66-0bd15f727d68}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -540,9 +552,6 @@
     <ClCompile Include="Application\SourceCode\Camera\TargetCamera.cpp">
       <Filter>Application\Source\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\Field.cpp">
-      <Filter>Application\Source\Field</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\Field\MessageSign.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
@@ -588,9 +597,6 @@
     <ClCompile Include="Application\SourceCode\Menu\LogoutMenu.cpp">
       <Filter>Application\Source\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\RespawnPoint.cpp">
-      <Filter>Application\Source\Field</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\Effect\RespawnPointEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
@@ -606,32 +612,17 @@
     <ClCompile Include="Application\SourceCode\Transition\RespawnTransition.cpp">
       <Filter>Application\Source\Transition</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\Tree.cpp">
-      <Filter>Application\Source\Field</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\Coffin.cpp">
-      <Filter>Application\Source\Field</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\FieldDataManager.cpp">
-      <Filter>Application\Source\Field</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\FieldData.cpp">
-      <Filter>Application\Source\Field</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Collision\ColliderObject.cpp">
       <Filter>NewEngine\Source\Collision</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Collision\ColliderDrawer.cpp">
       <Filter>NewEngine\Source\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Collision\SkyIsland.cpp">
-      <Filter>Application\Source\Field</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Collision\Grass.cpp">
-      <Filter>Application\Source\Field\Grass</Filter>
+      <Filter>Application\Source\Field\FiedlObject\Grass</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Field\Weed.cpp">
-      <Filter>Application\Source\Field\Grass</Filter>
+      <Filter>Application\Source\Field\FiedlObject\Grass</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Transition\ITransition.cpp">
       <Filter>Application\Source\Transition</Filter>
@@ -639,17 +630,11 @@
     <ClCompile Include="Application\SourceCode\Transition\TransitionManager.cpp">
       <Filter>Application\Source\Transition</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\Wall.cpp">
-      <Filter>Application\Source\Field</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Debugger\DebugManager.cpp">
       <Filter>NewEngine\Source\Debugger</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Debugger\MappingWindow.cpp">
       <Filter>NewEngine\Source\Debugger</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\Gate.cpp">
-      <Filter>Application\Source\Field</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Transition\SceneTransition.cpp">
       <Filter>Application\Source\Transition</Filter>
@@ -836,6 +821,33 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Motion\LogoExplosionEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Field\Field.cpp">
+      <Filter>Application\Source\Field\FiedlData</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Field\FieldData.cpp">
+      <Filter>Application\Source\Field\FiedlData</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Field\FieldDataManager.cpp">
+      <Filter>Application\Source\Field\FiedlData</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Field\Coffin.cpp">
+      <Filter>Application\Source\Field\FiedlObject</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Collision\SkyIsland.cpp">
+      <Filter>Application\Source\Field\FiedlObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Field\Tree.cpp">
+      <Filter>Application\Source\Field\FiedlObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Field\RespawnPoint.cpp">
+      <Filter>Application\Source\Field\FiedlObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Field\Wall.cpp">
+      <Filter>Application\Source\Field\FiedlObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Field\Gate.cpp">
+      <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1061,9 +1073,6 @@
     <ClInclude Include="Application\SourceCode\Camera\TargetCamera.h">
       <Filter>Application\Header\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\Field.h">
-      <Filter>Application\Header\Field</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\Field\MessageSign.h">
       <Filter>Application\Header\Field</Filter>
     </ClInclude>
@@ -1127,9 +1136,6 @@
     <ClInclude Include="Application\SourceCode\Menu\LogoutMenu.h">
       <Filter>Application\Header\Menu</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\RespawnPoint.h">
-      <Filter>Application\Header\Field</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\Effect\RespawnPointEffect.h">
       <Filter>Application\Header\Effect</Filter>
     </ClInclude>
@@ -1145,26 +1151,11 @@
     <ClInclude Include="Application\SourceCode\Transition\RespawnTransition.h">
       <Filter>Application\Header\Transition</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\Tree.h">
-      <Filter>Application\Header\Field</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\Coffin.h">
-      <Filter>Application\Header\Field</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\FieldDataManager.h">
-      <Filter>Application\Header\Field</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\FieldData.h">
-      <Filter>Application\Header\Field</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Collision\ColliderDrawer.h">
       <Filter>NewEngine\Header\Collision</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Collision\ColliderObject.h">
       <Filter>NewEngine\Header\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Collision\SkyIsland.h">
-      <Filter>Application\Header\Field</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Collision\Grass.h">
       <Filter>Application\Header\Field\Grass</Filter>
@@ -1178,9 +1169,6 @@
     <ClInclude Include="Application\SourceCode\Transition\TransitionManager.h">
       <Filter>Application\Header\Transition</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\Wall.h">
-      <Filter>Application\Header\Field</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Debugger\DebugManager.h">
       <Filter>NewEngine\Header\Debugger</Filter>
     </ClInclude>
@@ -1189,9 +1177,6 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Motion\OpenGateMotion.h">
       <Filter>Application\Header\Motion\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\Gate.h">
-      <Filter>Application\Header\Field</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Transition\SceneTransition.h">
       <Filter>Application\Header\Transition</Filter>
@@ -1360,6 +1345,33 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Effect\IEffect.h">
       <Filter>Application\Header\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Field\Field.h">
+      <Filter>Application\Header\Field\FiedlData</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Field\FieldData.h">
+      <Filter>Application\Header\Field\FiedlData</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Field\FieldDataManager.h">
+      <Filter>Application\Header\Field\FiedlData</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Field\Coffin.h">
+      <Filter>Application\Header\Field\FieldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Field\Gate.h">
+      <Filter>Application\Header\Field\FieldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Field\RespawnPoint.h">
+      <Filter>Application\Header\Field\FieldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Collision\SkyIsland.h">
+      <Filter>Application\Header\Field\FieldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Field\Tree.h">
+      <Filter>Application\Header\Field\FieldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Field\Wall.h">
+      <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

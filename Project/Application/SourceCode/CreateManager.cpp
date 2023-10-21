@@ -305,19 +305,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "ShadowMap");
 
-	// 深度値のみ書き込み用
-	{
-		// 3Dオブジェクト
-		setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
-		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
-		PipelineManager::CreateGraphicsPipeline(setting, "Object3DWriteNone");
-
-		// 草
-		setting = PipelineManager::GetGraphicsPipeline("Grass")->GetSetting();
-		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
-		PipelineManager::CreateGraphicsPipeline(setting, "GrassWriteNone");
-	}
-
 	// リスポーンエフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("RespawnPointEffect");
@@ -332,7 +319,7 @@ void CreateManager::CreateGraphicsPipeline()
 	setting = GraphicsPipelineSetting();
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("VolumetricFog");
-	setting.cullMode = CullMode::Back;
+	setting.cullMode = CullMode::Front;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc;
 	setting.rtvNum = 1;
@@ -363,6 +350,25 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("AirEffectInit");
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "AirEffect");
+
+
+	// 深度値のみ書き込み用
+	{
+		// 3Dオブジェクト
+		setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
+		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
+		PipelineManager::CreateGraphicsPipeline(setting, "Object3DWriteNone");
+
+		// 草
+		setting = PipelineManager::GetGraphicsPipeline("Grass")->GetSetting();
+		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
+		PipelineManager::CreateGraphicsPipeline(setting, "GrassWriteNone");
+
+		// ボリューメトリックフォグ
+		setting = PipelineManager::GetGraphicsPipeline("VolumetricFog")->GetSetting();
+		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
+		PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFogWriteNone");
+	}
 }
 
 // Computeパイプラインの生成

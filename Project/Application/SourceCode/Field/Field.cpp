@@ -88,7 +88,6 @@ void Field::Init()
 		{
 			mFieldData->respawnPoints[i]->Init();
 		}
-
 	}
 }
 
@@ -215,6 +214,31 @@ void Field::DrawFrontSprite()
 
 void Field::DrawDebugGui()
 {
+	//Gui::BeginWindow("Debug");
+
+	//Gui::DrawSlider2("Fog Clamp", VolumetricFog::fogClamp, 1.f);
+	//Gui::DrawSlider3("Fog Tiling", mFieldData->volumetricFogs[0]->tiling, 1.f);
+	//Gui::DrawSlider3("Fog Rot", mFieldData->volumetricFogs[0]->rot, 0.01f);
+	//if (Gui::DrawCollapsingHeader("Fog 0") == true)
+	//{
+	//	Gui::DrawInputInt("Step Count", (int&)mFieldData->volumetricFogs[0]->fogParam.stepCount);
+	//	Gui::DrawSlider1("Step Length", mFieldData->volumetricFogs[0]->fogParam.stepLength, 0.01f);
+	//	Gui::DrawSlider1("Fog Dencity", mFieldData->volumetricFogs[0]->fogParam.dencity, 0.01f);
+	//	Gui::DrawColorEdit("Fog Color", mFieldData->volumetricFogs[0]->fogParam.fogColor);
+
+	//	Gui::DrawLine();
+	//	Gui::DrawSlider1("Fog Color Rate R", mFieldData->volumetricFogs[0]->fogParam.fogColorRate.r, 0.01f);
+	//	Gui::DrawSlider1("Fog Color Rate G", mFieldData->volumetricFogs[0]->fogParam.fogColorRate.g, 0.01f);
+	//	Gui::DrawSlider1("Fog Color Rate B", mFieldData->volumetricFogs[0]->fogParam.fogColorRate.b, 0.01f);
+	//	Gui::DrawSlider1("Fog Color Rate A", mFieldData->volumetricFogs[0]->fogParam.fogColorRate.a, 0.01f);
+
+	//	Gui::DrawLine();
+	//	Gui::DrawSlider3("Fog Pos", mFieldData->volumetricFogs[0]->pos, 0.01f);
+	//	Gui::DrawSlider3("Fog Scale", mFieldData->volumetricFogs[0]->scale, 0.01f);
+	//	Gui::DrawSlider3("Fog Speed", mFieldData->volumetricFogs[0]->moveSpeed, 0.001f);
+	//}
+
+	//Gui::EndWindow();
 }
 
 std::array<std::unique_ptr<MessageSign>, 5>* Field::GetMessageSigns()
@@ -284,4 +308,3 @@ void Field::SetWeedGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 		}
 	}
 }
-

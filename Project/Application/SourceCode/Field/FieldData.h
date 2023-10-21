@@ -6,6 +6,7 @@
 #include "Weed.h"
 #include "Wall.h"
 #include "Gate.h"
+#include "VolumetricFog.h"
 
 struct FieldData
 {

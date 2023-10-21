@@ -6,9 +6,11 @@
 using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
+Vec2 VolumetricFog::fogClamp = Vec2(50.f, 200.f);
+
 VolumetricFog::VolumetricFog() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
-	offset(0), tiling(1), pSize(0),
+	offset(0), tiling(1),
 	mVertexBuffer(std::make_unique <VertexBuffer<VVolumetricFog>>()),
 	mIndexBuffer(std::make_unique<IndexBuffer>()),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("VolumetricFog")),
@@ -151,39 +153,6 @@ void VolumetricFog::VertexDataInit()
 		{ {  0.5f, 0.5f,-0.5f },{ 1.f,0.f,0.f } },	// 右下
 		{ {  0.5f, 0.5f, 0.5f },{ 1.f,0.f,1.f } },	// 右上
 	};
-	//mVertices.resize(24);
-	//uint32_t index = 0;
-
-	//float vpos[] = { -1.f, 1.f };
-	//float vdepth[] = { -1.f, 1.f };
-
-	//// 面作成
-	//for (uint32_t count = 0; count < 3; count++)
-	//{
-	//	// 頂点計算
-	//	for (int i = 0; i < 2; i++)
-	//	{
-	//		for (int j = 0; j < 2; j++)
-	//		{
-	//			for (int k = 0; k < 2; k++)
-	//			{
-	//				if (count == 0)
-	//				{
-	//					mVertices[index].pos = Vec3(vpos[j], vpos[k], vdepth[i]) * 0.5f;
-	//				}
-	//				else if (count == 1)
-	//				{
-	//					mVertices[index].pos = Vec3(vpos[i], vpos[j], vdepth[k]) * 0.5f;
-	//				}
-	//				else
-	//				{
-	//					mVertices[index].pos = Vec3(vpos[k], vpos[i], vdepth[j]) * 0.5f;
-	//				}
-	//				index++;
-	//			}
-	//		}
-	//	}
-	//}
 
 	mVertexBuffer->Create(mVertices);
 }
@@ -239,6 +208,7 @@ void VolumetricFog::MaterialTransfer()
 	// スクリーン座標をワールド座標に変換する行列
 	CVolumetricFog volumetricFogData = fogParam;
 	volumetricFogData.fogColor = fogParam.fogColor.To01();
+	volumetricFogData.fogClamp = fogClamp;
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[3].get(), volumetricFogData);
 
 	// UVWパラメーター
@@ -259,3 +229,8 @@ void VolumetricFog::MaterialDrawCommands()
 
 // --- ゲッター -------------------------------------------------------- //
 void VolumetricFog::SetTexture(ITexture* texture) { mTexture = texture; }
+
+void VolumetricFog::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	mGraphicsPipeline = graphicsPipeline;
+}

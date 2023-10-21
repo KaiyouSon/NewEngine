@@ -72,6 +72,7 @@ namespace ConstantBufferData
 		float dencity;		float pad;
 		Color fogColor;
 		Color fogColorRate;
+		Vec2 fogClamp;
 	};
 
 	struct CObjectParam

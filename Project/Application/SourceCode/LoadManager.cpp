@@ -212,6 +212,22 @@ bool LoadManager::TextureLoad()
 
 	// ボリュームテクスチャの作成
 	std::vector<Texture*> texs;
+	//for (uint32_t i = 0; i < 8; i++)
+	//{
+	//	// ボリュームノイズのロード
+	//	std::string index = std::to_string(i + 1);
+	//	std::string path = "T/t" + index + ".png";
+	//	std::string tag = "T" + index;
+	//	TextureManager::LoadTexture(path, tag);
+	//	texs.push_back(TextureManager::GetTexture(tag));
+	//}
+
+	//for (uint32_t i = 8; i > 0; i--)
+	//{
+	//	std::string tag = "T" + std::to_string(i);;
+	//	texs.push_back(TextureManager::GetTexture(tag));
+	//}
+
 	for (uint32_t i = 0; i < 16; i++)
 	{
 		// ボリュームノイズのロード
@@ -221,7 +237,7 @@ bool LoadManager::TextureLoad()
 		TextureManager::LoadTexture(path, tag);
 		texs.push_back(TextureManager::GetTexture(tag));
 
-		//texs.push_back(TextureManager::GetTexture("Test"));
+		//texs.push_back(TextureManager::GetTexture("Test1"));
 	}
 	TextureManager::CreateVolumeTexture(texs, "VolumeTexture");
 

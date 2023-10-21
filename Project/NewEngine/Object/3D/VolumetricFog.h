@@ -32,7 +32,7 @@ public:
 	Vec3 tiling;
 	Vec3 offset;
 	Vec3 moveSpeed;
-	uint32_t pSize;
+	static Vec2 fogClamp;
 
 	ConstantBufferData::CVolumetricFog fogParam;
 
@@ -51,5 +51,6 @@ public:
 
 public: // セッター
 	void SetTexture(ITexture* texture);
+	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 };
 

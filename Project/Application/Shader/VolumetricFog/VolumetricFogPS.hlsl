@@ -12,9 +12,6 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
 // 最小値を0に最大値を1にし値をlerpする
 float3 MapValueTo01(float3 boundsMin, float3 boundsMax, float3 value);
 
-// ボックス内にあるかどうかの判定
-uint CheckWithInBox(float3 boundsMin, float3 boundsMax, float3 value);
-
 float4 main(V2P i) : SV_TARGET
 {
     float3 rayStart = cameraPos;
@@ -24,7 +21,11 @@ float4 main(V2P i) : SV_TARGET
     float3 boundsMin = objectPos + objectScale * float3(-0.5f, -0.5f, -0.5f);
     float3 boundsMax = objectPos + objectScale * float3(+0.5f, +0.5f, +0.5f);
 
-    float4 resultColor = RayMarching(boundsMin, boundsMax, rayStart, rayDir);
+    // カメラからの距離を計算
+    float dis = distance(cameraPos, i.wpos);
+    float disRate = smoothstep(fogClamp.x, fogClamp.y, dis);
+    
+    float4 resultColor = RayMarching(boundsMin, boundsMax, rayStart, rayDir) * disRate;
     
     resultColor = resultColor * fogColor * fogColorRate;
     
@@ -114,16 +115,5 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
 float3 MapValueTo01(float3 boundsMin, float3 boundsMax, float3 value)
 {
     float3 result = (value - boundsMin) / (boundsMax - boundsMin);
-    return result;
-}
-
-// ボックス内にあるかどうかの判定
-uint CheckWithInBox(float3 boundsMin, float3 boundsMax, float3 value)
-{
-    uint result = (
-        value.x >= boundsMin.x && value.x <= boundsMax.x &&
-        value.y >= boundsMin.y && value.y <= boundsMax.y &&
-        value.z >= boundsMin.z && value.z <= boundsMax.z) ? 1 : 0;
-    
     return result;
 }

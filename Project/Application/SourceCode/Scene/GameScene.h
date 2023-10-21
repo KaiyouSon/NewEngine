@@ -22,9 +22,7 @@ private:
 	std::unique_ptr<Skydome> mSkydome;
 
 	std::unique_ptr<MovieEvent> mMovieEvent;
-	VolumetricFog mVolumetricFog;
-	VolumetricFog mVolumetricFog1;
-	VolumetricFog mVolumetricFog2;
+	std::unique_ptr<VolumetricFog> mVolumetricFog;
 
 	RenderTexture* mCurrentScene;
 

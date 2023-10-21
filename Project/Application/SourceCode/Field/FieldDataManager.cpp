@@ -469,4 +469,3 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 
 	data->gates.push_back(std::move(gate));
 }
-

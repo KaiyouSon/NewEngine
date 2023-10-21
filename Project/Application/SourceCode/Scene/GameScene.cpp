@@ -31,6 +31,7 @@ void GameScene::CreateInstance()
 	mPostEffectManager = std::make_unique<PostEffectManager>();
 	mMovieEvent = std::make_unique<MovieEvent>();
 	mSkydome = std::make_unique<Skydome>();
+	mVolumetricFog = std::make_unique<VolumetricFog>();
 }
 
 void GameScene::Init()
@@ -90,57 +91,31 @@ void GameScene::Init()
 
 	mIsChangeScene = false;
 
-	mVolumetricFog.SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
-	mVolumetricFog1.SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
-	mVolumetricFog2.SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
-
-	mVolumetricFog1.offset.y = 0.25f;
-	mVolumetricFog2.offset.x = 0.5f;
-
-	//mVolumetricFog.pos.y = 10;
-	//mVolumetricFog.scale = 10.f;
+	mVolumetricFog->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
+	mVolumetricFog->scale = Vec3(100.f, 50.f, 100.f);
+	mVolumetricFog->fogParam.stepCount = 50;
+	mVolumetricFog->fogParam.stepLength = 1.f;
+	mVolumetricFog->fogParam.dencity = 0.02f;
+	mVolumetricFog->color = Color(233, 216, 187, 255);
+	VolumetricFog::fogClamp = Vec2(30.f, 50.f);
 }
 void GameScene::Update()
 {
-	mVolumetricFog1.offset.y = 0.f;
-	mVolumetricFog2.offset.x = 0.f;
+	Vec3 offset = Vec3(0, 15, 0);
+	mVolumetricFog->pos = Camera::current.pos + offset;
+	mVolumetricFog->pos.y = Max(mVolumetricFog->pos.y, 25.f);
+	mVolumetricFog->moveSpeed = Vec3(0.001f, -0.001f, -0.001f);
 
-	if (Key::GetKey(DIK_RIGHT))
-	{
-		mVolumetricFog.pos.x += 0.01f;
-	}
-	if (Key::GetKey(DIK_LEFT))
-	{
-		mVolumetricFog.pos.x -= 0.01f;
-	}
-	if (Key::GetKey(DIK_UP))
-	{
-		mVolumetricFog.pos.z += 0.01f;
-	}
-	if (Key::GetKey(DIK_DOWN))
-	{
-		mVolumetricFog.pos.z -= 0.01f;
-	}
-	if (Key::GetKey(DIK_Q))
-	{
-		mVolumetricFog.scale += 0.01f;
-	}
-	if (Key::GetKey(DIK_E))
-	{
-		mVolumetricFog.scale -= 0.01f;
-	}
 	if (Key::GetKeyDown(DIK_L))
 	{
 		Camera::current.pos = Vec3(0, 10, -20);
 		Camera::current.rot = Radian(Vec3(0, 0, 0));
 
-		//mVolumetricFog.pos.y = 10;
-		//mVolumetricFog.scale.x = 1000;
-		//mVolumetricFog.scale.y = 25;
-		//mVolumetricFog.scale.z = 1000;
+		//mVolumetricFog->pos.y = 10;
+		//mVolumetricFog->scale.x = 1000;
+		//mVolumetricFog->scale.y = 25;
+		//mVolumetricFog->scale.z = 1000;
 	}
-
-	//mVolumetricFog.scale = 2.f;
 
 	if (Key::GetKeyDown(DIK_F10))
 	{
@@ -173,9 +148,7 @@ void GameScene::Update()
 	mSkydome->Update();
 	mMenuManager->Update();
 	mPostEffectManager->Update();
-	mVolumetricFog.Update();
-	mVolumetricFog1.Update();
-	mVolumetricFog2.Update();
+	mVolumetricFog->Update();
 
 	ShadowMap::GetInstance()->Update();
 	EffectManager::GetInstance()->Update();
@@ -183,7 +156,7 @@ void GameScene::Update()
 
 	if (mMenuManager->GetisActive() == false)
 	{
-		//CameraManager::GetInstance()->Update();
+		CameraManager::GetInstance()->Update();
 	}
 
 	// シーン切り替えの処理
@@ -231,96 +204,24 @@ void GameScene::DrawDebugGui()
 
 	//if (Gui::DrawCollapsingHeader("Fog 0") == true)
 	//{
-	//	Gui::DrawInputInt("Step Count", (int&)mVolumetricFog.fogParam.stepCount);
-	//	Gui::DrawSlider1("Step Length", mVolumetricFog.fogParam.stepLength, 0.01f);
-	//	Gui::DrawSlider1("Fog Dencity", mVolumetricFog.fogParam.dencity, 0.01f);
-	//	Gui::DrawColorEdit("Fog Color", mVolumetricFog.fogParam.fogColor);
+	//	Gui::DrawSlider2("Fog Clamp", VolumetricFog::fogClamp, 1.f);
+	//	Gui::DrawInputInt("Step Count", (int&)mVolumetricFog->fogParam.stepCount);
+	//	Gui::DrawSlider1("Step Length", mVolumetricFog->fogParam.stepLength, 0.01f);
+	//	Gui::DrawSlider1("Fog Dencity", mVolumetricFog->fogParam.dencity, 0.01f);
+	//	Gui::DrawColorEdit("Fog Color", mVolumetricFog->fogParam.fogColor);
 
 	//	Gui::DrawLine();
-	//	Gui::DrawSlider1("Fog Color Rate R", mVolumetricFog.fogParam.fogColorRate.r, 0.01f);
-	//	Gui::DrawSlider1("Fog Color Rate G", mVolumetricFog.fogParam.fogColorRate.g, 0.01f);
-	//	Gui::DrawSlider1("Fog Color Rate B", mVolumetricFog.fogParam.fogColorRate.b, 0.01f);
-	//	Gui::DrawSlider1("Fog Color Rate A", mVolumetricFog.fogParam.fogColorRate.a, 0.01f);
+	//	Gui::DrawSlider1("Fog Color Rate R", mVolumetricFog->fogParam.fogColorRate.r, 0.01f);
+	//	Gui::DrawSlider1("Fog Color Rate G", mVolumetricFog->fogParam.fogColorRate.g, 0.01f);
+	//	Gui::DrawSlider1("Fog Color Rate B", mVolumetricFog->fogParam.fogColorRate.b, 0.01f);
+	//	Gui::DrawSlider1("Fog Color Rate A", mVolumetricFog->fogParam.fogColorRate.a, 0.01f);
 
 	//	Gui::DrawLine();
-	//	Gui::DrawSlider3("Fog Pos", mVolumetricFog.pos, 0.01f);
-	//	Gui::DrawSlider3("Fog Scale", mVolumetricFog.scale, 0.01f);
-	//	Gui::DrawSlider3("Fog Speed", mVolumetricFog.moveSpeed, 0.001f);
+	//	Gui::DrawSlider3("Fog Pos", mVolumetricFog->pos, 0.01f);
+	//	Gui::DrawSlider3("Fog Scale", mVolumetricFog->scale, 0.01f);
+	//	Gui::DrawSlider3("Fog Speed", mVolumetricFog->moveSpeed, 0.001f);
 	//}
-
-	//if (Gui::DrawCollapsingHeader("Fog 1") == true)
-	//{
-	//	Gui::DrawInputInt("Step1 Count", (int&)mVolumetricFog1.fogParam.stepCount);
-	//	Gui::DrawSlider1("Step1 Length", mVolumetricFog1.fogParam.stepLength, 0.01f);
-	//	Gui::DrawSlider1("Fog1 Dencity", mVolumetricFog1.fogParam.dencity, 0.01f);
-	//	Gui::DrawColorEdit("Fog1 Color", mVolumetricFog1.fogParam.fogColor);
-
-	//	Gui::DrawLine();
-	//	Gui::DrawSlider1("Fog1 Color Rate R", mVolumetricFog1.fogParam.fogColorRate.r, 0.01f);
-	//	Gui::DrawSlider1("Fog1 Color Rate G", mVolumetricFog1.fogParam.fogColorRate.g, 0.01f);
-	//	Gui::DrawSlider1("Fog1 Color Rate B", mVolumetricFog1.fogParam.fogColorRate.b, 0.01f);
-	//	Gui::DrawSlider1("Fog1 Color Rate A", mVolumetricFog1.fogParam.fogColorRate.a, 0.01f);
-
-	//	Gui::DrawLine();
-	//	Gui::DrawSlider3("Fog1 Pos", mVolumetricFog1.pos, 0.01f);
-	//	Gui::DrawSlider3("Fog1 Scale", mVolumetricFog1.scale, 0.01f);
-	//	Gui::DrawSlider3("Fog1 Speed", mVolumetricFog1.moveSpeed, 0.001f);
-	//}
-
-	//if (Gui::DrawCollapsingHeader("Fog 2") == true)
-	//{
-	//	Gui::DrawInputInt("Step2 Count", (int&)mVolumetricFog2.fogParam.stepCount);
-	//	Gui::DrawSlider1("Step2 Length", mVolumetricFog2.fogParam.stepLength, 0.01f);
-	//	Gui::DrawSlider1("Fog2 Dencity", mVolumetricFog2.fogParam.dencity, 0.01f);
-	//	Gui::DrawColorEdit("Fog2 Color", mVolumetricFog2.fogParam.fogColor);
-
-	//	Gui::DrawLine();
-	//	Gui::DrawSlider1("Fog2 Color Rate R", mVolumetricFog2.fogParam.fogColorRate.r, 0.01f);
-	//	Gui::DrawSlider1("Fog2 Color Rate G", mVolumetricFog2.fogParam.fogColorRate.g, 0.01f);
-	//	Gui::DrawSlider1("Fog2 Color Rate B", mVolumetricFog2.fogParam.fogColorRate.b, 0.01f);
-	//	Gui::DrawSlider1("Fog2 Color Rate A", mVolumetricFog2.fogParam.fogColorRate.a, 0.01f);
-
-	//	Gui::DrawLine();
-	//	Gui::DrawSlider3("Fog2 Pos", mVolumetricFog2.pos, 0.01f);
-	//	Gui::DrawSlider3("Fog2 Scale", mVolumetricFog2.scale, 0.01f);
-	//	Gui::DrawSlider3("Fog2 Speed", mVolumetricFog2.moveSpeed, 0.001f);
-	//}
-
 	//Gui::EndWindow();
-
-	{
-		//GuiManager::BeginWindow("Lighting");
-		////GuiManager::DrawCheckBox("isActive", &LightManager::GetInstance()->directionalLight.isActive);
-		////GuiManager::DrawColorEdit("color", LightManager::GetInstance()->directionalLight.color);
-		//GuiManager::DrawSlider3("Light Pos", LightManager::GetInstance()->directionalLight.pos, 0.01f);
-
-		//Vec3 angle = Angle(ShadowMap::sLightCamera.rot);
-		//GuiManager::DrawSlider3("Camera Rot", angle, 1.f);
-		//ShadowMap::sLightCamera.rot = Radian(angle);
-
-		//GuiManager::DrawSlider1("Camera NearZ", ShadowMap::sLightCamera.oNearZ, 0.01f);
-		//GuiManager::DrawSlider1("Camera FarZ", ShadowMap::sLightCamera.oFarZ, 1.f);
-
-		//float fov = Angle(ShadowMap::sLightCamera.fov);
-		//GuiManager::DrawSlider1("Camera Fov", fov, 1.f);
-		//ShadowMap::sLightCamera.fov = Radian(fov);
-
-		//float width = ShadowMap::sLightCamera.rect.right;
-		//GuiManager::DrawSlider1("Camera Rect Width", width, 1.f);
-		//ShadowMap::sLightCamera.rect.left = -width;
-		//ShadowMap::sLightCamera.rect.right = +width;
-	}
-
-	//float height = ShadowMap::sLightCamera.rect.top;
-	//GuiManager::DrawSlider1("Camera Rect Height", ShadowMap::sLightCamera.rect.top, 1.f);
-	//ShadowMap::sLightCamera.rect.top = +height;
-	//ShadowMap::sLightCamera.rect.bottom = -height;
-
-	//GuiManager::EndWindow();
-
-	//mField->DrawDebugGui();
-
-	//mPlayer->DrawDebugGui();
 }
 
 // シーン切り替えの処理
@@ -420,6 +321,10 @@ void GameScene::DrawDepthToEffectBloom()
 	mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 
 	// フィールドオブジェクトの深度のみ書き込む
+	mVolumetricFog->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("VolumetricFogWriteNone"));
+	mVolumetricFog->Draw();
+	mVolumetricFog->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("VolumetricFog"));
+
 	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
 	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GrassWriteNone"));
 	mField->DrawModel();
@@ -434,14 +339,13 @@ void GameScene::DrawDepthToEffectBloom()
 void GameScene::DrawCurrentSceneObject()
 {
 	mPostEffectManager->DrawSkydomeVignette();
+
 	mField->DrawModel();
 
 	mPlayer->DrawModel();
 	mBoss->DrawModel();
 
-	mVolumetricFog.Draw();
-	mVolumetricFog1.Draw();
-	mVolumetricFog2.Draw();
+	mVolumetricFog->Draw();
 
 	EffectManager::GetInstance()->DrawEffect(false);
 }
