@@ -178,6 +178,7 @@ void GPUEmitter::CSMaterialTransfer()
 }
 void GPUEmitter::CSMaterialDrawCommands()
 {
+	RenderBase* renderBase = RenderBase::GetInstance();
 	ID3D12GraphicsCommandList* cmdList = RenderBase::GetInstance()->GetCommandList();
 
 	// ディスクリプターヒープ設定
@@ -190,6 +191,15 @@ void GPUEmitter::CSMaterialDrawCommands()
 	{
 		cmdList->SetComputeRootConstantBufferView(
 			cbvStartIndex + i, mCSMaterial->constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
+	}
+
+	if (mParticleData->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_GENERIC_READ)
+	{
+		// GENERIC_READ -> UNORDERED_ACCESS に変更
+		renderBase->TransitionBufferState(
+			mParticleData->GetBufferResource(),
+			D3D12_RESOURCE_STATE_GENERIC_READ,
+			D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
 	}
 
 	// UAV

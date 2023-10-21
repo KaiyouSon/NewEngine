@@ -11,12 +11,9 @@ void EffectManager::Init()
 	mPlayerRecoveryEffect = std::make_unique<PlayerRecoveryEffect>();
 	//mRespawnPointEffect = std::make_unique<RespawnPointEffect>();
 
-	mAirEffect = std::make_unique<AirEffect>();
-
 	// 初期化
 	mBloodSprayEffect->Init();
 	//mRespawnPointEffect->Init();
-	mAirEffect->Init();
 
 	mEffects.clear();
 }
@@ -26,13 +23,14 @@ void EffectManager::Update()
 	if (Key::GetKeyDown(DIK_G))
 	{
 		//GeneratePlayerRecoveryEffect(Vec3::up * 10.f);
-		GenerateLogoExplosionEffect(0, 0, 0.1f);
+		//GenerateLogoExplosionEffect(0, 0, 0.1f);
+
+		GenerateAirEffect(Vec3::up * 10.f);
 
 		//GenerateLeadEffect(Vec3::up * 10.f, Vec3::front);
 	}
 
 	mBloodSprayEffect->Update();
-	mAirEffect->Update();
 
 	// 削除処理
 	std::erase_if(mEffects,
@@ -71,9 +69,6 @@ void EffectManager::DrawEffect(const bool isBloom)
 		// 繝ｪ繧ｹ繝昴・繝ｳ蝨ｰ轤ｹ縺ｮ繧ｨ繝輔ぉ繧ｯ繝・
 		//mRespawnPointEffect->DrawModel();
 
-		//// 遨ｺ荳ｭ縺ｫ縺ゅｋ繧・▽
-		mAirEffect->DrawModel();
-
 		for (uint32_t i = 0; i < mEffects.size(); i++)
 		{
 			mEffects[i]->Draw();
@@ -85,14 +80,21 @@ void EffectManager::DrawEffect(const bool isBloom)
 		//// 陦
 		mBloodSprayEffect->DrawModel();
 
-		//// 遨ｺ荳ｭ縺ｫ縺ゅｋ繧・▽
-		mAirEffect->DrawModel();
-
 		for (uint32_t i = 0; i < mEffects.size(); i++)
 		{
 			mEffects[i]->Draw();
 		}
 	}
+}
+
+void EffectManager::GenerateAirEffect(const Vec3 pos)
+{
+	// インスタンス生成
+	std::unique_ptr<AirEffect> effect = std::make_unique<AirEffect>();
+	effect->Generate(pos);
+
+	// ベクターに追加
+	mEffects.push_back(std::move(effect));
 }
 
 void EffectManager::GenerateBloodSprayEffect(const Vec3 pos)

@@ -1,25 +1,23 @@
 #pragma once
 #include "NewEngine.h"
+#include "IEffect.h"
 
-class AirEffect
+class AirEffect : public IEffect
 {
 private:
+	std::unique_ptr<GPUEmitter> mEmitter;
 	Timer mTimer;
 
-	std::unique_ptr<Emitter> mEmitter;
 	std::vector<ParticleParameter::PParam1> mPParam;
 
 	Vec3 mStartPos;
-
-	uint32_t maxParticle;
 
 private:
 	void GenerateUpdate();
 
 public:
 	AirEffect();
-	void Init();
 	void Generate(const Vec3 pos);
-	void Update();
-	void DrawModel();
+	void Update() override;
+	void Draw() override;
 };

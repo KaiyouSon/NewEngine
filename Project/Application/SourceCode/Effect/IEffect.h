@@ -5,6 +5,7 @@
 enum class EffectType
 {
 	None,
+	AirEffect,
 	LeadEffect,
 	PlayerRecoveryEffect,
 	LogoExplosionEffect,

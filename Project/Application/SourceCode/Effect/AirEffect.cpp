@@ -1,24 +1,26 @@
 #include "AirEffect.h"
+using namespace StructuredBufferData;
+using namespace ParticleParameter;
 
 AirEffect::AirEffect() :
-	mEmitter(std::make_unique<Emitter>())
+	mEmitter(std::make_unique<GPUEmitter>())
 {
-}
-
-void AirEffect::Init()
-{
-	maxParticle = 512;
-
-	mPParam.clear();
-	mEmitter->SetMaxParticle(maxParticle);
 	mEmitter->SetTexture(TextureManager::GetTexture("Particle2"));
-	mTimer.SetLimitTimer(60);
-	mTimer.Reset();
+	mEmitter->SetParticleData<AirParticle>(100000);
+	mEmitter->AddCSStructuredBuffer<SAirEffect>();
+
+	mEffectType = EffectType::AirEffect;
 }
 
 void AirEffect::Generate(const Vec3 pos)
 {
-	mStartPos = pos;
+	mIsActive = true;
+	mEmitter->pos = pos;
+
+	mEmitter->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("AirEffect"));
+	mEmitter->SetComputePipeline(PipelineManager::GetComputePipeline("AirEffectInit"));
+	mEmitter->ExecuteCS();
+	mEmitter->SetComputePipeline(PipelineManager::GetComputePipeline("AirEffectUpdate"));
 
 	if (mTimer == true)
 	{
@@ -31,58 +33,47 @@ void AirEffect::Generate(const Vec3 pos)
 void AirEffect::Update()
 {
 	// 邊・
-	for (uint32_t i = 0; i < mPParam.size(); i++)
-	{
-		mPParam[i].ease.Update();
+	//for (uint32_t i = 0; i < mPParam.size(); i++)
+	//{
+	//	mPParam[i].ease.Update();
 
-		if (mPParam[i].ease.GetisEnd() == false)
-		{
-			if (mPParam[i].ease.GetTimer() % 200 == 0)
-			{
-				mPParam.back().moveAccel =
-				{
-					Random::RangeF(-0.02f, 0.02f),
-					Random::RangeF(-0.05f, -0.025f),
-					Random::RangeF(-0.02f, 0.02f)
-				};
-			}
-		}
-		else
-		{
-			mPParam[i].startColor.a -= 1.f;
-		}
-		mEmitter->pParam[i].curScale = mPParam[i].startScale;
+	//	if (mPParam[i].ease.GetisEnd() == false)
+	//	{
+	//		if (mPParam[i].ease.GetTimer() % 200 == 0)
+	//		{
+	//			mPParam.back().moveAccel =
+	//			{
+	//				Random::RangeF(-0.02f, 0.02f),
+	//				Random::RangeF(-0.05f, -0.025f),
+	//				Random::RangeF(-0.02f, 0.02f)
+	//			};
+	//		}
+	//	}
+	//	else
+	//	{
+	//		mPParam[i].startColor.a -= 1.f;
+	//	}
+	//	mEmitter->pParam[i].curScale = mPParam[i].startScale;
 
-		mEmitter->pParam[i].curPos = mPParam[i].startPos;
-		mPParam[i].startPos += mPParam[i].moveVec * mPParam[i].moveAccel;
+	//	mEmitter->pParam[i].curPos = mPParam[i].startPos;
+	//	mPParam[i].startPos += mPParam[i].moveVec * mPParam[i].moveAccel;
 
-		mEmitter->pParam[i].curShininess = mPParam[i].startShininess;
+	//	mEmitter->pParam[i].curShininess = mPParam[i].startShininess;
 
-		mEmitter->pParam[i].curColor = mPParam[i].startColor;
-	}
+	//	mEmitter->pParam[i].curColor = mPParam[i].startColor;
+	//}
 
-	std::erase_if(mPParam,
-		[](ParticleParameter::PParam1 param)
-		{
-			return param.startColor.a <= 0;
-		});
-
-	mEmitter->pSize = (uint32_t)mPParam.size();
 	mEmitter->Update();
 }
 
-void AirEffect::DrawModel()
+void AirEffect::Draw()
 {
+	mEmitter->ExecuteCS();
 	mEmitter->Draw();
 }
 
 void AirEffect::GenerateUpdate()
 {
-	if (mPParam.size() >= maxParticle)
-	{
-		return;
-	}
-
 	float width = 100.f;
 	float height = 20.f;
 	float depth = 100.f;

@@ -78,6 +78,16 @@ namespace ParticleParameter
 		float alphaAccel;
 	};
 
+	struct AirParticle
+	{
+		Vec3 pos;
+		Vec3 moveVec;
+		Vec3 moveAccel;
+		Vec2 scale;
+		float shininess;
+		Color color;
+	};
+
 	struct RespawnPointParticle
 	{
 		uint32_t isActive;

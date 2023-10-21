@@ -164,14 +164,6 @@ void CreateManager::CreateShaderCompiler()
 	setting.psFilePath = path1 + "EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "LeadEffectInit");
 
-	// 誘導エフェクト用（初期化）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "Effect/LeadEffect/LeadEffectInitCS.hlsl";
-	setting.vsFilePath = path2 + "Effect/LeadEffect/LeadEffectVS.hlsl";
-	setting.gsFilePath = path1 + "EmitterGS.hlsl";
-	setting.psFilePath = path1 + "EmitterPS.hlsl";
-	ShaderCompilerManager::Create(setting, "LeadEffectInit");
-
 	// 誘導エフェクト用（更新）
 	setting = ShaderCompilerSetting();
 	setting.csFilePath = path2 + "Effect/LeadEffect/LeadEffectUpdateCS.hlsl";
@@ -180,7 +172,7 @@ void CreateManager::CreateShaderCompiler()
 	setting.psFilePath = path1 + "EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "LeadEffectUpdate");
 
-	// プレイヤー回復エフェクト用（円形初期化）
+	// プレイヤー回復エフェクト用（初期化）
 	setting = ShaderCompilerSetting();
 	setting.csFilePath = path2 + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectInitCS.hlsl";
 	setting.vsFilePath = path2 + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectVS.hlsl";
@@ -188,13 +180,29 @@ void CreateManager::CreateShaderCompiler()
 	setting.psFilePath = path1 + "EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "PlayerRecoveryEffectInit");
 
-	// プレイヤー回復エフェクト用（円形更新）
+	// プレイヤー回復エフェクト用（更新）
 	setting = ShaderCompilerSetting();
 	setting.csFilePath = path2 + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectUpdateCS.hlsl";
 	setting.vsFilePath = path2 + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectVS.hlsl";
 	setting.gsFilePath = path1 + "EmitterGS.hlsl";
 	setting.psFilePath = path1 + "EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "PlayerRecoveryEffectUpdate");
+
+	// 空中のエフェクト用（初期化）
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path2 + "Effect/AirEffect/AirEffectInitCS.hlsl";
+	setting.vsFilePath = path2 + "Effect/AirEffect/AirEffectVS.hlsl";
+	setting.gsFilePath = path1 + "EmitterGS.hlsl";
+	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	ShaderCompilerManager::Create(setting, "AirEffectInit");
+
+	// 空中のエフェクト用（更新）
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path2 + "Effect/AirEffect/AirEffectUpdateCS.hlsl";
+	setting.vsFilePath = path2 + "Effect/AirEffect/AirEffectVS.hlsl";
+	setting.gsFilePath = path1 + "EmitterGS.hlsl";
+	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	ShaderCompilerManager::Create(setting, "AirEffectUpdate");
 }
 
 // パイプライン生成
@@ -338,7 +346,7 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "LogoExplosionEffect");
 
-	// LeadEffect1用
+	// 誘導エフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("LeadEffectInit");
 	setting.rtvNum = 1;
@@ -349,6 +357,12 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("PlayerRecoveryEffectInit");
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "PlayerRecoveryEffect");
+
+	// 空中のエフェクト用
+	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("AirEffectInit");
+	setting.rtvNum = 1;
+	PipelineManager::CreateGraphicsPipeline(setting, "AirEffect");
 }
 
 // Computeパイプラインの生成
@@ -406,6 +420,22 @@ void CreateManager::CreateComputePipeline()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 1;
 	PipelineManager::CreateComputePipeline(setting, "PlayerRecoveryEffectUpdate");
+
+	// 空中のエフェクト用（初期化）
+	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("AirEffectInit");
+	setting.rootSignatureSetting.maxCbvRootParameter = 1;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
+	setting.rootSignatureSetting.maxUavDescritorRange = 2;
+	PipelineManager::CreateComputePipeline(setting, "AirEffectInit");
+
+	// 空中のエフェクト用（更新）
+	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("AirEffectUpdate");
+	setting.rootSignatureSetting.maxCbvRootParameter = 1;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
+	setting.rootSignatureSetting.maxUavDescritorRange = 2;
+	PipelineManager::CreateComputePipeline(setting, "AirEffectUpdate");
 }
 
 void CreateManager::Create()

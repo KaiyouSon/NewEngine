@@ -9,7 +9,7 @@ Vignette::Vignette() :
 	mPostEffect->pos = GetWindowHalfSize();
 	mPostEffect->AddRenderTexture(mRenderTexture);
 	mPostEffect->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Vignette"));
-	mPostEffect->AddMaterial<ConstantBuffer<CVignette>>();
+	mPostEffect->AddMaterial<CVignette>();
 
 	mVignetteData.range = Vec2(0.2f, 1.7f);
 	mVignetteData.color = Color::black;

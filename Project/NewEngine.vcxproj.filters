@@ -349,6 +349,9 @@
     <Filter Include="Shader\Application\Effect\LogoExplosionEffect">
       <UniqueIdentifier>{c4793252-73b6-434a-9faa-bff5ca7177b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\Effect\AirEffect">
+      <UniqueIdentifier>{6115ce58-b5ab-485f-9a89-88629861c5cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -1623,6 +1626,15 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\Effect\PlayerRecoveryEffect\PlayerRecoveryEffectUpdateCS.hlsl">
       <Filter>Shader\Application\Effect\PlayerRecoveryEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\AirEffect\AirEffectVS.hlsl">
+      <Filter>Shader\Application\Effect\AirEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\AirEffect\AirEffectInitCS.hlsl">
+      <Filter>Shader\Application\Effect\AirEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\AirEffect\AirEffectUpdateCS.hlsl">
+      <Filter>Shader\Application\Effect\AirEffect</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

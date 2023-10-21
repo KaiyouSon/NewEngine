@@ -183,7 +183,7 @@ void GameScene::Update()
 
 	if (mMenuManager->GetisActive() == false)
 	{
-		CameraManager::GetInstance()->Update();
+		//CameraManager::GetInstance()->Update();
 	}
 
 	// シーン切り替えの処理
