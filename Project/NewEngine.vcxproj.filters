@@ -1408,19 +1408,19 @@
     <None Include="Application\Shader\Grass\Grass.hlsli">
       <Filter>Shader\Application\Grass</Filter>
     </None>
-    <None Include="NewEngine\Shader\Emitter.hlsli">
+    <None Include="NewEngine\Shader\Emitter\Emitter.hlsli">
       <Filter>Shader\Engine\Emitter</Filter>
     </None>
     <None Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSprite.hlsli">
       <Filter>Shader\Engine\CircleGaugeSprite</Filter>
     </None>
-    <None Include="NewEngine\Shader\Line.hlsli">
+    <None Include="NewEngine\Shader\Line\Line.hlsli">
       <Filter>Shader\Engine\Line</Filter>
     </None>
-    <None Include="NewEngine\Shader\ColliderObject.hlsli">
+    <None Include="NewEngine\Shader\ColliderObject\ColliderObject.hlsli">
       <Filter>Shader\Engine\ColliderObject</Filter>
     </None>
-    <None Include="NewEngine\Shader\FbxModel.hlsli">
+    <None Include="NewEngine\Shader\FbxModel\FbxModel.hlsli">
       <Filter>Shader\Engine\FbxModel</Filter>
     </None>
     <None Include="NewEngine\Shader\Object3D\Object3D.hlsli">
@@ -1433,7 +1433,7 @@
       <Filter>Shader\Engine\Sprite</Filter>
     </None>
     <None Include=".editorconfig" />
-    <None Include="NewEngine\Shader\ParticleMesh.hlsli">
+    <None Include="NewEngine\Shader\ParticleMesh\ParticleMesh.hlsli">
       <Filter>Shader\Engine\ParticleMesh</Filter>
     </None>
     <None Include="NewEngine\Shader\Util\Util.hlsli">
@@ -1516,19 +1516,19 @@
     <FxCompile Include="Application\Shader\RespawnPointEffect\RespawnPointEffectCS.hlsl">
       <Filter>Shader\Application\Effect</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\EmitterCS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Emitter\EmitterCS.hlsl">
       <Filter>Shader\Engine\Emitter</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\EmitterGS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Emitter\EmitterGS.hlsl">
       <Filter>Shader\Engine\Emitter</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\EmitterPS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Emitter\EmitterPS.hlsl">
       <Filter>Shader\Engine\Emitter</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\EmitterVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Emitter\EmitterVS.hlsl">
       <Filter>Shader\Engine\Emitter</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\GPUEmitterVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Emitter\GPUEmitterVS.hlsl">
       <Filter>Shader\Engine\Emitter</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSpritePS.hlsl">
@@ -1537,22 +1537,22 @@
     <FxCompile Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSpriteVS.hlsl">
       <Filter>Shader\Engine\CircleGaugeSprite</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\LinePS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Line\LinePS.hlsl">
       <Filter>Shader\Engine\Line</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\LineVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Line\LineVS.hlsl">
       <Filter>Shader\Engine\Line</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ColliderObjectPS.hlsl">
+    <FxCompile Include="NewEngine\Shader\ColliderObject\ColliderObjectPS.hlsl">
       <Filter>Shader\Engine\ColliderObject</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ColliderObjectVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\ColliderObject\ColliderObjectVS.hlsl">
       <Filter>Shader\Engine\ColliderObject</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\FbxModelPS.hlsl">
+    <FxCompile Include="NewEngine\Shader\FbxModel\FbxModelPS.hlsl">
       <Filter>Shader\Engine\FbxModel</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\FbxModelVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\FbxModel\FbxModelVS.hlsl">
       <Filter>Shader\Engine\FbxModel</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\Object3D\Object3DPS.hlsl">
@@ -1576,16 +1576,16 @@
     <FxCompile Include="Application\Shader\RespawnPointEffect\RespawnPointEffectVS.hlsl">
       <Filter>Shader\Application\Effect</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ParticleMeshPS.hlsl">
+    <FxCompile Include="NewEngine\Shader\ParticleMesh\ParticleMeshPS.hlsl">
       <Filter>Shader\Engine\ParticleMesh</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ParticleMeshVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\ParticleMesh\ParticleMeshVS.hlsl">
       <Filter>Shader\Engine\ParticleMesh</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ParticleMeshGS.hlsl">
+    <FxCompile Include="NewEngine\Shader\ParticleMesh\ParticleMeshGS.hlsl">
       <Filter>Shader\Engine\ParticleMesh</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ParticleMeshCS.hlsl">
+    <FxCompile Include="NewEngine\Shader\ParticleMesh\ParticleMeshCS.hlsl">
       <Filter>Shader\Engine\ParticleMesh</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogVS.hlsl">

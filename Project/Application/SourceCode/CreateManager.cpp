@@ -127,8 +127,8 @@ void CreateManager::CreateShaderCompiler()
 	setting = ShaderCompilerSetting();
 	setting.csFilePath = path2 + "RespawnPointEffect/RespawnPointEffectCS.hlsl";
 	setting.vsFilePath = path2 + "RespawnPointEffect/RespawnPointEffectVS.hlsl";
-	setting.gsFilePath = path1 + "EmitterGS.hlsl";
-	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
+	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "RespawnPointEffect");
 
 	// ボリューメトリックフォグ用
@@ -144,64 +144,64 @@ void CreateManager::CreateShaderCompiler()
 	setting = ShaderCompilerSetting();
 	setting.csFilePath = path2 + "Effect/LogoExplosionEffect/LogoExplosionEffectInitCS.hlsl";
 	setting.vsFilePath = path2 + "Effect/LogoExplosionEffect/LogoExplosionEffectVS.hlsl";
-	setting.gsFilePath = path1 + "ParticleMeshGS.hlsl";
-	setting.psFilePath = path1 + "ParticleMeshPS.hlsl";
+	setting.gsFilePath = path1 + "ParticleMesh/ParticleMeshGS.hlsl";
+	setting.psFilePath = path1 + "ParticleMesh/ParticleMeshPS.hlsl";
 	ShaderCompilerManager::Create(setting, "LogoExplosionEffectInit");
 
 	// タイトルのロゴ爆散用（更新）
 	setting = ShaderCompilerSetting();
 	setting.csFilePath = path2 + "Effect/LogoExplosionEffect/LogoExplosionEffectUpdateCS.hlsl";
 	setting.vsFilePath = path2 + "Effect/LogoExplosionEffect/LogoExplosionEffectVS.hlsl";
-	setting.gsFilePath = path1 + "ParticleMeshGS.hlsl";
-	setting.psFilePath = path1 + "ParticleMeshPS.hlsl";
+	setting.gsFilePath = path1 + "ParticleMesh/ParticleMeshGS.hlsl";
+	setting.psFilePath = path1 + "ParticleMesh/ParticleMeshPS.hlsl";
 	ShaderCompilerManager::Create(setting, "LogoExplosionEffectUpdate");
 
 	// 誘導エフェクト用（初期化）
 	setting = ShaderCompilerSetting();
 	setting.csFilePath = path2 + "Effect/LeadEffect/LeadEffectInitCS.hlsl";
 	setting.vsFilePath = path2 + "Effect/LeadEffect/LeadEffectVS.hlsl";
-	setting.gsFilePath = path1 + "EmitterGS.hlsl";
-	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
+	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "LeadEffectInit");
 
 	// 誘導エフェクト用（更新）
 	setting = ShaderCompilerSetting();
 	setting.csFilePath = path2 + "Effect/LeadEffect/LeadEffectUpdateCS.hlsl";
 	setting.vsFilePath = path2 + "Effect/LeadEffect/LeadEffectVS.hlsl";
-	setting.gsFilePath = path1 + "EmitterGS.hlsl";
-	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
+	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "LeadEffectUpdate");
 
 	// プレイヤー回復エフェクト用（初期化）
 	setting = ShaderCompilerSetting();
 	setting.csFilePath = path2 + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectInitCS.hlsl";
 	setting.vsFilePath = path2 + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectVS.hlsl";
-	setting.gsFilePath = path1 + "EmitterGS.hlsl";
-	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
+	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "PlayerRecoveryEffectInit");
 
 	// プレイヤー回復エフェクト用（更新）
 	setting = ShaderCompilerSetting();
 	setting.csFilePath = path2 + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectUpdateCS.hlsl";
 	setting.vsFilePath = path2 + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectVS.hlsl";
-	setting.gsFilePath = path1 + "EmitterGS.hlsl";
-	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
+	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "PlayerRecoveryEffectUpdate");
 
 	// 空中のエフェクト用（初期化）
 	setting = ShaderCompilerSetting();
 	setting.csFilePath = path2 + "Effect/AirEffect/AirEffectInitCS.hlsl";
 	setting.vsFilePath = path2 + "Effect/AirEffect/AirEffectVS.hlsl";
-	setting.gsFilePath = path1 + "EmitterGS.hlsl";
-	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
+	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "AirEffectInit");
 
 	// 空中のエフェクト用（更新）
 	setting = ShaderCompilerSetting();
 	setting.csFilePath = path2 + "Effect/AirEffect/AirEffectUpdateCS.hlsl";
 	setting.vsFilePath = path2 + "Effect/AirEffect/AirEffectVS.hlsl";
-	setting.gsFilePath = path1 + "EmitterGS.hlsl";
-	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
+	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "AirEffectUpdate");
 }
 

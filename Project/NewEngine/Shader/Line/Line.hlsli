@@ -11,3 +11,13 @@ cbuffer ConstantBufferDataColor : register(b1)
 {
     float4 color; // 色
 }
+
+struct Appdata
+{
+    float4 pos : POSITION;
+};
+
+struct V2P
+{
+    float4 svpos : SV_POSITION;
+};

@@ -356,8 +356,8 @@ void RenderBase::ShaderCompilerInit()
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
 	setting.mInputLayoutSettings[3] = InputLayoutSetting("BONEINDICES", DXGI_FORMAT_R32G32B32A32_UINT);
 	setting.mInputLayoutSettings[4] = InputLayoutSetting("BONEWEIGHTS", DXGI_FORMAT_R32G32B32A32_FLOAT);
-	setting.vsFilePath = path1 + "FbxModelVS.hlsl";
-	setting.psFilePath = path1 + "FbxModelPS.hlsl";
+	setting.vsFilePath = path1 + "FbxModel/FbxModelVS.hlsl";
+	setting.psFilePath = path1 + "FbxModel/FbxModelPS.hlsl";
 	ShaderCompilerManager::Create(setting, "FbxModel");
 
 	// スプライト用
@@ -391,8 +391,8 @@ void RenderBase::ShaderCompilerInit()
 	setting = ShaderCompilerSetting();
 	setting.mInputLayoutSettings.resize(1);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.vsFilePath = path1 + "LineVS.hlsl";
-	setting.psFilePath = path1 + "LinePS.hlsl";
+	setting.vsFilePath = path1 + "Line/LineVS.hlsl";
+	setting.psFilePath = path1 + "Line/LinePS.hlsl";
 	ShaderCompilerManager::Create(setting, "Line");
 
 	// エミッター用
@@ -403,18 +403,18 @@ void RenderBase::ShaderCompilerInit()
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 1);		// z軸回転
 	setting.mInputLayoutSettings[3] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 2);		// 輝度
 	setting.mInputLayoutSettings[4] = InputLayoutSetting("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);	// 色
-	setting.vsFilePath = path1 + "EmitterVS.hlsl";
-	setting.gsFilePath = path1 + "EmitterGS.hlsl";
-	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	setting.vsFilePath = path1 + "Emitter/EmitterVS.hlsl";
+	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
+	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "Emitter");
 
 	// GPUエミッター用
 	setting = ShaderCompilerSetting();
 	setting.mInputLayoutSettings.clear();
-	setting.csFilePath = path1 + "EmitterCS.hlsl";
-	setting.vsFilePath = path1 + "GPUEmitterVS.hlsl";
-	setting.gsFilePath = path1 + "EmitterGS.hlsl";
-	setting.psFilePath = path1 + "EmitterPS.hlsl";
+	setting.csFilePath = path1 + "Emitter/EmitterCS.hlsl";
+	setting.vsFilePath = path1 + "Emitter/GPUEmitterVS.hlsl";
+	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
+	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "GPUEmitter");
 
 	// ColliderObject用
@@ -423,16 +423,16 @@ void RenderBase::ShaderCompilerInit()
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path1 + "ColliderObjectVS.hlsl";
-	setting.psFilePath = path1 + "ColliderObjectPS.hlsl";
+	setting.vsFilePath = path1 + "ColliderObject/ColliderObjectVS.hlsl";
+	setting.psFilePath = path1 + "ColliderObject/ColliderObjectPS.hlsl";
 	ShaderCompilerManager::Create(setting, "ColliderObject");
 
 	// ParticleMesh用
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path1 + "ParticleMeshCS.hlsl";
-	setting.vsFilePath = path1 + "ParticleMeshVS.hlsl";
-	setting.gsFilePath = path1 + "ParticleMeshGS.hlsl";
-	setting.psFilePath = path1 + "ParticleMeshPS.hlsl";
+	setting.csFilePath = path1 + "ParticleMesh/ParticleMeshCS.hlsl";
+	setting.vsFilePath = path1 + "ParticleMesh/ParticleMeshVS.hlsl";
+	setting.gsFilePath = path1 + "ParticleMesh/ParticleMeshGS.hlsl";
+	setting.psFilePath = path1 + "ParticleMesh/ParticleMeshPS.hlsl";
 	ShaderCompilerManager::Create(setting, "ParticleMesh");
 }
 void RenderBase::GraphicsPipelineInit()

@@ -1,5 +1,3 @@
-#include "Lighting.hlsli"
-
 // 3D変換行列
 cbuffer ConstantBufferDataTransform : register(b0)
 {
@@ -33,4 +31,21 @@ struct SkinOutput
 {
     float4 pos;
     float3 normal;
+};
+
+struct Appdata
+{
+    float4 pos : POSITION;
+    float3 normal : NORMAL;
+    float2 uv : TEXCOORD;
+    uint4 boneIndices : BONEINDICES; // ボーンの番号
+    float4 boneWeights : BONEWEIGHTS; // ボーンのスキンウェイト
+};
+
+struct V2P
+{
+    float4 svpos : SV_POSITION;
+    float4 wpos : POSITION;
+    float3 normal : NORMAL;
+    float2 uv : TEXCOORD;
 };
