@@ -8,7 +8,7 @@
 #include "Timer.h"
 #include "Easing.h"
 #include "BezierCurve.h"
-#include "Rect.h"
+#include "RectAngle.h"
 #include "NewEngineDefine.h"
 #include "NewEngineEnum.h"
 #include "NewEngineSetting.h"

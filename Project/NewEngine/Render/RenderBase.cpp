@@ -102,10 +102,16 @@ void RenderBase::PreDraw()
 		(float)mRenderWindow->GetWindowSize().x,
 		(float)mRenderWindow->GetWindowSize().y
 	});
-	mViewport->Update();
+	mViewport->DrawCommands();
 
-	// シザーレクタングルの更新
-	mScissorRectangle->Update();
+	// シザー矩形の更新
+	mScissorRectangle->SetRectAngle(
+		{
+			RectAngle(
+				0, RenderWindow::GetInstance()->GetWindowSize().x,
+				0, RenderWindow::GetInstance()->GetWindowSize().y)
+		});
+	mScissorRectangle->DrawCommands();
 }
 void RenderBase::PostDraw()
 {

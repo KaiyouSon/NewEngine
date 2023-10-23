@@ -34,7 +34,7 @@ Color& Color::operator++()
 	return *this;
 }
 
-Color Color::operator+(const float num) const { return { r + num, g + num, b + num, a + num }; }	// 荳縺､縺ｮ蛟､縺ｨ縺ｮ雜ｳ縺礼ｮ・
-Color Color::operator-(const float num) const { return { r - num, g - num, b - num, a - num }; }	// 荳縺､縺ｮ蛟､縺ｨ縺ｮ蠑輔″邂・
-Color Color::operator*(const float num) const { return { r * num, g * num, b * num, a * num }; }	// 荳縺､縺ｮ蛟､縺ｨ縺ｮ謗帙￠邂・
-Color Color::operator/(const float num) const { return { r / num, g / num, b / num, a / num }; }	// 荳縺､縺ｮ蛟､縺ｨ縺ｮ蜑ｲ繧顔ｮ・
+Color Color::operator+(const float num) const { return { r + num, g + num, b + num, a + num }; }
+Color Color::operator-(const float num) const { return { r - num, g - num, b - num, a - num }; }
+Color Color::operator*(const float num) const { return { r * num, g * num, b * num, a * num }; }
+Color Color::operator/(const float num) const { return { r / num, g / num, b / num, a / num }; }

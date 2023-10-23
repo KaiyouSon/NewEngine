@@ -19,41 +19,39 @@
 #include <memory>
 #include <array>
 
-template<typename T> class Singleton;
-
-class RenderBase// : public Singleton<RenderBase>
+class RenderBase
 {
 public:
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr <T>;
 	static float sClearColor[4];
 
 private:
-	// 繝・ヰ繧､繧ｹ髢｢騾｣
+	// デバイスとファクトリ
 	ComPtr<ID3D12Device> mDevice;
 	ComPtr<IDXGIFactory7> mDxgiFactory;
 
-	// 繧ｳ繝槭Φ繝蛾未騾｣
+	// コマンドアロケータ
 	ComPtr<ID3D12CommandAllocator> mCommandAllocator;
 	ComPtr<ID3D12GraphicsCommandList> mCommandList;
 	ComPtr<ID3D12CommandQueue> mCommandQueue;
 
-	// 繧ｹ繝ｯ繝・・繝√ぉ繝ｼ繝ｳ
+	// スワップチェイン
 	ComPtr<IDXGISwapChain4> mSwapChain;
-	D3D12_DESCRIPTOR_HEAP_DESC mRtvHeapDesc;		 // rtv險ｭ螳壽ｧ矩菴・
+	D3D12_DESCRIPTOR_HEAP_DESC mRtvHeapDesc;  // RTVディスクリプタヒープの設定
 	std::array<std::unique_ptr<RenderTarget>, 2> mBackBuffers;
 
-	// 繝輔ぉ繝ｳ繧ｹ
+	// フェンス
 	ComPtr<ID3D12Fence> mFence;
 	UINT64 mFenceValue;
 
-	// 豺ｱ蠎ｦ繝舌ャ繝輔ぃ
+	// 深度ステンシルバッファ
 	std::unique_ptr<DepthBuffer> mDepthBuffer;
 
-	// 繝ｫ繝ｼ繝医す繧ｰ繝阪メ繝｣繝ｼ髢｢騾｣
-	ComPtr<ID3DBlob> mErrorBlob;	// 繧ｨ繝ｩ繝ｼ繧ｪ繝悶ず繧ｧ繧ｯ繝・
+	// ルートシグネチャのエラーメッセージ
+	ComPtr<ID3DBlob> mErrorBlob;  // シェーダーコンパイルエラーメッセージ
 
-	// 謠冗判蜃ｦ逅・未騾｣
-	D3D12_RESOURCE_BARRIER mBarrierDesc;	// 繝ｪ繧ｽ繝ｼ繧ｹ繝舌Μ繧｢
+	// パイプライン状態バリア
+	D3D12_RESOURCE_BARRIER mBarrierDesc;  // リソースバリアの設定
 	std::unique_ptr<Viewport> mViewport;
 	std::unique_ptr<ScissorRectangle> mScissorRectangle;
 
@@ -72,7 +70,7 @@ public:
 		const D3D12_RESOURCE_STATES targetState);
 
 private:
-	// 蛻晄悄蛹夜未騾｣
+	// 初期化関連
 	void DeviceInit();
 	void CommandInit();
 	void SwapChainInit();

@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 
+// 色の構造体
 struct Color
 {
 	float r, g, b, a;
@@ -29,13 +30,12 @@ struct Color
 
 	Color operator=(const Color other);
 
-	// 豈碑ｼ・ｼ皮ｮ怜ｭ舌・繧ｪ繝ｼ繝舌・繝ｭ繝ｼ繝・
 	bool operator!=(const Color other) const;
 	Color& operator++();
 
-	Color operator+(const float num) const;	// 荳縺､縺ｮ蛟､縺ｨ縺ｮ雜ｳ縺礼ｮ・
-	Color operator-(const float num) const;	// 荳縺､縺ｮ蛟､縺ｨ縺ｮ蠑輔″邂・
-	Color operator*(const float num) const; // 荳縺､縺ｮ蛟､縺ｨ縺ｮ謗帙￠邂・
-	Color operator/(const float num) const; // 荳縺､縺ｮ蛟､縺ｨ縺ｮ蜑ｲ繧顔ｮ・
+	Color operator+(const float num) const;
+	Color operator-(const float num) const;
+	Color operator*(const float num) const;
+	Color operator/(const float num) const;
 
 };

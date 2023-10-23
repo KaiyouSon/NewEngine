@@ -52,10 +52,10 @@ void SoundManager::Init()
 {
 	HRESULT result;
 
-	// XAudio繧ｨ繝ｳ繧ｸ繝ｳ縺ｮ繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ繧堤函謌・
+	// XAudio2オブジェクトの初期化
 	result = XAudio2Create(&sXAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR);
 
-	// 繝槭せ繧ｿ繝ｼ繝懊う繧ｹ繧堤函謌・
+	// マスターボイスの作成
 	result = sXAudio2->CreateMasteringVoice(&sMasterVoice);
 }
 
@@ -69,3 +69,4 @@ void SoundManager::Destroy()
 	}
 }
 
+IXAudio2* SoundManager::GetXAudio2() { return sXAudio2.Get(); }

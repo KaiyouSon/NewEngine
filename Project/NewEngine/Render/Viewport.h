@@ -11,14 +11,14 @@ private:
 
 public:
 	Viewport();
-	void Update();
+	void DrawCommands();
 
-public: // 繧ｻ繝・ち繝ｼ
+public: // セッター
 	void SetViewport(
 		const Vec2 leftTopPos, const Vec2 size,
 		const float MinDepth = 0.0f, const float MaxDepth = 1.0f);
 
-public: // 繧ｲ繝・ち繝ｼ
+public: // ゲッター
 	Vec2 GetLeftTopPos();
 	Vec2 GetSize();
 	float GetMinDepth();

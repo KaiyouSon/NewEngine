@@ -2,19 +2,21 @@
 #include "Mat4.h"
 #include "NewEngineEnum.h"
 
+// ビルボードのクラス
 class Billboard
 {
 private:
-	Mat4 mat_; // 繝薙Ν繝懊・繝芽｡悟・
-	BillboardType type_ = BillboardType::None;
+	Mat4 mMat;
+	BillboardType mType;
 
 public:
+	Billboard();
 	void CalculateBillboardMat();
 
-public: //繧ｻ繝・ち繝ｼ
-	inline void SetBillboardType(const BillboardType type) { type_ = type; }
+public:
+	void SetBillboardType(const BillboardType type);
 
-public:	// 繧ｲ繝・ち繝ｼ
-	inline Mat4 GetMat() { return mat_; }
-	inline BillboardType GetBillboardType() {return type_; }
+public:
+	Mat4 GetMat();
+	BillboardType GetBillboardType();
 };

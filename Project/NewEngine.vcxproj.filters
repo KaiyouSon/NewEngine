@@ -600,7 +600,7 @@
     <ClCompile Include="Application\SourceCode\Effect\RespawnPointEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Util\Rect.cpp">
+    <ClCompile Include="NewEngine\Util\RectAngle.cpp">
       <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\ShadowMap\ShadowMap.cpp">
@@ -1139,7 +1139,7 @@
     <ClInclude Include="Application\SourceCode\Effect\RespawnPointEffect.h">
       <Filter>Application\Header\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Util\Rect.h">
+    <ClInclude Include="NewEngine\Util\RectAngle.h">
       <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\ShadowMap\ShadowMap.h">

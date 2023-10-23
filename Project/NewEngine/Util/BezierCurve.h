@@ -5,6 +5,7 @@
 #include <vector>
 #include <cstdint>
 
+// ベジエ曲線のクラス
 class BezierCurve
 {
 private:
@@ -16,31 +17,28 @@ private:
 
 	Easing mEase;
 
+private:
+	// 再帰関数
+	std::vector<Vec3> RecursiveLerp(const std::vector<Vec3>& points, const BezierType type);
+
 public:
 	BezierCurve();
 	BezierCurve(const int32_t easeTimer);
 	BezierCurve(const int32_t easeTimer, const float powNum);
 	void Reset();
 	void Update();
-	Vec3 InterPolation(const BezierType type = BezierType::Lerp);	// 陬憺俣
 
-public:
+	// 補間
+	Vec3 InterPolation(const BezierType type = BezierType::Lerp);
 
-	// 蛻ｶ蠕｡轤ｹ繧定ｿｽ蜉
-	inline void AddPoint(const Vec3& pos) { mPoints.push_back(pos); }
+public: // 制御点関連
+	void AddPoint(const Vec3& pos);
+	void ClearPoints();
 
-	// 陬憺俣譎る俣繧偵そ繝・ヨ縺吶ｋ
-	inline void SetEaseTime(const int32_t easeTime) { mEase.SetEaseTimer(easeTime); }
+public: // セッター
+	void SetEaseTime(const int32_t easeTime);
+	void SetEasePowNum(const float pownum);
 
-	// N荵励ｒ繧ｻ繝・ヨ縺吶ｋ
-	inline void SetEasePowNum(const float pownum) { mEase.SetPowNum(pownum); }
-
-	// 蛻ｶ蠕｡轤ｹ蜑企勁
-	inline void ClearPoints() { mPoints.clear(); }
-
-	// 邨ゆｺ・ヵ繝ｩ繧ｰ
-	inline bool GetisEnd() { return mIsEnd; }
-
-private:
-	std::vector<Vec3> RecursiveLerp(const std::vector<Vec3>& points, const BezierType type);
+public: // ゲッター
+	bool GetisEnd();
 };

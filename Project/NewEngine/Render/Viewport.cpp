@@ -7,12 +7,11 @@ Viewport::Viewport() :
 {
 }
 
-void Viewport::Update()
+void Viewport::DrawCommands()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	//----------------------- 繝薙Η繝ｼ繝昴・繝医・險ｭ螳壹さ繝槭Φ繝・-----------------------//
-	// 繝薙Η繝ｼ繝昴・繝郁ｨｭ螳壹さ繝槭Φ繝・
+	// 設定構造体
 	D3D12_VIEWPORT viewport;
 	viewport.TopLeftX = mLeftTopPos.x;
 	viewport.TopLeftY = mLeftTopPos.y;
@@ -21,11 +20,11 @@ void Viewport::Update()
 	viewport.MinDepth = mMinDepth;
 	viewport.MaxDepth = mMaxDepth;
 
-	// 繝薙Η繝ｼ繝昴・繝郁ｨｭ螳壹さ繝槭Φ繝峨ｒ縲√さ繝槭Φ繝峨Μ繧ｹ繝医↓遨阪・
+	// ビューポートセット
 	renderBase->GetCommandList()->RSSetViewports(1, &viewport);
 }
 
-// 繧ｻ繝・ち繝ｼ
+// セッター
 void Viewport::SetViewport(
 	const Vec2 leftTopPos, const Vec2 size,
 	const float MinDepth, const float MaxDepth)
@@ -37,7 +36,7 @@ void Viewport::SetViewport(
 	mMaxDepth = MaxDepth;
 }
 
-// 繧ｲ繝・ち繝ｼ
+// ゲッター
 Vec2 Viewport::GetLeftTopPos()
 {
 	return mLeftTopPos;

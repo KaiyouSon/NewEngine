@@ -107,3 +107,14 @@ vector<Vec3> BezierCurve::RecursiveLerp(const vector<Vec3>& points, const Bezier
 		}
 	}
 }
+
+// 制御点関連
+void BezierCurve::AddPoint(const Vec3& pos) { mPoints.push_back(pos); }
+void BezierCurve::ClearPoints() { mPoints.clear(); }
+
+// セッター
+void BezierCurve::SetEaseTime(const int32_t easeTime) { mEase.SetEaseTimer(easeTime); }
+void BezierCurve::SetEasePowNum(const float pownum) { mEase.SetPowNum(pownum); }
+
+// ゲッター
+bool BezierCurve::GetisEnd() { return mIsEnd; }

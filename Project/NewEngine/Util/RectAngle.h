@@ -1,6 +1,7 @@
 #pragma once
 #include "Vec2.h"
 
+// 正方形の構造体
 struct RectAngle
 {
 	float left;

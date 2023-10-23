@@ -1,5 +1,5 @@
 #pragma once
-// 閾ｪ菴・
+// 自作
 #include "Object3D.h"
 #include "Sprite.h"
 #include "Camera.h"
@@ -47,14 +47,7 @@
 #include <algorithm>
 #include <queue>
 
-struct NewEngineSetting
-{
-	std::string windowTitle;	// 繧ｦ繧｣繝ｳ繝峨え繧ｿ繧､繝医Ν
-	Vec2 windowSize;			// 繧ｦ繧｣繝ｳ繝峨え繧ｵ繧､繧ｺ
-	Color bgColor;				// 閭梧勹濶ｲ
-	float frameRate;			// 繝輔Ξ繝ｼ繝繝ｬ繝ｼ繝・
-};
-
+// エンジンのクラス
 class NewEngine
 {
 private:
@@ -79,7 +72,7 @@ public:
 	void FrameControl();
 
 public:
-	// 繧ｦ繧､繝ｳ繝峨え髢｢騾｣
+	// ウインドウ関連
 	bool ProcessMessage();
 
 public:
@@ -87,10 +80,6 @@ public:
 	static void SetisClose(const bool isClose);
 };
 
+// ウインドウ関連
 Vec2 GetWindowSize();
 Vec2 GetWindowHalfSize();
-
-// FPS髢｢騾｣
-void SetFrameRate(const float& frameRate);
-void FrameRateUpdate();
-

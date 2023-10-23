@@ -14,60 +14,60 @@ Sound::Sound(std::string filePath) :
 {
 	string path = "Application/Sound/" + filePath;
 
-	// 繝輔ぃ繧､繝ｫ蜈･蜉帙せ繝医Μ繝ｼ繝縺ｮ繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ
+	// 音声ファイルの読み込み
 	std::ifstream file;
-	// .wav繝輔ぃ繧､繝ｫ繧偵ヰ繧､繝翫Μ繝｢繝ｼ繝峨〒髢九￥
+	// .wavファイルをバイナリモードで開く
 	file.open(path, std::ios_base::binary);
-	// 繝輔ぃ繧､繝ｫ繧ｪ繝ｼ繝励Φ螟ｱ謨励ｒ讀懷・
+	// ファイルが開けない場合はエラー
 	if (file.is_open() == false)
 	{
-		assert(0 && "繧ｵ繧ｦ繝ｳ繝峨ヵ繧｡繧､繝ｫ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ縺悟､ｱ謨励＠縺ｾ縺励◆");
+		assert(0 && "音声ファイルの読み込みに失敗しました");
 	}
 
-	// RIFF繝倥ャ繝繝ｼ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ
+	// RIFFチャンクの読み込み
 	RiffHeader riff;
 	file.read((char*)&riff, sizeof(riff));
-	// 繝輔ぃ繧､繝ｫ縺軍IFF縺九メ繧ｧ繝・け
-	if (strncmp(riff.chunk.id, "RIFF", 4) != 0)	assert(0);
-	// 繧ｿ繧､繝励′WAVE縺九メ繧ｧ繝・け
+	// ファイルがRIFFチャンクで始まらない場合はエラー
+	if (strncmp(riff.chunk.id, "RIFF", 4) != 0) assert(0);
+	// ファイルがWAVE形式でない場合はエラー
 	if (strncmp(riff.type, "WAVE", 4) != 0) assert(0);
 
-	// Format繝√Ε繝ｳ繧ｯ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ
+	// Formatチャンクの読み込み
 	FormatChunk format = {};
 	file.read((char*)&format, sizeof(ChunkHeader));
-	// 繝√Ε繝ｳ繧ｯ繝倥ャ繝繝ｼ縺ｮ遒ｺ隱・
+	// チャンクが"fmt "で始まらない場合はエラー
 	if (strncmp(format.chunk.id, "fmt ", 4) != 0) assert(0);
-	// 繝√Ε繝ｳ繧ｯ譛ｬ菴薙・隱ｭ縺ｿ霎ｼ縺ｿ
+	// チャンクサイズが正当な範囲内か確認
 	assert(format.chunk.size <= sizeof(format.fmt));
 	file.read((char*)&format.fmt, format.chunk.size);
 
-	// Data繝√Ε繝ｳ繧ｯ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ
+	// Dataチャンクの読み込み
 	ChunkHeader data;
 	file.read((char*)&data, sizeof(data));
-	// JUNK繝√Ε繝ｳ繧ｯ繧呈､懈渊縺励◆蝣ｴ蜷・
+	// JUNKチャンクの場合、スキップして読み込む
 	if (strncmp(data.id, "JUNK ", 4) == 0)
 	{
-		// 隱ｭ縺ｿ蜿悶ｊ菴咲ｽｮ繧谷UNK繝√Ε繝ｳ繧ｯ縺ｮ邨ゅｏ繧翫∪縺ｧ騾ｲ繧√ｋ
+		// スキップして読み込む
 		file.seekg(data.size, std::ios_base::cur);
-		// 蜀崎ｪｭ縺ｿ霎ｼ縺ｿ
+		// 次のチャンクを読み込む
 		file.read((char*)&data, sizeof(data));
 	}
-	// LIST繝√Ε繝ｳ繧ｯ繧呈､懈渊縺励◆蝣ｴ蜷・
+	// LISTチャンクの場合、スキップして読み込む
 	if (strncmp(data.id, "LIST ", 4) == 0)
 	{
-		// 隱ｭ縺ｿ蜿悶ｊ菴咲ｽｮ繧谷UNK繝√Ε繝ｳ繧ｯ縺ｮ邨ゅｏ繧翫∪縺ｧ騾ｲ繧√ｋ
+		// スキップして読み込む
 		file.seekg(data.size, std::ios_base::cur);
-		// 蜀崎ｪｭ縺ｿ霎ｼ縺ｿ
+		// 次のチャンクを読み込む
 		file.read((char*)&data, sizeof(data));
 	}
 
 	if (strncmp(data.id, "data ", 4) != 0) assert(0);
 
-	// Data繝√Ε繝ｳ繧ｯ縺ｮ繝・・繧ｿ驛ｨ・域ｳ｢蠖｢繝・・繧ｿ・峨・隱ｭ縺ｿ霎ｼ縺ｿ
+	// Dataチャンクのデータを読み込む
 	char* pBuffer = new char[data.size];
 	file.read(pBuffer, data.size);
 
-	// wave繝輔ぃ繧､繝ｫ繧帝哩縺倥ｋ
+	// waveデータをファイルを閉じる
 	file.close();
 
 	mWaveData.wfex = format.fmt;
@@ -75,24 +75,24 @@ Sound::Sound(std::string filePath) :
 	mWaveData.bufferSize = data.size;
 }
 
-void Sound::Play(bool isRoop)
+void Sound::Play(bool isLoop)
 {
-	// 豕｢蠖｢繝輔か繝ｼ繝槭ャ繝医ｒ蜈・↓SourceVoice縺ｮ逕滓・
+	// 音声データからSourceVoiceを作成
 	mResult = SoundManager::GetXAudio2()->
 		CreateSourceVoice(&mWaveData.pSourceVoice, &mWaveData.wfex);
 	assert(SUCCEEDED(mResult));
 
-	// 蜀咲函縺吶ｋ豕｢蠖｢繝・・繧ｿ縺ｮ險ｭ螳・
+	// 音声データをバッファにセット
 	XAUDIO2_BUFFER buffer{};
 	buffer.pAudioData = mWaveData.pBuffer;
 	buffer.AudioBytes = mWaveData.bufferSize;
 	buffer.Flags = XAUDIO2_END_OF_STREAM;
-	if (isRoop == true)
+	if (isLoop == true)
 	{
 		buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
 	}
 
-	// 豕｢蠖｢繝・・繧ｿ縺ｮ蜀咲函
+	// バッファを設定
 	if (buffer.LoopCount >= 0)
 	{
 		mResult = mWaveData.pSourceVoice->SubmitSourceBuffer(&buffer);
@@ -104,7 +104,7 @@ void Sound::Play(bool isRoop)
 
 void Sound::Stop()
 {
-	// null繝√ぉ繝・け
+	// nullポインタの確認
 	if (mWaveData.pSourceVoice == nullptr) return;
 
 	mWaveData.pSourceVoice->Stop();
@@ -112,10 +112,9 @@ void Sound::Stop()
 
 bool Sound::GetIsPlaying()
 {
-	// null繝√ぉ繝・け
 	if (mWaveData.pSourceVoice == nullptr) return false;
 
-	// 迥ｶ諷・
+	// 状態を取得
 	XAUDIO2_VOICE_STATE xa2state{};
 	mWaveData.pSourceVoice->GetState(&xa2state);
 
@@ -124,27 +123,27 @@ bool Sound::GetIsPlaying()
 
 void Sound::SetVolume(float volume)
 {
-	// null繝√ぉ繝・け
+	// nullポインタの確認
 	if (mWaveData.pSourceVoice == nullptr) return;
 
-	// clamp縺励※繧ｻ繝・ヨ縺吶ｋ
+	// 音量を設定（クランプ処理を適用）
 	mVolume = Clamp(volume);
 	mWaveData.pSourceVoice->SetVolume(mVolume);
 }
 
 void Sound::SetPitch(float pitch)
 {
-	// null繝√ぉ繝・け
+	// nullポインタの確認
 	if (mWaveData.pSourceVoice == nullptr) return;
 
-	// clamp縺励※繧ｻ繝・ヨ縺吶ｋ
+	// ピッチを設定（クランプ処理を適用）
 	mPitch = Clamp<float>(pitch, 0, 2);
 	mWaveData.pSourceVoice->SetFrequencyRatio(mPitch);
 }
 
 void Sound::UnLoad()
 {
-	// 繝舌ャ繝輔ぃ縺ｮ繝｡繝｢繝ｪ隗｣謾ｾ
+	// 音声データの解放
 	delete[] mWaveData.pBuffer;
 
 	mWaveData.pBuffer = 0;

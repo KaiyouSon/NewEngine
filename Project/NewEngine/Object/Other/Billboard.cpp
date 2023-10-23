@@ -1,33 +1,38 @@
 #include "Billboard.h"
 #include "MathUtil.h"
 
+Billboard::Billboard() :
+	mMat(Mat4::Identity()), mType(BillboardType::None)
+{
+}
+
 void Billboard::CalculateBillboardMat()
 {
-	mat_ = Mat4::Identity();
+	mMat = Mat4::Identity();
 
-	switch (type_)
+	switch (mType)
 	{
 	case BillboardType::XAxisBillboard:	// X軸ビルボード
 	{
-		mat_ *= ConvertBillBoardXAxis();
+		mMat *= ConvertBillBoardXAxis();
 		break;
 	}
 
 	case BillboardType::YAxisBillboard:	// Y軸ビルボード
 	{
-		mat_ *= ConvertBillBoardYAxis();
+		mMat *= ConvertBillBoardYAxis();
 		break;
 	}
 
 	case BillboardType::ZAxisBillboard:	// Z軸ビルボード
 	{
-		mat_ *= ConvertBillBoardZAxis();
+		mMat *= ConvertBillBoardZAxis();
 		break;
 	}
 
 	case BillboardType::AllAxisBillboard:	// 全方位ビルボード
 	{
-		mat_ *= ConvertBillBoardAllAxis();
+		mMat *= ConvertBillBoardAllAxis();
 		break;
 	}
 
@@ -36,3 +41,10 @@ void Billboard::CalculateBillboardMat()
 
 	}
 }
+
+// セッター
+void Billboard::SetBillboardType(const BillboardType type) { mType = type; }
+
+// ゲッター
+Mat4 Billboard::GetMat() { return mMat; }
+BillboardType Billboard::GetBillboardType() { return mType; }

@@ -37,27 +37,43 @@ void Easing::Update()
 	mTimeRate = Min<float>((float)mTimer / mLimitTimer, 1);
 }
 
-// 繧､繝ｼ繧ｸ繝ｳ繧ｰ邨ゅｏ繧・
+// セッター
+void Easing::SetEaseTimer(const int32_t limitTimer)
+{
+	mLimitTimer = limitTimer;
+}
+void Easing::SetPowNum(const float powNum)
+{
+	mPowNum = powNum;
+}
+void Easing::SetEaseType(const EaseType easeType)
+{
+	mEaseType = easeType;
+}
+void Easing::SetisEnd(const bool isEnd)
+{
+	mIsEnd = isEnd;
+}
+
+// ゲッター
 bool Easing::GetisEnd()
 {
 	return mIsEnd;
 }
-// 繧ｿ繧､繝槭・蜿門ｾ・
 int32_t Easing::GetTimer()
 {
 	return mTimer;
 }
-// 繧ｿ繧､繝繝ｬ繝ｼ繝医ｒ蜿門ｾ・
 float Easing::GetTimeRate()
 {
 	return mTimeRate;
 }
-// 陬憺俣繧ｿ繧､繝繧貞叙蠕・
 uint32_t Easing::GetEaseTimer()
 {
 	return mLimitTimer;
 }
 
+// 補間
 float Easing::Interpolation(const float startPos, const float endPos)
 {
 	switch (mEaseType)
@@ -78,7 +94,6 @@ float Easing::Interpolation(const float startPos, const float endPos)
 		return 0;
 	}
 }
-
 Vec2 Easing::Interpolation(const Vec2 startPos, const Vec2 endPos)
 {
 	switch (mEaseType)
@@ -99,7 +114,6 @@ Vec2 Easing::Interpolation(const Vec2 startPos, const Vec2 endPos)
 		return 0;
 	}
 }
-
 Vec3 Easing::Interpolation(const Vec3 startPos, const Vec3 endPos)
 {
 	switch (mEaseType)
@@ -120,7 +134,8 @@ Vec3 Easing::Interpolation(const Vec3 startPos, const Vec3 endPos)
 		return 0;
 	}
 }
-// 繝ｩ繝ｼ繝・
+
+// ラープ
 float Easing::Lerp(const float startPos, const float endPos)
 {
 	float dis = endPos - startPos;
@@ -137,7 +152,7 @@ Vec3 Easing::Lerp(const Vec3 startPos, const Vec3 endPos)
 	return dis * mTimeRate + startPos;
 }
 
-// 繧､繝ｼ繧ｺ繧､繝ｳ
+// イン
 float Easing::In(const float startPos, const float endPos)
 {
 	float dis = endPos - startPos;
@@ -154,7 +169,7 @@ Vec3 Easing::In(const Vec3 startPos, const Vec3 endPos)
 	return dis * powf(mTimeRate, mPowNum) + startPos;
 }
 
-// 繧､繝ｼ繧ｺ繧｢繧ｦ繝・
+// アウト
 float Easing::Out(const float startPos, const float endPos)
 {
 	float dis = endPos - startPos;
@@ -183,7 +198,7 @@ Vec3 Easing::Out(const Vec3 startPos, const Vec3 endPos)
 	return dis * -1 * (powf(mTimeRate - 1, mPowNum) - 1) + startPos;
 }
 
-// 繧､繝ｳ繧｢繧ｦ繝・
+// インアウト
 float Easing::InOut(const float startPos, const float endPos)
 {
 	float dis = (endPos - startPos);
@@ -215,7 +230,7 @@ Vec3 Easing::InOut(const Vec3 startPos, const Vec3 endPos)
 	return -dis / 2.f * (powf((1.f - (mTimeRate - 0.5f) * 2.f), mPowNum) - 2.f) + startPos;
 }
 
-// 繧､繝ｳ繝舌ャ繧ｯ
+// インバック
 float Easing::InBack(const float startPos, const float endPos)
 {
 	const float back1 = 1.70154f;

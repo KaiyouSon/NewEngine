@@ -1,9 +1,6 @@
 #include "NewEngine.h"
-
-#include "RenderTexture.h"
 #include "LoadManager.h"
 #include "DebugManager.h"
-#include <wrl.h>
 using namespace Microsoft::WRL;
 
 bool NewEngine::sIsClose = false;
@@ -17,22 +14,28 @@ NewEngine::NewEngine(const NewEngineSetting& setting) :
 
 NewEngine::~NewEngine()
 {
+	// GUIの破棄
 	Gui::Destroy();
-	RenderWindow::GetInstance()->TerminateGameWindow();		// 繧ｦ繧｣繝ｳ繝峨え繧ｯ繝ｩ繧ｹ繧堤匳骭ｲ隗｣髯､
+
+	// ウィンドウクラスを登録解除
+	RenderWindow::GetInstance()->TerminateGameWindow();
+
+	// サウンドの破棄
 	SoundManager::Destroy();
 
+	// RenderBaseの破棄
 	RenderBase::Destroy();
 }
 
 void NewEngine::Setting()
 {
-	// 繧ｦ繧｣繝ｳ繝峨え繧ｿ繧､繝医Ν
+	// ウィンドウタイトルの設定
 	mRenderWindow->SetWindowTitle(mSetting.windowTitle);
 
-	// 繧ｦ繧｣繝ｳ繝峨え繧ｵ繧､繧ｺ
+	// ウィンドウサイズの設定
 	mRenderWindow->SetWindowSize(mSetting.windowSize);
 
-	// 閭梧勹濶ｲ
+	// 背景色
 	mRenderBase->sClearColor[0] = mSetting.bgColor.To01().r;
 	mRenderBase->sClearColor[1] = mSetting.bgColor.To01().g;
 	mRenderBase->sClearColor[2] = mSetting.bgColor.To01().b;
@@ -42,49 +45,49 @@ void NewEngine::Init()
 {
 	Setting();
 
-	// 繧ｦ繧｣繝ｳ繝峨え逕滓・
+	// ウィンドウ生成
 	mRenderWindow->CreateGameWindow();
 
-	// RenderBase縺ｮ蛻晄悄蛹・
+	// RenderBaseの初期化
 	mRenderBase->Init();
 
-	// 繝ｩ繝ｳ繝峨・蛻晄悄蛹・
+	// ランダムの初期化
 	Random::Init();
 
-	//GUI縺ｮ蛻晄悄蛹・
+	// GUIの初期化
 	Gui::Init();
 
-	// 繧ｵ繧ｦ繝ｳ繝峨・繝阪・繧ｸ繝｣縺ｮ蛻晄悄蛹・
+	// サウンドの初期化
 	SoundManager::Init();
 
-	// 繝輔Ξ繝ｼ繝繝ｬ繝ｼ繝医・蛻晄悄蛹・
+	// フレームレートの初期化
 	FrameRate::GetInstance()->Init(mSetting.frameRate);
 
-	// 繧､繝ｳ繝励ャ繝医・繝阪・繧ｸ繝｣縺ｮ蛻晄悄蛹・
+	// 入力の初期化
 	InputManager::GetInstance()->Init();
 
-	// 繝・ヰ繝・げ繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｮ蛻晄悄蛹・
+	// デバッグ機能の初期化
 	DebugManager::GetInstance()->Init();
 
-	// 繝ｭ繝ｼ繝峨・繝阪・繧ｸ繝｣縺ｮ繝ｭ繝ｼ繝・
+	// ロード
 	LoadManager::GetInstance()->Load();
 
-	//縲繝ｭ繝ｼ繝臥ｵゆｺ・メ繧ｧ繝・け
+	// ロード終了なら
 	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
 	if (isLoaded == true)
 	{
-		// 繧ｳ繝ｩ繧､繝繝ｼ繝峨Ο繝ｯ繝ｼ縺ｮ繝ｭ繝ｼ繝峨→蛻晄悄蛹・
+		// コライダードロワーのロードと初期化
 		ColliderDrawer::GetInstance()->Load();
 		ColliderDrawer::GetInstance()->Init();
 
-		// 繧ｷ繝ｼ繝ｳ繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｮ蛻晄悄蛹・
+		// シーンの初期化
 		SceneManager::GetInstance()->Init();
 	}
 }
 
 void NewEngine::Update()
 {
-	//縲繝ｭ繝ｼ繝臥ｵゆｺ・メ繧ｧ繝・け
+	// ロード終了なら
 	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
 	if (isLoaded == true)
 	{
@@ -102,7 +105,7 @@ void NewEngine::Update()
 
 void NewEngine::Draw()
 {
-	//縲繝ｭ繝ｼ繝臥ｵゆｺ・メ繧ｧ繝・け
+	// ロード終了なら
 	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
 	if (isLoaded == true)
 	{
@@ -115,11 +118,11 @@ void NewEngine::Draw()
 
 void NewEngine::PrevDraw()
 {
-	//縲繝ｭ繝ｼ繝臥ｵゆｺ・メ繧ｧ繝・け
+	// ロード終了なら
 	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
 	if (isLoaded == true)
 	{
-		// SRV繝偵・繝励・險ｭ螳壹さ繝槭Φ繝・
+		// SRVのヒープセット
 		auto srvDescHeap = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
 		RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &srvDescHeap);
 		SceneManager::GetInstance()->DrawPass();
@@ -131,7 +134,7 @@ void NewEngine::PrevDraw()
 
 void NewEngine::PostDraw()
 {
-	//縲繝ｭ繝ｼ繝臥ｵゆｺ・メ繧ｧ繝・け
+	// ロード終了なら
 	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
 	if (isLoaded == true)
 	{
@@ -147,7 +150,7 @@ void NewEngine::FrameControl()
 
 bool NewEngine::ProcessMessage()
 {
-	//繧ｦ繧､繝ｳ繝峨え繧ｺ縺ｮ繝｡繝・そ繝ｼ繧ｸ繧貞・逅・☆繧・
+	// ウィンドウメッセージを処理し、WM_QUIT が返された場合は true を返す
 	if (RenderWindow::GetInstance()->ProcessMessage() == WM_QUIT)
 	{
 		return true;

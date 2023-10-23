@@ -1,7 +1,14 @@
 #pragma once
+#include "RectAngle.h"
 
 class ScissorRectangle
 {
+private:
+	RectAngle mRect;
+
 public:
-	void Update();
+	void DrawCommands();
+
+public: // セッター
+	void SetRectAngle(const RectAngle rect);
 };

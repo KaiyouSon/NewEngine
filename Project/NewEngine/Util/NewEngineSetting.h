@@ -1,11 +1,29 @@
 #pragma once
 #include "NewEngineEnum.h"
+#include "Vec2.h"
+#include "Color.h"
 #include <d3d12.h>
 #include <string>
 #include <vector>
 
 // 前方宣言
 class ShaderCompiler;
+
+// エンジンの初期設定構造体
+struct NewEngineSetting
+{
+	// ウィンドウタイトル
+	std::string windowTitle;
+
+	// ウィンドウサイズ
+	Vec2 windowSize;
+
+	// 背景色
+	Color bgColor;
+
+	// フレームレート
+	float frameRate;
+};
 
 // インプットレイアウトの設定構造体
 struct InputLayoutSetting
@@ -47,7 +65,7 @@ struct RootSignatureSetting
 // グラフィックスパイプラインの設定構造体
 struct GraphicsPipelineSetting
 {
-	// 繝代う繝励Λ繧､繝ｳ逕滓・逕ｨ
+	// パイプライン生成用
 	enum PipelineBlend
 	{
 		Alpha = 0b0001,
@@ -56,14 +74,14 @@ struct GraphicsPipelineSetting
 		Inv = 0b1000,
 	};
 
-	// 蝪励ｊ縺､縺ｶ縺・
+	// 塗りつぶし
 	enum FillMode
 	{
 		Solid,
 		Wireframe,
 	};
 
-	// 譖ｸ縺崎ｾｼ縺ｿ
+	// 書き込むモード
 	enum RenderTargetBlendMask
 	{
 		WriteNone = 0,
@@ -74,33 +92,32 @@ struct GraphicsPipelineSetting
 		WriteAll = ((WriteRed | WriteGreen) | WriteBlue) | WriteAlpha,
 	};
 
-	// 逕滓・縺吶ｋ繝代う繝励Λ繧､繝ｳ縺ｮ遞ｮ鬘・
+	// パイプライン種類
 	uint8_t pipelineBlend;
 
-	// 蝪励ｊ縺､縺ｶ縺・
+	// 塗りつぶしモード
 	FillMode fillMode;
 
-	// 譖ｸ縺崎ｾｼ縺ｿ
+	// 書き込むモード
 	RenderTargetBlendMask renderTargetBlendMask;
 
-	// 繧ｫ繝ｼ繝ｪ繝ｳ繧ｰ繝｢繝ｼ繝・
+	// カリング
 	CullMode cullMode;
 
-	// 繝医・繝ｭ繧ｸ繝ｼ繧ｿ繧､繝・
+	// トポロジータイプ
 	TopologyType topologyType;
 
-	// 繧ｷ繧ｧ繝繝ｼ繧ｪ繝悶ず繧ｧ繧ｯ繝・
+	// シェーダーコンパイラー
 	ShaderCompiler* shaderObject;
 
-	// 豺ｱ蠎ｦ險ｭ螳・
+	// 深度
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc;
 
-	// RTV縺ｮ謨ｰ
+	// RTV数
 	uint32_t rtvNum;
 
-	// RootParamter髢｢騾｣
+	// RootParamter設定構造体
 	RootSignatureSetting rootSignatureSetting;
 
-	// 繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
 	GraphicsPipelineSetting();
 };
