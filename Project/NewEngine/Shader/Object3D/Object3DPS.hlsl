@@ -114,12 +114,9 @@ PSOutput main(V2P i)// : SV_TARGET
     if (isWriteShadow == true)
     {
         shadow = CalcShadow(i.spos);
-        //shadowColor = CalcShadowColor(i, resultColor);
-        //resultColor.rgb = shadowColor;
     }
     
     resultColor.rgb *= shadow;
-    //resultColor.rgb = shadowColor;
     
     PSOutput output;
     output.target0 = resultColor * maskIntensity + dissolveColor * colorPower * (1 - maskIntensity);
