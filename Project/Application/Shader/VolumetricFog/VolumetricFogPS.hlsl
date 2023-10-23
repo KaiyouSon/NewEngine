@@ -1,7 +1,7 @@
 #include "VolumetricFog.hlsli"
 
-Texture3D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
-SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
+Texture3D<float4> tex : register(t0);
+SamplerState smp : register(s0);
 
 // レイからボックスに当たる最近接点と最遠点
 float2 ClucRayToBoxCrossPoint(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 rayDir);
@@ -28,33 +28,6 @@ float4 main(V2P i) : SV_TARGET
     float4 resultColor = RayMarching(boundsMin, boundsMax, rayStart, rayDir) * disRate;
     
     resultColor = resultColor * fogColor * fogColorRate;
-    
-    //resultColor.a = 1;
-    //clip(resultColor.a - 0.1f);
-    
-    //smoothstep(smoothingClamp.x, smoothingClamp.y, fogColor * hitCount * fogColorRate);
-    
-    // レイマーチングで球を描画する処理
-    //{
-    //    float3 v = rayStart - float3(0, 0, 0);
-    //    float dot1 = dot(v, rayDir);
-    //    float dot2 = dot(v, v) - (0.5f * 0.5f);
-    
-    //    float discr = (dot1 * dot1) - dot2;
-    //    if (dot1 > 0 && dot2 > 0)
-    //    {
-    //        resultColor = 0;
-    //    }
-    //    else if (discr < 0)
-    //    {
-    //        resultColor = 0;qq
-    //    }
-    //    else
-    //    {
-    //        resultColor = 1;
-    //    }
-    //}
-    
     return resultColor;
 }
 

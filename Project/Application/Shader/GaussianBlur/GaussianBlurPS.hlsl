@@ -1,7 +1,7 @@
 #include "GaussianBlur.hlsli"
 
-Texture2D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
-SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
+Texture2D<float4> tex : register(t0);
+SamplerState smp : register(s0);
 
 // ガウス関数
 float Gaussian(float2 drawUV, float2 pickUV, float sigma)

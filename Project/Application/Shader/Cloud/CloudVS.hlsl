@@ -6,7 +6,6 @@ V2P main(Appdata i)
     float4 wpos = mul(worldMat, i.pos);
     float4 vertexPos = mul(mul(viewMat, worldMat), i.pos);
 
-    // ピクセルシェーダーに渡す値
     V2P o = (V2P) 0;
     o.svpos = vertexPos;
     o.worldPos = wpos;

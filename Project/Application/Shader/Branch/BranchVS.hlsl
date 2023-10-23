@@ -6,9 +6,7 @@ V2P main(Appdata i)
     float4 wnormal = normalize(mul(worldMat, float4(i.normal, 0)));
     float4 vpos = mul(mul(viewProjMat, worldMat), i.pos);
     float4 wpos = mul(worldMat, i.pos);
-    //spos.z = length(wpos - float4(lightCameraPos, 1)) / 1000.f;
 
-    // ピクセルシェーダーに渡す値
     V2P o = (V2P) 0;
     o.svpos = vpos;
     o.wpos = wpos;

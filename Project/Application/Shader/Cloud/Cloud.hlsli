@@ -1,4 +1,3 @@
-
 // 3D変換行列
 cbuffer ConstantBufferDataTransform : register(b0)
 {
@@ -56,10 +55,4 @@ struct V2P
     float4 svpos : SV_POSITION; // システム用頂点座標
     float4 worldPos : POSITION; // ワールド座標
     float2 uv : TEXCOORD; // uv値
-};
-
-struct PSOutput
-{
-    float4 target0 : SV_TARGET0;
-    float4 target1 : SV_TARGET1;
 };

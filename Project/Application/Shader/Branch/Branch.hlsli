@@ -1,4 +1,3 @@
-// 3D変換行列
 cbuffer ConstantBufferDataTransform : register(b0)
 {
     matrix viewProjMat;
@@ -8,7 +7,6 @@ cbuffer ConstantBufferDataTransform : register(b0)
     float3 lightCameraPos;
 }
 
-// マテリアル
 cbuffer ConstantBufferDataMaterial : register(b1)
 {
     float3 ambient : packoffset(c0); // アンビエント係数
@@ -17,7 +15,6 @@ cbuffer ConstantBufferDataMaterial : register(b1)
     float alpha : packoffset(c2.w); // アルファ
 }
 
-// 色
 cbuffer ConstantBufferDataColor : register(b2)
 {
     float4 color; // 色
@@ -29,14 +26,12 @@ cbuffer ConstantBufferDataSkinning : register(b3)
     matrix skinningMat[maxBones];
 }
 
-// --- フォグ ---------------------- //
 cbuffer ConstantBufferDataUVParameter : register(b4)
 {
     float2 offset;
     float2 tiling;
 };
 
-// 平行光源
 cbuffer ConstantBufferDirectionalLight : register(b5)
 {
     float4 dirLightColor; // 色

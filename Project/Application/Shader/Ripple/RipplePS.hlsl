@@ -35,36 +35,4 @@ float4 main(V2P i) : SV_TARGET
     shainColor.rgb *= shininess;
     
     return texColor * shainColor;
-    
-
-
-    // マテリアル
-    Material material = { ambient, diffuse, specular };
-    
-    // シェーダーカラー
-    float4 shaderColor = 0;
-    
-    float4 adsColor = float4(0, 0, 0, 1);
-    if (isActiveDirLight == true)
-    {
-        // ライトに向かうベクトルと法線の内積
-        float dotLightNormal = dot(dirLightVec, i.normal);
-        
-        // アンビエント
-        float3 ambient = texColor.rgb * 0.6f * material.ambient.rgb;
-     
-        // ディフューズ
-        float intensity = saturate(dot(normalize(i.normal), dirLightVec));
-        float4 diffuse = intensity * dirLightColor * float4(material.diffuse.rgb, 1);
-    
-        // スペキュラー
-        float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // 頂点から視点へのベクトル
-        float3 reflectDir = -dirLightVec + 2 * i.normal * dot(i.normal, dirLightVec);
-        float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
-    
-        adsColor.rgb = ambient + diffuse + specular * dirLightColor;
-    }
-    
-    float4 resultColor = (adsColor * texColor * color);
-    return resultColor;
 }

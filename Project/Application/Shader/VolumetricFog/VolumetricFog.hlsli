@@ -9,7 +9,7 @@ cbuffer ConstantBufferDataTransform : register(b0)
 // 色
 cbuffer ConstantBufferDataColor : register(b1)
 {
-    float4 color; // 色
+    float4 color;
 }
 
 // UVWパラメーター
