@@ -76,14 +76,6 @@ void SceneTransition::Update()
 		{
 			SoundManager::Stop("BattleBGM");
 		}
-
-		//mLoadSprite->color.a = cosf(Radian((float)mAlphaTimer.GetTimer())) * 255.f;
-
-		//mAlphaTimer.Update(10);
-		//if (mAlphaTimer == true)
-		//{
-		//	mAlphaTimer.Reset();
-		//}
 	}
 	break;
 

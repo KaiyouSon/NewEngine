@@ -44,9 +44,13 @@ void TitleScene::Init()
 
 void TitleScene::Update()
 {
-	SoundManager::SetVolume("TitleBGM", mBgmVolume);
-	mBgmVolume += 0.01f;
-	mBgmVolume = Min<float>(mBgmVolume, 1.f);
+	auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
+	if (currentTransition == nullptr)
+	{
+		SoundManager::SetVolume("TitleBGM", mBgmVolume);
+		mBgmVolume += 0.01f;
+		mBgmVolume = Min<float>(mBgmVolume, 1.f);
+	}
 
 	mTimer.Update();
 	if (mTimer == true)

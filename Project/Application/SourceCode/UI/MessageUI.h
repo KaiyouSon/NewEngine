@@ -16,7 +16,6 @@ private:
 	Transform mParent;
 
 	float mAlpha;
-	bool mIsActive;
 
 public:
 	MessageUI();

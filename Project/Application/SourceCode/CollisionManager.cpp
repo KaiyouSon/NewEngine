@@ -107,7 +107,7 @@ void CollisionManager::PlayerHitNegotiation()
 		float dis = Vec3::Distance(mPlayer->GetPos(), respawnPoint->GetPos());
 		if (dis >= 20)
 		{
-			continue;;
+			continue;
 		}
 
 		if (Collision::SphereHitCapsule(
@@ -121,7 +121,7 @@ void CollisionManager::PlayerHitNegotiation()
 			{
 				TransitionManager::GetInstance()->Start(TransitionType::Respawn);
 			}
-			return;
+			break;
 		}
 	}
 
@@ -141,7 +141,7 @@ void CollisionManager::PlayerHitNegotiation()
 			mUiManager->GetNegotiationUI()->SetTextType(NegotiationUI::TextType::ReadMessageText);
 			mUiManager->GetMessageUI()->SetTexture(messageSign->GetMessageTexture());
 			isHit = true;
-			return;
+			break;
 		}
 		else
 		{
@@ -181,7 +181,7 @@ void CollisionManager::PlayerHitNegotiation()
 
 				gates[i]->SetisOpening(true);
 			}
-			return;
+			break;
 		}
 	}
 

@@ -124,11 +124,15 @@ void GameScene::Update()
 		CameraManager::GetInstance()->ChangeCamera(CameraManager::CameraType::Default);
 	}
 
-	if (SoundManager::GetIsPlaying("BattleBGM") == true)
+	auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
+	if (currentTransition == nullptr)
 	{
-		SoundManager::SetVolume("BattleBGM", mBgmVolume);
-		mBgmVolume += 0.005f;
-		mBgmVolume = Min<float>(mBgmVolume, 1.f);
+		if (SoundManager::GetIsPlaying("BattleBGM") == true)
+		{
+			SoundManager::SetVolume("BattleBGM", mBgmVolume);
+			mBgmVolume += 0.005f;
+			mBgmVolume = Min<float>(mBgmVolume, 1.f);
+		}
 	}
 
 	// ムービーイベント

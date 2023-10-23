@@ -445,18 +445,20 @@ VolumeTexture* TextureManager::GetVolumeTexture(const std::string tag)
 // 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ縺ｮ蜿門ｾ・
 RenderTexture* TextureManager::GetRenderTexture(const std::string tag)
 {
-	std::string log;
-	if (GetInstance()->mRenderTextureMap[tag].get() == nullptr)
+	auto it = GetInstance()->mRenderTextureMap.find(tag);
+	if (it == GetInstance()->mRenderTextureMap.end())
 	{
+		std::string log;
 		log = "[RenderTexture Use] Tag : " + tag + ", does not exist";
+		return nullptr;
 	}
 	else
 	{
+		std::string log;
 		log = "[RenderTexture Use] Tag : " + tag + ", was used";
+		OutputDebugLog(log.c_str());
+		return GetInstance()->mRenderTextureMap[tag].get();
 	}
-	OutputDebugLog(log.c_str());
-
-	return GetInstance()->mRenderTextureMap[tag].get();
 }
 
 // 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ繧堤函謌舌＠繝槭ャ繝励↓譬ｼ邏阪☆繧・
