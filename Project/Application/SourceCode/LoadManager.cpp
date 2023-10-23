@@ -47,7 +47,7 @@ void LoadManager::GameSceneLoad()
 	TextureManager::LoadTexture("UI/Menu/MenuTextFrame.png", "MenuTextFrame");
 	TextureManager::LoadTexture("UI/Menu/MenuTextLight.png", "MenuTextLight");
 	TextureManager::LoadTexture("UI/Result/ResultBack.png", "ResultBack");
-	TextureManager::LoadTexture("UI/RespawnPoint/RespawnBack.png", "RespawnBack");
+	TextureManager::LoadTexture("UI/Operation/OperationBack.png", "OperationBack");
 
 	// テキスト
 	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");
@@ -55,11 +55,11 @@ void LoadManager::GameSceneLoad()
 	TextureManager::LoadTexture("Text/Negotiation/RestInLightStr.png", "RestInLightStr");
 	TextureManager::LoadTexture("Text/Negotiation/OpenStr.png", "OpenStr");
 	TextureManager::LoadTexture("Text/ExitStr.png", "ExitStr");
-	TextureManager::LoadTexture("Text/Tutorial/TutorialStr1.png", "TutorialStr1");
-	TextureManager::LoadTexture("Text/Tutorial/TutorialStr2.png", "TutorialStr2");
-	TextureManager::LoadTexture("Text/Tutorial/TutorialStr3.png", "TutorialStr3");
-	TextureManager::LoadTexture("Text/Tutorial/TutorialStr4.png", "TutorialStr4");
-	TextureManager::LoadTexture("Text/Tutorial/TutorialStr5.png", "TutorialStr5");
+	TextureManager::LoadTexture("Text/Operation/Operation1Text.png", "Operation1Text");
+	TextureManager::LoadTexture("Text/Operation/Operation2Text.png", "Operation2Text");
+	TextureManager::LoadTexture("Text/Operation/Operation3Text.png", "Operation3Text");
+	TextureManager::LoadTexture("Text/Operation/Operation4Text.png", "Operation4Text");
+	TextureManager::LoadTexture("Text/Operation/Operation5Text.png", "Operation5Text");
 	TextureManager::LoadTexture("Text/Menu/BackToTitleStr.png", "BackToTitleStr");
 	TextureManager::LoadTexture("Text/Menu/CloseGameStr.png", "CloseGameStr");
 	TextureManager::LoadTexture("Text/Result/EnemyFelledStr.png", "EnemyFelledStr");

@@ -131,6 +131,7 @@
     <ClCompile Include="Application\SourceCode\Field\Cloud.cpp" />
     <ClCompile Include="Application\SourceCode\UI\BossGaugeUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\IUI.cpp" />
+    <ClCompile Include="Application\SourceCode\UI\OperationUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\PlayerGaugeUI.cpp" />
     <ClCompile Include="Application\SourceCode\Weapon\Club.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Coffin.cpp" />
@@ -300,6 +301,7 @@
     <ClInclude Include="Application\SourceCode\Field\Cloud.h" />
     <ClInclude Include="Application\SourceCode\UI\BossGaugeUI.h" />
     <ClInclude Include="Application\SourceCode\UI\IUI.h" />
+    <ClInclude Include="Application\SourceCode\UI\OperationUI.h" />
     <ClInclude Include="Application\SourceCode\UI\PlayerGaugeUI.h" />
     <ClInclude Include="Application\SourceCode\Weapon\Club.h" />
     <ClInclude Include="Application\SourceCode\Field\Coffin.h" />

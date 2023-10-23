@@ -3,6 +3,7 @@
 #include "PlayerGaugeUI.h"
 #include "BossGaugeUI.h"
 #include "ResultUI.h"
+#include "OperationUI.h"
 
 UIManager::UIManager()
 {
@@ -23,6 +24,9 @@ UIManager::UIManager()
 
 	// ボスのゲージUI
 	mUI.push_back(std::move(std::make_unique<BossGaugeUI>()));
+
+	// 操作UI
+	mUI.push_back(std::move(std::make_unique<OperationUI>()));
 }
 
 void UIManager::Init()

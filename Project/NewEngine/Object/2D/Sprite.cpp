@@ -181,6 +181,11 @@ void Sprite::TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightDownPos)
 // テクスチャー
 void Sprite::SetTexture(Texture* texture)
 {
+	if (texture == nullptr)
+	{
+		return;
+	}
+
 	mTexture = texture;
 	SetSize(texture->GetInitalSize());
 }

@@ -849,6 +849,9 @@
     <ClCompile Include="Application\SourceCode\Field\Gate.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\UI\OperationUI.cpp">
+      <Filter>Application\Source\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1286,9 +1289,6 @@
     <ClInclude Include="Application\SourceCode\UI\ItemBoxUIGroup.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\UI\ItemUI.h">
-      <Filter>Application\Header\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\UI\MessageUI.h">
       <Filter>Application\Header\UI</Filter>
     </ClInclude>
@@ -1372,6 +1372,12 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Field\Wall.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UI\OperationUI.h">
+      <Filter>Application\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UI\ItemUI.h">
+      <Filter>Application\Header\UI\Member</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

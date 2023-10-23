@@ -324,11 +324,6 @@ void GameScene::DrawDepthToEffectBloom()
 	mBoss->DrawModel();
 	mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 
-	// フィールドオブジェクトの深度のみ書き込む
-	//mVolumetricFog->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("VolumetricFogWriteNone"));
-	//mVolumetricFog->Draw();
-	//mVolumetricFog->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("VolumetricFog"));
-
 	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
 	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GrassWriteNone"));
 	mField->DrawModel();
