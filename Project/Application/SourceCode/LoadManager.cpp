@@ -109,11 +109,11 @@ void LoadManager::GameSceneUnLoad()
 	TextureManager::UnLoadTexture("RestInLightStr");
 	TextureManager::UnLoadTexture("OpenStr");
 	TextureManager::UnLoadTexture("ExitStr");
-	TextureManager::UnLoadTexture("TutorialStr1");
-	TextureManager::UnLoadTexture("TutorialStr2");
-	TextureManager::UnLoadTexture("TutorialStr3");
-	TextureManager::UnLoadTexture("TutorialStr4");
-	TextureManager::UnLoadTexture("TutorialStr5");
+	TextureManager::UnLoadTexture("Operation1Text");
+	TextureManager::UnLoadTexture("Operation2Text");
+	TextureManager::UnLoadTexture("Operation3Text");
+	TextureManager::UnLoadTexture("Operation4Text");
+	TextureManager::UnLoadTexture("Operation5Text");
 	TextureManager::UnLoadTexture("BackToTitleStr");
 	TextureManager::UnLoadTexture("CloseGameStr");
 	TextureManager::UnLoadTexture("EnemyFelledStr");

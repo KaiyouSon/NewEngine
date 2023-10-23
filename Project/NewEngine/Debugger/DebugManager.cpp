@@ -90,6 +90,11 @@ bool DebugManager::GetisStop()
 	return mIsStop;
 }
 
+bool DebugManager::GetisActive()
+{
+	return mIsActive;
+}
+
 bool DebugManager::GetisNextFrame()
 {
 	return mIsNextFrame;

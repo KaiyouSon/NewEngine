@@ -313,7 +313,7 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// ボリューメトリックフォグ用
 	depthStencilDesc = D3D12_DEPTH_STENCIL_DESC();
-	depthStencilDesc.DepthEnable = true;
+	depthStencilDesc.DepthEnable = false;
 	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
 	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
 	setting = GraphicsPipelineSetting();
@@ -351,7 +351,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "AirEffect");
 
-
 	// 深度値のみ書き込み用
 	{
 		// 3Dオブジェクト
@@ -363,6 +362,11 @@ void CreateManager::CreateGraphicsPipeline()
 		setting = PipelineManager::GetGraphicsPipeline("Grass")->GetSetting();
 		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
 		PipelineManager::CreateGraphicsPipeline(setting, "GrassWriteNone");
+
+		// 木
+		setting = PipelineManager::GetGraphicsPipeline("Branch")->GetSetting();
+		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
+		PipelineManager::CreateGraphicsPipeline(setting, "BranchWriteNone");
 
 		// ボリューメトリックフォグ
 		setting = PipelineManager::GetGraphicsPipeline("VolumetricFog")->GetSetting();

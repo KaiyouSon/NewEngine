@@ -852,6 +852,9 @@
     <ClCompile Include="Application\SourceCode\UI\OperationUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\UI\CameraTargetUI.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1378,6 +1381,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\UI\ItemUI.h">
       <Filter>Application\Header\UI\Member</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\UI\CameraTargetUI.h">
+      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

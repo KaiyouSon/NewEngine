@@ -31,4 +31,5 @@ public:
 	void SetSpherePos(const Vec3 pos);
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 	void SetWeedGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
+	void SetTreeGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 };

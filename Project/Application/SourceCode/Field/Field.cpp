@@ -308,3 +308,14 @@ void Field::SetWeedGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 		}
 	}
 }
+
+void Field::SetTreeGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	if (mFieldData)
+	{
+		for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
+		{
+			mFieldData->trees[i]->SetGraphicsPipeline(graphicsPipeline);
+		}
+	}
+}

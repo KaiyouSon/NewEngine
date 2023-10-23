@@ -10,6 +10,7 @@
 #include "LoadManager.h"
 #include "ResultUI.h"
 #include "FieldDataManager.h"
+#include "DebugManager.h"
 
 void GameScene::Load()
 {
@@ -92,18 +93,18 @@ void GameScene::Init()
 	mIsChangeScene = false;
 
 	mVolumetricFog->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
-	mVolumetricFog->scale = Vec3(100.f, 50.f, 100.f);
+	mVolumetricFog->scale = Vec3(1000.f, 200.f, 1000.f);
 	mVolumetricFog->fogParam.stepCount = 50;
 	mVolumetricFog->fogParam.stepLength = 1.f;
-	mVolumetricFog->fogParam.dencity = 0.02f;
+	mVolumetricFog->fogParam.dencity = 0.014f;
 	mVolumetricFog->color = Color(233, 216, 187, 255);
 	VolumetricFog::fogClamp = Vec2(30.f, 50.f);
 }
 void GameScene::Update()
 {
 	Vec3 offset = Vec3(0, 15, 0);
-	mVolumetricFog->pos = Camera::current.pos + offset;
-	mVolumetricFog->pos.y = Max(mVolumetricFog->pos.y, 25.f);
+	//mVolumetricFog->pos = Camera::current.pos + offset;
+	//mVolumetricFog->pos.y = Max(mVolumetricFog->pos.y, 25.f);
 	mVolumetricFog->moveSpeed = Vec3(0.001f, -0.001f, -0.001f);
 
 	if (Key::GetKeyDown(DIK_L))
@@ -160,7 +161,15 @@ void GameScene::Update()
 
 	if (mMenuManager->GetisActive() == false)
 	{
-		CameraManager::GetInstance()->Update();
+		if (DebugManager::GetInstance()->GetisActive() == false)
+		{
+			CameraManager::GetInstance()->Update();
+		}
+		else
+		{
+			Camera::DebugCameraUpdate();
+		}
+
 	}
 
 	// シーン切り替えの処理
@@ -204,28 +213,28 @@ void GameScene::Draw()
 }
 void GameScene::DrawDebugGui()
 {
-	//Gui::BeginWindow("Debug");
+	Gui::BeginWindow("Debug");
 
-	//if (Gui::DrawCollapsingHeader("Fog 0") == true)
-	//{
-	//	Gui::DrawSlider2("Fog Clamp", VolumetricFog::fogClamp, 1.f);
-	//	Gui::DrawInputInt("Step Count", (int&)mVolumetricFog->fogParam.stepCount);
-	//	Gui::DrawSlider1("Step Length", mVolumetricFog->fogParam.stepLength, 0.01f);
-	//	Gui::DrawSlider1("Fog Dencity", mVolumetricFog->fogParam.dencity, 0.01f);
-	//	Gui::DrawColorEdit("Fog Color", mVolumetricFog->fogParam.fogColor);
+	if (Gui::DrawCollapsingHeader("Fog 0") == true)
+	{
+		Gui::DrawSlider2("Fog Clamp", VolumetricFog::fogClamp, 1.f);
+		Gui::DrawInputInt("Step Count", (int&)mVolumetricFog->fogParam.stepCount);
+		Gui::DrawSlider1("Step Length", mVolumetricFog->fogParam.stepLength, 0.01f);
+		Gui::DrawSlider1("Fog Dencity", mVolumetricFog->fogParam.dencity, 0.01f);
+		Gui::DrawColorEdit("Fog Color", mVolumetricFog->fogParam.fogColor);
 
-	//	Gui::DrawLine();
-	//	Gui::DrawSlider1("Fog Color Rate R", mVolumetricFog->fogParam.fogColorRate.r, 0.01f);
-	//	Gui::DrawSlider1("Fog Color Rate G", mVolumetricFog->fogParam.fogColorRate.g, 0.01f);
-	//	Gui::DrawSlider1("Fog Color Rate B", mVolumetricFog->fogParam.fogColorRate.b, 0.01f);
-	//	Gui::DrawSlider1("Fog Color Rate A", mVolumetricFog->fogParam.fogColorRate.a, 0.01f);
+		Gui::DrawLine();
+		Gui::DrawSlider1("Fog Color Rate R", mVolumetricFog->fogParam.fogColorRate.r, 0.01f);
+		Gui::DrawSlider1("Fog Color Rate G", mVolumetricFog->fogParam.fogColorRate.g, 0.01f);
+		Gui::DrawSlider1("Fog Color Rate B", mVolumetricFog->fogParam.fogColorRate.b, 0.01f);
+		Gui::DrawSlider1("Fog Color Rate A", mVolumetricFog->fogParam.fogColorRate.a, 0.01f);
 
-	//	Gui::DrawLine();
-	//	Gui::DrawSlider3("Fog Pos", mVolumetricFog->pos, 0.01f);
-	//	Gui::DrawSlider3("Fog Scale", mVolumetricFog->scale, 0.01f);
-	//	Gui::DrawSlider3("Fog Speed", mVolumetricFog->moveSpeed, 0.001f);
-	//}
-	//Gui::EndWindow();
+		Gui::DrawLine();
+		Gui::DrawSlider3("Fog Pos", mVolumetricFog->pos, 0.01f);
+		Gui::DrawSlider3("Fog Scale", mVolumetricFog->scale, 0.01f);
+		Gui::DrawSlider3("Fog Speed", mVolumetricFog->moveSpeed, 0.001f);
+	}
+	Gui::EndWindow();
 }
 
 // シーン切り替えの処理
@@ -326,9 +335,11 @@ void GameScene::DrawDepthToEffectBloom()
 
 	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
 	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GrassWriteNone"));
+	mField->SetTreeGraphicsPipeline(PipelineManager::GetGraphicsPipeline("BranchWriteNone"));
 	mField->DrawModel();
 	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass"));
+	mField->SetTreeGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Branch"));
 
 	// エフェクトの描画(ブルーム書けるため深度以外も書き込む)
 	EffectManager::GetInstance()->DrawEffect(true);
@@ -345,6 +356,6 @@ void GameScene::DrawCurrentSceneObject()
 	mBoss->DrawModel();
 
 	EffectManager::GetInstance()->DrawEffect(false);
-
 	mVolumetricFog->Draw();
+
 }

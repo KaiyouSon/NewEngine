@@ -21,6 +21,7 @@ public:
 
 public:
 	bool GetisStop();
+	bool GetisActive();
 	bool GetisNextFrame();
 	void SetisNextFrame(const bool isNextFrame);
 
