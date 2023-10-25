@@ -6,13 +6,13 @@ DirectX12WarningDisableBegin
 #include <d3dx12.h>
 DirectX12WarningDisableEnd
 
-Texture::Texture() :
-	mUploadBuffer(std::make_unique<UploadBuffer>()), mInitalSize(0)
-{
-}
-
+// テクスチャーのバッファ生成する関数
 void Texture::Create(const D3D12_RESOURCE_DESC& resourceDesc, uint32_t mipLevels)
 {
+	mType = TextureType::Default;
+
+	mUploadBuffer = std::make_unique<UploadBuffer>();
+
 	// サイズ設定
 	mInitalSize = Vec2((float)resourceDesc.Width, (float)resourceDesc.Height);
 
@@ -40,6 +40,7 @@ void Texture::Create(const D3D12_RESOURCE_DESC& resourceDesc, uint32_t mipLevels
 
 	// アップロードバッファの生成
 	mUploadBuffer->Create(uploadSize);
+
 }
 
 void Texture::SetScratchImage(DirectX::ScratchImage* scratchImage)
@@ -50,11 +51,6 @@ void Texture::SetScratchImage(DirectX::ScratchImage* scratchImage)
 UploadBuffer* Texture::GetUploadBuffer()
 {
 	return mUploadBuffer.get();
-}
-
-Vec2 Texture::GetInitalSize()
-{
-	return mInitalSize;
 }
 
 DirectX::ScratchImage* Texture::GetScratchImage()

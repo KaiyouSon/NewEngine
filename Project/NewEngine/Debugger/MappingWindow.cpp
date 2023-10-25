@@ -5,7 +5,7 @@
 #include "SoundManager.h"
 
 MappingWindow::MappingWindow() :
-	mIsShow(false), currentType(None)
+	mIsShow(false), currentType(MapType::None)
 {
 }
 
@@ -18,28 +18,30 @@ void MappingWindow::DrawDebugGUI()
 
 	Gui::BeginWindow("Loaded Window", -1, &mIsShow);
 
-	Gui::DrawRadioButton("None", &currentType, None);
-	Gui::DrawRadioButton("Texture Map", &currentType, Texture);
-	Gui::DrawRadioButton("RenderTexture Map", &currentType, RenderTexture);
-	Gui::DrawRadioButton("Model Map", &currentType, Model);
-	Gui::DrawRadioButton("Sound Map", &currentType, Sound);
+	uint32_t type = (uint32_t)currentType;
+	Gui::DrawRadioButton("None", &type, (uint32_t)MapType::None);
+	Gui::DrawRadioButton("Texture Map", &type, (uint32_t)MapType::Texture);
+	Gui::DrawRadioButton("RenderTexture Map", &type, (uint32_t)MapType::RenderTexture);
+	Gui::DrawRadioButton("Model Map", &type, (uint32_t)MapType::Model);
+	Gui::DrawRadioButton("Sound Map", &type, (uint32_t)MapType::Sound);
+	currentType = (MapType)type;
 	Gui::DrawLine();
 
 	switch (currentType)
 	{
-	case Texture:
+	case MapType::Texture:
 		ShowTextureMap();
 		break;
 
-	case RenderTexture:
+	case MapType::RenderTexture:
 		ShowRenderTextureMap();
 		break;
 
-	case Model:
+	case MapType::Model:
 		ShowModelMap();
 		break;
 
-	case Sound:
+	case MapType::Sound:
 		ShowSoundMap();
 		break;
 	}
@@ -78,15 +80,19 @@ void MappingWindow::ShowRenderTextureMap()
 	{
 		if (Gui::DrawCollapsingHeader(pair.first.c_str()))
 		{
-			Vec2 size = pair.second->size;
+			Vec2 size =
+			{
+				pair.second->GetInitalSize().x,
+				pair.second->GetInitalSize().y,
+			};
 			Gui::DrawString("Texture Size : (%f,%f)", size.x, size.y);
 			size = size >= 10000 ? size / 10.f : size;
 
-			for (uint32_t i = 0; i < pair.second.get()->GetBufferResources()->size(); i++)
+			for (uint32_t i = 0; i < pair.second->GetBufferResources()->size(); i++)
 			{
 				Gui::DrawString("Pass %d", i);
 
-				Gui::DrawImage(pair.second.get()->GetBufferResources()->at(i).rtvHandle.gpu, size);
+				Gui::DrawImage(pair.second->GetBufferResources()->at(i).rtvHandle.gpu, size);
 			}
 
 		}

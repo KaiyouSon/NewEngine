@@ -120,3 +120,13 @@ enum class ViewType
 	DSV,
 	UAV
 };
+
+enum class TextureType
+{
+	Default,
+	Color,
+	Material,
+	Depth,
+	Render,
+	Volume,
+};

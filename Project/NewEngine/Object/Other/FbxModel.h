@@ -6,6 +6,7 @@
 #include <assimp/scene.h>
 #include <assimp/cimport.h>
 
+// FBXボーン
 struct FbxBone
 {
 	std::string name;
@@ -13,6 +14,7 @@ struct FbxBone
 	Mat4 currentMat;
 };
 
+// FBXノード
 struct FbxNode
 {
 	std::string name;
@@ -24,6 +26,7 @@ struct FbxNode
 	FbxNode* parent = nullptr;
 };
 
+// FBXアニメーション
 struct FbxAnimation
 {
 	uint32_t index = 0;
@@ -31,6 +34,7 @@ struct FbxAnimation
 	bool isPlay = false;
 };
 
+// fbxモデル
 struct FbxModel : public Model
 {
 	std::vector<FbxBone> bones;

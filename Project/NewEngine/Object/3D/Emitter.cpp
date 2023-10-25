@@ -11,9 +11,10 @@ Emitter::Emitter() :
 	offset(0, 0), tiling(1, 1), pSize(0),
 	mVertexBuffer(std::make_unique <VertexBuffer<VParticle>>()),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Emitter")),
-	mTexture(TextureManager::GetTexture("White"))
+	mTexture(TextureManager::GetTexture("White")),
+	mMaterial(std::make_unique<Material>())
 {
-	// 繝槭ユ繝ｪ繧｢繝ｫ縺ｮ蛻晄悄蛹・
+	// マテリアルの初期化
 	MaterialInit();
 
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
@@ -35,7 +36,7 @@ void Emitter::Update(Transform* parent)
 		mTransform.SetWorldMat(mat);
 	}
 
-	// 繝槭ユ繝ｪ繧｢繝ｫ縺ｮ霆｢騾・
+	// マテリアルの転送
 	MaterialTransfer();
 
 
@@ -53,13 +54,13 @@ void Emitter::Draw(const BlendMode blendMode)
 {
 	if (mTexture == nullptr) return;
 
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
+	RenderBase* renderBase = RenderBase::GetInstance();
 	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
 
-	// GraphicsPipeline謠冗判繧ｳ繝槭Φ繝・
+	// GraphicsPipelineの描画コマンド
 	mGraphicsPipeline->DrawCommand(blendMode);
 
-	// VBV縺ｨIBV縺ｮ險ｭ螳壹さ繝槭Φ繝・
+	// VBVのセット
 	cmdList->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
 
 	ID3D12DescriptorHeap* descriptorHeap2[] =
@@ -70,7 +71,7 @@ void Emitter::Draw(const BlendMode blendMode)
 
 	MaterialDrawCommands();
 
-	// SRV繝偵・繝励・蜈磯ｭ縺ｫ縺ゅｋSRV繧偵Ν繝ｼ繝医ヱ繝ｩ繝｡繝ｼ繧ｿ2逡ｪ縺ｫ險ｭ螳・
+	// SRVのセット
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
 		startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
@@ -78,69 +79,69 @@ void Emitter::Draw(const BlendMode blendMode)
 	renderBase->GetCommandList()->DrawInstanced(pSize, 1, 0, 0);
 }
 
-// --- 繝槭ユ繝ｪ繧｢繝ｫ髢｢騾｣ --------------------------------------------------- //
+// --- マテリアル関連 --------------------------------------------------- //
 void Emitter::MaterialInit()
 {
-	// 繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ逕滓・
+	// インターフェース
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3D陦悟・
+	// トランスフォーム
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransformP>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// 濶ｲ
+	// 色
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// UV諠・ｱ
+	// UVパラメーター
 	iConstantBuffer = std::make_unique<ConstantBuffer<CUVParameter>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// 蛻晄悄蛹・
-	mMaterial.Init();
+	// 初期化
+	mMaterial->Init();
 }
 void Emitter::MaterialTransfer()
 {
 	mBillboard.CalculateBillboardMat();
 
-	// 繝槭ヨ繝ｪ繝・け繧ｹ
+	// トランスフォーム
 	CTransformP transformPData =
 	{
 		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
 		mTransform.GetWorldMat(),
 		mBillboard.GetMat(),
 	};
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformPData);
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), transformPData);
 
-	// 濶ｲ繝・・繧ｿ
+	// 色
 	CColor colorData = { color / 255 };
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[1].get(), colorData);
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[1].get(), colorData);
 
-	// UV繝・・繧ｿ
+	// UVパラメーター
 	CUVParameter uvData = { offset,tiling };
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[2].get(), uvData);
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[2].get(), uvData);
 }
 void Emitter::MaterialDrawCommands()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	for (uint32_t i = 0; i < mMaterial.constantBuffers.size(); i++)
+	for (uint32_t i = 0; i < mMaterial->constantBuffers.size(); i++)
 	{
 		// CBV縺ｮ險ｭ螳壹さ繝槭Φ繝・
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-			i, mMaterial.constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
+			i, mMaterial->constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
 	}
 }
 
-// --- 繧ｻ繝・ち繝ｼ -------------------------------------------------------- //ko
-
-// 繝・け繧ｹ繝√Ε繝ｼ
-void Emitter::SetTexture(Texture* texture) { mTexture = texture; }
-
-// 繧ｰ繝ｩ繝輔ぅ繝・け繧ｹ繝代う繝励Λ繧､繝ｳ
-void Emitter::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline) { mGraphicsPipeline = graphicsPipeline; }
-
-// 繝代・繝・ぅ繧ｯ繝ｫ縺ｮ謨ｰ
+// --- セッター -------------------------------------------------------- //
+void Emitter::SetTexture(Texture* texture)
+{
+	mTexture = texture;
+}
+void Emitter::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	mGraphicsPipeline = graphicsPipeline;
+}
 void Emitter::SetMaxParticle(const uint32_t max)
 {
 	pParam.resize(max);
@@ -148,23 +149,17 @@ void Emitter::SetMaxParticle(const uint32_t max)
 	mVertexBuffer->Create(mVertices);
 }
 
-// --- 繧ｲ繝・ち繝ｼ -------------------------------------------------------- //
-
-// 繝ｯ繝ｼ繝ｫ繝牙ｺｧ讓・
+// --- ゲッター -------------------------------------------------------- //
 Vec3 Emitter::GetWorldPos()
 {
 	Vec3 worldPos = Vec3MulMat4(pos, mTransform.GetWorldMat(), true);
 	return worldPos;
 }
-
-// 繝ｯ繝ｼ繝ｫ繝峨せ繧ｱ繝ｼ繝ｫ
 Vec3 Emitter::GetWorldScale()
 {
 	Vec3 worldScale = mTransform.GetWorldMat().GetScale();
 	return worldScale;
 }
-
-// 繝医Λ繝ｳ繧ｹ繝輔か繝ｼ繝
 Transform Emitter::GetTransform()
 {
 	return mTransform;

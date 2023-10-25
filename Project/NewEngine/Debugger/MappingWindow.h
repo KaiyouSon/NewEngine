@@ -4,7 +4,7 @@
 class MappingWindow
 {
 private:
-	enum MappingType
+	enum class MapType
 	{
 		None,
 		Texture,
@@ -15,7 +15,7 @@ private:
 
 private:
 	bool mIsShow;
-	uint32_t currentType;
+	MapType currentType;
 
 private:
 	void ShowTextureMap();

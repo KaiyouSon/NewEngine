@@ -5,6 +5,7 @@
 #include "TextureAnimeiton.h"
 #include "RenderTexture.h"
 #include "Singleton.h"
+#include "NewEngineEnum.h"
 #include <DirectXTex.h>
 #include <mutex>
 #include <unordered_map>
@@ -15,69 +16,82 @@ template<typename T> class Singleton;
 class TextureManager : public Singleton<TextureManager>
 {
 private:
-	std::unordered_map<std::string, std::unique_ptr<ITexture>> mTextureMap;				// 繝・け繧ｹ繝√Ε繝ｼ縺ｮ繝槭ャ繝・
-	std::unordered_map<std::string, std::unique_ptr<Texture>> mMaterialTextureMap;		// 繝槭ユ繝ｪ繧｢繝ｫ繝・け繧ｹ繝√Ε繝ｼ縺ｮ繝槭ャ繝・
-	std::unordered_map<std::string, std::unique_ptr<RenderTexture>> mRenderTextureMap;	// 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ縺ｮ繝槭ャ繝・
+	std::unordered_map<std::string, std::unique_ptr<Texture>> mTextureMap;
+	std::unordered_map<std::string, std::unique_ptr<Texture>> mMaterialTextureMap;
+	std::unordered_map<std::string, std::unique_ptr<DepthTexture>> mDepthTextureMap;
+	std::unordered_map<std::string, std::unique_ptr<VolumeTexture>> mVolumeTextureMap;
+	std::unordered_map<std::string, std::unique_ptr<RenderTexture>> mRenderTextureMap;
 
-	std::vector<bool> mCheckSRVIndex; // index逡ｪ縺ｮSRV縺碁幕縺・※繧九°縺ｩ縺・°繧偵メ繧ｧ繝・け縺吶ｋ縺溘ａ
+	std::mutex mMutex;	// 排他制御
 
-	std::mutex mMutex;	// 謗剃ｻ門宛蠕｡
+public:	// 生成関連
 
-private:
-	void Init();
-
-public:	// テクスチャー関連
-
-	// 1x1の色テクスチャーを生成する関数
-	static void CreateTexture(const Color color, const std::string tag);
-
-	// テクスチャーをロードする関数
+	// テクスチャーをロード
 	static void LoadTexture(const std::string filePath, const std::string tag);
 
-	// mtlファイルのテクスチャーをロードする関数
+	// mtlファイルのテクスチャーをロード
 	static Texture* LoadMaterialTexture(const std::string filePath, const std::string tag);
 
-	// 深度テクスチャの生成
+	// 1x1の色テクスチャーを作成
+	static void CreateColorTexture(const Color color, const std::string tag);
+
+	// 深度テクスチャの作成
 	static void CreateDepthTexture(DepthBuffer* depthBuffer, const std::string tag);
 
-	// ボリュームテクスチャの生成
+	// ボリュームテクスチャの作成
 	static void CreateVolumeTexture(const std::vector<Texture*>& texs, const std::string tag);
 
-	// アンロード
-	static void UnLoadTexture(const std::string tag);
+	// レンダーテクスチャの作成
+	static void CreateRenderTexture(const Vec2 size, const uint32_t rtvNum, const std::string tag);
 
-	// テクスチャーを取得する関数
+public: // 破棄関連
+
+	// テクスチャの破棄
+	static void DestroyTexture(const std::string tag);
+
+	// 深度テクスチャの破棄
+	static void DestroyDepthTexture(const std::string tag);
+
+	// ボリュームテクスチャの破棄
+	static void VolumeDepthTexture(const std::string tag);
+
+	// レンダーテクスチャの破棄
+	static void DestroyRenderTexture(const std::string tag);
+
+
+public: // テクスチャの取得関連
+
+	// テクスチャーを取得
 	static Texture* GetTexture(const std::string tag);
 
-	// 深度テクスチャーを取得する関数
+	// 深度テクスチャーを取得
 	static DepthTexture* GetDepthTexture(const std::string tag);
 
-	// ボリュームテクスチャを取得する関数
+	// ボリュームテクスチャを取得
 	static VolumeTexture* GetVolumeTexture(const std::string tag);
 
-
-public: // 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ髢｢騾｣
-
-	// 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ縺ｮ蜿門ｾ・
+	// レンダーテクスチャを取得
 	static RenderTexture* GetRenderTexture(const std::string tag);
 
-	// 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ繧堤函謌舌＠繝槭ャ繝励↓譬ｼ邏阪☆繧・
-	static RenderTexture* CreateRenderTexture(const Vec2 size, const uint32_t num, const std::string tag);
+public:	// マップの取得関連
 
-	// 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ縺ｮ繧｢繝ｳ繝ｭ繝ｼ繝蛾未謨ｰ
-	static void UnLoadRenderTexture(const std::string tag);
+	// テクスチャーマップを取得
+	static std::unordered_map<std::string, std::unique_ptr<Texture>>* GetTextureMap();
 
-public:
-	// 繝槭ャ繝・
-	static std::unordered_map<std::string, std::unique_ptr<ITexture>>* GetTextureMap();
+	// マテリアルテクスチャーマップを取得
 	static std::unordered_map<std::string, std::unique_ptr<Texture>>* GetMaterialTextureMap();
+
+	// 深度テクスチャーマップを取得
+	static std::unordered_map<std::string, std::unique_ptr<DepthTexture>>* GetDepthTextureMap();
+
+	// ボリュームテクスチャーマップを取得
+	static std::unordered_map<std::string, std::unique_ptr<VolumeTexture>>* GetVolumeTextureMap();
+
+	// レンダーテクスチャーマップを取得
 	static std::unordered_map<std::string, std::unique_ptr<RenderTexture>>* GetRenderTextureMap();
 
 public:
-
-
-public:	// 縺昴・莉悶・蜃ｦ逅・
-	// 繝・け繧ｹ繝√Ε繝ｼ繝ｭ繝ｼ繝牙ｾ後・繧ｳ繝槭Φ繝峨Μ繧ｹ繝医・螳溯｡・
+	// コマンド実行
 	static void ExcuteComandList();
 
 private:

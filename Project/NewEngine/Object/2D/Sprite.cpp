@@ -187,7 +187,7 @@ void Sprite::SetTexture(Texture* texture)
 	}
 
 	mTexture = texture;
-	SetSize(texture->GetInitalSize());
+	SetSize(Vec2(texture->GetInitalSize().x, texture->GetInitalSize().y));
 }
 
 // 描画範囲

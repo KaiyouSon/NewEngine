@@ -6,13 +6,12 @@ DirectX12WarningDisableBegin
 #include <d3dx12.h>
 DirectX12WarningDisableEnd
 
-VolumeTexture::VolumeTexture() :
-	mResult(HRESULT()), mUploadBuffer(std::make_unique<UploadBuffer>())
-{
-}
-
 void VolumeTexture::Create(const D3D12_RESOURCE_DESC& resourceDesc)
 {
+	mType = TextureType::Volume;
+
+	mUploadBuffer = std::make_unique<UploadBuffer>();
+
 	// ヒープ設定
 	D3D12_HEAP_PROPERTIES heapProp =
 		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);

@@ -6,154 +6,142 @@
 
 using namespace VertexBufferData;
 
-// 繝｢繝・Ν縺ｮ繝槭ャ繝・
-std::unordered_map<std::string, std::unique_ptr<Model>> ModelManager::sModelMap;
-std::mutex ModelManager::sMtx = std::mutex{};
-std::string ModelManager::sDirectoryPath = "Application/Resources/Model/";
-
-// 繝｢繝・Ν縺ｮ蜿門ｾ・
-Model* ModelManager::GetModel(const std::string modelTag)
+ModelManager::ModelManager() :
+	mDirectoryPath("Application/Resources/Model/")
 {
-	std::string log;
-	if (sModelMap[modelTag].get() == nullptr)
-	{
-		log = "[Model Use] ModelTag : " + modelTag + ", does not exist";
-	}
-	else
-	{
-		log = "[Model Use] ModelTag : " + modelTag + ", was used";
-	}
-	OutputDebugLog(log.c_str());
 
-	return sModelMap[modelTag].get();
 }
 
-// obj繝輔ぃ繧､繝ｫ縺九ｉ繝｢繝・Ν繧偵Ο繝ｼ繝峨＠繝槭ャ繝励・譬ｼ邏阪☆繧・
-Model* ModelManager::LoadObjModel(const std::string fileName, const std::string modelTag, const bool isSmoothing)
-{
-	// 謗剃ｻ門宛蠕｡
-	std::lock_guard<std::mutex> lock(sMtx);
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// --- ロード関連 ---------------------------------------------------------------------------------------------------- ///
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// 繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ逕滓・
+// objモデルのロード
+Model* ModelManager::LoadObjModel(const std::string fileName, const std::string tag, const bool isSmoothing)
+{
+	// ロックを取得
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	// モデルデータを生成
 	std::unique_ptr<Model> model = std::make_unique<ObjModel>();
 	model->name = fileName;
 
 	std::string objfile = fileName + ".obj";
 	uint32_t checkPos;
-	// 蛹ｺ蛻・ｊ譁・ｭ・'/' 縺悟・縺ｦ縺上ｋ荳逡ｪ譛蠕後・驛ｨ蛻・ｒ讀懃ｴ｢
+	// ファイルパスの最後に'/'があればファイル名だけにして".obj"を追加
 	checkPos = static_cast<uint32_t>(fileName.rfind('/'));
 	if (checkPos < fileName.size())
 	{
 		objfile = fileName.substr(checkPos + 1, fileName.size() - checkPos - 1) + ".obj";
 	}
 
-	std::string path = sDirectoryPath + fileName + "/";
+	std::string path = GetInstance()->mDirectoryPath + fileName + "/";
 
-	// 繝輔ぃ繧､繝ｫ繧ｹ繝医Μ繝ｼ繝
+	// ファイルを開いて読み込み
 	std::ifstream file;
-	// .obj繝輔ぃ繧､繝ｫ繧帝幕縺・
+	// .objファイルを開く
 	file.open(path + objfile);
-	// 繝輔ぃ繧､繝ｫ繧ｪ繝ｼ繝励Φ螟ｱ謨励ｒ繝√ぉ繝・け
+	// ファイルが開けなかった場合
 	if (file.fail())
 	{
-		std::string log = "[ObjModel Load] FileName : " + fileName + ", Tag : " + modelTag + ", is,failed to load";
+		std::string log = "[ObjModel Load] FileName : " + fileName + ", Tag : " + tag + ", failed to load";
 		OutputDebugLog(log.c_str());
 
-		assert(0 && "繝｢繝・Ν縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ縺悟､ｱ謨励＠縺ｾ縺励◆");
+		assert(0 && "モデルデータの読み込みに失敗しました");
 	}
 
 	std::vector<Vec3> positions;
 	std::vector<Vec3> normals;
 	std::vector<Vec2> texcoords;
 
-	// 1陦後★縺､隱ｭ縺ｿ霎ｼ繧
+	// 1行ずつ読み込む
 	std::string line;
 	while (getline(file, line))
 	{
-		// 1陦悟・縺ｮ譁・ｭ怜・繧偵せ繝医Μ繝ｼ繝縺ｫ螟画鋤縺励※隗｣譫舌＠繧・☆縺上☆繧・
+		// 1行をスペースで分割
 		std::istringstream lineStream(line);
 
-		// 蜊願ｧ偵せ繝壹・繧ｹ蛹ｺ蛻・ｊ縺ｧ陦後・蜈磯ｭ譁・ｭ怜・繧貞叙蠕・
+		// 最初の単語を取得して、キーとする
 		std::string key;
 		std::getline(lineStream, key, ' ');
 
 		if (key == "mtllib")
 		{
-			// 繝槭ユ繝ｪ繧｢繝ｫ縺ｮ繝輔ぃ繧､繝ｫ蜷阪ｒ隱ｭ縺ｿ霎ｼ繧
+			// マテリアル情報のファイル名を取得し、カラー情報を読み込む
 			std::string mtlFileName;
 			lineStream >> mtlFileName;
 
-			LoadMaterialColor(path + mtlFileName, model.get());
+			LoadMtlFile(path + mtlFileName, model.get());
 			continue;
 		}
 
-		// 蜈磯ｭ譁・ｭ怜・縺計縺ｪ繧蛾らせ蠎ｧ讓・
+		// ポジション情報を読み込む
 		if (key == "v")
 		{
-			// X,Y,Z蠎ｧ讓呵ｪｭ縺ｿ霎ｼ縺ｿ
+			// X,Y,Z座標を読み込む
 			Vec3 pos{};
 			lineStream >> pos.x;
 			lineStream >> pos.y;
 			lineStream >> pos.z;
-			pos.z *= -1;
-			// 蠎ｧ讓吶ョ繝ｼ繧ｿ縺ｫ霑ｽ蜉
+			pos.z *= -1; // Z軸を反転
+			// 座標データを配列に追加
 			positions.emplace_back(pos);
 		}
 
-		// 蜈磯ｭ譁・ｭ怜・縺計t縺ｪ繧峨ユ繧ｯ繧ｹ繝√Ε
+		// テクスチャ座標情報を読み込む
 		if (key == "vt")
 		{
-			// uv謌仙・隱ｭ縺ｿ霎ｼ縺ｿ
+			// UV座標を読み込む
 			Vec2 texcoord{};
 			lineStream >> texcoord.x;
 			lineStream >> texcoord.y;
-			// v譁ｹ蜷大渚霆｢
+			// Y座標を反転
 			texcoord.y = 1.0f - texcoord.y;
-			// 繝・け繧ｹ繝√Ε蠎ｧ讓吶ョ繝ｼ繧ｿ縺ｫ霑ｽ蜉
+			// テクスチャ座標データを配列に追加
 			texcoords.emplace_back(texcoord);
 		}
 
-		// 蜈磯ｭ譁・ｭ怜・縺計n縺ｪ繧画ｳ慕ｷ壹・繧ｯ繝医Ν
+		// 法線情報を読み込む
 		if (key == "vn")
 		{
-			// xyz謌仙・隱ｭ縺ｿ霎ｼ縺ｿ
+			// XYZ座標を読み込む
 			Vec3 normal{};
 			lineStream >> normal.x;
 			lineStream >> normal.y;
 			lineStream >> normal.z;
-			normal.z *= -1;
-			// 豕慕ｷ壹・繧ｯ繝医Ν繝・・繧ｿ縺ｫ霑ｽ蜉
+			normal.z *= -1; // Z軸を反転
+			// 法線データを配列に追加
 			normals.emplace_back(normal);
 		}
 
-		// 蜈磯ｭ譁・ｭ怜・縺掲縺ｪ繧峨・繝ｪ繧ｴ繝ｳ(荳芽ｧ貞ｽ｢)
+		// 面情報を読み込む
 		if (key == "f")
 		{
-			// 蜊願ｧ偵せ繝壹・繧ｹ蛹ｺ蛻・ｊ縺ｧ陦後・邯壹″繧定ｪｭ縺ｿ霎ｼ繧
+			// 面情報をスペースで分割
 			std::string indexString;
 			int count = 0;
 
 			while (getline(lineStream, indexString, ' '))
 			{
-				// 鬆らせ繧､繝ｳ繝・ャ繧ｯ繧ｹ1蛟句・縺ｮ譁・ｭ怜・繧偵せ繝医Μ繝ｼ繝縺ｫ螟画鋤縺励※隗｣譫舌＠繧・☆縺上☆繧・
+				// インデックスを解析
 				std::istringstream indexStream(indexString);
 				uint32_t indexPos = 0, indexNormal = 0, indexTexcoord = 0;
 
 				indexStream >> indexPos;
-				indexStream.seekg(1, std::ios_base::cur);	// 繧ｹ繝ｩ繝・す繝･繧帝｣帙・縺・
+				indexStream.seekg(1, std::ios_base::cur); // スラッシュをスキップ
 				indexStream >> indexTexcoord;
-				indexStream.seekg(1, std::ios_base::cur);	// 繧ｹ繝ｩ繝・す繝･繧帝｣帙・縺・
+				indexStream.seekg(1, std::ios_base::cur); // スラッシュをスキップ
 
 				indexStream >> indexNormal;
-				// 鬆らせ繝・・繧ｿ縺ｮ霑ｽ蜉
+				// ポジション情報、法線情報、テクスチャ座標情報を使って
+				// モデルデータを構築
 				VFbxModel vertex{};
 				vertex.pos = positions[indexPos - 1];
 				vertex.normal = normals[indexNormal - 1];
 				vertex.uv = texcoords[indexTexcoord - 1];
-
 				model->mesh.AddVertex(vertex);
 
-				// 鬆らせ繧､繝ｳ繝・ャ繧ｯ繧ｹ縺ｫ霑ｽ蜉
+				// インデックスを追加
 				if (count % 3 == 0)
 				{
 					model->mesh.AddIndex((uint16_t)model->mesh.indices.size());
@@ -177,7 +165,7 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 		}
 	}
 
-	// 繝輔ぃ繧､繝ｫ繧帝哩縺倥ｋ
+	// ファイルを閉じる
 	file.close();
 
 	if (isSmoothing == true)
@@ -187,81 +175,75 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 
 	model->mesh.CreateBuffer();
 
-	std::string log = "[ObjModel Load] FileName : " + fileName + ", Tag : " + modelTag + ", was loaded successfully";
+	std::string log = "[ObjModel Load] FileName : " + fileName + ", Tag : " + tag + ", was loaded successfully";
 	OutputDebugLog(log.c_str());
 
-	// map縺ｫ譬ｼ邏・
-	sModelMap.insert(std::make_pair(modelTag, std::move(model)));
+	// マップに追加
+	GetInstance()->mModelMap.insert(std::make_pair(tag, std::move(model)));
 
-	return sModelMap[modelTag].get();
+	return GetInstance()->mModelMap[tag].get();
 }
 
-// fbx繝輔ぃ繧､繝ｫ縺九ｉ繝｢繝・Ν繧偵Ο繝ｼ繝峨＠繝槭ャ繝励・譬ｼ邏阪☆繧・
+// fbxファイルの読み込み
 Model* ModelManager::LoadFbxModel(const std::string fileName, const std::string modelTag)
 {
-	// 謗剃ｻ門宛蠕｡
-	std::lock_guard<std::mutex> lock(sMtx);
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
-	// 繝｢繝・Ν逕滓・
+	// Fbxモデルの作成
 	std::unique_ptr<FbxModel> model = std::make_unique<FbxModel>();
 	model->name = fileName;
 
-	// 繝｢繝・Ν縺ｨ蜷後§蜷榊燕縺ｮ繝輔か繝ｫ繝繝ｼ縺九ｉ隱ｭ縺ｿ霎ｼ繧
-	std::string path = sDirectoryPath + fileName + "/";
+	// Fbxファイルへのパス
+	std::string path = GetInstance()->mDirectoryPath + fileName + "/";
 	std::string fbxfile = fileName + ".fbx";
 	std::string fullPath = path + fbxfile;
 
-	// 繝輔Λ繧ｰ
+	// フラグの設定
 	uint32_t flags = aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs;
 
-	// 繧ｷ繝ｼ繝ｳ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ
+	// シーンの読み込み
 	model->scene = model->importer.ReadFile(fullPath, flags);
 
 	if (model->scene == nullptr)
 	{
-		std::string log = "[ObjModel Load] FileName : " + fileName + ", Tag : " + modelTag + ", is,failed to load";
+		std::string log = "[FbxModel Load] FileName : " + fileName + ", Tag : " + modelTag + " の読み込みに失敗しました";
 		OutputDebugLog(log.c_str());
 
-		assert(0 && "繝｢繝・Ν縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ縺悟､ｱ謨励＠縺ｾ縺励◆");
+		assert(0 && "Fbxファイルの読み込みに失敗しました");
 	}
 
-	// 繝槭ユ繝ｪ繧｢繝ｫ縺ｮ隗｣譫・
+	// マテリアルの解析
 	AssimpLoader::GetInstance()->ParseMaterial(model.get(), model->scene);
 	AssimpLoader::GetInstance()->ParseNodeRecursive(model.get(), nullptr, model->scene->mRootNode);
 
-	// 繝舌ャ繝輔ぃ繝ｼ逕滓・
+	// メッシュの作成
 	model->mesh.vertexBuffer.Create(model->mesh.vertices);
 	model->mesh.indexBuffer.Create(model->mesh.indices);
 
-	// map縺ｫ譬ｼ邏・
-	sModelMap.insert(std::make_pair(modelTag, std::move(model)));
+	// モデルをマップに追加
+	GetInstance()->mModelMap.insert(std::make_pair(modelTag, std::move(model)));
 
-
-	std::string log = "[FbxModel Load] FileName : " + fileName + ", Tag : " + modelTag + ", was loaded successfully";
+	std::string log = "[FbxModel Load] FileName : " + fileName + ", Tag : " + modelTag + " が正常に読み込まれました";
 	OutputDebugLog(log.c_str());
 
-	return sModelMap[modelTag].get();
+	return GetInstance()->mModelMap[modelTag].get();
 }
 
-std::unordered_map<std::string, std::unique_ptr<Model>>* ModelManager::GetModelMap()
+// .mtlファイルの読み込み
+void ModelManager::LoadMtlFile(std::string filePath, Model* model)
 {
-	return &sModelMap;
-}
-
-// .mtl繝輔ぃ繧､繝ｫ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ
-void ModelManager::LoadMaterialColor(std::string filePath, Model* model)
-{
-	// 繝輔ぃ繧､繝ｫ繧ｹ繝医Μ繝ｼ繝
+	// ファイルを開いて読み込み
 	std::ifstream file;
-	// .mtl繝輔ぃ繧､繝ｫ繧帝幕縺・
+	// .mtlファイルを開く
 	file.open(filePath);
-	// 繝輔ぃ繧､繝ｫ繧ｪ繝ｼ繝励Φ螟ｱ謨励ｒ繝√ぉ繝・け
+	// ファイルが開けなかった場合
 	if (file.fail())
 	{
-		assert(0 && "繝槭ユ繝ｪ繧｢繝ｫ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ縺悟､ｱ謨励＠縺ｾ縺励◆");
+		assert(0 && "マテリアル情報の読み込みに失敗しました");
 	}
 
-	// 繝・ぅ繝ｬ繧ｯ繝医Μ繝代せ
+	// ファイルのディレクトリパスを取得
 	std::string directoryPath = filePath;
 	while (true)
 	{
@@ -272,31 +254,31 @@ void ModelManager::LoadMaterialColor(std::string filePath, Model* model)
 		}
 	}
 
-	// 1陦後★縺､隱ｭ縺ｿ霎ｼ繧
+	// 1行ずつ読み込む
 	std::string line;
 	while (getline(file, line))
 	{
-		// 1陦悟・縺ｮ譁・ｭ怜・繧偵せ繝医Μ繝ｼ繝縺ｫ螟画鋤縺励※隗｣譫舌＠繧・☆縺上☆繧・
+		// 1行をスペースで分割
 		std::istringstream lineStream(line);
 
-		// 蜊願ｧ偵せ繝壹・繧ｹ蛹ｺ蛻・ｊ縺ｧ陦後・蜈磯ｭ譁・ｭ怜・繧貞叙蠕・
+		// 最初の単語を取得して、キーとする
 		std::string key;
 		std::getline(lineStream, key, ' ');
 
-		// 蜈磯ｭ縺ｮ繧ｿ繝匁枚蟄励ｒ辟｡隕悶☆繧・
+		// インデントを除去
 		if (key[0] == '\t')
 		{
 			key.erase(key.begin());
 		}
 
-		// 蜈磯ｭ譁・ｭ怜・縺系ewmtl縺ｪ繧峨・繝・Μ繧｢繝ｫ蜷・
+		// newmtlキーがあれば新しいマテリアル情報の開始
 		if (key == "newmtl")
 		{
-			// 繝槭ユ繝ｪ繧｢繝ｫ蜷崎ｪｭ縺ｿ霎ｼ縺ｿ
+			// マテリアル名を読み込む
 			lineStream >> model->material.name;
 		}
 
-		// 蜈磯ｭ譁・ｭ怜・縺桑a縺ｪ繧峨い繝ｳ繝薙お繝ｳ繝郁牡
+		// Kaキーがあればアンビエントカラーを読み込む
 		if (key == "Ka")
 		{
 			lineStream >> model->material.ambient.r;
@@ -304,7 +286,7 @@ void ModelManager::LoadMaterialColor(std::string filePath, Model* model)
 			lineStream >> model->material.ambient.b;
 		}
 
-		// 蜈磯ｭ譁・ｭ怜・縺桑a縺ｪ繧峨ョ繧｣繝輔・繧ｺ濶ｲ
+		// Kdキーがあればディフューズカラーを読み込む
 		if (key == "Kd")
 		{
 			lineStream >> model->material.diffuse.r;
@@ -312,7 +294,7 @@ void ModelManager::LoadMaterialColor(std::string filePath, Model* model)
 			lineStream >> model->material.diffuse.b;
 		}
 
-		// 蜈磯ｭ譁・ｭ怜・縺桑a縺ｪ繧峨せ繝壹く繝･繝ｩ繝ｼ濶ｲ
+		// Ksキーがあればスペキュラカラーを読み込む
 		if (key == "Ks")
 		{
 			lineStream >> model->material.specular.r;
@@ -320,21 +302,55 @@ void ModelManager::LoadMaterialColor(std::string filePath, Model* model)
 			lineStream >> model->material.specular.b;
 		}
 
-		// 蜈磯ｭ譁・ｭ怜・縺稽ap_Kd縺ｪ繧峨ユ繧ｯ繧ｹ繝√Ε繝輔ぃ繧､繝ｫ蜷・
+		// map_Kdキーがあればテクスチャを読み込む
 		if (key == "map_Kd")
 		{
-			// 繝・け繧ｹ繝√Ε縺ｮ繝輔ぃ繧､繝ｫ蜷崎ｪｭ縺ｿ霎ｼ縺ｿ
+			// テクスチャ名を読み込む
 			std::string textureName;
 			lineStream >> textureName;
 
 			std::string textureTag = model->name + "Texture";
 
-			// 繝・け繧ｹ繝√Ε隱ｭ縺ｿ霎ｼ縺ｿ
+			// テクスチャをロード
 			model->texture = TextureManager::LoadMaterialTexture(directoryPath + textureName, textureTag);
 		}
 	}
 
-	// 繝輔ぃ繧､繝ｫ繧帝哩縺倥ｋ
+	// ファイルを閉じる
 	file.close();
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// --- モデルの取得関連 ---------------------------------------------------------------------------------------------- ///
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Model* ModelManager::GetModel(const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	auto it = GetInstance()->mModelMap.find(tag);
+	if (it == GetInstance()->mModelMap.end())
+	{
+		std::string log;
+		log = "[Model Error] Tag : " + tag + ", is nullptr";
+		return nullptr;
+	}
+	else
+	{
+		std::string log;
+		log = "[Model Use] Tag : " + tag + ", was used";
+		OutputDebugLog(log.c_str());
+
+		return GetInstance()->mModelMap[tag].get();
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// --- モデルのマップの取得関連 -------------------------------------------------------------------------------------- ///
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::unordered_map<std::string, std::unique_ptr<Model>>* ModelManager::GetModelMap()
+{
+	return &GetInstance()->mModelMap;
+}

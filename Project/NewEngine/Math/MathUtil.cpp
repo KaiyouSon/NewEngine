@@ -232,7 +232,7 @@ Mat4 ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, 
 
 	return perspective;
 }
-Mat4 ConvertOrthoGrphicProjectionMat(float WIN_WIDTH, float WIN_HEIGHT)
+Mat4 ConvertOrthographicProjectionMat(float WIN_WIDTH, float WIN_HEIGHT)
 {
 	return
 	{
@@ -243,7 +243,7 @@ Mat4 ConvertOrthoGrphicProjectionMat(float WIN_WIDTH, float WIN_HEIGHT)
 	};
 }
 
-Mat4 ConvertOrthoGrphicProjectionMat(const RectAngle rect, const float nearZ, const float farZ)
+Mat4 ConvertOrthographicProjectionMat(const RectAngle rect, const float nearZ, const float farZ)
 {
 	Mat4 orthoGrphic = Mat4::Identity();
 	orthoGrphic.m[0][0] = 2 / (rect.right - rect.left);

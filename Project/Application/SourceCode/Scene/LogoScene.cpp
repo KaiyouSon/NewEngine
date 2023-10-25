@@ -12,13 +12,13 @@ LogoScene::~LogoScene()
 void LogoScene::Load()
 {
 	TextureManager::LoadTexture("LogoScene/NewEngineTitle.png", "NewEngineTitle");
-	TextureManager::CreateTexture(Color::black, "Black");
+	TextureManager::CreateColorTexture(Color::black, "Black");
 }
 
 void LogoScene::UnLoad()
 {
-	TextureManager::UnLoadTexture("NewEngineTitle");
-	TextureManager::UnLoadTexture("Black");
+	TextureManager::DestroyTexture("NewEngineTitle");
+	TextureManager::DestroyTexture("Black");
 }
 
 void LogoScene::CreateInstance()

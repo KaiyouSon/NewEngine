@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 
+// 線のクラス
 class Line
 {
 private:

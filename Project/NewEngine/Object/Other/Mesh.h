@@ -6,28 +6,28 @@
 class Mesh
 {
 private:
-	// 鬆らせ豕慕ｷ壹せ繝繝ｼ繧ｸ繝ｳ繧ｰ逕ｨ繝・・繧ｿ
-	std::unordered_map<uint16_t, std::vector<uint16_t>> smoothData;
+    // 頂点ごとに平滑化された法線データを格納するためのマップ
+    std::unordered_map<uint16_t, std::vector<uint16_t>> smoothData;
 
 public:
-	std::vector<VertexBufferData::VFbxModel> vertices;
-	VertexBuffer<VertexBufferData::VFbxModel> vertexBuffer;
-	std::vector<uint16_t> indices;
-	IndexBuffer indexBuffer;
+    std::vector<VertexBufferData::VFbxModel> vertices;
+    VertexBuffer<VertexBufferData::VFbxModel> vertexBuffer;
+    std::vector<uint16_t> indices;
+    IndexBuffer indexBuffer;
 
 public:
-	// 繧ｹ繝繝ｼ繧ｸ繝ｳ繧ｰ繝・・繧ｿ縺ｮ霑ｽ蜉
-	void AddSmoothData(const uint16_t indexPos, const uint16_t indexVertex);
+    // 平滑化データにインデックス位置と頂点インデックスを追加
+    void AddSmoothData(const uint16_t indexPos, const uint16_t indexVertex);
 
-	// Vertex縺ｮ霑ｽ蜉
-	void AddVertex(const VertexBufferData::VFbxModel vertex);
+    // 頂点データを追加
+    void AddVertex(const VertexBufferData::VFbxModel vertex);
 
-	// Index縺ｮ霑ｽ蜉
-	void AddIndex(const uint16_t index);
+    // インデックスデータを追加
+    void AddIndex(const uint16_t index);
 
-	// 繝舌ャ繝輔ぃ繝ｼ縺ｮ逕滓・
-	void CreateBuffer();
+    // 頂点バッファとインデックスバッファを作成
+    void CreateBuffer();
 
-	// 蟷ｳ貊大喧縺輔ｌ縺滄らせ豕慕ｷ壹・險育ｮ・
-	void CalculateSmoothedVertexNormals();
+    // 平滑化された頂点法線を計算
+    void CalculateSmoothedVertexNormals();
 };

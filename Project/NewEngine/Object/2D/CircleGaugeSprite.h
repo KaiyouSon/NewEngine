@@ -6,6 +6,7 @@
 #include "Util.h"
 #include "Sprite.h"
 
+// 円ゲージスプライトのクラス
 class CircleGaugeSprite
 {
 private:

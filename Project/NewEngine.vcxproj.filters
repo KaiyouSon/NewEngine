@@ -983,9 +983,6 @@
     <ClInclude Include="NewEngine\Object\Other\Material.h">
       <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\Other\TextureManager.h">
-      <Filter>NewEngine\Header\Object\Other</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Light\Fog.h">
       <Filter>NewEngine\Header\Lighting</Filter>
     </ClInclude>
@@ -1009,9 +1006,6 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Render\RenderBase.h">
       <Filter>NewEngine\Header\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Object\Other\TextureAnimeiton.h">
-      <Filter>NewEngine\Header\Object\Other</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Scene\LogoScene.h">
       <Filter>Application\Header\Scene</Filter>
@@ -1384,6 +1378,12 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\UI\CameraTargetUI.h">
       <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\TextureManager.h">
+      <Filter>NewEngine\Header\Object\Other\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\TextureAnimeiton.h">
+      <Filter>NewEngine\Header\Object\Other\Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,32 +1,27 @@
 #pragma once
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "ConstantBuffer.h"
-#include "RenderTarget.h"
-#include "Vec2.h"
+#include "DepthTexture.h"
+#include "Viewport.h"
+#include "ScissorRectangle.h"
 #include <vector>
 #include <memory>
 #include <wrl.h>
 
-DirectX12WarningDisableBegin
-#include <d3dx12.h>
-DirectX12WarningDisableEnd
-
-class RenderTexture
+// レンダーテクスチャのクラス
+class RenderTexture : public ITexture
 {
 private:
-	std::vector<CD3DX12_VIEWPORT> mViewports;	// ビューポート
-	std::vector<CD3DX12_RECT> mScissorRects;	// シザー矩形
-
-private:
 	std::vector<BufferResource> mBufferResources;
+	std::vector<Viewport> mViewports;				// ビューポート
+	std::vector<ScissorRectangle> mScissorRects;	// シザー矩形
+	std::unique_ptr<DepthTexture> mDepthTexture;
+	std::unique_ptr<DepthBuffer> mDepthBuffer;
 
 public:
 	static const float sClearColor[4];
-	std::unique_ptr<Texture> depthTexture;
-	DepthBuffer depthBuffer;
-	Vec2 size;
 	bool useDepth = false;
+
+public:
+	void Create(const Vec2 size, const uint32_t rtvNum = 1);
 
 public:
 	void PrevDrawScene();
@@ -34,4 +29,6 @@ public:
 
 public: // ゲッター
 	std::vector<BufferResource>* GetBufferResources();
+	DepthTexture* GetDepthTexture();
+	DepthBuffer* GetDepthBuffer();
 };

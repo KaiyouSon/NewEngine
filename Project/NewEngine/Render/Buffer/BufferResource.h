@@ -13,7 +13,7 @@ struct DescriptorHandle
 
 struct ViewIndex
 {
-	uint32_t index;
+	int32_t index = -1;
 	ViewType viewType;
 };
 

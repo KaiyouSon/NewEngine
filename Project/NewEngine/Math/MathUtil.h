@@ -42,8 +42,8 @@ Mat4 ConvertBillBoardAllAxis();
 Mat4 ConvertViewProjectionMatLookAt(const Vec3 pos, const Vec3 target, const Vec3 up);		// 繝薙Η繝ｼ螟画鋤
 Mat4 ConvertViewProjectionMatLookTo(const Vec3 pos, const Vec3 zAxis, const Vec3 yAxis);		// 繝薙Η繝ｼ螟画鋤
 Mat4 ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, float farZ);	// 騾剰ｦ門ｰ・ｽｱ螟画鋤
-Mat4 ConvertOrthoGrphicProjectionMat(float WIN_WIDTH, float WIN_HEIGHT);						// 蟷ｳ陦悟ｰ・ｽｱ螟画鋤
-Mat4 ConvertOrthoGrphicProjectionMat(const RectAngle rect, const float nearZ, const float farZ);		// 蟷ｳ陦悟ｰ・ｽｱ螟画鋤
+Mat4 ConvertOrthographicProjectionMat(float WIN_WIDTH, float WIN_HEIGHT);						// 蟷ｳ陦悟ｰ・ｽｱ螟画鋤
+Mat4 ConvertOrthographicProjectionMat(const RectAngle rect, const float nearZ, const float farZ);		// 蟷ｳ陦悟ｰ・ｽｱ螟画鋤
 Mat4 ConvertViewportMat(Viewport& viewport);
 
 Mat4 CalculateWorldMat(const Vec3 pos, const Vec3 scale, const Vec3 rot);

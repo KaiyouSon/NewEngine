@@ -82,13 +82,13 @@ void PostEffect::Draw()
 		if (mRenderTextures[i]->useDepth == true)
 		{
 			renderBase->TransitionBufferState(
-				mRenderTextures[i]->depthTexture->GetBufferResource(),
+				mRenderTextures[i]->GetDepthTexture()->GetBufferResource(),
 				D3D12_RESOURCE_STATE_DEPTH_WRITE,
 				D3D12_RESOURCE_STATE_GENERIC_READ);
 
 			cmdList->SetGraphicsRootDescriptorTable(
 				(uint32_t)(startIndex + 1),
-				mRenderTextures[i]->depthTexture->GetBufferResource()->srvHandle.gpu);
+				mRenderTextures[i]->GetDepthTexture()->GetBufferResource()->srvHandle.gpu);
 		}
 		else
 		{
@@ -114,7 +114,7 @@ void PostEffect::Draw()
 		if (mRenderTextures[i]->useDepth == true)
 		{
 			renderBase->TransitionBufferState(
-				mRenderTextures[i]->depthTexture->GetBufferResource(),
+				mRenderTextures[i]->GetDepthTexture()->GetBufferResource(),
 				D3D12_RESOURCE_STATE_GENERIC_READ,
 				D3D12_RESOURCE_STATE_DEPTH_WRITE);
 		}
@@ -197,8 +197,8 @@ void PostEffect::CSMaterialDrawCommands()
 void PostEffect::TransferTexturePos()
 {
 	// テクスチャーのサイズ
-	float width = mRenderTextures.front()->size.x;
-	float height = mRenderTextures.front()->size.y;
+	float width = mRenderTextures.front()->GetInitalSize().x;
+	float height = mRenderTextures.front()->GetInitalSize().y;
 
 	mVertices[0].pos = { (0.0f - mAnchorPoint.x) * width,(1.0f - mAnchorPoint.y) * height,0.0f }; //蟾ｦ荳・
 	mVertices[1].pos = { (0.0f - mAnchorPoint.x) * width,(0.0f - mAnchorPoint.y) * height,0.0f }; //蟾ｦ荳・

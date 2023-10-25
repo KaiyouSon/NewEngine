@@ -19,15 +19,15 @@ void LoadManager::TitleSceneLoad()
 }
 void LoadManager::TitleSceneUnLoad()
 {
-	TextureManager::UnLoadTexture("Particle1");
-	TextureManager::UnLoadTexture("GameTitle");
-	TextureManager::UnLoadTexture("PressButton");
-	TextureManager::UnLoadTexture("PressButtonBack");
+	TextureManager::DestroyTexture("Particle1");
+	TextureManager::DestroyTexture("GameTitle");
+	TextureManager::DestroyTexture("PressButton");
+	TextureManager::DestroyTexture("PressButtonBack");
 
 	// ブルーム用
-	TextureManager::UnLoadRenderTexture("HighLumi");
-	TextureManager::UnLoadRenderTexture("GaussianBlur");
-	TextureManager::UnLoadRenderTexture("Bloom");
+	TextureManager::DestroyRenderTexture("HighLumi");
+	TextureManager::DestroyRenderTexture("GaussianBlur");
+	TextureManager::DestroyRenderTexture("Bloom");
 }
 
 // ゲームシーンでのロード・アンロード
@@ -88,56 +88,56 @@ void LoadManager::GameSceneLoad()
 void LoadManager::GameSceneUnLoad()
 {
 	// UI
-	TextureManager::UnLoadTexture("Gauge");
-	TextureManager::UnLoadTexture("Buttons");
-	TextureManager::UnLoadTexture("NegotiationBack");
-	TextureManager::UnLoadTexture("MessageBack");
-	TextureManager::UnLoadTexture("MessageSignUI");
-	TextureManager::UnLoadTexture("ItemBoxFrame");
-	TextureManager::UnLoadTexture("ItemBoxLight");
-	TextureManager::UnLoadTexture("BottleUI");
-	TextureManager::UnLoadTexture("ClubUI");
-	TextureManager::UnLoadTexture("MenuBack");
-	TextureManager::UnLoadTexture("MenuTextFrame");
-	TextureManager::UnLoadTexture("MenuTextLight");
-	TextureManager::UnLoadTexture("ResultBack");
-	TextureManager::UnLoadTexture("RespawnBack");
+	TextureManager::DestroyTexture("Gauge");
+	TextureManager::DestroyTexture("Buttons");
+	TextureManager::DestroyTexture("NegotiationBack");
+	TextureManager::DestroyTexture("MessageBack");
+	TextureManager::DestroyTexture("MessageSignUI");
+	TextureManager::DestroyTexture("ItemBoxFrame");
+	TextureManager::DestroyTexture("ItemBoxLight");
+	TextureManager::DestroyTexture("BottleUI");
+	TextureManager::DestroyTexture("ClubUI");
+	TextureManager::DestroyTexture("MenuBack");
+	TextureManager::DestroyTexture("MenuTextFrame");
+	TextureManager::DestroyTexture("MenuTextLight");
+	TextureManager::DestroyTexture("ResultBack");
+	TextureManager::DestroyTexture("RespawnBack");
 
 	// テキスト
-	TextureManager::UnLoadTexture("ColonStr");
-	TextureManager::UnLoadTexture("ReadMessageStr");
-	TextureManager::UnLoadTexture("RestInLightStr");
-	TextureManager::UnLoadTexture("OpenStr");
-	TextureManager::UnLoadTexture("ExitStr");
-	TextureManager::UnLoadTexture("Operation1Text");
-	TextureManager::UnLoadTexture("Operation2Text");
-	TextureManager::UnLoadTexture("Operation3Text");
-	TextureManager::UnLoadTexture("Operation4Text");
-	TextureManager::UnLoadTexture("Operation5Text");
-	TextureManager::UnLoadTexture("BackToTitleStr");
-	TextureManager::UnLoadTexture("CloseGameStr");
-	TextureManager::UnLoadTexture("EnemyFelledStr");
-	TextureManager::UnLoadTexture("YouDiedStr");
-	TextureManager::UnLoadTexture("DecisionCloseStr");
-	TextureManager::UnLoadTexture("NumberSheets");
+	TextureManager::DestroyTexture("ColonStr");
+	TextureManager::DestroyTexture("ReadMessageStr");
+	TextureManager::DestroyTexture("RestInLightStr");
+	TextureManager::DestroyTexture("OpenStr");
+	TextureManager::DestroyTexture("ExitStr");
+	TextureManager::DestroyTexture("Operation1Text");
+	TextureManager::DestroyTexture("Operation2Text");
+	TextureManager::DestroyTexture("Operation3Text");
+	TextureManager::DestroyTexture("Operation4Text");
+	TextureManager::DestroyTexture("Operation5Text");
+	TextureManager::DestroyTexture("BackToTitleStr");
+	TextureManager::DestroyTexture("CloseGameStr");
+	TextureManager::DestroyTexture("EnemyFelledStr");
+	TextureManager::DestroyTexture("YouDiedStr");
+	TextureManager::DestroyTexture("DecisionCloseStr");
+	TextureManager::DestroyTexture("NumberSheets");
 
 	// パーティクル
-	TextureManager::UnLoadTexture("Particle1");
-	TextureManager::UnLoadTexture("Particle2");
-	TextureManager::UnLoadTexture("Line");
+	TextureManager::DestroyTexture("Particle1");
+	TextureManager::DestroyTexture("Particle2");
+	TextureManager::DestroyTexture("Line");
 
 	// 草
-	TextureManager::UnLoadTexture("Weed");
-	TextureManager::UnLoadTexture("Branch");
+	TextureManager::DestroyTexture("Weed");
+	TextureManager::DestroyTexture("Branch");
 
 	// 天球
-	TextureManager::UnLoadRenderTexture("Vignette");
-	TextureManager::UnLoadRenderTexture("VolumetricFog");
+	TextureManager::DestroyTexture("Vignette");
+	TextureManager::DestroyTexture("VolumetricFog");
 
 	// ブルーム用
-	TextureManager::UnLoadRenderTexture("HighLumi");
-	TextureManager::UnLoadRenderTexture("GaussianBlur");
-	TextureManager::UnLoadRenderTexture("Bloom");
+	TextureManager::DestroyTexture("HighLumi");
+	TextureManager::DestroyTexture("GaussianBlur");
+	TextureManager::DestroyTexture("Bloom");
 }
 
 bool LoadManager::ModelLoad()
@@ -291,7 +291,7 @@ LoadManager::LoadManager() : mIsLoaded(false)
 void LoadManager::Load()
 {
 	// 繝槭Ν繝√せ繝ｬ繝・ラ縺ｫ蜈･繧句燕縺ｫ菴懊▲縺ｨ縺・
-	TextureManager::CreateTexture(Color::white, "White");
+	TextureManager::CreateColorTexture(Color::white, "White");
 
 	// 髱槫酔譛・
 	std::future<bool> textureFtr = std::async(std::launch::async, [this] { return TextureLoad(); });

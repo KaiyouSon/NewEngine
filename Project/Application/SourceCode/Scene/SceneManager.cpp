@@ -19,7 +19,7 @@ SceneManager::SceneManager()
 	// デバッグビルドのも実行
 	ProcessAtDebugBuild([]()
 		{
-			sCurrentScene = std::make_unique<TitleScene>();
+			sCurrentScene = std::make_unique<GameScene>();
 		});
 
 	// リリースビルドのも実行

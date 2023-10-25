@@ -155,7 +155,7 @@ void CircleGaugeSprite::TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightD
 void CircleGaugeSprite::SetTexture(Texture* texture)
 {
 	mTexture = texture;
-	SetSize(texture->GetInitalSize());
+	SetSize(Vec2(texture->GetInitalSize().x, texture->GetInitalSize().y));
 }
 
 // 描画範囲

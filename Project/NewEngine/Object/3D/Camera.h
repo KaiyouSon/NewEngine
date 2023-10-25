@@ -1,6 +1,7 @@
 #pragma once
 #include "Util.h"
 
+// カメラのクラス
 class Camera
 {
 public:
@@ -15,10 +16,10 @@ public:
 	static Camera current;
 
 private:
-	Mat4 mViewLookToMat;			// 繝薙Η繝ｼ螟画鋤陦悟・・・LookTo ・・
-	Mat4 mViewLookAtMat;			// 繝薙Η繝ｼ螟画鋤陦悟・・・LookAt ・・
-	Mat4 mOrthoGrphicProjectionMat;	// 蟷ｳ陦梧兜蠖ｱ陦悟・
-	Mat4 mPerspectiveProjectionMat;	// 騾剰ｦ匁兜蠖ｱ陦悟・
+	Mat4 mViewLookToMat;              // ビュー行列 - LookTo 方式
+	Mat4 mViewLookAtMat;              // ビュー行列 - LookAt 方式
+	Mat4 mOrthographicProjectionMat;  // 正射影行列
+	Mat4 mPerspectiveProjectionMat;   // 透視投影行列
 
 public:
 	Camera();

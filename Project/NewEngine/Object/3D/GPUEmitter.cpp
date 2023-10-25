@@ -70,7 +70,7 @@ void GPUEmitter::Update(Transform* parent)
 		mTransform.SetWorldMat(mat);
 	}
 
-	// 繝槭ユ繝ｪ繧｢繝ｫ縺ｮ霆｢騾・
+	// マテリアルの転送
 	MaterialTransfer();
 }
 void GPUEmitter::Draw(const BlendMode blendMode)
@@ -214,9 +214,18 @@ void GPUEmitter::CSMaterialDrawCommands()
 }
 
 // --- セッター --------------------------------------------------------
-void GPUEmitter::SetTexture(Texture* texture) { mTexture = texture; }
-void GPUEmitter::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline) { mGraphicsPipeline = graphicsPipeline; }
-void GPUEmitter::SetComputePipeline(ComputePipeline* computePipeline) { mComputePipeline = computePipeline; }
+void GPUEmitter::SetTexture(Texture* texture)
+{
+	mTexture = texture;
+}
+void GPUEmitter::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+{
+	mGraphicsPipeline = graphicsPipeline;
+}
+void GPUEmitter::SetComputePipeline(ComputePipeline* computePipeline)
+{
+	mComputePipeline = computePipeline;
+}
 
 // --- ゲッターｼ -------------------------------------------------------- //
 Vec3 GPUEmitter::GetWorldPos()

@@ -247,6 +247,11 @@ void DescriptorHeap::DestroyView(BufferResource* bufferResource)
 	{
 		ViewIndex viewIndex = bufferResource->viewIndexes[i];
 
+		if (viewIndex.index == -1)
+		{
+			continue;
+		}
+
 		// CBV_SRV_UAVの場合
 		if (mSetting.heapType == DescriptorHeapSetting::CBV_SRV_UAV)
 		{

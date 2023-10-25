@@ -14,3 +14,8 @@ Vec3 ITexture::GetInitalSize()
 {
 	return mInitalSize;
 }
+
+TextureType ITexture::GetTextureType()
+{
+	return mType;
+}

@@ -8,8 +8,10 @@
 #include "NewEngineEnum.h"
 #include <vector>
 
+// 前方宣言
 class TextureAnimeiton;
 
+// スプライトのクラス
 class Sprite
 {
 private:

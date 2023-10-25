@@ -165,7 +165,7 @@ void ParticleMesh::CSMaterialTransfer()
 	// メッシュテクスチャ情報
 	CTextureSizeData textureAreaSize =
 	{
-		mMeshTexture->GetInitalSize(),
+		Vec2(mMeshTexture->GetInitalSize().x, mMeshTexture->GetInitalSize().y),
 		static_cast<float>(mMaxParticle)
 	};
 	TransferDataToConstantBuffer(mCSMaterial->constantBuffers[0].get(), textureAreaSize);

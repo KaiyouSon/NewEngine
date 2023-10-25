@@ -12,62 +12,11 @@ TextureManager::TextureManager() : mMutex(std::mutex{})
 {
 }
 
-void TextureManager::Init()
-{
-}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// --- 生成関連 ------------------------------------------------------------------------------------------------------ ///
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// 1x1の色テクスチャーを生成する関数
-void TextureManager::CreateTexture(const Color color, const std::string tag)
-{
-	// 排他制御
-	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
-
-	// マップに格納
-	GetInstance()->mTextureMap.
-		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
-
-	Texture* texture = dynamic_cast<Texture*>(GetInstance()->mTextureMap[tag].get());
-
-	// リソース設定
-	D3D12_RESOURCE_DESC resourceDesc =
-		CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 1, 1, 1, 1);
-
-	// テクスチャーのバッファ生成
-	texture->Create(resourceDesc);
-
-	// SRV作成
-	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(texture->GetBufferResource());
-
-	// サブリソースデータを初期化
-	Color col = color / 255.f;
-	Vec2 size = texture->GetInitalSize();
-	D3D12_SUBRESOURCE_DATA subResourcesData;
-	subResourcesData.pData = (void**)&col;
-	subResourcesData.RowPitch = static_cast<int64_t>(sizeof(Color) * size.x);
-	subResourcesData.SlicePitch = static_cast<int64_t>(sizeof(Color) * size.x * size.y);
-
-	// テクスチャーをアップロード
-	UpdateSubresources(
-		RenderBase::GetInstance()->GetCommandList(),
-		texture->GetBufferResource()->buffer.Get(),
-		texture->GetUploadBuffer()->GetBufferResource()->buffer.Get(),
-		0,
-		0,
-		1,
-		&subResourcesData);
-
-	// リソースの状態変更
-	RenderBase::GetInstance()->TransitionBufferState(
-		texture->GetBufferResource(),
-		D3D12_RESOURCE_STATE_COPY_DEST,
-		D3D12_RESOURCE_STATE_GENERIC_READ);
-
-	// Log出力
-	std::string log = "[Texture Create] ColorTexture, Tag : " + tag + ", created";
-	OutputDebugLog(log.c_str());
-}
-
-// テクスチャーをロードする関数
+// テクスチャーをロード
 void TextureManager::LoadTexture(const std::string filePath, const std::string tag)
 {
 	// 排他制御
@@ -168,7 +117,7 @@ void TextureManager::LoadTexture(const std::string filePath, const std::string t
 	OutputDebugLog(log.c_str());
 }
 
-// mtlファイルのテクスチャーをロードする関数
+// mtlファイルのテクスチャーをロード
 Texture* TextureManager::LoadMaterialTexture(const std::string filePath, const std::string tag)
 {
 	// 排他制御
@@ -178,7 +127,7 @@ Texture* TextureManager::LoadMaterialTexture(const std::string filePath, const s
 	GetInstance()->mMaterialTextureMap.
 		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
 
-	Texture* texture = GetInstance()->mMaterialTextureMap[tag].get();
+	Texture* texture = dynamic_cast<Texture*>(GetInstance()->mMaterialTextureMap[tag].get());
 
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
@@ -194,7 +143,7 @@ Texture* TextureManager::LoadMaterialTexture(const std::string filePath, const s
 
 	if (result != S_OK)
 	{
-		std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + tag + ", is,failed to load";
+		std::string log = "[MaterialTexture Load] FilePath : " + filePath + ", Tag : " + tag + ", is,failed to load";
 		OutputDebugLog(log.c_str());
 
 		assert(0 && "mtlテクスチャ読み込みに失敗しました");
@@ -265,39 +214,89 @@ Texture* TextureManager::LoadMaterialTexture(const std::string filePath, const s
 	return texture;
 }
 
-// 深度テクスチャの生成
+// 1x1の色テクスチャーを作成
+void TextureManager::CreateColorTexture(const Color color, const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	// マップに格納
+	GetInstance()->mTextureMap.
+		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
+
+	// リソース設定
+	D3D12_RESOURCE_DESC resourceDesc =
+		CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 1, 1, 1, 1);
+
+	Texture* texture = dynamic_cast<Texture*>(GetInstance()->mTextureMap[tag].get());
+
+	// テクスチャーのバッファ生成
+	texture->Create(resourceDesc);
+
+	// SRV作成
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(texture->GetBufferResource());
+
+	// サブリソースデータを初期化
+	Color col = color / 255.f;
+	Vec2 size = Vec2(texture->GetInitalSize().x, texture->GetInitalSize().y);
+	D3D12_SUBRESOURCE_DATA subResourcesData;
+	subResourcesData.pData = (void**)&col;
+	subResourcesData.RowPitch = static_cast<int64_t>(sizeof(Color) * size.x);
+	subResourcesData.SlicePitch = static_cast<int64_t>(sizeof(Color) * size.x * size.y);
+
+	// テクスチャーをアップロード
+	UpdateSubresources(
+		RenderBase::GetInstance()->GetCommandList(),
+		texture->GetBufferResource()->buffer.Get(),
+		texture->GetUploadBuffer()->GetBufferResource()->buffer.Get(),
+		0,
+		0,
+		1,
+		&subResourcesData);
+
+	// リソースの状態変更
+	RenderBase::GetInstance()->TransitionBufferState(
+		texture->GetBufferResource(),
+		D3D12_RESOURCE_STATE_COPY_DEST,
+		D3D12_RESOURCE_STATE_GENERIC_READ);
+
+	// Log出力
+	std::string log = "[Texture Create] ColorTexture, Tag : " + tag + ", created";
+	OutputDebugLog(log.c_str());
+}
+
+// 深度テクスチャの作成
 void TextureManager::CreateDepthTexture(DepthBuffer* depthBuffer, const std::string tag)
 {
 	// 排他制御
 	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
 	// マップに格納
-	GetInstance()->mTextureMap.
+	GetInstance()->mDepthTextureMap.
 		insert(std::make_pair(tag, std::move(std::make_unique<DepthTexture>())));
 
-	DepthTexture* texture = dynamic_cast<DepthTexture*>(GetInstance()->mTextureMap[tag].get());
+	DepthTexture* texture = dynamic_cast<DepthTexture*>(
+		GetInstance()->mDepthTextureMap[tag].get());
 
 	// 深度テクスチャのバッファ生成
 	texture->Create(depthBuffer);
 
-	// SRV作成
-	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(texture->GetBufferResource());
-
-	std::string log = "[Texture Create] DepthTexture, Tag : " + tag + ", created";
+	std::string log = "[DepthTexture Create] DepthTexture, Tag : " + tag + ", created";
 	OutputDebugLog(log.c_str());
 }
 
-// ボリュームテクスチャの生成
+// ボリュームテクスチャの作成
 void TextureManager::CreateVolumeTexture(const std::vector<Texture*>& texs, const std::string tag)
 {
 	// 排他制御
 	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
 	// マップに格納
-	GetInstance()->mTextureMap.
+	GetInstance()->mVolumeTextureMap.
 		insert(std::make_pair(tag, std::move(std::make_unique<VolumeTexture>())));
 
-	VolumeTexture* texture = dynamic_cast<VolumeTexture*>(GetInstance()->mTextureMap[tag].get());
+	VolumeTexture* texture = dynamic_cast<VolumeTexture*>(
+		GetInstance()->mVolumeTextureMap[tag].get());
 
 	// リソース設定
 	D3D12_RESOURCE_DESC resourceDesc =
@@ -343,7 +342,7 @@ void TextureManager::CreateVolumeTexture(const std::vector<Texture*>& texs, cons
 		&subResourcesData);
 
 	// アップロード後にdeleteする
-	delete subResourcesData.pData;
+	delete[] subResourcesData.pData;
 
 	// リソースの状態変更
 	RenderBase::GetInstance()->TransitionBufferState(
@@ -351,20 +350,49 @@ void TextureManager::CreateVolumeTexture(const std::vector<Texture*>& texs, cons
 		D3D12_RESOURCE_STATE_COPY_DEST,
 		D3D12_RESOURCE_STATE_GENERIC_READ);
 
-	std::string log = "[Texture Create] VolumeTexture, Tag : " + tag + ", created";
+	std::string log = "[VolumeTexture Create] Tag : " + tag + ", created";
 	OutputDebugLog(log.c_str());
 }
 
-// アンロード
-void TextureManager::UnLoadTexture(const std::string tag)
+// レンダーテクスチャの作成
+void TextureManager::CreateRenderTexture(const Vec2 size, const uint32_t rtvNum, const std::string tag)
 {
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	// マップに格納
+	GetInstance()->mRenderTextureMap.
+		insert(std::make_pair(tag, std::move(std::make_unique<RenderTexture>())));
+
+	RenderTexture* texture = dynamic_cast<RenderTexture*>(
+		GetInstance()->mRenderTextureMap[tag].get());
+
+	// 生成
+	texture->Create(size, rtvNum);
+
+	std::string log = "[RenderTexture Create] Tag : " + tag + ", created";
+	OutputDebugLog(log.c_str());
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// --- 破棄関連 ------------------------------------------------------------------------------------------------------ ///
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// テクスチャの破棄
+void TextureManager::DestroyTexture(const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
 	auto it = GetInstance()->mTextureMap.find(tag);
 	if (it == GetInstance()->mTextureMap.end())
 	{
+		std::string log;
+		log = "[Texture Error] Tag : " + tag + ", is nullptr";
 		return;
 	}
 
-	// SRVを上書きできる状態にする
+	// SRV解放
 	DescriptorHeapManager::GetDescriptorHeap("SRV")->DestroyView(
 		GetInstance()->mTextureMap[tag]->GetBufferResource());
 
@@ -372,84 +400,103 @@ void TextureManager::UnLoadTexture(const std::string tag)
 	GetInstance()->mTextureMap.erase(tag);
 }
 
-// テクスチャーを取得する関数
+// 深度テクスチャの破棄
+void TextureManager::DestroyDepthTexture(const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	auto it = GetInstance()->mDepthTextureMap.find(tag);
+	if (it == GetInstance()->mDepthTextureMap.end())
+	{
+		std::string log;
+		log = "[Texture Error] Tag : " + tag + ", is nullptr";
+		return;
+	}
+
+	// SRV解放
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->DestroyView(
+		GetInstance()->mDepthTextureMap[tag]->GetBufferResource());
+
+	// Mapから削除
+	GetInstance()->mDepthTextureMap.erase(tag);
+}
+
+// ボリュームテクスチャの破棄
+void TextureManager::VolumeDepthTexture(const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	auto it = GetInstance()->mVolumeTextureMap.find(tag);
+	if (it == GetInstance()->mVolumeTextureMap.end())
+	{
+		std::string log;
+		log = "[Texture Error] Tag : " + tag + ", is nullptr";
+		return;
+	}
+
+	// SRV解放
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->DestroyView(
+		GetInstance()->mVolumeTextureMap[tag]->GetBufferResource());
+
+	// Mapから削除
+	GetInstance()->mVolumeTextureMap.erase(tag);
+}
+
+// レンダーテクスチャの破棄
+void TextureManager::DestroyRenderTexture(const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	auto it = GetInstance()->mRenderTextureMap.find(tag);
+	if (it == GetInstance()->mRenderTextureMap.end())
+	{
+		std::string log;
+		log = "[RenderTexture Error] Tag : " + tag + ", is nullptr";
+		return;
+	}
+
+	RenderTexture* texture = GetInstance()->mRenderTextureMap[tag].get();
+
+	for (uint32_t i = 0; i < texture->GetBufferResources()->size(); i++)
+	{
+		// SRV解放
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->DestroyView(&texture->GetBufferResources()->at(i));
+		// RTV解放
+		DescriptorHeapManager::GetDescriptorHeap("RTV")->DestroyView(&texture->GetBufferResources()->at(i));
+	}
+
+	// 深度テクスチャを使った場合
+	if (texture->useDepth == true)
+	{
+		// SRV解放
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->DestroyView(texture->GetDepthTexture()->GetBufferResource());
+
+		// DSV解放
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->DestroyView(texture->GetDepthBuffer()->GetBufferResource());
+	}
+
+	// Mapから削除
+	GetInstance()->mRenderTextureMap.erase(tag);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// --- テクスチャの取得関連 ------------------------------------------------------------------------------------------ ///
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// テクスチャーを取得
 Texture* TextureManager::GetTexture(const std::string tag)
 {
 	// 排他制御
 	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
-	// ログ
-	std::string log = "Error";
-
-	ITexture* iTexture = GetInstance()->mTextureMap[tag].get();
-	if (iTexture == nullptr)
-	{
-		log = "[Texture Use] Tag : " + tag + ", does not exist";
-	}
-	else
-	{
-		log = "[Texture Use] Tag : " + tag + ", was used";
-	}
-	OutputDebugLog(log.c_str());
-
-	return dynamic_cast<Texture*>(iTexture);
-}
-
-// 深度テクスチャーを取得する関数
-DepthTexture* TextureManager::GetDepthTexture(const std::string tag)
-{
-	// 排他制御
-	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
-
-	// ログ
-	std::string log = "Error";
-
-	ITexture* iTexture = GetInstance()->mTextureMap[tag].get();
-	if (iTexture == nullptr)
-	{
-		log = "[DepthTexture Use] Tag : " + tag + ", does not exist";
-	}
-	else
-	{
-		log = "[DepthTexture Use] Tag : " + tag + ", was used";
-	}
-	OutputDebugLog(log.c_str());
-
-	return dynamic_cast<DepthTexture*>(iTexture);
-}
-
-// ボリュームテクスチャを取得する関数
-VolumeTexture* TextureManager::GetVolumeTexture(const std::string tag)
-{
-	// 排他制御
-	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
-
-	// ログ
-	std::string log = "Error";
-
-	ITexture* iTexture = GetInstance()->mTextureMap[tag].get();
-	if (iTexture == nullptr)
-	{
-		log = "[VolumeTexture Use] Tag : " + tag + ", does not exist";
-	}
-	else
-	{
-		log = "[VolumeTexture Use] Tag : " + tag + ", was used";
-	}
-	OutputDebugLog(log.c_str());
-
-	return dynamic_cast<VolumeTexture*>(iTexture);
-}
-
-
-// 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ縺ｮ蜿門ｾ・
-RenderTexture* TextureManager::GetRenderTexture(const std::string tag)
-{
-	auto it = GetInstance()->mRenderTextureMap.find(tag);
-	if (it == GetInstance()->mRenderTextureMap.end())
+	auto it = GetInstance()->mTextureMap.find(tag);
+	if (it == GetInstance()->mTextureMap.end())
 	{
 		std::string log;
-		log = "[RenderTexture Use] Tag : " + tag + ", does not exist";
+		log = "[RenderTexture Error] Tag : " + tag + ", is nullptr";
 		return nullptr;
 	}
 	else
@@ -457,119 +504,127 @@ RenderTexture* TextureManager::GetRenderTexture(const std::string tag)
 		std::string log;
 		log = "[RenderTexture Use] Tag : " + tag + ", was used";
 		OutputDebugLog(log.c_str());
-		return GetInstance()->mRenderTextureMap[tag].get();
+
+		Texture* texture = dynamic_cast<Texture*>(
+			GetInstance()->mTextureMap[tag].get());
+		return texture;
 	}
 }
 
-// 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝ｼ繧堤函謌舌＠繝槭ャ繝励↓譬ｼ邏阪☆繧・
-RenderTexture* TextureManager::CreateRenderTexture(const Vec2 size, const uint32_t num, const std::string tag)
+// 深度テクスチャーを取得
+DepthTexture* TextureManager::GetDepthTexture(const std::string tag)
 {
-	// 謗剃ｻ門宛蠕｡
+	// 排他制御
 	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
-	std::unique_ptr<RenderTexture> renderTex = std::make_unique<RenderTexture>();
-	renderTex->size = size;
-	renderTex->GetBufferResources()->resize(num);
-
-	HRESULT result;
-	RenderBase* renderBase = RenderBase::GetInstance();
-
-	// 繝偵・繝苓ｨｭ螳・
-	CD3DX12_HEAP_PROPERTIES heapProp =
-		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-
-	// 繝ｪ繧ｽ繝ｼ繧ｹ險ｭ螳・
-	CD3DX12_RESOURCE_DESC resourceDesc =
-		CD3DX12_RESOURCE_DESC::Tex2D(
-			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
-			(UINT64)size.x, (UINT)size.y,
-			1, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
-
-	CD3DX12_CLEAR_VALUE clearValue =
-		CD3DX12_CLEAR_VALUE(
-			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
-			RenderTexture::sClearColor);
-
-	for (uint32_t i = 0; i < num; i++)
+	auto it = GetInstance()->mDepthTextureMap.find(tag);
+	if (it == GetInstance()->mDepthTextureMap.end())
 	{
-		result = renderBase->GetDevice()->
-			CreateCommittedResource(
-				&heapProp,
-				D3D12_HEAP_FLAG_NONE,
-				&resourceDesc,
-				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-				&clearValue,
-				IID_PPV_ARGS(&renderTex->GetBufferResources()->at(i).buffer));
-		assert(SUCCEEDED(result));
+		std::string log;
+		log = "[DepthTexture Error] Tag : " + tag + ", is nullptr";
+		return nullptr;
 	}
-
-	for (uint32_t i = 0; i < num; i++)
+	else
 	{
-		// SRV菴懈・
-		DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(&renderTex->GetBufferResources()->at(i));
+		std::string log;
+		log = "[DepthTexture Use] Tag : " + tag + ", was used";
+		OutputDebugLog(log.c_str());
 
-		// RTV菴懈・
-		DescriptorHeapManager::GetDescriptorHeap("RTV")->CreateRTV(&renderTex->GetBufferResources()->at(i));
+		DepthTexture* texture = dynamic_cast<DepthTexture*>(
+			GetInstance()->mDepthTextureMap[tag].get());
+		return texture;
 	}
-
-	// DSV菴懈・
-	renderTex->depthBuffer.Create(size);
-	DescriptorHeapManager::GetDescriptorHeap("DSV")->CreateDSV(renderTex->depthBuffer.GetBufferResource());
-
-	renderTex->depthTexture = std::make_unique<Texture>();
-	renderTex->depthTexture->GetBufferResource()->buffer = renderTex->depthBuffer.GetBufferResource()->buffer;
-	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(renderTex->depthTexture->GetBufferResource());
-
-	GetInstance()->mRenderTextureMap.insert(std::make_pair(tag, std::move(renderTex)));
-
-	std::string log = "[RenderTexture Create] Tag : " + tag + ", created";
-	OutputDebugLog(log.c_str());
-
-	return GetInstance()->mRenderTextureMap[tag].get();
 }
 
-// レンダーテクスチャのアンロード関数
-void TextureManager::UnLoadRenderTexture(const std::string tag)
+// ボリュームテクスチャを取得
+VolumeTexture* TextureManager::GetVolumeTexture(const std::string tag)
 {
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	auto it = GetInstance()->mVolumeTextureMap.find(tag);
+	if (it == GetInstance()->mVolumeTextureMap.end())
+	{
+		std::string log;
+		log = "[VolumeTexture Error] Tag : " + tag + ", is nullptr";
+		return nullptr;
+	}
+	else
+	{
+		std::string log;
+		log = "[VolumeTexture Use] Tag : " + tag + ", was used";
+		OutputDebugLog(log.c_str());
+
+		VolumeTexture* texture = dynamic_cast<VolumeTexture*>(
+			GetInstance()->mVolumeTextureMap[tag].get());
+		return texture;
+	}
+}
+
+// レンダーテクスチャを取得
+RenderTexture* TextureManager::GetRenderTexture(const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
 	auto it = GetInstance()->mRenderTextureMap.find(tag);
 	if (it == GetInstance()->mRenderTextureMap.end())
 	{
-		return;
+		std::string log;
+		log = "[RenderTexture Error] Tag : " + tag + ", is nullptr";
+		return nullptr;
 	}
-
-	for (uint32_t i = 0; i < GetInstance()->mRenderTextureMap[tag]->GetBufferResources()->size(); i++)
+	else
 	{
-		// SRV解放
-		DescriptorHeapManager::GetDescriptorHeap("SRV")->DestroyView(
-			&GetInstance()->mRenderTextureMap[tag]->GetBufferResources()->at(i));
+		std::string log;
+		log = "[RenderTexture Use] Tag : " + tag + ", was used";
+		OutputDebugLog(log.c_str());
 
-		// RTV解放
-		DescriptorHeapManager::GetDescriptorHeap("RTV")->DestroyView(
-			&GetInstance()->mRenderTextureMap[tag]->GetBufferResources()->at(i));
+		RenderTexture* texture = dynamic_cast<RenderTexture*>(
+			GetInstance()->mRenderTextureMap[tag].get());
+		return texture;
 	}
-	// マップから削除
-	GetInstance()->mRenderTextureMap.erase(tag);
 }
 
-// 繝・け繧ｹ繝√Ε繝槭ャ繝励・蜿門ｾ・
-std::unordered_map<std::string, std::unique_ptr<ITexture>>* TextureManager::GetTextureMap()
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// --- マップの取得関連 ---------------------------------------------------------------------------------------------- ///
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// テクスチャーマップを取得
+std::unordered_map<std::string, std::unique_ptr<Texture>>* TextureManager::GetTextureMap()
 {
 	return &GetInstance()->mTextureMap;
 }
 
-// 繝・け繧ｹ繝√Ε繝槭ャ繝励・蜿門ｾ・
+// マテリアルテクスチャーマップを取得
 std::unordered_map<std::string, std::unique_ptr<Texture>>* TextureManager::GetMaterialTextureMap()
 {
 	return &GetInstance()->mMaterialTextureMap;
 }
 
-// 繝ｬ繝ｳ繝繝ｼ繝・け繧ｹ繝√Ε繝槭ャ繝励・蜿門ｾ・
+// 深度テクスチャーマップを取得
+std::unordered_map<std::string, std::unique_ptr<DepthTexture>>* TextureManager::GetDepthTextureMap()
+{
+	return &GetInstance()->mDepthTextureMap;
+}
+
+// ボリュームテクスチャーマップを取得
+std::unordered_map<std::string, std::unique_ptr<VolumeTexture>>* TextureManager::GetVolumeTextureMap()
+{
+	return &GetInstance()->mVolumeTextureMap;
+}
+
+// レンダーテクスチャーマップを取得
 std::unordered_map<std::string, std::unique_ptr<RenderTexture>>* TextureManager::GetRenderTextureMap()
 {
 	return &GetInstance()->mRenderTextureMap;
 }
 
-// 繝・け繧ｹ繝√Ε繝ｼ繝ｭ繝ｼ繝牙ｾ後・繧ｳ繝槭Φ繝峨Μ繧ｹ繝医・螳溯｡・
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// --- その他 -------------------------------------------------------------------------------------------------------- ///
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// コマンド実行
 void TextureManager::ExcuteComandList()
 {
 	ID3D12GraphicsCommandList* iCommandList = RenderBase::GetInstance()->GetCommandList();
@@ -583,7 +638,7 @@ void TextureManager::ExcuteComandList()
 
 	RenderBase::GetInstance()->PreIncrimentFenceValue();
 
-	// 繧ｳ繝槭Φ繝峨・螳溯｡悟ｮ御ｺ・ｒ蠕・▽
+	// コマンドキューにシグナルを送信
 	iCommandQueue->Signal(RenderBase::GetInstance()->GetFence(), RenderBase::GetInstance()->GetFenceValue());
 
 	if (RenderBase::GetInstance()->GetFence()->GetCompletedValue() != RenderBase::GetInstance()->GetFenceValue())
@@ -596,10 +651,10 @@ void TextureManager::ExcuteComandList()
 
 	HRESULT result;
 
-	// 繧ｭ繝･繝ｼ繧偵け繝ｪ繧｢
+	// コマンドアロケータをリセット
 	result = RenderBase::GetInstance()->GetCommandAllocator()->Reset();
 	assert(SUCCEEDED(result));
-	// 蜀阪・繧ｳ繝槭Φ繝峨Μ繧ｹ繝医ｒ雋ｯ繧√ｋ貅門ｙ
+	// コマンドリストをリセットし、コマンドアロケータを関連付けます
 	result = iCommandList->Reset(RenderBase::GetInstance()->GetCommandAllocator(), nullptr);
 	assert(SUCCEEDED(result));
 }

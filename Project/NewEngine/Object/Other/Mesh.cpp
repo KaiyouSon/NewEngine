@@ -7,25 +7,25 @@ void Mesh::AddSmoothData(const uint16_t indexPos, const uint16_t indexVertex)
 
 void Mesh::CalculateSmoothedVertexNormals()
 {
-	for (auto& currentData : smoothData)
-	{
-		// 蜷・擇逕ｨ縺ｮ蜈ｱ騾夐らせ繧ｳ繝ｬ繧ｯ繧ｷ繝ｧ繝ｳ
-		std::vector<uint16_t> v = currentData.second;
+    for (auto& currentData : smoothData)
+    {
+        // 各頂点の法線データを格納したベクトル
+        std::vector<uint16_t> v = currentData.second;
 
-		// 蜈ｨ鬆らせ縺ｮ豕慕ｷ壹ｒ蟷ｳ蝮・☆繧・
-		Vec3 normal;
-		for (uint16_t index : v)
-		{
-			normal += {	vertices[index].normal.x, vertices[index].normal.y, vertices[index].normal.z};
-		}
-		normal = (normal / (float)v.size()).Norm();
+        // 平滑化された頂点法線を計算するためのベクトル
+        Vec3 normal;
+        for (uint16_t index : v)
+        {
+            normal += {vertices[index].normal.x, vertices[index].normal.y, vertices[index].normal.z};
+        }
+        normal = (normal / static_cast<float>(v.size())).Norm();
 
-		// 蜈ｱ騾壽ｳ慕ｷ壹ｒ菴ｿ逕ｨ縺吶ｋ縺吶∋縺ｦ縺ｮ鬆らせ繝・・繧ｿ縺ｫ譖ｸ縺崎ｾｼ繧
-		for (uint16_t index : v)
-		{
-			vertices[index].normal = { normal.x,normal.y,normal.z };
-		}
-	}
+        // 平滑化された法線データを頂点に設定し、頂点データを更新
+        for (uint16_t index : v)
+        {
+            vertices[index].normal = { normal.x, normal.y, normal.z };
+        }
+    }
 }
 
 void Mesh::AddVertex(const VertexBufferData::VFbxModel vertex)

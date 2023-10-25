@@ -2,16 +2,10 @@
 #include "ITexture.h"
 #include "DepthBuffer.h"
 
+// 深度テクスチャのクラス
 class DepthTexture : public ITexture
 {
-private:
-	HRESULT mResult;
-
 public:
-	// コンストラクタ
-	DepthTexture();
-
 	// テクスチャーのバッファ生成する関数
 	void Create(DepthBuffer* depthBuffer);
 };
-

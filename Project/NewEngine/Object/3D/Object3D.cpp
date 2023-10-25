@@ -14,9 +14,9 @@ Object3D::Object3D() :
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D")),
 	mTexture(TextureManager::GetTexture("White")), mModel(nullptr), mParent(nullptr),
 	mDissolveTex(TextureManager::GetTexture("DissolveTexture")),
-	mDepthTex(TextureManager::GetRenderTexture("ShadowMap")->depthTexture.get()),
+	mDepthTex(TextureManager::GetRenderTexture("ShadowMap")->GetDepthTexture()),
 	isLighting(false), mIsWriteShadow(false), mIsWriteDepth(false),
-	mCamera(&Camera::current),
+	mMaterial(std::make_unique<Material>()), mCamera(&Camera::current),
 	isUseDissolve(false), dissolve(0.f), colorPower(1), dissolveColor(Color::red)
 {
 	// マテリアルの初期化
@@ -137,34 +137,34 @@ void Object3D::MaterialInit()
 
 	// 3D行列
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform3DShadow>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// マテリアルカラー
 	iConstantBuffer = std::make_unique<ConstantBuffer<CMaterialColor>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// 色
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// スキニング
 	iConstantBuffer = std::make_unique<ConstantBuffer<CSkin>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// UV情報
 	iConstantBuffer = std::make_unique<ConstantBuffer<CUVParameter>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// ディゾルブ
 	iConstantBuffer = std::make_unique<ConstantBuffer<CDissolve>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// 影
 	iConstantBuffer = std::make_unique<ConstantBuffer<CShadowMap>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// 初期化
-	mMaterial.Init();
+	mMaterial->Init();
 }
 void Object3D::MaterialTransfer()
 {
@@ -179,7 +179,7 @@ void Object3D::MaterialTransfer()
 		mCamera->pos,
 		lightViewCamera.pos
 	};
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transform3DShadowData);
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), transform3DShadowData);
 
 	if (mModel == nullptr)
 	{
@@ -201,11 +201,11 @@ void Object3D::MaterialTransfer()
 	{
 		materialColorData = { Color::one, Color::zero, Color::zero };
 	}
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[1].get(), materialColorData);
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[1].get(), materialColorData);
 
 	// 色データ
 	CColor colorData = { color / 255 };
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[2].get(), colorData);
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[2].get(), colorData);
 
 	// スキン情報
 	if (mModel->format == ModelFormat::Fbx)
@@ -218,20 +218,20 @@ void Object3D::MaterialTransfer()
 		{
 			skinData.bones[i] = fbxModel->bones[i].currentMat;
 		}
-		TransferDataToConstantBuffer(mMaterial.constantBuffers[3].get(), skinData);
+		TransferDataToConstantBuffer(mMaterial->constantBuffers[3].get(), skinData);
 	}
 
 	// UVデータ
 	CUVParameter uvData = { offset,tiling };
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[4].get(), uvData);
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[4].get(), uvData);
 
 	// ディゾルブ
 	CDissolve dissolveData = { dissolve,colorPower,Vec2(0,0), dissolveColor.To01() };
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[5].get(), dissolveData);
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[5].get(), dissolveData);
 
 	// ディゾルブ
 	CShadowMap shadowMapData = { mIsWriteShadow };
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[6].get(), shadowMapData);
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[6].get(), shadowMapData);
 }
 void Object3D::MaterialDrawCommands()
 {
@@ -239,25 +239,25 @@ void Object3D::MaterialDrawCommands()
 
 	// CBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, mMaterial.constantBuffers[0]->bufferResource->buffer->GetGPUVirtualAddress());
+		0, mMaterial->constantBuffers[0]->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, mMaterial.constantBuffers[1]->bufferResource->buffer->GetGPUVirtualAddress());
+		1, mMaterial->constantBuffers[1]->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		2, mMaterial.constantBuffers[2]->bufferResource->buffer->GetGPUVirtualAddress());
+		2, mMaterial->constantBuffers[2]->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		3, mMaterial.constantBuffers[3]->bufferResource->buffer->GetGPUVirtualAddress());
+		3, mMaterial->constantBuffers[3]->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		4, mMaterial.constantBuffers[4]->bufferResource->buffer->GetGPUVirtualAddress());
+		4, mMaterial->constantBuffers[4]->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		6, mMaterial.constantBuffers[5]->bufferResource->buffer->GetGPUVirtualAddress());
+		6, mMaterial->constantBuffers[5]->bufferResource->buffer->GetGPUVirtualAddress());
 
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		7, mMaterial.constantBuffers[6]->bufferResource->buffer->GetGPUVirtualAddress());
+		7, mMaterial->constantBuffers[6]->bufferResource->buffer->GetGPUVirtualAddress());
 }
 
 // --- セッター -------------------------------------------------------- //

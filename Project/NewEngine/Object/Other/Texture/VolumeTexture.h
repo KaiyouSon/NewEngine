@@ -10,9 +10,6 @@ private:
 	std::unique_ptr<UploadBuffer> mUploadBuffer;
 
 public:
-	// コンストラクタ
-	VolumeTexture();
-
 	// テクスチャーのバッファ生成する関数
 	void Create(const D3D12_RESOURCE_DESC& resourceDesc);
 

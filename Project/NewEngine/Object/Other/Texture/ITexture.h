@@ -9,6 +9,7 @@ class ITexture
 protected:
 	std::unique_ptr<BufferResource> mBufferResource;
 	Vec3 mInitalSize;
+	TextureType mType;
 
 public:
 	ITexture();
@@ -18,4 +19,5 @@ public:
 	// ゲッター
 	BufferResource* GetBufferResource();
 	Vec3 GetInitalSize();
+	TextureType GetTextureType();
 };

@@ -11,6 +11,7 @@
 #include "StructuredBuffer.h"
 #include "DescriptorHeapManager.h"
 
+// GPUエミッターのクラス
 class GPUEmitter
 {
 private:
