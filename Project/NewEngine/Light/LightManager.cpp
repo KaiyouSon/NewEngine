@@ -30,7 +30,7 @@ void LightManager::Update()
 }
 void LightManager::DrawCommand(const uint32_t index)
 {
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
+	RenderBase* renderBase = RenderBase::GetInstance();
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(

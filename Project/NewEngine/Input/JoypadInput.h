@@ -5,6 +5,7 @@
 #include <dinput.h>
 #include <wrl.h>
 
+// パッドコード
 enum class PadCode
 {
 	ButtonA = 0,
@@ -27,12 +28,14 @@ enum class PadCode
 	RightTrigger = 99,
 };
 
+// 前方宣言
 template<typename T> class Singleton;
 
+// コントローラーのクラス
 class JoypadInput : public Singleton<JoypadInput>
 {
 private:
-	// 讒矩菴・
+	// ジョイパッド情報
 	struct JoypadObj
 	{
 		Microsoft::WRL::ComPtr<IDirectInputDevice8> joypad;
@@ -40,47 +43,48 @@ private:
 		DIJOYSTATE2 prevPadInput;
 	};
 
-private:// 繝懊ち繝ｳ髢｢騾｣
+private: // メンバ変数
 	std::vector<JoypadObj> mJoypadObjs;
 	static bool sIsInsertPad;
 	static uint32_t sPadIndex;
 
-private:
-	// 繧ｳ繝ｳ繝医Ο繝ｼ繝ｩ繝ｼ謗･邯壹＠縺滓凾縺ｮ繧ｳ繝ｼ繝ｫ繝舌ャ繧ｯ
+private: // プライベートメソッド
+	// デバイスを探すためのコールバック関数
 	static BOOL CALLBACK DeviceFindCallBack(const DIDEVICEINSTANCE* pdidInstance, VOID* pContext);
 
-	// 繧ｳ繝ｳ繝医Ο繝ｼ繝ｩ繝ｼ繧呈磁邯壹☆繧句・逅・
+	// デバイスを見つけて初期化するためのメソッド
 	void SetJoyStick();
 
 public:
 	void Init();
 	void Update();
 
-public: // 繝懊ち繝ｳ髢｢騾｣
+public: // メンバ関数
 	static bool GetButton(const PadCode padCode, const int padIndex = 0);
 	static bool GetButtonDown(const PadCode padCode, const int padIndex = 0);
 	static bool GetButtonUp(const PadCode padCode, const int padIndex = 0);
 
 	static bool GetAnyButtonDown(const int padIndex = 0);
 
-public: // 繧ｹ繝・ぅ繝・け髢｢騾｣
+public: // 入力取得メソッド
 	static Vec2 GetStick(const PadCode padCode, const float length = 0, const int padIndex = 0);
 	static Vec2 GetStickDown(const PadCode padCode, const float length = 0, const int padIndex = 0);
 	static Vec2 GetStickUp(const PadCode padCode, const float length = 0, const int padIndex = 0);
 	static Vec3 GetStickVec3(const PadCode padCode, const float length = 0, const int padIndex = 0);
 
-
-public:	// 繝医Μ繧ｬ繝ｼ髢｢騾｣
+public: // トリガー取得メソッド
 	static float GetTrigger(const PadCode padCode, const float length = 0, const int padIndex = 0);
 	static bool GetTriggerDown(const PadCode padCode, const float length = 0, const int padIndex = 0);
 	static bool GetTriggerUp(const PadCode padCode, const float length = 0, const int padIndex = 0);
 
-public: // 縺昴・莉門叙蠕鈴未騾｣
+public: // リンクパッド情報取得
 	static bool GetisLinkPad();
 
-public: // 繧｢繧ｵ繝・ヨ
-	static inline void SetisInsertPad(const bool isInsertPad) { JoypadInput::sIsInsertPad = isInsertPad; }
-	static inline bool GetisInsertPad() { return JoypadInput::sIsInsertPad; }
+public:	// その他
+
+	// 挿入フラグ
+	static void SetisInsertPad(const bool isInsertPad);
+	static bool GetisInsertPad();
 
 private:
 	friend Singleton<JoypadInput>;

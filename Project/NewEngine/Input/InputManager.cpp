@@ -9,7 +9,7 @@ void InputManager::Init()
 	HRESULT result;
 	RenderWindow* renderWindow = RenderWindow::GetInstance().get();
 
-	// DirectInput縺ｮ蛻晄悄蛹・
+	// DirectInputの初期化
 	result = DirectInput8Create(
 		renderWindow->GetHInstance(),
 		DIRECTINPUT_VERSION,

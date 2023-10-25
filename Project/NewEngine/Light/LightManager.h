@@ -2,6 +2,7 @@
 #include "Material.h"
 #include <array>
 
+// 平行光源
 struct DirectionalLight
 {
 	Vec3 pos = Vec3::up;
@@ -12,6 +13,7 @@ struct DirectionalLight
 	~DirectionalLight() {}
 };
 
+// ポイントライト
 struct PointLight
 {
 	Vec3 pos = Vec3::up;
@@ -23,6 +25,7 @@ struct PointLight
 	~PointLight() {}
 };
 
+// スポットライト
 struct SpotLight
 {
 	Vec3 vec = Vec3::down;
@@ -36,7 +39,10 @@ struct SpotLight
 	~SpotLight() {}
 };
 
+// 前方宣言
 template<typename T> class Singleton;
+
+// ライトを管理するクラス
 class LightManager : public Singleton<LightManager>
 {
 private:

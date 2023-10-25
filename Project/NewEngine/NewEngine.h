@@ -23,7 +23,6 @@
 #include "PipelineManager.h"
 
 #include "CircleGaugeSprite.h"
-#include "Fog.h"
 #include "PostEffect.h"
 #include "ColliderDrawer.h"
 

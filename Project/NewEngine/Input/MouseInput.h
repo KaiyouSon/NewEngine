@@ -5,8 +5,10 @@
 #include <dinput.h>
 #include <wrl.h>
 
+// 前方宣言
 template<typename T> class Singleton;
 
+// マウスのクラス
 class MouseInput : public Singleton<MouseInput>
 {
 private:
@@ -16,25 +18,25 @@ private:
 	DIMOUSESTATE2 mPrevMouseInput;
 
 public:
-	void Init();
-	void Update();
+	void Init(); // マウスの初期化
+	void Update(); // マウスの更新
 
-	// 繧ｯ繝ｪ繝・け縺励※繧区凾
+	// クリックされたかを取得
 	static bool GetClick(const MouseCode mouseCode);
 
-	// 繧ｯ繝ｪ繝・け縺励◆迸ｬ髢・
+	// クリックが開始した瞬間かを取得
 	static bool GetClickDown(const MouseCode mouseCode);
 
-	// 繧ｯ繝ｪ繝・け縺礼ｵゅｏ縺｣縺溽椪髢・
+	// クリックが終了した瞬間かを取得
 	static bool GetClickUp(const MouseCode mouseCode);
 
-	// 繝槭え繧ｹ縺ｮ蠎ｧ讓・
+	// マウスの位置を取得
 	static Vec2 GetPos();
 
-	// 繝槭え繧ｹ縺ｮ蜍輔＞縺ｦ縺・ｋ繝吶け繝医Ν
+	// マウスの移動ベクトルを取得
 	static Vec2 GetMoveVec();
 
-	// 繝槭え繧ｹ繝帙う繝ｫ縺ｮ蜍輔＞縺ｦ縺・ｋ繝吶け繝医Ν
+	// マウスホイールの移動量を取得
 	static float GetWheelMoveVec();
 
 private:
