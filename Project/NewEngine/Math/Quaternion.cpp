@@ -17,22 +17,23 @@ Quaternion Quaternion::Inverse() const
 	return Conjugate() / (Length() * Length());
 }
 
-Quaternion Quaternion::AnyAxisRotation(const Vec3 v, const float radian)
+// 任意軸回転を作成
+Quaternion Quaternion::AnyAxisRotation(const Vec3 v, const float radians)
 {
-	Quaternion result = { x,y,z,w };
+	Quaternion result = { x, y, z, w };
 
-	// 蝗櫁ｻ｢繧ｯ繧ｩ繝ｼ繧ｿ繝九が繝ｳ菴懈・
+	// 軸を正規化
 	Quaternion q =
 	{
-		v.Norm().x * sinf(radian / 2),
-		v.Norm().y * sinf(radian / 2),
-		v.Norm().z * sinf(radian / 2),
-		cosf(radian / 2)
+		v.Norm().x * sinf(radians / 2),
+		v.Norm().y * sinf(radians / 2),
+		v.Norm().z * sinf(radians / 2),
+		cosf(radians / 2)
 	};
-	// 蝗櫁ｻ｢繧ｯ繧ｩ繝ｼ繧ｿ繝九が繝ｳ縺ｮ蜈ｱ蠖ｹ繧ｯ繧ｩ繝ｼ繧ｿ繝九が繝ｳ菴懈・      
+	// 軸回転がクォータニオンの逆クォータニオンを作成
 	Quaternion qc = q.Conjugate();
 
-	// 蝗櫁ｻ｢蜃ｦ逅・
+	// 軸回転を適用
 	result = q * result;
 	result = result * qc;
 
@@ -75,15 +76,15 @@ Quaternion Quaternion::Slerp(const Quaternion q1, const Quaternion q2, float t)
 	return q1 * k0 + t2 * k1;
 }
 
-Quaternion Quaternion::MakeAxisAngle(const Vec3 v, const float radian)
+Quaternion Quaternion::MakeAxisAngle(const Vec3 v, const float radians)
 {
-	// 蝗櫁ｻ｢繧ｯ繧ｩ繝ｼ繧ｿ繝九が繝ｳ菴懈・
+	// 軸回転を作成
 	Quaternion q =
 	{
-		v.Norm().x * sinf(radian / 2),
-		v.Norm().y * sinf(radian / 2),
-		v.Norm().z * sinf(radian / 2),
-		cosf(radian / 2)
+		v.Norm().x * sinf(radians / 2),
+		v.Norm().y * sinf(radians / 2),
+		v.Norm().z * sinf(radians / 2),
+		cosf(radians / 2)
 	};
 
 	return q;
@@ -91,25 +92,28 @@ Quaternion Quaternion::MakeAxisAngle(const Vec3 v, const float radian)
 
 Quaternion Quaternion::DirectionToDirection(const Vec3 v1, const Vec3 v2)
 {
-	// u縺ｨv繧呈ｭ｣隕丞喧縺励※蜀・ｩ阪ｒ豎ゅａ繧九Ｖ,v繧貞腰菴阪・繧ｯ繝医Ν蜑肴署縺ｨ縺吶ｋ縺ｪ繧画ｭ｣隕丞喧縺ｯ荳崎ｦ・
+	// uとvベクトルの内積を計算
+	// uとvが正規化されている必要があります
 	Vec3 u = v1;
 	u.Norm();
 	Vec3 v = v2;
 	v.Norm();
 
-	float dot = Vec3::Dot(u.Norm(), v.Norm());
+	float dot = Vec3::Dot(u, v);
 
-	// u,v縺ｮ螟也ｩ阪ｒ縺ｨ繧・
+	// uとvベクトルの外積を計算
+	// 霆角がベクトルに含まれ、uとvの両方に垂直です
 	Vec3 cross = Vec3::Cross(v1, v2);
 
-	// 霆ｸ縺ｯ蜊倅ｽ阪・繧ｯ繝医Ν縺ｧ縺ゅｋ蠢・ｦ√′縺ゅｋ縺ｮ縺ｧ豁｣隕丞喧
-	// u縺ｨv縺悟腰菴阪・繧ｯ繝医Ν縺ｧ縺ゅ▲縺ｦ繧ゅ∝､也ｩ阪′蜊倅ｽ阪・繧ｯ繝医Ν縺ｨ縺ｯ髯舌ｉ縺ｪ縺・・縺ｧ縺薙％縺ｮ豁｣隕丞喧縺ｯ蠢・・
+	// 軸を計算
+	// uとvが平行である場合、軸は任意のベクトルであるが、通常は(0, 0, 1)とする
 	Vec3 axis = cross.Norm();
 
-	// 蜊倅ｽ阪・繧ｯ繝医Ν縺ｧ蜀・ｩ阪ｒ縺ｨ縺｣縺ｦ縺・ｋ縺ｮ縺ｧacos縺ｧ隗貞ｺｦ繧呈ｱゅａ繧・
+	// 軸回転を作成
+	// ユニタリクォータニオンを作成し、acos関数を使用して角度を計算
 	float theta = acosf(dot);
 
-	// axis縺ｨtheta縺ｧ莉ｻ諢剰ｻｸ蝗櫁ｻ｢繧剃ｽ懊▲縺ｦ霑斐☆
+	// axisとthetaを使用して回転クォータニオンを作成
 	return MakeAxisAngle(axis, theta);
 }
 

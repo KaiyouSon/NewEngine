@@ -1,6 +1,7 @@
 #pragma once
 #include "Vec3.h"
 
+// 4x4行列の構造体
 struct Mat4
 {
 	float m[4][4] = {};

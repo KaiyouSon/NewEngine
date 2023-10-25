@@ -28,7 +28,7 @@ void DefaultCamera::Update()
 	stick.x = Clamp<float>(stick.x, -max, max);
 	stick.y = Clamp<float>(stick.y, -max, max);
 
-	const Vec2 rate = (Absolut(stick) - deadZone) / (Absolut(max) - deadZone);
+	const Vec2 rate = (Absolute(stick) - deadZone) / (Absolute(max) - deadZone);
 
 	// 繧ｹ繝・ぅ繝・け縺ｧ蛟偵☆縺ｨ蝗櫁ｻ｢縺吶ｋ蜃ｦ逅・
 	if (stick != 0)

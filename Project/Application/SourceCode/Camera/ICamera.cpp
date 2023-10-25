@@ -9,7 +9,7 @@ void ICamera::EaseCamera()
 	mCamera->pos += (mTargetPos - mCamera->pos) * 0.2f;
 	mCamera->rot += (mTargetRot - mCamera->rot) * 0.2f;
 
-	if (Absolut(mTargetPos - mCamera->pos) <= 0.1f)
+	if (Absolute(mTargetPos - mCamera->pos) <= 0.1f)
 	{
 		mIsEase = false;
 	}

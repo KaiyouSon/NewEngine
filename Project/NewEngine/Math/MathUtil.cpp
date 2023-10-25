@@ -3,6 +3,19 @@
 #include "Camera.h"
 #include "Viewport.h"
 
+// 絶対値を計算
+float Absolute(const float num) { return num >= 0 ? num : num * -1; }
+Vec2 Absolute(const Vec2 num) { return { Absolute(num.x), Absolute(num.y) }; }
+Vec3 Absolute(const Vec3 num) { return { Absolute(num.x), Absolute(num.y), Absolute(num.z) }; }
+// 弧度法から度数法へ変換
+float Angle(const float radian) { return radian * 180 / PI; }
+Vec2 Angle(const Vec2 radian) { return { Angle(radian.x), Angle(radian.y) }; }
+Vec3 Angle(const Vec3 radian) { return { Angle(radian.x), Angle(radian.y), Angle(radian.z) }; }
+// 度数法から弧度法へ変換
+float Radian(const float angle) { return angle * PI / 180; }
+Vec2 Radian(const Vec2 angle) { return { Radian(angle.x), Radian(angle.y) }; }
+Vec3 Radian(const Vec3 angle) { return { Radian(angle.x), Radian(angle.y), Radian(angle.z) }; }
+
 Vec3 Vec3MulMat4(const Vec3 v, const Mat4& m, const bool isMulW)
 {
 	Vec3 result = Vec3::zero;
@@ -170,37 +183,36 @@ Mat4 ConvertBillBoardAllAxis()
 
 Mat4 ConvertViewProjectionMatLookAt(const Vec3 pos, const Vec3 target, const Vec3 up)
 {
-	// 蜊倅ｽ崎｡悟・縺ｧ蛻晄悄蛹・
+	// 変換行列を初期化
 	Mat4 view = Mat4::Identity();
 
-	// ・夊ｻｸ
+	// 各軸を計算
 	Vec3 zAxis = target - pos;
 	view.m[2][0] = zAxis.Norm().x;
 	view.m[2][1] = zAxis.Norm().y;
 	view.m[2][2] = zAxis.Norm().z;
 
-	// ・倩ｻｸ
 	Vec3 xAxis = Vec3::Cross(up, zAxis);
 	view.m[0][0] = xAxis.Norm().x;
 	view.m[0][1] = xAxis.Norm().y;
 	view.m[0][2] = xAxis.Norm().z;
 
-	// ・呵ｻｸ
 	Vec3 yAxis = Vec3::Cross(zAxis, xAxis);
 	view.m[1][0] = yAxis.Norm().x;
 	view.m[1][1] = yAxis.Norm().y;
 	view.m[1][2] = yAxis.Norm().z;
 
-	// 蟷ｳ陦檎ｧｻ蜍・
+	// 平行移動成分
 	view.m[3][0] = Vec3::Dot(pos, xAxis.Norm());
 	view.m[3][1] = Vec3::Dot(pos, yAxis.Norm());
 	view.m[3][2] = -Vec3::Dot(pos, zAxis.Norm());
 
 	return view;
 }
+
 Mat4 ConvertViewProjectionMatLookTo(const Vec3 pos, const Vec3 zAxis, const Vec3 yAxis)
 {
-	// 蜊倅ｽ崎｡悟・縺ｧ蛻晄悄蛹・
+	// 変換行列を初期化
 	Mat4 view = Mat4::Identity();
 
 	Vec3 xAxisVec = Vec3::Cross(yAxis, zAxis).Norm();
@@ -208,15 +220,16 @@ Mat4 ConvertViewProjectionMatLookTo(const Vec3 pos, const Vec3 zAxis, const Vec3
 
 	return
 	{
-		xAxisVec.x,yAxisVec.x,zAxis.x,0,
-		xAxisVec.y,yAxisVec.y,zAxis.y,0,
-		xAxisVec.z,yAxisVec.z,zAxis.z,0,
-		Vec3::Dot(-pos, xAxisVec.Norm()),Vec3::Dot(-pos, yAxisVec.Norm()),Vec3::Dot(-pos, zAxis.Norm()),1,
+		xAxisVec.x, yAxisVec.x, zAxis.x, 0,
+		xAxisVec.y, yAxisVec.y, zAxis.y, 0,
+		xAxisVec.z, yAxisVec.z, zAxis.z, 0,
+		Vec3::Dot(-pos, xAxisVec.Norm()), Vec3::Dot(-pos, yAxisVec.Norm()), Vec3::Dot(-pos, zAxis.Norm()), 1,
 	};
 }
+
 Mat4 ConvertPerspectiveProjectionMat(float fovAngle, float aspect, float nearZ, float farZ)
 {
-	// 蜊倅ｽ崎｡悟・縺ｧ蛻晄悄蛹・
+	// 変換行列を初期化
 	Mat4 perspective = Mat4::Zero();
 
 	float scaleY = 1 / tanf(fovAngle / 2);
@@ -273,34 +286,37 @@ Mat4 CalculateWorldMat(const Vec3 pos, const Vec3 scale, const Vec3 rot)
 {
 	Mat4 result = Mat4::Identity();
 
-	// 蟷ｳ陦檎ｧｻ蜍輔√せ繧ｱ繝ｼ繝ｪ繝ｳ繧ｰ縲∝屓霆｢陦悟・菴懈・
+	// 各変換行列を計算: 並進、拡大、回転 (Z → X → Y 軸の順番)
 	Mat4 transMat = Mat4::Identity();
 	Mat4 scaleMat = Mat4::Identity();
 	Mat4 rotMat = Mat4::Identity();
 
-	transMat = ConvertTranslationMat(pos);	// 蟷ｳ陦檎ｧｻ蜍・
-	scaleMat = ConvertScalingMat(scale);		// 繧ｹ繧ｱ繝ｼ繝ｪ繝ｳ繧ｰ
-	rotMat *= ConvertRotationZAxisMat(rot.z);	// z霆ｸ蝗櫁ｻ｢
-	rotMat *= ConvertRotationXAxisMat(rot.x);	// x霆ｸ蝗櫁ｻ｢
-	rotMat *= ConvertRotationYAxisMat(rot.y);	// y霆ｸ蝗櫁ｻ｢
+	transMat = ConvertTranslationMat(pos);         // 並進
+	scaleMat = ConvertScalingMat(scale);           // 拡大
+	rotMat *= ConvertRotationZAxisMat(rot.z);      // Z軸回転
+	rotMat *= ConvertRotationXAxisMat(rot.x);      // X軸回転
+	rotMat *= ConvertRotationYAxisMat(rot.y);      // Y軸回転
 
+	// 最終的なワールド行列を計算
 	result = scaleMat * rotMat * transMat;
 
 	return result;
 }
+
 Mat4 CalculateWorldMat(const Vec3 pos, const Vec3 scale, const Quaternion rot)
 {
 	Mat4 result = Mat4::Identity();
 
-	// 蟷ｳ陦檎ｧｻ蜍輔√せ繧ｱ繝ｼ繝ｪ繝ｳ繧ｰ縲∝屓霆｢陦悟・菴懈・
+	// 各変換行列を計算: 並進、拡大、回転 (クォータニオン)
 	Mat4 transMat = Mat4::Identity();
 	Mat4 scaleMat = Mat4::Identity();
 	Mat4 rotMat = Mat4::Identity();
 
-	transMat = ConvertTranslationMat(pos);	// 蟷ｳ陦檎ｧｻ蜍・
-	scaleMat = ConvertScalingMat(scale);	// 繧ｹ繧ｱ繝ｼ繝ｪ繝ｳ繧ｰ
-	rotMat = ConvertRotationMat(rot);		// 蝗櫁ｻ｢
+	transMat = ConvertTranslationMat(pos);    // 並進
+	scaleMat = ConvertScalingMat(scale);      // 拡大
+	rotMat = ConvertRotationMat(rot);         // クォータニオンによる回転
 
+	// 最終的なワールド行列を計算
 	result = scaleMat * rotMat * transMat;
 
 	return result;
@@ -310,4 +326,3 @@ Vec3 operator+(const float num, const Vec3 v) { return { num + v.x,num + v.y,num
 Vec3 operator-(const float num, const Vec3 v) { return { num - v.x,num - v.y,num - v.z }; }
 Vec3 operator*(const float num, const Vec3 v) { return { num * v.x,num * v.y,num * v.z }; }
 Vec3 operator/(const float num, const Vec3 v) { return { num / v.x,num / v.y,num / v.z }; }
-

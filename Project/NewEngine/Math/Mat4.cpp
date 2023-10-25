@@ -44,63 +44,63 @@ Mat4 Mat4::Identity()
 Mat4 Mat4::Inverse()
 {
 	float sweepMat[4][8] = {};
-	float tmepNum = 0;
+	float tempNum = 0;
 
-	// 謗・″蜃ｺ縺苓｡悟・縺ｮ蛻晄悄蛹・
+	// 逆行列を求めるための行列の初期化
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			// 蠑墓焚縺ｧ繧ゅｉ縺｣縺溯｡悟・・亥ｷｦ 4 * 4・・
+			// ソース行列をコピー
 			sweepMat[i][j] = m[i][j];
 
-			// 蜊倅ｽ崎｡悟・・亥承 4 * 4・・
+			// 単位行列を初期化 4x4行列
 			sweepMat[i][j + 4] = (i == j) ? 1.0f : 0.0f;
 		}
 	}
 
-	// 謗・″蜃ｺ縺玲ｳ・
+	// 逆行列を求める
 	for (int i = 0; i < 4; i++)
 	{
-		// 譛螟ｧ謌仙・繧呈爾邏｢縺吶ｋ
+		// 最大値を持つ列を見つける
 		float max = fabsf(sweepMat[i][i]);
 		int maxIndex = i;
 		for (int j = i + 1; j < 4; j++)
 		{
-			if (max < fabsf(sweepMat[i][i]))
+			if (max < fabsf(sweepMat[j][i]))
 			{
-				max = fabsf(sweepMat[i][i]);
+				max = fabsf(sweepMat[j][i]);
 				maxIndex = j;
 			}
 		}
-		// 騾・｡悟・豎ゅａ繧九°縺ｩ縺・°
+		// 行列が特異値行列の場合
 		if (fabsf(sweepMat[maxIndex][i]) <= 1.e-50)
 		{
-			// 豎ゅａ繧後↑縺・ｴ蜷医・蜊倅ｽ崎｡悟・繧定ｿ斐☆
+			// 特異値行列の逆行列は単位行列とする
 			return Identity();
 		}
 
-		// 蟇ｾ雎｡縺ｨ縺ｪ繧玖｡悟・縺ｮ蟇ｾ隗呈・蛻・ｒ1縺ｫ縺吶ｋ
-		tmepNum = 1 / sweepMat[i][i];
+		// 1を対角要素で割り、それ以外の要素を0にする
+		tempNum = 1 / sweepMat[i][i];
 		for (int j = 0; j < 8; j++)
 		{
-			sweepMat[i][j] *= tmepNum;
+			sweepMat[i][j] *= tempNum;
 		}
 
-		// 蟇ｾ雎｡縺ｨ縺ｪ繧玖｡悟・縺ｮ蟇ｾ隗呈・蛻・ｻ･螟悶ｒ0縺ｫ縺吶ｋ縺溘ａ
+		// 対角要素以外の要素を0にする
 		for (int j = 0; j < 4; j++)
 		{
 			if (i == j) continue;
 
-			tmepNum = -sweepMat[j][i];
+			tempNum = -sweepMat[j][i];
 			for (int k = 0; k < 8; k++)
 			{
-				sweepMat[j][k] += sweepMat[i][k] * tmepNum;
+				sweepMat[j][k] += sweepMat[i][k] * tempNum;
 			}
 		}
 	}
 
-	// 騾・｡悟・繧定ｿ斐☆
+	// 逆行列を取り出す
 	Mat4 inverseMat = Mat4::Identity();
 	for (int i = 0; i < 4; i++)
 	{

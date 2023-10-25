@@ -74,14 +74,14 @@ Vec3 Vec3::operator+(const Vec2 other) const { return { x + other.x, y + other.y
 Vec3 Vec3::operator-(const Vec2 other) const { return { x - other.x, y - other.y ,z }; }
 Vec3 Vec3::operator*(const Vec2 other) const { return { x * other.x, y * other.y ,z }; }
 Vec3 Vec3::operator/(const Vec2 other) const { return { x / other.x, y / other.y ,z }; }
-Vec3 Vec3::operator+(float num) const { return { x + num, y + num, z + num }; }	// 荳縺､縺ｮ蛟､縺ｨ縺ｮ雜ｳ縺礼ｮ・
-Vec3 Vec3::operator-(float num) const { return { x - num, y - num, z - num }; }	// 荳縺､縺ｮ蛟､縺ｨ縺ｮ蠑輔″邂・
-Vec3 Vec3::operator*(float num) const { return { x * num, y * num, z * num }; }	// 荳縺､縺ｮ蛟､縺ｨ縺ｮ謗帙￠邂・
-Vec3 Vec3::operator/(float num) const { return { x / num, y / num, z / num }; }	// 荳縺､縺ｮ蛟､縺ｨ縺ｮ蜑ｲ繧顔ｮ・
+Vec3 Vec3::operator+(float num) const { return { x + num, y + num, z + num }; } // ベクトルの加算
+Vec3 Vec3::operator-(float num) const { return { x - num, y - num, z - num }; } // ベクトルの減算
+Vec3 Vec3::operator*(float num) const { return { x * num, y * num, z * num }; } // ベクトルの乗算
+Vec3 Vec3::operator/(float num) const { return { x / num, y / num, z / num }; } // ベクトルの除算
 
-Vec3 Vec3::operator-() const { return { -x,-y,-z }; }
+Vec3 Vec3::operator-() const { return { -x, -y, -z }; }
 
-// 隍・粋莉｣蜈･貍皮ｮ・+=
+// ベクトルの加算代入
 Vec3& Vec3::operator+=(const Vec3 other)
 {
 	x += other.x;
@@ -90,7 +90,7 @@ Vec3& Vec3::operator+=(const Vec3 other)
 	return *this;
 }
 
-// 隍・粋莉｣蜈･貍皮ｮ・-=
+// ベクトルの減算代入
 Vec3& Vec3::operator-=(const Vec3 other)
 {
 	x -= other.x;
@@ -115,7 +115,7 @@ Vec3& Vec3::operator-=(float num)
 	return *this;
 }
 
-// 隍・粋莉｣蜈･貍皮ｮ・*=
+// ベクトルの乗算代入
 Vec3& Vec3::operator*=(float num)
 {
 	x *= num;
@@ -124,7 +124,7 @@ Vec3& Vec3::operator*=(float num)
 	return *this;
 }
 
-// 隍・粋莉｣蜈･貍皮ｮ・/=
+// ベクトルの除算代入
 Vec3& Vec3::operator/=(float num)
 {
 	x /= num;
@@ -187,17 +187,20 @@ Vec3 Vec3::operator--(int)
 }
 
 bool Vec3::operator==(const Vec3 other) { return x == other.x && y == other.y && z == other.z; }
-
 bool Vec3::operator!=(const Vec3 other) { return x != other.x || y != other.y || z != other.z; }
-
 bool Vec3::operator>=(const Vec3 other) { return x >= other.x && y >= other.y && z >= other.z; }
-
 bool Vec3::operator<=(const Vec3 other) { return x <= other.x && y <= other.y && z <= other.z; }
-
-bool Vec3::operator==(float num) { return x == num && y == num && z == num; }
-
-bool Vec3::operator!=(float num) { return x != num || y != num || z != num; }
-
-bool Vec3::operator>=(float num) { return x >= num && y >= num && z >= num; }
-
-bool Vec3::operator<=(float num) { return x <= num && y <= num && z <= num; }
+bool Vec3::operator>(const Vec3 other) { return x > other.x && y > other.y && z > other.z; }
+bool Vec3::operator<(const Vec3 other) { return x < other.x && y < other.y && z < other.z; }
+bool Vec3::operator==(const Vec2 other) { return x == other.x && y == other.y; }
+bool Vec3::operator!=(const Vec2 other) { return x != other.x || y != other.y; }
+bool Vec3::operator>=(const Vec2 other) { return x >= other.x && y >= other.y; }
+bool Vec3::operator<=(const Vec2 other) { return x <= other.x && y <= other.y; }
+bool Vec3::operator>(const Vec2 other) { return x > other.x && y > other.y; }
+bool Vec3::operator<(const Vec2 other) { return x < other.x && y < other.y; }
+bool Vec3::operator==(const float num) { return x == num && y == num && z == num; }
+bool Vec3::operator!=(const float num) { return x != num || y != num || z != num; }
+bool Vec3::operator>=(const float num) { return x >= num && y >= num && z >= num; }
+bool Vec3::operator<=(const float num) { return x <= num && y <= num && z <= num; }
+bool Vec3::operator>(const float num) { return x > num && y > num && z > num; }
+bool Vec3::operator<(const float num) { return x < num && y < num && z < num; }

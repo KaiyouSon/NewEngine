@@ -8,128 +8,132 @@ const Vec2 Vec2::down(0.f, -1.f);
 const Vec2 Vec2::one(1.f, 1.f);
 const Vec2 Vec2::zero(0.f, 0.f);
 
-// 繝吶け繝医Ν縺ｮ螟ｧ縺阪＆
+// ベクトルの長さを取得
 float Vec2::Length() const { return sqrtf(x * x + y * y); }
 
-// 豁｣隕丞喧・磯聞縺輔ｒ・代↓縺励◆・峨・繧ｯ繝医Ν
+// ベクトルを正規化して返す
 Vec2 Vec2::Norm() const
 {
-	if (x == 0 && y == 0)
-	{
-		return 0;
-	}
+    if (x == 0 && y == 0)
+    {
+        return Vec2(0, 0);
+    }
 
-	return{ x / Length() , y / Length() };
+    return Vec2(x / Length(), y / Length());
 }
 
-// 莠後▽縺ｮ繝吶け繝医Ν縺ｮ蜀・ｩ・
+// 二つのベクトルの内積を計算して返す
 float Vec2::Dot(const Vec2 v1, const Vec2 v2) { return v1.x * v2.x + v1.y * v2.y; }
 
-// 莠後▽縺ｮ繝吶け繝医Ν縺ｮ螟也ｩ・
+// 二つのベクトルの外積を計算して返す
 float Vec2::Cross(const Vec2 v1, const Vec2 v2) { return v1.x * v2.y - v1.y * v2.x; }
 
-// 莠後▽縺ｮ繝吶け繝医Ν縺ｮ霍晞屬
+// 二つのベクトル間の距離を計算して返す
 float Vec2::Distance(const Vec2 v1, const Vec2 v2)
 {
-	return sqrtf((v2.x - v1.x) * (v2.x - v1.x) + (v2.y - v1.y) * (v2.y - v1.y));
+    return sqrtf((v2.x - v1.x) * (v2.x - v1.x) + (v2.y - v1.y) * (v2.y - v1.y));
 }
 
-// 莠後▽縺ｮ繝吶け繝医Ν縺ｧ蜷・・蛻・・荳逡ｪ螟ｧ縺阪↑蛟､繧剃ｽｿ逕ｨ縺励※繝吶け繝医Ν繧剃ｽ懈・縺吶ｋ
+// 二つのベクトルの要素ごとの最大値を返す
 Vec2 Vec2::Max(const Vec2 v1, const Vec2 v2)
 {
-	return Vec2(
-		v1.x >= v2.x ? v1.x : v2.x,
-		v1.y >= v2.y ? v1.y : v2.y);
+    return Vec2(
+        v1.x >= v2.x ? v1.x : v2.x,
+        v1.y >= v2.y ? v1.y : v2.y
+    );
 }
 
-// 莠後▽縺ｮ繝吶け繝医Ν縺ｧ蜷・・蛻・・荳逡ｪ蟆上＆縺ｪ蛟､繧剃ｽｿ逕ｨ縺励※繝吶け繝医Ν繧剃ｽ懈・縺吶ｋ
+// 二つのベクトルの要素ごとの最小値を返す
 Vec2 Vec2::Min(const Vec2 v1, const Vec2 v2)
 {
-	return Vec2(
-		v1.x <= v2.x ? v1.x : v2.x,
-		v1.y <= v2.y ? v1.y : v2.y);
+    return Vec2(
+        v1.x <= v2.x ? v1.x : v2.x,
+        v1.y <= v2.y ? v1.y : v2.y
+    );
 }
 
-// 繧ゅ≧荳譁ｹ縺ｮ繝吶け繝医Ν縺ｨ縺ｮ雜ｳ縺礼ｮ・
+// ベクトルの加算
 Vec2 Vec2::operator+(const Vec2 other) const
 {
-	return { x + other.x , y + other.y };
+    return Vec2(x + other.x, y + other.y);
 }
 
-// 繧ゅ≧荳譁ｹ縺ｮ繝吶け繝医Ν縺ｨ縺ｮ蠑輔″邂・
+// ベクトルの減算
 Vec2 Vec2::operator-(const Vec2 other) const
 {
-	return { x - other.x , y - other.y };
+    return Vec2(x - other.x, y - other.y);
 }
 
-// 繧ゅ≧荳譁ｹ縺ｮ繝吶け繝医Ν縺ｨ縺ｮ謗帙￠邂・
+// ベクトルの乗算
 Vec2 Vec2::operator*(const Vec2 other) const
 {
-	return { x * other.x , y * other.y };
+    return Vec2(x * other.x, y * other.y);
 }
 
-// 繧ゅ≧荳譁ｹ縺ｮ繝吶け繝医Ν縺ｨ縺ｮ蜑ｲ繧顔ｮ・
+// ベクトルの除算
 Vec2 Vec2::operator/(const Vec2 other) const
 {
-	return { x / other.x , y / other.y };
+    return Vec2(x / other.x, y / other.y);
 }
 
-// 荳縺､縺ｮ蛟､縺ｨ縺ｮ謗帙￠邂・
-Vec2 Vec2:: operator*(float num)const
+// スカラー倍
+Vec2 Vec2::operator*(float num) const
 {
-	return { x * num,y * num };
+    return Vec2(x * num, y * num);
 }
 
-// 荳縺､縺ｮ蛟､縺ｨ縺ｮ蜑ｲ繧顔ｮ・
-Vec2 Vec2::operator/(float num)const
+// スカラー除算
+Vec2 Vec2::operator/(float num) const
 {
-	return { x / num,y / num };
+    return Vec2(x / num, y / num);
 }
 
-// 隍・粋莉｣蜈･貍皮ｮ・+=
+// ベクトルの加算代入
 Vec2& Vec2::operator+=(const Vec2 other)
 {
-	x += other.x;
-	y += other.y;
-	return *this;
+    x += other.x;
+    y += other.y;
+    return *this;
 }
 
-// 隍・粋莉｣蜈･貍皮ｮ・-=
+// ベクトルの減算代入
 Vec2& Vec2::operator-=(const Vec2 other)
 {
-	x -= other.x;
-	y -= other.y;
-	return *this;
+    x -= other.x;
+    y -= other.y;
+    return *this;
 }
 
+// スカラーの加算代入
 Vec2& Vec2::operator+=(float num)
 {
-	x += num;
-	y += num;
-	return *this;
+    x += num;
+    y += num;
+    return *this;
 }
 
+// スカラーの減算代入
 Vec2& Vec2::operator-=(float num)
 {
-	x -= num;
-	y -= num;
-	return *this;
+    x -= num;
+    y -= num;
+    return *this;
 }
 
-// 隍・粋莉｣蜈･貍皮ｮ・*=
+// スカラーの乗算代入
 Vec2& Vec2::operator*=(float num)
 {
-	x *= num;
-	y *= num;
-	return *this;
+    x *= num;
+    y *= num;
+    return *this;
 }
 
-// 隍・粋莉｣蜈･貍皮ｮ・/=
+// スカラーの除算代入
 Vec2& Vec2::operator/=(float num)
 {
-	x += num;
-	y += num;
-	return *this;
+    x /= num;
+    y /= num;
+    return *this;
 }
 
 Vec2& Vec2::operator=(float num)
@@ -194,6 +198,16 @@ bool Vec2::operator<=(const Vec2 other)
 	return x <= other.x && y <= other.y;
 }
 
+bool Vec2::operator>(const Vec2 other)
+{
+	return x > other.x && y > other.y;
+}
+
+bool Vec2::operator<(const Vec2 other)
+{
+	return x < other.x && y < other.y;
+}
+
 bool Vec2::operator==(float num)
 {
 	return x == num && y == num;
@@ -212,6 +226,14 @@ bool Vec2::operator>=(float num)
 bool Vec2::operator<=(float num)
 {
 	return x <= num && y <= num;
-
 }
 
+bool Vec2::operator>(float num)
+{
+	return x > num && y > num;
+}
+
+bool Vec2::operator<(float num)
+{
+	return x < num && y < num;
+}

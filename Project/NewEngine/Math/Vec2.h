@@ -1,74 +1,80 @@
 #pragma once
 #include "Vec3.h"
 
+// 前方宣言
 struct Vec3;
 
+// ベクター2の構造体
 struct Vec2
 {
-	// 螟画焚
-	float x; // 繝吶け繝医Ν縺ｮ x 謌仙・
-	float y; // 繝吶け繝医Ν縺ｮ y 謌仙・
+    // メンバ変数
+    float x; // x座標
+    float y; // y座標
 
-	// static螟画焚
-	const static Vec2 left;		// Vector2(-1, 0) 縺ｨ蜷後§諢丞袖
-	const static Vec2 right;	// Vector2(1, 0) 縺ｨ蜷後§諢丞袖
-	const static Vec2 up;		// Vector2(0, 1) 縺ｨ蜷後§諢丞袖
-	const static Vec2 down;		// Vector2(0, -1) 縺ｨ蜷後§諢丞袖
-	const static Vec2 one;		// Vector2(1, 1) 縺ｨ蜷後§諢丞袖
-	const static Vec2 zero;		// Vector2(0, 0) 縺ｨ蜷後§諢丞袖
+    // 静的メンバ変数
+    const static Vec2 left;     // Vector2(-1, 0) および左方向ベクトル
+    const static Vec2 right;    // Vector2(1, 0) および右方向ベクトル
+    const static Vec2 up;       // Vector2(0, 1) および上方向ベクトル
+    const static Vec2 down;     // Vector2(0, -1) および下方向ベクトル
+    const static Vec2 one;      // Vector2(1, 1) および(1, 1)ベクトル
+    const static Vec2 zero;     // Vector2(0, 0) および(0, 0)ベクトル
 
-	// 繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
-	constexpr Vec2() : x(0), y(0) {};
-	constexpr Vec2(const float num) : x(num), y(num) {};
-	constexpr Vec2(const float x, const float y) : x(x), y(y) {};
+    // コンストラクタ
+    constexpr Vec2() : x(0), y(0) {};
+    constexpr Vec2(const float num) : x(num), y(num) {};
+    constexpr Vec2(const float x, const float y) : x(x), y(y) {};
 
-	// 髢｢謨ｰ
-	float Length() const;	// 繝吶け繝医Ν縺ｮ螟ｧ縺阪＆
-	Vec2 Norm() const;	// 豁｣隕丞喧縺ｫ縺励◆繝吶け繝医Ν
+    // 長さを取得
+    float Length() const;   // ベクトルの長さを返す
+    Vec2 Norm() const;      // 正規化ベクトルを返す
 
-	// static髢｢謨ｰ
-	static float Dot(const Vec2 v1, const Vec2 v2);		// 莠後▽縺ｮ繝吶け繝医Ν縺ｮ蜀・ｩ・
-	static float Cross(const Vec2 v1, const Vec2 v2);		// 莠後▽縺ｮ繝吶け繝医Ν縺ｮ螟也ｩ・
-	static float Distance(const Vec2 v1, const Vec2 v2);	// 莠後▽縺ｮ繝吶け繝医Ν縺ｮ霍晞屬
+    // 静的メソッド
+    static float Dot(const Vec2 v1, const Vec2 v2);        // 二つのベクトルの内積
+    static float Cross(const Vec2 v1, const Vec2 v2);      // 二つのベクトルの外積
+    static float Distance(const Vec2 v1, const Vec2 v2);   // 二つのベクトル間の距離
 
-	// 莠後▽縺ｮ繝吶け繝医Ν縺ｧ蜷・・蛻・・荳逡ｪ螟ｧ縺阪↑蛟､繧剃ｽｿ逕ｨ縺励※繝吶け繝医Ν繧剃ｽ懈・縺吶ｋ
-	static Vec2 Max(const Vec2 v1, const Vec2 v2);
-	// 莠後▽縺ｮ繝吶け繝医Ν縺ｧ蜷・・蛻・・荳逡ｪ蟆上＆縺ｪ蛟､繧剃ｽｿ逕ｨ縺励※繝吶け繝医Ν繧剃ｽ懈・縺吶ｋ
-	static Vec2 Min(const Vec2 v1, const Vec2 v2);
+    // 二つのベクトルの要素ごとの最大値を返す
+    static Vec2 Max(const Vec2 v1, const Vec2 v2);
+    // 二つのベクトルの要素ごとの最小値を返す
+    static Vec2 Min(const Vec2 v1, const Vec2 v2);
 
-	// 邂苓｡捺ｼ皮ｮ怜ｭ舌・繧ｪ繝ｼ繝舌・繝ｭ繝ｼ繝・
-	Vec2 operator+(const Vec2 other) const; // 繧ゅ≧荳譁ｹ縺ｮ繝吶け繝医Ν縺ｨ縺ｮ雜ｳ縺礼ｮ・
-	Vec2 operator-(const Vec2 other) const; // 繧ゅ≧荳譁ｹ縺ｮ繝吶け繝医Ν縺ｨ縺ｮ蠑輔″邂・
-	Vec2 operator*(const Vec2 other) const; // 繧ゅ≧荳譁ｹ縺ｮ繝吶け繝医Ν縺ｨ縺ｮ謗帙￠邂・
-	Vec2 operator/(const Vec2 other) const; // 繧ゅ≧荳譁ｹ縺ｮ繝吶け繝医Ν縺ｨ縺ｮ蜑ｲ繧顔ｮ・
-	Vec2 operator*(float num) const;	// 荳縺､縺ｮ蛟､縺ｨ縺ｮ謗帙￠邂・
-	Vec2 operator/(float num) const;	// 荳縺､縺ｮ蛟､縺ｨ縺ｮ蜑ｲ繧顔ｮ・
+    // ベクトルの加算、減算、乗算、除算演算子
+    Vec2 operator+(const Vec2 other) const; // ベクトルの加算
+    Vec2 operator-(const Vec2 other) const; // ベクトルの減算
+    Vec2 operator*(const Vec2 other) const; // ベクトルの乗算
+    Vec2 operator/(const Vec2 other) const; // ベクトルの除算
+    Vec2 operator*(float num) const;        // スカラー倍
+    Vec2 operator/(float num) const;        // スカラー除算
 
-	// 隍・粋莉｣蜈･貍皮ｮ怜ｭ舌・繧ｪ繝ｼ繝舌・繝ｭ繝ｼ繝・
-	Vec2& operator +=(const Vec2 other); // 隍・粋莉｣蜈･貍皮ｮ・+=
-	Vec2& operator -=(const Vec2 other); // 隍・粋莉｣蜈･貍皮ｮ・-=
-	Vec2& operator +=(float num); // 隍・粋莉｣蜈･貍皮ｮ・+=
-	Vec2& operator -=(float num); // 隍・粋莉｣蜈･貍皮ｮ・-=
-	Vec2& operator *=(float num); // 隍・粋莉｣蜈･貍皮ｮ・*=
-	Vec2& operator /=(float num); // 隍・粋莉｣蜈･貍皮ｮ・/=
+    // ベクトルの加算、減算、乗算、除算代入演算子
+    Vec2& operator+=(const Vec2 other);     // ベクトルの加算代入
+    Vec2& operator-=(const Vec2 other);     // ベクトルの減算代入
+    Vec2& operator+=(float num);            // スカラーの加算代入
+    Vec2& operator-=(float num);            // スカラーの減算代入
+    Vec2& operator*=(float num);            // スカラーの乗算代入
+    Vec2& operator/=(float num);            // スカラーの除算代入
 
-	// 莉｣蜈･貍皮ｮ怜ｭ舌・繧ｪ繝ｼ繝舌・繝ｭ繝ｼ繝・
-	Vec2& operator=(float num);		  // 荳縺､縺ｮ蛟､繧剃ｻ｣蜈･
-	Vec2& operator=(const Vec3 vec); // 荳縺､縺ｮ蛟､繧剃ｻ｣蜈･
+    // 代入演算子
+    Vec2& operator=(float num);            // スカラーの代入
+    Vec2& operator=(const Vec3 vec);       // 他のベクトルからの代入
 
-	// 繧､繝ｳ繧ｯ繝ｪ繝｡繝ｳ繝・繝・け繝ｪ繝｡繝ｳ繝域ｼ皮ｮ怜ｭ舌・繧ｪ繝ｼ繝舌・繝ｭ繝ｼ繝・
-	Vec2& operator++(); // 蜑咲ｽｮ繧､繝ｳ繧ｯ繝ｪ繝｡繝ｳ繝・
-	Vec2 operator++(int); // 蠕檎ｽｮ繧､繝ｳ繧ｯ繝ｪ繝｡繝ｳ繝・
-	Vec2& operator--(); // 蜑咲ｽｮ繝・け繝ｪ繝｡繝ｳ繝・
-	Vec2 operator--(int); // 蠕檎ｽｮ繝・け繝ｪ繝｡繝ｳ繝・
+    // 前置および後置インクリメント演算子
+    Vec2& operator++();                     // 前置インクリメント演算子
+    Vec2 operator++(int);                   // 後置インクリメント演算子
+    Vec2& operator--();                     // 前置デクリメント演算子
+    Vec2 operator--(int);                   // 後置デクリメント演算子
 
-	// 豈碑ｼ・ｼ皮ｮ怜ｭ舌・繧ｪ繝ｼ繝舌・繝ｭ繝ｼ繝・
-	bool operator ==(const Vec2 other);
-	bool operator !=(const Vec2 other);
-	bool operator >=(const Vec2 other);
-	bool operator <=(const Vec2 other);
-	bool operator ==(float num);
-	bool operator !=(float num);
-	bool operator >=(float num);
-	bool operator <=(float num);
+    // 比較演算子
+    bool operator==(const Vec2 other);     // 等しいかどうか
+    bool operator!=(const Vec2 other);     // 等しくないかどうか
+    bool operator>=(const Vec2 other);     // 以上
+    bool operator<=(const Vec2 other);     // 以下
+    bool operator>(const Vec2 other);
+    bool operator<(const Vec2 other);
+    bool operator==(float num);            // 等しいかどうか
+    bool operator!=(float num);            // 等しくないかどうか
+    bool operator>=(float num);            // 以上
+    bool operator<=(float num);            // 以下
+    bool operator>(float num);
+    bool operator<(float num);
 };

@@ -5,7 +5,7 @@
 #include "NewEngineEnum.h"
 #include <string>
 
-// モデルの基底構造体
+// モデルのインターフェース
 struct Model
 {
 	std::string name;

@@ -1,27 +1,30 @@
 #pragma once
+
+// 前方宣言
 struct Vec3;
 
+// クォーターニオンの構造体
 struct Quaternion
 {
 	float x, y, z, w;
 
-	// 繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
+	// クォータニオンのデフォルトコンストラクタ
 	Quaternion() : x(0), y(0), z(0), w(0) {}
 	Quaternion(const Vec3 v);
 	Quaternion(const float x, const float y, const float z) : x(x), y(y), z(z), w(0) {}
 	Quaternion(const float x, const float y, const float z, const float w) : x(x), y(y), z(z), w(w) {}
 
-	// 髢｢謨ｰ
-	float Length() const;			// 繧ｯ繧ｪ繝ｼ繧ｿ繝九が繝ｳ縺ｮ螟ｧ縺阪＆
-	Quaternion Norm() const;		// 豁｣隕丞喧繧ｯ繧ｪ繝ｼ繧ｿ繝九が繝ｳ
-	Quaternion Conjugate() const;	// 蜈ｱ蠖ｹ繧ｯ繧ｪ繝ｼ繧ｿ繝九が繝ｳ
-	Quaternion Inverse() const;		// 騾・け繧ｪ繝ｼ繧ｿ繝九が繝ｳ
+	// 長さを計算
+	float Length() const;            // クォータニオンの長さを返す
+	Quaternion Norm() const;        // 正規化されたクォータニオンを返す
+	Quaternion Conjugate() const;    // 共役クォータニオンを返す
+	Quaternion Inverse() const;        // 逆クォータニオンを返す
 
-	// 莉ｻ諢剰ｻｸ蝗櫁ｻ｢
+	// 転送回転
 	Quaternion AnyAxisRotation(const Vec3 v, const float radian);
 
-	static float Dot(const Quaternion q1, const Quaternion q2);		// 莠後▽縺ｮ繧ｯ繧ｪ繝ｼ繧ｿ繝九が繝ｳ縺ｮ蜀・ｩ・
-	static Quaternion Identity();	// 蜊倅ｽ阪け繧ｪ繝ｼ繧ｿ繝九が繝ｳ
+	static float Dot(const Quaternion q1, const Quaternion q2);        // ドット積を計算
+	static Quaternion Identity();    // 単位クォータニオンを返す
 	static Quaternion Slerp(const Quaternion q1, const Quaternion q2, float t);
 	static Quaternion MakeAxisAngle(const Vec3 v, const float radian);
 	static Quaternion DirectionToDirection(const Vec3 v1, const Vec3 v2);
@@ -29,19 +32,19 @@ struct Quaternion
 
 	Quaternion operator-() const;
 
-	// 邂苓｡捺ｼ皮ｮ怜ｭ舌・繧ｪ繝ｼ繝舌・繝ｭ繝ｼ繝・
-	Quaternion operator+(const Quaternion other) const;	// 繧ゅ≧荳縺､縺ｮ繧ｯ繧ｪ繝ｼ繧ｿ繝九が繝ｳ縺ｨ縺ｮ雜ｳ縺礼ｮ・
-	Quaternion operator-(const Quaternion other) const;	// 繧ゅ≧荳縺､縺ｮ繧ｯ繧ｪ繝ｼ繧ｿ繝九が繝ｳ縺ｨ縺ｮ蠑輔″邂・
-	Quaternion operator*(const Quaternion other) const;	// 繧ゅ≧荳縺､縺ｮ繧ｯ繧ｪ繝ｼ繧ｿ繝九が繝ｳ縺ｨ縺ｮ謗帙￠邂・
-	Quaternion operator*(const float num) const;			// 荳縺､縺ｮ蛟､縺ｨ縺ｮ謗帙￠邂・
-	Quaternion operator/(const float num) const;			// 荳縺､縺ｮ蛟､縺ｨ縺ｮ蜑ｲ繧顔ｮ・
+	// 二項演算子
+	Quaternion operator+(const Quaternion other) const;    // 加算
+	Quaternion operator-(const Quaternion other) const;    // 減算
+	Quaternion operator*(const Quaternion other) const;    // 乗算
+	Quaternion operator*(const float num) const;            // スカラー乗算
+	Quaternion operator/(const float num) const;            // スカラー除算
 
-	// 隍・粋莉｣蜈･貍皮ｮ怜ｭ舌・繧ｪ繝ｼ繝舌・繝ｭ繝ｼ繝・
-	Quaternion& operator+=(const Quaternion other);	// 隍・粋莉｣蜈･貍皮ｮ・+=
-	Quaternion& operator-=(const Quaternion other);	// 隍・粋莉｣蜈･貍皮ｮ・-=
-	Quaternion& operator*=(const Quaternion other);	// 隍・粋莉｣蜈･貍皮ｮ・*=
-	Quaternion& operator*=(const float num);			// 隍・粋莉｣蜈･貍皮ｮ・*=
-	Quaternion& operator/=(const float num);			// 隍・粋莉｣蜈･貍皮ｮ・/=
+	// 複合代入演算子
+	Quaternion& operator+=(const Quaternion other);    // 加算代入
+	Quaternion& operator-=(const Quaternion other);    // 減算代入
+	Quaternion& operator*=(const Quaternion other);    // 乗算代入
+	Quaternion& operator*=(const float num);            // スカラー乗算代入
+	Quaternion& operator/=(const float num);            // スカラー除算代入
 };
 
 Quaternion operator*(const float num, const Quaternion q);
