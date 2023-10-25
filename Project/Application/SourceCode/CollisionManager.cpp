@@ -125,30 +125,6 @@ void CollisionManager::PlayerHitNegotiation()
 		}
 	}
 
-	// メッセージサインと当たったら
-	for (const auto& messageSign : *mField->GetMessageSigns())
-	{
-		float dis = Vec3::Distance(mPlayer->GetPos(), messageSign->GetPos());
-		if (dis >= 20)
-		{
-			continue;
-		}
-
-		if (Collision::SphereHitCapsule(
-			messageSign->GetCollider(), mPlayer->GetBodyCollider()))
-		{
-			mUiManager->GetNegotiationUI()->SetisActive(true);
-			mUiManager->GetNegotiationUI()->SetTextType(NegotiationUI::TextType::ReadMessageText);
-			mUiManager->GetMessageUI()->SetTexture(messageSign->GetMessageTexture());
-			isHit = true;
-			break;
-		}
-		else
-		{
-			mUiManager->GetMessageUI()->SetisActive(false);
-		}
-	}
-
 	// 正門
 	const std::vector<std::unique_ptr<Gate>>& gates = mField->GetFieldData()->gates;
 	for (uint32_t i = 0; i < gates.size(); i++)

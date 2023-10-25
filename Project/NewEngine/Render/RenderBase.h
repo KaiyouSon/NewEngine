@@ -19,6 +19,7 @@
 #include <memory>
 #include <array>
 
+// ゲームの描画ベースを管理するクラス
 class RenderBase
 {
 public:
@@ -52,7 +53,11 @@ private:
 
 	// パイプライン状態バリア
 	D3D12_RESOURCE_BARRIER mBarrierDesc;  // リソースバリアの設定
+
+	// ビューポート
 	std::unique_ptr<Viewport> mViewport;
+
+	// シザー矩形
 	std::unique_ptr<ScissorRectangle> mScissorRectangle;
 
 	RenderWindow* mRenderWindow;

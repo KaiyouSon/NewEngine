@@ -2,6 +2,7 @@
 #include "BufferResource.h"
 #include <memory>
 
+// レンダーターゲットのクラス
 class RenderTarget
 {
 private:
@@ -10,9 +11,6 @@ private:
 public:
 	RenderTarget();
 
-public:
-	// 繧ｲ繝・ち繝ｼ
+public: // ゲッター
 	BufferResource* GetBufferResource();
-
 };
-

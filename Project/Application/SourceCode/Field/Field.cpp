@@ -7,28 +7,6 @@ Field::Field() :
 {
 	mSphere->SetModel(ModelManager::GetModel("Sphere"));
 	//mSphere->SetisShadow(true);
-
-	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
-	{
-		mMessageSigns[i] = std::make_unique<MessageSign>();
-		mMessageSigns[i]->SetRot(Vec3(0, Radian(90), 0));
-
-		if (i < 3)
-		{
-			mMessageSigns[i]->SetPos(Vec3(-20 + (float)(i * 20), 0, 50));
-		}
-		else
-		{
-			mMessageSigns[i]->SetPos(Vec3(0, 0, 75 + (float)(i - 3) * 25));
-		}
-	}
-
-	mMessageSigns[0]->SetMessageTexture(TextureManager::GetTexture("TutorialStr2"));
-	mMessageSigns[1]->SetMessageTexture(TextureManager::GetTexture("TutorialStr1"));
-	mMessageSigns[2]->SetMessageTexture(TextureManager::GetTexture("TutorialStr3"));
-	mMessageSigns[3]->SetMessageTexture(TextureManager::GetTexture("TutorialStr4"));
-	mMessageSigns[4]->SetMessageTexture(TextureManager::GetTexture("TutorialStr5"));
-
 	Init();
 
 	mFieldData = FieldDataManager::GetFieldData("SkyIsland");
@@ -38,12 +16,6 @@ void Field::Init()
 {
 	mSphere->pos = { 0,0,0 };
 	mSphere->scale = 2.0f;
-
-	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
-	{
-		mMessageSigns[i]->Init();
-	}
-
 
 	if (mFieldData)
 	{
@@ -97,12 +69,6 @@ void Field::Update()
 	mSphere->Update();
 	//mSphere->pos = { 0,8,0 };
 
-
-	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
-	{
-		mMessageSigns[i]->Update();
-	}
-
 	if (mFieldData)
 	{
 		// 譽ｺ譯ｶ
@@ -153,10 +119,6 @@ void Field::DrawModel()
 {
 	//mSphere->Draw();
 	//mSkydome->Draw();
-	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
-	{
-		mMessageSigns[i]->DrawModel();
-	}
 
 	if (mFieldData)
 	{
@@ -241,11 +203,6 @@ void Field::DrawDebugGui()
 	//Gui::EndWindow();
 }
 
-std::array<std::unique_ptr<MessageSign>, 5>* Field::GetMessageSigns()
-{
-	return &mMessageSigns;
-}
-
 FieldData* Field::GetFieldData()
 {
 	return mFieldData;
@@ -258,11 +215,6 @@ void Field::SetSpherePos(const Vec3 pos)
 
 void Field::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
-	for (uint32_t i = 0; i < mMessageSigns.size(); i++)
-	{
-		mMessageSigns[i]->SetGraphicsPipeline(graphicsPipeline);
-	}
-
 	if (mFieldData)
 	{
 		// 譽ｺ譯ｶ

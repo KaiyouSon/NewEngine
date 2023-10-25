@@ -3,7 +3,6 @@
 #include <d3dcompiler.h>
 #include <string>
 #include <cassert>
-#pragma comment(lib,"d3dcompiler.lib")
 
 Microsoft::WRL::ComPtr <ID3DBlob> ShaderCompiler::sErrorBlob = nullptr;
 

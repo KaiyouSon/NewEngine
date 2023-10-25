@@ -2,7 +2,7 @@
 
 std::unordered_map<std::string, std::unique_ptr<DescriptorHeap>> DescriptorHeapManager::sDescriptorHeapMap;
 
-// 逕滓・
+// 生成
 void DescriptorHeapManager::Create(const DescriptorHeapSetting& setting, const std::string tag)
 {
 	std::unique_ptr<DescriptorHeap> descriptorHeap = std::make_unique<DescriptorHeap>();
@@ -11,12 +11,11 @@ void DescriptorHeapManager::Create(const DescriptorHeapSetting& setting, const s
 	sDescriptorHeapMap.insert(std::make_pair(tag, std::move(descriptorHeap)));
 }
 
-// 蜿門ｾ・
+//  ゲッター
 DescriptorHeap* DescriptorHeapManager::GetDescriptorHeap(const std::string tag)
 {
 	return sDescriptorHeapMap[tag].get();
 }
-
 std::unordered_map<std::string, std::unique_ptr<DescriptorHeap>>* DescriptorHeapManager::GetDescriptorHeapMap()
 {
 	return &sDescriptorHeapMap;

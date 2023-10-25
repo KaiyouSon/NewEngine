@@ -32,7 +32,7 @@ void UploadBuffer::Create(const uint64_t uploadSize)
 			IID_PPV_ARGS(&mBufferResource->buffer));
 	assert(SUCCEEDED(mResult));
 
-	// 名前設定
+	mBufferResource->bufferState = D3D12_RESOURCE_STATE_GENERIC_READ;
 	mBufferResource->buffer->SetName(L"UploadBuffer");
 }
 

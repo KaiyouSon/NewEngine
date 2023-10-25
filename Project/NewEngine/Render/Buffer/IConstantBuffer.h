@@ -2,6 +2,7 @@
 #include "BufferResource.h"
 #include <memory>
 
+// 定数バッファのインターフェース
 class IConstantBuffer
 {
 public:

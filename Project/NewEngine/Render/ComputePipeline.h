@@ -1,24 +1,16 @@
 #pragma once
-#include "ShaderCompiler.h"
+#include "NewEngineSetting.h"
 #include "RootSignature.h"
 #include <memory>
 
-struct ComputePipelineSetting
-{
-	// 繧ｷ繧ｧ繝繝ｼ繧ｪ繝悶ず繧ｧ繧ｯ繝・
-	ShaderCompiler* shaderObject;
-
-	// RootParamter髢｢騾｣
-	RootSignatureSetting rootSignatureSetting;
-};
-
+// ComputePipelineのクラス
 class ComputePipeline
 {
 private:
 	HRESULT mResult;
 	ComputePipelineSetting mSetting;
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> mPSO;
-	std::unique_ptr<RootSignature> mRootSignature;	// 繝ｫ繝ｼ繝医す繧ｰ繝阪・繝√Ε繝ｼ
+	std::unique_ptr<RootSignature> mRootSignature;	// ルートシグネチャー
 
 public:
 	ComputePipeline();

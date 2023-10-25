@@ -107,6 +107,7 @@ void GameScene::Update()
 	//mVolumetricFog->pos.y = Max(mVolumetricFog->pos.y, 25.f);
 	mVolumetricFog->moveSpeed = Vec3(0.001f, -0.001f, -0.001f);
 
+#ifdef _DEBUG
 	if (Key::GetKeyDown(DIK_L))
 	{
 		Camera::current.pos = Vec3(0, 10, -20);
@@ -124,6 +125,7 @@ void GameScene::Update()
 		mMovieEvent->End();
 		CameraManager::GetInstance()->ChangeCamera(CameraManager::CameraType::Default);
 	}
+#endif
 
 	auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
 	if (currentTransition == nullptr)

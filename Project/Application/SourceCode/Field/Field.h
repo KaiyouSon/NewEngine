@@ -8,7 +8,6 @@ class Field
 {
 private:
 	FieldData* mFieldData;
-	std::array<std::unique_ptr<MessageSign>, 5> mMessageSigns;
 
 private:
 	// 繝・ヰ繝・げ逕ｨ
@@ -24,7 +23,6 @@ public:
 	void DrawDebugGui();
 
 public:
-	std::array<std::unique_ptr<MessageSign>, 5>* GetMessageSigns();
 	FieldData* GetFieldData();
 
 public:

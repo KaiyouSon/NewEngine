@@ -1,36 +1,18 @@
 #pragma once
 #include "BufferResource.h"
+#include "NewEngineSetting.h"
 #include <d3d12.h>
 #include <wrl.h>
 #include <cstdint>
 #include <vector>
 
-struct DescriptorHeapSetting
-{
-	enum HeapType
-	{
-		None,
-		CBV_SRV_UAV,
-		RTV,
-		DSV,
-	};
-
-	// 繧ｵ繧､繧ｺ
-	uint32_t maxSize;
-
-	uint32_t startIndex;
-
-	// 繝偵・繝励・遞ｮ鬘・
-	HeapType heapType;
-
-	DescriptorHeapSetting();
-};
-
+// ディスクリプタヒープのクラス
 class DescriptorHeap
 {
 private:
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mDescriptorHeap;		// Srv縺ｨUav逕ｨ繝・せ繧ｯ繝ｪ繝励ち繝偵・繝・ComputShader逕ｨ)
-	std::vector<bool> mCheckIndex;
+	// ディスクリプタヒープ
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mDescriptorHeap;
+	std::vector<bool> mCheckIndex;	// 何番目使ってるかどうかを判定するよう
 	DescriptorHeapSetting mSetting;
 	HRESULT mResult;
 

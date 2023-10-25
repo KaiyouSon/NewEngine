@@ -4,20 +4,19 @@
 
 namespace VertexBufferData
 {
-	// 鬆らせ繝・・繧ｿ繧ｯ繝ｩ繧ｹ
 	struct VObjModel
 	{
-		Vec3 pos;	 // xyz蠎ｧ讓・
-		Vec3 normal; // 豕慕ｷ壹・繧ｯ繝医Ν
-		Vec2 uv;	 // uv蠎ｧ讓・
+		Vec3 pos;
+		Vec3 normal;
+		Vec2 uv;
 	};
 
 	struct VFbxModel
 	{
-		Vec3 pos;	 // xyz蠎ｧ讓・
-		Vec3 normal; // 豕慕ｷ壹・繧ｯ繝医Ν
-		Vec2 uv;	 // uv蠎ｧ讓・
-		unsigned int boneIndex[maxBoneIndices];
+		Vec3 pos;
+		Vec3 normal;
+		Vec2 uv;
+		uint32_t boneIndex[maxBoneIndices];
 		float boneWeight[maxBoneIndices];
 	};
 
@@ -30,13 +29,13 @@ namespace VertexBufferData
 
 	struct VSprite
 	{
-		Vec3 pos;	 // xyz蠎ｧ讓・
-		Vec2 uv;	 // uv蠎ｧ讓・
+		Vec3 pos;
+		Vec2 uv;
 	};
 
 	struct VLine
 	{
-		Vec3 pos;	 // xyz蠎ｧ讓・
+		Vec3 pos;
 	};
 
 	struct VParticle

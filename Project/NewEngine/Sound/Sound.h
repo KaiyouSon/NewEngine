@@ -2,6 +2,7 @@
 #include <fstream>
 #include "WaveSound.h"
 
+// サウンドのクラス
 class Sound
 {
 private:
@@ -20,4 +21,3 @@ public:
 	void SetPitch(const float pitch);
 	void UnLoad();
 };
-

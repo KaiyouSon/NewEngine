@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 
+// ディスクリプタヒープを管理するクラス
 class DescriptorHeapManager
 {
 private:

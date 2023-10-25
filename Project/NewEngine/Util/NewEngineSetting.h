@@ -121,3 +121,35 @@ struct GraphicsPipelineSetting
 
 	GraphicsPipelineSetting();
 };
+
+// コンピュートパイプラインの設定構造体
+struct ComputePipelineSetting
+{
+	// シェーダーコンパイラオブジェクト
+	ShaderCompiler* shaderObject;
+
+	// RootSignature設定
+	RootSignatureSetting rootSignatureSetting;
+};
+
+// ディスクリプタヒープの設定構造体
+struct DescriptorHeapSetting
+{
+	enum HeapType
+	{
+		None,
+		CBV_SRV_UAV,
+		RTV,
+		DSV,
+	};
+
+	// 最大サイズ
+	uint32_t maxSize;
+
+	uint32_t startIndex;
+
+	// ヒープの種類
+	HeapType heapType;
+
+	DescriptorHeapSetting();
+};

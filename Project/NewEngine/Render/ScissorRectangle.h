@@ -1,6 +1,7 @@
 #pragma once
 #include "RectAngle.h"
 
+// シザー矩形のクラス
 class ScissorRectangle
 {
 private:

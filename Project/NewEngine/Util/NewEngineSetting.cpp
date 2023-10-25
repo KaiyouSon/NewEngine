@@ -46,3 +46,8 @@ GraphicsPipelineSetting::GraphicsPipelineSetting() :
 	rootSignatureSetting(RootSignatureSetting())
 {
 }
+
+DescriptorHeapSetting::DescriptorHeapSetting() :
+	maxSize(64), startIndex(0), heapType(DescriptorHeapSetting::None)
+{
+}

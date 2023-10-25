@@ -3,36 +3,36 @@
 #include <wrl.h>
 #include <xaudio2.h>
 
-// 繝√Ε繝ｳ繧ｯ繝倥ャ繝
+// チャンクヘッダ
 struct ChunkHeader
 {
-	char id[4];		// 繝√Ε繝ｳ繧ｯ豈弱・ID
-	int32_t size;	// 繝√Ε繝ｳ繧ｯ繧ｵ繧､繧ｺ
+    char id[4];     // チャンク識別子
+    int32_t size;   // チャンクデータサイズ
 };
 
-// RIFF繝倥ャ繝繝√Ε繝ｳ繧ｯ
+// RIFFヘッダ
 struct RiffHeader
 {
-	ChunkHeader chunk;	// "RIFF"
-	char type[4];		// "WAVE"
+    ChunkHeader chunk;  // "RIFF"
+    char type[4];       // "WAVE"
 };
 
-// FMT繝√Ε繝ｳ繧ｯ
+// フォーマットチャンク
 struct FormatChunk
 {
-	ChunkHeader chunk;	// "fmt"
-	WAVEFORMATEX fmt;	// 豕｢蠖｢繝輔か繝ｼ繝槭ャ繝・
+    ChunkHeader chunk;   // "fmt "
+    WAVEFORMATEX fmt;    // 波形形式情報
 };
 
-// 髻ｳ螢ｰ繝・・繧ｿ
+// 波形データ
 struct WaveData
 {
-	// 豕｢蠖｢繝輔か繝ｼ繝槭ャ繝・
-	WAVEFORMATEX wfex;
-	// 繝舌ャ繝輔ぃ縺ｮ蜈磯ｭ繧｢繝峨Ξ繧ｹ
-	BYTE* pBuffer;
-	// 繝舌ャ繝輔ぃ縺ｮ繧ｵ繧､繧ｺ
-	uint32_t bufferSize;
+    // 波形形式情報
+    WAVEFORMATEX wfex;
+    // 波形データを格納するバッファ
+    BYTE* pBuffer;
+    // 波形データのサイズ
+    uint32_t bufferSize;
 
-	IXAudio2SourceVoice* pSourceVoice;
+    IXAudio2SourceVoice* pSourceVoice;
 };

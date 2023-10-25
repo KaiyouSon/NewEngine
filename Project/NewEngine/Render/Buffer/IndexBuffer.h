@@ -1,20 +1,21 @@
 #pragma once
-#include <vector>
+#include "BufferResource.h"
+#include <memory>
 #include <d3d12.h>
 #include <wrl.h>
 #include <cstdint>
 
+// インデックスバッファのクラス
 class IndexBuffer
 {
 private:
-	// 繧､繝ｳ繝・ャ繧ｯ繧ｹ繝舌ャ繝輔ぃ繝薙Η繝ｼ
-	D3D12_INDEX_BUFFER_VIEW mIndexBufferView;
-	Microsoft::WRL::ComPtr<ID3D12Resource> mIndexBuffer;
+	std::unique_ptr<BufferResource> mBufferResource;
+	D3D12_INDEX_BUFFER_VIEW mBufferView;
 
 public:
+	IndexBuffer();
 	void Create(const std::vector<uint16_t>& indices);
 
-public:
-	// 繧､繝ｳ繝・ャ繧ｯ繧ｹ繝舌ャ繝輔ぃ繝薙Η繝ｼ繧貞叙蠕励☆繧矩未謨ｰ
+public: // ゲッター
 	D3D12_INDEX_BUFFER_VIEW* GetibViewAddress();
 };

@@ -9,7 +9,7 @@ private:
 	HRESULT mResult;
 	GraphicsPipelineSetting mSetting;
 	std::vector<Microsoft::WRL::ComPtr<ID3D12PipelineState>> mPSOs;
-	std::unique_ptr<RootSignature> mRootSignature;	// 繝ｫ繝ｼ繝医す繧ｰ繝阪・繝√Ε繝ｼ
+	std::unique_ptr<RootSignature> mRootSignature;	// ルートシグネチャー
 
 private:
 	void CreatePipelineState(const GraphicsPipelineSetting::PipelineBlend pipelineBlend);
@@ -19,8 +19,7 @@ public:
 	void Create(const GraphicsPipelineSetting& setting);
 	void DrawCommand(const BlendMode blendMode);
 
-public:
-	// 繧ｲ繝・ち繝ｼ
+public: // ゲッター
 	RootSignature* GetRootSignature();
 	GraphicsPipelineSetting GetSetting();
 	ID3D12PipelineState* GetPSO(const BlendMode blendMode);

@@ -6,20 +6,21 @@
 #include <string>
 #include <wrl.h>
 
+// シェダーコンパイラーのクラス
 class ShaderCompiler
 {
 private:
-	static Microsoft::WRL::ComPtr <ID3DBlob> sErrorBlob;// 繧ｨ繝ｩ繝ｼ繧ｪ繝悶ず繧ｧ繧ｯ繝・
+	static Microsoft::WRL::ComPtr<ID3DBlob> sErrorBlob; // シェーダーコンパイルエラーメッセージの格納
 	HRESULT mResult;
 	ShaderCompilerSetting mSetting;
-	Microsoft::WRL::ComPtr<ID3DBlob> mCsBlob;			// 鬆らせ繧ｷ繧ｧ繝ｼ繝繧ｪ繝悶ず繧ｧ繧ｯ繝・
-	Microsoft::WRL::ComPtr<ID3DBlob> mVsBlob;			// 鬆らせ繧ｷ繧ｧ繝ｼ繝繧ｪ繝悶ず繧ｧ繧ｯ繝・
-	Microsoft::WRL::ComPtr<ID3DBlob> mGsBlob;			// 繧ｸ繧ｪ繝｡繝医Μ繧ｷ繧ｧ繝ｼ繝繧ｪ繝悶ず繧ｧ繧ｯ繝・
-	Microsoft::WRL::ComPtr<ID3DBlob> mPsBlob;			// 繝斐け繧ｻ繝ｫ繧ｷ繧ｧ繝ｼ繝繧ｪ繝悶ず繧ｧ繧ｯ繝・
-	std::vector<D3D12_INPUT_ELEMENT_DESC> mInputLayout;	// 鬆らせ繝ｬ繧､繧｢繧ｦ繝・
+	Microsoft::WRL::ComPtr<ID3DBlob> mCsBlob; // CSコードの格納
+	Microsoft::WRL::ComPtr<ID3DBlob> mVsBlob; // VSコードの格納
+	Microsoft::WRL::ComPtr<ID3DBlob> mGsBlob; // GSコードの格納
+	Microsoft::WRL::ComPtr<ID3DBlob> mPsBlob; // PSコードの格納
+	std::vector<D3D12_INPUT_ELEMENT_DESC> mInputLayout; // インプットレイアウトの定義
 
 private:
-	// 繧ｷ繧ｧ繝ｼ繝縺ｮ繧ｨ繝ｩ繝ｼ蜀・ｮｹ繧定｡ｨ遉ｺ縺吶ｋ髢｢謨ｰ
+	// シェーダーコンパイルエラーの詳細を表示
 	void ShowErrorDetails();
 
 public:
@@ -27,16 +28,16 @@ public:
 	ShaderCompiler() {}
 	ShaderCompiler(const ShaderCompilerSetting& shaderCompilerSetting);
 
-	// 繧ｳ繝ｳ繝斐Η繝ｼ繝医す繧ｧ繝ｼ繝繝ｼ縺ｮ繧ｳ繝ｳ繝代う繝ｫ
+	// コンピュートシェーダーのコンパイル
 	void CompileComputeShader(const std::string& filePath);
 
-	// 鬆らせ繧ｷ繧ｧ繝ｼ繝繝ｼ縺ｮ繧ｳ繝ｳ繝代う繝ｫ
+	// バーテックスシェーダーのコンパイル
 	void CompileVertexShader(const std::string& filePath);
 
-	// 繧ｸ繧ｪ繝｡繝医Μ繧ｷ繧ｧ繝ｼ繝繝ｼ縺ｮ繧ｳ繝ｳ繝代う繝ｫ
+	// ジオメトリシェーダーのコンパイル
 	void CompileGeometryShader(const std::string& filePath);
 
-	// 繝斐け繧ｻ繝ｫ繧ｷ繧ｧ繝ｼ繝繝ｼ縺ｮ繧ｳ繝ｳ繝代う繝ｫ
+	// ピクセルシェーダーのコンパイル
 	void CompilePixelShader(const std::string& filePath);
 
 public:

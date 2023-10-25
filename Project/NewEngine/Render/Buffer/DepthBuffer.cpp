@@ -18,10 +18,7 @@ void DepthBuffer::Create(const Vec2 size)
 			DXGI_FORMAT_D32_FLOAT,
 			(uint32_t)resourceSize.x,
 			(uint32_t)resourceSize.y,
-			1,
-			1,
-			1,
-			0,
+			1, 1, 1, 0,
 			D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
 
 	// ヒープ設定
@@ -44,12 +41,10 @@ void DepthBuffer::Create(const Vec2 size)
 	assert(SUCCEEDED(result));
 
 	mBufferResource->bufferState = D3D12_RESOURCE_STATE_DEPTH_WRITE;
-
-	// 名前設定
 	mBufferResource->buffer->SetName(L"DepthBuffer");
 }
 
-// 繧ｲ繝・ち繝ｼ
+// ゲッター
 BufferResource* DepthBuffer::GetBufferResource()
 {
 	return mBufferResource.get();

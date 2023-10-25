@@ -10,13 +10,14 @@ DirectX12WarningDisableBegin
 #include <d3dx12.h>
 DirectX12WarningDisableEnd
 
+// ルートシグネチャーのクラス
 class RootSignature
 {
 private:
 	HRESULT mResult;
 	std::vector<CD3DX12_DESCRIPTOR_RANGE> mSrvDescriptorRanges;
 	std::vector<CD3DX12_DESCRIPTOR_RANGE> mUavDescriptorRanges;
-	std::vector<CD3DX12_ROOT_PARAMETER> mRootParameters;	// 繝ｫ繝ｼ繝医ヱ繝ｩ繝｡繝ｼ繧ｿ繝ｼ縺ｮ險ｭ螳・
+	std::vector<CD3DX12_ROOT_PARAMETER> mRootParameters; // ルートパラメータのベクター
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> mRootSignature;
 	RootSignatureSetting mSetting;
 

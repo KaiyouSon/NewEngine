@@ -5,6 +5,7 @@
 #include <memory>
 #include <unordered_map>
 
+// パイプラインを管理するマネージャー
 class PipelineManager
 {
 private:
@@ -12,13 +13,13 @@ private:
 	static std::unordered_map<std::string, std::unique_ptr<ComputePipeline>> sComputePipelineMap;
 
 public:
-	// GraphicsPipeline縺ｮ菴懈・
+	// GraphicsPipelineの生成
 	static void CreateGraphicsPipeline(const GraphicsPipelineSetting& setting, const std::string tag);
 
-	// ComputePipeline縺ｮ菴懈・
+	// ComputePipelineの生成
 	static void CreateComputePipeline(const ComputePipelineSetting& setting, const std::string tag);
 
-	// 蜿門ｾ・
+	// ゲッター
 	static GraphicsPipeline* GetGraphicsPipeline(const std::string tag);
 	static ComputePipeline* GetComputePipeline(const std::string tag);
 };

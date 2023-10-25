@@ -17,6 +17,7 @@ struct ViewIndex
 	ViewType viewType;
 };
 
+// バッファのクラス
 struct BufferResource
 {
 	DescriptorHandle srvHandle;		// SRV用

@@ -3,6 +3,7 @@
 #include "Vec2.h"
 #include <memory>
 
+// 深度バッファのクラス
 class DepthBuffer
 {
 private:
@@ -11,6 +12,6 @@ private:
 public:
 	void Create(const Vec2 size = -1);
 
-public: // 繧ｲ繝・ち繝ｼ
+public: // ゲッター
 	BufferResource* GetBufferResource();
 };

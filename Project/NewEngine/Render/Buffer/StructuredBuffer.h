@@ -1,12 +1,8 @@
 #pragma once
 #include "BufferResource.h"
-#include "RenderBase.h"
-#include <cassert>
+#include <memory>
 
-DirectX12WarningDisableBegin
-#include <d3dx12.h>
-DirectX12WarningDisableEnd
-
+// ストラクチャーバッファのクラス
 class StructuredBuffer
 {
 private:
@@ -15,8 +11,7 @@ private:
 public:
 	StructuredBuffer();
 	void Create(const uint32_t dataSize);
-	
-public:
+
+public: // ゲッター
 	BufferResource* GetBufferResource();
 };
-
