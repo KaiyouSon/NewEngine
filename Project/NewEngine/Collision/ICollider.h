@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngineEnum.h"
 
+// コライダーのインターフェース
 struct ICollider
 {
 public:

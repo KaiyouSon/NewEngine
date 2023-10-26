@@ -1,24 +1,25 @@
 #pragma once
 #include "Collider.h"
 
+// 当たり判定の関数
 namespace Collision
 {
-	// 蜀・→蜀・
+	// 円と円の当たり判定
 	bool CircleHitCircle(
 		const CircleCollider& circle1,
 		const CircleCollider& circle2);
 
-	// 逅・→逅・
+	// 球と球の当たり判定
 	bool SphereHitSphere(
 		const SphereCollider& sphere1,
 		const SphereCollider& sphere2);
 
-	// 繧ｭ繝･繝ｼ繝悶→繧ｭ繝･繝ｼ繝・
+	// 立方体と立方体の当たり判定
 	bool CubeHitCube(
 		const CubeCollider& cube1,
 		const CubeCollider& cube2);
 
-	// 繧ｭ繝･繝ｼ繝悶→繧ｫ繝励そ繝ｫ
+	// 立方体とカプセルの当たり判定
 	bool CubeHitCapsule(
 		CubeCollider& cube,
 		CapsuleCollider& capsule);
@@ -28,19 +29,19 @@ namespace Collision
 		const CapsuleCollider& capsule,
 		Vec3& hitPoint);
 
-	// 逅・→蟷ｳ髱｢
+	// 球と平面の当たり判定
 	bool SphereHitPlane(
 		const SphereCollider& sphere,
 		const PlaneCollider& plane,
 		Vec3* hitPoint = nullptr);
 
-	// 逅・→荳芽ｧ貞ｽ｢
+	// 球と三角形の当たり判定
 	bool SphereHitTriangle(
 		const SphereCollider& sphere,
 		const TriangleCollider& triangle,
 		Vec3* hitPoint = nullptr);
 
-	// 逅・→繧ｫ繝励そ繝ｫ
+	// 球とカプセルの当たり判定
 	bool SphereHitCapsule(
 		const SphereCollider& sphere,
 		const CapsuleCollider& capsule);
@@ -50,17 +51,17 @@ namespace Collision
 		const CapsuleCollider& capsule,
 		Vec3& hitPoint);
 
-	// 繝ｬ繧､縺ｨ蟷ｳ髱｢
+	// レイと平面の当たり判定
 	bool RayHitPlane(
 		const RayCollider& ray,
 		const PlaneCollider& plane);
 
-	// 繝ｬ繧､縺ｨ逅・
+	// レイと球の当たり判定
 	bool RayHitSphere(
 		const RayCollider& ray,
 		const SphereCollider& sphere);
 
-	// 繧ｫ繝励そ繝ｫ縺ｨ繧ｫ繝励そ繝ｫ
+	// カプセルとカプセルの当たり判定
 	bool CapsuleHitCapsule(
 		const CapsuleCollider& capsule1,
 		const CapsuleCollider& capsule2);
@@ -70,9 +71,8 @@ namespace Collision
 		const CapsuleCollider& capsule2,
 		Vec3& hitPoint);
 
-	// 轤ｹ縺ｨ荳芽ｧ貞ｽ｢縺ｮ譛霑第磁轤ｹ
+	// 点と三角形の最近接点
 	Vec3 ClosestPointOfPointAndTriangle(
 		const Vec3 point,
 		const TriangleCollider& triangle);
-
 };

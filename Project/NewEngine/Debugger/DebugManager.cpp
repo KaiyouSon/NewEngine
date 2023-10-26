@@ -63,7 +63,7 @@ void DebugManager::DrawDebugGui()
 	Gui::DrawSlider1("Fov Angle", Camera::current.fov);
 	Gui::DrawLine();
 
-	// 繧ｹ繝医ャ繝励☆繧・
+	// 処理を止める
 	Gui::DrawCheckBox("Stop", &mIsStop);
 	Gui::DrawTab();
 	if (Gui::DrawButton("Next Frame", Vec2(96, 24)))
@@ -72,7 +72,7 @@ void DebugManager::DrawDebugGui()
 	}
 	Gui::DrawLine();
 
-	// 蠖薙◆繧雁愛螳壹・陦ｨ遉ｺ
+	// あたり判定表示
 	bool isShowCollider = ColliderDrawer::GetInstance()->GetisShow();
 	Gui::DrawCheckBox("Show Collider", &isShowCollider);
 	ColliderDrawer::GetInstance()->SetisShow(isShowCollider);
@@ -80,9 +80,6 @@ void DebugManager::DrawDebugGui()
 	Gui::EndWindow();
 
 	mMappingWindow->DrawDebugGUI();
-
-	//static bool isActive = true;
-	//Gui::DrawDemoWindow(isActive);
 }
 
 bool DebugManager::GetisStop()

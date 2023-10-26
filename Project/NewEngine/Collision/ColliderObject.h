@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "ICollider.h"
 
+// コライダー表示用
 class ColliderObject
 {
 private:

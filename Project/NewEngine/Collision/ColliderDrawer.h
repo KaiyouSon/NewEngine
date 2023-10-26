@@ -5,8 +5,10 @@
 #include "ColliderObject.h"
 #include <unordered_map>
 
+// 前方宣言
 template<typename T> class Singleton;
 
+// コライダーを表示するクラス
 class ColliderDrawer : public Singleton<ColliderDrawer>
 {
 private:

@@ -11,7 +11,7 @@ using namespace Gui;
 
 void Gui::Init()
 {
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
+	RenderBase* renderBase = RenderBase::GetInstance();
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -40,8 +40,8 @@ void Gui::PreDraw()
 void Gui::PostDraw()
 {
 	ImGui::Render();
-	// SRV繝偵・繝励・險ｭ螳壹さ繝槭Φ繝・
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
+	// SRVヒープセット
+	RenderBase* renderBase = RenderBase::GetInstance();
 	auto srvDescHeap = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
 	renderBase->GetCommandList()->SetDescriptorHeaps(1, &srvDescHeap);
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), renderBase->GetCommandList());
@@ -49,7 +49,7 @@ void Gui::PostDraw()
 
 void Gui::Destroy()
 {
-	// Cleanup
+	// 破棄
 	ImGui_ImplDX12_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
@@ -80,12 +80,12 @@ void Gui::BeginFullWindow(const char* name)
 	ImGui::SetNextWindowViewport(viewport->ID);
 
 	ImGuiWindowFlags windowFlags =
-		ImGuiWindowFlags_NoTitleBar |				// 繧ｿ繧､繝医Ν繝舌・陦ｨ遉ｺ縺励↑縺・
-		ImGuiWindowFlags_NoResize |					// 繧ｵ繧､繧ｺ螟画峩縺励↑縺・
-		ImGuiWindowFlags_NoMove |					// 蠎ｧ讓吝､画峩縺励↑縺・
-		ImGuiWindowFlags_MenuBar |					// 繝｡繝九Η繝ｼ繝舌・陦ｨ遉ｺ
-		ImGuiWindowFlags_NoBringToFrontOnFocus |	// 繧ｯ繝ｪ繝・け縺励◆繧画怙蜑埼擇縺ｫ陦ｨ遉ｺ縺励↑縺・
-		ImGuiWindowFlags_NoCollapse;				// 謚倥ｊ逡ｳ縺ｿ縺励↑縺・
+		ImGuiWindowFlags_NoTitleBar |                // タイトルバーを非表示にする
+		ImGuiWindowFlags_NoResize |                 // ウィンドウのリサイズを禁止する
+		ImGuiWindowFlags_NoMove |                   // ウィンドウの移動を禁止する
+		ImGuiWindowFlags_MenuBar |                  // メニューバーを表示する
+		ImGuiWindowFlags_NoBringToFrontOnFocus |    // フォーカス時にウィンドウを前面に持ってこない
+		ImGuiWindowFlags_NoCollapse;                // ウィンドウの折り畳みを禁止する
 
 	static ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_None;
 	if (dockspaceFlags & ImGuiDockNodeFlags_PassthruCentralNode)

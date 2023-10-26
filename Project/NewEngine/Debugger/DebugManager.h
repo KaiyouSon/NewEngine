@@ -2,8 +2,10 @@
 #include "Singleton.h"
 #include "MappingWindow.h"
 
+// 前方宣言
 template<typename T> class Singleton;
 
+// デバッグ関連のクラス
 class DebugManager : public Singleton<DebugManager>
 {
 private:

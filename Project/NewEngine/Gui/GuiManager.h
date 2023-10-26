@@ -4,6 +4,7 @@
 #include "Texture.h"
 #include <stdint.h>
 
+// ImGuiのラッピング関数
 namespace Gui
 {
 	static const uint32_t sNumFramesInFlight = 3;;
@@ -25,7 +26,6 @@ namespace Gui
 
 	bool DrawCollapsingHeader(const char* name);
 
-	// 繝｡繝九Η繝ｼ髢｢騾｣
 	bool BeginMenuBar();
 	void EndMenuBar();
 	bool BeginMenu(const char* name);
