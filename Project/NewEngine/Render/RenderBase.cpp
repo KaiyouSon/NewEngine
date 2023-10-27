@@ -440,6 +440,15 @@ void RenderBase::ShaderCompilerInit()
 	setting.gsFilePath = path1 + "ParticleMesh/ParticleMeshGS.hlsl";
 	setting.psFilePath = path1 + "ParticleMesh/ParticleMeshPS.hlsl";
 	ShaderCompilerManager::Create(setting, "ParticleMesh");
+
+	// ボリューメトリックフォグ用
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(2);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.vsFilePath = path1 + "VolumetricFog/VolumetricFogVS.hlsl";
+	setting.psFilePath = path1 + "VolumetricFog/VolumetricFogPS.hlsl";
+	ShaderCompilerManager::Create(setting, "VolumetricFog");
 }
 void RenderBase::GraphicsPipelineInit()
 {
@@ -581,7 +590,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("VolumetricFog");
 	setting.cullMode = CullMode::Front;
 	setting.topologyType = TopologyType::TriangleList;
-	setting.depthStencilDesc = depthStencilDesc4;
+	setting.depthStencilDesc = depthStencilDesc2;
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 5;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;

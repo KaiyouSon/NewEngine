@@ -131,15 +131,6 @@ void CreateManager::CreateShaderCompiler()
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "RespawnPointEffect");
 
-	// ボリューメトリックフォグ用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(2);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.vsFilePath = path2 + "VolumetricFog/VolumetricFogVS.hlsl";
-	setting.psFilePath = path2 + "VolumetricFog/VolumetricFogPS.hlsl";
-	ShaderCompilerManager::Create(setting, "VolumetricFog");
-
 	// タイトルのロゴ爆散用（初期化）
 	setting = ShaderCompilerSetting();
 	setting.csFilePath = path2 + "Effect/LogoExplosionEffect/LogoExplosionEffectInitCS.hlsl";

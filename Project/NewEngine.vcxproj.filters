@@ -331,9 +331,6 @@
     <Filter Include="Application\Header\VolumetricFog">
       <UniqueIdentifier>{1223240e-9e89-4bdb-b71a-fd6f45e61fde}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\Application\VolumetricFog">
-      <UniqueIdentifier>{d21196f9-28b1-4dea-97db-276762c69927}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader\Engine\PostEffect">
       <UniqueIdentifier>{8c0398ce-464f-466e-9ace-4048e9dc0cbc}</UniqueIdentifier>
     </Filter>
@@ -375,6 +372,9 @@
     </Filter>
     <Filter Include="Application\Source\Motion\Weapon">
       <UniqueIdentifier>{d736aef2-4b12-4661-b374-b37a367525d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\VolumetricFog">
+      <UniqueIdentifier>{d21196f9-28b1-4dea-97db-276762c69927}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1437,7 +1437,7 @@
       <Filter>Shader\Engine\Util</Filter>
     </None>
     <None Include="NewEngine\Shader\VolumetricFog\VolumetricFog.hlsli">
-      <Filter>Shader\Application\VolumetricFog</Filter>
+      <Filter>Shader\Engine\VolumetricFog</Filter>
     </None>
     <None Include="Application\Shader\Vignette\Vignette.hlsli">
       <Filter>Shader\Application\Vignette</Filter>
@@ -1586,10 +1586,10 @@
       <Filter>Shader\Engine\ParticleMesh</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\VolumetricFog\VolumetricFogVS.hlsl">
-      <Filter>Shader\Application\VolumetricFog</Filter>
+      <Filter>Shader\Engine\VolumetricFog</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\VolumetricFog\VolumetricFogPS.hlsl">
-      <Filter>Shader\Application\VolumetricFog</Filter>
+      <Filter>Shader\Engine\VolumetricFog</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\Effect\LogoExplosionEffect\LogoExplosionEffectInitCS.hlsl">
       <Filter>Shader\Application\Effect\LogoExplosionEffect</Filter>
