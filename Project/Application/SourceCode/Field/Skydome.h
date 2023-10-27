@@ -2,6 +2,7 @@
 #include "NewEngine.h"
 #include "Cloud.h"
 
+// 天球のクラス
 class Skydome
 {
 private:
@@ -13,5 +14,4 @@ public:
 	void Init();
 	void Update();
 	void Draw();
-	void DrawDebugGui();
 };

@@ -20,7 +20,7 @@ Grass::Grass() :
 }
 void Grass::GenerateGrassToSquare(const Vec2 size, const uint32_t maxNum)
 {
-	// 鬆らせ繝舌ャ繝輔ぃ縺ｮ逕滓・
+	// 頂点バッファの生成
 	mVertices.resize(maxNum);
 	mVertexBuffer->Create(mVertices);
 
@@ -37,7 +37,7 @@ void Grass::GenerateGrassToSquare(const Vec2 size, const uint32_t maxNum)
 
 		mVertices[i].scale = Random::RangeF(0.5f, 1.0f);
 
-		// 360縺ｨ0荳邱偵□縺九ｉMax359縺ｫ縺吶ｋ
+		// タイム設定
 		mTimers[i].SetLimitTimer(359);
 		mTimers[i].SetTimer(Random::Range(0, 359));
 		mTimers[i].GetTimer();
@@ -59,10 +59,10 @@ void Grass::Update(Transform* parent)
 		mTransform.SetWorldMat(mat);
 	}
 
-	// 繝槭ユ繝ｪ繧｢繝ｫ縺ｮ霆｢騾・
+	// マテリアルの初期化
 	MaterialTransfer();
 
-	// 鬆らせ繝・・繧ｿ縺ｮ霆｢騾・
+	// 頂点データの転送
 	for (uint32_t i = 0; i < mVertices.size(); i++)
 	{
 		mVertices[i].timer.x = (float)mTimers[i].GetTimer();
@@ -82,43 +82,44 @@ void Grass::Draw()
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// GraphicsPipeline謠冗判繧ｳ繝槭Φ繝・
+	// GraphicsPipeline描画コマンド
 	mGraphicsPipeline->DrawCommand(BlendMode::Alpha);
 
-	// VBV縺ｨIBV縺ｮ險ｭ螳壹さ繝槭Φ繝・
+	// VBVのセット
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
 
+	// マテリアルの描画コマンド
 	MaterialDrawCommands();
 
-	// SRV繝偵・繝励・蜈磯ｭ縺ｫ縺ゅｋSRV繧偵Ν繝ｼ繝医ヱ繝ｩ繝｡繝ｼ繧ｿ2逡ｪ縺ｫ險ｭ螳・
+	// SRVのセット
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, texture->GetBufferResource()->srvHandle.gpu);
 
 	renderBase->GetCommandList()->DrawInstanced((uint16_t)mVertices.size(), 1, 0, 0);
 }
 
-// --- 繝槭ユ繝ｪ繧｢繝ｫ髢｢騾｣ --------------------------------------------------- //
+// --- マテリアル関連 --------------------------------------------------- //
 void Grass::MaterialInit()
 {
-	// 繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ逕滓・
+	// インターフェース
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3D陦悟・
+	// トランスフォーム
 	iConstantBuffer = std::make_unique<ConstantBuffer<CTransformGrass>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// 濶ｲ
+	// 色
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
-	// 蛻晄悄蛹・
+	// 初期化
 	mMaterial.Init();
 }
 void Grass::MaterialTransfer()
 {
 	mBillboard.CalculateBillboardMat();
 
-	// 繝槭ヨ繝ｪ繝・け繧ｹ
+	// トランスフォーム
 	CTransformGrass transformGrassData =
 	{
 		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
@@ -127,23 +128,23 @@ void Grass::MaterialTransfer()
 	};
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformGrassData);
 
-	// 濶ｲ繝・・繧ｿ
+	// 色
 	CColor colorData = { color.To01() };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[1].get(), colorData);
 }
 void Grass::MaterialDrawCommands()
 {
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
+	RenderBase* renderBase = RenderBase::GetInstance();
 
 	for (uint32_t i = 0; i < mMaterial.constantBuffers.size(); i++)
 	{
-		// CBV縺ｮ險ｭ螳壹さ繝槭Φ繝・
+		// CBVセット
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 			i, mMaterial.constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
 	}
 }
 
-// --- 繧ｻ繝・ち繝ｼ --------------------------------------------------------- //
+// --- セッター --------------------------------------------------------- //
 void Grass::SetBillboardType(const BillboardType billboardType)
 {
 	mBillboard.SetBillboardType(billboardType);

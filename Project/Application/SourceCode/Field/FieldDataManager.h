@@ -3,6 +3,7 @@
 #include "FieldData.h"
 #include "json.hpp"
 
+// フィールドデータを管理するクラス
 class FieldDataManager
 {
 private:

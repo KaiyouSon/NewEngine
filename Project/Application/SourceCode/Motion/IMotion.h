@@ -2,8 +2,10 @@
 #include "NewEngine.h"
 #include "MotionManager.h"
 
+// 前方宣言
 class HumanoidBody;
 
+// モーションのインターフェース
 struct IMotion
 {
 public:

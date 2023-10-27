@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+// 城壁のクラス
 class Wall
 {
 private:

@@ -1,6 +1,7 @@
 #pragma once
 #include "IMotion.h"
 
+// ボスの攻撃2のモーションクラス
 class BossAttack2Motion : public IMotion
 {
 private:

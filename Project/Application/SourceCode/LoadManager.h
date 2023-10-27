@@ -1,8 +1,10 @@
 #pragma once
 #include "Singleton.h"
 
+// 前方宣言
 template<typename T> class Singleton;
 
+// ロードに関連するクラス
 class LoadManager :public Singleton<LoadManager>
 {
 private:

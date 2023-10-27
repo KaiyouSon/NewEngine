@@ -7,8 +7,8 @@
 #include "GraphicsPipeline.h"
 #include "VertexBuffer.h"
 #include "ParticleParam.h"
-#include "StructuredBuffer.h"
 
+// 配置式ボリューメトリックフォグのクラス
 class VolumetricFog
 {
 private:

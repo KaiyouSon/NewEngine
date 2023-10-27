@@ -1,6 +1,7 @@
 #pragma once
 #include "Grass.h"
 
+// 草をひとまとめにしたクラス
 class Weed
 {
 private:

@@ -2,8 +2,10 @@
 #include "NewEngine.h"
 #include "Coffin.h"
 
+// 前方宣言
 class Player;
 
+// ムービーのイベントクラス
 class MovieEvent
 {
 public:

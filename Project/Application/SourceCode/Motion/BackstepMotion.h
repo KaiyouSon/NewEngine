@@ -1,6 +1,7 @@
 #pragma once
 #include "IMotion.h"
 
+// バックステップのモーションのクラス
 class BackstepMotion : public IMotion
 {
 private:

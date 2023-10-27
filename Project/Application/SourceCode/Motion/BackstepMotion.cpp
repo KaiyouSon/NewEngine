@@ -77,11 +77,9 @@ void BackstepMotion::Step0Init(HumanoidBody* human)
 
 	mStep = 0;
 
-	// 謾ｻ謦・Δ繝ｼ繧ｷ繝ｧ繝ｳ縺ｧ騾ｲ繧霍晞屬縺ｮ險育ｮ・
 	player->CalcFrontVec();
 	mLength = CollisionManager::GetInstance()->CalcPlayerDisToFront(-player->mFrontVec, 15);
 
-	// 迴ｾ蝨ｨ縺ｮ蠎ｧ讓吶ｒ蜿門ｾ・
 	mStartPos = human->pos;
 	mEndPos = mStartPos - player->mFrontVec.Norm() * mLength;
 

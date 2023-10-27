@@ -44,10 +44,6 @@ void RespawnPoint::Update()
 		mAngle.Reset();
 	}
 
-	// 髢｢謨ｰ縺ｮ荳ｭ霄ｫ縺ｧ繧ｿ繧､繝槭・險ｭ螳壹＠縺ｦ縺・ｋ縺溘ａ繝｡繧ｽ繝・ラ蜻ｼ縺ｶ縺縺代〒縺・＞
-	//EffectManager::GetInstance()->GenerateRespawnPointEffect(mParent.pos);
-	//EffectManager::GetInstance()->GenerateLeadEffect(mParent.pos + Vec3::up * 5.f, Vec3::front + Vec3(0, 0.5, 0));
-
 	mRipple->Update(&mParent);
 	mRhombus->Update(&mParent);
 }

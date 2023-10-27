@@ -143,14 +143,6 @@ void TitleUI::AfterImagaUpdate()
 		{
 			mAfterImageStep = 2;
 		}
-
-		//if (afterImageEase_.GetisEnd() == true)
-		//{
-		//	mAfterImageStep = 1;
-		//	afterImageEase_.Reset();
-		//	mIsEnd = true;
-		//}
-
 	}
 	else if (mAfterImageStep == 2)
 	{
@@ -158,8 +150,6 @@ void TitleUI::AfterImagaUpdate()
 		mPressButtonAfterImage->color.a -= 10.f;
 		if (mPressButtonAfterImage->color.a <= 0)
 		{
-			//mPressButtonAfterImage->scale = 0.425f;
-			//mPressButtonAfterImage->color.a = 255.f;
 			mAfterImageStep = 2;
 			mIsEnd = true;
 		}

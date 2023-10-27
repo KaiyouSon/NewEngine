@@ -2,6 +2,7 @@
 #include "NewEngine.h"
 #include "MotionManager.h"
 
+// 前方宣言
 class HumanoidBody;
 class PlayerBody;
 
@@ -13,6 +14,7 @@ enum class AttackType
 	Roll,
 };
 
+// 武器のモーションのインターフェース
 class IWeaponMotion
 {
 protected:

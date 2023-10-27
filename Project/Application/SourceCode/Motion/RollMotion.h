@@ -1,6 +1,7 @@
 #pragma once
 #include "IMotion.h"
 
+// 回転のモーションのクラス
 class RollMotion : public IMotion
 {
 private:

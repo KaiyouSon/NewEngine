@@ -83,15 +83,12 @@ void RollMotion::Step0Init(HumanoidBody* human)
 
 	mMoveEase.Reset();
 
-	// 謾ｻ謦・Δ繝ｼ繧ｷ繝ｧ繝ｳ縺ｧ騾ｲ繧霍晞屬縺ｮ險育ｮ・
 	player->CalcFrontVec();
 	mLength = 30;// CollisionManager::GetInstance()->CalcPlayerDisToFront(human->parent->mFrontVec, 30);
 
-	// 迴ｾ蝨ｨ縺ｮ蠎ｧ讓吶ｒ蜿門ｾ・
 	mStartPos = human->pos;
 	mEndPos = mStartPos + player->mFrontVec.Norm() * mLength;
 
-	// 蜈･蜉帙＠縺溷ｾ後・蝗櫁ｻ｢隗偵ｒ蜿門ｾ・
 	mRotY = atan2f(player->mFrontVec.x, player->mFrontVec.z);
 }
 void RollMotion::Step0Update(HumanoidBody* human)

@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+//　リスポーン地点のクラス
 class RespawnPoint
 {
 private:
@@ -19,13 +20,11 @@ public:
 	void Update();
 	void DrawModel();
 
-public:
-	// 繧ｻ繝・ち繝ｼ
+public:	// セッター
 	void SetParent(const Transform parent);
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
-public:
-	// 繧ｲ繝・ち繝ｼ
+public: // ゲッター
 	Vec3 GetPos();
 	SphereCollider GetCollider();
 };

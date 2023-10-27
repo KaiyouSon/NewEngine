@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+// 空島のクラス
 class SkyIsland
 {
 private:

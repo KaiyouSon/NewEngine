@@ -185,8 +185,6 @@ void CollisionManager::PlayerHitFieldObject()
 		if (Collision::CubeHitCapsule(
 			coffins[i]->GetBottomCollider(), mPlayer->GetBodyCollider(), hitPoint))
 		{
-			mField->SetSpherePos(hitPoint);
-
 			// y軸を無視する
 			Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
 			Vec3 pos2 = hitPoint * Vec3(1, 0, 1);
@@ -221,8 +219,6 @@ void CollisionManager::PlayerHitFieldObject()
 		if (Collision::SphereHitCapsule(
 			trees[i]->GetCollider(), mPlayer->GetBodyCollider(), hitPoint))
 		{
-			mField->SetSpherePos(hitPoint);
-
 			// 半径を足して実際の長さを求める
 			float checkLength =
 				mPlayer->GetBodyCollider().radius + trees[i]->GetCollider().radius;
@@ -267,8 +263,6 @@ void CollisionManager::PlayerHitFieldObject()
 		if (Collision::CapsuleHitCapsule(
 			walls[i]->GetCollider(), mPlayer->GetBodyCollider(), hitPoint))
 		{
-			mField->SetSpherePos(hitPoint);
-
 			// y軸を無視する
 			Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
 			Vec3 pos2 = hitPoint * Vec3(1, 0, 1);
@@ -304,8 +298,6 @@ void CollisionManager::PlayerHitFieldObject()
 			Collision::CapsuleHitCapsule(gates[i]->GetRightCollider(), mPlayer->GetBodyCollider(), hitPoint) ||
 			Collision::CapsuleHitCapsule(gates[i]->GetCloseCollider(), mPlayer->GetBodyCollider(), hitPoint))
 		{
-			mField->SetSpherePos(hitPoint);
-
 			// y軸を無視する
 			Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
 			Vec3 pos2 = hitPoint * Vec3(1, 0, 1);

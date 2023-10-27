@@ -8,6 +8,7 @@
 #include "Gate.h"
 #include "VolumetricFog.h"
 
+// フィールドデータの構造体
 struct FieldData
 {
 	std::vector<std::unique_ptr<Coffin>> coffins;

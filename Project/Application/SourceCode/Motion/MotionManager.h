@@ -2,6 +2,7 @@
 #include "NewEngine.h"
 #include <json.hpp>
 
+// モーションデータ
 struct MotionData
 {
 	uint32_t partsCount;
@@ -13,11 +14,13 @@ struct MotionData
 	std::vector<Vec3> endWeaponRots;
 };
 
+// モーションのデータを持つ構造体
 struct Motion
 {
 	std::vector<MotionData> data;
 };
 
+// 全モーションのデータを管理するクラス
 class MotionManager
 {
 private:

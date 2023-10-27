@@ -3,6 +3,7 @@
 #include "Bloom.h"
 #include "Vignette.h"
 
+// 全てのポストエフェクトを管理するクラス
 class PostEffectManager
 {
 private:

@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+// 城門のクラス
 class Gate
 {
 private:
@@ -12,8 +13,8 @@ private:
 	SphereCollider mNegotiationCollider;
 	Vec3 mCenterPos;
 	Vec3 mNegotitationPos;
-	bool mIsOpen;		// 髢九＞縺溘ヵ繝ｩ繧ｰ
-	bool mIsOpening;	// 髢九＞縺ｦ繧区怙荳ｭ縺ｮ繝輔Λ繧ｰ
+	bool mIsOpen;		// 開くフラグ
+	bool mIsOpening;	// 開いてる最中のフラグ
 	Easing mOpenEase;
 	Timer mStayTimer;
 

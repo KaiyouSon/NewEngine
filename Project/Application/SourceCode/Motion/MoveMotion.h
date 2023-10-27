@@ -3,6 +3,7 @@
 
 class PlayerBody;
 
+// 移動するときのモーションのクラス
 class MoveMotion
 {
 private:

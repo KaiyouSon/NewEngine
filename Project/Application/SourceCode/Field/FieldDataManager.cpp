@@ -4,40 +4,40 @@ std::unordered_map<std::string, std::unique_ptr<FieldData>> FieldDataManager::sF
 
 FieldData* FieldDataManager::Load(const std::string filename, const std::string tag)
 {
-	// 繝輔ぃ繧､繝ｫ繧ｹ繝医Μ繝ｼ繝
+	// ファイルを開く
 	std::ifstream file;
 
 	std::string directoryPath = "Application/Data/FieldData/";
 	std::string format = ".json";
 	std::string fullPath = directoryPath + filename + format;
 
-	// 繝輔ぃ繧､繝ｫ繧帝幕縺・
+	// ファイルを開く
 	file.open(fullPath);
-	// 繝輔ぃ繧､繝ｫ繧ｪ繝ｼ繝励Φ螟ｱ謨励ｒ繝√ぉ繝・けs
+	// ファイルが開けない場合はアサーションエラー
 	if (file.fail())
 	{
 		assert(0);
 	}
 
-	// JSON譁・ｭ怜・縺九ｉ隗｣蜃阪＠縺溘ョ繝ｼ繧ｿ
+	// JSONをデシリアライズ
 	nlohmann::json deserialized;
 
-	// 隗｣蜃・
+	// デシリアライズ
 	file >> deserialized;
 
-	// 豁｣縺励＞繝ｬ繝吶Ν繧ｨ繝・ぅ繧ｿ繝ｼ繝・・繧ｿ繝輔ぃ繧､繝ｫ縺九メ繧ｧ繝・け
+	// ルート要素はオブジェクトであることを確認
 	assert(deserialized.is_object());
 	assert(deserialized.contains("name"));
 	assert(deserialized["name"].is_string());
 
-	// "name"繧呈枚蟄怜・縺ｨ縺励※蜿門ｾ・
+	// "name"フィールドを取得
 	std::string name = deserialized["name"].get<std::string>();
-	// 豁｣縺励＞繝ｬ繝吶Ν繧ｨ繝・ぅ繧ｿ繝ｼ繝・・繧ｿ繝輔ぃ繧､繝ｫ縺九メ繧ｧ繝・け
+	// フィールドの値が"scene"であることを確認
 	assert(name.compare("scene") == 0);
 
 	std::unique_ptr<FieldData> fieldData = std::make_unique<FieldData>();
 
-	// "objects"縺ｮ蜈ｨ繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ襍ｰ譟ｻ
+	// "objects"フィールドの各オブジェクトを処理
 	for (nlohmann::json& object : deserialized["object"])
 	{
 		if (object["obj_name"] == nullptr)
@@ -82,7 +82,7 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 		}
 	}
 
-	// map縺ｫ譬ｼ邏・
+	// mapに挿入
 	sFieldDataMap.insert(std::make_pair(tag, std::move(fieldData)));
 	return sFieldDataMap[tag].get();
 }
@@ -94,7 +94,7 @@ FieldData* FieldDataManager::GetFieldData(const std::string tag)
 void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<Coffin> coffin = std::make_unique<Coffin>();
-	// 繝医Λ繝ｳ繧ｹ繝輔か繝ｼ繝縺ｮ繝代Λ繝｡繝ｼ繧ｿ隱ｭ縺ｿ霎ｼ縺ｿ
+	// 棺の位置、スケール、角度情報を取得
 	nlohmann::json transform = jsonObj["transform"];
 	Vec3 pos =
 	{
@@ -116,7 +116,7 @@ void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 	};
 	coffin->SetParent(Transform(pos, scale, Radian(angle)));
 
-	// 蟄舌′縺ゅｌ縺ｰ
+	// 子要素の処理
 	if (jsonObj.contains("children"))
 	{
 		nlohmann::json children = jsonObj["children"];
@@ -194,7 +194,7 @@ void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 void FieldDataManager::LoadSkyIslandData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<SkyIsland> skyIsland = std::make_unique<SkyIsland>();
-	// 繝医Λ繝ｳ繧ｹ繝輔か繝ｼ繝縺ｮ繝代Λ繝｡繝ｼ繧ｿ隱ｭ縺ｿ霎ｼ縺ｿ
+	// 空島の位置、スケール、角度情報を取得
 	nlohmann::json transform = jsonObj["transform"];
 	Vec3 pos =
 	{
@@ -222,7 +222,7 @@ void FieldDataManager::LoadSkyIslandData(FieldData* data, nlohmann::json jsonObj
 void FieldDataManager::LoadTreeData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<Tree> tree = std::make_unique<Tree>();
-	// 繝医Λ繝ｳ繧ｹ繝輔か繝ｼ繝縺ｮ繝代Λ繝｡繝ｼ繧ｿ隱ｭ縺ｿ霎ｼ縺ｿ
+	// 木の位置、スケール、角度情報を取得
 	nlohmann::json transform = jsonObj["transform"];
 	Vec3 pos =
 	{
@@ -262,7 +262,7 @@ void FieldDataManager::LoadTreeData(FieldData* data, nlohmann::json jsonObj)
 void FieldDataManager::LoadRespawnPointData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<RespawnPoint> respawnPoint = std::make_unique<RespawnPoint>();
-	// 繝医Λ繝ｳ繧ｹ繝輔か繝ｼ繝縺ｮ繝代Λ繝｡繝ｼ繧ｿ隱ｭ縺ｿ霎ｼ縺ｿ
+	// リスポーン地点の位置、スケール、角度情報を取得
 	nlohmann::json transform = jsonObj["transform"];
 	Vec3 pos =
 	{
@@ -289,7 +289,7 @@ void FieldDataManager::LoadRespawnPointData(FieldData* data, nlohmann::json json
 void FieldDataManager::LoadWeedData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<Weed> weed = std::make_unique<Weed>();
-	// 繝医Λ繝ｳ繧ｹ繝輔か繝ｼ繝縺ｮ繝代Λ繝｡繝ｼ繧ｿ隱ｭ縺ｿ霎ｼ縺ｿ
+	// 雑草の位置、スケール、角度情報を取得
 	nlohmann::json transform = jsonObj["transform"];
 	Vec3 pos =
 	{
@@ -311,7 +311,7 @@ void FieldDataManager::LoadWeedData(FieldData* data, nlohmann::json jsonObj)
 void FieldDataManager::LoadWallData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<Wall> wall = std::make_unique<Wall>();
-	// 繝医Λ繝ｳ繧ｹ繝輔か繝ｼ繝縺ｮ繝代Λ繝｡繝ｼ繧ｿ隱ｭ縺ｿ霎ｼ縺ｿ
+	// 城壁の位置、スケール、角度情報を取得
 	nlohmann::json transform = jsonObj["transform"];
 	Vec3 pos =
 	{
@@ -334,7 +334,7 @@ void FieldDataManager::LoadWallData(FieldData* data, nlohmann::json jsonObj)
 	wall->SetParent(Transform(pos, scale, Radian(angle)));
 	wall->SetModel(ModelManager::GetModel(jsonObj["obj_name"]));
 
-	// Collider縺後≠繧後・
+	// Colliderある場合
 	if (jsonObj.contains("collider"))
 	{
 		nlohmann::json collider = jsonObj["collider"];
@@ -362,7 +362,7 @@ void FieldDataManager::LoadWallData(FieldData* data, nlohmann::json jsonObj)
 void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<Gate> gate = std::make_unique<Gate>();
-	// 繝医Λ繝ｳ繧ｹ繝輔か繝ｼ繝縺ｮ繝代Λ繝｡繝ｼ繧ｿ隱ｭ縺ｿ霎ｼ縺ｿ
+	// ゲートの位置、スケール、角度情報を取得
 	nlohmann::json transform = jsonObj["transform"];
 	Vec3 pos =
 	{
@@ -387,7 +387,7 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 	Transform parent = Transform(pos, scale, Radian(angle));
 	parent.Update();
 
-	// Collider縺後≠繧後・
+	// Collider情報の処理
 	if (jsonObj.contains("collider"))
 	{
 		nlohmann::json collider = jsonObj["collider"];
@@ -404,7 +404,7 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 		}
 	}
 
-	// 蟄舌′縺ゅｌ縺ｰ
+	// 子要素の処理
 	if (jsonObj.contains("children"))
 	{
 		nlohmann::json children = jsonObj["children"];

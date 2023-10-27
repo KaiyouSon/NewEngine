@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+// 雲のクラス
 class Cloud
 {
 private:

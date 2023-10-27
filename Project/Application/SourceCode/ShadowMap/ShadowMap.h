@@ -2,6 +2,7 @@
 #include "NewEngine.h"
 #include "ShadowObj.h"
 
+// 前方宣言
 template<typename T> class Singleton;
 
 // シャドウマップ制御するクラス

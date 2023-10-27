@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+// ブルームのクラス
 class Bloom
 {
 public:

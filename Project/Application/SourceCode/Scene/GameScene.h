@@ -9,7 +9,9 @@
 #include "Field.h"
 #include "MovieEvent.h"
 #include "VolumetricFog.h"
+#include "Skydome.h"
 
+// ゲームシーンのクラス
 class GameScene : public IScene
 {
 private:

@@ -5,8 +5,8 @@ Bloom::Bloom()
 	// 繝・け繧ｹ繝√Ε繝ｼ縺ｮ繧ｻ繝・ヨ
 	mTexs[(uint32_t)PassType::HighLumi] = TextureManager::GetRenderTexture("HighLumi");
 	mTexs[(uint32_t)PassType::GaussianBlur] = TextureManager::GetRenderTexture("GaussianBlur");
-	mTexs[(uint32_t)PassType::Bloom] = TextureManager::GetRenderTexture("Bloom");
-	mTexs[(uint32_t)PassType::Target] = TextureManager::GetRenderTexture("EffectBloom");
+	mTexs[(uint32_t)PassType::Bloom] = TextureManager::GetRenderTexture("EffectBloom");
+	mTexs[(uint32_t)PassType::Target] = TextureManager::GetRenderTexture("EffectBloomTarget");
 
 	// 
 	for (uint32_t i = 0; i < mPasses.size(); i++)

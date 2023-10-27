@@ -40,7 +40,6 @@ void DrinkMotion::Update(HumanoidBody* human)
 	if (mIsInit == false)
 	{
 		BaseInit(human);
-		//CurrentStepInit(human);
 		mIsInit = true;
 	}
 	BasePrevUpdate(human);

@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+// メッセージのオブジェクトのクラス
 class MessageSign
 {
 private:

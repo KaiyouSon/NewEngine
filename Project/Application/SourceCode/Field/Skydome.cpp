@@ -47,17 +47,3 @@ void Skydome::Draw()
 		mClouds[i]->DrawModel();
 	}
 }
-
-void Skydome::DrawDebugGui()
-{
-	//if (test == true)
-	//{
-	//	Gui::BeginWindow("Skydome");
-	//	Gui::DrawColorEdit("Skydome Color", mSkydome->color);
-	//	Gui::DrawCheckBox("Use Vignette", &isVignette);
-	//	Gui::DrawSlider2("Vignette Range", mVignetteData.range, 0.01f);
-	//	Gui::DrawColorEdit("Vignette Color", mVignetteData.color);
-	//	Gui::EndWindow();
-	//}
-}
-

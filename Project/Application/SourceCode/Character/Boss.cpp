@@ -139,7 +139,6 @@ void Boss::MotionUpdate()
 		switch (mMotionNum)
 		{
 		case 1:
-			mBoss->GrabAttackMotion();
 			break;
 		case 2:
 			mBoss->Attack2Motion();

@@ -10,6 +10,7 @@
 #include "StructuredBuffer.h"
 #include "DescriptorHeapManager.h"
 
+// GPUパーティクルを用いて、メッシュの貼り付けるクラス
 class ParticleMesh
 {
 private:

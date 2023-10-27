@@ -146,7 +146,6 @@
     <ClCompile Include="Application\SourceCode\Field\Gate.cpp" />
     <ClCompile Include="Application\SourceCode\GaugeParam.cpp" />
     <ClCompile Include="Application\SourceCode\UI\GaugeUI.cpp" />
-    <ClCompile Include="Application\SourceCode\PostEffect\GaussianBlur.cpp" />
     <ClCompile Include="Application\SourceCode\Body\HumanoidBody.cpp" />
     <ClCompile Include="Application\SourceCode\Camera\ICamera.cpp" />
     <ClCompile Include="Application\SourceCode\Menu\IMenu.cpp" />
@@ -187,7 +186,6 @@
     <ClCompile Include="Application\SourceCode\Field\Skydome.cpp" />
     <ClCompile Include="Application\SourceCode\Weapon\Sword.cpp" />
     <ClCompile Include="Application\SourceCode\Camera\TargetCamera.cpp" />
-    <ClCompile Include="Application\SourceCode\PostEffect\Task.cpp" />
     <ClCompile Include="Application\SourceCode\UI\TitleUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\MessageUI.cpp" />
     <ClCompile Include="Application\SourceCode\Transition\TransitionManager.cpp" />
@@ -294,7 +292,6 @@
     <ClInclude Include="Application\SourceCode\Motion\BossAttack3Motion.h" />
     <ClInclude Include="Application\SourceCode\Motion\BossAttack2Motion.h" />
     <ClInclude Include="Application\SourceCode\Body\BossBody.h" />
-    <ClInclude Include="Application\SourceCode\Motion\BossGrabAttackMotion.h" />
     <ClInclude Include="Application\SourceCode\Camera\CameraManager.h" />
     <ClInclude Include="Application\SourceCode\Character\Character.h" />
     <ClInclude Include="Application\SourceCode\Field\Cloud.h" />
@@ -316,7 +313,6 @@
     <ClInclude Include="Application\SourceCode\GaugeParam.h" />
     <ClInclude Include="Application\SourceCode\GaugeType.h" />
     <ClInclude Include="Application\SourceCode\UI\GaugeUI.h" />
-    <ClInclude Include="Application\SourceCode\PostEffect\GaussianBlur.h" />
     <ClInclude Include="Application\SourceCode\Body\HumanoidBody.h" />
     <ClInclude Include="Application\SourceCode\Camera\ICamera.h" />
     <ClInclude Include="Application\SourceCode\Menu\IMenu.h" />
@@ -358,7 +354,6 @@
     <ClInclude Include="Application\SourceCode\Field\Skydome.h" />
     <ClInclude Include="Application\SourceCode\Weapon\Sword.h" />
     <ClInclude Include="Application\SourceCode\Camera\TargetCamera.h" />
-    <ClInclude Include="Application\SourceCode\PostEffect\Task.h" />
     <ClInclude Include="Application\SourceCode\UI\TitleUI.h" />
     <ClInclude Include="Application\SourceCode\UI\MessageUI.h" />
     <ClInclude Include="Application\SourceCode\Transition\TransitionManager.h" />

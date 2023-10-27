@@ -63,7 +63,6 @@ void Gate::ColliderUpdate()
 	mCloseCollider.endPos = mGateRight->pos;
 	mCloseCollider.radius = 5.f;
 
-	// 繧ｲ繝ｼ繝医・髢九″縺ｫ繧医▲縺ｦ繧ｳ繝ｩ繧､繝繝ｼ縺ｮ繧｢繧ｯ繝・ぅ繝・
 	if (mIsOpen == true)
 	{
 		mLeftCollider.isActive = true;

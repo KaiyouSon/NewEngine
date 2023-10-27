@@ -15,7 +15,8 @@ void LoadManager::TitleSceneLoad()
 	// ブルーム用
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "HighLumi");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "GaussianBlur");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectBloom");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectBloomTarget");
 }
 void LoadManager::TitleSceneUnLoad()
 {
@@ -27,7 +28,8 @@ void LoadManager::TitleSceneUnLoad()
 	// ブルーム用
 	TextureManager::DestroyRenderTexture("HighLumi");
 	TextureManager::DestroyRenderTexture("GaussianBlur");
-	TextureManager::DestroyRenderTexture("Bloom");
+	TextureManager::DestroyRenderTexture("EffectBloom");
+	TextureManager::DestroyRenderTexture("EffectBloomTarget");
 }
 
 // ゲームシーンでのロード・アンロード
@@ -83,7 +85,8 @@ void LoadManager::GameSceneLoad()
 	// ブルーム用
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "HighLumi");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "GaussianBlur");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectBloom");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectBloomTarget");
 }
 void LoadManager::GameSceneUnLoad()
 {
@@ -137,7 +140,8 @@ void LoadManager::GameSceneUnLoad()
 	// ブルーム用
 	TextureManager::DestroyTexture("HighLumi");
 	TextureManager::DestroyTexture("GaussianBlur");
-	TextureManager::DestroyTexture("Bloom");
+	TextureManager::DestroyRenderTexture("EffectBloom");
+	TextureManager::DestroyRenderTexture("EffectBloomTarget");
 }
 
 bool LoadManager::ModelLoad()
@@ -175,59 +179,32 @@ bool LoadManager::ModelLoad()
 
 	ModelManager::LoadObjModel("Capsule", "Capsule");
 	ModelManager::LoadObjModel("MainGateWall", "MainGateWall");
-	// 蜃ｦ逅・′邨ゅｏ縺｣縺溘・繧呈蕗縺医ｋ縺溘ａ縲∝ｿ・★true繧定ｿ斐☆
+
+	// 非同期終わったよ～
 	return true;
 }
 
 bool LoadManager::TextureLoad()
 {
-	TextureManager::LoadTexture("Test.png", "Test");
-	TextureManager::LoadTexture("Test1.png", "Test1");
-
-	TextureManager::LoadTexture("Particle/StarParticle.png", "StarParticle");
-
-	// 繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ縺ｫ菴ｿ縺・°繧蔚nLoad縺励↑縺・
+	// タイトルロゴ
 	TextureManager::LoadTexture("Title/TitleLogo.png", "TitleLogo");
+
+	// ディゾルブ
 	TextureManager::LoadTexture("DissolveTexture.png", "DissolveTexture");
 
-	// 繝弱う繧ｺ繝・け繧ｹ繝√Ε
+	// ブラー
 	TextureManager::LoadTexture("Noice/BlurNoice.png", "BlurNoice");
 	TextureManager::LoadTexture("Noice/ScreenNoice.png", "ScreenNoice");
 
-	// 迴ｾ蝨ｨ縺ｮ繧ｷ繝ｼ繝ｳ謠冗判諠・ｱ
+	// シャドウマップ
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMap");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMapBlur");
 
-	// 迴ｾ蝨ｨ縺ｮ繧ｷ繝ｼ繝ｳ
+	// 現在のシーン
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "CurrentScene");
-
-	// 繝悶Ν繝ｼ繝
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "HighLumi");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "GaussianBlur");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
-
-
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectBloom");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "VolumetricFog");
 
 	// ボリュームテクスチャの作成
 	std::vector<Texture*> texs;
-	//for (uint32_t i = 0; i < 8; i++)
-	//{
-	//	// ボリュームノイズのロード
-	//	std::string index = std::to_string(i + 1);
-	//	std::string path = "T/t" + index + ".png";
-	//	std::string tag = "T" + index;
-	//	TextureManager::LoadTexture(path, tag);
-	//	texs.push_back(TextureManager::GetTexture(tag));
-	//}
-
-	//for (uint32_t i = 8; i > 0; i--)
-	//{
-	//	std::string tag = "T" + std::to_string(i);;
-	//	texs.push_back(TextureManager::GetTexture(tag));
-	//}
-
 	for (uint32_t i = 0; i < 16; i++)
 	{
 		// ボリュームノイズのロード
@@ -236,12 +213,10 @@ bool LoadManager::TextureLoad()
 		std::string tag = "Noice" + index;
 		TextureManager::LoadTexture(path, tag);
 		texs.push_back(TextureManager::GetTexture(tag));
-
-		//texs.push_back(TextureManager::GetTexture("Test1"));
 	}
 	TextureManager::CreateVolumeTexture(texs, "VolumeTexture");
 
-	// 蜃ｦ逅・′邨ゅｏ縺｣縺溘・繧呈蕗縺医ｋ縺溘ａ縲∝ｿ・★true繧定ｿ斐☆
+	// 非同期終わったよ～
 	return true;
 }
 
@@ -261,7 +236,7 @@ bool LoadManager::SoundLoad()
 
 	SoundManager::LoadSound("SE/BossAttackSE.wav", "BossAttackSE");
 
-	// 蜃ｦ逅・′邨ゅｏ縺｣縺溘・繧呈蕗縺医ｋ縺溘ａ縲∝ｿ・★true繧定ｿ斐☆
+	// 非同期終わったよ～
 	return true;
 }
 
@@ -282,6 +257,7 @@ bool LoadManager::MotionLoad()
 	MotionManager::Load("Boss/Attack2", "BossAttack2");
 	MotionManager::Load("Boss/Attack3", "BossAttack3");
 
+	// 非同期終わったよ～
 	return true;
 }
 
@@ -290,23 +266,23 @@ LoadManager::LoadManager() : mIsLoaded(false)
 }
 void LoadManager::Load()
 {
-	// 繝槭Ν繝√せ繝ｬ繝・ラ縺ｫ蜈･繧句燕縺ｫ菴懊▲縺ｨ縺・
+	// モデルで使うから先に作っとく
 	TextureManager::CreateColorTexture(Color::white, "White");
 
-	// 髱槫酔譛・
 	std::future<bool> textureFtr = std::async(std::launch::async, [this] { return TextureLoad(); });
 	std::future<bool> modelFtr = std::async(std::launch::async, [this] { return ModelLoad(); });
 	std::future<bool> soundFtr = std::async(std::launch::async, [this] { return SoundLoad(); });
 	std::future<bool> motionFtr = std::async(std::launch::async, [this] { return MotionLoad(); });
 
-	// 繝ｭ繝ｼ繝牙ｮ御ｺ・
-	if (textureFtr.get() == true &&	// 繝・け繧ｹ繝√Ε繝ｼ
-		modelFtr.get() == true &&	// 繝｢繝・Ν
+	//	全ロード終わったら
+	if (textureFtr.get() == true &&
+		modelFtr.get() == true &&
 		soundFtr.get() == true &&
-		motionFtr.get() == true)	// 繧ｵ繧ｦ繝ｳ繝・
+		motionFtr.get() == true)
 	{
 		mIsLoaded = true;
-		// 繧ｳ繝槭Φ繝牙ｮ溯｡・
+
+		// コマンド実行
 		TextureManager::ExcuteComandList();
 	}
 }

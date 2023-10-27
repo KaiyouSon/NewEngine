@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+// 木のクラス
 class Tree
 {
 private:

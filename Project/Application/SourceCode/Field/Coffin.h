@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+// 棺桶のクラス
 class Coffin
 {
 private:

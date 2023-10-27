@@ -12,10 +12,6 @@ void IMotion::BaseInit(HumanoidBody* human)
 {
 	if (mIsInit == false)
 	{
-		//human->pos.y = 4.75f;
-		//human->GetPart(PartID::Body)->pos.y = 0.f;
-
-		// 迴ｾ譎らせ縺ｮ繝｢繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ蛻晄悄蛹・
 		mCurRots = human->CalcCurRots();
 		MotionData current = mMotion->data[mStep];
 		for (uint32_t i = 0; i < current.endRots.size(); i++)

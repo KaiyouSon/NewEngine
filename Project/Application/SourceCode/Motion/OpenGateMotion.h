@@ -1,6 +1,7 @@
 #pragma once
 #include "IMotion.h"
 
+// ドアを開けるモーションのクラス
 class OpenGateMotion : public IMotion
 {
 private:

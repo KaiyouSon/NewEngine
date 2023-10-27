@@ -7,7 +7,7 @@ Club::Club()
 	weapon->SetModel(ModelManager::GetModel("Club"));
 	weapon->SetisShadow(false, true);
 
-	// 讒後・繝｢繝ｼ繧ｷ繝ｧ繝ｳ
+	// モーション生成
 	motion = std::make_unique<MalletMotion>();
 
 	mLocalPos = Vec3(0.f, -1.5f, 0.f);

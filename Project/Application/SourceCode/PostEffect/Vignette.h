@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+// ビネットのクラス
 class Vignette
 {
 private:
