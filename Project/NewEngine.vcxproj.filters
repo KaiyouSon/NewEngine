@@ -1436,7 +1436,7 @@
     <None Include="NewEngine\Shader\Util\Util.hlsli">
       <Filter>Shader\Engine\Util</Filter>
     </None>
-    <None Include="Application\Shader\VolumetricFog\VolumetricFog.hlsli">
+    <None Include="NewEngine\Shader\VolumetricFog\VolumetricFog.hlsli">
       <Filter>Shader\Application\VolumetricFog</Filter>
     </None>
     <None Include="Application\Shader\Vignette\Vignette.hlsli">
@@ -1585,10 +1585,10 @@
     <FxCompile Include="NewEngine\Shader\ParticleMesh\ParticleMeshCS.hlsl">
       <Filter>Shader\Engine\ParticleMesh</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\VolumetricFog\VolumetricFogVS.hlsl">
       <Filter>Shader\Application\VolumetricFog</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogPS.hlsl">
+    <FxCompile Include="NewEngine\Shader\VolumetricFog\VolumetricFogPS.hlsl">
       <Filter>Shader\Application\VolumetricFog</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\Effect\LogoExplosionEffect\LogoExplosionEffectInitCS.hlsl">

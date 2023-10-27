@@ -467,7 +467,7 @@
     <None Include="Application\Shader\ShadowObj\ShadowObj.hlsli" />
     <None Include="Application\Shader\Vignette\Vignette.hlsli" />
     <None Include="NewEngine\Shader\Blur.hlsli" />
-    <None Include="Application\Shader\VolumetricFog\VolumetricFog.hlsli" />
+    <None Include="NewEngine\Shader\VolumetricFog\VolumetricFog.hlsli" />
     <None Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSprite.hlsli" />
     <None Include="NewEngine\Shader\ColliderObject\ColliderObject.hlsli" />
     <None Include="NewEngine\Shader\Emitter\Emitter.hlsli" />
@@ -690,13 +690,13 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogPS.hlsl">
+    <FxCompile Include="NewEngine\Shader\VolumetricFog\VolumetricFogPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Application\Shader\VolumetricFog\VolumetricFogVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\VolumetricFog\VolumetricFogVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>

@@ -444,22 +444,22 @@ void RenderBase::ShaderCompilerInit()
 void RenderBase::GraphicsPipelineInit()
 {
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc1{};
-	depthStencilDesc1.DepthEnable = true; // 豺ｱ蠎ｦ繝・せ繝医ｒ陦後≧
-	depthStencilDesc1.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 譖ｸ縺崎ｾｼ縺ｿ險ｱ蜿ｯ
-	depthStencilDesc1.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 蟆上＆縺・⊇縺・ｒ謗｡逕ｨ
+	depthStencilDesc1.DepthEnable = true;
+	depthStencilDesc1.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	depthStencilDesc1.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
 
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc2{};
-	depthStencilDesc2.DepthEnable = false; // 豺ｱ蠎ｦ繝・せ繝医ｒ陦後ｏ縺ｪ縺・
+	depthStencilDesc2.DepthEnable = false;
 
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc3{};
-	depthStencilDesc3.DepthEnable = true; // 豺ｱ蠎ｦ繝・せ繝医ｒ陦後≧
-	depthStencilDesc3.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// 譖ｸ縺崎ｾｼ縺ｿ荳榊庄
-	depthStencilDesc3.DepthFunc = D3D12_COMPARISON_FUNC_GREATER;	// 螟ｧ縺阪＞縺ｻ縺・ｒ謗｡逕ｨ
+	depthStencilDesc3.DepthEnable = true;
+	depthStencilDesc3.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+	depthStencilDesc3.DepthFunc = D3D12_COMPARISON_FUNC_GREATER;
 
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc4{};
-	depthStencilDesc4.DepthEnable = true; // 豺ｱ蠎ｦ繝・せ繝医ｒ陦後≧
-	depthStencilDesc4.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	// 譖ｸ縺崎ｾｼ縺ｿ險ｱ蜿ｯ
-	depthStencilDesc4.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// 蟆上＆縺・⊇縺・ｒ謗｡逕ｨ
+	depthStencilDesc4.DepthEnable = true;
+	depthStencilDesc4.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+	depthStencilDesc4.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
 
 	GraphicsPipelineSetting setting;
 
@@ -574,6 +574,18 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "ParticleMesh");
+
+	// ボリューメトリックフォグ用
+	setting = GraphicsPipelineSetting();
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("VolumetricFog");
+	setting.cullMode = CullMode::Front;
+	setting.topologyType = TopologyType::TriangleList;
+	setting.depthStencilDesc = depthStencilDesc4;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 5;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFog");
 }
 void RenderBase::ComputePipelineInit()
 {

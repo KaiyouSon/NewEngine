@@ -311,22 +311,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "RespawnPointEffect");
 
-	// ボリューメトリックフォグ用
-	depthStencilDesc = D3D12_DEPTH_STENCIL_DESC();
-	depthStencilDesc.DepthEnable = false;
-	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
-	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
-	setting = GraphicsPipelineSetting();
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("VolumetricFog");
-	setting.cullMode = CullMode::Front;
-	setting.topologyType = TopologyType::TriangleList;
-	setting.depthStencilDesc = depthStencilDesc;
-	setting.rtvNum = 1;
-	setting.rootSignatureSetting.maxCbvRootParameter = 5;
-	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFog");
-
 	// タイトルのロゴ爆散用
 	setting = PipelineManager::GetGraphicsPipeline("ParticleMesh")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("LogoExplosionEffectInit");
