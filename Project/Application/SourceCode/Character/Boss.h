@@ -3,11 +3,12 @@
 #include "GaugeParam.h"
 #include "BossBody.h"
 
+// 前方宣言
 class Player;
-class BossGrabAttackMotion;
 class BossAttack2Motion;
 class BossAttack3Motion;
 
+// ボスのクラス
 class Boss : public Character
 {
 private:
@@ -29,12 +30,12 @@ private:
 	float mDamage;
 
 private:
-	// 繝繝｡繝ｼ繧ｸ髢｢騾｣
+	// damage関連
 	bool mIsDamage;
 	Timer mDamageCoolTimer;
 
 private:
-	// 繝｢繝ｼ繧ｷ繝ｧ繝ｳ蛻・ｊ譖ｿ縺磯未騾｣
+	// モーション関連
 	Timer mCoolTimer;
 	uint32_t mMotionNum;
 
@@ -71,7 +72,6 @@ public:
 	bool GetisFight();
 
 private:
-	friend BossGrabAttackMotion;
 	friend BossAttack2Motion;
 	friend BossAttack3Motion;
 };

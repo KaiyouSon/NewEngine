@@ -2,6 +2,7 @@
 #include "NewEngine.h"
 #include "IEffect.h"
 
+// タイトルロゴ爆散エフェクトのクラス
 class LogoExplosionEffect : public IEffect
 {
 private:

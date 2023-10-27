@@ -3,8 +3,10 @@
 #include "BossAttack2Motion.h"
 #include "BossAttack3Motion.h"
 
+// 前方宣言
 class Boss;
 
+// ボスの体のクラス
 class BossBody : public HumanoidBody
 {
 private:

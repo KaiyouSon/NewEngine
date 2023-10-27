@@ -540,7 +540,7 @@
     <ClCompile Include="Application\SourceCode\Camera\DefaultCamera.cpp">
       <Filter>Application\Source\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Camera\TargetCamera.cpp">
+    <ClCompile Include="Application\SourceCode\Camera\LockonCamera.cpp">
       <Filter>Application\Source\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Field\MessageSign.cpp">
@@ -1055,7 +1055,7 @@
     <ClInclude Include="Application\SourceCode\Camera\DefaultCamera.h">
       <Filter>Application\Header\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Camera\TargetCamera.h">
+    <ClInclude Include="Application\SourceCode\Camera\LockonCamera.h">
       <Filter>Application\Header\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Field\MessageSign.h">

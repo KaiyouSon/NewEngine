@@ -5,8 +5,10 @@
 #include "PlayerBody.h"
 #include "MovieEvent.h"
 
+// 前方宣言
 class MalletMotion;
 
+// プレイヤーのクラス
 class Player : public Character
 {
 public:
@@ -35,26 +37,26 @@ private:
 	bool mIsDissolve;
 
 private:
-	Timer mPushTimer; //繝懊ち繝ｳ騾｣謇薙＆縺帙↑縺・ｈ縺・↓
+	Timer mPushTimer; // ボタン連打させないように
 
 private:
-	// 迥ｶ諷・
+	// ステート
 	State mState;
 
 private:
-	// 遘ｻ蜍暮未騾｣
+	// 移動関連
 	float mMoveSpeed;
 	float mJoggingSpeed;
 	float mRunSpeed;
 	Vec3 mMoveVel;
 
 private:
-	// 蠖薙◆繧翫≠蛻､螳夐未騾｣
+	// 当たり判定関連
 	Vec3 mFrontVec;
 	CapsuleCollider mBodyCollider;
 
 private:
-	// 繝繝｡繝ｼ繧ｸ髢｢騾｣
+	// ダメージ関連
 	bool mIsDamage;
 	Timer mDamageCoolTimer;
 

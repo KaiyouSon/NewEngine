@@ -1,6 +1,7 @@
 #pragma once
 #include "NewEngine.h"
 
+// 血のエフェクト（後GPUに移す）
 class BloodSprayEffect
 {
 private:

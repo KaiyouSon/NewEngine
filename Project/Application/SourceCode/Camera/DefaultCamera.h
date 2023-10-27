@@ -2,6 +2,7 @@
 #include "NewEngine.h"
 #include "ICamera.h"
 
+// 普段のカメラのクラス
 class DefaultCamera : public ICamera
 {
 private:
@@ -14,8 +15,6 @@ private:
 	Vec3 mRot;
 
 public:
-	DefaultCamera();
 	void Init(Player* player) override;
 	void Update() override;
-
 };

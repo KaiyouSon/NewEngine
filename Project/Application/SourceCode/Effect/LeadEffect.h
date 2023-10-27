@@ -2,6 +2,7 @@
 #include "NewEngine.h"
 #include "IEffect.h"
 
+// 誘導エフェクトのクラス
 class LeadEffect : public IEffect
 {
 private:

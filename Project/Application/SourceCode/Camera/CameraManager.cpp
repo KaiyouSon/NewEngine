@@ -1,6 +1,6 @@
 #include "CameraManager.h"
 #include "DefaultCamera.h"
-#include "TargetCamera.h"
+#include "LockonCamera.h"
 #include "MovieCamera.h"
 
 CameraManager::CameraManager()
@@ -28,7 +28,7 @@ void CameraManager::Update()
 		Camera::current.rot.y += Radian(360);
 	}
 
-	// 繧ｫ繝｡繝ｩ蛻・ｊ譖ｿ縺医ｋ蜃ｦ逅・
+	// カメラの切り替え処理
 	bool isRightStickDown = Pad::GetButtonDown(PadCode::RightStick);
 	if (mCameraType == CameraType::Default)
 	{
@@ -66,8 +66,6 @@ void CameraManager::Update()
 			ChangeCamera(CameraManager::Default);
 		}
 	}
-
-	//Camera::DebugCameraUpdate();
 }
 
 void CameraManager::ChangeCamera(const CameraType cameraType)
@@ -82,7 +80,7 @@ void CameraManager::ChangeCamera(const CameraType cameraType)
 		break;
 
 	case CameraType::Target:
-		nextCamera = std::make_unique<TargetCamera>();
+		nextCamera = std::make_unique<LockonCamera>();
 		break;
 
 	case CameraType::Movie:

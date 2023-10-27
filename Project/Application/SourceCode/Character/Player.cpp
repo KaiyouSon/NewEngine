@@ -50,10 +50,10 @@ void Player::PrevUpdate()
 
 	if (mIsAlive == true)
 	{
-		// 髢｢謨ｰ繝昴う繝ｳ繧ｿ
+		// 関数ポインタ
 		void (Player:: * pFunc[])() =
 		{
-			// 逋ｻ骭ｲ
+			// 各ステートの処理
 			&Player::IdleUpdate,
 			&Player::JoggingUpdate,
 			&Player::RunUpdate,
@@ -67,7 +67,7 @@ void Player::PrevUpdate()
 			&Player::OpenGateUpdate,
 		};
 
-		// 螳溯｡・
+		// 実行
 		(this->*pFunc[(int)mState])();
 	}
 
@@ -126,14 +126,14 @@ void Player::Damage(const float damage)
 	}
 }
 
-// 繧ｳ繝ｩ繧､繝繝ｼ髢｢騾｣
+// コライダー関連
 void Player::CalcFrontVec()
 {
-	// 繧ｫ繝｡繝ｩ縺ｮ蜑阪・繧ｯ繝医Ν
+	// 正面ベクトル
 	Vec3 cameForward = mPlayer->pos - Camera::current.pos;
 	cameForward.y = 0.f;
 
-	// 繧ｫ繝｡繝ｩ縺ｮ蜿ｳ繝吶け繝医Ν
+	// 右ベクトル
 	Vec3 cameRight = Vec3::Cross(cameForward, Vec3::up);
 
 	Vec3 stick =
@@ -158,7 +158,7 @@ void Player::CalcBodyCollider()
 }
 void Player::ColliderUpdate()
 {
-	// 繝峨い繧帝幕縺代ｋ譎・
+	// ドア開けてる時あたり判定つけない
 	if (mState == State::OpenGate)
 	{
 		mBodyCollider.isActive = false;
@@ -176,16 +176,16 @@ void Player::ColliderUpdate()
 	ColliderDrawer::GetInstance()->Bind(&mBodyCollider);
 }
 
-// 繧ｲ繝ｼ繧ｸ髢｢騾｣
+// ゲージ関連
 void Player::GaugeParamInit()
 {
-	// HP繧ｲ繝ｼ繧ｸ
+	// HPゲージ
 	mGaugePrames[(uint32_t)GaugeType::Hp].CalcRate(256.f, 256.f);
 
-	// MP繧ｲ繝ｼ繧ｸ
+	// MPゲージ（使ってないから消すかも）
 	mGaugePrames[(uint32_t)GaugeType::Mp].CalcRate(64.f, 64.f);
 
-	// 繧ｹ繧ｿ繝溘リ繧ｲ繝ｼ繧ｸ
+	// スタミナゲージ
 	mGaugePrames[(uint32_t)GaugeType::Stamina].CalcRate(160.f, 160.f);
 }
 void Player::GaugeParamUpdate()
@@ -201,7 +201,7 @@ void Player::GaugeParamUpdate()
 	}
 }
 
-// 繧ｹ繝・・繝磯未騾｣
+// 各ステートの処理
 void Player::MoveUpdate()
 {
 	CalcFrontVec();
@@ -286,7 +286,7 @@ void Player::JoggingUpdate()
 	}
 	else if (Pad::GetButton(PadCode::ButtonA))
 	{
-		// 菴輔ヵ繝ｬ繝ｼ繝謚ｼ縺励◆縺九ｒ險倬鹸縺吶ｋ
+		// 連打しないように
 		mPushTimer.Update();
 		if (mPushTimer == true)
 		{
@@ -304,7 +304,6 @@ void Player::JoggingUpdate()
 		mState = State::Drink;
 	}
 
-	// 髮｢縺励◆譎・
 	if (Pad::GetButtonUp(PadCode::ButtonA))
 	{
 		if (mPushTimer.GetisTimeOut() == false)
@@ -602,12 +601,7 @@ void Player::DamageUpdate()
 	}
 }
 
-void Player::SetMovieEvent(MovieEvent* movieEvent)
-{
-	mMovieEvent = movieEvent;
-}
-
-// 繧ｻ繝・ち繝ｼ
+// セッター
 void Player::SetPos(const Vec3 pos)
 {
 	mPlayer->pos = pos;
@@ -632,8 +626,12 @@ void Player::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 	}
 	mWeapon->SetGraphicsPipeline(graphicsPipeline);
 }
+void Player::SetMovieEvent(MovieEvent* movieEvent)
+{
+	mMovieEvent = movieEvent;
+}
 
-// 繧ｲ繝・ち繝ｼ
+// ゲッター
 GaugeParam Player::GetGaugeParam(const uint32_t index)
 {
 	return mGaugePrames[index];
@@ -694,4 +692,3 @@ uint32_t Player::GetBottleNum()
 {
 	return mBottleNum;
 }
-

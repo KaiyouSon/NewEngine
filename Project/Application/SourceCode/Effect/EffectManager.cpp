@@ -21,12 +21,7 @@ void EffectManager::Update()
 {
 	if (Key::GetKeyDown(DIK_G))
 	{
-		//GeneratePlayerRecoveryEffect(Vec3::up * 10.f);
-		//GenerateLogoExplosionEffect(0, 0, 0.1f);
-
 		GenerateAirEffect(Vec3::up * 10.f);
-
-		//GenerateLeadEffect(Vec3::up * 10.f, Vec3::front);
 	}
 
 	mBloodSprayEffect->Update();
@@ -42,30 +37,19 @@ void EffectManager::Update()
 	{
 		mEffects[i]->Update();
 	}
-
-	//mAirEffect->Generate(mPlayer->GetPos());
 }
 
 void EffectManager::DrawModel()
 {
 	// 陦
 	mBloodSprayEffect->DrawModel();
-
-	// 蝗槫ｾｩ
-	//mPlayerRecoveryEffect->DrawModel();
-
-	// 繝ｪ繧ｹ繝昴・繝ｳ蝨ｰ轤ｹ縺ｮ繧ｨ繝輔ぉ繧ｯ繝・
-	//mRespawnPointEffect->DrawModel();
-
-	// 蟆手勠縺ｿ縺溘＞縺ｪ繧ｨ繝輔ぉ繧ｯ繝・
 }
 
 void EffectManager::DrawEffect(const bool isBloom)
 {
-	// 繝悶Ν繝ｼ繝蜉ｹ譫懊°縺代◆縺・お繝輔ぉ繧ｯ繝・
+	// ブルームかけるやつ
 	if (isBloom == true)
 	{
-		// 繝ｪ繧ｹ繝昴・繝ｳ蝨ｰ轤ｹ縺ｮ繧ｨ繝輔ぉ繧ｯ繝・
 		//mRespawnPointEffect->DrawModel();
 
 		for (uint32_t i = 0; i < mEffects.size(); i++)
@@ -73,10 +57,10 @@ void EffectManager::DrawEffect(const bool isBloom)
 			mEffects[i]->Draw();
 		}
 	}
-	// 縺昴ｌ莉･螟・
+	// ブルームかけたくないやつ
 	else
 	{
-		//// 陦
+		// 血
 		mBloodSprayEffect->DrawModel();
 
 		for (uint32_t i = 0; i < mEffects.size(); i++)

@@ -3,6 +3,7 @@
 #include "ICamera.h"
 #include "MovieEvent.h"
 
+// ムービー時のカメラ
 class MovieCamera : public ICamera
 {
 private:

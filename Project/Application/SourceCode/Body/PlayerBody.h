@@ -10,6 +10,7 @@
 class Weapon;
 class Player;
 
+// プレイヤーの体
 class PlayerBody : public HumanoidBody
 {
 private:

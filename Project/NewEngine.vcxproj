@@ -185,7 +185,7 @@
     <ClCompile Include="Application\SourceCode\ShadowMap\ShadowObj.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Skydome.cpp" />
     <ClCompile Include="Application\SourceCode\Weapon\Sword.cpp" />
-    <ClCompile Include="Application\SourceCode\Camera\TargetCamera.cpp" />
+    <ClCompile Include="Application\SourceCode\Camera\LockonCamera.cpp" />
     <ClCompile Include="Application\SourceCode\UI\TitleUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\MessageUI.cpp" />
     <ClCompile Include="Application\SourceCode\Transition\TransitionManager.cpp" />
@@ -353,7 +353,7 @@
     <ClInclude Include="Application\SourceCode\ShadowMap\ShadowObj.h" />
     <ClInclude Include="Application\SourceCode\Field\Skydome.h" />
     <ClInclude Include="Application\SourceCode\Weapon\Sword.h" />
-    <ClInclude Include="Application\SourceCode\Camera\TargetCamera.h" />
+    <ClInclude Include="Application\SourceCode\Camera\LockonCamera.h" />
     <ClInclude Include="Application\SourceCode\UI\TitleUI.h" />
     <ClInclude Include="Application\SourceCode\UI\MessageUI.h" />
     <ClInclude Include="Application\SourceCode\Transition\TransitionManager.h" />

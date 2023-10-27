@@ -2,6 +2,7 @@
 #include "NewEngine.h"
 #include "Player.h"
 
+// カメラのインターフェース
 class ICamera
 {
 protected:

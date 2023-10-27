@@ -10,18 +10,18 @@ enum class PartID
 {
 	Transform,
 
-	Body,	// 菴・
-	Head,	// 鬆ｭ
+	Body,	// 体
+	Head,	// 頭
 
-	LeftArm,	// 蟾ｦ閻・
-	LeftHand,	// 蟾ｦ謇・
-	LeftThigh,	 // 蟾ｦ螟ｪ繧ゅｂ
-	LeftLeg,	 // 蟾ｦ雜ｳ
+	LeftArm,	// 左腕
+	LeftHand,	// 左手
+	LeftThigh,	// 左もも
+	LeftLeg,	// 左足
 
-	RightArm,	// 蜿ｳ閻・
-	RightHand,	// 蜿ｳ謇・
-	RightThigh,	 // 蜿ｳ螟ｪ繧ゅｂ
-	RightLeg,	 // 蜿ｳ雜ｳ
+	RightArm,	// 右腕
+	RightHand,	// 右手
+	RightThigh,	// 右もも
+	RightLeg,	// 右足
 };
 
 enum class WeaponPartID
@@ -29,6 +29,7 @@ enum class WeaponPartID
 	Left, Right
 };
 
+// 基底クラス
 class HumanoidBody
 {
 protected:

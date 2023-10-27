@@ -2,6 +2,7 @@
 #include "NewEngine.h"
 #include "IEffect.h"
 
+// プレイヤーの回復エフェクト
 class PlayerRecoveryEffect : public IEffect
 {
 private:

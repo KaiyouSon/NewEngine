@@ -2,18 +2,12 @@
 #include "NewEngine.h"
 #include "IEffect.h"
 
+// 空中にあるエフェクト
 class AirEffect : public IEffect
 {
 private:
 	std::unique_ptr<GPUEmitter> mEmitter;
 	Timer mTimer;
-
-	std::vector<ParticleParameter::PParam1> mPParam;
-
-	Vec3 mStartPos;
-
-private:
-	void GenerateUpdate();
 
 public:
 	AirEffect();

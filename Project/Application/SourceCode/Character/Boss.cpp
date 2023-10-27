@@ -18,7 +18,7 @@ void Boss::Init()
 	mBoss->iParent = this;
 	mBoss->parent = static_cast<Boss*>(mBoss->iParent);
 
-	// HP繧ｲ繝ｼ繧ｸ
+	// HPゲージのパラメータ
 	mHpGaugeParam.CalcRate(2560.f, 2560.f);
 
 	mCoolTimer.SetLimitTimer(120);
@@ -84,7 +84,7 @@ void Boss::Update()
 		}
 	}
 
-	// HP繧ｲ繝ｼ繧ｸ
+	// HPゲージのパラメータ
 	mHpGaugeParam.CalcRate(mHpGaugeParam.value, 2560.f);
 
 	mBoss->rot.y = mRotY;

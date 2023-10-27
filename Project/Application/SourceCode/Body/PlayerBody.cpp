@@ -90,7 +90,6 @@ void PlayerBody::DrawDebugGui()
 	BaseDrawDebugGui();
 }
 
-// 繝｢繝ｼ繧ｷ繝ｧ繝ｳ髢｢騾｣
 void PlayerBody::IdleMotion()
 {
 	//for (uint32_t i = 1; i < mParts.size(); i++)
@@ -108,12 +107,10 @@ void PlayerBody::RunMotion()
 }
 void PlayerBody::AttackR1MotionUpdate()
 {
-	// 蠕訓layer.cpp縺ｫ遘ｻ縺・
 	if (mWeapons[(uint32_t)WeaponPartID::Right]->motion->GetisPlay() == true)
 	{
 		if (mWeapons[(uint32_t)WeaponPartID::Right]->motion->GetisCanChangeMotion() == true)
 		{
-			// 繧ｳ繝ｳ繝懊〒縺阪ｋ縺溘ａ
 			if (Pad::GetButtonDown(PadCode::ButtonR1))
 			{
 				if (parent->mGaugePrames[(uint32_t)GaugeType::Stamina].value - 20 >= 0)
@@ -130,19 +127,6 @@ void PlayerBody::AttackR1MotionUpdate()
 }
 void PlayerBody::AttackR2MotionUpdate()
 {
-	if (mWeapons[(uint32_t)WeaponPartID::Right]->motion->GetisPlay() == true)
-	{
-		//if (mWeapons[0]->motion->GetisCanChangeMotion() == true)
-		//{
-		//	// 繧ｳ繝ｳ繝懊〒縺阪ｋ縺溘ａ
-		//	if (Pad::GetButtonDown(PadCode::Butto))
-		//	{
-		//		mWeapons[0]->motion->Init(this);
-		//		mWeapons[0]->motion->IncreComboCount();
-		//	}
-		//}
-	}
-
 	mWeapons[(uint32_t)WeaponPartID::Right]->motion->HeavyMotion(this);
 }
 void PlayerBody::AttackBackMotionUpdate()

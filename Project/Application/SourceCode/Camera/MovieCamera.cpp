@@ -27,7 +27,7 @@ void MovieCamera::Update()
 		mCamera->rot = Radian(Vec3(40, -30, 0));
 	}
 
-	// 迴ｾ蝨ｨ縺ｮ繧ｫ繝｡繝ｩ縺ｫ莉｣蜈･
+	// 現在のカメラに代入
 	Camera::current = *mCamera;
 }
 

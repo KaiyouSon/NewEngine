@@ -1,14 +1,15 @@
 #pragma once
 #include "ICamera.h"
 
-class TargetCamera : public ICamera
+// ロックオンカメラのクラス
+class LockonCamera : public ICamera
 {
 private:
 	Vec3 mCurCamePos;
 	Vec3 mTargetCamePos;
 
 public:
-	TargetCamera();
+	LockonCamera();
 	void Init(Player* player) override;
 	void Update() override;
 
