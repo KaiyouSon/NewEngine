@@ -67,12 +67,6 @@ void VolumetricFog::Draw(const BlendMode blendMode)
 	cmdList->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
 	cmdList->IASetIndexBuffer(mIndexBuffer->GetibViewAddress());
 
-	ID3D12DescriptorHeap* descriptorHeap2[] =
-	{
-		DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap()
-	};
-	cmdList->SetDescriptorHeaps(1, descriptorHeap2);
-
 	// マテリアルの描画コマンド(主にCBV)
 	MaterialDrawCommands();
 
