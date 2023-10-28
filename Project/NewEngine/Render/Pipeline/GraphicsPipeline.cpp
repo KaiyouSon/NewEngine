@@ -93,20 +93,20 @@ void GraphicsPipeline::CreatePipelineState(const GraphicsPipelineSetting::Pipeli
 
 	ID3D12Device* device = RenderBase::GetInstance()->GetDevice();
 
-	// シェーダーコード設定
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
 
-	if (mSetting.shaderObject->GetVSBlob() != nullptr)
+	// シェーダーコード設定
+	if (mSetting.shaderObject->GetShaderBlob(ShaderType::Vertex) != nullptr)
 	{
-		pipelineDesc.VS = CD3DX12_SHADER_BYTECODE(mSetting.shaderObject->GetVSBlob());
+		pipelineDesc.VS = CD3DX12_SHADER_BYTECODE(mSetting.shaderObject->GetShaderBlob(ShaderType::Vertex));
 	}
-	if (mSetting.shaderObject->GetGSBlob() != nullptr)
+	if (mSetting.shaderObject->GetShaderBlob(ShaderType::Geometry) != nullptr)
 	{
-		pipelineDesc.GS = CD3DX12_SHADER_BYTECODE(mSetting.shaderObject->GetGSBlob());
+		pipelineDesc.GS = CD3DX12_SHADER_BYTECODE(mSetting.shaderObject->GetShaderBlob(ShaderType::Geometry));
 	}
-	if (mSetting.shaderObject->GetPSBlob() != nullptr)
+	if (mSetting.shaderObject->GetShaderBlob(ShaderType::Pixel) != nullptr)
 	{
-		pipelineDesc.PS = CD3DX12_SHADER_BYTECODE(mSetting.shaderObject->GetPSBlob());
+		pipelineDesc.PS = CD3DX12_SHADER_BYTECODE(mSetting.shaderObject->GetShaderBlob(ShaderType::Pixel));
 	}
 
 	// サンプルマスク設定

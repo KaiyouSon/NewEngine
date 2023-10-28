@@ -64,7 +64,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Weapon;$(ProjectDir)Application/SourceCode/UI;$(ProjectDir)Application/SourceCode/Transition;$(ProjectDir)Application/SourceCode/ShadowMap;$(ProjectDir)Application/SourceCode/PostEffect;$(ProjectDir)Application/SourceCode/Motion;$(ProjectDir)Application/SourceCode/Menu;$(ProjectDir)Application/SourceCode/Field;$(ProjectDir)Application/SourceCode/Effect;$(ProjectDir)Application/SourceCode/Character;$(ProjectDir)Application/SourceCode/Camera;$(ProjectDir)Application/SourceCode/Body;$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Debugger;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/Other/Texture;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Weapon;$(ProjectDir)Application/SourceCode/UI;$(ProjectDir)Application/SourceCode/Transition;$(ProjectDir)Application/SourceCode/ShadowMap;$(ProjectDir)Application/SourceCode/PostEffect;$(ProjectDir)Application/SourceCode/Motion;$(ProjectDir)Application/SourceCode/Menu;$(ProjectDir)Application/SourceCode/Field;$(ProjectDir)Application/SourceCode/Effect;$(ProjectDir)Application/SourceCode/Character;$(ProjectDir)Application/SourceCode/Camera;$(ProjectDir)Application/SourceCode/Body;$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Debugger;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/ShaderCompiler;$(ProjectDir)NewEngine/Render/Pipeline;$(ProjectDir)NewEngine/Render/DescriptorHeap;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/Other/Texture;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Weapon;$(ProjectDir)Application/SourceCode/UI;$(ProjectDir)Application/SourceCode/Transition;$(ProjectDir)Application/SourceCode/ShadowMap;$(ProjectDir)Application/SourceCode/PostEffect;$(ProjectDir)Application/SourceCode/Motion;$(ProjectDir)Application/SourceCode/Menu;$(ProjectDir)Application/SourceCode/Field;$(ProjectDir)Application/SourceCode/Effect;$(ProjectDir)Application/SourceCode/Character;$(ProjectDir)Application/SourceCode/Camera;$(ProjectDir)Application/SourceCode/Body;$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Debugger;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/Other/Texture;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Weapon;$(ProjectDir)Application/SourceCode/UI;$(ProjectDir)Application/SourceCode/Transition;$(ProjectDir)Application/SourceCode/ShadowMap;$(ProjectDir)Application/SourceCode/PostEffect;$(ProjectDir)Application/SourceCode/Motion;$(ProjectDir)Application/SourceCode/Menu;$(ProjectDir)Application/SourceCode/Field;$(ProjectDir)Application/SourceCode/Effect;$(ProjectDir)Application/SourceCode/Character;$(ProjectDir)Application/SourceCode/Camera;$(ProjectDir)Application/SourceCode/Body;$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Debugger;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/ShaderCompiler;$(ProjectDir)NewEngine/Render/Pipeline;$(ProjectDir)NewEngine/Render/DescriptorHeap;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/Other/Texture;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -125,7 +125,6 @@
     <ClCompile Include="Application\SourceCode\Motion\BossAttack3Motion.cpp" />
     <ClCompile Include="Application\SourceCode\Motion\BossAttack2Motion.cpp" />
     <ClCompile Include="Application\SourceCode\Body\BossBody.cpp" />
-    <ClCompile Include="Application\SourceCode\Motion\BossGrabAttackMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Camera\CameraManager.cpp" />
     <ClCompile Include="Application\SourceCode\Character\Character.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Cloud.cpp" />
@@ -252,18 +251,18 @@
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\StructuredBuffer.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\UploadBuffer.cpp" />
-    <ClCompile Include="NewEngine\Render\ComputePipeline.cpp" />
-    <ClCompile Include="NewEngine\Render\DescriptorHeap.cpp" />
-    <ClCompile Include="NewEngine\Render\DescriptorHeapManager.cpp" />
-    <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp" />
-    <ClCompile Include="NewEngine\Render\PipelineManager.cpp" />
+    <ClCompile Include="NewEngine\Render\Pipeline\ComputePipeline.cpp" />
+    <ClCompile Include="NewEngine\Render\DescriptorHeap\DescriptorHeap.cpp" />
+    <ClCompile Include="NewEngine\Render\DescriptorHeap\DescriptorHeapManager.cpp" />
+    <ClCompile Include="NewEngine\Render\Pipeline\GraphicsPipeline.cpp" />
+    <ClCompile Include="NewEngine\Render\Pipeline\PipelineManager.cpp" />
     <ClCompile Include="NewEngine\Render\RenderBase.cpp" />
     <ClCompile Include="NewEngine\Render\RenderTarget.cpp" />
     <ClCompile Include="NewEngine\Render\RenderWindow.cpp" />
-    <ClCompile Include="NewEngine\Render\RootSignature.cpp" />
+    <ClCompile Include="NewEngine\Render\Pipeline\RootSignature.cpp" />
     <ClCompile Include="NewEngine\Render\ScissorRectangle.cpp" />
-    <ClCompile Include="NewEngine\Render\ShaderCompiler.cpp" />
-    <ClCompile Include="NewEngine\Render\ShaderCompilerManager.cpp" />
+    <ClCompile Include="NewEngine\Render\ShaderCompiler\ShaderCompiler.cpp" />
+    <ClCompile Include="NewEngine\Render\ShaderCompiler\ShaderCompilerManager.cpp" />
     <ClCompile Include="NewEngine\Render\Viewport.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Texture\TextureManager.cpp" />
     <ClCompile Include="NewEngine\Sound\SoundManager.cpp" />
@@ -420,18 +419,18 @@
     <ClInclude Include="NewEngine\Render\Buffer\StructuredBufferData.h" />
     <ClInclude Include="NewEngine\Render\Buffer\UploadBuffer.h" />
     <ClInclude Include="NewEngine\Render\Buffer\VertexBuffer.h" />
-    <ClInclude Include="NewEngine\Render\ComputePipeline.h" />
-    <ClInclude Include="NewEngine\Render\DescriptorHeap.h" />
-    <ClInclude Include="NewEngine\Render\DescriptorHeapManager.h" />
-    <ClInclude Include="NewEngine\Render\GraphicsPipeline.h" />
-    <ClInclude Include="NewEngine\Render\PipelineManager.h" />
+    <ClInclude Include="NewEngine\Render\Pipeline\ComputePipeline.h" />
+    <ClInclude Include="NewEngine\Render\DescriptorHeap\DescriptorHeap.h" />
+    <ClInclude Include="NewEngine\Render\DescriptorHeap\DescriptorHeapManager.h" />
+    <ClInclude Include="NewEngine\Render\Pipeline\GraphicsPipeline.h" />
+    <ClInclude Include="NewEngine\Render\Pipeline\PipelineManager.h" />
     <ClInclude Include="NewEngine\Render\RenderBase.h" />
     <ClInclude Include="NewEngine\Render\RenderTarget.h" />
     <ClInclude Include="NewEngine\Render\RenderWindow.h" />
-    <ClInclude Include="NewEngine\Render\RootSignature.h" />
+    <ClInclude Include="NewEngine\Render\Pipeline\RootSignature.h" />
     <ClInclude Include="NewEngine\Render\ScissorRectangle.h" />
-    <ClInclude Include="NewEngine\Render\ShaderCompiler.h" />
-    <ClInclude Include="NewEngine\Render\ShaderCompilerManager.h" />
+    <ClInclude Include="NewEngine\Render\ShaderCompiler\ShaderCompiler.h" />
+    <ClInclude Include="NewEngine\Render\ShaderCompiler\ShaderCompilerManager.h" />
     <ClInclude Include="NewEngine\Render\VertexBufferData.h" />
     <ClInclude Include="NewEngine\Render\Viewport.h" />
     <ClInclude Include="NewEngine\Object\Other\Texture\TextureManager.h" />
@@ -465,6 +464,7 @@
     <None Include="Application\Shader\Ripple\Ripple.hlsli" />
     <None Include="Application\Shader\ShadowMap\ShadowMap.hlsli" />
     <None Include="Application\Shader\ShadowObj\ShadowObj.hlsli" />
+    <None Include="Application\Shader\Skydome\Skydome.hlsli" />
     <None Include="Application\Shader\Vignette\Vignette.hlsli" />
     <None Include="NewEngine\Shader\Blur.hlsli" />
     <None Include="NewEngine\Shader\VolumetricFog\VolumetricFog.hlsli" />
@@ -679,6 +679,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Application\Shader\ShadowObj\ShadowObjVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Skydome\SkydomePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Skydome\SkydomeVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>

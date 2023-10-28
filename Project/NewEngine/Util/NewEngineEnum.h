@@ -1,6 +1,6 @@
 #pragma once
 
-// 繝悶Ξ繝ｳ繝峨Δ繝ｼ繝・
+// ブレンドモード
 enum class BlendMode
 {
 	Alpha,
@@ -9,26 +9,27 @@ enum class BlendMode
 	Inv,
 };
 
-// 譎る俣蜊倅ｽ・
+// 時間単位
 enum class TimeUnit
 {
-	MilliSecond,	// 繝溘Μ遘・
-	Second,			// 遘・
-	Minute			// 蛻・
+	MilliSecond, // ミリ秒
+	Second,      // 秒
+	Minute       // 分
 };
 
-// 繝吶ず繧ｨ譖ｲ邱壹・遞ｮ鬘・
+// ベジェ曲線の種類
 enum class BezierType
 {
-	// 繧､繝ｼ繧ｸ繝ｳ繧ｰ縺ｪ縺・
+	// 線形補間
 	Lerp,
 
-	// 繧､繝ｼ繧ｸ繝ｳ繧ｰ縺ゅｊ
+	// イーズイン
 	EaseIn,
+	// イーズアウト
 	EaseOut,
 };
 
-// 繧､繝ｼ繧ｸ繝ｳ繧ｰ遞ｮ鬘・
+// イーズの種類
 enum class EaseType
 {
 	Lerp,
@@ -37,7 +38,7 @@ enum class EaseType
 	InOut,
 };
 
-// 繝薙Ν繝懊・繝峨・遞ｮ鬘・
+// ビルボードの種類
 enum class BillboardType
 {
 	None,
@@ -47,7 +48,7 @@ enum class BillboardType
 	AllAxisBillboard,
 };
 
-// 繝医・繝ｭ繧ｸ繝ｼ繧ｿ繧､繝・
+// トポロジの種類
 enum class TopologyType
 {
 	Point,
@@ -57,7 +58,7 @@ enum class TopologyType
 	TriangleStrip,
 };
 
-// 繧ｫ繝ｼ繝ｪ繝ｳ繧ｰ繝｢繝ｼ繝・
+// カリングの種類
 enum class CullMode
 {
 	None,
@@ -65,14 +66,14 @@ enum class CullMode
 	Back,
 };
 
-// 繝｢繝・Ν縺ｮ繝輔か繝ｼ繝槭ャ繝・
+// モデルのフォーマット
 enum class ModelFormat
 {
 	Obj,
 	Fbx,
 };
 
-// 蜿崎ｻ｢繝輔Λ繧ｰ
+// フリップの種類
 enum class FlipType
 {
 	None,
@@ -81,7 +82,7 @@ enum class FlipType
 	XY
 };
 
-// 繧ｳ繝ｩ繧､繝繝ｼ縺ｮ遞ｮ鬘・
+// コライダーのプリミティブ
 enum class ColliderPrimitive
 {
 	// 2D
@@ -97,7 +98,7 @@ enum class ColliderPrimitive
 	Capsule,
 };
 
-// 繧ｭ繝･繝ｼ繝悶・蜈ｫ鬆らせ
+// キューブの頂点
 enum class CubePoints
 {
 	FLT, FLD,
@@ -105,7 +106,6 @@ enum class CubePoints
 	BLT, BLD,
 	BRT, BRD
 };
-
 enum class MouseCode
 {
 	Left = 0,
@@ -129,4 +129,13 @@ enum class TextureType
 	Depth,
 	Render,
 	Volume,
+};
+
+enum class ShaderType
+{
+	Compute,
+	Vertex,
+	Geometry,
+	Pixel,
+	Size,
 };

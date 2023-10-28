@@ -1,5 +1,6 @@
 #pragma once
 #include "NewEngineSetting.h"
+#include "NewEngineEnum.h"
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <vector>
@@ -13,10 +14,7 @@ private:
 	static Microsoft::WRL::ComPtr<ID3DBlob> sErrorBlob; // シェーダーコンパイルエラーメッセージの格納
 	HRESULT mResult;
 	ShaderCompilerSetting mSetting;
-	Microsoft::WRL::ComPtr<ID3DBlob> mCsBlob; // CSコードの格納
-	Microsoft::WRL::ComPtr<ID3DBlob> mVsBlob; // VSコードの格納
-	Microsoft::WRL::ComPtr<ID3DBlob> mGsBlob; // GSコードの格納
-	Microsoft::WRL::ComPtr<ID3DBlob> mPsBlob; // PSコードの格納
+	std::vector<Microsoft::WRL::ComPtr<ID3DBlob>> mShaderBlobs;
 	std::vector<D3D12_INPUT_ELEMENT_DESC> mInputLayout; // インプットレイアウトの定義
 
 private:
@@ -28,24 +26,12 @@ public:
 	ShaderCompiler() {}
 	ShaderCompiler(const ShaderCompilerSetting& shaderCompilerSetting);
 
-	// コンピュートシェーダーのコンパイル
-	void CompileComputeShader(const std::string& filePath);
-
-	// バーテックスシェーダーのコンパイル
-	void CompileVertexShader(const std::string& filePath);
-
-	// ジオメトリシェーダーのコンパイル
-	void CompileGeometryShader(const std::string& filePath);
-
-	// ピクセルシェーダーのコンパイル
-	void CompilePixelShader(const std::string& filePath);
+	// シェーダーをコンパイル
+	void CompileShader(const std::string& filePath, const ShaderType shaderType);
 
 public:
-	ID3DBlob* GetCSBlob();
-	ID3DBlob* GetVSBlob();
-	ID3DBlob* GetGSBlob();
-	ID3DBlob* GetPSBlob();
 	static ID3DBlob* GetErrorBlob();
+	ID3DBlob* GetShaderBlob(const ShaderType shaderType);
 	const std::vector <D3D12_INPUT_ELEMENT_DESC>& GetInputLayout();
 };
 

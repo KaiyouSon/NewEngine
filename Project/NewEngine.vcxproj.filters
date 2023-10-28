@@ -370,6 +370,9 @@
     <Filter Include="Shader\Engine\VolumetricFog">
       <UniqueIdentifier>{d21196f9-28b1-4dea-97db-276762c69927}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\Skydome">
+      <UniqueIdentifier>{d7f084ad-8891-45ca-afdb-84307a697e6c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -477,7 +480,7 @@
     <ClCompile Include="NewEngine\Light\LightManager.cpp">
       <Filter>NewEngine\Source\Lighting</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Render\RootSignature.cpp">
+    <ClCompile Include="NewEngine\Render\Pipeline\RootSignature.cpp">
       <Filter>NewEngine\Source\Render</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\Mesh.cpp">
@@ -630,25 +633,25 @@
     <ClCompile Include="NewEngine\Render\Buffer\StructuredBuffer.cpp">
       <Filter>NewEngine\Source\Render\Buffer</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Render\DescriptorHeap.cpp">
+    <ClCompile Include="NewEngine\Render\DescriptorHeap\DescriptorHeap.cpp">
       <Filter>NewEngine\Source\Render\DescriptorHeap</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Render\DescriptorHeapManager.cpp">
+    <ClCompile Include="NewEngine\Render\DescriptorHeap\DescriptorHeapManager.cpp">
       <Filter>NewEngine\Source\Render\DescriptorHeap</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Render\GraphicsPipeline.cpp">
+    <ClCompile Include="NewEngine\Render\Pipeline\GraphicsPipeline.cpp">
       <Filter>NewEngine\Source\Render\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Render\PipelineManager.cpp">
+    <ClCompile Include="NewEngine\Render\Pipeline\PipelineManager.cpp">
       <Filter>NewEngine\Source\Render\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Render\ShaderCompiler.cpp">
+    <ClCompile Include="NewEngine\Render\ShaderCompiler\ShaderCompiler.cpp">
       <Filter>NewEngine\Source\Render\ShaderCompiler</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Render\ShaderCompilerManager.cpp">
+    <ClCompile Include="NewEngine\Render\ShaderCompiler\ShaderCompilerManager.cpp">
       <Filter>NewEngine\Source\Render\ShaderCompiler</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Render\ComputePipeline.cpp">
+    <ClCompile Include="NewEngine\Render\Pipeline\ComputePipeline.cpp">
       <Filter>NewEngine\Source\Render\Pipeline</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Effect\AirEffect.cpp">
@@ -803,9 +806,6 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Motion\BackstepMotion.cpp">
       <Filter>Application\Source\Motion\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SourceCode\Motion\BossGrabAttackMotion.cpp">
-      <Filter>Application\Source\Motion\Boss</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\UI\CameraTargetUI.cpp">
       <Filter>Application\Source\UI</Filter>
@@ -962,7 +962,7 @@
     <ClInclude Include="NewEngine\Light\LightManager.h">
       <Filter>NewEngine\Header\Lighting</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Render\RootSignature.h">
+    <ClInclude Include="NewEngine\Render\Pipeline\RootSignature.h">
       <Filter>NewEngine\Header\Render</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\Mesh.h">
@@ -1166,25 +1166,25 @@
     <ClInclude Include="NewEngine\Render\Buffer\StructuredBuffer.h">
       <Filter>NewEngine\Header\Render\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Render\DescriptorHeap.h">
+    <ClInclude Include="NewEngine\Render\DescriptorHeap\DescriptorHeap.h">
       <Filter>NewEngine\Header\Render\DescriptorHeap</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Render\DescriptorHeapManager.h">
+    <ClInclude Include="NewEngine\Render\DescriptorHeap\DescriptorHeapManager.h">
       <Filter>NewEngine\Header\Render\DescriptorHeap</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Render\PipelineManager.h">
+    <ClInclude Include="NewEngine\Render\Pipeline\PipelineManager.h">
       <Filter>NewEngine\Header\Render\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Render\GraphicsPipeline.h">
+    <ClInclude Include="NewEngine\Render\Pipeline\GraphicsPipeline.h">
       <Filter>NewEngine\Header\Render\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Render\ShaderCompiler.h">
+    <ClInclude Include="NewEngine\Render\ShaderCompiler\ShaderCompiler.h">
       <Filter>NewEngine\Header\Render\ShaderCompiler</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Render\ShaderCompilerManager.h">
+    <ClInclude Include="NewEngine\Render\ShaderCompiler\ShaderCompilerManager.h">
       <Filter>NewEngine\Header\Render\ShaderCompiler</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Render\ComputePipeline.h">
+    <ClInclude Include="NewEngine\Render\Pipeline\ComputePipeline.h">
       <Filter>NewEngine\Header\Render\Pipeline</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Effect\AirEffect.h">
@@ -1445,6 +1445,9 @@
     <None Include="Application\Shader\Rhombus\Rhombus.hlsli">
       <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
     </None>
+    <None Include="Application\Shader\Skydome\Skydome.hlsli">
+      <Filter>Shader\Application\Skydome</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Application\Shader\Cloud\CloudPS.hlsl">
@@ -1638,6 +1641,12 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\Effect\AirEffect\AirEffectUpdateCS.hlsl">
       <Filter>Shader\Application\Effect\AirEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Skydome\SkydomeVS.hlsl">
+      <Filter>Shader\Application\Skydome</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Skydome\SkydomePS.hlsl">
+      <Filter>Shader\Application\Skydome</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
