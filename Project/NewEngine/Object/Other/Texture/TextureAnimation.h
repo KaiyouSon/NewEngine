@@ -2,9 +2,11 @@
 #include "Sprite.h"
 #include "Timer.h"
 
+// 前方宣言
 class Sprite;
 
-class TextureAnimeiton
+// テクスチャのアニメーションクラス
+class TextureAnimation
 {
 private:
 	Timer mAnimetionTimer;

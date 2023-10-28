@@ -2,7 +2,7 @@
 #include "Texture.h"
 #include "DepthTexture.h"
 #include "VolumeTexture.h"
-#include "TextureAnimeiton.h"
+#include "TextureAnimation.h"
 #include "RenderTexture.h"
 #include "Singleton.h"
 #include "NewEngineEnum.h"

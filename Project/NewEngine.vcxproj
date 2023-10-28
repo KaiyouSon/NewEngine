@@ -244,7 +244,7 @@
     <ClCompile Include="NewEngine\Object\Other\Model\ModelManager.cpp" />
     <ClCompile Include="NewEngine\Object\3D\Object3D.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Texture\Texture.cpp" />
-    <ClCompile Include="NewEngine\Object\Other\Texture\TextureAnimeiton.cpp" />
+    <ClCompile Include="NewEngine\Object\Other\Texture\TextureAnimation.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Texture\VolumeTexture.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\BufferResource.cpp" />
     <ClCompile Include="NewEngine\Render\Buffer\DepthBuffer.cpp" />
@@ -399,7 +399,7 @@
     <ClInclude Include="NewEngine\Object\Other\Billboard.h" />
     <ClInclude Include="NewEngine\Object\Other\Model\FbxModel.h" />
     <ClInclude Include="NewEngine\Object\Other\MaterialColor.h" />
-    <ClInclude Include="NewEngine\Object\Other\Texture\TextureAnimeiton.h" />
+    <ClInclude Include="NewEngine\Object\Other\Texture\TextureAnimation.h" />
     <ClInclude Include="NewEngine\Object\Other\Texture\Texture.h" />
     <ClInclude Include="NewEngine\Object\3D\Camera.h" />
     <ClInclude Include="NewEngine\Object\3D\Line.h" />

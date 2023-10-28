@@ -1,6 +1,6 @@
-#include "TextureAnimeiton.h"
+#include "TextureAnimation.h"
 
-void TextureAnimeiton::Init(const Vec2& leftTopPos, const Vec2& rightDownPos)
+void TextureAnimation::Init(const Vec2& leftTopPos, const Vec2& rightDownPos)
 {
 	mInitLeftTopPos = leftTopPos;
 	mInitRightDownPos = rightDownPos;
@@ -10,7 +10,7 @@ void TextureAnimeiton::Init(const Vec2& leftTopPos, const Vec2& rightDownPos)
 	isPlay = true;
 }
 
-void TextureAnimeiton::Play(const int& maxTimer, Sprite* sprite)
+void TextureAnimation::Play(const int& maxTimer, Sprite* sprite)
 {
 	if (isPlay == false)
 	{
@@ -36,7 +36,7 @@ void TextureAnimeiton::Play(const int& maxTimer, Sprite* sprite)
 	mAnimetionTimer.Update(true);
 }
 
-void TextureAnimeiton::Reset()
+void TextureAnimation::Reset()
 {
 	mAnimetionTimer.Reset();
 }

@@ -9,7 +9,7 @@
 #include <vector>
 
 // 前方宣言
-class TextureAnimeiton;
+class TextureAnimation;
 
 // スプライトのクラス
 class Sprite
@@ -82,6 +82,6 @@ public: //セッター
 	}
 
 private:
-	friend TextureAnimeiton;
+	friend TextureAnimation;
 };
 

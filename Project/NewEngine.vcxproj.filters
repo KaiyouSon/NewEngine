@@ -792,7 +792,7 @@
     <ClCompile Include="NewEngine\Object\Other\Model\AssimpLoader.cpp">
       <Filter>NewEngine\Source\Object\Other\Model</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\Other\Texture\TextureAnimeiton.cpp">
+    <ClCompile Include="NewEngine\Object\Other\Texture\TextureAnimation.cpp">
       <Filter>NewEngine\Source\Object\Other\Texture</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\Texture\TextureManager.cpp">
@@ -1331,7 +1331,7 @@
     <ClInclude Include="NewEngine\Object\Other\Texture\TextureManager.h">
       <Filter>NewEngine\Header\Object\Other\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\Other\Texture\TextureAnimeiton.h">
+    <ClInclude Include="NewEngine\Object\Other\Texture\TextureAnimation.h">
       <Filter>NewEngine\Header\Object\Other\Texture</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\Model\AssimpLoader.h">
