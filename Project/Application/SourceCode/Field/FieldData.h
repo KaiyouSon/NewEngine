@@ -18,4 +18,5 @@ struct FieldData
 	std::vector<std::unique_ptr<Weed>> weeds;
 	std::vector<std::unique_ptr<Wall>> walls;
 	std::vector<std::unique_ptr<Gate>> gates;
+	std::vector<std::unique_ptr<VolumetricFog>> volumetricFogs;
 };

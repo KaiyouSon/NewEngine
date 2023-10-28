@@ -55,6 +55,21 @@ void Field::Init()
 	{
 		mFieldData->respawnPoints[i]->Init();
 	}
+
+	// ボリュメトリックフォグ
+	for (uint32_t i = 0; i < mFieldData->volumetricFogs.size(); i++)
+	{
+		mFieldData->volumetricFogs[i]->fogParam.fogClamp = Vec2(30, 100);
+		mFieldData->volumetricFogs[i]->fogParam.stepCount = 25;
+		mFieldData->volumetricFogs[i]->fogParam.stepLength = 0.5f;
+		mFieldData->volumetricFogs[i]->fogParam.dencity = 0.125f;
+		mFieldData->volumetricFogs[i]->fogParam.fogColor = Color(0xffeab7);
+		mFieldData->volumetricFogs[i]->fogParam.fogColorRate = Color(1.25f, 1.25f, 1.25f, 0.05f);
+		mFieldData->volumetricFogs[i]->offset.x = Random::RangeF(-1.f, 1.f);
+		mFieldData->volumetricFogs[i]->offset.y = Random::RangeF(-1.f, 1.f);
+		mFieldData->volumetricFogs[i]->offset.z = Random::RangeF(-1.f, 1.f);
+		mFieldData->volumetricFogs[i]->moveSpeed = Vec3(Random::RangeF(0.0005f, 0.001f), 0.f, -0.002f);
+	}
 }
 
 void Field::Update()
@@ -105,6 +120,12 @@ void Field::Update()
 	{
 		mFieldData->respawnPoints[i]->Update();
 	}
+
+	// ボリュメトリックフォグ
+	for (uint32_t i = 0; i < mFieldData->volumetricFogs.size(); i++)
+	{
+		mFieldData->volumetricFogs[i]->Update();
+	}
 }
 
 void Field::DrawModel()
@@ -154,6 +175,12 @@ void Field::DrawModel()
 	for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
 	{
 		mFieldData->respawnPoints[i]->DrawModel();
+	}
+
+	// ボリュメトリックフォグ
+	for (uint32_t i = 0; i < mFieldData->volumetricFogs.size(); i++)
+	{
+		mFieldData->volumetricFogs[i]->Draw();
 	}
 }
 

@@ -325,12 +325,6 @@
     <Filter Include="Shader\Application\HighLumi">
       <UniqueIdentifier>{58bf5c5e-1c46-431e-9006-44fb0dc13d76}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Source\VolumetricFog">
-      <UniqueIdentifier>{aaaa93e5-9305-48fb-b3f1-ab51da8d93fb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Header\VolumetricFog">
-      <UniqueIdentifier>{1223240e-9e89-4bdb-b71a-fd6f45e61fde}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader\Engine\PostEffect">
       <UniqueIdentifier>{8c0398ce-464f-466e-9ace-4048e9dc0cbc}</UniqueIdentifier>
     </Filter>
@@ -756,9 +750,6 @@
     <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp">
       <Filter>NewEngine\Source\Object\2D</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\3D\VolumetricFog.cpp">
-      <Filter>Application\Source\VolumetricFog</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\Effect\IEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
@@ -775,9 +766,6 @@
       <Filter>Application\Source\Field\FiedlData</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Field\Coffin.cpp">
-      <Filter>Application\Source\Field\FiedlObject</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Collision\SkyIsland.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Field\Tree.cpp">
@@ -854,6 +842,12 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\GaugeParam.cpp">
       <Filter>Application\Source\UI\Member</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Field\SkyIsland.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\VolumetricFog.cpp">
+      <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1298,9 +1292,6 @@
     <ClInclude Include="Application\SourceCode\PostEffect\PostEffectManager.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\3D\VolumetricFog.h">
-      <Filter>Application\Header\VolumetricFog</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\Motion\LogoExplosionEffect.h">
       <Filter>Application\Header\Effect</Filter>
     </ClInclude>
@@ -1323,9 +1314,6 @@
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Field\RespawnPoint.h">
-      <Filter>Application\Header\Field\FieldObject</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Collision\SkyIsland.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Field\Tree.h">
@@ -1369,6 +1357,12 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\GaugeParam.h">
       <Filter>Application\Header\UI\Member</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Field\SkyIsland.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\VolumetricFog.h">
+      <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

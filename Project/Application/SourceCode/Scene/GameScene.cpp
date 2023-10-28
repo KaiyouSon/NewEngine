@@ -358,6 +358,4 @@ void GameScene::DrawCurrentSceneObject()
 	mBoss->DrawModel();
 
 	EffectManager::GetInstance()->DrawEffect(false);
-	mVolumetricFog->Draw();
-
 }

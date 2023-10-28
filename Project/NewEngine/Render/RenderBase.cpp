@@ -588,9 +588,9 @@ void RenderBase::GraphicsPipelineInit()
 	setting = GraphicsPipelineSetting();
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("VolumetricFog");
-	setting.cullMode = CullMode::Front;
+	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleList;
-	setting.depthStencilDesc = depthStencilDesc2;
+	setting.depthStencilDesc = depthStencilDesc4;
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 5;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;

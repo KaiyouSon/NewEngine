@@ -79,6 +79,10 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 			{
 				LoadGateData(fieldData.get(), object);
 			}
+			else if (object["obj_name"] == "VolumetricFog")
+			{
+				LoadVolumetricFogData(fieldData.get(), object);
+			}
 		}
 	}
 
@@ -468,4 +472,27 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 	}
 
 	data->gates.push_back(std::move(gate));
+}
+void FieldDataManager::LoadVolumetricFogData(FieldData* data, nlohmann::json jsonObj)
+{
+	std::unique_ptr<VolumetricFog> volumetricFog = std::make_unique<VolumetricFog>();
+	// ゲートの位置、スケール、角度情報を取得
+	nlohmann::json transform = jsonObj["transform"];
+	Vec3 pos =
+	{
+		(float)transform["translation"][0],
+		(float)transform["translation"][1],
+		(float)transform["translation"][2],
+	};
+	Vec3 scale =
+	{
+		(float)transform["scaling"][0],
+		(float)transform["scaling"][1],
+		(float)transform["scaling"][2],
+	};
+	volumetricFog->pos = pos;
+	volumetricFog->scale = scale;
+	volumetricFog->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
+
+	data->volumetricFogs.push_back(std::move(volumetricFog));
 }
