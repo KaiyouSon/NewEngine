@@ -33,14 +33,14 @@ void Trajectory::Update()
 	// 追跡する
 	Vec3 v1 = pos[LD] - pos[RD];
 	pos[RD] += v1.Norm() * moveSpeed;
-	if (v1.Length() <= 0.1f)
+	if (v1.Length() <= moveSpeed)
 	{
 		pos[RD] = pos[LD];
 	}
 
 	Vec3 v2 = pos[LT] - pos[RT];
 	pos[RT] += v2.Norm() * moveSpeed;
-	if (v2.Length() <= 0.1f)
+	if (v2.Length() <= moveSpeed)
 	{
 		pos[RT] = pos[LT];
 	}

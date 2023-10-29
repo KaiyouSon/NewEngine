@@ -30,15 +30,15 @@ void Sword::Init()
 
 void Sword::Update(Transform* parent)
 {
-	weapon->Update(parent);
-
+	Vec3 yAxis = weapon->GetTransform().GetWorldMat().GetYAxis();
 	Vec3 zAxis = weapon->GetTransform().GetWorldMat().GetZAxis();
 	Vec3 pos = weapon->GetWorldPos();
 
-	mTrajectory->moveSpeed = 2.5f;
-	mTrajectory->pos[Trajectory::LD] = pos;
-	mTrajectory->pos[Trajectory::LT] = pos + zAxis.Norm() * 8.f;
+	mTrajectory->moveSpeed = 1.f;
+	mTrajectory->pos[Trajectory::LD] = pos + yAxis.Norm() * 2.f + zAxis.Norm() * 2.f;
+	mTrajectory->pos[Trajectory::LT] = pos + yAxis.Norm() * 2.f + zAxis.Norm() * 10.f;
 
+	weapon->Update(parent);
 	mTrajectory->Update();
 
 	collider.startPos;
