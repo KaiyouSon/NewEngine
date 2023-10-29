@@ -373,6 +373,9 @@
     <Filter Include="NewEngine\Header\Light">
       <UniqueIdentifier>{2e138d45-a1d0-4dde-97af-e473ac0908db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\Trajectory">
+      <UniqueIdentifier>{294d9723-96ed-456e-ae13-b168872e9d4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -857,6 +860,9 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Light\ILight.cpp">
       <Filter>NewEngine\Source\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Trajectory.cpp">
+      <Filter>Application\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1382,6 +1388,9 @@
     <ClInclude Include="NewEngine\Light\ILight.h">
       <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SourceCode\Trajectory.h">
+      <Filter>Application\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1465,6 +1474,9 @@
     </None>
     <None Include="Application\Shader\Skydome\Skydome.hlsli">
       <Filter>Shader\Application\Skydome</Filter>
+    </None>
+    <None Include="Application\Shader\Trajectory\Trajectory.hlsli">
+      <Filter>Shader\Application\Trajectory</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1665,6 +1677,12 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\Skydome\SkydomePS.hlsl">
       <Filter>Shader\Application\Skydome</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Trajectory\TrajectoryVS.hlsl">
+      <Filter>Shader\Application\Trajectory</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Trajectory\TrajectoryPS.hlsl">
+      <Filter>Shader\Application\Trajectory</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

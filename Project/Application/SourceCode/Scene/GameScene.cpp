@@ -36,6 +36,7 @@ void GameScene::CreateInstance()
 	mMovieEvent = std::make_unique<MovieEvent>();
 	mSkydome = std::make_unique<Skydome>();
 	mVolumetricFog = std::make_unique<VolumetricFog>();
+	mTrajectory = std::make_unique<Trajectory>();
 }
 
 void GameScene::Init()
@@ -101,6 +102,10 @@ void GameScene::Init()
 	mVolumetricFog->fogParam.dencity = 0.014f;
 	mVolumetricFog->color = Color(233, 216, 187, 255);
 	VolumetricFog::fogClamp = Vec2(30.f, 50.f);
+
+	mTrajectory->pos[Trajectory::LD] = Vec3(0, -0.5f, 0);
+	mTrajectory->pos[Trajectory::LT] = Vec3(0, +0.5f, 0);
+	mTrajectory->SetTexture(TextureManager::GetTexture("DissolveTexture"));
 }
 void GameScene::Update()
 {
@@ -121,12 +126,24 @@ void GameScene::Update()
 		//mVolumetricFog->scale.z = 1000;
 	}
 
-	if (Key::GetKeyDown(DIK_F10))
+	if (Key::GetKeyDown(DIK_F6))
 	{
 		mPlayer->Init();
 		mMovieEvent->End();
 		CameraManager::GetInstance()->ChangeCamera(CameraManager::CameraType::Default);
 	}
+
+	if (Key::GetKey(DIK_RIGHT))
+	{
+		mTrajectory->pos[Trajectory::LD].x += 0.1f;
+		mTrajectory->pos[Trajectory::LT].x += 0.1f;
+	}
+	if (Key::GetKey(DIK_LEFT))
+	{
+		mTrajectory->pos[Trajectory::LD].x -= 0.1f;
+		mTrajectory->pos[Trajectory::LT].x -= 0.1f;
+	}
+
 #endif
 
 	auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
@@ -158,6 +175,7 @@ void GameScene::Update()
 	mMenuManager->Update();
 	mPostEffectManager->Update();
 	mVolumetricFog->Update();
+	mTrajectory->Update();
 
 	ShadowMap::GetInstance()->Update(mDirectionalLight->pos);
 	EffectManager::GetInstance()->Update();
@@ -211,9 +229,11 @@ void GameScene::Draw()
 	ShadowMap::GetInstance()->DrawPostEffect();
 
 	mPostEffectManager->DrawEffectBloom();
+	//mTrajectory->Draw();
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
+
 }
 void GameScene::DrawDebugGui()
 {

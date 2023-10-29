@@ -1,7 +1,8 @@
 #include "Sword.h"
 #include "MalletMotion.h"
 
-Sword::Sword()
+Sword::Sword() :
+	mTrajectory(std::make_unique<Trajectory>())
 {
 	weapon = std::make_unique<Object3D>();
 	weapon->SetModel(ModelManager::GetModel("Sword"));
@@ -17,11 +18,28 @@ Sword::Sword()
 
 void Sword::Init()
 {
+	Vec3 zAxis = weapon->GetTransform().GetWorldMat().GetZAxis();
+	Vec3 pos = weapon->GetWorldPos();
+
+	mTrajectory->pos[Trajectory::LD] = pos - zAxis.Norm() * 8.f;
+	mTrajectory->pos[Trajectory::LT] = pos + zAxis.Norm() * 8.f;
+
+	mTrajectory->pos[Trajectory::RD] = mTrajectory->pos[Trajectory::LD];
+	mTrajectory->pos[Trajectory::RT] = mTrajectory->pos[Trajectory::LT];
 }
 
 void Sword::Update(Transform* parent)
 {
 	weapon->Update(parent);
+
+	Vec3 zAxis = weapon->GetTransform().GetWorldMat().GetZAxis();
+	Vec3 pos = weapon->GetWorldPos();
+
+	mTrajectory->moveSpeed = 2.5f;
+	mTrajectory->pos[Trajectory::LD] = pos;
+	mTrajectory->pos[Trajectory::LT] = pos + zAxis.Norm() * 8.f;
+
+	mTrajectory->Update();
 
 	collider.startPos;
 }
@@ -29,6 +47,7 @@ void Sword::Update(Transform* parent)
 void Sword::DrawModel()
 {
 	weapon->Draw();
+	mTrajectory->Draw();
 }
 
 void Sword::ColliderUpdate()

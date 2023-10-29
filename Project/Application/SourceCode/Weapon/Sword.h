@@ -1,9 +1,13 @@
 #pragma once
 #include "Weapon.h"
+#include "Trajectory.h"
 
 // 剣のクラス
 class Sword : public Weapon
 {
+private:
+	std::unique_ptr<Trajectory> mTrajectory;
+
 private:
 	void ColliderUpdate() override;
 	void CalcDamage() override;

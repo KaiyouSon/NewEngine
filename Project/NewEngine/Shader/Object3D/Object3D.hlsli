@@ -55,7 +55,6 @@ cbuffer ConstantBufferDataSkinning : register(b3)
     matrix skinningMat[maxBones];
 }
 
-// --- フォグ ---------------------- //
 cbuffer ConstantBufferDataUVParameter : register(b4)
 {
     float2 offset;

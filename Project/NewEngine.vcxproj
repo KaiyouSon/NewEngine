@@ -280,6 +280,7 @@
     <ClCompile Include="NewEngine\Util\Timer.cpp" />
     <ClCompile Include="NewEngine\Util\Transform.cpp" />
     <ClCompile Include="NewEngine\Util\Util.cpp" />
+    <ClCompile Include="Application\SourceCode\Trajectory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\1.School\3.3年前期\TL1\CG5_Task01\Project\External\nlohmann\json.hpp" />
@@ -456,6 +457,7 @@
     <ClInclude Include="NewEngine\Util\Transform.h" />
     <ClInclude Include="NewEngine\Util\Util.h" />
     <ClInclude Include="NewEngine\NewEngineDefine.h" />
+    <ClInclude Include="Application\SourceCode\Trajectory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -471,6 +473,7 @@
     <None Include="Application\Shader\ShadowMap\ShadowMap.hlsli" />
     <None Include="Application\Shader\ShadowObj\ShadowObj.hlsli" />
     <None Include="Application\Shader\Skydome\Skydome.hlsli" />
+    <None Include="Application\Shader\Trajectory\Trajectory.hlsli" />
     <None Include="Application\Shader\Vignette\Vignette.hlsli" />
     <None Include="NewEngine\Shader\Blur.hlsli" />
     <None Include="NewEngine\Shader\VolumetricFog\VolumetricFog.hlsli" />
@@ -699,6 +702,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Trajectory\TrajectoryPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Trajectory\TrajectoryVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Application\Shader\Vignette\VignettePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

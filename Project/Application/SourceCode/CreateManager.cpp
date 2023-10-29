@@ -194,6 +194,15 @@ void CreateManager::CreateShaderCompiler()
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "AirEffectUpdate");
+
+	// 軌跡用
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(2);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
+	setting.vsFilePath = path2 + "Trajectory/TrajectoryVS.hlsl";
+	setting.psFilePath = path2 + "Trajectory/TrajectoryPS.hlsl";
+	ShaderCompilerManager::Create(setting, "Trajectory");
 }
 
 // パイプライン生成
@@ -348,6 +357,17 @@ void CreateManager::CreateGraphicsPipeline()
 		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
 		PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFogWriteNone");
 	}
+
+	// 軌跡用
+	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Trajectory");
+	setting.cullMode = CullMode::None;
+	setting.topologyType = TopologyType::TriangleStrip;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	setting.rootSignatureSetting.maxUavDescritorRange = 0;
+	setting.rtvNum = 1;
+	PipelineManager::CreateGraphicsPipeline(setting, "Trajectory");
 }
 
 // Computeパイプラインの生成

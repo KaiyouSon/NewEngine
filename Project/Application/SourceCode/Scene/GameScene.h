@@ -10,6 +10,7 @@
 #include "MovieEvent.h"
 #include "VolumetricFog.h"
 #include "Skydome.h"
+#include "Trajectory.h"
 
 // ゲームシーンのクラス
 class GameScene : public IScene
@@ -27,6 +28,8 @@ private:
 	std::unique_ptr<VolumetricFog> mVolumetricFog;
 	std::unique_ptr<DirectionalLight> mDirectionalLight;
 	std::unique_ptr<PointLight> mPointLight;
+
+	std::unique_ptr<Trajectory> mTrajectory;
 
 	RenderTexture* mCurrentScene;
 
