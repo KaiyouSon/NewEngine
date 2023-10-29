@@ -65,11 +65,11 @@ void LightManager::Update()
 		// 色
 		lightGroupData.pointLightsData[i].color = light->color.To01();
 		// 影響範囲
-		lightGroupData.pointLightsData[i].length = light->length;
+		lightGroupData.pointLightsData[i].radius = light->radius;
 		// ベクトル
 		lightGroupData.pointLightsData[i].pos = light->pos;
 		// 減衰係数
-		lightGroupData.pointLightsData[i].atten = light->atten;
+		lightGroupData.pointLightsData[i].colorRate = light->colorRate;
 		// アクティブフラグ
 		lightGroupData.pointLightsData[i].isActive = light->isActive;
 	}

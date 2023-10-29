@@ -103,9 +103,9 @@ namespace ConstantBufferData
 	struct CPointLight
 	{
 		Color color;
-		float length;
+		float radius;
 		Vec3 pos;
-		Vec3 atten;
+		Vec3 colorRate;
 		uint32_t isActive;
 	};
 

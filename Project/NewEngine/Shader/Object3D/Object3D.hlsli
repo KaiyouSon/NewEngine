@@ -18,9 +18,9 @@ struct DirectionalLight
 struct PointLight
 {
     float4 color;
-    float length;
+    float radius;
     float3 pos;
-    float3 atten;
+    float3 colorRate;
     uint isActive;
 };
 

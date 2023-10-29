@@ -250,8 +250,8 @@ void GameScene::DrawDebugGui()
 	{
 		Gui::DrawCheckBox("Point Light Active", &mPointLight->isActive);
 		Gui::DrawSlider3("Point Light Pos", mPointLight->pos, 0.1f);
-		Gui::DrawSlider3("Point Light Atten", mPointLight->atten, 0.01f);
-		Gui::DrawSlider1("Point Light Length", mPointLight->length, 0.1f);
+		Gui::DrawSlider1("Point Light Length", mPointLight->radius, 0.1f);
+		Gui::DrawSlider3("Point Light ColorRate", mPointLight->colorRate, 0.01f);
 		Gui::DrawColorEdit("Point Light Color", mPointLight->color);
 	}
 

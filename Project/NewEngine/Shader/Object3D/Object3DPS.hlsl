@@ -121,29 +121,27 @@ PSOutput main(V2P i)// : SV_TARGET
             float d = distance(pointLight[index].pos, i.wpos.xyz);
             
             // 距離チェック
-            if (d >= pointLight[index].length)
+            if (d >= pointLight[index].radius)
             {
                 continue;
             }
             
             // 距離減数係数
-            float atten = 1.0f /
-            (pointLight[index].atten.x +
-             pointLight[index].atten.y * d +
-             pointLight[index].atten.z * d * d);
+            float atten = 1.0f - (d / pointLight[index].radius);
             
             // ライトに向かうベクトルと法線の内積
             float3 dotLightNormal = dot(lightVec, i.normal);
             
             // ディフューズ
-            float3 diffuse = dotLightNormal * material.diffuse.rgb;
+            float3 diffuse = saturate(dotLightNormal * material.diffuse.rgb);
     
             // スペキュラー
             float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // 頂点から視点へのベクトル
             float3 reflectDir = normalize(-lightVec + 2 * dotLightNormal * i.normal);
             float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
     
-            adsColor.rgb += atten * (diffuse + specular) * pointLight[index].color.rgb;
+            adsColor.rgb += atten * (diffuse + specular) *
+                            pointLight[index].color.rgb * pointLight[index].colorRate.rgb;
         }
     }
     
