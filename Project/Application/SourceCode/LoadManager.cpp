@@ -180,6 +180,11 @@ bool LoadManager::ModelLoad()
 	ModelManager::LoadObjModel("Capsule", "Capsule");
 	ModelManager::LoadObjModel("MainGateWall", "MainGateWall");
 
+	ModelManager::LoadObjModel("Boss/BossHead", "BossHead");
+	ModelManager::LoadObjModel("Boss/BossBody", "BossBody");
+	ModelManager::LoadObjModel("Boss/BossLeftArm", "BossLeftArm");
+	ModelManager::LoadObjModel("Boss/BossRightArm", "BossRightArm");
+
 	// 非同期終わったよ～
 	return true;
 }

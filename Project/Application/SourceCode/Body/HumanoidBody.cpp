@@ -30,7 +30,7 @@ void HumanoidBody::BaseInit()
 	mParts[(uint32_t)PartID::LeftThigh]->pos = Vec3(-0.5f, -1.5f, 0.f);
 	mParts[(uint32_t)PartID::LeftLeg]->pos = Vec3(0.f, -1.5f, 0.f);
 
-	mParts[(uint32_t)PartID::RightArm]->color = Color::black;
+	//mParts[(uint32_t)PartID::RightArm]->color = Color::black;
 	mParts[(uint32_t)PartID::RightHand]->color = Color::blue;
 	mParts[(uint32_t)PartID::RightLeg]->color = Color::green;
 	mParts[(uint32_t)PartID::LeftThigh]->color = Color::black;
@@ -46,14 +46,14 @@ void HumanoidBody::BaseUpdate()
 	mParts[(uint32_t)PartID::Transform]->Update();
 	Transform transform = mParts[(uint32_t)PartID::Transform]->GetTransform();
 
-	// 菴・
+	// 体
 	mParts[(uint32_t)PartID::Body]->Update(&transform);
 	Transform body = mParts[(uint32_t)PartID::Body]->GetTransform();
 
-	// 鬆ｭ
+	// 頭
 	mParts[(uint32_t)PartID::Head]->Update(&body);
 
-	// 蟾ｦ謇・
+	// 左手
 	mParts[(uint32_t)PartID::LeftArm]->Update(&body);
 	Transform leftArm = mParts[(uint32_t)PartID::LeftArm]->GetTransform();
 	mParts[(uint32_t)PartID::LeftHand]->Update(&leftArm);
@@ -62,12 +62,12 @@ void HumanoidBody::BaseUpdate()
 		Transform leftHand = mParts[(uint32_t)PartID::LeftHand]->GetTransform();
 		mWeapons[0]->Update(&leftHand);
 	}
-	// 蟾ｦ雜ｳ
+	// 左足
 	mParts[(uint32_t)PartID::LeftThigh]->Update(&body);
 	Transform leftThigh = mParts[(uint32_t)PartID::LeftThigh]->GetTransform();
 	mParts[(uint32_t)PartID::LeftLeg]->Update(&leftThigh);
 
-	// 蜿ｳ謇・
+	// 右手
 	mParts[(uint32_t)PartID::RightArm]->Update(&body);
 	Transform rightArm = mParts[(uint32_t)PartID::RightArm]->GetTransform();
 	mParts[(uint32_t)PartID::RightHand]->Update(&rightArm);
@@ -77,7 +77,7 @@ void HumanoidBody::BaseUpdate()
 		mWeapons[1]->Update(&rightHand);
 	}
 
-	// 蜿ｳ雜ｳ
+	// 右足
 	mParts[(uint32_t)PartID::RightThigh]->Update(&body);
 	Transform rightThigh = mParts[(uint32_t)PartID::RightThigh]->GetTransform();
 	mParts[(uint32_t)PartID::RightLeg]->Update(&rightThigh);

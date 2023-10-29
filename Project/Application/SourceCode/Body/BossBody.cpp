@@ -20,7 +20,21 @@ void BossBody::Init()
 		mParts[i]->dissolveColor = Color(255, 30, 0, 255);
 
 		mParts[i]->SetisShadow(false, true);
+
+		// 頭と体以外のパーティの色を黒にする
+		if (i != (uint32_t)PartID::Head &&
+			i != (uint32_t)PartID::Body &&
+			i != (uint32_t)PartID::LeftArm &&
+			i != (uint32_t)PartID::RightArm)
+		{
+			mParts[i]->color = Color::black;
+		}
 	}
+
+	mParts[(uint32_t)PartID::Head]->SetModel(ModelManager::GetModel("BossHead"));
+	mParts[(uint32_t)PartID::Body]->SetModel(ModelManager::GetModel("BossBody"));
+	mParts[(uint32_t)PartID::LeftArm]->SetModel(ModelManager::GetModel("BossLeftArm"));
+	mParts[(uint32_t)PartID::RightArm]->SetModel(ModelManager::GetModel("BossRightArm"));
 }
 
 void BossBody::Update()
