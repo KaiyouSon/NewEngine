@@ -7,6 +7,9 @@
 #include "GPUEmitter.h"
 #include "ParticleMesh.h"
 
+#include "DirectionalLight.h"
+#include "PointLight.h"
+
 #include "TextureManager.h"
 #include "ModelManager.h"	
 #include "SoundManager.h"

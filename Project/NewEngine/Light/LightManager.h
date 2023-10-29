@@ -1,29 +1,7 @@
 #pragma once
 #include "Material.h"
+#include "ILight.h"
 #include <array>
-
-// 平行光源
-struct DirectionalLight
-{
-	Vec3 pos = Vec3::up;
-	Color color = Color::white;
-	bool isActive = false;
-
-	DirectionalLight() {}
-	~DirectionalLight() {}
-};
-
-// ポイントライト
-struct PointLight
-{
-	Vec3 pos = Vec3::up;
-	Color color = Color::white;
-	Vec3 atten = { 0.3f,0.1f,0.1f };
-	bool isActive = false;
-
-	PointLight() {}
-	~PointLight() {}
-};
 
 // スポットライト
 struct SpotLight
@@ -46,15 +24,40 @@ template<typename T> class Singleton;
 class LightManager : public Singleton<LightManager>
 {
 private:
-	Material material_;
+	std::unique_ptr<Material> mMaterial;
+
+private:
+	enum LightSize
+	{
+		DirectionalLightSize = 1,
+		PointLightSize = 20,
+	};
+
+private:
+	struct CLightGroup
+	{
+		std::array<ConstantBufferData::CDirectionalLight, DirectionalLightSize> directionalLightsData;
+		std::array<ConstantBufferData::CPointLight, PointLightSize> pointLightsData;
+	};
+
+
+private:
+	struct LightGroup
+	{
+		std::vector<ILight*> directionalLights;
+		std::vector<ILight*> pointLights;
+	};
+	LightGroup mLightGroup;
+
+private:
+	void MaterialInit();
 
 public:
-	DirectionalLight directionalLight;
-
-public:
-	void Init();
 	void Update();
 	void DrawCommand(const uint32_t index);
+
+public:
+	void Register(ILight* iLight);
 
 private:
 	friend Singleton<LightManager>;

@@ -160,12 +160,6 @@
     <Filter Include="Application\Header\Field">
       <UniqueIdentifier>{26f52e60-b22b-4649-bb79-497d5bbcbda3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="NewEngine\Source\Lighting">
-      <UniqueIdentifier>{723b8732-9770-4eb3-b3b6-b67e8efb9d57}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewEngine\Header\Lighting">
-      <UniqueIdentifier>{2e138d45-a1d0-4dde-97af-e473ac0908db}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Header\Motion\Boss">
       <UniqueIdentifier>{82854429-bc3b-45c3-867e-30ea50635982}</UniqueIdentifier>
     </Filter>
@@ -373,6 +367,12 @@
     <Filter Include="Shader\Application\Skydome">
       <UniqueIdentifier>{d7f084ad-8891-45ca-afdb-84307a697e6c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NewEngine\Source\Light">
+      <UniqueIdentifier>{723b8732-9770-4eb3-b3b6-b67e8efb9d57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Light">
+      <UniqueIdentifier>{2e138d45-a1d0-4dde-97af-e473ac0908db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -478,7 +478,7 @@
       <Filter>NewEngine\Source\Math</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Light\LightManager.cpp">
-      <Filter>NewEngine\Source\Lighting</Filter>
+      <Filter>NewEngine\Source\Light</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Render\Pipeline\RootSignature.cpp">
       <Filter>NewEngine\Source\Render</Filter>
@@ -843,11 +843,20 @@
     <ClCompile Include="Application\SourceCode\GaugeParam.cpp">
       <Filter>Application\Source\UI\Member</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\SkyIsland.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\VolumetricFog.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Field\SkyIsland.cpp">
+      <Filter>Application\Source\Field\FiedlObject</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Light\PointLight.cpp">
+      <Filter>NewEngine\Source\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Light\DirectionalLight.cpp">
+      <Filter>NewEngine\Source\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Light\ILight.cpp">
+      <Filter>NewEngine\Source\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -960,7 +969,7 @@
       <Filter>NewEngine\Header\Math</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Light\LightManager.h">
-      <Filter>NewEngine\Header\Lighting</Filter>
+      <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Render\Pipeline\RootSignature.h">
       <Filter>NewEngine\Header\Render</Filter>
@@ -1358,11 +1367,20 @@
     <ClInclude Include="Application\SourceCode\GaugeParam.h">
       <Filter>Application\Header\UI\Member</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\SkyIsland.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\VolumetricFog.h">
       <Filter>NewEngine\Header\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Field\SkyIsland.h">
+      <Filter>Application\Header\Field\FieldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Light\PointLight.h">
+      <Filter>NewEngine\Header\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Light\DirectionalLight.h">
+      <Filter>NewEngine\Header\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Light\ILight.h">
+      <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

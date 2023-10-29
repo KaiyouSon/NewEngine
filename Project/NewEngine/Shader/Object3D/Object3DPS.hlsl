@@ -86,24 +86,65 @@ PSOutput main(V2P i)// : SV_TARGET
     float4 shaderColor = 0;
     
     float4 adsColor = float4(0, 0, 0, 1);
-    if (isActiveDirLight == true)
+    
+    uint index = 0;
+    // 平行光源の計算
+    for (index = 0; index < directionalLightSize; index++)
     {
-        // ライトに向かうベクトルと法線の内積
-        float dotLightNormal = dot(dirLightVec, i.normal);
+        if (directionalLight[index].isActive == true)
+        {
+            // ライトに向かうベクトルと法線の内積
+            float dotLightNormal = dot(directionalLight[index].vec, i.normal);
         
-        // アンビエント
-        float3 ambient = /*texColor.rgb **/material.ambient.rgb;
+            // アンビエント
+            float3 ambient = /*texColor.rgb **/material.ambient.rgb;
      
-        // ディフューズ
-        float intensity = saturate(dot(normalize(i.normal), dirLightVec));
-        float3 diffuse = intensity * dirLightColor.rgb * material.diffuse.rgb;
+            // ディフューズ
+            float3 diffuse = dotLightNormal * material.diffuse.rgb;
     
-        // スペキュラー
-        float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // 頂点から視点へのベクトル
-        float3 reflectDir = -dirLightVec + 2 * i.normal * dot(i.normal, dirLightVec);
-        float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
+            // スペキュラー
+            float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // 頂点から視点へのベクトル
+            float3 reflectDir = normalize(-directionalLight[index].vec + 2 * dotLightNormal * i.normal);
+            float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
     
-        adsColor.rgb = ambient + diffuse + specular * dirLightColor.rgb;
+            adsColor.rgb += ambient + diffuse + specular * directionalLight[index].color.rgb;
+        }
+    }
+
+    // 点光源の計算
+    for (index = 0; index < pointLightSize; index++)
+    {
+        if (pointLight[index].isActive == true)
+        {
+            // ライトヘのベクトル
+            float3 lightVec = normalize(pointLight[index].pos - i.wpos.xyz);
+            float d = distance(pointLight[index].pos, i.wpos.xyz);
+            
+            // 距離チェック
+            if (d >= pointLight[index].length)
+            {
+                continue;
+            }
+            
+            // 距離減数係数
+            float atten = 1.0f /
+            (pointLight[index].atten.x +
+             pointLight[index].atten.y * d +
+             pointLight[index].atten.z * d * d);
+            
+            // ライトに向かうベクトルと法線の内積
+            float3 dotLightNormal = dot(lightVec, i.normal);
+            
+            // ディフューズ
+            float3 diffuse = dotLightNormal * material.diffuse.rgb;
+    
+            // スペキュラー
+            float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // 頂点から視点へのベクトル
+            float3 reflectDir = normalize(-lightVec + 2 * dotLightNormal * i.normal);
+            float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
+    
+            adsColor.rgb += atten * (diffuse + specular) * pointLight[index].color.rgb;
+        }
     }
     
     float4 resultColor = (adsColor * texColor * color);

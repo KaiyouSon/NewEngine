@@ -25,6 +25,8 @@ private:
 
 	std::unique_ptr<MovieEvent> mMovieEvent;
 	std::unique_ptr<VolumetricFog> mVolumetricFog;
+	std::unique_ptr<DirectionalLight> mDirectionalLight;
+	std::unique_ptr<PointLight> mPointLight;
 
 	RenderTexture* mCurrentScene;
 

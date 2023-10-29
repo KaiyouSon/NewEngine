@@ -139,3 +139,10 @@ enum class ShaderType
 	Pixel,
 	Size,
 };
+
+enum class LightType
+{
+	DirectionalLight,
+	PointLight,
+	SpotLight
+};

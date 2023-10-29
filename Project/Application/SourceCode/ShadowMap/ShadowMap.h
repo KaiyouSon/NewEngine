@@ -14,7 +14,7 @@ private:
 	uint32_t mIndex;
 
 public:
-	Camera mLightCamera;
+	Camera lightCamera;
 
 private:
 	std::unique_ptr<PostEffect> mShadowMap;
@@ -24,7 +24,7 @@ public:
 	ShadowMap();
 	void Init();
 	void Register(const uint32_t size);
-	void Update();
+	void Update(const Vec3 lightPos);
 	void RenderTextureSetting();
 	void DrawModel();
 	void DrawPostEffect();

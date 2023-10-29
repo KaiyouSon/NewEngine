@@ -1,32 +1,81 @@
 #include "LightManager.h"
+#include "NewEngineEnum.h"
 #include "ConstantBufferData.h"
+#include "DirectionalLight.h"
+#include "PointLight.h"
+
 using namespace ConstantBufferData;
 
-LightManager::LightManager()
+LightManager::LightManager() :
+	mMaterial(std::make_unique<Material>())
 {
-	Init();
+	// マテリアルの初期化
+	MaterialInit();
 }
 
-void LightManager::Init()
+void LightManager::MaterialInit()
 {
 	// インスタンス生成
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
-	// 3D行列
-	iConstantBuffer = std::make_unique<ConstantBuffer<CDirectionalLight>>();
-	material_.constantBuffers.push_back(std::move(iConstantBuffer));
+	// ライトグループのデータ
+	iConstantBuffer = std::make_unique<ConstantBuffer<CLightGroup>>();
+	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
-	material_.Init();
+	mMaterial->Init();
 }
 
 void LightManager::Update()
 {
-	// マトリックス
-	CDirectionalLight directionalLightData;
-	directionalLightData.color = directionalLight.color.To01();
-	directionalLightData.dir = directionalLight.pos.Norm();
-	directionalLightData.isActive = directionalLight.isActive;
-	TransferDataToConstantBuffer(material_.constantBuffers[0].get(), directionalLightData);
+	// ライトグループのデータ
+	CLightGroup lightGroupData;
+
+	// 平行光源のデータを転送する
+	for (uint32_t i = 0; i < mLightGroup.directionalLights.size(); i++)
+	{
+		// 宣言したライトの数よりも多かったらbreakする
+		if (i > DirectionalLightSize)
+		{
+			OutputDebugLog("[Direction Light] warring : Not enough Directional Lights");
+			break;
+		}
+
+		DirectionalLight* light = dynamic_cast<DirectionalLight*>(mLightGroup.directionalLights[i]);
+
+		// 色
+		lightGroupData.directionalLightsData[i].color = light->color.To01();
+		// ベクトル
+		lightGroupData.directionalLightsData[i].vec = light->pos.Norm();
+		// アクティブフラグ
+		lightGroupData.directionalLightsData[i].isActive = light->isActive;
+	}
+
+	// 点光源のデータを転送する
+	for (uint32_t i = 0; i < mLightGroup.pointLights.size(); i++)
+	{
+		// 宣言したライトの数よりも多かったらbreakする
+		if (i > PointLightSize)
+		{
+			OutputDebugLog("[Point Light] warring : Not enough Point Lights");
+			break;
+		}
+
+		PointLight* light = dynamic_cast<PointLight*>(mLightGroup.pointLights[i]);
+
+		// 色
+		lightGroupData.pointLightsData[i].color = light->color.To01();
+		// 影響範囲
+		lightGroupData.pointLightsData[i].length = light->length;
+		// ベクトル
+		lightGroupData.pointLightsData[i].pos = light->pos;
+		// 減衰係数
+		lightGroupData.pointLightsData[i].atten = light->atten;
+		// アクティブフラグ
+		lightGroupData.pointLightsData[i].isActive = light->isActive;
+	}
+
+	// データ転送
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), lightGroupData);
 }
 void LightManager::DrawCommand(const uint32_t index)
 {
@@ -34,5 +83,24 @@ void LightManager::DrawCommand(const uint32_t index)
 
 	// マテリアルとトランスフォームのCBVの設定コマンド
 	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		index, material_.constantBuffers[0]->bufferResource->buffer->GetGPUVirtualAddress());
+		index, mMaterial->constantBuffers[0]->bufferResource->buffer->GetGPUVirtualAddress());
+}
+
+void LightManager::Register(ILight* iLight)
+{
+	// インターフェースのタイプよって登録先を決める
+
+	switch (iLight->GetLightType())
+	{
+	case LightType::DirectionalLight:
+		// 平行光源に登録
+		mLightGroup.directionalLights.push_back(iLight);
+		break;
+
+	case LightType::PointLight:
+		// 点光源に登録
+		mLightGroup.pointLights.push_back(iLight);
+		break;
+
+	}
 }

@@ -6,6 +6,24 @@ struct Material
     float3 specular;
 };
 
+// 平行光源
+struct DirectionalLight
+{
+    float4 color;
+    float3 vec;
+    uint isActive;
+};
+
+// 点光源
+struct PointLight
+{
+    float4 color;
+    float length;
+    float3 pos;
+    float3 atten;
+    uint isActive;
+};
+
 // 3D変換行列
 cbuffer ConstantBufferDataTransform : register(b0)
 {
@@ -44,13 +62,14 @@ cbuffer ConstantBufferDataUVParameter : register(b4)
     float2 tiling;
 };
 
-// 平行光源
-cbuffer ConstantBufferDirectionalLight : register(b5)
+// ライトグループ
+static const uint directionalLightSize = 1;
+static const uint pointLightSize = 10;
+cbuffer ConstantBufferDataLightGroup : register(b5)
 {
-    float4 dirLightColor; // 色
-    float3 dirLightVec; // 方向
-    uint isActiveDirLight;
-}
+    DirectionalLight directionalLight[directionalLightSize];
+    PointLight pointLight[pointLightSize];
+};
 
 cbuffer ConstantBufferDissolve : register(b6)
 {

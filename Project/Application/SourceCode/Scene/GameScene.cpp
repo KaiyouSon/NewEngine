@@ -24,6 +24,9 @@ void GameScene::UnLoad()
 
 void GameScene::CreateInstance()
 {
+	mDirectionalLight = std::make_unique<DirectionalLight>();
+	mPointLight = std::make_unique<PointLight>();
+
 	mPlayer = std::make_unique<Player>();
 	mBoss = std::make_unique<Boss>();
 	mUiManager = std::make_unique<UIManager>();
@@ -80,8 +83,7 @@ void GameScene::Init()
 	CollisionManager::GetInstance()->SetUIManager(mUiManager.get());
 	CollisionManager::GetInstance()->SetMovieEvent(mMovieEvent.get());
 
-	LightManager::GetInstance()->directionalLight.isActive = true;
-	LightManager::GetInstance()->directionalLight.pos = Vec3(-400, 400, -100);
+	mDirectionalLight->pos = Vec3(-400, 400, -100);
 
 	mMovieEvent->Init();
 	mMovieEvent->SetPlayer(mPlayer.get());
@@ -157,7 +159,7 @@ void GameScene::Update()
 	mPostEffectManager->Update();
 	mVolumetricFog->Update();
 
-	ShadowMap::GetInstance()->Update();
+	ShadowMap::GetInstance()->Update(mDirectionalLight->pos);
 	EffectManager::GetInstance()->Update();
 	ColliderDrawer::GetInstance()->Update();
 
@@ -217,7 +219,7 @@ void GameScene::DrawDebugGui()
 {
 	Gui::BeginWindow("Debug");
 
-	if (Gui::DrawCollapsingHeader("Fog 0") == true)
+	if (Gui::DrawCollapsingHeader("Fog") == true)
 	{
 		Gui::DrawSlider2("Fog Clamp", VolumetricFog::fogClamp, 1.f);
 		Gui::DrawInputInt("Step Count", (int&)mVolumetricFog->fogParam.stepCount);
@@ -236,7 +238,26 @@ void GameScene::DrawDebugGui()
 		Gui::DrawSlider3("Fog Scale", mVolumetricFog->scale, 0.01f);
 		Gui::DrawSlider3("Fog Speed", mVolumetricFog->moveSpeed, 0.001f);
 	}
+
+	if (Gui::DrawCollapsingHeader("Directional Light") == true)
+	{
+		Gui::DrawCheckBox("Directional Light Active", &mDirectionalLight->isActive);
+		Gui::DrawSlider3("Directional Light Pos", mDirectionalLight->pos, 0.1f);
+		Gui::DrawColorEdit("Directional Light Color", mDirectionalLight->color);
+	}
+
+	if (Gui::DrawCollapsingHeader("Point Light") == true)
+	{
+		Gui::DrawCheckBox("Point Light Active", &mPointLight->isActive);
+		Gui::DrawSlider3("Point Light Pos", mPointLight->pos, 0.1f);
+		Gui::DrawSlider3("Point Light Atten", mPointLight->atten, 0.01f);
+		Gui::DrawSlider1("Point Light Length", mPointLight->length, 0.1f);
+		Gui::DrawColorEdit("Point Light Color", mPointLight->color);
+	}
+
 	Gui::EndWindow();
+
+
 }
 
 // シーン切り替えの処理

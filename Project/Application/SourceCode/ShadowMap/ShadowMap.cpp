@@ -15,9 +15,9 @@ ShadowMap::ShadowMap() :
 
 	mIndex = 0;
 
-	mLightCamera.rot = Vec3(Radian(45), Radian(45), 0);
-	mLightCamera.rect = RectAngle(-480, 480, 270, -270);
-	mLightCamera.oFarZ = 1000.f;
+	lightCamera.rot = Vec3(Radian(45), Radian(45), 0);
+	lightCamera.rect = RectAngle(-480, 480, 270, -270);
+	lightCamera.oFarZ = 1000.f;
 
 	mShadowObjs.clear();
 	mParents.clear();
@@ -40,22 +40,22 @@ void ShadowMap::Init()
 	mIndex = 0;
 }
 
-void ShadowMap::Update()
+void ShadowMap::Update(const Vec3 lightPos)
 {
-	mLightCamera.pos = LightManager::GetInstance()->directionalLight.pos;
+	lightCamera.pos = lightPos;
 
 	// カメラの設定
-	mLightCamera.Update();
+	lightCamera.Update();
 
 	for (uint32_t i = 0; i < mShadowObjs.size(); i++)
 	{
-		mShadowObjs[i].SetCamera(&mLightCamera);
+		mShadowObjs[i].SetCamera(&lightCamera);
 		mShadowObjs[i].Update();
 	}
 
 	CTransformShadowObj data =
 	{
-		mLightCamera.GetViewLookToMat() * mLightCamera.GetOrthoGrphicProjectionMat(),
+		lightCamera.GetViewLookToMat() * lightCamera.GetOrthoGrphicProjectionMat(),
 		Mat4::Identity(),
 	};
 
@@ -114,5 +114,5 @@ void ShadowMap::Bind(Object3D& object)
 
 Camera ShadowMap::GetLightCamera()
 {
-	return mLightCamera;
+	return lightCamera;
 }

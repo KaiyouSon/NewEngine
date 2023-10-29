@@ -209,7 +209,10 @@
     <ClCompile Include="NewEngine\Input\JoypadInput.cpp" />
     <ClCompile Include="NewEngine\Input\KeyBoardInput.cpp" />
     <ClCompile Include="NewEngine\Input\MouseInput.cpp" />
+    <ClCompile Include="NewEngine\Light\DirectionalLight.cpp" />
+    <ClCompile Include="NewEngine\Light\ILight.cpp" />
     <ClCompile Include="NewEngine\Light\LightManager.cpp" />
+    <ClCompile Include="NewEngine\Light\PointLight.cpp" />
     <ClCompile Include="NewEngine\main.cpp" />
     <ClCompile Include="NewEngine\Debugger\MappingWindow.cpp" />
     <ClCompile Include="NewEngine\Math\Mat4.cpp" />
@@ -375,8 +378,11 @@
     <ClInclude Include="NewEngine\Input\JoypadInput.h" />
     <ClInclude Include="NewEngine\Input\KeyBoardInput.h" />
     <ClInclude Include="NewEngine\Input\MouseInput.h" />
+    <ClInclude Include="NewEngine\Light\DirectionalLight.h" />
+    <ClInclude Include="NewEngine\Light\ILight.h" />
     <ClInclude Include="NewEngine\Light\LightManager.h" />
     <ClInclude Include="NewEngine\Debugger\MappingWindow.h" />
+    <ClInclude Include="NewEngine\Light\PointLight.h" />
     <ClInclude Include="NewEngine\Math\Mat4.h" />
     <ClInclude Include="NewEngine\Math\MathUtil.h" />
     <ClInclude Include="NewEngine\Math\Quaternion.h" />
