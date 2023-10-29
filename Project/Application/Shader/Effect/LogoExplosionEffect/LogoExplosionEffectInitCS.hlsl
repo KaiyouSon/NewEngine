@@ -20,7 +20,7 @@ cbuffer ConstantBufferTextureSizeData : register(b0)
     float area;
 }
 
-cbuffer ConstantBufferIsExplosionFlag: register(b1)
+cbuffer ConstantBufferIsExplosionFlag : register(b1)
 {
     uint isExplosion;
 }
@@ -67,7 +67,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
         seed = RandomSeed(seed, index);
         result.pos.x = Random01(seed) * size.x;
         seed = RandomSeed(seed, index);
-        result.pos.z = Random01(seed) * size.y;
+        result.pos.y = Random01(seed) * size.y;
 
         // 移動ベクトル
         seed = RandomSeed(seed, index);
@@ -79,7 +79,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
         
         // 移動速度
         const float baseSpeed = 4.f;
-        const float rate = 0.5f;
+        const float rate = 2.f;
         seed = RandomSeed(seed, index);
         result.moveAccel.x = baseSpeed + Random01(seed) * rate;
         seed = RandomSeed(seed, index);
@@ -96,7 +96,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
         result.shininess = 1.f;
         
         // 色
-        result.color = tex.Load(int3(result.pos.x, result.pos.z, 0));
+        result.color = tex.Load(int3(result.pos.x, result.pos.y, 0));
         
         // タイマー
         seed = RandomSeed(seed, index);
@@ -105,7 +105,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
         // 中心に
         float2 offsetPos = -size / 2.f;
         result.pos.x += offsetPos.x;
-        result.pos.z += offsetPos.y;
+        result.pos.y += offsetPos.y;
         
         // 出力データを書き込む
         outputData[i] = result;

@@ -23,8 +23,8 @@ void TitleScene::CreateInstance()
 
 void TitleScene::Init()
 {
-	Camera::current.pos = { 0,10,-0.75f };
-	Camera::current.rot = { Radian(90),Radian(5),0 };
+	Camera::current.pos = { 0,0,0 };
+	Camera::current.rot = { 0,0,0 };
 
 	mPostEffectManager->Init();
 	mTitleUI->Init();
@@ -37,7 +37,7 @@ void TitleScene::Init()
 
 	EffectManager::GetInstance()->Init();
 	EffectManager::GetInstance()->
-		GenerateLogoExplosionEffect(Vec3::zero, Vec3(0, 0, 0), Vec3::one * 0.01f);
+		GenerateLogoExplosionEffect(Vec3(0.f, 0.5f, 9.f), Vec3(0, 0, 0), Vec3::one * 0.01f);
 
 	mTimer.SetLimitTimer(360);
 }

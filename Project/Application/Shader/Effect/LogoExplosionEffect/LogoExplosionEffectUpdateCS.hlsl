@@ -72,10 +72,10 @@ void main(uint3 DTid : SV_DispatchThreadID)
             result.timer = 0;
         }
         
-        result.pos.x += sin(result.timer * 3.1415926f / 180.f) * 0.0075f;
-        result.pos.z += cos(result.timer * 3.1415926f / 180.f) * 0.0075f;
+        result.pos.x += sin(result.timer * 3.1415926f / 180.f) * 0.01f;
+        result.pos.z += cos(result.timer * 3.1415926f / 180.f) * 0.01f;
         
-        result.shininess += sin(result.timer * 3.1415926f / 180.f) * 0.005f;
+        result.shininess += sin(result.timer * 3.1415926f / 180.f) * 0.0075f;
         
         // 出力データを書き込む
         outputData[i] = result;

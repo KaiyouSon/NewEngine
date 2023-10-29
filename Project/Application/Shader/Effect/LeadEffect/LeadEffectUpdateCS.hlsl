@@ -166,7 +166,7 @@ ParticleData InitParticleData(uint index)
         
     // スケール
     seed = RandomSeed(seed, index);
-    result.scale = 0.15f + Random01(seed) * 0.25f;
+    result.scale = 0.25f + Random01(seed) * 0.25f;
 
     // スケールの変化量
     const float baseScaleAccel = result.scale > 0.25f ? 0.0005f : 0.0001f;

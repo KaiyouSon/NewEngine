@@ -15,15 +15,11 @@ void EffectManager::Init()
 	//mRespawnPointEffect->Init();
 
 	mEffects.clear();
+	GenerateAirEffect(Vec3::up * 10.f);
 }
 
 void EffectManager::Update()
 {
-	if (Key::GetKeyDown(DIK_G))
-	{
-		GenerateAirEffect(Vec3::up * 10.f);
-	}
-
 	mBloodSprayEffect->Update();
 
 	// 削除処理
