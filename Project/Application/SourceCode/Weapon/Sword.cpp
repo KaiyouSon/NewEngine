@@ -22,16 +22,6 @@ Sword::Sword() :
 
 void Sword::Init()
 {
-	Vec3 zAxis = weapon->GetTransform().GetWorldMat().GetZAxis();
-	Vec3 pos = weapon->GetWorldPos();
-
-	mTrajectory->color = Color(0x890000);
-
-	mTrajectory->pos[Trajectory::LD] = pos + zAxis.Norm() * 2.f;
-	mTrajectory->pos[Trajectory::LT] = pos + zAxis.Norm() * 10.f;
-
-	mTrajectory->pos[Trajectory::RD] = mTrajectory->pos[Trajectory::LD];
-	mTrajectory->pos[Trajectory::RT] = mTrajectory->pos[Trajectory::LT];
 }
 
 void Sword::Update(Transform* parent)
@@ -42,13 +32,13 @@ void Sword::Update(Transform* parent)
 	Vec3 zAxis = weapon->GetTransform().GetWorldMat().GetZAxis();
 	Vec3 pos = weapon->GetTransform().GetWorldMat().GetTrans();
 
-	mTrajectory->moveSpeed = 1.0f;
-	mTrajectory->pos[Trajectory::LD] = pos  + zAxis.Norm() * 2.f;
-	mTrajectory->pos[Trajectory::LT] = pos  + zAxis.Norm() * 10.f;
-
-	//mTrajectory->pos[Trajectory::RD] = pos - yAxis.Norm() * 10.f + zAxis.Norm() * 2.f;
-	//mTrajectory->pos[Trajectory::RT] = pos - yAxis.Norm() * 10.f + zAxis.Norm() * 10.f;
-
+	mTrajectory->pos[Trajectory::LD] = pos + zAxis.Norm() * 4.f;
+	mTrajectory->pos[Trajectory::LT] = pos + zAxis.Norm() * 10.f;
+	if (mIsActiveTrajectory == false)
+	{
+		mTrajectory->pos[Trajectory::RD] = mTrajectory->pos[Trajectory::LD];
+		mTrajectory->pos[Trajectory::RT] = mTrajectory->pos[Trajectory::LT];
+	}
 
 	mTrajectory->Update();
 
@@ -58,7 +48,11 @@ void Sword::Update(Transform* parent)
 void Sword::DrawModel()
 {
 	weapon->Draw();
-	mTrajectory->Draw();
+
+	if (mIsActiveTrajectory == true)
+	{
+		mTrajectory->Draw();
+	}
 }
 
 void Sword::ColliderUpdate()

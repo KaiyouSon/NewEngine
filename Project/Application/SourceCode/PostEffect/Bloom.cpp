@@ -2,32 +2,21 @@
 
 Bloom::Bloom()
 {
-	// 繝・け繧ｹ繝√Ε繝ｼ縺ｮ繧ｻ繝・ヨ
-	mTexs[(uint32_t)PassType::HighLumi] = TextureManager::GetRenderTexture("HighLumi");
-	mTexs[(uint32_t)PassType::GaussianBlur] = TextureManager::GetRenderTexture("GaussianBlur");
-	mTexs[(uint32_t)PassType::Bloom] = TextureManager::GetRenderTexture("EffectBloom");
-	mTexs[(uint32_t)PassType::Target] = TextureManager::GetRenderTexture("EffectBloomTarget");
-
-	// 
 	for (uint32_t i = 0; i < mPasses.size(); i++)
 	{
 		mPasses[i] = std::make_unique<PostEffect>();
 		mPasses[i]->pos = GetWindowHalfSize();
 	}
-	mPasses[(uint32_t)PassType::HighLumi]->AddRenderTexture(mTexs[(uint32_t)PassType::HighLumi]);
-	mPasses[(uint32_t)PassType::GaussianBlur]->AddRenderTexture(mTexs[(uint32_t)PassType::GaussianBlur]);
 
-	// 繝代う繝励Λ繧､繝ｳ險ｭ螳・
+	// パイプライン
 	mPasses[(uint32_t)PassType::HighLumi]->
 		SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("HighLumi"));
 	mPasses[(uint32_t)PassType::GaussianBlur]->
 		SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GaussianBlur"));
 
-	// 蜷域・逕ｨ繝代せ
+	// 合成用
 	mCompositePass = std::make_unique<PostEffect>();
 	mCompositePass->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Composite"));
-	mCompositePass->AddRenderTexture(mTexs[(uint32_t)PassType::Bloom]);
-	mCompositePass->AddRenderTexture(mTexs[(uint32_t)PassType::Target]);
 	mCompositePass->pos = GetWindowHalfSize();
 
 	mHighLumiClamp = Vec2(0.2f, 0.6f);
@@ -72,6 +61,30 @@ void Bloom::PostSceneDraw(const PassType passType)
 void Bloom::SetHighLumiClmap(const Vec2 highLumiClamp)
 {
 	mHighLumiClamp = highLumiClamp;
+}
+
+void Bloom::SetRenderTexture(RenderTexture* renderTexture, const PassType passType)
+{
+	mTexs[(uint32_t)passType] = renderTexture;
+	switch (passType)
+	{
+	case PassType::HighLumi:
+		mPasses[(uint32_t)PassType::HighLumi]->AddRenderTexture(mTexs[(uint32_t)PassType::HighLumi]);
+		break;
+
+	case PassType::GaussianBlur:
+		mPasses[(uint32_t)PassType::GaussianBlur]->AddRenderTexture(mTexs[(uint32_t)PassType::GaussianBlur]);
+		break;
+
+	case PassType::Bloom:
+		mCompositePass->AddRenderTexture(mTexs[(uint32_t)PassType::Bloom]);
+		break;
+
+	case PassType::Target:
+		mCompositePass->AddRenderTexture(mTexs[(uint32_t)PassType::Target]);
+		break;
+	}
+
 }
 
 Vec2 Bloom::GetHighLumiClmap()

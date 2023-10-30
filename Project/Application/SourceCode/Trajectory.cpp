@@ -4,7 +4,7 @@ using namespace ConstantBufferData;
 
 Trajectory::Trajectory() :
 	mTexture(TextureManager::GetTexture("White")),
-	moveSpeed(0.01f), tiling(1), offset(0), color(Color::white),
+	tiling(1), offset(0), color(Color::white),
 	mVertexBuffer(std::make_unique<VertexBuffer<VSprite>>()),
 	mMaterial(std::make_unique<Material>()),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Trajectory"))
@@ -18,6 +18,9 @@ Trajectory::Trajectory() :
 
 	// マテリアルの初期化
 	MaterialInit();
+
+	mEase.SetEaseTimer(5);
+	mEase.SetisEnd(true);
 }
 
 void Trajectory::Update()
@@ -31,19 +34,19 @@ void Trajectory::Update()
 	MaterialTransfer();
 
 	// 追跡する
-	Vec3 v1 = pos[LD] - pos[RD];
-	pos[RD] += v1.Norm() * moveSpeed;
-	if (v1.Length() <= moveSpeed)
+	if (mEase.GetisEnd() == true)
 	{
-		pos[RD] = pos[LD];
+		currentPos[LD] = pos[RD];
+		currentPos[LT] = pos[RT];
+		targetPos[LD] = pos[LD];
+		targetPos[LT] = pos[LT];
+
+		mEase.Reset();
 	}
 
-	Vec3 v2 = pos[LT] - pos[RT];
-	pos[RT] += v2.Norm() * moveSpeed;
-	if (v2.Length() <= moveSpeed)
-	{
-		pos[RT] = pos[LT];
-	}
+	mEase.Update();
+	pos[RD] = mEase.Lerp(currentPos[LD], targetPos[LD]);
+	pos[RT] = mEase.Lerp(currentPos[LT], targetPos[LT]);
 
 	mVertices[LD].pos = pos[LD];
 	mVertices[LT].pos = pos[LT];

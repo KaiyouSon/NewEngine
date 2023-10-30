@@ -259,6 +259,14 @@ Object3D* HumanoidBody::GetWeaponPart(const WeaponPartID partID)
 
 	return mWeapons[(uint32_t)partID]->weapon.get();
 }
+Weapon* HumanoidBody::GetWeapon(const WeaponPartID partID)
+{
+	if (mWeapons[(uint32_t)partID] == nullptr)
+	{
+		return nullptr;
+	}
+	return mWeapons[(uint32_t)partID];
+}
 uint32_t HumanoidBody::GetPartsSize()
 {
 	return (uint32_t)mParts.size();

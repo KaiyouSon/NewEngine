@@ -47,6 +47,7 @@ void BossAttack2Motion::CurrentStepInit(HumanoidBody* human)
 		break;
 	case 1:
 		mEndBodyY = -1.1f;
+		boss->GetWeapon()->SetisActiveTrajectory(true);
 		break;
 	case 2:
 		SettingMovePrame(human, 5, 30, 2);
@@ -106,6 +107,7 @@ void BossAttack2Motion::CurrentStepInit(HumanoidBody* human)
 		break;
 	case 17:
 		boss->GetWeapon()->SetisCalcCollider(false);
+		boss->GetWeapon()->SetisActiveTrajectory(false);
 		boss->mDamage = 0.f;
 		mEndBodyY = -0.7f;
 		break;

@@ -5,6 +5,10 @@
 class Weapon
 {
 protected:
+	// 軌跡関連
+	bool mIsActiveTrajectory;
+
+protected:
 	Vec3 mLocalPos;
 	Vec3 mLocalRot;
 	bool mIsCalcCollider;
@@ -42,5 +46,6 @@ public:
 	void SetisCalcCollider(const bool isCalcCollide);
 	void SetChargeRate(const float chargeRate);
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
-
+	void SetisActiveTrajectory(const bool isActiveTrajectory);
+	
 };

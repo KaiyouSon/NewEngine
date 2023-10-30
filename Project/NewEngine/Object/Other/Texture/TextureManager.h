@@ -58,7 +58,6 @@ public: // 破棄関連
 	// レンダーテクスチャの破棄
 	static void DestroyRenderTexture(const std::string tag);
 
-
 public: // テクスチャの取得関連
 
 	// テクスチャーを取得

@@ -14,6 +14,7 @@ class Boss : public Character
 private:
 	std::unique_ptr<BossBody> mBoss;
 	std::unique_ptr<Weapon> mWeapon;
+
 	Player* mPlayer;
 	bool mIsAlive;
 	bool mIsDissolve;
@@ -38,6 +39,10 @@ private:
 	// モーション関連
 	Timer mCoolTimer;
 	uint32_t mMotionNum;
+
+private:
+	// ポイントライト
+	std::unique_ptr<PointLight> mPointLight;
 
 private:
 	void CalcFrontVec();

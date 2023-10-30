@@ -62,6 +62,7 @@ public:
 	Vec3 GetWorldPos(const PartID partID);
 	Object3D* GetPart(const PartID partID);
 	Object3D* GetWeaponPart(const WeaponPartID partID);
+	Weapon* GetWeapon(const WeaponPartID partID);
 	uint32_t GetPartsSize();
 	uint32_t GetWeaponPartsSize();
 };

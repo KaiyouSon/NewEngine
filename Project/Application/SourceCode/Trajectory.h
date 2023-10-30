@@ -10,6 +10,9 @@ private:
 	GraphicsPipeline* mGraphicsPipeline;
 	Transform mTransform;
 	Texture* mTexture;
+	Easing mEase;
+	std::array<Vec3, 2> targetPos;
+	std::array<Vec3, 2> currentPos;
 
 public:
 	enum Pos
@@ -19,8 +22,8 @@ public:
 	};
 
 public:
+	bool isActive;
 	std::array<Vec3, Pos::Size> pos;
-	float moveSpeed;
 	Vec2 offset;
 	Vec2 tiling;
 	Color color;

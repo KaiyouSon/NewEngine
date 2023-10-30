@@ -24,3 +24,8 @@ void Weapon::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
 	weapon->SetGraphicsPipeline(graphicsPipeline);
 }
+
+void Weapon::SetisActiveTrajectory(const bool isActiveTrajectory)
+{
+	mIsActiveTrajectory = isActiveTrajectory;
+}

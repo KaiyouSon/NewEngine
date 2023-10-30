@@ -13,8 +13,8 @@ void LoadManager::TitleSceneLoad()
 	TextureManager::LoadTexture("Title/PressButtonBack.png", "PressButtonBack");
 
 	// ブルーム用
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "HighLumi");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "GaussianBlur");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectHighLumi");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectGaussianBlur");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectBloom");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectBloomTarget");
 }
@@ -26,8 +26,8 @@ void LoadManager::TitleSceneUnLoad()
 	TextureManager::DestroyTexture("PressButtonBack");
 
 	// ブルーム用
-	TextureManager::DestroyRenderTexture("HighLumi");
-	TextureManager::DestroyRenderTexture("GaussianBlur");
+	TextureManager::DestroyRenderTexture("EffectHighLumi");
+	TextureManager::DestroyRenderTexture("EffectGaussianBlur");
 	TextureManager::DestroyRenderTexture("EffectBloom");
 	TextureManager::DestroyRenderTexture("EffectBloomTarget");
 }
@@ -83,11 +83,17 @@ void LoadManager::GameSceneLoad()
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Vignette");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "VolumetricFog");
 
-	// ブルーム用
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "HighLumi");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "GaussianBlur");
+	// エフェクトブルーム用
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectHighLumi");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectGaussianBlur");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectBloom");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "EffectBloomTarget");
+
+	// ボスブルーム用
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BossHighLumi");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BossGaussianBlur");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BossBloom");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BossBloomTarget");
 }
 void LoadManager::GameSceneUnLoad()
 {
@@ -131,7 +137,6 @@ void LoadManager::GameSceneUnLoad()
 	TextureManager::DestroyTexture("Line");
 	TextureManager::DestroyTexture("Trajectory");
 
-
 	// 草
 	TextureManager::DestroyTexture("Weed");
 	TextureManager::DestroyTexture("Branch");
@@ -140,11 +145,17 @@ void LoadManager::GameSceneUnLoad()
 	TextureManager::DestroyTexture("Vignette");
 	TextureManager::DestroyTexture("VolumetricFog");
 
-	// ブルーム用
-	TextureManager::DestroyTexture("HighLumi");
-	TextureManager::DestroyTexture("GaussianBlur");
+	// エフェクトブルーム用
+	TextureManager::DestroyRenderTexture("EffectHighLumi");
+	TextureManager::DestroyRenderTexture("EffectGaussianBlur");
 	TextureManager::DestroyRenderTexture("EffectBloom");
 	TextureManager::DestroyRenderTexture("EffectBloomTarget");
+
+	// ボスブルーム用
+	TextureManager::DestroyRenderTexture("BossHighLumi");
+	TextureManager::DestroyRenderTexture("BossGaussianBlur");
+	TextureManager::DestroyRenderTexture("BossBloom");
+	TextureManager::DestroyRenderTexture("BossBloomTarget");
 }
 
 bool LoadManager::ModelLoad()

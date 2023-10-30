@@ -4,7 +4,8 @@
 
 Boss::Boss() :
 	mBoss(std::make_unique<BossBody>()),
-	mWeapon(std::make_unique<Sword>())
+	mWeapon(std::make_unique<Sword>()),
+	mPointLight(std::make_unique<PointLight>())
 {
 }
 void Boss::Init()
@@ -33,6 +34,10 @@ void Boss::Init()
 	mIsAlive = true;
 	mIsDissolve = false;
 	mIsFight = false;
+
+	mPointLight->radius = 7.5f;
+	mPointLight->color = Color::red;
+	mPointLight->colorRate.x = 10.f;
 }
 void Boss::Update()
 {
@@ -90,6 +95,9 @@ void Boss::Update()
 	mBoss->rot.y = mRotY;
 	mBoss->Update();
 
+	Vec3 offset = mFrontVec.Norm() * 2;
+	mPointLight->pos = mBoss->mParts[(uint32_t)PartID::Head]->GetWorldPos() + offset;
+
 	ColliderUpdate();
 
 }
@@ -100,6 +108,19 @@ void Boss::DrawModel()
 void Boss::DrawDebugGui()
 {
 	mBoss->BaseDrawDebugGui();
+
+	Gui::BeginWindow("Boss Light");
+
+	if (Gui::DrawCollapsingHeader("Point Light") == true)
+	{
+		Gui::DrawCheckBox("Point Light Active", &mPointLight->isActive);
+		Gui::DrawSlider3("Point Light Pos", mPointLight->pos, 0.1f);
+		Gui::DrawSlider1("Point Light Length", mPointLight->radius, 0.1f);
+		Gui::DrawSlider3("Point Light ColorRate", mPointLight->colorRate, 0.01f);
+		Gui::DrawColorEdit("Point Light Color", mPointLight->color);
+	}
+
+	Gui::EndWindow();
 }
 
 void Boss::CalcFrontVec()
@@ -129,6 +150,8 @@ void Boss::MotionUpdate()
 	{
 		CalcFrontVec();
 
+		//mWeapon->SetisActiveTrajectory(false);
+
 		mMotionNum = 0;
 		mCoolTimer.Update();
 		if (mCoolTimer == true)
@@ -138,6 +161,7 @@ void Boss::MotionUpdate()
 	}
 	if (mMotionNum != 0)
 	{
+		//mWeapon->SetisActiveTrajectory(true);
 		mCoolTimer.Reset();
 
 		switch (mMotionNum)

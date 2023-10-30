@@ -25,7 +25,6 @@ void GameScene::UnLoad()
 void GameScene::CreateInstance()
 {
 	mDirectionalLight = std::make_unique<DirectionalLight>();
-	mPointLight = std::make_unique<PointLight>();
 
 	mPlayer = std::make_unique<Player>();
 	mBoss = std::make_unique<Boss>();
@@ -36,7 +35,6 @@ void GameScene::CreateInstance()
 	mMovieEvent = std::make_unique<MovieEvent>();
 	mSkydome = std::make_unique<Skydome>();
 	mVolumetricFog = std::make_unique<VolumetricFog>();
-	mTrajectory = std::make_unique<Trajectory>();
 }
 
 void GameScene::Init()
@@ -102,10 +100,6 @@ void GameScene::Init()
 	mVolumetricFog->fogParam.dencity = 0.014f;
 	mVolumetricFog->color = Color(233, 216, 187, 255);
 	VolumetricFog::fogClamp = Vec2(30.f, 50.f);
-
-	mTrajectory->pos[Trajectory::LD] = Vec3(0, -0.5f, 0);
-	mTrajectory->pos[Trajectory::LT] = Vec3(0, +0.5f, 0);
-	mTrajectory->SetTexture(TextureManager::GetTexture("DissolveTexture"));
 }
 void GameScene::Update()
 {
@@ -131,17 +125,6 @@ void GameScene::Update()
 		mPlayer->Init();
 		mMovieEvent->End();
 		CameraManager::GetInstance()->ChangeCamera(CameraManager::CameraType::Default);
-	}
-
-	if (Key::GetKey(DIK_RIGHT))
-	{
-		mTrajectory->pos[Trajectory::LD].x += 0.1f;
-		mTrajectory->pos[Trajectory::LT].x += 0.1f;
-	}
-	if (Key::GetKey(DIK_LEFT))
-	{
-		mTrajectory->pos[Trajectory::LD].x -= 0.1f;
-		mTrajectory->pos[Trajectory::LT].x -= 0.1f;
 	}
 
 #endif
@@ -175,7 +158,6 @@ void GameScene::Update()
 	mMenuManager->Update();
 	mPostEffectManager->Update();
 	mVolumetricFog->Update();
-	mTrajectory->Update();
 
 	ShadowMap::GetInstance()->Update(mDirectionalLight->pos);
 	EffectManager::GetInstance()->Update();
@@ -229,7 +211,6 @@ void GameScene::Draw()
 	ShadowMap::GetInstance()->DrawPostEffect();
 
 	mPostEffectManager->DrawEffectBloom();
-	//mTrajectory->Draw();
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
@@ -237,7 +218,7 @@ void GameScene::Draw()
 }
 void GameScene::DrawDebugGui()
 {
-	mBoss->DrawDebugGui();
+	//mBoss->DrawDebugGui();
 
 	Gui::BeginWindow("Debug");
 
@@ -267,16 +248,6 @@ void GameScene::DrawDebugGui()
 		Gui::DrawSlider3("Directional Light Pos", mDirectionalLight->pos, 0.1f);
 		Gui::DrawColorEdit("Directional Light Color", mDirectionalLight->color);
 	}
-
-	if (Gui::DrawCollapsingHeader("Point Light") == true)
-	{
-		Gui::DrawCheckBox("Point Light Active", &mPointLight->isActive);
-		Gui::DrawSlider3("Point Light Pos", mPointLight->pos, 0.1f);
-		Gui::DrawSlider1("Point Light Length", mPointLight->radius, 0.1f);
-		Gui::DrawSlider3("Point Light ColorRate", mPointLight->colorRate, 0.01f);
-		Gui::DrawColorEdit("Point Light Color", mPointLight->color);
-	}
-
 	Gui::EndWindow();
 
 
