@@ -249,8 +249,6 @@ void GameScene::DrawDebugGui()
 		Gui::DrawColorEdit("Directional Light Color", mDirectionalLight->color);
 	}
 	Gui::EndWindow();
-
-
 }
 
 // シーン切り替えの処理

@@ -29,15 +29,20 @@ struct ParticleData
 };
 RWStructuredBuffer<ParticleData> outputData : register(u0);
 
-[numthreads(50, 1, 1)]
+[numthreads(100, 1, 1)]
 void main(uint3 DTid : SV_DispatchThreadID)
 {
-    uint dataPerThread = max / 50;
+    uint dataPerThread = max / 100;
     uint startIndex = (DTid.x - 1) * dataPerThread;
     uint endIndex = DTid.x * dataPerThread;
     
     for (uint i = startIndex; i < endIndex; i++)
     {
+        if (i > max)
+        {
+            return;
+        }
+        
         ParticleData result = outputData[i];
         
         if (result.scale.x <= 0)
@@ -46,6 +51,8 @@ void main(uint3 DTid : SV_DispatchThreadID)
         }
 
         result.pos += result.moveVec * result.moveAccel;
+        
+        result.shininess += 0.001f;
         
         result.color.a += result.alphaAccel;
         if (result.color.a >= 1)

@@ -25,6 +25,12 @@ void LightManager::MaterialInit()
 	mMaterial->Init();
 }
 
+void LightManager::Init()
+{
+	mLightGroup.directionalLights.clear();
+	mLightGroup.pointLights.clear();
+}
+
 void LightManager::Update()
 {
 	// ライトグループのデータ

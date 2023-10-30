@@ -27,8 +27,8 @@ void RespawnPoint::Init()
 
 	mAngle.SetLimitTimer(360);
 
-	EffectManager::GetInstance()->GenerateLeadEffect(mParent.pos + Vec3::up * 5.f, Vec3::front + Vec3(0, 0.5, 0));
-}
+	EffectManager::GetInstance()->GenerateLeadEffect(mParent.pos + Vec3::up * 4.5f, Vec3::front + Vec3(0.f, 0.1f, 0.f));
+} 
 
 void RespawnPoint::Update()
 {

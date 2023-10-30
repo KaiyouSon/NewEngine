@@ -1,6 +1,7 @@
 #pragma once
 #include "IScene.h"
 #include "Util.h"
+#include "LightManager.h"
 #include <future>
 #include <thread>
 
@@ -65,6 +66,9 @@ public:
 
 					// 次のシーンのロード
 					sNextScene->Load();
+
+					// ライトの初期化
+					LightManager::GetInstance()->Init();
 
 					// 次のシーンのインスタンス生成
 					sNextScene->CreateInstance();

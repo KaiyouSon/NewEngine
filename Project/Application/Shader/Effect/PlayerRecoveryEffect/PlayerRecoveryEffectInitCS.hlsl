@@ -35,23 +35,29 @@ float Random01(float2 seed);
 // 疑似乱数シード
 float2 RandomSeed(float2 seed, uint2 index);
 
-[numthreads(50, 1, 1)]
+[numthreads(100, 1, 1)]
 void main(uint3 DTid : SV_DispatchThreadID)
 {
-    uint dataPerThread = max / 50;
+    uint dataPerThread = max / 100;
     uint startIndex = (DTid.x - 1) * dataPerThread;
     uint endIndex = DTid.x * dataPerThread;
     
     for (uint i = startIndex; i < endIndex; i++)
     {
+        if (i > max)
+        {
+            return;
+        }
+        
         // インデックス(x,y)
         float2 seed = uint2(i % 256, i / 256) + uint2(-1, 1);
 
         ParticleData result = outputData[i];
         
         // 座標
-        float3 basePos = float3(2.f, 2.5f, 2.f); // -basePos ~ basePos
+        float3 basePos = float3(4.f, 5.5f, 4.f); // -basePos ~ basePos
         float3 ratePos = basePos * 2;
+
         seed = RandomSeed(seed, i);
         result.pos.x = basePos.x - Random01(seed) * ratePos.x;
         seed = RandomSeed(seed, i);

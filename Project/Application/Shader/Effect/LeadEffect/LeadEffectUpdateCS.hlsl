@@ -53,7 +53,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
         if (leadEffect[0].timer >= leadEffect[0].maxTimer)
         {
             // 初期化
-            for (uint i = 0; i < 3; i++)
+            for (uint i = 0; i < 10; i++)
             {
                 outputData[leadEffect[0].endIndex] = InitParticleData(leadEffect[0].endIndex);
                 leadEffect[0].endIndex++;
@@ -166,7 +166,7 @@ ParticleData InitParticleData(uint index)
         
     // スケール
     seed = RandomSeed(seed, index);
-    result.scale = 0.25f + Random01(seed) * 0.25f;
+    result.scale = 0.35f + Random01(seed) * 0.25f;
 
     // スケールの変化量
     const float baseScaleAccel = result.scale > 0.25f ? 0.0005f : 0.0001f;

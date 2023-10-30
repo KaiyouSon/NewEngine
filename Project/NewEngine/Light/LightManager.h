@@ -53,6 +53,7 @@ private:
 	void MaterialInit();
 
 public:
+	void Init();
 	void Update();
 	void DrawCommand(const uint32_t index);
 

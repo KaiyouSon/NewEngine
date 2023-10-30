@@ -9,10 +9,10 @@ PlayerRecoveryEffect::PlayerRecoveryEffect() :
 {
 	// 円形のパーティクル
 	mCircleEmitter->SetTexture(TextureManager::GetTexture("Particle1"));
-	mCircleEmitter->SetParticleData<PlayerRecoveryParticle>(1000);
+	mCircleEmitter->SetParticleData<PlayerRecoveryParticle>(10000);
 
 	mLineEmitter->SetTexture(TextureManager::GetTexture("Line"));
-	mLineEmitter->SetParticleData<PlayerRecoveryParticle>(50);
+	mLineEmitter->SetParticleData<PlayerRecoveryParticle>(100);
 
 	mEffectType = EffectType::PlayerRecoveryEffect;
 }
@@ -38,7 +38,7 @@ void PlayerRecoveryEffect::Generate(const Vec3 pos)
 	mCircleEmitterParam.rateScaleAccel = 0.00125f;
 
 	// 速度
-	mCircleEmitterParam.baseSpeed = Vec3(0.025f, 0.05f, 0.025f);
+	mCircleEmitterParam.baseSpeed = Vec3(0.05f, 0.05f, 0.05f);
 	mCircleEmitterParam.rateSpeed = mCircleEmitterParam.baseSpeed * 2;
 	mCircleEmitterParam.rateSpeed.y = 0;
 
@@ -81,6 +81,8 @@ void PlayerRecoveryEffect::Generate(const Vec3 pos)
 
 void PlayerRecoveryEffect::Update()
 {
+	mCircleEmitter->rot.y += Radian(1);
+
 	mActiveTimer.Update();
 	if (mActiveTimer == true)
 	{

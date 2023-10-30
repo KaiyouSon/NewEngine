@@ -42,7 +42,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
         if (airEffect[0].timer >= airEffect[0].maxTimer)
         {
             // ‰Šú‰»
-            for (uint i = 0; i < 40; i++)
+            for (uint i = 0; i < 50; i++)
             {
                 outputData[airEffect[0].index] = InitParticleData(airEffect[0].index);
                 airEffect[0].index++;

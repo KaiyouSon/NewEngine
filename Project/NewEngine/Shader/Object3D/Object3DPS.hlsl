@@ -77,7 +77,7 @@ PSOutput main(V2P i)// : SV_TARGET
     clip(maskIntensity - 0.01f);
     
 	// 光沢度
-    const float shininess = 4.0f;
+    const float shininess = 2.0f;
 
     // マテリアル
     Material material = { ambient, diffuse, specular };
@@ -97,7 +97,7 @@ PSOutput main(V2P i)// : SV_TARGET
             float dotLightNormal = dot(directionalLight[index].vec, i.normal);
         
             // アンビエント
-            float3 ambient = /*texColor.rgb **/material.ambient.rgb;
+            float3 ambient = material.ambient.rgb + float3(0.2f, 0.2f, 0.2f);
      
             // ディフューズ
             float3 diffuse = dotLightNormal * material.diffuse.rgb;
@@ -107,7 +107,7 @@ PSOutput main(V2P i)// : SV_TARGET
             float3 reflectDir = normalize(-directionalLight[index].vec + 2 * dotLightNormal * i.normal);
             float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
     
-            adsColor.rgb += ambient + diffuse + specular * directionalLight[index].color.rgb;
+            adsColor.rgb += (ambient + diffuse + specular) * directionalLight[index].color.rgb;
         }
     }
 
