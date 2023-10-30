@@ -4,6 +4,8 @@
 Sword::Sword() :
 	mTrajectory(std::make_unique<Trajectory>())
 {
+	mTrajectory->SetTexture(TextureManager::GetTexture("Trajectory"));
+
 	weapon = std::make_unique<Object3D>();
 	weapon->SetModel(ModelManager::GetModel("Sword"));
 	weapon->SetisShadow(false, true);
@@ -14,6 +16,8 @@ Sword::Sword() :
 	mLocalPos = Vec3(0.f, -1.5f, 0.f);
 
 	mIsCalcCollider = false;
+	mTrajectory->color = Color(0x890000);
+
 }
 
 void Sword::Init()
@@ -21,8 +25,10 @@ void Sword::Init()
 	Vec3 zAxis = weapon->GetTransform().GetWorldMat().GetZAxis();
 	Vec3 pos = weapon->GetWorldPos();
 
-	mTrajectory->pos[Trajectory::LD] = pos - zAxis.Norm() * 8.f;
-	mTrajectory->pos[Trajectory::LT] = pos + zAxis.Norm() * 8.f;
+	mTrajectory->color = Color(0x890000);
+
+	mTrajectory->pos[Trajectory::LD] = pos + zAxis.Norm() * 2.f;
+	mTrajectory->pos[Trajectory::LT] = pos + zAxis.Norm() * 10.f;
 
 	mTrajectory->pos[Trajectory::RD] = mTrajectory->pos[Trajectory::LD];
 	mTrajectory->pos[Trajectory::RT] = mTrajectory->pos[Trajectory::LT];
@@ -30,15 +36,20 @@ void Sword::Init()
 
 void Sword::Update(Transform* parent)
 {
+	weapon->Update(parent);
+
 	Vec3 yAxis = weapon->GetTransform().GetWorldMat().GetYAxis();
 	Vec3 zAxis = weapon->GetTransform().GetWorldMat().GetZAxis();
-	Vec3 pos = weapon->GetWorldPos();
+	Vec3 pos = weapon->GetTransform().GetWorldMat().GetTrans();
 
-	mTrajectory->moveSpeed = 1.f;
-	mTrajectory->pos[Trajectory::LD] = pos + yAxis.Norm() * 2.f + zAxis.Norm() * 2.f;
-	mTrajectory->pos[Trajectory::LT] = pos + yAxis.Norm() * 2.f + zAxis.Norm() * 10.f;
+	mTrajectory->moveSpeed = 1.0f;
+	mTrajectory->pos[Trajectory::LD] = pos  + zAxis.Norm() * 2.f;
+	mTrajectory->pos[Trajectory::LT] = pos  + zAxis.Norm() * 10.f;
 
-	weapon->Update(parent);
+	//mTrajectory->pos[Trajectory::RD] = pos - yAxis.Norm() * 10.f + zAxis.Norm() * 2.f;
+	//mTrajectory->pos[Trajectory::RT] = pos - yAxis.Norm() * 10.f + zAxis.Norm() * 10.f;
+
+
 	mTrajectory->Update();
 
 	collider.startPos;

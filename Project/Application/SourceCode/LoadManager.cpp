@@ -73,6 +73,7 @@ void LoadManager::GameSceneLoad()
 	TextureManager::LoadTexture("Particle/Particle1.png", "Particle1");
 	TextureManager::LoadTexture("Particle/Particle2.png", "Particle2");
 	TextureManager::LoadTexture("Particle/Line.png", "Line");
+	TextureManager::LoadTexture("Trajectory.png", "Trajectory");
 
 	// 草
 	TextureManager::LoadTexture("Grass/Weed.png", "Weed");
@@ -128,6 +129,8 @@ void LoadManager::GameSceneUnLoad()
 	TextureManager::DestroyTexture("Particle1");
 	TextureManager::DestroyTexture("Particle2");
 	TextureManager::DestroyTexture("Line");
+	TextureManager::DestroyTexture("Trajectory");
+
 
 	// 草
 	TextureManager::DestroyTexture("Weed");

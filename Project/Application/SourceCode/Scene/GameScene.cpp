@@ -237,6 +237,8 @@ void GameScene::Draw()
 }
 void GameScene::DrawDebugGui()
 {
+	mBoss->DrawDebugGui();
+
 	Gui::BeginWindow("Debug");
 
 	if (Gui::DrawCollapsingHeader("Fog") == true)

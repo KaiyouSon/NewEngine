@@ -97,6 +97,10 @@ void Boss::DrawModel()
 {
 	mBoss->DrawModel();
 }
+void Boss::DrawDebugGui()
+{
+	mBoss->BaseDrawDebugGui();
+}
 
 void Boss::CalcFrontVec()
 {

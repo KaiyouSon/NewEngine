@@ -129,55 +129,55 @@ void HumanoidBody::BaseDrawDebugGui()
 	mParts[(uint32_t)PartID::RightHand]->rot = Radian(angle);
 	Gui::DrawLine();
 
-	angle = Angle(mParts[(uint32_t)PartID::LeftArm]->rot);
-	Gui::DrawSlider3("LeftArm Pos", mParts[(uint32_t)PartID::LeftArm]->pos, move);
-	Gui::DrawSlider3("LeftArm Rot", angle, move);
-	Gui::DrawSlider3("LeftArm Scale", mParts[(uint32_t)PartID::LeftArm]->scale, move);
-	mParts[(uint32_t)PartID::LeftArm]->rot = Radian(angle);
-	Gui::DrawLine();
+	//angle = Angle(mParts[(uint32_t)PartID::LeftArm]->rot);
+	//Gui::DrawSlider3("LeftArm Pos", mParts[(uint32_t)PartID::LeftArm]->pos, move);
+	//Gui::DrawSlider3("LeftArm Rot", angle, move);
+	//Gui::DrawSlider3("LeftArm Scale", mParts[(uint32_t)PartID::LeftArm]->scale, move);
+	//mParts[(uint32_t)PartID::LeftArm]->rot = Radian(angle);
+	//Gui::DrawLine();
 
-	angle = Angle(mParts[(uint32_t)PartID::LeftHand]->rot);
-	Gui::DrawSlider3("LeftHand Pos", mParts[(uint32_t)PartID::LeftHand]->pos, move);
-	Gui::DrawSlider3("LeftHand Rot", angle, move);
-	Gui::DrawSlider3("LeftHand Scale", mParts[(uint32_t)PartID::LeftHand]->scale, move);
-	mParts[(uint32_t)PartID::LeftHand]->rot = Radian(angle);
-	Gui::DrawLine();
+	//angle = Angle(mParts[(uint32_t)PartID::LeftHand]->rot);
+	//Gui::DrawSlider3("LeftHand Pos", mParts[(uint32_t)PartID::LeftHand]->pos, move);
+	//Gui::DrawSlider3("LeftHand Rot", angle, move);
+	//Gui::DrawSlider3("LeftHand Scale", mParts[(uint32_t)PartID::LeftHand]->scale, move);
+	//mParts[(uint32_t)PartID::LeftHand]->rot = Radian(angle);
+	//Gui::DrawLine();
 
-	angle = Angle(mParts[(uint32_t)PartID::RightThigh]->rot);
-	Gui::DrawSlider3("RightThigh Pos", mParts[(uint32_t)PartID::RightThigh]->pos, move);
-	Gui::DrawSlider3("RightThigh Rot", angle, move);
-	Gui::DrawSlider3("RightThigh Scale", mParts[(uint32_t)PartID::RightThigh]->scale, move);
-	mParts[(uint32_t)PartID::RightThigh]->rot = Radian(angle);
-	Gui::DrawLine();
+	//angle = Angle(mParts[(uint32_t)PartID::RightThigh]->rot);
+	//Gui::DrawSlider3("RightThigh Pos", mParts[(uint32_t)PartID::RightThigh]->pos, move);
+	//Gui::DrawSlider3("RightThigh Rot", angle, move);
+	//Gui::DrawSlider3("RightThigh Scale", mParts[(uint32_t)PartID::RightThigh]->scale, move);
+	//mParts[(uint32_t)PartID::RightThigh]->rot = Radian(angle);
+	//Gui::DrawLine();
 
-	angle = Angle(mParts[(uint32_t)PartID::RightLeg]->rot);
-	Gui::DrawSlider3("RightLeg Pos", mParts[(uint32_t)PartID::RightLeg]->pos, move);
-	Gui::DrawSlider3("RightLeg Rot", angle, move);
-	Gui::DrawSlider3("RightLeg Scale", mParts[(uint32_t)PartID::RightLeg]->scale, move);
-	mParts[(uint32_t)PartID::RightLeg]->rot = Radian(angle);
-	Gui::DrawLine();
+	//angle = Angle(mParts[(uint32_t)PartID::RightLeg]->rot);
+	//Gui::DrawSlider3("RightLeg Pos", mParts[(uint32_t)PartID::RightLeg]->pos, move);
+	//Gui::DrawSlider3("RightLeg Rot", angle, move);
+	//Gui::DrawSlider3("RightLeg Scale", mParts[(uint32_t)PartID::RightLeg]->scale, move);
+	//mParts[(uint32_t)PartID::RightLeg]->rot = Radian(angle);
+	//Gui::DrawLine();
 
-	angle = Angle(mParts[(uint32_t)PartID::LeftThigh]->rot);
-	Gui::DrawSlider3("LeftThigh Pos", mParts[(uint32_t)PartID::LeftThigh]->pos, move);
-	Gui::DrawSlider3("LeftThigh Rot", angle, move);
-	Gui::DrawSlider3("LeftThigh Scale", mParts[(uint32_t)PartID::LeftThigh]->scale, move);
-	mParts[(uint32_t)PartID::LeftThigh]->rot = Radian(angle);
-	Gui::DrawLine();
+	//angle = Angle(mParts[(uint32_t)PartID::LeftThigh]->rot);
+	//Gui::DrawSlider3("LeftThigh Pos", mParts[(uint32_t)PartID::LeftThigh]->pos, move);
+	//Gui::DrawSlider3("LeftThigh Rot", angle, move);
+	//Gui::DrawSlider3("LeftThigh Scale", mParts[(uint32_t)PartID::LeftThigh]->scale, move);
+	//mParts[(uint32_t)PartID::LeftThigh]->rot = Radian(angle);
+	//Gui::DrawLine();
 
-	angle = Angle(mParts[(uint32_t)PartID::LeftLeg]->rot);
-	Gui::DrawSlider3("LeftLeg Pos", mParts[(uint32_t)PartID::LeftLeg]->pos, move);
-	Gui::DrawSlider3("LeftLeg Rot", angle, move);
-	Gui::DrawSlider3("LeftLeg Scale", mParts[(uint32_t)PartID::LeftLeg]->scale, move);
-	mParts[(uint32_t)PartID::LeftLeg]->rot = Radian(angle);
-	Gui::DrawLine();
+	//angle = Angle(mParts[(uint32_t)PartID::LeftLeg]->rot);
+	//Gui::DrawSlider3("LeftLeg Pos", mParts[(uint32_t)PartID::LeftLeg]->pos, move);
+	//Gui::DrawSlider3("LeftLeg Rot", angle, move);
+	//Gui::DrawSlider3("LeftLeg Scale", mParts[(uint32_t)PartID::LeftLeg]->scale, move);
+	//mParts[(uint32_t)PartID::LeftLeg]->rot = Radian(angle);
+	//Gui::DrawLine();
 
-	if (mWeapons[0] != nullptr)
+	if (mWeapons[1] != nullptr)
 	{
-		angle = Angle(mWeapons[0]->weapon->rot);
-		Gui::DrawSlider3("RightWeapon Pos", mWeapons[0]->weapon->pos, move);
+		angle = Angle(mWeapons[1]->weapon->rot);
+		Gui::DrawSlider3("RightWeapon Pos", mWeapons[1]->weapon->pos, move);
 		Gui::DrawSlider3("RightWeapon Rot", angle, move);
-		Gui::DrawSlider3("RightWeapon Scale", mWeapons[0]->weapon->scale, move);
-		mWeapons[0]->weapon->rot = Radian(angle);
+		Gui::DrawSlider3("RightWeapon Scale", mWeapons[1]->weapon->scale, move);
+		mWeapons[1]->weapon->rot = Radian(angle);
 		Gui::DrawLine();
 	}
 

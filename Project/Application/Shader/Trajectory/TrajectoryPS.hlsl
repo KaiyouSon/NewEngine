@@ -11,7 +11,8 @@ float4 main(V2P i) : SV_TARGET
     
 	// テクスチャーマッピング
     float4 texColor = tex.Sample(smp, newUV);
-    texColor.a = 1 - smoothstep(0, 0.5, dis);
+    clip(texColor.a - 0.1f);
     
+    //texColor.a = 1 - smoothstep(0, 0.5, dis);
     return texColor * color;
 }
