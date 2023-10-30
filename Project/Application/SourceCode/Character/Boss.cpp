@@ -97,7 +97,6 @@ void Boss::Update()
 
 	Vec3 offset = mFrontVec.Norm() * 2;
 	mPointLight->pos = mBoss->mParts[(uint32_t)PartID::Head]->GetWorldPos() + offset;
-
 	ColliderUpdate();
 
 }

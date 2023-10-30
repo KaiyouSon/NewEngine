@@ -34,7 +34,6 @@ public:
 
 public:
 	void SetHighLumiClmap(const Vec2 highLumiClamp);
-	void SetRenderTexture(RenderTexture* renderTexture, const PassType passType);
 
 public:
 	Vec2 GetHighLumiClmap();

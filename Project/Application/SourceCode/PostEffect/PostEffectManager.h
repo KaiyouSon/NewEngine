@@ -8,7 +8,6 @@ class PostEffectManager
 {
 private:
 	std::unique_ptr<Bloom> mEffectBloom;
-	std::unique_ptr<Bloom> mBossBloom;
 	std::unique_ptr<Vignette> mSkydomeVignette;
 
 public:
@@ -18,11 +17,6 @@ public:
 
 	// エフェクトのブルームのパス設定
 	void EffectBloomDrawPass(
-		const std::function<void()>& targetDrawFunc,
-		const std::function<void()>& sceneDrawFunc);
-
-	// ボスのブルームのパス設定
-	void BossBloomDrawPass(
 		const std::function<void()>& targetDrawFunc,
 		const std::function<void()>& sceneDrawFunc);
 
@@ -38,9 +32,6 @@ public:
 
 	// エフェクトのブルーム	
 	void DrawEffectBloom();
-
-	// ボスのブルーム	
-	void DrawBossBloom();
 
 public:
 	Bloom* GetEffectBloom();

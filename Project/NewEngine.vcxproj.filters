@@ -864,6 +864,9 @@
     <ClCompile Include="Application\SourceCode\Trajectory.cpp">
       <Filter>Application\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\PostEffect\HighLumi.cpp">
+      <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1390,6 +1393,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Trajectory.h">
       <Filter>Application\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\PostEffect\HighLumi.h">
+      <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

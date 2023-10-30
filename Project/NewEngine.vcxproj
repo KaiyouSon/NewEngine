@@ -128,6 +128,7 @@
     <ClCompile Include="Application\SourceCode\Camera\CameraManager.cpp" />
     <ClCompile Include="Application\SourceCode\Character\Character.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Cloud.cpp" />
+    <ClCompile Include="Application\SourceCode\PostEffect\HighLumi.cpp" />
     <ClCompile Include="Application\SourceCode\UI\BossGaugeUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\CameraTargetUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\IUI.cpp" />
@@ -298,6 +299,7 @@
     <ClInclude Include="Application\SourceCode\Camera\CameraManager.h" />
     <ClInclude Include="Application\SourceCode\Character\Character.h" />
     <ClInclude Include="Application\SourceCode\Field\Cloud.h" />
+    <ClInclude Include="Application\SourceCode\PostEffect\HighLumi.h" />
     <ClInclude Include="Application\SourceCode\UI\BossGaugeUI.h" />
     <ClInclude Include="Application\SourceCode\UI\CameraTargetUI.h" />
     <ClInclude Include="Application\SourceCode\UI\IUI.h" />

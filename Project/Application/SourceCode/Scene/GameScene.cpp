@@ -344,11 +344,7 @@ void GameScene::DrawDepthToEffectBloom()
 	mPlayer->DrawModel();
 	mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 
-	// ボスの深度のみ書き込む
-	mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
-	mBoss->DrawModel();
-	mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
-
+	// フィールド
 	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
 	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GrassWriteNone"));
 	mField->SetTreeGraphicsPipeline(PipelineManager::GetGraphicsPipeline("BranchWriteNone"));
@@ -356,6 +352,9 @@ void GameScene::DrawDepthToEffectBloom()
 	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass"));
 	mField->SetTreeGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Branch"));
+
+	// ボス
+	mBoss->DrawModel();
 
 	// エフェクトの描画(ブルーム書けるため深度以外も書き込む)
 	EffectManager::GetInstance()->DrawEffect(true);
