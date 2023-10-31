@@ -27,6 +27,14 @@ namespace StructuredBufferData
 		uint32_t index;
 	};
 
+	struct SBossAttackTrajectoryEffect
+	{
+		uint32_t timer;
+		uint32_t maxTimer;
+		float timeRate;
+		uint32_t index;
+	};
+
 	struct SFog
 	{
 		Color color;

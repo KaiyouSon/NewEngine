@@ -195,6 +195,22 @@ void CreateManager::CreateShaderCompiler()
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "AirEffectUpdate");
 
+	// ボスの攻撃軌跡のエフェクト用（初期化用）
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path2 + "Effect/BossAttackTrajectoryEffect/BossAttackTrajectoryEffectInitCS.hlsl";
+	setting.vsFilePath = path2 + "Effect/BossAttackTrajectoryEffect/BossAttackTrajectoryEffectVS.hlsl";
+	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
+	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
+	ShaderCompilerManager::Create(setting, "BossAttackTrajectoryEffectInit");
+
+	// ボスの攻撃軌跡のエフェクト用（更新用）
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path2 + "Effect/BossAttackTrajectoryEffect/BossAttackTrajectoryEffectUpdateCS.hlsl";
+	setting.vsFilePath = path2 + "Effect/BossAttackTrajectoryEffect/BossAttackTrajectoryEffectVS.hlsl";
+	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
+	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
+	ShaderCompilerManager::Create(setting, "BossAttackTrajectoryEffectUpdate");
+
 	// 軌跡用
 	setting = ShaderCompilerSetting();
 	setting.mInputLayoutSettings.resize(2);
@@ -335,6 +351,12 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "AirEffect");
 
+	// ボスの攻撃軌跡のエフェクト用
+	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttackTrajectoryEffectInit");
+	setting.rtvNum = 1;
+	PipelineManager::CreateGraphicsPipeline(setting, "BossAttackTrajectoryEffect");
+
 	// 深度値のみ書き込み用
 	{
 		// 3Dオブジェクト
@@ -441,6 +463,23 @@ void CreateManager::CreateComputePipeline()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 2;
 	PipelineManager::CreateComputePipeline(setting, "AirEffectUpdate");
+
+	// ボスの攻撃軌跡のエフェクト用（初期化）
+	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttackTrajectoryEffectInit");
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
+	setting.rootSignatureSetting.maxUavDescritorRange = 2;
+	PipelineManager::CreateComputePipeline(setting, "BossAttackTrajectoryEffectInit");
+
+
+	// ボスの攻撃軌跡のエフェクト用（初期化）
+	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttackTrajectoryEffectUpdate");
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
+	setting.rootSignatureSetting.maxUavDescritorRange = 2;
+	PipelineManager::CreateComputePipeline(setting, "BossAttackTrajectoryEffectUpdate");
 }
 
 void CreateManager::Create()

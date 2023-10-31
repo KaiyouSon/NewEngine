@@ -20,6 +20,11 @@ PlayerBody::PlayerBody() :
 	}
 	mParts[(uint32_t)PartID::Body]->SetModel(ModelManager::GetModel("Body"));
 	mParts[(uint32_t)PartID::Head]->SetModel(ModelManager::GetModel("Head"));
+
+	mParts[(uint32_t)PartID::LeftArm]->color = Color::red;
+	mParts[(uint32_t)PartID::RightArm]->color = Color::red;
+	mParts[(uint32_t)PartID::LeftThigh]->color = Color::red;
+	mParts[(uint32_t)PartID::RightThigh]->color = Color::red;
 }
 
 void PlayerBody::Init()

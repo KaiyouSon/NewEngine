@@ -376,6 +376,9 @@
     <Filter Include="Shader\Application\Trajectory">
       <UniqueIdentifier>{294d9723-96ed-456e-ae13-b168872e9d4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\Effect\BossAttackTrajectoryEffect">
+      <UniqueIdentifier>{fcb2d8e6-45fa-452f-b67d-6127bef12656}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -866,6 +869,9 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\PostEffect\HighLumi.cpp">
       <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Effect\BossAttackTrajectoryEffect.cpp">
+      <Filter>Application\Source\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1397,6 +1403,9 @@
     <ClInclude Include="Application\SourceCode\PostEffect\HighLumi.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SourceCode\Effect\BossAttackTrajectoryEffect.h">
+      <Filter>Application\Header\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1689,6 +1698,15 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\Trajectory\TrajectoryPS.hlsl">
       <Filter>Shader\Application\Trajectory</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\BossAttackTrajectoryEffect\BossAttackTrajectoryEffectInitCS.hlsl">
+      <Filter>Shader\Application\Effect\BossAttackTrajectoryEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\BossAttackTrajectoryEffect\BossAttackTrajectoryEffectVS.hlsl">
+      <Filter>Shader\Application\Effect\BossAttackTrajectoryEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\BossAttackTrajectoryEffect\BossAttackTrajectoryEffectUpdateCS.hlsl">
+      <Filter>Shader\Application\Effect\BossAttackTrajectoryEffect</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

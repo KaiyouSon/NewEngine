@@ -1,10 +1,7 @@
 #pragma once
 #include "BloodSprayEffect.h"
-#include "PlayerRecoveryEffect.h"
 #include "RespawnPointEffect.h"
-#include "LeadEffect.h"
-#include "AirEffect.h"
-#include "LogoExplosionEffect.h"
+#include "IEffect.h"
 #include "Player.h"
 
 template<typename T> class Singleton;
@@ -35,6 +32,7 @@ public:
 	void GenerateRespawnPointEffect(const Vec3 pos);
 	void GenerateLeadEffect(const Vec3 pos, const Vec3 frontVec);
 	void GenerateLogoExplosionEffect(const Vec3 pos, const Vec3 rot, const Vec3 scale);
+	void GenerateBossAttackTrajectoryEffect(const Vec3 startPos, Vec3 endPos);
 
 public:
 	void ExplosionLogoExplosionEffect();

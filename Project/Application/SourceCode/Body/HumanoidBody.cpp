@@ -31,11 +31,11 @@ void HumanoidBody::BaseInit()
 	mParts[(uint32_t)PartID::LeftLeg]->pos = Vec3(0.f, -1.5f, 0.f);
 
 	//mParts[(uint32_t)PartID::RightArm]->color = Color::black;
-	mParts[(uint32_t)PartID::RightHand]->color = Color::blue;
-	mParts[(uint32_t)PartID::RightLeg]->color = Color::green;
-	mParts[(uint32_t)PartID::LeftThigh]->color = Color::black;
-	mParts[(uint32_t)PartID::LeftHand]->color = Color::green;
-	mParts[(uint32_t)PartID::LeftLeg]->color = Color::blue;
+	//mParts[(uint32_t)PartID::RightHand]->color = Color::blue;
+	//mParts[(uint32_t)PartID::RightLeg]->color = Color::green;
+	//mParts[(uint32_t)PartID::LeftThigh]->color = Color::black;
+	//mParts[(uint32_t)PartID::LeftHand]->color = Color::green;
+	//mParts[(uint32_t)PartID::LeftLeg]->color = Color::blue;
 }
 void HumanoidBody::BaseUpdate()
 {

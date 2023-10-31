@@ -1,4 +1,9 @@
 #include "EffectManager.h"
+#include "PlayerRecoveryEffect.h"
+#include "LeadEffect.h"
+#include "AirEffect.h"
+#include "LogoExplosionEffect.h"
+#include "BossAttackTrajectoryEffect.h"
 
 EffectManager::EffectManager()
 {
@@ -20,6 +25,15 @@ void EffectManager::Init()
 
 void EffectManager::Update()
 {
+	// デバッグのみ実行
+	ProcessAtDebugBuild([this]
+		{
+			if (Key::GetKeyDown(DIK_G))
+			{
+				GenerateBossAttackTrajectoryEffect(Vec3::front * 10.f, 0);
+			}
+		});
+
 	mBloodSprayEffect->Update();
 
 	// 削除処理
@@ -112,6 +126,16 @@ void EffectManager::GenerateLogoExplosionEffect(const Vec3 pos, const Vec3 rot, 
 	// インスタンス生成
 	std::unique_ptr<LogoExplosionEffect> effect = std::make_unique<LogoExplosionEffect>();
 	effect->Generate(pos, rot, scale);
+
+	// ベクターに追加
+	mEffects.push_back(std::move(effect));
+}
+
+void EffectManager::GenerateBossAttackTrajectoryEffect(const Vec3 startPos, Vec3 endPos)
+{
+	// インスタンス生成
+	std::unique_ptr<BossAttackTrajectoryEffect> effect = std::make_unique<BossAttackTrajectoryEffect>();
+	effect->Generate(startPos, endPos);
 
 	// ベクターに追加
 	mEffects.push_back(std::move(effect));

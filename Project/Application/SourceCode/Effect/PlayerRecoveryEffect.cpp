@@ -9,7 +9,7 @@ PlayerRecoveryEffect::PlayerRecoveryEffect() :
 {
 	// 円形のパーティクル
 	mCircleEmitter->SetTexture(TextureManager::GetTexture("Particle1"));
-	mCircleEmitter->SetParticleData<PlayerRecoveryParticle>(10000);
+	mCircleEmitter->SetParticleData<PlayerRecoveryParticle>(5000);
 
 	mLineEmitter->SetTexture(TextureManager::GetTexture("Line"));
 	mLineEmitter->SetParticleData<PlayerRecoveryParticle>(100);

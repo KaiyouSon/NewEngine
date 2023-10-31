@@ -71,7 +71,7 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
         for (uint i = 0; i < stepCount; i++)
         {
             float3 uvw = MapValueTo01(boundsMin, boundsMax, rayPos);
-            colorDensity += tex.Sample(smp, (uvw + offset)).r * stepLength * density;
+            colorDensity += tex.Sample(smp, (uvw + offset) * tiling).r * stepLength * density;
             
             float r = distance(uvw, float3(0.5f, 0.5f, 0.5f));
             alpha += (1 - smoothstep(0.05, 0.5f, r)) * colorDensity;

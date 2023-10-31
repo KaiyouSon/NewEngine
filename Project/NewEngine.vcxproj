@@ -118,6 +118,7 @@
   <ItemGroup>
     <ClCompile Include="Application\SourceCode\CreateManager.cpp" />
     <ClCompile Include="Application\SourceCode\Effect\AirEffect.cpp" />
+    <ClCompile Include="Application\SourceCode\Effect\BossAttackTrajectoryEffect.cpp" />
     <ClCompile Include="Application\SourceCode\Motion\BackstepMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Motion\LogoExplosionEffect.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\Bloom.cpp" />
@@ -287,6 +288,7 @@
     <ClInclude Include="..\..\1.School\3.3年前期\TL1\CG5_Task01\Project\External\nlohmann\json.hpp" />
     <ClInclude Include="Application\SourceCode\CreateManager.h" />
     <ClInclude Include="Application\SourceCode\Effect\AirEffect.h" />
+    <ClInclude Include="Application\SourceCode\Effect\BossAttackTrajectoryEffect.h" />
     <ClInclude Include="Application\SourceCode\Effect\IEffect.h" />
     <ClInclude Include="Application\SourceCode\Motion\BackstepMotion.h" />
     <ClInclude Include="Application\SourceCode\Effect\BloodSprayEffect.h" />
@@ -506,6 +508,24 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Application\Shader\Effect\AirEffect\AirEffectVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\BossAttackTrajectoryEffect\BossAttackTrajectoryEffectInitCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\BossAttackTrajectoryEffect\BossAttackTrajectoryEffectUpdateCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\BossAttackTrajectoryEffect\BossAttackTrajectoryEffectVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>

@@ -134,7 +134,7 @@ void GameScene::Update()
 	{
 		if (SoundManager::GetIsPlaying("BattleBGM") == true)
 		{
-			SoundManager::SetVolume("BattleBGM", mBgmVolume);
+			SoundManager::SetVolume("BattleBGM", 0);
 			mBgmVolume += 0.005f;
 			mBgmVolume = Min<float>(mBgmVolume, 1.f);
 		}
