@@ -27,7 +27,9 @@ cbuffer ConstantBufferMaxParticleData : register(b0)
 // ベクトルのデータ
 cbuffer ConstantBufferVecData : register(b1)
 {
-    float3 vec;
+    uint isActive;
+    float3 startPos;
+    float3 endPos;
 }
 
 // 疑似乱数
@@ -43,12 +45,12 @@ ParticleData InitParticleData(uint index);
 void main(uint3 DTid : SV_DispatchThreadID)
 {
     // タイマーの処理
-    if (DTid.x == 0)
+    if (DTid.x == 0 && isActive == true)
     {
         bossAttackTrajectoryEffect[0].timer++;
         if (bossAttackTrajectoryEffect[0].timer >= bossAttackTrajectoryEffect[0].maxTimer)
         {
-            for (uint i = 0; i < 50; i++)
+            for (uint i = 0; i < 10; i++)
             {
                 uint index = bossAttackTrajectoryEffect[0].index;
                 outputData[index] = InitParticleData(index);
@@ -69,17 +71,14 @@ void main(uint3 DTid : SV_DispatchThreadID)
 
     for (uint i = startIndex; i < endIndex; i++)
     {
-        if (i >= bossAttackTrajectoryEffect[0].index)
-        {
-            return;
-        }
-        
         ParticleData result = outputData[i];
         
         if (result.scale.x <= 0)
         {
             continue;
         }
+        
+        result.pos += result.moveVec * result.moveAccel;
         
         result.shininess += 0.01f;
         result.color.a += 0.01f;
@@ -117,6 +116,7 @@ ParticleData InitParticleData(uint index)
     float2 seed = uint2(index % 256, index / 256) + uint2(-1, 1);
 
     // 座標
+    float3 vec = endPos - startPos;
     float3 frontVec = normalize(vec);
     float3 rightVec = normalize(cross(frontVec, float3(0, 1, 0)));
     float3 upVec = normalize(cross(frontVec, rightVec));
@@ -128,7 +128,7 @@ ParticleData InitParticleData(uint index)
     sign = Random01(seed) > 0.5f ? +1 : -1;
     
     seed = RandomSeed(seed, index);
-    result.pos = frontVec * Random01(seed) * length(vec) * sign;
+    result.pos = startPos + frontVec * Random01(seed) * length(vec);
 
     // 上下左右にずらす
     float dis = 2.f;
@@ -148,26 +148,24 @@ ParticleData InitParticleData(uint index)
     result.moveVec = normalize(float3(1, 1, 1));
         
     // 移動速度
-    const float3 baseSpeed = float3(0.005f, -0.01f, 0.005f);
-    const float3 rateSpeed = float3(0.01f, -0.005f, 0.01f);
+    const float3 baseSpeed = 0.1f;
+    const float3 rateSpeed = baseSpeed * 2;
     seed = RandomSeed(seed, index);
     result.moveAccel.x = baseSpeed.x - Random01(seed) * rateSpeed.x;
     seed = RandomSeed(seed, index);
-    result.moveAccel.y = baseSpeed.y + Random01(seed) * rateSpeed.y;
+    result.moveAccel.y = baseSpeed.y - Random01(seed) * rateSpeed.y;
     seed = RandomSeed(seed, index);
     result.moveAccel.z = baseSpeed.z - Random01(seed) * rateSpeed.z;
         
     // スケール
     seed = RandomSeed(seed, index);
-    result.scale = 0.25f + Random01(seed) * 0.15f;
+    result.scale = 0.6f + Random01(seed) * 0.3f;
     
     // 輝度
-    seed = RandomSeed(seed, index);
     result.shininess = 1.0f;
         
     // 色
     result.color = float4(0.53f, 0.f, 0.f, 0.f);
-    result.color.rgb = rightVec;
     
     return result;
 }

@@ -22,7 +22,6 @@ public:
 	EffectManager();
 	void Init();
 	void Update();
-	void DrawModel();
 	void DrawEffect(const bool isBloom = false);
 
 public:
@@ -32,10 +31,11 @@ public:
 	void GenerateRespawnPointEffect(const Vec3 pos);
 	void GenerateLeadEffect(const Vec3 pos, const Vec3 frontVec);
 	void GenerateLogoExplosionEffect(const Vec3 pos, const Vec3 rot, const Vec3 scale);
-	void GenerateBossAttackTrajectoryEffect(const Vec3 startPos, Vec3 endPos);
+	void GenerateBossAttackTrajectoryEffect();
 
 public:
 	void ExplosionLogoExplosionEffect();
+	void ExecuteBossAttackTrajectoryEffect(const bool isGenerate, const Vec3 startPos, const Vec3 endPos);
 
 public:
 	void SetPlayer(Player* player);

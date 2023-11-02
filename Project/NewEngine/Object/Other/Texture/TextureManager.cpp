@@ -601,13 +601,13 @@ Texture* TextureManager::GetTexture(const std::string tag)
 	if (it == GetInstance()->mTextureMap.end())
 	{
 		std::string log;
-		log = "[RenderTexture Error] Tag : " + tag + ", is nullptr";
+		log = "[Texture Error] Tag : " + tag + ", is nullptr";
 		return nullptr;
 	}
 	else
 	{
 		std::string log;
-		log = "[RenderTexture Use] Tag : " + tag + ", was used";
+		log = "[Texture Use] Tag : " + tag + ", was used";
 		OutputDebugLog(log.c_str());
 
 		Texture* texture = dynamic_cast<Texture*>(

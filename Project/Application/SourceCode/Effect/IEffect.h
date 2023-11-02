@@ -26,6 +26,9 @@ public:
 	virtual void Draw() = 0;
 
 public:
+	void SetisAcitve(const bool isActive);
+
+public:
 	bool GetisActive();
 	EffectType GetEffectType();
 };

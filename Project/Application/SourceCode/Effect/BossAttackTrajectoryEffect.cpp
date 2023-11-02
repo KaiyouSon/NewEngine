@@ -1,5 +1,6 @@
 #include "BossAttackTrajectoryEffect.h"
 using namespace StructuredBufferData;
+using namespace ConstantBufferData;
 using namespace ParticleParameter;
 
 BossAttackTrajectoryEffect::BossAttackTrajectoryEffect() :
@@ -7,26 +8,23 @@ BossAttackTrajectoryEffect::BossAttackTrajectoryEffect() :
 {
 	mEmitter->SetTexture(TextureManager::GetTexture("Particle2"));
 	mEmitter->SetParticleData<BossAttackTrajectoryParticle>(10000);
-	mEmitter->AddCSConstantBuffer<Vec3>();
+	mEmitter->AddCSConstantBuffer<CBossAttackTrajectoryEffect>();
 	mEmitter->AddCSStructuredBuffer<SBossAttackTrajectoryEffect>();
 
 	mEffectType = EffectType::BossAttackTrajectoryEffect;
 }
 
-void BossAttackTrajectoryEffect::Generate(const Vec3 startPos, const Vec3 endPos)
+void BossAttackTrajectoryEffect::Generate()
 {
-	mEmitter->pos = Vec3::up * 10;
-
 	mIsActive = true;
-	mStartPos = startPos;
-	mEndPos = endPos;
+	mIsGenerate = false;
 
 	mEmitter->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("BossAttackTrajectoryEffect"));
 	mEmitter->SetComputePipeline(PipelineManager::GetComputePipeline("BossAttackTrajectoryEffectInit"));
 
 	// ベクトル転送
-	Vec3 vec = mEndPos - mStartPos;
-	mEmitter->TransferCSConstantBuffer(1, vec);
+	CBossAttackTrajectoryEffect data = { mIsGenerate,mStartPos,mEndPos };
+	mEmitter->TransferCSConstantBuffer(1, data);
 
 	mEmitter->ExecuteCS();
 	mEmitter->SetComputePipeline(PipelineManager::GetComputePipeline("BossAttackTrajectoryEffectUpdate"));
@@ -35,8 +33,8 @@ void BossAttackTrajectoryEffect::Generate(const Vec3 startPos, const Vec3 endPos
 void BossAttackTrajectoryEffect::Update()
 {
 	// ベクトル転送
-	Vec3 vec = mEndPos - mStartPos;
-	mEmitter->TransferCSConstantBuffer(1, vec);
+	CBossAttackTrajectoryEffect data = { mIsGenerate,mStartPos,mEndPos };
+	mEmitter->TransferCSConstantBuffer(1, data);
 
 	mEmitter->Update();
 }
@@ -45,4 +43,11 @@ void BossAttackTrajectoryEffect::Draw()
 {
 	mEmitter->ExecuteCS();
 	mEmitter->Draw();
+}
+
+void BossAttackTrajectoryEffect::Execute(const bool isGenerate, const Vec3 startPos, const Vec3 endPos)
+{
+	mIsGenerate = isGenerate;
+	mStartPos = startPos;
+	mEndPos = endPos;
 }

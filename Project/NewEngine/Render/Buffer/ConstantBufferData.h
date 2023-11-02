@@ -220,4 +220,11 @@ namespace ConstantBufferData
 		Vec3 rateScaleAccel; float pad6;
 		Color baseColor;
 	};
+
+	struct CBossAttackTrajectoryEffect
+	{
+		uint32_t isActive;
+		Vec3 startPos;
+		Vec3 endPos;
+	};
 }

@@ -1,5 +1,6 @@
 #include "Sword.h"
 #include "MalletMotion.h"
+#include "EffectManager.h"
 
 Sword::Sword() :
 	mTrajectory(std::make_unique<Trajectory>())
@@ -39,6 +40,12 @@ void Sword::Update(Transform* parent)
 		mTrajectory->pos[Trajectory::RD] = mTrajectory->pos[Trajectory::LD];
 		mTrajectory->pos[Trajectory::RT] = mTrajectory->pos[Trajectory::LT];
 	}
+	// エフェクト生成
+	EffectManager::GetInstance()->
+		ExecuteBossAttackTrajectoryEffect(
+			mIsActiveTrajectory,
+			mTrajectory->pos[Trajectory::LD],
+			mTrajectory->pos[Trajectory::LT]);
 
 	mTrajectory->Update();
 

@@ -21,8 +21,9 @@ void EffectManager::Init()
 
 	mEffects.clear();
 	GenerateAirEffect(Vec3::up * 10.f);
-}
 
+	GenerateBossAttackTrajectoryEffect();
+}
 void EffectManager::Update()
 {
 	// デバッグのみ実行
@@ -30,7 +31,7 @@ void EffectManager::Update()
 		{
 			if (Key::GetKeyDown(DIK_G))
 			{
-				GenerateBossAttackTrajectoryEffect(Vec3::front * 10.f, 0);
+				GenerateBossAttackTrajectoryEffect();
 			}
 		});
 
@@ -48,13 +49,6 @@ void EffectManager::Update()
 		mEffects[i]->Update();
 	}
 }
-
-void EffectManager::DrawModel()
-{
-	// 陦
-	mBloodSprayEffect->DrawModel();
-}
-
 void EffectManager::DrawEffect(const bool isBloom)
 {
 	// ブルームかけるやつ
@@ -80,6 +74,11 @@ void EffectManager::DrawEffect(const bool isBloom)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// --- 生成 --------------------------------------------------------------------------------------------------//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// 空中のエフェクト
 void EffectManager::GenerateAirEffect(const Vec3 pos)
 {
 	// インスタンス生成
@@ -90,11 +89,13 @@ void EffectManager::GenerateAirEffect(const Vec3 pos)
 	mEffects.push_back(std::move(effect));
 }
 
+// 血のエフェクト
 void EffectManager::GenerateBloodSprayEffect(const Vec3 pos)
 {
 	mBloodSprayEffect->Generate(pos);
 }
 
+// プレイヤーの回復のエフェクト
 void EffectManager::GeneratePlayerRecoveryEffect(const Vec3 pos)
 {
 	// インスタンス生成
@@ -105,12 +106,14 @@ void EffectManager::GeneratePlayerRecoveryEffect(const Vec3 pos)
 	mEffects.push_back(std::move(effect));
 }
 
+// リスポーン地点のエフェクト
 void EffectManager::GenerateRespawnPointEffect(const Vec3 pos)
 {
 	pos;
 	//mRespawnPointEffect->Generate(pos);
 }
 
+// 誘導エフェクト
 void EffectManager::GenerateLeadEffect(const Vec3 pos, const Vec3 frontVec)
 {
 	// インスタンス生成
@@ -121,6 +124,7 @@ void EffectManager::GenerateLeadEffect(const Vec3 pos, const Vec3 frontVec)
 	mEffects.push_back(std::move(effect));
 }
 
+// タイトルロゴが爆散するエフェクト
 void EffectManager::GenerateLogoExplosionEffect(const Vec3 pos, const Vec3 rot, const Vec3 scale)
 {
 	// インスタンス生成
@@ -131,16 +135,22 @@ void EffectManager::GenerateLogoExplosionEffect(const Vec3 pos, const Vec3 rot, 
 	mEffects.push_back(std::move(effect));
 }
 
-void EffectManager::GenerateBossAttackTrajectoryEffect(const Vec3 startPos, Vec3 endPos)
+// ボスの攻撃の軌跡のエフェクト
+void EffectManager::GenerateBossAttackTrajectoryEffect()
 {
 	// インスタンス生成
 	std::unique_ptr<BossAttackTrajectoryEffect> effect = std::make_unique<BossAttackTrajectoryEffect>();
-	effect->Generate(startPos, endPos);
+	effect->Generate();
 
 	// ベクターに追加
 	mEffects.push_back(std::move(effect));
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// --- 実行 --------------------------------------------------------------------------------------------------//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// タイトルロゴが爆散するエフェクト
 void EffectManager::ExplosionLogoExplosionEffect()
 {
 	for (uint32_t i = 0; i < mEffects.size(); i++)
@@ -154,6 +164,25 @@ void EffectManager::ExplosionLogoExplosionEffect()
 		}
 	}
 }
+
+// ボスの攻撃の軌跡のエフェクト
+void EffectManager::ExecuteBossAttackTrajectoryEffect(const bool isGenerate, const Vec3 startPos, const Vec3 endPos)
+{
+	for (uint32_t i = 0; i < mEffects.size(); i++)
+	{
+		// 先に格納したエフェクト
+		if (mEffects[i]->GetEffectType() == EffectType::BossAttackTrajectoryEffect)
+		{
+			BossAttackTrajectoryEffect* effect = dynamic_cast<BossAttackTrajectoryEffect*>(mEffects[i].get());
+			effect->Execute(isGenerate, startPos, endPos);
+			break;
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// --- セッター ----------------------------------------------------------------------------------------------//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void EffectManager::SetPlayer(Player* player)
 {
