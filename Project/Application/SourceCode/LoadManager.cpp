@@ -36,48 +36,49 @@ void LoadManager::TitleSceneUnLoad()
 void LoadManager::GameSceneLoad()
 {
 	// UI
-	TextureManager::LoadTexture("UI/Gauge.png", "Gauge");
-	TextureManager::LoadTexture("UI/Buttons.png", "Buttons");
-	TextureManager::LoadTexture("UI/Negotiation/NegotiationBack.png", "NegotiationBack");
-	TextureManager::LoadTexture("UI/MessageSign/MessageBack.png", "MessageBack");
-	TextureManager::LoadTexture("UI/MessageSign/MessageSignUI.png", "MessageSignUI");
-	TextureManager::LoadTexture("UI/ItemBoxFrame.png", "ItemBoxFrame");
-	TextureManager::LoadTexture("UI/ItemBoxLight.png", "ItemBoxLight");
-	TextureManager::LoadTexture("UI/ItemUI/BottleUI.png", "BottleUI");
-	TextureManager::LoadTexture("UI/ItemUI/ClubUI.png", "ClubUI");
-	TextureManager::LoadTexture("UI/Menu/TempMenuBack.png", "MenuBack");
-	TextureManager::LoadTexture("UI/Menu/MenuTextFrame.png", "MenuTextFrame");
-	TextureManager::LoadTexture("UI/Menu/MenuTextLight.png", "MenuTextLight");
-	TextureManager::LoadTexture("UI/Result/ResultBack.png", "ResultBack");
-	TextureManager::LoadTexture("UI/Operation/OperationBack.png", "OperationBack");
+	TextureManager::LoadTextureFromDDS("UI/Gauge.dds", "Gauge");
+	TextureManager::LoadTextureFromDDS("UI/Buttons.dds", "Buttons");
+	TextureManager::LoadTextureFromDDS("UI/Negotiation/NegotiationBack.dds", "NegotiationBack");
+	TextureManager::LoadTextureFromDDS("UI/MessageSign/MessageBack.dds", "MessageBack");
+	TextureManager::LoadTextureFromDDS("UI/MessageSign/MessageSignUI.dds", "MessageSignUI");
+	TextureManager::LoadTextureFromDDS("UI/ItemBoxFrame.dds", "ItemBoxFrame");
+	TextureManager::LoadTextureFromDDS("UI/ItemBoxLight.dds", "ItemBoxLight");
+	TextureManager::LoadTextureFromDDS("UI/ItemUI/BottleUI.dds", "BottleUI");
+	TextureManager::LoadTextureFromDDS("UI/ItemUI/ClubUI.dds", "ClubUI");
+	TextureManager::LoadTextureFromDDS("UI/Menu/TempMenuBack.dds", "MenuBack");
+	TextureManager::LoadTextureFromDDS("UI/Menu/MenuTextFrame.dds", "MenuTextFrame");
+	TextureManager::LoadTextureFromDDS("UI/Menu/MenuTextLight.dds", "MenuTextLight");
+	TextureManager::LoadTextureFromDDS("UI/Result/ResultBack.dds", "ResultBack");
+	TextureManager::LoadTextureFromDDS("UI/Operation/OperationBack.dds", "OperationBack");
 
 	// テキスト
-	TextureManager::LoadTexture("Text/ColonStr.png", "ColonStr");
-	TextureManager::LoadTexture("Text/Negotiation/ReadMessageStr.png", "ReadMessageStr");
-	TextureManager::LoadTexture("Text/Negotiation/RestInLightStr.png", "RestInLightStr");
-	TextureManager::LoadTexture("Text/Negotiation/OpenStr.png", "OpenStr");
-	TextureManager::LoadTexture("Text/ExitStr.png", "ExitStr");
-	TextureManager::LoadTexture("Text/Operation/Operation1Text.png", "Operation1Text");
-	TextureManager::LoadTexture("Text/Operation/Operation2Text.png", "Operation2Text");
-	TextureManager::LoadTexture("Text/Operation/Operation3Text.png", "Operation3Text");
-	TextureManager::LoadTexture("Text/Operation/Operation4Text.png", "Operation4Text");
-	TextureManager::LoadTexture("Text/Operation/Operation5Text.png", "Operation5Text");
-	TextureManager::LoadTexture("Text/Menu/BackToTitleStr.png", "BackToTitleStr");
-	TextureManager::LoadTexture("Text/Menu/CloseGameStr.png", "CloseGameStr");
-	TextureManager::LoadTexture("Text/Result/EnemyFelledStr.png", "EnemyFelledStr");
-	TextureManager::LoadTexture("Text/Result/YouDiedStr.png", "YouDiedStr");
-	TextureManager::LoadTexture("Text/RespawnPoint/DecisionCloseStr.png", "DecisionCloseStr");
-	TextureManager::LoadTexture("Text/NumberSheets.png", "NumberSheets");
+	TextureManager::LoadTextureFromDDS("Text/ColonStr.dds", "ColonStr");
+	TextureManager::LoadTextureFromDDS("Text/Negotiation/ReadMessageStr.dds", "ReadMessageStr");
+	TextureManager::LoadTextureFromDDS("Text/Negotiation/RestInLightStr.dds", "RestInLightStr");
+	TextureManager::LoadTextureFromDDS("Text/Negotiation/OpenStr.dds", "OpenStr");
+	TextureManager::LoadTextureFromDDS("Text/ExitStr.dds", "ExitStr");
+	TextureManager::LoadTextureFromDDS("Text/Operation/Operation1Text.dds", "Operation1Text");
+	TextureManager::LoadTextureFromDDS("Text/Operation/Operation2Text.dds", "Operation2Text");
+	TextureManager::LoadTextureFromDDS("Text/Operation/Operation3Text.dds", "Operation3Text");
+	TextureManager::LoadTextureFromDDS("Text/Operation/Operation4Text.dds", "Operation4Text");
+	TextureManager::LoadTextureFromDDS("Text/Operation/Operation5Text.dds", "Operation5Text");
+	TextureManager::LoadTextureFromDDS("Text/Menu/BackToTitleStr.dds", "BackToTitleStr");
+	TextureManager::LoadTextureFromDDS("Text/Menu/CloseGameStr.dds", "CloseGameStr");
+	TextureManager::LoadTextureFromDDS("Text/Result/EnemyFelledStr.dds", "EnemyFelledStr");
+	TextureManager::LoadTextureFromDDS("Text/Result/YouDiedStr.dds", "YouDiedStr");
+	TextureManager::LoadTextureFromDDS("Text/RespawnPoint/DecisionCloseStr.dds", "DecisionCloseStr");
+	TextureManager::LoadTextureFromDDS("Text/NumberSheets.dds", "NumberSheets");
 
 	// パーティクル
-	TextureManager::LoadTexture("Particle/Particle1.png", "Particle1");
-	TextureManager::LoadTexture("Particle/Particle2.png", "Particle2");
-	TextureManager::LoadTexture("Particle/Line.png", "Line");
-	TextureManager::LoadTexture("Trajectory.png", "Trajectory");
+	TextureManager::LoadTextureFromDDS("Particle/Particle1.dds", "Particle1");
+	TextureManager::LoadTextureFromDDS("Particle/Particle2.dds", "Particle2");
+	TextureManager::LoadTextureFromDDS("Particle/Line.dds", "Line");
+	TextureManager::LoadTextureFromDDS("Trajectory.dds", "Trajectory");
 
 	// 草
-	TextureManager::LoadTexture("Grass/Weed.png", "Weed");
-	TextureManager::LoadTexture("Branch.png", "Branch");
+	//TextureManager::LoadTextureFromDDS("Grass/Weed.dds", "Weed");
+	TextureManager::LoadTextureFromDDS("Grass/Weed.dds", "Weed");
+	TextureManager::LoadTextureFromDDS("Branch.dds", "Branch");
 
 	// 天球
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Vignette");
@@ -88,6 +89,19 @@ void LoadManager::GameSceneLoad()
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomGaussianBlur");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomTarget");
+
+	// ボリュームテクスチャの作成
+	std::vector<Texture*> texs;
+	for (uint32_t i = 0; i < 16; i++)
+	{
+		// ボリュームノイズのロード
+		std::string index = std::to_string(i);
+		std::string path = "Noice/VolumeNoice/VolumeNoice" + index + ".png";
+		std::string tag = "Noice" + index;
+		TextureManager::LoadTexture(path, tag);
+		texs.push_back(TextureManager::GetTexture(tag));
+	}
+	TextureManager::CreateVolumeTexture(texs, "VolumeTexture");
 }
 void LoadManager::GameSceneUnLoad()
 {
@@ -144,6 +158,9 @@ void LoadManager::GameSceneUnLoad()
 	TextureManager::DestroyRenderTexture("BloomGaussianBlur");
 	TextureManager::DestroyRenderTexture("Bloom");
 	TextureManager::DestroyRenderTexture("BloomTarget");
+
+	// ボリュームテクスチャの破棄
+	TextureManager::DestroyVolumeTexture("VolumeTexture");
 }
 
 bool LoadManager::ModelLoad()
@@ -194,14 +211,14 @@ bool LoadManager::ModelLoad()
 bool LoadManager::TextureLoad()
 {
 	// タイトルロゴ
-	TextureManager::LoadTexture("Title/TitleLogo.png", "TitleLogo");
+	TextureManager::LoadTextureFromDDS("Title/TitleLogo.dds", "TitleLogo");
 
 	// ディゾルブ
-	TextureManager::LoadTexture("DissolveTexture.png", "DissolveTexture");
+	TextureManager::LoadTextureFromDDS("DissolveTexture.dds", "DissolveTexture");
 
 	// ブラー
-	TextureManager::LoadTexture("Noice/BlurNoice.png", "BlurNoice");
-	TextureManager::LoadTexture("Noice/ScreenNoice.png", "ScreenNoice");
+	TextureManager::LoadTextureFromDDS("Noice/BlurNoice.dds", "BlurNoice");
+	TextureManager::LoadTextureFromDDS("Noice/ScreenNoice.dds", "ScreenNoice");
 
 	// シャドウマップ
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMap");
@@ -209,19 +226,6 @@ bool LoadManager::TextureLoad()
 
 	// 現在のシーン
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "CurrentScene");
-
-	// ボリュームテクスチャの作成
-	std::vector<Texture*> texs;
-	for (uint32_t i = 0; i < 16; i++)
-	{
-		// ボリュームノイズのロード
-		std::string index = std::to_string(i);
-		std::string path = "Noice/VolumeNoice/VolumeNoice" + index + ".png";
-		std::string tag = "Noice" + index;
-		TextureManager::LoadTexture(path, tag);
-		texs.push_back(TextureManager::GetTexture(tag));
-	}
-	TextureManager::CreateVolumeTexture(texs, "VolumeTexture");
 
 	// 非同期終わったよ～
 	return true;

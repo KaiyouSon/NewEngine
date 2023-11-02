@@ -116,6 +116,94 @@ void TextureManager::LoadTexture(const std::string filePath, const std::string t
 	std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + tag + ", was loaded successfully";
 	OutputDebugLog(log.c_str());
 }
+void TextureManager::LoadTextureFromDDS(const std::string filePath, const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	// マップに格納
+	GetInstance()->mTextureMap.
+		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
+
+	Texture* texture = dynamic_cast<Texture*>(GetInstance()->mTextureMap[tag].get());
+
+	std::string path = "Application/Resources/DDSTexture/" + filePath;
+
+	HRESULT result;
+
+	TexMetadata metadata{};
+	ScratchImage scratchImg{};
+	std::wstring wfilePath(path.begin(), path.end());
+
+	// WICを使用してテクスチャデータを読み込む
+	result = LoadFromWICFile(
+		wfilePath.c_str(),
+		WIC_FLAGS_NONE,
+		&metadata, scratchImg);
+
+	result = LoadFromDDSFile(
+		wfilePath.c_str(),
+		DDS_FLAGS_NONE,
+		&metadata, scratchImg);
+
+	if (result != S_OK)
+	{
+		std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + tag + ", is,failed to load";
+		OutputDebugLog(log.c_str());
+
+		assert(0 && "テクスチャ読み込みに失敗しました");
+	}
+
+	// リソース設定
+	D3D12_RESOURCE_DESC resourceDesc =
+		CD3DX12_RESOURCE_DESC::Tex2D(
+			metadata.format,
+			static_cast<uint64_t>(metadata.width),
+			static_cast<uint32_t>(metadata.height),
+			static_cast<uint16_t>(metadata.arraySize),
+			static_cast<uint16_t>(metadata.mipLevels),
+			1);
+
+	// テクスチャーのバッファ生成
+	texture->Create(resourceDesc, static_cast<uint32_t>(metadata.mipLevels));
+
+	// SRV作成
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(texture->GetBufferResource());
+
+	// サブリソースデータを初期化
+	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas(metadata.mipLevels);
+	for (size_t i = 0; i < subResourcesDatas.size(); i++)
+	{
+		// イメージデータを取得してサブリソースデータを設定
+		const Image* img = scratchImg.GetImage(i, 0, 0);
+		subResourcesDatas[i].pData = img->pixels;
+		subResourcesDatas[i].RowPitch = img->rowPitch;
+		subResourcesDatas[i].SlicePitch = img->slicePitch;
+
+	}
+	// テクスチャーをアップロード
+	UpdateSubresources(
+		RenderBase::GetInstance()->GetCommandList(),
+		texture->GetBufferResource()->buffer.Get(),
+		texture->GetUploadBuffer()->GetBufferResource()->buffer.Get(),
+		0,
+		0,
+		static_cast<uint32_t>(metadata.mipLevels),
+		subResourcesDatas.data());
+
+	// リソースの状態変更
+	RenderBase::GetInstance()->TransitionBufferState(
+		texture->GetBufferResource(),
+		D3D12_RESOURCE_STATE_COPY_DEST,
+		D3D12_RESOURCE_STATE_GENERIC_READ);
+
+	// 使い終わったならテクスチャにmove
+	texture->SetScratchImage(&scratchImg);
+
+	// Log出力
+	std::string log = "[Texture Load] FilePath : " + filePath + ", Tag : " + tag + ", was loaded successfully";
+	OutputDebugLog(log.c_str());
+}
 
 // mtlファイルのテクスチャーをロード
 Texture* TextureManager::LoadMaterialTexture(const std::string filePath, const std::string tag)
@@ -423,7 +511,7 @@ void TextureManager::DestroyDepthTexture(const std::string tag)
 }
 
 // ボリュームテクスチャの破棄
-void TextureManager::VolumeDepthTexture(const std::string tag)
+void TextureManager::DestroyVolumeTexture(const std::string tag)
 {
 	// 排他制御
 	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);

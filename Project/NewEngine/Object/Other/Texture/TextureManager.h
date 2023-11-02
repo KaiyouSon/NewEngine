@@ -28,6 +28,7 @@ public:	// 生成関連
 
 	// テクスチャーをロード
 	static void LoadTexture(const std::string filePath, const std::string tag);
+	static void LoadTextureFromDDS(const std::string filePath, const std::string tag);
 
 	// mtlファイルのテクスチャーをロード
 	static Texture* LoadMaterialTexture(const std::string filePath, const std::string tag);
@@ -53,7 +54,7 @@ public: // 破棄関連
 	static void DestroyDepthTexture(const std::string tag);
 
 	// ボリュームテクスチャの破棄
-	static void VolumeDepthTexture(const std::string tag);
+	static void DestroyVolumeTexture(const std::string tag);
 
 	// レンダーテクスチャの破棄
 	static void DestroyRenderTexture(const std::string tag);

@@ -52,9 +52,9 @@ void main(uint3 DTid : SV_DispatchThreadID)
             {
                 uint index = bossAttackTrajectoryEffect[0].index;
                 outputData[index] = InitParticleData(index);
+                bossAttackTrajectoryEffect[0].index++;
             }
             
-            bossAttackTrajectoryEffect[0].index += 10;
             bossAttackTrajectoryEffect[0].timer = 0;
             if (bossAttackTrajectoryEffect[0].index >= max)
             {
@@ -76,15 +76,18 @@ void main(uint3 DTid : SV_DispatchThreadID)
         
         ParticleData result = outputData[i];
         
-        //result.color.a += 0.01f;
-        //if (result.color.a >= 1)
-        //{
-        //    result.color.a = 1;
-        //    result.scale -= 0.001f;
-        //}
+        if (result.scale.x <= 0)
+        {
+            continue;
+        }
         
         result.shininess += 0.01f;
         result.color.a += 0.01f;
+        if (result.color.a >= 0)
+        {
+            result.color.a = 1;
+            result.scale -= 0.001f;
+        }
         
         outputData[i] = result;
     }
@@ -125,7 +128,7 @@ ParticleData InitParticleData(uint index)
     sign = Random01(seed) > 0.5f ? +1 : -1;
     
     seed = RandomSeed(seed, index);
-    result.pos = frontVec * Random01(seed) * length(vec);
+    result.pos = frontVec * Random01(seed) * length(vec) * sign;
 
     // 上下左右にずらす
     float dis = 2.f;
@@ -133,13 +136,13 @@ ParticleData InitParticleData(uint index)
     sign = Random01(seed) > 0.5f ? +1 : -1;
     
     seed = RandomSeed(seed, index);
-    result.pos += rightVec * Random01(seed) * dis;
+    result.pos += rightVec * Random01(seed) * dis * sign;
     
     seed = RandomSeed(seed, index);
     sign = Random01(seed) > 0.5f ? +1 : -1;
     
     seed = RandomSeed(seed, index);
-    result.pos += upVec * Random01(seed) * dis;
+    result.pos += upVec * Random01(seed) * dis * sign;
 
     // ベクトル
     result.moveVec = normalize(float3(1, 1, 1));
@@ -163,7 +166,7 @@ ParticleData InitParticleData(uint index)
     result.shininess = 1.0f;
         
     // 色
-    result.color = float4(0.53f, 0.f, 0.f, 1.f);
+    result.color = float4(0.53f, 0.f, 0.f, 0.f);
     result.color.rgb = rightVec;
     
     return result;
