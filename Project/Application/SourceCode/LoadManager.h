@@ -16,6 +16,10 @@ private:
 	bool SoundLoad();
 	bool MotionLoad();
 
+private:
+	void GameSceneTextureLoad();
+	void GameSceneTextureUnLoad();
+
 public:
 	// タイトルシーンでのロード・アンロード
 	void TitleSceneLoad();

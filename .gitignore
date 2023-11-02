@@ -367,3 +367,5 @@ Generated/
 
 *assimp-vc143-mtd.dll
 *NewEngine.exe
+*imgui.ini
+/Project/imgui.ini

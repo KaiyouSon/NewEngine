@@ -4,7 +4,9 @@
 #include "MotionManager.h"
 #include "FieldDataManager.h"
 
-// タイトルシーンでのロード・アンロード
+///////////////////////////////////////////////////////////////
+// --- タイトルシーンでのロード・アンロード ----------------///
+///////////////////////////////////////////////////////////////
 void LoadManager::TitleSceneLoad()
 {
 	TextureManager::LoadTexture("Particle/Particle1.png", "Particle1");
@@ -32,24 +34,36 @@ void LoadManager::TitleSceneUnLoad()
 	TextureManager::DestroyRenderTexture("BloomTarget");
 }
 
-// ゲームシーンでのロード・アンロード
+///////////////////////////////////////////////////////////////
+// --- ゲームシーンでのロード・アンロード ------------------///
+///////////////////////////////////////////////////////////////
 void LoadManager::GameSceneLoad()
 {
+	GameSceneTextureLoad();
+}
+void LoadManager::GameSceneUnLoad()
+{
+	GameSceneTextureUnLoad();
+}
+
+// テクスチャ
+void LoadManager::GameSceneTextureLoad()
+{
 	// UI
-	TextureManager::LoadTextureFromDDS("UI/Gauge.dds", "Gauge");
-	TextureManager::LoadTextureFromDDS("UI/Buttons.dds", "Buttons");
-	TextureManager::LoadTextureFromDDS("UI/Negotiation/NegotiationBack.dds", "NegotiationBack");
-	TextureManager::LoadTextureFromDDS("UI/MessageSign/MessageBack.dds", "MessageBack");
-	TextureManager::LoadTextureFromDDS("UI/MessageSign/MessageSignUI.dds", "MessageSignUI");
-	TextureManager::LoadTextureFromDDS("UI/ItemBoxFrame.dds", "ItemBoxFrame");
-	TextureManager::LoadTextureFromDDS("UI/ItemBoxLight.dds", "ItemBoxLight");
-	TextureManager::LoadTextureFromDDS("UI/ItemUI/BottleUI.dds", "BottleUI");
-	TextureManager::LoadTextureFromDDS("UI/ItemUI/ClubUI.dds", "ClubUI");
-	TextureManager::LoadTextureFromDDS("UI/Menu/TempMenuBack.dds", "MenuBack");
-	TextureManager::LoadTextureFromDDS("UI/Menu/MenuTextFrame.dds", "MenuTextFrame");
-	TextureManager::LoadTextureFromDDS("UI/Menu/MenuTextLight.dds", "MenuTextLight");
-	TextureManager::LoadTextureFromDDS("UI/Result/ResultBack.dds", "ResultBack");
-	TextureManager::LoadTextureFromDDS("UI/Operation/OperationBack.dds", "OperationBack");
+	TextureManager::LoadTexture("UI/Gauge.png", "Gauge");
+	TextureManager::LoadTexture("UI/Buttons.png", "Buttons");
+	TextureManager::LoadTexture("UI/Negotiation/NegotiationBack.png", "NegotiationBack");
+	TextureManager::LoadTexture("UI/MessageSign/MessageBack.png", "MessageBack");
+	TextureManager::LoadTexture("UI/MessageSign/MessageSignUI.png", "MessageSignUI");
+	TextureManager::LoadTexture("UI/ItemBoxFrame.png", "ItemBoxFrame");
+	TextureManager::LoadTexture("UI/ItemBoxLight.png", "ItemBoxLight");
+	TextureManager::LoadTexture("UI/ItemUI/BottleUI.png", "BottleUI");
+	TextureManager::LoadTexture("UI/ItemUI/ClubUI.png", "ClubUI");
+	TextureManager::LoadTexture("UI/Menu/TempMenuBack.png", "MenuBack");
+	TextureManager::LoadTexture("UI/Menu/MenuTextFrame.png", "MenuTextFrame");
+	TextureManager::LoadTexture("UI/Menu/MenuTextLight.png", "MenuTextLight");
+	TextureManager::LoadTexture("UI/Result/ResultBack.png", "ResultBack");
+	TextureManager::LoadTexture("UI/Operation/OperationBack.png", "OperationBack");
 
 	// テキスト
 	TextureManager::LoadTextureFromDDS("Text/ColonStr.dds", "ColonStr");
@@ -76,7 +90,6 @@ void LoadManager::GameSceneLoad()
 	TextureManager::LoadTextureFromDDS("Trajectory.dds", "Trajectory");
 
 	// 草
-	//TextureManager::LoadTextureFromDDS("Grass/Weed.dds", "Weed");
 	TextureManager::LoadTextureFromDDS("Grass/Weed.dds", "Weed");
 	TextureManager::LoadTextureFromDDS("Branch.dds", "Branch");
 
@@ -89,21 +102,8 @@ void LoadManager::GameSceneLoad()
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomGaussianBlur");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomTarget");
-
-	// ボリュームテクスチャの作成
-	std::vector<Texture*> texs;
-	for (uint32_t i = 0; i < 16; i++)
-	{
-		// ボリュームノイズのロード
-		std::string index = std::to_string(i);
-		std::string path = "Noice/VolumeNoice/VolumeNoice" + index + ".png";
-		std::string tag = "Noice" + index;
-		TextureManager::LoadTexture(path, tag);
-		texs.push_back(TextureManager::GetTexture(tag));
-	}
-	TextureManager::CreateVolumeTexture(texs, "VolumeTexture");
 }
-void LoadManager::GameSceneUnLoad()
+void LoadManager::GameSceneTextureUnLoad()
 {
 	// UI
 	TextureManager::DestroyTexture("Gauge");
@@ -158,15 +158,13 @@ void LoadManager::GameSceneUnLoad()
 	TextureManager::DestroyRenderTexture("BloomGaussianBlur");
 	TextureManager::DestroyRenderTexture("Bloom");
 	TextureManager::DestroyRenderTexture("BloomTarget");
-
-	// ボリュームテクスチャの破棄
-	TextureManager::DestroyVolumeTexture("VolumeTexture");
 }
 
+///////////////////////////////////////////////////////////////
+// --- ゲーム起動時 ----------------------------------------///
+///////////////////////////////////////////////////////////////
 bool LoadManager::ModelLoad()
 {
-	ModelManager::LoadObjModel("Block1", "Block1");
-	ModelManager::LoadFbxModel("boneTest", "BoneTest");
 	ModelManager::LoadObjModel("Cube", "Cube");
 	ModelManager::LoadObjModel("Sphere", "Sphere");
 
@@ -207,7 +205,6 @@ bool LoadManager::ModelLoad()
 	// 非同期終わったよ～
 	return true;
 }
-
 bool LoadManager::TextureLoad()
 {
 	// タイトルロゴ
@@ -227,10 +224,22 @@ bool LoadManager::TextureLoad()
 	// 現在のシーン
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "CurrentScene");
 
+	// ボリュームテクスチャの作成
+	std::vector<Texture*> texs;
+	for (uint32_t i = 0; i < 16; i++)
+	{
+		// ボリュームノイズのロード
+		std::string index = std::to_string(i);
+		std::string path = "Noice/VolumeNoice/VolumeNoice" + index + ".png";
+		std::string tag = "Noice" + index;
+		TextureManager::LoadTexture(path, tag);
+		texs.push_back(TextureManager::GetTexture(tag));
+	}
+	TextureManager::CreateVolumeTexture(texs, "VolumeTexture");
+
 	// 非同期終わったよ～
 	return true;
 }
-
 bool LoadManager::SoundLoad()
 {
 	// BGM
@@ -250,7 +259,6 @@ bool LoadManager::SoundLoad()
 	// 非同期終わったよ～
 	return true;
 }
-
 bool LoadManager::MotionLoad()
 {
 	MotionManager::Load("Player/BackstepMotion", "Backstep");

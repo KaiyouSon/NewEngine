@@ -136,11 +136,6 @@ void TextureManager::LoadTextureFromDDS(const std::string filePath, const std::s
 	std::wstring wfilePath(path.begin(), path.end());
 
 	// WICを使用してテクスチャデータを読み込む
-	result = LoadFromWICFile(
-		wfilePath.c_str(),
-		WIC_FLAGS_NONE,
-		&metadata, scratchImg);
-
 	result = LoadFromDDSFile(
 		wfilePath.c_str(),
 		DDS_FLAGS_NONE,
