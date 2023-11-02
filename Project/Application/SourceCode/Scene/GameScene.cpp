@@ -25,7 +25,6 @@ void GameScene::UnLoad()
 void GameScene::CreateInstance()
 {
 	mDirectionalLight = std::make_unique<DirectionalLight>();
-
 	mPlayer = std::make_unique<Player>();
 	mBoss = std::make_unique<Boss>();
 	mUiManager = std::make_unique<UIManager>();
@@ -68,6 +67,7 @@ void GameScene::Init()
 	EffectManager::GetInstance()->Init();
 	EffectManager::GetInstance()->SetPlayer(mPlayer.get());
 
+	mField->SetFieldData(FieldDataManager::GetFieldData("SkyIsland"));
 	mField->Init();
 	mSkydome->Init();
 

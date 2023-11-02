@@ -14,6 +14,7 @@ class SceneManager : public Singleton<SceneManager>
 private:
 	enum ChangeStep
 	{
+		None,
 		CreateInstance,	// インスタンス生成中
 		Loading,		// ロード中
 		Changed			// シーン切り替え終わった
@@ -23,7 +24,6 @@ private:
 	friend Singleton<SceneManager>;
 	static std::unique_ptr<IScene> sCurrentScene;
 	static std::unique_ptr<IScene> sNextScene;
-	static bool sIsChanged;
 	ChangeStep mChangeStep;
 	bool mIsReturn;
 
@@ -42,10 +42,14 @@ public:
 	template<typename T>
 	static void ChangeScene()
 	{
-		sIsChanged = false;
-
 		switch (GetInstance()->mChangeStep)
 		{
+		case None:
+		{
+			GetInstance()->mChangeStep = CreateInstance;
+		}
+		break;
+
 		case CreateInstance:
 		{
 			// 次のシーンのインスタンスを作成
@@ -87,7 +91,6 @@ public:
 			}
 		}
 		break;
-
 		}
 	}
 

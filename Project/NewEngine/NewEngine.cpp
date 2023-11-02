@@ -87,60 +87,66 @@ void NewEngine::Init()
 
 void NewEngine::Update()
 {
-	// ロード終了なら
-	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
-	if (isLoaded == true)
+	mIsLoaded = LoadManager::GetInstance()->GetisLoaded();
+
+	// ロード終わってないなら
+	if (mIsLoaded == false)
 	{
-		InputManager::GetInstance()->Update();
-		DebugManager::GetInstance()->Update();
-		if (DebugManager::GetInstance()->GetisStop() == false ||
-			DebugManager::GetInstance()->GetisNextFrame() == true)
-		{
-			LightManager::GetInstance()->Update();
-			SceneManager::GetInstance()->Update();
-			DebugManager::GetInstance()->SetisNextFrame(false);
-		}
+		return;
+	}
+
+	InputManager::GetInstance()->Update();
+	DebugManager::GetInstance()->Update();
+	if (DebugManager::GetInstance()->GetisStop() == false ||
+		DebugManager::GetInstance()->GetisNextFrame() == true)
+	{
+		LightManager::GetInstance()->Update();
+		SceneManager::GetInstance()->Update();
+		DebugManager::GetInstance()->SetisNextFrame(false);
 	}
 }
 
 void NewEngine::Draw()
 {
-	// ロード終了なら
-	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
-	if (isLoaded == true)
+	// ロード終わってないなら
+	if (mIsLoaded == false)
 	{
-		SceneManager::GetInstance()->Draw();
-		ColliderDrawer::GetInstance()->DrawCollider();
-		SceneManager::GetInstance()->DrawDebugGui();
-		DebugManager::GetInstance()->DrawDebugGui();
+		return;
 	}
+
+	SceneManager::GetInstance()->Draw();
+	ColliderDrawer::GetInstance()->DrawCollider();
+	SceneManager::GetInstance()->DrawDebugGui();
+	DebugManager::GetInstance()->DrawDebugGui();
 }
 
 void NewEngine::PrevDraw()
 {
-	// ロード終了なら
-	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
-	if (isLoaded == true)
+	// ロード終わってないなら
+	if (mIsLoaded == false)
 	{
-		// SRVのヒープセット
-		auto srvDescHeap = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
-		RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &srvDescHeap);
-		SceneManager::GetInstance()->DrawPass();
-
-		RenderBase::GetInstance()->PreDraw();
-		Gui::PreDraw();
+		return;
 	}
+
+	// SRVのヒープセット
+	auto srvDescHeap = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
+	RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &srvDescHeap);
+	SceneManager::GetInstance()->DrawPass();
+
+	RenderBase::GetInstance()->PreDraw();
+	Gui::PreDraw();
 }
 
 void NewEngine::PostDraw()
 {
-	// ロード終了なら
-	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
-	if (isLoaded == true)
+	// ロード終わってないなら
+	if (mIsLoaded == false)
 	{
-		Gui::PostDraw();
-		RenderBase::GetInstance()->PostDraw();
+		return;
 	}
+
+	Gui::PostDraw();
+	RenderBase::GetInstance()->PostDraw();
 }
 
 void NewEngine::FrameControl()

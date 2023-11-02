@@ -27,6 +27,11 @@ public: // ロード関連
 	// マテリアルのロード
 	static void LoadMtlFile(std::string filePath, Model* model);
 
+public: // 破棄関連
+
+	// モデルの破棄
+	static void DestroyModel(const std::string tag);
+
 public:	// モデルの取得関連
 	static Model* GetModel(const std::string tag);
 

@@ -1,6 +1,6 @@
 #include "ModelManager.h"
-#include "TextureManager.h"
 #include "AssimpLoader.h"
+#include "TextureManager.h"
 #include <fstream>
 #include <sstream>
 
@@ -318,6 +318,31 @@ void ModelManager::LoadMtlFile(std::string filePath, Model* model)
 
 	// ファイルを閉じる
 	file.close();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// --- 破棄関連 ------------------------------------------------------------------------------------------------------ ///
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void ModelManager::DestroyModel(const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	auto it = GetInstance()->mModelMap.find(tag);
+	if (it == GetInstance()->mModelMap.end())
+	{
+		std::string log;
+		log = "[ObjModel Error] Tag : " + tag + ", is nullptr";
+		return;
+	}
+
+	// テクスチャのSRV解放
+	std::string textureTag = GetInstance()->mModelMap[tag]->name + "Texture";
+	TextureManager::DestroyMaterialTexture(textureTag);
+
+	// Mapから削除
+	GetInstance()->mModelMap.erase(tag);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

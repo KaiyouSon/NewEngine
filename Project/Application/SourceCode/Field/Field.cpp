@@ -4,7 +4,6 @@
 Field::Field() :
 	mFieldData(nullptr)
 {
-	mFieldData = FieldDataManager::GetFieldData("SkyIsland");
 }
 
 void Field::Init()
@@ -191,6 +190,11 @@ void Field::DrawDebugGui()
 FieldData* Field::GetFieldData()
 {
 	return mFieldData;
+}
+
+void Field::SetFieldData(FieldData* fieldData)
+{
+	mFieldData = fieldData;
 }
 
 // パイプライン設定関連

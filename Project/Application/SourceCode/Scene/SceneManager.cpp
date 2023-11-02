@@ -8,7 +8,6 @@
 
 std::unique_ptr<IScene> SceneManager::sCurrentScene = nullptr;
 std::unique_ptr<IScene> SceneManager::sNextScene = nullptr;
-bool SceneManager::sIsChanged = false;
 
 SceneManager::SceneManager()
 {
@@ -19,7 +18,7 @@ SceneManager::SceneManager()
 	// デバッグビルドのも実行
 	ProcessAtDebugBuild([]()
 		{
-			sCurrentScene = std::make_unique<GameScene>();
+			sCurrentScene = std::make_unique<TitleScene>();
 		});
 
 	// リリースビルドのも実行
@@ -39,13 +38,18 @@ void SceneManager::Init()
 	sCurrentScene->CreateInstance();
 	sCurrentScene->Init();
 
-	mChangeStep = CreateInstance;
+	mChangeStep = None;
 
 	mIsReturn = false;
 }
 
 void SceneManager::Update()
 {
+	if (mChangeStep == Changed)
+	{
+		mChangeStep = None;
+	}
+
 	Camera::current.Update();
 	sCurrentScene->Update();
 	TransitionManager::GetInstance()->Update();
@@ -53,6 +57,11 @@ void SceneManager::Update()
 
 void SceneManager::DrawPass()
 {
+	if (mChangeStep != None)
+	{
+		return;
+	}
+
 	sCurrentScene->DrawPass();
 }
 
@@ -61,14 +70,18 @@ void SceneManager::DrawDebugGui()
 	// デバッグビルドのも実行
 	ProcessAtDebugBuild([&]()
 		{
+			if (mChangeStep != None)
+			{
+				return;
+			}
+
 			sCurrentScene->DrawDebugGui();
 		});
 }
 
 void SceneManager::Draw()
 {
-	if (SceneManager::GetisLoading() == false &&
-		SceneManager::GetisChanged() == false)
+	if (mChangeStep == None)
 	{
 		sCurrentScene->Draw();
 	}
@@ -89,6 +102,6 @@ bool SceneManager::GetisChanged()
 void SceneManager::SetChangeStepToCreateInstance()
 {
 	GetInstance()->mIsReturn = false;
-	GetInstance()->mChangeStep = CreateInstance;
+	//GetInstance()->mChangeStep = None;
 }
 

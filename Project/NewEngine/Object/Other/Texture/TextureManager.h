@@ -50,6 +50,9 @@ public: // 破棄関連
 	// テクスチャの破棄
 	static void DestroyTexture(const std::string tag);
 
+	// マテリアルのテクスチャの破棄
+	static void DestroyMaterialTexture(const std::string tag);
+
 	// 深度テクスチャの破棄
 	static void DestroyDepthTexture(const std::string tag);
 

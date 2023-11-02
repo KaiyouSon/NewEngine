@@ -39,11 +39,19 @@ void LoadManager::TitleSceneUnLoad()
 ///////////////////////////////////////////////////////////////
 void LoadManager::GameSceneLoad()
 {
+	// テクスチャ
 	GameSceneTextureLoad();
+
+	// モデル
+	GameSceneModelLoad();
 }
 void LoadManager::GameSceneUnLoad()
 {
+	// テクスチャ
 	GameSceneTextureUnLoad();
+
+	// モデル
+	GameSceneModelUnLoad();
 }
 
 // テクスチャ
@@ -160,6 +168,73 @@ void LoadManager::GameSceneTextureUnLoad()
 	TextureManager::DestroyRenderTexture("BloomTarget");
 }
 
+// モデル
+void LoadManager::GameSceneModelLoad()
+{
+	// フィールド
+	ModelManager::LoadObjModel("Ground", "Ground");
+	ModelManager::LoadObjModel("Skydome", "Skydome", true);
+	ModelManager::LoadObjModel("Cloud", "Cloud");
+	ModelManager::LoadObjModel("Tree", "Tree", true);
+	ModelManager::LoadObjModel("Branch", "Branch");
+	ModelManager::LoadObjModel("CoffinTop", "CoffinTop");
+	ModelManager::LoadObjModel("CoffinBottom", "CoffinBottom");
+	ModelManager::LoadObjModel("SkyIsland/SkyIsland1", "SkyIsland1", true);
+	ModelManager::LoadObjModel("SkyIsland/SkyIsland2", "SkyIsland2", true);
+	ModelManager::LoadObjModel("Wall/MainWall", "MainWall");
+	ModelManager::LoadObjModel("Wall/Wall1", "Wall1");
+	ModelManager::LoadObjModel("Wall/Wall2", "Wall2");
+	ModelManager::LoadObjModel("Wall/WallGate", "WallGate");
+
+	// キャラクター(プレイヤー)
+	ModelManager::LoadObjModel("HumanoidBody/Body", "Body");
+	ModelManager::LoadObjModel("HumanoidBody/Head", "Head");
+	ModelManager::LoadObjModel("HumanoidBody/Limbs", "Limbs");
+
+	// キャラクター(ボス)
+	ModelManager::LoadObjModel("Boss/BossHead", "BossHead");
+	ModelManager::LoadObjModel("Boss/BossBody", "BossBody");
+	ModelManager::LoadObjModel("Boss/BossLeftArm", "BossLeftArm");
+	ModelManager::LoadObjModel("Boss/BossRightArm", "BossRightArm");
+
+	// 武器
+	ModelManager::LoadObjModel("Weapon/Club", "Club", true);
+	ModelManager::LoadObjModel("Weapon/Sword", "Sword", true);
+
+}
+void LoadManager::GameSceneModelUnLoad()
+{
+	// フィールド
+	ModelManager::DestroyModel("Ground");
+	ModelManager::DestroyModel("Skydome");
+	ModelManager::DestroyModel("Cloud");
+	ModelManager::DestroyModel("Tree");
+	ModelManager::DestroyModel("Branch");
+	ModelManager::DestroyModel("CoffinTop");
+	ModelManager::DestroyModel("CoffinBottom");
+	ModelManager::DestroyModel("SkyIsland1");
+	ModelManager::DestroyModel("SkyIsland2");
+	ModelManager::DestroyModel("MainWall");
+	ModelManager::DestroyModel("Wall1");
+	ModelManager::DestroyModel("Wall2");
+	ModelManager::DestroyModel("WallGate");
+
+	// キャラクター(プレイヤー)
+	ModelManager::DestroyModel("Body");
+	ModelManager::DestroyModel("Head");
+	ModelManager::DestroyModel("Limbs");
+
+	// キャラクター(ボス)
+	ModelManager::DestroyModel("BossHead");
+	ModelManager::DestroyModel("BossBody");
+	ModelManager::DestroyModel("BossLeftArm");
+	ModelManager::DestroyModel("BossRightArm");
+
+	// 武器
+	ModelManager::DestroyModel("Club");
+	ModelManager::DestroyModel("Sword");
+}
+
 ///////////////////////////////////////////////////////////////
 // --- ゲーム起動時 ----------------------------------------///
 ///////////////////////////////////////////////////////////////
@@ -170,37 +245,10 @@ bool LoadManager::ModelLoad()
 
 	ModelManager::LoadObjModel("Plane", "Plane");
 
-	ModelManager::LoadObjModel("Ground", "Ground");
-	ModelManager::LoadObjModel("Skydome", "Skydome", true);
-	ModelManager::LoadObjModel("Cloud", "Cloud");
-	ModelManager::LoadObjModel("Tree", "Tree", true);
-	ModelManager::LoadObjModel("Branch", "Branch");
-
 	ModelManager::LoadObjModel("MessageSign", "MessageSign");
-
-	ModelManager::LoadObjModel("HumanoidBody/Body", "Body");
-	ModelManager::LoadObjModel("HumanoidBody/Head", "Head");
-	ModelManager::LoadObjModel("HumanoidBody/Limbs", "Limbs");
-
-	ModelManager::LoadObjModel("Weapon/Club", "Club", true);
-	ModelManager::LoadObjModel("Weapon/Sword", "Sword", true);
-
-	ModelManager::LoadObjModel("CoffinTop", "CoffinTop");
-	ModelManager::LoadObjModel("CoffinBottom", "CoffinBottom");
-	ModelManager::LoadObjModel("SkyIsland/SkyIsland1", "SkyIsland1", true);
-	ModelManager::LoadObjModel("SkyIsland/SkyIsland2", "SkyIsland2", true);
-	ModelManager::LoadObjModel("Wall/MainWall", "MainWall");
-	ModelManager::LoadObjModel("Wall/Wall1", "Wall1");
-	ModelManager::LoadObjModel("Wall/Wall2", "Wall2");
-	ModelManager::LoadObjModel("Wall/WallGate", "WallGate");
 
 	ModelManager::LoadObjModel("Capsule", "Capsule");
 	ModelManager::LoadObjModel("MainGateWall", "MainGateWall");
-
-	ModelManager::LoadObjModel("Boss/BossHead", "BossHead");
-	ModelManager::LoadObjModel("Boss/BossBody", "BossBody");
-	ModelManager::LoadObjModel("Boss/BossLeftArm", "BossLeftArm");
-	ModelManager::LoadObjModel("Boss/BossRightArm", "BossRightArm");
 
 	// 非同期終わったよ～
 	return true;

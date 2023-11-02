@@ -18,6 +18,7 @@ public:
 	FieldData* GetFieldData();
 
 public:
+	void SetFieldData(FieldData* fieldData);
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 	void SetWeedGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 	void SetTreeGraphicsPipeline(GraphicsPipeline* graphicsPipeline);

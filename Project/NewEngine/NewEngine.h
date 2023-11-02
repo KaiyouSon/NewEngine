@@ -57,6 +57,7 @@ private:
 	RenderWindow* mRenderWindow;
 	RenderBase* mRenderBase;
 	static bool sIsClose;
+	bool mIsLoaded;
 
 private:
 	void Setting();

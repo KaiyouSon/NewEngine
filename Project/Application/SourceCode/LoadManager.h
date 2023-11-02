@@ -19,6 +19,8 @@ private:
 private:
 	void GameSceneTextureLoad();
 	void GameSceneTextureUnLoad();
+	void GameSceneModelLoad();
+	void GameSceneModelUnLoad();
 
 public:
 	// タイトルシーンでのロード・アンロード

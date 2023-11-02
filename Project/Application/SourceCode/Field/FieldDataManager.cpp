@@ -86,6 +86,13 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 		}
 	}
 
+	// タグが重複した場合
+	if (sFieldDataMap.find(tag) != sFieldDataMap.end())
+	{
+		// 古い方のタグを削除する
+		sFieldDataMap.erase(tag);
+	}
+
 	// mapに挿入
 	sFieldDataMap.insert(std::make_pair(tag, std::move(fieldData)));
 	return sFieldDataMap[tag].get();

@@ -483,6 +483,28 @@ void TextureManager::DestroyTexture(const std::string tag)
 	GetInstance()->mTextureMap.erase(tag);
 }
 
+// マテリアルのテクスチャの破棄
+void TextureManager::DestroyMaterialTexture(const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	auto it = GetInstance()->mMaterialTextureMap.find(tag);
+	if (it == GetInstance()->mMaterialTextureMap.end())
+	{
+		std::string log;
+		log = "[Material Texture Error] Tag : " + tag + ", is nullptr";
+		return;
+	}
+
+	// SRV解放
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->DestroyView(
+		GetInstance()->mMaterialTextureMap[tag]->GetBufferResource());
+
+	// Mapから削除
+	GetInstance()->mMaterialTextureMap.erase(tag);
+}
+
 // 深度テクスチャの破棄
 void TextureManager::DestroyDepthTexture(const std::string tag)
 {
