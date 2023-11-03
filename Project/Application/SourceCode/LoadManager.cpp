@@ -95,7 +95,7 @@ void LoadManager::GameSceneTextureLoad()
 	TextureManager::LoadTextureFromDDS("Particle/Particle1.dds", "Particle1");
 	TextureManager::LoadTextureFromDDS("Particle/Particle2.dds", "Particle2");
 	TextureManager::LoadTextureFromDDS("Particle/Line.dds", "Line");
-	TextureManager::LoadTextureFromDDS("Trajectory.dds", "Trajectory");
+	TextureManager::LoadTexture("Trajectory.png", "Trajectory");
 
 	// 草
 	TextureManager::LoadTextureFromDDS("Grass/Weed.dds", "Weed");

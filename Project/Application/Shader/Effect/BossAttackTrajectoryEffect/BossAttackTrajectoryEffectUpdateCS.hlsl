@@ -50,7 +50,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
         bossAttackTrajectoryEffect[0].timer++;
         if (bossAttackTrajectoryEffect[0].timer >= bossAttackTrajectoryEffect[0].maxTimer)
         {
-            for (uint i = 0; i < 10; i++)
+            for (uint i = 0; i < 30; i++)
             {
                 uint index = bossAttackTrajectoryEffect[0].index;
                 outputData[index] = InitParticleData(index);
@@ -81,11 +81,11 @@ void main(uint3 DTid : SV_DispatchThreadID)
         result.pos += result.moveVec * result.moveAccel;
         
         result.shininess += 0.01f;
-        result.color.a += 0.01f;
-        if (result.color.a >= 0)
+        result.color.a += 0.1f;
+        if (result.color.a >= 1)
         {
             result.color.a = 1;
-            result.scale -= 0.001f;
+            result.scale -= 0.0025f;
         }
         
         outputData[i] = result;
@@ -127,42 +127,39 @@ ParticleData InitParticleData(uint index)
     seed = RandomSeed(seed, index);
     sign = Random01(seed) > 0.5f ? +1 : -1;
     
+    float l = Random01(seed) * length(vec);
+    
     seed = RandomSeed(seed, index);
-    result.pos = startPos + frontVec * Random01(seed) * length(vec);
+    result.pos = startPos + frontVec * l;
 
     // 上下左右にずらす
-    float dis = 2.f;
     seed = RandomSeed(seed, index);
     sign = Random01(seed) > 0.5f ? +1 : -1;
     
     seed = RandomSeed(seed, index);
-    result.pos += rightVec * Random01(seed) * dis * sign;
+    result.pos += rightVec * Random01(seed) * sign;
     
     seed = RandomSeed(seed, index);
     sign = Random01(seed) > 0.5f ? +1 : -1;
     
     seed = RandomSeed(seed, index);
-    result.pos += upVec * Random01(seed) * dis * sign;
+    result.pos += upVec * Random01(seed) * 2.f;
 
     // ベクトル
-    result.moveVec = normalize(float3(1, 1, 1));
+    result.moveVec = frontVec;
         
     // 移動速度
-    const float3 baseSpeed = 0.1f;
-    const float3 rateSpeed = baseSpeed * 2;
     seed = RandomSeed(seed, index);
-    result.moveAccel.x = baseSpeed.x - Random01(seed) * rateSpeed.x;
-    seed = RandomSeed(seed, index);
-    result.moveAccel.y = baseSpeed.y - Random01(seed) * rateSpeed.y;
-    seed = RandomSeed(seed, index);
-    result.moveAccel.z = baseSpeed.z - Random01(seed) * rateSpeed.z;
+    result.moveAccel = 0.005f + Random01(seed) * 0.01f;
         
     // スケール
+    float baseScale = smoothstep(0, 1, l) - 0.3f;
+    
     seed = RandomSeed(seed, index);
-    result.scale = 0.6f + Random01(seed) * 0.3f;
+    result.scale = baseScale + Random01(seed) * 0.25f;
     
     // 輝度
-    result.shininess = 1.0f;
+    result.shininess = 5.0f;
         
     // 色
     result.color = float4(0.53f, 0.f, 0.f, 0.f);

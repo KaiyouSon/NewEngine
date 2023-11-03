@@ -1,6 +1,7 @@
 #include "InputManager.h"
 #include "JoypadInput.h"
 #include "RenderWindow.h"
+#include "Util.h"
 #include <cassert>
 #include <dbt.h>
 
@@ -83,8 +84,12 @@ void JoypadInput::Update()
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // ボタンの押下状態を取得
-bool JoypadInput::GetButton(const PadCode padCode, const int padIndex)
+bool JoypadInput::GetButton(const PadCode padCode, const uint32_t padIndex)
 {
+	// 配列範囲外
+	bool isOutOfRange = padIndex > GetInstance()->mJoypadObjs.size() || padIndex < 0;
+	if (isOutOfRange) return false;
+
 	// リンクされているか確認
 	if (GetisLinkPad() == false) return false;
 
@@ -109,8 +114,12 @@ bool JoypadInput::GetButton(const PadCode padCode, const int padIndex)
 }
 
 // ボタンが押された瞬間の状態を取得
-bool JoypadInput::GetButtonDown(const PadCode padCode, const int padIndex)
+bool JoypadInput::GetButtonDown(const PadCode padCode, const uint32_t padIndex)
 {
+	// 配列範囲外
+	bool isOutOfRange = padIndex > GetInstance()->mJoypadObjs.size() || padIndex < 0;
+	if (isOutOfRange) return false;
+
 	// リンクされているか確認
 	if (GetisLinkPad() == false) return false;
 
@@ -146,8 +155,12 @@ bool JoypadInput::GetButtonDown(const PadCode padCode, const int padIndex)
 }
 
 // ボタンが離された瞬間の状態を取得
-bool JoypadInput::GetButtonUp(const PadCode padCode, const int padIndex)
+bool JoypadInput::GetButtonUp(const PadCode padCode, const uint32_t padIndex)
 {
+	// 配列範囲外
+	bool isOutOfRange = padIndex > GetInstance()->mJoypadObjs.size() || padIndex < 0;
+	if (isOutOfRange) return false;
+
 	if (padCode == PadCode::ButtonLeft)
 	{
 		bool isPressed = GetInstance()->mJoypadObjs[padIndex].padInput.rgdwPOV[0] == 27000;
@@ -179,8 +192,12 @@ bool JoypadInput::GetButtonUp(const PadCode padCode, const int padIndex)
 }
 
 // 任意のボタンが押されているかを判定
-bool JoypadInput::GetAnyButtonDown(const int padIndex)
+bool JoypadInput::GetAnyButtonDown(const uint32_t padIndex)
 {
+	// 配列範囲外
+	bool isOutOfRange = padIndex > GetInstance()->mJoypadObjs.size() || padIndex < 0;
+	if (isOutOfRange) return false;
+
 	if (GetisLinkPad() == false) return false;
 
 	for (uint32_t i = 0; i < 16; ++i)
@@ -213,8 +230,12 @@ bool JoypadInput::GetAnyButtonDown(const int padIndex)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // スティックの入力状態を取得
-Vec2 JoypadInput::GetStick(const PadCode padCode, const float length, const int padIndex)
+Vec2 JoypadInput::GetStick(const PadCode padCode, const float length, const uint32_t padIndex)
 {
+	// 配列範囲外
+	bool isOutOfRange = padIndex > GetInstance()->mJoypadObjs.size() || padIndex < 0;
+	if (isOutOfRange) return false;
+
 	if (GetisLinkPad() == false) return 0;
 
 	Vec2 stick = 0;
@@ -238,8 +259,12 @@ Vec2 JoypadInput::GetStick(const PadCode padCode, const float length, const int 
 }
 
 // 3Dベクトルとしてスティックの入力状態を取得
-Vec3 JoypadInput::GetStickVec3(const PadCode padCode, const float length, const int padIndex)
+Vec3 JoypadInput::GetStickVec3(const PadCode padCode, const float length, const uint32_t padIndex)
 {
+	// 配列範囲外
+	bool isOutOfRange = padIndex > GetInstance()->mJoypadObjs.size() || padIndex < 0;
+	if (isOutOfRange) return false;
+
 	if (GetisLinkPad() == false) return 0;
 
 	Vec3 stick = 0;
@@ -263,8 +288,12 @@ Vec3 JoypadInput::GetStickVec3(const PadCode padCode, const float length, const 
 }
 
 // スティックが押された瞬間の状態を取得
-Vec2 JoypadInput::GetStickDown(const PadCode padCode, const float length, const int padIndex)
+Vec2 JoypadInput::GetStickDown(const PadCode padCode, const float length, const uint32_t padIndex)
 {
+	// 配列範囲外
+	bool isOutOfRange = padIndex > GetInstance()->mJoypadObjs.size() || padIndex < 0;
+	if (isOutOfRange) return false;
+
 	if (GetisLinkPad() == false) return 0;
 
 	Vec2 stick = 0;
@@ -295,8 +324,12 @@ Vec2 JoypadInput::GetStickDown(const PadCode padCode, const float length, const 
 }
 
 // スティックが離された瞬間の状態を取得
-Vec2 JoypadInput::GetStickUp(const PadCode padCode, const float length, const int padIndex)
+Vec2 JoypadInput::GetStickUp(const PadCode padCode, const float length, const uint32_t padIndex)
 {
+	// 配列範囲外
+	bool isOutOfRange = padIndex > GetInstance()->mJoypadObjs.size() || padIndex < 0;
+	if (isOutOfRange) return false;
+
 	if (GetisLinkPad() == false) return 0;
 
 	Vec2 stick = 0;
@@ -331,8 +364,12 @@ Vec2 JoypadInput::GetStickUp(const PadCode padCode, const float length, const in
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // ジョイパッドのトリガー入力を取得
-float JoypadInput::GetTrigger(const PadCode padCode, const float length, const int padIndex)
+float JoypadInput::GetTrigger(const PadCode padCode, const float length, const uint32_t padIndex)
 {
+	// 配列範囲外
+	bool isOutOfRange = padIndex > GetInstance()->mJoypadObjs.size() || padIndex < 0;
+	if (isOutOfRange) return false;
+
 	// ジョイパッドが接続されていない場合は0を返す
 	if (GetisLinkPad() == false) return 0;
 
@@ -358,8 +395,12 @@ float JoypadInput::GetTrigger(const PadCode padCode, const float length, const i
 }
 
 // ジョイパッドのトリガーが押された瞬間の状態を取得
-bool JoypadInput::GetTriggerDown(const PadCode padCode, const float length, const int padIndex)
+bool JoypadInput::GetTriggerDown(const PadCode padCode, const float length, const uint32_t padIndex)
 {
+	// 配列範囲外
+	bool isOutOfRange = padIndex > GetInstance()->mJoypadObjs.size() || padIndex < 0;
+	if (isOutOfRange) return false;
+
 	if (padCode == PadCode::LeftTrigger)
 	{
 		bool isGreater = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lZ > length;
@@ -385,8 +426,12 @@ bool JoypadInput::GetTriggerDown(const PadCode padCode, const float length, cons
 }
 
 // ジョイパッドのトリガーが離された瞬間の状態を取得
-bool JoypadInput::GetTriggerUp(const PadCode padCode, const float length, const int padIndex)
+bool JoypadInput::GetTriggerUp(const PadCode padCode, const float length, const uint32_t padIndex)
 {
+	// 配列範囲外
+	bool isOutOfRange = padIndex > GetInstance()->mJoypadObjs.size() || padIndex < 0;
+	if (isOutOfRange) return false;
+
 	if (padCode == PadCode::LeftTrigger)
 	{
 		bool isGreater = (float)GetInstance()->mJoypadObjs[padIndex].padInput.lZ > length;

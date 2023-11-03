@@ -27,27 +27,26 @@ void Sword::Init()
 
 void Sword::Update(Transform* parent)
 {
+	mTrajectory->PrevUpdate();
+
 	weapon->Update(parent);
 
 	Vec3 yAxis = weapon->GetTransform().GetWorldMat().GetYAxis();
 	Vec3 zAxis = weapon->GetTransform().GetWorldMat().GetZAxis();
 	Vec3 pos = weapon->GetTransform().GetWorldMat().GetTrans();
 
-	mTrajectory->pos[Trajectory::LD] = pos + zAxis.Norm() * 4.f;
-	mTrajectory->pos[Trajectory::LT] = pos + zAxis.Norm() * 10.f;
-	if (mIsActiveTrajectory == false)
-	{
-		mTrajectory->pos[Trajectory::RD] = mTrajectory->pos[Trajectory::LD];
-		mTrajectory->pos[Trajectory::RT] = mTrajectory->pos[Trajectory::LT];
-	}
+	mTrajectory->SetTargetPos(
+		pos + zAxis.Norm() * 2.f,
+		pos + zAxis.Norm() * 10.f);
+
 	// エフェクト生成
 	EffectManager::GetInstance()->
 		ExecuteBossAttackTrajectoryEffect(
 			mIsActiveTrajectory,
-			mTrajectory->pos[Trajectory::LD],
-			mTrajectory->pos[Trajectory::LT]);
+			mTrajectory->GetDownPos(),
+			mTrajectory->GetTopPos());
 
-	mTrajectory->Update();
+	mTrajectory->PostUpdate();
 
 	collider.startPos;
 }

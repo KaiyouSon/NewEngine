@@ -9,21 +9,43 @@ Trajectory::Trajectory() :
 	mMaterial(std::make_unique<Material>()),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Trajectory"))
 {
-	mVertices.resize(4);
-	mVertices[LD].uv = { 0.0f,1.0f };
-	mVertices[LT].uv = { 0.0f,0.0f };
-	mVertices[RD].uv = { 1.0f,1.0f };
-	mVertices[RT].uv = { 1.0f,0.0f };
+	mVertices.resize(20);
+	// 上下に点を置くから半分になる
+	uint32_t halfSize = (uint32_t)(mVertices.size() / 2);
+	for (uint32_t i = 0; i < halfSize; i++)
+	{
+		// 上下
+		for (uint32_t j = 0; j < 2; j++)
+		{
+			// 間隔数
+			uint32_t spaceCount = halfSize - 1;
+
+			Vec2 uv;
+			uv.x = i * (1.f / spaceCount);
+			uv.y = (float)i;
+
+			// 上下の点
+			mVertices[i * 2 + j].uv.x = i * (1.f / spaceCount);
+			mVertices[i * 2 + j].uv.y = 1 - (float)j;
+		}
+	}
 	mVertexBuffer->Create(mVertices);
 
 	// マテリアルの初期化
 	MaterialInit();
 
-	mEase.SetEaseTimer(5);
-	mEase.SetisEnd(true);
+	mPrevPos.resize(mVertices.size());
 }
 
-void Trajectory::Update()
+void Trajectory::PrevUpdate()
+{
+	for (uint32_t i = 0; i < mVertices.size(); i++)
+	{
+		mPrevPos[i] = mVertices[i].pos;
+	}
+}
+
+void Trajectory::PostUpdate()
 {
 	mTransform.pos = 0;
 	mTransform.scale = 1;
@@ -33,25 +55,29 @@ void Trajectory::Update()
 	// マテリアルの転送
 	MaterialTransfer();
 
-	// 追跡する
-	if (mEase.GetisEnd() == true)
+	// 上下に点を置くから半分になる
+	uint32_t halfSize = (uint32_t)(mVertices.size() / 2);
+	for (uint32_t i = 0; i < halfSize; i++)
 	{
-		currentPos[LD] = pos[RD];
-		currentPos[LT] = pos[RT];
-		targetPos[LD] = pos[LD];
-		targetPos[LT] = pos[LT];
-
-		mEase.Reset();
+		// 最初の二点
+		if (i == 0)
+		{
+			mVertices[Down].pos = mTargetPos[Down];
+			mVertices[Top].pos = mTargetPos[Top];
+		}
+		else
+		{
+			// 上下
+			for (uint32_t j = 0; j < 2; j++)
+			{
+				uint32_t index = i * 2 + j;
+				Vec3 target = mPrevPos[index - 2];
+				Vec3 current = mVertices[index].pos;
+				Vec3 v = target - current;
+				mVertices[index].pos = target;
+			}
+		}
 	}
-
-	mEase.Update();
-	pos[RD] = mEase.Lerp(currentPos[LD], targetPos[LD]);
-	pos[RT] = mEase.Lerp(currentPos[LT], targetPos[LT]);
-
-	mVertices[LD].pos = pos[LD];
-	mVertices[LT].pos = pos[LT];
-	mVertices[RD].pos = pos[RD];
-	mVertices[RT].pos = pos[RT];
 
 	// 頂点データの転送
 	mVertexBuffer->TransferToBuffer(mVertices);
@@ -84,11 +110,6 @@ void Trajectory::Draw(const BlendMode blendMode)
 	}
 
 	renderBase->GetCommandList()->DrawInstanced((uint16_t)mVertices.size(), 1, 0, 0);
-}
-
-void Trajectory::SetTexture(Texture* texture)
-{
-	mTexture = texture;
 }
 
 // --- マテリアル関連 --------------------------------------------------- //
@@ -141,4 +162,25 @@ void Trajectory::MaterialDrawCommands()
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 			i, mMaterial->constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
 	}
+}
+
+void Trajectory::SetTexture(Texture* texture)
+{
+	mTexture = texture;
+}
+
+void Trajectory::SetTargetPos(const Vec3 downPos, const Vec3 topPos)
+{
+	mTargetPos[Down] = downPos;
+	mTargetPos[Top] = topPos;
+}
+
+Vec3 Trajectory::GetDownPos()
+{
+	return mTargetPos[Down];
+}
+
+Vec3 Trajectory::GetTopPos()
+{
+	return mTargetPos[Top];
 }

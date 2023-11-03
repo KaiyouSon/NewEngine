@@ -28,6 +28,8 @@ private:
 	std::unique_ptr<VolumetricFog> mVolumetricFog;
 	std::unique_ptr<DirectionalLight> mDirectionalLight;
 
+	Trajectory mTrajectory;
+
 	RenderTexture* mCurrentScene;
 
 	bool mIsChangeScene;

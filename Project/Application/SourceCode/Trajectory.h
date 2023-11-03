@@ -3,6 +3,12 @@
 
 class Trajectory
 {
+public:
+	enum Pos
+	{
+		Down, Top, Size
+	};
+
 private:
 	std::vector<VertexBufferData::VSprite> mVertices;
 	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> mVertexBuffer;
@@ -10,20 +16,14 @@ private:
 	GraphicsPipeline* mGraphicsPipeline;
 	Transform mTransform;
 	Texture* mTexture;
-	Easing mEase;
-	std::array<Vec3, 2> targetPos;
-	std::array<Vec3, 2> currentPos;
 
-public:
-	enum Pos
-	{
-		LD, LT, RD, RT,
-		Size
-	};
+private:
+	// 追跡関連
+	std::array<Vec3, Pos::Size> mTargetPos;
+	std::vector<Vec3> mPrevPos;
 
 public:
 	bool isActive;
-	std::array<Vec3, Pos::Size> pos;
 	Vec2 offset;
 	Vec2 tiling;
 	Color color;
@@ -35,10 +35,16 @@ private: // マテリアル関連
 
 public:
 	Trajectory();
-	void Update();
+	void PrevUpdate();
+	void PostUpdate();
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 
 public:
 	void SetTexture(Texture* texture);
+	void SetTargetPos(const Vec3 downPos, const Vec3 topPos);
+
+public:
+	Vec3 GetDownPos();
+	Vec3 GetTopPos();
 };
 

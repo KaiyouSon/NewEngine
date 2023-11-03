@@ -100,6 +100,8 @@ void GameScene::Init()
 	mVolumetricFog->fogParam.dencity = 0.014f;
 	mVolumetricFog->color = Color(233, 216, 187, 255);
 	VolumetricFog::fogClamp = Vec2(30.f, 50.f);
+
+	//mTrajectory.SetTexture(TextureManager::GetTexture("Trajectory"));
 }
 void GameScene::Update()
 {
@@ -107,6 +109,32 @@ void GameScene::Update()
 	//mVolumetricFog->pos = Camera::current.pos + offset;
 	//mVolumetricFog->pos.y = Max(mVolumetricFog->pos.y, 25.f);
 	mVolumetricFog->moveSpeed = Vec3(0.001f, -0.001f, -0.001f);
+
+	mTrajectory.PrevUpdate();
+
+	static Vec3 pos = 0;
+	if (Key::GetKey(DIK_RIGHT))
+	{
+		pos.x += 0.1f;
+	}
+	if (Key::GetKey(DIK_LEFT))
+	{
+		pos.x -= 0.1f;
+	}
+	if (Key::GetKey(DIK_UP))
+	{
+		pos.y += 0.1f;
+	}
+	if (Key::GetKey(DIK_DOWN))
+	{
+		pos.y -= 0.1f;
+	}
+	Vec3 p1 = pos + Vec3::up * 9.5f;
+	Vec3 p2 = pos + Vec3::up * 10.5f;
+
+	mTrajectory.SetTargetPos(p1, p2);
+	mTrajectory.PostUpdate();
+
 
 #ifdef _DEBUG
 	if (Key::GetKeyDown(DIK_L))
@@ -214,6 +242,8 @@ void GameScene::Draw()
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
+
+	mTrajectory.Draw();
 
 }
 void GameScene::DrawDebugGui()

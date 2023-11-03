@@ -60,22 +60,22 @@ public:
 	void Update();
 
 public: // メンバ関数
-	static bool GetButton(const PadCode padCode, const int padIndex = 0);
-	static bool GetButtonDown(const PadCode padCode, const int padIndex = 0);
-	static bool GetButtonUp(const PadCode padCode, const int padIndex = 0);
+	static bool GetButton(const PadCode padCode, const uint32_t padIndex = 0);
+	static bool GetButtonDown(const PadCode padCode, const uint32_t padIndex = 0);
+	static bool GetButtonUp(const PadCode padCode, const uint32_t padIndex = 0);
 
-	static bool GetAnyButtonDown(const int padIndex = 0);
+	static bool GetAnyButtonDown(const uint32_t padIndex = 0);
 
 public: // 入力取得メソッド
-	static Vec2 GetStick(const PadCode padCode, const float length = 0, const int padIndex = 0);
-	static Vec2 GetStickDown(const PadCode padCode, const float length = 0, const int padIndex = 0);
-	static Vec2 GetStickUp(const PadCode padCode, const float length = 0, const int padIndex = 0);
-	static Vec3 GetStickVec3(const PadCode padCode, const float length = 0, const int padIndex = 0);
+	static Vec2 GetStick(const PadCode padCode, const float length = 0, const uint32_t padIndex = 0);
+	static Vec2 GetStickDown(const PadCode padCode, const float length = 0, const uint32_t padIndex = 0);
+	static Vec2 GetStickUp(const PadCode padCode, const float length = 0, const uint32_t padIndex = 0);
+	static Vec3 GetStickVec3(const PadCode padCode, const float length = 0, const uint32_t padIndex = 0);
 
 public: // トリガー取得メソッド
-	static float GetTrigger(const PadCode padCode, const float length = 0, const int padIndex = 0);
-	static bool GetTriggerDown(const PadCode padCode, const float length = 0, const int padIndex = 0);
-	static bool GetTriggerUp(const PadCode padCode, const float length = 0, const int padIndex = 0);
+	static float GetTrigger(const PadCode padCode, const float length = 0, const uint32_t padIndex = 0);
+	static bool GetTriggerDown(const PadCode padCode, const float length = 0, const uint32_t padIndex = 0);
+	static bool GetTriggerUp(const PadCode padCode, const float length = 0, const uint32_t padIndex = 0);
 
 public: // リンクパッド情報取得
 	static bool GetisLinkPad();
