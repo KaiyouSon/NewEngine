@@ -175,6 +175,14 @@ void Field::DrawModel()
 	{
 		mFieldData->respawnPoints[i]->DrawModel();
 	}
+}
+
+void Field::DrawFog()
+{
+	if (!mFieldData)
+	{
+		return;
+	}
 
 	// ボリュメトリックフォグ
 	for (uint32_t i = 0; i < mFieldData->volumetricFogs.size(); i++)

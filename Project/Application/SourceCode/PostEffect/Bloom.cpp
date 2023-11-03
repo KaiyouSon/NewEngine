@@ -5,7 +5,9 @@ Bloom::Bloom()
 	// テクスチャ
 	mTexs[(uint32_t)PassType::HighLumi] = TextureManager::GetRenderTexture("BloomHighLumi");
 	mTexs[(uint32_t)PassType::GaussianBlur] = TextureManager::GetRenderTexture("BloomGaussianBlur");
+	mTexs[(uint32_t)PassType::GaussianBlurHalf] = TextureManager::GetRenderTexture("BloomGaussianBlurHalf");
 	mTexs[(uint32_t)PassType::Bloom] = TextureManager::GetRenderTexture("Bloom");
+	mTexs[(uint32_t)PassType::Bloom1] = TextureManager::GetRenderTexture("Bloom1");
 	mTexs[(uint32_t)PassType::Target] = TextureManager::GetRenderTexture("BloomTarget");
 
 	for (uint32_t i = 0; i < mPasses.size(); i++)
@@ -15,19 +17,27 @@ Bloom::Bloom()
 	}
 	mPasses[(uint32_t)PassType::HighLumi]->AddRenderTexture(mTexs[(uint32_t)PassType::HighLumi]);
 	mPasses[(uint32_t)PassType::GaussianBlur]->AddRenderTexture(mTexs[(uint32_t)PassType::GaussianBlur]);
+	mPasses[(uint32_t)PassType::GaussianBlurHalf]->AddRenderTexture(mTexs[(uint32_t)PassType::GaussianBlurHalf]);
 
 	// パイプライン
 	mPasses[(uint32_t)PassType::HighLumi]->
 		SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("HighLumi"));
 	mPasses[(uint32_t)PassType::GaussianBlur]->
 		SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GaussianBlur"));
+	mPasses[(uint32_t)PassType::GaussianBlurHalf]->
+		SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GaussianBlur"));
+
+	// サイズ設定
+	mPasses[(uint32_t)PassType::GaussianBlurHalf]->SetSize(GetWindowSize());
 
 	// 合成用
 	mCompositePass = std::make_unique<PostEffect>();
 	mCompositePass->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Composite"));
 	mCompositePass->AddRenderTexture(mTexs[(uint32_t)PassType::Bloom]);
+	mCompositePass->AddRenderTexture(mTexs[(uint32_t)PassType::Bloom1]);
 	mCompositePass->AddRenderTexture(mTexs[(uint32_t)PassType::Target]);
 	mCompositePass->pos = GetWindowHalfSize();
+	mCompositePass->SetSize(GetWindowSize());
 
 	mHighLumiClamp = Vec2(0.1f, 1.0f);
 	mPasses[(uint32_t)PassType::HighLumi]->AddMaterial<Vec2>();
@@ -35,6 +45,11 @@ Bloom::Bloom()
 
 void Bloom::Update()
 {
+	if (Key::GetKeyDown(DIK_S))
+	{
+		mPasses[(uint32_t)PassType::HighLumi]->SetSize(GetWindowSize());
+	}
+
 	for (uint32_t i = 0; i < mPasses.size(); i++)
 	{
 		mPasses[i]->Update();

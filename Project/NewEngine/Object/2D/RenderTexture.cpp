@@ -61,7 +61,6 @@ void RenderTexture::Create(const Vec2 size, const uint32_t rtvNum)
 	}
 
 	// 深度バッファの生成
-
 	mDepthBuffer->Create(size);
 
 	// DSV作成

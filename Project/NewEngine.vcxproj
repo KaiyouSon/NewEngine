@@ -222,6 +222,7 @@
     <ClCompile Include="NewEngine\Math\Quaternion.cpp" />
     <ClCompile Include="NewEngine\Math\Vec2.cpp" />
     <ClCompile Include="NewEngine\Math\Vec3.cpp" />
+    <ClCompile Include="NewEngine\Math\Vec4.cpp" />
     <ClCompile Include="NewEngine\NewEngine.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -283,6 +284,7 @@
     <ClCompile Include="NewEngine\Util\Transform.cpp" />
     <ClCompile Include="NewEngine\Util\Util.cpp" />
     <ClCompile Include="Application\SourceCode\Trajectory.cpp" />
+    <ClCompile Include="NewEngine\Object\3D\ParticleObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\1.School\3.3年前期\TL1\CG5_Task01\Project\External\nlohmann\json.hpp" />
@@ -393,11 +395,13 @@
     <ClInclude Include="NewEngine\Math\Quaternion.h" />
     <ClInclude Include="NewEngine\Math\Vec2.h" />
     <ClInclude Include="NewEngine\Math\Vec3.h" />
+    <ClInclude Include="NewEngine\Math\Vec4.h" />
     <ClInclude Include="NewEngine\NewEngine.h" />
     <ClInclude Include="NewEngine\Object\2D\CircleGaugeSprite.h" />
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h" />
     <ClInclude Include="NewEngine\Object\2D\RenderTexture.h" />
     <ClInclude Include="NewEngine\Object\2D\Sprite.h" />
+    <ClInclude Include="NewEngine\Object\3D\ParticleObject.h" />
     <ClInclude Include="NewEngine\Object\3D\VolumetricFog.h" />
     <ClInclude Include="NewEngine\Object\3D\ParticleMesh.h" />
     <ClInclude Include="NewEngine\Object\Other\Texture\DepthTexture.h" />
@@ -480,6 +484,7 @@
     <None Include="Application\Shader\Trajectory\Trajectory.hlsli" />
     <None Include="Application\Shader\Vignette\Vignette.hlsli" />
     <None Include="NewEngine\Shader\Blur.hlsli" />
+    <None Include="NewEngine\Shader\ParticleObject\ParticleObject.hlsli" />
     <None Include="NewEngine\Shader\VolumetricFog\VolumetricFog.hlsli" />
     <None Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSprite.hlsli" />
     <None Include="NewEngine\Shader\ColliderObject\ColliderObject.hlsli" />
@@ -740,6 +745,30 @@
     <FxCompile Include="Application\Shader\Vignette\VignetteVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ParticleObject\ParticleObjectCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ParticleObject\ParticleObjectGS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ParticleObject\ParticleObjectPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ParticleObject\ParticleObjectVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\VolumetricFog\VolumetricFogPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

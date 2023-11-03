@@ -12,6 +12,7 @@ public:
 	void Init();
 	void Update();
 	void DrawModel();
+	void DrawFog();
 	void DrawDebugGui();
 
 public:

@@ -92,4 +92,6 @@ public:
 	D3D12_VERTEX_BUFFER_VIEW* GetvbViewAddress() { return &mBufferView; }
 	// 頂点バッファを取得
 	ID3D12Resource* GetVertexBuffer() { return mBufferResource->buffer.Get(); }
+
+	BufferResource* GetBufferResource() { return mBufferResource.get(); }
 };

@@ -242,7 +242,6 @@ void GameScene::Draw()
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
-
 	mTrajectory.Draw();
 
 }
@@ -394,6 +393,7 @@ void GameScene::DrawCurrentSceneObject()
 	mPostEffectManager->DrawSkydomeVignette();
 
 	mField->DrawModel();
+	mField->DrawFog();
 
 	mPlayer->DrawModel();
 	mBoss->DrawModel();

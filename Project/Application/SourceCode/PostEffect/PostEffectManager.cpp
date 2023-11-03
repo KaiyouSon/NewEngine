@@ -61,10 +61,24 @@ void PostEffectManager::EffectBloomDrawPass(
 	mEffectBloom->DrawPass(Bloom::PassType::HighLumi);
 	mEffectBloom->PostSceneDraw(Bloom::PassType::GaussianBlur);
 
+	mEffectBloom->PrevSceneDraw(Bloom::PassType::GaussianBlurHalf);
+	mEffectBloom->DrawPass(Bloom::PassType::HighLumi);
+	mEffectBloom->PostSceneDraw(Bloom::PassType::GaussianBlurHalf);
+
 	// ブラーかけ終わったやつを描画
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::Bloom);
-	mEffectBloom->DrawPass(Bloom::PassType::GaussianBlur);
+	if (Key::GetKey(DIK_1))
+	{
+		mEffectBloom->DrawPass(Bloom::PassType::GaussianBlur);
+	}
 	mEffectBloom->PostSceneDraw(Bloom::PassType::Bloom);
+
+	mEffectBloom->PrevSceneDraw(Bloom::PassType::Bloom1);
+	if (Key::GetKey(DIK_2))
+	{
+		mEffectBloom->DrawPass(Bloom::PassType::GaussianBlurHalf);
+	}
+	mEffectBloom->PostSceneDraw(Bloom::PassType::Bloom1);
 
 	// 現在のシーンの描画
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::Target);

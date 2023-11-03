@@ -379,6 +379,9 @@
     <Filter Include="Shader\Application\Effect\BossAttackTrajectoryEffect">
       <UniqueIdentifier>{fcb2d8e6-45fa-452f-b67d-6127bef12656}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Engine\ParticleObject">
+      <UniqueIdentifier>{dd7c20c1-c2b4-4c51-98b6-3bc6a20e38c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -872,6 +875,12 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Effect\BossAttackTrajectoryEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\ParticleObject.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Math\Vec4.cpp">
+      <Filter>Uncategorized\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1406,6 +1415,12 @@
     <ClInclude Include="Application\SourceCode\Effect\BossAttackTrajectoryEffect.h">
       <Filter>Application\Header\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\ParticleObject.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Math\Vec4.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1492,6 +1507,9 @@
     </None>
     <None Include="Application\Shader\Trajectory\Trajectory.hlsli">
       <Filter>Shader\Application\Trajectory</Filter>
+    </None>
+    <None Include="NewEngine\Shader\ParticleObject\ParticleObject.hlsli">
+      <Filter>Shader\Engine\ParticleObject</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1707,6 +1725,18 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\Effect\BossAttackTrajectoryEffect\BossAttackTrajectoryEffectUpdateCS.hlsl">
       <Filter>Shader\Application\Effect\BossAttackTrajectoryEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ParticleObject\ParticleObjectVS.hlsl">
+      <Filter>Shader\Engine\ParticleObject</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ParticleObject\ParticleObjectCS.hlsl">
+      <Filter>Shader\Engine\ParticleObject</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ParticleObject\ParticleObjectPS.hlsl">
+      <Filter>Shader\Engine\ParticleObject</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\ParticleObject\ParticleObjectGS.hlsl">
+      <Filter>Shader\Engine\ParticleObject</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

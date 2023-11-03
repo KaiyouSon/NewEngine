@@ -441,6 +441,14 @@ void RenderBase::ShaderCompilerInit()
 	setting.psFilePath = path1 + "ParticleMesh/ParticleMeshPS.hlsl";
 	ShaderCompilerManager::Create(setting, "ParticleMesh");
 
+	// ParticleObject用
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path1 + "ParticleObject/ParticleObjectCS.hlsl";
+	setting.vsFilePath = path1 + "ParticleObject/ParticleObjectVS.hlsl";
+	setting.gsFilePath = path1 + "ParticleObject/ParticleObjectGS.hlsl";
+	setting.psFilePath = path1 + "ParticleObject/ParticleObjectPS.hlsl";
+	ShaderCompilerManager::Create(setting, "ParticleObject");
+
 	// ボリューメトリックフォグ用
 	setting = ShaderCompilerSetting();
 	setting.mInputLayoutSettings.resize(2);
@@ -584,6 +592,18 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "ParticleMesh");
 
+	// ParticleObject用
+	setting = GraphicsPipelineSetting();
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ParticleObject");
+	setting.cullMode = CullMode::None;
+	setting.topologyType = TopologyType::Point;
+	setting.depthStencilDesc = depthStencilDesc4;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
+	PipelineManager::CreateGraphicsPipeline(setting, "ParticleObject");
+
 	// ボリューメトリックフォグ用
 	setting = GraphicsPipelineSetting();
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
@@ -615,6 +635,14 @@ void RenderBase::ComputePipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	setting.rootSignatureSetting.maxUavDescritorRange = 1;
 	PipelineManager::CreateComputePipeline(setting, "ParticleMesh");
+
+	// ParticleObject用
+	setting = ComputePipelineSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ParticleObject");
+	setting.rootSignatureSetting.maxCbvRootParameter = 1;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	setting.rootSignatureSetting.maxUavDescritorRange = 1;
+	PipelineManager::CreateComputePipeline(setting, "ParticleObject");
 }
 
 // --- ゲッター -------------------------------------------------------------- //

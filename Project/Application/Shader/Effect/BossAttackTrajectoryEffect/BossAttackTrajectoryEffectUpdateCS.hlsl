@@ -85,7 +85,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
         if (result.color.a >= 1)
         {
             result.color.a = 1;
-            result.scale -= 0.0025f;
+            result.scale -= 0.004f;
         }
         
         outputData[i] = result;
@@ -159,7 +159,8 @@ ParticleData InitParticleData(uint index)
     result.scale = baseScale + Random01(seed) * 0.25f;
     
     // ãPìx
-    result.shininess = 5.0f;
+    seed = RandomSeed(seed, index);
+    result.shininess = 0.5f + Random01(seed);
         
     // êF
     result.color = float4(0.53f, 0.f, 0.f, 0.f);

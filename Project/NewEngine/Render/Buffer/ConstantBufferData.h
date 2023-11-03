@@ -205,6 +205,11 @@ namespace ConstantBufferData
 		float area;
 	};
 
+	struct CParticleObject
+	{
+		uint32_t maxParticleSize;
+	};
+
 	struct CMaxParticle
 	{
 		uint32_t max;

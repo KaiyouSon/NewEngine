@@ -16,14 +16,19 @@ float4 GaussianBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float si
 {
     float4 result = float4(0, 0, 0, 0);
     float totalWeight = 0;
-    float stepWidth = sigma / loopNum;
+    float max = sigma * 2;
+    float min = -sigma * 2;
+    float stepWidth = (max - min) / loopNum;
 
-    for (float py = -sigma * 2; py <= sigma * 2; py += stepWidth)
+    [unroll]
+    for (float py = min; py <= max; py += stepWidth)
     {
-        for (float px = -sigma * 2; px <= sigma * 2; px += stepWidth)
+        [unroll]
+        for (float px = min; px <= max; px += stepWidth)
         {
 		    // 色取得するUV座標
-            float2 pickUV = uv + float2(px, py);
+            float2 offset = float2(px, py);
+            float2 pickUV = uv + offset;
             
             // 画面外の色を取得しないように
             pickUV = clamp(pickUV, 0.001, 0.999);
@@ -43,7 +48,7 @@ float4 GaussianBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float si
 
 float4 main(V2P i) : SV_TARGET
 {
-    float4 texColor = GaussianBlur(tex, smp, i.uv, 0.0025f, 5);
+    float4 texColor = GaussianBlur(tex, smp, i.uv, 0.0025f, 10);
     
     return float4(texColor.rgb, 1);
 }

@@ -90,12 +90,12 @@ void PostEffect::Draw()
 				(uint32_t)(startIndex + 1),
 				mRenderTextures[i]->GetDepthTexture()->GetBufferResource()->srvHandle.gpu);
 		}
-		else
-		{
-			cmdList->SetGraphicsRootDescriptorTable(
-				startIndex + 1,
-				mRenderTextures[i]->GetBufferResources()->at(rtvIndex).srvHandle.gpu);
-		}
+		//else
+		//{
+		//	cmdList->SetGraphicsRootDescriptorTable(
+		//		startIndex + 1,
+		//		mRenderTextures[i]->GetBufferResources()->at(rtvIndex).srvHandle.gpu);
+		//}
 	}
 
 	// CSOutput
