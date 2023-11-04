@@ -6,8 +6,6 @@
 class DefaultCamera : public ICamera
 {
 private:
-	float mTargetYaw;
-	float mAssistYaw;
 	float mControlYaw;
 	float mControlPitch;
 
