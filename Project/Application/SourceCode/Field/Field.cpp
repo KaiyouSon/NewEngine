@@ -59,11 +59,11 @@ void Field::Init()
 	for (uint32_t i = 0; i < mFieldData->volumetricFogs.size(); i++)
 	{
 		mFieldData->volumetricFogs[i]->fogParam.fogClamp = Vec2(30, 100);
-		mFieldData->volumetricFogs[i]->fogParam.stepCount = 25;
-		mFieldData->volumetricFogs[i]->fogParam.stepLength = 0.5f;
-		mFieldData->volumetricFogs[i]->fogParam.dencity = 0.1f;
-		mFieldData->volumetricFogs[i]->fogParam.fogColor = Color(0xffeab7);
-		mFieldData->volumetricFogs[i]->fogParam.fogColorRate = Color(1.25f, 1.25f, 1.25f, 0.05f);
+		//mFieldData->volumetricFogs[i]->fogParam.stepCount = 25;
+		//mFieldData->volumetricFogs[i]->fogParam.stepLength = 0.5f;
+		//mFieldData->volumetricFogs[i]->fogParam.dencity = 0.1f;
+		//mFieldData->volumetricFogs[i]->fogParam.fogColor = Color(0xffeab7);
+		//mFieldData->volumetricFogs[i]->fogParam.fogColorRate = Color(1.25f, 1.25f, 1.25f, 0.05f);
 		mFieldData->volumetricFogs[i]->offset.x = Random::RangeF(-1.f, 1.f);
 		mFieldData->volumetricFogs[i]->offset.y = Random::RangeF(-1.f, 1.f);
 		mFieldData->volumetricFogs[i]->offset.z = Random::RangeF(-1.f, 1.f);

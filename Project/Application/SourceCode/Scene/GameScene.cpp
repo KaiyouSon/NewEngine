@@ -101,8 +101,6 @@ void GameScene::Init()
 	mVolumetricFog->fogParam.dencity = 0.014f;
 	mVolumetricFog->color = Color(233, 216, 187, 255);
 	VolumetricFog::fogClamp = Vec2(30.f, 50.f);
-
-	//mTrajectory.SetTexture(TextureManager::GetTexture("Trajectory"));
 }
 void GameScene::Update()
 {
@@ -111,52 +109,33 @@ void GameScene::Update()
 	//mVolumetricFog->pos.y = Max(mVolumetricFog->pos.y, 25.f);
 	mVolumetricFog->moveSpeed = Vec3(0.001f, -0.001f, -0.001f);
 
-	mTrajectory.PrevUpdate();
+	// デバッグ機能
+	ProcessAtDebugBuild([this]
+		{
+			// ホットリロード
+			if (Key::GetKey(DIK_H))
+			{
+				if (Key::GetKeyDown(DIK_S))
+				{
+					FieldDataManager::Load("SkyIsland", "SkyIsland");
+					mField->SetFieldData(FieldDataManager::GetFieldData("SkyIsland"));
+					mField->Init();
+				}
+			}
 
-	static Vec3 pos = 0;
-	if (Key::GetKey(DIK_RIGHT))
-	{
-		pos.x += 0.1f;
-	}
-	if (Key::GetKey(DIK_LEFT))
-	{
-		pos.x -= 0.1f;
-	}
-	if (Key::GetKey(DIK_UP))
-	{
-		pos.y += 0.1f;
-	}
-	if (Key::GetKey(DIK_DOWN))
-	{
-		pos.y -= 0.1f;
-	}
-	Vec3 p1 = pos + Vec3::up * 9.5f;
-	Vec3 p2 = pos + Vec3::up * 10.5f;
+			if (Key::GetKeyDown(DIK_L))
+			{
+				Camera::current.pos = Vec3(0, 10, -20);
+				Camera::current.rot = Radian(Vec3(0, 0, 0));
+			}
 
-	mTrajectory.SetTargetPos(p1, p2);
-	mTrajectory.PostUpdate();
-
-
-#ifdef _DEBUG
-	if (Key::GetKeyDown(DIK_L))
-	{
-		Camera::current.pos = Vec3(0, 10, -20);
-		Camera::current.rot = Radian(Vec3(0, 0, 0));
-
-		//mVolumetricFog->pos.y = 10;
-		//mVolumetricFog->scale.x = 1000;
-		//mVolumetricFog->scale.y = 25;
-		//mVolumetricFog->scale.z = 1000;
-	}
-
-	if (Key::GetKeyDown(DIK_F6))
-	{
-		mPlayer->Init();
-		mMovieEvent->End();
-		CameraManager::GetInstance()->ChangeCamera(CameraManager::CameraType::Default);
-	}
-
-#endif
+			if (Key::GetKeyDown(DIK_F6))
+			{
+				mPlayer->Init();
+				mMovieEvent->End();
+				CameraManager::GetInstance()->ChangeCamera(CameraManager::CameraType::Default);
+			}
+		});
 
 	auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
 	if (currentTransition == nullptr)
@@ -245,7 +224,7 @@ void GameScene::Draw()
 	mMenuManager->DrawFrontSprite();
 	mTrajectory.Draw();
 
-	mVolumetricFog->Draw();
+	//mVolumetricFog->Draw();
 
 }
 void GameScene::DrawDebugGui()

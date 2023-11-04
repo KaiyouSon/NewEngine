@@ -6,7 +6,7 @@ LeadEffect::LeadEffect() :
 	mEmitter(std::make_unique<GPUEmitter>())
 {
 	mEmitter->SetTexture(TextureManager::GetTexture("Particle2"));
-	mEmitter->SetParticleData<LeadParticle>(100000);
+	mEmitter->SetParticleData<LeadParticle>(5000);
 	mEmitter->AddCSConstantBuffer<Vec3>();
 	mEmitter->AddCSStructuredBuffer<SLeadEffect>();
 

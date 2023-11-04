@@ -497,9 +497,48 @@ void FieldDataManager::LoadVolumetricFogData(FieldData* data, nlohmann::json jso
 		(float)transform["scaling"][1],
 		(float)transform["scaling"][2],
 	};
+	Vec3 angle =
+	{
+		(float)transform["rotation"][0],
+		(float)transform["rotation"][1],
+		(float)transform["rotation"][2],
+	};
 	volumetricFog->pos = pos;
 	volumetricFog->scale = scale;
+	volumetricFog->rot = Radian(angle);
+	if (angle.y != 0)
+	{
+		int a = 0;
+		a;
+	}
 	volumetricFog->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
+
+	// フォグのパラメーター
+	if (jsonObj.contains("fog_param"))
+	{
+		nlohmann::json fogParam = jsonObj["fog_param"];
+		volumetricFog->fogParam.stepCount = fogParam["step_count"];
+		volumetricFog->fogParam.stepLength = fogParam["step_length"];
+		volumetricFog->fogParam.dencity = fogParam["dencity"];
+
+		Color color =
+		{
+			fogParam["color"][0],
+			fogParam["color"][1],
+			fogParam["color"][2],
+			fogParam["color"][3],
+		};
+		volumetricFog->fogParam.fogColor = color;
+
+		Color colorRate =
+		{
+			fogParam["color_rate"][0],
+			fogParam["color_rate"][1],
+			fogParam["color_rate"][2],
+			fogParam["color_rate"][3],
+		};
+		volumetricFog->fogParam.fogColorRate = colorRate;
+	}
 
 	data->volumetricFogs.push_back(std::move(volumetricFog));
 }

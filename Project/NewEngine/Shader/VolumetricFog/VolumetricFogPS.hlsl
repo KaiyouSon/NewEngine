@@ -18,12 +18,13 @@ float4 main(V2P i) : SV_TARGET
     float3 rayDir = normalize(i.wpos - cameraPos);
     
     // レイをOBBのローカル座標系に変換
-    float3 localRayStart = mul(transpose(rotateMat), float4(rayStart, 1)).xyz;
-    float3 localRayDir = mul(transpose(rotateMat), float4(rayDir, 1)).xyz;
-        
+    matrix invRotateMat = transpose(rotateMat);
+    float3 localRayStart = mul(invRotateMat, float4(rayStart - objectPos, 1)).xyz;
+    float3 localRayDir = mul(invRotateMat, float4(rayDir, 1)).xyz;
+    
     // ボックスの最大最小値
-    float3 boundsMin = objectPos + objectScale * -0.5f;
-    float3 boundsMax = objectPos + objectScale * +0.5f;
+    float3 boundsMin = objectScale * -0.5f;
+    float3 boundsMax = objectScale * +0.5f;
 
     // カメラからの距離を計算
     float dis = distance(cameraPos, i.wpos);
@@ -77,10 +78,9 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
             float3 uvw = MapValueTo01(boundsMin, boundsMax, rayPos);
             colorDensity += tex.Sample(smp, (uvw + offset)).r * stepLength * density;
             
-            float3 v = rayPos - objectPos;
-            float dis = length(v);
-            float p = length(normalize(v) * objectScale / 2);
-            alpha += (1 - smoothstep(0.05, p, dis)) * colorDensity;
+            float3 clamped = clamp(uvw, 0, 1);
+            float dis = distance(clamped, float3(0.5f, 0.5f, 0.5f));
+            alpha += (1 - smoothstep(0.05, 0.5f, dis)) * colorDensity;
             
             // 次のレイの座標を算出
             rayPos += rayDir * stepLength;
