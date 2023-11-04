@@ -37,6 +37,14 @@ namespace ConstantBufferData
 		Vec3 lightCameraPos;
 	};
 
+	struct CTransformVolumetricFog
+	{
+		Mat4 viewMat;
+		Mat4 worldMat;
+		Mat4 rotateMat;
+		Vec3 cameraPos;
+	};
+
 	struct CTransform2D
 	{
 		Mat4 mat;	//3D変換行列

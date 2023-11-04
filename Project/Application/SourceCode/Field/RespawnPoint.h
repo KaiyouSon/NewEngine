@@ -22,7 +22,7 @@ public:
 
 public:	// セッター
 	void SetParent(const Transform parent);
-	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
+	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline1, GraphicsPipeline* graphicsPipeline2);
 
 public: // ゲッター
 	Vec3 GetPos();

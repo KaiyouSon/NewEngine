@@ -158,7 +158,7 @@ void VolumetricFog::MaterialInit()
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
 	// 3Dトランスフォーム
-	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform3D>>();
+	iConstantBuffer = std::make_unique<ConstantBuffer<CTransformVolumetricFog>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// 色
@@ -183,13 +183,14 @@ void VolumetricFog::MaterialInit()
 void VolumetricFog::MaterialTransfer()
 {
 	// トランスフォーム
-	CTransform3D transform3DData =
+	CTransformVolumetricFog transformData =
 	{
 		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
 		mTransform.GetWorldMat(),
+		mTransform.GetRotMat(),
 		Camera::current.pos,
 	};
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transform3DData);
+	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformData);
 
 	// 色
 	CColor colorData = { color / 255 };

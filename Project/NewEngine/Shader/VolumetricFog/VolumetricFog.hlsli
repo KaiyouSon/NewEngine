@@ -3,6 +3,7 @@ cbuffer ConstantBufferDataTransform : register(b0)
 {
     matrix viewProjMat;
     matrix worldMat;
+    matrix rotateMat;
     float3 cameraPos;
 }
 

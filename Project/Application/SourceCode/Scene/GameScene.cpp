@@ -94,7 +94,8 @@ void GameScene::Init()
 	mIsChangeScene = false;
 
 	mVolumetricFog->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
-	mVolumetricFog->scale = Vec3(1000.f, 200.f, 1000.f);
+	mVolumetricFog->pos.y = 10;
+	mVolumetricFog->scale = Vec3(10.f, 10.f, 10.f);
 	mVolumetricFog->fogParam.stepCount = 50;
 	mVolumetricFog->fogParam.stepLength = 1.f;
 	mVolumetricFog->fogParam.dencity = 0.014f;
@@ -244,6 +245,8 @@ void GameScene::Draw()
 	mMenuManager->DrawFrontSprite();
 	mTrajectory.Draw();
 
+	mVolumetricFog->Draw();
+
 }
 void GameScene::DrawDebugGui()
 {
@@ -268,6 +271,9 @@ void GameScene::DrawDebugGui()
 		Gui::DrawLine();
 		Gui::DrawSlider3("Fog Pos", mVolumetricFog->pos, 0.01f);
 		Gui::DrawSlider3("Fog Scale", mVolumetricFog->scale, 0.01f);
+		Vec3 angle = Angle(mVolumetricFog->rot);
+		Gui::DrawSlider3("Fog Rot", angle, 1.f);
+		mVolumetricFog->rot = Radian(angle);
 		Gui::DrawSlider3("Fog Speed", mVolumetricFog->moveSpeed, 0.001f);
 	}
 
@@ -375,10 +381,16 @@ void GameScene::DrawDepthToEffectBloom()
 	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
 	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GrassWriteNone"));
 	mField->SetTreeGraphicsPipeline(PipelineManager::GetGraphicsPipeline("BranchWriteNone"));
+	mField->SetRespawnPointGraphicsPipeline(
+		PipelineManager::GetGraphicsPipeline("RippleWriteNone"),
+		PipelineManager::GetGraphicsPipeline("RhombusWriteNone"));
 	mField->DrawModel();
 	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass"));
 	mField->SetTreeGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Branch"));
+	mField->SetRespawnPointGraphicsPipeline(
+		PipelineManager::GetGraphicsPipeline("Ripple"),
+		PipelineManager::GetGraphicsPipeline("Rhombus"));
 
 	// ボス
 	mBoss->DrawModel();

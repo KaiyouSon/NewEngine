@@ -271,3 +271,17 @@ void Field::SetTreeGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 		mFieldData->trees[i]->SetGraphicsPipeline(graphicsPipeline);
 	}
 }
+
+void Field::SetRespawnPointGraphicsPipeline(GraphicsPipeline* graphicsPipeline1, GraphicsPipeline* graphicsPipeline2)
+{
+	if (!mFieldData)
+	{
+		return;
+	}
+
+	// リスポーン地点
+	for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
+	{
+		mFieldData->respawnPoints[i]->SetGraphicsPipeline(graphicsPipeline1, graphicsPipeline2);
+	}
+}

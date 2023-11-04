@@ -42,7 +42,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
         if (airEffect[0].timer >= airEffect[0].maxTimer)
         {
             // 初期化
-            for (uint i = 0; i < 50; i++)
+            for (uint i = 0; i < 100; i++)
             {
                 outputData[airEffect[0].index] = InitParticleData(airEffect[0].index);
                 airEffect[0].index++;
@@ -143,7 +143,7 @@ ParticleData InitParticleData(uint index)
         
     // スケール
     seed = RandomSeed(seed, index);
-    result.scale = 0.25f + Random01(seed) * 0.15f;
+    result.scale = 0.35f + Random01(seed) * 0.35f;
     
     // 輝度
     seed = RandomSeed(seed, index);

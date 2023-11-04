@@ -209,7 +209,6 @@ Mat4 ConvertViewProjectionMatLookAt(const Vec3 pos, const Vec3 target, const Vec
 
 	return view;
 }
-
 Mat4 ConvertViewProjectionMatLookTo(const Vec3 pos, const Vec3 zAxis, const Vec3 yAxis)
 {
 	// 変換行列を初期化
@@ -302,7 +301,6 @@ Mat4 CalculateWorldMat(const Vec3 pos, const Vec3 scale, const Vec3 rot)
 
 	return result;
 }
-
 Mat4 CalculateWorldMat(const Vec3 pos, const Vec3 scale, const Quaternion rot)
 {
 	Mat4 result = Mat4::Identity();

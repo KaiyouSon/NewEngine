@@ -870,9 +870,6 @@
     <ClCompile Include="Application\SourceCode\Trajectory.cpp">
       <Filter>Application\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\PostEffect\HighLumi.cpp">
-      <Filter>Application\Source\PostEffect</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\Effect\BossAttackTrajectoryEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
@@ -1408,9 +1405,6 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Trajectory.h">
       <Filter>Application\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\PostEffect\HighLumi.h">
-      <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Effect\BossAttackTrajectoryEffect.h">
       <Filter>Application\Header\Effect</Filter>

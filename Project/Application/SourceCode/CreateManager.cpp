@@ -374,6 +374,16 @@ void CreateManager::CreateGraphicsPipeline()
 		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
 		PipelineManager::CreateGraphicsPipeline(setting, "BranchWriteNone");
 
+		// リスポーン地点用（下の波紋用）
+		setting = PipelineManager::GetGraphicsPipeline("Ripple")->GetSetting();
+		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
+		PipelineManager::CreateGraphicsPipeline(setting, "RippleWriteNone");
+
+		// リスポーン地点用（浮いてる菱形用）
+		setting = PipelineManager::GetGraphicsPipeline("Rhombus")->GetSetting();
+		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
+		PipelineManager::CreateGraphicsPipeline(setting, "RhombusWriteNone");
+
 		// ボリューメトリックフォグ
 		setting = PipelineManager::GetGraphicsPipeline("VolumetricFog")->GetSetting();
 		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;

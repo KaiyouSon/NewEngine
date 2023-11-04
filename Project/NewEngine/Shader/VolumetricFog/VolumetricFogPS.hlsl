@@ -16,16 +16,20 @@ float4 main(V2P i) : SV_TARGET
 {
     float3 rayStart = cameraPos;
     float3 rayDir = normalize(i.wpos - cameraPos);
+    
+    // レイをOBBのローカル座標系に変換
+    float3 localRayStart = mul(transpose(rotateMat), float4(rayStart, 1)).xyz;
+    float3 localRayDir = mul(transpose(rotateMat), float4(rayDir, 1)).xyz;
         
     // ボックスの最大最小値
-    float3 boundsMin = objectPos + objectScale * float3(-0.5f, -0.5f, -0.5f);
-    float3 boundsMax = objectPos + objectScale * float3(+0.5f, +0.5f, +0.5f);
+    float3 boundsMin = objectPos + objectScale * -0.5f;
+    float3 boundsMax = objectPos + objectScale * +0.5f;
 
     // カメラからの距離を計算
     float dis = distance(cameraPos, i.wpos);
     float disRate = smoothstep(fogClamp.x, fogClamp.y, dis);
     
-    float4 resultColor = RayMarching(boundsMin, boundsMax, rayStart, rayDir) * disRate;
+    float4 resultColor = RayMarching(boundsMin, boundsMax, localRayStart, localRayDir) /* * disRate*/;
     
     resultColor = resultColor * fogColor * fogColorRate;
     return resultColor;
@@ -58,7 +62,7 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
     float2 hitinfo = ClucRayToBoxCrossPoint(boundsMin, boundsMax, rayStart, rayDir);
     
     float colorDensity = 0.0f;
-    float alpha = 0.0f;
+    float alpha = 0;
     
     // レイを飛ばして当たっていたら
     if (hitinfo.x <= hitinfo.y)
@@ -71,17 +75,17 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
         for (uint i = 0; i < stepCount; i++)
         {
             float3 uvw = MapValueTo01(boundsMin, boundsMax, rayPos);
-            colorDensity += tex.Sample(smp, (uvw + offset) * tiling).r * stepLength * density;
+            colorDensity += tex.Sample(smp, (uvw + offset)).r * stepLength * density;
             
-            float r = distance(uvw, float3(0.5f, 0.5f, 0.5f));
-            alpha += (1 - smoothstep(0.05, 0.5f, r)) * colorDensity;
+            float3 v = rayPos - objectPos;
+            float dis = length(v);
+            float p = length(normalize(v) * objectScale / 2);
+            alpha += (1 - smoothstep(0.05, p, dis)) * colorDensity;
             
             // 次のレイの座標を算出
             rayPos += rayDir * stepLength;
         }
     }
-    
-    //return alpha;
     return float4(colorDensity.xxx, alpha);
 }
 

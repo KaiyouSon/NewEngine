@@ -23,4 +23,5 @@ public:
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 	void SetWeedGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 	void SetTreeGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
+	void SetRespawnPointGraphicsPipeline(GraphicsPipeline* graphicsPipeline1, GraphicsPipeline* graphicsPipeline2);
 };

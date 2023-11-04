@@ -48,7 +48,7 @@ void Tree::SetCollider(const SphereCollider collider)
 
 void Tree::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
-	mTree->SetGraphicsPipeline(graphicsPipeline);
+	//mTree->SetGraphicsPipeline(graphicsPipeline);
 	mBranch->SetGraphicsPipeline(graphicsPipeline);
 }
 
