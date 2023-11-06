@@ -59,15 +59,16 @@ void Field::Init()
 	for (uint32_t i = 0; i < mFieldData->volumetricFogs.size(); i++)
 	{
 		mFieldData->volumetricFogs[i]->fogParam.fogClamp = Vec2(30, 100);
-		//mFieldData->volumetricFogs[i]->fogParam.stepCount = 25;
-		//mFieldData->volumetricFogs[i]->fogParam.stepLength = 0.5f;
-		//mFieldData->volumetricFogs[i]->fogParam.dencity = 0.1f;
-		//mFieldData->volumetricFogs[i]->fogParam.fogColor = Color(0xffeab7);
-		//mFieldData->volumetricFogs[i]->fogParam.fogColorRate = Color(1.25f, 1.25f, 1.25f, 0.05f);
 		mFieldData->volumetricFogs[i]->offset.x = Random::RangeF(-1.f, 1.f);
 		mFieldData->volumetricFogs[i]->offset.y = Random::RangeF(-1.f, 1.f);
 		mFieldData->volumetricFogs[i]->offset.z = Random::RangeF(-1.f, 1.f);
 		mFieldData->volumetricFogs[i]->moveSpeed = Vec3(Random::RangeF(0.0005f, 0.001f), 0.f, -0.002f);
+	}
+
+	// 太陽
+	for (uint32_t i = 0; i < mFieldData->suns.size(); i++)
+	{
+		mFieldData->suns[i]->Init();
 	}
 }
 
@@ -125,6 +126,12 @@ void Field::Update()
 	{
 		mFieldData->volumetricFogs[i]->Update();
 	}
+
+	// 太陽
+	for (uint32_t i = 0; i < mFieldData->suns.size(); i++)
+	{
+		mFieldData->suns[i]->Update();
+	}
 }
 
 void Field::DrawModel()
@@ -174,6 +181,12 @@ void Field::DrawModel()
 	for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
 	{
 		mFieldData->respawnPoints[i]->DrawModel();
+	}
+
+	// 太陽
+	for (uint32_t i = 0; i < mFieldData->suns.size(); i++)
+	{
+		mFieldData->suns[i]->Draw();
 	}
 }
 
@@ -225,12 +238,6 @@ void Field::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 		mFieldData->skyIslands[i]->SetGraphicsPipeline(graphicsPipeline);
 	}
 
-	// 木
-	for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
-	{
-		mFieldData->trees[i]->SetGraphicsPipeline(graphicsPipeline);
-	}
-
 	// 城壁
 	for (uint32_t i = 0; i < mFieldData->walls.size(); i++)
 	{
@@ -258,7 +265,7 @@ void Field::SetWeedGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 	}
 }
 
-void Field::SetTreeGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
+void Field::SetTreeGraphicsPipeline(GraphicsPipeline* graphicsPipeline1, GraphicsPipeline* graphicsPipeline2)
 {
 	if (!mFieldData)
 	{
@@ -268,7 +275,7 @@ void Field::SetTreeGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 	// 木
 	for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
 	{
-		mFieldData->trees[i]->SetGraphicsPipeline(graphicsPipeline);
+		mFieldData->trees[i]->SetGraphicsPipeline(graphicsPipeline1, graphicsPipeline2);
 	}
 }
 

@@ -7,6 +7,7 @@
 #include "Wall.h"
 #include "Gate.h"
 #include "VolumetricFog.h"
+#include "Sun.h"
 
 // フィールドデータの構造体
 struct FieldData
@@ -19,4 +20,5 @@ struct FieldData
 	std::vector<std::unique_ptr<Wall>> walls;
 	std::vector<std::unique_ptr<Gate>> gates;
 	std::vector<std::unique_ptr<VolumetricFog>> volumetricFogs;
+	std::vector<std::unique_ptr<Sun>> suns;
 };

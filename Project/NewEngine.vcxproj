@@ -119,6 +119,7 @@
     <ClCompile Include="Application\SourceCode\CreateManager.cpp" />
     <ClCompile Include="Application\SourceCode\Effect\AirEffect.cpp" />
     <ClCompile Include="Application\SourceCode\Effect\BossAttackTrajectoryEffect.cpp" />
+    <ClCompile Include="Application\SourceCode\Field\Sun.cpp" />
     <ClCompile Include="Application\SourceCode\Motion\BackstepMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Motion\LogoExplosionEffect.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\Bloom.cpp" />
@@ -221,7 +222,6 @@
     <ClCompile Include="NewEngine\Math\Quaternion.cpp" />
     <ClCompile Include="NewEngine\Math\Vec2.cpp" />
     <ClCompile Include="NewEngine\Math\Vec3.cpp" />
-    <ClCompile Include="NewEngine\Math\Vec4.cpp" />
     <ClCompile Include="NewEngine\NewEngine.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -291,6 +291,7 @@
     <ClInclude Include="Application\SourceCode\Effect\AirEffect.h" />
     <ClInclude Include="Application\SourceCode\Effect\BossAttackTrajectoryEffect.h" />
     <ClInclude Include="Application\SourceCode\Effect\IEffect.h" />
+    <ClInclude Include="Application\SourceCode\Field\Sun.h" />
     <ClInclude Include="Application\SourceCode\Motion\BackstepMotion.h" />
     <ClInclude Include="Application\SourceCode\Effect\BloodSprayEffect.h" />
     <ClInclude Include="Application\SourceCode\Motion\LogoExplosionEffect.h" />
@@ -393,7 +394,6 @@
     <ClInclude Include="NewEngine\Math\Quaternion.h" />
     <ClInclude Include="NewEngine\Math\Vec2.h" />
     <ClInclude Include="NewEngine\Math\Vec3.h" />
-    <ClInclude Include="NewEngine\Math\Vec4.h" />
     <ClInclude Include="NewEngine\NewEngine.h" />
     <ClInclude Include="NewEngine\Object\2D\CircleGaugeSprite.h" />
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h" />
@@ -473,6 +473,7 @@
     <None Include="Application\Shader\Grass\Grass.hlsli" />
     <None Include="Application\Shader\HighLumi\HighLumi.hlsli" />
     <None Include="Application\Shader\GaussianBlur\GaussianBlur.hlsli" />
+    <None Include="Application\Shader\RadialBlur\RadialBlur.hlsli" />
     <None Include="Application\Shader\RespawnTransition\RespawnTransition.hlsli" />
     <None Include="Application\Shader\Rhombus\Rhombus.hlsli" />
     <None Include="Application\Shader\Ripple\Ripple.hlsli" />
@@ -652,6 +653,36 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\PonDeRing\PonDeRingInitCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\PonDeRing\PonDeRingUpdateCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\PonDeRing\PonDeRingVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RadialBlur\RadialBlurPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RadialBlur\RadialBlurVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Application\Shader\RespawnPointEffect\RespawnPointEffectCS.hlsl">

@@ -26,13 +26,7 @@ private:
 	std::unique_ptr<Skydome> mSkydome;
 
 	std::unique_ptr<MovieEvent> mMovieEvent;
-	std::unique_ptr<VolumetricFog> mVolumetricFog;
 	std::unique_ptr<DirectionalLight> mDirectionalLight;
-
-	ParticleObject mParticleObject;
-	Object3D obj;
-
-	Trajectory mTrajectory;
 
 	RenderTexture* mCurrentScene;
 

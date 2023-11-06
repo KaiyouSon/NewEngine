@@ -382,6 +382,12 @@
     <Filter Include="Shader\Engine\ParticleObject">
       <UniqueIdentifier>{dd7c20c1-c2b4-4c51-98b6-3bc6a20e38c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\PonDeRing">
+      <UniqueIdentifier>{7880dd69-ece2-4e34-bfe2-4e901ce1f1b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\RadialBlur">
+      <UniqueIdentifier>{26d8d7a7-647c-4ac3-8041-3f48443a2dc7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -843,9 +849,6 @@
     <ClCompile Include="Application\SourceCode\Motion\MotionManager.cpp">
       <Filter>Application\Source\Motion</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\3D\ParticleMesh.cpp">
-      <Filter>Application\Source</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\ParticleParam.cpp">
       <Filter>NewEngine\Source\Object\Other</Filter>
     </ClCompile>
@@ -874,10 +877,13 @@
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\ParticleObject.cpp">
-      <Filter>Uncategorized\Source</Filter>
+      <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Math\Vec4.cpp">
-      <Filter>Uncategorized\Source</Filter>
+    <ClCompile Include="NewEngine\Object\3D\ParticleMesh.cpp">
+      <Filter>NewEngine\Source\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Field\Sun.cpp">
+      <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1379,9 +1385,6 @@
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h">
       <Filter>NewEngine\Header\Object\2D</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\3D\ParticleMesh.h">
-      <Filter>Application\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\GaugeType.h">
       <Filter>Application\Header\UI\Member</Filter>
     </ClInclude>
@@ -1410,10 +1413,13 @@
       <Filter>Application\Header\Effect</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\ParticleObject.h">
-      <Filter>Uncategorized\Header</Filter>
+      <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Math\Vec4.h">
-      <Filter>Uncategorized\Header</Filter>
+    <ClInclude Include="NewEngine\Object\3D\ParticleMesh.h">
+      <Filter>NewEngine\Header\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Field\Sun.h">
+      <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1504,6 +1510,9 @@
     </None>
     <None Include="NewEngine\Shader\ParticleObject\ParticleObject.hlsli">
       <Filter>Shader\Engine\ParticleObject</Filter>
+    </None>
+    <None Include="Application\Shader\RadialBlur\RadialBlur.hlsli">
+      <Filter>Shader\Application\RadialBlur</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1731,6 +1740,21 @@
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\ParticleObject\ParticleObjectGS.hlsl">
       <Filter>Shader\Engine\ParticleObject</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\PonDeRing\PonDeRingUpdateCS.hlsl">
+      <Filter>Shader\Application\PonDeRing</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\PonDeRing\PonDeRingInitCS.hlsl">
+      <Filter>Shader\Application\PonDeRing</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\PonDeRing\PonDeRingVS.hlsl">
+      <Filter>Shader\Application\PonDeRing</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RadialBlur\RadialBlurVS.hlsl">
+      <Filter>Shader\Application\RadialBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RadialBlur\RadialBlurPS.hlsl">
+      <Filter>Shader\Application\RadialBlur</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

@@ -77,6 +77,9 @@ void DebugManager::DrawDebugGui()
 	Gui::DrawCheckBox("Show Collider", &isShowCollider);
 	ColliderDrawer::GetInstance()->SetisShow(isShowCollider);
 
+	Gui::DrawLine();
+	Gui::DrawString("FPS : %f", FrameRate::GetInstance()->GetCurrentFPS());
+
 	Gui::EndWindow();
 
 	mMappingWindow->DrawDebugGUI();

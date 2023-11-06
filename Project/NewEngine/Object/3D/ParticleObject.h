@@ -54,7 +54,8 @@ private:
 
 public:
 	ParticleObject();
-	void ExecuteCS();
+	~ParticleObject();
+	void ExecuteCS(const uint32_t threadX = 1, const uint32_t threadY = 1, const uint32_t threadZ = 1);
 	void Update(Transform* parent = nullptr);
 	void Draw(const BlendMode blendMode = BlendMode::Alpha);
 

@@ -89,6 +89,9 @@ void main(uint3 DTid : SV_DispatchThreadID)
                 result.scale = 0.01f;
             }
             
+            result.color = float4(0.9f, 0.7f, 0.37f, 1);
+            result.scale = 0.005f + Random01(seed / 10000 + 10) * 0.005f;
+
             result.shininess = 1;
             
             outputData[i] = result;

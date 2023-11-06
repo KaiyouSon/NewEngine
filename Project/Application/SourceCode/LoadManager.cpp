@@ -209,6 +209,8 @@ void LoadManager::GameSceneModelLoad()
 	ModelManager::LoadObjModel("Weapon/Club", "Club", true);
 	ModelManager::LoadObjModel("Weapon/Sword", "Sword", true);
 
+	// ポンデリング
+	ModelManager::LoadObjModel("PonDeRing", "PonDeRing");
 }
 void LoadManager::GameSceneModelUnLoad()
 {
@@ -241,6 +243,8 @@ void LoadManager::GameSceneModelUnLoad()
 	// 武器
 	ModelManager::DestroyModel("Club");
 	ModelManager::DestroyModel("Sword");
+
+	ModelManager::DestroyModel("PonDeRing");
 }
 
 ///////////////////////////////////////////////////////////////

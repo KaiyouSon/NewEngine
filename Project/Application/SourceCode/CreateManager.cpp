@@ -219,6 +219,22 @@ void CreateManager::CreateShaderCompiler()
 	setting.vsFilePath = path2 + "Trajectory/TrajectoryVS.hlsl";
 	setting.psFilePath = path2 + "Trajectory/TrajectoryPS.hlsl";
 	ShaderCompilerManager::Create(setting, "Trajectory");
+
+	// ポンデリング/太陽用（初期化用）
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path2 + "PonDeRing/PonDeRingInitCS.hlsl";
+	setting.vsFilePath = path2 + "PonDeRing/PonDeRingVS.hlsl";
+	setting.gsFilePath = path1 + "ParticleObject/ParticleObjectGS.hlsl";
+	setting.psFilePath = path1 + "ParticleObject/ParticleObjectPS.hlsl";
+	ShaderCompilerManager::Create(setting, "PonDeRingInit");
+
+	// ポンデリング/太陽用（更新用）
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path2 + "PonDeRing/PonDeRingUpdateCS.hlsl";
+	setting.vsFilePath = path2 + "PonDeRing/PonDeRingVS.hlsl";
+	setting.gsFilePath = path1 + "ParticleObject/ParticleObjectGS.hlsl";
+	setting.psFilePath = path1 + "ParticleObject/ParticleObjectPS.hlsl";
+	ShaderCompilerManager::Create(setting, "PonDeRingUpdate");
 }
 
 // パイプライン生成
@@ -400,6 +416,11 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.rootSignatureSetting.maxUavDescritorRange = 0;
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Trajectory");
+
+	// ポンデリング/太陽用
+	setting = PipelineManager::GetGraphicsPipeline("ParticleObject")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("PonDeRingInit");
+	PipelineManager::CreateGraphicsPipeline(setting, "PonDeRing");
 }
 
 // Computeパイプラインの生成
@@ -482,7 +503,6 @@ void CreateManager::CreateComputePipeline()
 	setting.rootSignatureSetting.maxUavDescritorRange = 2;
 	PipelineManager::CreateComputePipeline(setting, "BossAttackTrajectoryEffectInit");
 
-
 	// ボスの攻撃軌跡のエフェクト用（初期化）
 	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttackTrajectoryEffectUpdate");
@@ -490,6 +510,22 @@ void CreateManager::CreateComputePipeline()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 2;
 	PipelineManager::CreateComputePipeline(setting, "BossAttackTrajectoryEffectUpdate");
+
+	// ポンデリング/太陽用（初期化用）
+	setting = PipelineManager::GetComputePipeline("ParticleObject")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("PonDeRingInit");
+	setting.rootSignatureSetting.maxCbvRootParameter = 1;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	setting.rootSignatureSetting.maxUavDescritorRange = 1;
+	PipelineManager::CreateComputePipeline(setting, "PonDeRingInit");
+
+	// ポンデリング/太陽用（更新用）
+	setting = PipelineManager::GetComputePipeline("ParticleObject")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("PonDeRingUpdate");
+	setting.rootSignatureSetting.maxCbvRootParameter = 1;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	setting.rootSignatureSetting.maxUavDescritorRange = 1;
+	PipelineManager::CreateComputePipeline(setting, "PonDeRingUpdate");
 }
 
 void CreateManager::Create()

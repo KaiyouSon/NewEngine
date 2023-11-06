@@ -6,6 +6,7 @@
 #include "Emitter.h"
 #include "GPUEmitter.h"
 #include "ParticleMesh.h"
+#include "ParticleObject.h"
 
 #include "DirectionalLight.h"
 #include "PointLight.h"

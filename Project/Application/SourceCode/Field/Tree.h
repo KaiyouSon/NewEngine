@@ -19,7 +19,7 @@ public:
 public:
 	void SetParent(const Transform& parent);
 	void SetCollider(const SphereCollider collider);
-	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
+	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline1, GraphicsPipeline* graphicsPipeline2);
 
 public:
 	Vec3 GetPos();

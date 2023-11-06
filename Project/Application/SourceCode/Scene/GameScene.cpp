@@ -33,7 +33,6 @@ void GameScene::CreateInstance()
 	mPostEffectManager = std::make_unique<PostEffectManager>();
 	mMovieEvent = std::make_unique<MovieEvent>();
 	mSkydome = std::make_unique<Skydome>();
-	mVolumetricFog = std::make_unique<VolumetricFog>();
 }
 
 void GameScene::Init()
@@ -92,35 +91,9 @@ void GameScene::Init()
 	isInit = false;
 
 	mIsChangeScene = false;
-
-	mVolumetricFog->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
-	mVolumetricFog->pos.y = 10;
-	mVolumetricFog->scale = Vec3(10.f, 10.f, 10.f);
-	mVolumetricFog->fogParam.stepCount = 50;
-	mVolumetricFog->fogParam.stepLength = 1.f;
-	mVolumetricFog->fogParam.dencity = 0.014f;
-	mVolumetricFog->color = Color(233, 216, 187, 255);
-	VolumetricFog::fogClamp = Vec2(30.f, 50.f);
-
-	mParticleObject.SetParticleData
-		<ParticleParameter::ParticleMesh>(ModelManager::GetModel("Sphere"), 100);
-	mParticleObject.SetParticleTexture(TextureManager::GetTexture("Particle2"));
-
-	mParticleObject.ExecuteCS();
-
-
-	mParticleObject.pos.y = 10;
-	mParticleObject.scale = 10;
-
-	obj.SetModel(ModelManager::GetModel("Cube"));
 }
 void GameScene::Update()
 {
-	Vec3 offset = Vec3(0, 15, 0);
-	//mVolumetricFog->pos = Camera::current.pos + offset;
-	//mVolumetricFog->pos.y = Max(mVolumetricFog->pos.y, 25.f);
-	mVolumetricFog->moveSpeed = Vec3(0.001f, -0.001f, -0.001f);
-
 	// デバッグ機能
 	ProcessAtDebugBuild([this]
 		{
@@ -177,10 +150,6 @@ void GameScene::Update()
 	mSkydome->Update();
 	mMenuManager->Update();
 	mPostEffectManager->Update();
-	mVolumetricFog->Update();
-
-	mParticleObject.Update();
-	obj.Update();
 
 	ShadowMap::GetInstance()->Update(mDirectionalLight->pos);
 	EffectManager::GetInstance()->Update();
@@ -237,15 +206,6 @@ void GameScene::Draw()
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
-	mTrajectory.Draw();
-
-
-
-
-	mParticleObject.Draw();
-	obj.Draw();
-
-	//mVolumetricFog->Draw();
 
 }
 void GameScene::DrawDebugGui()
@@ -254,35 +214,22 @@ void GameScene::DrawDebugGui()
 
 	Gui::BeginWindow("Debug");
 
-	if (Gui::DrawCollapsingHeader("Fog") == true)
-	{
-		Gui::DrawSlider2("Fog Clamp", VolumetricFog::fogClamp, 1.f);
-		Gui::DrawInputInt("Step Count", (int&)mVolumetricFog->fogParam.stepCount);
-		Gui::DrawSlider1("Step Length", mVolumetricFog->fogParam.stepLength, 0.01f);
-		Gui::DrawSlider1("Fog Dencity", mVolumetricFog->fogParam.dencity, 0.01f);
-		Gui::DrawColorEdit("Fog Color", mVolumetricFog->fogParam.fogColor);
-
-		Gui::DrawLine();
-		Gui::DrawSlider1("Fog Color Rate R", mVolumetricFog->fogParam.fogColorRate.r, 0.01f);
-		Gui::DrawSlider1("Fog Color Rate G", mVolumetricFog->fogParam.fogColorRate.g, 0.01f);
-		Gui::DrawSlider1("Fog Color Rate B", mVolumetricFog->fogParam.fogColorRate.b, 0.01f);
-		Gui::DrawSlider1("Fog Color Rate A", mVolumetricFog->fogParam.fogColorRate.a, 0.01f);
-
-		Gui::DrawLine();
-		Gui::DrawSlider3("Fog Pos", mVolumetricFog->pos, 0.01f);
-		Gui::DrawSlider3("Fog Scale", mVolumetricFog->scale, 0.01f);
-		Vec3 angle = Angle(mVolumetricFog->rot);
-		Gui::DrawSlider3("Fog Rot", angle, 1.f);
-		mVolumetricFog->rot = Radian(angle);
-		Gui::DrawSlider3("Fog Speed", mVolumetricFog->moveSpeed, 0.001f);
-	}
-
 	if (Gui::DrawCollapsingHeader("Directional Light") == true)
 	{
 		Gui::DrawCheckBox("Directional Light Active", &mDirectionalLight->isActive);
 		Gui::DrawSlider3("Directional Light Pos", mDirectionalLight->pos, 0.1f);
 		Gui::DrawColorEdit("Directional Light Color", mDirectionalLight->color);
 	}
+
+	//if (Gui::DrawCollapsingHeader("Particle Object") == true)
+	//{
+	//	Gui::DrawSlider3("PObj Pos", mParticleObject.pos, 0.01f);
+	//	Gui::DrawSlider3("PObj Scale", mParticleObject.scale, 0.01f);
+	//	Vec3 angle = Angle(mParticleObject.rot);
+	//	Gui::DrawSlider3("PObj Rot", angle, 1.f);
+	//	mParticleObject.rot = Radian(angle);
+	//}
+
 	Gui::EndWindow();
 }
 
@@ -380,14 +327,20 @@ void GameScene::DrawDepthToEffectBloom()
 	// フィールド
 	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
 	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GrassWriteNone"));
-	mField->SetTreeGraphicsPipeline(PipelineManager::GetGraphicsPipeline("BranchWriteNone"));
+	mField->SetTreeGraphicsPipeline(
+		PipelineManager::GetGraphicsPipeline("Object3DWriteNone"),
+		PipelineManager::GetGraphicsPipeline("BranchWriteNone"));
 	mField->SetRespawnPointGraphicsPipeline(
 		PipelineManager::GetGraphicsPipeline("RippleWriteNone"),
 		PipelineManager::GetGraphicsPipeline("RhombusWriteNone"));
+
 	mField->DrawModel();
+
 	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass"));
-	mField->SetTreeGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Branch"));
+	mField->SetTreeGraphicsPipeline(
+		PipelineManager::GetGraphicsPipeline("Object3D"),
+		PipelineManager::GetGraphicsPipeline("Branch"));
 	mField->SetRespawnPointGraphicsPipeline(
 		PipelineManager::GetGraphicsPipeline("Ripple"),
 		PipelineManager::GetGraphicsPipeline("Rhombus"));
@@ -408,6 +361,7 @@ void GameScene::DrawCurrentSceneObject()
 	mField->DrawFog();
 
 	mPlayer->DrawModel();
+
 	mBoss->DrawModel();
 
 	EffectManager::GetInstance()->DrawEffect(false);

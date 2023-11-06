@@ -22,6 +22,6 @@ public:
 	void SetFieldData(FieldData* fieldData);
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 	void SetWeedGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
-	void SetTreeGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
+	void SetTreeGraphicsPipeline(GraphicsPipeline* graphicsPipeline1, GraphicsPipeline* graphicsPipeline2);
 	void SetRespawnPointGraphicsPipeline(GraphicsPipeline* graphicsPipeline1, GraphicsPipeline* graphicsPipeline2);
 };

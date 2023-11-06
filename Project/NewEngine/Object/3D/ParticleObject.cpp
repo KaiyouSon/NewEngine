@@ -3,6 +3,7 @@
 #include "LightManager.h"
 #include "Camera.h"
 #include "FbxModel.h"
+#include "NewEngine.h"
 using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
@@ -21,8 +22,25 @@ ParticleObject::ParticleObject() :
 
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
 }
+ParticleObject::~ParticleObject()
+{
+	if (NewEngine::GetisClose() == true)
+	{
+		return;
+	}
 
-void ParticleObject::ExecuteCS()
+	auto* descriptorHeap = DescriptorHeapManager::GetDescriptorHeap("SRV");
+
+	// ビュー解放
+	descriptorHeap->DestroyView(mModel->mesh.vertexBuffer.GetBufferResource());
+	descriptorHeap->DestroyView(mParticleData->GetBufferResource());
+	for (uint32_t i = 0; i < mCSMaterial->structuredBuffers.size(); i++)
+	{
+		descriptorHeap->DestroyView(mCSMaterial->structuredBuffers[i]->GetBufferResource());
+	}
+}
+
+void ParticleObject::ExecuteCS(const uint32_t threadX, const uint32_t threadY, const uint32_t threadZ)
 {
 	if (mModel == nullptr)
 	{
@@ -39,7 +57,7 @@ void ParticleObject::ExecuteCS()
 	CSMaterialDrawCommands();
 
 	// ディスパッチ
-	cmdList->Dispatch(1, 1, 1);
+	cmdList->Dispatch(threadX, threadY, threadZ);
 }
 void ParticleObject::Update(Transform* parent)
 {

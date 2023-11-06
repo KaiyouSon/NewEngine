@@ -83,6 +83,10 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 			{
 				LoadVolumetricFogData(fieldData.get(), object);
 			}
+			else if (object["obj_name"] == "Sun")
+			{
+				LoadSunData(fieldData.get(), object);
+			}
 		}
 	}
 
@@ -506,11 +510,6 @@ void FieldDataManager::LoadVolumetricFogData(FieldData* data, nlohmann::json jso
 	volumetricFog->pos = pos;
 	volumetricFog->scale = scale;
 	volumetricFog->rot = Radian(angle);
-	if (angle.y != 0)
-	{
-		int a = 0;
-		a;
-	}
 	volumetricFog->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
 
 	// フォグのパラメーター
@@ -541,4 +540,31 @@ void FieldDataManager::LoadVolumetricFogData(FieldData* data, nlohmann::json jso
 	}
 
 	data->volumetricFogs.push_back(std::move(volumetricFog));
+}
+void FieldDataManager::LoadSunData(FieldData* data, nlohmann::json jsonObj)
+{
+	std::unique_ptr<Sun> sun = std::make_unique<Sun>();
+	// ゲートの位置、スケール、角度情報を取得
+	nlohmann::json transform = jsonObj["transform"];
+	Vec3 pos =
+	{
+		(float)transform["translation"][0],
+		(float)transform["translation"][1],
+		(float)transform["translation"][2],
+	};
+	Vec3 scale =
+	{
+		(float)transform["scaling"][0],
+		(float)transform["scaling"][1],
+		(float)transform["scaling"][2],
+	};
+	Vec3 angle =
+	{
+		(float)transform["rotation"][0],
+		(float)transform["rotation"][1],
+		(float)transform["rotation"][2],
+	};
+	sun->SetTransform(Transform(pos, scale, Radian(angle)));
+
+	data->suns.push_back(std::move(sun));
 }

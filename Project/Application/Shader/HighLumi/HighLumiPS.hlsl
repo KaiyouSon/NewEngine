@@ -10,6 +10,7 @@ float4 main(V2P i) : SV_TARGET
     float grayScale = texColor.r * 0.299f + texColor.g * 0.587f + texColor.b * 0.114f;
     float extract = smoothstep(smoothClamp.x, smoothClamp.y, texColor.r);
     
-    float4 result = float4(texColor.rgb * extract, 1);
+    //float4 result = float4(texColor.rgb * extract, 1);
+    float4 result = float4(texColor.rgb, 1);
     return result;
 }
