@@ -17,7 +17,7 @@ float2 RandomSeed(float2 seed, uint2 index)
 cbuffer ConstantBufferParticleObject : register(b0)
 {
     uint vertexSize;
-    uint meshParitcleSize;
+    uint meshParticleSize;
     uint maxParticleSize;
 }
 
@@ -30,7 +30,6 @@ struct ModelData
     float boneWeight[4];
 };
 StructuredBuffer<ModelData> modelData : register(t0);
-
 
 struct ParticleData
 {
@@ -45,58 +44,56 @@ RWStructuredBuffer<ParticleData> outputData : register(u0);
 void main(uint3 DTid : SV_DispatchThreadID)
 {
     uint pointIndexOffset = 0;
-    uint meshNum = vertexSize / 3;
-    
-    for (uint i = 0; i < meshNum; i++)
+    uint meshMaxSize = vertexSize / 3;
+    float2 seed = 0;
+    for (uint meshIndex = 0; meshIndex < meshMaxSize; meshIndex++)
     {
+        // 三角形の各頂点を算出する
         float3 p0 = modelData[pointIndexOffset].pos;
-        float3 p2 = modelData[pointIndexOffset + 1].pos;
-        float3 p1 = modelData[pointIndexOffset + 2].pos;
-    
-        float2 seed = float2(10, 1);
-        for (uint j = 0; j < meshParitcleSize / 2; j++)
-        {
-            uint index = i * meshParitcleSize / 2 + j;
-            
-            ParticleData result = outputData[index];
-            float3 centroidPos = 0;
+        float3 p1 = modelData[pointIndexOffset + 1].pos;
+        float3 p2 = modelData[pointIndexOffset + 2].pos;
         
-            if (j < 3)
+        uint start = (meshIndex) * meshParticleSize;
+        uint end = (meshIndex + 1) * meshParticleSize;
+        
+         // パーティクルの設定
+        for (uint i = start; i < end; i++)
+        {
+            if (i > maxParticleSize)
             {
-                result.pos = modelData[pointIndexOffset + j].pos;
-                result.color.rgb = float4(0, 0, 1, 1);
-                result.scale = 0.25f;
+                return;
+            }
+            
+            ParticleData result = outputData[i];
+            seed = float2(i, i + 2);
 
+            // 頂点(最初の三点を頂点のところに配置する)
+            if (i < start + 3)
+            {
+                uint vertexIndex = pointIndexOffset + i - start;
+                result.pos = modelData[vertexIndex].pos;
+                result.color = float4(0, 0, 1, 1);
+                result.scale = 0.05f;
             }
             else
             {
-                seed = RandomSeed(seed, index);
-                float a = Random01(seed);
-                seed = RandomSeed(seed, index);
-                float b = (1 - a) * Random01(seed);
+                float a = Random01(seed / 10000);
+                float b = (1 - a) * Random01(seed / 10000 + 1);
                 float c = 1 - a - b;
     
-                centroidPos.x = a * p0.x + b * p1.x + c * p2.x;
-                centroidPos.y = a * p0.y + b * p1.y + c * p2.y;
-                centroidPos.z = a * p0.z + b * p1.z + c * p2.z;
+                // 重心座標系
+                float3 centroidPos = a * p0 + b * p1 + c * p2;
+                
                 result.pos = centroidPos;
-                result.color.rgb = float4(1, 0, 0, 1);
-                
-                if (pointIndexOffset == 18)
-                {
-                    result.color.rgb = float4(0, 1, 0, 1);
-                }
-                
-                result.scale = 0.05f;
+                result.color = float4(1, 0, 0, 1);
+                result.scale = 0.01f;
             }
-       
-            result.shininess = 1;
-            result.color.a = 1;
-        
-            // 出力データを書き込む
-            outputData[index] = result;
             
+            result.shininess = 1;
+            
+            outputData[i] = result;
         }
+        
         
         pointIndexOffset += 3;
     }

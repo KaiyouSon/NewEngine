@@ -110,16 +110,9 @@ public: // セッター
 			CreateSRV(model->mesh.vertexBuffer.GetBufferResource(),
 				(uint32_t)model->mesh.vertices.size(), sizeof(model->mesh.vertices.front()));
 
-		if (meshParticleSize != 0)
-		{
-			mMeshParticleSize = meshParticleSize;
-			mMaxParticleSize = meshParticleSize * (uint32_t)model->mesh.vertices.size();
-		}
-		else
-		{
-			mMeshParticleSize = 0;
-			mMaxParticleSize = (uint32_t)model->mesh.vertices.size();
-		}
+		uint32_t triangleSize = (uint32_t)model->mesh.vertices.size() / 3;
+		mMeshParticleSize = meshParticleSize;
+		mMaxParticleSize = mMeshParticleSize * triangleSize;
 
 		// SRVとUAVを作成
 		uint32_t dataSize = sizeof(T) * mMaxParticleSize;

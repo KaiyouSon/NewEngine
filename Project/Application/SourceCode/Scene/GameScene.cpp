@@ -103,8 +103,12 @@ void GameScene::Init()
 	VolumetricFog::fogClamp = Vec2(30.f, 50.f);
 
 	mParticleObject.SetParticleData
-		<ParticleParameter::ParticleMesh>(ModelManager::GetModel("Cube"), 1000);
+		<ParticleParameter::ParticleMesh>(ModelManager::GetModel("Sphere"), 100);
 	mParticleObject.SetParticleTexture(TextureManager::GetTexture("Particle2"));
+
+	mParticleObject.ExecuteCS();
+
+
 	mParticleObject.pos.y = 10;
 	mParticleObject.scale = 10;
 
@@ -235,7 +239,9 @@ void GameScene::Draw()
 	mMenuManager->DrawFrontSprite();
 	mTrajectory.Draw();
 
-	mParticleObject.ExecuteCS();
+
+
+
 	mParticleObject.Draw();
 	obj.Draw();
 
