@@ -295,7 +295,7 @@ void CreateManager::CreateGraphicsPipeline()
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Composite");
 	setting.rtvNum = 1;
-	setting.rootSignatureSetting.maxSrvDescritorRange = 4;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "Composite");
 
 	// リスポーン時の遷移用

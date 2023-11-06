@@ -215,7 +215,9 @@ namespace ConstantBufferData
 
 	struct CParticleObject
 	{
-		uint32_t maxParticleSize;
+		uint32_t vertexSize;
+		uint32_t meshParticleSize;	// 1三角形にあるパーティクルの量
+		uint32_t maxParticleSize;	// パーティクル全体の量
 	};
 
 	struct CMaxParticle

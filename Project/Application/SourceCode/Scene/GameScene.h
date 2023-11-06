@@ -11,6 +11,7 @@
 #include "VolumetricFog.h"
 #include "Skydome.h"
 #include "Trajectory.h"
+#include "ParticleObject.h"
 
 // ゲームシーンのクラス
 class GameScene : public IScene
@@ -27,6 +28,9 @@ private:
 	std::unique_ptr<MovieEvent> mMovieEvent;
 	std::unique_ptr<VolumetricFog> mVolumetricFog;
 	std::unique_ptr<DirectionalLight> mDirectionalLight;
+
+	ParticleObject mParticleObject;
+	Object3D obj;
 
 	Trajectory mTrajectory;
 

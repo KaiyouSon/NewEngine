@@ -90,7 +90,7 @@ void ParticleObject::Draw(const BlendMode blendMode)
 	cmdList->SetGraphicsRootDescriptorTable(
 		startIndex + 1, mParticleData->GetBufferResource()->srvHandle.gpu);
 
-	cmdList->DrawInstanced(mMaxParticle, 1, 0, 0);
+	cmdList->DrawInstanced(mMaxParticleSize, 1, 0, 0);
 }
 
 // --- マテリアル関連 --------------------------------------------------- //
@@ -153,7 +153,7 @@ void ParticleObject::CSMaterialInit()
 	std::unique_ptr<IConstantBuffer> iConstantBuffer;
 
 	// テクスチャーの面積
-	iConstantBuffer = std::make_unique<ConstantBuffer<CTextureSizeData>>();
+	iConstantBuffer = std::make_unique<ConstantBuffer<CParticleObject>>();
 	mCSMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
 
 	mCSMaterial->Init();
@@ -161,17 +161,18 @@ void ParticleObject::CSMaterialInit()
 void ParticleObject::CSMaterialTransfer()
 {
 	// メッシュテクスチャ情報
-	CParticleObject cParticleObject = { static_cast<uint32_t>(mMaxParticle) };
+	CParticleObject cParticleObject =
+	{
+		static_cast<uint32_t>(mModel->mesh.vertices.size()),
+		static_cast<uint32_t>(mMeshParticleSize),
+		static_cast<uint32_t>(mMaxParticleSize),
+	};
 	TransferDataToConstantBuffer(mCSMaterial->constantBuffers[0].get(), cParticleObject);
 }
 void ParticleObject::CSMaterialDrawCommands()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();
 	ID3D12GraphicsCommandList* cmdList = RenderBase::GetInstance()->GetCommandList();
-
-	// ディスクリプターヒープ設定
-	auto srvDescHeap = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
-	cmdList->SetDescriptorHeaps(1, &srvDescHeap);
 
 	// CBV
 	uint32_t cbvStartIndex = mComputePipeline->GetRootSignature()->GetCBVStartIndex();
@@ -207,18 +208,7 @@ void ParticleObject::CSMaterialDrawCommands()
 	}
 }
 
-// --- セッター -------------------------------------------------------- //ko
-
-// モデル
-void ParticleObject::SetModel(Model* model)
-{
-	mModel = model;
-
-	// 頂点バッファでSRV作成
-	DescriptorHeapManager::GetDescriptorHeap("SRV")->
-		CreateSRV(model->mesh.vertexBuffer.GetBufferResource(),
-			(uint32_t)model->mesh.vertices.size(), sizeof(model->mesh.vertices.front()));
-}
+// --- セッター -------------------------------------------------------- //
 
 // パーティクルのテクスチャー
 void ParticleObject::SetParticleTexture(Texture* particleTexture) { mParticleTexture = particleTexture; }

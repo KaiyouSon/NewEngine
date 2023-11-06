@@ -101,6 +101,14 @@ void GameScene::Init()
 	mVolumetricFog->fogParam.dencity = 0.014f;
 	mVolumetricFog->color = Color(233, 216, 187, 255);
 	VolumetricFog::fogClamp = Vec2(30.f, 50.f);
+
+	mParticleObject.SetParticleData
+		<ParticleParameter::ParticleMesh>(ModelManager::GetModel("Cube"), 1000);
+	mParticleObject.SetParticleTexture(TextureManager::GetTexture("Particle2"));
+	mParticleObject.pos.y = 10;
+	mParticleObject.scale = 10;
+
+	obj.SetModel(ModelManager::GetModel("Cube"));
 }
 void GameScene::Update()
 {
@@ -167,6 +175,9 @@ void GameScene::Update()
 	mPostEffectManager->Update();
 	mVolumetricFog->Update();
 
+	mParticleObject.Update();
+	obj.Update();
+
 	ShadowMap::GetInstance()->Update(mDirectionalLight->pos);
 	EffectManager::GetInstance()->Update();
 	ColliderDrawer::GetInstance()->Update();
@@ -223,6 +234,10 @@ void GameScene::Draw()
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
 	mTrajectory.Draw();
+
+	mParticleObject.ExecuteCS();
+	mParticleObject.Draw();
+	obj.Draw();
 
 	//mVolumetricFog->Draw();
 

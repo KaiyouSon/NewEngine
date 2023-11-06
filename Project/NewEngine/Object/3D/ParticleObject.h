@@ -17,7 +17,6 @@ class ParticleObject
 private:
 	std::unique_ptr<StructuredBuffer> mParticleData;
 
-	uint32_t mMaxParticle;
 	Model* mModel;
 	Texture* mParticleTexture;
 
@@ -30,6 +29,11 @@ private:
 	GraphicsPipeline* mGraphicsPipeline;
 	ComputePipeline* mComputePipeline;
 	Billboard mBillboard;
+
+private:
+	// パーティクル関連
+	uint32_t mMeshParticleSize;
+	uint32_t mMaxParticleSize;
 
 public:
 	Vec3 pos;
@@ -85,9 +89,6 @@ public:
 
 public: // セッター
 
-	// モデル
-	void SetModel(Model* model);
-
 	// パーティクルのテクスチャー
 	void SetParticleTexture(Texture* texture);
 
@@ -99,19 +100,33 @@ public: // セッター
 
 	// パーティクルのデータ
 	template<typename T>
-	void SetParticleData(const uint32_t maxParticle = 0)
+	void SetParticleData(Model* model, const uint32_t meshParticleSize = 0)
 	{
-		if (maxParticle != 0)
+		// モデルセット
+		mModel = model;
+
+		// 頂点バッファでSRV作成
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->
+			CreateSRV(model->mesh.vertexBuffer.GetBufferResource(),
+				(uint32_t)model->mesh.vertices.size(), sizeof(model->mesh.vertices.front()));
+
+		if (meshParticleSize != 0)
 		{
-			mMaxParticle = maxParticle;
+			mMeshParticleSize = meshParticleSize;
+			mMaxParticleSize = meshParticleSize * (uint32_t)model->mesh.vertices.size();
+		}
+		else
+		{
+			mMeshParticleSize = 0;
+			mMaxParticleSize = (uint32_t)model->mesh.vertices.size();
 		}
 
 		// SRVとUAVを作成
-		uint32_t dataSize = sizeof(T) * mMaxParticle;
+		uint32_t dataSize = sizeof(T) * mMaxParticleSize;
 		mParticleData->Create(dataSize);
 
 		DescriptorHeapManager::GetDescriptorHeap("SRV")->
-			CreateSRV(mParticleData->GetBufferResource(), mMaxParticle, sizeof(T));
+			CreateSRV(mParticleData->GetBufferResource(), mMaxParticleSize, sizeof(T));
 
 		// GENERIC_READ -> UNORDERED_ACCESS に変更
 		RenderBase::GetInstance()->TransitionBufferState(
@@ -121,7 +136,7 @@ public: // セッター
 		mParticleData->GetBufferResource()->buffer->GetDesc();
 
 		DescriptorHeapManager::GetDescriptorHeap("SRV")->
-			CreateUAV(mParticleData->GetBufferResource(), mMaxParticle, sizeof(T));
+			CreateUAV(mParticleData->GetBufferResource(), mMaxParticleSize, sizeof(T));
 	}
 
 public: // ゲッター

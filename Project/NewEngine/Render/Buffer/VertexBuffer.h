@@ -64,6 +64,9 @@ public:
 		// 頂点データをコピー
 		std::memcpy(vertMap, vertices.data(), sizeVB);
 
+		mBufferResource->buffer->SetName(L"VertexBuffer");
+		mBufferResource->bufferState = D3D12_RESOURCE_STATE_GENERIC_READ;
+
 		// GPUメモリのアンマップ
 		mBufferResource->buffer->Unmap(0, nullptr);
 
