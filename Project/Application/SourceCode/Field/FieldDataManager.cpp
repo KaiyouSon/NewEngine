@@ -539,6 +539,27 @@ void FieldDataManager::LoadVolumetricFogData(FieldData* data, nlohmann::json jso
 		volumetricFog->fogParam.fogColorRate = colorRate;
 	}
 
+	if (jsonObj.contains("uv_parameter"))
+	{
+		nlohmann::json uvParameter = jsonObj["uv_parameter"];
+
+		Vec3 tiling =
+		{
+			uvParameter["tiling"][0],
+			uvParameter["tiling"][1],
+			uvParameter["tiling"][2],
+		};
+		volumetricFog->tiling = tiling;
+
+		Vec3 offset =
+		{
+			uvParameter["offset"][0],
+			uvParameter["offset"][1],
+			uvParameter["offset"][2],
+		};
+		volumetricFog->offset = offset;
+	}
+
 	data->volumetricFogs.push_back(std::move(volumetricFog));
 }
 void FieldDataManager::LoadSunData(FieldData* data, nlohmann::json jsonObj)

@@ -25,6 +25,9 @@ void GameScene::UnLoad()
 void GameScene::CreateInstance()
 {
 	mDirectionalLight = std::make_unique<DirectionalLight>();
+	mPointLight = std::make_unique<PointLight>();
+	mSpotLight = std::make_unique<SpotLight>();
+
 	mPlayer = std::make_unique<Player>();
 	mBoss = std::make_unique<Boss>();
 	mUiManager = std::make_unique<UIManager>();
@@ -33,6 +36,8 @@ void GameScene::CreateInstance()
 	mPostEffectManager = std::make_unique<PostEffectManager>();
 	mMovieEvent = std::make_unique<MovieEvent>();
 	mSkydome = std::make_unique<Skydome>();
+	mVolumetricFog = std::make_unique<VolumetricFog>();
+
 }
 
 void GameScene::Init()
@@ -91,6 +96,19 @@ void GameScene::Init()
 	isInit = false;
 
 	mIsChangeScene = false;
+
+	mVolumetricFog->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
+	mVolumetricFog->pos.y = 10;
+	mVolumetricFog->scale = 10;
+	mVolumetricFog->fogParam.stepCount = 100;
+	mVolumetricFog->fogParam.stepLength = 0.01f;
+	mVolumetricFog->fogParam.dencity = 1.f;
+
+	//VolumetricFog::fogClamp = Vec2(0, 1);
+
+	mSpotLight->pos.y = 10;
+	mSpotLight->decay = 2.0f;
+	mSpotLight->cosAngle = 60;
 }
 void GameScene::Update()
 {
@@ -150,6 +168,7 @@ void GameScene::Update()
 	mSkydome->Update();
 	mMenuManager->Update();
 	mPostEffectManager->Update();
+	mVolumetricFog->Update();
 
 	ShadowMap::GetInstance()->Update(mDirectionalLight->pos);
 	EffectManager::GetInstance()->Update();
@@ -204,6 +223,8 @@ void GameScene::Draw()
 
 	mPostEffectManager->DrawEffectBloom();
 
+	mVolumetricFog->Draw();
+
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
 
@@ -214,12 +235,59 @@ void GameScene::DrawDebugGui()
 
 	Gui::BeginWindow("Debug");
 
+
+	if (Gui::DrawCollapsingHeader("Fog") == true)
+	{
+		Gui::DrawSlider2("Fog Clamp", VolumetricFog::fogClamp, 1.f);
+		Gui::DrawInputInt("Step Count", (int&)mVolumetricFog->fogParam.stepCount);
+		Gui::DrawSlider1("Step Length", mVolumetricFog->fogParam.stepLength, 0.01f);
+		Gui::DrawSlider1("Fog Dencity", mVolumetricFog->fogParam.dencity, 0.01f);
+		Gui::DrawColorEdit("Fog Color", mVolumetricFog->fogParam.fogColor);
+		Gui::DrawLine();
+		Gui::DrawSlider1("Fog Color Rate R", mVolumetricFog->fogParam.fogColorRate.r, 0.01f);
+		Gui::DrawSlider1("Fog Color Rate G", mVolumetricFog->fogParam.fogColorRate.g, 0.01f);
+		Gui::DrawSlider1("Fog Color Rate B", mVolumetricFog->fogParam.fogColorRate.b, 0.01f);
+		Gui::DrawSlider1("Fog Color Rate A", mVolumetricFog->fogParam.fogColorRate.a, 0.01f);
+		Gui::DrawLine();
+		Gui::DrawSlider3("Fog Pos", mVolumetricFog->pos, 0.01f);
+		Gui::DrawSlider3("Fog Scale", mVolumetricFog->scale, 0.01f);
+		Vec3 angle = Angle(mVolumetricFog->rot);
+		Gui::DrawSlider3("Fog Rot", angle, 1.f);
+		mVolumetricFog->rot = Radian(angle);
+		Gui::DrawSlider3("Fog Speed", mVolumetricFog->moveSpeed, 0.001f);
+		Gui::DrawSlider3("Fog tiling", mVolumetricFog->tiling, 0.001f);
+	}
+
 	if (Gui::DrawCollapsingHeader("Directional Light") == true)
 	{
 		Gui::DrawCheckBox("Directional Light Active", &mDirectionalLight->isActive);
 		Gui::DrawSlider3("Directional Light Pos", mDirectionalLight->pos, 0.1f);
 		Gui::DrawColorEdit("Directional Light Color", mDirectionalLight->color);
 	}
+
+	if (Gui::DrawCollapsingHeader("Point Light") == true)
+	{
+		Gui::DrawCheckBox("Point Light Active", &mPointLight->isActive);
+		Gui::DrawSlider3("Point Light Pos", mPointLight->pos, 0.1f);
+		Gui::DrawColorEdit("Point Light Color", mPointLight->color);
+		Gui::DrawSlider3("Point Light Color Rate", mPointLight->colorRate);
+		Gui::DrawSlider1("Point Light Radius", mPointLight->radius);
+		Gui::DrawSlider1("Point Light Decay", mPointLight->decay);
+	}
+
+	if (Gui::DrawCollapsingHeader("Spot Light") == true)
+	{
+		Gui::DrawCheckBox("Spot Light Active", &mSpotLight->isActive);
+		Gui::DrawSlider3("Spot Light Vec", mSpotLight->vec, 0.01f);
+		Gui::DrawSlider3("Spot Light Pos", mSpotLight->pos, 0.1f);
+		Gui::DrawColorEdit("Spot Light Color", mSpotLight->color);
+		Gui::DrawSlider3("Spot Light Color Rate", mSpotLight->colorRate);
+		Gui::DrawSlider1("Spot Light Radius", mSpotLight->radius);
+		Gui::DrawSlider1("Spot Light Decay", mSpotLight->decay);
+		Gui::DrawSlider2("Spot Light Factor CosAngle", mSpotLight->cosAngle);
+	}
+
+
 
 	//if (Gui::DrawCollapsingHeader("Particle Object") == true)
 	//{
@@ -335,6 +403,7 @@ void GameScene::DrawDepthToEffectBloom()
 		PipelineManager::GetGraphicsPipeline("RhombusWriteNone"));
 
 	mField->DrawModel();
+	mField->DrawSkyIsLand();
 
 	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass"));
@@ -358,11 +427,15 @@ void GameScene::DrawCurrentSceneObject()
 	mPostEffectManager->DrawSkydomeVignette();
 
 	mField->DrawModel();
-	mField->DrawFog();
+	mField->DrawSkyIsLand();
 
+
+	mField->DrawFog();
 	mPlayer->DrawModel();
 
 	mBoss->DrawModel();
 
 	EffectManager::GetInstance()->DrawEffect(false);
+
+
 }

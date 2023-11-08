@@ -885,6 +885,9 @@
     <ClCompile Include="Application\SourceCode\Field\Sun.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Light\SpotLight.cpp">
+      <Filter>NewEngine\Source\Light</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1420,6 +1423,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Field\Sun.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Light\SpotLight.h">
+      <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

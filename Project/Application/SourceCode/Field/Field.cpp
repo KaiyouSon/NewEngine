@@ -62,7 +62,8 @@ void Field::Init()
 		mFieldData->volumetricFogs[i]->offset.x = Random::RangeF(-1.f, 1.f);
 		mFieldData->volumetricFogs[i]->offset.y = Random::RangeF(-1.f, 1.f);
 		mFieldData->volumetricFogs[i]->offset.z = Random::RangeF(-1.f, 1.f);
-		mFieldData->volumetricFogs[i]->moveSpeed = Vec3(Random::RangeF(0.0005f, 0.001f), 0.f, -0.002f);
+		mFieldData->volumetricFogs[i]->moveSpeed.x = -Random::RangeF(0.0005f, 0.002f);
+		mFieldData->volumetricFogs[i]->moveSpeed.z = -Random::RangeF(0.0005f, 0.002f) * 2;
 	}
 
 	// 太陽
@@ -147,12 +148,6 @@ void Field::DrawModel()
 		mFieldData->coffins[i]->DrawModel();
 	}
 
-	// 空島
-	for (uint32_t i = 0; i < mFieldData->skyIslands.size(); i++)
-	{
-		mFieldData->skyIslands[i]->DrawModel();
-	}
-
 	// 木
 	for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
 	{
@@ -177,12 +172,6 @@ void Field::DrawModel()
 		mFieldData->gates[i]->DrawModel();
 	}
 
-	// リスポーン地点
-	for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
-	{
-		mFieldData->respawnPoints[i]->DrawModel();
-	}
-
 	// 太陽
 	for (uint32_t i = 0; i < mFieldData->suns.size(); i++)
 	{
@@ -201,6 +190,26 @@ void Field::DrawFog()
 	for (uint32_t i = 0; i < mFieldData->volumetricFogs.size(); i++)
 	{
 		mFieldData->volumetricFogs[i]->Draw();
+	}
+}
+
+void Field::DrawSkyIsLand()
+{
+	if (!mFieldData)
+	{
+		return;
+	}
+
+	// 空島
+	for (uint32_t i = 0; i < mFieldData->skyIslands.size(); i++)
+	{
+		mFieldData->skyIslands[i]->DrawModel();
+	}
+
+	// リスポーン地点
+	for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
+	{
+		mFieldData->respawnPoints[i]->DrawModel();
 	}
 }
 

@@ -26,7 +26,7 @@ private:
 	std::unique_ptr<Skydome> mSkydome;
 
 	std::unique_ptr<MovieEvent> mMovieEvent;
-	std::unique_ptr<DirectionalLight> mDirectionalLight;
+	std::unique_ptr<VolumetricFog> mVolumetricFog;
 
 	RenderTexture* mCurrentScene;
 
@@ -34,6 +34,13 @@ private:
 
 	bool isInit;
 	float mBgmVolume;
+
+private:
+	// ライト
+	std::unique_ptr<DirectionalLight> mDirectionalLight;
+	std::unique_ptr<PointLight> mPointLight;
+	std::unique_ptr<SpotLight> mSpotLight;
+
 
 private:
 	// シーン切り替えの処理

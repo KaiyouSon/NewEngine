@@ -69,6 +69,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -98,6 +99,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -215,6 +217,7 @@
     <ClCompile Include="NewEngine\Light\ILight.cpp" />
     <ClCompile Include="NewEngine\Light\LightManager.cpp" />
     <ClCompile Include="NewEngine\Light\PointLight.cpp" />
+    <ClCompile Include="NewEngine\Light\SpotLight.cpp" />
     <ClCompile Include="NewEngine\main.cpp" />
     <ClCompile Include="NewEngine\Debugger\MappingWindow.cpp" />
     <ClCompile Include="NewEngine\Math\Mat4.cpp" />
@@ -389,6 +392,7 @@
     <ClInclude Include="NewEngine\Light\LightManager.h" />
     <ClInclude Include="NewEngine\Debugger\MappingWindow.h" />
     <ClInclude Include="NewEngine\Light\PointLight.h" />
+    <ClInclude Include="NewEngine\Light\SpotLight.h" />
     <ClInclude Include="NewEngine\Math\Mat4.h" />
     <ClInclude Include="NewEngine\Math\MathUtil.h" />
     <ClInclude Include="NewEngine\Math\Quaternion.h" />

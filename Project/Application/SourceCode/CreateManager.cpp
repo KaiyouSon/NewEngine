@@ -399,11 +399,6 @@ void CreateManager::CreateGraphicsPipeline()
 		setting = PipelineManager::GetGraphicsPipeline("Rhombus")->GetSetting();
 		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
 		PipelineManager::CreateGraphicsPipeline(setting, "RhombusWriteNone");
-
-		// ボリューメトリックフォグ
-		setting = PipelineManager::GetGraphicsPipeline("VolumetricFog")->GetSetting();
-		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
-		PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFogWriteNone");
 	}
 
 	// 軌跡用

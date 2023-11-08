@@ -4,18 +4,18 @@
 #include <array>
 
 // スポットライト
-struct SpotLight
-{
-	Vec3 vec = Vec3::down;
-	Vec3 pos = Vec3::up * 5;
-	Color color = Color::white;
-	Vec3 atten = Vec3::zero;
-	Vec2 factorAngle = { 20,30 };
-	bool isActive = false;
-
-	SpotLight() {}
-	~SpotLight() {}
-};
+//struct SpotLight
+//{
+//	Vec3 vec = Vec3::down;
+//	Vec3 pos = Vec3::up * 5;
+//	Color color = Color::white;
+//	Vec3 atten = Vec3::zero;
+//	Vec2 factorAngle = { 20,30 };
+//	bool isActive = false;
+//
+//	SpotLight() {}
+//	~SpotLight() {}
+//};
 
 // 前方宣言
 template<typename T> class Singleton;
@@ -31,6 +31,7 @@ private:
 	{
 		DirectionalLightSize = 1,
 		PointLightSize = 20,
+		SpotLightSize = 1,
 	};
 
 private:
@@ -38,6 +39,7 @@ private:
 	{
 		std::array<ConstantBufferData::CDirectionalLight, DirectionalLightSize> directionalLightsData;
 		std::array<ConstantBufferData::CPointLight, PointLightSize> pointLightsData;
+		std::array<ConstantBufferData::CSpotLight, SpotLightSize> spotLightsData;
 	};
 
 
@@ -46,6 +48,7 @@ private:
 	{
 		std::vector<ILight*> directionalLights;
 		std::vector<ILight*> pointLights;
+		std::vector<ILight*> spotLights;
 	};
 	LightGroup mLightGroup;
 

@@ -43,17 +43,17 @@ void BossAttack2Motion::CurrentStepInit(HumanoidBody* human)
 	switch (mStep)
 	{
 	case 0:
-		mEndBodyY = -0.9f;
+		//mEndBodyY = -0.9f;
 		break;
 	case 1:
-		mEndBodyY = -1.1f;
+		//mEndBodyY = -1.1f;
 		break;
 	case 2:
 		SettingMovePrame(human, 5, 30, 2);
 		boss->GetWeapon()->SetisActiveTrajectory(true);
 		boss->GetWeapon()->SetisCalcCollider(true);
 		boss->mDamage = 40.f;
-		mEndBodyY = -0.85f;
+		//mEndBodyY = -0.85f;
 		break;
 	case 3:
 		mEndBodyY = -1.0f;

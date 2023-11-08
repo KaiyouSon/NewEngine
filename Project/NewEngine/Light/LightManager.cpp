@@ -3,6 +3,7 @@
 #include "ConstantBufferData.h"
 #include "DirectionalLight.h"
 #include "PointLight.h"
+#include "SpotLight.h"
 
 using namespace ConstantBufferData;
 
@@ -70,14 +71,60 @@ void LightManager::Update()
 
 		// 色
 		lightGroupData.pointLightsData[i].color = light->color.To01();
+
+		// 座標
+		lightGroupData.pointLightsData[i].pos = light->pos;
+
 		// 影響範囲
 		lightGroupData.pointLightsData[i].radius = light->radius;
-		// ベクトル
-		lightGroupData.pointLightsData[i].pos = light->pos;
-		// 減衰係数
+
+		// 色の影響率
 		lightGroupData.pointLightsData[i].colorRate = light->colorRate;
+
+		// 減衰係数
+		lightGroupData.pointLightsData[i].decay = light->decay;
+
 		// アクティブフラグ
 		lightGroupData.pointLightsData[i].isActive = light->isActive;
+	}
+
+	// スポットライトのデータを転送する
+
+	for (uint32_t i = 0; i < mLightGroup.spotLights.size(); i++)
+	{
+		// 宣言したライトの数よりも多かったらbreakする
+		if (i > SpotLightSize)
+		{
+			OutputDebugLog("[Spot Light] warring : Not enough Spot Lights");
+			break;
+		}
+
+		SpotLight* light = dynamic_cast<SpotLight*>(mLightGroup.spotLights[i]);
+
+		// 色
+		lightGroupData.spotLightsData[i].color = light->color.To01();
+
+		// ベクトル
+		lightGroupData.spotLightsData[i].vec = -light->vec.Norm();
+
+		// 影響範囲
+		lightGroupData.spotLightsData[i].radius = light->radius;
+
+		// 座標
+		lightGroupData.spotLightsData[i].pos = light->pos;
+
+		// 減衰係数
+		lightGroupData.spotLightsData[i].decay = light->decay;
+
+		// 色の影響率
+		lightGroupData.spotLightsData[i].colorRate = light->colorRate;
+
+		// アクティブフラグ
+		lightGroupData.spotLightsData[i].isActive = light->isActive;
+
+		// 角度減衰
+		lightGroupData.spotLightsData[i].cosAngle.x = cosf(Radian(light->cosAngle.x));
+		lightGroupData.spotLightsData[i].cosAngle.y = cosf(Radian(light->cosAngle.y));
 	}
 
 	// データ転送
@@ -108,5 +155,9 @@ void LightManager::Register(ILight* iLight)
 		mLightGroup.pointLights.push_back(iLight);
 		break;
 
+	case LightType::SpotLight:
+		// 点光源に登録
+		mLightGroup.spotLights.push_back(iLight);
+		break;
 	}
 }

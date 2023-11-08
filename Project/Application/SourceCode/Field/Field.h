@@ -13,6 +13,7 @@ public:
 	void Update();
 	void DrawModel();
 	void DrawFog();
+	void DrawSkyIsLand();
 	void DrawDebugGui();
 
 public:

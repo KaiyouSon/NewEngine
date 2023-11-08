@@ -22,10 +22,15 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "In",
                 "ease_pow": 2,
                 "ease_time": 40
+            },
+            "boss_move": {
+                "move_ease_timer": 0.0,
+                "move_ease_pow": 0.0,
+                "move_dis": 0.0,
+                "end_body_y": -0.8999999761581421
             },
             "children": [
                 {
@@ -319,10 +324,15 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "Out",
                 "ease_pow": 2,
                 "ease_time": 40
+            },
+            "boss_move": {
+                "move_ease_timer": 0.0,
+                "move_ease_pow": 0.0,
+                "move_dis": 0.0,
+                "end_body_y": -1.100000023841858
             },
             "children": [
                 {
@@ -616,10 +626,15 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "In",
                 "ease_pow": 2,
                 "ease_time": 20
+            },
+            "boss_move": {
+                "move_ease_timer": 0.0,
+                "move_ease_pow": 0.0,
+                "move_dis": 0.0,
+                "end_body_y": -0.8500000238418579
             },
             "children": [
                 {
@@ -913,7 +928,6 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "Lerp",
                 "ease_pow": 2,
                 "ease_time": 10
@@ -1210,7 +1224,6 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "Lerp",
                 "ease_pow": 2,
                 "ease_time": 10
@@ -1507,7 +1520,6 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "Lerp",
                 "ease_pow": 2,
                 "ease_time": 10
@@ -1804,7 +1816,6 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "Out",
                 "ease_pow": 2,
                 "ease_time": 20
@@ -2101,7 +2112,6 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "In",
                 "ease_pow": 2,
                 "ease_time": 20
@@ -2398,7 +2408,6 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "Lerp",
                 "ease_pow": 2,
                 "ease_time": 10
@@ -2695,7 +2704,6 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "Lerp",
                 "ease_pow": 2,
                 "ease_time": 10
@@ -2992,7 +3000,6 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "Lerp",
                 "ease_pow": 2,
                 "ease_time": 10
@@ -3289,7 +3296,6 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "Lerp",
                 "ease_pow": 2,
                 "ease_time": 10
@@ -3586,7 +3592,6 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "Lerp",
                 "ease_pow": 2,
                 "ease_time": 10
@@ -3883,7 +3888,6 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "Lerp",
                 "ease_pow": 2,
                 "ease_time": 10
@@ -4180,7 +4184,6 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "Lerp",
                 "ease_pow": 2,
                 "ease_time": 10
@@ -4477,7 +4480,6 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "Out",
                 "ease_pow": 3,
                 "ease_time": 30
@@ -4774,7 +4776,6 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "Out",
                 "ease_pow": 3,
                 "ease_time": 20
@@ -5071,7 +5072,6 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "In",
                 "ease_pow": 2,
                 "ease_time": 40
@@ -5368,7 +5368,6 @@
                 ]
             },
             "parameter": {
-                "step": 0,
                 "ease_type": "Out",
                 "ease_pow": 2,
                 "ease_time": 40

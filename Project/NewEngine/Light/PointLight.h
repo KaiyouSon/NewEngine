@@ -10,6 +10,7 @@ public:
 	Vec3 colorRate;
 	Color color;
 	float radius;
+	float decay;
 	bool isActive;
 
 public:

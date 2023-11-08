@@ -64,7 +64,7 @@ namespace ConstantBufferData
 
 	struct CUVWParameter
 	{
-		Vec3 offset;
+		Vec3 offset; float pad;
 		Vec3 tiling;
 	};
 
@@ -111,20 +111,23 @@ namespace ConstantBufferData
 	struct CPointLight
 	{
 		Color color;
-		float radius;
 		Vec3 pos;
+		float radius;
 		Vec3 colorRate;
-		uint32_t isActive;
+		float decay;
+		uint32_t isActive;	Vec3 pad;
 	};
 
 	struct CSpotLight
 	{
-		Vec3 vec;		float pad1;
-		Vec3 pos;		float pad2;
-		Vec3 color;		float pad3;
-		Vec3 atten;		float pad4;
-		Vec2 factorAngleCos;
-		uint32_t isActive;	float pad5;
+		Color color;
+		Vec3 vec;
+		float radius;
+		Vec3 pos;
+		float decay;
+		Vec3 colorRate;
+		uint32_t isActive;
+		Vec2 cosAngle; Vec2 pad;
 	};
 
 	struct CCircleShadow
