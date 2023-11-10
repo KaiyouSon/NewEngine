@@ -39,6 +39,9 @@ public:	// 生成関連
 	// 深度テクスチャの作成
 	static void CreateDepthTexture(DepthBuffer* depthBuffer, const std::string tag);
 
+	// ボリュームテクスチャのロード
+	static void LoadVolumeTexture(const std::string filePath, const std::string tag);
+
 	// ボリュームテクスチャの作成
 	static void CreateVolumeTexture(const std::vector<Texture*>& texs, const std::string tag);
 

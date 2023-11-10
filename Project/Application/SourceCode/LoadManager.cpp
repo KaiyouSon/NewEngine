@@ -285,17 +285,18 @@ bool LoadManager::TextureLoad()
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "CurrentScene");
 
 	// ボリュームテクスチャの作成
-	std::vector<Texture*> texs;
-	for (uint32_t i = 0; i < 16; i++)
-	{
-		// ボリュームノイズのロード
-		std::string index = std::to_string(i);
-		std::string path = "Noice/VolumeNoice/VolumeNoice" + index + ".png";
-		std::string tag = "Noice" + index;
-		TextureManager::LoadTexture(path, tag);
-		texs.push_back(TextureManager::GetTexture(tag));
-	}
-	TextureManager::CreateVolumeTexture(texs, "VolumeTexture");
+	//std::vector<Texture*> texs;
+	//for (uint32_t i = 0; i < 16; i++)
+	//{
+	//	// ボリュームノイズのロード
+	//	std::string index = std::to_string(i);
+	//	std::string path = "Noice/VolumeNoice/VolumeNoice" + index + ".png";
+	//	std::string tag = "Noice" + index;
+	//	TextureManager::LoadTexture(path, tag);
+	//	texs.push_back(TextureManager::GetTexture(tag));
+	//}
+	//TextureManager::CreateVolumeTexture(texs, "VolumeTexture");
+	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice.dds", "VolumeTexture");
 
 	// 非同期終わったよ～
 	return true;

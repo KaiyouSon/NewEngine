@@ -79,7 +79,8 @@
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>copy /y $(SolutionDir)..\Generated\Outputs\assimp\$(Configuration)\assimp-vc143-mtd.dll $(SolutionDir)..\Generated\Outputs\NewEngine\$(Configuration)\</Command>
+      <Command>copy /y $(SolutionDir)..\Generated\Outputs\assimp\$(Configuration)\assimp-vc143-mtd.dll $(SolutionDir)..\Generated\Outputs\NewEngine\$(Configuration)\
+</Command>
     </PostBuildEvent>
     <FxCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)NewEngine\Shader\CircleGaugeSprite;$(ProjectDir)NewEngine\Shader\Util;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

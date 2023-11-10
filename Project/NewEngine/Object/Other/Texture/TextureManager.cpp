@@ -368,6 +368,87 @@ void TextureManager::CreateDepthTexture(DepthBuffer* depthBuffer, const std::str
 	OutputDebugLog(log.c_str());
 }
 
+// ボリュームテクスチャのロード
+void TextureManager::LoadVolumeTexture(const std::string filePath, const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	// マップに格納
+	GetInstance()->mVolumeTextureMap.
+		insert(std::make_pair(tag, std::move(std::make_unique<VolumeTexture>())));
+
+	VolumeTexture* texture = dynamic_cast<VolumeTexture*>(
+		GetInstance()->mVolumeTextureMap[tag].get());
+
+	std::string path = "Application/Resources/DDSTexture/" + filePath;
+
+	HRESULT result;
+
+	TexMetadata metadata{};
+	ScratchImage scratchImg{};
+	std::wstring wfilePath(path.begin(), path.end());
+
+	// WICを使用してテクスチャデータを読み込む
+	result = LoadFromDDSFile(
+		wfilePath.c_str(),
+		DDS_FLAGS_NONE,
+		&metadata, scratchImg);
+
+	if (result != S_OK)
+	{
+		std::string log = "[Volume Texture Load] FilePath : " + filePath + ", Tag : " + tag + ", is,failed to load";
+		OutputDebugLog(log.c_str());
+
+		assert(0 && "テクスチャ読み込みに失敗しました");
+	}
+
+	// リソース設定
+	D3D12_RESOURCE_DESC resourceDesc =
+		CD3DX12_RESOURCE_DESC::Tex3D(
+			metadata.format,
+			static_cast<uint64_t>(metadata.width),
+			static_cast<uint32_t>(metadata.height),
+			static_cast<uint16_t>(metadata.depth),
+			1);
+
+	// バッファ生成
+	texture->Create(resourceDesc);
+
+	// SRV作成
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(texture->GetBufferResource());
+
+	// サブリソースデータを初期化
+	std::vector<D3D12_SUBRESOURCE_DATA> subResourcesDatas(metadata.mipLevels);
+	for (size_t i = 0; i < subResourcesDatas.size(); i++)
+	{
+		// イメージデータを取得してサブリソースデータを設定
+		const Image* img = scratchImg.GetImage(0, 0, i);
+		subResourcesDatas[i].pData = img->pixels;
+		subResourcesDatas[i].RowPitch = img->rowPitch;
+		subResourcesDatas[i].SlicePitch = img->slicePitch;
+
+	}
+	// テクスチャーをアップロード
+	UpdateSubresources(
+		RenderBase::GetInstance()->GetCommandList(),
+		texture->GetBufferResource()->buffer.Get(),
+		texture->GetUploadBuffer()->GetBufferResource()->buffer.Get(),
+		0,
+		0,
+		static_cast<uint32_t>(metadata.mipLevels),
+		subResourcesDatas.data());
+
+	// リソースの状態変更
+	RenderBase::GetInstance()->TransitionBufferState(
+		texture->GetBufferResource(),
+		D3D12_RESOURCE_STATE_COPY_DEST,
+		D3D12_RESOURCE_STATE_GENERIC_READ);
+
+	std::string log = "[VolumeTexture Create] Tag : " + tag + ", created";
+	OutputDebugLog(log.c_str());
+}
+
 // ボリュームテクスチャの作成
 void TextureManager::CreateVolumeTexture(const std::vector<Texture*>& texs, const std::string tag)
 {
