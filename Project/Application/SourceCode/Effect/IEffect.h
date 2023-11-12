@@ -10,6 +10,7 @@ enum class EffectType
 	PlayerRecoveryEffect,
 	LogoExplosionEffect,
 	BossAttackTrajectoryEffect,
+	AttackExplosionEffect,
 };
 
 // エフェクトのインタフェース

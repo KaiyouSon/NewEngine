@@ -62,48 +62,48 @@ void LoadManager::GameSceneUnLoad()
 void LoadManager::GameSceneTextureLoad()
 {
 	// UI
-	TextureManager::LoadTexture("UI/Gauge.png", "Gauge");
-	TextureManager::LoadTexture("UI/Buttons.png", "Buttons");
-	TextureManager::LoadTexture("UI/Negotiation/NegotiationBack.png", "NegotiationBack");
-	TextureManager::LoadTexture("UI/MessageSign/MessageBack.png", "MessageBack");
-	TextureManager::LoadTexture("UI/MessageSign/MessageSignUI.png", "MessageSignUI");
-	TextureManager::LoadTexture("UI/ItemBoxFrame.png", "ItemBoxFrame");
-	TextureManager::LoadTexture("UI/ItemBoxLight.png", "ItemBoxLight");
-	TextureManager::LoadTexture("UI/ItemUI/BottleUI.png", "BottleUI");
-	TextureManager::LoadTexture("UI/ItemUI/ClubUI.png", "ClubUI");
-	TextureManager::LoadTexture("UI/Menu/TempMenuBack.png", "MenuBack");
-	TextureManager::LoadTexture("UI/Menu/MenuTextFrame.png", "MenuTextFrame");
-	TextureManager::LoadTexture("UI/Menu/MenuTextLight.png", "MenuTextLight");
-	TextureManager::LoadTexture("UI/Result/ResultBack.png", "ResultBack");
-	TextureManager::LoadTexture("UI/Operation/OperationBack.png", "OperationBack");
+	TextureManager::LoadTexture("UI/Gauge.dds", "Gauge");
+	TextureManager::LoadTexture("UI/Buttons.dds", "Buttons");
+	TextureManager::LoadTexture("UI/Negotiation/NegotiationBack.dds", "NegotiationBack");
+	TextureManager::LoadTexture("UI/MessageSign/MessageBack.dds", "MessageBack");
+	TextureManager::LoadTexture("UI/MessageSign/MessageSignUI.dds", "MessageSignUI");
+	TextureManager::LoadTexture("UI/ItemBoxFrame.dds", "ItemBoxFrame");
+	TextureManager::LoadTexture("UI/ItemBoxLight.dds", "ItemBoxLight");
+	TextureManager::LoadTexture("UI/ItemUI/BottleUI.dds", "BottleUI");
+	TextureManager::LoadTexture("UI/ItemUI/ClubUI.dds", "ClubUI");
+	TextureManager::LoadTexture("UI/Menu/TempMenuBack.dds", "MenuBack");
+	TextureManager::LoadTexture("UI/Menu/MenuTextFrame.dds", "MenuTextFrame");
+	TextureManager::LoadTexture("UI/Menu/MenuTextLight.dds", "MenuTextLight");
+	TextureManager::LoadTexture("UI/Result/ResultBack.dds", "ResultBack");
+	TextureManager::LoadTexture("UI/Operation/OperationBack.dds", "OperationBack");
 
 	// テキスト
-	TextureManager::LoadTextureFromDDS("Text/ColonStr.dds", "ColonStr");
-	TextureManager::LoadTextureFromDDS("Text/Negotiation/ReadMessageStr.dds", "ReadMessageStr");
-	TextureManager::LoadTextureFromDDS("Text/Negotiation/RestInLightStr.dds", "RestInLightStr");
-	TextureManager::LoadTextureFromDDS("Text/Negotiation/OpenStr.dds", "OpenStr");
-	TextureManager::LoadTextureFromDDS("Text/ExitStr.dds", "ExitStr");
-	TextureManager::LoadTextureFromDDS("Text/Operation/Operation1Text.dds", "Operation1Text");
-	TextureManager::LoadTextureFromDDS("Text/Operation/Operation2Text.dds", "Operation2Text");
-	TextureManager::LoadTextureFromDDS("Text/Operation/Operation3Text.dds", "Operation3Text");
-	TextureManager::LoadTextureFromDDS("Text/Operation/Operation4Text.dds", "Operation4Text");
-	TextureManager::LoadTextureFromDDS("Text/Operation/Operation5Text.dds", "Operation5Text");
-	TextureManager::LoadTextureFromDDS("Text/Menu/BackToTitleStr.dds", "BackToTitleStr");
-	TextureManager::LoadTextureFromDDS("Text/Menu/CloseGameStr.dds", "CloseGameStr");
-	TextureManager::LoadTextureFromDDS("Text/Result/EnemyFelledStr.dds", "EnemyFelledStr");
-	TextureManager::LoadTextureFromDDS("Text/Result/YouDiedStr.dds", "YouDiedStr");
-	TextureManager::LoadTextureFromDDS("Text/RespawnPoint/DecisionCloseStr.dds", "DecisionCloseStr");
-	TextureManager::LoadTextureFromDDS("Text/NumberSheets.dds", "NumberSheets");
+	TextureManager::LoadTexture("Text/ColonStr.dds", "ColonStr");
+	TextureManager::LoadTexture("Text/Negotiation/ReadMessageStr.dds", "ReadMessageStr");
+	TextureManager::LoadTexture("Text/Negotiation/RestInLightStr.dds", "RestInLightStr");
+	TextureManager::LoadTexture("Text/Negotiation/OpenStr.dds", "OpenStr");
+	TextureManager::LoadTexture("Text/ExitStr.dds", "ExitStr");
+	TextureManager::LoadTexture("Text/Operation/Operation1Text.dds", "Operation1Text");
+	TextureManager::LoadTexture("Text/Operation/Operation2Text.dds", "Operation2Text");
+	TextureManager::LoadTexture("Text/Operation/Operation3Text.dds", "Operation3Text");
+	TextureManager::LoadTexture("Text/Operation/Operation4Text.dds", "Operation4Text");
+	TextureManager::LoadTexture("Text/Operation/Operation5Text.dds", "Operation5Text");
+	TextureManager::LoadTexture("Text/Menu/BackToTitleStr.dds", "BackToTitleStr");
+	TextureManager::LoadTexture("Text/Menu/CloseGameStr.dds", "CloseGameStr");
+	TextureManager::LoadTexture("Text/Result/EnemyFelledStr.dds", "EnemyFelledStr");
+	TextureManager::LoadTexture("Text/Result/YouDiedStr.dds", "YouDiedStr");
+	TextureManager::LoadTexture("Text/RespawnPoint/DecisionCloseStr.dds", "DecisionCloseStr");
+	TextureManager::LoadTexture("Text/NumberSheets.dds", "NumberSheets");
 
 	// パーティクル
-	TextureManager::LoadTextureFromDDS("Particle/Particle1.dds", "Particle1");
-	TextureManager::LoadTextureFromDDS("Particle/Particle2.dds", "Particle2");
-	TextureManager::LoadTextureFromDDS("Particle/Line.dds", "Line");
-	TextureManager::LoadTexture("Trajectory.png", "Trajectory");
+	TextureManager::LoadTexture("Particle/Particle1.dds", "Particle1");
+	TextureManager::LoadTexture("Particle/Particle2.dds", "Particle2");
+	TextureManager::LoadTexture("Particle/Line.dds", "Line");
+	TextureManager::LoadTexture("Trajectory.dds", "Trajectory");
 
 	// 草
-	TextureManager::LoadTextureFromDDS("Grass/Weed.dds", "Weed");
-	TextureManager::LoadTextureFromDDS("Branch.dds", "Branch");
+	TextureManager::LoadTexture("Grass/Weed.dds", "Weed");
+	TextureManager::LoadTexture("Branch.dds", "Branch");
 
 	// 天球
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Vignette");
@@ -268,14 +268,14 @@ bool LoadManager::ModelLoad()
 bool LoadManager::TextureLoad()
 {
 	// タイトルロゴ
-	TextureManager::LoadTextureFromDDS("Title/TitleLogo.dds", "TitleLogo");
+	TextureManager::LoadTexture("Title/TitleLogo.dds", "TitleLogo");
 
 	// ディゾルブ
-	TextureManager::LoadTextureFromDDS("DissolveTexture.dds", "DissolveTexture");
+	TextureManager::LoadTexture("DissolveTexture.dds", "DissolveTexture");
 
 	// ブラー
-	TextureManager::LoadTextureFromDDS("Noice/BlurNoice.dds", "BlurNoice");
-	TextureManager::LoadTextureFromDDS("Noice/ScreenNoice.dds", "ScreenNoice");
+	TextureManager::LoadTexture("Noice/BlurNoice.dds", "BlurNoice");
+	TextureManager::LoadTexture("Noice/ScreenNoice.dds", "ScreenNoice");
 
 	// シャドウマップ
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMap");

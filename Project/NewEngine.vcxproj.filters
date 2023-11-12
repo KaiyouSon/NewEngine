@@ -388,6 +388,9 @@
     <Filter Include="Shader\Application\RadialBlur">
       <UniqueIdentifier>{26d8d7a7-647c-4ac3-8041-3f48443a2dc7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\Effect\AttackExplosionEffect">
+      <UniqueIdentifier>{012ba14f-1ea3-41c5-80a6-34f6087742de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -887,6 +890,9 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Light\SpotLight.cpp">
       <Filter>NewEngine\Source\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Effect\AttackExplosionEffect.cpp">
+      <Filter>Application\Source\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1427,6 +1433,9 @@
     <ClInclude Include="NewEngine\Light\SpotLight.h">
       <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SourceCode\Effect\AttackExplosionEffect.h">
+      <Filter>Application\Header\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1761,6 +1770,15 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\RadialBlur\RadialBlurPS.hlsl">
       <Filter>Shader\Application\RadialBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\AttackExplosionEffect\AttackExplosionEffectInitCS.hlsl">
+      <Filter>Shader\Application\Effect\AttackExplosionEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\AttackExplosionEffect\AttackExplosionEffectVS.hlsl">
+      <Filter>Shader\Application\Effect\AttackExplosionEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\AttackExplosionEffect\AttackExplosionEffectUpdateCS.hlsl">
+      <Filter>Shader\Application\Effect\AttackExplosionEffect</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

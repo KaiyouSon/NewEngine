@@ -24,11 +24,14 @@ private:
 
 	std::mutex mMutex;	// 排他制御
 
+private:
+	void LoadTextureFromPNG(const std::string filePath, DirectX::ScratchImage& scratchImg, DirectX::TexMetadata& metadata);
+	void LoadTextureFromDDS(const std::string filePath, DirectX::ScratchImage& scratchImg, DirectX::TexMetadata& metadata);
+
 public:	// 生成関連
 
 	// テクスチャーをロード
 	static void LoadTexture(const std::string filePath, const std::string tag);
-	static void LoadTextureFromDDS(const std::string filePath, const std::string tag);
 
 	// mtlファイルのテクスチャーをロード
 	static Texture* LoadMaterialTexture(const std::string filePath, const std::string tag);
