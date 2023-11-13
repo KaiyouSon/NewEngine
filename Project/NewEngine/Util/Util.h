@@ -61,12 +61,12 @@ T Convergence(const T value, const T speed, const T origin = 0)
 	}
 	else if (value > origin)
 	{
-		temp -= fabs(speed);
+		temp -= std::fabs(speed);
 		return Max(temp, origin);
 	}
 	else if (value < origin)
 	{
-		temp += fabs(speed);
+		temp += std::fabs(speed);
 		return Min(temp, origin);
 	}
 
@@ -88,7 +88,7 @@ T Restore(const T value, const T limit, const T origin = 0)
 uint32_t GetDigit(const uint32_t value);
 
 // 現在の時間を取得する
-unsigned long GetNowTime(const TimeUnit timeUnit = TimeUnit::MilliSecond);
+uint64_t GetNowTime(const TimeUnit timeUnit = TimeUnit::MilliSecond);
 
 // ワールド座標をスクリーン座標に変換する
 Vec2 WorldToScreen(const Vec3 worldPos);

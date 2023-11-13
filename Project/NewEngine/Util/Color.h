@@ -6,16 +6,10 @@ struct Color
 {
 	float r, g, b, a;
 
-	constexpr Color() : r(255.f), g(255.f), b(255.f), a(255.f) {}
-	constexpr Color(float r, float g, float b) : r(r), g(g), b(b), a(255.f) {}
-	constexpr Color(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {}
-	constexpr Color(const uint32_t colorCodo)
-	{
-		r = (float)((colorCodo >> 16) & 0xff);
-		g = (float)((colorCodo >> 8) & 0xff);
-		b = (float)(colorCodo & 0xff);
-		a = 255;
-	}
+	Color();
+	Color(float r, float g, float b);
+	Color(float r, float g, float b, float a);
+	Color(const uint32_t colorCodo);
 
 	const static Color red;
 	const static Color green;

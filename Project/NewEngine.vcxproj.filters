@@ -894,6 +894,9 @@
     <ClCompile Include="Application\SourceCode\Effect\AttackExplosionEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\stdafx.cpp">
+      <Filter>NewEngine\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1435,6 +1438,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Effect\AttackExplosionEffect.h">
       <Filter>Application\Header\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\stdafx.h">
+      <Filter>NewEngine\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -34,7 +34,7 @@ uint32_t GetDigit(const uint32_t value)
 }
 
 // 現在の時間を取得する
-unsigned long GetNowTime(const TimeUnit timeUnit)
+uint64_t GetNowTime(const TimeUnit timeUnit)
 {
 	switch (timeUnit)
 	{

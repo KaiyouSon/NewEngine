@@ -47,9 +47,12 @@
 #include <unordered_map>
 #include <future>
 #include <thread>
-#include <cstdint>
 #include <algorithm>
 #include <queue>
+#include <functional>
+#include <Windows.h>
+#include <math.h>
+#include <stdint.h>
 
 // エンジンのクラス
 class NewEngine

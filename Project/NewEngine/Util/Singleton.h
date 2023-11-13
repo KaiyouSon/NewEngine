@@ -5,7 +5,7 @@
 template<typename T> class Singleton
 {
 protected:
-	Singleton() {};
+	constexpr Singleton() {};
 public:
 	virtual ~Singleton() {};
 private:
@@ -16,7 +16,7 @@ private:
 
 	static std::unique_ptr<T> sInstance;
 public:
-	inline static std::unique_ptr<T>& GetInstance()
+	static std::unique_ptr<T>& GetInstance()
 	{
 		if (sInstance.get() == nullptr)
 		{
