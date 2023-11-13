@@ -61,6 +61,14 @@ void Sword::DrawModel()
 	}
 }
 
+Vec3 Sword::GetTipPos()
+{
+	Vec3 zAxis = weapon->GetTransform().GetWorldMat().GetZAxis();
+	Vec3 pos = weapon->GetTransform().GetWorldMat().GetTrans();
+
+	return pos + zAxis.Norm() * 10.f;
+}
+
 void Sword::ColliderUpdate()
 {
 	if (mIsCalcCollider == false)

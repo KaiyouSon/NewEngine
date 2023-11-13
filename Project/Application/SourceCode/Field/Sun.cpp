@@ -22,7 +22,7 @@ void Sun::Update()
 
 void Sun::Draw()
 {
-	mSun->ExecuteCS(4160);
+	//mSun->ExecuteCS(4160);
 	mSun->Draw();
 }
 

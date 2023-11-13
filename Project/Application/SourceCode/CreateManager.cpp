@@ -437,7 +437,7 @@ void CreateManager::CreateGraphicsPipeline()
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("AttackExplosionEffectInit");
 	setting.rtvNum = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "BossAttackTrajectoryEffect");
+	PipelineManager::CreateGraphicsPipeline(setting, "AttackExplosionEffect");
 }
 
 // Computeパイプラインの生成

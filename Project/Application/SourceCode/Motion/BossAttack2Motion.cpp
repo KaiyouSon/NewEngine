@@ -1,6 +1,7 @@
 #include "BossAttack2Motion.h"
 #include "HumanoidBody.h"
 #include "Boss.h"
+#include "EffectManager.h"
 
 BossAttack2Motion::BossAttack2Motion()
 {
@@ -43,17 +44,17 @@ void BossAttack2Motion::CurrentStepInit(HumanoidBody* human)
 	switch (mStep)
 	{
 	case 0:
-		//mEndBodyY = -0.9f;
+		mEndBodyY = -0.9f;
 		break;
 	case 1:
-		//mEndBodyY = -1.1f;
+		mEndBodyY = -1.1f;
 		break;
 	case 2:
 		SettingMovePrame(human, 5, 30, 2);
 		boss->GetWeapon()->SetisActiveTrajectory(true);
 		boss->GetWeapon()->SetisCalcCollider(true);
 		boss->mDamage = 40.f;
-		//mEndBodyY = -0.85f;
+		mEndBodyY = -0.85f;
 		break;
 	case 3:
 		mEndBodyY = -1.0f;
@@ -110,6 +111,7 @@ void BossAttack2Motion::CurrentStepInit(HumanoidBody* human)
 		boss->GetWeapon()->SetisCalcCollider(false);
 		boss->mDamage = 0.f;
 		mEndBodyY = -0.7f;
+
 		break;
 	default:
 		mEndBodyY = 0;
@@ -118,6 +120,8 @@ void BossAttack2Motion::CurrentStepInit(HumanoidBody* human)
 void BossAttack2Motion::CurrentStepUpdate(HumanoidBody* human)
 {
 	human->GetPart(PartID::Body)->pos.y = mEase.Interpolation(mStartBodyY, mEndBodyY);
+	Boss* boss = static_cast<Boss*>(human->iParent);
+
 
 	if ((mStep >= 2 && mStep <= 4) ||
 		(mStep >= 11 && mStep <= 13) ||
@@ -146,6 +150,10 @@ void BossAttack2Motion::CurrentStepUpdate(HumanoidBody* human)
 		if (mEase.GetTimer() == 10)
 		{
 			SoundManager::Play("BossAttackSE");
+		}
+		if (mEase.GetTimer() == 15)
+		{
+			EffectManager::GetInstance()->GenerateAttackExplosionEffect(boss->GetWeapon()->GetTipPos());
 		}
 	}
 }

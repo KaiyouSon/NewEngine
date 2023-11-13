@@ -101,6 +101,8 @@ void TextureManager::LoadTexture(const std::string filePath, const std::string t
 		GetInstance()->LoadTextureFromDDS(path, scratchImg, metadata);
 	}
 
+	metadata.format = MakeSRGB(metadata.format);
+
 	// リソース設定
 	D3D12_RESOURCE_DESC resourceDesc =
 		CD3DX12_RESOURCE_DESC::Tex2D(

@@ -24,15 +24,6 @@ cbuffer ConstantBufferMaxParticleData : register(b0)
     uint max;
 }
 
-// ‹^——”
-float Random01(float2 seed);
-
-// ‹^——”ƒV[ƒh
-float2 RandomSeed(float2 seed, uint2 index);
-
-// ‰Šú‰»
-ParticleData InitParticleData(uint index);
-
 [numthreads(1000, 1, 1)]
 void main(uint3 DTid : SV_DispatchThreadID)
 {
@@ -43,19 +34,4 @@ void main(uint3 DTid : SV_DispatchThreadID)
         bossAttackTrajectoryEffect[0].timerRate = 0;
         bossAttackTrajectoryEffect[0].index = 0;
     }
-}
-
-// ‹^——”
-float Random01(float2 seed)
-{
-    float result = frac(sin(dot(seed, float2(12.9898f, 78.223f))) * 43758.5453f);
-    return result;
-}
-
-// ‹^——”ƒV[ƒh
-float2 RandomSeed(float2 seed, uint2 index)
-{
-    float random = Random01(seed);
-    float2 result = float2(random / index.x, random * index.y);
-    return result;
 }

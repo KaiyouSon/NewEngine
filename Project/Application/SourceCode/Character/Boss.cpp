@@ -155,7 +155,8 @@ void Boss::MotionUpdate()
 		mCoolTimer.Update();
 		if (mCoolTimer == true)
 		{
-			mMotionNum = Random::Range(2, 3);
+			//mMotionNum = Random::Range(2, 3);
+			mMotionNum = 2;
 		}
 	}
 	if (mMotionNum != 0)

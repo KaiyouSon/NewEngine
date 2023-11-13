@@ -26,13 +26,16 @@ private:
 	Vec2 mHighLumiClamp;
 
 public:
+	bool isBloom0;
+	bool isBloom1;
+
+public:
 	Bloom();
 	void Update();
 	void DrawPostEffect();
 	void DrawPass(const PassType passType);
 	void PrevSceneDraw(const PassType passType);
 	void PostSceneDraw(const PassType passType);
-	void DrawDebugGui();
 
 public:
 	void SetHighLumiClmap(const Vec2 highLumiClamp);

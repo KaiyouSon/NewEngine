@@ -37,6 +37,7 @@ public:
 
 public:
 	virtual void ColliderUpdate() = 0;
+	virtual Vec3 GetTipPos() = 0; // 先端の座標
 
 public:
 	float GetDamage();
@@ -47,5 +48,5 @@ public:
 	void SetChargeRate(const float chargeRate);
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 	void SetisActiveTrajectory(const bool isActiveTrajectory);
-	
+
 };

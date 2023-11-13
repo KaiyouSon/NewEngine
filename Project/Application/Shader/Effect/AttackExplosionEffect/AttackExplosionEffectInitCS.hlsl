@@ -41,26 +41,26 @@ void main(uint3 DTid : SV_DispatchThreadID)
         ParticleData result = outputData[i];
         
         // 座標
-        float3 basePos = float3(4.f, 5.5f, 4.f); // -basePos ~ basePos
-        float3 ratePos = basePos * 2;
-
-        seed = RandomSeed(seed, i);
-        result.pos.x = basePos.x - Random01(seed) * ratePos.x;
-        seed = RandomSeed(seed, i);
-        result.pos.y = basePos.y - Random01(seed) * ratePos.y;
-        seed = RandomSeed(seed, i);
-        result.pos.z = basePos.z - Random01(seed) * ratePos.z;
+        float radius = 0.25f;
         
+        // ランダムな球面座標を生成
+        seed = RandomSeed(seed, i);
+        float theta = 2 * 3.14159265359 * Random01(seed);
+        seed = RandomSeed(seed, i);
+        float phi = acos(2 * Random01(seed) - 1);
+        
+        // 極座標をデカルト座標に変換して球の表面上の点を取得
+        result.pos.x = radius * sin(phi) * cos(theta);
+        result.pos.y = radius * sin(phi) * sin(theta);
+        result.pos.z = radius * cos(phi);
+
         // ベクトル
-        result.moveVec = normalize(float3(1.f, 1.f, 1.f));
+        result.moveVec = normalize(result.pos);
         
         // 移動速度
-        //seed = RandomSeed(seed, i);
-        //result.moveAccel.x = baseSpeed.x - Random01(seed) * rateSpeed.x;
-        //seed = RandomSeed(seed, i);
-        //result.moveAccel.y = baseSpeed.y - Random01(seed) * rateSpeed.y;
-        //seed = RandomSeed(seed, i);
-        //result.moveAccel.z = baseSpeed.z - Random01(seed) * rateSpeed.z;
+        float baseSpeed = 1.f;
+        seed = RandomSeed(seed, i);
+        result.moveAccel = baseSpeed;
         
         // スケール
         seed = RandomSeed(seed, i);
@@ -71,8 +71,9 @@ void main(uint3 DTid : SV_DispatchThreadID)
         result.shininess = 0.5f + Random01(seed) * 0.5f;
         
         // 色
-        result.color = float4(0.76f, 0.76f, 0.47f, 0.f);
-        
+        seed = RandomSeed(seed, i);
+        result.color = float4(0.6f, 0.f, 0.f, 1.f);
+        result.color.r -= Random01(seed) * 0.3f;
         outputData[i] = result;
     }
 }

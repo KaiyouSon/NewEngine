@@ -223,15 +223,15 @@ void GameScene::Draw()
 
 	mPostEffectManager->DrawEffectBloom();
 
-	mVolumetricFog->Draw();
+	//mVolumetricFog->Draw();
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
-
 }
 void GameScene::DrawDebugGui()
 {
 	//mBoss->DrawDebugGui();
+	mPostEffectManager->DrawDebugGui();
 
 	Gui::BeginWindow("Debug");
 
@@ -430,7 +430,7 @@ void GameScene::DrawCurrentSceneObject()
 	mField->DrawSkyIsLand();
 
 
-	mField->DrawFog();
+	//mField->DrawFog();
 	mPlayer->DrawModel();
 
 	mBoss->DrawModel();

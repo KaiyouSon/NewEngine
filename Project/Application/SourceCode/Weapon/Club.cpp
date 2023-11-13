@@ -35,6 +35,11 @@ void Club::DrawModel()
 	weapon->Draw();
 }
 
+Vec3 Club::GetTipPos()
+{
+	return Vec3();
+}
+
 void Club::ColliderUpdate()
 {
 	if (motion->GetisCalcCollider() == false)

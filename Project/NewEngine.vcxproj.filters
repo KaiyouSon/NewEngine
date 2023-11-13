@@ -600,9 +600,6 @@
     <ClCompile Include="Application\SourceCode\Menu\LogoutMenu.cpp">
       <Filter>Application\Source\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Effect\RespawnPointEffect.cpp">
-      <Filter>Application\Source\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Util\RectAngle.cpp">
       <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
@@ -1156,9 +1153,6 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Menu\LogoutMenu.h">
       <Filter>Application\Header\Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Effect\RespawnPointEffect.h">
-      <Filter>Application\Header\Effect</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Util\RectAngle.h">
       <Filter>NewEngine\Header\Util</Filter>

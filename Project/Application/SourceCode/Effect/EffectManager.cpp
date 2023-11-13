@@ -4,6 +4,7 @@
 #include "AirEffect.h"
 #include "LogoExplosionEffect.h"
 #include "BossAttackTrajectoryEffect.h"
+#include "AttackExplosionEffect.h"
 
 EffectManager::EffectManager()
 {
@@ -13,15 +14,16 @@ void EffectManager::Init()
 {
 	// インスタンス生成
 	mBloodSprayEffect = std::make_unique<BloodSprayEffect>();
-	//mRespawnPointEffect = std::make_unique<RespawnPointEffect>();
 
 	// 初期化
 	mBloodSprayEffect->Init();
-	//mRespawnPointEffect->Init();
 
 	mEffects.clear();
+
+	// 空中のエフェクトのエミッタ生成
 	GenerateAirEffect(Vec3::up * 10.f);
 
+	// ボスの攻撃のエミッタ生成
 	GenerateBossAttackTrajectoryEffect();
 }
 void EffectManager::Update()
@@ -31,7 +33,9 @@ void EffectManager::Update()
 		{
 			if (Key::GetKeyDown(DIK_G))
 			{
-				GenerateBossAttackTrajectoryEffect();
+				GenerateAttackExplosionEffect(Vec3::up * 10.f);
+
+				//GenerateBossAttackTrajectoryEffect();
 			}
 		});
 
@@ -54,8 +58,6 @@ void EffectManager::DrawEffect(const bool isBloom)
 	// ブルームかけるやつ
 	if (isBloom == true)
 	{
-		//mRespawnPointEffect->DrawModel();
-
 		for (uint32_t i = 0; i < mEffects.size(); i++)
 		{
 			mEffects[i]->Draw();
@@ -89,6 +91,17 @@ void EffectManager::GenerateAirEffect(const Vec3 pos)
 	mEffects.push_back(std::move(effect));
 }
 
+// 攻撃後のエフェクト
+void EffectManager::GenerateAttackExplosionEffect(const Vec3 pos)
+{
+	// インスタンス生成
+	std::unique_ptr<AttackExplosionEffect> effect = std::make_unique<AttackExplosionEffect>();
+	effect->Generate(pos);
+
+	// ベクターに追加
+	mEffects.push_back(std::move(effect));
+}
+
 // 血のエフェクト
 void EffectManager::GenerateBloodSprayEffect(const Vec3 pos)
 {
@@ -104,13 +117,6 @@ void EffectManager::GeneratePlayerRecoveryEffect(const Vec3 pos)
 
 	// ベクターに追加
 	mEffects.push_back(std::move(effect));
-}
-
-// リスポーン地点のエフェクト
-void EffectManager::GenerateRespawnPointEffect(const Vec3 pos)
-{
-	pos;
-	//mRespawnPointEffect->Generate(pos);
 }
 
 // 誘導エフェクト

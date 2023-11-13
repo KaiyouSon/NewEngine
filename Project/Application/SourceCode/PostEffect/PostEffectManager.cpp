@@ -17,6 +17,17 @@ void PostEffectManager::Update()
 	mEffectBloom->Update();
 }
 
+void PostEffectManager::DrawDebugGui()
+{
+	Gui::BeginWindow("PostEffect");
+	if (Gui::DrawCollapsingHeader("Bloom"))
+	{
+		Gui::DrawCheckBox("Bloom0", &mEffectBloom->isBloom0);
+		Gui::DrawCheckBox("Bloom1", &mEffectBloom->isBloom1);
+	}
+	Gui::EndWindow();
+}
+
 // 天球のビネット
 void PostEffectManager::DrawSkydomeVignette()
 {
@@ -58,20 +69,32 @@ void PostEffectManager::EffectBloomDrawPass(
 
 	// 高輝度箇所にブラー
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::GaussianBlur);
-	mEffectBloom->DrawPass(Bloom::PassType::HighLumi);
+	if (mEffectBloom->isBloom0 == true)
+	{
+		mEffectBloom->DrawPass(Bloom::PassType::HighLumi);
+	}
 	mEffectBloom->PostSceneDraw(Bloom::PassType::GaussianBlur);
 
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::GaussianBlurHalf);
-	mEffectBloom->DrawPass(Bloom::PassType::HighLumi);
+	if (mEffectBloom->isBloom1 == true)
+	{
+		mEffectBloom->DrawPass(Bloom::PassType::HighLumi);
+	}
 	mEffectBloom->PostSceneDraw(Bloom::PassType::GaussianBlurHalf);
 
 	// ブラーかけ終わったやつを描画
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::Bloom);
-	mEffectBloom->DrawPass(Bloom::PassType::GaussianBlur);
+	if (mEffectBloom->isBloom0 == true)
+	{
+		mEffectBloom->DrawPass(Bloom::PassType::GaussianBlur);
+	}
 	mEffectBloom->PostSceneDraw(Bloom::PassType::Bloom);
 
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::Bloom1);
-	mEffectBloom->DrawPass(Bloom::PassType::GaussianBlurHalf);
+	if (mEffectBloom->isBloom1 == true)
+	{
+		mEffectBloom->DrawPass(Bloom::PassType::GaussianBlurHalf);
+	}
 	mEffectBloom->PostSceneDraw(Bloom::PassType::Bloom1);
 
 	// 現在のシーンの描画

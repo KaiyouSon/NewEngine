@@ -24,6 +24,7 @@ public:
 	PostEffectManager();
 	void Init();
 	void Update();
+	void DrawDebugGui();
 
 public:
 

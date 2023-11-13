@@ -41,6 +41,9 @@ Bloom::Bloom()
 
 	mHighLumiClamp = Vec2(0.1f, 1.0f);
 	mPasses[(uint32_t)PassType::HighLumi]->AddMaterial<Vec2>();
+
+	isBloom0 = true;
+	isBloom1 = true;
 }
 
 void Bloom::Update()

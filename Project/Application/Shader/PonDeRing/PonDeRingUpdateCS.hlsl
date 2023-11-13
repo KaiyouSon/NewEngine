@@ -69,8 +69,8 @@ void main(uint3 DTid : SV_DispatchThreadID)
         {
             result.timer = 0;
         }
-        result.pos.x += sin(result.timer * 3.1415926f / 180.f) * result.moveSpeed;
-        result.pos.y += cos(result.timer * 3.1415926f / 180.f) * result.moveSpeed;
+        //result.pos.x += sin(result.timer * 3.1415926f / 180.f) * result.moveSpeed;
+        //result.pos.y += cos(result.timer * 3.1415926f / 180.f) * result.moveSpeed;
         
         result.shininess += sin(result.timer * 3.1415926f / 180.f) * 0.0075f;
         outputData[i] = result;

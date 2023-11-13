@@ -35,43 +35,20 @@ void main(uint3 DTid : SV_DispatchThreadID)
             return;
         }
         
-        // インデックス(x,y)
-        float2 seed = uint2(i % 256, i / 256) + uint2(-1, 1);
-
         ParticleData result = outputData[i];
+        if (result.scale.x <= 0)
+        {
+            continue;
+        }
         
         // 座標
-        float3 basePos = float3(4.f, 5.5f, 4.f); // -basePos ~ basePos
-        float3 ratePos = basePos * 2;
-
-        seed = RandomSeed(seed, i);
-        result.pos.x = basePos.x - Random01(seed) * ratePos.x;
-        seed = RandomSeed(seed, i);
-        result.pos.y = basePos.y - Random01(seed) * ratePos.y;
-        seed = RandomSeed(seed, i);
-        result.pos.z = basePos.z - Random01(seed) * ratePos.z;
-        
-        // ベクトル
-        result.moveVec = normalize(float3(1.f, 1.f, 1.f));
-        
-        // 移動速度
-        //seed = RandomSeed(seed, i);
-        //result.moveAccel.x = baseSpeed.x - Random01(seed) * rateSpeed.x;
-        //seed = RandomSeed(seed, i);
-        //result.moveAccel.y = baseSpeed.y - Random01(seed) * rateSpeed.y;
-        //seed = RandomSeed(seed, i);
-        //result.moveAccel.z = baseSpeed.z - Random01(seed) * rateSpeed.z;
-        
-        // スケール
-        seed = RandomSeed(seed, i);
-        result.scale = 0.25f + Random01(seed) * 0.25f;
-        
-        // 輝度
-        seed = RandomSeed(seed, i);
-        result.shininess = 0.5f + Random01(seed) * 0.5f;
-        
-        // 色
-        result.color = float4(0.76f, 0.76f, 0.47f, 0.f);
+        result.pos += result.moveVec * result.moveAccel;
+        result.moveAccel -= 0.025f;
+        if (result.moveAccel.x <= 0.25f)
+        {
+            result.moveAccel = 0.125f;
+            result.scale -= 0.01f;
+        }
         
         outputData[i] = result;
     }
