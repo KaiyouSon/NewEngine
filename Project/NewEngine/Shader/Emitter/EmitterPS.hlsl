@@ -7,7 +7,7 @@ float4 main(G2P i) : SV_TARGET
 {
     float4 texColor = tex.Sample(smp, i.uv);
     
-    clip(texColor.a - 0.5);
+    clip(texColor.a - 0.25);
     
     float4 shineColor = i.color;
     shineColor.rgb *= i.shininess;

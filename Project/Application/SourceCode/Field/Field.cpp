@@ -171,12 +171,6 @@ void Field::DrawModel()
 	{
 		mFieldData->gates[i]->DrawModel();
 	}
-
-	// 太陽
-	for (uint32_t i = 0; i < mFieldData->suns.size(); i++)
-	{
-		mFieldData->suns[i]->Draw();
-	}
 }
 
 void Field::DrawFog()
@@ -210,6 +204,20 @@ void Field::DrawSkyIsLand()
 	for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
 	{
 		mFieldData->respawnPoints[i]->DrawModel();
+	}
+}
+
+void Field::DrawSun()
+{
+	if (!mFieldData)
+	{
+		return;
+	}
+
+	// 太陽
+	for (uint32_t i = 0; i < mFieldData->suns.size(); i++)
+	{
+		mFieldData->suns[i]->Draw();
 	}
 }
 

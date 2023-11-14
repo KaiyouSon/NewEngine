@@ -5,6 +5,7 @@
 #include "LogoExplosionEffect.h"
 #include "BossAttackTrajectoryEffect.h"
 #include "AttackExplosionEffect.h"
+#include "SmokeEffect.h"
 
 EffectManager::EffectManager()
 {
@@ -25,6 +26,12 @@ void EffectManager::Init()
 
 	// ボスの攻撃のエミッタ生成
 	GenerateBossAttackTrajectoryEffect();
+
+	// 煙のエミッタ生成
+	for (uint32_t i = 0; i < (uint32_t)SmokeEffectIndex::Size; i++)
+	{
+		GenerateSmokeEffect();
+	}
 }
 void EffectManager::Update()
 {
@@ -39,6 +46,7 @@ void EffectManager::Update()
 			}
 		});
 
+
 	mBloodSprayEffect->Update();
 
 	// 削除処理
@@ -52,6 +60,11 @@ void EffectManager::Update()
 	{
 		mEffects[i]->Update();
 	}
+
+	for (uint32_t i = 0; i < mSmokeEffects.size(); i++)
+	{
+		mSmokeEffects[i]->Update();
+	}
 }
 void EffectManager::DrawEffect(const bool isBloom)
 {
@@ -60,6 +73,12 @@ void EffectManager::DrawEffect(const bool isBloom)
 	{
 		for (uint32_t i = 0; i < mEffects.size(); i++)
 		{
+			// 煙エフェクトにはBloomかけない
+			if (mEffects[i]->GetEffectType() == EffectType::SmokeEffect)
+			{
+				continue;
+			}
+
 			mEffects[i]->Draw();
 		}
 	}
@@ -72,6 +91,11 @@ void EffectManager::DrawEffect(const bool isBloom)
 		for (uint32_t i = 0; i < mEffects.size(); i++)
 		{
 			mEffects[i]->Draw();
+		}
+
+		for (uint32_t i = 0; i < mSmokeEffects.size(); i++)
+		{
+			mSmokeEffects[i]->Draw();
 		}
 	}
 }
@@ -152,6 +176,17 @@ void EffectManager::GenerateBossAttackTrajectoryEffect()
 	mEffects.push_back(std::move(effect));
 }
 
+// 煙のエフェクト
+void EffectManager::GenerateSmokeEffect()
+{
+	// インスタンス生成
+	std::unique_ptr<SmokeEffect> effect = std::make_unique<SmokeEffect>();
+	effect->Generate();
+
+	// ベクターに追加
+	mSmokeEffects.push_back(std::move(effect));
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // --- 実行 --------------------------------------------------------------------------------------------------//
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -184,6 +219,13 @@ void EffectManager::ExecuteBossAttackTrajectoryEffect(const bool isGenerate, con
 			break;
 		}
 	}
+}
+
+// 煙のエフェクト
+void EffectManager::ExecuteSmokeEffect(const ConstantBufferData::CSmokeEffect data,const SmokeEffectIndex index)
+{
+	SmokeEffect* effect = dynamic_cast<SmokeEffect*>(mSmokeEffects[(uint32_t)index].get());
+	effect->Execute(data);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -2,6 +2,7 @@
 #include "IEffect.h"
 #include "NewEngine.h"
 
+// 攻撃後の爆発エフェクト
 class AttackExplosionEffect : public IEffect
 {
 private:

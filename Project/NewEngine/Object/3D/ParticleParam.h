@@ -131,4 +131,13 @@ namespace ParticleParameter
 		float shininess;
 		Color color;
 	};
+
+	struct SmokeParticle
+	{
+		Vec3 pos;
+		Vec3 moveVec;
+		Vec3 moveAccel;
+		Vec2 scale;
+		Color color;
+	};
 }

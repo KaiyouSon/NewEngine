@@ -4,19 +4,18 @@ struct ParticleData
     float3 moveVec;
     float3 moveAccel;
     float2 scale;
-    float shininess;
     float4 color;
 };
 RWStructuredBuffer<ParticleData> outputData : register(u0);
 
-struct BossAttackTrajectoryEffect
+struct SmokeEffect
 {
     uint timer;
     uint maxTimer;
     float timerRate;
     uint index;
 };
-RWStructuredBuffer<BossAttackTrajectoryEffect> bossAttackTrajectoryEffect : register(u1);
+RWStructuredBuffer<SmokeEffect> smokeEffect : register(u1);
 
 // パーティクルの最大数
 cbuffer ConstantBufferMaxParticleData : register(b0)
@@ -29,9 +28,9 @@ void main(uint3 DTid : SV_DispatchThreadID)
 {
     if (DTid.x == 0)
     {
-        bossAttackTrajectoryEffect[0].timer = 0;
-        bossAttackTrajectoryEffect[0].maxTimer = 1;
-        bossAttackTrajectoryEffect[0].timerRate = 0;
-        bossAttackTrajectoryEffect[0].index = 0;
+        smokeEffect[0].timer = 0;
+        smokeEffect[0].maxTimer = 10;
+        smokeEffect[0].timerRate = 0;
+        smokeEffect[0].index = 0;
     }
 }

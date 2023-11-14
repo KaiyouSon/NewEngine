@@ -414,6 +414,9 @@ void GameScene::DrawDepthToEffectBloom()
 		PipelineManager::GetGraphicsPipeline("Ripple"),
 		PipelineManager::GetGraphicsPipeline("Rhombus"));
 
+	// 太陽
+	mField->DrawSun();
+
 	// ボス
 	mBoss->DrawModel();
 
@@ -428,9 +431,9 @@ void GameScene::DrawCurrentSceneObject()
 
 	mField->DrawModel();
 	mField->DrawSkyIsLand();
+	mField->DrawSun();
 
-
-	//mField->DrawFog();
+	mField->DrawFog();
 	mPlayer->DrawModel();
 
 	mBoss->DrawModel();

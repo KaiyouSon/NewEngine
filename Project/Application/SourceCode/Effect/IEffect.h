@@ -11,6 +11,7 @@ enum class EffectType
 	LogoExplosionEffect,
 	BossAttackTrajectoryEffect,
 	AttackExplosionEffect,
+	SmokeEffect,
 };
 
 // エフェクトのインタフェース

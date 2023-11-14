@@ -1,4 +1,5 @@
 #include "Gate.h"
+#include "EffectManager.h"
 
 Gate::Gate() :
 	mGateLeft(std::make_unique<Object3D>()),
@@ -86,8 +87,18 @@ void Gate::ColliderUpdate()
 
 void Gate::OpeningUpdate()
 {
+	// 煙のエフェクトのデータ
+	ConstantBufferData::CSmokeEffect smokeEffectData;
+
+
 	if (mIsOpening == false)
 	{
+		//smokeEffectData.isGenerate = false;
+		//
+		//EffectManager::GetInstance()->ExecuteSmokeEffect(
+		//	smokeEffectData, mGateLeft->rot, EffectManager::SmokeEffectIndex::LeftGateUse);
+		//EffectManager::GetInstance()->ExecuteSmokeEffect(
+		//	smokeEffectData, mGateRight->rot, EffectManager::SmokeEffectIndex::RightGateUse);
 		return;
 	}
 
@@ -96,6 +107,40 @@ void Gate::OpeningUpdate()
 	{
 		mGateLeft->rot.y = mOpenEase.Lerp(Radian(0), Radian(-45));
 		mGateRight->rot.y = mOpenEase.Lerp(Radian(180), Radian(225));
+
+
+		// ----------------------------------------------------------------------------------------------------------------- //
+		// --- エフェクトの処理 -------------------------------------------------------------------------------------------- //
+		// ----------------------------------------------------------------------------------------------------------------- //
+		//{
+		//	smokeEffectData.isGenerate = true;
+		//	smokeEffectData.generateTimer = 1;
+		//	smokeEffectData.generateNum = 32;
+
+		//	// 左の門の煙
+		//	Vec3 leftVec = Vec3(cosf(mGateLeft->rot.y), 0, sinf(mGateLeft->rot.y));
+		//	smokeEffectData.generatePos = mGateLeft->pos + leftVec * mGateLeft->scale.x * 2;
+		//	smokeEffectData.generateRange.x = leftVec.x * 15.f;
+		//	smokeEffectData.generateRange.z = leftVec.z * 6.f;
+
+		//	static float rad = 0;
+		//	rad += Radian(5);
+		//	EffectManager::GetInstance()->ExecuteSmokeEffect(
+		//		smokeEffectData, EffectManager::SmokeEffectIndex::LeftGateUse);
+
+		//	// 右の門の煙
+		//	Vec3 rightVec = Vec3(cosf(mGateRight->rot.y), 0, sinf(mGateRight->rot.y));
+		//	smokeEffectData.generatePos = mGateRight->pos + rightVec * mGateRight->scale.x * 2;
+		//	smokeEffectData.generateRange = leftVec.x * 15.f;
+		//	smokeEffectData.generateRange = leftVec.z * 6.f;
+		//	EffectManager::GetInstance()->ExecuteSmokeEffect(
+		//		smokeEffectData, EffectManager::SmokeEffectIndex::RightGateUse);
+		//}
+		// ----------------------------------------------------------------------------------------------------------------- //
+		// ----------------------------------------------------------------------------------------------------------------- //
+		// ----------------------------------------------------------------------------------------------------------------- //
+
+
 
 		mOpenEase.Update();
 		if (mOpenEase.GetisEnd() == true)

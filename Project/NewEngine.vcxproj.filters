@@ -391,6 +391,9 @@
     <Filter Include="Shader\Application\Effect\AttackExplosionEffect">
       <UniqueIdentifier>{012ba14f-1ea3-41c5-80a6-34f6087742de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\Effect\SmokeEffect">
+      <UniqueIdentifier>{2776cec2-3319-4af9-8171-4f63e792e059}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -893,6 +896,9 @@
     </ClCompile>
     <ClCompile Include="NewEngine\stdafx.cpp">
       <Filter>NewEngine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Effect\SmokeEffect.cpp">
+      <Filter>Application\Source\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1436,6 +1442,9 @@
     <ClInclude Include="NewEngine\stdafx.h">
       <Filter>NewEngine\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SourceCode\Effect\SmokeEffect.h">
+      <Filter>Application\Header\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1779,6 +1788,15 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\Effect\AttackExplosionEffect\AttackExplosionEffectUpdateCS.hlsl">
       <Filter>Shader\Application\Effect\AttackExplosionEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\SmokeEffect\SmokeEffectInitCS.hlsl">
+      <Filter>Shader\Application\Effect\SmokeEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\SmokeEffect\SmokeEffectVS.hlsl">
+      <Filter>Shader\Application\Effect\SmokeEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\Effect\SmokeEffect\SmokeEffectUpdateCS.hlsl">
+      <Filter>Shader\Application\Effect\SmokeEffect</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

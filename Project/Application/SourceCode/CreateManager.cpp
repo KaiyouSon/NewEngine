@@ -251,6 +251,22 @@ void CreateManager::CreateShaderCompiler()
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "AttackExplosionEffectUpdate");
+
+	// 煙のエフェクト（初期化用）
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path2 + "Effect/SmokeEffect/SmokeEffectInitCS.hlsl";
+	setting.vsFilePath = path2 + "Effect/SmokeEffect/SmokeEffectVS.hlsl";
+	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
+	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
+	ShaderCompilerManager::Create(setting, "SmokeEffectInit");
+
+	// 煙のエフェクト（更新用）
+	setting = ShaderCompilerSetting();
+	setting.csFilePath = path2 + "Effect/SmokeEffect/SmokeEffectUpdateCS.hlsl";
+	setting.vsFilePath = path2 + "Effect/SmokeEffect/SmokeEffectVS.hlsl";
+	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
+	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
+	ShaderCompilerManager::Create(setting, "SmokeEffectUpdate");
 }
 
 // パイプライン生成
@@ -438,6 +454,12 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("AttackExplosionEffectInit");
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "AttackExplosionEffect");
+
+	// 攻撃の爆発のエフェクト
+	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("SmokeEffectInit");
+	setting.rtvNum = 1;
+	PipelineManager::CreateGraphicsPipeline(setting, "SmokeEffect");
 }
 
 // Computeパイプラインの生成
@@ -555,6 +577,16 @@ void CreateManager::CreateComputePipeline()
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("AttackExplosionEffectUpdate");
 	setting.rootSignatureSetting.maxCbvRootParameter = 1;
 	PipelineManager::CreateComputePipeline(setting, "AttackExplosionEffectUpdate");
+
+	// ボスの攻撃軌跡のエフェクト用（初期化用）
+	setting = PipelineManager::GetComputePipeline("BossAttackTrajectoryEffectInit")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("SmokeEffectInit");
+	PipelineManager::CreateComputePipeline(setting, "SmokeEffectInit");
+
+	// ボスの攻撃軌跡のエフェクト用（更新用）
+	setting = PipelineManager::GetComputePipeline("BossAttackTrajectoryEffectUpdate")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("SmokeEffectUpdate");
+	PipelineManager::CreateComputePipeline(setting, "SmokeEffectUpdate");
 }
 
 void CreateManager::Create()

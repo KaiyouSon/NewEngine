@@ -14,6 +14,7 @@ public:
 	void DrawModel();
 	void DrawFog();
 	void DrawSkyIsLand();
+	void DrawSun();
 	void DrawDebugGui();
 
 public:

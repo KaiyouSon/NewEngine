@@ -7,7 +7,7 @@ AirEffect::AirEffect() :
 {
 	mEmitter->SetTexture(TextureManager::GetTexture("Particle2"));
 	mEmitter->SetParticleData<AirParticle>(100000);
-	mEmitter->AddCSStructuredBuffer<SAirEffect>();
+	mEmitter->AddCSStructuredBuffer<STimer>();
 
 	mEffectType = EffectType::AirEffect;
 }

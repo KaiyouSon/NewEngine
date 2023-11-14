@@ -9,7 +9,7 @@ BossAttackTrajectoryEffect::BossAttackTrajectoryEffect() :
 	mEmitter->SetTexture(TextureManager::GetTexture("Particle2"));
 	mEmitter->SetParticleData<BossAttackTrajectoryParticle>(10000);
 	mEmitter->AddCSConstantBuffer<CBossAttackTrajectoryEffect>();
-	mEmitter->AddCSStructuredBuffer<SBossAttackTrajectoryEffect>();
+	mEmitter->AddCSStructuredBuffer<STimer>();
 
 	mEffectType = EffectType::BossAttackTrajectoryEffect;
 }

@@ -2,6 +2,7 @@
 #include "GaugeType.h"
 #include "Club.h"
 #include "Sword.h"
+#include "EffectManager.h"
 
 Player::Player() :
 	mPlayer(std::make_unique<PlayerBody>()),
@@ -70,6 +71,23 @@ void Player::PrevUpdate()
 		// 実行
 		(this->*pFunc[(int)mState])();
 	}
+
+	ConstantBufferData::CSmokeEffect smokeEffectData;
+	smokeEffectData.generateRange = 1;
+	smokeEffectData.generateTimer = 10;
+	smokeEffectData.generateNum = 4;
+	if (mState == State::Jogging || mState == State::Run)
+	{
+		smokeEffectData.isGenerate = true;
+		smokeEffectData.generatePos = mPlayer->pos + Vec3::down * 4.75f;
+		EffectManager::GetInstance()->ExecuteSmokeEffect(smokeEffectData, EffectManager::SmokeEffectIndex::PlayerUse);
+	}
+	else
+	{
+		smokeEffectData.isGenerate = false;
+		EffectManager::GetInstance()->ExecuteSmokeEffect(smokeEffectData, EffectManager::SmokeEffectIndex::PlayerUse);
+	}
+
 
 	GaugeParamUpdate();
 	ColliderUpdate();

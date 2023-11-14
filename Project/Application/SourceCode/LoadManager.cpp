@@ -99,6 +99,7 @@ void LoadManager::GameSceneTextureLoad()
 	TextureManager::LoadTexture("Particle/Particle1.dds", "Particle1");
 	TextureManager::LoadTexture("Particle/Particle2.dds", "Particle2");
 	TextureManager::LoadTexture("Particle/Line.dds", "Line");
+	TextureManager::LoadTexture("Particle/SmokeParticle.dds", "SmokeParticle");
 	TextureManager::LoadTexture("Trajectory.dds", "Trajectory");
 
 	// 草

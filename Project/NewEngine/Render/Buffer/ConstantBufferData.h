@@ -245,4 +245,13 @@ namespace ConstantBufferData
 		Vec3 startPos;
 		Vec3 endPos;
 	};
+
+	struct CSmokeEffect
+	{
+		uint32_t isGenerate;
+		Vec3 generatePos;
+		uint32_t generateTimer;
+		Vec3 generateRange;
+		uint32_t generateNum;
+	};
 }
