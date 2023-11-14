@@ -9,10 +9,13 @@ struct V2G
 struct ParticleData
 {
     float3 pos;
+    float3 generatePos;
     float2 scale;
+    float scaleAccel;
     float shininess;
     float4 color;
     float timer;
+    float3 moveVec;
     float moveSpeed;
 };
 

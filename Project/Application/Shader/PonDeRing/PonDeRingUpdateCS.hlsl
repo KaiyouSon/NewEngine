@@ -34,45 +34,59 @@ StructuredBuffer<ModelData> modelData : register(t0);
 struct ParticleData
 {
     float3 pos;
+    float3 generatePos;
     float2 scale;
+    float scaleAccel;
     float shininess;
     float4 color;
     float timer;
+    float3 moveVec;
     float moveSpeed;
 };
 RWStructuredBuffer<ParticleData> outputData : register(u0);
 
-[numthreads(100, 1, 1)]
+[numthreads(256, 1, 1)]
 void main(uint3 DTid : SV_DispatchThreadID)
 {
-    uint pointIndexOffset = (DTid.x / 100) * 3;
-
-    float2 seed = 0;
-    
-    uint dataPerThread = meshParticleSize / 100;
-    
-    uint start = (DTid.x) * dataPerThread;
-    uint end = (DTid.x + 1) * dataPerThread;
-        
-    // パーティクルの設定
-    for (uint i = start; i < end; i++)
-    {
-        if (i > maxParticleSize)
-        {
-            return;
-        }
+    float2 seed = float2(DTid.x, DTid.x / 2.4124f);
             
-        ParticleData result = outputData[i];
+    // パーティクルの設定
+    ParticleData result = outputData[DTid.x];
 
-        result.timer += 1;
-        if (result.timer >= 360)
-        {
-            result.timer = 0;
-        }
-        //result.pos.x += sin(result.timer * 3.1415926f / 180.f) * result.moveSpeed;
-        //result.pos.y += cos(result.timer * 3.1415926f / 180.f) * result.moveSpeed;
-        
-        result.shininess += sin(result.timer * 3.1415926f / 180.f) * 0.0075f;
-        outputData[i] = result;
+    result.timer += 1;
+    if (result.timer >= 360)
+    {
+        result.timer = 0;
     }
+    result.pos += result.moveVec * result.moveSpeed;
+    
+    result.scale -= result.scaleAccel;
+    if (result.scale.x <= 0)
+    {
+        result.pos = result.generatePos;
+        result.scale = 0.05f + Random01(seed / 1000 + 2) * 0.15f;
+        result.scaleAccel = 0.0002f + Random01(seed / 1000 + 4.123f) * 0.0004f;
+        result.shininess = 0.1f + Random01(seed / 100 + 3) * 0.9f;
+        
+        seed = RandomSeed(seed, float2(DTid.x, DTid.x / 3.1415926f));
+        result.moveVec.x = 1 - Random01(seed) * 2;
+        seed = RandomSeed(seed, float2(DTid.x, DTid.x / 3.1415926f));
+        result.moveVec.y = 1 - Random01(seed) * 2;
+        seed = RandomSeed(seed, float2(DTid.x, DTid.x / 3.1415926f));
+        result.moveVec.z = 1 - Random01(seed) * 2;
+        result.moveVec = normalize(result.moveVec);
+
+        result.moveSpeed = 0.0025f + Random01(seed / 10000) * 0.005f;
+        result.color.a = 0;
+    }
+    
+    result.color.a += 0.01f;
+    if (result.color.a >= 1)
+    {
+        result.color.a = 1;
+
+    }
+        
+    result.shininess += sin(result.timer * 3.1415926f / 180.f) * 0.0075f;
+    outputData[DTid.x] = result;
 }

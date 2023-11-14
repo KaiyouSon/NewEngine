@@ -34,10 +34,13 @@ StructuredBuffer<ModelData> modelData : register(t0);
 struct ParticleData
 {
     float3 pos;
+    float3 generatePos;
     float2 scale;
+    float scaleAccel;
     float shininess;
     float4 color;
     float timer;
+    float3 moveVec;
     float moveSpeed;
 };
 RWStructuredBuffer<ParticleData> outputData : register(u0);
@@ -77,12 +80,24 @@ void main(uint3 DTid : SV_DispatchThreadID)
        // èdêSç¿ïWån
         float3 centroidPos = a * p0 + b * p1 + c * p2;
         result.pos = centroidPos;
+        result.generatePos = centroidPos;
             
+        
         result.color = float4(0.9f, 0.7f, 0.37f, 1);
-        result.scale = 0.01f + Random01(seed / 1000 + 2) * 0.01f;
+        result.scale = 0.05f + Random01(seed / 1000 + 2) * 0.15f;
+        result.scaleAccel = 0.0002f + Random01(seed / 1000 + 4.123f) * 0.0004f;
         result.shininess = 0.1f + Random01(seed / 100 + 3) * 0.9f;
         result.timer = Random01(seed / 10000 + float2(a * p0.x, a * p2.y)) * 360;
-        result.moveSpeed = 0.001f + Random01(seed / 10000 + float2(b * p0.y, c * p1.z)) * 0.002f;
+        
+        seed = RandomSeed(seed, float2(DTid.x, DTid.x / 3.1415926f));
+        result.moveVec.x = 1 - Random01(seed) * 2;
+        seed = RandomSeed(seed, float2(DTid.x, DTid.x / 3.1415926f));
+        result.moveVec.y = 1 - Random01(seed) * 2;
+        seed = RandomSeed(seed, float2(DTid.x, DTid.x / 3.1415926f));
+        result.moveVec.z = 1 - Random01(seed) * 2;
+        result.moveVec = normalize(result.moveVec);
+
+        result.moveSpeed = 0.0025f + Random01(seed / 10000 + float2(b * p0.y, c * p1.z)) * 0.005f;
 
         outputData[i] = result;
     }

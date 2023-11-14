@@ -58,10 +58,13 @@ namespace ParticleParameter
 	struct PonDeRing
 	{
 		Vec3 pos;
+		Vec3 generatePos;
 		Vec2 scale;
+		float scaleAccel;
 		float shininess;
 		Color color;
 		float timer;
+		Vec3 moveVec;
 		float moveSpeed;
 	};
 

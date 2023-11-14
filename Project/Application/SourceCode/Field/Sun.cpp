@@ -8,7 +8,7 @@ Sun::Sun() :
 
 void Sun::Init()
 {
-	mSun->SetParticleData<ParticleParameter::PonDeRing>(ModelManager::GetModel("PonDeRing"), 1000);
+	mSun->SetParticleData<ParticleParameter::PonDeRing>(ModelManager::GetModel("PonDeRing"), 100);
 	mSun->SetComputePipeline(PipelineManager::GetComputePipeline("PonDeRingInit"));
 	mSun->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("PonDeRing"));
 	mSun->ExecuteCS(4160);
@@ -22,7 +22,7 @@ void Sun::Update()
 
 void Sun::Draw()
 {
-	//mSun->ExecuteCS(4160);
+	mSun->ExecuteCS(1625);
 	mSun->Draw();
 }
 
