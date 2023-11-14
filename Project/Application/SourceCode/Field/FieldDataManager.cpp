@@ -510,7 +510,7 @@ void FieldDataManager::LoadVolumetricFogData(FieldData* data, nlohmann::json jso
 	volumetricFog->pos = pos;
 	volumetricFog->scale = scale;
 	volumetricFog->rot = Radian(angle);
-	volumetricFog->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
+	volumetricFog->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture1"));
 
 	// フォグのパラメーター
 	if (jsonObj.contains("fog_param"))

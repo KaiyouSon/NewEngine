@@ -97,7 +97,7 @@ void GameScene::Init()
 
 	mIsChangeScene = false;
 
-	mVolumetricFog->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
+	mVolumetricFog->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture0"));
 	mVolumetricFog->pos.y = 10;
 	mVolumetricFog->scale = 10;
 	mVolumetricFog->fogParam.stepCount = 100;
@@ -256,6 +256,21 @@ void GameScene::DrawDebugGui()
 		mVolumetricFog->rot = Radian(angle);
 		Gui::DrawSlider3("Fog Speed", mVolumetricFog->moveSpeed, 0.001f);
 		Gui::DrawSlider3("Fog tiling", mVolumetricFog->tiling, 0.001f);
+
+
+		for (uint32_t i = 0; i < 4; i++)
+		{
+			std::string tag = "VolumeTexture" + std::to_string(i);
+			if (Gui::DrawButton(tag.c_str(), Vec2(64, 32)))
+			{
+				mVolumetricFog->SetTexture(TextureManager::GetVolumeTexture(tag));
+			}
+
+			if (i != 3)
+			{
+				Gui::DrawTab();
+			}
+		}
 	}
 
 	if (Gui::DrawCollapsingHeader("Directional Light") == true)

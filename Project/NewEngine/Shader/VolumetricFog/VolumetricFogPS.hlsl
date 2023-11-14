@@ -143,40 +143,56 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
             float3 clamped = clamp(uvw, 0, 1);
             float uvdis = distance(clamped, float3(0.5f, 0.5f, 0.5f));
             alpha += (1 - smoothstep(0.05, 0.5f, uvdis)) * color;
-        }
     
-            //// テストライティング
-            //{
-            //
-            //// スポットライトの計算
-            //for (uint index = 0; index < spotLightSize; index++)
-            //{
-            //    if (spotLight[index].isActive == true)
-            //    {
-            //
-            //        //float3 spos = mul(invRotateMat, float4(spotLight[index].pos - objectPos, 1)).xyz;
-            //            // ライトヘのベクトル
-            //        float3 lightVec = normalize(spotLight[index].pos - objectPos - rayPos);
-            //        float d = distance(spotLight[index].pos - objectPos, rayPos);
-            //
-            //        float s = d / spotLight[index].radius;
-            //        if (s >= 1.0)
-            //        {
-            //            continue;
-            //        }
-            //
-            //        float s2 = s * s;
-            //
-            //        float cosAngle = dot(lightVec, spotLight[index].vec);
-            //        float falloffFactor = 1; //saturate((cosAngle - spotLight[index].cosAngle.y) / (spotLight[index].cosAngle.x - spotLight[index].cosAngle.y));
-            //
-            //        float atten = spotLight[index].decay * ((1 - s2) * (1 - s2));
-            //        atten *= falloffFactor;
-            //
-            //        colorDensity += atten * colorDensity * spotLight[index].color.rgb * spotLight[index].colorRate.rgb * fogClamp.x;
-            //    }
-            //}
-            //}
+        // テストライティング
+        {
+            
+            // スポットライトの計算
+                for (uint index = 0; index < spotLightSize; index++)
+                {
+                    if (spotLight[index].isActive == true)
+                    {
+            
+                    //float3 spos = mul(invRotateMat, float4(spotLight[index].pos - objectPos, 1)).xyz;
+                        // ライトヘのベクトル
+                        float3 lightVec = normalize(spotLight[index].pos - objectPos - rayPos);
+                        float d = distance(spotLight[index].pos - objectPos, rayPos);
+            
+                    //float s = d / spotLight[index].radius;
+                    //if (s >= 1.0)
+                    //{
+                    //    continue;
+                    //}
+            
+                    //float s2 = s * s;
+            
+                    //float cosAngle = dot(lightVec, spotLight[index].vec);
+                    //float falloffFactor = saturate((cosAngle - spotLight[index].cosAngle.y) / (spotLight[index].cosAngle.x - spotLight[index].cosAngle.y));
+            
+                    //float atten = spotLight[index].decay * ((1 - s2) * (1 - s2)); // / (1 + falloffFactor * s);
+                    //atten *= falloffFactor;
+                    
+                    
+                        float s = d / spotLight[index].radius;
+                        if (s >= 1.0)
+                        {
+                            continue;
+                        }
+            
+                        float s2 = s * s;
+            
+                        float cosAngle = dot(lightVec, spotLight[index].vec);
+                        float falloffFactor = saturate((cosAngle - spotLight[index].cosAngle.y) / (spotLight[index].cosAngle.x - spotLight[index].cosAngle.y));
+            
+                        float atten = spotLight[index].decay * ((1 - s2) * (1 - s2));
+                        atten *= falloffFactor;
+            
+                        colorDensity += atten * color * spotLight[index].color.rgb * spotLight[index].colorRate.rgb * fogClamp.x;
+                    }
+                }
+            }
+                
+        }
         
         // 次のレイの座標を算出
         rayPos += rayDir * stepLength;

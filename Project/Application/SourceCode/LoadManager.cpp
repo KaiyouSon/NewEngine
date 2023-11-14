@@ -296,7 +296,7 @@ bool LoadManager::TextureLoad()
 	//	texs.push_back(TextureManager::GetTexture(tag));
 	//}
 	//TextureManager::CreateVolumeTexture(texs, "VolumeTexture");
-	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice.dds", "VolumeTexture");
+	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice0.dds", "VolumeTexture0");
 	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice1.dds", "VolumeTexture1");
 	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice2.dds", "VolumeTexture2");
 	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice3.dds", "VolumeTexture3");
