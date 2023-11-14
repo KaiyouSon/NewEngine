@@ -27,8 +27,7 @@ struct LeadEffect
     uint timer;
     uint maxTimer;
     float timerRate;
-    uint startIndex;
-    uint endIndex;
+    uint index;
 };
 RWStructuredBuffer<LeadEffect> leadEffect : register(u1);
 
@@ -40,7 +39,6 @@ void main(uint3 DTid : SV_DispatchThreadID)
         leadEffect[0].timer = 0;
         leadEffect[0].maxTimer = 20;
         leadEffect[0].timerRate = 0;
-        leadEffect[0].startIndex = 0;
-        leadEffect[0].endIndex = 0;
+        leadEffect[0].index = 0;
     }
 }

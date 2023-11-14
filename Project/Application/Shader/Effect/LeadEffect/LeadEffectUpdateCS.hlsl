@@ -15,8 +15,7 @@ struct LeadEffect
     uint timer;
     uint maxTimer;
     float timerRate;
-    uint startIndex;
-    uint endIndex;
+    uint index;
 };
 RWStructuredBuffer<LeadEffect> leadEffect : register(u1);
 
@@ -55,14 +54,14 @@ void main(uint3 DTid : SV_DispatchThreadID)
             // ‰Šú‰»
             for (uint i = 0; i < 10; i++)
             {
-                outputData[leadEffect[0].endIndex] = InitParticleData(leadEffect[0].endIndex);
-                leadEffect[0].endIndex++;
+                outputData[leadEffect[0].index] = InitParticleData(leadEffect[0].index);
+                leadEffect[0].index++;
             }
             
             leadEffect[0].timer = 0;
-            if (leadEffect[0].endIndex >= max)
+            if (leadEffect[0].index >= max)
             {
-                leadEffect[0].endIndex = 0;
+                leadEffect[0].index = 0;
             }
         }
     }
@@ -77,11 +76,6 @@ void main(uint3 DTid : SV_DispatchThreadID)
 
     for (uint i = startIndex; i < endIndex; i++)
     {
-        if (i >= leadEffect[0].endIndex)
-        {
-            return;
-        }
-        
         ParticleData result = outputData[i];
         
         // ƒXƒP[ƒ‹‚ª0‚Ìê‡

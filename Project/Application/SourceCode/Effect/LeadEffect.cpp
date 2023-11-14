@@ -8,7 +8,7 @@ LeadEffect::LeadEffect() :
 	mEmitter->SetTexture(TextureManager::GetTexture("Particle2"));
 	mEmitter->SetParticleData<LeadParticle>(5000);
 	mEmitter->AddCSConstantBuffer<Vec3>();
-	mEmitter->AddCSStructuredBuffer<SLeadEffect>();
+	mEmitter->AddCSStructuredBuffer<STimer>();
 
 	mEffectType = EffectType::LeadEffect;
 }

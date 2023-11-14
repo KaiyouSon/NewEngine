@@ -66,11 +66,6 @@ void main(uint3 DTid : SV_DispatchThreadID)
 
     for (uint i = startIndex; i < endIndex; i++)
     {
-        if (i >= airEffect[0].index)
-        {
-            return;
-        }
-        
         ParticleData result = outputData[i];
         
         // ƒXƒP[ƒ‹‚ª0‚Ìê‡
