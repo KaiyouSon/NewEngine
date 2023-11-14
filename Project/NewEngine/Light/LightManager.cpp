@@ -30,6 +30,7 @@ void LightManager::Init()
 {
 	mLightGroup.directionalLights.clear();
 	mLightGroup.pointLights.clear();
+	mLightGroup.spotLights.clear();
 }
 
 void LightManager::Update()

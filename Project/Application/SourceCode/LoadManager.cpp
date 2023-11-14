@@ -9,10 +9,10 @@
 ///////////////////////////////////////////////////////////////
 void LoadManager::TitleSceneLoad()
 {
-	TextureManager::LoadTexture("Particle/Particle1.png", "Particle1");
-	TextureManager::LoadTexture("Title/GameTitle.png", "GameTitle");
-	TextureManager::LoadTexture("Title/PressButton.png", "PressButton");
-	TextureManager::LoadTexture("Title/PressButtonBack.png", "PressButtonBack");
+	TextureManager::LoadTexture("Particle/Particle1.dds", "Particle1");
+	TextureManager::LoadTexture("Title/GameTitle.dds", "GameTitle");
+	TextureManager::LoadTexture("Title/PressButton.dds", "PressButton");
+	TextureManager::LoadTexture("Title/PressButtonBack.dds", "PressButtonBack");
 
 	// ブルーム用
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomHighLumi");
@@ -116,6 +116,12 @@ void LoadManager::GameSceneTextureLoad()
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) / 4, 1, "Bloom1");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomTarget");
+
+	// ボリュームテクスチャ
+	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice0.dds", "VolumeTexture0");
+	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice1.dds", "VolumeTexture1");
+	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice2.dds", "VolumeTexture2");
+	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice3.dds", "VolumeTexture3");
 }
 void LoadManager::GameSceneTextureUnLoad()
 {
@@ -174,6 +180,12 @@ void LoadManager::GameSceneTextureUnLoad()
 	TextureManager::DestroyRenderTexture("Bloom");
 	TextureManager::DestroyRenderTexture("Bloom1");
 	TextureManager::DestroyRenderTexture("BloomTarget");
+
+	// ボリュームテクスチャ
+	TextureManager::DestroyVolumeTexture("VolumeTexture0");
+	TextureManager::DestroyVolumeTexture("VolumeTexture1");
+	TextureManager::DestroyVolumeTexture("VolumeTexture2");
+	TextureManager::DestroyVolumeTexture("VolumeTexture3");
 }
 
 // モデル
@@ -279,27 +291,9 @@ bool LoadManager::TextureLoad()
 
 	// シャドウマップ
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMap");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMapBlur");
 
 	// 現在のシーン
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "CurrentScene");
-
-	// ボリュームテクスチャの作成
-	//std::vector<Texture*> texs;
-	//for (uint32_t i = 0; i < 16; i++)
-	//{
-	//	// ボリュームノイズのロード
-	//	std::string index = std::to_string(i);
-	//	std::string path = "Noice/VolumeNoice/VolumeNoice" + index + ".png";
-	//	std::string tag = "Noice" + index;
-	//	TextureManager::LoadTexture(path, tag);
-	//	texs.push_back(TextureManager::GetTexture(tag));
-	//}
-	//TextureManager::CreateVolumeTexture(texs, "VolumeTexture");
-	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice0.dds", "VolumeTexture0");
-	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice1.dds", "VolumeTexture1");
-	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice2.dds", "VolumeTexture2");
-	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice3.dds", "VolumeTexture3");
 
 	// 非同期終わったよ～
 	return true;
