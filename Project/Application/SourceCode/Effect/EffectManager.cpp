@@ -73,12 +73,6 @@ void EffectManager::DrawEffect(const bool isBloom)
 	{
 		for (uint32_t i = 0; i < mEffects.size(); i++)
 		{
-			// 煙エフェクトにはBloomかけない
-			if (mEffects[i]->GetEffectType() == EffectType::SmokeEffect)
-			{
-				continue;
-			}
-
 			mEffects[i]->Draw();
 		}
 	}
@@ -222,7 +216,7 @@ void EffectManager::ExecuteBossAttackTrajectoryEffect(const bool isGenerate, con
 }
 
 // 煙のエフェクト
-void EffectManager::ExecuteSmokeEffect(const ConstantBufferData::CSmokeEffect data,const SmokeEffectIndex index)
+void EffectManager::ExecuteSmokeEffect(const ConstantBufferData::CSmokeEffect data, const SmokeEffectIndex index)
 {
 	SmokeEffect* effect = dynamic_cast<SmokeEffect*>(mSmokeEffects[(uint32_t)index].get());
 	effect->Execute(data);

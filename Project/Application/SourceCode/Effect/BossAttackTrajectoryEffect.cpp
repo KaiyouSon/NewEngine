@@ -7,7 +7,7 @@ BossAttackTrajectoryEffect::BossAttackTrajectoryEffect() :
 	mEmitter(std::make_unique<GPUEmitter>())
 {
 	mEmitter->SetTexture(TextureManager::GetTexture("Particle2"));
-	mEmitter->SetParticleData<BossAttackTrajectoryParticle>(10000);
+	mEmitter->SetParticleData<BossAttackTrajectoryParticle>(10240);
 	mEmitter->AddCSConstantBuffer<CBossAttackTrajectoryEffect>();
 	mEmitter->AddCSStructuredBuffer<STimer>();
 

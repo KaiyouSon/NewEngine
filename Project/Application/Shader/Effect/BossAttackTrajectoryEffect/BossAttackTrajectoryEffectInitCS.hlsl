@@ -30,7 +30,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
     if (DTid.x == 0)
     {
         bossAttackTrajectoryEffect[0].timer = 0;
-        bossAttackTrajectoryEffect[0].maxTimer = 1;
+        bossAttackTrajectoryEffect[0].maxTimer = 0;
         bossAttackTrajectoryEffect[0].timerRate = 0;
         bossAttackTrajectoryEffect[0].index = 0;
     }

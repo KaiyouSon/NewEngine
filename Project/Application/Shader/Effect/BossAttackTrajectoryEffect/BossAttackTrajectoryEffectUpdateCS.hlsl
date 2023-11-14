@@ -41,7 +41,7 @@ float2 RandomSeed(float2 seed, uint2 index);
 // 初期化
 ParticleData InitParticleData(uint index);
 
-[numthreads(1000, 1, 1)]
+[numthreads(1024, 1, 1)]
 void main(uint3 DTid : SV_DispatchThreadID)
 {
     // タイマーの処理
@@ -50,7 +50,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
         bossAttackTrajectoryEffect[0].timer++;
         if (bossAttackTrajectoryEffect[0].timer >= bossAttackTrajectoryEffect[0].maxTimer)
         {
-            for (uint i = 0; i < 30; i++)
+            for (uint i = 0; i < 50; i++)
             {
                 uint index = bossAttackTrajectoryEffect[0].index;
                 outputData[index] = InitParticleData(index);
@@ -79,9 +79,14 @@ void main(uint3 DTid : SV_DispatchThreadID)
         }
         
         result.pos += result.moveVec * result.moveAccel;
+
+        result.moveAccel -= 0.025f;
+        if (result.moveAccel.x <= 0.05f)
+        {
+            result.moveAccel = 0.05f;
+        }
         
-        result.shininess += 0.01f;
-        result.color.a += 0.1f;
+        result.color.a += 0.03f;
         if (result.color.a >= 1)
         {
             result.color.a = 1;
@@ -132,25 +137,26 @@ ParticleData InitParticleData(uint index)
     seed = RandomSeed(seed, index);
     result.pos = startPos + frontVec * l;
 
-    // 上下左右にずらす
+    // 上下にずらす
     seed = RandomSeed(seed, index);
     sign = Random01(seed) > 0.5f ? +1 : -1;
     
     seed = RandomSeed(seed, index);
     result.pos += rightVec * Random01(seed) * sign;
     
+    // 左右にずらす
     seed = RandomSeed(seed, index);
     sign = Random01(seed) > 0.5f ? +1 : -1;
     
     seed = RandomSeed(seed, index);
-    result.pos += upVec * Random01(seed) * 2.f;
+    result.pos += upVec * Random01(seed) * 10.f;
 
     // ベクトル
-    result.moveVec = frontVec;
+    result.moveVec = normalize(rightVec);
         
     // 移動速度
     seed = RandomSeed(seed, index);
-    result.moveAccel = 0.005f + Random01(seed) * 0.01f;
+    result.moveAccel = Random01(seed);
         
     // スケール
     float baseScale = smoothstep(0, 1, l) - 0.3f;
@@ -160,10 +166,12 @@ ParticleData InitParticleData(uint index)
     
     // 輝度
     seed = RandomSeed(seed, index);
-    result.shininess = 0.5f + Random01(seed);
+    result.shininess = 0.5f + Random01(seed) * 0.5f;
         
     // 色
-    result.color = float4(0.53f, 0.f, 0.f, 0.f);
+    seed = RandomSeed(seed, index);
+    result.color = float4(0.6f, 0.f, 0.f, 0.f);
+    result.color.r -= Random01(seed) * 0.3f;
     
     return result;
 }
