@@ -223,7 +223,7 @@ void GameScene::Draw()
 
 	mPostEffectManager->DrawEffectBloom();
 
-	//mVolumetricFog->Draw();
+	mVolumetricFog->Draw();
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();

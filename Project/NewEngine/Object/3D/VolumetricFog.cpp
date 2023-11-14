@@ -13,7 +13,7 @@ VolumetricFog::VolumetricFog() :
 	offset(0), tiling(1),
 	mVertexBuffer(std::make_unique <VertexBuffer<VVolumetricFog>>()),
 	mIndexBuffer(std::make_unique<IndexBuffer>()),
-	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("WithInVolumetricFog")),
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("VolumetricFog")),
 	mTexture(TextureManager::GetTexture("White"))
 {
 	// 頂点データ
@@ -60,17 +60,6 @@ void VolumetricFog::Update(Transform* parent)
 void VolumetricFog::Draw(const BlendMode blendMode)
 {
 	if (mTexture == nullptr) return;
-
-	// フォグの中か外かによってパイプライン変更
-	bool withInFog = Camera::current.pos >= -mTransform.scale && Camera::current.pos <= mTransform.scale;
-	if (withInFog == true)
-	{
-		mGraphicsPipeline = PipelineManager::GetGraphicsPipeline("WithInVolumetricFog");
-	}
-	else
-	{
-		mGraphicsPipeline = PipelineManager::GetGraphicsPipeline("WithOutVolumetricFog");
-	}
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();

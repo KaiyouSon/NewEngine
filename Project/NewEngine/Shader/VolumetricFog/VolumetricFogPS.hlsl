@@ -35,6 +35,23 @@ float EvaluatePoint(float3 rayPos)
 
 float4 main(V2P i) : SV_TARGET
 {
+    //float2 uv = input.texcoord;
+    //
+    //float2 dx = ddx(uv);
+    //float2 dy = ddy(uv);
+    //
+    //float2 gradient = float2(length(float2(dx.x, dy.x)), length(float2(dx.y, dy.y)));
+    //
+    //// 
+    //float smoothness = min(gradient.x, gradient.y);
+    //float radius = smoothness * 0.5;
+
+    //float4 color = tex2D(TextureSampler, uv);
+    //color.a *= smoothstep(0.0, radius, min(uv.x * (1.0 - uv.x), uv.y * (1.0 - uv.y)));
+    //
+    //return color;
+   
+    
     float3 rayStart = cameraPos;
     float3 rayDir = normalize(i.wpos - cameraPos);
     
@@ -51,6 +68,9 @@ float4 main(V2P i) : SV_TARGET
     float4 resultColor = rayMarchingColor;
     
     resultColor = (resultColor) * fogColor * fogColorRate;
+    
+    //resultColor.a = alpha;
+
     return resultColor;
 }
 
@@ -88,19 +108,41 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
     float alpha = 0;
 
     float3 scale = 1.0f / (boundsMax - boundsMin);
+    uint hitCount = 0;
     
     // ステップ分を進む
     [loop]
     for (uint i = 0; i < stepCount; i++)
     {
+        //float disToCenter = distance(rayPos, float3(0, 0, 0));
+        //if (disToCenter <= 5.f)
+        //{
+        //    hitCount++;
+            
+
+        //}
+        //else
+        //{
+        //    colorDensity = float4(1, 0, 0, 1);
+
+        //}
+        
+        
         if (CheckWithInBox(boundsMin, boundsMax, rayPos) == true)
         {
-            // カメラからの距離を計算
+                        // カメラからの距離を計算
             float dis = distance(cameraPos, rayPos);
             float disRate = smoothstep(fogClamp.x, fogClamp.y, dis);
             
             float3 smpPoint = rayPos * scale + float3(0.5f, 0.5f, 0.5f);
-            colorDensity += tex.Sample(smp, (smpPoint + offset) * tiling).r * density * disRate;
+            float color = tex.Sample(smp, (smpPoint + offset) * tiling).r * stepLength * density;
+            
+            colorDensity += color; // * disRate;
+            
+            float3 uvw = MapValueTo01(boundsMin, boundsMax, rayPos);
+            float3 clamped = clamp(uvw, 0, 1);
+            float uvdis = distance(clamped, float3(0.5f, 0.5f, 0.5f));
+            alpha += (1 - smoothstep(0.05, 0.5f, uvdis)) * color;
         }
     
             //// テストライティング
@@ -140,7 +182,9 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
         rayPos += rayDir * stepLength;
     }
     
-    return float4(colorDensity.xxx, colorDensity);
+    //colorDensity = hitCount * 0.01f;
+    
+    return float4(colorDensity.xxx, alpha);
 }
 
 // 最小値を0に最大値を1にし値をlerpする

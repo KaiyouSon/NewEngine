@@ -108,7 +108,6 @@ void LoadManager::GameSceneTextureLoad()
 
 	// 天球
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Vignette");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "VolumetricFog");
 
 	// ブルーム用
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomHighLumi");
@@ -298,6 +297,9 @@ bool LoadManager::TextureLoad()
 	//}
 	//TextureManager::CreateVolumeTexture(texs, "VolumeTexture");
 	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice.dds", "VolumeTexture");
+	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice1.dds", "VolumeTexture1");
+	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice2.dds", "VolumeTexture2");
+	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice3.dds", "VolumeTexture3");
 
 	// 非同期終わったよ～
 	return true;

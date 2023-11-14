@@ -610,15 +610,15 @@ void RenderBase::GraphicsPipelineInit()
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("VolumetricFog");
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleList;
-	setting.depthStencilDesc = depthStencilDesc2;
+	setting.depthStencilDesc = depthStencilDesc4;
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 6;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "WithInVolumetricFog");
+	PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFog");
 
-	setting = PipelineManager::GetGraphicsPipeline("WithInVolumetricFog")->GetSetting();
-	setting.depthStencilDesc = depthStencilDesc4;
-	PipelineManager::CreateGraphicsPipeline(setting, "WithOutVolumetricFog");
+	//setting = PipelineManager::GetGraphicsPipeline("WithInVolumetricFog")->GetSetting();
+	//setting.depthStencilDesc = depthStencilDesc2;
+	//PipelineManager::CreateGraphicsPipeline(setting, "WithOutVolumetricFog");
 }
 void RenderBase::ComputePipelineInit()
 {

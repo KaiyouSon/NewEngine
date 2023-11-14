@@ -58,6 +58,7 @@ void Field::Init()
 	// ボリュメトリックフォグ
 	for (uint32_t i = 0; i < mFieldData->volumetricFogs.size(); i++)
 	{
+		mFieldData->volumetricFogs[i]->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture"));
 		mFieldData->volumetricFogs[i]->fogParam.fogClamp = Vec2(30, 100);
 		mFieldData->volumetricFogs[i]->offset.x = Random::RangeF(-1.f, 1.f);
 		mFieldData->volumetricFogs[i]->offset.y = Random::RangeF(-1.f, 1.f);
