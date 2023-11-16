@@ -1,4 +1,4 @@
-#include "VolumetricFog.hlsli"
+#include "WorldVolumetricFog.hlsli"
 
 Texture3D<float4> tex : register(t0);
 SamplerState smp : register(s0);
@@ -22,17 +22,6 @@ uint CheckWithInBox(float3 boundsMin, float3 boundsMax, float3 value)
     return result;
 }
 
-// ボックスの内部の点を評価して値を計算
-float EvaluatePoint(float3 rayPos)
-{
-    float3 disToSurface = min(objectScale - abs(rayPos), objectScale);
-    float result = (disToSurface.x * disToSurface.y * disToSurface.z) /
-                   (objectScale.x * objectScale.y * objectScale.z);
-    
-    return result >= 0 ? result : 0;
-    
-}
-
 float4 main(V2P i) : SV_TARGET
 {
     float3 rayStart = cameraPos;
@@ -50,13 +39,11 @@ float4 main(V2P i) : SV_TARGET
     float4 rayMarchingColor = RayMarching(boundsMin, boundsMax, localRayStart, localRayDir);
     float4 resultColor = rayMarchingColor;
     
-    // カメラからの距離を計算
-    float dis = distance(cameraPos, i.wpos);
-    float disRate = smoothstep(fogClamp.x, fogClamp.y, dis);
+    //// カメラからの距離を計算
+    //float dis = distance(cameraPos, i.wpos);
+    //float disRate = smoothstep(fogClamp.x, fogClamp.y, dis);
     
-    resultColor = (resultColor) * fogColor * fogColorRate * disRate;
-    
-    //resultColor.a = alpha;
+    resultColor = (resultColor) * fogColor * fogColorRate;
 
     return resultColor;
 }
@@ -108,48 +95,40 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
             
             colorDensity += color; // * disRate;
             
-            float3 uvw = MapValueTo01(boundsMin, boundsMax, rayPos);
-            float3 clamped = clamp(uvw, 0, 1);
-            float uvdis = distance(clamped, float3(0.5f, 0.5f, 0.5f));
-            alpha += (1 - smoothstep(0.05, 0.5f, uvdis)) * color;
+            // スポットライトの計算
+            for (uint index = 0; index < spotLightSize; index++)
+            {
+                if (spotLight[index].isActive == true)
+                {
             
-            //// スポットライトの計算
-            //for (uint index = 0; index < spotLightSize; index++)
-            //{
-            //    if (spotLight[index].isActive == true)
-            //    {
-            
-            //            // ライトヘのベクトル
-            //        float3 lightVec = normalize(spotLight[index].pos - objectPos - rayPos);
-            //        float d = distance(spotLight[index].pos - objectPos, rayPos);
+                    // ライトヘのベクトル
+                    float3 lightVec = normalize(spotLight[index].pos - objectPos - rayPos);
+                    float d = distance(spotLight[index].pos - objectPos, rayPos);
                     
-            //        float s = d / spotLight[index].radius;
-            //        if (s >= 1.0)
-            //        {
-            //            continue;
-            //        }
+                    float s = d / spotLight[index].radius;
+                    if (s >= 1.0)
+                    {
+                        continue;
+                    }
             
-            //        float s2 = s * s;
+                    float s2 = s * s;
             
-            //        float cosAngle = dot(lightVec, spotLight[index].vec);
-            //        float falloffFactor = saturate((cosAngle - spotLight[index].cosAngle.y) / (spotLight[index].cosAngle.x - spotLight[index].cosAngle.y));
+                    float cosAngle = dot(lightVec, spotLight[index].vec);
+                    float falloffFactor = saturate((cosAngle - spotLight[index].cosAngle.y) / (spotLight[index].cosAngle.x - spotLight[index].cosAngle.y));
             
-            //        float atten = spotLight[index].decay * ((1 - s2) * (1 - s2));
-            //        atten *= falloffFactor;
+                    float atten = spotLight[index].decay * ((1 - s2) * (1 - s2));
+                    atten *= falloffFactor;
             
-            //        colorDensity += atten * color * spotLight[index].color.rgb * spotLight[index].colorRate.rgb * fogClamp.x;
-            //    }
-            //}
-                
+                    colorDensity += atten * color * spotLight[index].color.rgb * spotLight[index].colorRate.rgb * fogClamp.x;
+                }
+            }
         }
         
         // 次のレイの座標を算出
         rayPos += rayDir * stepLength;
     }
     
-    //colorDensity = hitCount * 0.01f;
-    
-    return float4(colorDensity.xxx, alpha);
+    return float4(colorDensity.xxx, colorDensity);
 }
 
 // 最小値を0に最大値を1にし値をlerpする

@@ -394,6 +394,9 @@
     <Filter Include="Shader\Application\Effect\SmokeEffect">
       <UniqueIdentifier>{2776cec2-3319-4af9-8171-4f63e792e059}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\WorldVolumetricFog">
+      <UniqueIdentifier>{5d5e13c5-8e36-4257-b900-5c1ae5a2a167}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -1538,6 +1541,9 @@
     <None Include="Application\Shader\RadialBlur\RadialBlur.hlsli">
       <Filter>Shader\Application\RadialBlur</Filter>
     </None>
+    <None Include="Application\Shader\WorldVolumetricFog\WorldVolumetricFog.hlsli">
+      <Filter>Shader\Application\WorldVolumetricFog</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Application\Shader\Cloud\CloudPS.hlsl">
@@ -1797,6 +1803,12 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\Effect\SmokeEffect\SmokeEffectUpdateCS.hlsl">
       <Filter>Shader\Application\Effect\SmokeEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\WorldVolumetricFog\WorldVolumetricFogVS.hlsl">
+      <Filter>Shader\Application\WorldVolumetricFog</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\WorldVolumetricFog\WorldVolumetricFogPS.hlsl">
+      <Filter>Shader\Application\WorldVolumetricFog</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

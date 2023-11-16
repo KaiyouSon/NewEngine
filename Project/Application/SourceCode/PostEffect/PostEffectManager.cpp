@@ -71,8 +71,8 @@ void PostEffectManager::EffectBloomDrawPass(
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::GaussianBlur);
 	if (mEffectBloom->isBloom0 == true)
 	{
-		mEffectBloom->DrawPass(Bloom::PassType::HighLumi);
 	}
+	mEffectBloom->DrawPass(Bloom::PassType::HighLumi);
 	mEffectBloom->PostSceneDraw(Bloom::PassType::GaussianBlur);
 
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::GaussianBlurHalf);
@@ -86,8 +86,8 @@ void PostEffectManager::EffectBloomDrawPass(
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::Bloom);
 	if (mEffectBloom->isBloom0 == true)
 	{
-		mEffectBloom->DrawPass(Bloom::PassType::GaussianBlur);
 	}
+	mEffectBloom->DrawPass(Bloom::PassType::GaussianBlur);
 	mEffectBloom->PostSceneDraw(Bloom::PassType::Bloom);
 
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::Bloom1);

@@ -267,6 +267,15 @@ void CreateManager::CreateShaderCompiler()
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "SmokeEffectUpdate");
+
+	// ワールドのボリュメトリックフォグ
+	setting = ShaderCompilerSetting();
+	setting.mInputLayoutSettings.resize(2);
+	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32B32_FLOAT);
+	setting.vsFilePath = path2 + "WorldVolumetricFog/WorldVolumetricFogVS.hlsl";
+	setting.psFilePath = path2 + "WorldVolumetricFog/WorldVolumetricFogPS.hlsl";
+	ShaderCompilerManager::Create(setting, "WorldVolumetricFog");
 }
 
 // パイプライン生成
@@ -460,6 +469,16 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("SmokeEffectInit");
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "SmokeEffect");
+
+	// 攻撃の爆発のエフェクト
+	depthStencilDesc = D3D12_DEPTH_STENCIL_DESC();
+	depthStencilDesc.DepthEnable = false;
+	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
+	setting = PipelineManager::GetGraphicsPipeline("VolumetricFog")->GetSetting();
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("WorldVolumetricFog");
+	setting.depthStencilDesc = depthStencilDesc;
+	PipelineManager::CreateGraphicsPipeline(setting, "WorldVolumetricFog");
 }
 
 // Computeパイプラインの生成

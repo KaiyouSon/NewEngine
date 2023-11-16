@@ -97,14 +97,17 @@ void GameScene::Init()
 
 	mIsChangeScene = false;
 
-	mVolumetricFog->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture0"));
-	mVolumetricFog->pos.y = 10;
-	mVolumetricFog->scale = 10;
-	mVolumetricFog->fogParam.stepCount = 100;
-	mVolumetricFog->fogParam.stepLength = 0.01f;
-	mVolumetricFog->fogParam.dencity = 1.f;
+	mVolumetricFog->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture3"));
+	mVolumetricFog->pos.z = 400;
+	mVolumetricFog->scale = Vec3(1000, 1000, 1400);
+	mVolumetricFog->tiling = Vec3(20, 20, 80);
+	mVolumetricFog->moveSpeed = -0.0001f;
+	mVolumetricFog->fogParam.stepCount = 300;
+	mVolumetricFog->fogParam.stepLength = 1.f;
+	mVolumetricFog->fogParam.dencity = 0.00125f;
+	mVolumetricFog->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("WorldVolumetricFog"));
 
-	//VolumetricFog::fogClamp = Vec2(0, 1);
+	mPointLight->isActive = false;
 
 	mSpotLight->pos.y = 10;
 	mSpotLight->decay = 2.0f;
@@ -223,15 +226,13 @@ void GameScene::Draw()
 
 	mPostEffectManager->DrawEffectBloom();
 
-	mVolumetricFog->Draw();
-
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
 }
 void GameScene::DrawDebugGui()
 {
 	//mBoss->DrawDebugGui();
-	mPostEffectManager->DrawDebugGui();
+	//mPostEffectManager->DrawDebugGui();
 
 	Gui::BeginWindow("Debug");
 
@@ -301,17 +302,6 @@ void GameScene::DrawDebugGui()
 		Gui::DrawSlider1("Spot Light Decay", mSpotLight->decay);
 		Gui::DrawSlider2("Spot Light Factor CosAngle", mSpotLight->cosAngle);
 	}
-
-
-
-	//if (Gui::DrawCollapsingHeader("Particle Object") == true)
-	//{
-	//	Gui::DrawSlider3("PObj Pos", mParticleObject.pos, 0.01f);
-	//	Gui::DrawSlider3("PObj Scale", mParticleObject.scale, 0.01f);
-	//	Vec3 angle = Angle(mParticleObject.rot);
-	//	Gui::DrawSlider3("PObj Rot", angle, 1.f);
-	//	mParticleObject.rot = Radian(angle);
-	//}
 
 	Gui::EndWindow();
 }
@@ -455,5 +445,5 @@ void GameScene::DrawCurrentSceneObject()
 
 	EffectManager::GetInstance()->DrawEffect(false);
 
-
+	mVolumetricFog->Draw();
 }

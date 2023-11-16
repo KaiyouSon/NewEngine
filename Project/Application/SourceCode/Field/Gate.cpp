@@ -11,8 +11,8 @@ Gate::Gate() :
 
 void Gate::Init()
 {
-	mGateLeft->SetisShadow(false, true);
-	mGateRight->SetisShadow(false, true);
+	mGateLeft->SetisShadow(true, true);
+	mGateRight->SetisShadow(true, true);
 	mGateLeft->isLighting = true;
 	mGateRight->isLighting = true;
 

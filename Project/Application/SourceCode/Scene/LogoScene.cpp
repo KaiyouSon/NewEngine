@@ -11,7 +11,7 @@ LogoScene::~LogoScene()
 
 void LogoScene::Load()
 {
-	TextureManager::LoadTexture("LogoScene/NewEngineTitle.png", "NewEngineTitle");
+	TextureManager::LoadTexture("LogoScene/NewEngineTitle.dds", "NewEngineTitle");
 	TextureManager::CreateColorTexture(Color::black, "Black");
 }
 

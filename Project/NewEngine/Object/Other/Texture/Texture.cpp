@@ -11,6 +11,7 @@ void Texture::Create(const D3D12_RESOURCE_DESC& resourceDesc, uint32_t mipLevels
 {
 	mType = TextureType::Default;
 
+	mBufferResource = std::make_unique<BufferResource>();
 	mUploadBuffer = std::make_unique<UploadBuffer>();
 
 	// サイズ設定
