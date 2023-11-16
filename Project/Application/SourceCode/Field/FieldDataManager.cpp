@@ -87,6 +87,10 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 			{
 				LoadSunData(fieldData.get(), object);
 			}
+			else if (object["obj_name"] == "AirCollider")
+			{
+				LoadAirColliderData(fieldData.get(), object);
+			}
 		}
 	}
 
@@ -588,4 +592,33 @@ void FieldDataManager::LoadSunData(FieldData* data, nlohmann::json jsonObj)
 	sun->SetTransform(Transform(pos, scale, Radian(angle)));
 
 	data->suns.push_back(std::move(sun));
+}
+void FieldDataManager::LoadAirColliderData(FieldData* data, nlohmann::json jsonObj)
+{
+	std::unique_ptr<AirCollider> airCollider = std::make_unique<AirCollider>();
+
+	// Colliderある場合
+	if (jsonObj.contains("collider"))
+	{
+		nlohmann::json collider = jsonObj["collider"];
+		if (collider["type"] == "Capsule")
+		{
+			Vec3 start =
+			{
+				collider["start"][0],
+				collider["start"][1],
+				collider["start"][2],
+			};
+			Vec3 end =
+			{
+				collider["end"][0],
+				collider["end"][1],
+				collider["end"][2],
+			};
+			float radius = collider["radius"];
+			airCollider->SetCollider(CapsuleCollider(start, end, radius));
+		}
+	}
+
+	data->airColliders.push_back(std::move(airCollider));
 }

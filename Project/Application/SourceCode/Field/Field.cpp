@@ -133,6 +133,12 @@ void Field::Update()
 	{
 		mFieldData->suns[i]->Update();
 	}
+
+	// 当たり判定
+	for (uint32_t i = 0; i < mFieldData->airColliders.size(); i++)
+	{
+		mFieldData->airColliders[i]->Update();
+	}
 }
 
 void Field::DrawModel()

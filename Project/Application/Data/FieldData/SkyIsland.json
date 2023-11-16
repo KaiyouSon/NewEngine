@@ -3974,6 +3974,258 @@
                 ]
             },
             "obj_name": "Sun"
+        },
+        {
+            "type": "EMPTY",
+            "name": "エンプティ.001",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "obj_name": "AirCollider",
+            "collider": {
+                "type": "Capsule",
+                "start": [
+                    90.0,
+                    0.0,
+                    190.0
+                ],
+                "end": [
+                    120.0,
+                    0.0,
+                    70.0
+                ],
+                "radius": 32
+            }
+        },
+        {
+            "type": "EMPTY",
+            "name": "エンプティ.002",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "obj_name": "AirCollider",
+            "collider": {
+                "type": "Capsule",
+                "start": [
+                    110.0,
+                    0.0,
+                    -60.0
+                ],
+                "end": [
+                    120.0,
+                    0.0,
+                    70.0
+                ],
+                "radius": 32
+            }
+        },
+        {
+            "type": "EMPTY",
+            "name": "エンプティ.003",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "obj_name": "AirCollider",
+            "collider": {
+                "type": "Capsule",
+                "start": [
+                    110.0,
+                    0.0,
+                    -60.0
+                ],
+                "end": [
+                    40.0,
+                    0.0,
+                    -140.0
+                ],
+                "radius": 32
+            }
+        },
+        {
+            "type": "EMPTY",
+            "name": "エンプティ.004",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "obj_name": "AirCollider",
+            "collider": {
+                "type": "Capsule",
+                "start": [
+                    -10.0,
+                    0.0,
+                    -140.0
+                ],
+                "end": [
+                    -45.0,
+                    0.0,
+                    -80.0
+                ],
+                "radius": 32
+            }
+        },
+        {
+            "type": "EMPTY",
+            "name": "エンプティ.005",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "obj_name": "AirCollider",
+            "collider": {
+                "type": "Capsule",
+                "start": [
+                    -100.0,
+                    0.0,
+                    -45.0
+                ],
+                "end": [
+                    -45.0,
+                    0.0,
+                    -80.0
+                ],
+                "radius": 32
+            }
+        },
+        {
+            "type": "EMPTY",
+            "name": "エンプティ.006",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "obj_name": "AirCollider",
+            "collider": {
+                "type": "Capsule",
+                "start": [
+                    -100.0,
+                    0.0,
+                    -45.0
+                ],
+                "end": [
+                    -120.0,
+                    0.0,
+                    70.0
+                ],
+                "radius": 32
+            }
+        },
+        {
+            "type": "EMPTY",
+            "name": "エンプティ.007",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "obj_name": "AirCollider",
+            "collider": {
+                "type": "Capsule",
+                "start": [
+                    -100.0,
+                    0.0,
+                    180.0
+                ],
+                "end": [
+                    -120.0,
+                    0.0,
+                    70.0
+                ],
+                "radius": 32
+            }
         }
     ]
 }

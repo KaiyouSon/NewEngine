@@ -12,6 +12,8 @@ void CollisionManager::Update()
 		PlayerHitFieldObject();
 
 		PlayerHitNegotiation();
+
+		PlayerHitAirCollider();
 	}
 
 	// ボスとプレイヤー
@@ -297,6 +299,38 @@ void CollisionManager::PlayerHitFieldObject()
 		if (Collision::CapsuleHitCapsule(gates[i]->GetLeftCollider(), mPlayer->GetBodyCollider(), hitPoint) ||
 			Collision::CapsuleHitCapsule(gates[i]->GetRightCollider(), mPlayer->GetBodyCollider(), hitPoint) ||
 			Collision::CapsuleHitCapsule(gates[i]->GetCloseCollider(), mPlayer->GetBodyCollider(), hitPoint))
+		{
+			// y軸を無視する
+			Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
+			Vec3 pos2 = hitPoint * Vec3(1, 0, 1);
+
+			// プレイヤーに向かうベクトル
+			Vec3 toPlayer = pos1 - pos2;
+			float toPlayerLength = toPlayer.Length();
+			Vec3 normal = toPlayer.Norm();
+
+			// 衝突した位置とプレイヤーの中心が重なる距離を計算
+			float overlap = mPlayer->GetBodyCollider().radius - toPlayerLength;
+
+			// 押し戻しのベクトル
+			Vec3 pushVec = normal * (overlap);
+
+			Vec3 nextPos = mPlayer->GetPos() + pushVec;
+			mPlayer->SetPos(nextPos);
+		}
+	}
+}
+void CollisionManager::PlayerHitAirCollider()
+{
+	FieldData* fieldData = mField->GetFieldData();
+
+	// 当たり判定
+	const auto& airColliders = fieldData->airColliders;
+	for (uint32_t i = 0; i < airColliders.size(); i++)
+	{
+		Vec3 hitPoint = 0;
+		if (Collision::CapsuleHitCapsule(
+			airColliders[i]->GetCollider(), mPlayer->GetBodyCollider(), hitPoint))
 		{
 			// y軸を無視する
 			Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);

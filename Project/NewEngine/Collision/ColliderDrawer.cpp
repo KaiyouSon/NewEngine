@@ -35,7 +35,7 @@ void ColliderDrawer::Load()
 
 void ColliderDrawer::Init()
 {
-	mMaxColliderNum = 64;
+	mMaxColliderNum = 128;
 
 	for (uint32_t i = 0; i < mMaxColliderNum; i++)
 	{

@@ -26,6 +26,7 @@ private:
 	void PlayerHitBoss();
 	void PlayerHitNegotiation();
 	void PlayerHitFieldObject();
+	void PlayerHitAirCollider();
 
 	void BossHitPlayer();
 
