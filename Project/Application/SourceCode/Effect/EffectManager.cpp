@@ -47,6 +47,8 @@ void EffectManager::Update()
 		});
 
 
+	ExecuteAirEffect(Camera::current.pos);
+
 	mBloodSprayEffect->Update();
 
 	// 削除処理
@@ -220,6 +222,21 @@ void EffectManager::ExecuteSmokeEffect(const ConstantBufferData::CSmokeEffect da
 {
 	SmokeEffect* effect = dynamic_cast<SmokeEffect*>(mSmokeEffects[(uint32_t)index].get());
 	effect->Execute(data);
+}
+
+void EffectManager::ExecuteAirEffect(const Vec3 pos)
+{
+	for (uint32_t i = 0; i < mEffects.size(); i++)
+	{
+		// 先に格納したエフェクト
+		if (mEffects[i]->GetEffectType() == EffectType::AirEffect)
+		{
+			AirEffect* effect = dynamic_cast<AirEffect*>(mEffects[i].get());
+			effect->Execute(pos);
+			break;
+		}
+	}
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

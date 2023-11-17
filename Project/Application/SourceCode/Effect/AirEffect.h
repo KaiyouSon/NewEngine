@@ -7,6 +7,7 @@ class AirEffect : public IEffect
 {
 private:
 	std::unique_ptr<GPUEmitter> mEmitter;
+	Vec3 mGeneratePos;
 	Timer mTimer;
 
 public:
@@ -14,4 +15,7 @@ public:
 	void Generate(const Vec3 pos);
 	void Update() override;
 	void Draw() override;
+
+public:
+	void Execute(const Vec3 pos);
 };

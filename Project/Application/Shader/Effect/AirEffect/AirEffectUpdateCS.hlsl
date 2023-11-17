@@ -24,6 +24,11 @@ cbuffer ConstantBufferMaxParticleData : register(b0)
     uint max;
 }
 
+cbuffer ConstantBufferGenerateData : register(b1)
+{
+    float3 generatePos;
+}
+
 // 疑似乱数
 float Random01(float2 seed);
 
@@ -33,7 +38,7 @@ float2 RandomSeed(float2 seed, uint2 index);
 // 初期化
 ParticleData InitParticleData(uint index);
 
-[numthreads(1000, 1, 1)]
+[numthreads(1024, 1, 1)]
 void main(uint3 DTid : SV_DispatchThreadID)
 {
     if (DTid.x == 0)
@@ -60,7 +65,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
     // area == 10wになっているから、[numthreads(1000, 1, 1)]だと1CSに100回for分回す
     
     // 100個のデータを処理するためのインデックスを計算
-    uint dataPerThread = max / 1000;
+    uint dataPerThread = max / 1024;
     uint startIndex = (DTid.x - 1) * dataPerThread;
     uint endIndex = DTid.x * dataPerThread;
 
@@ -122,7 +127,8 @@ ParticleData InitParticleData(uint index)
     result.pos.y = basePos.y - Random01(seed) * ratePos.y;
     seed = RandomSeed(seed, index);
     result.pos.z = basePos.z - Random01(seed) * ratePos.z;
-
+    result.pos += generatePos;
+    
     // ベクトル
     result.moveVec = normalize(float3(1, 1, 1));
         

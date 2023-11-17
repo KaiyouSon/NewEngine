@@ -47,6 +47,7 @@ public:
 	void ExplosionLogoExplosionEffect();
 	void ExecuteBossAttackTrajectoryEffect(const bool isGenerate, const Vec3 startPos, const Vec3 endPos);
 	void ExecuteSmokeEffect(const ConstantBufferData::CSmokeEffect data, const SmokeEffectIndex index);
+	void ExecuteAirEffect(const Vec3 pos);
 
 public:
 	void SetPlayer(Player* player);

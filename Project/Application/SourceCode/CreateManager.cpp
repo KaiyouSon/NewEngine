@@ -540,7 +540,7 @@ void CreateManager::CreateComputePipeline()
 	// 空中のエフェクト用（初期化）
 	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("AirEffectInit");
-	setting.rootSignatureSetting.maxCbvRootParameter = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 2;
 	PipelineManager::CreateComputePipeline(setting, "AirEffectInit");
@@ -548,7 +548,7 @@ void CreateManager::CreateComputePipeline()
 	// 空中のエフェクト用（更新）
 	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("AirEffectUpdate");
-	setting.rootSignatureSetting.maxCbvRootParameter = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 2;
 	PipelineManager::CreateComputePipeline(setting, "AirEffectUpdate");
