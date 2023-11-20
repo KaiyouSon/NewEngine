@@ -213,6 +213,7 @@
     <ClCompile Include="NewEngine\Collision\ICollider.cpp" />
     <ClCompile Include="Application\SourceCode\Field\SkyIsland.cpp" />
     <ClCompile Include="NewEngine\Debugger\DebugManager.cpp" />
+    <ClCompile Include="NewEngine\Debugger\RendererWindow.cpp" />
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp" />
     <ClCompile Include="NewEngine\Input\InputManager.cpp" />
     <ClCompile Include="NewEngine\Input\JoypadInput.cpp" />
@@ -395,6 +396,7 @@
     <ClInclude Include="NewEngine\Collision\ICollider.h" />
     <ClInclude Include="Application\SourceCode\Field\SkyIsland.h" />
     <ClInclude Include="NewEngine\Debugger\DebugManager.h" />
+    <ClInclude Include="NewEngine\Debugger\RendererWindow.h" />
     <ClInclude Include="NewEngine\Gui\GuiManager.h" />
     <ClInclude Include="NewEngine\Input\InputManager.h" />
     <ClInclude Include="NewEngine\Input\JoypadInput.h" />

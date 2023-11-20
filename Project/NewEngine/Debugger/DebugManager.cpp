@@ -2,7 +2,8 @@
 #include "NewEngine.h"
 
 DebugManager::DebugManager() :
-	mMappingWindow(std::make_unique<MappingWindow>())
+	mMappingWindow(std::make_unique<MappingWindow>()),
+	mRendererWindow(std::make_unique<RendererWindow>())
 {
 
 }
@@ -36,6 +37,7 @@ void DebugManager::DrawDebugGui()
 
 	Gui::BeginWindow("Debug Manager");
 
+	// メニューバー
 	if (Gui::BeginMenuBar())
 	{
 		if (Gui::BeginMenu("Display"))
@@ -45,6 +47,10 @@ void DebugManager::DrawDebugGui()
 			if (Gui::MenuItem("All Map"))
 			{
 				mMappingWindow->SetisShow(true);
+			}
+			else if (Gui::MenuItem("Renderer"))
+			{
+				mRendererWindow->SetisShow(true);
 			}
 
 			Gui::EndMenu();
@@ -82,7 +88,10 @@ void DebugManager::DrawDebugGui()
 
 	Gui::EndWindow();
 
-	mMappingWindow->DrawDebugGUI();
+	ImGui::ShowDemoWindow();
+
+	mMappingWindow->DrawDebugGui();
+	mRendererWindow->DrawDebugGui();
 }
 
 bool DebugManager::GetisStop()

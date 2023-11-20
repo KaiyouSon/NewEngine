@@ -1,19 +1,22 @@
 #include "stdafx.h"
 #include "Renderer.h"
+#include "json.hpp"
 
 Renderer::Renderer()
 {
-	AddLayer(Layer("Pass", -1, LayerType::Pass));
+	//AddLayer(Layer("Pass", -10, LayerType::Pass));
+	//
+	//AddLayer(Layer("BackSprite", 0));
+	//AddLayer(Layer("Object3D", 10));
+	//AddLayer(Layer("FrontSprite", 20));
 
-	AddLayer(Layer("BackSprite", 0));
-	AddLayer(Layer("Object3D", 1));
-	AddLayer(Layer("FrontSprite", 2));
+	LoadData();
 }
 
 void Renderer::DrawLayer(const Layer& layer)
 {
 	// 指定したレイヤーの関数の配列を取得
-	for (const auto& func : functionMap[layer])
+	for (const auto& func : layer.funcs)
 	{
 		func();
 	}
@@ -25,7 +28,13 @@ void Renderer::DrawPass()
 
 void Renderer::DrawObject()
 {
-	for (const auto& [layer, funcVector] : functionMap)
+	std::sort(mLayers.begin(), mLayers.end(),
+		[](const Layer& a, const Layer& b)
+		{
+			return a.depth < b.depth;
+		});
+
+	for (auto& layer : mLayers)
 	{
 		if (layer.type == LayerType::Pass)
 		{
@@ -35,54 +44,86 @@ void Renderer::DrawObject()
 		DrawLayer(layer);
 	}
 
-	for (auto& [layer, funcVector] : functionMap)
+	for (auto& layer : mLayers)
 	{
-		funcVector.clear();
+		layer.funcs.clear();
 	}
 }
 
 void Renderer::AddLayer(const Layer& layer)
 {
-	functionMap.insert(std::make_pair(layer, std::vector<std::function<void()>>()));
+	mLayers.push_back(layer);
+}
+
+void Renderer::DestroyLayer(const std::string& tag)
+{
+	std::erase_if(mLayers,
+		[&](Layer layer)
+		{
+			return layer.tag == tag;
+		});
 }
 
 void Renderer::Register(const std::string& tag, const std::function<void()>& func)
 {
-	// レイヤー取得
-	Layer layer = GetLayer(tag);
-
-	if (layer.tag == "Unknown")
-	{
-		return;
-	}
-
-	// 指定したレイヤーの関数の配列を取得
-	auto& layerFuncs = functionMap[layer];
-	layerFuncs.push_back(func);
-}
-
-void Renderer::SetLayerDepth(const std::string& tag, const int32_t depth)
-{
-	// レイヤー取得
-	Layer layer = GetLayer(tag);
-
-	if (layer.tag == "Unknown")
-	{
-		return;
-	}
-
-	layer.depth = depth;
-}
-
-Layer Renderer::GetLayer(const std::string tag)
-{
-	for (const auto& [layer, funcVector] : functionMap)
+	// レイヤーを探す
+	for (auto& layer : mLayers)
 	{
 		if (layer.tag == tag)
 		{
-			return layer;
+			layer.funcs.push_back(func);
 		}
 	}
+}
 
-	return Layer();
+void Renderer::SaveData()
+{
+	nlohmann::json jsonArray = nlohmann::json::array();
+	for (const auto& layer : mLayers)
+	{
+		nlohmann::json jsonLayer = nlohmann::json
+		{
+			{ "tag", layer.tag },
+			{ "depth", layer.depth },
+			{ "type", static_cast<int>(layer.type) },
+		};
+
+		jsonArray.push_back(jsonLayer);
+	}
+	nlohmann::json jsonData = nlohmann::json{ {"layer",jsonArray} };
+
+	std::ofstream file("NewEngine/Data/RendererData.json");
+	file << std::setw(4) << jsonData << std::endl;
+}
+
+void Renderer::LoadData()
+{
+	mLayers.clear();
+
+	// JSONファイルの読み込み
+	std::ifstream file("NewEngine/Data/RendererData.json");
+	if (!file.is_open())
+	{
+		return;
+	}
+
+	// JSONをデシリアライズ
+	nlohmann::json deserialized;
+
+	// デシリアライズ
+	file >> deserialized;
+
+	// "objects"フィールドの各オブジェクトを処理
+	for (nlohmann::json& object : deserialized["layer"])
+	{
+		Layer layer =
+		{
+			object["tag"],
+			object["depth"],
+			object["type"],
+		};
+		AddLayer(layer);
+	}
+
+	file.close();
 }

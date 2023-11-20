@@ -9,7 +9,7 @@ MappingWindow::MappingWindow() :
 {
 }
 
-void MappingWindow::DrawDebugGUI()
+void MappingWindow::DrawDebugGui()
 {
 	if (mIsShow == false)
 	{

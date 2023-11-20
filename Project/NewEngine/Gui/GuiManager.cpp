@@ -242,7 +242,7 @@ void Gui::DrawColorEdit(const char* label, Color& color)
 	color.r = temp[0] * 255; color.g = temp[1] * 255; color.b = temp[2] * 255; color.a = temp[3] * 255;
 }
 
-bool Gui::DrawInputInt(const char* label, int& v)
+bool Gui::DrawInputInt(const char* label, int32_t& v)
 {
 	bool flag = ImGui::InputInt(label, &v);
 	return flag;

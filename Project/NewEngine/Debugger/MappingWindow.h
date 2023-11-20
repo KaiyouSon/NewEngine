@@ -26,7 +26,7 @@ private:
 
 public:
 	MappingWindow();
-	void DrawDebugGUI();
+	void DrawDebugGui();
 
 public:
 	void SetisShow(const bool isShow);

@@ -94,6 +94,8 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 		}
 	}
 
+	file.close();
+
 	// タグが重複した場合
 	if (sFieldDataMap.find(tag) != sFieldDataMap.end())
 	{

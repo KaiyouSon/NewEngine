@@ -906,11 +906,14 @@
     <ClCompile Include="Application\SourceCode\Field\AirCollider.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\RendererWindow.cpp">
+      <Filter>NewEngine\Source\Debugger</Filter>
+    </ClCompile>
     <ClCompile Include="NewEngine\Render\Renderer.cpp">
-      <Filter>Uncategorized\Source</Filter>
+      <Filter>NewEngine\Source\Render</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Util\Layer.cpp">
-      <Filter>Uncategorized\Source</Filter>
+      <Filter>NewEngine\Source\Render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1460,11 +1463,14 @@
     <ClInclude Include="Application\SourceCode\Field\AirCollider.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\RendererWindow.h">
+      <Filter>NewEngine\Header\Debugger</Filter>
+    </ClInclude>
     <ClInclude Include="NewEngine\Render\Renderer.h">
-      <Filter>Uncategorized\Header</Filter>
+      <Filter>NewEngine\Header\Render</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Util\Layer.h">
-      <Filter>Uncategorized\Header</Filter>
+      <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

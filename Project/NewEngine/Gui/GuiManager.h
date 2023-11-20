@@ -52,7 +52,7 @@ namespace Gui
 	void DrawSlider3(const char* label, Vec3& v, const float& moveSpeed = 1.f);
 	void DrawColorEdit(const char* label, Color& color);
 
-	bool DrawInputInt(const char* label, int& v);
+	bool DrawInputInt(const char* label, int32_t& v);
 	bool DrawInputText(const char* label, const std::string& str);
 
 	void DrawImage(ITexture* texture, const Vec2& size);

@@ -1,6 +1,7 @@
 #pragma once
 #include "Singleton.h"
 #include "MappingWindow.h"
+#include "RendererWindow.h"
 
 // 前方宣言
 template<typename T> class Singleton;
@@ -15,6 +16,7 @@ private:
 
 private:
 	std::unique_ptr<MappingWindow> mMappingWindow;
+	std::unique_ptr<RendererWindow> mRendererWindow;
 
 public:
 	void Init();
