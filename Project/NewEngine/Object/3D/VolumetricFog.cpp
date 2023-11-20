@@ -41,10 +41,6 @@ void VolumetricFog::Update(Transform* parent)
 	mTransform.rot = rot;
 	mTransform.Update();
 
-
-
-
-
 	if (parent != nullptr)
 	{
 		mParent = parent;

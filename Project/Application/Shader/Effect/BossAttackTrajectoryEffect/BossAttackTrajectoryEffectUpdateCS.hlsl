@@ -86,11 +86,11 @@ void main(uint3 DTid : SV_DispatchThreadID)
             result.moveAccel = 0.05f;
         }
         
-        result.color.a += 0.03f;
+        result.color.a += 0.035f;
         if (result.color.a >= 1)
         {
             result.color.a = 1;
-            result.scale -= 0.004f;
+            result.scale -= 0.005f;
         }
         
         outputData[i] = result;
@@ -152,7 +152,7 @@ ParticleData InitParticleData(uint index)
     result.pos += upVec * Random01(seed) * 10.f;
 
     // ベクトル
-    result.moveVec = normalize(rightVec);
+    result.moveVec = normalize(frontVec / 2 + rightVec);
         
     // 移動速度
     seed = RandomSeed(seed, index);

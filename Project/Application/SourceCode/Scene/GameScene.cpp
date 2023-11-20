@@ -100,12 +100,14 @@ void GameScene::Init()
 	mVolumetricFog->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture3"));
 	mVolumetricFog->pos.z = 400;
 	mVolumetricFog->scale = Vec3(1000, 1000, 1400);
-	mVolumetricFog->tiling = Vec3(20, 20, 80);
-	mVolumetricFog->moveSpeed = -0.0001f;
-	mVolumetricFog->fogParam.stepCount = 300;
+	mVolumetricFog->tiling = Vec3(20, 20, 20);
+	mVolumetricFog->moveSpeed = -0.000025f;
+	mVolumetricFog->fogParam.stepCount = 200;
 	mVolumetricFog->fogParam.stepLength = 1.f;
-	mVolumetricFog->fogParam.dencity = 0.00125f;
+	mVolumetricFog->fogParam.dencity = 0.0015f;
 	mVolumetricFog->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("WorldVolumetricFog"));
+
+	VolumetricFog::fogClamp = Vec2(20, 40);
 
 	mPointLight->isActive = false;
 
@@ -148,7 +150,7 @@ void GameScene::Update()
 	{
 		if (SoundManager::GetIsPlaying("BattleBGM") == true)
 		{
-			SoundManager::SetVolume("BattleBGM", 0);
+			SoundManager::SetVolume("BattleBGM", mBgmVolume);
 			mBgmVolume += 0.005f;
 			mBgmVolume = Min<float>(mBgmVolume, 1.f);
 		}

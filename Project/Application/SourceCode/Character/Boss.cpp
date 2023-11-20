@@ -22,7 +22,7 @@ void Boss::Init()
 	// HPゲージのパラメータ
 	mHpGaugeParam.CalcRate(2560.f, 2560.f);
 
-	mCoolTimer.SetLimitTimer(120);
+	mCoolTimer.SetLimitTimer(90);
 
 	mIsDamage = false;
 	mDamageCoolTimer.SetLimitTimer(40);
@@ -41,6 +41,15 @@ void Boss::Init()
 }
 void Boss::Update()
 {
+	ProcessAtDebugBuild([this]
+		{
+			if (Key::GetKeyDown(DIK_D))
+			{
+				mHpGaugeParam.value = 0;
+			}
+
+		});
+
 	float disToPlayer = Vec3::Distance(mPlayer->GetPos(), mBoss->pos);
 	if (disToPlayer <= 150.f)
 	{
@@ -149,19 +158,16 @@ void Boss::MotionUpdate()
 	{
 		CalcFrontVec();
 
-		//mWeapon->SetisActiveTrajectory(false);
-
 		mMotionNum = 0;
 		mCoolTimer.Update();
 		if (mCoolTimer == true)
 		{
-			//mMotionNum = Random::Range(2, 3);
-			mMotionNum = 2;
+			mMotionNum = Random::Range(2, 3);
+			//mMotionNum = 2;
 		}
 	}
 	if (mMotionNum != 0)
 	{
-		//mWeapon->SetisActiveTrajectory(true);
 		mCoolTimer.Reset();
 
 		switch (mMotionNum)
