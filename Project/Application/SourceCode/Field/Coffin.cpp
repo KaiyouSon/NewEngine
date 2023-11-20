@@ -30,8 +30,8 @@ void Coffin::Update()
 
 void Coffin::DrawModel()
 {
-	mCoffinTop->Draw();
-	mCoffinBottom->Draw();
+	mCoffinTop->Draw("Object3D");
+	mCoffinBottom->Draw("Object3D");
 }
 
 void Coffin::SetParent(const Transform parent)

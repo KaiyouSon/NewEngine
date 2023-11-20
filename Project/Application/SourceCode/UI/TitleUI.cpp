@@ -63,17 +63,17 @@ void TitleUI::Update()
 
 void TitleUI::DrawFrontSprite()
 {
-	mGameTitle->Draw();
+	mGameTitle->Draw("FrontSprite");
 
 	for (uint32_t i = 0; i < mPressButtonBacks.size(); i++)
 	{
-		mPressButtonBacks[i]->Draw();
+		mPressButtonBacks[i]->Draw("FrontSprite");
 	}
-	mPressButton->Draw();
+	mPressButton->Draw("FrontSprite");
 
 	if (mIsAfterImage == true)
 	{
-		mPressButtonAfterImage->Draw();
+		mPressButtonAfterImage->Draw("FrontSprite");
 	}
 }
 

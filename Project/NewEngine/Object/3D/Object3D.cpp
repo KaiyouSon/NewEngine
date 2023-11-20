@@ -66,67 +66,15 @@ void Object3D::Update(Transform* parent)
 	// マテリアルの転送
 	MaterialTransfer();
 }
-void Object3D::Draw(const BlendMode blendMode)
+void Object3D::Draw(const std::string& layerTag, const BlendMode blendMode)
 {
-	if (mTexture == nullptr || mModel == nullptr) return;
+	mBlendMode = blendMode;
 
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
-
-	// GraphicsPipeline描画コマンド
-	mGraphicsPipeline->DrawCommand(blendMode);
-
-	// VBVとIBVの設定コマンド
-	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mModel->mesh.vertexBuffer.GetvbViewAddress());
-	renderBase->GetCommandList()->IASetIndexBuffer(mModel->mesh.indexBuffer.GetibViewAddress());
-
-	MaterialDrawCommands();
-	LightManager::GetInstance()->DrawCommand(5);
-
-	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
-
-	if (isUseDissolve == true)
-	{
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			(uint32_t)startIndex + 1, mDissolveTex->GetBufferResource()->srvHandle.gpu);
-	}
-	else
-	{
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			(uint32_t)startIndex + 1, mWhiteTex->GetBufferResource()->srvHandle.gpu);
-	}
-
-	if (mIsWriteShadow == true)
-	{
-		CD3DX12_RESOURCE_BARRIER barrier =
-			CD3DX12_RESOURCE_BARRIER::Transition(
-				mDepthTex->GetBufferResource()->buffer.Get(),
-				D3D12_RESOURCE_STATE_DEPTH_WRITE,
-				D3D12_RESOURCE_STATE_GENERIC_READ,
-				D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
-		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
-
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			(uint32_t)startIndex + 2, mDepthTex->GetBufferResource()->srvHandle.gpu);
-	}
-	else
-	{
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			(uint32_t)startIndex + 2, mWhiteTex->GetBufferResource()->srvHandle.gpu);
-	}
-
-	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModel->mesh.indices.size(), 1, 0, 0, 0);
-	if (mIsWriteShadow == true)
-	{
-		CD3DX12_RESOURCE_BARRIER barrier =
-			CD3DX12_RESOURCE_BARRIER::Transition(
-				mDepthTex->GetBufferResource()->buffer.Get(),
-				D3D12_RESOURCE_STATE_GENERIC_READ,
-				D3D12_RESOURCE_STATE_DEPTH_WRITE,
-				D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
-		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
-	}
+	Renderer::GetInstance()->Register(layerTag,
+		[this]()
+		{
+			DrawCommands();
+		});
 }
 
 // --- マテリアル関連 --------------------------------------------------- //
@@ -260,7 +208,71 @@ void Object3D::MaterialDrawCommands()
 		7, mMaterial->constantBuffers[6]->bufferResource->buffer->GetGPUVirtualAddress());
 }
 
-// --- セッター -------------------------------------------------------- //
+// --- 描画コマンド ----------------------------------------------------- //
+void Object3D::DrawCommands()
+{
+	if (mTexture == nullptr || mModel == nullptr) return;
+
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
+
+	// GraphicsPipeline描画コマンド
+	mGraphicsPipeline->DrawCommand(mBlendMode);
+
+	// VBVとIBVの設定コマンド
+	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mModel->mesh.vertexBuffer.GetvbViewAddress());
+	renderBase->GetCommandList()->IASetIndexBuffer(mModel->mesh.indexBuffer.GetibViewAddress());
+
+	MaterialDrawCommands();
+	LightManager::GetInstance()->DrawCommand(5);
+
+	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
+	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
+
+	if (isUseDissolve == true)
+	{
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+			(uint32_t)startIndex + 1, mDissolveTex->GetBufferResource()->srvHandle.gpu);
+	}
+	else
+	{
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+			(uint32_t)startIndex + 1, mWhiteTex->GetBufferResource()->srvHandle.gpu);
+	}
+
+	if (mIsWriteShadow == true)
+	{
+		CD3DX12_RESOURCE_BARRIER barrier =
+			CD3DX12_RESOURCE_BARRIER::Transition(
+				mDepthTex->GetBufferResource()->buffer.Get(),
+				D3D12_RESOURCE_STATE_DEPTH_WRITE,
+				D3D12_RESOURCE_STATE_GENERIC_READ,
+				D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
+
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+			(uint32_t)startIndex + 2, mDepthTex->GetBufferResource()->srvHandle.gpu);
+	}
+	else
+	{
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+			(uint32_t)startIndex + 2, mWhiteTex->GetBufferResource()->srvHandle.gpu);
+	}
+
+	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModel->mesh.indices.size(), 1, 0, 0, 0);
+	if (mIsWriteShadow == true)
+	{
+		CD3DX12_RESOURCE_BARRIER barrier =
+			CD3DX12_RESOURCE_BARRIER::Transition(
+				mDepthTex->GetBufferResource()->buffer.Get(),
+				D3D12_RESOURCE_STATE_GENERIC_READ,
+				D3D12_RESOURCE_STATE_DEPTH_WRITE,
+				D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
+	}
+}
+
+// --- セッター --------------------------------------------------------- //
 
 // モデル
 void Object3D::SetModel(Model* model)

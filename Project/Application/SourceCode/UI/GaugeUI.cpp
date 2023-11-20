@@ -58,13 +58,13 @@ void GaugeUI::Update()
 
 void GaugeUI::Draw()
 {
-	mSprites[BackFrame]->Draw();
-	mSprites[BackColor]->Draw();
-	mSprites[FrontColor]->Draw();
-	mSprites[CurrentPos]->Draw();
-	mSprites[FrontFrame]->Draw();
-	mSprites[FrontLeftFrame]->Draw();
-	mSprites[FrontRightFrame]->Draw();
+	mSprites[BackFrame]->Draw("FrontSprite");
+	mSprites[BackColor]->Draw("FrontSprite");
+	mSprites[FrontColor]->Draw("FrontSprite");
+	mSprites[CurrentPos]->Draw("FrontSprite");
+	mSprites[FrontFrame]->Draw("FrontSprite");
+	mSprites[FrontLeftFrame]->Draw("FrontSprite");
+	mSprites[FrontRightFrame]->Draw("FrontSprite");
 }
 
 void GaugeUI::CalcPosUpdate()

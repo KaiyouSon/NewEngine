@@ -97,8 +97,8 @@ void LogoScene::DrawPass()
 
 void LogoScene::Draw()
 {
-	mBackSprite->Draw();
-	mLogoSprite->Draw();
+	mBackSprite->Draw("FrontSprite");
+	mLogoSprite->Draw("FrontSprite");
 }
 
 void LogoScene::DrawDebugGui()

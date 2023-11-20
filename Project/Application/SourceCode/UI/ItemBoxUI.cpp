@@ -46,12 +46,12 @@ void ItemBoxUI::Update(Transform* parent)
 
 void ItemBoxUI::DrawFrame()
 {
-	mFrame->Draw();
+	mFrame->Draw("FrontSprite");
 }
 
 void ItemBoxUI::DrawLight()
 {
-	mLight->Draw();
+	mLight->Draw("FrontSprite");
 }
 
 void ItemBoxUI::SetPos(const Vec2 pos)

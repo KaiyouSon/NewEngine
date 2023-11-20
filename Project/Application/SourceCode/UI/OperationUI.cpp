@@ -35,8 +35,8 @@ void OperationUI::Draw()
 {
 	for (uint32_t i = 0; i < mPair.size(); i++)
 	{
-		mPair[i]->mBack->Draw();
-		mPair[i]->mText->Draw();
+		mPair[i]->mBack->Draw("FrontSprite");
+		mPair[i]->mText->Draw("FrontSprite");
 	}
 }
 

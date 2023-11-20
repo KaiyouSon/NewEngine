@@ -103,7 +103,7 @@ void ItemBoxUIGroup::Draw()
 		mItemBoxUIs[i]->DrawLight();
 	}
 
-	mNumber->Draw();
+	mNumber->Draw("FrontSprite");
 }
 
 // スプライトのαの処理

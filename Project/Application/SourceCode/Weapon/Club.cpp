@@ -32,7 +32,7 @@ void Club::Update(Transform* parent)
 
 void Club::DrawModel()
 {
-	weapon->Draw();
+	weapon->Draw("Object3D");
 }
 
 Vec3 Club::GetTipPos()

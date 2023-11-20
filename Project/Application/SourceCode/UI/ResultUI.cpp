@@ -52,7 +52,7 @@ void ResultUI::Update()
 }
 void ResultUI::Draw()
 {
-	mBack->Draw();
+	mBack->Draw("FrontSprite");
 
 	switch (mResultType)
 	{
@@ -136,8 +136,8 @@ void ResultUI::EnemyFelledUpdate()
 }
 void ResultUI::EnemyFelledDraw()
 {
-	mTextAfterImage->Draw();
-	mText->Draw();
+	mTextAfterImage->Draw("FrontSprite");
+	mText->Draw("FrontSprite");
 }
 
 // プレイヤーが死んだ時の処理
@@ -189,7 +189,7 @@ void ResultUI::YouDiedUpdate()
 }
 void ResultUI::YouDiedDraw()
 {
-	mText->Draw();
+	mText->Draw("FrontSprite");
 }
 
 void ResultUI::SetResultType(const ResultType resultType)

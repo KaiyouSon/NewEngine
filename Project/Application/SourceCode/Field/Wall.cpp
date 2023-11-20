@@ -23,7 +23,7 @@ void Wall::Update()
 
 void Wall::DrawModel()
 {
-	mWall->Draw();
+	mWall->Draw("Object3D");
 }
 
 void Wall::SetParent(const Transform parent)

@@ -50,8 +50,8 @@ void RespawnPoint::Update()
 
 void RespawnPoint::DrawModel()
 {
-	mRipple->Draw();
-	mRhombus->Draw();
+	mRipple->Draw("Object3D");
+	mRhombus->Draw("Object3D");
 }
 
 void RespawnPoint::ColliderUpdatge()

@@ -17,7 +17,7 @@ void ItemUI::Update(Transform* parent)
 
 void ItemUI::DrawFrontSprite()
 {
-	mItemUI->Draw();
+	mItemUI->Draw("FrontSprite");
 }
 
 void ItemUI::SettingsByType()

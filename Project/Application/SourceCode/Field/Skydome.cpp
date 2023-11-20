@@ -41,7 +41,7 @@ void Skydome::Update()
 
 void Skydome::Draw()
 {
-	mSkydome->Draw();
+	mSkydome->Draw("Object3D");
 	for (uint32_t i = 0; i < mClouds.size(); i++)
 	{
 		mClouds[i]->DrawModel();

@@ -86,7 +86,7 @@ void HumanoidBody::BaseDrawModel()
 {
 	for (uint32_t i = 1; i < mParts.size(); i++)
 	{
-		mParts[i]->Draw();
+		mParts[i]->Draw("Object3D");
 	}
 }
 void HumanoidBody::BaseDrawDebugGui()

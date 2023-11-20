@@ -95,6 +95,6 @@ void RespawnTransition::DrawFrontSprite()
 
 	for (uint32_t i = 0; i < mTransition.size(); i++)
 	{
-		mTransition[i]->Draw();
+		mTransition[i]->Draw("FrontSprite");
 	}
 }

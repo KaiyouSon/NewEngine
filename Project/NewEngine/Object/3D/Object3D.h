@@ -24,6 +24,7 @@ private:
 	Camera* mCamera;
 	bool mIsWriteShadow;
 	bool mIsWriteDepth;
+	BlendMode mBlendMode;
 
 private:
 	// テクスチャ
@@ -50,10 +51,13 @@ private:
 	void MaterialTransfer();
 	void MaterialDrawCommands();
 
+private:
+	void DrawCommands();
+
 public:
 	Object3D();
 	void Update(Transform* parent = nullptr);
-	void Draw(const BlendMode blendMode = BlendMode::Alpha);
+	void Draw(const std::string& layerTag, const BlendMode blendMode = BlendMode::Alpha);
 
 public: // セッター
 	void SetModel(Model* model);

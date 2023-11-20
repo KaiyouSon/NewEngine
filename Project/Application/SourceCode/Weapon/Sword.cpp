@@ -53,7 +53,7 @@ void Sword::Update(Transform* parent)
 
 void Sword::DrawModel()
 {
-	weapon->Draw();
+	weapon->Draw("Object3D");
 
 	if (mIsActiveTrajectory == true)
 	{

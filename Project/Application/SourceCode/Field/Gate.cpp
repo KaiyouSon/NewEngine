@@ -42,8 +42,8 @@ void Gate::Update()
 
 void Gate::DrawModel()
 {
-	mGateLeft->Draw();
-	mGateRight->Draw();
+	mGateLeft->Draw("Object3D");
+	mGateRight->Draw("Object3D");
 }
 
 void Gate::ColliderUpdate()

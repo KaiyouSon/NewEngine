@@ -18,7 +18,7 @@ void SkyIsland::Update()
 
 void SkyIsland::DrawModel()
 {
-	mSkyIsland->Draw();
+	mSkyIsland->Draw("Object3D");
 }
 
 void SkyIsland::SetParent(const Transform parent)

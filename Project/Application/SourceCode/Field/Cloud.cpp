@@ -25,7 +25,7 @@ void Cloud::Update()
 
 void Cloud::DrawModel()
 {
-	mCloud->Draw();
+	mCloud->Draw("Object3D");
 }
 
 void Cloud::SetPos(const Vec3 pos)

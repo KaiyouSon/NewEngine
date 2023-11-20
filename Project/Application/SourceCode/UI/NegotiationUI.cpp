@@ -64,10 +64,10 @@ void NegotiationUI::Draw()
 		return;
 	}
 
-	mBackFrame->Draw();
-	mButton->Draw();
-	mColon->Draw();
-	mText->Draw();
+	mBackFrame->Draw("FrontSprite");
+	mButton->Draw("FrontSprite");
+	mColon->Draw("FrontSprite");
+	mText->Draw("FrontSprite");
 }
 
 void NegotiationUI::AlphaUpdate()

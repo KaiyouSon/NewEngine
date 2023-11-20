@@ -2,6 +2,7 @@
 #include "MathUtil.h"
 #include "RenderBase.h"
 #include "Camera.h"
+#include "Renderer.h"
 
 using namespace VertexBufferData;
 using namespace ConstantBufferData;
@@ -47,34 +48,15 @@ void Sprite::Update(Transform* parent)
 	// 頂点データの転送
 	mVertexBuffer->TransferToBuffer(mVertices);
 }
-void Sprite::Draw(const BlendMode blendMode)
+void Sprite::Draw(const std::string& layerTag, const BlendMode blendMode)
 {
-	if (mTexture == nullptr)
-	{
-		return;
-	}
+	mBlendMode = blendMode;
 
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
-
-	// GraphicsPipeline描画コマンド
-	mGraphicsPipeline->DrawCommand(blendMode);
-
-	// VBVとIBVの設定コマンド
-	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
-
-	// マテリアルの描画コマンド
-	MaterialDrawCommands();
-
-	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
-	uint32_t endIndex = mGraphicsPipeline->GetRootSignature()->GetUAVStartIndex();
-
-	for (uint32_t i = startIndex; i < endIndex; i++)
-	{
-		// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
-	}
-
-	renderBase->GetCommandList()->DrawInstanced((uint16_t)mVertices.size(), 1, 0, 0);
+	Renderer::GetInstance()->Register(layerTag,
+		[this]()
+		{
+			DrawCommands();
+		});
 }
 
 // --- マテリアル関連 --------------------------------------------------- //
@@ -174,6 +156,38 @@ void Sprite::TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightDownPos)
 	mVertices[(uint32_t)Point::LU].uv = Vec2(left, up);		 //左上
 	mVertices[(uint32_t)Point::RD].uv = Vec2(right, down);	 //右下
 	mVertices[(uint32_t)Point::RU].uv = Vec2(right, up);	 //右上
+}
+
+// --- 描画コマンド ----------------------------------------------------- //
+void Sprite::DrawCommands()
+{
+	if (mTexture == nullptr)
+	{
+		return;
+	}
+
+
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
+
+	// GraphicsPipeline描画コマンド
+	mGraphicsPipeline->DrawCommand(mBlendMode);
+
+	// VBVとIBVの設定コマンド
+	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
+
+	// マテリアルの描画コマンド
+	MaterialDrawCommands();
+
+	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
+	uint32_t endIndex = mGraphicsPipeline->GetRootSignature()->GetUAVStartIndex();
+
+	for (uint32_t i = startIndex; i < endIndex; i++)
+	{
+		// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
+	}
+
+	renderBase->GetCommandList()->DrawInstanced((uint16_t)mVertices.size(), 1, 0, 0);
 }
 
 // --- セッター -------------------------------------------------------- //

@@ -30,8 +30,8 @@ void Tree::Update()
 
 void Tree::DrawModel()
 {
-	mTree->Draw();
-	mBranch->Draw();
+	mTree->Draw("Object3D");
+	mBranch->Draw("Object3D");
 }
 
 void Tree::SetParent(const Transform& parent)

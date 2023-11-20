@@ -107,6 +107,6 @@ void SceneTransition::DrawFrontSprite()
 		return;
 	}
 
-	mTransition->Draw();
-	mLoadSprite->Draw();
+	mTransition->Draw("FrontSprite");
+	mLoadSprite->Draw("FrontSprite");
 }

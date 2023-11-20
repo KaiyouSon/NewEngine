@@ -92,13 +92,13 @@ void LogoutMenu::Update()
 
 void LogoutMenu::DrawFrontSprite()
 {
-	mBack->Draw();
+	mBack->Draw("FrontSprite");
 	for (uint32_t i = 0; i < mTextFrames.size(); i++)
 	{
-		mTextFrames[i]->Draw();
-		mTexts[i]->Draw();
+		mTextFrames[i]->Draw("FrontSprite");
+		mTexts[i]->Draw("FrontSprite");
 	}
-	mTextLight->Draw();
+	mTextLight->Draw("FrontSprite");
 }
 
 LogoutMenu::Select LogoutMenu::GetSelect()

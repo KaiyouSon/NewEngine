@@ -69,12 +69,12 @@ void MessageUI::Draw()
 		return;
 	}
 
-	mBack->Draw();
-	mButton->Draw();
-	mColon->Draw();
-	mText->Draw();
-	mMessageSignUI->Draw();
-	mMessage->Draw();
+	mBack->Draw("FrontSprite");
+	mButton->Draw("FrontSprite");
+	mColon->Draw("FrontSprite");
+	mText->Draw("FrontSprite");
+	mMessageSignUI->Draw("FrontSprite");
+	mMessage->Draw("FrontSprite");
 }
 
 void MessageUI::SetTexture(Texture* texture)

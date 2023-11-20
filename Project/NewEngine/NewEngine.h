@@ -36,6 +36,7 @@
 
 #include "RenderBase.h"
 #include "RenderWindow.h"
+#include "Renderer.h"
 
 // c++
 #include <memory>

@@ -25,6 +25,7 @@ private:
 	Vec2 mAnchorPoint;
 	Vec2 mSize;
 	FlipType mFlipType;
+	BlendMode mBlendMode;
 
 public:
 	Vec2 pos;
@@ -41,10 +42,13 @@ private:
 	void TransferVertexCoord();
 	void TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightDownPos);
 
+private:
+	void DrawCommands();
+
 public:
 	Sprite();
 	void Update(Transform* parent = nullptr);
-	void Draw(const BlendMode blendMode = BlendMode::Alpha);
+	void Draw(const std::string& layerTag, const BlendMode blendMode = BlendMode::Alpha);
 
 	template<typename T>
 	void AddMaterial()

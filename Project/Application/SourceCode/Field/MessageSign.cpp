@@ -22,7 +22,7 @@ void MessageSign::Update()
 
 void MessageSign::DrawModel()
 {
-	mMessageSign->Draw();
+	mMessageSign->Draw("Object3D");
 }
 
 void MessageSign::ColliderUpdate()

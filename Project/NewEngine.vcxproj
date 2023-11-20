@@ -270,6 +270,7 @@
     <ClCompile Include="NewEngine\Render\Pipeline\GraphicsPipeline.cpp" />
     <ClCompile Include="NewEngine\Render\Pipeline\PipelineManager.cpp" />
     <ClCompile Include="NewEngine\Render\RenderBase.cpp" />
+    <ClCompile Include="NewEngine\Render\Renderer.cpp" />
     <ClCompile Include="NewEngine\Render\RenderTarget.cpp" />
     <ClCompile Include="NewEngine\Render\RenderWindow.cpp" />
     <ClCompile Include="NewEngine\Render\Pipeline\RootSignature.cpp" />
@@ -287,6 +288,7 @@
     <ClCompile Include="NewEngine\Util\Color.cpp" />
     <ClCompile Include="NewEngine\Util\Easing.cpp" />
     <ClCompile Include="NewEngine\Util\FrameRate.cpp" />
+    <ClCompile Include="NewEngine\Util\Layer.cpp" />
     <ClCompile Include="NewEngine\Util\Random.cpp" />
     <ClCompile Include="NewEngine\Sound\Sound.cpp" />
     <ClCompile Include="NewEngine\Util\RectAngle.cpp" />
@@ -453,6 +455,7 @@
     <ClInclude Include="NewEngine\Render\Pipeline\GraphicsPipeline.h" />
     <ClInclude Include="NewEngine\Render\Pipeline\PipelineManager.h" />
     <ClInclude Include="NewEngine\Render\RenderBase.h" />
+    <ClInclude Include="NewEngine\Render\Renderer.h" />
     <ClInclude Include="NewEngine\Render\RenderTarget.h" />
     <ClInclude Include="NewEngine\Render\RenderWindow.h" />
     <ClInclude Include="NewEngine\Render\Pipeline\RootSignature.h" />
@@ -468,6 +471,7 @@
     <ClInclude Include="NewEngine\Util\BezierCurve.h" />
     <ClInclude Include="NewEngine\Util\Color.h" />
     <ClInclude Include="NewEngine\Util\Easing.h" />
+    <ClInclude Include="NewEngine\Util\Layer.h" />
     <ClInclude Include="NewEngine\Util\NewEngineEnum.h" />
     <ClInclude Include="NewEngine\Util\FrameRate.h" />
     <ClInclude Include="NewEngine\Util\Random.h" />
