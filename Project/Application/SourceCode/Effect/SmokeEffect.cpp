@@ -37,7 +37,7 @@ void SmokeEffect::Update()
 void SmokeEffect::Draw()
 {
 	mEmitter->ExecuteCS();
-	mEmitter->Draw();
+	mEmitter->Draw("Object3D");
 }
 
 void SmokeEffect::Execute(const CSmokeEffect data)

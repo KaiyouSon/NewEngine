@@ -238,6 +238,9 @@ void GameScene::DrawDebugGui()
 
 	Gui::BeginWindow("Debug");
 
+	float bias = Object3D::sShadowBias;
+	Gui::DrawSlider1("Shadow Bias", bias, 0.0001f);
+	Object3D::sShadowBias = bias;
 
 	if (Gui::DrawCollapsingHeader("Fog") == true)
 	{
@@ -440,12 +443,12 @@ void GameScene::DrawCurrentSceneObject()
 	mField->DrawSkyIsLand();
 	mField->DrawSun();
 
-	mField->DrawFog();
+	//mField->DrawFog();
 	mPlayer->DrawModel();
 
 	mBoss->DrawModel();
 
 	EffectManager::GetInstance()->DrawEffect(false);
 
-	mVolumetricFog->Draw();
+	//mVolumetricFog->Draw();
 }

@@ -1,6 +1,11 @@
 {
     "layer": [
         {
+            "depth": -20,
+            "tag": "BloomPa",
+            "type": 0
+        },
+        {
             "depth": -10,
             "tag": "Pass",
             "type": 0

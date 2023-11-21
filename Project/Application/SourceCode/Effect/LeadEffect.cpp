@@ -35,5 +35,5 @@ void LeadEffect::Update()
 void LeadEffect::Draw()
 {
 	mEmitter->ExecuteCS();
-	mEmitter->Draw();
+	mEmitter->Draw("Object3D");
 }

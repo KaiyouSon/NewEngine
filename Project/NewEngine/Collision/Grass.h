@@ -13,6 +13,7 @@ private:
 	Material mMaterial;
 	GraphicsPipeline* mGraphicsPipeline;
 	Billboard mBillboard;
+	DepthTexture* mDepthTex;
 
 public:
 	Vec3 pos;

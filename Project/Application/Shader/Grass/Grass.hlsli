@@ -1,9 +1,12 @@
 // 3D変換行列
 cbuffer ConstantBufferDataTransform : register(b0)
 {
-    matrix viewMat;
+    matrix viewProjMat;
+    matrix lightViewProjMat;
     matrix worldMat;
     matrix billboardMat;
+    float3 cameraPos;
+    float3 lightCameraPos;
 }
 
 // 色
@@ -30,4 +33,5 @@ struct G2P
 {
     float4 pos : SV_POSITION; //システム用頂点座標
     float2 uv : TEXCOORD; //uv値
+    float4 spos : POSITIONT1;
 };

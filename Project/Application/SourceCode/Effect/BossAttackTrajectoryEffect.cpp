@@ -42,7 +42,7 @@ void BossAttackTrajectoryEffect::Update()
 void BossAttackTrajectoryEffect::Draw()
 {
 	mEmitter->ExecuteCS();
-	mEmitter->Draw();
+	mEmitter->Draw("Object3D");
 }
 
 void BossAttackTrajectoryEffect::Execute(const bool isGenerate, const Vec3 startPos, const Vec3 endPos)

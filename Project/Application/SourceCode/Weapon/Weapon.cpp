@@ -29,3 +29,8 @@ void Weapon::SetisActiveTrajectory(const bool isActiveTrajectory)
 {
 	mIsActiveTrajectory = isActiveTrajectory;
 }
+
+void Weapon::SetisShadow(const bool isShadow)
+{
+	weapon->SetisShadow(false, isShadow);
+}

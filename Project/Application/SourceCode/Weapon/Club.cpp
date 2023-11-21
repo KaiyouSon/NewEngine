@@ -5,7 +5,7 @@ Club::Club()
 {
 	weapon = std::make_unique<Object3D>();
 	weapon->SetModel(ModelManager::GetModel("Club"));
-	weapon->SetisShadow(false, true);
+	weapon->SetisShadow(false, false);
 
 	// モーション生成
 	motion = std::make_unique<MalletMotion>();

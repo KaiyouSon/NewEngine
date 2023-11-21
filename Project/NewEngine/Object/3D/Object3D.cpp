@@ -8,6 +8,7 @@
 using namespace ConstantBufferData;
 
 bool Object3D::isAllLighting = false;
+float Object3D::sShadowBias = 0.0005f;
 
 Object3D::Object3D() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0), offset(0, 0), tiling(1, 1),
@@ -69,12 +70,15 @@ void Object3D::Update(Transform* parent)
 void Object3D::Draw(const std::string& layerTag, const BlendMode blendMode)
 {
 	mBlendMode = blendMode;
+	layerTag;
 
-	Renderer::GetInstance()->Register(layerTag,
-		[this]()
-		{
-			DrawCommands();
-		});
+	//Renderer::GetInstance()->Register(layerTag,
+	//	[this]()
+	//	{
+	//		DrawCommands();
+	//	});
+
+	DrawCommands();
 }
 
 // --- マテリアル関連 --------------------------------------------------- //
@@ -177,8 +181,8 @@ void Object3D::MaterialTransfer()
 	CDissolve dissolveData = { dissolve,colorPower,Vec2(0,0), dissolveColor.To01() };
 	TransferDataToConstantBuffer(mMaterial->constantBuffers[5].get(), dissolveData);
 
-	// ディゾルブ
-	CShadowMap shadowMapData = { mIsWriteShadow };
+	// シャドウマップ
+	CShadowMap shadowMapData = { mIsWriteShadow, sShadowBias };
 	TransferDataToConstantBuffer(mMaterial->constantBuffers[6].get(), shadowMapData);
 }
 void Object3D::MaterialDrawCommands()

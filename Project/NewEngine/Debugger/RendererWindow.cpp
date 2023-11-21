@@ -17,8 +17,6 @@ void RendererWindow::DrawDebugGui()
 	{
 		if (Gui::BeginMenu("File"))
 		{
-			Gui::BeginMenuBar();
-
 			if (Gui::MenuItem("Save"))
 			{
 				renderer->SaveData();
@@ -30,6 +28,8 @@ void RendererWindow::DrawDebugGui()
 
 			Gui::EndMenu();
 		}
+
+
 		Gui::EndMenuBar();
 	}
 
@@ -52,10 +52,37 @@ void RendererWindow::DrawDebugGui()
 		Gui::DrawLine();
 	}
 
+	if (Gui::DrawButton("Add Layer", Vec2(160, 20)))
+	{
+		Gui::OpenPopModal("Add Layer Setting");
+		mIsOpenPop = true;
+	}
+
 	if (CheckDestroyLayer() == Destroy)
 	{
 		renderer->DestroyLayer(mDestroyTag);
 	}
+
+	AddLayerSetting();
+
+	//if (Gui::DrawCollapsingHeader(.tag.c_str()))
+	//{
+	//	static int32_t depth = 0;
+	//	Gui::DrawInputInt("Layer Depth", depth);
+
+	//	static std::string tag = "Unknown";
+	//	Gui::DrawInputText("Layer Tag", tag);
+
+	//	static uint32_t type = (uint32_t)LayerType::Scene;
+	//	Gui::DrawRadioButton("LayerType : Scene", &type, (uint32_t)LayerType::Scene);
+	//	Gui::DrawRadioButton("LayerType : Pass", &type, (uint32_t)LayerType::Pass);
+	//}
+
+	//if ()
+
+		//renderer->AddLayer();
+
+
 	Gui::EndWindow();
 }
 
@@ -76,14 +103,12 @@ RendererWindow::State RendererWindow::CheckDestroyLayer()
 		if (Gui::DrawButton("ok", Vec2(48, 24)))
 		{
 			Gui::ClosePopModal();
-			//mIsOpenPop = false;
 			result = Destroy;
 		}
 		Gui::DrawTab();
 		if (Gui::DrawButton("cancel", Vec2(48, 24)))
 		{
 			Gui::ClosePopModal();
-			//mIsOpenPop = false;
 			result = Cancel;
 		}
 
@@ -91,6 +116,35 @@ RendererWindow::State RendererWindow::CheckDestroyLayer()
 	}
 
 	return result;
+}
+
+void RendererWindow::AddLayerSetting()
+{
+	int32_t flag = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+	if (ImGui::BeginPopupModal("Add Layer Setting", &mIsOpenPop, flag))
+	{
+		ImVec2 size = ImVec2(352, 128);
+
+		ImGui::SetWindowPos(ImVec2(GetWindowHalfSize().x - size.x / 2, GetWindowHalfSize().y - size.y / 2));
+		ImGui::SetWindowSize(size);
+
+		static int32_t depth = 0;
+		Gui::DrawInputInt("Layer Depth", depth);
+
+		static std::string tag = "Unknown";
+		Gui::DrawInputText("Layer Tag", tag);
+
+		static uint32_t type = (uint32_t)LayerType::Scene;
+		Gui::DrawRadioButton("LayerType : Scene", &type, (uint32_t)LayerType::Scene);
+		Gui::DrawRadioButton("LayerType : Pass", &type, (uint32_t)LayerType::Pass, false);
+
+		if (Gui::DrawButton("Add", Vec2(48, 24)))
+		{
+			Renderer::GetInstance()->AddLayer(Layer(tag, depth, (LayerType)type));
+		}
+
+		ImGui::EndPopup();
+	}
 }
 
 void RendererWindow::SetisShow(const bool isShow)

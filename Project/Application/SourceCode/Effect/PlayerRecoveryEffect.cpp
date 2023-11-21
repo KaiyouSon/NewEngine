@@ -98,6 +98,6 @@ void PlayerRecoveryEffect::Draw()
 	mCircleEmitter->ExecuteCS();
 	mLineEmitter->ExecuteCS();
 
-	mCircleEmitter->Draw();
-	mLineEmitter->Draw();
+	mCircleEmitter->Draw("Object3D");
+	mLineEmitter->Draw("Object3D");
 }

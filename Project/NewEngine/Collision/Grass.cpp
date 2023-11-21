@@ -1,4 +1,6 @@
 #include "Grass.h"
+#include "ShadowMap.h"
+#include "Camera.h"
 using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
@@ -6,6 +8,7 @@ Grass::Grass() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
 	mVertexBuffer(std::make_unique <VertexBuffer<VGrass>>()),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass")),
+	mDepthTex(TextureManager::GetRenderTexture("ShadowMap")->GetDepthTexture()),
 	texture(TextureManager::GetTexture("White"))
 {
 	// 頂点バッファの生成
@@ -95,7 +98,16 @@ void Grass::Draw()
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, texture->GetBufferResource()->srvHandle.gpu);
 
+	renderBase->TransitionBufferState(mDepthTex->GetBufferResource(),
+		D3D12_RESOURCE_STATE_DEPTH_WRITE, D3D12_RESOURCE_STATE_GENERIC_READ);
+
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+		(uint32_t)startIndex + 1, mDepthTex->GetBufferResource()->srvHandle.gpu);
+
 	renderBase->GetCommandList()->DrawInstanced((uint16_t)mVertices.size(), 1, 0, 0);
+
+	renderBase->TransitionBufferState(mDepthTex->GetBufferResource(),
+		D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_DEPTH_WRITE);
 }
 
 // --- マテリアル関連 --------------------------------------------------- //
@@ -117,14 +129,19 @@ void Grass::MaterialInit()
 }
 void Grass::MaterialTransfer()
 {
+	Camera lightViewCamera = ShadowMap::GetInstance()->GetLightCamera();
+
 	mBillboard.CalculateBillboardMat();
 
 	// トランスフォーム
 	CTransformGrass transformGrassData =
 	{
 		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
+		lightViewCamera.GetViewLookToMat() * lightViewCamera.GetOrthoGrphicProjectionMat(),
 		mTransform.GetWorldMat(),
 		mBillboard.GetMat(),
+		Camera::current.pos,
+		lightViewCamera.pos
 	};
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformGrassData);
 

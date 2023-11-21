@@ -12,8 +12,8 @@ Tree::Tree() :
 
 void Tree::Init()
 {
-	mTree->SetisShadow(false, true);
-	mBranch->SetisShadow(false, true);
+	mTree->SetisShadow(true, true);
+	mBranch->SetisShadow(true, true);
 	mBranch->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Branch"));
 }
 

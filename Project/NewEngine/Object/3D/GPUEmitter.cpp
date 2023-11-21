@@ -73,37 +73,17 @@ void GPUEmitter::Update(Transform* parent)
 	// マテリアルの転送
 	MaterialTransfer();
 }
-void GPUEmitter::Draw(const BlendMode blendMode)
+void GPUEmitter::Draw(const std::string layerTag, const BlendMode blendMode)
 {
-	if (mTexture == nullptr) return;
+	mBlendMode = blendMode;
 
-	RenderBase* renderBase = RenderBase::GetInstance();
-	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
+	//Renderer::GetInstance()->Register(layerTag,
+	//	[this]()
+	//	{
+	//		DrawCommands();
+	//	});
 
-	// GraphicsPipeline描画コマンド
-	mGraphicsPipeline->DrawCommand(blendMode);
-
-	// マテリアルの描画コマンド
-	MaterialDrawCommands();
-
-	// SRV設定
-	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
-	cmdList->SetGraphicsRootDescriptorTable(
-		startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
-
-	if (mParticleData->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_UNORDERED_ACCESS)
-	{
-		// GENERIC_READ -> UNORDERED_ACCESS に変更
-		renderBase->TransitionBufferState(
-			mParticleData->GetBufferResource(),
-			D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
-			D3D12_RESOURCE_STATE_GENERIC_READ);
-	}
-
-	cmdList->SetGraphicsRootDescriptorTable(
-		startIndex + 1, mParticleData->GetBufferResource()->srvHandle.gpu);
-
-	cmdList->DrawInstanced((uint32_t)mVertices.size(), 1, 0, 0);
+	DrawCommands();
 }
 
 // --- マテリアル関連 --------------------------------------------------- //
@@ -211,6 +191,39 @@ void GPUEmitter::CSMaterialDrawCommands()
 		cmdList->SetComputeRootDescriptorTable(
 			uavStartIndex + i + 1, mStructuredBuffers[i]->GetBufferResource()->uavHandle.gpu);
 	}
+}
+
+void GPUEmitter::DrawCommands()
+{
+	if (mTexture == nullptr) return;
+
+	RenderBase* renderBase = RenderBase::GetInstance();
+	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
+
+	// GraphicsPipeline描画コマンド
+	mGraphicsPipeline->DrawCommand(mBlendMode);
+
+	// マテリアルの描画コマンド
+	MaterialDrawCommands();
+
+	// SRV設定
+	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
+	cmdList->SetGraphicsRootDescriptorTable(
+		startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
+
+	if (mParticleData->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_UNORDERED_ACCESS)
+	{
+		// GENERIC_READ -> UNORDERED_ACCESS に変更
+		renderBase->TransitionBufferState(
+			mParticleData->GetBufferResource(),
+			D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+			D3D12_RESOURCE_STATE_GENERIC_READ);
+	}
+
+	cmdList->SetGraphicsRootDescriptorTable(
+		startIndex + 1, mParticleData->GetBufferResource()->srvHandle.gpu);
+
+	cmdList->DrawInstanced((uint32_t)mVertices.size(), 1, 0, 0);
 }
 
 // --- セッター --------------------------------------------------------

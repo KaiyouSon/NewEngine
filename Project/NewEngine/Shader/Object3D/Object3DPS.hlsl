@@ -16,17 +16,18 @@ float4 CalcShadowColor(V2P i, float4 color)
         
     // ライトビューでのスクリーン空間でのz値を計算する
     float z = i.spos.z;
+    float w = 1.0f / i.spos.w;
     
     if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
         shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
     {
-        float2 shadowValue = shadowMapTex.Sample(smp, shadowTexUV).rg;
+        float shadowValue = shadowMapTex.Sample(smp, shadowTexUV).r;
         
-        if (shadowValue.r < z && z <= 1.0f)
+        if (shadowValue + bias < z * w /* && z <= 1.0f*/)
         {
-            float depthSq = shadowValue.x * shadowValue.x;
+            float depthSq = shadowValue * shadowValue;
             
-            float variance = min(max(shadowValue.y - depthSq, 0.0001f), 1.0f);
+            float variance = min(max(shadowValue - depthSq, 0.0001f), 1.0f);
             
             float md = z - shadowValue.x;
             
@@ -56,7 +57,7 @@ float CalcShadow(float4 spos)
         shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
     {
         float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV).r;
-        if (shadowDepth < z)
+        if (shadowDepth + bias < z)
         {
             shadow *= 0.5f;
         }

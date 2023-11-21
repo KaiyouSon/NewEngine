@@ -96,6 +96,7 @@ cbuffer ConstantBufferDissolve : register(b6)
 cbuffer ConstantBufferShadow : register(b7)
 {
     uint isWriteShadow;
+    float bias;
 }
 
 struct Appdata

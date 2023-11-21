@@ -17,6 +17,7 @@ private:
 
 private:
 	State CheckDestroyLayer();
+	void AddLayerSetting();
 
 public:
 	void DrawDebugGui();

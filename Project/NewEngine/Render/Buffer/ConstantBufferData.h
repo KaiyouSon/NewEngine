@@ -188,7 +188,8 @@ namespace ConstantBufferData
 
 	struct CShadowMap
 	{
-		bool isWrite;
+		uint32_t isWrite;
+		float bias;
 	};
 
 	struct CRespawnTransition
@@ -205,9 +206,12 @@ namespace ConstantBufferData
 
 	struct CTransformGrass
 	{
-		Mat4 viewMat;
+		Mat4 viewProjMat;
+		Mat4 shadowMat;
 		Mat4 worldMat;
 		Mat4 billboardMat;
+		Vec3 cameraPos;
+		Vec3 lightCameraPos;
 	};
 
 	struct CTextureSizeData

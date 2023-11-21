@@ -12,8 +12,8 @@ Coffin::Coffin() :
 
 void Coffin::Init()
 {
-	mCoffinTop->SetisShadow(false, true);
-	mCoffinBottom->SetisShadow(false, true);
+	mCoffinTop->SetisShadow(true, true);
+	mCoffinBottom->SetisShadow(true, true);
 	mCoffinTop->isLighting = true;
 	mCoffinBottom->isLighting = true;
 

@@ -45,6 +45,7 @@ public:
 	bool isLighting;
 	bool isUseDissolve;
 	static bool isAllLighting;
+	static float sShadowBias;
 
 private:
 	void MaterialInit();

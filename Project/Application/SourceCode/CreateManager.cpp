@@ -289,7 +289,7 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Grass");
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
-	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Grass");
 
 	// 雲用

@@ -8,7 +8,7 @@ Wall::Wall() :
 
 void Wall::Init()
 {
-	mWall->SetisShadow(false, true);
+	mWall->SetisShadow(true, true);
 }
 
 void Wall::Update()

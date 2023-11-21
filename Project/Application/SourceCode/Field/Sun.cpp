@@ -23,7 +23,7 @@ void Sun::Update()
 void Sun::Draw()
 {
 	mSun->ExecuteCS(1625);
-	mSun->Draw();
+	mSun->Draw("Object3D");
 }
 
 void Sun::SetTransform(const Transform& transform)

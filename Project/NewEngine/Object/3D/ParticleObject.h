@@ -29,6 +29,7 @@ private:
 	GraphicsPipeline* mGraphicsPipeline;
 	ComputePipeline* mComputePipeline;
 	Billboard mBillboard;
+	BlendMode mBlendMode;
 
 private:
 	// パーティクル関連
@@ -52,12 +53,14 @@ private:
 	void CSMaterialTransfer();
 	void CSMaterialDrawCommands();
 
+	void DrawCommands();
+
 public:
 	ParticleObject();
 	~ParticleObject();
 	void ExecuteCS(const uint32_t threadX = 1, const uint32_t threadY = 1, const uint32_t threadZ = 1);
 	void Update(Transform* parent = nullptr);
-	void Draw(const BlendMode blendMode = BlendMode::Alpha);
+	void Draw(const std::string layerTag, const BlendMode blendMode = BlendMode::Alpha);
 
 public:
 	template<typename T>

@@ -46,6 +46,10 @@ void Player::PrevUpdate()
 	{
 		return;
 	}
+	else
+	{
+		mWeapon->SetisShadow(true);
+	}
 
 	mMoveVel = 0;
 

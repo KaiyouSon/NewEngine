@@ -38,7 +38,8 @@ void main(point V2G input[1] : SV_POSITION, inout TriangleStream<G2P> output)
         
         float4 vpos = input[0].pos + voffset;
         
-        element.pos = mul(mul(viewMat, worldMat), vpos);
+        element.pos = mul(mul(viewProjMat, worldMat), vpos);
+        element.spos = mul(mul(lightViewProjMat, worldMat), vpos);
         element.uv = uvArray[i];
         output.Append(element);
     }

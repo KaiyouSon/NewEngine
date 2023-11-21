@@ -48,5 +48,6 @@ public:
 	void SetChargeRate(const float chargeRate);
 	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 	void SetisActiveTrajectory(const bool isActiveTrajectory);
+	void SetisShadow(const bool isShadow);
 
 };

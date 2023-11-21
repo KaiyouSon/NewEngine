@@ -37,7 +37,7 @@ void AirEffect::Update()
 void AirEffect::Draw()
 {
 	mEmitter->ExecuteCS();
-	mEmitter->Draw();
+	mEmitter->Draw("Object3D");
 }
 
 void AirEffect::Execute(const Vec3 pos)

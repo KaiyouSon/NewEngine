@@ -41,7 +41,6 @@ private:
 	std::unique_ptr<PointLight> mPointLight;
 	std::unique_ptr<SpotLight> mSpotLight;
 
-
 private:
 	// シーン切り替えの処理
 	void SceneChangeUpdate();
