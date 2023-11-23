@@ -88,7 +88,7 @@ void DebugManager::DrawDebugGui()
 
 	Gui::EndWindow();
 
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
 
 	mMappingWindow->DrawDebugGui();
 	mRendererWindow->DrawDebugGui();

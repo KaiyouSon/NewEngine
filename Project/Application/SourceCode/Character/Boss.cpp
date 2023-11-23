@@ -45,10 +45,15 @@ void Boss::Update()
 		{
 			if (Key::GetKeyDown(DIK_D))
 			{
-				mHpGaugeParam.value = 0;
+				mHpGaugeParam.value = 10;
 			}
 
 		});
+
+	if (Key::GetKeyDown(DIK_D))
+	{
+		mHpGaugeParam.value = 10;
+	}
 
 	float disToPlayer = Vec3::Distance(mPlayer->GetPos(), mBoss->pos);
 	if (disToPlayer <= 150.f)

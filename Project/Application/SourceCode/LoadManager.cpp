@@ -103,7 +103,7 @@ void LoadManager::GameSceneTextureLoad()
 	TextureManager::LoadTexture("Trajectory.dds", "Trajectory");
 
 	// 草
-	TextureManager::LoadTexture("Grass/Weed.dds", "Weed");
+	TextureManager::LoadTexture("Grass/Weed.png", "Weed");
 	TextureManager::LoadTexture("Branch.dds", "Branch");
 
 	// 天球
@@ -192,7 +192,6 @@ void LoadManager::GameSceneTextureUnLoad()
 void LoadManager::GameSceneModelLoad()
 {
 	// フィールド
-	ModelManager::LoadObjModel("Ground", "Ground");
 	ModelManager::LoadObjModel("Skydome", "Skydome", true);
 	ModelManager::LoadObjModel("Cloud", "Cloud");
 	ModelManager::LoadObjModel("Tree", "Tree", true);

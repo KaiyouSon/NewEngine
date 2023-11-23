@@ -59,7 +59,7 @@ float CalcShadow(float4 spos)
         float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV).r;
         if (shadowDepth + bias < z)
         {
-            shadow *= 0.5f;
+            shadow *= 0.25f;
         }
     }
     

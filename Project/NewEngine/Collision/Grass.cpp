@@ -4,6 +4,13 @@
 using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
+CMaterialColor Grass::sMaterialColor =
+{
+	Color(140,135,70,255),
+	Color(60,60,60,255),
+	Color(185,175,40,255),
+};
+
 Grass::Grass() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
 	mVertexBuffer(std::make_unique <VertexBuffer<VGrass>>()),
@@ -19,7 +26,6 @@ Grass::Grass() :
 
 	// マテリアルの初期化
 	MaterialInit();
-
 }
 void Grass::GenerateGrassToSquare(const Vec2 size, const uint32_t maxNum)
 {
@@ -38,7 +44,8 @@ void Grass::GenerateGrassToSquare(const Vec2 size, const uint32_t maxNum)
 			Random::RangeF(-size.y,+size.y),
 		};
 
-		mVertices[i].scale = Random::RangeF(0.5f, 1.0f);
+		mVertices[i].scale.x = Random::RangeF(1.0f, 2.0f);
+		mVertices[i].scale.y = Random::RangeF(1.0f, 2.0f);
 
 		// タイム設定
 		mTimers[i].SetLimitTimer(359);
@@ -94,6 +101,8 @@ void Grass::Draw()
 	// マテリアルの描画コマンド
 	MaterialDrawCommands();
 
+	LightManager::GetInstance()->DrawCommand(3);
+
 	// SRVのセット
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, texture->GetBufferResource()->srvHandle.gpu);
@@ -124,6 +133,9 @@ void Grass::MaterialInit()
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
+	iConstantBuffer = std::make_unique<ConstantBuffer<CMaterialColor>>();
+	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+
 	// 初期化
 	mMaterial.Init();
 }
@@ -148,6 +160,15 @@ void Grass::MaterialTransfer()
 	// 色
 	CColor colorData = { color.To01() };
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[1].get(), colorData);
+
+	// マテリアル
+	CMaterialColor materialColorData =
+	{
+		sMaterialColor.ambient.To01(),
+		sMaterialColor.diffuse.To01(),
+		sMaterialColor.specular.To01(),
+	};
+	TransferDataToConstantBuffer(mMaterial.constantBuffers[2].get(), materialColorData);
 }
 void Grass::MaterialDrawCommands()
 {

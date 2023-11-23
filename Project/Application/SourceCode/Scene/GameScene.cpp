@@ -189,7 +189,6 @@ void GameScene::Update()
 		{
 			Camera::DebugCameraUpdate();
 		}
-
 	}
 
 	// シーン切り替えの処理
@@ -238,9 +237,19 @@ void GameScene::DrawDebugGui()
 
 	Gui::BeginWindow("Debug");
 
-	float bias = Object3D::sShadowBias;
-	Gui::DrawSlider1("Shadow Bias", bias, 0.0001f);
-	Object3D::sShadowBias = bias;
+	if (Gui::DrawCollapsingHeader("Grass") == true)
+	{
+		Gui::DrawColorEdit("Ambient", Grass::sMaterialColor.ambient);
+		Gui::DrawColorEdit("Diffuse", Grass::sMaterialColor.diffuse);
+		Gui::DrawColorEdit("Specular", Grass::sMaterialColor.specular);
+	}
+
+	if (Gui::DrawCollapsingHeader("ShadowMap") == true)
+	{
+		float bias = Object3D::sShadowBias;
+		Gui::DrawSlider1("Shadow Bias", bias, 0.0001f);
+		Object3D::sShadowBias = bias;
+	}
 
 	if (Gui::DrawCollapsingHeader("Fog") == true)
 	{
@@ -443,12 +452,12 @@ void GameScene::DrawCurrentSceneObject()
 	mField->DrawSkyIsLand();
 	mField->DrawSun();
 
-	//mField->DrawFog();
+	mField->DrawFog();
 	mPlayer->DrawModel();
 
 	mBoss->DrawModel();
 
 	EffectManager::GetInstance()->DrawEffect(false);
 
-	//mVolumetricFog->Draw();
+	mVolumetricFog->Draw();
 }

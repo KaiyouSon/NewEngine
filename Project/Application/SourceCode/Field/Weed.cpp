@@ -14,7 +14,7 @@ Weed::Weed() :
 void Weed::Init()
 {
 	float area = mGenerateSize.x * mGenerateSize.y;
-	mGrass->GenerateGrassToSquare(mGenerateSize, (uint32_t)(area * 4));
+	mGrass->GenerateGrassToSquare(mGenerateSize, (uint32_t)(area * 8));
 	mGrass->texture = TextureManager::GetTexture("Weed");
 }
 

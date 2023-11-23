@@ -31,7 +31,7 @@ ParticleObject::~ParticleObject()
 
 	auto* descriptorHeap = DescriptorHeapManager::GetDescriptorHeap("SRV");
 
-	// ビュー解放
+	// ビュー解放	(落ちる時ある)
 	descriptorHeap->DestroyView(mModel->mesh.vertexBuffer.GetBufferResource());
 	descriptorHeap->DestroyView(mParticleData->GetBufferResource());
 	for (uint32_t i = 0; i < mCSMaterial->structuredBuffers.size(); i++)

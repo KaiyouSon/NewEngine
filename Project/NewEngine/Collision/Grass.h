@@ -21,6 +21,7 @@ public:
 	Vec3 rot;
 	Color color;
 	Texture* texture;
+	static ConstantBufferData::CMaterialColor sMaterialColor;
 
 private:
 	void MaterialInit();
