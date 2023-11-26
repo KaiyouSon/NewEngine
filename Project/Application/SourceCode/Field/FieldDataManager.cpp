@@ -60,7 +60,9 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 			{
 				LoadTreeData(fieldData.get(), object);
 			}
-			else if (object["obj_name"] == "Weed")
+			else if (
+				object["obj_name"] == "Weed" ||
+				object["obj_name"] == "WeedToSphere")
 			{
 				LoadWeedData(fieldData.get(), object);
 			}
@@ -325,7 +327,14 @@ void FieldDataManager::LoadWeedData(FieldData* data, nlohmann::json jsonObj)
 		(float)transform["scaling"][2],
 	};
 	weed->SetPos(pos);
-	weed->SetGenerateSize(Vec2(scale.x, scale.z) / 2);
+	if (jsonObj["obj_name"] == "Weed")
+	{
+		weed->GenerateToSquare(Vec2(scale.x, scale.z) / 2);
+	}
+	else if (jsonObj["obj_name"] == "WeedToSphere")
+	{
+		weed->GenerateToSphere(scale.x / 2);
+	}
 
 	data->weeds.push_back(std::move(weed));
 }

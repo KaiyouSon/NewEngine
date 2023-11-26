@@ -25,6 +25,11 @@ PlayerBody::PlayerBody() :
 	mParts[(uint32_t)PartID::RightArm]->color = Color::red;
 	mParts[(uint32_t)PartID::LeftThigh]->color = Color::red;
 	mParts[(uint32_t)PartID::RightThigh]->color = Color::red;
+
+	mParts[(uint32_t)PartID::LeftHand]->scale = Vec3(0.99f, 1.0f, 0.99f);
+	mParts[(uint32_t)PartID::RightHand]->scale = Vec3(0.99f, 1.0f, 0.99f);
+	mParts[(uint32_t)PartID::LeftLeg]->scale = Vec3(0.99f, 1.0f, 0.99f);
+	mParts[(uint32_t)PartID::RightLeg]->scale = Vec3(0.99f, 1.0f, 0.99f);
 }
 
 void PlayerBody::Init()

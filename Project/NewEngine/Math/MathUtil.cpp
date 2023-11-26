@@ -320,6 +320,11 @@ Mat4 CalculateWorldMat(const Vec3 pos, const Vec3 scale, const Quaternion rot)
 	return result;
 }
 
+float CalcSphereArea(const float radius)
+{
+	return PI * radius * radius;
+}
+
 Vec3 operator+(const float num, const Vec3 v) { return { num + v.x,num + v.y,num + v.z }; }
 Vec3 operator-(const float num, const Vec3 v) { return { num - v.x,num - v.y,num - v.z }; }
 Vec3 operator*(const float num, const Vec3 v) { return { num * v.x,num * v.y,num * v.z }; }

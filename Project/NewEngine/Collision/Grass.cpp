@@ -6,9 +6,9 @@ using namespace ConstantBufferData;
 
 CMaterialColor Grass::sMaterialColor =
 {
-	Color(140,135,70,255),
-	Color(60,60,60,255),
-	Color(185,175,40,255),
+	Color(105,100,45,255),
+	Color(25,25,25,255),
+	Color(120,115,40,255),
 };
 
 Grass::Grass() :
@@ -27,8 +27,10 @@ Grass::Grass() :
 	// マテリアルの初期化
 	MaterialInit();
 }
-void Grass::GenerateGrassToSquare(const Vec2 size, const uint32_t maxNum)
+void Grass::GenerateGrassToSquare(const Vec2 size, const uint32_t density)
 {
+	uint32_t maxNum = (uint32_t)(size.Area() * density);
+
 	// 頂点バッファの生成
 	mVertices.resize(maxNum);
 	mVertexBuffer->Create(mVertices);
@@ -42,6 +44,37 @@ void Grass::GenerateGrassToSquare(const Vec2 size, const uint32_t maxNum)
 			Random::RangeF(-size.x,+size.x),
 			0.0f,
 			Random::RangeF(-size.y,+size.y),
+		};
+
+		mVertices[i].scale.x = Random::RangeF(1.0f, 2.0f);
+		mVertices[i].scale.y = Random::RangeF(1.0f, 2.0f);
+
+		// タイム設定
+		mTimers[i].SetLimitTimer(359);
+		mTimers[i].SetTimer(Random::Range(0, 359));
+		mTimers[i].GetTimer();
+	}
+}
+void Grass::GenerateGrassToSphere(const float radius, const uint32_t density)
+{
+	uint32_t maxNum = (uint32_t)(CalcSphereArea(radius) * density);
+
+	// 頂点バッファの生成
+	mVertices.resize(maxNum);
+	mVertexBuffer->Create(mVertices);
+
+	mTimers.resize(maxNum);
+
+	for (uint32_t i = 0; i < maxNum; i++)
+	{
+		float radian = Random::RangeRadian();
+		float randomRadius = Random::RangeF(0, radius);
+
+		mVertices[i].pos =
+		{
+			sinf(radian) * randomRadius,
+			0.0f,
+			cosf(radian) * randomRadius,
 		};
 
 		mVertices[i].scale.x = Random::RangeF(1.0f, 2.0f);

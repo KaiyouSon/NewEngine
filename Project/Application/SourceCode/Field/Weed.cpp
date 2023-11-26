@@ -1,5 +1,7 @@
 #include "Weed.h"
 
+uint32_t Weed::sDensity = 8;
+
 Weed::Weed() :
 	mGrass(std::make_unique<Grass>())
 {
@@ -8,14 +10,11 @@ Weed::Weed() :
 	mGrass->color = Color(0xb8b137);
 	mGrass->SetBillboardType(BillboardType::YAxisBillboard);
 
-	mGenerateSize = 1;
+	mGrass->texture = TextureManager::GetTexture("Weed");
 }
 
 void Weed::Init()
 {
-	float area = mGenerateSize.x * mGenerateSize.y;
-	mGrass->GenerateGrassToSquare(mGenerateSize, (uint32_t)(area * 8));
-	mGrass->texture = TextureManager::GetTexture("Weed");
 }
 
 void Weed::Update()
@@ -33,13 +32,17 @@ void Weed::SetPos(const Vec3 pos)
 	mGrass->pos = pos;
 }
 
-void Weed::SetGenerateSize(const Vec2 size)
-{
-	mGenerateSize = size;
-}
-
 void Weed::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
 	mGrass->SetGraphicsPipeline(graphicsPipeline);
 }
 
+void Weed::GenerateToSquare(const Vec2 size)
+{
+	mGrass->GenerateGrassToSquare(size, sDensity);
+}
+
+void Weed::GenerateToSphere(const float radius)
+{
+	mGrass->GenerateGrassToSphere(radius, sDensity / 4);
+}

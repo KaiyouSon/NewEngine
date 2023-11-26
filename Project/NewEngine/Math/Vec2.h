@@ -27,6 +27,7 @@ struct Vec2
     // 長さを取得
     float Length() const;   // ベクトルの長さを返す
     Vec2 Norm() const;      // 正規化ベクトルを返す
+    float Area() const;     // 面積を返す
 
     // 静的メソッド
     static float Dot(const Vec2 v1, const Vec2 v2);        // 二つのベクトルの内積

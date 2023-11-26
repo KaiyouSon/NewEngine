@@ -30,7 +30,8 @@ private:
 
 public:
 	Grass();
-	void GenerateGrassToSquare(const Vec2 size, const uint32_t maxNum);
+	void GenerateGrassToSquare(const Vec2 size, const uint32_t density);
+	void GenerateGrassToSphere(const float radius, const uint32_t density);
 	void Update(Transform* parent = nullptr);
 	void Draw();
 

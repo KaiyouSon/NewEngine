@@ -49,6 +49,8 @@ Mat4 ConvertViewportMat(Viewport& viewport);
 Mat4 CalculateWorldMat(const Vec3 pos, const Vec3 scale, const Vec3 rot);
 Mat4 CalculateWorldMat(const Vec3 pos, const Vec3 scale, const Quaternion rot);
 
+float CalcSphereArea(const float radius);
+
 Vec3 operator+(const float num, const Vec3 v);
 Vec3 operator-(const float num, const Vec3 v);
 Vec3 operator*(const float num, const Vec3 v);

@@ -105,8 +105,12 @@ PSOutput main(V2P i)// : SV_TARGET
     
             // スペキュラー
             float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // 頂点から視点へのベクトル
-            float3 reflectDir = normalize(-directionalLight[index].vec + 2 * dotLightNormal * i.normal);
-            float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
+            float3 halfVector = normalize(-directionalLight[index].vec + eyeDir);
+            float nDoth = dot(normalize(i.normal), halfVector);
+            float3 specular = pow(saturate(nDoth), shininess) * material.specular.rgb;
+            
+            //float3 reflectDir = normalize(-directionalLight[index].vec + 2 * dotLightNormal * i.normal);
+            //float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
     
             adsColor.rgb += (ambient + diffuse + specular) * directionalLight[index].color.rgb;
         }
@@ -167,7 +171,7 @@ PSOutput main(V2P i)// : SV_TARGET
             float cosAngle = dot(lightVec, spotLight[index].vec);
             float falloffFactor = saturate((cosAngle - spotLight[index].cosAngle.y) / (spotLight[index].cosAngle.x - spotLight[index].cosAngle.y));
             
-            float atten = spotLight[index].decay * ((1 - s2) * (1 - s2)); // / (1 + falloffFactor * s);
+            float atten = spotLight[index].decay * ((1 - s2) * (1 - s2));
             atten *= falloffFactor;
             
             // ライトに向かうベクトルと法線の内積
@@ -190,7 +194,6 @@ PSOutput main(V2P i)// : SV_TARGET
     
     
     float shadow = 1.0f;
-   //float4 shadowColor = 1.0f;
     if (isWriteShadow == true)
     {
         shadow = CalcShadow(i.spos);
