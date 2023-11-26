@@ -10,9 +10,7 @@ public:
 		// パスの種類
 		HighLumi,
 		GaussianBlur,
-		GaussianBlurHalf,
 		Bloom,
-		Bloom1,
 		Target,
 
 		Size

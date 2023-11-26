@@ -17,9 +17,7 @@ void LoadManager::TitleSceneLoad()
 	// ブルーム用
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomHighLumi");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomGaussianBlur");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080) / 4, 1, "BloomGaussianBlurHalf");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080) / 4, 1, "Bloom1");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomTarget");
 }
 void LoadManager::TitleSceneUnLoad()
@@ -32,9 +30,7 @@ void LoadManager::TitleSceneUnLoad()
 	// ブルーム用
 	TextureManager::DestroyRenderTexture("BloomHighLumi");
 	TextureManager::DestroyRenderTexture("BloomGaussianBlur");
-	TextureManager::DestroyRenderTexture("BloomGaussianBlurHalf");
 	TextureManager::DestroyRenderTexture("Bloom");
-	TextureManager::DestroyRenderTexture("Bloom1");
 	TextureManager::DestroyRenderTexture("BloomTarget");
 }
 
@@ -112,9 +108,7 @@ void LoadManager::GameSceneTextureLoad()
 	// ブルーム用
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomHighLumi");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomGaussianBlur");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080) / 4, 1, "BloomGaussianBlurHalf");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080) / 4, 1, "Bloom1");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomTarget");
 
 	// ラジアルブラー用
@@ -179,9 +173,7 @@ void LoadManager::GameSceneTextureUnLoad()
 	// エフェクトブルーム用
 	TextureManager::DestroyRenderTexture("BloomHighLumi");
 	TextureManager::DestroyRenderTexture("BloomGaussianBlur");
-	TextureManager::DestroyRenderTexture("BloomGaussianBlurHalf");
 	TextureManager::DestroyRenderTexture("Bloom");
-	TextureManager::DestroyRenderTexture("Bloom1");
 	TextureManager::DestroyRenderTexture("BloomTarget");
 
 	// ボリュームテクスチャ
