@@ -10,9 +10,10 @@ cbuffer ConstBufferDataMaterial : register(b1)
     float4 color; // 色(RGBA)
 };
 
-// 色
+// ラジアルブラーデータ
 cbuffer ConstBufferDataRadialBlur : register(b2)
 {
+    float2 centerPos;
     float strength;
     float loopNum;
 };

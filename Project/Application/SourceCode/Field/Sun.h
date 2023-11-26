@@ -14,5 +14,8 @@ public:
 
 public:
 	void SetTransform(const Transform& transform);
+
+public:
+	Vec3 GetPos();
 };
 

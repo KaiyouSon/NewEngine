@@ -32,3 +32,8 @@ void Sun::SetTransform(const Transform& transform)
 	mSun->scale = transform.scale;
 	mSun->rot = transform.rot;
 }
+
+Vec3 Sun::GetPos()
+{
+	return mSun->pos;
+}

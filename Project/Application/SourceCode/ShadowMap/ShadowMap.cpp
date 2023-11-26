@@ -44,6 +44,10 @@ void ShadowMap::Update(const Vec3 lightPos)
 {
 	lightCamera.pos = lightPos;
 
+	float pitch = atan2f(lightCamera.pos.y, -lightCamera.pos.z);
+	float yaw = atan2f(lightCamera.pos.x, lightCamera.pos.z);
+	lightCamera.rot = Vec3(pitch, yaw, 0);
+
 	// カメラの設定
 	lightCamera.Update();
 

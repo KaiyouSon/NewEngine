@@ -112,7 +112,10 @@ void LoadManager::GameSceneTextureLoad()
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomTarget");
 
 	// ラジアルブラー用
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "RadianBlur");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "RadialBlurTarget");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "RadialBlurMask");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "RadialBlurFinish");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "RadialBlurScene");
 
 	// ボリュームテクスチャ
 	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice0.dds", "VolumeTexture0");
@@ -175,6 +178,9 @@ void LoadManager::GameSceneTextureUnLoad()
 	TextureManager::DestroyRenderTexture("BloomGaussianBlur");
 	TextureManager::DestroyRenderTexture("Bloom");
 	TextureManager::DestroyRenderTexture("BloomTarget");
+
+	// ラジアルブラー
+	TextureManager::DestroyRenderTexture("RadialBlur");
 
 	// ボリュームテクスチャ
 	TextureManager::DestroyVolumeTexture("VolumeTexture0");

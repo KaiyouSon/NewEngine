@@ -16,7 +16,6 @@ void BossBody::Init()
 	for (uint32_t i = 1; i < mParts.size(); i++)
 	{
 		mParts[i]->isUseDissolve = true;
-		mParts[i]->colorPower = 5;
 		mParts[i]->dissolveColor = Color(255, 30, 0, 255);
 
 		mParts[i]->SetisShadow(false, true);
@@ -27,7 +26,7 @@ void BossBody::Init()
 			i != (uint32_t)PartID::LeftArm &&
 			i != (uint32_t)PartID::RightArm)
 		{
-			mParts[i]->color = Color::black;
+			mParts[i]->color = Color(1, 0, 0, 255);
 		}
 	}
 

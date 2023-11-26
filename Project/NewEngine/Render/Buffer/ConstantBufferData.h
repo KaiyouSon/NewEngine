@@ -168,6 +168,7 @@ namespace ConstantBufferData
 
 	struct CRadialBlur
 	{
+		Vec2 centerPos;
 		float strength = 0.5f;
 		float loopNum = 8.f;
 	};

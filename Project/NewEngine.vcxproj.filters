@@ -193,14 +193,8 @@
     <Filter Include="Shader\Application\RespawnPoint\Rhombus">
       <UniqueIdentifier>{1abab86d-546b-4066-843d-330619fd51ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\Application\ShaderMap">
-      <UniqueIdentifier>{07f3a72f-efb1-48ef-b187-562e4f30b081}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader\Application\RespawnPoint\Transition">
       <UniqueIdentifier>{c72fd087-92e7-4d7d-afbd-8fe369dd9ef9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shader\Application\GaussianBlur">
-      <UniqueIdentifier>{e48727b2-0d2f-400e-897c-ffcc0bb9f24a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Source\ShadowMap">
       <UniqueIdentifier>{87c7ff0d-2214-4104-9e56-a045ef8fbf69}</UniqueIdentifier>
@@ -304,20 +298,11 @@
     <Filter Include="Application\Source\Weapon">
       <UniqueIdentifier>{7b2f016d-4e5c-4324-8195-ffed8019e25c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\Application\Vignette">
-      <UniqueIdentifier>{8860517a-80d9-4c0a-b4a2-33dbda29c0f3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Source\PostEffect">
       <UniqueIdentifier>{b2eeff48-1288-4ca2-925d-7923718b908d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Header\PostEffect">
       <UniqueIdentifier>{d23e5dc4-a28f-4e2e-a7e8-c5bda6eb47a8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shader\Application\Composite">
-      <UniqueIdentifier>{05e019e1-116d-4440-ae10-a24709307598}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shader\Application\HighLumi">
-      <UniqueIdentifier>{58bf5c5e-1c46-431e-9006-44fb0dc13d76}</UniqueIdentifier>
     </Filter>
     <Filter Include="Shader\Engine\PostEffect">
       <UniqueIdentifier>{8c0398ce-464f-466e-9ace-4048e9dc0cbc}</UniqueIdentifier>
@@ -385,9 +370,6 @@
     <Filter Include="Shader\Application\PonDeRing">
       <UniqueIdentifier>{7880dd69-ece2-4e34-bfe2-4e901ce1f1b5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\Application\RadialBlur">
-      <UniqueIdentifier>{26d8d7a7-647c-4ac3-8041-3f48443a2dc7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader\Application\Effect\AttackExplosionEffect">
       <UniqueIdentifier>{012ba14f-1ea3-41c5-80a6-34f6087742de}</UniqueIdentifier>
     </Filter>
@@ -396,6 +378,27 @@
     </Filter>
     <Filter Include="Shader\Application\WorldVolumetricFog">
       <UniqueIdentifier>{5d5e13c5-8e36-4257-b900-5c1ae5a2a167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\PostEffect">
+      <UniqueIdentifier>{c6dd9dc3-1f0e-46c7-ac45-5a36be7c0dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\PostEffect\Composite">
+      <UniqueIdentifier>{05e019e1-116d-4440-ae10-a24709307598}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\PostEffect\GaussianBlur">
+      <UniqueIdentifier>{e48727b2-0d2f-400e-897c-ffcc0bb9f24a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\PostEffect\HighLumi">
+      <UniqueIdentifier>{58bf5c5e-1c46-431e-9006-44fb0dc13d76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\PostEffect\RadialBlur">
+      <UniqueIdentifier>{26d8d7a7-647c-4ac3-8041-3f48443a2dc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\ShaderMap">
+      <UniqueIdentifier>{07f3a72f-efb1-48ef-b187-562e4f30b081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\PostEffect\Vignette">
+      <UniqueIdentifier>{8860517a-80d9-4c0a-b4a2-33dbda29c0f3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1504,8 +1507,8 @@
     <None Include="Application\Shader\RespawnTransition\RespawnTransition.hlsli">
       <Filter>Shader\Application\RespawnPoint\Transition</Filter>
     </None>
-    <None Include="Application\Shader\GaussianBlur\GaussianBlur.hlsli">
-      <Filter>Shader\Application\GaussianBlur</Filter>
+    <None Include="Application\Shader\PostEffect\GaussianBlur\GaussianBlur.hlsli">
+      <Filter>Shader\Application\PostEffect\GaussianBlur</Filter>
     </None>
     <None Include="Application\Shader\Branch\Branch.hlsli">
       <Filter>Shader\Application\Branch</Filter>
@@ -1547,14 +1550,14 @@
     <None Include="NewEngine\Shader\VolumetricFog\VolumetricFog.hlsli">
       <Filter>Shader\Engine\VolumetricFog</Filter>
     </None>
-    <None Include="Application\Shader\Vignette\Vignette.hlsli">
-      <Filter>Shader\Application\Vignette</Filter>
+    <None Include="Application\Shader\PostEffect\Vignette\Vignette.hlsli">
+      <Filter>Shader\Application\PostEffect\Vignette</Filter>
     </None>
-    <None Include="Application\Shader\Composite\Composite.hlsli">
-      <Filter>Shader\Application\Composite</Filter>
+    <None Include="Application\Shader\PostEffect\Composite\Composite.hlsli">
+      <Filter>Shader\Application\PostEffect\Composite</Filter>
     </None>
-    <None Include="Application\Shader\HighLumi\HighLumi.hlsli">
-      <Filter>Shader\Application\HighLumi</Filter>
+    <None Include="Application\Shader\PostEffect\HighLumi\HighLumi.hlsli">
+      <Filter>Shader\Application\PostEffect\HighLumi</Filter>
     </None>
     <None Include="Application\Shader\Rhombus\Rhombus.hlsli">
       <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
@@ -1568,8 +1571,8 @@
     <None Include="NewEngine\Shader\ParticleObject\ParticleObject.hlsli">
       <Filter>Shader\Engine\ParticleObject</Filter>
     </None>
-    <None Include="Application\Shader\RadialBlur\RadialBlur.hlsli">
-      <Filter>Shader\Application\RadialBlur</Filter>
+    <None Include="Application\Shader\PostEffect\RadialBlur\RadialBlur.hlsli">
+      <Filter>Shader\Application\PostEffect\RadialBlur</Filter>
     </None>
     <None Include="Application\Shader\WorldVolumetricFog\WorldVolumetricFog.hlsli">
       <Filter>Shader\Application\WorldVolumetricFog</Filter>
@@ -1612,11 +1615,11 @@
     <FxCompile Include="Application\Shader\RespawnTransition\RespawnTransitionVS.hlsl">
       <Filter>Shader\Application\RespawnPoint\Transition</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\GaussianBlur\GaussianBlurPS.hlsl">
-      <Filter>Shader\Application\GaussianBlur</Filter>
+    <FxCompile Include="Application\Shader\PostEffect\GaussianBlur\GaussianBlurPS.hlsl">
+      <Filter>Shader\Application\PostEffect\GaussianBlur</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\GaussianBlur\GaussianBlurVS.hlsl">
-      <Filter>Shader\Application\GaussianBlur</Filter>
+    <FxCompile Include="Application\Shader\PostEffect\GaussianBlur\GaussianBlurVS.hlsl">
+      <Filter>Shader\Application\PostEffect\GaussianBlur</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\Branch\BranchVS.hlsl">
       <Filter>Shader\Application\Branch</Filter>
@@ -1723,23 +1726,23 @@
     <FxCompile Include="Application\Shader\Effect\LogoExplosionEffect\LogoExplosionEffectVS.hlsl">
       <Filter>Shader\Application\Effect\LogoExplosionEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Vignette\VignettePS.hlsl">
-      <Filter>Shader\Application\Vignette</Filter>
+    <FxCompile Include="Application\Shader\PostEffect\Vignette\VignettePS.hlsl">
+      <Filter>Shader\Application\PostEffect\Vignette</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Vignette\VignetteVS.hlsl">
-      <Filter>Shader\Application\Vignette</Filter>
+    <FxCompile Include="Application\Shader\PostEffect\Vignette\VignetteVS.hlsl">
+      <Filter>Shader\Application\PostEffect\Vignette</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Composite\CompositePS.hlsl">
-      <Filter>Shader\Application\Composite</Filter>
+    <FxCompile Include="Application\Shader\PostEffect\Composite\CompositePS.hlsl">
+      <Filter>Shader\Application\PostEffect\Composite</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Composite\CompositeVS.hlsl">
-      <Filter>Shader\Application\Composite</Filter>
+    <FxCompile Include="Application\Shader\PostEffect\Composite\CompositeVS.hlsl">
+      <Filter>Shader\Application\PostEffect\Composite</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\HighLumi\HighLumiPS.hlsl">
-      <Filter>Shader\Application\HighLumi</Filter>
+    <FxCompile Include="Application\Shader\PostEffect\HighLumi\HighLumiPS.hlsl">
+      <Filter>Shader\Application\PostEffect\HighLumi</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\HighLumi\HighLumiVS.hlsl">
-      <Filter>Shader\Application\HighLumi</Filter>
+    <FxCompile Include="Application\Shader\PostEffect\HighLumi\HighLumiVS.hlsl">
+      <Filter>Shader\Application\PostEffect\HighLumi</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\Effect\LeadEffect\LeadEffectInitCS.hlsl">
       <Filter>Shader\Application\Effect\LeadEffect</Filter>
@@ -1810,11 +1813,11 @@
     <FxCompile Include="Application\Shader\PonDeRing\PonDeRingVS.hlsl">
       <Filter>Shader\Application\PonDeRing</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RadialBlur\RadialBlurVS.hlsl">
-      <Filter>Shader\Application\RadialBlur</Filter>
+    <FxCompile Include="Application\Shader\PostEffect\RadialBlur\RadialBlurVS.hlsl">
+      <Filter>Shader\Application\PostEffect\RadialBlur</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RadialBlur\RadialBlurPS.hlsl">
-      <Filter>Shader\Application\RadialBlur</Filter>
+    <FxCompile Include="Application\Shader\PostEffect\RadialBlur\RadialBlurPS.hlsl">
+      <Filter>Shader\Application\PostEffect\RadialBlur</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\Effect\AttackExplosionEffect\AttackExplosionEffectInitCS.hlsl">
       <Filter>Shader\Application\Effect\AttackExplosionEffect</Filter>

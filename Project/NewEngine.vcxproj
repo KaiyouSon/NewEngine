@@ -493,11 +493,11 @@
     <None Include=".editorconfig" />
     <None Include="Application\Shader\Branch\Branch.hlsli" />
     <None Include="Application\Shader\Cloud\Cloud.hlsli" />
-    <None Include="Application\Shader\Composite\Composite.hlsli" />
+    <None Include="Application\Shader\PostEffect\Composite\Composite.hlsli" />
     <None Include="Application\Shader\Grass\Grass.hlsli" />
-    <None Include="Application\Shader\HighLumi\HighLumi.hlsli" />
-    <None Include="Application\Shader\GaussianBlur\GaussianBlur.hlsli" />
-    <None Include="Application\Shader\RadialBlur\RadialBlur.hlsli" />
+    <None Include="Application\Shader\PostEffect\HighLumi\HighLumi.hlsli" />
+    <None Include="Application\Shader\PostEffect\GaussianBlur\GaussianBlur.hlsli" />
+    <None Include="Application\Shader\PostEffect\RadialBlur\RadialBlur.hlsli" />
     <None Include="Application\Shader\RespawnTransition\RespawnTransition.hlsli" />
     <None Include="Application\Shader\Rhombus\Rhombus.hlsli" />
     <None Include="Application\Shader\Ripple\Ripple.hlsli" />
@@ -505,7 +505,7 @@
     <None Include="Application\Shader\ShadowObj\ShadowObj.hlsli" />
     <None Include="Application\Shader\Skydome\Skydome.hlsli" />
     <None Include="Application\Shader\Trajectory\Trajectory.hlsli" />
-    <None Include="Application\Shader\Vignette\Vignette.hlsli" />
+    <None Include="Application\Shader\PostEffect\Vignette\Vignette.hlsli" />
     <None Include="Application\Shader\WorldVolumetricFog\WorldVolumetricFog.hlsli" />
     <None Include="NewEngine\Shader\Blur.hlsli" />
     <None Include="NewEngine\Shader\ParticleObject\ParticleObject.hlsli" />
@@ -616,11 +616,11 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Composite\CompositePS.hlsl">
+    <FxCompile Include="Application\Shader\PostEffect\Composite\CompositePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Composite\CompositeVS.hlsl">
+    <FxCompile Include="Application\Shader\PostEffect\Composite\CompositeVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
@@ -694,25 +694,25 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="Application\Shader\HighLumi\HighLumiPS.hlsl">
+    <FxCompile Include="Application\Shader\PostEffect\HighLumi\HighLumiPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Application\Shader\HighLumi\HighLumiVS.hlsl">
+    <FxCompile Include="Application\Shader\PostEffect\HighLumi\HighLumiVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Application\Shader\GaussianBlur\GaussianBlurPS.hlsl">
+    <FxCompile Include="Application\Shader\PostEffect\GaussianBlur\GaussianBlurPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Application\Shader\GaussianBlur\GaussianBlurVS.hlsl">
+    <FxCompile Include="Application\Shader\PostEffect\GaussianBlur\GaussianBlurVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
@@ -736,13 +736,13 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RadialBlur\RadialBlurPS.hlsl">
+    <FxCompile Include="Application\Shader\PostEffect\RadialBlur\RadialBlurPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RadialBlur\RadialBlurVS.hlsl">
+    <FxCompile Include="Application\Shader\PostEffect\RadialBlur\RadialBlurVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
@@ -830,11 +830,11 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Vignette\VignettePS.hlsl">
+    <FxCompile Include="Application\Shader\PostEffect\Vignette\VignettePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Vignette\VignetteVS.hlsl">
+    <FxCompile Include="Application\Shader\PostEffect\Vignette\VignetteVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>

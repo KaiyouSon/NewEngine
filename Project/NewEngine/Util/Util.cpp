@@ -60,7 +60,7 @@ Vec2 WorldToScreen(const Vec3 worldPos)
 		ConvertViewportMat(*RenderBase::GetInstance()->GetViewport());
 
 	Mat4 finalMat =
-		Camera::current.GetViewLookAtMat() *
+		Camera::current.GetViewLookToMat() *
 		Camera::current.GetPerspectiveProjectionMat() *
 		viewportMat;
 

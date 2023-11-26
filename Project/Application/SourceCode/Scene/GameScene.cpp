@@ -86,7 +86,7 @@ void GameScene::Init()
 	CollisionManager::GetInstance()->SetUIManager(mUiManager.get());
 	CollisionManager::GetInstance()->SetMovieEvent(mMovieEvent.get());
 
-	mDirectionalLight->pos = Vec3(-400, 400, -100);
+	mDirectionalLight->pos = Vec3(100, 220, 200);
 
 	mMovieEvent->Init();
 	mMovieEvent->SetPlayer(mPlayer.get());
@@ -169,11 +169,14 @@ void GameScene::Update()
 		mPlayer->PostUpdate();
 	}
 
+	mPostEffectManager->SetRadialBlurCenterPos(mField->GetFieldData()->suns[0]->GetPos());
+
 	mField->Update();
 	mSkydome->Update();
 	mMenuManager->Update();
 	mPostEffectManager->Update();
 	mVolumetricFog->Update();
+
 
 	ShadowMap::GetInstance()->Update(mDirectionalLight->pos);
 	EffectManager::GetInstance()->Update();
@@ -199,6 +202,7 @@ void GameScene::DrawPass()
 	ShadowMap::GetInstance()->RenderTextureSetting();
 
 	std::function<void()> targetDrawFunc;
+	std::function<void()> maskDrawFunc;
 	std::function<void()> sceneDrawFunc;
 
 	// --- 天球にベネットをかけるパス ------------------------------//
@@ -209,6 +213,28 @@ void GameScene::DrawPass()
 	};
 	mPostEffectManager->SkydomeVignetteDrawPass(targetDrawFunc);
 
+	// ラムダ式で代入
+	targetDrawFunc = [this]()
+	{
+		mField->DrawSun();
+	};
+	maskDrawFunc = [this]()
+	{
+		mField->DrawModel();
+		mField->DrawSkyIsLand();
+
+		mPlayer->DrawModel();
+
+		mBoss->DrawModel();
+
+		EffectManager::GetInstance()->DrawEffect(false);
+	};
+	sceneDrawFunc = [this]()
+	{
+		DrawCurrentSceneObject();
+	};
+	mPostEffectManager->RadialBlurDrawPass(targetDrawFunc, maskDrawFunc, sceneDrawFunc);
+
 	// --- エフェクトにブルームをかけるパス ------------------------//
 	// ラムダ式で代入
 	targetDrawFunc = [this]()
@@ -217,7 +243,8 @@ void GameScene::DrawPass()
 	};
 	sceneDrawFunc = [this]()
 	{
-		DrawCurrentSceneObject();
+		mPostEffectManager->DrawRadialBlur();
+		mVolumetricFog->Draw();
 	};
 	mPostEffectManager->EffectBloomDrawPass(targetDrawFunc, sceneDrawFunc);
 }
@@ -459,5 +486,5 @@ void GameScene::DrawCurrentSceneObject()
 
 	EffectManager::GetInstance()->DrawEffect(false);
 
-	mVolumetricFog->Draw();
+	//mVolumetricFog->Draw();
 }

@@ -3,7 +3,8 @@
 
 PostEffectManager::PostEffectManager() :
 	mEffectBloom(std::make_unique<Bloom>()),
-	mSkydomeVignette(std::make_unique<Vignette>())
+	mSkydomeVignette(std::make_unique<Vignette>()),
+	mRadialBlur(std::make_unique<RadialBlur>())
 {
 }
 
@@ -15,10 +16,13 @@ void PostEffectManager::Update()
 {
 	mSkydomeVignette->Update();
 	mEffectBloom->Update();
+	mRadialBlur->Update();
 }
 
 void PostEffectManager::DrawDebugGui()
 {
+	mRadialBlur->DrawDebugGui();
+
 	Gui::BeginWindow("PostEffect");
 	if (Gui::DrawCollapsingHeader("Bloom"))
 	{
@@ -40,10 +44,25 @@ void PostEffectManager::DrawEffectBloom()
 	mEffectBloom->DrawPostEffect();
 }
 
+// ラジアルブラー
+void PostEffectManager::DrawRadialBlur()
+{
+	mRadialBlur->DrawPostEffect();
+	//mRadialBlur->DrawPass(RadialBlur::PassType::Target);
+	//mRadialBlur->DrawPass(RadialBlur::PassType::Scene);
+}
+
 // ゲッター
 Bloom* PostEffectManager::GetEffectBloom()
 {
 	return mEffectBloom.get();
+}
+
+void PostEffectManager::SetRadialBlurCenterPos(const Vec3 worldPos)
+{
+	Vec2 centerPos = WorldToScreen(worldPos);
+	Vec2 uvPos = centerPos / GetWindowSize();
+	mRadialBlur->SetCenterPos(uvPos);
 }
 
 ///--- パスの設定 ------------------------------------------------------------------------------------------------ ///
@@ -87,5 +106,27 @@ void PostEffectManager::EffectBloomDrawPass(
 	mEffectBloom->PrevSceneDraw(Bloom::PassType::Target);
 	sceneDrawFunc();
 	mEffectBloom->PostSceneDraw(Bloom::PassType::Target);
+}
+
+void PostEffectManager::RadialBlurDrawPass(
+	const std::function<void()>& targetDrawFunc,
+	const std::function<void()>& maskDrawFunc,
+	const std::function<void()>& sceneDrawFunc)
+{
+	mRadialBlur->PrevSceneDraw(RadialBlur::PassType::Target);
+	targetDrawFunc();
+	mRadialBlur->PostSceneDraw(RadialBlur::PassType::Target);
+
+	mRadialBlur->PrevSceneDraw(RadialBlur::PassType::Mask);
+	maskDrawFunc();
+	mRadialBlur->PostSceneDraw(RadialBlur::PassType::Mask);
+
+	mRadialBlur->PrevSceneDraw(RadialBlur::PassType::Finish);
+	mRadialBlur->DrawPass(RadialBlur::PassType::Target);
+	mRadialBlur->PostSceneDraw(RadialBlur::PassType::Finish);
+
+	mRadialBlur->PrevSceneDraw(RadialBlur::PassType::Scene);
+	sceneDrawFunc();
+	mRadialBlur->PostSceneDraw(RadialBlur::PassType::Scene);
 }
 
