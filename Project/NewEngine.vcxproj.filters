@@ -1843,5 +1843,8 @@
     <FxCompile Include="Application\Shader\WorldVolumetricFog\WorldVolumetricFogPS.hlsl">
       <Filter>Shader\Application\WorldVolumetricFog</Filter>
     </FxCompile>
+    <FxCompile Include="Application\Shader\Grass\GrassCS.hlsl">
+      <Filter>Shader\Application\Grass</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

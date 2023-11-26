@@ -11,6 +11,7 @@ private:
 	Transform mTransform;
 	Transform* mParent;
 	Material mMaterial;
+	std::unique_ptr<Material> mCSMaterial;
 	GraphicsPipeline* mGraphicsPipeline;
 	Billboard mBillboard;
 	DepthTexture* mDepthTex;

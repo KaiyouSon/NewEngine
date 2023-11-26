@@ -57,8 +57,9 @@ float4 CalcLighting(G2P i)
     
             // スペキュラー
             float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // 頂点から視点へのベクトル
-            float3 reflectDir = normalize(-directionalLight[index].vec + 2 * dotLightNormal * i.normal);
-            float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
+            float3 halfVector = normalize(-directionalLight[index].vec + eyeDir);
+            float nDoth = dot(normalize(i.normal), halfVector);
+            float3 specular = pow(saturate(nDoth), shininess) * material.specular.rgb;
     
             adsColor.rgb += (ambient + diffuse + specular) * directionalLight[index].color.rgb;
         }

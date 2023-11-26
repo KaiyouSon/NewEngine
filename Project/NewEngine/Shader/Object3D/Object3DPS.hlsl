@@ -1,9 +1,9 @@
 #include "Object3D.hlsli"
 
-Texture2D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
-Texture2D<float4> dissolveTex : register(t1); // 0番スロットに設定されたテクスチャ
-Texture2D<float4> shadowMapTex : register(t2); // 0番スロットに設定されたテクスチャ
-SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
+Texture2D<float4> tex : register(t0);
+Texture2D<float4> dissolveTex : register(t1);
+Texture2D<float4> shadowMapTex : register(t2);
+SamplerState smp : register(s0);
 
 float4 CalcShadowColor(V2P i, float4 color)
 {
@@ -46,24 +46,71 @@ float CalcShadow(float4 spos)
 {
     float shadow = 1;
     
+    // ライトビューでのスクリーン空間でのz値を計算する
+    float z = spos.z / spos.w;
+    
+    // シャドウマップのUVを算出
     float2 shadowTexUV = spos.xy / spos.w;
     shadowTexUV *= float2(0.5f, -0.5f);
     shadowTexUV += 0.5f;
-        
-    // ライトビューでのスクリーン空間でのz値を計算する
-    float z = spos.z / spos.w;
-        
-    if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
-        shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
-    {
-        float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV).r;
-        if (shadowDepth + bias < z)
-        {
-            shadow *= 0.25f;
-        }
-    }
     
+    uint numSamples = 32;
+    float shadowFactor = 0;
+    // ソフトシャドウのために、複数のサンプルを使って平均をとる
+    for (int i = 0; i < numSamples; ++i)
+    {
+        // サンプルポイントを生成
+        float dis = 0.0005f;
+        float radian = numSamples * (3.14159265359 / 180.0);
+        float2 sampleOffset = normalize(float2(cos(i * radian), sin(i * radian))) * dis;
+        
+        float2 uv = shadowTexUV + sampleOffset;
+        
+        if (uv.x > 0.01f && uv.x < 0.99f &&
+            uv.y > 0.01f && uv.y < 0.99f)
+        {
+        // シャドウ マップから深度をサンプリング
+            float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV + sampleOffset).r;
+            if (shadowDepth + bias < z)
+            {
+                shadowFactor += 0.75f;
+            }
+        }
+        
+        // ピクセルの深度とサンプリングした深度を比較してシャドウ ファクターを計算
+        //shadowFactor += (pixelDepth - softShadowDepth < shadowBias) ? 0.0f : 1.0f;
+    }
+
+    // 平均をとって正規化
+    shadowFactor /= numSamples;
+
+    // サンプル数で割って正規化
+    shadow = 1 - shadowFactor;
+
+
     return shadow;
+    
+    
+    //float shadow = 1;
+    
+    //float2 shadowTexUV = spos.xy / spos.w;
+    //shadowTexUV *= float2(0.5f, -0.5f);
+    //shadowTexUV += 0.5f;
+    
+    //// ライトビューでのスクリーン空間でのz値を計算する
+    //float z = spos.z / spos.w;
+    
+    //if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
+    //    shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
+    //{
+    //    float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV).r;
+    //    if (shadowDepth + bias < z)
+    //    {
+    //        shadow *= 0.25f;
+    //    }
+    //}
+    
+    //return shadow;
 }
 
 PSOutput main(V2P i)// : SV_TARGET
@@ -108,9 +155,6 @@ PSOutput main(V2P i)// : SV_TARGET
             float3 halfVector = normalize(-directionalLight[index].vec + eyeDir);
             float nDoth = dot(normalize(i.normal), halfVector);
             float3 specular = pow(saturate(nDoth), shininess) * material.specular.rgb;
-            
-            //float3 reflectDir = normalize(-directionalLight[index].vec + 2 * dotLightNormal * i.normal);
-            //float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
     
             adsColor.rgb += (ambient + diffuse + specular) * directionalLight[index].color.rgb;
         }

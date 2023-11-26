@@ -16,7 +16,8 @@ Grass::Grass() :
 	mVertexBuffer(std::make_unique <VertexBuffer<VGrass>>()),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass")),
 	mDepthTex(TextureManager::GetRenderTexture("ShadowMap")->GetDepthTexture()),
-	texture(TextureManager::GetTexture("White"))
+	texture(TextureManager::GetTexture("White")),
+	mCSMaterial(std::make_unique<Material>())
 {
 	// 頂点バッファの生成
 	mVertices.resize(1);

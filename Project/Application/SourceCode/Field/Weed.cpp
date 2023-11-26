@@ -19,12 +19,12 @@ void Weed::Init()
 
 void Weed::Update()
 {
-	//mGrass->Update();
+	mGrass->Update();
 }
 
 void Weed::DrawModel()
 {
-	//mGrass->Draw();
+	mGrass->Draw();
 }
 
 void Weed::SetPos(const Vec3 pos)
