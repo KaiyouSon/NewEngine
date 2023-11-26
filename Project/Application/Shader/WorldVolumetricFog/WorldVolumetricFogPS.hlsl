@@ -80,7 +80,7 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
     float3 scale = 1.0f / (boundsMax - boundsMin);
     uint hitCount = 0;
     
-    float3 lightting = 0.1f;
+    float3 lightting = 1.0f;
     
     // ステップ分を進む
     [loop]

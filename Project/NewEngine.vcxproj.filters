@@ -915,6 +915,9 @@
     <ClCompile Include="NewEngine\Util\Layer.cpp">
       <Filter>NewEngine\Source\Render</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp">
+      <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1471,6 +1474,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Util\Layer.h">
       <Filter>NewEngine\Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h">
+      <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

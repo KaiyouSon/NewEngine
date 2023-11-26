@@ -117,6 +117,9 @@ void LoadManager::GameSceneTextureLoad()
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) / 4, 1, "Bloom1");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomTarget");
 
+	// ラジアルブラー用
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "RadianBlur");
+
 	// ボリュームテクスチャ
 	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice0.dds", "VolumeTexture0");
 	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice1.dds", "VolumeTexture1");
