@@ -39,10 +39,6 @@ float4 main(V2P i) : SV_TARGET
     float4 rayMarchingColor = RayMarching(boundsMin, boundsMax, localRayStart, localRayDir);
     float4 resultColor = rayMarchingColor;
     
-    //// カメラからの距離を計算
-    //float dis = distance(cameraPos, i.wpos);
-    //float disRate = smoothstep(fogClamp.x, fogClamp.y, dis);
-    
     resultColor = (resultColor) * fogColor * fogColorRate;
 
     return resultColor;
@@ -84,6 +80,8 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
     float3 scale = 1.0f / (boundsMax - boundsMin);
     uint hitCount = 0;
     
+    float3 lightting = 0.1f;
+    
     // ステップ分を進む
     [loop]
     for (uint i = 0; i < stepCount; i++)
@@ -95,12 +93,36 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
             
             colorDensity += color; // * disRate;
             
+            uint index = 0;
+            
+            for (index = 0; index < 3; index++)
+            {
+                if (pointLight[index].isActive == true)
+                {
+                    // ライトヘのベクトル
+                    float3 lightVec = normalize(pointLight[index].pos - objectPos - rayPos);
+                    float d = distance(pointLight[index].pos - objectPos, rayPos);
+            
+                    float s = d / pointLight[index].radius;
+                    if (s >= 1.0)
+                    {
+                        continue;
+                    }
+            
+                    float s2 = s * s;
+            
+                    float atten = pointLight[index].decay * ((1 - s2) * (1 - s2));
+                
+                    lightting.rgb += atten * color *
+                            pointLight[index].color.rgb * pointLight[index].colorRate.rgb;
+                }
+            }
+            
             // スポットライトの計算
-            for (uint index = 0; index < spotLightSize; index++)
+            for (index = 0; index < spotLightSize; index++)
             {
                 if (spotLight[index].isActive == true)
                 {
-            
                     // ライトヘのベクトル
                     float3 lightVec = normalize(spotLight[index].pos - objectPos - rayPos);
                     float d = distance(spotLight[index].pos - objectPos, rayPos);
@@ -119,7 +141,8 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
                     float atten = spotLight[index].decay * ((1 - s2) * (1 - s2));
                     atten *= falloffFactor;
             
-                    colorDensity += atten * color * spotLight[index].color.rgb * spotLight[index].colorRate.rgb * fogClamp.x;
+                    lightting += atten * color * 
+                            spotLight[index].color.rgb * spotLight[index].colorRate.rgb;
                 }
             }
         }
@@ -128,7 +151,7 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
         rayPos += rayDir * stepLength;
     }
     
-    return float4(colorDensity.xxx, colorDensity);
+    return float4(colorDensity.xxx * lightting.rgb, colorDensity);
 }
 
 // 最小値を0に最大値を1にし値をlerpする

@@ -23,159 +23,6 @@
             }
         },
         {
-            "type": "MESH",
-            "name": "円",
-            "transform": {
-                "translation": [
-                    -82.49203491210938,
-                    0.0,
-                    164.11776733398438
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    10.0,
-                    1.0,
-                    10.0
-                ]
-            },
-            "obj_name": "WeedToSphere"
-        },
-        {
-            "type": "MESH",
-            "name": "円.001",
-            "transform": {
-                "translation": [
-                    -102.16838073730469,
-                    0.0,
-                    174.85032653808594
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    10.0,
-                    1.0,
-                    10.0
-                ]
-            },
-            "obj_name": "WeedToSphere"
-        },
-        {
-            "type": "MESH",
-            "name": "円.002",
-            "transform": {
-                "translation": [
-                    -117.37283325195312,
-                    0.0,
-                    183.2574920654297
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    10.0,
-                    1.0,
-                    10.0
-                ]
-            },
-            "obj_name": "WeedToSphere"
-        },
-        {
-            "type": "MESH",
-            "name": "円.003",
-            "transform": {
-                "translation": [
-                    -134.544921875,
-                    0.0,
-                    197.38868713378906
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    15.0,
-                    1.0,
-                    15.0
-                ]
-            },
-            "obj_name": "WeedToSphere"
-        },
-        {
-            "type": "MESH",
-            "name": "円.004",
-            "transform": {
-                "translation": [
-                    -134.00830078125,
-                    0.0,
-                    192.0224151611328
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    10.0,
-                    1.0,
-                    10.0
-                ]
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "円.005",
-            "transform": {
-                "translation": [
-                    70.94316864013672,
-                    0.0,
-                    197.0177764892578
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    15.0,
-                    1.0,
-                    15.0
-                ]
-            },
-            "obj_name": "WeedToSphere"
-        },
-        {
-            "type": "MESH",
-            "name": "立方体.048",
-            "transform": {
-                "translation": [
-                    -152.950927734375,
-                    2.9802322387695312e-08,
-                    211.70358276367188
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    18.769344329833984,
-                    1.0,
-                    8.643218994140625
-                ]
-            },
-            "obj_name": "Weed"
-        },
-        {
             "type": "EMPTY",
             "name": "棺桶",
             "transform": {
@@ -2066,6 +1913,159 @@
                     6.0,
                     1.0,
                     39.98874282836914
+                ]
+            },
+            "obj_name": "Weed"
+        },
+        {
+            "type": "MESH",
+            "name": "円",
+            "transform": {
+                "translation": [
+                    -82.49203491210938,
+                    0.0,
+                    164.11776733398438
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    10.0,
+                    1.0,
+                    10.0
+                ]
+            },
+            "obj_name": "WeedToSphere"
+        },
+        {
+            "type": "MESH",
+            "name": "円.001",
+            "transform": {
+                "translation": [
+                    -102.16838073730469,
+                    0.0,
+                    174.85032653808594
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    10.0,
+                    1.0,
+                    10.0
+                ]
+            },
+            "obj_name": "WeedToSphere"
+        },
+        {
+            "type": "MESH",
+            "name": "円.002",
+            "transform": {
+                "translation": [
+                    -117.37283325195312,
+                    0.0,
+                    183.2574920654297
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    10.0,
+                    1.0,
+                    10.0
+                ]
+            },
+            "obj_name": "WeedToSphere"
+        },
+        {
+            "type": "MESH",
+            "name": "円.003",
+            "transform": {
+                "translation": [
+                    -134.544921875,
+                    0.0,
+                    197.38868713378906
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    15.0,
+                    1.0,
+                    15.0
+                ]
+            },
+            "obj_name": "WeedToSphere"
+        },
+        {
+            "type": "MESH",
+            "name": "円.004",
+            "transform": {
+                "translation": [
+                    -134.00830078125,
+                    0.0,
+                    192.0224151611328
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    10.0,
+                    1.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "円.005",
+            "transform": {
+                "translation": [
+                    70.94316864013672,
+                    0.0,
+                    197.0177764892578
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    15.0,
+                    1.0,
+                    15.0
+                ]
+            },
+            "obj_name": "WeedToSphere"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.048",
+            "transform": {
+                "translation": [
+                    -152.950927734375,
+                    2.9802322387695312e-08,
+                    211.70358276367188
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    18.769344329833984,
+                    1.0,
+                    8.643218994140625
                 ]
             },
             "obj_name": "Weed"

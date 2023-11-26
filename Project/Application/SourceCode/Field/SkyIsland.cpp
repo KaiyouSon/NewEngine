@@ -7,7 +7,7 @@ SkyIsland::SkyIsland() :
 
 void SkyIsland::Init()
 {
-	mSkyIsland->SetisShadow(true, false);
+	mSkyIsland->SetisShadow(true, true);
 	mSkyIsland->isLighting = true;
 }
 
