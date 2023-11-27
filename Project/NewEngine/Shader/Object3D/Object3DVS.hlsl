@@ -13,6 +13,7 @@ V2P main(Appdata i)
     output.svpos = vpos;
     output.wpos = wpos;
     output.spos = spos;
+    //output.spos.z = length(wpos.xyz - lightCameraPos) / 1000.f;
     output.normal = wnormal.xyz;
     output.uv = i.uv;
 

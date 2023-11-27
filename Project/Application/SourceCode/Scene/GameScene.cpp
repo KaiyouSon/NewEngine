@@ -244,18 +244,18 @@ void GameScene::DrawPass()
 	sceneDrawFunc = [this]()
 	{
 		mPostEffectManager->DrawRadialBlur();
-		mVolumetricFog->Draw();
+		//mVolumetricFog->Draw();
 	};
 	mPostEffectManager->EffectBloomDrawPass(targetDrawFunc, sceneDrawFunc);
 }
 void GameScene::Draw()
 {
-	ShadowMap::GetInstance()->DrawPostEffect();
 
 	mPostEffectManager->DrawEffectBloom();
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
+	ShadowMap::GetInstance()->DrawPostEffect();
 }
 void GameScene::DrawDebugGui()
 {

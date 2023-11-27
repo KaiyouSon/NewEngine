@@ -378,6 +378,7 @@ void CreateManager::CreateGraphicsPipeline()
 	// ShadowObj用
 	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ShadowObj");
+	setting.cullMode = CullMode::None;
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;

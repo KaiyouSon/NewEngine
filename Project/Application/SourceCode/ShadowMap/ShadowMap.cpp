@@ -9,7 +9,7 @@ ShadowMap::ShadowMap() :
 
 	mShadowMap->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ShadowMap"));
 	mShadowMap->AddRenderTexture(mShadowMapRT);
-	mShadowMap->scale = 1.f / 32.f;
+	mShadowMap->scale = 1.f / 8.f;
 	mShadowMap->pos = GetWindowHalfSize();
 	mShadowMap->AddMaterial<ConstantBuffer<CTransformShadowObj>>();
 
@@ -42,11 +42,15 @@ void ShadowMap::Init()
 
 void ShadowMap::Update(const Vec3 lightPos)
 {
+	lightCamera.oFarZ = 1000.f;
+	lightCamera.rect = RectAngle(-960, 960, 540, -540);
+
 	lightCamera.pos = lightPos;
 
-	float pitch = atan2f(lightCamera.pos.y, -lightCamera.pos.z);
-	float yaw = atan2f(lightCamera.pos.x, lightCamera.pos.z);
+	float pitch = atan2f(lightCamera.pos.y, lightCamera.pos.z);
+	float yaw = atan2f(lightCamera.pos.x, -lightCamera.pos.z);
 	lightCamera.rot = Vec3(pitch, yaw, 0);
+	//lightCamera.rot = Vec3(Radian(45), yaw, 0);
 
 	// カメラの設定
 	lightCamera.Update();
@@ -86,6 +90,23 @@ void ShadowMap::DrawModel()
 
 void ShadowMap::DrawPostEffect()
 {
+	static bool flag = false;
+	if (Key::GetKeyDown(DIK_M))
+	{
+		if (flag == true)
+		{
+			flag = false;
+		}
+		else
+		{
+			flag = true;
+		}
+	}
+
+	if (flag == true)
+	{
+		mShadowMap->Draw();
+	}
 }
 
 void ShadowMap::Bind(Object3D& object)

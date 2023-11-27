@@ -8,23 +8,43 @@ float CalcShadow(float4 spos)
 {
     float shadow = 1;
     
+    // ライトビューでのスクリーン空間でのz値を計算する
+    float z = spos.z / spos.w;
+    
+    // シャドウマップのUVを算出
     float2 shadowTexUV = spos.xy / spos.w;
     shadowTexUV *= float2(0.5f, -0.5f);
     shadowTexUV += 0.5f;
-        
-    // ライトビューでのスクリーン空間でのz値を計算する
-    float z = spos.z / spos.w;
-        
-    if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
-        shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
+    
+    float shadowFactor = 0;
+    float shiftNum = 9;
+    float shiftWidth = 0.00005f;
+    float count = 0;
+    [unroll]
+    for (float py = -shiftNum / 2; py <= shiftNum / 2; py++)
     {
-        float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV).r;
-        if (shadowDepth + 0.0001f < z)
+        [unroll]
+        for (float px = -shiftNum / 2; px <= shiftNum / 2; px++)
         {
-            shadow *= 0.3f;
+		    // 色取得するUV座標
+            float2 offset = float2(px, py);
+            float2 pickUV = shadowTexUV + offset * shiftWidth;
+            
+            // 画面外の色を取得しないように
+            pickUV = clamp(pickUV, 0.001, 0.999);
+
+            // シャドウ マップから深度をサンプリング
+            float shadowDepth = shadowMapTex.Sample(smp, pickUV).r;
+            if (shadowDepth + 0.0005f < z)
+            {
+                shadowFactor += 0.75f;
+            }
+            count++;
         }
     }
-    
+
+    // サンプル数で割って正規化
+    shadow = 1 - shadowFactor / count;
     return shadow;
 }
 

@@ -5,7 +5,7 @@ cbuffer ConstantBufferDataTransform : register(b0)
     matrix worldMat;
 }
 
-cbuffer ConstantBufferDataSkinning : register(b1)
+cbuffer ConstantBufferDataShadowObj : register(b1)
 {
     matrix lightViewProjMat;
     float3 cameraPos;

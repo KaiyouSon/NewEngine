@@ -9,33 +9,39 @@ float4 CalcShadowColor(V2P i, float4 color)
 {
     float4 resultColor = color;
     
-    // ライトビュースクリーン空間からUV空間に座標変換
+    // ライトビューでのスクリーン空間でのz値を計算する
+    float z = i.spos.z/* / i.spos.w*/;
+    
+    // シャドウマップのUVを算出
     float2 shadowTexUV = i.spos.xy / i.spos.w;
     shadowTexUV *= float2(0.5f, -0.5f);
     shadowTexUV += 0.5f;
-        
-    // ライトビューでのスクリーン空間でのz値を計算する
-    float z = i.spos.z;
-    float w = 1.0f / i.spos.w;
     
     if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
         shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
     {
-        float shadowValue = shadowMapTex.Sample(smp, shadowTexUV).r;
+        float2 shadowValue = shadowMapTex.Sample(smp, shadowTexUV).rg;
         
-        if (shadowValue + bias < z * w /* && z <= 1.0f*/)
+        if (z > shadowValue.r && z <= 1.0f)
         {
-            float depthSq = shadowValue * shadowValue;
+            // 遮蔽されているなら、チェビシェフの不等式を利用して光が当たり確率を求める
+            float depthSQ = shadowValue.r * shadowValue.r;
             
-            float variance = min(max(shadowValue - depthSq, 0.0001f), 1.0f);
+            // このグループの分散具合を求める
+            // 分散が大きいほど、varianceの数値は大きくなる
+            float variance = min(max(shadowValue.g - depthSQ, 0.0001f), 1.0f);
+
+            // このピクセルのライトから見た深度値とシャドウマップの平均の深度値の差を求める
+            float md = z - shadowValue.r;
             
-            float md = z - shadowValue.x;
+            // 光が届く確率を求める
+            float litFactor = variance / (variance + md * md);
             
-            float lightFactor = variance / (variance + md * md);
-            
-            float3 shadowColor = resultColor.rgb * 0.5f;
-            
-            shadowColor.rgb = lerp(shadowColor, color.xyz, lightFactor);
+            // シャドウカラーを求める
+            float3 shadowColor = resultColor.rgb * 0.75f;
+
+            // 光が当たる確率を使って通常カラーとシャドウカラーを線形補間
+            resultColor.rgb = lerp(shadowColor, color.xyz, litFactor);
         }
     }
     
@@ -54,63 +60,36 @@ float CalcShadow(float4 spos)
     shadowTexUV *= float2(0.5f, -0.5f);
     shadowTexUV += 0.5f;
     
-    uint numSamples = 32;
     float shadowFactor = 0;
-    // ソフトシャドウのために、複数のサンプルを使って平均をとる
-    for (int i = 0; i < numSamples; ++i)
+    float shiftNum = 9;
+    float shiftWidth = 0.00005f;
+    float count = 0;
+    [unroll]
+    for (float py = -shiftNum / 2; py <= shiftNum / 2; py++)
     {
-        // サンプルポイントを生成
-        float dis = 0.0005f;
-        float radian = numSamples * (3.14159265359 / 180.0);
-        float2 sampleOffset = normalize(float2(cos(i * radian), sin(i * radian))) * dis;
-        
-        float2 uv = shadowTexUV + sampleOffset;
-        
-        if (uv.x > 0.01f && uv.x < 0.99f &&
-            uv.y > 0.01f && uv.y < 0.99f)
+        [unroll]
+        for (float px = -shiftNum / 2; px <= shiftNum / 2; px++)
         {
-        // シャドウ マップから深度をサンプリング
-            float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV + sampleOffset).r;
+		    // 色取得するUV座標
+            float2 offset = float2(px, py);
+            float2 pickUV = shadowTexUV + offset * shiftWidth;
+            
+            // 画面外の色を取得しないように
+            pickUV = clamp(pickUV, 0.001, 0.999);
+
+            // シャドウ マップから深度をサンプリング
+            float shadowDepth = shadowMapTex.Sample(smp, pickUV).r;
             if (shadowDepth + bias < z)
             {
                 shadowFactor += 0.75f;
             }
+            count++;
         }
-        
-        // ピクセルの深度とサンプリングした深度を比較してシャドウ ファクターを計算
-        //shadowFactor += (pixelDepth - softShadowDepth < shadowBias) ? 0.0f : 1.0f;
     }
 
-    // 平均をとって正規化
-    shadowFactor /= numSamples;
-
     // サンプル数で割って正規化
-    shadow = 1 - shadowFactor;
-
-
+    shadow = 1 - shadowFactor / count;
     return shadow;
-    
-    
-    //float shadow = 1;
-    
-    //float2 shadowTexUV = spos.xy / spos.w;
-    //shadowTexUV *= float2(0.5f, -0.5f);
-    //shadowTexUV += 0.5f;
-    
-    //// ライトビューでのスクリーン空間でのz値を計算する
-    //float z = spos.z / spos.w;
-    
-    //if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
-    //    shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
-    //{
-    //    float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV).r;
-    //    if (shadowDepth + bias < z)
-    //    {
-    //        shadow *= 0.25f;
-    //    }
-    //}
-    
-    //return shadow;
 }
 
 PSOutput main(V2P i)// : SV_TARGET
@@ -236,14 +215,17 @@ PSOutput main(V2P i)// : SV_TARGET
     
     float4 resultColor = (adsColor * texColor * color);
     
-    
+    // PCF
     float shadow = 1.0f;
     if (isWriteShadow == true)
     {
         shadow = CalcShadow(i.spos);
     }
-    
     resultColor.rgb *= shadow;
+    
+    // VSM
+    //resultColor = CalcShadowColor(i, resultColor);
+    
     
     PSOutput output;
     output.target0 = resultColor * maskIntensity + dissolveColor * colorPower * (1 - maskIntensity);
