@@ -90,7 +90,6 @@ void ParticleObject::Draw(const std::string layerTag, const BlendMode blendMode)
 	//	});
 
 	DrawCommands();
-
 }
 
 // --- マテリアル関連 --------------------------------------------------- //

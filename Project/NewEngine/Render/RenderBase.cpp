@@ -159,6 +159,11 @@ void RenderBase::TransitionBufferState(
 	const D3D12_RESOURCE_STATES currentState,
 	const D3D12_RESOURCE_STATES targetState)
 {
+	if (bufferResource->bufferState != currentState)
+	{
+		return;
+	}
+
 	CD3DX12_RESOURCE_BARRIER barrier =
 		CD3DX12_RESOURCE_BARRIER::Transition(
 			bufferResource->buffer.Get(),

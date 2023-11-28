@@ -86,7 +86,7 @@ void GameScene::Init()
 	CollisionManager::GetInstance()->SetUIManager(mUiManager.get());
 	CollisionManager::GetInstance()->SetMovieEvent(mMovieEvent.get());
 
-	mDirectionalLight->pos = Vec3(100, 220, 200);
+	mDirectionalLight->pos = Vec3(-200, 440, 500);
 
 	mMovieEvent->Init();
 	mMovieEvent->SetPlayer(mPlayer.get());
@@ -100,10 +100,10 @@ void GameScene::Init()
 	mVolumetricFog->SetTexture(TextureManager::GetVolumeTexture("VolumeTexture3"));
 	mVolumetricFog->pos.z = 400;
 	mVolumetricFog->scale = Vec3(1000, 1000, 1400);
-	mVolumetricFog->tiling = Vec3(20, 20, 20);
+	mVolumetricFog->tiling = Vec3(40, 40, 40);
 	mVolumetricFog->moveSpeed = -0.000025f;
-	mVolumetricFog->fogParam.stepCount = 200;
-	mVolumetricFog->fogParam.stepLength = 1.f;
+	mVolumetricFog->fogParam.stepCount = 100;
+	mVolumetricFog->fogParam.stepLength = 2.f;
 	mVolumetricFog->fogParam.dencity = 0.0015f;
 	mVolumetricFog->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("WorldVolumetricFog"));
 
@@ -150,7 +150,7 @@ void GameScene::Update()
 	{
 		if (SoundManager::GetIsPlaying("BattleBGM") == true)
 		{
-			SoundManager::SetVolume("BattleBGM", mBgmVolume);
+			SoundManager::SetVolume("BattleBGM", 0);
 			mBgmVolume += 0.005f;
 			mBgmVolume = Min<float>(mBgmVolume, 1.f);
 		}
@@ -199,7 +199,7 @@ void GameScene::Update()
 }
 void GameScene::DrawPass()
 {
-	ShadowMap::GetInstance()->RenderTextureSetting();
+	ShadowMap::GetInstance()->DrawPass();
 
 	std::function<void()> targetDrawFunc;
 	std::function<void()> maskDrawFunc;
@@ -244,23 +244,23 @@ void GameScene::DrawPass()
 	sceneDrawFunc = [this]()
 	{
 		mPostEffectManager->DrawRadialBlur();
+		//DrawCurrentSceneObject();
 		//mVolumetricFog->Draw();
 	};
 	mPostEffectManager->EffectBloomDrawPass(targetDrawFunc, sceneDrawFunc);
 }
 void GameScene::Draw()
 {
-
 	mPostEffectManager->DrawEffectBloom();
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
-	ShadowMap::GetInstance()->DrawPostEffect();
+	//ShadowMap::GetInstance()->DrawPostEffect();
 }
 void GameScene::DrawDebugGui()
 {
 	//mBoss->DrawDebugGui();
-	//mPostEffectManager->DrawDebugGui();
+	mPostEffectManager->DrawDebugGui();
 
 	Gui::BeginWindow("Debug");
 
@@ -298,7 +298,6 @@ void GameScene::DrawDebugGui()
 		mVolumetricFog->rot = Radian(angle);
 		Gui::DrawSlider3("Fog Speed", mVolumetricFog->moveSpeed, 0.001f);
 		Gui::DrawSlider3("Fog tiling", mVolumetricFog->tiling, 0.001f);
-
 
 		for (uint32_t i = 0; i < 4; i++)
 		{

@@ -55,6 +55,9 @@ void RenderTexture::Create(const Vec2 size, const uint32_t rtvNum)
 				IID_PPV_ARGS(&mBufferResources[i].buffer));
 		assert(SUCCEEDED(result));
 
+		mBufferResources[i].buffer->SetName(L"RenderTexture");
+		mBufferResources[i].bufferState = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+
 		// テクスチャのSRVとRTV作成
 		DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(&GetBufferResources()->at(i));
 		DescriptorHeapManager::GetDescriptorHeap("RTV")->CreateRTV(&GetBufferResources()->at(i));

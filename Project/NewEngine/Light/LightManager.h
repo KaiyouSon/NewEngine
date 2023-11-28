@@ -3,20 +3,6 @@
 #include "ILight.h"
 #include <array>
 
-// スポットライト
-//struct SpotLight
-//{
-//	Vec3 vec = Vec3::down;
-//	Vec3 pos = Vec3::up * 5;
-//	Color color = Color::white;
-//	Vec3 atten = Vec3::zero;
-//	Vec2 factorAngle = { 20,30 };
-//	bool isActive = false;
-//
-//	SpotLight() {}
-//	~SpotLight() {}
-//};
-
 // 前方宣言
 template<typename T> class Singleton;
 
@@ -30,7 +16,7 @@ private:
 	enum LightSize
 	{
 		DirectionalLightSize = 1,
-		PointLightSize = 20,
+		PointLightSize = 5,
 		SpotLightSize = 1,
 	};
 

@@ -93,58 +93,58 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
             
             colorDensity += color; // * disRate;
             
-            uint index = 0;
+            //uint index = 0;
             
-            for (index = 0; index < 3; index++)
-            {
-                if (pointLight[index].isActive == true)
-                {
-                    // ライトヘのベクトル
-                    float3 lightVec = normalize(pointLight[index].pos - objectPos - rayPos);
-                    float d = distance(pointLight[index].pos - objectPos, rayPos);
+            //for (index = 0; index < 3; index++)
+            //{
+            //    if (pointLight[index].isActive == true)
+            //    {
+            //        // ライトヘのベクトル
+            //        float3 lightVec = normalize(pointLight[index].pos - objectPos - rayPos);
+            //        float d = distance(pointLight[index].pos - objectPos, rayPos);
             
-                    float s = d / pointLight[index].radius;
-                    if (s >= 1.0)
-                    {
-                        continue;
-                    }
+            //        float s = d / pointLight[index].radius;
+            //        if (s >= 1.0)
+            //        {
+            //            continue;
+            //        }
             
-                    float s2 = s * s;
+            //        float s2 = s * s;
             
-                    float atten = pointLight[index].decay * ((1 - s2) * (1 - s2));
+            //        float atten = pointLight[index].decay * ((1 - s2) * (1 - s2));
                 
-                    lightting.rgb += atten * color *
-                            pointLight[index].color.rgb * pointLight[index].colorRate.rgb;
-                }
-            }
+            //        lightting.rgb += atten * color *
+            //                pointLight[index].color.rgb * pointLight[index].colorRate.rgb;
+            //    }
+            //}
             
-            // スポットライトの計算
-            for (index = 0; index < spotLightSize; index++)
-            {
-                if (spotLight[index].isActive == true)
-                {
-                    // ライトヘのベクトル
-                    float3 lightVec = normalize(spotLight[index].pos - objectPos - rayPos);
-                    float d = distance(spotLight[index].pos - objectPos, rayPos);
+            //// スポットライトの計算
+            //for (index = 0; index < spotLightSize; index++)
+            //{
+            //    if (spotLight[index].isActive == true)
+            //    {
+            //        // ライトヘのベクトル
+            //        float3 lightVec = normalize(spotLight[index].pos - objectPos - rayPos);
+            //        float d = distance(spotLight[index].pos - objectPos, rayPos);
                     
-                    float s = d / spotLight[index].radius;
-                    if (s >= 1.0)
-                    {
-                        continue;
-                    }
+            //        float s = d / spotLight[index].radius;
+            //        if (s >= 1.0)
+            //        {
+            //            continue;
+            //        }
             
-                    float s2 = s * s;
+            //        float s2 = s * s;
             
-                    float cosAngle = dot(lightVec, spotLight[index].vec);
-                    float falloffFactor = saturate((cosAngle - spotLight[index].cosAngle.y) / (spotLight[index].cosAngle.x - spotLight[index].cosAngle.y));
+            //        float cosAngle = dot(lightVec, spotLight[index].vec);
+            //        float falloffFactor = saturate((cosAngle - spotLight[index].cosAngle.y) / (spotLight[index].cosAngle.x - spotLight[index].cosAngle.y));
             
-                    float atten = spotLight[index].decay * ((1 - s2) * (1 - s2));
-                    atten *= falloffFactor;
+            //        float atten = spotLight[index].decay * ((1 - s2) * (1 - s2));
+            //        atten *= falloffFactor;
             
-                    lightting += atten * color * 
-                            spotLight[index].color.rgb * spotLight[index].colorRate.rgb;
-                }
-            }
+            //        lightting += atten * color * 
+            //                spotLight[index].color.rgb * spotLight[index].colorRate.rgb;
+            //    }
+            //}
         }
         
         // 次のレイの座標を算出

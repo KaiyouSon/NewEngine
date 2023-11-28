@@ -56,7 +56,7 @@ void Boss::Update()
 	}
 
 	float disToPlayer = Vec3::Distance(mPlayer->GetPos(), mBoss->pos);
-	if (disToPlayer <= 150.f)
+	if (disToPlayer <= 125.f)
 	{
 		if (mIsFight == false)
 		{

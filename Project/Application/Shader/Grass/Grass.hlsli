@@ -67,7 +67,7 @@ cbuffer ConstantBufferDataMaterial : register(b2)
 
 // ライトグループ
 static const uint directionalLightSize = 1;
-static const uint pointLightSize = 20;
+static const uint pointLightSize = 5;
 static const uint spotLightSize = 1;
 cbuffer ConstantBufferDataLightGroup : register(b3)
 {

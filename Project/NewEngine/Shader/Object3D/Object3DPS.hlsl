@@ -60,6 +60,18 @@ float CalcShadow(float4 spos)
     shadowTexUV *= float2(0.5f, -0.5f);
     shadowTexUV += 0.5f;
     
+    //if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
+    //    shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
+    //{
+    //    float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV).r;
+    //    if (shadowDepth + 0.0001f < z)
+    //    {
+    //        shadow *= 0.25f;
+    //    }
+    //}
+
+    //return shadow;
+    
     float shadowFactor = 0;
     float shiftNum = 9;
     float shiftWidth = 0.00005f;

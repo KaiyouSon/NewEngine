@@ -77,7 +77,6 @@ void Object3D::Draw(const std::string& layerTag, const BlendMode blendMode)
 	//	{
 	//		DrawCommands();
 	//	});
-
 	DrawCommands();
 }
 
@@ -246,13 +245,8 @@ void Object3D::DrawCommands()
 
 	if (mIsWriteShadow == true)
 	{
-		CD3DX12_RESOURCE_BARRIER barrier =
-			CD3DX12_RESOURCE_BARRIER::Transition(
-				mDepthTex->GetBufferResource()->buffer.Get(),
-				D3D12_RESOURCE_STATE_DEPTH_WRITE,
-				D3D12_RESOURCE_STATE_GENERIC_READ,
-				D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
-		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
+		//renderBase->TransitionBufferState(mDepthTex->GetBufferResource(),
+		//	D3D12_RESOURCE_STATE_DEPTH_WRITE, D3D12_RESOURCE_STATE_GENERIC_READ);
 
 		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
 			(uint32_t)startIndex + 2, mDepthTex->GetBufferResource()->srvHandle.gpu);
@@ -264,16 +258,6 @@ void Object3D::DrawCommands()
 	}
 
 	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModel->mesh.indices.size(), 1, 0, 0, 0);
-	if (mIsWriteShadow == true)
-	{
-		CD3DX12_RESOURCE_BARRIER barrier =
-			CD3DX12_RESOURCE_BARRIER::Transition(
-				mDepthTex->GetBufferResource()->buffer.Get(),
-				D3D12_RESOURCE_STATE_GENERIC_READ,
-				D3D12_RESOURCE_STATE_DEPTH_WRITE,
-				D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
-		renderBase->GetCommandList()->ResourceBarrier(1, &barrier);
-	}
 }
 
 // --- セッター --------------------------------------------------------- //

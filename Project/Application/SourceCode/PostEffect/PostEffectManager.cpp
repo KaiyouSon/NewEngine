@@ -48,8 +48,6 @@ void PostEffectManager::DrawEffectBloom()
 void PostEffectManager::DrawRadialBlur()
 {
 	mRadialBlur->DrawPostEffect();
-	//mRadialBlur->DrawPass(RadialBlur::PassType::Target);
-	//mRadialBlur->DrawPass(RadialBlur::PassType::Scene);
 }
 
 // ゲッター

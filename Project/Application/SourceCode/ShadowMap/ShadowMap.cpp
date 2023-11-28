@@ -16,7 +16,7 @@ ShadowMap::ShadowMap() :
 	mIndex = 0;
 
 	lightCamera.rot = Vec3(Radian(45), Radian(45), 0);
-	lightCamera.rect = RectAngle(-480, 480, 270, -270);
+	lightCamera.rect = RectAngle(-960, 960, 540, -540);
 	lightCamera.oFarZ = 1000.f;
 
 	mShadowObjs.clear();
@@ -42,15 +42,11 @@ void ShadowMap::Init()
 
 void ShadowMap::Update(const Vec3 lightPos)
 {
-	lightCamera.oFarZ = 1000.f;
-	lightCamera.rect = RectAngle(-960, 960, 540, -540);
-
 	lightCamera.pos = lightPos;
 
 	float pitch = atan2f(lightCamera.pos.y, lightCamera.pos.z);
 	float yaw = atan2f(lightCamera.pos.x, -lightCamera.pos.z);
 	lightCamera.rot = Vec3(pitch, yaw, 0);
-	//lightCamera.rot = Vec3(Radian(45), yaw, 0);
 
 	// カメラの設定
 	lightCamera.Update();
@@ -71,8 +67,13 @@ void ShadowMap::Update(const Vec3 lightPos)
 	mShadowMap->Update();
 }
 
-void ShadowMap::RenderTextureSetting()
+void ShadowMap::DrawPass()
 {
+	auto renderBase = RenderBase::GetInstance();
+
+	renderBase->TransitionBufferState(mShadowMapRT->GetDepthTexture()->GetBufferResource(),
+		D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_DEPTH_WRITE);
+
 	mShadowMapRT->PrevDrawScene();
 	for (uint32_t i = 0; i < mShadowObjs.size(); i++)
 	{
@@ -80,33 +81,33 @@ void ShadowMap::RenderTextureSetting()
 	}
 	mShadowMapRT->PostDrawScene();
 
+
+	renderBase->TransitionBufferState(mShadowMapRT->GetDepthTexture()->GetBufferResource(),
+		D3D12_RESOURCE_STATE_DEPTH_WRITE, D3D12_RESOURCE_STATE_GENERIC_READ);
+
 	// 次のフレームの準備
 	mIndex = 0;
 }
 
-void ShadowMap::DrawModel()
-{
-}
-
 void ShadowMap::DrawPostEffect()
 {
-	static bool flag = false;
-	if (Key::GetKeyDown(DIK_M))
-	{
-		if (flag == true)
-		{
-			flag = false;
-		}
-		else
-		{
-			flag = true;
-		}
-	}
+	//static bool flag = false;
+	//if (Key::GetKeyDown(DIK_M))
+	//{
+	//	if (flag == true)
+	//	{
+	//		flag = false;
+	//	}
+	//	else
+	//	{
+	//		flag = true;
+	//	}
+	//}
 
-	if (flag == true)
-	{
-		mShadowMap->Draw();
-	}
+	//if (flag == true)
+	//{
+	//	mShadowMap->Draw();
+	//}
 }
 
 void ShadowMap::Bind(Object3D& object)

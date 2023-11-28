@@ -43,7 +43,7 @@ float3 AnyAxisRotation(float3 vec, float3 axis, float angle);
 // 初期化
 ParticleData InitParticleData(uint index);
 
-[numthreads(100, 1, 1)]
+[numthreads(128, 1, 1)]
 void main(uint3 DTid : SV_DispatchThreadID)
 {
     if (DTid.x == 0)
@@ -70,7 +70,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
     // area == 10wになっているから、[numthreads(1000, 1, 1)]だと1CSに10回for分回す
     
     // 100個のデータを処理するためのインデックスを計算
-    uint dataPerThread = max / 100;
+    uint dataPerThread = max / 128;
     uint startIndex = (DTid.x - 1) * dataPerThread;
     uint endIndex = DTid.x * dataPerThread;
 

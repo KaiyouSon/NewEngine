@@ -29,6 +29,7 @@ void VolumeTexture::Create(const D3D12_RESOURCE_DESC& resourceDesc)
 
 	// 名前設定
 	mBufferResource->buffer->SetName(L"VolumeTextureBuffer");
+	mBufferResource->bufferState = D3D12_RESOURCE_STATE_COPY_DEST;
 
 	// アップロードサイズを取得
 	uint64_t uploadSize =

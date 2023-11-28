@@ -25,8 +25,7 @@ public:
 	void Init();
 	void Register(const uint32_t size);
 	void Update(const Vec3 lightPos);
-	void RenderTextureSetting();
-	void DrawModel();
+	void DrawPass();
 	void DrawPostEffect();
 
 public:

@@ -141,16 +141,10 @@ void Grass::Draw()
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, texture->GetBufferResource()->srvHandle.gpu);
 
-	renderBase->TransitionBufferState(mDepthTex->GetBufferResource(),
-		D3D12_RESOURCE_STATE_DEPTH_WRITE, D3D12_RESOURCE_STATE_GENERIC_READ);
-
 	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
 		(uint32_t)startIndex + 1, mDepthTex->GetBufferResource()->srvHandle.gpu);
 
 	renderBase->GetCommandList()->DrawInstanced((uint16_t)mVertices.size(), 1, 0, 0);
-
-	renderBase->TransitionBufferState(mDepthTex->GetBufferResource(),
-		D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_DEPTH_WRITE);
 }
 
 // --- マテリアル関連 --------------------------------------------------- //
