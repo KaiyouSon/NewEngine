@@ -11,6 +11,7 @@ public:
 	Field();
 	void Init();
 	void Update();
+	void ExecuteCS();
 	void DrawModel();
 	void DrawFog();
 	void DrawSkyIsLand();

@@ -70,6 +70,10 @@ void TitleScene::Update()
 	SceneChangeUpdate();
 }
 
+void TitleScene::ExecuteCS()
+{
+}
+
 void TitleScene::DrawPass()
 {
 	mPostEffectManager->EffectBloomDrawPass(

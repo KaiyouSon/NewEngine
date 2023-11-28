@@ -10,6 +10,7 @@ public:
 	Sun();
 	void Init();
 	void Update();
+	void ExecuteCS();
 	void Draw();
 
 public:

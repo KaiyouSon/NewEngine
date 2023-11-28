@@ -20,9 +20,13 @@ void Sun::Update()
 	mSun->Update();
 }
 
-void Sun::Draw()
+void Sun::ExecuteCS()
 {
 	mSun->ExecuteCS(1625);
+}
+
+void Sun::Draw()
+{
 	mSun->Draw("Object3D");
 }
 

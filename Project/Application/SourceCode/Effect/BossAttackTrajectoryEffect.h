@@ -15,6 +15,7 @@ public:
 	BossAttackTrajectoryEffect();
 	void Generate();
 	void Update() override;
+	void ExecuteCS() override;
 	void Draw() override;
 
 public:

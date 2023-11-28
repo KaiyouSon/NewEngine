@@ -34,9 +34,13 @@ void AirEffect::Update()
 	mEmitter->Update();
 }
 
-void AirEffect::Draw()
+void AirEffect::ExecuteCS()
 {
 	mEmitter->ExecuteCS();
+}
+
+void AirEffect::Draw()
+{
 	mEmitter->Draw("Object3D");
 }
 

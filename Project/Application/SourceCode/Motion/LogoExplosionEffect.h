@@ -13,6 +13,7 @@ public:
 	LogoExplosionEffect();
 	void Generate(const Vec3 pos, const Vec3 rot, const Vec3 scale);
 	void Update() override;
+	void ExecuteCS() override;
 	void Draw() override;
 
 public:

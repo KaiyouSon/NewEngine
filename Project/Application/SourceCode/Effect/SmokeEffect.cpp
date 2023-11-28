@@ -34,9 +34,13 @@ void SmokeEffect::Update()
 	mEmitter->Update();
 }
 
-void SmokeEffect::Draw()
+void SmokeEffect::ExecuteCS()
 {
 	mEmitter->ExecuteCS();
+}
+
+void SmokeEffect::Draw()
+{
 	mEmitter->Draw("Object3D");
 }
 

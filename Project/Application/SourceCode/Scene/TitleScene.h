@@ -25,6 +25,7 @@ public:
 	void CreateInstance() override;
 	void Init() override;
 	void Update() override;
+	void ExecuteCS() override;
 	void DrawPass() override;
 	void Draw() override;
 	void DrawDebugGui() override;

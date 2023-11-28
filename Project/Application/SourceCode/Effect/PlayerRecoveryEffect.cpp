@@ -93,10 +93,14 @@ void PlayerRecoveryEffect::Update()
 	mLineEmitter->Update();
 }
 
-void PlayerRecoveryEffect::Draw()
+void PlayerRecoveryEffect::ExecuteCS()
 {
 	mCircleEmitter->ExecuteCS();
 	mLineEmitter->ExecuteCS();
+}
+
+void PlayerRecoveryEffect::Draw()
+{
 
 	mCircleEmitter->Draw("Object3D");
 	mLineEmitter->Draw("Object3D");

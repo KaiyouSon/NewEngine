@@ -68,6 +68,18 @@ void EffectManager::Update()
 		mSmokeEffects[i]->Update();
 	}
 }
+void EffectManager::ExecuteCS()
+{
+	for (uint32_t i = 0; i < mEffects.size(); i++)
+	{
+		mEffects[i]->ExecuteCS();
+	}
+
+	for (uint32_t i = 0; i < mSmokeEffects.size(); i++)
+	{
+		mSmokeEffects[i]->ExecuteCS();
+	}
+}
 void EffectManager::DrawEffect(const bool isBloom)
 {
 	// ブルームかけるやつ

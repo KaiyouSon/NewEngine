@@ -32,8 +32,12 @@ void LeadEffect::Update()
 	mEmitter->Update();
 }
 
-void LeadEffect::Draw()
+void LeadEffect::ExecuteCS()
 {
 	mEmitter->ExecuteCS();
+}
+
+void LeadEffect::Draw()
+{
 	mEmitter->Draw("Object3D");
 }

@@ -141,6 +141,15 @@ void Field::Update()
 	}
 }
 
+void Field::ExecuteCS()
+{
+	// 太陽
+	for (uint32_t i = 0; i < mFieldData->suns.size(); i++)
+	{
+		mFieldData->suns[i]->ExecuteCS();
+	}
+}
+
 void Field::DrawModel()
 {
 	if (!mFieldData)

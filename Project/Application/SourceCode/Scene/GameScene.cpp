@@ -197,6 +197,11 @@ void GameScene::Update()
 	// シーン切り替えの処理
 	SceneChangeUpdate();
 }
+void GameScene::ExecuteCS()
+{
+	EffectManager::GetInstance()->ExecuteCS();
+	mField->ExecuteCS();
+}
 void GameScene::DrawPass()
 {
 	ShadowMap::GetInstance()->DrawPass();

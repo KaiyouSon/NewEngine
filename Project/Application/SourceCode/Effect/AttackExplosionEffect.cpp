@@ -36,8 +36,12 @@ void AttackExplosionEffect::Update()
 	mEmitter->Update();
 }
 
-void AttackExplosionEffect::Draw()
+void AttackExplosionEffect::ExecuteCS()
 {
 	mEmitter->ExecuteCS();
+}
+
+void AttackExplosionEffect::Draw()
+{
 	mEmitter->Draw("Object3D");
 }

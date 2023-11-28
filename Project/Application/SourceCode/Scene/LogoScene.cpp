@@ -91,6 +91,10 @@ void LogoScene::Update()
 	}
 }
 
+void LogoScene::ExecuteCS()
+{
+}
+
 void LogoScene::DrawPass()
 {
 }

@@ -34,6 +34,7 @@ public:
 public:
 	void Init();
 	void Update();
+	void ExecuteCS();
 	void DrawPass();
 	void Draw();
 	void DrawDebugGui();

@@ -31,6 +31,7 @@ public:
 	EffectManager();
 	void Init();
 	void Update();
+	void ExecuteCS();
 	void DrawEffect(const bool isBloom = false);
 
 public:

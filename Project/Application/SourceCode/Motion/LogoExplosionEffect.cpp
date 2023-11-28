@@ -42,10 +42,14 @@ void LogoExplosionEffect::Update()
 	mParticleMesh->Update();
 }
 
-void LogoExplosionEffect::Draw()
+void LogoExplosionEffect::ExecuteCS()
 {
 	mParticleMesh->TransferCSConstantBuffer(1, mIsExplosion);
 	mParticleMesh->ExecuteCS();
+}
+
+void LogoExplosionEffect::Draw()
+{
 	mParticleMesh->Draw();
 }
 

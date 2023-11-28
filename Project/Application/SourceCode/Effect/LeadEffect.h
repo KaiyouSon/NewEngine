@@ -13,5 +13,6 @@ public:
 	LeadEffect();
 	void Generate(const Vec3 pos, const Vec3 frontVec);
 	void Update() override;
+	void ExecuteCS() override;
 	void Draw() override;
 };

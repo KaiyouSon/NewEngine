@@ -14,6 +14,7 @@ public:
 	AirEffect();
 	void Generate(const Vec3 pos);
 	void Update() override;
+	void ExecuteCS() override;
 	void Draw() override;
 
 public:

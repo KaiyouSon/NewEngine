@@ -55,6 +55,16 @@ void SceneManager::Update()
 	TransitionManager::GetInstance()->Update();
 }
 
+void SceneManager::ExecuteCS()
+{
+	if (mChangeStep != None)
+	{
+		return;
+	}
+
+	sCurrentScene->ExecuteCS();
+}
+
 void SceneManager::DrawPass()
 {
 	if (mChangeStep != None)

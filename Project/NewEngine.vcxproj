@@ -139,6 +139,7 @@
     <ClCompile Include="Application\SourceCode\Character\Character.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Cloud.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp" />
+    <ClCompile Include="Application\SourceCode\Scene\IScene.cpp" />
     <ClCompile Include="Application\SourceCode\UI\BossGaugeUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\CameraTargetUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\IUI.cpp" />

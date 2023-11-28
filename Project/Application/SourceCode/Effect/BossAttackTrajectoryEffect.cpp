@@ -39,9 +39,13 @@ void BossAttackTrajectoryEffect::Update()
 	mEmitter->Update();
 }
 
-void BossAttackTrajectoryEffect::Draw()
+void BossAttackTrajectoryEffect::ExecuteCS()
 {
 	mEmitter->ExecuteCS();
+}
+
+void BossAttackTrajectoryEffect::Draw()
+{
 	mEmitter->Draw("Object3D");
 }
 

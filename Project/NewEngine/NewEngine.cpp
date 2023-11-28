@@ -133,6 +133,9 @@ void NewEngine::PrevDraw()
 	// SRVのヒープセット
 	auto srvDescHeap = DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap();
 	RenderBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(1, &srvDescHeap);
+
+	// メインに描画する前にCSの実行とパスの描画を先に
+	SceneManager::GetInstance()->ExecuteCS();
 	SceneManager::GetInstance()->DrawPass();
 
 	RenderBase::GetInstance()->PreDraw();
