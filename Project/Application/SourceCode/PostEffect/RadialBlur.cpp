@@ -29,11 +29,8 @@ RadialBlur::RadialBlur() :
 	mCompositePass->AddRenderTexture(mTex[(uint32_t)PassType::Scene]);
 	mCompositePass->pos = GetWindowHalfSize();
 
-	//mData.strength = 0.01f;
-	//mData.loopNum = 100;
-
 	mData.strength = 0.01f;
-	mData.loopNum = 15;
+	mData.loopNum = 100;
 }
 
 void RadialBlur::Update()
@@ -50,7 +47,6 @@ void RadialBlur::Update()
 void RadialBlur::DrawPostEffect()
 {
 	mCompositePass->Draw();
-	//mPostEffect[(uint32_t)PassType::Target]->Draw();
 }
 
 void RadialBlur::DrawPass(const PassType type)

@@ -15,6 +15,7 @@
 #include "RectAngle.h"
 #include "Timer.h"
 #include "Transform.h"
+#include "Frustum.h"
 #include "Util.h"
 
 // Sound関連

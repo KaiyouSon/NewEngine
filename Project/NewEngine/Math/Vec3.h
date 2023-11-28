@@ -29,7 +29,8 @@ struct Vec3
 	const static Vec3 one;     // Vec3(1,1,1) または単位ベクトル
 	const static Vec3 zero;    // Vec3(0,0,0) または単位ベクトル
 
-	// 長さ
+	float Max() const;
+	float Min() const;
 	float Length() const;    // ベクトルの長さ
 	float LengthSq() const;  // ベクトルの長さの2乗
 	Vec3 Norm() const;      // 正規化されたベクトル

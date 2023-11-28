@@ -69,6 +69,12 @@ void Object3D::Update(Transform* parent)
 }
 void Object3D::Draw(const std::string& layerTag, const BlendMode blendMode)
 {
+	float radius = scale.Max();
+	if (Camera::current.IsVisible(pos, radius) == false)
+	{
+		return;
+	}
+
 	mBlendMode = blendMode;
 	layerTag;
 
@@ -245,9 +251,6 @@ void Object3D::DrawCommands()
 
 	if (mIsWriteShadow == true)
 	{
-		//renderBase->TransitionBufferState(mDepthTex->GetBufferResource(),
-		//	D3D12_RESOURCE_STATE_DEPTH_WRITE, D3D12_RESOURCE_STATE_GENERIC_READ);
-
 		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
 			(uint32_t)startIndex + 2, mDepthTex->GetBufferResource()->srvHandle.gpu);
 	}

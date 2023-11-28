@@ -152,3 +152,10 @@ enum class LayerType
 	Pass,	// パスを描画する
 	Scene,	// シーンを描画する
 };
+
+enum class FrustamPlanePos
+{
+	Left, Right,
+	Top, Down,
+	Near, Far
+};

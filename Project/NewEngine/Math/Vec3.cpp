@@ -10,6 +10,20 @@ const Vec3 Vec3::back(0.f, 0.f, -1.f);
 const Vec3 Vec3::one(1.f, 1.f, 1.f);
 const Vec3 Vec3::zero(0.f, 0.f, 0.f);
 
+float Vec3::Max() const
+{
+	float max1 = x >= y ? x : y;
+	float max2 = max1 >= z ? max1 : z;
+	return max2;
+}
+
+float Vec3::Min() const
+{
+	float min1 = x <= y ? x : y;
+	float min2 = min1 <= z ? min1 : z;
+	return min2;
+}
+
 float Vec3::Length() const { return sqrtf(x * x + y * y + z * z); }
 
 float Vec3::LengthSq() const { return x * x + y * y + z * z; }

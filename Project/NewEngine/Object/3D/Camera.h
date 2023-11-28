@@ -13,6 +13,7 @@ public:
 	float pFarZ;
 	float fov;
 	RectAngle rect;
+	Frustum viewFrustum;
 	static Camera current;
 
 private:
@@ -21,11 +22,15 @@ private:
 	Mat4 mOrthographicProjectionMat;  // 正射影行列
 	Mat4 mPerspectiveProjectionMat;   // 透視投影行列
 
+private:
+	void CalcViewFrustum();	// 試錐台を計算
+
 public:
 	Camera();
 	void Update();
 	static void DebugCameraUpdate();
 
+	bool IsVisible(const Vec3 objPos, const float radius);
 	Mat4 GetViewLookToMat();
 	Mat4 GetViewLookAtMat();
 	Mat4 GetOrthoGrphicProjectionMat();

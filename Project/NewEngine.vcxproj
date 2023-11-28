@@ -139,7 +139,6 @@
     <ClCompile Include="Application\SourceCode\Character\Character.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Cloud.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp" />
-    <ClCompile Include="Application\SourceCode\Scene\IScene.cpp" />
     <ClCompile Include="Application\SourceCode\UI\BossGaugeUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\CameraTargetUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\IUI.cpp" />
@@ -291,6 +290,7 @@
     <ClCompile Include="NewEngine\Util\Color.cpp" />
     <ClCompile Include="NewEngine\Util\Easing.cpp" />
     <ClCompile Include="NewEngine\Util\FrameRate.cpp" />
+    <ClCompile Include="NewEngine\Util\Frustum.cpp" />
     <ClCompile Include="NewEngine\Util\Layer.cpp" />
     <ClCompile Include="NewEngine\Util\Random.cpp" />
     <ClCompile Include="NewEngine\Sound\Sound.cpp" />
@@ -476,6 +476,7 @@
     <ClInclude Include="NewEngine\Util\BezierCurve.h" />
     <ClInclude Include="NewEngine\Util\Color.h" />
     <ClInclude Include="NewEngine\Util\Easing.h" />
+    <ClInclude Include="NewEngine\Util\Frustum.h" />
     <ClInclude Include="NewEngine\Util\Layer.h" />
     <ClInclude Include="NewEngine\Util\NewEngineEnum.h" />
     <ClInclude Include="NewEngine\Util\FrameRate.h" />

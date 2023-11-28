@@ -39,7 +39,6 @@ void Emitter::Update(Transform* parent)
 	// マテリアルの転送
 	MaterialTransfer();
 
-
 	for (uint32_t i = 0; i < pSize; i++)
 	{
 		mVertices[i].pos = pParam[i].curPos;

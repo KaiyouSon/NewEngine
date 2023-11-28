@@ -9,6 +9,7 @@
 #include "Easing.h"
 #include "BezierCurve.h"
 #include "RectAngle.h"
+#include "Frustum.h"
 #include "NewEngineDefine.h"
 #include "NewEngineEnum.h"
 #include "NewEngineSetting.h"
