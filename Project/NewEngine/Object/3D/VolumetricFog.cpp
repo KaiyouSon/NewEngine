@@ -55,11 +55,11 @@ void VolumetricFog::Update(Transform* parent)
 }
 void VolumetricFog::Draw(const BlendMode blendMode)
 {
-	float radius = scale.Max();
-	if (Camera::current.IsVisible(pos, radius) == false)
-	{
-		return;
-	}
+	//float radius = scale.Max();
+	//if (Camera::current.IsVisible(pos, radius) == false)
+	//{
+	//	return;
+	//}
 
 	if (mTexture == nullptr) return;
 

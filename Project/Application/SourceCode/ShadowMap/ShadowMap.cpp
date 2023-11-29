@@ -91,23 +91,6 @@ void ShadowMap::DrawPass()
 
 void ShadowMap::DrawPostEffect()
 {
-	//static bool flag = false;
-	//if (Key::GetKeyDown(DIK_M))
-	//{
-	//	if (flag == true)
-	//	{
-	//		flag = false;
-	//	}
-	//	else
-	//	{
-	//		flag = true;
-	//	}
-	//}
-
-	//if (flag == true)
-	//{
-	//	mShadowMap->Draw();
-	//}
 }
 
 void ShadowMap::Bind(Object3D& object)

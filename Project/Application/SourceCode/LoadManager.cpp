@@ -112,7 +112,7 @@ void LoadManager::GameSceneTextureLoad()
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomTarget");
 
 	// ラジアルブラー用
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "RadialBlurTarget");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080) / 4, 1, "RadialBlurTarget");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "RadialBlurMask");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "RadialBlurFinish");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "RadialBlurScene");

@@ -69,11 +69,11 @@ void Object3D::Update(Transform* parent)
 }
 void Object3D::Draw(const std::string& layerTag, const BlendMode blendMode)
 {
-	float radius = scale.Max();
-	if (Camera::current.IsVisible(pos, radius) == false)
-	{
-		return;
-	}
+	//float radius = scale.Max();
+	//if (Camera::current.IsVisible(pos, radius) == false)
+	//{
+	//	return;
+	//}
 
 	mBlendMode = blendMode;
 	layerTag;
