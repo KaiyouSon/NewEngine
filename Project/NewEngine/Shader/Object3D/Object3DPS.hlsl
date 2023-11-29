@@ -226,7 +226,6 @@ PSOutput main(V2P i)// : SV_TARGET
     // VSM
     //resultColor = CalcShadowColor(i, resultColor);
     
-    
     PSOutput output;
     output.target0 = resultColor * maskIntensity + dissolveColor * colorPower * (1 - maskIntensity);
     output.target1 = float4(1 - resultColor.rgb, color.a);

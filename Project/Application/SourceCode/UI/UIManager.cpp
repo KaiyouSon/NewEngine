@@ -35,9 +35,24 @@ void UIManager::Init()
 	{
 		mUI[i]->Init();
 	}
+
+	mIsActive = true;
 }
 void UIManager::Update()
 {
+	ProcessAtDebugBuild([this]
+		{
+			if (Key::GetKeyDown(DIK_U))
+			{
+				mIsActive = mIsActive == true ? false : true;
+			}
+		});
+
+	if (mIsActive == false)
+	{
+		return;
+	}
+
 	if (mMovieEvent->GetisPlaying() == true)
 	{
 		return;
@@ -65,6 +80,11 @@ void UIManager::Update()
 }
 void UIManager::DrawFrontSprite()
 {
+	if (mIsActive == false)
+	{
+		return;
+	}
+
 	if (mMovieEvent->GetisPlaying() == true)
 	{
 		return;

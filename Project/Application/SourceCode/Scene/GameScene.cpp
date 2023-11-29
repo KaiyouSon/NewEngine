@@ -265,7 +265,7 @@ void GameScene::Draw()
 void GameScene::DrawDebugGui()
 {
 	//mBoss->DrawDebugGui();
-	mPostEffectManager->DrawDebugGui();
+	/*mPostEffectManager->DrawDebugGui();
 
 	Gui::BeginWindow("Debug");
 
@@ -348,7 +348,7 @@ void GameScene::DrawDebugGui()
 		Gui::DrawSlider2("Spot Light Factor CosAngle", mSpotLight->cosAngle);
 	}
 
-	Gui::EndWindow();
+	Gui::EndWindow();*/
 }
 
 // シーン切り替えの処理

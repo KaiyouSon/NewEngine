@@ -29,7 +29,7 @@ private:
 	Player* mPlayer;
 	Boss* mBoss;
 	MovieEvent* mMovieEvent;
-
+	bool mIsActive;
 
 private:
 	// 交渉UIの処理

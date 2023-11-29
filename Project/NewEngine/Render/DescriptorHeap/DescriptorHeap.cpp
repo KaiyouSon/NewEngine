@@ -133,11 +133,9 @@ void DescriptorHeap::CreateRTV(BufferResource* bufferResource)
 
 	// CPUとGPUハンドルを設定
 	bufferResource->rtvHandle.cpu = mDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
-	bufferResource->rtvHandle.gpu = mDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
 
 	// インデックスに基づいてハンドルを更新
 	bufferResource->rtvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->rtvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex - mSetting.startIndex, ViewType::RTV));
 
 	// レンダーターゲットビューの設定
@@ -171,11 +169,9 @@ void DescriptorHeap::CreateDSV(BufferResource* bufferResource)
 
 	// CPUとGPUハンドルを設定
 	bufferResource->dsvHandle.cpu = mDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
-	bufferResource->dsvHandle.gpu = mDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
 
 	// インデックスに基づいてハンドルを更新
 	bufferResource->dsvHandle.cpu.ptr += (uint32_t)(incrementSize * incrementIndex);
-	bufferResource->dsvHandle.gpu.ptr += (uint32_t)(incrementSize * incrementIndex);
 	bufferResource->viewIndexes.push_back(ViewIndex(incrementIndex - mSetting.startIndex, ViewType::DSV));
 
 	// デプスステンシルビューの設定

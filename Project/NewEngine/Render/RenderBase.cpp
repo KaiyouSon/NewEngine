@@ -28,7 +28,7 @@ void RenderBase::Init()
 			if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(debugController.GetAddressOf()))))
 			{
 				debugController->EnableDebugLayer();
-				debugController->SetEnableGPUBasedValidation(true);
+				debugController->SetEnableGPUBasedValidation(false);
 			}
 		});
 
