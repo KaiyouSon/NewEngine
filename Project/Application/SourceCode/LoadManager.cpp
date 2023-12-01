@@ -15,10 +15,11 @@ void LoadManager::TitleSceneLoad()
 	TextureManager::LoadTexture("Title/PressButtonBack.dds", "PressButtonBack");
 
 	// ブルーム用
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomHighLumi");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomGaussianBlur");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomTarget");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "BloomHighLumi");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "BloomGaussianBlur");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080) / 2, "BloomGaussianBlurHalf");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "Bloom");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "BloomTarget");
 }
 void LoadManager::TitleSceneUnLoad()
 {
@@ -30,6 +31,7 @@ void LoadManager::TitleSceneUnLoad()
 	// ブルーム用
 	TextureManager::DestroyRenderTexture("BloomHighLumi");
 	TextureManager::DestroyRenderTexture("BloomGaussianBlur");
+	TextureManager::DestroyRenderTexture("BloomGaussianBlurHalf");
 	TextureManager::DestroyRenderTexture("Bloom");
 	TextureManager::DestroyRenderTexture("BloomTarget");
 }
@@ -103,19 +105,20 @@ void LoadManager::GameSceneTextureLoad()
 	TextureManager::LoadTexture("Branch.dds", "Branch");
 
 	// 天球
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Vignette");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "Vignette");
 
 	// ブルーム用
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomHighLumi");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomGaussianBlur");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "Bloom");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "BloomTarget");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "BloomHighLumi");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "BloomGaussianBlur");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080) / 4, "BloomGaussianBlurHalf");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "Bloom");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "BloomTarget");
 
 	// ラジアルブラー用
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080) / 4, 1, "RadialBlurTarget");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "RadialBlurMask");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "RadialBlurFinish");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "RadialBlurScene");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080) / 4, "RadialBlurTarget");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "RadialBlurMask");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "RadialBlurFinish");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "RadialBlurScene");
 
 	// ボリュームテクスチャ
 	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice0.dds", "VolumeTexture0");
@@ -176,6 +179,7 @@ void LoadManager::GameSceneTextureUnLoad()
 	// エフェクトブルーム用
 	TextureManager::DestroyRenderTexture("BloomHighLumi");
 	TextureManager::DestroyRenderTexture("BloomGaussianBlur");
+	TextureManager::DestroyRenderTexture("BloomGaussianBlurHalf");
 	TextureManager::DestroyRenderTexture("Bloom");
 	TextureManager::DestroyRenderTexture("BloomTarget");
 
@@ -285,15 +289,16 @@ bool LoadManager::TextureLoad()
 	// ディゾルブ
 	TextureManager::LoadTexture("DissolveTexture.dds", "DissolveTexture");
 
-	// ブラー
+	// ノイズ
 	TextureManager::LoadTexture("Noice/BlurNoice.dds", "BlurNoice");
 	TextureManager::LoadTexture("Noice/ScreenNoice.dds", "ScreenNoice");
 
 	// シャドウマップ
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080) * 8, 1, "ShadowMap");
+	RenderTextureSetting setting = RenderTextureSetting(Vec2(1920, 1080), Vec2(1920, 1080) * 2, true);
+	TextureManager::CreateRenderTexture(setting, "ShadowMap");
 
 	// 現在のシーン
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), 1, "CurrentScene");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "CurrentScene");
 
 	// 非同期終わったよ～
 	return true;

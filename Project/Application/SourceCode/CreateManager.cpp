@@ -359,6 +359,7 @@ void CreateManager::CreateGraphicsPipeline()
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("GaussianBlur");
 	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "GaussianBlur");
 
 	// 合成用（PostEffect）

@@ -43,6 +43,8 @@ void ShadowMap::Init()
 void ShadowMap::Update(const Vec3 lightPos)
 {
 	lightCamera.pos = lightPos;
+	lightCamera.rect = RectAngle(-832, 128, 0, -540);
+
 
 	float pitch = atan2f(lightCamera.pos.y, lightCamera.pos.z);
 	float yaw = atan2f(lightCamera.pos.x, -lightCamera.pos.z);
@@ -91,6 +93,17 @@ void ShadowMap::DrawPass()
 
 void ShadowMap::DrawPostEffect()
 {
+	static bool flag = false;
+
+	if (Key::GetKeyDown(DIK_M))
+	{
+		flag = flag == true ? false : true;
+	}
+
+	if (flag == true)
+	{
+		mShadowMap->Draw();
+	}
 }
 
 void ShadowMap::Bind(Object3D& object)

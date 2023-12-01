@@ -473,7 +473,7 @@ void TextureManager::CreateVolumeTexture(const std::vector<Texture*>& texs, cons
 }
 
 // レンダーテクスチャの作成
-void TextureManager::CreateRenderTexture(const Vec2 size, const uint32_t rtvNum, const std::string tag)
+void TextureManager::CreateRenderTexture(const Vec2 size, const std::string tag)
 {
 	// 排他制御
 	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
@@ -486,7 +486,27 @@ void TextureManager::CreateRenderTexture(const Vec2 size, const uint32_t rtvNum,
 		GetInstance()->mRenderTextureMap[tag].get());
 
 	// 生成
-	texture->Create(size, rtvNum);
+	RenderTextureSetting setting = RenderTextureSetting(size);
+	texture->Create(setting);
+
+	std::string log = "[RenderTexture Create] Tag : " + tag + ", created";
+	OutputDebugLog(log.c_str());
+}
+
+void TextureManager::CreateRenderTexture(const RenderTextureSetting setting, const std::string tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	// マップに格納
+	GetInstance()->mRenderTextureMap.
+		insert(std::make_pair(tag, std::move(std::make_unique<RenderTexture>())));
+
+	RenderTexture* texture = dynamic_cast<RenderTexture*>(
+		GetInstance()->mRenderTextureMap[tag].get());
+
+	// 生成
+	texture->Create(setting);
 
 	std::string log = "[RenderTexture Create] Tag : " + tag + ", created";
 	OutputDebugLog(log.c_str());

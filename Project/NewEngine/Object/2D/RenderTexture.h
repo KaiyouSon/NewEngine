@@ -2,6 +2,7 @@
 #include "DepthTexture.h"
 #include "Viewport.h"
 #include "ScissorRectangle.h"
+#include "NewEngineSetting.h"
 #include <vector>
 #include <memory>
 #include <wrl.h>
@@ -21,7 +22,7 @@ public:
 	bool useDepth = false;
 
 public:
-	void Create(const Vec2 size, const uint32_t rtvNum = 1);
+	void Create(const RenderTextureSetting setting);
 
 public:
 	void PrevDrawScene();

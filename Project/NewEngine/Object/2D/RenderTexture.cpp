@@ -13,14 +13,14 @@ using namespace std;
 
 const float RenderTexture::sClearColor[4] = { 0.f,0.f,0.f,1.0f };
 
-void RenderTexture::Create(const Vec2 size, const uint32_t rtvNum)
+void RenderTexture::Create(const RenderTextureSetting setting)
 {
 	mType = TextureType::Render;
 
-	mInitalSize = size;
-	mBufferResources.resize(rtvNum);
-	mViewports.resize(rtvNum);
-	mScissorRects.resize(rtvNum);
+	mInitalSize = setting.texSize;
+	mBufferResources.resize(setting.rtvNum);
+	mViewports.resize(setting.rtvNum);
+	mScissorRects.resize(setting.rtvNum);
 
 	mDepthBuffer = std::make_unique<DepthBuffer>();
 	mDepthTexture = std::make_unique<DepthTexture>();
@@ -33,7 +33,7 @@ void RenderTexture::Create(const Vec2 size, const uint32_t rtvNum)
 	D3D12_RESOURCE_DESC resourceDesc =
 		CD3DX12_RESOURCE_DESC::Tex2D(
 			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
-			(uint64_t)size.x, (uint32_t)size.y,
+			(uint64_t)setting.texSize.x, (uint32_t)setting.texSize.y,
 			1, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
 
 	// クリアバリュー
@@ -43,7 +43,7 @@ void RenderTexture::Create(const Vec2 size, const uint32_t rtvNum)
 			RenderTexture::sClearColor);
 
 	HRESULT result;
-	for (uint32_t i = 0; i < rtvNum; i++)
+	for (uint32_t i = 0; i < setting.rtvNum; i++)
 	{
 		result = RenderBase::GetInstance()->GetDevice()->
 			CreateCommittedResource(
@@ -59,21 +59,24 @@ void RenderTexture::Create(const Vec2 size, const uint32_t rtvNum)
 		mBufferResources[i].bufferState = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
 
 		// テクスチャのSRVとRTV作成
-		DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(&GetBufferResources()->at(i));
 		DescriptorHeapManager::GetDescriptorHeap("RTV")->CreateRTV(&GetBufferResources()->at(i));
 	}
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(&GetBufferResources()->at(0));
 
 	// 深度バッファの生成
-	mDepthBuffer->Create(size);
+	mDepthBuffer->Create(setting.depthSize);
 
 	// DSV作成
 	DescriptorHeapManager::GetDescriptorHeap("DSV")->CreateDSV(mDepthBuffer->GetBufferResource());
 
-	// 深度テクスチャの作成
-	mDepthTexture->Create(mDepthBuffer.get());
+	if (setting.isUseDepthTexture == true)
+	{
+		// 深度テクスチャの作成
+		mDepthTexture->Create(mDepthBuffer.get());
 
-	// 深度テクスチャのSRV
-	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(mDepthTexture->GetBufferResource());
+		// 深度テクスチャのSRV
+		DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(mDepthTexture->GetBufferResource());
+	}
 }
 
 void RenderTexture::PrevDrawScene()

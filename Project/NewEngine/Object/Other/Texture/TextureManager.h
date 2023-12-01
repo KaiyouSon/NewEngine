@@ -49,7 +49,8 @@ public:	// 生成関連
 	static void CreateVolumeTexture(const std::vector<Texture*>& texs, const std::string tag);
 
 	// レンダーテクスチャの作成
-	static void CreateRenderTexture(const Vec2 size, const uint32_t rtvNum, const std::string tag);
+	static void CreateRenderTexture(const Vec2 size, const std::string tag);
+	static void CreateRenderTexture(const RenderTextureSetting setting, const std::string tag);
 
 public: // 破棄関連
 

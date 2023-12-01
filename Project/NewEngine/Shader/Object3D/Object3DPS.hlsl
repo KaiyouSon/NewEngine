@@ -61,7 +61,7 @@ float CalcShadow(float4 spos)
     shadowTexUV += 0.5f;
     
     float shadowFactor = 0;
-    float shiftNum = 12;
+    float shiftNum = 3;
     float shiftWidth = 0.00005f;
     float count = 0;
     [unroll]

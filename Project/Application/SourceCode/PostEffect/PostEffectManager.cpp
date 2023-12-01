@@ -80,30 +80,27 @@ void PostEffectManager::EffectBloomDrawPass(
 	const std::function<void()>& sceneDrawFunc)
 {
 	// 高輝度箇所を抽出
-	mEffectBloom->PrevSceneDraw(Bloom::PassType::HighLumi);
+	mEffectBloom->PrevSceneDraw(Bloom::TexType::HighLumi);
 	targetDrawFunc();
-	mEffectBloom->PostSceneDraw(Bloom::PassType::HighLumi);
+	mEffectBloom->PostSceneDraw(Bloom::TexType::HighLumi);
 
 	// 高輝度箇所にブラー
-	mEffectBloom->PrevSceneDraw(Bloom::PassType::GaussianBlur);
-	if (mEffectBloom->isBloom0 == true)
-	{
-	}
+	mEffectBloom->PrevSceneDraw(Bloom::TexType::GaussianBlur);
 	mEffectBloom->DrawPass(Bloom::PassType::HighLumi);
-	mEffectBloom->PostSceneDraw(Bloom::PassType::GaussianBlur);
+	mEffectBloom->PostSceneDraw(Bloom::TexType::GaussianBlur);
+	mEffectBloom->PrevSceneDraw(Bloom::TexType::GaussianBlurHalf);
+	mEffectBloom->DrawPass(Bloom::PassType::HighLumi);
+	mEffectBloom->PostSceneDraw(Bloom::TexType::GaussianBlurHalf);
 
 	// ブラーかけ終わったやつを描画
-	mEffectBloom->PrevSceneDraw(Bloom::PassType::Bloom);
-	if (mEffectBloom->isBloom0 == true)
-	{
-	}
+	mEffectBloom->PrevSceneDraw(Bloom::TexType::Bloom);
 	mEffectBloom->DrawPass(Bloom::PassType::GaussianBlur);
-	mEffectBloom->PostSceneDraw(Bloom::PassType::Bloom);
+	mEffectBloom->PostSceneDraw(Bloom::TexType::Bloom);
 
 	// 現在のシーンの描画
-	mEffectBloom->PrevSceneDraw(Bloom::PassType::Target);
+	mEffectBloom->PrevSceneDraw(Bloom::TexType::Target);
 	sceneDrawFunc();
-	mEffectBloom->PostSceneDraw(Bloom::PassType::Target);
+	mEffectBloom->PostSceneDraw(Bloom::TexType::Target);
 }
 
 void PostEffectManager::RadialBlurDrawPass(

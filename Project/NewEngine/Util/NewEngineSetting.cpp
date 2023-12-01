@@ -51,3 +51,26 @@ DescriptorHeapSetting::DescriptorHeapSetting() :
 	maxSize(64), startIndex(0), heapType(DescriptorHeapSetting::None)
 {
 }
+
+//////////////////////////////////////////////////////////////////////////
+/// --- RenderTextureの設定構造体 ------------------------------------ ///
+//////////////////////////////////////////////////////////////////////////
+RenderTextureSetting::RenderTextureSetting(Vec2 texSize) :
+	texSize(texSize), depthSize(texSize), rtvNum(1), isUseDepthTexture(false)
+{
+}
+
+RenderTextureSetting::RenderTextureSetting(Vec2 texSize, uint32_t rtvNum) :
+	texSize(texSize), depthSize(texSize), rtvNum(rtvNum), isUseDepthTexture(false)
+{
+}
+
+RenderTextureSetting::RenderTextureSetting(Vec2 texSize, Vec2 depthSize, bool isUseDepthTexture) :
+	texSize(texSize), depthSize(depthSize), rtvNum(1), isUseDepthTexture(isUseDepthTexture)
+{
+}
+
+RenderTextureSetting::RenderTextureSetting(Vec2 texSize, Vec2 depthSize, uint32_t rtvNum, bool isUseDepthTexture) :
+	texSize(texSize), depthSize(depthSize), rtvNum(rtvNum), isUseDepthTexture(isUseDepthTexture)
+{
+}

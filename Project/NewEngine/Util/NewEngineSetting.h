@@ -153,3 +153,17 @@ struct DescriptorHeapSetting
 
 	DescriptorHeapSetting();
 };
+
+// RenderTextureの設定構造体
+struct RenderTextureSetting
+{
+	Vec2 texSize;
+	Vec2 depthSize;
+	uint32_t rtvNum;
+	bool isUseDepthTexture;
+
+	RenderTextureSetting(Vec2 texSize);
+	RenderTextureSetting(Vec2 texSize, uint32_t rtvNum);
+	RenderTextureSetting(Vec2 texSize, Vec2 depthSize, bool isUseDepthTexture);
+	RenderTextureSetting(Vec2 texSize, Vec2 depthSize, uint32_t rtvNum, bool isUseDepthTexture);
+};

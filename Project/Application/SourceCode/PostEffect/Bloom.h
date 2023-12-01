@@ -5,21 +5,31 @@
 class Bloom
 {
 public:
-	enum class PassType
+	enum class TexType
 	{
 		// パスの種類
 		HighLumi,
 		GaussianBlur,
+		GaussianBlurHalf,
 		Bloom,
 		Target,
 
 		Size
 	};
 
+	enum class PassType
+	{
+		// パスの種類
+		HighLumi,
+		GaussianBlur,
+		Bloom,
+
+		Size
+	};
+
 private:
 	std::array<std::unique_ptr<PostEffect>, (uint32_t)PassType::Size> mPasses;
-	std::array<RenderTexture*, (uint32_t)PassType::Size> mTexs;
-	std::unique_ptr<PostEffect> mCompositePass;
+	std::array<RenderTexture*, (uint32_t)TexType::Size> mTexs;
 
 	Vec2 mHighLumiClamp;
 
@@ -32,8 +42,8 @@ public:
 	void Update();
 	void DrawPostEffect();
 	void DrawPass(const PassType passType);
-	void PrevSceneDraw(const PassType passType);
-	void PostSceneDraw(const PassType passType);
+	void PrevSceneDraw(const TexType passType);
+	void PostSceneDraw(const TexType passType);
 
 public:
 	void SetHighLumiClmap(const Vec2 highLumiClamp);

@@ -1,6 +1,7 @@
 #include "GaussianBlur.hlsli"
 
-Texture2D<float4> tex : register(t0);
+Texture2D<float4> tex0 : register(t0);
+Texture2D<float4> tex1 : register(t1);
 SamplerState smp : register(s0);
 
 // ガウス関数
@@ -29,6 +30,7 @@ float4 GaussianBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float si
 		    // 色取得するUV座標
             float2 offset = float2(px, py);
             float2 pickUV = uv + offset;
+            pickUV.x *= 1920 / 1090;
             
             // 画面外の色を取得しないように
             pickUV = clamp(pickUV, 0.001, 0.999);
@@ -48,8 +50,8 @@ float4 GaussianBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float si
 
 float4 main(V2P i) : SV_TARGET
 {
-    float4 texColor1 = GaussianBlur(tex, smp, i.uv, 0.00125f, 10);
-    float4 texColor2 = GaussianBlur(tex, smp, i.uv, 0.0025f, 10);
+    float4 texColor0 = GaussianBlur(tex0, smp, i.uv, 0.00125f, 10);
+    float4 texColor1 = GaussianBlur(tex1, smp, i.uv, 0.0025f, 5);
     
-    return float4(texColor1.rgb + texColor2.rgb, 1);
+    return float4(texColor0.rgb + texColor1.rgb, 1);
 }
