@@ -297,9 +297,6 @@ bool LoadManager::TextureLoad()
 	RenderTextureSetting setting = RenderTextureSetting(Vec2(1920, 1080), Vec2(1920, 1080) * 2, true);
 	TextureManager::CreateRenderTexture(setting, "ShadowMap");
 
-	// 現在のシーン
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "CurrentScene");
-
 	// 非同期終わったよ～
 	return true;
 }
