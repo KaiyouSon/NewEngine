@@ -101,6 +101,11 @@ namespace ConstantBufferData
 		Color specular;	// スペキュラー係数
 	};
 
+	struct CPOM
+	{
+		float heightScale;
+	};
+
 	struct CDirectionalLight
 	{
 		Color color;

@@ -22,6 +22,7 @@ public:
 	Vec3 rot;
 	Color color;
 	Texture* texture;
+	static float heightScale;
 	static ConstantBufferData::CMaterialColor sMaterialColor;
 
 private:

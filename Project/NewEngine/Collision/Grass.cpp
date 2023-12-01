@@ -4,6 +4,7 @@
 using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
+float Grass::heightScale = 0.0f;
 CMaterialColor Grass::sMaterialColor =
 {
 	Color(105,100,45,255),
@@ -31,6 +32,7 @@ Grass::Grass() :
 void Grass::GenerateGrassToSquare(const Vec2 size, const uint32_t density)
 {
 	uint32_t maxNum = (uint32_t)(size.Area() * density);
+	//maxNum = 1;
 
 	// 頂点バッファの生成
 	mVertices.resize(maxNum);
@@ -135,7 +137,7 @@ void Grass::Draw()
 	// マテリアルの描画コマンド
 	MaterialDrawCommands();
 
-	LightManager::GetInstance()->DrawCommand(3);
+	LightManager::GetInstance()->DrawCommand(4);
 
 	// SRVのセット
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
@@ -161,7 +163,12 @@ void Grass::MaterialInit()
 	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
+	// マテリアルカラー
 	iConstantBuffer = std::make_unique<ConstantBuffer<CMaterialColor>>();
+	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
+
+	// POM
+	iConstantBuffer = std::make_unique<ConstantBuffer<CPOM>>();
 	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
 
 	// 初期化
@@ -197,6 +204,10 @@ void Grass::MaterialTransfer()
 		sMaterialColor.specular.To01(),
 	};
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[2].get(), materialColorData);
+
+	// マテリアル
+	CPOM pomData = { heightScale };
+	TransferDataToConstantBuffer(mMaterial.constantBuffers[3].get(), pomData);
 }
 void Grass::MaterialDrawCommands()
 {

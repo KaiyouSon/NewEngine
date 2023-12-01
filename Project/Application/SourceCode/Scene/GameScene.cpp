@@ -279,6 +279,7 @@ void GameScene::DrawDebugGui()
 		Gui::DrawColorEdit("Ambient", Grass::sMaterialColor.ambient);
 		Gui::DrawColorEdit("Diffuse", Grass::sMaterialColor.diffuse);
 		Gui::DrawColorEdit("Specular", Grass::sMaterialColor.specular);
+		Gui::DrawSlider1("HeightScale", Grass::heightScale);
 	}
 
 	if (Gui::DrawCollapsingHeader("ShadowMap") == true)

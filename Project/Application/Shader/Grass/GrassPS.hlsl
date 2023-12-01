@@ -4,60 +4,79 @@ Texture2D<float4> tex : register(t0);
 Texture2D<float4> shadowMapTex : register(t1);
 SamplerState smp : register(s0);
 
-float CalcShadow(float4 spos)
+// POMの計算
+float3 CalcParallaxMapping(G2P i);
+
+// ライティングの計算
+float4 CalcLighting(G2P i);
+
+// 陰の計算
+float CalcShadow(float4 spos);
+
+float4 main(G2P i) : SV_TARGET
 {
-    float shadow = 1;
+    float4 texColor = tex.Sample(smp, i.uv);
+    float4 resultColor = texColor;
     
-    // ライトビューでのスクリーン空間でのz値を計算する
-    float z = spos.z / spos.w;
+    // POM
+    float4 pomColor = float4(CalcParallaxMapping(i).rgb, 1);
+    resultColor *= pomColor * color;
     
-    // シャドウマップのUVを算出
-    float2 shadowTexUV = spos.xy / spos.w;
-    shadowTexUV *= float2(0.5f, -0.5f);
-    shadowTexUV += 0.5f;
+    clip(resultColor.a - 0.75);
+    //return resultColor;
     
-    //if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
-    //    shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
-    //{
-    //    float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV).r;
-    //    if (shadowDepth + 0.0001f < z)
-    //    {
-    //        shadow *= 0.5f;
-    //    }
-    //}
+    // ライティング
+    float4 adsColor = CalcLighting(i);
+    resultColor *= adsColor;
+    
+    // シャドウ
+    float shadow = 1.0f;
+    shadow = CalcShadow(i.spos);
+    resultColor.rgb *= shadow;
+    
+    
+    return resultColor;
+}
 
-    //return shadow;
+float3 CalcParallaxMapping(G2P i)
+{
+    float2 uv = i.uv;
     
-    float shadowFactor = 0;
-    float shiftNum = 3;
-    float shiftWidth = 0.00005f;
-    float count = 0;
-    [unroll]
-    for (float py = -shiftNum / 2; py <= shiftNum / 2; py++)
+    float height = tex.Sample(smp, i.uv).r;
+    float3 eyeDir = normalize(i.wpos.xyz - cameraPos); // 頂点から視点へのベクトル
+    float2 parallaxOffset = /* heightScale **/eyeDir.xy * height;
+    //uv += parallaxOffset/* + float2(0.5f, 0.5f)*/;
+    
+    // レイマーチング
+    float3 resultColor = tex.Sample(smp, uv);
+    float stepSize = heightScale;
+    float maxStep = 20;
+    
+    for (float i = 0; i < maxStep; i++)
     {
-        [unroll]
-        for (float px = -shiftNum / 2; px <= shiftNum / 2; px++)
-        {
-		    // 色取得するUV座標
-            float2 offset = float2(px, py);
-            float2 pickUV = shadowTexUV + offset * shiftWidth;
+         // レイの先にあるポイントの高さを取得
+        float currentHeight = tex.Sample(smp, uv).r;
+
+        // レイの衝突判定
+        //if (uv.y > currentHeight)
+        //{
+            // サンプリング
+        float4 sampleColor = tex.Sample(smp, uv);
+        resultColor += sampleColor.rgb;
+
+            // テクスチャ座標を更新
+            //uv += parallaxOffset /*+ float2(0.5f, 0.5f)*/;
             
-            // 画面外の色を取得しないように
-            pickUV = clamp(pickUV, 0.001, 0.999);
-
-            // シャドウ マップから深度をサンプリング
-            float shadowDepth = shadowMapTex.Sample(smp, pickUV).r;
-            if (shadowDepth + 0.0005f < z)
-            {
-                shadowFactor += 0.75f;
-            }
-            count++;
-        }
+            // ステップサイズだけ進める
+        uv += stepSize * eyeDir.xy;
+        //}
+        //else
+        //{
+        //    break; // 衝突したらループ終了
+        //}
     }
-
-    // サンプル数で割って正規化
-    shadow = 1 - shadowFactor / count;
-    return shadow;
+    
+    return resultColor / maxStep;
 }
 
 float4 CalcLighting(G2P i)
@@ -175,19 +194,60 @@ float4 CalcLighting(G2P i)
     return adsColor;
 }
 
-float4 main(G2P i) : SV_TARGET
+
+float CalcShadow(float4 spos)
 {
-    float4 texColor = tex.Sample(smp, i.uv);
+    float shadow = 1;
     
-    clip(texColor.a - 0.75);
+    // ライトビューでのスクリーン空間でのz値を計算する
+    float z = spos.z / spos.w;
     
-    float4 adsColor = CalcLighting(i);
+    // シャドウマップのUVを算出
+    float2 shadowTexUV = spos.xy / spos.w;
+    shadowTexUV *= float2(0.5f, -0.5f);
+    shadowTexUV += 0.5f;
     
-    float shadow = 1.0f;
-    shadow = CalcShadow(i.spos);
+    //if (shadowTexUV.x > 0.01f && shadowTexUV.x < 0.99f &&
+    //    shadowTexUV.y > 0.01f && shadowTexUV.y < 0.99f)
+    //{
+    //    float shadowDepth = shadowMapTex.Sample(smp, shadowTexUV).r;
+    //    if (shadowDepth + 0.0001f < z)
+    //    {
+    //        shadow *= 0.5f;
+    //    }
+    //}
+
+    //return shadow;
     
-    float4 resultColor = texColor * adsColor * color;
-    resultColor.rgb *= shadow;
-    
-    return resultColor;
+    float shadowFactor = 0;
+    float shiftNum = 3;
+    float shiftWidth = 0.00005f;
+    float count = 0;
+    [unroll]
+    for (float py = -shiftNum / 2; py <= shiftNum / 2; py++)
+    {
+        [unroll]
+        for (float px = -shiftNum / 2; px <= shiftNum / 2; px++)
+        {
+		    // 色取得するUV座標
+            float2 offset = float2(px, py);
+            float2 pickUV = shadowTexUV + offset * shiftWidth;
+            
+            // 画面外の色を取得しないように
+            pickUV = clamp(pickUV, 0.001, 0.999);
+
+            // シャドウ マップから深度をサンプリング
+            float shadowDepth = shadowMapTex.Sample(smp, pickUV).r;
+            if (shadowDepth + 0.0005f < z)
+            {
+                shadowFactor += 0.75f;
+            }
+            count++;
+        }
+    }
+
+    // サンプル数で割って正規化
+    shadow = 1 - shadowFactor / count;
+    return shadow;
 }
+

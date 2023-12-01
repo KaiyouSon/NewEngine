@@ -65,11 +65,17 @@ cbuffer ConstantBufferDataMaterial : register(b2)
     float alpha : packoffset(c2.w); // アルファ
 }
 
+// POM
+cbuffer ConstantBufferDataPOM : register(b3)
+{
+    float heightScale; // 色
+}
+
 // ライトグループ
 static const uint directionalLightSize = 1;
 static const uint pointLightSize = 5;
 static const uint spotLightSize = 1;
-cbuffer ConstantBufferDataLightGroup : register(b3)
+cbuffer ConstantBufferDataLightGroup : register(b4)
 {
     DirectionalLight directionalLight[directionalLightSize];
     PointLight pointLight[pointLightSize];
@@ -97,4 +103,6 @@ struct G2P
     float3 normal : NORMAL;
     float4 wpos : POSITION0; // ワールド座標
     float4 spos : POSITIONT1;
+    float3 tangent : TANGENT;
+    float3 binormal : BINORMAL;
 };

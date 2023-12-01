@@ -41,9 +41,9 @@ void main(point V2G input[1] : SV_POSITION, inout TriangleStream<G2P> output)
     offsetArray[1].x += sin(input[0].timer.x * PI / 180) / 3;
     offsetArray[3].x += sin(input[0].timer.x * PI / 180) / 3;
 
-    float offsetZ = 0.5f - Random01(float2(input[0].timer.x, input[0].pos.x));
-    offsetArray[1].z += sin(input[0].timer.x * PI / 180);
-    offsetArray[3].z -= sin(input[0].timer.x * PI / 180);
+    //float offsetZ = 0.5f - Random01(float2(input[0].timer.x, input[0].pos.x));
+    //offsetArray[1].z += sin(input[0].timer.x * PI / 180);
+    //offsetArray[3].z -= sin(input[0].timer.x * PI / 180);
     
     for (uint i = 0; i < num; i++)
     {
@@ -54,13 +54,14 @@ void main(point V2G input[1] : SV_POSITION, inout TriangleStream<G2P> output)
         
         float4 vpos = input[0].pos + voffset;
         
-        float4 normal = mul(worldMat, float4(normalArray[i], 0));
+        float4 normal = mul(worldMat, mul(billboardMat, float4(normalArray[i], 0)));
         
         element.pos = mul(mul(viewProjMat, worldMat), vpos);
         element.wpos = mul(worldMat, vpos);
         element.spos = mul(mul(lightViewProjMat, worldMat), vpos);
         element.normal = normal;
         element.uv = uvArray[i];
+        
         output.Append(element);
     }
 }
