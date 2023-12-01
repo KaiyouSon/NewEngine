@@ -12,6 +12,8 @@ private:
 	std::vector<ShadowObj> mShadowObjs;
 	std::vector<Transform> mParents;
 	uint32_t mIndex;
+	Vec2 rectLeftTop;
+	Vec2 rectSize;
 
 public:
 	Camera lightCamera;
@@ -24,9 +26,11 @@ public:
 	ShadowMap();
 	void Init();
 	void Register(const uint32_t size);
-	void Update(const Vec3 lightPos);
+	void LightViewUpdate(const Vec3 lightPos);
+	void Update();
 	void DrawPass();
 	void DrawPostEffect();
+	void DrawDebugGui();
 
 public:
 	void Bind(Object3D& object);

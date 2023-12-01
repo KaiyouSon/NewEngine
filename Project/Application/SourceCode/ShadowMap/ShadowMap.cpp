@@ -15,8 +15,10 @@ ShadowMap::ShadowMap() :
 
 	mIndex = 0;
 
-	lightCamera.rot = Vec3(Radian(45), Radian(45), 0);
-	lightCamera.rect = RectAngle(-960, 960, 540, -540);
+	rectLeftTop = Vec2(-400, 100.f);
+	rectSize = Vec2(624.f, 351.f);
+	lightCamera.rot = Vec3(Radian(45), Radian(170), 0);
+	lightCamera.rect = RectAngle(rectLeftTop, rectLeftTop + rectSize * Vec2(1, -1));
 	lightCamera.oFarZ = 1000.f;
 
 	mShadowObjs.clear();
@@ -40,18 +42,22 @@ void ShadowMap::Init()
 	mIndex = 0;
 }
 
-void ShadowMap::Update(const Vec3 lightPos)
+void ShadowMap::LightViewUpdate(const Vec3 lightPos)
 {
 	lightCamera.pos = lightPos;
-	lightCamera.rect = RectAngle(-832, 128, 0, -540);
 
-
-	float pitch = atan2f(lightCamera.pos.y, lightCamera.pos.z);
-	float yaw = atan2f(lightCamera.pos.x, -lightCamera.pos.z);
-	lightCamera.rot = Vec3(pitch, yaw, 0);
+	rectLeftTop = Vec2(-400, 100.f);
+	lightCamera.rect = RectAngle(rectLeftTop, rectLeftTop + rectSize * Vec2(1, -1));
 
 	// カメラの設定
 	lightCamera.Update();
+}
+
+void ShadowMap::Update()
+{
+	//float pitch = atan2f(lightCamera.pos.y, lightCamera.pos.z);
+	//float yaw = atan2f(lightCamera.pos.x, -lightCamera.pos.z);
+	//lightCamera.rot = Vec3(pitch, 0, 0);
 
 	for (uint32_t i = 0; i < mShadowObjs.size(); i++)
 	{
@@ -104,6 +110,23 @@ void ShadowMap::DrawPostEffect()
 	{
 		mShadowMap->Draw();
 	}
+}
+
+void ShadowMap::DrawDebugGui()
+{
+	Gui::BeginWindow("ShadowMap");
+	Gui::DrawImage(mShadowMapRT->GetDepthTexture(), Vec2(960, 540) * 0.75f);
+
+	Gui::DrawSlider2("Rect LeftTop", rectLeftTop);
+	Gui::DrawSlider2("Rect Size", rectSize);
+	Vec3 angle = Angle(lightCamera.rot);
+	Gui::DrawSlider3("LightView Angle", angle);
+	lightCamera.rot = Radian(angle);
+
+	Gui::DrawSlider1("LightView oNearZ", lightCamera.oNearZ);
+	Gui::DrawSlider1("LightView oFarZ", lightCamera.oFarZ);
+
+	Gui::EndWindow();
 }
 
 void ShadowMap::Bind(Object3D& object)

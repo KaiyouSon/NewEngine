@@ -86,7 +86,7 @@ void GameScene::Init()
 	CollisionManager::GetInstance()->SetUIManager(mUiManager.get());
 	CollisionManager::GetInstance()->SetMovieEvent(mMovieEvent.get());
 
-	mDirectionalLight->pos = Vec3(-200, 440, 500);
+	mDirectionalLight->pos = Vec3(-100, 440, 440);
 
 	mMovieEvent->Init();
 	mMovieEvent->SetPlayer(mPlayer.get());
@@ -117,6 +117,10 @@ void GameScene::Init()
 }
 void GameScene::Update()
 {
+	int32_t offsetZ = (int32_t)(mPlayer->GetPos().z / 200) * 100;
+	Vec3 viewLightPos = mDirectionalLight->pos + Vec3(0, 0, (float)offsetZ);
+	ShadowMap::GetInstance()->LightViewUpdate(viewLightPos);
+
 	// デバッグ機能
 	ProcessAtDebugBuild([this]
 		{
@@ -178,7 +182,7 @@ void GameScene::Update()
 	mVolumetricFog->Update();
 
 
-	ShadowMap::GetInstance()->Update(mDirectionalLight->pos);
+	ShadowMap::GetInstance()->Update();
 	EffectManager::GetInstance()->Update();
 	ColliderDrawer::GetInstance()->Update();
 
@@ -265,7 +269,8 @@ void GameScene::Draw()
 void GameScene::DrawDebugGui()
 {
 	//mBoss->DrawDebugGui();
-	mPostEffectManager->DrawDebugGui();
+	//mPostEffectManager->DrawDebugGui();
+	ShadowMap::GetInstance()->DrawDebugGui();
 
 	Gui::BeginWindow("Debug");
 

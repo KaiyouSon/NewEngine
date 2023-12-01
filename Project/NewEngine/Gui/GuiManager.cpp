@@ -257,9 +257,22 @@ void Gui::DrawImage(ITexture* texture, const Vec2& size)
 {
 	if (texture == nullptr) return;
 
-	ImTextureID gpuHandle = (ImTextureID)texture->GetBufferResource()->srvHandle.gpu.ptr;
-	ImVec2 textureSize = { size.x,size.y };
-	ImGui::Image(gpuHandle, textureSize);
+	if (texture->GetTextureType() != TextureType::Render)
+	{
+		ImTextureID gpuHandle = (ImTextureID)texture->GetBufferResource()->srvHandle.gpu.ptr;
+		ImVec2 textureSize = { size.x,size.y };
+		ImGui::Image(gpuHandle, textureSize);
+	}
+	else
+	{
+		RenderTexture* renderTex = dynamic_cast<RenderTexture*>(texture);
+		for (uint32_t i = 0; i < renderTex->GetBufferResources()->size(); i++)
+		{
+			ImTextureID gpuHandle = (ImTextureID)renderTex->GetBufferResources()->at(i).srvHandle.gpu.ptr;
+			ImVec2 textureSize = { size.x,size.y };
+			ImGui::Image(gpuHandle, textureSize);
+		}
+	}
 }
 
 void Gui::DrawImage(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle, const Vec2& size)

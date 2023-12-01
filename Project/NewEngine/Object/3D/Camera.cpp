@@ -27,8 +27,7 @@ void Camera::Update()
 	mViewLookAtMat = ConvertViewProjectionMatLookAt(v1, v1 * 10, { 0,1,0 });
 
 	// 正射影行列を計算
-	mOrthographicProjectionMat = ConvertOrthographicProjectionMat(
-		GetWindowSize().x, GetWindowSize().y);
+	//mOrthographicProjectionMat = ConvertOrthographicProjectionMat(GetWindowSize().x, GetWindowSize().y);
 	mOrthographicProjectionMat = ConvertOrthographicProjectionMat(rect, oNearZ, oFarZ);
 
 	// 透視投影行列を計算
