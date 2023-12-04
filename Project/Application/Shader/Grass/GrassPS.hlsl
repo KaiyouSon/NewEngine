@@ -48,41 +48,34 @@ float3 CalcParallaxMapping(G2P i)
     float3 rayDir = normalize(cameraPos - i.wpos.xyz);
     rayDir = mul(tbnMat, rayDir);
     
-    float height = tex.Sample(smp, i.uv).r;
-    float2 offsetUV = float2(-rayDir.x, rayDir.y) * (height * heightScale);
-    float2 shiftUV = saturate(i.uv + offsetUV);
+    //float height = tex.Sample(smp, i.uv).r;
+    //float2 offsetUV = float2(-rayDir.x, rayDir.y) * (height * heightScale);
+    //float2 shiftUV = saturate(i.uv + offsetUV);
     
-    return tex.Sample(smp, shiftUV).rgb;
+    // ハイトテクスチャの高さをレイヤー分けするように
+    const float numLayers = 10.f;
+    float layerHeight = 1.0f / numLayers; // 各レイヤーの高さ
+    float currentLayerHeight = 0.0f;
     
+    float2 P = rayDir.xy * heightScale;
+    float2 deltaUV = P / numLayers;
     
+    float2 currentUV = i.uv;
+    float currentTexHeight = tex.Sample(smp, i.uv).r;
     
-    //// 交点を計算する
-    //float3 planeNormal = float3(0, 0, -1); // 平面の法線ベクトル
-    //float3 planeOrigan = i.opos; // 平面上の原点
-    
-    //// カメラの座標から長さtをかけて交点を求める
-    //float t = dot(planeOrigan - cameraPos, planeNormal) / dot(rayDir, planeNormal);
-    //float3 crossPoint = cameraPos + t * rayDir;
-    
-    //// 交点から中心点に向かうベクトル
-    //float3 toCenter = crossPoint - planeOrigan;
-    
-    //// 平面のxy軸（仮）
-    //float3 xAxis = float3(1, 0, 0);
-    //float3 yAxis = float3(0, 1, 0);
+    for (uint index = 0; index < numLayers; index++)
+    {
+        if (currentLayerHeight > currentTexHeight)
+        {
+            break;
+        }
 
-    //// 交点のuvを算出
-    //float2 crossUV = toCenter.xy / float2(20.0f, -20.0f) + float2(0.5f, 0.0f);
-    ////crossUV = saturate(crossUV);
+        currentUV -= deltaUV;
+        currentTexHeight = tex.Sample(smp, currentUV).r;
+        currentLayerHeight += layerHeight;
+    }
     
-    //// 交点uvでハイトマップをサンプリングし高さを取得する
-    //float height = tex.Sample(smp, crossUV).r;
-    //float2 offset = rayDir.xy * (height.xx * heightScale.xx);
-    //float2 shiftedUV = i.uv + offset;
-    //shiftedUV = saturate(shiftedUV);
-    
-    //float3 pomColor = tex.Sample(smp, shiftedUV).rgb;
-    //return pomColor;
+    return tex.Sample(smp, currentUV).rgb;
 }
 
 float4 CalcLighting(G2P i)
