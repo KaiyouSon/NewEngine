@@ -4,12 +4,12 @@
 using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
-float Grass::heightScale = 0.0f;
+float Grass::heightScale = 0.5f;
 CMaterialColor Grass::sMaterialColor =
 {
-	Color(105,100,45,255),
-	Color(25,25,25,255),
-	Color(120,115,40,255),
+	Color(50,55,35,255),
+	Color(95,90,70,255),
+	Color(200,215,60,255),
 };
 
 Grass::Grass() :
@@ -32,7 +32,7 @@ Grass::Grass() :
 void Grass::GenerateGrassToSquare(const Vec2 size, const uint32_t density)
 {
 	uint32_t maxNum = (uint32_t)(size.Area() * density);
-	maxNum = 1;
+	//maxNum = 1;
 
 	// 頂点バッファの生成
 	mVertices.resize(maxNum);
@@ -52,7 +52,7 @@ void Grass::GenerateGrassToSquare(const Vec2 size, const uint32_t density)
 		mVertices[i].scale.x = Random::RangeF(1.0f, 2.0f);
 		mVertices[i].scale.y = Random::RangeF(1.0f, 2.0f);
 
-		mVertices[i].scale = Vec2(10, 10);
+		//mVertices[i].scale = Vec2(10, 10);
 
 		// タイム設定
 		mTimers[i].SetLimitTimer(359);

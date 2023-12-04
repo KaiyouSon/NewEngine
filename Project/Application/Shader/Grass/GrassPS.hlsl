@@ -17,16 +17,11 @@ float4 main(G2P i) : SV_TARGET
 {
     float4 texColor = tex.Sample(smp, i.uv);
     clip(texColor.a - 0.75f);
-    float4 resultColor = texColor;
+    float4 resultColor = texColor * color;
     
     // POM
-    float4 pomColor = float4(CalcParallaxMapping(i).rgb, 1);
-    //return texColor * 10;
-    //return pomColor;
-    
-    resultColor *= pomColor * color;
-    
-    return resultColor;
+    float4 pomColor = float4(CalcParallaxMapping(i).rgb + 0.25f, 1);
+    resultColor += pomColor * color;
     
     // ライティング
     float4 adsColor = CalcLighting(i);
@@ -51,17 +46,23 @@ float3 CalcParallaxMapping(G2P i)
     //float height = tex.Sample(smp, i.uv).r;
     //float2 offsetUV = float2(-rayDir.x, rayDir.y) * (height * heightScale);
     //float2 shiftUV = saturate(i.uv + offsetUV);
+    //return tex.Sample(smp, shiftUV).rgb;
     
-    // ハイトテクスチャの高さをレイヤー分けするように
-    const float numLayers = 10.f;
-    float layerHeight = 1.0f / numLayers; // 各レイヤーの高さ
+    // ハイトテクスチャの高さのレイヤー数
+    const float numLayers = 32.f;
+     // 各レイヤーの高さ
+    float layerHeight = 1.0f / numLayers;
+    // 現在のレイヤーの高さ
     float currentLayerHeight = 0.0f;
     
-    float2 P = rayDir.xy * heightScale;
-    float2 deltaUV = P / numLayers;
+    // 始点方向にずらす量
+    float2 p = rayDir.xy * heightScale;
+    // uvのずらすする量
+    float2 deltaUV = p / numLayers;
     
+    // 初期値のuvと高さ
     float2 currentUV = i.uv;
-    float currentTexHeight = tex.Sample(smp, i.uv).r;
+    float currentTexHeight = tex.Sample(smp, currentUV).r;
     
     for (uint index = 0; index < numLayers; index++)
     {
@@ -70,12 +71,21 @@ float3 CalcParallaxMapping(G2P i)
             break;
         }
 
+        // uvをずらして再度高さを取得
         currentUV -= deltaUV;
         currentTexHeight = tex.Sample(smp, currentUV).r;
         currentLayerHeight += layerHeight;
     }
     
-    return tex.Sample(smp, currentUV).rgb;
+    float2 prevUV = currentUV + deltaUV;
+        
+    float afterHeight = currentTexHeight - currentLayerHeight;
+    float beforeHeight = tex.Sample(smp, prevUV).r - currentLayerHeight + layerHeight;
+        
+    float weight = afterHeight / (afterHeight - beforeHeight);
+    float2 finalUV = prevUV * weight + currentUV * (1.0 - weight);
+    
+    return tex.Sample(smp, finalUV).rgb;
 }
 
 float4 CalcLighting(G2P i)

@@ -1,6 +1,6 @@
 #include "Weed.h"
 
-uint32_t Weed::sDensity = 6;
+uint32_t Weed::sDensity = 8;
 
 Weed::Weed() :
 	mGrass(std::make_unique<Grass>())

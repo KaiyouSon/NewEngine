@@ -38,12 +38,12 @@ void main(point V2G input[1] : SV_POSITION, inout TriangleStream<G2P> output)
     
     const float PI = 3.141592;
     
-    offsetArray[1].x += sin(input[0].timer.x * PI / 180) / 3;
-    offsetArray[3].x += sin(input[0].timer.x * PI / 180) / 3;
-
-    float offsetZ = 0.5f - Random01(float2(input[0].timer.x, input[0].pos.x));
-    offsetArray[1].z += sin(input[0].timer.x * PI / 180);
-    offsetArray[3].z -= sin(input[0].timer.x * PI / 180);
+    //offsetArray[1].x += sin(input[0].timer.x * PI / 180) / 3;
+    //offsetArray[3].x += sin(input[0].timer.x * PI / 180) / 3;
+    //
+    //float offsetZ = 0.5f - Random01(float2(input[0].timer.x, input[0].pos.x));
+    //offsetArray[1].z += sin(input[0].timer.x * PI / 180);
+    //offsetArray[3].z -= sin(input[0].timer.x * PI / 180);
     
     for (uint i = 0; i < num; i++)
     {
