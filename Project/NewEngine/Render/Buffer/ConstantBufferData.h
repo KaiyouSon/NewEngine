@@ -104,6 +104,7 @@ namespace ConstantBufferData
 	struct CPOM
 	{
 		float heightScale;
+		float numLayers;
 	};
 
 	struct CDirectionalLight

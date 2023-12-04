@@ -157,22 +157,10 @@ void Field::DrawModel()
 		return;
 	}
 
-	// 棺桶
-	for (uint32_t i = 0; i < mFieldData->coffins.size(); i++)
-	{
-		mFieldData->coffins[i]->DrawModel();
-	}
-
 	// 木
 	for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
 	{
 		mFieldData->trees[i]->DrawModel();
-	}
-
-	// 雑草
-	for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
-	{
-		mFieldData->weeds[i]->DrawModel();
 	}
 
 	// 城壁
@@ -185,6 +173,12 @@ void Field::DrawModel()
 	for (uint32_t i = 0; i < mFieldData->gates.size(); i++)
 	{
 		mFieldData->gates[i]->DrawModel();
+	}
+
+	// 棺桶
+	for (uint32_t i = 0; i < mFieldData->coffins.size(); i++)
+	{
+		mFieldData->coffins[i]->DrawModel();
 	}
 }
 
@@ -219,6 +213,12 @@ void Field::DrawSkyIsLand()
 	for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
 	{
 		mFieldData->respawnPoints[i]->DrawModel();
+	}
+
+	// 雑草
+	for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
+	{
+		mFieldData->weeds[i]->DrawModel();
 	}
 }
 

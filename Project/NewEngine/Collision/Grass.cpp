@@ -4,12 +4,15 @@
 using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
-float Grass::heightScale = 0.5f;
+CPOM Grass::sPOMData =
+{
+	0.25f,64.0f
+};
 CMaterialColor Grass::sMaterialColor =
 {
-	Color(50,55,35,255),
-	Color(95,90,70,255),
-	Color(200,215,60,255),
+	Color(185,180,120,255),
+	Color(55,55,55,255),
+	Color(255,200,40,255),
 };
 
 Grass::Grass() :
@@ -49,8 +52,8 @@ void Grass::GenerateGrassToSquare(const Vec2 size, const uint32_t density)
 			Random::RangeF(-size.y,+size.y),
 		};
 
-		mVertices[i].scale.x = Random::RangeF(1.0f, 2.0f);
-		mVertices[i].scale.y = Random::RangeF(1.0f, 2.0f);
+		mVertices[i].scale.x = Random::RangeF(1.0f, 3.0f);
+		mVertices[i].scale.y = Random::RangeF(1.0f, 3.0f);
 
 		//mVertices[i].scale = Vec2(10, 10);
 
@@ -208,8 +211,7 @@ void Grass::MaterialTransfer()
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[2].get(), materialColorData);
 
 	// マテリアル
-	CPOM pomData = { heightScale };
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[3].get(), pomData);
+	TransferDataToConstantBuffer(mMaterial.constantBuffers[3].get(), sPOMData);
 }
 void Grass::MaterialDrawCommands()
 {

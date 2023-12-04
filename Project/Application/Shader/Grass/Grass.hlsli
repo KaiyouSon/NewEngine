@@ -69,6 +69,7 @@ cbuffer ConstantBufferDataMaterial : register(b2)
 cbuffer ConstantBufferDataPOM : register(b3)
 {
     float heightScale; // 色
+    float numLayers;
 }
 
 // ライトグループ

@@ -22,10 +22,10 @@ static const float2 uvArray[num] =
 
 static const float3 normalArray[num] =
 {
-    float3(-1.f, -1.f, 0.f), //左下
-    float3(-1.f, +1.f, 0.f), //左上
-    float3(+1.f, -1.f, 0.f), //右下
-    float3(+1.f, +1.f, 0.f), //右上
+    float3(+1.f, +1.f, 0.f), //左下
+    float3(+1.f, -1.f, 0.f), //左上
+    float3(-1.f, +1.f, 0.f), //右下
+    float3(-0.5f, -1.f, 0.f), //右上
 };
 
 void CaluTangentAndBinormal(float3 normal, out float3 tangent, out float3 binormal);

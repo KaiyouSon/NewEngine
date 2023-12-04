@@ -279,7 +279,8 @@ void GameScene::DrawDebugGui()
 		Gui::DrawColorEdit("Ambient", Grass::sMaterialColor.ambient);
 		Gui::DrawColorEdit("Diffuse", Grass::sMaterialColor.diffuse);
 		Gui::DrawColorEdit("Specular", Grass::sMaterialColor.specular);
-		Gui::DrawSlider1("HeightScale", Grass::heightScale);
+		Gui::DrawSlider1("Height Scale", Grass::sPOMData.heightScale, 0.01f);
+		Gui::DrawSlider1("Num Layers", Grass::sPOMData.numLayers, 0.1f);
 	}
 
 	if (Gui::DrawCollapsingHeader("ShadowMap") == true)
@@ -489,7 +490,7 @@ void GameScene::DrawCurrentSceneObject()
 	mField->DrawSkyIsLand();
 	mField->DrawSun();
 
-	mField->DrawFog();
+	//mField->DrawFog();
 	mPlayer->DrawModel();
 
 	mBoss->DrawModel();

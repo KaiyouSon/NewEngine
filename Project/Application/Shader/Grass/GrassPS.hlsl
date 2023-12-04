@@ -15,13 +15,15 @@ float CalcShadow(float4 spos);
 
 float4 main(G2P i) : SV_TARGET
 {
-    float4 texColor = tex.Sample(smp, i.uv);
-    clip(texColor.a - 0.75f);
+    float2 uv = clamp(i.uv, 0.01f, 0.99f);
+    float4 texColor = tex.Sample(smp, uv);
     float4 resultColor = texColor * color;
-    
+    clip(texColor.a - 0.75f);
+
     // POM
-    float4 pomColor = float4(CalcParallaxMapping(i).rgb + 0.25f, 1);
-    resultColor += pomColor * color;
+    float3 pomColor = CalcParallaxMapping(i);
+    resultColor *= float4(pomColor + 0.25f, 1);
+    //return resultColor;
     
     // ライティング
     float4 adsColor = CalcLighting(i);
@@ -48,15 +50,13 @@ float3 CalcParallaxMapping(G2P i)
     //float2 shiftUV = saturate(i.uv + offsetUV);
     //return tex.Sample(smp, shiftUV).rgb;
     
-    // ハイトテクスチャの高さのレイヤー数
-    const float numLayers = 32.f;
      // 各レイヤーの高さ
     float layerHeight = 1.0f / numLayers;
     // 現在のレイヤーの高さ
     float currentLayerHeight = 0.0f;
     
     // 始点方向にずらす量
-    float2 p = rayDir.xy * heightScale;
+    float2 p = float2(rayDir.x, -rayDir.y) * heightScale;
     // uvのずらすする量
     float2 deltaUV = p / numLayers;
     
@@ -64,6 +64,7 @@ float3 CalcParallaxMapping(G2P i)
     float2 currentUV = i.uv;
     float currentTexHeight = tex.Sample(smp, currentUV).r;
     
+    [loop]
     for (uint index = 0; index < numLayers; index++)
     {
         if (currentLayerHeight > currentTexHeight)
@@ -76,16 +77,28 @@ float3 CalcParallaxMapping(G2P i)
         currentTexHeight = tex.Sample(smp, currentUV).r;
         currentLayerHeight += layerHeight;
     }
+    //currentUV = saturate(currentUV);
     
     float2 prevUV = currentUV + deltaUV;
+    prevUV = clamp(prevUV, 0.01f, 0.99f);
+    float3 prevColor = tex.Sample(smp, prevUV);
         
     float afterHeight = currentTexHeight - currentLayerHeight;
-    float beforeHeight = tex.Sample(smp, prevUV).r - currentLayerHeight + layerHeight;
+    float beforeHeight = prevColor.r - currentLayerHeight - layerHeight;
         
     float weight = afterHeight / (afterHeight - beforeHeight);
-    float2 finalUV = prevUV * weight + currentUV * (1.0 - weight);
     
-    return tex.Sample(smp, finalUV).rgb;
+    float2 finalUV = prevUV * weight + currentUV * (1.0 - weight);
+    finalUV = clamp(finalUV, 0.01f, 0.99f);
+    float3 finalColor = tex.Sample(smp, finalUV);
+    
+    // Smoothstepを使用して滑らかに補完
+    float smoothFactor = smoothstep(0.0, 1.0, saturate(beforeHeight / afterHeight));
+    
+    // レイヤー間のトランジションをスムーズにする
+    float3 pomColor = lerp(finalColor, prevColor, smoothFactor);
+    
+    return pomColor;
 }
 
 float4 CalcLighting(G2P i)
