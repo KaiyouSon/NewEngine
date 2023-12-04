@@ -32,7 +32,7 @@ Grass::Grass() :
 void Grass::GenerateGrassToSquare(const Vec2 size, const uint32_t density)
 {
 	uint32_t maxNum = (uint32_t)(size.Area() * density);
-	//maxNum = 1;
+	maxNum = 1;
 
 	// 頂点バッファの生成
 	mVertices.resize(maxNum);
@@ -51,6 +51,8 @@ void Grass::GenerateGrassToSquare(const Vec2 size, const uint32_t density)
 
 		mVertices[i].scale.x = Random::RangeF(1.0f, 2.0f);
 		mVertices[i].scale.y = Random::RangeF(1.0f, 2.0f);
+
+		mVertices[i].scale = Vec2(10, 10);
 
 		// タイム設定
 		mTimers[i].SetLimitTimer(359);

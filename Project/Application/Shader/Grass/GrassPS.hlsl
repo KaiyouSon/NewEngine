@@ -16,14 +16,17 @@ float CalcShadow(float4 spos);
 float4 main(G2P i) : SV_TARGET
 {
     float4 texColor = tex.Sample(smp, i.uv);
+    clip(texColor.a - 0.75f);
     float4 resultColor = texColor;
     
     // POM
     float4 pomColor = float4(CalcParallaxMapping(i).rgb, 1);
+    //return texColor * 10;
+    //return pomColor;
+    
     resultColor *= pomColor * color;
     
-    clip(resultColor.a - 0.75);
-    //return resultColor;
+    return resultColor;
     
     // ライティング
     float4 adsColor = CalcLighting(i);
@@ -34,49 +37,52 @@ float4 main(G2P i) : SV_TARGET
     shadow = CalcShadow(i.spos);
     resultColor.rgb *= shadow;
     
-    
     return resultColor;
 }
 
 float3 CalcParallaxMapping(G2P i)
 {
-    float2 uv = i.uv;
+    float3x3 tbnMat = float3x3(i.tangent, i.binormal, float3(0, 0, 1));
+    
+    // レイ(ワールド座標系)
+    float3 rayDir = normalize(cameraPos - i.wpos.xyz);
+    rayDir = mul(tbnMat, rayDir);
     
     float height = tex.Sample(smp, i.uv).r;
-    float3 eyeDir = normalize(i.wpos.xyz - cameraPos); // 頂点から視点へのベクトル
-    float2 parallaxOffset = /* heightScale **/eyeDir.xy * height;
-    //uv += parallaxOffset/* + float2(0.5f, 0.5f)*/;
+    float2 offsetUV = float2(-rayDir.x, rayDir.y) * (height * heightScale);
+    float2 shiftUV = saturate(i.uv + offsetUV);
     
-    // レイマーチング
-    float3 resultColor = tex.Sample(smp, uv);
-    float stepSize = heightScale;
-    float maxStep = 20;
+    return tex.Sample(smp, shiftUV).rgb;
     
-    for (float i = 0; i < maxStep; i++)
-    {
-         // レイの先にあるポイントの高さを取得
-        float currentHeight = tex.Sample(smp, uv).r;
+    
+    
+    //// 交点を計算する
+    //float3 planeNormal = float3(0, 0, -1); // 平面の法線ベクトル
+    //float3 planeOrigan = i.opos; // 平面上の原点
+    
+    //// カメラの座標から長さtをかけて交点を求める
+    //float t = dot(planeOrigan - cameraPos, planeNormal) / dot(rayDir, planeNormal);
+    //float3 crossPoint = cameraPos + t * rayDir;
+    
+    //// 交点から中心点に向かうベクトル
+    //float3 toCenter = crossPoint - planeOrigan;
+    
+    //// 平面のxy軸（仮）
+    //float3 xAxis = float3(1, 0, 0);
+    //float3 yAxis = float3(0, 1, 0);
 
-        // レイの衝突判定
-        //if (uv.y > currentHeight)
-        //{
-            // サンプリング
-        float4 sampleColor = tex.Sample(smp, uv);
-        resultColor += sampleColor.rgb;
-
-            // テクスチャ座標を更新
-            //uv += parallaxOffset /*+ float2(0.5f, 0.5f)*/;
-            
-            // ステップサイズだけ進める
-        uv += stepSize * eyeDir.xy;
-        //}
-        //else
-        //{
-        //    break; // 衝突したらループ終了
-        //}
-    }
+    //// 交点のuvを算出
+    //float2 crossUV = toCenter.xy / float2(20.0f, -20.0f) + float2(0.5f, 0.0f);
+    ////crossUV = saturate(crossUV);
     
-    return resultColor / maxStep;
+    //// 交点uvでハイトマップをサンプリングし高さを取得する
+    //float height = tex.Sample(smp, crossUV).r;
+    //float2 offset = rayDir.xy * (height.xx * heightScale.xx);
+    //float2 shiftedUV = i.uv + offset;
+    //shiftedUV = saturate(shiftedUV);
+    
+    //float3 pomColor = tex.Sample(smp, shiftedUV).rgb;
+    //return pomColor;
 }
 
 float4 CalcLighting(G2P i)
@@ -98,7 +104,7 @@ float4 CalcLighting(G2P i)
         if (directionalLight[index].isActive == true)
         {
             // ライトに向かうベクトルと法線の内積
-            float dotLightNormal = dot(directionalLight[index].vec, i.normal);
+            float dotLightNormal = dot(directionalLight[index].vec, i.vnormal);
         
             // アンビエント
             float3 ambient = material.ambient.rgb + float3(0.2f, 0.2f, 0.2f);
@@ -109,7 +115,7 @@ float4 CalcLighting(G2P i)
             // スペキュラー
             float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // 頂点から視点へのベクトル
             float3 halfVector = normalize(-directionalLight[index].vec + eyeDir);
-            float nDoth = dot(normalize(i.normal), halfVector);
+            float nDoth = dot(normalize(i.vnormal), halfVector);
             float3 specular = pow(saturate(nDoth), shininess) * material.specular.rgb;
     
             adsColor.rgb += (ambient + diffuse + specular) * directionalLight[index].color.rgb;
@@ -136,14 +142,14 @@ float4 CalcLighting(G2P i)
             float atten = pointLight[index].decay * ((1 - s2) * (1 - s2));
             
             // ライトに向かうベクトルと法線の内積
-            float3 dotLightNormal = dot(lightVec, i.normal);
+            float3 dotLightNormal = dot(lightVec, i.vnormal);
             
             // ディフューズ
             float3 diffuse = saturate(dotLightNormal * material.diffuse.rgb);
     
             // スペキュラー
             float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // 頂点から視点へのベクトル
-            float3 reflectDir = normalize(-lightVec + 2 * dotLightNormal * i.normal);
+            float3 reflectDir = normalize(-lightVec + 2 * dotLightNormal * i.vnormal);
             float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
     
             adsColor.rgb += atten * (diffuse + specular) *
@@ -175,14 +181,14 @@ float4 CalcLighting(G2P i)
             atten *= falloffFactor;
             
             // ライトに向かうベクトルと法線の内積
-            float3 dotLightNormal = dot(lightVec, i.normal);
+            float3 dotLightNormal = dot(lightVec, i.vnormal);
             
             // ディフューズ
             float3 diffuse = saturate(dotLightNormal * material.diffuse.rgb);
     
             // スペキュラー
             float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // 頂点から視点へのベクトル
-            float3 reflectDir = normalize(-lightVec + 2 * dotLightNormal * i.normal);
+            float3 reflectDir = normalize(-lightVec + 2 * dotLightNormal * i.vnormal);
             float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
     
             adsColor.rgb += atten * (diffuse + specular) *

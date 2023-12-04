@@ -100,9 +100,10 @@ struct G2P
 {
     float4 pos : SV_POSITION; //システム用頂点座標
     float2 uv : TEXCOORD; //uv値
-    float3 normal : NORMAL;
     float4 wpos : POSITION0; // ワールド座標
     float4 spos : POSITIONT1;
+    float3 vnormal : NORMAL; // 頂点の法線
+    float3 pnormal : NORMAL1; // 平面の法線
     float3 tangent : TANGENT;
     float3 binormal : BINORMAL;
 };
