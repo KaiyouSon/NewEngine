@@ -17,6 +17,7 @@ Bloom::Bloom()
 	mPasses[(uint32_t)PassType::HighLumi]->AddRenderTexture(mTexs[(uint32_t)TexType::HighLumi]);
 	mPasses[(uint32_t)PassType::GaussianBlur]->AddRenderTexture(mTexs[(uint32_t)TexType::GaussianBlur]);
 	mPasses[(uint32_t)PassType::GaussianBlur]->AddRenderTexture(mTexs[(uint32_t)TexType::GaussianBlurHalf]);
+	mPasses[(uint32_t)PassType::GaussianBlur]->SetSize(GetWindowSize());
 
 	// パイプライン
 	mPasses[(uint32_t)PassType::HighLumi]->

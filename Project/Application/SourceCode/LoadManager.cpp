@@ -109,7 +109,7 @@ void LoadManager::GameSceneTextureLoad()
 
 	// ブルーム用
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "BloomHighLumi");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "BloomGaussianBlur");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080) / 2, "BloomGaussianBlur");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) / 4, "BloomGaussianBlurHalf");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "Bloom");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "BloomTarget");

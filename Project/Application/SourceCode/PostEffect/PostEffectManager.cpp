@@ -41,6 +41,7 @@ void PostEffectManager::DrawSkydomeVignette()
 // エフェクトのブルーム
 void PostEffectManager::DrawEffectBloom()
 {
+	//mEffectBloom->DrawPass(Bloom::PassType::GaussianBlur);
 	mEffectBloom->DrawPostEffect();
 }
 
