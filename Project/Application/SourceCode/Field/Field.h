@@ -12,9 +12,9 @@ public:
 	void Init();
 	void Update();
 	void ExecuteCS();
-	void DrawModel();
+	void DrawModel(const bool isDrawDepth = false);
+	void DrawSkyIsLand(const bool isDrawDepth = false);
 	void DrawFog();
-	void DrawSkyIsLand();
 	void DrawSun();
 	void DrawDebugGui();
 
@@ -23,8 +23,4 @@ public:
 
 public:
 	void SetFieldData(FieldData* fieldData);
-	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
-	void SetWeedGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
-	void SetTreeGraphicsPipeline(GraphicsPipeline* graphicsPipeline1, GraphicsPipeline* graphicsPipeline2);
-	void SetRespawnPointGraphicsPipeline(GraphicsPipeline* graphicsPipeline1, GraphicsPipeline* graphicsPipeline2);
 };

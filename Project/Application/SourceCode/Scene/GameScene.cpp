@@ -450,26 +450,8 @@ void GameScene::DrawDepthToEffectBloom()
 	mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 
 	// フィールド
-	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
-	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GrassWriteNone"));
-	mField->SetTreeGraphicsPipeline(
-		PipelineManager::GetGraphicsPipeline("Object3DWriteNone"),
-		PipelineManager::GetGraphicsPipeline("BranchWriteNone"));
-	mField->SetRespawnPointGraphicsPipeline(
-		PipelineManager::GetGraphicsPipeline("RippleWriteNone"),
-		PipelineManager::GetGraphicsPipeline("RhombusWriteNone"));
-
-	mField->DrawModel();
-	mField->DrawSkyIsLand();
-
-	mField->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
-	mField->SetWeedGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass"));
-	mField->SetTreeGraphicsPipeline(
-		PipelineManager::GetGraphicsPipeline("Object3D"),
-		PipelineManager::GetGraphicsPipeline("Branch"));
-	mField->SetRespawnPointGraphicsPipeline(
-		PipelineManager::GetGraphicsPipeline("Ripple"),
-		PipelineManager::GetGraphicsPipeline("Rhombus"));
+	mField->DrawModel(true);
+	mField->DrawSkyIsLand(true);
 
 	// 太陽
 	mField->DrawSun();

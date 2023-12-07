@@ -71,6 +71,12 @@ void Field::Init()
 	{
 		mFieldData->suns[i]->Init();
 	}
+
+	// タワー
+	for (uint32_t i = 0; i < mFieldData->towers.size(); i++)
+	{
+		mFieldData->towers[i]->Init();
+	}
 }
 
 void Field::Update()
@@ -139,6 +145,12 @@ void Field::Update()
 	{
 		mFieldData->airColliders[i]->Update();
 	}
+
+	// タワー
+	for (uint32_t i = 0; i < mFieldData->towers.size(); i++)
+	{
+		mFieldData->towers[i]->Update();
+	}
 }
 
 void Field::ExecuteCS()
@@ -150,7 +162,7 @@ void Field::ExecuteCS()
 	}
 }
 
-void Field::DrawModel()
+void Field::DrawModel(const bool isDrawDepth)
 {
 	if (!mFieldData)
 	{
@@ -160,25 +172,87 @@ void Field::DrawModel()
 	// 木
 	for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
 	{
+		if (isDrawDepth == false)
+		{
+			mFieldData->trees[i]->SetGraphicsPipeline(
+				PipelineManager::GetGraphicsPipeline("Object3D"),
+				PipelineManager::GetGraphicsPipeline("Branch"));
+		}
+		else
+		{
+			mFieldData->trees[i]->SetGraphicsPipeline(
+				PipelineManager::GetGraphicsPipeline("Object3DWriteNone"),
+				PipelineManager::GetGraphicsPipeline("BranchWriteNone"));
+		}
 		mFieldData->trees[i]->DrawModel();
 	}
 
 	// 城壁
 	for (uint32_t i = 0; i < mFieldData->walls.size(); i++)
 	{
+		if (isDrawDepth == false)
+		{
+			mFieldData->walls[i]->SetGraphicsPipeline(
+				PipelineManager::GetGraphicsPipeline("Object3D"));
+		}
+		else
+		{
+			mFieldData->walls[i]->SetGraphicsPipeline(
+				PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+		}
+
 		mFieldData->walls[i]->DrawModel();
 	}
 
 	// 城門
 	for (uint32_t i = 0; i < mFieldData->gates.size(); i++)
 	{
+		if (isDrawDepth == false)
+		{
+			mFieldData->gates[i]->SetGraphicsPipeline(
+				PipelineManager::GetGraphicsPipeline("Object3D"));
+		}
+		else
+		{
+			mFieldData->gates[i]->SetGraphicsPipeline(
+				PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+		}
+
 		mFieldData->gates[i]->DrawModel();
 	}
 
 	// 棺桶
 	for (uint32_t i = 0; i < mFieldData->coffins.size(); i++)
 	{
+		if (isDrawDepth == false)
+		{
+			mFieldData->coffins[i]->SetGraphicsPipeline(
+				PipelineManager::GetGraphicsPipeline("Object3D"));
+		}
+		else
+		{
+			mFieldData->coffins[i]->SetGraphicsPipeline(
+				PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+		}
+
 		mFieldData->coffins[i]->DrawModel();
+	}
+
+	// タワー
+	for (uint32_t i = 0; i < mFieldData->towers.size(); i++)
+	{
+		if (isDrawDepth == false)
+		{
+			mFieldData->towers[i]->SetGraphicsPipeline(
+				PipelineManager::GetGraphicsPipeline("Object3D"));
+		}
+		else
+		{
+			mFieldData->towers[i]->SetGraphicsPipeline(
+				PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+		}
+
+		mFieldData->towers[i]->Draw();
 	}
 }
 
@@ -196,7 +270,7 @@ void Field::DrawFog()
 	}
 }
 
-void Field::DrawSkyIsLand()
+void Field::DrawSkyIsLand(const bool isDrawDepth)
 {
 	if (!mFieldData)
 	{
@@ -206,18 +280,53 @@ void Field::DrawSkyIsLand()
 	// 空島
 	for (uint32_t i = 0; i < mFieldData->skyIslands.size(); i++)
 	{
+		if (isDrawDepth == false)
+		{
+			mFieldData->skyIslands[i]->SetGraphicsPipeline(
+				PipelineManager::GetGraphicsPipeline("Object3D"));
+		}
+		else
+		{
+			mFieldData->skyIslands[i]->SetGraphicsPipeline(
+				PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+		}
+
 		mFieldData->skyIslands[i]->DrawModel();
 	}
 
 	// リスポーン地点
 	for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
 	{
+		if (isDrawDepth == false)
+		{
+			mFieldData->respawnPoints[i]->SetGraphicsPipeline(
+				PipelineManager::GetGraphicsPipeline("Ripple"),
+				PipelineManager::GetGraphicsPipeline("Rhombus"));
+		}
+		else
+		{
+			mFieldData->respawnPoints[i]->SetGraphicsPipeline(
+				PipelineManager::GetGraphicsPipeline("RippleWriteNone"),
+				PipelineManager::GetGraphicsPipeline("RhombusWriteNone"));
+		}
+
 		mFieldData->respawnPoints[i]->DrawModel();
 	}
 
 	// 雑草
 	for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
 	{
+		if (isDrawDepth == false)
+		{
+			mFieldData->weeds[i]->SetGraphicsPipeline(
+				PipelineManager::GetGraphicsPipeline("Grass"));
+		}
+		else
+		{
+			mFieldData->weeds[i]->SetGraphicsPipeline(
+				PipelineManager::GetGraphicsPipeline("GrassWriteNone"));
+		}
+
 		mFieldData->weeds[i]->DrawModel();
 	}
 }
@@ -248,79 +357,4 @@ FieldData* Field::GetFieldData()
 void Field::SetFieldData(FieldData* fieldData)
 {
 	mFieldData = fieldData;
-}
-
-// パイプライン設定関連
-void Field::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
-{
-	if (!mFieldData)
-	{
-		return;
-	}
-
-	// 棺桶
-	for (uint32_t i = 0; i < mFieldData->coffins.size(); i++)
-	{
-		mFieldData->coffins[i]->SetGraphicsPipeline(graphicsPipeline);
-	}
-
-	// 空島
-	for (uint32_t i = 0; i < mFieldData->skyIslands.size(); i++)
-	{
-		mFieldData->skyIslands[i]->SetGraphicsPipeline(graphicsPipeline);
-	}
-
-	// 城壁
-	for (uint32_t i = 0; i < mFieldData->walls.size(); i++)
-	{
-		mFieldData->walls[i]->SetGraphicsPipeline(graphicsPipeline);
-	}
-
-	// 城門
-	for (uint32_t i = 0; i < mFieldData->gates.size(); i++)
-	{
-		mFieldData->gates[i]->SetGraphicsPipeline(graphicsPipeline);
-	}
-}
-
-void Field::SetWeedGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
-{
-	if (!mFieldData)
-	{
-		return;
-	}
-
-	// 雑草
-	for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
-	{
-		mFieldData->weeds[i]->SetGraphicsPipeline(graphicsPipeline);
-	}
-}
-
-void Field::SetTreeGraphicsPipeline(GraphicsPipeline* graphicsPipeline1, GraphicsPipeline* graphicsPipeline2)
-{
-	if (!mFieldData)
-	{
-		return;
-	}
-
-	// 木
-	for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
-	{
-		mFieldData->trees[i]->SetGraphicsPipeline(graphicsPipeline1, graphicsPipeline2);
-	}
-}
-
-void Field::SetRespawnPointGraphicsPipeline(GraphicsPipeline* graphicsPipeline1, GraphicsPipeline* graphicsPipeline2)
-{
-	if (!mFieldData)
-	{
-		return;
-	}
-
-	// リスポーン地点
-	for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
-	{
-		mFieldData->respawnPoints[i]->SetGraphicsPipeline(graphicsPipeline1, graphicsPipeline2);
-	}
 }

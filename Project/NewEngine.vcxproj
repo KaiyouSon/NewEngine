@@ -128,6 +128,7 @@
     <ClCompile Include="Application\SourceCode\Effect\SmokeEffect.cpp" />
     <ClCompile Include="Application\SourceCode\Field\AirCollider.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Sun.cpp" />
+    <ClCompile Include="Application\SourceCode\Field\Tower.cpp" />
     <ClCompile Include="Application\SourceCode\Motion\BackstepMotion.cpp" />
     <ClCompile Include="Application\SourceCode\Motion\LogoExplosionEffect.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\Bloom.cpp" />
@@ -312,6 +313,7 @@
     <ClInclude Include="Application\SourceCode\Effect\SmokeEffect.h" />
     <ClInclude Include="Application\SourceCode\Field\AirCollider.h" />
     <ClInclude Include="Application\SourceCode\Field\Sun.h" />
+    <ClInclude Include="Application\SourceCode\Field\Tower.h" />
     <ClInclude Include="Application\SourceCode\Motion\BackstepMotion.h" />
     <ClInclude Include="Application\SourceCode\Effect\BloodSprayEffect.h" />
     <ClInclude Include="Application\SourceCode\Motion\LogoExplosionEffect.h" />

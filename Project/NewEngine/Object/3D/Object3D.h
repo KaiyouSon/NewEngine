@@ -58,7 +58,7 @@ private:
 public:
 	Object3D();
 	void Update(Transform* parent = nullptr);
-	void Draw(const std::string& layerTag, const BlendMode blendMode = BlendMode::Alpha);
+	void Draw(const std::string& layerTag = "", const BlendMode blendMode = BlendMode::Alpha);
 
 public: // セッター
 	void SetModel(Model* model);

@@ -209,6 +209,7 @@ void LoadManager::GameSceneModelLoad()
 	ModelManager::LoadObjModel("Wall/Wall1", "Wall1");
 	ModelManager::LoadObjModel("Wall/Wall2", "Wall2");
 	ModelManager::LoadObjModel("Wall/WallGate", "WallGate");
+	ModelManager::LoadObjModel("Tower", "Tower");
 
 	// キャラクター(プレイヤー)
 	ModelManager::LoadObjModel("HumanoidBody/Body", "Body");
@@ -276,7 +277,6 @@ bool LoadManager::ModelLoad()
 	ModelManager::LoadObjModel("MessageSign", "MessageSign");
 
 	ModelManager::LoadObjModel("Capsule", "Capsule");
-	ModelManager::LoadObjModel("MainGateWall", "MainGateWall");
 
 	// 非同期終わったよ～
 	return true;
