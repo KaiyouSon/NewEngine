@@ -72,6 +72,7 @@ void TitleScene::Update()
 
 void TitleScene::ExecuteCS()
 {
+	EffectManager::GetInstance()->ExecuteCS();
 }
 
 void TitleScene::DrawPass()
