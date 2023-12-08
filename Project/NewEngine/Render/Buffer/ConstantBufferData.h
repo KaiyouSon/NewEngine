@@ -149,8 +149,12 @@ namespace ConstantBufferData
 	struct CDistanceFog
 	{
 		Color color;
+		Vec2 nearFarDistance;
+		Vec2 nearFarHeight;
+
+		Vec3 distanceRate;
 		uint32_t isActive;
-		Vec2 nearFarDis;
+		uint32_t isActiveHeight;
 	};
 
 	static const int maxBones = 32;

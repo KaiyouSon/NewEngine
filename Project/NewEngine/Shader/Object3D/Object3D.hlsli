@@ -102,8 +102,11 @@ cbuffer ConstantBufferDataLightGroup : register(b7)
 cbuffer ConstantBufferDataDistanceFog : register(b8)
 {
     float4 distanceFogColor;
+    float2 fogNearFarDistance;
+    float2 fogNearFarHeight;
+    float3 distanceRate;
     uint isActiveDistanceFog;
-    float2 distanceFogNearFarDis;
+    uint isActiveHeightFog;
 };
 
 struct Appdata

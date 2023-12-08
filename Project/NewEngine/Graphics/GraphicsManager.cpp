@@ -29,7 +29,15 @@ void GraphicsManager::DrawDebugGui()
 		Gui::DrawCheckBox("Distance Fog IsActive", &isActive);
 		GetInstance()->mDistanceFog->data.isActive = isActive;
 
-		Gui::DrawSlider2("DistanceFog NearFar Dis", GetInstance()->mDistanceFog->data.nearFarDis);
+		Gui::DrawSlider2("DistanceFog NearFar Distance", GetInstance()->mDistanceFog->data.nearFarDistance);
+
+		Gui::DrawSlider3("DistanceFog Distance Rate", GetInstance()->mDistanceFog->data.distanceRate);
+
+		isActive = GetInstance()->mDistanceFog->data.isActiveHeight;
+		Gui::DrawCheckBox("Distance Fog IsActive Height", &isActive);
+		GetInstance()->mDistanceFog->data.isActiveHeight = isActive;
+
+		Gui::DrawSlider2("DistanceFog NearFar Height", GetInstance()->mDistanceFog->data.nearFarHeight);
 
 		Gui::DrawColorEdit("DistanceFog Color", GetInstance()->mDistanceFog->data.color);
 	}

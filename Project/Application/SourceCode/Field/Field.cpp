@@ -237,23 +237,6 @@ void Field::DrawModel(const bool isDrawDepth)
 
 		mFieldData->coffins[i]->DrawModel();
 	}
-
-	// タワー
-	for (uint32_t i = 0; i < mFieldData->towers.size(); i++)
-	{
-		if (isDrawDepth == false)
-		{
-			mFieldData->towers[i]->SetGraphicsPipeline(
-				PipelineManager::GetGraphicsPipeline("Object3D"));
-		}
-		else
-		{
-			mFieldData->towers[i]->SetGraphicsPipeline(
-				PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
-		}
-
-		mFieldData->towers[i]->Draw();
-	}
 }
 
 void Field::DrawFog()
@@ -342,6 +325,26 @@ void Field::DrawSun()
 	for (uint32_t i = 0; i < mFieldData->suns.size(); i++)
 	{
 		mFieldData->suns[i]->Draw();
+	}
+}
+
+void Field::DrawTower()
+{
+	// タワー
+	for (uint32_t i = 0; i < mFieldData->towers.size(); i++)
+	{
+		//if (isDrawDepth == false)
+		//{
+		//	mFieldData->towers[i]->SetGraphicsPipeline(
+		//		PipelineManager::GetGraphicsPipeline("Object3D"));
+		//}
+		//else
+		//{
+		//	mFieldData->towers[i]->SetGraphicsPipeline(
+		//		PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+		//}
+
+		mFieldData->towers[i]->Draw();
 	}
 }
 

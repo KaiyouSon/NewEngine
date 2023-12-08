@@ -15,7 +15,7 @@ float4 CalcLighting(V2P i, Material material);
 float4 CalcDissolve(float2 uv, float4 color);
 
 // 距離フォグ
-float4 CalcDistanceFog(float3 pos, float4 color);
+float4 CalcDistanceFog(float3 wpos, float4 color);
 
 float4 main(V2P i) : SV_TARGET
 {
@@ -217,16 +217,26 @@ float4 CalcDissolve(float2 uv, float4 color)
 }
 
 // 距離フォグ
-float4 CalcDistanceFog(float3 pos, float4 color)
+float4 CalcDistanceFog(float3 wpos, float4 color)
 {
     if (isActiveDistanceFog == false)
     {
         return color;
     }
     
-    float dis = distance(pos.xyz, cameraPos);
-    float intensity = smoothstep(distanceFogNearFarDis.x, distanceFogNearFarDis.y, dis);
+    // 距離フォグの割合
+    float dis = distance(wpos.xyz * distanceRate, cameraPos);
+    float distanceFogIntensity = smoothstep(fogNearFarDistance.x, fogNearFarDistance.y, dis);
+    float intensity = distanceFogIntensity;
     
-    float4 resultColor = distanceFogColor * intensity + color * (1 - intensity);
+    if (isActiveHeightFog == true)
+    {
+        // 高さフォグの割合
+        float height = wpos.y;
+        float heightFogIntensity = smoothstep(fogNearFarHeight.x, fogNearFarHeight.y, height);
+        intensity = max(distanceFogIntensity, heightFogIntensity);
+    }
+    
+    float4 resultColor = lerp(color, distanceFogColor, intensity);
     return resultColor;
 }

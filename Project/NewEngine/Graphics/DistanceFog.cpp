@@ -9,7 +9,10 @@ DistanceFog::DistanceFog() :
 
 	data.color = Color::white;
 	data.isActive = true;
-	data.nearFarDis = Vec2(30.f, 100.f);
+	data.isActiveHeight = false;
+	data.nearFarDistance = Vec2(30.f, 100.f);
+	data.nearFarHeight = Vec2(0.f, -100.f);
+	data.distanceRate = Vec3(1.f, 0.01f, 1.f);
 }
 
 void DistanceFog::TransferData()

@@ -43,8 +43,11 @@ void GameScene::CreateInstance()
 void GameScene::Init()
 {
 	GraphicsManager::GetDistanceFog()->data.isActive = true;
-	GraphicsManager::GetDistanceFog()->data.color = Color(100, 100, 100);
-	GraphicsManager::GetDistanceFog()->data.nearFarDis = Vec2(500, 5000);
+	GraphicsManager::GetDistanceFog()->data.isActiveHeight = true;
+	GraphicsManager::GetDistanceFog()->data.color = Color(30, 30, 15);
+	GraphicsManager::GetDistanceFog()->data.nearFarDistance = Vec2(2000, 3500);
+	GraphicsManager::GetDistanceFog()->data.nearFarHeight = Vec2(-100, -1000);
+	GraphicsManager::GetDistanceFog()->data.distanceRate = Vec3(1.f, 0.f, 1.f);
 
 	mBgmVolume = 0;
 
@@ -444,6 +447,7 @@ void GameScene::SceneChangeUpdate()
 void GameScene::DrawSkydome()
 {
 	mSkydome->Draw();
+	mField->DrawTower();
 }
 
 // エフェクトのブルームのポストエフェクトに深度のみ書き込む処理

@@ -24,14 +24,14 @@ Skydome::Skydome() :
 
 void Skydome::Init()
 {
-	mSkydome->scale = 800.f;
+	mSkydome->scale = 3200.f;
 	mSkydome->pos.z = 200.f;
 }
 
 void Skydome::Update()
 {
-	mSkydome->scale = 1600.f;
-
+	mSkydome->scale = 6400.f;
+	mSkydome->scale.y = 10000.f;
 	mSkydome->Update();
 	for (uint32_t i = 0; i < mClouds.size(); i++)
 	{

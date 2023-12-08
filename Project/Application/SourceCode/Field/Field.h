@@ -16,6 +16,7 @@ public:
 	void DrawSkyIsLand(const bool isDrawDepth = false);
 	void DrawFog();
 	void DrawSun();
+	void DrawTower();
 	void DrawDebugGui();
 
 public:
