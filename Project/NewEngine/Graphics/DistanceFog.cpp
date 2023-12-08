@@ -9,14 +9,13 @@ DistanceFog::DistanceFog() :
 
 	data.color = Color::white;
 	data.isActive = true;
-	data.nearDis = 30.f;
-	data.farDis = 100.f;
+	data.nearFarDis = Vec2(30.f, 100.f);
 }
 
 void DistanceFog::TransferData()
 {
 	CDistanceFog transfer = data;
-	transfer.color.To01();
+	transfer.color = data.color.To01();
 
 	// データ転送
 	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), transfer);

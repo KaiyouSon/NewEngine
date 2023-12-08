@@ -75,17 +75,6 @@ cbuffer ConstantBufferDataUVParameter : register(b4)
     float2 tiling;
 };
 
-// ライトグループ
-static const uint directionalLightSize = 1;
-static const uint pointLightSize = 5;
-static const uint spotLightSize = 1;
-cbuffer ConstantBufferDataLightGroup : register(b7)
-{
-    DirectionalLight directionalLight[directionalLightSize];
-    PointLight pointLight[pointLightSize];
-    SpotLight spotLight[spotLightSize];
-};
-
 cbuffer ConstantBufferDissolve : register(b5)
 {
     float dissolve;
@@ -98,6 +87,24 @@ cbuffer ConstantBufferShadow : register(b6)
     uint isWriteShadow;
     float bias;
 }
+
+// ライトグループ
+static const uint directionalLightSize = 1;
+static const uint pointLightSize = 5;
+static const uint spotLightSize = 1;
+cbuffer ConstantBufferDataLightGroup : register(b7)
+{
+    DirectionalLight directionalLight[directionalLightSize];
+    PointLight pointLight[pointLightSize];
+    SpotLight spotLight[spotLightSize];
+};
+
+cbuffer ConstantBufferDataDistanceFog : register(b8)
+{
+    float4 distanceFogColor;
+    uint isActiveDistanceFog;
+    float2 distanceFogNearFarDis;
+};
 
 struct Appdata
 {

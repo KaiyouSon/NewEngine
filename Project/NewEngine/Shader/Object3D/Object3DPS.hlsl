@@ -11,16 +11,17 @@ float CalcShadowPFC(float4 spos);
 // ライティング
 float4 CalcLighting(V2P i, Material material);
 
+// ディゾルブ
+float4 CalcDissolve(float2 uv, float4 color);
+
+// 距離フォグ
+float4 CalcDistanceFog(float3 pos, float4 color);
+
 float4 main(V2P i) : SV_TARGET
 {
-    float2 newUV = (i.uv + offset) * tiling;
-    
 	// テクスチャーマッピング
+    float2 newUV = (i.uv + offset) * tiling;
     float4 texColor = tex.Sample(smp, newUV);
-    float4 mask = dissolveTex.Sample(smp, newUV);
-    
-    float maskIntensity = smoothstep(0.1, 0.25, (0.5f + mask.r) - dissolve);
-    clip(maskIntensity - 0.01f);
     
     // ライティング
     Material material = { ambient, diffuse, specular };
@@ -35,8 +36,13 @@ float4 main(V2P i) : SV_TARGET
         shadow = CalcShadowPFC(i.spos);
     }
     resultColor.rgb *= shadow;
+
+    // ディゾルブ    
+    resultColor = CalcDissolve(newUV, resultColor);
     
-    resultColor = resultColor * maskIntensity + dissolveColor * colorPower * (1 - maskIntensity);
+    // 距離フォグ
+    resultColor = CalcDistanceFog(i.wpos.xyz, resultColor);
+    
     return resultColor;
 }
 
@@ -196,4 +202,31 @@ float4 CalcLighting(V2P i, Material material)
     }
     
     return adsColor;
+}
+
+// ディゾルブ
+float4 CalcDissolve(float2 uv, float4 color)
+{
+    float4 mask = dissolveTex.Sample(smp, uv);
+    
+    float maskIntensity = smoothstep(0.1, 0.25, (0.5f + mask.r) - dissolve);
+    clip(maskIntensity - 0.01f);
+    
+    float4 resultColor = color * maskIntensity + dissolveColor * colorPower * (1 - maskIntensity);
+    return resultColor;
+}
+
+// 距離フォグ
+float4 CalcDistanceFog(float3 pos, float4 color)
+{
+    if (isActiveDistanceFog == false)
+    {
+        return color;
+    }
+    
+    float dis = distance(pos.xyz, cameraPos);
+    float intensity = smoothstep(distanceFogNearFarDis.x, distanceFogNearFarDis.y, dis);
+    
+    float4 resultColor = distanceFogColor * intensity + color * (1 - intensity);
+    return resultColor;
 }

@@ -150,8 +150,7 @@ namespace ConstantBufferData
 	{
 		Color color;
 		uint32_t isActive;
-		float nearDis;
-		float farDis;
+		Vec2 nearFarDis;
 	};
 
 	static const int maxBones = 32;

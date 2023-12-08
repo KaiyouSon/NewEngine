@@ -19,6 +19,10 @@ public:
 
 public:
 	static void DrawCommands(const GraphicsType type, const uint32_t index);
+	static void DrawDebugGui();
+
+public:
+	static DistanceFog* GetDistanceFog();
 
 private:
 	friend Singleton<GraphicsManager>;

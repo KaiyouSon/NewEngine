@@ -42,6 +42,10 @@ void GameScene::CreateInstance()
 
 void GameScene::Init()
 {
+	GraphicsManager::GetDistanceFog()->data.isActive = true;
+	GraphicsManager::GetDistanceFog()->data.color = Color(100, 100, 100);
+	GraphicsManager::GetDistanceFog()->data.nearFarDis = Vec2(500, 5000);
+
 	mBgmVolume = 0;
 
 	mCurrentScene = TextureManager::GetRenderTexture("CurrentScene");
@@ -271,6 +275,7 @@ void GameScene::DrawDebugGui()
 	//mBoss->DrawDebugGui();
 	//mPostEffectManager->DrawDebugGui();
 	ShadowMap::GetInstance()->DrawDebugGui();
+	GraphicsManager::DrawDebugGui();
 
 	Gui::BeginWindow("Debug");
 
