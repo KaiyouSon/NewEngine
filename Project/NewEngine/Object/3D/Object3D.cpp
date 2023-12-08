@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "FbxModel.h"
 #include "ShadowMap.h"
+#include "GraphicsManager.h"
 
 using namespace ConstantBufferData;
 
@@ -195,26 +196,11 @@ void Object3D::MaterialDrawCommands()
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
 	// CBVの設定コマンド
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		0, mMaterial->constantBuffers[0]->bufferResource->buffer->GetGPUVirtualAddress());
-
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		1, mMaterial->constantBuffers[1]->bufferResource->buffer->GetGPUVirtualAddress());
-
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		2, mMaterial->constantBuffers[2]->bufferResource->buffer->GetGPUVirtualAddress());
-
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		3, mMaterial->constantBuffers[3]->bufferResource->buffer->GetGPUVirtualAddress());
-
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		4, mMaterial->constantBuffers[4]->bufferResource->buffer->GetGPUVirtualAddress());
-
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		6, mMaterial->constantBuffers[5]->bufferResource->buffer->GetGPUVirtualAddress());
-
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		7, mMaterial->constantBuffers[6]->bufferResource->buffer->GetGPUVirtualAddress());
+	for (uint32_t i = 0; i < mMaterial->constantBuffers.size(); i++)
+	{
+		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+			i, mMaterial->constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
+	}
 }
 
 // --- 描画コマンド ----------------------------------------------------- //
@@ -232,7 +218,10 @@ void Object3D::DrawCommands()
 	renderBase->GetCommandList()->IASetIndexBuffer(mModel->mesh.indexBuffer.GetibViewAddress());
 
 	MaterialDrawCommands();
-	LightManager::GetInstance()->DrawCommand(5);
+
+	uint32_t end = (uint32_t)mMaterial->constantBuffers.size();
+	LightManager::GetInstance()->DrawCommands(end);
+	GraphicsManager::DrawCommands(GraphicsType::DistanceFog, end + 1);
 
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();

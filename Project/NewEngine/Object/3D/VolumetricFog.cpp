@@ -75,7 +75,7 @@ void VolumetricFog::Draw(const BlendMode blendMode)
 
 	// マテリアルの描画コマンド(主にCBV)
 	MaterialDrawCommands();
-	LightManager::GetInstance()->DrawCommand(5);
+	LightManager::GetInstance()->DrawCommands(5);
 
 	// SRV設定(テクスチャ)
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();

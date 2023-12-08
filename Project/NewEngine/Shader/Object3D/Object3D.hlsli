@@ -79,21 +79,21 @@ cbuffer ConstantBufferDataUVParameter : register(b4)
 static const uint directionalLightSize = 1;
 static const uint pointLightSize = 5;
 static const uint spotLightSize = 1;
-cbuffer ConstantBufferDataLightGroup : register(b5)
+cbuffer ConstantBufferDataLightGroup : register(b7)
 {
     DirectionalLight directionalLight[directionalLightSize];
     PointLight pointLight[pointLightSize];
     SpotLight spotLight[spotLightSize];
 };
 
-cbuffer ConstantBufferDissolve : register(b6)
+cbuffer ConstantBufferDissolve : register(b5)
 {
     float dissolve;
     float colorPower;
     float4 dissolveColor;
 }
 
-cbuffer ConstantBufferShadow : register(b7)
+cbuffer ConstantBufferShadow : register(b6)
 {
     uint isWriteShadow;
     float bias;
@@ -113,10 +113,4 @@ struct V2P
     float3 normal : NORMAL; // 法線ベクトル
     float2 uv : TEXCOORD; // uv値
     float4 spos : POSITIONT1;
-};
-
-struct PSOutput
-{
-    float4 target0 : SV_TARGET0;
-    float4 target1 : SV_TARGET1;
 };

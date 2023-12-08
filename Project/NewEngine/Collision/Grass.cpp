@@ -142,7 +142,7 @@ void Grass::Draw()
 	// マテリアルの描画コマンド
 	MaterialDrawCommands();
 
-	LightManager::GetInstance()->DrawCommand(4);
+	LightManager::GetInstance()->DrawCommands(4);
 
 	// SRVのセット
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();

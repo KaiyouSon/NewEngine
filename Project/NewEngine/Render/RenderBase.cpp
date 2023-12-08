@@ -1,7 +1,5 @@
 #include "RenderBase.h"
 #include "RenderWindow.h"
-#include "Viewport.h"
-#include "ScissorRectangle.h"
 #include "TextureManager.h"
 #include "ShaderCompilerManager.h"
 #include <cassert>
@@ -491,8 +489,8 @@ void RenderBase::GraphicsPipelineInit()
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
-	setting.rtvNum = 2;
-	setting.rootSignatureSetting.maxCbvRootParameter = 8;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 9;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "Object3D");
 

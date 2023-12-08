@@ -44,7 +44,7 @@ private:
 public:
 	void Init();
 	void Update();
-	void DrawCommand(const uint32_t index);
+	void DrawCommands(const uint32_t index);
 
 public:
 	void Register(ILight* iLight);

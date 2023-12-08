@@ -400,6 +400,12 @@
     <Filter Include="Shader\Application\PostEffect\Vignette">
       <UniqueIdentifier>{8860517a-80d9-4c0a-b4a2-33dbda29c0f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NewEngine\Source\Graphics">
+      <UniqueIdentifier>{e8db2d9e-f155-4744-94dc-d0bd89bbe5bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Header\Graphics">
+      <UniqueIdentifier>{ab12b987-5b6a-4581-8456-ff37f36f1036}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -926,6 +932,12 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Field\Tower.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Graphics\DistanceFog.cpp">
+      <Filter>NewEngine\Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Graphics\GraphicsManager.cpp">
+      <Filter>NewEngine\Source\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1492,6 +1504,12 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Field\Tower.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Graphics\DistanceFog.h">
+      <Filter>NewEngine\Header\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Graphics\GraphicsManager.h">
+      <Filter>NewEngine\Header\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

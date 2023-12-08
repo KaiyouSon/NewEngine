@@ -159,3 +159,8 @@ enum class FrustamPlanePos
 	Top, Down,
 	Near, Far
 };
+
+enum class GraphicsType
+{
+	DistanceFog,
+};

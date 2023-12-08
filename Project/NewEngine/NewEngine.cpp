@@ -60,6 +60,9 @@ void NewEngine::Init()
 	// サウンドの初期化
 	SoundManager::Init();
 
+	// グラフィックス関連の初期化
+	GraphicsManager::Init();
+
 	// フレームレートの初期化
 	FrameRate::GetInstance()->Init(mSetting.frameRate);
 

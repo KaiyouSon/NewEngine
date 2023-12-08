@@ -26,6 +26,7 @@
 #include "LightManager.h"
 #include "ShaderCompilerManager.h"
 #include "PipelineManager.h"
+#include "GraphicsManager.h"
 
 #include "CircleGaugeSprite.h"
 #include "PostEffect.h"

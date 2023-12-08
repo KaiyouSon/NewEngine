@@ -146,12 +146,12 @@ namespace ConstantBufferData
 		uint32_t isActive;	float pad3;
 	};
 
-	struct CFog
+	struct CDistanceFog
 	{
+		Color color;
 		uint32_t isActive;
 		float nearDis;
-		float farDis;	float pad;
-		Color color;
+		float farDis;
 	};
 
 	static const int maxBones = 32;

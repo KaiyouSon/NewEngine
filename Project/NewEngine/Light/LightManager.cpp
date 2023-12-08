@@ -131,7 +131,7 @@ void LightManager::Update()
 	// データ転送
 	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), lightGroupData);
 }
-void LightManager::DrawCommand(const uint32_t index)
+void LightManager::DrawCommands(const uint32_t index)
 {
 	RenderBase* renderBase = RenderBase::GetInstance();
 
