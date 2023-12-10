@@ -97,6 +97,13 @@ void PostEffect::Draw()
 		//		mRenderTextures[i]->GetBufferResources()->at(rtvIndex).srvHandle.gpu);
 		//}
 	}
+	for (uint32_t i = 0; i < mVolumeTextures.size(); i++)
+	{
+		// VolumeTexture
+		cmdList->SetGraphicsRootDescriptorTable(
+			startIndex + (uint32_t)mRenderTextures.size() + i,
+			mVolumeTextures[i]->GetBufferResource()->srvHandle.gpu);
+	}
 
 	// CSOutput
 	uint32_t offsetIndex = startIndex + (uint32_t)mRenderTextures.size();

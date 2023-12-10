@@ -91,67 +91,28 @@ float4 RayMarching(float3 boundsMin, float3 boundsMax, float3 rayStart, float3 r
             float3 smpPoint = rayPos * scale + float3(0.5f, 0.5f, 0.5f);
             float color = tex.Sample(smp, (smpPoint + offset) * tiling).r * stepLength * density;
             
-            colorDensity += color; // * disRate;
+            float3 viewDir = normalize(rayPos - cameraPos);
+            float3 lightDir = normalize(directionalLight[0].vec);
             
-            //uint index = 0;
+            float g = 0.8f;
+            float g2 = g * g;
+            float cosTheta = dot(viewDir, lightDir);
+            float denominator = 1.0 + g2 - 2.0 * g * cosTheta;
             
-            //for (index = 0; index < 3; index++)
-            //{
-            //    if (pointLight[index].isActive == true)
-            //    {
-            //        // ライトヘのベクトル
-            //        float3 lightVec = normalize(pointLight[index].pos - objectPos - rayPos);
-            //        float d = distance(pointLight[index].pos - objectPos, rayPos);
+            float mieCoefficient = color.r;
             
-            //        float s = d / pointLight[index].radius;
-            //        if (s >= 1.0)
-            //        {
-            //            continue;
-            //        }
+            // ミー散乱の計算
+            float miePhase = 3.0 / (4.0 * 3.14) * (1.0 - g2) / pow(denominator, 1.5);
+            float mieIntensity = mieCoefficient * miePhase;
             
-            //        float s2 = s * s;
-            
-            //        float atten = pointLight[index].decay * ((1 - s2) * (1 - s2));
-                
-            //        lightting.rgb += atten * color *
-            //                pointLight[index].color.rgb * pointLight[index].colorRate.rgb;
-            //    }
-            //}
-            
-            //// スポットライトの計算
-            //for (index = 0; index < spotLightSize; index++)
-            //{
-            //    if (spotLight[index].isActive == true)
-            //    {
-            //        // ライトヘのベクトル
-            //        float3 lightVec = normalize(spotLight[index].pos - objectPos - rayPos);
-            //        float d = distance(spotLight[index].pos - objectPos, rayPos);
-                    
-            //        float s = d / spotLight[index].radius;
-            //        if (s >= 1.0)
-            //        {
-            //            continue;
-            //        }
-            
-            //        float s2 = s * s;
-            
-            //        float cosAngle = dot(lightVec, spotLight[index].vec);
-            //        float falloffFactor = saturate((cosAngle - spotLight[index].cosAngle.y) / (spotLight[index].cosAngle.x - spotLight[index].cosAngle.y));
-            
-            //        float atten = spotLight[index].decay * ((1 - s2) * (1 - s2));
-            //        atten *= falloffFactor;
-            
-            //        lightting += atten * color * 
-            //                spotLight[index].color.rgb * spotLight[index].colorRate.rgb;
-            //    }
-            //}
+            colorDensity += color * mieIntensity; // * disRate;
         }
         
         // 次のレイの座標を算出
         rayPos += rayDir * stepLength;
     }
     
-    return float4(colorDensity.xxx * lightting.rgb, colorDensity);
+    return float4(colorDensity.xxx, colorDensity);
 }
 
 // 最小値を0に最大値を1にし値をlerpする

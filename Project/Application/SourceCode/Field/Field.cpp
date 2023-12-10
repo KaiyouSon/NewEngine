@@ -77,6 +77,12 @@ void Field::Init()
 	{
 		mFieldData->towers[i]->Init();
 	}
+
+	// 橋
+	for (uint32_t i = 0; i < mFieldData->bridges.size(); i++)
+	{
+		mFieldData->bridges[i]->Init();
+	}
 }
 
 void Field::Update()
@@ -150,6 +156,12 @@ void Field::Update()
 	for (uint32_t i = 0; i < mFieldData->towers.size(); i++)
 	{
 		mFieldData->towers[i]->Update();
+	}
+
+	// 橋
+	for (uint32_t i = 0; i < mFieldData->bridges.size(); i++)
+	{
+		mFieldData->bridges[i]->Update();
 	}
 }
 
@@ -333,18 +345,13 @@ void Field::DrawTower()
 	// タワー
 	for (uint32_t i = 0; i < mFieldData->towers.size(); i++)
 	{
-		//if (isDrawDepth == false)
-		//{
-		//	mFieldData->towers[i]->SetGraphicsPipeline(
-		//		PipelineManager::GetGraphicsPipeline("Object3D"));
-		//}
-		//else
-		//{
-		//	mFieldData->towers[i]->SetGraphicsPipeline(
-		//		PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
-		//}
-
 		mFieldData->towers[i]->Draw();
+	}
+
+	// 橋
+	for (uint32_t i = 0; i < mFieldData->bridges.size(); i++)
+	{
+		mFieldData->bridges[i]->Draw();
 	}
 }
 

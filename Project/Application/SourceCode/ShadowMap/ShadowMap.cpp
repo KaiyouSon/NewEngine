@@ -46,7 +46,7 @@ void ShadowMap::LightViewUpdate(const Vec3 lightPos)
 {
 	lightCamera.pos = lightPos;
 
-	rectLeftTop = Vec2(-400, 100.f);
+	//rectLeftTop = Vec2(-400, 100.f);
 	lightCamera.rect = RectAngle(rectLeftTop, rectLeftTop + rectSize * Vec2(1, -1));
 
 	// カメラの設定

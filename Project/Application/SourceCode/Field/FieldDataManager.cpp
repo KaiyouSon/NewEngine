@@ -97,6 +97,10 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 			{
 				LoadTowerData(fieldData.get(), object);
 			}
+			else if (object["obj_name"] == "Bridge")
+			{
+				LoadBridgeData(fieldData.get(), object);
+			}
 		}
 	}
 
@@ -639,7 +643,7 @@ void FieldDataManager::LoadAirColliderData(FieldData* data, nlohmann::json jsonO
 }
 void FieldDataManager::LoadTowerData(FieldData* data, nlohmann::json jsonObj)
 {
-	std::unique_ptr<Tower> sun = std::make_unique<Tower>();
+	std::unique_ptr<Tower> tower = std::make_unique<Tower>();
 	// ゲートの位置、スケール、角度情報を取得
 	nlohmann::json transform = jsonObj["transform"];
 	Vec3 pos =
@@ -660,7 +664,34 @@ void FieldDataManager::LoadTowerData(FieldData* data, nlohmann::json jsonObj)
 		(float)transform["rotation"][1],
 		(float)transform["rotation"][2],
 	};
-	sun->SetTransform(Transform(pos, scale, Radian(angle)));
+	tower->SetTransform(Transform(pos, scale, Radian(angle)));
 
-	data->towers.push_back(std::move(sun));
+	data->towers.push_back(std::move(tower));
+}
+void FieldDataManager::LoadBridgeData(FieldData* data, nlohmann::json jsonObj)
+{
+	std::unique_ptr<Bridge> bridge = std::make_unique<Bridge>();
+	// ゲートの位置、スケール、角度情報を取得
+	nlohmann::json transform = jsonObj["transform"];
+	Vec3 pos =
+	{
+		(float)transform["translation"][0],
+		(float)transform["translation"][1],
+		(float)transform["translation"][2],
+	};
+	Vec3 scale =
+	{
+		(float)transform["scaling"][0],
+		(float)transform["scaling"][1],
+		(float)transform["scaling"][2],
+	};
+	Vec3 angle =
+	{
+		(float)transform["rotation"][0],
+		(float)transform["rotation"][1],
+		(float)transform["rotation"][2],
+	};
+	bridge->SetTransform(Transform(pos, scale, Radian(angle)));
+
+	data->bridges.push_back(std::move(bridge));
 }

@@ -21,6 +21,7 @@ private:
 	static void LoadSunData(FieldData* data, nlohmann::json jsonObj);
 	static void LoadAirColliderData(FieldData* data, nlohmann::json jsonObj);
 	static void LoadTowerData(FieldData* data, nlohmann::json jsonObj);
+	static void LoadBridgeData(FieldData* data, nlohmann::json jsonObj);
 
 public:
 	static FieldData* Load(const std::string filename, const std::string tag);

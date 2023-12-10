@@ -3,16 +3,21 @@
 #include "IndexBuffer.h"
 #include "ConstantBuffer.h"
 #include "Transform.h"
-#include "RenderTexture.h"
 #include "Material.h"
 #include <vector>
 
+// 前方宣言
+class RenderTexture;
+class VolumeTexture;
+
+// ポストエフェクトのクラス
 class PostEffect
 {
 private:
 	std::vector<VertexBufferData::VSprite> mVertices;
 	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> mVertexBuffer;
 	std::vector<RenderTexture*> mRenderTextures;
+	std::vector<VolumeTexture*> mVolumeTextures;
 	std::unique_ptr<Material> mMaterial;
 	std::unique_ptr<Material> mCSMaterial;
 	GraphicsPipeline* mGraphicsPipeline;

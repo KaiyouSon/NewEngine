@@ -6,7 +6,7 @@ using namespace ConstantBufferData;
 
 CPOM Grass::sPOMData =
 {
-	0.25f,64.0f
+	0.1f,64.0f
 };
 CMaterialColor Grass::sMaterialColor =
 {
@@ -52,8 +52,8 @@ void Grass::GenerateGrassToSquare(const Vec2 size, const uint32_t density)
 			Random::RangeF(-size.y,+size.y),
 		};
 
-		mVertices[i].scale.x = Random::RangeF(1.0f, 3.0f);
-		mVertices[i].scale.y = Random::RangeF(1.0f, 3.0f);
+		mVertices[i].scale.x = Random::RangeF(1.0f, 2.0f);
+		mVertices[i].scale.y = Random::RangeF(1.0f, 2.0f);
 
 		//mVertices[i].scale = Vec2(10, 10);
 

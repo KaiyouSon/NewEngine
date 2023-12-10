@@ -127,6 +127,7 @@
     <ClCompile Include="Application\SourceCode\Effect\BossAttackTrajectoryEffect.cpp" />
     <ClCompile Include="Application\SourceCode\Effect\SmokeEffect.cpp" />
     <ClCompile Include="Application\SourceCode\Field\AirCollider.cpp" />
+    <ClCompile Include="Application\SourceCode\Field\Bridge.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Sun.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Tower.cpp" />
     <ClCompile Include="Application\SourceCode\Motion\BackstepMotion.cpp" />
@@ -218,6 +219,7 @@
     <ClCompile Include="NewEngine\Debugger\RendererWindow.cpp" />
     <ClCompile Include="NewEngine\Graphics\DistanceFog.cpp" />
     <ClCompile Include="NewEngine\Graphics\GraphicsManager.cpp" />
+    <ClCompile Include="NewEngine\Graphics\LightShaft.cpp" />
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp" />
     <ClCompile Include="NewEngine\Input\InputManager.cpp" />
     <ClCompile Include="NewEngine\Input\JoypadInput.cpp" />
@@ -314,6 +316,7 @@
     <ClInclude Include="Application\SourceCode\Effect\IEffect.h" />
     <ClInclude Include="Application\SourceCode\Effect\SmokeEffect.h" />
     <ClInclude Include="Application\SourceCode\Field\AirCollider.h" />
+    <ClInclude Include="Application\SourceCode\Field\Bridge.h" />
     <ClInclude Include="Application\SourceCode\Field\Sun.h" />
     <ClInclude Include="Application\SourceCode\Field\Tower.h" />
     <ClInclude Include="Application\SourceCode\Motion\BackstepMotion.h" />
@@ -406,6 +409,7 @@
     <ClInclude Include="NewEngine\Debugger\RendererWindow.h" />
     <ClInclude Include="NewEngine\Graphics\DistanceFog.h" />
     <ClInclude Include="NewEngine\Graphics\GraphicsManager.h" />
+    <ClInclude Include="NewEngine\Graphics\LightShaft.h" />
     <ClInclude Include="NewEngine\Gui\GuiManager.h" />
     <ClInclude Include="NewEngine\Input\InputManager.h" />
     <ClInclude Include="NewEngine\Input\JoypadInput.h" />

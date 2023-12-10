@@ -939,6 +939,12 @@
     <ClCompile Include="NewEngine\Graphics\GraphicsManager.cpp">
       <Filter>NewEngine\Source\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Graphics\LightShaft.cpp">
+      <Filter>NewEngine\Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Field\Bridge.cpp">
+      <Filter>Application\Source\Field\FiedlObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1510,6 +1516,12 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Graphics\GraphicsManager.h">
       <Filter>NewEngine\Header\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Graphics\LightShaft.h">
+      <Filter>NewEngine\Header\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Field\Bridge.h">
+      <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

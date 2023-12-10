@@ -210,6 +210,7 @@ void LoadManager::GameSceneModelLoad()
 	ModelManager::LoadObjModel("Wall/Wall2", "Wall2");
 	ModelManager::LoadObjModel("Wall/WallGate", "WallGate");
 	ModelManager::LoadObjModel("Tower", "Tower");
+	ModelManager::LoadObjModel("Bridge", "Bridge");
 
 	// キャラクター(プレイヤー)
 	ModelManager::LoadObjModel("HumanoidBody/Body", "Body");
