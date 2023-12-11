@@ -63,8 +63,6 @@ void LoadManager::GameSceneTextureLoad()
 	TextureManager::LoadTexture("UI/Gauge.dds", "Gauge");
 	TextureManager::LoadTexture("UI/Buttons.dds", "Buttons");
 	TextureManager::LoadTexture("UI/Negotiation/NegotiationBack.dds", "NegotiationBack");
-	TextureManager::LoadTexture("UI/MessageSign/MessageBack.dds", "MessageBack");
-	TextureManager::LoadTexture("UI/MessageSign/MessageSignUI.dds", "MessageSignUI");
 	TextureManager::LoadTexture("UI/ItemBoxFrame.dds", "ItemBoxFrame");
 	TextureManager::LoadTexture("UI/ItemBoxLight.dds", "ItemBoxLight");
 	TextureManager::LoadTexture("UI/ItemUI/BottleUI.dds", "BottleUI");
@@ -272,11 +270,7 @@ bool LoadManager::ModelLoad()
 {
 	ModelManager::LoadObjModel("Cube", "Cube");
 	ModelManager::LoadObjModel("Sphere", "Sphere");
-
 	ModelManager::LoadObjModel("Plane", "Plane");
-
-	ModelManager::LoadObjModel("MessageSign", "MessageSign");
-
 	ModelManager::LoadObjModel("Capsule", "Capsule");
 
 	// 非同期終わったよ～

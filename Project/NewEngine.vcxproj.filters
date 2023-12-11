@@ -573,9 +573,6 @@
     <ClCompile Include="Application\SourceCode\Camera\LockonCamera.cpp">
       <Filter>Application\Source\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\MessageSign.cpp">
-      <Filter>Application\Source\Field</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\Field\Skydome.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
@@ -1147,9 +1144,6 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Camera\LockonCamera.h">
       <Filter>Application\Header\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\MessageSign.h">
-      <Filter>Application\Header\Field</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Field\Skydome.h">
       <Filter>Application\Header\Field</Filter>

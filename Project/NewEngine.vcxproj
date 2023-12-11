@@ -191,7 +191,6 @@
     <ClCompile Include="Application\SourceCode\Body\PlayerBody.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\SceneManager.cpp" />
     <ClCompile Include="Application\SourceCode\Scene\TitleScene.cpp" />
-    <ClCompile Include="Application\SourceCode\Field\MessageSign.cpp" />
     <ClCompile Include="Application\SourceCode\ShadowMap\ShadowMap.cpp" />
     <ClCompile Include="Application\SourceCode\ShadowMap\ShadowObj.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Skydome.cpp" />
@@ -383,7 +382,6 @@
     <ClInclude Include="Application\SourceCode\Scene\LogoScene.h" />
     <ClInclude Include="Application\SourceCode\Scene\SceneManager.h" />
     <ClInclude Include="Application\SourceCode\Scene\TitleScene.h" />
-    <ClInclude Include="Application\SourceCode\Field\MessageSign.h" />
     <ClInclude Include="Application\SourceCode\ShadowMap\ShadowMap.h" />
     <ClInclude Include="Application\SourceCode\ShadowMap\ShadowObj.h" />
     <ClInclude Include="Application\SourceCode\Field\Skydome.h" />
