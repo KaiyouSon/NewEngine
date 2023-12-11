@@ -67,7 +67,7 @@ void LoadManager::GameSceneTextureLoad()
 	TextureManager::LoadTexture("UI/ItemBoxLight.dds", "ItemBoxLight");
 	TextureManager::LoadTexture("UI/ItemUI/BottleUI.dds", "BottleUI");
 	TextureManager::LoadTexture("UI/ItemUI/ClubUI.dds", "ClubUI");
-	TextureManager::LoadTexture("UI/Menu/TempMenuBack.dds", "MenuBack");
+	TextureManager::LoadTexture("UI/Menu/MenuBack.dds", "MenuBack");
 	TextureManager::LoadTexture("UI/Menu/MenuTextFrame.dds", "MenuTextFrame");
 	TextureManager::LoadTexture("UI/Menu/MenuTextLight.dds", "MenuTextLight");
 	TextureManager::LoadTexture("UI/Result/ResultBack.dds", "ResultBack");
@@ -75,7 +75,6 @@ void LoadManager::GameSceneTextureLoad()
 
 	// テキスト
 	TextureManager::LoadTexture("Text/ColonStr.dds", "ColonStr");
-	TextureManager::LoadTexture("Text/Negotiation/ReadMessageStr.dds", "ReadMessageStr");
 	TextureManager::LoadTexture("Text/Negotiation/RestInLightStr.dds", "RestInLightStr");
 	TextureManager::LoadTexture("Text/Negotiation/OpenStr.dds", "OpenStr");
 	TextureManager::LoadTexture("Text/ExitStr.dds", "ExitStr");
