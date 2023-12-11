@@ -21,14 +21,8 @@ void PostEffectManager::Update()
 
 void PostEffectManager::DrawDebugGui()
 {
-	mRadialBlur->DrawDebugGui();
-
 	Gui::BeginWindow("PostEffect");
-	if (Gui::DrawCollapsingHeader("Bloom"))
-	{
-		Gui::DrawCheckBox("Bloom0", &mEffectBloom->isBloom0);
-		Gui::DrawCheckBox("Bloom1", &mEffectBloom->isBloom1);
-	}
+	mRadialBlur->DrawDebugGui();
 	Gui::EndWindow();
 }
 

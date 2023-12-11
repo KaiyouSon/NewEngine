@@ -276,7 +276,7 @@ void GameScene::Draw()
 void GameScene::DrawDebugGui()
 {
 	//mBoss->DrawDebugGui();
-	//mPostEffectManager->DrawDebugGui();
+	mPostEffectManager->DrawDebugGui();
 	ShadowMap::GetInstance()->DrawDebugGui();
 	GraphicsManager::DrawDebugGui();
 
@@ -487,7 +487,5 @@ void GameScene::DrawCurrentSceneObject()
 	mBoss->DrawModel();
 
 	EffectManager::GetInstance()->DrawEffect(false);
-
-
-	mVolumetricFog->Draw();
+	//mVolumetricFog->Draw();
 }

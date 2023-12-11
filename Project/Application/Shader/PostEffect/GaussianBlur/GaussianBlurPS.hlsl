@@ -13,13 +13,14 @@ float Gaussian(float2 drawUV, float2 pickUV, float sigma)
 }
 
 // ガウシアンブラー
-float4 GaussianBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float sigma, float loopNum)
+float4 GaussianBlur(Texture2D<float4> tex, float2 uv, float sigma, float stepWidth)
 {
     float4 result = float4(0, 0, 0, 0);
     float totalWeight = 0;
     float max = sigma * 2;
     float min = -sigma * 2;
-    float stepWidth = (max - min) / loopNum;
+    //float stepWidth = (max - min) / loopNum;
+    float asepect = 1920.f / 1080.f;
 
     [unroll]
     for (float py = min; py <= max; py += stepWidth)
@@ -28,9 +29,8 @@ float4 GaussianBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float si
         for (float px = min; px <= max; px += stepWidth)
         {
 		    // 色取得するUV座標
-            float2 offset = float2(px, py);
+            float2 offset = float2(px, py) * float2(asepect, 1.0f);
             float2 pickUV = uv + offset;
-            pickUV.x *= 1920 / 1090;
             
             // 画面外の色を取得しないように
             pickUV = clamp(pickUV, 0.001, 0.999);
@@ -50,9 +50,10 @@ float4 GaussianBlur(Texture2D<float4> tex, SamplerState smp, float2 uv, float si
 
 float4 main(V2P i) : SV_TARGET
 {
-    const float sigma = 0.005f;
-    float4 texColor0 = GaussianBlur(tex0, smp, i.uv, sigma, 10);
-    float4 texColor1 = GaussianBlur(tex1, smp, i.uv, sigma / 2, 15);
+    const float sigma = 0.0025f;
+    const float stepWidth = 0.001f;
+    float4 texColor0 = GaussianBlur(tex0, i.uv, sigma, stepWidth);
+    float4 texColor1 = GaussianBlur(tex1, i.uv, sigma * 0.5f, stepWidth * 0.5f);
     
     return float4(texColor0.rgb + texColor1.rgb, 1);
 }

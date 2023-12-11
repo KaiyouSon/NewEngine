@@ -31,8 +31,8 @@ RadialBlur::RadialBlur() :
 
 	mPostEffect[(uint32_t)PassType::Target]->SetSize(GetWindowSize());
 
-	mData.strength = 0.01f;
-	mData.loopNum = 100;
+	mData.strength = 0.015f;
+	mData.loopNum = 65;
 }
 
 void RadialBlur::Update()
@@ -68,15 +68,14 @@ void RadialBlur::PostSceneDraw(const PassType type)
 
 void RadialBlur::DrawDebugGui()
 {
-	Gui::BeginWindow("Radial Blur");
+	if (Gui::DrawCollapsingHeader("RadialBlur"))
+	{
+		Gui::DrawSlider1("Strength", mData.strength, 0.01f);
+		mData.strength = Max<float>(mData.strength, 0.f);
 
-	Gui::DrawSlider1("Strength", mData.strength, 0.01f);
-	mData.strength = Max<float>(mData.strength, 0.f);
-
-	Gui::DrawSlider1("LoopNum", mData.loopNum, 1.f);
-	mData.loopNum = Clamp<float>(mData.loopNum, 1, 1000);
-
-	Gui::EndWindow();
+		Gui::DrawSlider1("LoopNum", mData.loopNum, 1.f);
+		mData.loopNum = Clamp<float>(mData.loopNum, 1, 1000);
+	}
 }
 
 void RadialBlur::SetCenterPos(const Vec2 centerPos)

@@ -27,8 +27,6 @@ float4 main(V2P i) : SV_TARGET
     //    return float4(0, 0, 0, 0); // 透明
     //}
     
-    
-    
     float4 maskCol = maskTex.Sample(smp, i.uv) * 10;
     float mask = maskCol.r > 0 ? 1.f : 0.f;
     if (mask == 1)
