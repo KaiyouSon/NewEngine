@@ -16,13 +16,13 @@ void LockonCamera::Update()
     Vec3 target = mLockonPos;
 
     // 方向転換
-    const float length = 30.f; // 距離
+    const float length = 40.f; // 距離
     // 追従対象位置 (y軸方向は追従しない)
     Vec3 curPos = mPlayer->GetPos() * Vec3(1.f, 0.f, 1.f) + Vec3(0.f, 9.5f, 0.f);
     // 方向ベクトル
     Vec3 vec = (curPos - target) * Vec3(1.f, 0.f, 1.f);
 
-    const float pitchRad = Radian(22.5f);
+    const float pitchRad = Radian(10.f);
 
     // カメラ位置の補正
     Quaternion q = vec;

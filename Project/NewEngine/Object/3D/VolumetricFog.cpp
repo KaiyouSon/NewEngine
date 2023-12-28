@@ -67,6 +67,7 @@ void VolumetricFog::Draw(const BlendMode blendMode)
 	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
 
 	// GraphicsPipeline描画コマンド
+
 	mGraphicsPipeline->DrawCommand(blendMode);
 
 	// VBV設定

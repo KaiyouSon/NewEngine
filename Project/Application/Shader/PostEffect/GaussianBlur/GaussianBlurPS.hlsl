@@ -51,7 +51,7 @@ float4 GaussianBlur(Texture2D<float4> tex, float2 uv, float sigma, float stepWid
 float4 main(V2P i) : SV_TARGET
 {
     const float sigma = 0.0025f;
-    const float stepWidth = 0.001f;
+    const float stepWidth = 0.002f;
     float4 texColor0 = GaussianBlur(tex0, i.uv, sigma, stepWidth);
     float4 texColor1 = GaussianBlur(tex1, i.uv, sigma * 0.5f, stepWidth * 0.5f);
     

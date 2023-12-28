@@ -10,7 +10,7 @@ ShadowObj::ShadowObj() :
 	// マテリアルの初期化
 	MaterialInit();
 }
-void ShadowObj::Update(Transform* parent)
+void ShadowObj::Update()
 {
 	// カメラが設定してない場合
 	if (mCamera == nullptr || mCamera == &Camera::current)
@@ -22,16 +22,7 @@ void ShadowObj::Update(Transform* parent)
 	mTransform.scale = scale;
 	mTransform.rot = rot;
 	mTransform.Update();
-
-	if (parent != nullptr)
-	{
-		mParent = parent;
-
-		Mat4 mat = mTransform.GetWorldMat();
-		mat *= mParent->GetWorldMat();
-		mTransform.SetWorldMat(mat);
-	}
-	else if (mParent != nullptr)
+	if (mParent != nullptr)
 	{
 		Mat4 mat = mTransform.GetWorldMat();
 		mat *= mParent->GetWorldMat();

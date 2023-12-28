@@ -41,7 +41,7 @@ void DefaultCamera::Update()
 		-cosf(Radian(mControlYaw)) * cosf(Radian(mControlPitch)),
 	};
 
-	const float length = 30.f;
+	const float length = 40.f;
 	Vec3 curPos = mPlayer->GetPos() * Vec3(1.f, 0.f, 1.f) + Vec3(0.f, 9.5f, 0.f);
 	mCamera->pos = curPos + mVec.Norm() * length;
 

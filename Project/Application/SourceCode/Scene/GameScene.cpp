@@ -125,6 +125,7 @@ void GameScene::Init()
 void GameScene::Update()
 {
 	int32_t offsetZ = (int32_t)(mPlayer->GetPos().z / 200) * 100;
+	//int32_t offsetZ = (int32_t)(800 / 200) * 100;
 	Vec3 viewLightPos = mDirectionalLight->pos + Vec3(0, 0, (float)offsetZ);
 	ShadowMap::GetInstance()->LightViewUpdate(viewLightPos);
 
@@ -161,7 +162,7 @@ void GameScene::Update()
 	{
 		if (SoundManager::GetIsPlaying("BattleBGM") == true)
 		{
-			SoundManager::SetVolume("BattleBGM", 0);
+			SoundManager::SetVolume("BattleBGM", mBgmVolume);
 			mBgmVolume += 0.005f;
 			mBgmVolume = Min<float>(mBgmVolume, 1.f);
 		}
@@ -276,9 +277,9 @@ void GameScene::Draw()
 void GameScene::DrawDebugGui()
 {
 	//mBoss->DrawDebugGui();
-	mPostEffectManager->DrawDebugGui();
-	ShadowMap::GetInstance()->DrawDebugGui();
-	GraphicsManager::DrawDebugGui();
+	//mPostEffectManager->DrawDebugGui();
+	//ShadowMap::GetInstance()->DrawDebugGui();
+	//GraphicsManager::DrawDebugGui();
 
 	Gui::BeginWindow("Debug");
 
@@ -481,7 +482,7 @@ void GameScene::DrawCurrentSceneObject()
 	mField->DrawSkyIsLand();
 	mField->DrawSun();
 
-	//mField->DrawFog();
+	mField->DrawFog();
 	mPlayer->DrawModel();
 
 	mBoss->DrawModel();

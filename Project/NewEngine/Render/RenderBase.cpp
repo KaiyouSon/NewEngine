@@ -619,6 +619,10 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFog");
 
+	setting = PipelineManager::GetGraphicsPipeline("VolumetricFog")->GetSetting();
+	setting.depthStencilDesc = depthStencilDesc2;
+	PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFogInSide");
+
 	//setting = PipelineManager::GetGraphicsPipeline("WithInVolumetricFog")->GetSetting();
 	//setting.depthStencilDesc = depthStencilDesc2;
 	//PipelineManager::CreateGraphicsPipeline(setting, "WithOutVolumetricFog");

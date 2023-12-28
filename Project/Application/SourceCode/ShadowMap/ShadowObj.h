@@ -24,7 +24,7 @@ private:
 
 public:
 	ShadowObj();
-	void Update(Transform* parent = nullptr);
+	void Update();
 	void Draw();
 
 public: //セッター
