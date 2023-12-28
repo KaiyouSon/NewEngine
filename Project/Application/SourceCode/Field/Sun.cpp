@@ -4,6 +4,7 @@ Sun::Sun() :
 	mSun(std::make_unique<ParticleObject>())
 {
 	mSun->SetParticleTexture(TextureManager::GetTexture("Particle2"));
+	mType = FieldObjectType::Sun;
 }
 
 void Sun::Init()
@@ -25,8 +26,9 @@ void Sun::ExecuteCS()
 	mSun->ExecuteCS(1625);
 }
 
-void Sun::Draw()
+void Sun::Draw(const bool isDrawDepth)
 {
+	isDrawDepth;
 	mSun->Draw("Object3D");
 }
 

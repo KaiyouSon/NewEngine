@@ -8,13 +8,13 @@ Weed::Weed() :
 	mGrass->pos = Vec3(0, 0, 10);
 	mGrass->scale = 2.f;
 	mGrass->color = Color(0xb8b137);
-	mGrass->SetBillboardType(BillboardType::YAxisBillboard);
 
 	mGrass->texture = TextureManager::GetTexture("Weed");
 }
 
 void Weed::Init()
 {
+	mGrass->SetBillboardType(BillboardType::YAxisBillboard);
 }
 
 void Weed::Update()
@@ -22,19 +22,23 @@ void Weed::Update()
 	mGrass->Update();
 }
 
-void Weed::DrawModel()
+void Weed::Draw(const bool isDrawDepth)
 {
+	if (isDrawDepth == false)
+	{
+		mGrass->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Grass"));
+	}
+	else
+	{
+		mGrass->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("GrassWriteNone"));
+	}
+
 	mGrass->Draw();
 }
 
 void Weed::SetPos(const Vec3 pos)
 {
 	mGrass->pos = pos;
-}
-
-void Weed::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
-{
-	mGrass->SetGraphicsPipeline(graphicsPipeline);
 }
 
 void Weed::GenerateToSquare(const Vec2 size)

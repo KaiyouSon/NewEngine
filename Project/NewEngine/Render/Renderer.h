@@ -13,7 +13,7 @@ private:
 	std::vector<Layer> mLayers;
 
 private:
-	void DrawLayer(const Layer& layer);
+	void FieldObjectLayer(const Layer& layer);
 
 public:
 	void DrawPass();

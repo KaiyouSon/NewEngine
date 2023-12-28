@@ -27,6 +27,7 @@ public:
 	Gate();
 	void Init() override;
 	void Update() override;
+	void ExecuteCS() override {};
 	void Draw(const bool isDrawDepth = false) override;
 
 public:

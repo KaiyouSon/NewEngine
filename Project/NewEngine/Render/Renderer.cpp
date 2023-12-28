@@ -13,7 +13,7 @@ Renderer::Renderer()
 	LoadData();
 }
 
-void Renderer::DrawLayer(const Layer& layer)
+void Renderer::FieldObjectLayer(const Layer& layer)
 {
 	// 指定したレイヤーの関数の配列を取得
 	for (const auto& func : layer.funcs)
@@ -41,7 +41,7 @@ void Renderer::DrawObject()
 			continue;
 		}
 
-		DrawLayer(layer);
+		FieldObjectLayer(layer);
 	}
 
 	for (auto& layer : mLayers)

@@ -5,7 +5,6 @@ Field::Field() :
 	mFieldData(nullptr)
 {
 }
-
 void Field::Init()
 {
 	if (!mFieldData)
@@ -13,34 +12,13 @@ void Field::Init()
 		return;
 	}
 
-	// 棺桶
-	for (uint32_t i = 0; i < mFieldData->mFieldObjects.size(); i++)
+	// フィールドオブジェクト
+	for (const auto& [layer, objs] : mFieldData->fieldObjects)
 	{
-		mFieldData->mFieldObjects[i]->Init();
-	}
-
-	// 空島
-	for (uint32_t i = 0; i < mFieldData->skyIslands.size(); i++)
-	{
-		mFieldData->skyIslands[i]->Init();
-	}
-
-	// 木
-	for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
-	{
-		mFieldData->trees[i]->Init();
-	}
-
-	// 雑草
-	for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
-	{
-		mFieldData->weeds[i]->Init();
-	}
-
-	// リスポーン地点
-	for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
-	{
-		mFieldData->respawnPoints[i]->Init();
+		for (const auto& obj : objs)
+		{
+			obj->Init();
+		}
 	}
 
 	// ボリュメトリックフォグ
@@ -53,26 +31,7 @@ void Field::Init()
 		mFieldData->volumetricFogs[i]->moveSpeed.x = -Random::RangeF(0.0005f, 0.002f);
 		mFieldData->volumetricFogs[i]->moveSpeed.z = -Random::RangeF(0.0005f, 0.002f) * 2;
 	}
-
-	// 太陽
-	for (uint32_t i = 0; i < mFieldData->suns.size(); i++)
-	{
-		mFieldData->suns[i]->Init();
-	}
-
-	// タワー
-	for (uint32_t i = 0; i < mFieldData->towers.size(); i++)
-	{
-		mFieldData->towers[i]->Init();
-	}
-
-	// 橋
-	for (uint32_t i = 0; i < mFieldData->bridges.size(); i++)
-	{
-		mFieldData->bridges[i]->Init();
-	}
 }
-
 void Field::Update()
 {
 	if (!mFieldData)
@@ -81,33 +40,12 @@ void Field::Update()
 	}
 
 	// フィールドオブジェクト
-	for (uint32_t i = 0; i < mFieldData->mFieldObjects.size(); i++)
+	for (const auto& [layer, objs] : mFieldData->fieldObjects)
 	{
-		mFieldData->mFieldObjects[i]->Update();
-	}
-
-	// 空島
-	for (uint32_t i = 0; i < mFieldData->skyIslands.size(); i++)
-	{
-		mFieldData->skyIslands[i]->Update();
-	}
-
-	// 木
-	for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
-	{
-		mFieldData->trees[i]->Update();
-	}
-
-	// 雑草
-	for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
-	{
-		mFieldData->weeds[i]->Update();
-	}
-
-	// リスポーン地点
-	for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
-	{
-		mFieldData->respawnPoints[i]->Update();
+		for (const auto& obj : objs)
+		{
+			obj->Update();
+		}
 	}
 
 	// ボリュメトリックフォグ
@@ -115,41 +53,17 @@ void Field::Update()
 	{
 		mFieldData->volumetricFogs[i]->Update();
 	}
-
-	// 太陽
-	for (uint32_t i = 0; i < mFieldData->suns.size(); i++)
-	{
-		mFieldData->suns[i]->Update();
-	}
-
-	// 当たり判定
-	for (uint32_t i = 0; i < mFieldData->airColliders.size(); i++)
-	{
-		mFieldData->airColliders[i]->Update();
-	}
-
-	// タワー
-	for (uint32_t i = 0; i < mFieldData->towers.size(); i++)
-	{
-		mFieldData->towers[i]->Update();
-	}
-
-	// 橋
-	for (uint32_t i = 0; i < mFieldData->bridges.size(); i++)
-	{
-		mFieldData->bridges[i]->Update();
-	}
 }
-
 void Field::ExecuteCS()
 {
 	// 太陽
-	for (uint32_t i = 0; i < mFieldData->suns.size(); i++)
+	for (const auto& obj : mFieldData->fieldObjects[FieldObjectLayer::Sun])
 	{
-		mFieldData->suns[i]->ExecuteCS();
+		obj->ExecuteCS();
 	}
 }
 
+// 描画周り
 void Field::DrawModel(const bool isDrawDepth)
 {
 	if (!mFieldData)
@@ -157,31 +71,18 @@ void Field::DrawModel(const bool isDrawDepth)
 		return;
 	}
 
-	// 木
-	for (uint32_t i = 0; i < mFieldData->trees.size(); i++)
+	// フィールドオブジェクト
+	for (const auto& obj : mFieldData->fieldObjects[FieldObjectLayer::Default])
 	{
-		if (isDrawDepth == false)
-		{
-			mFieldData->trees[i]->SetGraphicsPipeline(
-				PipelineManager::GetGraphicsPipeline("Object3D"),
-				PipelineManager::GetGraphicsPipeline("Branch"));
-		}
-		else
-		{
-			mFieldData->trees[i]->SetGraphicsPipeline(
-				PipelineManager::GetGraphicsPipeline("Object3DWriteNone"),
-				PipelineManager::GetGraphicsPipeline("BranchWriteNone"));
-		}
-		mFieldData->trees[i]->DrawModel();
+		obj->Draw(isDrawDepth);
 	}
 
-	// フィールドデータ
-	for (uint32_t i = 0; i < mFieldData->mFieldObjects.size(); i++)
+	// フィールドオブジェクト(半透明関連)
+	for (const auto& obj : mFieldData->fieldObjects[FieldObjectLayer::Translucent])
 	{
-		mFieldData->mFieldObjects[i]->Draw(isDrawDepth);
+		obj->Draw(isDrawDepth);
 	}
 }
-
 void Field::DrawFog()
 {
 	if (!mFieldData)
@@ -195,68 +96,6 @@ void Field::DrawFog()
 		mFieldData->volumetricFogs[i]->Draw();
 	}
 }
-
-void Field::DrawSkyIsLand(const bool isDrawDepth)
-{
-	if (!mFieldData)
-	{
-		return;
-	}
-
-	// 空島
-	for (uint32_t i = 0; i < mFieldData->skyIslands.size(); i++)
-	{
-		if (isDrawDepth == false)
-		{
-			mFieldData->skyIslands[i]->SetGraphicsPipeline(
-				PipelineManager::GetGraphicsPipeline("Object3D"));
-		}
-		else
-		{
-			mFieldData->skyIslands[i]->SetGraphicsPipeline(
-				PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
-		}
-
-		mFieldData->skyIslands[i]->DrawModel();
-	}
-
-	// リスポーン地点
-	for (uint32_t i = 0; i < mFieldData->respawnPoints.size(); i++)
-	{
-		if (isDrawDepth == false)
-		{
-			mFieldData->respawnPoints[i]->SetGraphicsPipeline(
-				PipelineManager::GetGraphicsPipeline("Ripple"),
-				PipelineManager::GetGraphicsPipeline("Rhombus"));
-		}
-		else
-		{
-			mFieldData->respawnPoints[i]->SetGraphicsPipeline(
-				PipelineManager::GetGraphicsPipeline("RippleWriteNone"),
-				PipelineManager::GetGraphicsPipeline("RhombusWriteNone"));
-		}
-
-		mFieldData->respawnPoints[i]->DrawModel();
-	}
-
-	// 雑草
-	for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
-	{
-		if (isDrawDepth == false)
-		{
-			mFieldData->weeds[i]->SetGraphicsPipeline(
-				PipelineManager::GetGraphicsPipeline("Grass"));
-		}
-		else
-		{
-			mFieldData->weeds[i]->SetGraphicsPipeline(
-				PipelineManager::GetGraphicsPipeline("GrassWriteNone"));
-		}
-
-		mFieldData->weeds[i]->DrawModel();
-	}
-}
-
 void Field::DrawSun()
 {
 	if (!mFieldData)
@@ -265,41 +104,38 @@ void Field::DrawSun()
 	}
 
 	// 太陽
-	for (uint32_t i = 0; i < mFieldData->suns.size(); i++)
+	for (const auto& obj : mFieldData->fieldObjects[FieldObjectLayer::Sun])
 	{
-		mFieldData->suns[i]->Draw();
+		obj->Draw();
 	}
 }
-
 void Field::DrawTower()
 {
-	// タワー
-	for (uint32_t i = 0; i < mFieldData->towers.size(); i++)
+	if (!mFieldData)
 	{
-		mFieldData->towers[i]->Draw();
+		return;
 	}
 
-	// 橋
-	for (uint32_t i = 0; i < mFieldData->bridges.size(); i++)
+	// フィールドオブジェクト
+	for (const auto& obj : mFieldData->fieldObjects[FieldObjectLayer::Tower])
 	{
-		mFieldData->bridges[i]->Draw();
+		obj->Draw();
 	}
 }
-
 void Field::DrawDebugGui()
 {
 }
 
+// ゲッター
 FieldData* Field::GetFieldData()
 {
 	return mFieldData;
 }
-
 Coffin* Field::GetPlayerCoffin()
 {
-	for (const auto& obj : mFieldData->mFieldObjects)
+	for (const auto& obj : mFieldData->fieldObjects[FieldObjectLayer::Default])
 	{
-		if (obj.get()->GetType() == FieldObjectType::PlayerCoffin)
+		if (obj->GetType() == FieldObjectType::PlayerCoffin)
 		{
 			return dynamic_cast<Coffin*>(obj.get());
 		}
@@ -307,7 +143,20 @@ Coffin* Field::GetPlayerCoffin()
 
 	return nullptr;
 }
+Sun* Field::GetSun()
+{
+	for (const auto& obj : mFieldData->fieldObjects[FieldObjectLayer::Sun])
+	{
+		if (obj->GetType() == FieldObjectType::Sun)
+		{
+			return dynamic_cast<Sun*>(obj.get());
+		}
+	}
 
+	return nullptr;
+}
+
+// セッター
 void Field::SetFieldData(FieldData* fieldData)
 {
 	mFieldData = fieldData;

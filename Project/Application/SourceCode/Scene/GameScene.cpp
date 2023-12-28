@@ -181,7 +181,7 @@ void GameScene::Update()
 		mPlayer->PostUpdate();
 	}
 
-	mPostEffectManager->SetRadialBlurCenterPos(mField->GetFieldData()->suns[0]->GetPos());
+	mPostEffectManager->SetRadialBlurCenterPos(mField->GetSun()->GetPos());
 
 	mField->Update();
 	mSkydome->Update();
@@ -238,7 +238,6 @@ void GameScene::DrawPass()
 	maskDrawFunc = [this]()
 	{
 		mField->DrawModel();
-		mField->DrawSkyIsLand();
 
 		mPlayer->DrawModel();
 
@@ -461,7 +460,6 @@ void GameScene::DrawDepthToEffectBloom()
 
 	// フィールド
 	mField->DrawModel(true);
-	mField->DrawSkyIsLand(true);
 
 	// 太陽
 	mField->DrawSun();
@@ -479,7 +477,6 @@ void GameScene::DrawCurrentSceneObject()
 	mPostEffectManager->DrawSkydomeVignette();
 
 	mField->DrawModel();
-	mField->DrawSkyIsLand();
 	mField->DrawSun();
 
 	mField->DrawFog();

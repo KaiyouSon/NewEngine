@@ -22,6 +22,7 @@ private:
 	// 押し戻しの処理
 	void CubeCollisionPlayer(const CubeCollider& cube);
 	void CapsuleCollisionPlayer(const CapsuleCollider& capsule);
+	void SphereCollisionPlayer(const SphereCollider& sphere);
 
 private:
 	void PlayerHitBoss();

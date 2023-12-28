@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "AirCollider.h"
 
+AirCollider::AirCollider()
+{
+	mType = FieldObjectType::AirCollider;
+}
+
 void AirCollider::Update()
 {
 	if (mCollider.isActive == true)

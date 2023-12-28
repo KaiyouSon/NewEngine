@@ -231,7 +231,7 @@ void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 			}
 		}
 	}
-	data->mFieldObjects.push_back(std::move(coffin));
+	data->fieldObjects[FieldObjectLayer::Default].push_back(std::move(coffin));
 }
 void FieldDataManager::LoadSkyIslandData(FieldData* data, nlohmann::json jsonObj)
 {
@@ -259,7 +259,7 @@ void FieldDataManager::LoadSkyIslandData(FieldData* data, nlohmann::json jsonObj
 	skyIsland->SetParent(Transform(pos, scale, Radian(angle)));
 	skyIsland->SetModel(ModelManager::GetModel(jsonObj["obj_name"]));
 
-	data->skyIslands.push_back(std::move(skyIsland));
+	data->fieldObjects[FieldObjectLayer::Default].push_back(std::move(skyIsland));
 }
 void FieldDataManager::LoadTreeData(FieldData* data, nlohmann::json jsonObj)
 {
@@ -299,7 +299,7 @@ void FieldDataManager::LoadTreeData(FieldData* data, nlohmann::json jsonObj)
 		tree->SetCollider(SphereCollider(colliderPos, radius));
 	}
 
-	data->trees.push_back(std::move(tree));
+	data->fieldObjects[FieldObjectLayer::Default].push_back(std::move(tree));
 }
 void FieldDataManager::LoadRespawnPointData(FieldData* data, nlohmann::json jsonObj)
 {
@@ -326,7 +326,7 @@ void FieldDataManager::LoadRespawnPointData(FieldData* data, nlohmann::json json
 	};
 	respawnPoint->SetParent(Transform(pos, scale, Radian(angle)));
 
-	data->respawnPoints.push_back(std::move(respawnPoint));
+	data->fieldObjects[FieldObjectLayer::Translucent].push_back(std::move(respawnPoint));
 }
 void FieldDataManager::LoadWeedData(FieldData* data, nlohmann::json jsonObj)
 {
@@ -355,7 +355,7 @@ void FieldDataManager::LoadWeedData(FieldData* data, nlohmann::json jsonObj)
 		weed->GenerateToSphere(scale.x / 2);
 	}
 
-	data->weeds.push_back(std::move(weed));
+	data->fieldObjects[FieldObjectLayer::Translucent].push_back(std::move(weed));
 }
 void FieldDataManager::LoadWallData(FieldData* data, nlohmann::json jsonObj)
 {
@@ -406,7 +406,7 @@ void FieldDataManager::LoadWallData(FieldData* data, nlohmann::json jsonObj)
 		}
 	}
 
-	data->mFieldObjects.push_back(std::move(wall));
+	data->fieldObjects[FieldObjectLayer::Default].push_back(std::move(wall));
 }
 void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 {
@@ -516,7 +516,7 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 		}
 	}
 
-	data->mFieldObjects.push_back(std::move(gate));
+	data->fieldObjects[FieldObjectLayer::Default].push_back(std::move(gate));
 }
 void FieldDataManager::LoadVolumetricFogData(FieldData* data, nlohmann::json jsonObj)
 {
@@ -621,7 +621,7 @@ void FieldDataManager::LoadSunData(FieldData* data, nlohmann::json jsonObj)
 	};
 	sun->SetTransform(Transform(pos, scale, Radian(angle)));
 
-	data->suns.push_back(std::move(sun));
+	data->fieldObjects[FieldObjectLayer::Sun].push_back(std::move(sun));
 }
 void FieldDataManager::LoadAirColliderData(FieldData* data, nlohmann::json jsonObj)
 {
@@ -650,7 +650,7 @@ void FieldDataManager::LoadAirColliderData(FieldData* data, nlohmann::json jsonO
 		}
 	}
 
-	data->airColliders.push_back(std::move(airCollider));
+	data->fieldObjects[FieldObjectLayer::Collider].push_back(std::move(airCollider));
 }
 void FieldDataManager::LoadTowerData(FieldData* data, nlohmann::json jsonObj)
 {
@@ -677,7 +677,7 @@ void FieldDataManager::LoadTowerData(FieldData* data, nlohmann::json jsonObj)
 	};
 	tower->SetTransform(Transform(pos, scale, Radian(angle)));
 
-	data->towers.push_back(std::move(tower));
+	data->fieldObjects[FieldObjectLayer::Tower].push_back(std::move(tower));
 }
 void FieldDataManager::LoadBridgeData(FieldData* data, nlohmann::json jsonObj)
 {
@@ -704,5 +704,5 @@ void FieldDataManager::LoadBridgeData(FieldData* data, nlohmann::json jsonObj)
 	};
 	bridge->SetTransform(Transform(pos, scale, Radian(angle)));
 
-	data->bridges.push_back(std::move(bridge));
+	data->fieldObjects[FieldObjectLayer::Tower].push_back(std::move(bridge));
 }

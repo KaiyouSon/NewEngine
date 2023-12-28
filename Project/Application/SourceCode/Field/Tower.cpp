@@ -4,6 +4,7 @@ Tower::Tower() :
 	mTower(std::make_unique<Object3D>())
 {
 	mTower->SetModel(ModelManager::GetModel("Tower"));
+	mType = FieldObjectType::Tower;
 }
 
 void Tower::Init()
@@ -15,8 +16,9 @@ void Tower::Update()
 	mTower->Update();
 }
 
-void Tower::Draw()
+void Tower::Draw(const bool isDrawDepth)
 {
+	isDrawDepth;
 	mTower->Draw();
 }
 

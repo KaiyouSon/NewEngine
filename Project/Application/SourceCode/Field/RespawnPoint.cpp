@@ -10,6 +10,8 @@ RespawnPoint::RespawnPoint() :
 
 	mRhombus->SetModel(ModelManager::GetModel("Plane"));
 	mRhombus->SetTexture(TextureManager::GetTexture("BlurNoice"));
+
+	mType = FieldObjectType::RespawnPoint;
 }
 
 void RespawnPoint::Init()
@@ -48,8 +50,19 @@ void RespawnPoint::Update()
 	mRhombus->Update(&mParent);
 }
 
-void RespawnPoint::DrawModel()
+void RespawnPoint::Draw(const bool isDrawDepth)
 {
+	if (isDrawDepth == false)
+	{
+		mRipple->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Ripple"));
+		mRhombus->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Rhombus"));
+	}
+	else
+	{
+		mRipple->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("RippleWriteNone"));
+		mRhombus->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("RhombusWriteNone"));
+	}
+
 	mRipple->Draw("Object3D");
 	mRhombus->Draw("Object3D");
 }
@@ -64,12 +77,6 @@ void RespawnPoint::SetParent(const Transform parent)
 {
 	mParent = parent;
 	mParent.Update();
-}
-
-void RespawnPoint::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline1, GraphicsPipeline* graphicsPipeline2)
-{
-	mRipple->SetGraphicsPipeline(graphicsPipeline1);
-	mRhombus->SetGraphicsPipeline(graphicsPipeline2);
 }
 
 Vec3 RespawnPoint::GetPos()

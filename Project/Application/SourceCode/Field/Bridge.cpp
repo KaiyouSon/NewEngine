@@ -4,6 +4,7 @@ Bridge::Bridge() :
 	mBridge(std::make_unique<Object3D>())
 {
 	mBridge->SetModel(ModelManager::GetModel("Bridge"));
+	mType = FieldObjectType::Bridge;
 }
 
 void Bridge::Init()
@@ -16,8 +17,9 @@ void Bridge::Update()
 	mBridge->Update();
 }
 
-void Bridge::Draw()
+void Bridge::Draw(const bool isDrawDepth)
 {
+	isDrawDepth;
 	mBridge->Draw();
 }
 

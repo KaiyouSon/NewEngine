@@ -1,8 +1,9 @@
 #pragma once
 #include "NewEngine.h"
+#include "IFieldObject.h"
 
 //　リスポーン地点のクラス
-class RespawnPoint
+class RespawnPoint : public IFieldObject
 {
 private:
 	Transform mParent;
@@ -16,13 +17,13 @@ private:
 
 public:
 	RespawnPoint();
-	void Init();
-	void Update();
-	void DrawModel();
+	void Init() override;
+	void Update() override;
+	void ExecuteCS() override {};
+	void Draw(const bool isDrawDepth = false) override;
 
 public:	// セッター
 	void SetParent(const Transform parent);
-	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline1, GraphicsPipeline* graphicsPipeline2);
 
 public: // ゲッター
 	Vec3 GetPos();

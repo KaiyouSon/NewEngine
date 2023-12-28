@@ -16,8 +16,16 @@ void SkyIsland::Update()
 	mSkyIsland->Update(&mParent);
 }
 
-void SkyIsland::DrawModel()
+void SkyIsland::Draw(const bool isDrawDepth)
 {
+	if (isDrawDepth == false)
+	{
+		SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
+	}
+	else
+	{
+		SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+	}
 	mSkyIsland->Draw("Object3D");
 }
 

@@ -99,79 +99,85 @@ void CollisionManager::PlayerHitNegotiation()
 	// 何かに当たった時用
 	bool isHit = false;
 
-	// リスポーン地点と当たったら
-	for (const auto& respawnPoint : mField->GetFieldData()->respawnPoints)
-	{
-		float dis = Vec3::Distance(mPlayer->GetPos(), respawnPoint->GetPos());
-		if (dis >= 20)
-		{
-			continue;
-		}
-
-		if (Collision::SphereHitCapsule(
-			respawnPoint->GetCollider(), mPlayer->GetBodyCollider()))
-		{
-			mUiManager->GetNegotiationUI()->SetisActive(true);
-			mUiManager->GetNegotiationUI()->SetTextType(NegotiationUI::TextType::RestInLightText);
-			isHit = true;
-
-			if (Pad::GetButtonDown(PadCode::ButtonB))
-			{
-				TransitionManager::GetInstance()->Start(TransitionType::Respawn);
-			}
-			break;
-		}
-	}
-
 	// フィールドデータ
 	FieldData* fieldData = mField->GetFieldData();
 
 	// 当たり判定の有効距離
-	const float effectiveDis = 50;
+	const float effectiveDis = 20;
 
 	// フィールドオブジェクト
-	const auto& fieldObjects = fieldData->mFieldObjects;
-	for (const auto& obj : fieldObjects)
+	for (const auto& [layer, objs] : fieldData->fieldObjects)
 	{
-		switch (obj->GetType())
+		if (layer != FieldObjectLayer::Default && layer != FieldObjectLayer::Translucent)
 		{
-		case FieldObjectType::Gate:
+			continue;
+		}
+
+		for (const auto& obj : objs)
 		{
-			// キャスト
-			Gate* gate = dynamic_cast<Gate*>(obj.get());
-
-			// 距離が遠かったら当たり判定取らないように
-			float dis = Vec3::Distance(mPlayer->GetPos(), gate->GetCenterPos());
-			if (dis >= effectiveDis)
+			if (obj->GetType() == FieldObjectType::Gate)
 			{
-				continue;
-			}
+				// キャスト
+				Gate* gate = dynamic_cast<Gate*>(obj.get());
 
-			if (gate->GetisOpen() == true)
-			{
-				continue;
-			}
-
-			if (Collision::SphereHitCapsule(
-				gate->GetNegotiationCollider(), mPlayer->GetBodyCollider()))
-			{
-				mUiManager->GetNegotiationUI()->SetisActive(true);
-				mUiManager->GetNegotiationUI()->SetTextType(NegotiationUI::TextType::OpenText);
-				isHit = true;
-
-				if (Pad::GetButtonDown(PadCode::ButtonB))
+				// 距離が遠かったら当たり判定取らないように
+				float dis = Vec3::Distance(mPlayer->GetPos(), gate->GetCenterPos());
+				if (dis >= effectiveDis)
 				{
-					Vec3 pos = gate->GetNegotitationPos();
-					pos.y = mPlayer->GetPos().y;
-					mPlayer->SetPos(pos);
+					continue;
+				}
 
-					mPlayer->SetState(Player::State::OpenGate);
+				if (gate->GetisOpen() == true)
+				{
+					continue;
+				}
 
-					gate->SetisOpening(true);
+				if (Collision::SphereHitCapsule(
+					gate->GetNegotiationCollider(), mPlayer->GetBodyCollider()))
+				{
+					mUiManager->GetNegotiationUI()->SetisActive(true);
+					mUiManager->GetNegotiationUI()->SetTextType(NegotiationUI::TextType::OpenText);
+					isHit = true;
+
+					if (Pad::GetButtonDown(PadCode::ButtonB))
+					{
+						Vec3 pos = gate->GetNegotitationPos();
+						pos.y = mPlayer->GetPos().y;
+						mPlayer->SetPos(pos);
+
+						mPlayer->SetState(Player::State::OpenGate);
+
+						gate->SetisOpening(true);
+						break;
+					}
 				}
 			}
-		}
-		break;
+			else if (obj->GetType() == FieldObjectType::RespawnPoint)
+			{
+				// キャスト
+				RespawnPoint* respawnPoint = dynamic_cast<RespawnPoint*>(obj.get());
+
+				// 距離が遠かったら当たり判定取らないように
+				float dis = Vec3::Distance(mPlayer->GetPos(), respawnPoint->GetPos());
+				if (dis >= effectiveDis)
+				{
+					continue;
+				}
+
+				if (Collision::SphereHitCapsule(
+					respawnPoint->GetCollider(), mPlayer->GetBodyCollider()))
+				{
+					mUiManager->GetNegotiationUI()->SetisActive(true);
+					mUiManager->GetNegotiationUI()->SetTextType(NegotiationUI::TextType::RestInLightText);
+					isHit = true;
+
+					if (Pad::GetButtonDown(PadCode::ButtonB))
+					{
+						TransitionManager::GetInstance()->Start(TransitionType::Respawn);
+					}
+					break;
+				}
+			}
 		}
 
 		if (isHit == true)
@@ -195,7 +201,7 @@ void CollisionManager::PlayerHitFieldObject()
 	const float effectiveDis = 50;
 
 	// フィールドオブジェクト
-	const auto& fieldObjects = fieldData->mFieldObjects;
+	const auto& fieldObjects = fieldData->fieldObjects[FieldObjectLayer::Default];
 	for (const auto& obj : fieldObjects)
 	{
 		switch (obj->GetType())
@@ -255,118 +261,48 @@ void CollisionManager::PlayerHitFieldObject()
 		}
 		break;
 
+		case FieldObjectType::Tree:
+		{
+			// キャスト
+			Tree* tree = dynamic_cast<Tree*>(obj.get());
+
+			// 距離が遠かったら当たり判定取らないように
+			float dis = Vec3::Distance(mPlayer->GetPos(), tree->GetPos());
+			if (dis >= effectiveDis)
+			{
+				continue;
+			}
+
+			SphereCollisionPlayer(tree->GetCollider());
+		}
+		break;
+
 		}
 	}
+}
+void CollisionManager::PlayerHitAirCollider()
+{
+	// フィールドデータ
+	FieldData* fieldData = mField->GetFieldData();
 
-	// 木
-	const std::vector<std::unique_ptr<Tree>>& trees = fieldData->trees;
-	for (uint32_t i = 0; i < trees.size(); i++)
+	// 当たり判定の有効距離
+	const float effectiveDis = 150;
+
+	// フィールドオブジェクト
+	const auto& fieldObjects = fieldData->fieldObjects[FieldObjectLayer::Collider];
+	for (const auto& obj : fieldObjects)
 	{
-		float dis = Vec3::Distance(mPlayer->GetPos(), trees[i]->GetPos());
-		if (dis >= 20)
+		// キャスト
+		AirCollider* airCollider = dynamic_cast<AirCollider*>(obj.get());
+
+		// 距離が遠かったら当たり判定取らないように
+		float dis = Vec3::Distance(mPlayer->GetPos(), airCollider->GetCollider().startPos);
+		if (dis >= effectiveDis)
 		{
 			continue;
 		}
 
-		Vec3 hitPoint = 0;
-		if (Collision::SphereHitCapsule(
-			trees[i]->GetCollider(), mPlayer->GetBodyCollider(), hitPoint))
-		{
-			// 半径を足して実際の長さを求める
-			float checkLength =
-				mPlayer->GetBodyCollider().radius + trees[i]->GetCollider().radius;
-
-			// y軸を無視する
-			Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
-			Vec3 pos2 = trees[i]->GetPos() * Vec3(1, 0, 1);
-
-			Vec3 toPlayer = pos1 - pos2;
-
-			// 現在の長さ
-			float curLength = toPlayer.Length();
-
-			// checkLength と curLength の差分で埋め込んだ長さが求まる
-			float embedLength = checkLength - curLength;
-
-			// 誤差をけす処理
-			Vec3 normal = toPlayer.Norm();
-			if (fabs(curLength) < 0.0001f)
-			{
-				normal = 0;
-			}
-
-			Vec3 pushVec = normal * embedLength;
-
-			Vec3 nextPos = mPlayer->GetPos() + pushVec;
-			mPlayer->SetPos(nextPos);
-		}
-	}
-
-	// 正門
-	//const std::vector<std::unique_ptr<Gate>>& gates = fieldData->gates;
-	//for (uint32_t i = 0; i < gates.size(); i++)
-	//{
-	//	float dis = Vec3::Distance(mPlayer->GetPos(), gates[i]->GetCenterPos());
-	//	if (dis >= 50)
-	//	{
-	//		continue;
-	//	}
-
-	//	Vec3 hitPoint = 0;
-	//	if (Collision::CapsuleHitCapsule(gates[i]->GetLeftCollider(), mPlayer->GetBodyCollider(), hitPoint) ||
-	//		Collision::CapsuleHitCapsule(gates[i]->GetRightCollider(), mPlayer->GetBodyCollider(), hitPoint) ||
-	//		Collision::CapsuleHitCapsule(gates[i]->GetCloseCollider(), mPlayer->GetBodyCollider(), hitPoint))
-	//	{
-	//		// y軸を無視する
-	//		Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
-	//		Vec3 pos2 = hitPoint * Vec3(1, 0, 1);
-
-	//		// プレイヤーに向かうベクトル
-	//		Vec3 toPlayer = pos1 - pos2;
-	//		float toPlayerLength = toPlayer.Length();
-	//		Vec3 normal = toPlayer.Norm();
-
-	//		// 衝突した位置とプレイヤーの中心が重なる距離を計算
-	//		float overlap = mPlayer->GetBodyCollider().radius - toPlayerLength;
-
-	//		// 押し戻しのベクトル
-	//		Vec3 pushVec = normal * (overlap);
-
-	//		Vec3 nextPos = mPlayer->GetPos() + pushVec;
-	//		mPlayer->SetPos(nextPos);
-	//	}
-	//}
-}
-void CollisionManager::PlayerHitAirCollider()
-{
-	FieldData* fieldData = mField->GetFieldData();
-
-	// 当たり判定
-	const auto& airColliders = fieldData->airColliders;
-	for (uint32_t i = 0; i < airColliders.size(); i++)
-	{
-		Vec3 hitPoint = 0;
-		if (Collision::CapsuleHitCapsule(
-			airColliders[i]->GetCollider(), mPlayer->GetBodyCollider(), hitPoint))
-		{
-			// y軸を無視する
-			Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
-			Vec3 pos2 = hitPoint * Vec3(1, 0, 1);
-
-			// プレイヤーに向かうベクトル
-			Vec3 toPlayer = pos1 - pos2;
-			float toPlayerLength = toPlayer.Length();
-			Vec3 normal = toPlayer.Norm();
-
-			// 衝突した位置とプレイヤーの中心が重なる距離を計算
-			float overlap = mPlayer->GetBodyCollider().radius - toPlayerLength;
-
-			// 押し戻しのベクトル
-			Vec3 pushVec = normal * (overlap);
-
-			Vec3 nextPos = mPlayer->GetPos() + pushVec;
-			mPlayer->SetPos(nextPos);
-		}
+		CapsuleCollisionPlayer(airCollider->GetCollider());
 	}
 }
 void CollisionManager::BossHitPlayer()
@@ -445,13 +381,44 @@ void CollisionManager::CapsuleCollisionPlayer(const CapsuleCollider& capsule)
 		float overlap = mPlayer->GetBodyCollider().radius - toPlayerLength;
 
 		// 押し戻しのベクトル
-		Vec3 pushVec = normal * (overlap);
+		Vec3 pushVec = normal * overlap;
 
 		Vec3 nextPos = mPlayer->GetPos() + pushVec;
 		mPlayer->SetPos(nextPos);
 	}
 }
+void CollisionManager::SphereCollisionPlayer(const SphereCollider& sphere)
+{
+	if (Collision::SphereHitCapsule(sphere, mPlayer->GetBodyCollider()))
+	{
+		// y軸を無視する
+		Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
+		Vec3 pos2 = sphere.centerPos * Vec3(1, 0, 1);
 
+		// プレイヤーに向かうベクトル
+		Vec3 toPlayer = pos1 - pos2;
+		float toPlayerLength = toPlayer.Length();
+
+		// 誤差をけす処理
+		Vec3 normal = toPlayer.Norm();
+		if (fabs(toPlayerLength) < 0.0001f)
+		{
+			normal = 0;
+		}
+
+		// 半径を足して実際の長さを求める
+		float checkLength = mPlayer->GetBodyCollider().radius + sphere.radius;
+
+		// 衝突した位置とプレイヤーの中心が重なる距離を計算
+		float overlap = checkLength - toPlayerLength;
+
+		// 押し戻しのベクトル
+		Vec3 pushVec = normal * overlap;
+
+		Vec3 nextPos = mPlayer->GetPos() + pushVec;
+		mPlayer->SetPos(nextPos);
+	}
+}
 
 bool CollisionManager::IsCheckFrontBoss(const Vec3 pos, const Vec3 front)
 {

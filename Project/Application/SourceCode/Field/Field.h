@@ -13,7 +13,6 @@ public:
 	void Update();
 	void ExecuteCS();
 	void DrawModel(const bool isDrawDepth = false);
-	void DrawSkyIsLand(const bool isDrawDepth = false);
 	void DrawFog();
 	void DrawSun();
 	void DrawTower();
@@ -22,6 +21,7 @@ public:
 public:
 	FieldData* GetFieldData();
 	Coffin* GetPlayerCoffin();
+	Sun* GetSun();
 
 public:
 	void SetFieldData(FieldData* fieldData);

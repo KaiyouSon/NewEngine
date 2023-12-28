@@ -1,8 +1,9 @@
 #pragma once
 #include "Grass.h"
+#include "IFieldObject.h"
 
 // 草をひとまとめにしたクラス
-class Weed
+class Weed : public IFieldObject
 {
 private:
 	static uint32_t sDensity;
@@ -12,14 +13,13 @@ private:
 
 public:
 	Weed();
-	void Init();
-	void Update();
-	void DrawModel();
+	void Init() override;
+	void Update() override;
+	void ExecuteCS() override {};
+	void Draw(const bool isDrawDepth = false) override;
 
 public:
 	void SetPos(const Vec3 pos);
-	void SetGenerateSize(const Vec2 size);
-	void SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline);
 
 public:
 	void GenerateToSquare(const Vec2 size);

@@ -1,8 +1,9 @@
 #pragma once
 #include "NewEngine.h"
+#include "IFieldObject.h"
 
 // 空島のクラス
-class SkyIsland
+class SkyIsland : public IFieldObject
 {
 private:
 	Transform mParent;
@@ -10,9 +11,10 @@ private:
 
 public:
 	SkyIsland();
-	void Init();
-	void Update();
-	void DrawModel();
+	void Init() override;
+	void Update() override;
+	void ExecuteCS() override {};
+	void Draw(const bool isDrawDepth = false) override;
 
 public:
 	void SetParent(const Transform parent);

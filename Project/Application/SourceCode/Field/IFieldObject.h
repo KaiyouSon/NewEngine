@@ -28,6 +28,7 @@ public:
 	virtual ~IFieldObject() {};
 	virtual void Init() = 0;
 	virtual void Update() = 0;
+	virtual void ExecuteCS() = 0;
 	virtual void Draw(const bool isDrawDepth = false) = 0;
 
 public:

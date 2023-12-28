@@ -8,6 +8,7 @@ Tree::Tree() :
 	mBranch->SetModel(ModelManager::GetModel("Branch"));
 
 	mCollider.isActive = false;
+	mType = FieldObjectType::Tree;
 }
 
 void Tree::Init()
@@ -28,8 +29,19 @@ void Tree::Update()
 	mBranch->Update(&mParent);
 }
 
-void Tree::DrawModel()
+void Tree::Draw(const bool isDrawDepth)
 {
+	if (isDrawDepth == false)
+	{
+		mTree->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
+		mBranch->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Branch"));
+	}
+	else
+	{
+		mTree->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+		mBranch->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("BranchWriteNone"));
+	}
+
 	mTree->Draw("Object3D");
 	mBranch->Draw("Object3D");
 }
@@ -44,12 +56,6 @@ void Tree::SetCollider(const SphereCollider collider)
 {
 	mCollider = collider;
 	mCollider.isActive = true;
-}
-
-void Tree::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline1, GraphicsPipeline* graphicsPipeline2)
-{
-	mTree->SetGraphicsPipeline(graphicsPipeline1);
-	mBranch->SetGraphicsPipeline(graphicsPipeline2);
 }
 
 Vec3 Tree::GetPos()
