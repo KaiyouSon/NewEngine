@@ -19,8 +19,9 @@ private:
 	MovieEvent* mMovieEvent;
 
 private:
-	// プレイヤーの押し戻し処理
-	void PushBackPlayer();
+	// 押し戻しの処理
+	void CubeCollisionPlayer(const CubeCollider& cube);
+	void CapsuleCollisionPlayer(const CapsuleCollider& capsule);
 
 private:
 	void PlayerHitBoss();

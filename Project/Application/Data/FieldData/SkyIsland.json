@@ -1037,7 +1037,7 @@
                     2.0
                 ]
             },
-            "obj_name": "Coffin",
+            "obj_name": "PlayerCoffin",
             "children": [
                 {
                     "type": "MESH",
@@ -4075,7 +4075,7 @@
             },
             "obj_name": "VolumetricFog",
             "fog_param": {
-                "step_count": 25,
+                "step_count": 20,
                 "step_length": 0.5,
                 "dencity": 0.10000000149011612,
                 "color": [
@@ -4126,7 +4126,7 @@
             },
             "obj_name": "VolumetricFog",
             "fog_param": {
-                "step_count": 25,
+                "step_count": 20,
                 "step_length": 0.5,
                 "dencity": 0.10000000149011612,
                 "color": [
@@ -4177,7 +4177,7 @@
             },
             "obj_name": "VolumetricFog",
             "fog_param": {
-                "step_count": 25,
+                "step_count": 20,
                 "step_length": 0.5,
                 "dencity": 0.10000000149011612,
                 "color": [
@@ -4228,7 +4228,7 @@
             },
             "obj_name": "VolumetricFog",
             "fog_param": {
-                "step_count": 25,
+                "step_count": 20,
                 "step_length": 0.5,
                 "dencity": 0.10000000149011612,
                 "color": [
@@ -4279,7 +4279,7 @@
             },
             "obj_name": "VolumetricFog",
             "fog_param": {
-                "step_count": 25,
+                "step_count": 20,
                 "step_length": 0.5,
                 "dencity": 0.10000000149011612,
                 "color": [
@@ -4330,7 +4330,7 @@
             },
             "obj_name": "VolumetricFog",
             "fog_param": {
-                "step_count": 25,
+                "step_count": 20,
                 "step_length": 0.5,
                 "dencity": 0.10000000149011612,
                 "color": [
@@ -4381,7 +4381,7 @@
             },
             "obj_name": "VolumetricFog",
             "fog_param": {
-                "step_count": 25,
+                "step_count": 20,
                 "step_length": 0.5,
                 "dencity": 0.10000000149011612,
                 "color": [
@@ -4432,7 +4432,7 @@
             },
             "obj_name": "VolumetricFog",
             "fog_param": {
-                "step_count": 25,
+                "step_count": 20,
                 "step_length": 0.5,
                 "dencity": 0.10000000149011612,
                 "color": [
@@ -4483,7 +4483,7 @@
             },
             "obj_name": "VolumetricFog",
             "fog_param": {
-                "step_count": 25,
+                "step_count": 20,
                 "step_length": 0.5,
                 "dencity": 0.10000000149011612,
                 "color": [
@@ -4534,7 +4534,7 @@
             },
             "obj_name": "VolumetricFog",
             "fog_param": {
-                "step_count": 25,
+                "step_count": 20,
                 "step_length": 0.5,
                 "dencity": 0.10000000149011612,
                 "color": [
@@ -4585,7 +4585,7 @@
             },
             "obj_name": "VolumetricFog",
             "fog_param": {
-                "step_count": 25,
+                "step_count": 20,
                 "step_length": 0.5,
                 "dencity": 0.10000000149011612,
                 "color": [
@@ -4636,7 +4636,7 @@
             },
             "obj_name": "VolumetricFog",
             "fog_param": {
-                "step_count": 25,
+                "step_count": 20,
                 "step_length": 0.5,
                 "dencity": 0.10000000149011612,
                 "color": [

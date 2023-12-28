@@ -1,8 +1,9 @@
 #pragma once
 #include "NewEngine.h"
+#include "IFieldObject.h"	
 
 // 城門のクラス
-class Gate
+class Gate : public IFieldObject
 {
 private:
 	std::unique_ptr<Object3D> mGateLeft;
@@ -24,9 +25,9 @@ private:
 
 public:
 	Gate();
-	void Init();
-	void Update();
-	void DrawModel();
+	void Init() override;
+	void Update() override;
+	void Draw(const bool isDrawDepth = false) override;
 
 public:
 	void SetLeftTransform(const Transform& transform);

@@ -1,8 +1,9 @@
 #pragma once
 #include "NewEngine.h"
+#include "IFieldObject.h"
 
 // 城壁のクラス
-class Wall
+class Wall : public IFieldObject
 {
 private:
 	Transform mParent;
@@ -11,9 +12,9 @@ private:
 
 public:
 	Wall();
-	void Init();
-	void Update();
-	void DrawModel();
+	void Init() override;
+	void Update() override;
+	void Draw(const bool isDrawDepth = false) override;
 
 public:
 	void SetParent(const Transform parent);

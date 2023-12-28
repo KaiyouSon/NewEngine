@@ -20,10 +20,6 @@ void CollisionManager::Update()
 	BossHitPlayer();
 }
 
-void CollisionManager::PushBackPlayer()
-{
-}
-
 void CollisionManager::PlayerHitBoss()
 {
 	if (mPlayer->GetisAlive() == false)
@@ -127,38 +123,59 @@ void CollisionManager::PlayerHitNegotiation()
 		}
 	}
 
-	// 正門
-	const std::vector<std::unique_ptr<Gate>>& gates = mField->GetFieldData()->gates;
-	for (uint32_t i = 0; i < gates.size(); i++)
+	// フィールドデータ
+	FieldData* fieldData = mField->GetFieldData();
+
+	// 当たり判定の有効距離
+	const float effectiveDis = 50;
+
+	// フィールドオブジェクト
+	const auto& fieldObjects = fieldData->mFieldObjects;
+	for (const auto& obj : fieldObjects)
 	{
-		float dis = Vec3::Distance(mPlayer->GetPos(), gates[i]->GetCenterPos());
-		if (dis >= 20)
+		switch (obj->GetType())
 		{
-			continue;
-		}
-
-		if (gates[i]->GetisOpen() == true)
+		case FieldObjectType::Gate:
 		{
-			continue;
-		}
+			// キャスト
+			Gate* gate = dynamic_cast<Gate*>(obj.get());
 
-		if (Collision::SphereHitCapsule(
-			gates[i]->GetNegotiationCollider(), mPlayer->GetBodyCollider()))
-		{
-			mUiManager->GetNegotiationUI()->SetisActive(true);
-			mUiManager->GetNegotiationUI()->SetTextType(NegotiationUI::TextType::OpenText);
-			isHit = true;
-
-			if (Pad::GetButtonDown(PadCode::ButtonB))
+			// 距離が遠かったら当たり判定取らないように
+			float dis = Vec3::Distance(mPlayer->GetPos(), gate->GetCenterPos());
+			if (dis >= effectiveDis)
 			{
-				Vec3 pos = gates[i]->GetNegotitationPos();
-				pos.y = mPlayer->GetPos().y;
-				mPlayer->SetPos(pos);
-
-				mPlayer->SetState(Player::State::OpenGate);
-
-				gates[i]->SetisOpening(true);
+				continue;
 			}
+
+			if (gate->GetisOpen() == true)
+			{
+				continue;
+			}
+
+			if (Collision::SphereHitCapsule(
+				gate->GetNegotiationCollider(), mPlayer->GetBodyCollider()))
+			{
+				mUiManager->GetNegotiationUI()->SetisActive(true);
+				mUiManager->GetNegotiationUI()->SetTextType(NegotiationUI::TextType::OpenText);
+				isHit = true;
+
+				if (Pad::GetButtonDown(PadCode::ButtonB))
+				{
+					Vec3 pos = gate->GetNegotitationPos();
+					pos.y = mPlayer->GetPos().y;
+					mPlayer->SetPos(pos);
+
+					mPlayer->SetState(Player::State::OpenGate);
+
+					gate->SetisOpening(true);
+				}
+			}
+		}
+		break;
+		}
+
+		if (isHit == true)
+		{
 			break;
 		}
 	}
@@ -171,39 +188,73 @@ void CollisionManager::PlayerHitNegotiation()
 }
 void CollisionManager::PlayerHitFieldObject()
 {
+	// フィールドデータ
 	FieldData* fieldData = mField->GetFieldData();
 
-	// 棺桶
-	const std::vector<std::unique_ptr<Coffin>>& coffins = fieldData->coffins;
-	for (uint32_t i = 0; i < coffins.size(); i++)
+	// 当たり判定の有効距離
+	const float effectiveDis = 50;
+
+	// フィールドオブジェクト
+	const auto& fieldObjects = fieldData->mFieldObjects;
+	for (const auto& obj : fieldObjects)
 	{
-		float dis = Vec3::Distance(mPlayer->GetPos(), coffins[i]->GetPos());
-		if (dis >= 20)
+		switch (obj->GetType())
 		{
-			continue;
+
+		case FieldObjectType::Coffin:
+		case FieldObjectType::PlayerCoffin:
+		{
+			// キャスト
+			Coffin* coffin = dynamic_cast<Coffin*>(obj.get());
+
+			// 距離が遠かったら当たり判定取らないように
+			float dis = Vec3::Distance(mPlayer->GetPos(), coffin->GetPos());
+			if (dis >= effectiveDis)
+			{
+				continue;
+			}
+
+			// 押し戻しの処理
+			CubeCollisionPlayer(coffin->GetBottomCollider());
 		}
+		break;
 
-		Vec3 hitPoint = 0;
-		if (Collision::CubeHitCapsule(
-			coffins[i]->GetBottomCollider(), mPlayer->GetBodyCollider(), hitPoint))
+		case FieldObjectType::Wall:
 		{
-			// y軸を無視する
-			Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
-			Vec3 pos2 = hitPoint * Vec3(1, 0, 1);
+			// キャスト
+			Wall* wall = dynamic_cast<Wall*>(obj.get());
 
-			// プレイヤーに向かうベクトル
-			Vec3 toPlayer = pos1 - pos2;
-			float toPlayerLength = toPlayer.Length();
-			Vec3 normal = toPlayer.Norm();
+			// 距離が遠かったら当たり判定取らないように
+			float dis = Vec3::Distance(mPlayer->GetPos(), wall->GetPos());
+			if (dis >= effectiveDis)
+			{
+				continue;
+			}
 
-			// 衝突した位置とプレイヤーの中心が重なる距離を計算
-			float overlap = mPlayer->GetBodyCollider().radius - toPlayerLength;
+			// 押し戻しの処理
+			CapsuleCollisionPlayer(wall->GetCollider());
+		}
+		break;
 
-			// 押し戻しのベクトル
-			Vec3 pushVec = normal * (overlap);
+		case FieldObjectType::Gate:
+		{
+			// キャスト
+			Gate* gate = dynamic_cast<Gate*>(obj.get());
 
-			Vec3 nextPos = mPlayer->GetPos() + pushVec;
-			mPlayer->SetPos(nextPos);
+			// 距離が遠かったら当たり判定取らないように
+			float dis = Vec3::Distance(mPlayer->GetPos(), gate->GetCenterPos());
+			if (dis >= effectiveDis)
+			{
+				continue;
+			}
+
+			// 押し戻しの処理
+			CapsuleCollisionPlayer(gate->GetLeftCollider());
+			CapsuleCollisionPlayer(gate->GetRightCollider());
+			CapsuleCollisionPlayer(gate->GetCloseCollider());
+		}
+		break;
+
 		}
 	}
 
@@ -251,74 +302,40 @@ void CollisionManager::PlayerHitFieldObject()
 		}
 	}
 
-	// 壁
-	const std::vector<std::unique_ptr<Wall>>& walls = fieldData->walls;
-	for (uint32_t i = 0; i < walls.size(); i++)
-	{
-		float dis = Vec3::Distance(mPlayer->GetPos(), walls[i]->GetPos());
-		if (dis >= 75)
-		{
-			continue;
-		}
-
-		Vec3 hitPoint = 0;
-		if (Collision::CapsuleHitCapsule(
-			walls[i]->GetCollider(), mPlayer->GetBodyCollider(), hitPoint))
-		{
-			// y軸を無視する
-			Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
-			Vec3 pos2 = hitPoint * Vec3(1, 0, 1);
-
-			// プレイヤーに向かうベクトル
-			Vec3 toPlayer = pos1 - pos2;
-			float toPlayerLength = toPlayer.Length();
-			Vec3 normal = toPlayer.Norm();
-
-			// 衝突した位置とプレイヤーの中心が重なる距離を計算
-			float overlap = mPlayer->GetBodyCollider().radius - toPlayerLength;
-
-			// 押し戻しのベクトル
-			Vec3 pushVec = normal * (overlap);
-
-			Vec3 nextPos = mPlayer->GetPos() + pushVec;
-			mPlayer->SetPos(nextPos);
-		}
-	}
-
 	// 正門
-	const std::vector<std::unique_ptr<Gate>>& gates = fieldData->gates;
-	for (uint32_t i = 0; i < gates.size(); i++)
-	{
-		float dis = Vec3::Distance(mPlayer->GetPos(), gates[i]->GetCenterPos());
-		if (dis >= 50)
-		{
-			continue;
-		}
+	//const std::vector<std::unique_ptr<Gate>>& gates = fieldData->gates;
+	//for (uint32_t i = 0; i < gates.size(); i++)
+	//{
+	//	float dis = Vec3::Distance(mPlayer->GetPos(), gates[i]->GetCenterPos());
+	//	if (dis >= 50)
+	//	{
+	//		continue;
+	//	}
 
-		Vec3 hitPoint = 0;
-		if (Collision::CapsuleHitCapsule(gates[i]->GetLeftCollider(), mPlayer->GetBodyCollider(), hitPoint) ||
-			Collision::CapsuleHitCapsule(gates[i]->GetRightCollider(), mPlayer->GetBodyCollider(), hitPoint) ||
-			Collision::CapsuleHitCapsule(gates[i]->GetCloseCollider(), mPlayer->GetBodyCollider(), hitPoint))
-		{
-			// y軸を無視する
-			Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
-			Vec3 pos2 = hitPoint * Vec3(1, 0, 1);
+	//	Vec3 hitPoint = 0;
+	//	if (Collision::CapsuleHitCapsule(gates[i]->GetLeftCollider(), mPlayer->GetBodyCollider(), hitPoint) ||
+	//		Collision::CapsuleHitCapsule(gates[i]->GetRightCollider(), mPlayer->GetBodyCollider(), hitPoint) ||
+	//		Collision::CapsuleHitCapsule(gates[i]->GetCloseCollider(), mPlayer->GetBodyCollider(), hitPoint))
+	//	{
+	//		// y軸を無視する
+	//		Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
+	//		Vec3 pos2 = hitPoint * Vec3(1, 0, 1);
 
-			// プレイヤーに向かうベクトル
-			Vec3 toPlayer = pos1 - pos2;
-			float toPlayerLength = toPlayer.Length();
-			Vec3 normal = toPlayer.Norm();
+	//		// プレイヤーに向かうベクトル
+	//		Vec3 toPlayer = pos1 - pos2;
+	//		float toPlayerLength = toPlayer.Length();
+	//		Vec3 normal = toPlayer.Norm();
 
-			// 衝突した位置とプレイヤーの中心が重なる距離を計算
-			float overlap = mPlayer->GetBodyCollider().radius - toPlayerLength;
+	//		// 衝突した位置とプレイヤーの中心が重なる距離を計算
+	//		float overlap = mPlayer->GetBodyCollider().radius - toPlayerLength;
 
-			// 押し戻しのベクトル
-			Vec3 pushVec = normal * (overlap);
+	//		// 押し戻しのベクトル
+	//		Vec3 pushVec = normal * (overlap);
 
-			Vec3 nextPos = mPlayer->GetPos() + pushVec;
-			mPlayer->SetPos(nextPos);
-		}
-	}
+	//		Vec3 nextPos = mPlayer->GetPos() + pushVec;
+	//		mPlayer->SetPos(nextPos);
+	//	}
+	//}
 }
 void CollisionManager::PlayerHitAirCollider()
 {
@@ -384,6 +401,57 @@ void CollisionManager::BossHitPlayer()
 		}
 	}
 }
+
+// 押し戻しの処理
+void CollisionManager::CubeCollisionPlayer(const CubeCollider& cube)
+{
+	Vec3 hitPoint = 0;
+	if (Collision::CubeHitCapsule(cube, mPlayer->GetBodyCollider(), hitPoint))
+	{
+		// y軸を無視する
+		Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
+		Vec3 pos2 = hitPoint * Vec3(1, 0, 1);
+
+		// プレイヤーに向かうベクトル
+		Vec3 toPlayer = pos1 - pos2;
+		float toPlayerLength = toPlayer.Length();
+		Vec3 normal = toPlayer.Norm();
+
+		// 衝突した位置とプレイヤーの中心が重なる距離を計算
+		float overlap = mPlayer->GetBodyCollider().radius - toPlayerLength;
+
+		// 押し戻しのベクトル
+		Vec3 pushVec = normal * (overlap);
+
+		Vec3 nextPos = mPlayer->GetPos() + pushVec;
+		mPlayer->SetPos(nextPos);
+	}
+}
+void CollisionManager::CapsuleCollisionPlayer(const CapsuleCollider& capsule)
+{
+	Vec3 hitPoint = 0;
+	if (Collision::CapsuleHitCapsule(capsule, mPlayer->GetBodyCollider(), hitPoint))
+	{
+		// y軸を無視する
+		Vec3 pos1 = mPlayer->GetPos() * Vec3(1, 0, 1);
+		Vec3 pos2 = hitPoint * Vec3(1, 0, 1);
+
+		// プレイヤーに向かうベクトル
+		Vec3 toPlayer = pos1 - pos2;
+		float toPlayerLength = toPlayer.Length();
+		Vec3 normal = toPlayer.Norm();
+
+		// 衝突した位置とプレイヤーの中心が重なる距離を計算
+		float overlap = mPlayer->GetBodyCollider().radius - toPlayerLength;
+
+		// 押し戻しのベクトル
+		Vec3 pushVec = normal * (overlap);
+
+		Vec3 nextPos = mPlayer->GetPos() + pushVec;
+		mPlayer->SetPos(nextPos);
+	}
+}
+
 
 bool CollisionManager::IsCheckFrontBoss(const Vec3 pos, const Vec3 front)
 {

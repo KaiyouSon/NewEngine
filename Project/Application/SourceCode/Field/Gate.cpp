@@ -7,8 +7,9 @@ Gate::Gate() :
 {
 	mGateLeft->SetModel(ModelManager::GetModel("WallGate"));
 	mGateRight->SetModel(ModelManager::GetModel("WallGate"));
-}
 
+	mType = FieldObjectType::Gate;
+}
 void Gate::Init()
 {
 	mGateLeft->SetisShadow(true, true);
@@ -28,7 +29,6 @@ void Gate::Init()
 	mGateLeft->rot.y = 0;
 	mGateRight->rot.y = Radian(180);
 }
-
 void Gate::Update()
 {
 	mNegotitationPos = mCenterPos + Vec3::back * 7.5f;
@@ -39,9 +39,17 @@ void Gate::Update()
 	mGateLeft->Update();
 	mGateRight->Update();
 }
-
-void Gate::DrawModel()
+void Gate::Draw(const bool isDrawDepth)
 {
+	if (isDrawDepth == false)
+	{
+		SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
+	}
+	else
+	{
+		SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+	}
+
 	mGateLeft->Draw("Object3D");
 	mGateRight->Draw("Object3D");
 }
@@ -84,7 +92,6 @@ void Gate::ColliderUpdate()
 	ColliderDrawer::GetInstance()->Bind(&mCloseCollider);
 	ColliderDrawer::GetInstance()->Bind(&mNegotiationCollider);
 }
-
 void Gate::OpeningUpdate()
 {
 	// 煙のエフェクトのデータ
@@ -153,72 +160,63 @@ void Gate::OpeningUpdate()
 	}
 }
 
+// セッター
 void Gate::SetLeftTransform(const Transform& transform)
 {
 	mGateLeft->pos = transform.pos;
 	mGateLeft->scale = transform.scale;
 	mGateLeft->rot = transform.rot;
 }
-
 void Gate::SetRightTransform(const Transform& transform)
 {
 	mGateRight->pos = transform.pos;
 	mGateRight->scale = transform.scale;
 	mGateRight->rot = transform.rot;
 }
-
 void Gate::SetNegotiationCollider(const SphereCollider collider)
 {
 	mNegotiationCollider = collider;
 	mNegotiationCollider.isActive = true;
 }
-
 void Gate::SetCenterPos(const Vec3 pos)
 {
 	mCenterPos = pos;
 }
-
 void Gate::SetisOpening(const bool isOpening)
 {
 	mIsOpening = isOpening;
 }
-
 void Gate::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
 	mGateLeft->SetGraphicsPipeline(graphicsPipeline);
 	mGateRight->SetGraphicsPipeline(graphicsPipeline);
 }
 
+// ゲッター
 CapsuleCollider Gate::GetLeftCollider()
 {
 	return mLeftCollider;
 }
-
 CapsuleCollider Gate::GetRightCollider()
 {
 	return mRightCollider;
 }
-
 CapsuleCollider Gate::GetCloseCollider()
 {
 	return mCloseCollider;
 }
-
 SphereCollider Gate::GetNegotiationCollider()
 {
 	return mNegotiationCollider;
 }
-
 Vec3 Gate::GetCenterPos()
 {
 	return mCenterPos;
 }
-
 Vec3 Gate::GetNegotitationPos()
 {
 	return mNegotitationPos;
 }
-
 bool Gate::GetisOpen()
 {
 	return mIsOpen;

@@ -97,7 +97,7 @@ void GameScene::Init()
 
 	mMovieEvent->Init();
 	mMovieEvent->SetPlayer(mPlayer.get());
-	mMovieEvent->SetPlayerCoffin(mField->GetFieldData()->coffins[10].get());
+	mMovieEvent->SetPlayerCoffin(mField->GetPlayerCoffin());
 	mMovieEvent->Start();
 
 	isInit = false;

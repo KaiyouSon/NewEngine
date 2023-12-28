@@ -89,7 +89,6 @@ void ShadowMap::DrawPass()
 	}
 	mShadowMapRT->PostDrawScene();
 
-
 	renderBase->TransitionBufferState(mShadowMapRT->GetDepthTexture()->GetBufferResource(),
 		D3D12_RESOURCE_STATE_DEPTH_WRITE, D3D12_RESOURCE_STATE_GENERIC_READ);
 
@@ -151,8 +150,12 @@ void ShadowMap::Bind(Object3D& object)
 	if (object.GetParent())
 	{
 		mParents[mIndex] = *object.GetParent();
-		mShadowObjs[mIndex].SetParent(&mParents[mIndex]);
 	}
+	else
+	{
+		mParents[mIndex] = Transform{};
+	}
+	mShadowObjs[mIndex].SetParent(&mParents[mIndex]);
 
 	mIndex++;
 }

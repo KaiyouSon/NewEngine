@@ -21,6 +21,7 @@ public:
 
 public:
 	FieldData* GetFieldData();
+	Coffin* GetPlayerCoffin();
 
 public:
 	void SetFieldData(FieldData* fieldData);

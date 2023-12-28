@@ -786,9 +786,6 @@
     <ClCompile Include="Application\SourceCode\Motion\LogoExplosionEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\Field.cpp">
-      <Filter>Application\Source\Field\FiedlData</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SourceCode\Field\FieldData.cpp">
       <Filter>Application\Source\Field\FiedlData</Filter>
     </ClCompile>
@@ -941,6 +938,12 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Field\Bridge.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Field\IFieldObject.cpp">
+      <Filter>Application\Source\Field\FiedlObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\Field\Field.cpp">
+      <Filter>Application\Source\Field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1515,6 +1518,9 @@
       <Filter>NewEngine\Header\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Field\Bridge.h">
+      <Filter>Application\Header\Field\FieldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\Field\IFieldObject.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
   </ItemGroup>

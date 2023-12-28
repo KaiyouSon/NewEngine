@@ -128,6 +128,7 @@
     <ClCompile Include="Application\SourceCode\Effect\SmokeEffect.cpp" />
     <ClCompile Include="Application\SourceCode\Field\AirCollider.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Bridge.cpp" />
+    <ClCompile Include="Application\SourceCode\Field\IFieldObject.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Sun.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Tower.cpp" />
     <ClCompile Include="Application\SourceCode\Motion\BackstepMotion.cpp" />
@@ -316,6 +317,7 @@
     <ClInclude Include="Application\SourceCode\Effect\SmokeEffect.h" />
     <ClInclude Include="Application\SourceCode\Field\AirCollider.h" />
     <ClInclude Include="Application\SourceCode\Field\Bridge.h" />
+    <ClInclude Include="Application\SourceCode\Field\IFieldObject.h" />
     <ClInclude Include="Application\SourceCode\Field\Sun.h" />
     <ClInclude Include="Application\SourceCode\Field\Tower.h" />
     <ClInclude Include="Application\SourceCode\Motion\BackstepMotion.h" />

@@ -1,8 +1,9 @@
 #pragma once
 #include "NewEngine.h"
+#include "IFieldObject.h"
 
 // 棺桶のクラス
-class Coffin
+class Coffin : public IFieldObject
 {
 private:
 	Transform mParent;
@@ -12,9 +13,9 @@ private:
 
 public:
 	Coffin();
-	void Init();
-	void Update();
-	void DrawModel();
+	void Init() override;
+	void Update() override;
+	void Draw(const bool isDrawDepth = false) override;
 
 public:
 	void SetParent(const Transform parent);

@@ -46,7 +46,8 @@ FieldData* FieldDataManager::Load(const std::string filename, const std::string 
 		}
 		else
 		{
-			if (object["obj_name"] == "Coffin")
+			if (object["obj_name"] == "Coffin" ||
+				object["obj_name"] == "PlayerCoffin")
 			{
 				LoadCoffinData(fieldData.get(), object);
 			}
@@ -125,6 +126,16 @@ FieldData* FieldDataManager::GetFieldData(const std::string tag)
 void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 {
 	std::unique_ptr<Coffin> coffin = std::make_unique<Coffin>();
+
+	if (jsonObj["obj_name"] == "Coffin")
+	{
+		coffin->SetType(FieldObjectType::Coffin);
+	}
+	else
+	{
+		coffin->SetType(FieldObjectType::PlayerCoffin);
+	}
+
 	// 棺の位置、スケール、角度情報を取得
 	nlohmann::json transform = jsonObj["transform"];
 	Vec3 pos =
@@ -220,7 +231,7 @@ void FieldDataManager::LoadCoffinData(FieldData* data, nlohmann::json jsonObj)
 			}
 		}
 	}
-	data->coffins.push_back(std::move(coffin));
+	data->mFieldObjects.push_back(std::move(coffin));
 }
 void FieldDataManager::LoadSkyIslandData(FieldData* data, nlohmann::json jsonObj)
 {
@@ -395,7 +406,7 @@ void FieldDataManager::LoadWallData(FieldData* data, nlohmann::json jsonObj)
 		}
 	}
 
-	data->walls.push_back(std::move(wall));
+	data->mFieldObjects.push_back(std::move(wall));
 }
 void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 {
@@ -505,7 +516,7 @@ void FieldDataManager::LoadGateData(FieldData* data, nlohmann::json jsonObj)
 		}
 	}
 
-	data->gates.push_back(std::move(gate));
+	data->mFieldObjects.push_back(std::move(gate));
 }
 void FieldDataManager::LoadVolumetricFogData(FieldData* data, nlohmann::json jsonObj)
 {

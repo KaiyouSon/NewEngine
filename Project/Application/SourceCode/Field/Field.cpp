@@ -14,9 +14,9 @@ void Field::Init()
 	}
 
 	// 棺桶
-	for (uint32_t i = 0; i < mFieldData->coffins.size(); i++)
+	for (uint32_t i = 0; i < mFieldData->mFieldObjects.size(); i++)
 	{
-		mFieldData->coffins[i]->Init();
+		mFieldData->mFieldObjects[i]->Init();
 	}
 
 	// 空島
@@ -35,18 +35,6 @@ void Field::Init()
 	for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
 	{
 		mFieldData->weeds[i]->Init();
-	}
-
-	// 城壁
-	for (uint32_t i = 0; i < mFieldData->walls.size(); i++)
-	{
-		mFieldData->walls[i]->Init();
-	}
-
-	// 城門
-	for (uint32_t i = 0; i < mFieldData->gates.size(); i++)
-	{
-		mFieldData->gates[i]->Init();
 	}
 
 	// リスポーン地点
@@ -92,10 +80,10 @@ void Field::Update()
 		return;
 	}
 
-	// 棺桶
-	for (uint32_t i = 0; i < mFieldData->coffins.size(); i++)
+	// フィールドオブジェクト
+	for (uint32_t i = 0; i < mFieldData->mFieldObjects.size(); i++)
 	{
-		mFieldData->coffins[i]->Update();
+		mFieldData->mFieldObjects[i]->Update();
 	}
 
 	// 空島
@@ -114,18 +102,6 @@ void Field::Update()
 	for (uint32_t i = 0; i < mFieldData->weeds.size(); i++)
 	{
 		mFieldData->weeds[i]->Update();
-	}
-
-	// 城壁
-	for (uint32_t i = 0; i < mFieldData->walls.size(); i++)
-	{
-		mFieldData->walls[i]->Update();
-	}
-
-	// 城門
-	for (uint32_t i = 0; i < mFieldData->gates.size(); i++)
-	{
-		mFieldData->gates[i]->Update();
 	}
 
 	// リスポーン地点
@@ -199,55 +175,10 @@ void Field::DrawModel(const bool isDrawDepth)
 		mFieldData->trees[i]->DrawModel();
 	}
 
-	// 城壁
-	for (uint32_t i = 0; i < mFieldData->walls.size(); i++)
+	// フィールドデータ
+	for (uint32_t i = 0; i < mFieldData->mFieldObjects.size(); i++)
 	{
-		if (isDrawDepth == false)
-		{
-			mFieldData->walls[i]->SetGraphicsPipeline(
-				PipelineManager::GetGraphicsPipeline("Object3D"));
-		}
-		else
-		{
-			mFieldData->walls[i]->SetGraphicsPipeline(
-				PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
-		}
-
-		mFieldData->walls[i]->DrawModel();
-	}
-
-	// 城門
-	for (uint32_t i = 0; i < mFieldData->gates.size(); i++)
-	{
-		if (isDrawDepth == false)
-		{
-			mFieldData->gates[i]->SetGraphicsPipeline(
-				PipelineManager::GetGraphicsPipeline("Object3D"));
-		}
-		else
-		{
-			mFieldData->gates[i]->SetGraphicsPipeline(
-				PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
-		}
-
-		mFieldData->gates[i]->DrawModel();
-	}
-
-	// 棺桶
-	for (uint32_t i = 0; i < mFieldData->coffins.size(); i++)
-	{
-		if (isDrawDepth == false)
-		{
-			mFieldData->coffins[i]->SetGraphicsPipeline(
-				PipelineManager::GetGraphicsPipeline("Object3D"));
-		}
-		else
-		{
-			mFieldData->coffins[i]->SetGraphicsPipeline(
-				PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
-		}
-
-		mFieldData->coffins[i]->DrawModel();
+		mFieldData->mFieldObjects[i]->Draw(isDrawDepth);
 	}
 }
 
@@ -362,6 +293,19 @@ void Field::DrawDebugGui()
 FieldData* Field::GetFieldData()
 {
 	return mFieldData;
+}
+
+Coffin* Field::GetPlayerCoffin()
+{
+	for (const auto& obj : mFieldData->mFieldObjects)
+	{
+		if (obj.get()->GetType() == FieldObjectType::PlayerCoffin)
+		{
+			return dynamic_cast<Coffin*>(obj.get());
+		}
+	}
+
+	return nullptr;
 }
 
 void Field::SetFieldData(FieldData* fieldData)
