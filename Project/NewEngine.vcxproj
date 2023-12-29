@@ -46,17 +46,17 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)External/nlohmann;$(SolutionDir)External/Assmip/include;$(SolutionDir)External/ImGUI;$(SolutionDir)External/DirectXTex</IncludePath>
+    <IncludePath>$(SolutionDir)External/nlohmann;$(SolutionDir)External/Assmip/include;$(SolutionDir)External/ImGUI;$(SolutionDir)External/DirectXTex/inc</IncludePath>
     <IntDir>$(SolutionDir)../Generated/Obj/$(ProjectName)/$(Configuration)/</IntDir>
     <OutDir>$(SolutionDir)../Generated/Outputs/$(ProjectName)/$(Configuration)/</OutDir>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)External\DirectXTex\lib\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)External/nlohmann;$(SolutionDir)External/Assmip/include;$(SolutionDir)External/ImGUI;$(SolutionDir)External/DirectXTex</IncludePath>
+    <IncludePath>$(SolutionDir)External/nlohmann;$(SolutionDir)External/Assmip/include;$(SolutionDir)External/ImGUI;$(SolutionDir)External/DirectXTex/inc</IncludePath>
     <IntDir>$(SolutionDir)../Generated/Obj/$(ProjectName)/$(Configuration)/</IntDir>
     <OutDir>$(SolutionDir)../Generated/Outputs/$(ProjectName)/$(Configuration)/</OutDir>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)External\DirectXTex\lib\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -64,7 +64,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Weapon;$(ProjectDir)Application/SourceCode/UI;$(ProjectDir)Application/SourceCode/Transition;$(ProjectDir)Application/SourceCode/ShadowMap;$(ProjectDir)Application/SourceCode/PostEffect;$(ProjectDir)Application/SourceCode/Motion;$(ProjectDir)Application/SourceCode/Menu;$(ProjectDir)Application/SourceCode/Field;$(ProjectDir)Application/SourceCode/Effect;$(ProjectDir)Application/SourceCode/Character;$(ProjectDir)Application/SourceCode/Camera;$(ProjectDir)Application/SourceCode/Body;$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Debugger;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/ShaderCompiler;$(ProjectDir)NewEngine/Render/Pipeline;$(ProjectDir)NewEngine/Render/DescriptorHeap;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/Other/Texture;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Graphics;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Weapon;$(ProjectDir)Application/SourceCode/UI;$(ProjectDir)Application/SourceCode/Transition;$(ProjectDir)Application/SourceCode/ShadowMap;$(ProjectDir)Application/SourceCode/PostEffect;$(ProjectDir)Application/SourceCode/Motion/Weapon;$(ProjectDir)Application/SourceCode/Motion/Player;$(ProjectDir)Application/SourceCode/Motion/Boss;$(ProjectDir)Application/SourceCode/Motion;$(ProjectDir)Application/SourceCode/Menu;$(ProjectDir)Application/SourceCode/Field/FieldObject/Grass;$(ProjectDir)Application/SourceCode/Field/FieldObject;$(ProjectDir)Application/SourceCode/Field/FieldData;$(ProjectDir)Application/SourceCode/Field;$(ProjectDir)Application/SourceCode/Effect;$(ProjectDir)Application/SourceCode/Character;$(ProjectDir)Application/SourceCode/Camera;$(ProjectDir)Application/SourceCode/Body;$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Debugger;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/ShaderCompiler;$(ProjectDir)NewEngine/Render/Pipeline;$(ProjectDir)NewEngine/Render/DescriptorHeap;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/Other/Texture;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Graphics;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -75,7 +75,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -95,7 +95,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Weapon;$(ProjectDir)Application/SourceCode/UI;$(ProjectDir)Application/SourceCode/Transition;$(ProjectDir)Application/SourceCode/ShadowMap;$(ProjectDir)Application/SourceCode/PostEffect;$(ProjectDir)Application/SourceCode/Motion;$(ProjectDir)Application/SourceCode/Menu;$(ProjectDir)Application/SourceCode/Field;$(ProjectDir)Application/SourceCode/Effect;$(ProjectDir)Application/SourceCode/Character;$(ProjectDir)Application/SourceCode/Camera;$(ProjectDir)Application/SourceCode/Body;$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Debugger;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/ShaderCompiler;$(ProjectDir)NewEngine/Render/Pipeline;$(ProjectDir)NewEngine/Render/DescriptorHeap;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/Other/Texture;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Graphics;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Application/SourceCode/Weapon;$(ProjectDir)Application/SourceCode/UI;$(ProjectDir)Application/SourceCode/Transition;$(ProjectDir)Application/SourceCode/ShadowMap;$(ProjectDir)Application/SourceCode/PostEffect;$(ProjectDir)Application/SourceCode/Motion/Weapon;$(ProjectDir)Application/SourceCode/Motion/Player;$(ProjectDir)Application/SourceCode/Motion/Boss;$(ProjectDir)Application/SourceCode/Motion;$(ProjectDir)Application/SourceCode/Menu;$(ProjectDir)Application/SourceCode/Field/FieldObject/Grass;$(ProjectDir)Application/SourceCode/Field/FieldObject;$(ProjectDir)Application/SourceCode/Field/FieldData;$(ProjectDir)Application/SourceCode/Field;$(ProjectDir)Application/SourceCode/Effect;$(ProjectDir)Application/SourceCode/Character;$(ProjectDir)Application/SourceCode/Camera;$(ProjectDir)Application/SourceCode/Body;$(ProjectDir)Application/SourceCode/Scene;$(ProjectDir)Application/SourceCode;$(ProjectDir)Application;$(ProjectDir)NewEngine/Debugger;$(ProjectDir)NewEngine/Util;$(ProjectDir)NewEngine/Sound;$(ProjectDir)NewEngine/Render/ShaderCompiler;$(ProjectDir)NewEngine/Render/Pipeline;$(ProjectDir)NewEngine/Render/DescriptorHeap;$(ProjectDir)NewEngine/Render/Buffer;$(ProjectDir)NewEngine/Render;$(ProjectDir)NewEngine/Object/Other;$(ProjectDir)NewEngine/Object/Other/Model;$(ProjectDir)NewEngine/Object/Other/Texture;$(ProjectDir)NewEngine/Object/3D;$(ProjectDir)NewEngine/Object/2D;$(ProjectDir)NewEngine/Object;$(ProjectDir)NewEngine/Math;$(ProjectDir)NewEngine/Light;$(ProjectDir)NewEngine/Input;$(ProjectDir)NewEngine/Gui;$(ProjectDir)NewEngine/Graphics;$(ProjectDir)NewEngine/Collision;$(ProjectDir)NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -109,7 +109,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
@@ -1039,9 +1039,6 @@
     </ProjectReference>
     <ProjectReference Include="External\Assmip\zlibstatic.vcxproj">
       <Project>{04dd64c3-42b4-317f-88e1-e512fa5b475d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
-      <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
     </ProjectReference>
     <ProjectReference Include="External\ImGUI\ImGui.vcxproj">
       <Project>{c2a5b044-317a-4261-80c6-74a34d4356ef}</Project>
