@@ -630,10 +630,10 @@
     <ClCompile Include="NewEngine\Collision\ColliderDrawer.cpp">
       <Filter>NewEngine\Source\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Collision\Grass.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldObject\Grass\Grass.cpp">
       <Filter>Application\Source\Field\FiedlObject\Grass</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\Weed.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldObject\Grass\Weed.cpp">
       <Filter>Application\Source\Field\FiedlObject\Grass</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Transition\ITransition.cpp">
@@ -783,28 +783,28 @@
     <ClCompile Include="Application\SourceCode\Effect\IEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Motion\LogoExplosionEffect.cpp">
+    <ClCompile Include="Application\SourceCode\Effect\LogoExplosionEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\FieldData.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldData\FieldData.cpp">
       <Filter>Application\Source\Field\FiedlData</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\FieldDataManager.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldData\FieldDataManager.cpp">
       <Filter>Application\Source\Field\FiedlData</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\Coffin.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldObject\Coffin.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\Tree.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldObject\Tree.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\RespawnPoint.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldObject\RespawnPoint.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\Wall.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldObject\Wall.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\Gate.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldObject\Gate.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\UI\OperationUI.cpp">
@@ -822,34 +822,34 @@
     <ClCompile Include="NewEngine\Object\Other\Texture\TextureManager.cpp">
       <Filter>NewEngine\Source\Object\Other\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Motion\BossAttack2Motion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\Boss\BossAttack2Motion.cpp">
       <Filter>Application\Source\Motion\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Motion\BossAttack3Motion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\Boss\BossAttack3Motion.cpp">
       <Filter>Application\Source\Motion\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Motion\BackstepMotion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\Player\BackstepMotion.cpp">
       <Filter>Application\Source\Motion\Player</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\UI\CameraTargetUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Motion\DrinkMotion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\Player\DrinkMotion.cpp">
       <Filter>Application\Source\Motion\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Motion\MoveMotion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\Player\MoveMotion.cpp">
       <Filter>Application\Source\Motion\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Motion\OpenGateMotion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\Player\OpenGateMotion.cpp">
       <Filter>Application\Source\Motion\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Motion\RollMotion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\Player\RollMotion.cpp">
       <Filter>Application\Source\Motion\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Motion\IWeaponMotion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\Weapon\IWeaponMotion.cpp">
       <Filter>Application\Source\Motion\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Motion\MalletMotion.cpp">
+    <ClCompile Include="Application\SourceCode\Motion\Weapon\MalletMotion.cpp">
       <Filter>Application\Source\Motion\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Motion\IMotion.cpp">
@@ -867,7 +867,7 @@
     <ClCompile Include="NewEngine\Object\3D\VolumetricFog.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\SkyIsland.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldObject\SkyIsland.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Light\PointLight.cpp">
@@ -891,7 +891,7 @@
     <ClCompile Include="NewEngine\Object\3D\ParticleMesh.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\Sun.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldObject\Sun.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Light\SpotLight.cpp">
@@ -921,10 +921,10 @@
     <ClCompile Include="NewEngine\Util\Frustum.cpp">
       <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\AirCollider.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldObject\AirCollider.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\Tower.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldObject\Tower.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Graphics\DistanceFog.cpp">
@@ -936,10 +936,10 @@
     <ClCompile Include="NewEngine\Graphics\LightShaft.cpp">
       <Filter>NewEngine\Source\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\Bridge.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldObject\Bridge.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\Field\IFieldObject.cpp">
+    <ClCompile Include="Application\SourceCode\Field\FieldObject\IFieldObject.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Field\Field.cpp">
@@ -1109,19 +1109,19 @@
     <ClInclude Include="Application\SourceCode\CollisionManager.h">
       <Filter>Application\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Motion\IWeaponMotion.h">
+    <ClInclude Include="Application\SourceCode\Motion\Weapon\IWeaponMotion.h">
       <Filter>Application\Header\Motion\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Motion\MalletMotion.h">
+    <ClInclude Include="Application\SourceCode\Motion\Weapon\MalletMotion.h">
       <Filter>Application\Header\Motion\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Motion\BackstepMotion.h">
+    <ClInclude Include="Application\SourceCode\Motion\Player\BackstepMotion.h">
       <Filter>Application\Header\Motion\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Motion\MoveMotion.h">
+    <ClInclude Include="Application\SourceCode\Motion\Player\MoveMotion.h">
       <Filter>Application\Header\Motion\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Motion\RollMotion.h">
+    <ClInclude Include="Application\SourceCode\Motion\Player\RollMotion.h">
       <Filter>Application\Header\Motion\Player</Filter>
     </ClInclude>
     <ClInclude Include="..\..\1.School\3.3年前期\TL1\CG5_Task01\Project\External\nlohmann\json.hpp">
@@ -1160,16 +1160,16 @@
     <ClInclude Include="Application\SourceCode\Motion\MotionManager.h">
       <Filter>Application\Header\Motion</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Motion\BossAttack2Motion.h">
+    <ClInclude Include="Application\SourceCode\Motion\Boss\BossAttack2Motion.h">
       <Filter>Application\Header\Motion\Boss</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Motion\IMotion.h">
       <Filter>Application\Header\Motion</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Motion\BossAttack3Motion.h">
+    <ClInclude Include="Application\SourceCode\Motion\Boss\BossAttack3Motion.h">
       <Filter>Application\Header\Motion\Boss</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Motion\DrinkMotion.h">
+    <ClInclude Include="Application\SourceCode\Motion\Player\DrinkMotion.h">
       <Filter>Application\Header\Motion\Player</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Effect\BloodSprayEffect.h">
@@ -1220,10 +1220,10 @@
     <ClInclude Include="NewEngine\Collision\ColliderObject.h">
       <Filter>NewEngine\Header\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Collision\Grass.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldObject\Grass\Grass.h">
       <Filter>Application\Header\Field\Grass</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\Weed.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldObject\Grass\Weed.h">
       <Filter>Application\Header\Field\Grass</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Transition\ITransition.h">
@@ -1238,7 +1238,7 @@
     <ClInclude Include="NewEngine\Debugger\MappingWindow.h">
       <Filter>NewEngine\Header\Debugger</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Motion\OpenGateMotion.h">
+    <ClInclude Include="Application\SourceCode\Motion\Player\OpenGateMotion.h">
       <Filter>Application\Header\Motion\Player</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Transition\SceneTransition.h">
@@ -1382,7 +1382,7 @@
     <ClInclude Include="Application\SourceCode\PostEffect\PostEffectManager.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Motion\LogoExplosionEffect.h">
+    <ClInclude Include="Application\SourceCode\Effect\LogoExplosionEffect.h">
       <Filter>Application\Header\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Effect\IEffect.h">
@@ -1391,25 +1391,25 @@
     <ClInclude Include="Application\SourceCode\Field\Field.h">
       <Filter>Application\Header\Field\FiedlData</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\FieldData.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldData\FieldData.h">
       <Filter>Application\Header\Field\FiedlData</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\FieldDataManager.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldData\FieldDataManager.h">
       <Filter>Application\Header\Field\FiedlData</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\Coffin.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldObject\Coffin.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\Gate.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldObject\Gate.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\RespawnPoint.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldObject\RespawnPoint.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\Tree.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldObject\Tree.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\Wall.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldObject\Wall.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\UI\OperationUI.h">
@@ -1448,7 +1448,7 @@
     <ClInclude Include="NewEngine\Object\3D\VolumetricFog.h">
       <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\SkyIsland.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldObject\SkyIsland.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Light\PointLight.h">
@@ -1472,7 +1472,7 @@
     <ClInclude Include="NewEngine\Object\3D\ParticleMesh.h">
       <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\Sun.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldObject\Sun.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Light\SpotLight.h">
@@ -1502,10 +1502,10 @@
     <ClInclude Include="NewEngine\Util\Frustum.h">
       <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\AirCollider.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldObject\AirCollider.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\Tower.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldObject\Tower.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Graphics\DistanceFog.h">
@@ -1517,10 +1517,10 @@
     <ClInclude Include="NewEngine\Graphics\LightShaft.h">
       <Filter>NewEngine\Header\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\Bridge.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldObject\Bridge.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\Field\IFieldObject.h">
+    <ClInclude Include="Application\SourceCode\Field\FieldObject\IFieldObject.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
   </ItemGroup>
