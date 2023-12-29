@@ -28,3 +28,11 @@
 | CloneもしくはDownload |
 |:--------------------:|
 | <img src="ScreenShot/Pic2.png" width="400" alt="ScreenShot2"> |
+
+## 外部ライブラリ
+| ライブラリ | 使用 |
+|----------|------|
+| **[Dear ImGui](https://github.com/ocornut/imgui)** | Debug用にGUIを使用 |
+| **[Assimp](https://github.com/assimp/assimp)** | モデルの読み込み |
+| **[DirectXTex](https://github.com/microsoft/DirectXTex)** |テクスチャの読み込み|
+|**[nlohmann](https://github.com/nlohmann/json)**|jsonファイルの読み込み|
