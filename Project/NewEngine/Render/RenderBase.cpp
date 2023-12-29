@@ -353,8 +353,7 @@ void RenderBase::ShaderCompilerInit()
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path1 + "Object3D/Object3DVS.hlsl";
-	setting.psFilePath = path1 + "Object3D/Object3DPS.hlsl";
+	setting.folderPath = path1 + "Object3D";
 	ShaderCompilerManager::Create(setting, "Object3D");
 
 	// Fbxモデル用
@@ -365,8 +364,7 @@ void RenderBase::ShaderCompilerInit()
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
 	setting.mInputLayoutSettings[3] = InputLayoutSetting("BONEINDICES", DXGI_FORMAT_R32G32B32A32_UINT);
 	setting.mInputLayoutSettings[4] = InputLayoutSetting("BONEWEIGHTS", DXGI_FORMAT_R32G32B32A32_FLOAT);
-	setting.vsFilePath = path1 + "FbxModel/FbxModelVS.hlsl";
-	setting.psFilePath = path1 + "FbxModel/FbxModelPS.hlsl";
+	setting.folderPath = path1 + "FbxModel";
 	ShaderCompilerManager::Create(setting, "FbxModel");
 
 	// スプライト用
@@ -374,8 +372,7 @@ void RenderBase::ShaderCompilerInit()
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path1 + "Sprite/SpriteVS.hlsl";
-	setting.psFilePath = path1 + "Sprite/SpritePS.hlsl";
+	setting.folderPath = path1 + "Sprite";
 	ShaderCompilerManager::Create(setting, "Sprite");
 
 	// 円ゲージスプライト用
@@ -383,8 +380,7 @@ void RenderBase::ShaderCompilerInit()
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path1 + "CircleGaugeSprite/CircleGaugeSpriteVS.hlsl";
-	setting.psFilePath = path1 + "CircleGaugeSprite/CircleGaugeSpritePS.hlsl";
+	setting.folderPath = path1 + "CircleGaugeSprite";
 	ShaderCompilerManager::Create(setting, "CircleGaugeSprite");
 
 	// ポストエフェクト用（デフォルトシェーダー）
@@ -392,16 +388,14 @@ void RenderBase::ShaderCompilerInit()
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path1 + "PostEffect/PostEffectVS.hlsl";
-	setting.psFilePath = path1 + "PostEffect/PostEffectPS.hlsl";
+	setting.folderPath = path1 + "PostEffect";
 	ShaderCompilerManager::Create(setting, "PostEffect");
 
 	// 線用
 	setting = ShaderCompilerSetting();
 	setting.mInputLayoutSettings.resize(1);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.vsFilePath = path1 + "Line/LineVS.hlsl";
-	setting.psFilePath = path1 + "Line/LinePS.hlsl";
+	setting.folderPath = path1 + "Line";
 	ShaderCompilerManager::Create(setting, "Line");
 
 	// エミッター用
@@ -412,9 +406,7 @@ void RenderBase::ShaderCompilerInit()
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 1);		// z軸回転
 	setting.mInputLayoutSettings[3] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 2);		// 輝度
 	setting.mInputLayoutSettings[4] = InputLayoutSetting("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);	// 色
-	setting.vsFilePath = path1 + "Emitter/EmitterVS.hlsl";
-	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
-	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
+	setting.folderPath = path1 + "Emitter";
 	ShaderCompilerManager::Create(setting, "Emitter");
 
 	// GPUエミッター用
@@ -432,24 +424,17 @@ void RenderBase::ShaderCompilerInit()
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path1 + "ColliderObject/ColliderObjectVS.hlsl";
-	setting.psFilePath = path1 + "ColliderObject/ColliderObjectPS.hlsl";
+	setting.folderPath = path1 + "ColliderObject";
 	ShaderCompilerManager::Create(setting, "ColliderObject");
 
 	// ParticleMesh用
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path1 + "ParticleMesh/ParticleMeshCS.hlsl";
-	setting.vsFilePath = path1 + "ParticleMesh/ParticleMeshVS.hlsl";
-	setting.gsFilePath = path1 + "ParticleMesh/ParticleMeshGS.hlsl";
-	setting.psFilePath = path1 + "ParticleMesh/ParticleMeshPS.hlsl";
+	setting.folderPath = path1 + "ParticleMesh";
 	ShaderCompilerManager::Create(setting, "ParticleMesh");
 
 	// ParticleObject用
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path1 + "ParticleObject/ParticleObjectCS.hlsl";
-	setting.vsFilePath = path1 + "ParticleObject/ParticleObjectVS.hlsl";
-	setting.gsFilePath = path1 + "ParticleObject/ParticleObjectGS.hlsl";
-	setting.psFilePath = path1 + "ParticleObject/ParticleObjectPS.hlsl";
+	setting.folderPath = path1 + "ParticleObject";
 	ShaderCompilerManager::Create(setting, "ParticleObject");
 
 	// ボリューメトリックフォグ用

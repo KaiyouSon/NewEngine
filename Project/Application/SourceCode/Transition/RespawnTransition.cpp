@@ -41,15 +41,17 @@ void RespawnTransition::Generate()
 void RespawnTransition::Update()
 {
 	const float transitionDataAccel = 0.015f;
+	const float offsetAccel = -0.001f;
 
 	switch (mStep)
 	{
 	case TransitionStep::In: // 遷移がインの時
 	{
-		mUVParameteData[Back].offset.y -= 0.001f;
+		const float transitionDataAccelRate = 0.5f;
+		mUVParameteData[Back].offset.y += offsetAccel;
 
 		mTransitionData[Front].max += transitionDataAccel;
-		mTransitionData[Back].max += transitionDataAccel * 0.5f;
+		mTransitionData[Back].max += transitionDataAccel * transitionDataAccelRate;
 
 		if (mTransitionData[Back].max >= 1.f)
 		{
@@ -60,10 +62,11 @@ void RespawnTransition::Update()
 
 	case TransitionStep::Out: // 遷移がアウトの時
 	{
-		mUVParameteData[Back].offset.y -= 0.001f;
+		const float transitionDataAccelRate = 0.85f;
+		mUVParameteData[Back].offset.y += offsetAccel;
 
 		mTransitionData[Front].max -= transitionDataAccel;
-		mTransitionData[Back].max -= transitionDataAccel * 0.85f;
+		mTransitionData[Back].max -= transitionDataAccel * transitionDataAccelRate;
 
 		if (mTransitionData[Back].max <= 0.f)
 		{

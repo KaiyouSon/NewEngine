@@ -3,8 +3,15 @@
 #include <d3dcompiler.h>
 #include <string>
 #include <cassert>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 Microsoft::WRL::ComPtr <ID3DBlob> ShaderCompiler::sErrorBlob = nullptr;
+std::vector<std::string> ShaderCompiler::sShaderTags =
+{
+	"VS","GS","PS","CS"
+};
 
 ShaderCompiler::ShaderCompiler(const ShaderCompilerSetting& shaderCompilerSetting)
 	: mResult(HRESULT())
@@ -29,11 +36,48 @@ ShaderCompiler::ShaderCompiler(const ShaderCompilerSetting& shaderCompilerSettin
 			});
 	}
 
-	// 各シェーダーをコンパイル
-	CompileShader(mSetting.csFilePath, ShaderType::Compute);	// CS
-	CompileShader(mSetting.vsFilePath, ShaderType::Vertex);	// VS
-	CompileShader(mSetting.gsFilePath, ShaderType::Geometry);	// GS
-	CompileShader(mSetting.psFilePath, ShaderType::Pixel);	// PS
+	// フォルダーパスを設定しているなら
+	if (mSetting.folderPath.empty() == false)
+	{
+		// フォルダ内にある分読み込む
+		for (const auto& entry : fs::directory_iterator(mSetting.folderPath))
+		{
+			auto path = entry.path();
+
+			if (fs::is_regular_file(path))
+			{
+				// 拡張子
+				std::string ext = path.extension().string();
+
+				// ヘッダーなら飛ばす
+				if (ext == ".hlsli")
+				{
+					continue;
+				}
+
+				const uint32_t length = static_cast<uint32_t>(path.string().length() - ext.length());
+
+				// 該当のタグのシェーダーをコンパイルする
+				for (uint32_t i = 0; i < static_cast<uint32_t>(sShaderTags.size()); i++)
+				{
+					const uint32_t pos = static_cast<uint32_t>(path.string().find(sShaderTags[i]));
+					if (pos != std::string::npos && pos + 2 == length)
+					{
+						CompileShader(path.string(), (ShaderType)i);
+					}
+				}
+			}
+		}
+	}
+	// フォルダーパスを設定していないなら
+	else
+	{
+		// 各シェーダーをコンパイル
+		CompileShader(mSetting.vsFilePath, ShaderType::Vertex);		// VS
+		CompileShader(mSetting.gsFilePath, ShaderType::Geometry);	// GS
+		CompileShader(mSetting.psFilePath, ShaderType::Pixel);		// PS
+		CompileShader(mSetting.csFilePath, ShaderType::Compute);	// CS
+	}
 }
 
 // シェーダーをコンパイル

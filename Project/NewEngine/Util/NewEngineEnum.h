@@ -133,10 +133,10 @@ enum class TextureType
 
 enum class ShaderType
 {
-	Compute,
 	Vertex,
 	Geometry,
 	Pixel,
+	Compute,
 	Size,
 };
 

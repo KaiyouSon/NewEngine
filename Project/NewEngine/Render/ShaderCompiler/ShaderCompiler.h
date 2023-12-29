@@ -6,13 +6,15 @@
 #include <vector>
 #include <string>
 #include <wrl.h>
+#include <unordered_map>
 
 // シェダーコンパイラーのクラス
 class ShaderCompiler
 {
 private:
 	static Microsoft::WRL::ComPtr<ID3DBlob> sErrorBlob; // シェーダーコンパイルエラーメッセージの格納
-	HRESULT mResult;
+	static std::vector<std::string> sShaderTags;
+		HRESULT mResult;
 	ShaderCompilerSetting mSetting;
 	std::vector<Microsoft::WRL::ComPtr<ID3DBlob>> mShaderBlobs;
 	std::vector<D3D12_INPUT_ELEMENT_DESC> mInputLayout; // インプットレイアウトの定義

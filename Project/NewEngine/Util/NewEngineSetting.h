@@ -42,6 +42,7 @@ struct InputLayoutSetting
 // シェーダーコンパイラーの設定構造体
 struct ShaderCompilerSetting
 {
+	std::string folderPath;
 	std::string csFilePath;
 	std::string vsFilePath;
 	std::string gsFilePath;
