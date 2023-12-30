@@ -3,7 +3,8 @@
 
 RespawnPoint::RespawnPoint() :
 	mRipple(std::make_unique<Object3D>()),
-	mRhombus(std::make_unique<Object3D>())
+	mRhombus(std::make_unique<Object3D>()),
+	mPointLight(std::make_unique<PointLight>())
 {
 	mRipple->SetModel(ModelManager::GetModel("Plane"));
 	mRipple->SetTexture(TextureManager::GetTexture("DissolveTexture"));
@@ -30,6 +31,10 @@ void RespawnPoint::Init()
 	mAngle.SetLimitTimer(360);
 
 	EffectManager::GetInstance()->GenerateLeadEffect(mParent.pos + Vec3::up * 4.5f, Vec3::front + Vec3(0.f, 0.1f, 0.f));
+
+	mPointLight->pos = mParent.pos + Vec3::up * 4.5f;
+	mPointLight->radius = 15;
+	mPointLight->decay = 5;
 }
 
 void RespawnPoint::Update()

@@ -9,6 +9,7 @@ private:
 	Transform mParent;
 	std::unique_ptr<Object3D> mRipple;
 	std::unique_ptr<Object3D> mRhombus;
+	std::unique_ptr<PointLight> mPointLight;
 	Timer mAngle;
 	SphereCollider mCollider;
 

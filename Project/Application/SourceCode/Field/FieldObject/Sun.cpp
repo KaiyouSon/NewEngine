@@ -1,7 +1,8 @@
 #include "Sun.h"
 
 Sun::Sun() :
-	mSun(std::make_unique<ParticleObject>())
+	mSun(std::make_unique<ParticleObject>()),
+	mPointLight(std::make_unique<PointLight>())
 {
 	mSun->SetParticleTexture(TextureManager::GetTexture("Particle2"));
 	mType = FieldObjectType::Sun;
@@ -14,10 +15,18 @@ void Sun::Init()
 	mSun->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("PonDeRing"));
 	mSun->ExecuteCS(4160);
 	mSun->SetComputePipeline(PipelineManager::GetComputePipeline("PonDeRingUpdate"));
+
+	mPointLight->isActive = true;
+	mPointLight->pos = mSun->pos;
+	mPointLight->radius = 500;
+	mPointLight->decay = 20;
 }
 
 void Sun::Update()
 {
+	mPointLight->radius = 1000;
+	mPointLight->decay = 3;
+
 	mSun->Update();
 }
 

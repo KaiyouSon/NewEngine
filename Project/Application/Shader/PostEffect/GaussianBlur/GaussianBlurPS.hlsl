@@ -29,7 +29,7 @@ float4 GaussianBlur(Texture2D<float4> tex, float2 uv, float sigma, float stepWid
         for (float px = min; px <= max; px += stepWidth)
         {
 		    // 色取得するUV座標
-            float2 offset = float2(px, py) * float2(asepect, 1.0f);
+            float2 offset = float2(px, py)/* * float2(asepect, 1.0f)*/;
             float2 pickUV = uv + offset;
             
             // 画面外の色を取得しないように

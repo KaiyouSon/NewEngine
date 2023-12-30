@@ -196,9 +196,6 @@
     <Filter Include="Shader\Application\RespawnPoint\Transition">
       <UniqueIdentifier>{c72fd087-92e7-4d7d-afbd-8fe369dd9ef9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Source\ShadowMap">
-      <UniqueIdentifier>{87c7ff0d-2214-4104-9e56-a045ef8fbf69}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Header\ShadowMap">
       <UniqueIdentifier>{b27e1439-b356-4ea8-b083-b6b62298c3a9}</UniqueIdentifier>
     </Filter>
@@ -405,6 +402,9 @@
     </Filter>
     <Filter Include="NewEngine\Header\Graphics">
       <UniqueIdentifier>{ab12b987-5b6a-4581-8456-ff37f36f1036}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source\ShadowMap">
+      <UniqueIdentifier>{87c7ff0d-2214-4104-9e56-a045ef8fbf69}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

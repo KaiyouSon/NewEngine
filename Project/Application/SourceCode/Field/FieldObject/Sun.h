@@ -6,6 +6,7 @@ class Sun : public IFieldObject
 {
 private:
 	std::unique_ptr<ParticleObject> mSun;
+	std::unique_ptr<PointLight> mPointLight;
 
 public:
 	Sun();

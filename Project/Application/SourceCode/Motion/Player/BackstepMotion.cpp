@@ -1,6 +1,5 @@
 #include "BackstepMotion.h"
 #include "HumanoidBody.h"
-#include "HumanoidBody.h"
 #include "Player.h"
 #include "CollisionManager.h"
 

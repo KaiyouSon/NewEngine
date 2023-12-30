@@ -37,7 +37,7 @@ void Boss::Init()
 
 	mPointLight->radius = 7.5f;
 	mPointLight->color = Color::red;
-	mPointLight->colorRate.x = 10.f;
+	mPointLight->decay = 20;
 }
 void Boss::Update()
 {
@@ -108,6 +108,7 @@ void Boss::Update()
 
 	mBoss->rot.y = mRotY;
 	mBoss->Update();
+
 
 	Vec3 offset = mFrontVec.Norm() * 2;
 	mPointLight->pos = mBoss->mParts[(uint32_t)PartID::Head]->GetWorldPos() + offset;
