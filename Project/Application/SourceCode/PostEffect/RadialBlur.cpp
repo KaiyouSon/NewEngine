@@ -5,7 +5,6 @@ RadialBlur::RadialBlur() :
 	mCompositePass(std::make_unique<PostEffect>())
 {
 	mTex[(uint32_t)PassType::Target] = TextureManager::GetRenderTexture("RadialBlurTarget");
-	mTex[(uint32_t)PassType::Mask] = TextureManager::GetRenderTexture("RadialBlurMask");
 	mTex[(uint32_t)PassType::Finish] = TextureManager::GetRenderTexture("RadialBlurFinish");
 	mTex[(uint32_t)PassType::Scene] = TextureManager::GetRenderTexture("RadialBlurScene");
 
@@ -20,7 +19,6 @@ RadialBlur::RadialBlur() :
 
 	// テクスチャ設定
 	mPostEffect[(uint32_t)PassType::Target]->AddRenderTexture(mTex[(uint32_t)PassType::Target]);
-	mPostEffect[(uint32_t)PassType::Target]->AddRenderTexture(mTex[(uint32_t)PassType::Mask]);
 	mPostEffect[(uint32_t)PassType::Finish]->AddRenderTexture(mTex[(uint32_t)PassType::Finish]);
 	mPostEffect[(uint32_t)PassType::Scene]->AddRenderTexture(mTex[(uint32_t)PassType::Scene]);
 

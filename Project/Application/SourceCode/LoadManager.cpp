@@ -113,9 +113,11 @@ void LoadManager::GameSceneTextureLoad()
 
 	// ラジアルブラー用
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080) / 4, "RadialBlurTarget");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "RadialBlurMask");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "RadialBlurFinish");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "RadialBlurScene");
+
+	// トーンマッピング用
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "ToonMapping");
 
 	// ボリュームテクスチャ
 	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice0.dds", "VolumeTexture0");

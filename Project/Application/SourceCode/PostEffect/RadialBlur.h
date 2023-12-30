@@ -8,7 +8,6 @@ public:
 	enum class PassType
 	{
 		Target,
-		Mask,
 		Finish,
 		Scene,
 

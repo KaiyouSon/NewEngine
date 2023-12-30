@@ -24,7 +24,6 @@ public:
 
 	void RadialBlurDrawPass(
 		const std::function<void()>& targetDrawFunc,
-		const std::function<void()>& maskDrawFunc,
 		const std::function<void()>& sceneDrawFunc);
 
 public:

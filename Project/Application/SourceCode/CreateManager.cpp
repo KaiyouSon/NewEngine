@@ -279,7 +279,7 @@ void CreateManager::CreateShaderCompiler()
 	setting.psFilePath = path2 + "WorldVolumetricFog/WorldVolumetricFogPS.hlsl";
 	ShaderCompilerManager::Create(setting, "WorldVolumetricFog");
 
-	// 高輝度箇所抽出用（RenderTexture）
+	// ラジアルブラー用（RenderTexture）
 	setting = ShaderCompilerSetting();
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
@@ -500,7 +500,7 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("RadialBlur");
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
-	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "RadialBlur");
 }
 

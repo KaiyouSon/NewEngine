@@ -945,6 +945,9 @@
     <ClCompile Include="Application\SourceCode\Field\Field.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SourceCode\PostEffect\ToonMapping.cpp">
+      <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1522,6 +1525,9 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Field\FieldObject\IFieldObject.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SourceCode\PostEffect\ToonMapping.h">
+      <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

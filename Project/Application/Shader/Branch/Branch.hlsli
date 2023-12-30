@@ -1,3 +1,44 @@
+// マテリアル
+struct Material
+{
+    float3 ambient;
+    float3 diffuse;
+    float3 specular;
+};
+
+// 平行光源
+struct DirectionalLight
+{
+    float4 color;
+    float3 vec;
+    uint isActive;
+};
+
+// 点光源
+struct PointLight
+{
+    float4 color;
+    float3 pos;
+    float radius;
+    float3 colorRate;
+    float decay;
+    uint isActive;
+};
+
+// スポットライト
+struct SpotLight
+{
+    float4 color;
+    float3 vec;
+    float radius;
+    float3 pos;
+    float decay;
+    float3 colorRate;
+    uint isActive;
+    float2 cosAngle;
+};
+
+// 3D変換行列
 cbuffer ConstantBufferDataTransform : register(b0)
 {
     matrix viewProjMat;
@@ -7,6 +48,7 @@ cbuffer ConstantBufferDataTransform : register(b0)
     float3 lightCameraPos;
 }
 
+// マテリアル
 cbuffer ConstantBufferDataMaterial : register(b1)
 {
     float3 ambient : packoffset(c0); // アンビエント係数
@@ -15,6 +57,7 @@ cbuffer ConstantBufferDataMaterial : register(b1)
     float alpha : packoffset(c2.w); // アルファ
 }
 
+// 色
 cbuffer ConstantBufferDataColor : register(b2)
 {
     float4 color; // 色
@@ -32,24 +75,39 @@ cbuffer ConstantBufferDataUVParameter : register(b4)
     float2 tiling;
 };
 
-cbuffer ConstantBufferDirectionalLight : register(b5)
-{
-    float4 dirLightColor; // 色
-    float3 dirLightVec; // 方向
-    uint isActiveDirLight;
-}
-
-cbuffer ConstantBufferDissolve : register(b6)
+cbuffer ConstantBufferDissolve : register(b5)
 {
     float dissolve;
     float colorPower;
     float4 dissolveColor;
 }
 
-cbuffer ConstantBufferShadow : register(b7)
+cbuffer ConstantBufferShadow : register(b6)
 {
     uint isWriteShadow;
+    float bias;
 }
+
+// ライトグループ
+static const uint directionalLightSize = 1;
+static const uint pointLightSize = 5;
+static const uint spotLightSize = 1;
+cbuffer ConstantBufferDataLightGroup : register(b7)
+{
+    DirectionalLight directionalLight[directionalLightSize];
+    PointLight pointLight[pointLightSize];
+    SpotLight spotLight[spotLightSize];
+};
+
+cbuffer ConstantBufferDataDistanceFog : register(b8)
+{
+    float4 distanceFogColor;
+    float2 fogNearFarDistance;
+    float2 fogNearFarHeight;
+    float3 distanceRate;
+    uint isActiveDistanceFog;
+    uint isActiveHeightFog;
+};
 
 struct Appdata
 {

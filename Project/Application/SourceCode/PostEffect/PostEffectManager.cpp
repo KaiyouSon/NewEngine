@@ -100,16 +100,11 @@ void PostEffectManager::EffectBloomDrawPass(
 
 void PostEffectManager::RadialBlurDrawPass(
 	const std::function<void()>& targetDrawFunc,
-	const std::function<void()>& maskDrawFunc,
 	const std::function<void()>& sceneDrawFunc)
 {
 	mRadialBlur->PrevSceneDraw(RadialBlur::PassType::Target);
 	targetDrawFunc();
 	mRadialBlur->PostSceneDraw(RadialBlur::PassType::Target);
-
-	mRadialBlur->PrevSceneDraw(RadialBlur::PassType::Mask);
-	maskDrawFunc();
-	mRadialBlur->PostSceneDraw(RadialBlur::PassType::Mask);
 
 	mRadialBlur->PrevSceneDraw(RadialBlur::PassType::Finish);
 	mRadialBlur->DrawPass(RadialBlur::PassType::Target);

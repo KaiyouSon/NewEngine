@@ -234,23 +234,26 @@ void GameScene::DrawPass()
 	// ラムダ式で代入
 	targetDrawFunc = [this]()
 	{
-		mField->DrawSun();
-	};
-	maskDrawFunc = [this]()
-	{
-		mField->DrawModel();
-
+		// プレイヤーの深度のみ書き込む
+		mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
 		mPlayer->DrawModel();
+		mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 
+		// プレイヤーの深度のみ書き込む
+		mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
 		mBoss->DrawModel();
+		mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 
-		EffectManager::GetInstance()->DrawEffect(false);
+		// フィールド
+		mField->DrawModel(true);
+
+		mField->DrawSun();
 	};
 	sceneDrawFunc = [this]()
 	{
 		DrawCurrentSceneObject();
 	};
-	mPostEffectManager->RadialBlurDrawPass(targetDrawFunc, maskDrawFunc, sceneDrawFunc);
+	mPostEffectManager->RadialBlurDrawPass(targetDrawFunc, sceneDrawFunc);
 
 	// --- エフェクトにブルームをかけるパス ------------------------//
 	// ラムダ式で代入
