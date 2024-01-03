@@ -4,10 +4,7 @@
 
 ## 2Dおよび3Dの自作ゲーム開発エンジン
 
-ゲーム作成上での基本的な機能を持ち、
-**[Dear ImGui](https://github.com/ocornut/imgui)**
-**[Assimp](https://github.com/assimp/assimp)**
-等のライブラリもエンジン内に取り組んでいます。
+ゲーム作成上での基本的な機能を持ち、ゲームグラフィックスに特化しようとするエンジン。
 
 ## ブランチ詳細
 | ブランチ | 説明 |
@@ -28,6 +25,12 @@
 | CloneもしくはDownload |
 |:--------------------:|
 | <img src="ScreenShot/Pic2.png" width="400" alt="ScreenShot2"> |
+
+## 自作ツール
+| ツール | 説明 |
+|----------|------|
+| **[Texture Converter](https://github.com/KaiyouSon/TextureConverter)** | シェーダーファイル作成 |
+| **[Shader Creater](https://github.com/KaiyouSon/ShaderCreater)**| テクスチャ変換 |
 
 ## 外部ライブラリ
 | ライブラリ | 使用 |
