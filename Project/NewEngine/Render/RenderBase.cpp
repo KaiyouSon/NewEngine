@@ -349,107 +349,43 @@ void RenderBase::ShaderCompilerInit()
 	ShaderCompilerSetting setting;
 
 	// Object3D用
-	setting.mInputLayoutSettings.resize(3);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.folderPath = path1 + "Object3D";
-	ShaderCompilerManager::Create(setting, "Object3D");
+	ShaderCompilerManager::Create(path1 + "Object3D", "Object3D");
 
 	// Fbxモデル用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(5);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.mInputLayoutSettings[3] = InputLayoutSetting("BONEINDICES", DXGI_FORMAT_R32G32B32A32_UINT);
-	setting.mInputLayoutSettings[4] = InputLayoutSetting("BONEWEIGHTS", DXGI_FORMAT_R32G32B32A32_FLOAT);
-	setting.folderPath = path1 + "FbxModel";
-	ShaderCompilerManager::Create(setting, "FbxModel");
+	ShaderCompilerManager::Create(path1 + "FbxModel", "FbxModel");
 
 	// スプライト用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(2);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.folderPath = path1 + "Sprite";
-	ShaderCompilerManager::Create(setting, "Sprite");
+	ShaderCompilerManager::Create(path1 + "Sprite", "Sprite");
 
 	// 円ゲージスプライト用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(2);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.folderPath = path1 + "CircleGaugeSprite";
-	ShaderCompilerManager::Create(setting, "CircleGaugeSprite");
+	ShaderCompilerManager::Create(path1 + "CircleGaugeSprite", "CircleGaugeSprite");
 
 	// ポストエフェクト用（デフォルトシェーダー）
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(2);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.folderPath = path1 + "PostEffect";
-	ShaderCompilerManager::Create(setting, "PostEffect");
+	ShaderCompilerManager::Create(path1 + "PostEffect", "PostEffect");
 
 	// 線用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(1);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.folderPath = path1 + "Line";
-	ShaderCompilerManager::Create(setting, "Line");
+	ShaderCompilerManager::Create(path1 + "Line", "Line");
 
 	// エミッター用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(5);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);	// 座標
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);		// スケール
-	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 1);		// z軸回転
-	setting.mInputLayoutSettings[3] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32_FLOAT, 2);		// 輝度
-	setting.mInputLayoutSettings[4] = InputLayoutSetting("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);	// 色
-	setting.folderPath = path1 + "Emitter";
-	ShaderCompilerManager::Create(setting, "Emitter");
+	ShaderCompilerManager::Create(path1 + "Emitter", "Emitter");
 
 	// GPUエミッター用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.clear();
-	setting.csFilePath = path1 + "Emitter/EmitterCS.hlsl";
-	setting.vsFilePath = path1 + "Emitter/GPUEmitterVS.hlsl";
-	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
-	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
-	ShaderCompilerManager::Create(setting, "GPUEmitter");
+	ShaderCompilerManager::Create(path1 + "GPUEmitter", "GPUEmitter");
 
 	// ColliderObject用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(3);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.folderPath = path1 + "ColliderObject";
-	ShaderCompilerManager::Create(setting, "ColliderObject");
+	ShaderCompilerManager::Create(path1 + "ColliderObject", "ColliderObject");
 
 	// ParticleMesh用
-	setting = ShaderCompilerSetting();
-	setting.folderPath = path1 + "ParticleMesh";
-	ShaderCompilerManager::Create(setting, "ParticleMesh");
+	ShaderCompilerManager::Create(path1 + "ParticleMesh", "ParticleMesh");
 
 	// ParticleObject用
-	setting = ShaderCompilerSetting();
-	setting.folderPath = path1 + "ParticleObject";
-	ShaderCompilerManager::Create(setting, "ParticleObject");
+	ShaderCompilerManager::Create(path1 + "ParticleObject", "ParticleObject");
 
 	// ボリューメトリックフォグ用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(2);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.vsFilePath = path1 + "VolumetricFog/VolumetricFogVS.hlsl";
-	setting.psFilePath = path1 + "VolumetricFog/VolumetricFogPS.hlsl";
-	ShaderCompilerManager::Create(setting, "VolumetricFog");
+	ShaderCompilerManager::Create(path1 + "VolumetricFog", "VolumetricFog");
 
 	// トーンマッピング用
-	setting = ShaderCompilerSetting();
-	setting.folderPath = path1 + "Graphics/" + "ToonMapping";
-	ShaderCompilerManager::Create(setting, "ToonMapping");
+	ShaderCompilerManager::Create(path1 + "Graphics/" + "ToonMapping", "ToonMapping");
 }
 void RenderBase::GraphicsPipelineInit()
 {

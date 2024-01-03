@@ -12,8 +12,8 @@ private:
 
 public:
 	// シェーダーコンパイラーを作成する関数
-	static void Create(const std::string shaderObjectTag);
 	static void Create(const ShaderCompilerSetting& setting, const std::string tag);
+	static void Create(const std::filesystem::path& folderPath, const std::string tag);
 
 	// シェーダーコンパイラーを取得する関数
 	static ShaderCompiler* GetShaderCompiler(const std::string tag);

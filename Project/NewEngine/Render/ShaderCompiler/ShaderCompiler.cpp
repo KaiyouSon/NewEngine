@@ -104,6 +104,49 @@ ShaderCompiler::ShaderCompiler(const ShaderCompilerSetting& shaderCompilerSettin
 	}
 }
 
+ShaderCompiler::ShaderCompiler(const std::filesystem::path& filePath)
+{
+	mSetting.folderPath = filePath;
+
+	// 設定ファイルを開く
+	std::string iniPath = filePath.string() + "/" + filePath.filename().string() + ".ini";
+	std::ifstream iniFile(iniPath);
+
+	// 設定ファイルが存在する場合
+	if (iniFile.is_open() == true)
+	{
+		// 読み込み
+		LoadIniFile(iniFile);
+
+		// 閉じる
+		iniFile.close();
+
+		// サイズ分確保
+		mShaderBlobs.resize((uint32_t)ShaderType::Size);
+
+		// インプットレイアウトの設定
+		for (uint32_t i = 0; i < mSetting.mInputLayoutSettings.size(); i++)
+		{
+			mInputLayout.push_back(
+				{
+					mSetting.mInputLayoutSettings[i].semanticName.c_str(),
+					mSetting.mInputLayoutSettings[i].index,
+					mSetting.mInputLayoutSettings[i].format,
+					0,
+					D3D12_APPEND_ALIGNED_ELEMENT,
+					D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,
+					0
+				});
+		}
+
+		// 各シェーダーをコンパイル
+		CompileShader(mSetting.vsFilePath, ShaderType::Vertex);		// VS
+		CompileShader(mSetting.gsFilePath, ShaderType::Geometry);	// GS
+		CompileShader(mSetting.psFilePath, ShaderType::Pixel);		// PS
+		CompileShader(mSetting.csFilePath, ShaderType::Compute);	// CS
+	}
+}
+
 // シェーダーをコンパイル
 void ShaderCompiler::CompileShader(const std::string& filePath, ShaderType shaderType)
 {
@@ -205,22 +248,49 @@ void ShaderCompiler::LoadIniFile(std::ifstream& file)
 		}
 		else if (key == "VS")
 		{
-			lineStream >> mSetting.vsFilePath;
+			if (mSetting.vsFilePath.empty() == false)
+			{
+				continue;
+			}
+
+			std::string path;
+			lineStream >> path;
+			mSetting.vsFilePath = mSetting.folderPath.string() + "/" + path;
 		}
-		else  if (key == "GS")
+		else if (key == "GS")
 		{
-			lineStream >> mSetting.gsFilePath;
+			if (mSetting.gsFilePath.empty() == false)
+			{
+				continue;
+			}
+
+			std::string path;
+			lineStream >> path;
+			mSetting.gsFilePath = mSetting.folderPath.string() + "/" + path;
 		}
-		else  if (key == "PS")
+		else if (key == "PS")
 		{
-			lineStream >> mSetting.psFilePath;
+			if (mSetting.psFilePath.empty() == false)
+			{
+				continue;
+			}
+
+			std::string path;
+			lineStream >> path;
+			mSetting.psFilePath = mSetting.folderPath.string() + "/" + path;
 		}
-		else  if (key == "CS")
+		else if (key == "CS")
 		{
-			lineStream >> mSetting.csFilePath;
+			if (mSetting.csFilePath.empty() == false)
+			{
+				continue;
+			}
+
+			std::string path;
+			lineStream >> path;
+			mSetting.csFilePath = mSetting.folderPath.string() + "/" + path;
 		}
 	}
-
 }
 
 // ゲッター

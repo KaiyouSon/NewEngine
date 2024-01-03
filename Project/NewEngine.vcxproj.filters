@@ -412,6 +412,9 @@
     <Filter Include="Shader\Engine\Graphics\ToonMapping">
       <UniqueIdentifier>{376500e2-f902-46f2-b5b7-79276313b606}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Engine\GPUEmitter">
+      <UniqueIdentifier>{8f93d0c7-8557-4025-89d4-fa6198d07e48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -1634,6 +1637,9 @@
     <None Include="NewEngine\Shader\Graphics\ToonMapping\ToonMapping.hlsli">
       <Filter>Shader\Engine\Graphics\ToonMapping</Filter>
     </None>
+    <None Include="NewEngine\Shader\GPUEmitter\GPUEmitter.hlsli">
+      <Filter>Shader\Engine\GPUEmitter</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Application\Shader\Cloud\CloudPS.hlsl">
@@ -1696,9 +1702,6 @@
     <FxCompile Include="Application\Shader\RespawnPointEffect\RespawnPointEffectCS.hlsl">
       <Filter>Shader\Application\Effect</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Emitter\EmitterCS.hlsl">
-      <Filter>Shader\Engine\Emitter</Filter>
-    </FxCompile>
     <FxCompile Include="NewEngine\Shader\Emitter\EmitterGS.hlsl">
       <Filter>Shader\Engine\Emitter</Filter>
     </FxCompile>
@@ -1706,9 +1709,6 @@
       <Filter>Shader\Engine\Emitter</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\Emitter\EmitterVS.hlsl">
-      <Filter>Shader\Engine\Emitter</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Emitter\GPUEmitterVS.hlsl">
       <Filter>Shader\Engine\Emitter</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSpritePS.hlsl">
@@ -1908,6 +1908,18 @@
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\Graphics\ToonMapping\ToonMappingVS.hlsl">
       <Filter>Shader\Engine\Graphics\ToonMapping</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterCS.hlsl">
+      <Filter>Shader\Engine\GPUEmitter</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterGS.hlsl">
+      <Filter>Shader\Engine\GPUEmitter</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterPS.hlsl">
+      <Filter>Shader\Engine\GPUEmitter</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterVS.hlsl">
+      <Filter>Shader\Engine\GPUEmitter</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

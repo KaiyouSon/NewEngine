@@ -31,6 +31,7 @@ public:
 	// コンストラクタ
 	ShaderCompiler() {}
 	ShaderCompiler(const ShaderCompilerSetting& shaderCompilerSetting);
+	ShaderCompiler(const std::filesystem::path& filePath);
 
 	// シェーダーをコンパイル
 	void CompileShader(const std::string& filePath, const ShaderType shaderType);
