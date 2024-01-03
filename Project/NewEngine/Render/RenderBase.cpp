@@ -445,6 +445,11 @@ void RenderBase::ShaderCompilerInit()
 	setting.vsFilePath = path1 + "VolumetricFog/VolumetricFogVS.hlsl";
 	setting.psFilePath = path1 + "VolumetricFog/VolumetricFogPS.hlsl";
 	ShaderCompilerManager::Create(setting, "VolumetricFog");
+
+	// トーンマッピング用
+	setting = ShaderCompilerSetting();
+	setting.folderPath = path1 + "Graphics/" + "ToonMapping";
+	ShaderCompilerManager::Create(setting, "ToonMapping");
 }
 void RenderBase::GraphicsPipelineInit()
 {

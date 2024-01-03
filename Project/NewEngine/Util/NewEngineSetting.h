@@ -5,6 +5,7 @@
 #include <d3d12.h>
 #include <string>
 #include <vector>
+#include <filesystem>
 
 // 前方宣言
 class ShaderCompiler;
@@ -42,7 +43,7 @@ struct InputLayoutSetting
 // シェーダーコンパイラーの設定構造体
 struct ShaderCompilerSetting
 {
-	std::string folderPath;
+	std::filesystem::path folderPath;
 	std::string csFilePath;
 	std::string vsFilePath;
 	std::string gsFilePath;

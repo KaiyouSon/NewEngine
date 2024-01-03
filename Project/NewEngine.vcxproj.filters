@@ -406,6 +406,12 @@
     <Filter Include="Application\Source\ShadowMap">
       <UniqueIdentifier>{87c7ff0d-2214-4104-9e56-a045ef8fbf69}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Engine\Graphics">
+      <UniqueIdentifier>{436cd705-a514-4680-9bc9-97c9828c6f85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\Graphics\ToonMapping">
+      <UniqueIdentifier>{376500e2-f902-46f2-b5b7-79276313b606}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -1625,6 +1631,9 @@
     <None Include="Application\Shader\WorldVolumetricFog\WorldVolumetricFog.hlsli">
       <Filter>Shader\Application\WorldVolumetricFog</Filter>
     </None>
+    <None Include="NewEngine\Shader\Graphics\ToonMapping\ToonMapping.hlsli">
+      <Filter>Shader\Engine\Graphics\ToonMapping</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Application\Shader\Cloud\CloudPS.hlsl">
@@ -1893,6 +1902,12 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\Grass\GrassCS.hlsl">
       <Filter>Shader\Application\Grass</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\Graphics\ToonMapping\ToonMappingPS.hlsl">
+      <Filter>Shader\Engine\Graphics\ToonMapping</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\Graphics\ToonMapping\ToonMappingVS.hlsl">
+      <Filter>Shader\Engine\Graphics\ToonMapping</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

@@ -39,18 +39,42 @@ ShaderCompiler::ShaderCompiler(const ShaderCompilerSetting& shaderCompilerSettin
 	// フォルダーパスを設定しているなら
 	if (mSetting.folderPath.empty() == false)
 	{
-		// フォルダ内にある分読み込む
-		for (const auto& entry : fs::directory_iterator(mSetting.folderPath))
-		{
-			auto path = entry.path();
+		// 設定ファイルを開く
+		std::string iniPath = mSetting.folderPath.string() + "/" + mSetting.folderPath.filename().string() + ".ini";
+		std::ifstream iniFile(iniPath);
 
-			if (fs::is_regular_file(path))
+		// 設定ファイルが存在する場合
+		if (iniFile.is_open() == true)
+		{
+			// 読み込み
+			LoadIniFile(iniFile);
+
+			// 閉じる
+			iniFile.close();
+
+			// 各シェーダーをコンパイル
+			CompileShader(mSetting.vsFilePath, ShaderType::Vertex);		// VS
+			CompileShader(mSetting.gsFilePath, ShaderType::Geometry);	// GS
+			CompileShader(mSetting.psFilePath, ShaderType::Pixel);		// PS
+			CompileShader(mSetting.csFilePath, ShaderType::Compute);	// CS
+		}
+		else
+		{
+			// フォルダ内にある分読み込む
+			for (const auto& entry : fs::directory_iterator(mSetting.folderPath))
 			{
+				auto path = entry.path();
+
+				if (fs::is_regular_file(path) == false)
+				{
+					continue;
+				}
+
 				// 拡張子
 				std::string ext = path.extension().string();
 
-				// ヘッダーなら飛ばす
-				if (ext == ".hlsli")
+				// hlslファイルじゃなければ飛ばす
+				if (ext != ".hlsl")
 				{
 					continue;
 				}
@@ -148,6 +172,55 @@ void ShaderCompiler::ShowErrorDetails()
 		OutputDebugStringA(error.c_str());
 		assert(0);
 	}
+}
+
+// 設定ファイルを読み込む
+void ShaderCompiler::LoadIniFile(std::ifstream& file)
+{
+	// 1行ずつ読み込む
+	std::string line;
+	while (std::getline(file, line))
+	{
+		// 1行をスペースで分割
+		std::istringstream lineStream(line);
+
+		// 最初の単語を取得して、キーとする
+		std::string key;
+		std::getline(lineStream, key, ' ');
+
+		if (key == "IL")
+		{
+			int format = 0;
+
+			InputLayoutSetting setting;
+			lineStream >> setting.semanticName;
+			lineStream >> format;
+			lineStream >> setting.index;
+
+			// キャスト
+			setting.format = (DXGI_FORMAT)format;
+
+			// 追加
+			mSetting.mInputLayoutSettings.push_back(setting);
+		}
+		else if (key == "VS")
+		{
+			lineStream >> mSetting.vsFilePath;
+		}
+		else  if (key == "GS")
+		{
+			lineStream >> mSetting.gsFilePath;
+		}
+		else  if (key == "PS")
+		{
+			lineStream >> mSetting.psFilePath;
+		}
+		else  if (key == "CS")
+		{
+			lineStream >> mSetting.csFilePath;
+		}
+	}
+
 }
 
 // ゲッター
