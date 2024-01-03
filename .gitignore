@@ -76,7 +76,7 @@ StyleCopReport.xml
 *.meta
 *.iobj
 *.pch
-*.pdb
+#*.pdb
 *.ipdb
 *.pgc
 *.pgd
@@ -96,7 +96,7 @@ StyleCopReport.xml
 *.svclog
 *.scc
 *.exp
-*.lib
+#*.lib
 
 # Chutzpah Test files
 _Chutzpah*
@@ -365,8 +365,12 @@ FodyWeavers.xsd
 # Generated Folder
 Generated/
 
+# Project Floder
 *assimp-vc143-mtd.dll
 *NewEngine.exe
-*imgui.ini
+/Project/External/Assmip/lib
 /Project/imgui.ini
 /Project/Application/Resources/Backup
+
+# don't ignore
+!/Project/External/DirectXTex/lib
