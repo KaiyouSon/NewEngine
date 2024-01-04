@@ -4,12 +4,14 @@
 PostEffectManager::PostEffectManager() :
 	mEffectBloom(std::make_unique<Bloom>()),
 	mSkydomeVignette(std::make_unique<Vignette>()),
-	mRadialBlur(std::make_unique<RadialBlur>())
+	mRadialBlur(std::make_unique<RadialBlur>()),
+	mToonMapping(std::make_unique<ToonMapping>())
 {
 }
 
 void PostEffectManager::Init()
 {
+	mToonMapping->Init();
 }
 
 void PostEffectManager::Update()
@@ -17,12 +19,14 @@ void PostEffectManager::Update()
 	mSkydomeVignette->Update();
 	mEffectBloom->Update();
 	mRadialBlur->Update();
+	mToonMapping->Update();
 }
 
 void PostEffectManager::DrawDebugGui()
 {
 	Gui::BeginWindow("PostEffect");
 	mRadialBlur->DrawDebugGui();
+	mToonMapping->DrawDebugGui();
 	Gui::EndWindow();
 }
 
@@ -43,6 +47,12 @@ void PostEffectManager::DrawEffectBloom()
 void PostEffectManager::DrawRadialBlur()
 {
 	mRadialBlur->DrawPostEffect();
+}
+
+void PostEffectManager::DrawPostEffect(const PostEffectType type)
+{
+	type;
+	mToonMapping->Draw();
 }
 
 // ゲッター
@@ -115,3 +125,8 @@ void PostEffectManager::RadialBlurDrawPass(
 	mRadialBlur->PostSceneDraw(RadialBlur::PassType::Scene);
 }
 
+void PostEffectManager::DrawToonMappingPass(
+	const std::function<void()>& targetDrawFunc)
+{
+	mToonMapping->DrawPass(targetDrawFunc);
+}

@@ -268,10 +268,17 @@ void GameScene::DrawPass()
 		//mVolumetricFog->Draw();
 	};
 	mPostEffectManager->EffectBloomDrawPass(targetDrawFunc, sceneDrawFunc);
+
+	targetDrawFunc = [this]()
+	{
+		mPostEffectManager->DrawEffectBloom();
+	};
+	mPostEffectManager->DrawToonMappingPass(targetDrawFunc);
 }
 void GameScene::Draw()
 {
-	mPostEffectManager->DrawEffectBloom();
+	//mPostEffectManager->DrawEffectBloom();
+	mPostEffectManager->DrawPostEffect(PostEffectType::ToonMapping);
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
@@ -280,7 +287,7 @@ void GameScene::Draw()
 void GameScene::DrawDebugGui()
 {
 	//mBoss->DrawDebugGui();
-	//mPostEffectManager->DrawDebugGui();
+	mPostEffectManager->DrawDebugGui();
 	//ShadowMap::GetInstance()->DrawDebugGui();
 	//GraphicsManager::DrawDebugGui();
 

@@ -1,12 +1,25 @@
 #include "GraphicsManager.h"
 
+GraphicsManager::GraphicsManager() :
+	mDistanceFog(std::make_unique<DistanceFog>())
+{
+}
+
+void GraphicsManager::Load()
+{
+}
+
 void GraphicsManager::Init()
 {
-	GetInstance()->mDistanceFog = std::make_unique<DistanceFog>();
 }
 
 void GraphicsManager::Update()
 {
+}
+
+void GraphicsManager::Draw()
+{
+
 }
 
 void GraphicsManager::DrawCommands(const GraphicsType type, const uint32_t index)
@@ -50,3 +63,4 @@ DistanceFog* GraphicsManager::GetDistanceFog()
 {
 	return GetInstance()->mDistanceFog.get();
 }
+

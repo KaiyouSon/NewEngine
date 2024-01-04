@@ -289,6 +289,8 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Noice/BlurNoice.dds", "BlurNoice");
 	TextureManager::LoadTexture("Noice/ScreenNoice.dds", "ScreenNoice");
 
+	TextureManager::CreateRenderTexture(GetWindowSize(), "ToonMapping");
+
 	// シャドウマップ
 	RenderTextureSetting setting = RenderTextureSetting(Vec2(1920, 1080) * 2, Vec2(1920, 1080) * 2, true);
 	TextureManager::CreateRenderTexture(setting, "ShadowMap");

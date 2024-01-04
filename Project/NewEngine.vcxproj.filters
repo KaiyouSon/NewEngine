@@ -954,7 +954,7 @@
     <ClCompile Include="Application\SourceCode\Field\Field.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SourceCode\PostEffect\ToonMapping.cpp">
+    <ClCompile Include="NewEngine\Graphics\ToonMapping.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1535,7 +1535,7 @@
     <ClInclude Include="Application\SourceCode\Field\FieldObject\IFieldObject.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SourceCode\PostEffect\ToonMapping.h">
+    <ClInclude Include="NewEngine\Graphics\ToonMapping.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
   </ItemGroup>

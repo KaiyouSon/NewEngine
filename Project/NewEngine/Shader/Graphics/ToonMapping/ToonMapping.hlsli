@@ -10,6 +10,12 @@ cbuffer ConstBufferDataMaterial : register(b1)
     float4 color;
 };
 
+cbuffer ConstBufferDataToonMapping : register(b2)
+{
+    float gain;
+    float offset;
+}
+
 struct Appdata
 {
     float4 pos : POSITION;

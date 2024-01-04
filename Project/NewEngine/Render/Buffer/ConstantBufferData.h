@@ -268,4 +268,10 @@ namespace ConstantBufferData
 		Vec3 generateRange;
 		uint32_t generateNum;
 	};
+
+	struct CToonMapping
+	{
+		float gain = 1.1f;
+		float offset = 0.02f;
+	};
 }

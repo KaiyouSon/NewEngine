@@ -142,7 +142,7 @@
     <ClCompile Include="Application\SourceCode\Character\Character.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Cloud.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp" />
-    <ClCompile Include="Application\SourceCode\PostEffect\ToonMapping.cpp" />
+    <ClCompile Include="NewEngine\Graphics\ToonMapping.cpp" />
     <ClCompile Include="Application\SourceCode\UI\BossGaugeUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\CameraTargetUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\IUI.cpp" />
@@ -333,7 +333,7 @@
     <ClInclude Include="Application\SourceCode\Character\Character.h" />
     <ClInclude Include="Application\SourceCode\Field\Cloud.h" />
     <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h" />
-    <ClInclude Include="Application\SourceCode\PostEffect\ToonMapping.h" />
+    <ClInclude Include="NewEngine\Graphics\ToonMapping.h" />
     <ClInclude Include="Application\SourceCode\UI\BossGaugeUI.h" />
     <ClInclude Include="Application\SourceCode\UI\CameraTargetUI.h" />
     <ClInclude Include="Application\SourceCode\UI\IUI.h" />

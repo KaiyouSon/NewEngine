@@ -4,7 +4,6 @@
 #include <memory>
 
 // 前方宣言
-class DistanceFog;
 template<typename T> class Singleton;
 
 // グラフィックスマネージャーのクラス
@@ -14,10 +13,13 @@ private:
 	std::unique_ptr<DistanceFog> mDistanceFog;
 
 public:
+	static void Load();
 	static void Init();
 	static void Update();
+	static void Draw();
 
 public:
+	static void DrawPass(const GraphicsType type);
 	static void DrawCommands(const GraphicsType type, const uint32_t index);
 	static void DrawDebugGui();
 
@@ -26,6 +28,6 @@ public:
 
 private:
 	friend Singleton<GraphicsManager>;
-	GraphicsManager() {}
+	GraphicsManager();
 };
 

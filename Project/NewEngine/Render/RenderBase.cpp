@@ -549,6 +549,17 @@ void RenderBase::GraphicsPipelineInit()
 	setting.depthStencilDesc = depthStencilDesc2;
 	PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFogInSide");
 
+	// トーンマッピング用
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ToonMapping");
+	setting.cullMode = CullMode::None;
+	setting.topologyType = TopologyType::TriangleStrip;
+	setting.depthStencilDesc = depthStencilDesc2;
+	setting.rtvNum = 1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	PipelineManager::CreateGraphicsPipeline(setting, "ToonMapping");
+
 	//setting = PipelineManager::GetGraphicsPipeline("WithInVolumetricFog")->GetSetting();
 	//setting.depthStencilDesc = depthStencilDesc2;
 	//PipelineManager::CreateGraphicsPipeline(setting, "WithOutVolumetricFog");
