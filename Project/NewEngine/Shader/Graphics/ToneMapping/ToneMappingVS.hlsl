@@ -7,4 +7,3 @@ V2P main(Appdata i)
     o.uv = i.uv;
     return o;
 }
-

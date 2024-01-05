@@ -110,7 +110,7 @@ struct GraphicsPipelineSetting
 	TopologyType topologyType;
 
 	// シェーダーコンパイラー
-	ShaderCompiler* shaderObject;
+	std::string shaderCompilerTag;
 
 	// 深度
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc;

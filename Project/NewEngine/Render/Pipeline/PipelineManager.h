@@ -26,4 +26,7 @@ public:
 	static ComputePipeline* GetComputePipeline(const std::string tag);
 
 	static GraphicsPipelineSetting GetGraphicsPipelineSetting(const std::string tag);
+
+	static std::unordered_map<std::string, std::unique_ptr<GraphicsPipeline>>* GetGraphicsPipelineMap();
+
 };

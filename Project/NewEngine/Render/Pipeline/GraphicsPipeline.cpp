@@ -17,6 +17,7 @@ GraphicsPipeline::GraphicsPipeline() : mResult(HRESULT())
 void GraphicsPipeline::Create(const GraphicsPipelineSetting& setting)
 {
 	mSetting = setting;
+	shaderCompiler = ShaderCompilerManager::GetShaderCompiler(mSetting.shaderCompilerTag);
 
 	// パイプラインブレンド設定のビット
 	uint8_t bit = (uint8_t)mSetting.pipelineBlend;
@@ -96,17 +97,17 @@ void GraphicsPipeline::CreatePipelineState(const GraphicsPipelineSetting::Pipeli
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
 
 	// シェーダーコード設定
-	if (mSetting.shaderObject->GetShaderBlob(ShaderType::Vertex) != nullptr)
+	if (shaderCompiler->GetShaderBlob(ShaderType::Vertex) != nullptr)
 	{
-		pipelineDesc.VS = CD3DX12_SHADER_BYTECODE(mSetting.shaderObject->GetShaderBlob(ShaderType::Vertex));
+		pipelineDesc.VS = CD3DX12_SHADER_BYTECODE(shaderCompiler->GetShaderBlob(ShaderType::Vertex));
 	}
-	if (mSetting.shaderObject->GetShaderBlob(ShaderType::Geometry) != nullptr)
+	if (shaderCompiler->GetShaderBlob(ShaderType::Geometry) != nullptr)
 	{
-		pipelineDesc.GS = CD3DX12_SHADER_BYTECODE(mSetting.shaderObject->GetShaderBlob(ShaderType::Geometry));
+		pipelineDesc.GS = CD3DX12_SHADER_BYTECODE(shaderCompiler->GetShaderBlob(ShaderType::Geometry));
 	}
-	if (mSetting.shaderObject->GetShaderBlob(ShaderType::Pixel) != nullptr)
+	if (shaderCompiler->GetShaderBlob(ShaderType::Pixel) != nullptr)
 	{
-		pipelineDesc.PS = CD3DX12_SHADER_BYTECODE(mSetting.shaderObject->GetShaderBlob(ShaderType::Pixel));
+		pipelineDesc.PS = CD3DX12_SHADER_BYTECODE(shaderCompiler->GetShaderBlob(ShaderType::Pixel));
 	}
 
 	// サンプルマスク設定
@@ -197,8 +198,8 @@ void GraphicsPipeline::CreatePipelineState(const GraphicsPipelineSetting::Pipeli
 	}
 
 	// 入力レイアウト設定
-	pipelineDesc.InputLayout.pInputElementDescs = mSetting.shaderObject->GetInputLayout().data();
-	pipelineDesc.InputLayout.NumElements = (uint32_t)mSetting.shaderObject->GetInputLayout().size();
+	pipelineDesc.InputLayout.pInputElementDescs = shaderCompiler->GetInputLayout().data();
+	pipelineDesc.InputLayout.NumElements = (uint32_t)shaderCompiler->GetInputLayout().size();
 
 	// プリミティブトポロジ設定
 	switch (mSetting.topologyType)

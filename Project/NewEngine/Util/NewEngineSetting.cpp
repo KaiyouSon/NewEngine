@@ -40,7 +40,7 @@ GraphicsPipelineSetting::GraphicsPipelineSetting() :
 	cullMode(CullMode::Back),
 	renderTargetBlendMask(WriteAll),
 	topologyType(TopologyType::TriangleList),
-	shaderObject(nullptr),
+	shaderCompilerTag("empty"),
 	depthStencilDesc(D3D12_DEPTH_STENCIL_DESC()),
 	rtvNum(1),
 	rootSignatureSetting(RootSignatureSetting())

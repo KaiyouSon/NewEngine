@@ -8,6 +8,7 @@ class GraphicsPipeline
 private:
 	HRESULT mResult;
 	GraphicsPipelineSetting mSetting;
+	ShaderCompiler* shaderCompiler;
 	std::vector<Microsoft::WRL::ComPtr<ID3D12PipelineState>> mPSOs;
 	std::unique_ptr<RootSignature> mRootSignature;	// ルートシグネチャー
 

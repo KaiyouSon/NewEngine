@@ -299,7 +299,7 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// 草用
 	setting = PipelineManager::GetGraphicsPipeline("Emitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Grass");
+	setting.shaderCompilerTag = "Grass";
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 5;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
@@ -311,7 +311,7 @@ void CreateManager::CreateGraphicsPipeline()
 	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
 	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
 	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Cloud");
+	setting.shaderCompilerTag = "Cloud";
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc;
@@ -320,21 +320,21 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// ビネット用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Vignette");
+	setting.shaderCompilerTag = "Vignette";
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "Vignette");
 
 	// 木の枝用
 	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Branch");
+	setting.shaderCompilerTag = "Branch";
 	setting.cullMode = CullMode::None;
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Branch");
 
 	// リスポーン地点用（下の波紋用）
 	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Ripple");
+	setting.shaderCompilerTag = "Ripple";
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.rtvNum = 1;
@@ -342,7 +342,7 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// リスポーン地点用（浮いてる菱形用）
 	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Rhombus");
+	setting.shaderCompilerTag = "Rhombus";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.rtvNum = 1;
@@ -350,35 +350,35 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// 高輝度箇所抽出用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("HighLumi");
+	setting.shaderCompilerTag = "HighLumi";
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "HighLumi");
 
 	// ガウシアンブラー用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("GaussianBlur");
+	setting.shaderCompilerTag = "GaussianBlur";
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "GaussianBlur");
 
 	// 合成用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Composite");
+	setting.shaderCompilerTag = "Composite";
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Composite");
 
 	// リスポーン時の遷移用
 	setting = PipelineManager::GetGraphicsPipeline("Sprite")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("RespawnTransition");
+	setting.shaderCompilerTag = "RespawnTransition";
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 4;
 	PipelineManager::CreateGraphicsPipeline(setting, "RespawnTransition");
 
 	// ShadowObj用
 	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ShadowObj");
+	setting.shaderCompilerTag = "ShadowObj";
 	setting.cullMode = CullMode::None;
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
@@ -387,7 +387,7 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// ShadowMap用
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ShadowMap");
+	setting.shaderCompilerTag = "ShadowMap";
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
@@ -395,37 +395,37 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// リスポーンエフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("RespawnPointEffect");
+	setting.shaderCompilerTag = "RespawnPointEffect";
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "RespawnPointEffect");
 
 	// タイトルのロゴ爆散用
 	setting = PipelineManager::GetGraphicsPipeline("ParticleMesh")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("LogoExplosionEffectInit");
+	setting.shaderCompilerTag = "LogoExplosionEffectInit";
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "LogoExplosionEffect");
 
 	// 誘導エフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("LeadEffectInit");
+	setting.shaderCompilerTag = "LeadEffectInit";
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "LeadEffect");
 
 	// プレイヤー回復エフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("PlayerRecoveryEffectInit");
+	setting.shaderCompilerTag = "PlayerRecoveryEffectInit";
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "PlayerRecoveryEffect");
 
 	// 空中のエフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("AirEffectInit");
+	setting.shaderCompilerTag = "AirEffectInit";
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "AirEffect");
 
 	// ボスの攻撃軌跡のエフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttackTrajectoryEffectInit");
+	setting.shaderCompilerTag = "BossAttackTrajectoryEffectInit";
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "BossAttackTrajectoryEffect");
 
@@ -459,7 +459,7 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// 軌跡用
 	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Trajectory");
+	setting.shaderCompilerTag = "Trajectory";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
@@ -470,18 +470,18 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// ポンデリング/太陽用
 	setting = PipelineManager::GetGraphicsPipeline("ParticleObject")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("PonDeRingInit");
+	setting.shaderCompilerTag = "PonDeRingInit";
 	PipelineManager::CreateGraphicsPipeline(setting, "PonDeRing");
 
 	// 攻撃の爆発のエフェクト
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("AttackExplosionEffectInit");
+	setting.shaderCompilerTag = "AttackExplosionEffectInit";
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "AttackExplosionEffect");
 
 	// 攻撃の爆発のエフェクト
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("SmokeEffectInit");
+	setting.shaderCompilerTag = "SmokeEffectInit";
 	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "SmokeEffect");
 
@@ -491,13 +491,13 @@ void CreateManager::CreateGraphicsPipeline()
 	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
 	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
 	setting = PipelineManager::GetGraphicsPipeline("VolumetricFog")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("WorldVolumetricFog");
+	setting.shaderCompilerTag = "WorldVolumetricFog";
 	setting.depthStencilDesc = depthStencilDesc;
 	PipelineManager::CreateGraphicsPipeline(setting, "WorldVolumetricFog");
 
 	// ラジアルブラー用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("RadialBlur");
+	setting.shaderCompilerTag = "RadialBlur";
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;

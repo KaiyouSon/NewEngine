@@ -63,3 +63,8 @@ GraphicsPipelineSetting PipelineManager::GetGraphicsPipelineSetting(const std::s
 
 	return sGraphicsPipelineMap[tag]->GetSetting();
 }
+
+std::unordered_map<std::string, std::unique_ptr<GraphicsPipeline>>* PipelineManager::GetGraphicsPipelineMap()
+{
+	return &sGraphicsPipelineMap;
+}

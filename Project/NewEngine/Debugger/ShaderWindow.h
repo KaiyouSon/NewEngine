@@ -8,6 +8,13 @@ private:
 	bool mIsShow;
 	std::vector<std::function<void()>> funclist;
 
+private:
+	float padding = 16.f;
+	float buttonSize = 128.f;
+
+private:
+	void ShowFilePanel(const std::string& folderPath);
+	void ReCreatePipeline(const std::string& tag);
 
 public:
 	ShaderWindow();

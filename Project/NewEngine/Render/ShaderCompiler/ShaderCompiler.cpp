@@ -125,8 +125,8 @@ void ShaderCompiler::Create(const std::filesystem::path& filePath)
 		// 閉じる
 		iniFile.close();
 
-		// サイズ分確保
-		mShaderBlobs.resize((uint32_t)ShaderType::Size);
+		// 空にする
+		mInputLayout.clear();
 
 		// インプットレイアウトの設定
 		for (uint32_t i = 0; i < mSetting.mInputLayoutSettings.size(); i++)
@@ -142,6 +142,9 @@ void ShaderCompiler::Create(const std::filesystem::path& filePath)
 					0
 				});
 		}
+
+		// サイズ分確保
+		mShaderBlobs.resize((uint32_t)ShaderType::Size);
 
 		// 各シェーダーをコンパイル
 		CompileShader(mSetting.vsFilePath, ShaderType::Vertex);		// VS
@@ -229,6 +232,9 @@ void ShaderCompiler::ShowErrorDetails()
 // 設定ファイルを読み込む
 void ShaderCompiler::LoadIniFile(std::ifstream& file)
 {
+	// 空にする
+	mSetting.mInputLayoutSettings.clear();
+
 	// 1行ずつ読み込む
 	std::string line;
 	while (std::getline(file, line))

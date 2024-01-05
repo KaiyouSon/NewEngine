@@ -411,7 +411,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// 3Dオブジェクト用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Object3D");
+	setting.shaderCompilerTag = "Object3D";
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
@@ -422,7 +422,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// FBXモデル用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("FbxModel");
+	setting.shaderCompilerTag = "FbxModel";
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
@@ -433,7 +433,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// スプライト用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Sprite");
+	setting.shaderCompilerTag = "Sprite";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
@@ -444,7 +444,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// 円ゲージスプライト用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("CircleGaugeSprite");
+	setting.shaderCompilerTag = "CircleGaugeSprite";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
@@ -455,7 +455,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// ポストエフェクト用(デフォルト)
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("PostEffect");
+	setting.shaderCompilerTag = "PostEffect";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
@@ -466,7 +466,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// 線用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Line");
+	setting.shaderCompilerTag = "Line";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::LineStrip;
 	setting.depthStencilDesc = depthStencilDesc1;
@@ -477,7 +477,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// エミッタ用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("Emitter");
+	setting.shaderCompilerTag = "Emitter";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc1;
@@ -488,7 +488,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// GPUエミッタ用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("GPUEmitter");
+	setting.shaderCompilerTag = "GPUEmitter";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc1;
@@ -499,7 +499,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// ColliderObject用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ColliderObject");
+	setting.shaderCompilerTag = "ColliderObject";
 	setting.cullMode = CullMode::None;
 	setting.fillMode = GraphicsPipelineSetting::Wireframe;
 	setting.topologyType = TopologyType::TriangleList;
@@ -512,7 +512,7 @@ void RenderBase::GraphicsPipelineInit()
 	// ParticleMesh用
 	setting = GraphicsPipelineSetting();
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ParticleMesh");
+	setting.shaderCompilerTag = "ParticleMesh";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc4;
@@ -524,7 +524,7 @@ void RenderBase::GraphicsPipelineInit()
 	// ParticleObject用
 	setting = GraphicsPipelineSetting();
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ParticleObject");
+	setting.shaderCompilerTag = "ParticleObject";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc4;
@@ -536,7 +536,7 @@ void RenderBase::GraphicsPipelineInit()
 	// ボリューメトリックフォグ用
 	setting = GraphicsPipelineSetting();
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("VolumetricFog");
+	setting.shaderCompilerTag = "VolumetricFog";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc4;
@@ -551,7 +551,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// トーンマッピング用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ToneMapping");
+	setting.shaderCompilerTag = "ToneMapping";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
