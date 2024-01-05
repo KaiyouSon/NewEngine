@@ -17,18 +17,19 @@ enum class PostEffectType
 class PostEffectManager
 {
 private:
-	std::unique_ptr<Bloom> mEffectBloom;
-	std::unique_ptr<Vignette> mVignette;
 	std::unique_ptr<RadialBlur> mRadialBlur;
+	std::unique_ptr<Bloom> mBloom;
 	std::unique_ptr<ToneMapping> mToneMapping;
+	std::unique_ptr<Vignette> mVignette;
 
 public:
-	// エフェクトのブルームのパス設定
-	void EffectBloomDrawPass(
+	// ラジアルブラー
+	void DrawRadialBlurPass(
 		const std::function<void()>& targetDrawFunc,
 		const std::function<void()>& sceneDrawFunc);
 
-	void RadialBlurDrawPass(
+	// ブルーム
+	void DrawBloomPass(
 		const std::function<void()>& targetDrawFunc,
 		const std::function<void()>& sceneDrawFunc);
 
@@ -48,16 +49,6 @@ public:
 	void DrawDebugGui();
 
 public:
-
-	// 天球のビネット
-	void DrawSkydomeVignette();
-
-	// エフェクトのブルーム	
-	void DrawEffectBloom();
-
-	// ラジアルブラー
-	void DrawRadialBlur();
-
 	// ポストエフェクトを描画する関数
 	void DrawPostEffect(const PostEffectType type);
 

@@ -4,30 +4,30 @@ using namespace ConstantBufferData;
 RadialBlur::RadialBlur() :
 	mCompositePass(std::make_unique<PostEffect>())
 {
-	mTex[(uint32_t)PassType::Target] = TextureManager::GetRenderTexture("RadialBlurTarget");
-	mTex[(uint32_t)PassType::Finish] = TextureManager::GetRenderTexture("RadialBlurFinish");
-	mTex[(uint32_t)PassType::Scene] = TextureManager::GetRenderTexture("RadialBlurScene");
+	mTexes[(uint32_t)PassType::Target] = TextureManager::GetRenderTexture("RadialBlurTarget");
+	mTexes[(uint32_t)PassType::Finish] = TextureManager::GetRenderTexture("RadialBlurFinish");
+	mTexes[(uint32_t)PassType::Scene] = TextureManager::GetRenderTexture("RadialBlurScene");
 
 	for (uint32_t i = 0; i < (uint32_t)PassType::Size; i++)
 	{
-		mPostEffect[i] = std::make_unique<PostEffect>();
-		mPostEffect[i]->pos = GetWindowHalfSize();
+		mPasses[i] = std::make_unique<PostEffect>();
+		mPasses[i]->pos = GetWindowHalfSize();
 	}
 
-	mPostEffect[(uint32_t)PassType::Target]->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("RadialBlur"));
-	mPostEffect[(uint32_t)PassType::Target]->AddMaterial<CRadialBlur>();
+	mPasses[(uint32_t)PassType::Target]->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("RadialBlur"));
+	mPasses[(uint32_t)PassType::Target]->AddMaterial<CRadialBlur>();
 
 	// テクスチャ設定
-	mPostEffect[(uint32_t)PassType::Target]->AddRenderTexture(mTex[(uint32_t)PassType::Target]);
-	mPostEffect[(uint32_t)PassType::Finish]->AddRenderTexture(mTex[(uint32_t)PassType::Finish]);
-	mPostEffect[(uint32_t)PassType::Scene]->AddRenderTexture(mTex[(uint32_t)PassType::Scene]);
+	mPasses[(uint32_t)PassType::Target]->AddRenderTexture(mTexes[(uint32_t)PassType::Target]);
+	mPasses[(uint32_t)PassType::Finish]->AddRenderTexture(mTexes[(uint32_t)PassType::Finish]);
+	mPasses[(uint32_t)PassType::Scene]->AddRenderTexture(mTexes[(uint32_t)PassType::Scene]);
 
 	mCompositePass->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Composite"));
-	mCompositePass->AddRenderTexture(mTex[(uint32_t)PassType::Finish]);
-	mCompositePass->AddRenderTexture(mTex[(uint32_t)PassType::Scene]);
+	mCompositePass->AddRenderTexture(mTexes[(uint32_t)PassType::Finish]);
+	mCompositePass->AddRenderTexture(mTexes[(uint32_t)PassType::Scene]);
 	mCompositePass->pos = GetWindowHalfSize();
 
-	mPostEffect[(uint32_t)PassType::Target]->SetSize(GetWindowSize());
+	mPasses[(uint32_t)PassType::Target]->SetSize(GetWindowSize());
 
 	mData.strength = 0.015f;
 	mData.loopNum = 65;
@@ -35,11 +35,11 @@ RadialBlur::RadialBlur() :
 
 void RadialBlur::Update()
 {
-	mPostEffect[(uint32_t)PassType::Target]->SetTransferBuffer(2, mData);
+	mPasses[(uint32_t)PassType::Target]->SetTransferBuffer(2, mData);
 
 	for (uint32_t i = 0; i < (uint32_t)PassType::Size; i++)
 	{
-		mPostEffect[i]->Update();
+		mPasses[i]->Update();
 	}
 	mCompositePass->Update();
 }
@@ -49,19 +49,31 @@ void RadialBlur::DrawPostEffect()
 	mCompositePass->Draw();
 }
 
-void RadialBlur::DrawPass(const PassType type)
+void RadialBlur::DrawPass(
+	const std::function<void()>& targetDrawFunc,
+	const std::function<void()>& sceneDrawFunc)
 {
-	mPostEffect[(uint32_t)type]->Draw();
+	mTexes[(uint32_t)PassType::Target]->PrevDrawScene();
+	targetDrawFunc();
+	mTexes[(uint32_t)PassType::Target]->PostDrawScene();
+
+	mTexes[(uint32_t)PassType::Finish]->PrevDrawScene();
+	mPasses[(uint32_t)PassType::Target]->Draw();
+	mTexes[(uint32_t)PassType::Finish]->PostDrawScene();
+
+	mTexes[(uint32_t)PassType::Scene]->PrevDrawScene();
+	sceneDrawFunc();
+	mTexes[(uint32_t)PassType::Scene]->PostDrawScene();
 }
 
 void RadialBlur::PrevSceneDraw(const PassType type)
 {
-	mTex[(uint32_t)type]->PrevDrawScene();
+	mTexes[(uint32_t)type]->PrevDrawScene();
 }
 
 void RadialBlur::PostSceneDraw(const PassType type)
 {
-	mTex[(uint32_t)type]->PostDrawScene();
+	mTexes[(uint32_t)type]->PostDrawScene();
 }
 
 void RadialBlur::DrawDebugGui()

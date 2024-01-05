@@ -35,9 +35,6 @@ Bloom::Bloom()
 
 	mHighLumiClamp = Vec2(0.1f, 1.0f);
 	mPasses[(uint32_t)PassType::HighLumi]->AddMaterial<Vec2>();
-
-	isBloom0 = true;
-	isBloom1 = true;
 }
 
 void Bloom::Update()
@@ -47,6 +44,7 @@ void Bloom::Update()
 		mPasses[(uint32_t)PassType::HighLumi]->SetSize(GetWindowSize());
 	}
 
+	mPasses[(uint32_t)PassType::HighLumi]->SetTransferBuffer(2, mHighLumiClamp);
 	for (uint32_t i = 0; i < mPasses.size(); i++)
 	{
 		mPasses[i]->Update();
@@ -58,14 +56,32 @@ void Bloom::DrawPostEffect()
 	mPasses[(uint32_t)PassType::Bloom]->Draw();
 }
 
-void Bloom::DrawPass(const PassType passType)
+void Bloom::DrawPass(
+	const std::function<void()>& targetDrawFunc,
+	const std::function<void()>& sceneDrawFunc)
 {
-	if (passType == PassType::HighLumi)
-	{
-		mPasses[(uint32_t)PassType::HighLumi]->SetTransferBuffer(2, mHighLumiClamp);
-	}
+	// 高輝度箇所を抽出
+	mTexs[(uint32_t)TexType::HighLumi]->PrevDrawScene();
+	targetDrawFunc();
+	mTexs[(uint32_t)TexType::HighLumi]->PostDrawScene();
 
-	mPasses[(uint32_t)passType]->Draw();
+	// 高輝度箇所にブラー
+	mTexs[(uint32_t)TexType::GaussianBlur]->PrevDrawScene();
+	mPasses[(uint32_t)PassType::HighLumi]->Draw();
+	mTexs[(uint32_t)TexType::GaussianBlur]->PostDrawScene();
+	mTexs[(uint32_t)TexType::GaussianBlurHalf]->PrevDrawScene();
+	mPasses[(uint32_t)PassType::HighLumi]->Draw();
+	mTexs[(uint32_t)TexType::GaussianBlurHalf]->PostDrawScene();
+
+	// ブラーかけ終わったやつを描画
+	mTexs[(uint32_t)TexType::Bloom]->PrevDrawScene();
+	mPasses[(uint32_t)PassType::GaussianBlur]->Draw();
+	mTexs[(uint32_t)TexType::Bloom]->PostDrawScene();
+
+	// 現在のシーンの描画
+	mTexs[(uint32_t)TexType::Target]->PrevDrawScene();
+	sceneDrawFunc();
+	mTexs[(uint32_t)TexType::Target]->PostDrawScene();
 }
 
 void Bloom::PrevSceneDraw(const TexType passType)

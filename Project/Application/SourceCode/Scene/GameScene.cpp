@@ -219,53 +219,49 @@ void GameScene::DrawPass()
 {
 	ShadowMap::GetInstance()->DrawPass();
 
-	std::function<void()> targetDrawFunc;
-	std::function<void()> maskDrawFunc;
-	std::function<void()> sceneDrawFunc;
+	// ラジアルブラー
+	mPostEffectManager->DrawRadialBlurPass(
+		[this]()
+		{
+			// プレイヤーの深度のみ書き込む
+			mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+			mPlayer->DrawModel();
+			mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 
-	// ラムダ式で代入
-	targetDrawFunc = [this]()
-	{
-		// プレイヤーの深度のみ書き込む
-		mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
-		mPlayer->DrawModel();
-		mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
+			// プレイヤーの深度のみ書き込む
+			mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+			mBoss->DrawModel();
+			mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 
-		// プレイヤーの深度のみ書き込む
-		mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
-		mBoss->DrawModel();
-		mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
-
-		// フィールド
-		mField->DrawModel(true);
-
-		mField->DrawSun();
-	};
-	sceneDrawFunc = [this]()
-	{
-		DrawCurrentSceneObject();
-	};
-	mPostEffectManager->RadialBlurDrawPass(targetDrawFunc, sceneDrawFunc);
+			// フィールド
+			mField->DrawModel(true);
+			mField->DrawSun();
+		},
+		[this]()
+		{
+			DrawCurrentSceneObject();
+		});
 
 	// --- エフェクトにブルームをかけるパス ------------------------//
 	// ラムダ式で代入
-	targetDrawFunc = [this]()
-	{
-		DrawDepthToEffectBloom();
-	};
-	sceneDrawFunc = [this]()
-	{
-		mPostEffectManager->DrawRadialBlur();
-	};
-	mPostEffectManager->EffectBloomDrawPass(targetDrawFunc, sceneDrawFunc);
+	mPostEffectManager->DrawBloomPass(
+		[this]()
+		{
+			DrawDepthToEffectBloom();
+		},
+		[this]()
+		{
+			mPostEffectManager->DrawPostEffect(PostEffectType::RadialBlur);
+		});
 
 	// トーンマッピング
-	targetDrawFunc = [this]()
-	{
-		mPostEffectManager->DrawEffectBloom();
-	};
-	mPostEffectManager->DrawToneMappingPass(targetDrawFunc);
+	mPostEffectManager->DrawToneMappingPass(
+		[this]()
+		{
+			mPostEffectManager->DrawPostEffect(PostEffectType::Bloom);
+		});
 
+	// ビネット
 	mPostEffectManager->DrawVignettePass(
 		[this]()
 		{
@@ -276,15 +272,12 @@ void GameScene::DrawPass()
 			mField->DrawModel();
 			mField->DrawSun();
 
-			//mField->DrawFog();
 			mPlayer->DrawModel();
-
 			mBoss->DrawModel();
 		});
 }
 void GameScene::Draw()
 {
-	//mPostEffectManager->DrawEffectBloom();
 	mPostEffectManager->DrawPostEffect(PostEffectType::Vignette);
 
 	mUiManager->DrawFrontSprite();
@@ -492,8 +485,6 @@ void GameScene::DrawDepthToEffectBloom()
 // 現在のシーンのオブジェクトの描画
 void GameScene::DrawCurrentSceneObject()
 {
-	//mPostEffectManager->DrawSkydomeVignette();
-
 	DrawSkydome();
 
 	mField->DrawModel();
@@ -505,5 +496,4 @@ void GameScene::DrawCurrentSceneObject()
 	mBoss->DrawModel();
 
 	EffectManager::GetInstance()->DrawEffect(false);
-	//mVolumetricFog->Draw();
 }

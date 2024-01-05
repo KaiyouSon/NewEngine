@@ -77,12 +77,12 @@ void TitleScene::ExecuteCS()
 
 void TitleScene::DrawPass()
 {
-	mPostEffectManager->EffectBloomDrawPass(
-		[]()
+	mPostEffectManager->DrawBloomPass(
+		[this]()
 		{
 			EffectManager::GetInstance()->DrawEffect();
 		},
-		[]()
+		[this]()
 		{
 			EffectManager::GetInstance()->DrawEffect();
 		});
@@ -90,7 +90,7 @@ void TitleScene::DrawPass()
 
 void TitleScene::Draw()
 {
-	mPostEffectManager->DrawEffectBloom();
+	mPostEffectManager->DrawPostEffect(PostEffectType::Bloom);
 	mTitleUI->DrawFrontSprite();
 }
 

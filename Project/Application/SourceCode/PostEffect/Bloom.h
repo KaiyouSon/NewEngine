@@ -30,18 +30,13 @@ public:
 private:
 	std::array<std::unique_ptr<PostEffect>, (uint32_t)PassType::Size> mPasses;
 	std::array<RenderTexture*, (uint32_t)TexType::Size> mTexs;
-
 	Vec2 mHighLumiClamp;
-
-public:
-	bool isBloom0;
-	bool isBloom1;
 
 public:
 	Bloom();
 	void Update();
 	void DrawPostEffect();
-	void DrawPass(const PassType passType);
+	void DrawPass(const std::function<void()>& targetDrawFunc, const std::function<void()>& sceneDrawFunc);
 	void PrevSceneDraw(const TexType passType);
 	void PostSceneDraw(const TexType passType);
 
