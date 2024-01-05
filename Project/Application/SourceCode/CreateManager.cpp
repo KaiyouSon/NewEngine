@@ -33,12 +33,7 @@ void CreateManager::CreateShaderCompiler()
 
 	// ビネット用
 	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(2);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "PostEffect/Vignette/VignetteVS.hlsl";
-	setting.psFilePath = path2 + "PostEffect/Vignette/VignettePS.hlsl";
-	ShaderCompilerManager::Create(setting, "Vignette");
+	ShaderCompilerManager::Create(path2 + "PostEffect/Vignette", "Vignette");
 
 	// 木の枝用
 	setting = ShaderCompilerSetting();
@@ -71,31 +66,13 @@ void CreateManager::CreateShaderCompiler()
 	ShaderCompilerManager::Create(setting, "Rhombus");
 
 	// 高輝度箇所抽出用（RenderTexture）
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(2);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "PostEffect/HighLumi/HighLumiVS.hlsl";
-	setting.psFilePath = path2 + "PostEffect/HighLumi/HighLumiPS.hlsl";
-	ShaderCompilerManager::Create(setting, "HighLumi");
+	ShaderCompilerManager::Create(path2 + "PostEffect/HighLumi", "HighLumi");
 
 	// ガウシアンブラー用（RenderTexture）
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(2);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "PostEffect/GaussianBlur/GaussianBlurVS.hlsl";
-	setting.psFilePath = path2 + "PostEffect/GaussianBlur/GaussianBlurPS.hlsl";
-	ShaderCompilerManager::Create(setting, "GaussianBlur");
+	ShaderCompilerManager::Create(path2 + "PostEffect/GaussianBlur", "GaussianBlur");
 
 	// 合成用（RenderTexture）
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(2);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "PostEffect/Composite/CompositeVS.hlsl";
-	setting.psFilePath = path2 + "PostEffect/Composite/CompositePS.hlsl";
-	ShaderCompilerManager::Create(setting, "Composite");
+	ShaderCompilerManager::Create(path2 + "PostEffect/Composite", "Composite");
 
 	// リスポーン時の遷移用
 	setting = ShaderCompilerSetting();
@@ -280,13 +257,7 @@ void CreateManager::CreateShaderCompiler()
 	ShaderCompilerManager::Create(setting, "WorldVolumetricFog");
 
 	// ラジアルブラー用（RenderTexture）
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(2);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "PostEffect/RadialBlur/RadialBlurVS.hlsl";
-	setting.psFilePath = path2 + "PostEffect/RadialBlur/RadialBlurPS.hlsl";
-	ShaderCompilerManager::Create(setting, "RadialBlur");
+	ShaderCompilerManager::Create(path2 + "PostEffect/RadialBlur", "RadialBlur");
 }
 
 /// ------------------------------------------------------------- ///

@@ -17,7 +17,6 @@ void ShaderWindow::DrawDebugGui()
 
 	Gui::BeginWindow("Shader Window", -1, &mIsShow);
 
-
 	for (const auto& [tag, shader] : *ShaderCompilerManager::GetShaderCompilerMap())
 	{
 		if (Gui::DrawCollapsingHeader(tag.c_str()))

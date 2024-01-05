@@ -156,6 +156,8 @@ void ShaderCompiler::Create(const std::filesystem::path& filePath)
 	{
 		std::string errorMessage = iniPath + "is an invalid path。";
 		OutputDebugLog(errorMessage.c_str());
+
+		assert(0 && "指定したシェーダファイルのパスは無効です");
 	}
 }
 
