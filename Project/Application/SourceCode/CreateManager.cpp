@@ -10,6 +10,9 @@ void CreateManager::CreateShaderCompiler()
 
 	ShaderCompilerSetting setting;
 
+	// 天球用
+	ShaderCompilerManager::Create(path2 + "Skydome", "Skydome");
+
 	// 草用
 	setting = ShaderCompilerSetting();
 	setting.mInputLayoutSettings.resize(3);
@@ -267,6 +270,12 @@ void CreateManager::CreateGraphicsPipeline()
 {
 	GraphicsPipelineSetting setting;
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
+
+	setting = GraphicsPipelineSetting();
+	setting = PipelineManager::GetGraphicsPipelineSetting("Object3D");
+	setting.shaderCompilerTag = "Skydome";
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	PipelineManager::CreateGraphicsPipeline(setting, "Object3D");
 
 	// 草用
 	setting = PipelineManager::GetGraphicsPipeline("Emitter")->GetSetting();

@@ -240,9 +240,9 @@ void GameScene::DrawPass()
 		mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 
 		// プレイヤーの深度のみ書き込む
-		mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+		mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
 		mBoss->DrawModel();
-		mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
+		mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 
 		// フィールド
 		mField->DrawModel(true);

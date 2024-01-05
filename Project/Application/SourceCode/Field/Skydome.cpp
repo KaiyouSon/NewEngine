@@ -3,6 +3,7 @@
 Skydome::Skydome() :
 	mSkydome(std::make_unique<Object3D>())
 {
+	mSkydome->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Skydome"));
 	mSkydome->SetModel(ModelManager::GetModel("Skydome"));
 	mSkydome->color = Color(0xc4c178);
 	mSkydome->isLighting = false;
