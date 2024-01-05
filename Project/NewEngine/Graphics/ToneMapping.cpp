@@ -21,7 +21,8 @@ void ToneMapping::Init()
 	mPostEffect->pos = GetWindowHalfSize();
 
 	mData.gain = 1.25f;
-	mData.offset = -0.015f;
+	mData.gain.z = 1.75f;
+	mData.offset = -0.025f;
 }
 
 void ToneMapping::Update()
@@ -46,7 +47,7 @@ void ToneMapping::DrawDebugGui()
 {
 	if (Gui::DrawCollapsingHeader("ToneMapping"))
 	{
-		Gui::DrawSlider1("Gain", mData.gain, 0.01f);
-		Gui::DrawSlider1("Offset", mData.offset, 0.01f);
+		Gui::DrawSlider3("Gain", mData.gain, 0.01f);
+		Gui::DrawSlider3("Offset", mData.offset, 0.01f);
 	}
 }

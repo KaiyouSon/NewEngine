@@ -271,7 +271,7 @@ namespace ConstantBufferData
 
 	struct CToneMapping
 	{
-		float gain = 1.1f;
-		float offset = 0.02f;
+		Vec3 gain = 1.1f;		float pad;
+		Vec3 offset = 0.02f;
 	};
 }

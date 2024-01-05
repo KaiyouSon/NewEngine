@@ -12,8 +12,8 @@ cbuffer ConstBufferDataMaterial : register(b1)
 
 cbuffer ConstBufferDataToonMapping : register(b2)
 {
-    float gain;
-    float offset;
+    float3 gain;
+    float3 offset;
 }
 
 struct Appdata

@@ -94,7 +94,7 @@ void GameScene::Init()
 	CollisionManager::GetInstance()->SetMovieEvent(mMovieEvent.get());
 
 	mDirectionalLight->pos = Vec3(-100, 440, 440);
-	mDirectionalLight->color = Color(120, 120, 120);
+	mDirectionalLight->color = Color(150, 150, 150);
 
 	mMovieEvent->Init();
 	mMovieEvent->SetPlayer(mPlayer.get());
