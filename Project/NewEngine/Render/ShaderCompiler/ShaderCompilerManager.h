@@ -8,7 +8,7 @@ class ShaderCompilerManager
 {
 private:
 	// シェーダーコンパイラーのマップ
-	static std::unordered_map<std::string, std::shared_ptr<ShaderCompiler>> sShaderCompilerMap;
+	static std::unordered_map<std::string, std::unique_ptr<ShaderCompiler>> sShaderCompilerMap;
 
 public:
 	// シェーダーコンパイラーを作成する関数
@@ -20,6 +20,6 @@ public:
 
 	// シェーダーコンパイラーを取得する関数
 	static ShaderCompiler* GetShaderCompiler(const std::string tag);
-	static std::unordered_map<std::string, std::shared_ptr<ShaderCompiler>>* GetShaderCompilerMap();
+	static std::unordered_map<std::string, std::unique_ptr<ShaderCompiler>>* GetShaderCompilerMap();
 };
 

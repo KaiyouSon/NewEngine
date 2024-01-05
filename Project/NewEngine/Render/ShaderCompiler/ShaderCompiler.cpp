@@ -13,6 +13,10 @@ std::vector<std::string> ShaderCompiler::sShaderTags =
 	"VS","GS","PS","CS"
 };
 
+ShaderCompiler::ShaderCompiler() : mResult(HRESULT())
+{
+}
+
 ShaderCompiler::ShaderCompiler(const ShaderCompilerSetting& shaderCompilerSetting)
 	: mResult(HRESULT())
 {
@@ -104,7 +108,7 @@ ShaderCompiler::ShaderCompiler(const ShaderCompilerSetting& shaderCompilerSettin
 	}
 }
 
-ShaderCompiler::ShaderCompiler(const std::filesystem::path& filePath)
+void ShaderCompiler::Create(const std::filesystem::path& filePath)
 {
 	mSetting.folderPath = filePath;
 
@@ -144,6 +148,11 @@ ShaderCompiler::ShaderCompiler(const std::filesystem::path& filePath)
 		CompileShader(mSetting.gsFilePath, ShaderType::Geometry);	// GS
 		CompileShader(mSetting.psFilePath, ShaderType::Pixel);		// PS
 		CompileShader(mSetting.csFilePath, ShaderType::Compute);	// CS
+	}
+	else
+	{
+		std::string errorMessage = iniPath + "is an invalid path。";
+		OutputDebugLog(errorMessage.c_str());
 	}
 }
 
@@ -306,9 +315,7 @@ const std::vector <D3D12_INPUT_ELEMENT_DESC>& ShaderCompiler::GetInputLayout()
 {
 	return mInputLayout;
 }
-
 ShaderCompilerSetting ShaderCompiler::GetSetting()
 {
 	return mSetting;
 }
-

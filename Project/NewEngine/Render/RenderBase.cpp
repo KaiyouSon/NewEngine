@@ -385,7 +385,7 @@ void RenderBase::ShaderCompilerInit()
 	ShaderCompilerManager::Create(path1 + "VolumetricFog", "VolumetricFog");
 
 	// トーンマッピング用
-	ShaderCompilerManager::Create(path1 + "Graphics/" + "ToonMapping", "ToonMapping");
+	ShaderCompilerManager::Create(path1 + "Graphics/" + "ToneMapping", "ToneMapping");
 }
 void RenderBase::GraphicsPipelineInit()
 {
@@ -551,14 +551,14 @@ void RenderBase::GraphicsPipelineInit()
 
 	// トーンマッピング用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ToonMapping");
+	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("ToneMapping");
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "ToonMapping");
+	PipelineManager::CreateGraphicsPipeline(setting, "ToneMapping");
 
 	//setting = PipelineManager::GetGraphicsPipeline("WithInVolumetricFog")->GetSetting();
 	//setting.depthStencilDesc = depthStencilDesc2;

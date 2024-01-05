@@ -5,15 +5,15 @@
 class PostEffect;
 
 // トーンマッピング
-class ToonMapping
+class ToneMapping
 {
 private:
 	std::unique_ptr<PostEffect> mPostEffect;
 	RenderTexture* mTexture;
-	ConstantBufferData::CToonMapping mData;
+	ConstantBufferData::CToneMapping mData;
 
 public:
-	ToonMapping();
+	ToneMapping();
 	void Load();
 	void Init();
 	void Update();

@@ -117,7 +117,7 @@ void LoadManager::GameSceneTextureLoad()
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "RadialBlurScene");
 
 	// トーンマッピング用
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "ToonMapping");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "ToneMapping");
 
 	// ボリュームテクスチャ
 	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice0.dds", "VolumeTexture0");
@@ -289,7 +289,7 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Noice/BlurNoice.dds", "BlurNoice");
 	TextureManager::LoadTexture("Noice/ScreenNoice.dds", "ScreenNoice");
 
-	TextureManager::CreateRenderTexture(GetWindowSize(), "ToonMapping");
+	TextureManager::CreateRenderTexture(GetWindowSize(), "ToneMapping");
 
 	// シャドウマップ
 	RenderTextureSetting setting = RenderTextureSetting(Vec2(1920, 1080) * 2, Vec2(1920, 1080) * 2, true);

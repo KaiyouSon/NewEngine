@@ -143,7 +143,6 @@
     <ClCompile Include="Application\SourceCode\Field\Cloud.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp" />
     <ClCompile Include="NewEngine\Debugger\ShaderWindow.cpp" />
-    <ClCompile Include="NewEngine\Graphics\ToonMapping.cpp" />
     <ClCompile Include="Application\SourceCode\UI\BossGaugeUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\CameraTargetUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\IUI.cpp" />
@@ -222,6 +221,7 @@
     <ClCompile Include="NewEngine\Graphics\DistanceFog.cpp" />
     <ClCompile Include="NewEngine\Graphics\GraphicsManager.cpp" />
     <ClCompile Include="NewEngine\Graphics\LightShaft.cpp" />
+    <ClCompile Include="NewEngine\Graphics\ToneMapping.cpp" />
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp" />
     <ClCompile Include="NewEngine\Input\InputManager.cpp" />
     <ClCompile Include="NewEngine\Input\JoypadInput.cpp" />
@@ -335,7 +335,6 @@
     <ClInclude Include="Application\SourceCode\Field\Cloud.h" />
     <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h" />
     <ClInclude Include="NewEngine\Debugger\ShaderWindow.h" />
-    <ClInclude Include="NewEngine\Graphics\ToonMapping.h" />
     <ClInclude Include="Application\SourceCode\UI\BossGaugeUI.h" />
     <ClInclude Include="Application\SourceCode\UI\CameraTargetUI.h" />
     <ClInclude Include="Application\SourceCode\UI\IUI.h" />
@@ -414,6 +413,7 @@
     <ClInclude Include="NewEngine\Graphics\DistanceFog.h" />
     <ClInclude Include="NewEngine\Graphics\GraphicsManager.h" />
     <ClInclude Include="NewEngine\Graphics\LightShaft.h" />
+    <ClInclude Include="NewEngine\Graphics\ToneMapping.h" />
     <ClInclude Include="NewEngine\Gui\GuiManager.h" />
     <ClInclude Include="NewEngine\Input\InputManager.h" />
     <ClInclude Include="NewEngine\Input\JoypadInput.h" />
@@ -525,7 +525,7 @@
     <None Include="Application\Shader\WorldVolumetricFog\WorldVolumetricFog.hlsli" />
     <None Include="NewEngine\Shader\Blur.hlsli" />
     <None Include="NewEngine\Shader\GPUEmitter\GPUEmitter.hlsli" />
-    <None Include="NewEngine\Shader\Graphics\ToonMapping\ToonMapping.hlsli" />
+    <None Include="NewEngine\Shader\Graphics\ToneMapping\ToneMapping.hlsli" />
     <None Include="NewEngine\Shader\ParticleObject\ParticleObject.hlsli" />
     <None Include="NewEngine\Shader\VolumetricFog\VolumetricFog.hlsli" />
     <None Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSprite.hlsli" />
@@ -902,13 +902,13 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Graphics\ToonMapping\ToonMappingPS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Graphics\ToneMapping\ToneMappingPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Graphics\ToonMapping\ToonMappingVS.hlsl">
+    <FxCompile Include="NewEngine\Shader\Graphics\ToneMapping\ToneMappingVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>

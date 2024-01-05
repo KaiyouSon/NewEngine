@@ -269,7 +269,7 @@ namespace ConstantBufferData
 		uint32_t generateNum;
 	};
 
-	struct CToonMapping
+	struct CToneMapping
 	{
 		float gain = 1.1f;
 		float offset = 0.02f;

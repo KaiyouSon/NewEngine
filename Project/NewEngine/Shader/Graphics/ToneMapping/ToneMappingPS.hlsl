@@ -1,4 +1,4 @@
-#include "ToonMapping.hlsli"
+#include "ToneMapping.hlsli"
 
 Texture2D<float4> tex : register(t0);
 SamplerState smp : register(s0);

@@ -273,12 +273,12 @@ void GameScene::DrawPass()
 	{
 		mPostEffectManager->DrawEffectBloom();
 	};
-	mPostEffectManager->DrawToonMappingPass(targetDrawFunc);
+	mPostEffectManager->DrawToneMappingPass(targetDrawFunc);
 }
 void GameScene::Draw()
 {
 	//mPostEffectManager->DrawEffectBloom();
-	mPostEffectManager->DrawPostEffect(PostEffectType::ToonMapping);
+	mPostEffectManager->DrawPostEffect(PostEffectType::ToneMapping);
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();

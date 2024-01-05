@@ -409,11 +409,11 @@
     <Filter Include="Shader\Engine\Graphics">
       <UniqueIdentifier>{436cd705-a514-4680-9bc9-97c9828c6f85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\Engine\Graphics\ToonMapping">
-      <UniqueIdentifier>{376500e2-f902-46f2-b5b7-79276313b606}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader\Engine\GPUEmitter">
       <UniqueIdentifier>{8f93d0c7-8557-4025-89d4-fa6198d07e48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Engine\Graphics\ToneMapping">
+      <UniqueIdentifier>{376500e2-f902-46f2-b5b7-79276313b606}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -954,11 +954,11 @@
     <ClCompile Include="Application\SourceCode\Field\Field.cpp">
       <Filter>Application\Source\Field</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Graphics\ToonMapping.cpp">
-      <Filter>Application\Source\PostEffect</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Debugger\ShaderWindow.cpp">
       <Filter>NewEngine\Source\Debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Graphics\ToneMapping.cpp">
+      <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1538,11 +1538,11 @@
     <ClInclude Include="Application\SourceCode\Field\FieldObject\IFieldObject.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Graphics\ToonMapping.h">
-      <Filter>Application\Header\PostEffect</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Debugger\ShaderWindow.h">
       <Filter>NewEngine\Header\Debugger</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Graphics\ToneMapping.h">
+      <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1640,11 +1640,11 @@
     <None Include="Application\Shader\WorldVolumetricFog\WorldVolumetricFog.hlsli">
       <Filter>Shader\Application\WorldVolumetricFog</Filter>
     </None>
-    <None Include="NewEngine\Shader\Graphics\ToonMapping\ToonMapping.hlsli">
-      <Filter>Shader\Engine\Graphics\ToonMapping</Filter>
-    </None>
     <None Include="NewEngine\Shader\GPUEmitter\GPUEmitter.hlsli">
       <Filter>Shader\Engine\GPUEmitter</Filter>
+    </None>
+    <None Include="NewEngine\Shader\Graphics\ToneMapping\ToneMapping.hlsli">
+      <Filter>Shader\Engine\Graphics\ToneMapping</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1909,12 +1909,6 @@
     <FxCompile Include="Application\Shader\Grass\GrassCS.hlsl">
       <Filter>Shader\Application\Grass</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Graphics\ToonMapping\ToonMappingPS.hlsl">
-      <Filter>Shader\Engine\Graphics\ToonMapping</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Graphics\ToonMapping\ToonMappingVS.hlsl">
-      <Filter>Shader\Engine\Graphics\ToonMapping</Filter>
-    </FxCompile>
     <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterCS.hlsl">
       <Filter>Shader\Engine\GPUEmitter</Filter>
     </FxCompile>
@@ -1926,6 +1920,12 @@
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterVS.hlsl">
       <Filter>Shader\Engine\GPUEmitter</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\Graphics\ToneMapping\ToneMappingPS.hlsl">
+      <Filter>Shader\Engine\Graphics\ToneMapping</Filter>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\Graphics\ToneMapping\ToneMappingVS.hlsl">
+      <Filter>Shader\Engine\Graphics\ToneMapping</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

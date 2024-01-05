@@ -27,14 +27,15 @@ private:
 	// 設定ファイルを読み込む
 	void LoadIniFile(std::ifstream& file);
 
-public:
-	// コンストラクタ
-	ShaderCompiler() {}
-	ShaderCompiler(const ShaderCompilerSetting& shaderCompilerSetting);
-	ShaderCompiler(const std::filesystem::path& filePath);
-
 	// シェーダーをコンパイル
 	void CompileShader(const std::string& filePath, const ShaderType shaderType);
+
+public:
+	// コンストラクタ
+	ShaderCompiler();
+	ShaderCompiler(const ShaderCompilerSetting& shaderCompilerSetting);
+
+	void Create(const std::filesystem::path& filePath);
 
 public:
 	static ID3DBlob* GetErrorBlob();

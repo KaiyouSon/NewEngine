@@ -3,14 +3,14 @@
 #include "Bloom.h"
 #include "Vignette.h"
 #include "RadialBlur.h"
-#include "ToonMapping.h"
+#include "ToneMapping.h"
 
 enum class PostEffectType
 {
 	Bloom,
 	Vignette,
 	RadialBlur,
-	ToonMapping
+	ToneMapping
 };
 
 // 全てのポストエフェクトを管理するクラス
@@ -20,7 +20,7 @@ private:
 	std::unique_ptr<Bloom> mEffectBloom;
 	std::unique_ptr<Vignette> mSkydomeVignette;
 	std::unique_ptr<RadialBlur> mRadialBlur;
-	std::unique_ptr<ToonMapping> mToonMapping;
+	std::unique_ptr<ToneMapping> mToneMapping;
 
 public:
 	// 天球のビネットのパス設定
@@ -37,7 +37,7 @@ public:
 		const std::function<void()>& sceneDrawFunc);
 
 	// トーンマッピング
-	void DrawToonMappingPass(
+	void DrawToneMappingPass(
 		const std::function<void()>& targetDrawFunc);
 
 public:
