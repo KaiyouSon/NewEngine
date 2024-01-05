@@ -2,6 +2,7 @@
 #include "Singleton.h"
 #include "MappingWindow.h"
 #include "RendererWindow.h"
+#include "ShaderWindow.h"
 
 // 前方宣言
 template<typename T> class Singleton;
@@ -15,6 +16,7 @@ private:
 	bool mIsNextFrame;
 
 private:
+	std::unique_ptr<ShaderWindow> mShaderWindow;
 	std::unique_ptr<MappingWindow> mMappingWindow;
 	std::unique_ptr<RendererWindow> mRendererWindow;
 
@@ -22,6 +24,7 @@ public:
 	void Init();
 	void Update();
 	void DrawDebugGui();
+	void ReCompile();
 
 public:
 	bool GetisStop();

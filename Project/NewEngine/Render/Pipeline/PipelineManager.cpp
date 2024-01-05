@@ -12,6 +12,16 @@ void PipelineManager::CreateGraphicsPipeline(const GraphicsPipelineSetting& sett
 	sGraphicsPipelineMap.insert(std::make_pair(tag, std::move(gp)));
 }
 
+void PipelineManager::ReCreateGraphicsPipeline(const std::string tag)
+{
+	sGraphicsPipelineMap[tag]->Create(sGraphicsPipelineMap[tag]->GetSetting());
+}
+
+void PipelineManager::ReCreateGraphicsPipeline(const GraphicsPipelineSetting& setting, const std::string tag)
+{
+	sGraphicsPipelineMap[tag]->Create(setting);
+}
+
 // ComputePipelineの生成
 void PipelineManager::CreateComputePipeline(const ComputePipelineSetting& setting, const std::string tag)
 {
@@ -41,4 +51,15 @@ ComputePipeline* PipelineManager::GetComputePipeline(const std::string tag)
 	}
 
 	return sComputePipelineMap[tag].get();
+}
+
+GraphicsPipelineSetting PipelineManager::GetGraphicsPipelineSetting(const std::string tag)
+{
+	auto it = sGraphicsPipelineMap.find(tag);
+	if (it == sGraphicsPipelineMap.end())
+	{
+		return GraphicsPipelineSetting();
+	}
+
+	return sGraphicsPipelineMap[tag]->GetSetting();
 }

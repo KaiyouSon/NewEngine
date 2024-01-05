@@ -20,8 +20,8 @@ void ToonMapping::Init()
 	mPostEffect->AddMaterial<CToonMapping>();
 	mPostEffect->pos = GetWindowHalfSize();
 
-	mData.gain = 0.01f;
-	mData.offset = 0.01f;
+	mData.gain = 1.25f;
+	mData.offset = -0.015f;
 }
 
 void ToonMapping::Update()

@@ -40,5 +40,6 @@ public:
 	static ID3DBlob* GetErrorBlob();
 	ID3DBlob* GetShaderBlob(const ShaderType shaderType);
 	const std::vector <D3D12_INPUT_ELEMENT_DESC>& GetInputLayout();
+	ShaderCompilerSetting GetSetting();
 };
 

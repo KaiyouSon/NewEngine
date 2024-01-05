@@ -155,6 +155,7 @@ void NewEngine::PostDraw()
 
 	Gui::PostDraw();
 	RenderBase::GetInstance()->PostDraw();
+	DebugManager::GetInstance()->ReCompile();
 }
 
 void NewEngine::FrameControl()

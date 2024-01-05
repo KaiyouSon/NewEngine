@@ -2,6 +2,7 @@
 #include "NewEngine.h"
 
 DebugManager::DebugManager() :
+	mShaderWindow(std::make_unique<ShaderWindow>()),
 	mMappingWindow(std::make_unique<MappingWindow>()),
 	mRendererWindow(std::make_unique<RendererWindow>())
 {
@@ -44,7 +45,11 @@ void DebugManager::DrawDebugGui()
 		{
 			Gui::BeginMenuBar();
 
-			if (Gui::MenuItem("All Map"))
+			if (Gui::MenuItem("Shader"))
+			{
+				mShaderWindow->SetisShow(true);
+			}
+			else if (Gui::MenuItem("Map Data"))
 			{
 				mMappingWindow->SetisShow(true);
 			}
@@ -83,15 +88,18 @@ void DebugManager::DrawDebugGui()
 	Gui::DrawCheckBox("Show Collider", &isShowCollider);
 	ColliderDrawer::GetInstance()->SetisShow(isShowCollider);
 
-	Gui::DrawLine();
-	Gui::DrawString("FPS : %f", FrameRate::GetInstance()->GetCurrentFPS());
-
 	Gui::EndWindow();
 
 	//ImGui::ShowDemoWindow();
 
+	mShaderWindow->DrawDebugGui();
 	mMappingWindow->DrawDebugGui();
 	mRendererWindow->DrawDebugGui();
+}
+
+void DebugManager::ReCompile()
+{
+	mShaderWindow->ReCompile();
 }
 
 bool DebugManager::GetisStop()

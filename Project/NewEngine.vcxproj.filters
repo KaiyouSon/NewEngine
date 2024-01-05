@@ -957,6 +957,9 @@
     <ClCompile Include="NewEngine\Graphics\ToonMapping.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\ShaderWindow.cpp">
+      <Filter>NewEngine\Source\Debugger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1537,6 +1540,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Graphics\ToonMapping.h">
       <Filter>Application\Header\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\ShaderWindow.h">
+      <Filter>NewEngine\Header\Debugger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

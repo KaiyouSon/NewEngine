@@ -307,3 +307,8 @@ const std::vector <D3D12_INPUT_ELEMENT_DESC>& ShaderCompiler::GetInputLayout()
 	return mInputLayout;
 }
 
+ShaderCompilerSetting ShaderCompiler::GetSetting()
+{
+	return mSetting;
+}
+
