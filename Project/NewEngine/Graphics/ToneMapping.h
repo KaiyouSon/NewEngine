@@ -18,7 +18,7 @@ public:
 	void Init();
 	void Update();
 	void DrawPass(const std::function<void()>& targetDrawFunc);
-	void Draw();
+	void DrawPostEffect();
 	void DrawDebugGui();
 };
 

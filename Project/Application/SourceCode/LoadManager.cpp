@@ -101,8 +101,9 @@ void LoadManager::GameSceneTextureLoad()
 	TextureManager::LoadTexture("Grass/Weed.png", "Weed");
 	TextureManager::LoadTexture("Branch.dds", "Branch");
 
-	// 天球
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "Vignette");
+	// ビネット用
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "VignetteTarget");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "VignetteMask");
 
 	// ブルーム用
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "BloomHighLumi");
@@ -288,8 +289,6 @@ bool LoadManager::TextureLoad()
 	// ノイズ
 	TextureManager::LoadTexture("Noice/BlurNoice.dds", "BlurNoice");
 	TextureManager::LoadTexture("Noice/ScreenNoice.dds", "ScreenNoice");
-
-	TextureManager::CreateRenderTexture(GetWindowSize(), "ToneMapping");
 
 	// シャドウマップ
 	RenderTextureSetting setting = RenderTextureSetting(Vec2(1920, 1080) * 2, Vec2(1920, 1080) * 2, true);

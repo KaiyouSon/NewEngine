@@ -223,14 +223,6 @@ void GameScene::DrawPass()
 	std::function<void()> maskDrawFunc;
 	std::function<void()> sceneDrawFunc;
 
-	// --- 天球にベネットをかけるパス ------------------------------//
-	// ラムダ式で代入
-	targetDrawFunc = [this]()
-	{
-		DrawSkydome();
-	};
-	mPostEffectManager->SkydomeVignetteDrawPass(targetDrawFunc);
-
 	// ラムダ式で代入
 	targetDrawFunc = [this]()
 	{
@@ -264,21 +256,36 @@ void GameScene::DrawPass()
 	sceneDrawFunc = [this]()
 	{
 		mPostEffectManager->DrawRadialBlur();
-		//DrawCurrentSceneObject();
-		//mVolumetricFog->Draw();
 	};
 	mPostEffectManager->EffectBloomDrawPass(targetDrawFunc, sceneDrawFunc);
 
+	// トーンマッピング
 	targetDrawFunc = [this]()
 	{
 		mPostEffectManager->DrawEffectBloom();
 	};
 	mPostEffectManager->DrawToneMappingPass(targetDrawFunc);
+
+	mPostEffectManager->DrawVignettePass(
+		[this]()
+		{
+			mPostEffectManager->DrawPostEffect(PostEffectType::ToneMapping);
+		},
+		[this]()
+		{
+			mField->DrawModel();
+			mField->DrawSun();
+
+			//mField->DrawFog();
+			mPlayer->DrawModel();
+
+			mBoss->DrawModel();
+		});
 }
 void GameScene::Draw()
 {
 	//mPostEffectManager->DrawEffectBloom();
-	mPostEffectManager->DrawPostEffect(PostEffectType::ToneMapping);
+	mPostEffectManager->DrawPostEffect(PostEffectType::Vignette);
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
@@ -485,7 +492,9 @@ void GameScene::DrawDepthToEffectBloom()
 // 現在のシーンのオブジェクトの描画
 void GameScene::DrawCurrentSceneObject()
 {
-	mPostEffectManager->DrawSkydomeVignette();
+	//mPostEffectManager->DrawSkydomeVignette();
+
+	DrawSkydome();
 
 	mField->DrawModel();
 	mField->DrawSun();

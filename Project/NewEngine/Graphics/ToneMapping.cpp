@@ -38,7 +38,7 @@ void ToneMapping::DrawPass(const std::function<void()>& targetDrawFunc)
 	mTexture->PostDrawScene();
 }
 
-void ToneMapping::Draw()
+void ToneMapping::DrawPostEffect()
 {
 	mPostEffect->Draw();
 }

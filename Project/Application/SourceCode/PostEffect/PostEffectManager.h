@@ -8,9 +8,9 @@
 enum class PostEffectType
 {
 	Bloom,
-	Vignette,
 	RadialBlur,
-	ToneMapping
+	ToneMapping,
+	Vignette,
 };
 
 // 全てのポストエフェクトを管理するクラス
@@ -18,15 +18,11 @@ class PostEffectManager
 {
 private:
 	std::unique_ptr<Bloom> mEffectBloom;
-	std::unique_ptr<Vignette> mSkydomeVignette;
+	std::unique_ptr<Vignette> mVignette;
 	std::unique_ptr<RadialBlur> mRadialBlur;
 	std::unique_ptr<ToneMapping> mToneMapping;
 
 public:
-	// 天球のビネットのパス設定
-	void SkydomeVignetteDrawPass(
-		const std::function<void()>& targetDrawFunc);
-
 	// エフェクトのブルームのパス設定
 	void EffectBloomDrawPass(
 		const std::function<void()>& targetDrawFunc,
@@ -39,6 +35,11 @@ public:
 	// トーンマッピング
 	void DrawToneMappingPass(
 		const std::function<void()>& targetDrawFunc);
+
+	// ビネット
+	void DrawVignettePass(
+		const std::function<void()>& targetDrawFunc,
+		const std::function<void()>& maskDrawFunc);
 
 public:
 	PostEffectManager();

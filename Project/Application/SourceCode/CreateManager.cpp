@@ -303,6 +303,7 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.shaderCompilerTag = "Vignette";
 	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Vignette");
 
 	// 木の枝用

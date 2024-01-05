@@ -3,9 +3,9 @@
 
 PostEffectManager::PostEffectManager() :
 	mEffectBloom(std::make_unique<Bloom>()),
-	mSkydomeVignette(std::make_unique<Vignette>()),
 	mRadialBlur(std::make_unique<RadialBlur>()),
-	mToneMapping(std::make_unique<ToneMapping>())
+	mToneMapping(std::make_unique<ToneMapping>()),
+	mVignette(std::make_unique<Vignette>())
 {
 }
 
@@ -16,10 +16,10 @@ void PostEffectManager::Init()
 
 void PostEffectManager::Update()
 {
-	mSkydomeVignette->Update();
 	mEffectBloom->Update();
 	mRadialBlur->Update();
 	mToneMapping->Update();
+	mVignette->Update();
 }
 
 void PostEffectManager::DrawDebugGui()
@@ -33,7 +33,7 @@ void PostEffectManager::DrawDebugGui()
 // 天球のビネット
 void PostEffectManager::DrawSkydomeVignette()
 {
-	mSkydomeVignette->DrawPostEffect();
+	mVignette->DrawPostEffect();
 }
 
 // エフェクトのブルーム
@@ -51,8 +51,18 @@ void PostEffectManager::DrawRadialBlur()
 
 void PostEffectManager::DrawPostEffect(const PostEffectType type)
 {
+	switch (type)
+	{
+	case PostEffectType::ToneMapping:
+		mToneMapping->DrawPostEffect();
+		break;
+
+	case PostEffectType::Vignette:
+		mVignette->DrawPostEffect();
+		break;
+	};
+
 	type;
-	mToneMapping->Draw();
 }
 
 // ゲッター
@@ -69,15 +79,6 @@ void PostEffectManager::SetRadialBlurCenterPos(const Vec3 worldPos)
 }
 
 ///--- パスの設定 ------------------------------------------------------------------------------------------------ ///
-
-// 天球のビネットのパス設定
-void PostEffectManager::SkydomeVignetteDrawPass(
-	const std::function<void()>& targetDrawFunc)
-{
-	mSkydomeVignette->PrevSceneDraw();
-	targetDrawFunc();
-	mSkydomeVignette->PostSceneDraw();
-}
 
 // エフェクトのブルームのパス設定
 void PostEffectManager::EffectBloomDrawPass(
@@ -129,4 +130,11 @@ void PostEffectManager::DrawToneMappingPass(
 	const std::function<void()>& targetDrawFunc)
 {
 	mToneMapping->DrawPass(targetDrawFunc);
+}
+
+void PostEffectManager::DrawVignettePass(
+	const std::function<void()>& targetDrawFunc,
+	const std::function<void()>& maskDrawFunc)
+{
+	mVignette->DrawPass(targetDrawFunc, maskDrawFunc);
 }
