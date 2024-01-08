@@ -412,6 +412,9 @@
     <Filter Include="Shader\Application\Transition">
       <UniqueIdentifier>{c72fd087-92e7-4d7d-afbd-8fe369dd9ef9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Application\PostEffect\LensFlare">
+      <UniqueIdentifier>{77b07f40-b7bb-40b6-a559-0229951ea397}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -955,6 +958,9 @@
       <Filter>NewEngine\Source\Debugger</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\PostEffect\ToneMapping.cpp">
+      <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SourceCode\PostEffect\LensFlare.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1541,6 +1547,9 @@
     <ClInclude Include="Application\SourceCode\PostEffect\ToneMapping.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SourceCode\PostEffect\LensFlare.h">
+      <Filter>Application\Header\PostEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1642,6 +1651,9 @@
     </None>
     <None Include="Application\Shader\RespawnPoint\Ripple\Ripple.hlsli">
       <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
+    </None>
+    <None Include="Application\Shader\PostEffect\LensFlare\LensFlare.hlsli">
+      <Filter>Shader\Application\PostEffect\LensFlare</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1923,6 +1935,12 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\RespawnPoint\Ripple\RippleVS.hlsl">
       <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\PostEffect\LensFlare\LensFlarePS.hlsl">
+      <Filter>Shader\Application\PostEffect\LensFlare</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\PostEffect\LensFlare\LensFlareVS.hlsl">
+      <Filter>Shader\Application\PostEffect\LensFlare</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

@@ -141,6 +141,7 @@
     <ClCompile Include="Application\SourceCode\Camera\CameraManager.cpp" />
     <ClCompile Include="Application\SourceCode\Character\Character.cpp" />
     <ClCompile Include="Application\SourceCode\Field\Cloud.cpp" />
+    <ClCompile Include="Application\SourceCode\PostEffect\LensFlare.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp" />
     <ClCompile Include="NewEngine\Debugger\ShaderWindow.cpp" />
     <ClCompile Include="Application\SourceCode\UI\BossGaugeUI.cpp" />
@@ -333,6 +334,7 @@
     <ClInclude Include="Application\SourceCode\Camera\CameraManager.h" />
     <ClInclude Include="Application\SourceCode\Character\Character.h" />
     <ClInclude Include="Application\SourceCode\Field\Cloud.h" />
+    <ClInclude Include="Application\SourceCode\PostEffect\LensFlare.h" />
     <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h" />
     <ClInclude Include="NewEngine\Debugger\ShaderWindow.h" />
     <ClInclude Include="Application\SourceCode\UI\BossGaugeUI.h" />
@@ -513,6 +515,7 @@
     <None Include="Application\Shader\Grass\Grass.hlsli" />
     <None Include="Application\Shader\PostEffect\HighLumi\HighLumi.hlsli" />
     <None Include="Application\Shader\PostEffect\GaussianBlur\GaussianBlur.hlsli" />
+    <None Include="Application\Shader\PostEffect\LensFlare\LensFlare.hlsli" />
     <None Include="Application\Shader\PostEffect\RadialBlur\RadialBlur.hlsli" />
     <None Include="Application\Shader\RespawnPoint\Rhombus\Rhombus.hlsli" />
     <None Include="Application\Shader\RespawnPoint\Ripple\Ripple.hlsli" />
@@ -762,6 +765,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\PostEffect\LensFlare\LensFlarePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\PostEffect\LensFlare\LensFlareVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Application\Shader\PostEffect\RadialBlur\RadialBlurPS.hlsl">

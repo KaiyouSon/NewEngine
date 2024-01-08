@@ -28,8 +28,6 @@ private:
 	std::unique_ptr<MovieEvent> mMovieEvent;
 	std::unique_ptr<VolumetricFog> mVolumetricFog;
 
-	RenderTexture* mCurrentScene;
-
 	bool mIsChangeScene;
 
 	bool isInit;

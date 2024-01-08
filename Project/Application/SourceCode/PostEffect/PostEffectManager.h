@@ -4,6 +4,7 @@
 #include "Vignette.h"
 #include "RadialBlur.h"
 #include "ToneMapping.h"
+#include "LensFlare.h"
 
 enum class PostEffectType
 {
@@ -11,6 +12,7 @@ enum class PostEffectType
 	RadialBlur,
 	ToneMapping,
 	Vignette,
+	LensFlare
 };
 
 // 全てのポストエフェクトを管理するクラス
@@ -21,6 +23,7 @@ private:
 	std::unique_ptr<Bloom> mBloom;
 	std::unique_ptr<ToneMapping> mToneMapping;
 	std::unique_ptr<Vignette> mVignette;
+	std::unique_ptr<LensFlare> mLensFlare;
 
 public:
 	// ラジアルブラー
@@ -39,6 +42,11 @@ public:
 
 	// ビネット
 	void DrawVignettePass(
+		const std::function<void()>& targetDrawFunc,
+		const std::function<void()>& maskDrawFunc);
+
+	// レンズフレア
+	void DrawLensFlarePass(
 		const std::function<void()>& targetDrawFunc,
 		const std::function<void()>& maskDrawFunc);
 

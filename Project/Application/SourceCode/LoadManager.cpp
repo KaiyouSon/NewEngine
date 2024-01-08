@@ -101,9 +101,10 @@ void LoadManager::GameSceneTextureLoad()
 	TextureManager::LoadTexture("Grass/Weed.png", "Weed");
 	TextureManager::LoadTexture("Branch.dds", "Branch");
 
-	// ビネット用
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "VignetteTarget");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "VignetteMask");
+	// ラジアルブラー用
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080) / 4, "RadialBlurTarget");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "RadialBlurFinish");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "RadialBlurScene");
 
 	// ブルーム用
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "BloomHighLumi");
@@ -112,13 +113,16 @@ void LoadManager::GameSceneTextureLoad()
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "Bloom");
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "BloomTarget");
 
-	// ラジアルブラー用
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080) / 4, "RadialBlurTarget");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "RadialBlurFinish");
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "RadialBlurScene");
+	// レンズフレア用
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "LensFlareTarget");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "LensFlareMask");
 
 	// トーンマッピング用
 	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "ToneMapping");
+
+	// ビネット用
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "VignetteTarget");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "VignetteMask");
 
 	// ボリュームテクスチャ
 	TextureManager::LoadVolumeTexture("Noice/VolumeNoice/VolumeNoice0.dds", "VolumeTexture0");

@@ -48,6 +48,9 @@ void CreateManager::CreateShaderCompiler()
 	// 軌跡用
 	ShaderCompilerManager::Create(AppShaderDirectory + "Trajectory", "Trajectory");
 
+	// レンズフレア用
+	ShaderCompilerManager::Create(AppShaderDirectory + "PostEffect/LensFlare", "LensFlare");
+
 	// 雲用
 	setting = ShaderCompilerSetting();
 	setting.mInputLayoutSettings.resize(3);
@@ -241,13 +244,11 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc;
-	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Cloud");
 
 	// ビネット用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
 	setting.shaderCompilerTag = "Vignette";
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Vignette");
@@ -256,7 +257,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 	setting.shaderCompilerTag = "Branch";
 	setting.cullMode = CullMode::None;
-	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Branch");
 
 	// リスポーン地点用（下の波紋用）
@@ -264,7 +264,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.shaderCompilerTag = "Ripple";
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
-	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Ripple");
 
 	// リスポーン地点用（浮いてる菱形用）
@@ -272,34 +271,29 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.shaderCompilerTag = "Rhombus";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleList;
-	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Rhombus");
 
 	// 高輝度箇所抽出用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
 	setting.shaderCompilerTag = "HighLumi";
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "HighLumi");
 
 	// ガウシアンブラー用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
 	setting.shaderCompilerTag = "GaussianBlur";
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "GaussianBlur");
 
 	// 合成用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
 	setting.shaderCompilerTag = "Composite";
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Composite");
 
 	// リスポーン時の遷移用
 	setting = PipelineManager::GetGraphicsPipeline("Sprite")->GetSetting();
 	setting.shaderCompilerTag = "RespawnTransition";
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 4;
 	PipelineManager::CreateGraphicsPipeline(setting, "RespawnTransition");
 
@@ -307,7 +301,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 	setting.shaderCompilerTag = "ShadowObj";
 	setting.cullMode = CullMode::None;
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "ShadowObj");
@@ -315,7 +308,6 @@ void CreateManager::CreateGraphicsPipeline()
 	// ShadowMap用
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
 	setting.shaderCompilerTag = "ShadowMap";
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "ShadowMap");
@@ -323,37 +315,31 @@ void CreateManager::CreateGraphicsPipeline()
 	// リスポーンエフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
 	setting.shaderCompilerTag = "RespawnPointEffect";
-	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "RespawnPointEffect");
 
 	// タイトルのロゴ爆散用
 	setting = PipelineManager::GetGraphicsPipeline("ParticleMesh")->GetSetting();
 	setting.shaderCompilerTag = "LogoExplosionEffectInit";
-	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "LogoExplosionEffect");
 
 	// 誘導エフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
 	setting.shaderCompilerTag = "LeadEffectInit";
-	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "LeadEffect");
 
 	// プレイヤー回復エフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
 	setting.shaderCompilerTag = "PlayerRecoveryEffectInit";
-	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "PlayerRecoveryEffect");
 
 	// 空中のエフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
 	setting.shaderCompilerTag = "AirEffectInit";
-	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "AirEffect");
 
 	// ボスの攻撃軌跡のエフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
 	setting.shaderCompilerTag = "BossAttackTrajectoryEffectInit";
-	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "BossAttackTrajectoryEffect");
 
 	// 深度値のみ書き込み用
@@ -392,7 +378,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	setting.rootSignatureSetting.maxUavDescritorRange = 0;
-	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Trajectory");
 
 	// ポンデリング/太陽用
@@ -403,13 +388,11 @@ void CreateManager::CreateGraphicsPipeline()
 	// 攻撃の爆発のエフェクト
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
 	setting.shaderCompilerTag = "AttackExplosionEffectInit";
-	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "AttackExplosionEffect");
 
 	// 攻撃の爆発のエフェクト
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
 	setting.shaderCompilerTag = "SmokeEffectInit";
-	setting.rtvNum = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "SmokeEffect");
 
 	// 攻撃の爆発のエフェクト
@@ -435,6 +418,12 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "ToneMapping");
+
+	// レンズフレア用（PostEffect）
+	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
+	setting.shaderCompilerTag = "LensFlare";
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
+	PipelineManager::CreateGraphicsPipeline(setting, "LensFlare");
 }
 
 /// ------------------------------------------------------------- ///

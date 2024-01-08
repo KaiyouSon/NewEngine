@@ -5,7 +5,8 @@ PostEffectManager::PostEffectManager() :
 	mBloom(std::make_unique<Bloom>()),
 	mRadialBlur(std::make_unique<RadialBlur>()),
 	mToneMapping(std::make_unique<ToneMapping>()),
-	mVignette(std::make_unique<Vignette>())
+	mVignette(std::make_unique<Vignette>()),
+	mLensFlare(std::make_unique<LensFlare>())
 {
 }
 
@@ -20,6 +21,7 @@ void PostEffectManager::Update()
 	mRadialBlur->Update();
 	mToneMapping->Update();
 	mVignette->Update();
+	mLensFlare->Update();
 }
 
 void PostEffectManager::DrawDebugGui()
@@ -49,9 +51,11 @@ void PostEffectManager::DrawPostEffect(const PostEffectType type)
 	case PostEffectType::Vignette:
 		mVignette->DrawPostEffect();
 		break;
-	};
 
-	type;
+	case PostEffectType::LensFlare:
+		mLensFlare->DrawPostEffect();
+		break;
+	};
 }
 
 // ゲッター
@@ -95,4 +99,11 @@ void PostEffectManager::DrawVignettePass(
 	const std::function<void()>& maskDrawFunc)
 {
 	mVignette->DrawPass(targetDrawFunc, maskDrawFunc);
+}
+
+void PostEffectManager::DrawLensFlarePass(
+	const std::function<void()>& targetDrawFunc,
+	const std::function<void()>& maskDrawFunc)
+{
+	mLensFlare->DrawPass(targetDrawFunc, maskDrawFunc);
 }

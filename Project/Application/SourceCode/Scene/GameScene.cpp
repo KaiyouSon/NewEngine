@@ -51,8 +51,6 @@ void GameScene::Init()
 
 	mBgmVolume = 0;
 
-	mCurrentScene = TextureManager::GetRenderTexture("CurrentScene");
-
 	Camera::current.pos = Vec3(-65, 75, -85);
 	Camera::current.rot = Radian(Vec3(25, 40, 0));
 
@@ -187,9 +185,8 @@ void GameScene::Update()
 	mField->Update();
 	mSkydome->Update();
 	mMenuManager->Update();
-	mPostEffectManager->Update();
 	mVolumetricFog->Update();
-
+	mPostEffectManager->Update();
 
 	ShadowMap::GetInstance()->Update();
 	EffectManager::GetInstance()->Update();
@@ -242,8 +239,7 @@ void GameScene::DrawPass()
 			DrawCurrentSceneObject();
 		});
 
-	// --- エフェクトにブルームをかけるパス ------------------------//
-	// ラムダ式で代入
+	// ブルーム
 	mPostEffectManager->DrawBloomPass(
 		[this]()
 		{
@@ -259,6 +255,21 @@ void GameScene::DrawPass()
 		[this]()
 		{
 			mPostEffectManager->DrawPostEffect(PostEffectType::Bloom);
+		});
+
+	// レンズフレア]
+	mPostEffectManager->DrawLensFlarePass(
+		[this]()
+		{
+			mPostEffectManager->DrawPostEffect(PostEffectType::ToneMapping);
+		},
+		[this]()
+		{
+			mField->DrawModel();
+			mField->DrawSun();
+
+			mPlayer->DrawModel();
+			mBoss->DrawModel();
 		});
 
 	// ビネット
@@ -278,7 +289,8 @@ void GameScene::DrawPass()
 }
 void GameScene::Draw()
 {
-	mPostEffectManager->DrawPostEffect(PostEffectType::Vignette);
+	//mPostEffectManager->DrawPostEffect(PostEffectType::Vignette);
+	mPostEffectManager->DrawPostEffect(PostEffectType::LensFlare);
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
