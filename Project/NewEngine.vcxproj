@@ -221,7 +221,7 @@
     <ClCompile Include="NewEngine\Graphics\DistanceFog.cpp" />
     <ClCompile Include="NewEngine\Graphics\GraphicsManager.cpp" />
     <ClCompile Include="NewEngine\Graphics\LightShaft.cpp" />
-    <ClCompile Include="NewEngine\Graphics\ToneMapping.cpp" />
+    <ClCompile Include="Application\SourceCode\PostEffect\ToneMapping.cpp" />
     <ClCompile Include="NewEngine\Gui\GuiManager.cpp" />
     <ClCompile Include="NewEngine\Input\InputManager.cpp" />
     <ClCompile Include="NewEngine\Input\JoypadInput.cpp" />
@@ -413,7 +413,7 @@
     <ClInclude Include="NewEngine\Graphics\DistanceFog.h" />
     <ClInclude Include="NewEngine\Graphics\GraphicsManager.h" />
     <ClInclude Include="NewEngine\Graphics\LightShaft.h" />
-    <ClInclude Include="NewEngine\Graphics\ToneMapping.h" />
+    <ClInclude Include="Application\ToneMapping.h" />
     <ClInclude Include="NewEngine\Gui\GuiManager.h" />
     <ClInclude Include="NewEngine\Input\InputManager.h" />
     <ClInclude Include="NewEngine\Input\JoypadInput.h" />
@@ -525,7 +525,7 @@
     <None Include="Application\Shader\WorldVolumetricFog\WorldVolumetricFog.hlsli" />
     <None Include="NewEngine\Shader\Blur.hlsli" />
     <None Include="NewEngine\Shader\GPUEmitter\GPUEmitter.hlsli" />
-    <None Include="NewEngine\Shader\Graphics\ToneMapping\ToneMapping.hlsli" />
+    <None Include="Application\Shader\PostEffect\ToneMapping\ToneMapping.hlsli" />
     <None Include="NewEngine\Shader\ParticleObject\ParticleObject.hlsli" />
     <None Include="NewEngine\Shader\VolumetricFog\VolumetricFog.hlsli" />
     <None Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSprite.hlsli" />
@@ -902,13 +902,13 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Graphics\ToneMapping\ToneMappingPS.hlsl">
+    <FxCompile Include="Application\Shader\PostEffect\ToneMapping\ToneMappingPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Graphics\ToneMapping\ToneMappingVS.hlsl">
+    <FxCompile Include="Application\Shader\PostEffect\ToneMapping\ToneMappingVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>

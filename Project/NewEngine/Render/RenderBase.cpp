@@ -383,9 +383,6 @@ void RenderBase::ShaderCompilerInit()
 
 	// ボリューメトリックフォグ用
 	ShaderCompilerManager::Create(path1 + "VolumetricFog", "VolumetricFog");
-
-	// トーンマッピング用
-	ShaderCompilerManager::Create(path1 + "Graphics/" + "ToneMapping", "ToneMapping");
 }
 void RenderBase::GraphicsPipelineInit()
 {
@@ -415,7 +412,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 9;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "Object3D");
@@ -426,7 +422,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 7;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "FbxModel");
@@ -437,7 +432,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Sprite");
@@ -448,7 +442,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "CircleGaugeSprite");
@@ -459,7 +452,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "PostEffect");
@@ -470,7 +462,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::LineStrip;
 	setting.depthStencilDesc = depthStencilDesc1;
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	PipelineManager::CreateGraphicsPipeline(setting, "Line");
@@ -481,7 +472,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc1;
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Emitter");
@@ -492,7 +482,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc1;
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "GPUEmitter");
@@ -504,7 +493,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.fillMode = GraphicsPipelineSetting::Wireframe;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	PipelineManager::CreateGraphicsPipeline(setting, "ColliderObject");
@@ -516,7 +504,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc4;
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "ParticleMesh");
@@ -528,7 +515,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc4;
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "ParticleObject");
@@ -540,7 +526,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc4;
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 6;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFog");
@@ -548,17 +533,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting = PipelineManager::GetGraphicsPipeline("VolumetricFog")->GetSetting();
 	setting.depthStencilDesc = depthStencilDesc2;
 	PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFogInSide");
-
-	// トーンマッピング用
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
-	setting.shaderCompilerTag = "ToneMapping";
-	setting.cullMode = CullMode::None;
-	setting.topologyType = TopologyType::TriangleStrip;
-	setting.depthStencilDesc = depthStencilDesc2;
-	setting.rtvNum = 1;
-	setting.rootSignatureSetting.maxCbvRootParameter = 3;
-	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "ToneMapping");
 
 	//setting = PipelineManager::GetGraphicsPipeline("WithInVolumetricFog")->GetSetting();
 	//setting.depthStencilDesc = depthStencilDesc2;

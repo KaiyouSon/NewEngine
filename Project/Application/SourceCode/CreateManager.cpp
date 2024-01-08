@@ -261,6 +261,9 @@ void CreateManager::CreateShaderCompiler()
 
 	// ラジアルブラー用（RenderTexture）
 	ShaderCompilerManager::Create(path2 + "PostEffect/RadialBlur", "RadialBlur");
+
+	// トーンマッピング用（RenderTexture）
+	ShaderCompilerManager::Create(path2 + "PostEffect/ToneMapping", "ToneMapping");
 }
 
 /// ------------------------------------------------------------- ///
@@ -479,10 +482,16 @@ void CreateManager::CreateGraphicsPipeline()
 	// ラジアルブラー用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
 	setting.shaderCompilerTag = "RadialBlur";
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "RadialBlur");
+
+	// トーンマッピング用（PostEffect）
+	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
+	setting.shaderCompilerTag = "ToneMapping";
+	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
+	PipelineManager::CreateGraphicsPipeline(setting, "ToneMapping");
 }
 
 /// ------------------------------------------------------------- ///

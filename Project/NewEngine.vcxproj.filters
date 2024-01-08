@@ -406,13 +406,10 @@
     <Filter Include="Application\Source\ShadowMap">
       <UniqueIdentifier>{87c7ff0d-2214-4104-9e56-a045ef8fbf69}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\Engine\Graphics">
-      <UniqueIdentifier>{436cd705-a514-4680-9bc9-97c9828c6f85}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader\Engine\GPUEmitter">
       <UniqueIdentifier>{8f93d0c7-8557-4025-89d4-fa6198d07e48}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\Engine\Graphics\ToneMapping">
+    <Filter Include="Shader\Application\PostEffect\ToneMapping">
       <UniqueIdentifier>{376500e2-f902-46f2-b5b7-79276313b606}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -957,7 +954,7 @@
     <ClCompile Include="NewEngine\Debugger\ShaderWindow.cpp">
       <Filter>NewEngine\Source\Debugger</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Graphics\ToneMapping.cpp">
+    <ClCompile Include="Application\SourceCode\PostEffect\ToneMapping.cpp">
       <Filter>Application\Source\PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1541,7 +1538,7 @@
     <ClInclude Include="NewEngine\Debugger\ShaderWindow.h">
       <Filter>NewEngine\Header\Debugger</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Graphics\ToneMapping.h">
+    <ClInclude Include="Application\ToneMapping.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1643,8 +1640,8 @@
     <None Include="NewEngine\Shader\GPUEmitter\GPUEmitter.hlsli">
       <Filter>Shader\Engine\GPUEmitter</Filter>
     </None>
-    <None Include="NewEngine\Shader\Graphics\ToneMapping\ToneMapping.hlsli">
-      <Filter>Shader\Engine\Graphics\ToneMapping</Filter>
+    <None Include="Application\Shader\PostEffect\ToneMapping\ToneMapping.hlsli">
+      <Filter>Shader\Application\PostEffect\ToneMapping</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1921,11 +1918,11 @@
     <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterVS.hlsl">
       <Filter>Shader\Engine\GPUEmitter</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Graphics\ToneMapping\ToneMappingPS.hlsl">
-      <Filter>Shader\Engine\Graphics\ToneMapping</Filter>
+    <FxCompile Include="Application\Shader\PostEffect\ToneMapping\ToneMappingPS.hlsl">
+      <Filter>Shader\Application\PostEffect\ToneMapping</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Graphics\ToneMapping\ToneMappingVS.hlsl">
-      <Filter>Shader\Engine\Graphics\ToneMapping</Filter>
+    <FxCompile Include="Application\Shader\PostEffect\ToneMapping\ToneMappingVS.hlsl">
+      <Filter>Shader\Application\PostEffect\ToneMapping</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
