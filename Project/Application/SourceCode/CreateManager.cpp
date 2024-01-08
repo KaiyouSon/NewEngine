@@ -6,23 +6,14 @@
 void CreateManager::CreateShaderCompiler()
 {
 	std::string path1 = "NewEngine/Shader/";
-	std::string path2 = "Application/Shader/";
 
 	ShaderCompilerSetting setting;
 
 	// 天球用
-	ShaderCompilerManager::Create(path2 + "Skydome", "Skydome");
+	ShaderCompilerManager::Create(AppShaderDirectory + "Skydome", "Skydome");
 
 	// 草用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(3);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT, 1);
-	setting.vsFilePath = path2 + "Grass/GrassVS.hlsl";
-	setting.gsFilePath = path2 + "Grass/GrassGS.hlsl";
-	setting.psFilePath = path2 + "Grass/GrassPS.hlsl";
-	ShaderCompilerManager::Create(setting, "Grass");
+	ShaderCompilerManager::Create(AppShaderDirectory + "Grass", "Grass");
 
 	// 雲用
 	setting = ShaderCompilerSetting();
@@ -30,61 +21,33 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "Cloud/CloudVS.hlsl";
-	setting.psFilePath = path2 + "Cloud/CloudPS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "Cloud/CloudVS.hlsl";
+	setting.psFilePath = AppShaderDirectory + "Cloud/CloudPS.hlsl";
 	ShaderCompilerManager::Create(setting, "Cloud");
 
 	// ビネット用
-	setting = ShaderCompilerSetting();
-	ShaderCompilerManager::Create(path2 + "PostEffect/Vignette", "Vignette");
+	ShaderCompilerManager::Create(AppShaderDirectory + "PostEffect/Vignette", "Vignette");
 
 	// 木の枝用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(3);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "Branch/BranchVS.hlsl";
-	setting.psFilePath = path2 + "Branch/BranchPS.hlsl";
-	ShaderCompilerManager::Create(setting, "Branch");
+	ShaderCompilerManager::Create(AppShaderDirectory + "Branch", "Branch");
 
 	// リスポーン地点用（下の波紋用）
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(3);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "Ripple/RippleVS.hlsl";
-	setting.psFilePath = path2 + "Ripple/RipplePS.hlsl";
-	ShaderCompilerManager::Create(setting, "Ripple");
+	ShaderCompilerManager::Create(AppShaderDirectory + "RespawnPoint/Ripple", "Ripple");
 
 	// リスポーン地点用（浮いてる菱形用）
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(3);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "Rhombus/RhombusVS.hlsl";
-	setting.psFilePath = path2 + "Rhombus/RhombusPS.hlsl";
-	ShaderCompilerManager::Create(setting, "Rhombus");
+	ShaderCompilerManager::Create(AppShaderDirectory + "RespawnPoint/Rhombus", "Rhombus");
 
 	// 高輝度箇所抽出用（RenderTexture）
-	ShaderCompilerManager::Create(path2 + "PostEffect/HighLumi", "HighLumi");
+	ShaderCompilerManager::Create(AppShaderDirectory + "PostEffect/HighLumi", "HighLumi");
 
 	// ガウシアンブラー用（RenderTexture）
-	ShaderCompilerManager::Create(path2 + "PostEffect/GaussianBlur", "GaussianBlur");
+	ShaderCompilerManager::Create(AppShaderDirectory + "PostEffect/GaussianBlur", "GaussianBlur");
 
 	// 合成用（RenderTexture）
-	ShaderCompilerManager::Create(path2 + "PostEffect/Composite", "Composite");
+	ShaderCompilerManager::Create(AppShaderDirectory + "PostEffect/Composite", "Composite");
 
 	// リスポーン時の遷移用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(2);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "RespawnTransition/RespawnTransitionVS.hlsl";
-	setting.psFilePath = path2 + "RespawnTransition/RespawnTransitionPS.hlsl";
-	ShaderCompilerManager::Create(setting, "RespawnTransition");
+	ShaderCompilerManager::Create(AppShaderDirectory + "Transition/RespawnTransition", "RespawnTransition");
 
 	// ShadowObj用
 	setting = ShaderCompilerSetting();
@@ -92,8 +55,8 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "ShadowObj/ShadowObjVS.hlsl";
-	setting.psFilePath = path2 + "ShadowObj/ShadowObjPS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "ShadowObj/ShadowObjVS.hlsl";
+	setting.psFilePath = AppShaderDirectory + "ShadowObj/ShadowObjPS.hlsl";
 	ShaderCompilerManager::Create(setting, "ShadowObj");
 
 	// ShadowMap用
@@ -101,94 +64,94 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "ShadowMap/ShadowMapVS.hlsl";
-	setting.psFilePath = path2 + "ShadowMap/ShadowMapPS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "ShadowMap/ShadowMapVS.hlsl";
+	setting.psFilePath = AppShaderDirectory + "ShadowMap/ShadowMapPS.hlsl";
 	ShaderCompilerManager::Create(setting, "ShadowMap");
 
 	// リスポーンエフェクト用
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "RespawnPointEffect/RespawnPointEffectCS.hlsl";
-	setting.vsFilePath = path2 + "RespawnPointEffect/RespawnPointEffectVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "RespawnPointEffect/RespawnPointEffectCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "RespawnPointEffect/RespawnPointEffectVS.hlsl";
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "RespawnPointEffect");
 
 	// タイトルのロゴ爆散用（初期化）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "Effect/LogoExplosionEffect/LogoExplosionEffectInitCS.hlsl";
-	setting.vsFilePath = path2 + "Effect/LogoExplosionEffect/LogoExplosionEffectVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "Effect/LogoExplosionEffect/LogoExplosionEffectInitCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "Effect/LogoExplosionEffect/LogoExplosionEffectVS.hlsl";
 	setting.gsFilePath = path1 + "ParticleMesh/ParticleMeshGS.hlsl";
 	setting.psFilePath = path1 + "ParticleMesh/ParticleMeshPS.hlsl";
 	ShaderCompilerManager::Create(setting, "LogoExplosionEffectInit");
 
 	// タイトルのロゴ爆散用（更新）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "Effect/LogoExplosionEffect/LogoExplosionEffectUpdateCS.hlsl";
-	setting.vsFilePath = path2 + "Effect/LogoExplosionEffect/LogoExplosionEffectVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "Effect/LogoExplosionEffect/LogoExplosionEffectUpdateCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "Effect/LogoExplosionEffect/LogoExplosionEffectVS.hlsl";
 	setting.gsFilePath = path1 + "ParticleMesh/ParticleMeshGS.hlsl";
 	setting.psFilePath = path1 + "ParticleMesh/ParticleMeshPS.hlsl";
 	ShaderCompilerManager::Create(setting, "LogoExplosionEffectUpdate");
 
 	// 誘導エフェクト用（初期化）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "Effect/LeadEffect/LeadEffectInitCS.hlsl";
-	setting.vsFilePath = path2 + "Effect/LeadEffect/LeadEffectVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "Effect/LeadEffect/LeadEffectInitCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "Effect/LeadEffect/LeadEffectVS.hlsl";
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "LeadEffectInit");
 
 	// 誘導エフェクト用（更新）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "Effect/LeadEffect/LeadEffectUpdateCS.hlsl";
-	setting.vsFilePath = path2 + "Effect/LeadEffect/LeadEffectVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "Effect/LeadEffect/LeadEffectUpdateCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "Effect/LeadEffect/LeadEffectVS.hlsl";
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "LeadEffectUpdate");
 
 	// プレイヤー回復エフェクト用（初期化）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectInitCS.hlsl";
-	setting.vsFilePath = path2 + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectInitCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectVS.hlsl";
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "PlayerRecoveryEffectInit");
 
 	// プレイヤー回復エフェクト用（更新）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectUpdateCS.hlsl";
-	setting.vsFilePath = path2 + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectUpdateCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectVS.hlsl";
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "PlayerRecoveryEffectUpdate");
 
 	// 空中のエフェクト用（初期化）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "Effect/AirEffect/AirEffectInitCS.hlsl";
-	setting.vsFilePath = path2 + "Effect/AirEffect/AirEffectVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "Effect/AirEffect/AirEffectInitCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "Effect/AirEffect/AirEffectVS.hlsl";
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "AirEffectInit");
 
 	// 空中のエフェクト用（更新）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "Effect/AirEffect/AirEffectUpdateCS.hlsl";
-	setting.vsFilePath = path2 + "Effect/AirEffect/AirEffectVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "Effect/AirEffect/AirEffectUpdateCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "Effect/AirEffect/AirEffectVS.hlsl";
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "AirEffectUpdate");
 
 	// ボスの攻撃軌跡のエフェクト用（初期化用）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "Effect/BossAttackTrajectoryEffect/BossAttackTrajectoryEffectInitCS.hlsl";
-	setting.vsFilePath = path2 + "Effect/BossAttackTrajectoryEffect/BossAttackTrajectoryEffectVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "Effect/BossAttackTrajectoryEffect/BossAttackTrajectoryEffectInitCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "Effect/BossAttackTrajectoryEffect/BossAttackTrajectoryEffectVS.hlsl";
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "BossAttackTrajectoryEffectInit");
 
 	// ボスの攻撃軌跡のエフェクト用（更新用）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "Effect/BossAttackTrajectoryEffect/BossAttackTrajectoryEffectUpdateCS.hlsl";
-	setting.vsFilePath = path2 + "Effect/BossAttackTrajectoryEffect/BossAttackTrajectoryEffectVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "Effect/BossAttackTrajectoryEffect/BossAttackTrajectoryEffectUpdateCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "Effect/BossAttackTrajectoryEffect/BossAttackTrajectoryEffectVS.hlsl";
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "BossAttackTrajectoryEffectUpdate");
@@ -198,54 +161,54 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = path2 + "Trajectory/TrajectoryVS.hlsl";
-	setting.psFilePath = path2 + "Trajectory/TrajectoryPS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "Trajectory/TrajectoryVS.hlsl";
+	setting.psFilePath = AppShaderDirectory + "Trajectory/TrajectoryPS.hlsl";
 	ShaderCompilerManager::Create(setting, "Trajectory");
 
 	// ポンデリング/太陽用（初期化用）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "PonDeRing/PonDeRingInitCS.hlsl";
-	setting.vsFilePath = path2 + "PonDeRing/PonDeRingVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "PonDeRing/PonDeRingInitCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "PonDeRing/PonDeRingVS.hlsl";
 	setting.gsFilePath = path1 + "ParticleObject/ParticleObjectGS.hlsl";
 	setting.psFilePath = path1 + "ParticleObject/ParticleObjectPS.hlsl";
 	ShaderCompilerManager::Create(setting, "PonDeRingInit");
 
 	// ポンデリング/太陽用（更新用）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "PonDeRing/PonDeRingUpdateCS.hlsl";
-	setting.vsFilePath = path2 + "PonDeRing/PonDeRingVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "PonDeRing/PonDeRingUpdateCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "PonDeRing/PonDeRingVS.hlsl";
 	setting.gsFilePath = path1 + "ParticleObject/ParticleObjectGS.hlsl";
 	setting.psFilePath = path1 + "ParticleObject/ParticleObjectPS.hlsl";
 	ShaderCompilerManager::Create(setting, "PonDeRingUpdate");
 
 	// 攻撃の爆発のエフェクト（初期化用）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "Effect/AttackExplosionEffect/AttackExplosionEffectInitCS.hlsl";
-	setting.vsFilePath = path2 + "Effect/AttackExplosionEffect/AttackExplosionEffectVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "Effect/AttackExplosionEffect/AttackExplosionEffectInitCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "Effect/AttackExplosionEffect/AttackExplosionEffectVS.hlsl";
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "AttackExplosionEffectInit");
 
 	// 攻撃の爆発のエフェクト（更新用）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "Effect/AttackExplosionEffect/AttackExplosionEffectUpdateCS.hlsl";
-	setting.vsFilePath = path2 + "Effect/AttackExplosionEffect/AttackExplosionEffectVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "Effect/AttackExplosionEffect/AttackExplosionEffectUpdateCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "Effect/AttackExplosionEffect/AttackExplosionEffectVS.hlsl";
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "AttackExplosionEffectUpdate");
 
 	// 煙のエフェクト（初期化用）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "Effect/SmokeEffect/SmokeEffectInitCS.hlsl";
-	setting.vsFilePath = path2 + "Effect/SmokeEffect/SmokeEffectVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "Effect/SmokeEffect/SmokeEffectInitCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "Effect/SmokeEffect/SmokeEffectVS.hlsl";
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "SmokeEffectInit");
 
 	// 煙のエフェクト（更新用）
 	setting = ShaderCompilerSetting();
-	setting.csFilePath = path2 + "Effect/SmokeEffect/SmokeEffectUpdateCS.hlsl";
-	setting.vsFilePath = path2 + "Effect/SmokeEffect/SmokeEffectVS.hlsl";
+	setting.csFilePath = AppShaderDirectory + "Effect/SmokeEffect/SmokeEffectUpdateCS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "Effect/SmokeEffect/SmokeEffectVS.hlsl";
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "SmokeEffectUpdate");
@@ -255,15 +218,15 @@ void CreateManager::CreateShaderCompiler()
 	setting.mInputLayoutSettings.resize(2);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.vsFilePath = path2 + "WorldVolumetricFog/WorldVolumetricFogVS.hlsl";
-	setting.psFilePath = path2 + "WorldVolumetricFog/WorldVolumetricFogPS.hlsl";
+	setting.vsFilePath = AppShaderDirectory + "WorldVolumetricFog/WorldVolumetricFogVS.hlsl";
+	setting.psFilePath = AppShaderDirectory + "WorldVolumetricFog/WorldVolumetricFogPS.hlsl";
 	ShaderCompilerManager::Create(setting, "WorldVolumetricFog");
 
 	// ラジアルブラー用（RenderTexture）
-	ShaderCompilerManager::Create(path2 + "PostEffect/RadialBlur", "RadialBlur");
+	ShaderCompilerManager::Create(AppShaderDirectory + "PostEffect/RadialBlur", "RadialBlur");
 
 	// トーンマッピング用（RenderTexture）
-	ShaderCompilerManager::Create(path2 + "PostEffect/ToneMapping", "ToneMapping");
+	ShaderCompilerManager::Create(AppShaderDirectory + "PostEffect/ToneMapping", "ToneMapping");
 }
 
 /// ------------------------------------------------------------- ///
@@ -283,7 +246,6 @@ void CreateManager::CreateGraphicsPipeline()
 	// 草用
 	setting = PipelineManager::GetGraphicsPipeline("Emitter")->GetSetting();
 	setting.shaderCompilerTag = "Grass";
-	setting.rtvNum = 1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 5;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Grass");

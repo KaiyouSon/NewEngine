@@ -193,9 +193,6 @@
     <Filter Include="Shader\Application\RespawnPoint\Rhombus">
       <UniqueIdentifier>{1abab86d-546b-4066-843d-330619fd51ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\Application\RespawnPoint\Transition">
-      <UniqueIdentifier>{c72fd087-92e7-4d7d-afbd-8fe369dd9ef9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Header\ShadowMap">
       <UniqueIdentifier>{b27e1439-b356-4ea8-b083-b6b62298c3a9}</UniqueIdentifier>
     </Filter>
@@ -411,6 +408,9 @@
     </Filter>
     <Filter Include="Shader\Application\PostEffect\ToneMapping">
       <UniqueIdentifier>{376500e2-f902-46f2-b5b7-79276313b606}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Application\Transition">
+      <UniqueIdentifier>{c72fd087-92e7-4d7d-afbd-8fe369dd9ef9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1538,7 +1538,7 @@
     <ClInclude Include="NewEngine\Debugger\ShaderWindow.h">
       <Filter>NewEngine\Header\Debugger</Filter>
     </ClInclude>
-    <ClInclude Include="Application\ToneMapping.h">
+    <ClInclude Include="Application\SourceCode\PostEffect\ToneMapping.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1555,17 +1555,14 @@
     <None Include="Application\Shader\Cloud\Cloud.hlsli">
       <Filter>Shader\Application\Cloud</Filter>
     </None>
-    <None Include="Application\Shader\Ripple\Ripple.hlsli">
-      <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
-    </None>
     <None Include="Application\Shader\ShadowObj\ShadowObj.hlsli">
       <Filter>Shader\Application\ShaderMap</Filter>
     </None>
     <None Include="Application\Shader\ShadowMap\ShadowMap.hlsli">
       <Filter>Shader\Application\ShaderMap</Filter>
     </None>
-    <None Include="Application\Shader\RespawnTransition\RespawnTransition.hlsli">
-      <Filter>Shader\Application\RespawnPoint\Transition</Filter>
+    <None Include="Application\Shader\Transition\RespawnTransition\RespawnTransition.hlsli">
+      <Filter>Shader\Application\Transition</Filter>
     </None>
     <None Include="Application\Shader\PostEffect\GaussianBlur\GaussianBlur.hlsli">
       <Filter>Shader\Application\PostEffect\GaussianBlur</Filter>
@@ -1619,9 +1616,6 @@
     <None Include="Application\Shader\PostEffect\HighLumi\HighLumi.hlsli">
       <Filter>Shader\Application\PostEffect\HighLumi</Filter>
     </None>
-    <None Include="Application\Shader\Rhombus\Rhombus.hlsli">
-      <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
-    </None>
     <None Include="Application\Shader\Skydome\Skydome.hlsli">
       <Filter>Shader\Application\Skydome</Filter>
     </None>
@@ -1643,6 +1637,12 @@
     <None Include="Application\Shader\PostEffect\ToneMapping\ToneMapping.hlsli">
       <Filter>Shader\Application\PostEffect\ToneMapping</Filter>
     </None>
+    <None Include="Application\Shader\RespawnPoint\Rhombus\Rhombus.hlsli">
+      <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
+    </None>
+    <None Include="Application\Shader\RespawnPoint\Ripple\Ripple.hlsli">
+      <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Application\Shader\Cloud\CloudPS.hlsl">
@@ -1650,18 +1650,6 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\Cloud\CloudVS.hlsl">
       <Filter>Shader\Application\Cloud</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\Ripple\RipplePS.hlsl">
-      <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\Ripple\RippleVS.hlsl">
-      <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\Rhombus\RhombusPS.hlsl">
-      <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\Rhombus\RhombusVS.hlsl">
-      <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\ShadowObj\ShadowObjVS.hlsl">
       <Filter>Shader\Application\ShaderMap</Filter>
@@ -1675,11 +1663,11 @@
     <FxCompile Include="Application\Shader\ShadowMap\ShadowMapPS.hlsl">
       <Filter>Shader\Application\ShaderMap</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RespawnTransition\RespawnTransitionPS.hlsl">
-      <Filter>Shader\Application\RespawnPoint\Transition</Filter>
+    <FxCompile Include="Application\Shader\Transition\RespawnTransition\RespawnTransitionPS.hlsl">
+      <Filter>Shader\Application\Transition</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RespawnTransition\RespawnTransitionVS.hlsl">
-      <Filter>Shader\Application\RespawnPoint\Transition</Filter>
+    <FxCompile Include="Application\Shader\Transition\RespawnTransition\RespawnTransitionVS.hlsl">
+      <Filter>Shader\Application\Transition</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\PostEffect\GaussianBlur\GaussianBlurPS.hlsl">
       <Filter>Shader\Application\PostEffect\GaussianBlur</Filter>
@@ -1923,6 +1911,18 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\PostEffect\ToneMapping\ToneMappingVS.hlsl">
       <Filter>Shader\Application\PostEffect\ToneMapping</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RespawnPoint\Rhombus\RhombusPS.hlsl">
+      <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RespawnPoint\Rhombus\RhombusVS.hlsl">
+      <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RespawnPoint\Ripple\RipplePS.hlsl">
+      <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\RespawnPoint\Ripple\RippleVS.hlsl">
+      <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

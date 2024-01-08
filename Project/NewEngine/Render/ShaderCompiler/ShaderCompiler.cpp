@@ -119,14 +119,15 @@ void ShaderCompiler::Create(const std::filesystem::path& filePath)
 	// 設定ファイルが存在する場合
 	if (iniFile.is_open() == true)
 	{
+		// 空にする
+		mSetting.mInputLayoutSettings.clear();
+		mInputLayout.clear();
+
 		// 読み込み
 		LoadIniFile(iniFile);
 
 		// 閉じる
 		iniFile.close();
-
-		// 空にする
-		mInputLayout.clear();
 
 		// インプットレイアウトの設定
 		for (uint32_t i = 0; i < mSetting.mInputLayoutSettings.size(); i++)
@@ -234,9 +235,6 @@ void ShaderCompiler::ShowErrorDetails()
 // 設定ファイルを読み込む
 void ShaderCompiler::LoadIniFile(std::ifstream& file)
 {
-	// 空にする
-	mSetting.mInputLayoutSettings.clear();
-
 	// 1行ずつ読み込む
 	std::string line;
 	while (std::getline(file, line))
@@ -265,7 +263,7 @@ void ShaderCompiler::LoadIniFile(std::ifstream& file)
 		}
 		else if (key == "VS")
 		{
-			if (mSetting.vsFilePath.empty() == false)
+			if (!mSetting.vsFilePath.empty())
 			{
 				continue;
 			}
@@ -276,7 +274,7 @@ void ShaderCompiler::LoadIniFile(std::ifstream& file)
 		}
 		else if (key == "GS")
 		{
-			if (mSetting.gsFilePath.empty() == false)
+			if (!mSetting.gsFilePath.empty())
 			{
 				continue;
 			}
@@ -287,7 +285,7 @@ void ShaderCompiler::LoadIniFile(std::ifstream& file)
 		}
 		else if (key == "PS")
 		{
-			if (mSetting.psFilePath.empty() == false)
+			if (!mSetting.psFilePath.empty())
 			{
 				continue;
 			}
@@ -298,7 +296,7 @@ void ShaderCompiler::LoadIniFile(std::ifstream& file)
 		}
 		else if (key == "CS")
 		{
-			if (mSetting.csFilePath.empty() == false)
+			if (!mSetting.csFilePath.empty())
 			{
 				continue;
 			}

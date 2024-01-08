@@ -16,6 +16,8 @@
 #include <functional>
 
 static const int maxBoneIndices = 4;
+static const std::string EngineShaderDirectory = "NewEngine/Shader/";
+static const std::string AppShaderDirectory = "Application/Shader/";
 
 // 2つの値の最大値を返す
 template<typename T>
