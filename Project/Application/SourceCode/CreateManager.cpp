@@ -15,16 +15,6 @@ void CreateManager::CreateShaderCompiler()
 	// 草用
 	ShaderCompilerManager::Create(AppShaderDirectory + "Grass", "Grass");
 
-	// 雲用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(3);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = AppShaderDirectory + "Cloud/CloudVS.hlsl";
-	setting.psFilePath = AppShaderDirectory + "Cloud/CloudPS.hlsl";
-	ShaderCompilerManager::Create(setting, "Cloud");
-
 	// ビネット用
 	ShaderCompilerManager::Create(AppShaderDirectory + "PostEffect/Vignette", "Vignette");
 
@@ -50,23 +40,23 @@ void CreateManager::CreateShaderCompiler()
 	ShaderCompilerManager::Create(AppShaderDirectory + "Transition/RespawnTransition", "RespawnTransition");
 
 	// ShadowObj用
+	ShaderCompilerManager::Create(AppShaderDirectory + "ShadowObj", "ShadowObj");
+
+	// ShadowMap用
+	ShaderCompilerManager::Create(AppShaderDirectory + "ShadowMap", "ShadowMap");
+
+	// 軌跡用
+	ShaderCompilerManager::Create(AppShaderDirectory + "Trajectory", "Trajectory");
+
+	// 雲用
 	setting = ShaderCompilerSetting();
 	setting.mInputLayoutSettings.resize(3);
 	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
 	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = AppShaderDirectory + "ShadowObj/ShadowObjVS.hlsl";
-	setting.psFilePath = AppShaderDirectory + "ShadowObj/ShadowObjPS.hlsl";
-	ShaderCompilerManager::Create(setting, "ShadowObj");
-
-	// ShadowMap用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(2);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = AppShaderDirectory + "ShadowMap/ShadowMapVS.hlsl";
-	setting.psFilePath = AppShaderDirectory + "ShadowMap/ShadowMapPS.hlsl";
-	ShaderCompilerManager::Create(setting, "ShadowMap");
+	setting.vsFilePath = AppShaderDirectory + "Cloud/CloudVS.hlsl";
+	setting.psFilePath = AppShaderDirectory + "Cloud/CloudPS.hlsl";
+	ShaderCompilerManager::Create(setting, "Cloud");
 
 	// リスポーンエフェクト用
 	setting = ShaderCompilerSetting();
@@ -155,15 +145,6 @@ void CreateManager::CreateShaderCompiler()
 	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
 	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
 	ShaderCompilerManager::Create(setting, "BossAttackTrajectoryEffectUpdate");
-
-	// 軌跡用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(2);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = AppShaderDirectory + "Trajectory/TrajectoryVS.hlsl";
-	setting.psFilePath = AppShaderDirectory + "Trajectory/TrajectoryPS.hlsl";
-	ShaderCompilerManager::Create(setting, "Trajectory");
 
 	// ポンデリング/太陽用（初期化用）
 	setting = ShaderCompilerSetting();
