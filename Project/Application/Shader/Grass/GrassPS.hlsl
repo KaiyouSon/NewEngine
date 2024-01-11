@@ -48,7 +48,7 @@ float3 CalcParallaxMapping(G2P i)
     float height = tex.Sample(smp, i.uv).r;
     float2 offsetUV = float2(-rayDir.x, rayDir.y) * (height * heightScale);
     float2 shiftUV = saturate(i.uv + offsetUV);
-    float3 pomColor = tex.Sample(smp, shiftUV).rgb;
+    float3 pomColor = tex.Sample(smp, float2(shiftUV.x,i.uv.y)).rgb;
     return pomColor;
 }
 

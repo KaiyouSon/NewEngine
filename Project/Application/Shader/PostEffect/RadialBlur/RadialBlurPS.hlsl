@@ -30,7 +30,7 @@ float4 main(V2P i) : SV_TARGET
     for (int index = 0; index < loopNum; index++)
     {
         // 重みの計算
-        float weight = 1.0f - 0.08f * index;
+        float weight = 1.0f - 0.01f * index;
         
         col += mainTex.Sample(smp, i.uv + dir * index) * weight;
         totalWeight += weight;

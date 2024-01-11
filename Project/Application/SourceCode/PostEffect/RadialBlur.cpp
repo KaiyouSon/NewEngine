@@ -29,8 +29,8 @@ RadialBlur::RadialBlur() :
 
 	mPasses[(uint32_t)PassType::Target]->SetSize(GetWindowSize());
 
-	mData.strength = 0.015f;
-	mData.loopNum = 65;
+	mData.strength = 0.0125f;
+	mData.loopNum = 30;
 }
 
 void RadialBlur::Update()
