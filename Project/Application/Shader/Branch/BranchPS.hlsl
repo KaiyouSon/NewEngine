@@ -3,7 +3,7 @@
 Texture2D<float4> tex : register(t0);
 SamplerState smp : register(s0);
 
-// ƒ‰ƒCƒeƒBƒ“ƒO
+// ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°
 float4 CalcLighting(V2P i, Material material);
 
 float4 main(V2P i) : SV_TARGET
@@ -11,40 +11,40 @@ float4 main(V2P i) : SV_TARGET
     float4 texColor = tex.Sample(smp, i.uv);
     clip(texColor.a - 0.5);
     
-    // ƒ‰ƒCƒeƒBƒ“ƒO
+    // ï¿½ï¿½ï¿½Cï¿½eï¿½Bï¿½ï¿½ï¿½O
     Material material = { ambient, diffuse, specular };
     float4 adsColor = CalcLighting(i, material);
     
     return texColor * adsColor;
 }
 
-// ƒ‰ƒCƒeƒBƒ“ƒO
+// ï¿½ï¿½ï¿½Cï¿½eï¿½Bï¿½ï¿½ï¿½O
 float4 CalcLighting(V2P i, Material material)
 {
-    // Œõ‘ò“x
+    // ï¿½ï¿½ï¿½ï¿½x
     const float shininess = 2.0f;
     
     float4 adsColor = float4(0, 0, 0, 1);
     
     uint index = 0;
-    // •½sŒõŒ¹‚ÌŒvZ
+    // ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½ÌŒvï¿½Z
     for (index = 0; index < directionalLightSize; index++)
     {
         if (directionalLight[index].isActive == false)
         {
             continue;
         }
-            // ƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚Æ–@ü‚Ì“àÏ
+            // ï¿½ï¿½ï¿½Cï¿½gï¿½ÉŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½ï¿½Æ–@ï¿½ï¿½ï¿½Ì“ï¿½ï¿½ï¿½
         float dotLightNormal = dot(directionalLight[index].vec, i.normal);
         
-            // ƒAƒ“ƒrƒGƒ“ƒg
+            // ï¿½Aï¿½ï¿½ï¿½rï¿½Gï¿½ï¿½ï¿½g
         float3 ambient = material.ambient.rgb + float3(0.2f, 0.2f, 0.2f);
      
-            // ƒfƒBƒtƒ…[ƒY
+            // ï¿½fï¿½Bï¿½tï¿½ï¿½ï¿½[ï¿½Y
         float3 diffuse = dotLightNormal * material.diffuse.rgb;
     
-            // ƒXƒyƒLƒ…ƒ‰[
-        float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // ’¸“_‚©‚ç‹“_‚Ö‚ÌƒxƒNƒgƒ‹
+            // ï¿½Xï¿½yï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½[
+        float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ç‹ï¿½_ï¿½Ö‚Ìƒxï¿½Nï¿½gï¿½ï¿½
         float3 halfVector = normalize(-directionalLight[index].vec + eyeDir);
         float nDoth = dot(normalize(i.normal), halfVector);
         float3 specular = pow(saturate(nDoth), shininess) * material.specular.rgb;
@@ -52,14 +52,14 @@ float4 CalcLighting(V2P i, Material material)
         adsColor.rgb += (ambient + diffuse + specular) * directionalLight[index].color.rgb;
     }
 
-    // “_ŒõŒ¹‚ÌŒvZ
+    // ï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½ÌŒvï¿½Z
     for (index = 0; index < pointLightSize; index++)
     {
         if (pointLight[index].isActive == false)
         {
             continue;
         }
-            // ƒ‰ƒCƒgƒw‚ÌƒxƒNƒgƒ‹
+            // ï¿½ï¿½ï¿½Cï¿½gï¿½wï¿½Ìƒxï¿½Nï¿½gï¿½ï¿½
         float3 lightVec = normalize(pointLight[index].pos - i.wpos.xyz);
         float d = distance(pointLight[index].pos, i.wpos.xyz);
             
@@ -73,14 +73,14 @@ float4 CalcLighting(V2P i, Material material)
             
         float atten = pointLight[index].decay * ((1 - s2) * (1 - s2));
             
-            // ƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚Æ–@ü‚Ì“àÏ
+            // ï¿½ï¿½ï¿½Cï¿½gï¿½ÉŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½ï¿½Æ–@ï¿½ï¿½ï¿½Ì“ï¿½ï¿½ï¿½
         float3 dotLightNormal = dot(lightVec, i.normal);
             
-            // ƒfƒBƒtƒ…[ƒY
+            // ï¿½fï¿½Bï¿½tï¿½ï¿½ï¿½[ï¿½Y
         float3 diffuse = saturate(dotLightNormal * material.diffuse.rgb);
     
-            // ƒXƒyƒLƒ…ƒ‰[
-        float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // ’¸“_‚©‚ç‹“_‚Ö‚ÌƒxƒNƒgƒ‹
+            // ï¿½Xï¿½yï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½[
+        float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ç‹ï¿½_ï¿½Ö‚Ìƒxï¿½Nï¿½gï¿½ï¿½
         float3 reflectDir = normalize(-lightVec + 2 * dotLightNormal * i.normal);
         float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
     
@@ -88,14 +88,14 @@ float4 CalcLighting(V2P i, Material material)
                             pointLight[index].color.rgb * pointLight[index].colorRate.rgb;
     }
     
-    // ƒXƒ|ƒbƒgƒ‰ƒCƒg‚ÌŒvZ
+    // ï¿½Xï¿½|ï¿½bï¿½gï¿½ï¿½ï¿½Cï¿½gï¿½ÌŒvï¿½Z
     for (index = 0; index < spotLightSize; index++)
     {
         if (spotLight[index].isActive == false)
         {
             continue;
         }
-            // ƒ‰ƒCƒgƒw‚ÌƒxƒNƒgƒ‹
+            // ï¿½ï¿½ï¿½Cï¿½gï¿½wï¿½Ìƒxï¿½Nï¿½gï¿½ï¿½
         float3 lightVec = normalize(spotLight[index].pos - i.wpos.xyz);
         float d = distance(spotLight[index].pos, i.wpos.xyz);
             
@@ -113,14 +113,14 @@ float4 CalcLighting(V2P i, Material material)
         float atten = spotLight[index].decay * ((1 - s2) * (1 - s2));
         atten *= falloffFactor;
             
-            // ƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚Æ–@ü‚Ì“àÏ
+            // ï¿½ï¿½ï¿½Cï¿½gï¿½ÉŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½ï¿½Æ–@ï¿½ï¿½ï¿½Ì“ï¿½ï¿½ï¿½
         float3 dotLightNormal = dot(lightVec, i.normal);
             
-            // ƒfƒBƒtƒ…[ƒY
+            // ï¿½fï¿½Bï¿½tï¿½ï¿½ï¿½[ï¿½Y
         float3 diffuse = saturate(dotLightNormal * material.diffuse.rgb);
     
-            // ƒXƒyƒLƒ…ƒ‰[
-        float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // ’¸“_‚©‚ç‹“_‚Ö‚ÌƒxƒNƒgƒ‹
+            // ï¿½Xï¿½yï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½[
+        float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ç‹ï¿½_ï¿½Ö‚Ìƒxï¿½Nï¿½gï¿½ï¿½
         float3 reflectDir = normalize(-lightVec + 2 * dotLightNormal * i.normal);
         float3 specular = pow(saturate(dot(reflectDir, eyeDir)), shininess) * material.specular.rgb;
     

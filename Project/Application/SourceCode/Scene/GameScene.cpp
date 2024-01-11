@@ -257,20 +257,20 @@ void GameScene::DrawPass()
 			mPostEffectManager->DrawPostEffect(PostEffectType::Bloom);
 		});
 
-	// レンズフレア]
-	mPostEffectManager->DrawLensFlarePass(
-		[this]()
-		{
-			mPostEffectManager->DrawPostEffect(PostEffectType::ToneMapping);
-		},
-		[this]()
-		{
-			mField->DrawModel();
-			mField->DrawSun();
+	// レンズフレア
+	//mPostEffectManager->DrawLensFlarePass(
+	//	[this]()
+	//	{
+	//		mPostEffectManager->DrawPostEffect(PostEffectType::ToneMapping);
+	//	},
+	//	[this]()
+	//	{
+	//		mField->DrawModel();
+	//		mField->DrawSun();
 
-			mPlayer->DrawModel();
-			mBoss->DrawModel();
-		});
+	//		mPlayer->DrawModel();
+	//		mBoss->DrawModel();
+	//	});
 
 	// ビネット
 	mPostEffectManager->DrawVignettePass(
@@ -289,8 +289,8 @@ void GameScene::DrawPass()
 }
 void GameScene::Draw()
 {
-	//mPostEffectManager->DrawPostEffect(PostEffectType::Vignette);
-	mPostEffectManager->DrawPostEffect(PostEffectType::LensFlare);
+	mPostEffectManager->DrawPostEffect(PostEffectType::Vignette);
+	//mPostEffectManager->DrawPostEffect(PostEffectType::LensFlare);
 
 	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();

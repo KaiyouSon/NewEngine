@@ -6,7 +6,7 @@ using namespace ConstantBufferData;
 
 CPOM Grass::sPOMData =
 {
-	0.3f,64.0f
+	0.15f,64.0f
 };
 CMaterialColor Grass::sMaterialColor =
 {

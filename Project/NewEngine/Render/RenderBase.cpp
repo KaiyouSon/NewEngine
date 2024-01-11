@@ -350,6 +350,7 @@ void RenderBase::ShaderCompilerInit()
 
 	// Object3D用
 	ShaderCompilerManager::Create(path1 + "Object3D", "Object3D");
+	ShaderCompilerManager::Create(path1 + "Object3DSMOff", "Object3DSMOff");
 
 	// Fbxモデル用
 	ShaderCompilerManager::Create(path1 + "FbxModel", "FbxModel");
@@ -415,6 +416,15 @@ void RenderBase::GraphicsPipelineInit()
 	setting.rootSignatureSetting.maxCbvRootParameter = 9;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "Object3D");
+
+	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.shaderCompilerTag = "Object3DSMOff";
+	setting.cullMode = CullMode::Back;
+	setting.topologyType = TopologyType::TriangleList;
+	setting.depthStencilDesc = depthStencilDesc1;
+	setting.rootSignatureSetting.maxCbvRootParameter = 9;
+	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
+	PipelineManager::CreateGraphicsPipeline(setting, "Object3DSMOff");
 
 	// FBXモデル用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;

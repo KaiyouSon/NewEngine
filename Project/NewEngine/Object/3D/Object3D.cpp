@@ -13,7 +13,7 @@ float Object3D::sShadowBias = 0.0005f;
 
 Object3D::Object3D() :
 	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0), offset(0, 0), tiling(1, 1),
-	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D")),
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DSMOff")),
 	mTexture(TextureManager::GetTexture("White")), mModel(nullptr), mParent(nullptr),
 	mDissolveTex(TextureManager::GetTexture("DissolveTexture")),
 	mDepthTex(TextureManager::GetRenderTexture("ShadowMap")->GetDepthTexture()),
@@ -243,11 +243,6 @@ void Object3D::DrawCommands()
 		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
 			(uint32_t)startIndex + 2, mDepthTex->GetBufferResource()->srvHandle.gpu);
 	}
-	else
-	{
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			(uint32_t)startIndex + 2, mWhiteTex->GetBufferResource()->srvHandle.gpu);
-	}
 
 	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModel->mesh.indices.size(), 1, 0, 0, 0);
 }
@@ -263,7 +258,14 @@ void Object3D::SetModel(Model* model)
 	// パイプライン変更
 	if (mModel->format == ModelFormat::Obj)
 	{
-		mGraphicsPipeline = PipelineManager::GetGraphicsPipeline("Object3D");
+		if (mIsWriteShadow == true)
+		{
+			mGraphicsPipeline = PipelineManager::GetGraphicsPipeline("Object3D");
+		}
+		else
+		{
+			mGraphicsPipeline = PipelineManager::GetGraphicsPipeline("Object3DSMOff");
+		}
 	}
 	if (mModel->format == ModelFormat::Fbx)
 	{
@@ -302,6 +304,11 @@ void Object3D::SetisShadow(const bool isWriteShadow, const bool isWriteDepth)
 {
 	mIsWriteShadow = isWriteShadow;
 	mIsWriteDepth = isWriteDepth;
+
+	if (mIsWriteShadow == true)
+	{
+		mGraphicsPipeline = PipelineManager::GetGraphicsPipeline("Object3D");
+	}
 }
 
 // 親

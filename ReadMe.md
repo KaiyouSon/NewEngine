@@ -1,6 +1,6 @@
 # NewEngine
 
-<img src="Project/Application/Resources/Texture/LogoScene/NewEngineTitle.png" width="400" alt="NewEngine Title Logo">
+<img src="ScreenShot/NewEngineTitle.png" width="400" alt="NewEngine Title Logo">
 
 ## 2Dおよび3Dの自作ゲーム開発エンジン
 

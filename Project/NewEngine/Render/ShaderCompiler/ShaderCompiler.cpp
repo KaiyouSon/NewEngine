@@ -175,10 +175,10 @@ void ShaderCompiler::CompileShader(const std::string& filePath, ShaderType shade
 	uint32_t flags = D3DCOMPILE_OPTIMIZATION_LEVEL3;
 
 	// デバッグのみ実行
-	ProcessAtDebugBuild([&]()
-		{
-			flags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
-		});
+	//ProcessAtDebugBuild([&]()
+	//	{
+	//		flags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
+	//	});
 
 	// stringをwstringに変換
 	std::wstring wFilePath(filePath.begin(), filePath.end());
@@ -211,6 +211,9 @@ void ShaderCompiler::CompileShader(const std::string& filePath, ShaderType shade
 		flags,								// フラグ設定
 		0,
 		&mShaderBlobs[(uint32_t)shaderType], &sErrorBlob);
+
+	// コンパイルエラーの詳細を表示
+	ShowErrorDetails();
 }
 
 // シェーダーコンパイルエラーの詳細を表示

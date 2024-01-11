@@ -98,7 +98,7 @@ void LoadManager::GameSceneTextureLoad()
 	TextureManager::LoadTexture("Trajectory.dds", "Trajectory");
 
 	// 草
-	TextureManager::LoadTexture("Grass/Weed.png", "Weed");
+	TextureManager::LoadTexture("Grass/Weed.dds", "Weed");
 	TextureManager::LoadTexture("Branch.dds", "Branch");
 
 	// ラジアルブラー用

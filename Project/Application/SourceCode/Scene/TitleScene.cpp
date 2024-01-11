@@ -101,7 +101,7 @@ void TitleScene::DrawDebugGui()
 // シーン切り替えの処理
 void TitleScene::SceneChangeUpdate()
 {
-	if (Pad::GetAnyButtonDown())
+	if (Pad::GetAnyButtonDown() || Key::GetKeyDown(DIK_SPACE))
 	{
 		if (mTitleUI->GetisAfterImage() == false)
 		{

@@ -160,46 +160,27 @@ Texture* TextureManager::LoadMaterialTexture(const std::string filePath, const s
 	// 排他制御
 	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
-	// 繝・け繧ｹ繝√Ε繝ｼ菴懈・
-	GetInstance()->mMaterialTextureMap.
+	// マップに格納
+	GetInstance()->mTextureMap.
 		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
 
-	Texture* texture = dynamic_cast<Texture*>(GetInstance()->mMaterialTextureMap[tag].get());
-
+	Texture* texture = dynamic_cast<Texture*>(GetInstance()->mTextureMap[tag].get());
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
-	std::wstring wfilePath(filePath.begin(), filePath.end());
 
-	HRESULT result;
+	// フルパス
+	fs::path fsPath = filePath;
 
-	// WICを使用してテクスチャデータを読み込む
-	result = LoadFromWICFile(
-		wfilePath.c_str(),
-		WIC_FLAGS_NONE,
-		&metadata, scratchImg);
-
-	if (result != S_OK)
+	// ロード
+	if (fsPath.extension() == ".png")
 	{
-		std::string log = "[MaterialTexture Load] FilePath : " + filePath + ", Tag : " + tag + ", is,failed to load";
-		OutputDebugLog(log.c_str());
-
-		assert(0 && "mtlテクスチャ読み込みに失敗しました");
+		GetInstance()->LoadTextureFromPNG(filePath, scratchImg, metadata);
+	}
+	else if (fsPath.extension() == ".dds")
+	{
+		GetInstance()->LoadTextureFromDDS(filePath, scratchImg, metadata);
 	}
 
-	// ミップマップを生成する
-	ScratchImage mipChain{};
-	result = GenerateMipMaps(
-		scratchImg.GetImages(),
-		scratchImg.GetImageCount(),
-		scratchImg.GetMetadata(),
-		TEX_FILTER_DEFAULT, 0, mipChain);
-	if (SUCCEEDED(result))
-	{
-		scratchImg = std::move(mipChain);
-		metadata = scratchImg.GetMetadata();
-	}
-
-	// テクスチャのフォーマットをSRGBに設定
 	metadata.format = MakeSRGB(metadata.format);
 
 	// リソース設定
@@ -227,8 +208,8 @@ Texture* TextureManager::LoadMaterialTexture(const std::string filePath, const s
 		subResourcesDatas[i].pData = img->pixels;
 		subResourcesDatas[i].RowPitch = img->rowPitch;
 		subResourcesDatas[i].SlicePitch = img->slicePitch;
-	}
 
+	}
 	// テクスチャーをアップロード
 	UpdateSubresources(
 		RenderBase::GetInstance()->GetCommandList(),
@@ -245,7 +226,11 @@ Texture* TextureManager::LoadMaterialTexture(const std::string filePath, const s
 		D3D12_RESOURCE_STATE_COPY_DEST,
 		D3D12_RESOURCE_STATE_GENERIC_READ);
 
-	std::string log = "[MaterialTexture Load] FilePath : " + filePath + ", Tag : " + tag + ", was loaded successfully";
+	// 使い終わったならテクスチャにmove
+	texture->SetScratchImage(&scratchImg);
+
+	// Log出力
+	std::string log = "[Material Texture Load] FilePath : " + filePath + ", Tag : " + tag + ", was loaded successfully";
 	OutputDebugLog(log.c_str());
 
 	return texture;
