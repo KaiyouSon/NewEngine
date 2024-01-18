@@ -92,10 +92,9 @@ void ShaderWindow::ShowFilePanel(const std::string& folderPath)
 		{
 			// 起動するファイルのパス
 			std::wstring wpath = std::wstring(pathString.begin(), pathString.end());
-			LPCWSTR filePath = wpath.c_str();
 
 			// ShellExecute関数の呼び出し
-			ShellExecute(NULL, L"open", filePath, LPCWSTR(), nullptr, SW_SHOWNORMAL);
+			ShellExecute(NULL, L"open", wpath.c_str(), LPCWSTR(), nullptr, SW_SHOWNORMAL);
 		}
 	}
 

@@ -66,14 +66,14 @@ public:
 			std::future<bool> ftr = std::async(std::launch::async,
 				[]()
 				{
+					// ライトの初期化
+					LightManager::GetInstance()->Init();
+
 					// 現在のシーンのアンロード
 					sCurrentScene->UnLoad();
 
 					// 次のシーンのロード
 					sNextScene->Load();
-
-					// ライトの初期化
-					LightManager::GetInstance()->Init();
 
 					// 次のシーンのインスタンス生成
 					sNextScene->CreateInstance();

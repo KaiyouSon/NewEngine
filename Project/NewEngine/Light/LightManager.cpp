@@ -90,7 +90,6 @@ void LightManager::Update()
 	}
 
 	// スポットライトのデータを転送する
-
 	for (uint32_t i = 0; i < mLightGroup.spotLights.size(); i++)
 	{
 		// 宣言したライトの数よりも多かったらbreakする
