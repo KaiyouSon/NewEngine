@@ -53,7 +53,7 @@ namespace Gui
 	void DrawColorEdit(const char* label, Color& color);
 
 	bool DrawInputInt(const char* label, int32_t& v);
-	bool DrawInputText(const char* label, const std::string& str);
+	bool DrawInputText(const char* label, std::string& str);
 
 	void DrawImage(ITexture* texture, const Vec2& size);
 	void DrawImage(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle, const Vec2& size);

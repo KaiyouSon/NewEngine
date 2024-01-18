@@ -98,31 +98,13 @@ float4 CalcLighting(V2P i, Material material)
     const float shininess = 2.0f;
     
     float4 adsColor = float4(0, 0, 0, 1);
+    float3 eyeVec = normalize(cameraPos - i.wpos.xyz); // 頂点から視点へのベクトル
     
     uint index = 0;
     // 平行光源の計算
     for (index = 0; index < directionalLightSize; index++)
     {
-        if (directionalLight[index].isActive == false)
-        {
-            continue;
-        }
-            // ライトに向かうベクトルと法線の内積
-        float dotLightNormal = dot(directionalLight[index].vec, i.normal);
-        
-            // アンビエント
-        float3 ambient = material.ambient.rgb + float3(0.2f, 0.2f, 0.2f);
-     
-            // ディフューズ
-        float3 diffuse = dotLightNormal * material.diffuse.rgb;
-    
-            // スペキュラー
-        float3 eyeDir = normalize(cameraPos - i.wpos.xyz); // 頂点から視点へのベクトル
-        float3 halfVector = normalize(-directionalLight[index].vec + eyeDir);
-        float nDoth = dot(normalize(i.normal), halfVector);
-        float3 specular = pow(saturate(nDoth), shininess) * material.specular.rgb;
-    
-        adsColor.rgb += (ambient + diffuse + specular) * directionalLight[index].color.rgb;
+        adsColor.rgb += CalcDirectionalLight(directionalLight[index], material, i.normal, eyeVec, shininess);
     }
 
     // 点光源の計算

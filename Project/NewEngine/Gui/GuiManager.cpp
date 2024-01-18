@@ -248,9 +248,14 @@ bool Gui::DrawInputInt(const char* label, int32_t& v)
 	return flag;
 }
 
-bool Gui::DrawInputText(const char* label, const std::string& str)
+bool Gui::DrawInputText(const char* label, std::string& str)
 {
-	return ImGui::InputText(label, const_cast<char*>(str.c_str()), 30);
+	char* cstr = const_cast<char*>(str.c_str());
+	bool result = ImGui::InputText(label, cstr, 30);
+	str = cstr;
+
+	return result;
+	//return ImGui::InputText(label, const_cast<char*>(str.c_str()), 30);
 }
 
 void Gui::DrawImage(ITexture* texture, const Vec2& size)

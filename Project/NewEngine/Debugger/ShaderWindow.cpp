@@ -17,8 +17,18 @@ void ShaderWindow::DrawDebugGui()
 
 	Gui::BeginWindow("Shader Window", -1, &mIsShow);
 
+	static std::string search;
+	Gui::DrawInputText("Search", search);
+
 	for (const auto& [tag, shader] : *ShaderCompilerManager::GetShaderCompilerMap())
 	{
+		// 検索機能
+		std::string::size_type pos = tag.find(search);
+		if (pos == std::string::npos)
+		{
+			continue;
+		}
+
 		if (Gui::DrawCollapsingHeader(tag.c_str()))
 		{
 			// ファイルパネル

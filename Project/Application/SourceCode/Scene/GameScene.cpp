@@ -196,7 +196,7 @@ void GameScene::Update()
 	{
 		if (DebugManager::GetInstance()->GetisActive() == false)
 		{
-			CameraManager::GetInstance()->Update();
+			//CameraManager::GetInstance()->Update();
 		}
 		else
 		{
@@ -292,101 +292,101 @@ void GameScene::Draw()
 	mPostEffectManager->DrawPostEffect(PostEffectType::Vignette);
 	//mPostEffectManager->DrawPostEffect(PostEffectType::LensFlare);
 
-	mUiManager->DrawFrontSprite();
+	//mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
 	ShadowMap::GetInstance()->DrawPostEffect();
 }
 void GameScene::DrawDebugGui()
 {
 	//mBoss->DrawDebugGui();
-	mPostEffectManager->DrawDebugGui();
+	//mPostEffectManager->DrawDebugGui();
 	//ShadowMap::GetInstance()->DrawDebugGui();
 	//GraphicsManager::DrawDebugGui();
 
-	Gui::BeginWindow("Debug");
+	//Gui::BeginWindow("Debug");
 
-	if (Gui::DrawCollapsingHeader("Grass") == true)
-	{
-		Gui::DrawColorEdit("Ambient", Grass::sMaterialColor.ambient);
-		Gui::DrawColorEdit("Diffuse", Grass::sMaterialColor.diffuse);
-		Gui::DrawColorEdit("Specular", Grass::sMaterialColor.specular);
-		Gui::DrawSlider1("Height Scale", Grass::sPOMData.heightScale, 0.01f);
-		Gui::DrawSlider1("Num Layers", Grass::sPOMData.numLayers, 0.1f);
-	}
+	//if (Gui::DrawCollapsingHeader("Grass") == true)
+	//{
+	//	Gui::DrawColorEdit("Ambient", Grass::sMaterialColor.ambient);
+	//	Gui::DrawColorEdit("Diffuse", Grass::sMaterialColor.diffuse);
+	//	Gui::DrawColorEdit("Specular", Grass::sMaterialColor.specular);
+	//	Gui::DrawSlider1("Height Scale", Grass::sPOMData.heightScale, 0.01f);
+	//	Gui::DrawSlider1("Num Layers", Grass::sPOMData.numLayers, 0.1f);
+	//}
 
-	if (Gui::DrawCollapsingHeader("ShadowMap") == true)
-	{
-		float bias = Object3D::sShadowBias;
-		Gui::DrawSlider1("Shadow Bias", bias, 0.0001f);
-		Object3D::sShadowBias = bias;
-	}
+	//if (Gui::DrawCollapsingHeader("ShadowMap") == true)
+	//{
+	//	float bias = Object3D::sShadowBias;
+	//	Gui::DrawSlider1("Shadow Bias", bias, 0.0001f);
+	//	Object3D::sShadowBias = bias;
+	//}
 
-	if (Gui::DrawCollapsingHeader("Fog") == true)
-	{
-		Gui::DrawSlider2("Fog Clamp", VolumetricFog::fogClamp, 1.f);
-		Gui::DrawInputInt("Step Count", (int&)mVolumetricFog->fogParam.stepCount);
-		Gui::DrawSlider1("Step Length", mVolumetricFog->fogParam.stepLength, 0.01f);
-		Gui::DrawSlider1("Fog Dencity", mVolumetricFog->fogParam.dencity, 0.01f);
-		Gui::DrawColorEdit("Fog Color", mVolumetricFog->fogParam.fogColor);
-		Gui::DrawLine();
-		Gui::DrawSlider1("Fog Color Rate R", mVolumetricFog->fogParam.fogColorRate.r, 0.01f);
-		Gui::DrawSlider1("Fog Color Rate G", mVolumetricFog->fogParam.fogColorRate.g, 0.01f);
-		Gui::DrawSlider1("Fog Color Rate B", mVolumetricFog->fogParam.fogColorRate.b, 0.01f);
-		Gui::DrawSlider1("Fog Color Rate A", mVolumetricFog->fogParam.fogColorRate.a, 0.01f);
-		Gui::DrawLine();
-		Gui::DrawSlider3("Fog Pos", mVolumetricFog->pos, 0.01f);
-		Gui::DrawSlider3("Fog Scale", mVolumetricFog->scale, 0.01f);
-		Vec3 angle = Angle(mVolumetricFog->rot);
-		Gui::DrawSlider3("Fog Rot", angle, 1.f);
-		mVolumetricFog->rot = Radian(angle);
-		Gui::DrawSlider3("Fog Speed", mVolumetricFog->moveSpeed, 0.001f);
-		Gui::DrawSlider3("Fog tiling", mVolumetricFog->tiling, 0.001f);
+	//if (Gui::DrawCollapsingHeader("Fog") == true)
+	//{
+	//	Gui::DrawSlider2("Fog Clamp", VolumetricFog::fogClamp, 1.f);
+	//	Gui::DrawInputInt("Step Count", (int&)mVolumetricFog->fogParam.stepCount);
+	//	Gui::DrawSlider1("Step Length", mVolumetricFog->fogParam.stepLength, 0.01f);
+	//	Gui::DrawSlider1("Fog Dencity", mVolumetricFog->fogParam.dencity, 0.01f);
+	//	Gui::DrawColorEdit("Fog Color", mVolumetricFog->fogParam.fogColor);
+	//	Gui::DrawLine();
+	//	Gui::DrawSlider1("Fog Color Rate R", mVolumetricFog->fogParam.fogColorRate.r, 0.01f);
+	//	Gui::DrawSlider1("Fog Color Rate G", mVolumetricFog->fogParam.fogColorRate.g, 0.01f);
+	//	Gui::DrawSlider1("Fog Color Rate B", mVolumetricFog->fogParam.fogColorRate.b, 0.01f);
+	//	Gui::DrawSlider1("Fog Color Rate A", mVolumetricFog->fogParam.fogColorRate.a, 0.01f);
+	//	Gui::DrawLine();
+	//	Gui::DrawSlider3("Fog Pos", mVolumetricFog->pos, 0.01f);
+	//	Gui::DrawSlider3("Fog Scale", mVolumetricFog->scale, 0.01f);
+	//	Vec3 angle = Angle(mVolumetricFog->rot);
+	//	Gui::DrawSlider3("Fog Rot", angle, 1.f);
+	//	mVolumetricFog->rot = Radian(angle);
+	//	Gui::DrawSlider3("Fog Speed", mVolumetricFog->moveSpeed, 0.001f);
+	//	Gui::DrawSlider3("Fog tiling", mVolumetricFog->tiling, 0.001f);
 
-		for (uint32_t i = 0; i < 4; i++)
-		{
-			std::string tag = "VolumeTexture" + std::to_string(i);
-			if (Gui::DrawButton(tag.c_str(), Vec2(64, 32)))
-			{
-				mVolumetricFog->SetTexture(TextureManager::GetVolumeTexture(tag));
-			}
+	//	for (uint32_t i = 0; i < 4; i++)
+	//	{
+	//		std::string tag = "VolumeTexture" + std::to_string(i);
+	//		if (Gui::DrawButton(tag.c_str(), Vec2(64, 32)))
+	//		{
+	//			mVolumetricFog->SetTexture(TextureManager::GetVolumeTexture(tag));
+	//		}
 
-			if (i != 3)
-			{
-				Gui::DrawTab();
-			}
-		}
-	}
+	//		if (i != 3)
+	//		{
+	//			Gui::DrawTab();
+	//		}
+	//	}
+	//}
 
-	if (Gui::DrawCollapsingHeader("Directional Light") == true)
-	{
-		Gui::DrawCheckBox("Directional Light Active", &mDirectionalLight->isActive);
-		Gui::DrawSlider3("Directional Light Pos", mDirectionalLight->pos, 0.1f);
-		Gui::DrawColorEdit("Directional Light Color", mDirectionalLight->color);
-	}
+	//if (Gui::DrawCollapsingHeader("Directional Light") == true)
+	//{
+	//	Gui::DrawCheckBox("Directional Light Active", &mDirectionalLight->isActive);
+	//	Gui::DrawSlider3("Directional Light Pos", mDirectionalLight->pos, 0.1f);
+	//	Gui::DrawColorEdit("Directional Light Color", mDirectionalLight->color);
+	//}
 
-	if (Gui::DrawCollapsingHeader("Point Light") == true)
-	{
-		Gui::DrawCheckBox("Point Light Active", &mPointLight->isActive);
-		Gui::DrawSlider3("Point Light Pos", mPointLight->pos, 0.1f);
-		Gui::DrawColorEdit("Point Light Color", mPointLight->color);
-		Gui::DrawSlider3("Point Light Color Rate", mPointLight->colorRate);
-		Gui::DrawSlider1("Point Light Radius", mPointLight->radius);
-		Gui::DrawSlider1("Point Light Decay", mPointLight->decay);
-	}
+	//if (Gui::DrawCollapsingHeader("Point Light") == true)
+	//{
+	//	Gui::DrawCheckBox("Point Light Active", &mPointLight->isActive);
+	//	Gui::DrawSlider3("Point Light Pos", mPointLight->pos, 0.1f);
+	//	Gui::DrawColorEdit("Point Light Color", mPointLight->color);
+	//	Gui::DrawSlider3("Point Light Color Rate", mPointLight->colorRate);
+	//	Gui::DrawSlider1("Point Light Radius", mPointLight->radius);
+	//	Gui::DrawSlider1("Point Light Decay", mPointLight->decay);
+	//}
 
-	if (Gui::DrawCollapsingHeader("Spot Light") == true)
-	{
-		Gui::DrawCheckBox("Spot Light Active", &mSpotLight->isActive);
-		Gui::DrawSlider3("Spot Light Vec", mSpotLight->vec, 0.01f);
-		Gui::DrawSlider3("Spot Light Pos", mSpotLight->pos, 0.1f);
-		Gui::DrawColorEdit("Spot Light Color", mSpotLight->color);
-		Gui::DrawSlider3("Spot Light Color Rate", mSpotLight->colorRate);
-		Gui::DrawSlider1("Spot Light Radius", mSpotLight->radius);
-		Gui::DrawSlider1("Spot Light Decay", mSpotLight->decay);
-		Gui::DrawSlider2("Spot Light Factor CosAngle", mSpotLight->cosAngle);
-	}
+	//if (Gui::DrawCollapsingHeader("Spot Light") == true)
+	//{
+	//	Gui::DrawCheckBox("Spot Light Active", &mSpotLight->isActive);
+	//	Gui::DrawSlider3("Spot Light Vec", mSpotLight->vec, 0.01f);
+	//	Gui::DrawSlider3("Spot Light Pos", mSpotLight->pos, 0.1f);
+	//	Gui::DrawColorEdit("Spot Light Color", mSpotLight->color);
+	//	Gui::DrawSlider3("Spot Light Color Rate", mSpotLight->colorRate);
+	//	Gui::DrawSlider1("Spot Light Radius", mSpotLight->radius);
+	//	Gui::DrawSlider1("Spot Light Decay", mSpotLight->decay);
+	//	Gui::DrawSlider2("Spot Light Factor CosAngle", mSpotLight->cosAngle);
+	//}
 
-	Gui::EndWindow();
+	//Gui::EndWindow();
 }
 
 // シーン切り替えの処理

@@ -6,6 +6,8 @@ SamplerState smp : register(s0);
 
 float4 main(V2P i) : SV_TARGET
 {
+    //return float4(1, 0, 0, 1);
+    
     float4 texColor = tex.Sample(smp, i.uv);
     float2 newUV = i.uv * 2 - 1;
     float l = length(newUV);

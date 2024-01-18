@@ -5,6 +5,10 @@ using namespace ConstantBufferData;
 ToneMapping::ToneMapping() :
 	mPostEffect(std::make_unique<PostEffect>())
 {
+	mTexture = TextureManager::GetRenderTexture("ToneMapping");
+	mPostEffect->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ToneMapping"));
+	mPostEffect->AddRenderTexture(mTexture);
+	mPostEffect->AddMaterial<CToneMapping>();
 }
 
 void ToneMapping::Load()
@@ -14,10 +18,6 @@ void ToneMapping::Load()
 
 void ToneMapping::Init()
 {
-	mTexture = TextureManager::GetRenderTexture("ToneMapping");
-	mPostEffect->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ToneMapping"));
-	mPostEffect->AddRenderTexture(mTexture);
-	mPostEffect->AddMaterial<CToneMapping>();
 	mPostEffect->pos = GetWindowHalfSize();
 
 	mData.gain = 1.25f;

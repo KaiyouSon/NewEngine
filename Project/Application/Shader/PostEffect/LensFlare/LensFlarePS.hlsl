@@ -3,88 +3,68 @@
 Texture2D<float4> mainTex : register(t0);
 SamplerState smp : register(s0);
 
+float4 DrawCircle(float2 circleUV, float2 pixelUV, float radius, float4 color);
+
 float4 main(V2P i) : SV_TARGET
 {
+    //float4 lensFlareColor = float4(1, 1, 1, 1);
+    //float lensFlareIntensity = 0.5f;
+    
+    //float2 flarePos = float2(960.f, 540.f);
+    //float flareSize = 0.1f;
+    
+    //float disToFlare = length(i.uv - flarePos);
+
+    //float flareIntensity = saturate(1.0f - disToFlare / flareSize);
+    //float4 flareColor = /*flareIntensity * */lensFlareIntensity * lensFlareColor;
+    
+    //return flareColor;
+    
+    //return mainTex.Sample(smp, i.uv) + flareColor;
+    
+    // 調整できるパラメーター
+    float oddSpace = 0.1f; // 奇数時のスペース
+    float evenSpace = 0.025f; // 偶数時のスペース
+    float spaceAccel = 0.005f; // スペースの増加量
+    
+    float baseRadius = 0.025f; // ベース半径
+    float radiusAccel = 0.02f; // 半径の増加量
+    
+    
     float asepect = 1920.0f / 1080.0f;
     float2 center = float2(960.f, 540.f);
     
     float4 col = mainTex.Sample(smp, i.uv);
     
-    float2 vec = normalize(float2(-1.f, 1.f));
+    float2 vec = normalize(float2(1.f, 1.f));
     
     float4 result = float4(0, 0, 0, 1);
-    for (uint index = 0; index < 5; index++)
+    
+    float pos = float2(0.f, 0.f);
+    float space = 0;
+    float spaceOffset = 0;
+    for (uint index = 0; index < 8; index++)
     {
-        float pos = float2(0.5f, 0.5f);
+        float radius = baseRadius + index * radiusAccel;
         
-        // 中心座標との距離を計算
-        float distance = length((i.uv - (pos + vec * ((index + 1) * 0.05f/* + index * 0.025f*/))) * float2(asepect, 1.0f));
-        
-        // 円の半径
-        float radius = 0.025f + index * 0.01f;
-    
-        // 透明度をsmoothstepで計算
-        float3 cirCol = 1 - smoothstep(0, radius, distance);
-    
-        result += float4(cirCol.rgb, 1) * 2;
+        result += DrawCircle(pos + vec * space, i.uv, radius, float4(1, 0, 0, 1));
+        spaceOffset += (index % 2 == 1) ? index * spaceAccel : 0.0f;
+        space += ((index % 2 == 0) ? evenSpace : oddSpace + spaceOffset) + index * radius / 8;
     }
-    return col + result;
     
-    //// レンズフレアの計算
-    //float2 lensFlareBaseUV = float2(1.f, 1.f) - i.uv;
-    
-    //float2 center = float2(960.f, 540.f);
-    //float2 toCenter = (center - lensFlareBaseUV) * 0.5f;
-    
-    //for (uint index = 0; index < 8; index++)
-    //{
-    //    const float2 lensFlareUV = lensFlareBaseUV + toCenter * (1.f + index);
+    return /*col + */result;
+}
 
-    //    const float r = length(center - lensFlareUV);
-    //    //const float fadeoutR = (r - 2);
-    //    //const float weight =
-    //    //    (r / length(center)) // 光源が重なったときに極端に明るくさせない重み
-    //    //    * (1.0f - smoothstep(0.0f, 1, r - 2)) // 外周をフェードアウトさせる重み
-    //    //;
-    //    // 重みの計算
-    //    float weight = 1.0f - 0.08f * index;
-    //    result.rgb += col.rgb * weight;
-    //}
+float4 DrawCircle(float2 circleUV, float2 pixelUV, float radius, float4 color)
+{
+    float2 asepect = float2(1920.0f / 1080.0f, 1.0f);
     
-    //return float4(result.rgb, 1);
+    // 現在のピクセルと円の中心の座標との長さ
+    float2 subUV = pixelUV - circleUV;
+    float len = length(subUV * asepect);
     
-    //float asepect = 1920.0f / 1080.0f;
+    // 半径以下なら描画
+    float3 circle = 1 - smoothstep(0, radius, len);
     
-    //// 中心座標との距離を計算
-    //float distance = length((i.uv - centerPos) * float2(asepect, 1.0f));
-
-    //// 円の半径
-    //float radius = 0.5;
-    
-    //// 透明度をsmoothstepで計算
-    //float cirCol = 1 - smoothstep(0, radius, distance);
-    
-
-    //float2 dir = centerPos - i.uv;
-    //float len = length(dir);
-    
-    //dir = normalize(dir);
-    //dir *= strength * len;
-    
-    //float totalWeight = 0;
-    
-    //[loop]
-    //for (int index = 0; index < loopNum; index++)
-    //{
-    //    // 重みの計算
-    //    float weight = 1.0f - 0.08f * index;
-        
-    //    col += mainTex.Sample(smp, i.uv + dir * index) * weight;
-    //    totalWeight += weight;
-
-    //}
-    //col /= totalWeight;
-    
-
-    //return float4(col.rgb * cirCol, 1);
+    return float4(circle, 1) * color;
 }
