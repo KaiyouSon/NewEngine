@@ -223,7 +223,7 @@
     <ClCompile Include="NewEngine\Graphics\GraphicsManager.cpp" />
     <ClCompile Include="NewEngine\Graphics\LightShaft.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\ToneMapping.cpp" />
-    <ClCompile Include="NewEngine\Gui\GuiManager.cpp" />
+    <ClCompile Include="NewEngine\Gui\GuiWraper.cpp" />
     <ClCompile Include="NewEngine\Input\InputManager.cpp" />
     <ClCompile Include="NewEngine\Input\JoypadInput.cpp" />
     <ClCompile Include="NewEngine\Input\KeyBoardInput.cpp" />
@@ -416,7 +416,7 @@
     <ClInclude Include="NewEngine\Graphics\GraphicsManager.h" />
     <ClInclude Include="NewEngine\Graphics\LightShaft.h" />
     <ClInclude Include="Application\SourceCode\PostEffect\ToneMapping.h" />
-    <ClInclude Include="NewEngine\Gui\GuiManager.h" />
+    <ClInclude Include="NewEngine\Gui\GuiWraper.h" />
     <ClInclude Include="NewEngine\Input\InputManager.h" />
     <ClInclude Include="NewEngine\Input\JoypadInput.h" />
     <ClInclude Include="NewEngine\Input\KeyBoardInput.h" />

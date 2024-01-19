@@ -111,7 +111,7 @@
 #include "MouseInput.h"
 
 // Gui関連
-#include "GuiManager.h"
+#include "GuiWraper.h"
 
 // Debugger関連
 #include "DebugManager.h"

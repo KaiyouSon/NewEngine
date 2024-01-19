@@ -1,4 +1,4 @@
-#include "GuiManager.h"
+#include "GuiWraper.h"
 #include "RenderBase.h"
 #include "RenderWindow.h"
 #include "TextureManager.h"
@@ -7,9 +7,22 @@
 #include <imgui_impl_dx12.h>
 #include <imgui_impl_win32.h>
 
-using namespace Gui;
+GuiWraper::GuiWraper() :
+	isOpenGuiSetting(true),
+	windowBgColor(Color::black + 5),
+	menuBarBgColor(Color::black + 10),
+	titleBgActiveColor(Color::black),
+	titleBgCollapsedColor(Color::black + 5)
+{
+}
 
-void Gui::Init()
+ImVec4 GuiWraper::ToImVec4(const Color color)
+{
+	Color to01 = color / 255.f;
+	return { to01.r,to01.g,to01.b,to01.a };
+}
+
+void GuiWraper::Init()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();
 
@@ -27,17 +40,28 @@ void Gui::Init()
 		DescriptorHeapManager::GetDescriptorHeap("SRV")->GetDescriptorHeap()->GetGPUDescriptorHandleForHeapStart());
 }
 
-void Gui::PreDraw()
+void GuiWraper::PreDraw()
 {
+	GuiWraper* instance = GetInstance().get();
+
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
+	// ウィンドウの背景色を変更する
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.Colors[ImGuiCol_WindowBg] = GetInstance()->ToImVec4(instance->windowBgColor);
+	style.Colors[ImGuiCol_MenuBarBg] = GetInstance()->ToImVec4(instance->menuBarBgColor);
+	style.Colors[ImGuiCol_TitleBgActive] = GetInstance()->ToImVec4(instance->titleBgActiveColor);
+	style.Colors[ImGuiCol_TitleBgCollapsed] = GetInstance()->ToImVec4(instance->titleBgCollapsedColor);
+
 	ImGui::NewFrame();
+
+	DrawGuiSetting();
 }
 
-void Gui::PostDraw()
+void GuiWraper::PostDraw()
 {
 	ImGui::Render();
 	// SRVヒープセット
@@ -47,7 +71,7 @@ void Gui::PostDraw()
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), renderBase->GetCommandList());
 }
 
-void Gui::Destroy()
+void GuiWraper::Destroy()
 {
 	// 破棄
 	ImGui_ImplDX12_Shutdown();
@@ -55,7 +79,18 @@ void Gui::Destroy()
 	ImGui::DestroyContext();
 }
 
-bool Gui::BeginWindow(const char* name, const Vec2& size, bool* isOpen)
+void GuiWraper::DrawGuiSetting()
+{
+	GuiWraper* instance = GetInstance().get();
+	BeginWindow("Gui Setting", -1, &instance->isOpenGuiSetting);
+	DrawColorEdit("Window BG Color", instance->windowBgColor);
+	DrawColorEdit("MenuBar BG Color", instance->menuBarBgColor);
+	DrawColorEdit("Title BG Active Color", instance->titleBgActiveColor);
+	DrawColorEdit("Title BG Collapsed Color", instance->titleBgCollapsedColor);
+	EndWindow();
+}
+
+bool GuiWraper::BeginWindow(const char* name, const Vec2& size, bool* isOpen)
 {
 	if (size.x != -1 && size.y != -1)
 	{
@@ -71,7 +106,7 @@ bool Gui::BeginWindow(const char* name, const Vec2& size, bool* isOpen)
 	return ImGui::Begin(name, isOpen, windowFlags);
 }
 
-void Gui::BeginFullWindow(const char* name)
+void GuiWraper::BeginFullWindow(const char* name)
 {
 	// 繧ｦ繧｣繝ｳ繝峨え縺ｮ險ｭ螳・
 	const ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -104,108 +139,108 @@ void Gui::BeginFullWindow(const char* name)
 	}
 }
 
-void Gui::EndFullWindow()
+void GuiWraper::EndFullWindow()
 {
 	ImGui::End();
 	ImGui::PopStyleVar();
 }
 
-void Gui::OpenPopModal(const char* tag)
+void GuiWraper::OpenPopModal(const char* tag)
 {
 	ImGui::OpenPopup(tag);
 }
 
-void Gui::ClosePopModal()
+void GuiWraper::ClosePopModal()
 {
 	ImGui::CloseCurrentPopup();
 }
 
-bool Gui::BeginPopModal(const char* tag)
+bool GuiWraper::BeginPopModal(const char* tag)
 {
 	return ImGui::BeginPopupModal(tag);
 }
 
-void Gui::EndPopModal()
+void GuiWraper::EndPopModal()
 {
 	ImGui::EndPopup();
 }
 
-bool Gui::DrawCollapsingHeader(const char* name)
+bool GuiWraper::DrawCollapsingHeader(const char* name)
 {
 	return ImGui::CollapsingHeader(name);
 }
 
-bool Gui::BeginMenuBar()
+bool GuiWraper::BeginMenuBar()
 {
 	return ImGui::BeginMenuBar();
 }
 
-void Gui::EndMenuBar()
+void GuiWraper::EndMenuBar()
 {
 	ImGui::EndMenuBar();
 }
 
-bool Gui::BeginMenu(const char* name)
+bool GuiWraper::BeginMenu(const char* name)
 {
 	return ImGui::BeginMenu(name);
 }
 
-void Gui::EndMenu()
+void GuiWraper::EndMenu()
 {
 	ImGui::EndMenu();
 }
 
-bool Gui::MenuItem(const char* name)
+bool GuiWraper::MenuItem(const char* name)
 {
 	return ImGui::MenuItem(name);
 }
 
-void Gui::EndWindow()
+void GuiWraper::EndWindow()
 {
 	ImGui::End();
 }
 
-void Gui::DrawDemoWindow(bool& flag)
+void GuiWraper::DrawDemoWindow(bool& flag)
 {
 	ImGui::ShowDemoWindow(&flag);
 }
 
-bool Gui::DrawButton(const char* label, const Vec2& size)
+bool GuiWraper::DrawButton(const char* label, const Vec2& size)
 {
 	return ImGui::Button(label, { size.x,size.y });
 }
 
-void Gui::DrawTab()
+void GuiWraper::DrawTab()
 {
 	ImGui::SameLine();
 }
 
-void Gui::DrawColumns(uint32_t space, const bool& isBorder)
+void GuiWraper::DrawColumns(uint32_t space, const bool& isBorder)
 {
 	ImGui::Columns(space, 0, isBorder);
 }
 
-void Gui::NextColumn()
+void GuiWraper::NextColumn()
 {
 	ImGui::NextColumn();
 }
 
-void Gui::DrawLine()
+void GuiWraper::DrawLine()
 {
 	ImGui::Separator();
 }
 
-void Gui::DrawString(const char* fmt, ...)
+void GuiWraper::DrawString(const char* fmt, ...)
 {
 	ImGui::Text(fmt);
 }
 
-void Gui::DrawCheckBox(const char* label, bool* flag)
+void GuiWraper::DrawCheckBox(const char* label, bool* flag)
 {
 	ImGui::Checkbox(label, flag);
 }
 
-bool Gui::DrawRadioButton(const char* label, uint32_t* current, const uint32_t index, const bool isTab)
+bool GuiWraper::DrawRadioButton(const char* label, uint32_t* current, const uint32_t index, const bool isTab)
 {
 	bool flag = ImGui::RadioButton(label, (int*)current, (int)index);
 	if (isTab == true)
@@ -216,49 +251,48 @@ bool Gui::DrawRadioButton(const char* label, uint32_t* current, const uint32_t i
 	return flag;
 }
 
-void Gui::DrawSlider1(const char* label, float& v, const float& moveSpeed)
+void GuiWraper::DrawSlider1(const char* label, float& v, const float& moveSpeed)
 {
 	ImGui::DragFloat(label, &v, moveSpeed);
 }
 
-void Gui::DrawSlider2(const char* label, Vec2& v, const float& moveSpeed)
+void GuiWraper::DrawSlider2(const char* label, Vec2& v, const float& moveSpeed)
 {
 	float temp[2] = { v.x,v.y };
 	ImGui::DragFloat2(label, temp, moveSpeed);
 	v.x = temp[0]; v.y = temp[1];
 }
 
-void Gui::DrawSlider3(const char* label, Vec3& v, const float& moveSpeed)
+void GuiWraper::DrawSlider3(const char* label, Vec3& v, const float& moveSpeed)
 {
 	float temp[3] = { v.x,v.y,v.z };
 	ImGui::DragFloat3(label, temp, moveSpeed);
 	v.x = temp[0];	v.y = temp[1];	v.z = temp[2];
 }
 
-void Gui::DrawColorEdit(const char* label, Color& color)
+void GuiWraper::DrawColorEdit(const char* label, Color& color)
 {
 	float temp[4] = { color.r / 255,color.g / 255,color.b / 255,color.a / 255 };
 	ImGui::ColorEdit4(label, temp);
 	color.r = temp[0] * 255; color.g = temp[1] * 255; color.b = temp[2] * 255; color.a = temp[3] * 255;
 }
 
-bool Gui::DrawInputInt(const char* label, int32_t& v)
+bool GuiWraper::DrawInputInt(const char* label, int32_t& v)
 {
 	bool flag = ImGui::InputInt(label, &v);
 	return flag;
 }
 
-bool Gui::DrawInputText(const char* label, std::string& str)
+bool GuiWraper::DrawInputText(const char* label, std::string& str)
 {
 	char* cstr = const_cast<char*>(str.c_str());
 	bool result = ImGui::InputText(label, cstr, 30);
 	str = cstr;
 
 	return result;
-	//return ImGui::InputText(label, const_cast<char*>(str.c_str()), 30);
 }
 
-void Gui::DrawImage(ITexture* texture, const Vec2& size)
+void GuiWraper::DrawImage(ITexture* texture, const Vec2& size)
 {
 	if (texture == nullptr) return;
 
@@ -280,14 +314,14 @@ void Gui::DrawImage(ITexture* texture, const Vec2& size)
 	}
 }
 
-void Gui::DrawImage(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle, const Vec2& size)
+void GuiWraper::DrawImage(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle, const Vec2& size)
 {
 	ImTextureID handle = (ImTextureID)gpuHandle.ptr;
 	ImVec2 textureSize = { size.x,size.y };
 	ImGui::Image(handle, textureSize);
 }
 
-bool Gui::DrawImageButton(ITexture* texture, const Vec2& size)
+bool GuiWraper::DrawImageButton(ITexture* texture, const Vec2& size)
 {
 	if (texture == nullptr) return false;
 
@@ -295,4 +329,5 @@ bool Gui::DrawImageButton(ITexture* texture, const Vec2& size)
 	ImVec2 buttonSize = { size.x,size.y };
 	return ImGui::ImageButton(gpuHandle, buttonSize);
 }
+
 

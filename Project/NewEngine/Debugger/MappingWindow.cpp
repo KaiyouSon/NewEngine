@@ -1,5 +1,5 @@
 #include "MappingWindow.h"
-#include "GuiManager.h"
+#include "GuiWraper.h"
 #include "TextureManager.h"
 #include "ModelManager.h"
 #include "SoundManager.h"

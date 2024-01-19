@@ -504,7 +504,7 @@
     <ClCompile Include="Application\SourceCode\Scene\TitleScene.cpp">
       <Filter>Application\Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Gui\GuiManager.cpp">
+    <ClCompile Include="NewEngine\Gui\GuiWraper.cpp">
       <Filter>NewEngine\Source\Gui</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Util\Easing.cpp">
@@ -1058,7 +1058,7 @@
     <ClInclude Include="Application\SourceCode\Scene\TitleScene.h">
       <Filter>Application\Header\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Gui\GuiManager.h">
+    <ClInclude Include="NewEngine\Gui\GuiWraper.h">
       <Filter>NewEngine\Header\Gui</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Util\Easing.h">

@@ -1,5 +1,5 @@
 #include "ShaderWindow.h"
-#include "GuiManager.h"
+#include "GuiWraper.h"
 #include "ShaderCompilerManager.h"
 
 namespace fs = std::filesystem;

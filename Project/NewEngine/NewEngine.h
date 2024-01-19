@@ -20,7 +20,7 @@
 #include "MathUtil.h"
 #include "Util.h"
 
-#include "GuiManager.h"
+#include "GuiWraper.h"
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "LightManager.h"

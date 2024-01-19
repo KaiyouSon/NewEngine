@@ -129,32 +129,32 @@ void GameScene::Update()
 	ShadowMap::GetInstance()->LightViewUpdate(viewLightPos);
 
 	// デバッグ機能
-	//ProcessAtDebugBuild([this]
-	//	{
-			// ホットリロード
-	if (Key::GetKey(DIK_H))
-	{
-		if (Key::GetKeyDown(DIK_S))
+	ProcessAtDebugBuild([this]
 		{
-			FieldDataManager::Load("SkyIsland", "SkyIsland");
-			mField->SetFieldData(FieldDataManager::GetFieldData("SkyIsland"));
-			mField->Init();
-		}
-	}
+			// ホットリロード
+			if (Key::GetKey(DIK_H))
+			{
+				if (Key::GetKeyDown(DIK_S))
+				{
+					FieldDataManager::Load("SkyIsland", "SkyIsland");
+					mField->SetFieldData(FieldDataManager::GetFieldData("SkyIsland"));
+					mField->Init();
+				}
+			}
 
-	if (Key::GetKeyDown(DIK_L))
-	{
-		Camera::current.pos = Vec3(0, 10, -20);
-		Camera::current.rot = Radian(Vec3(0, 0, 0));
-	}
+			if (Key::GetKeyDown(DIK_L))
+			{
+				Camera::current.pos = Vec3(0, 10, -20);
+				Camera::current.rot = Radian(Vec3(0, 0, 0));
+			}
 
-	if (Key::GetKeyDown(DIK_F6))
-	{
-		mPlayer->Init();
-		mMovieEvent->End();
-		CameraManager::GetInstance()->ChangeCamera(CameraManager::CameraType::Default);
-	}
-	//	});
+			if (Key::GetKeyDown(DIK_F6))
+			{
+				mPlayer->Init();
+				mMovieEvent->End();
+				CameraManager::GetInstance()->ChangeCamera(CameraManager::CameraType::Default);
+			}
+		});
 
 	auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
 	if (currentTransition == nullptr)
@@ -196,7 +196,7 @@ void GameScene::Update()
 	{
 		if (DebugManager::GetInstance()->GetisActive() == false)
 		{
-			//CameraManager::GetInstance()->Update();
+			CameraManager::GetInstance()->Update();
 		}
 		else
 		{
@@ -292,7 +292,7 @@ void GameScene::Draw()
 	mPostEffectManager->DrawPostEffect(PostEffectType::Vignette);
 	//mPostEffectManager->DrawPostEffect(PostEffectType::LensFlare);
 
-	//mUiManager->DrawFrontSprite();
+	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
 	ShadowMap::GetInstance()->DrawPostEffect();
 }
