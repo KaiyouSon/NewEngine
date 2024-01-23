@@ -12,6 +12,13 @@ void PipelineManager::CreateGraphicsPipeline(const GraphicsPipelineSetting& sett
 	sGraphicsPipelineMap.insert(std::make_pair(tag, std::move(gp)));
 }
 
+void PipelineManager::CreateGraphicsPipeline2(const GraphicsPipelineSetting& setting, const std::string tag)
+{
+	std::unique_ptr<GraphicsPipeline> gp = std::make_unique<GraphicsPipeline>(setting);
+
+	sGraphicsPipelineMap.insert(std::make_pair(tag, std::move(gp)));
+}
+
 void PipelineManager::ReCreateGraphicsPipeline(const std::string tag)
 {
 	sGraphicsPipelineMap[tag]->Create(sGraphicsPipelineMap[tag]->GetSetting());

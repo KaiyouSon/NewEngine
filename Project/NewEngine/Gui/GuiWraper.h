@@ -38,6 +38,9 @@ public:
 	static bool BeginPopModal(const char* tag);
 	static void EndPopModal();
 
+	static bool BeginTreeNode(const std::string& tag, const bool isOpenNode = false);
+	static void EndTreeNode();
+
 	static bool DrawCollapsingHeader(const char* name);
 
 	// メニューバー関連
@@ -75,6 +78,7 @@ public:
 
 	// 入力関連
 	static bool DrawInputInt(const char* label, int32_t& v);
+	static bool DrawInputInt(const char* label, uint32_t& v);
 	static bool DrawInputText(const char* label, std::string& str);
 
 	// 画像関連

@@ -347,7 +347,7 @@ void CreateManager::CreateGraphicsPipeline()
 		// 3Dオブジェクト
 		setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
-		PipelineManager::CreateGraphicsPipeline(setting, "Object3DWriteNone");
+		PipelineManager::CreateGraphicsPipeline2(setting, "Object3DWriteNone");
 
 		// 草
 		setting = PipelineManager::GetGraphicsPipeline("Grass")->GetSetting();

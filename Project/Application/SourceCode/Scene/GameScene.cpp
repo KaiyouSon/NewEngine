@@ -123,7 +123,8 @@ void GameScene::Init()
 }
 void GameScene::Update()
 {
-	int32_t offsetZ = (int32_t)(mPlayer->GetPos().z / 200) * 100;
+	//int32_t offsetZ = (int32_t)(mPlayer->GetPos().z / 200) * 100;
+	int32_t offsetZ = (int32_t)(Camera::current.pos.z / 200) * 100;
 	//int32_t offsetZ = (int32_t)(800 / 200) * 100;
 	Vec3 viewLightPos = mDirectionalLight->pos + Vec3(0, 0, (float)offsetZ);
 	ShadowMap::GetInstance()->LightViewUpdate(viewLightPos);
@@ -196,11 +197,24 @@ void GameScene::Update()
 	{
 		if (DebugManager::GetInstance()->GetisActive() == false)
 		{
-			CameraManager::GetInstance()->Update();
+			//CameraManager::GetInstance()->Update();
 		}
 		else
 		{
 			Camera::DebugCameraUpdate();
+			if (Key::GetKey(DIK_C))
+			{
+				if (Key::GetKeyDown(DIK_1))
+				{
+					Camera::current.rot = Radian(Vec3(0, -65, 0));
+					Camera::current.pos = Vec3(0, 10, 0);
+				}
+				else if (Key::GetKeyDown(DIK_2))
+				{
+					Camera::current.rot = Radian(Vec3(7.5, 25, 0));
+					Camera::current.pos = Vec3(-80, 120, 230);
+				}
+			}
 		}
 	}
 
@@ -292,7 +306,7 @@ void GameScene::Draw()
 	mPostEffectManager->DrawPostEffect(PostEffectType::Vignette);
 	//mPostEffectManager->DrawPostEffect(PostEffectType::LensFlare);
 
-	mUiManager->DrawFrontSprite();
+	//mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
 	ShadowMap::GetInstance()->DrawPostEffect();
 }

@@ -23,7 +23,7 @@ ShaderCompiler::ShaderCompiler(const ShaderCompilerSetting& shaderCompilerSettin
 	mSetting = shaderCompilerSetting;
 
 	// サイズ分確保
-	mShaderBlobs.resize((uint32_t)ShaderType::Size);
+	mShaderBlobs.resize((uint32_t)ShaderType::Count);
 
 	// インプットレイアウトの設定
 	for (uint32_t i = 0; i < mSetting.mInputLayoutSettings.size(); i++)
@@ -145,7 +145,7 @@ void ShaderCompiler::Create(const std::filesystem::path& filePath)
 		}
 
 		// サイズ分確保
-		mShaderBlobs.resize((uint32_t)ShaderType::Size);
+		mShaderBlobs.resize((uint32_t)ShaderType::Count);
 
 		// 各シェーダーをコンパイル
 		CompileShader(mSetting.vsFilePath, ShaderType::Vertex);		// VS

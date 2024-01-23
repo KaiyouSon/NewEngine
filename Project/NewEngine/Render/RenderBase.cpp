@@ -2,6 +2,7 @@
 #include "RenderWindow.h"
 #include "TextureManager.h"
 #include "ShaderCompilerManager.h"
+#include "ShaderManager.h"
 #include <cassert>
 #include <string>
 #include <d3dcompiler.h>
@@ -349,26 +350,26 @@ void RenderBase::ShaderCompilerInit()
 	ShaderCompilerSetting setting;
 
 	// Object3D用
-	ShaderCompilerManager::Create(path1 + "Object3D", "Object3D");
-	ShaderCompilerManager::Create(path1 + "Object3DSMOff", "Object3DSMOff");
+	//ShaderCompilerManager::Create(path1 + "Object3D", "Object3D");
+	//ShaderCompilerManager::Create(path1 + "Object3DSMOff", "Object3DSMOff");
 
 	// Fbxモデル用
-	ShaderCompilerManager::Create(path1 + "FbxModel", "FbxModel");
+	//ShaderCompilerManager::Create(path1 + "FbxModel", "FbxModel");
 
 	// スプライト用
-	ShaderCompilerManager::Create(path1 + "Sprite", "Sprite");
+	//ShaderCompilerManager::Create(path1 + "Sprite", "Sprite");
 
 	// 円ゲージスプライト用
-	ShaderCompilerManager::Create(path1 + "CircleGaugeSprite", "CircleGaugeSprite");
+	//ShaderCompilerManager::Create(path1 + "CircleGaugeSprite", "CircleGaugeSprite");
 
 	// ポストエフェクト用（デフォルトシェーダー）
-	ShaderCompilerManager::Create(path1 + "PostEffect", "PostEffect");
+	//ShaderCompilerManager::Create(path1 + "PostEffect", "PostEffect");
 
 	// 線用
-	ShaderCompilerManager::Create(path1 + "Line", "Line");
+	//ShaderCompilerManager::Create(path1 + "Line", "Line");
 
 	// エミッター用
-	ShaderCompilerManager::Create(path1 + "Emitter", "Emitter");
+	//ShaderCompilerManager::Create(path1 + "Emitter", "Emitter");
 
 	// GPUエミッター用
 	ShaderCompilerManager::Create(path1 + "GPUEmitter", "GPUEmitter");
@@ -383,7 +384,37 @@ void RenderBase::ShaderCompilerInit()
 	ShaderCompilerManager::Create(path1 + "ParticleObject", "ParticleObject");
 
 	// ボリューメトリックフォグ用
-	ShaderCompilerManager::Create(path1 + "VolumetricFog", "VolumetricFog");
+	//ShaderCompilerManager::Create(path1 + "VolumetricFog", "VolumetricFog");
+
+	// Object3D用
+	ShaderManager::CompileAllType(EngineShaderDirectory2 + "Object3D", "Object3D");
+
+	// Object3D(影なし)用
+	ShaderManager::CompileAllType(EngineShaderDirectory2 + "Object3DSMOff", "Object3DSMOff");
+
+	// Fbxモデル用
+	ShaderManager::CompileAllType(EngineShaderDirectory2 + "FbxModel", "FbxModel");
+
+	// スプライト用
+	ShaderManager::CompileAllType(EngineShaderDirectory2 + "Sprite", "Sprite");
+
+	// 円ゲージスプライト用
+	ShaderManager::CompileAllType(EngineShaderDirectory2 + "CircleGaugeSprite", "CircleGaugeSprite");
+
+	// ポストエフェクト用（デフォルトシェーダー）
+	ShaderManager::CompileAllType(EngineShaderDirectory2 + "PostEffect", "PostEffect");
+
+	// 線用
+	ShaderManager::CompileAllType(EngineShaderDirectory2 + "Line", "Line");
+
+	// エミッター用
+	ShaderManager::CompileAllType(EngineShaderDirectory2 + "Emitter", "Emitter");
+
+	// GPUエミッター用
+	ShaderManager::CompileAllType(EngineShaderDirectory2 + "GPUEmitter", "GPUEmitter");
+
+	// ボリューメトリックフォグ用
+	ShaderManager::CompileAllType(EngineShaderDirectory2 + "VolumetricFog", "VolumetricFog");
 }
 void RenderBase::GraphicsPipelineInit()
 {
@@ -408,6 +439,9 @@ void RenderBase::GraphicsPipelineInit()
 	GraphicsPipelineSetting setting;
 
 	// 3Dオブジェクト用
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Object3D");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Object3D");
+	setting.inputLayout = ShaderManager::GetInputLayout("Object3D");
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "Object3D";
 	setting.cullMode = CullMode::Back;
@@ -415,8 +449,11 @@ void RenderBase::GraphicsPipelineInit()
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 9;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 3;
-	PipelineManager::CreateGraphicsPipeline(setting, "Object3D");
+	PipelineManager::CreateGraphicsPipeline2(setting, "Object3D");
 
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Object3DSMOff");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Object3DSMOff");
+	setting.inputLayout = ShaderManager::GetInputLayout("Object3DSMOff");
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "Object3DSMOff";
 	setting.cullMode = CullMode::Back;
@@ -424,9 +461,12 @@ void RenderBase::GraphicsPipelineInit()
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 9;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
-	PipelineManager::CreateGraphicsPipeline(setting, "Object3DSMOff");
+	PipelineManager::CreateGraphicsPipeline2(setting, "Object3DSMOff");
 
 	// FBXモデル用
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "FbxModel");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "FbxModel");
+	setting.inputLayout = ShaderManager::GetInputLayout("FbxModel");
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "FbxModel";
 	setting.cullMode = CullMode::Back;
@@ -434,9 +474,12 @@ void RenderBase::GraphicsPipelineInit()
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 7;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
-	PipelineManager::CreateGraphicsPipeline(setting, "FbxModel");
+	PipelineManager::CreateGraphicsPipeline2(setting, "FbxModel");
 
 	// スプライト用
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Sprite");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Sprite");
+	setting.inputLayout = ShaderManager::GetInputLayout("Sprite");
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "Sprite";
 	setting.cullMode = CullMode::None;
@@ -444,9 +487,12 @@ void RenderBase::GraphicsPipelineInit()
 	setting.depthStencilDesc = depthStencilDesc2;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "Sprite");
+	PipelineManager::CreateGraphicsPipeline2(setting, "Sprite");
 
 	// 円ゲージスプライト用
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "CircleGaugeSprite");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "CircleGaugeSprite");
+	setting.inputLayout = ShaderManager::GetInputLayout("CircleGaugeSprite");
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "CircleGaugeSprite";
 	setting.cullMode = CullMode::None;
@@ -454,9 +500,12 @@ void RenderBase::GraphicsPipelineInit()
 	setting.depthStencilDesc = depthStencilDesc2;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "CircleGaugeSprite");
+	PipelineManager::CreateGraphicsPipeline2(setting, "CircleGaugeSprite");
 
 	// ポストエフェクト用(デフォルト)
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "PostEffect");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "PostEffect");
+	setting.inputLayout = ShaderManager::GetInputLayout("PostEffect");
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "PostEffect";
 	setting.cullMode = CullMode::None;
@@ -464,9 +513,12 @@ void RenderBase::GraphicsPipelineInit()
 	setting.depthStencilDesc = depthStencilDesc2;
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
-	PipelineManager::CreateGraphicsPipeline(setting, "PostEffect");
+	PipelineManager::CreateGraphicsPipeline2(setting, "PostEffect");
 
 	// 線用
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Line");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Line");
+	setting.inputLayout = ShaderManager::GetInputLayout("Line");
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "Line";
 	setting.cullMode = CullMode::None;
@@ -474,9 +526,13 @@ void RenderBase::GraphicsPipelineInit()
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
-	PipelineManager::CreateGraphicsPipeline(setting, "Line");
+	PipelineManager::CreateGraphicsPipeline2(setting, "Line");
 
 	// エミッタ用
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Emitter");
+	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "Emitter");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Emitter");
+	setting.inputLayout = ShaderManager::GetInputLayout("Emitter");
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "Emitter";
 	setting.cullMode = CullMode::None;
@@ -484,9 +540,13 @@ void RenderBase::GraphicsPipelineInit()
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
-	PipelineManager::CreateGraphicsPipeline(setting, "Emitter");
+	PipelineManager::CreateGraphicsPipeline2(setting, "Emitter");
 
 	// GPUエミッタ用
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "GPUEmitter");
+	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "GPUEmitter");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GPUEmitter");
+	setting.inputLayout = ShaderManager::GetInputLayout("GPUEmitter");
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "GPUEmitter";
 	setting.cullMode = CullMode::None;
@@ -494,13 +554,13 @@ void RenderBase::GraphicsPipelineInit()
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
-	PipelineManager::CreateGraphicsPipeline(setting, "GPUEmitter");
+	PipelineManager::CreateGraphicsPipeline2(setting, "GPUEmitter");
 
 	// ColliderObject用
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "ColliderObject";
 	setting.cullMode = CullMode::None;
-	setting.fillMode = GraphicsPipelineSetting::Wireframe;
+	setting.fillMode = FillMode::Wireframe;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
@@ -530,7 +590,9 @@ void RenderBase::GraphicsPipelineInit()
 	PipelineManager::CreateGraphicsPipeline(setting, "ParticleObject");
 
 	// ボリューメトリックフォグ用
-	setting = GraphicsPipelineSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "VolumetricFog");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "VolumetricFog");
+	setting.inputLayout = ShaderManager::GetInputLayout("VolumetricFog");
 	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "VolumetricFog";
 	setting.cullMode = CullMode::None;
@@ -538,11 +600,14 @@ void RenderBase::GraphicsPipelineInit()
 	setting.depthStencilDesc = depthStencilDesc4;
 	setting.rootSignatureSetting.maxCbvRootParameter = 6;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFog");
+	PipelineManager::CreateGraphicsPipeline2(setting, "VolumetricFog");
 
-	setting = PipelineManager::GetGraphicsPipeline("VolumetricFog")->GetSetting();
-	setting.depthStencilDesc = depthStencilDesc2;
-	PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFogInSide");
+	//setting = PipelineManager::GetGraphicsPipeline("VolumetricFog")->GetSetting();
+	//setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "VolumetricFog");
+	//setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "VolumetricFog");
+	//setting.inputLayout = ShaderManager::GetInputLayout("VolumetricFog");
+	//setting.depthStencilDesc = depthStencilDesc2;
+	//PipelineManager::CreateGraphicsPipeline(setting, "VolumetricFogInSide");
 
 	//setting = PipelineManager::GetGraphicsPipeline("WithInVolumetricFog")->GetSetting();
 	//setting.depthStencilDesc = depthStencilDesc2;

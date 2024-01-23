@@ -143,6 +143,7 @@
     <ClCompile Include="Application\SourceCode\Field\Cloud.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\LensFlare.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp" />
+    <ClCompile Include="NewEngine\Debugger\PipelineWindow.cpp" />
     <ClCompile Include="NewEngine\Debugger\ShaderWindow.cpp" />
     <ClCompile Include="Application\SourceCode\UI\BossGaugeUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\CameraTargetUI.cpp" />
@@ -285,8 +286,11 @@
     <ClCompile Include="NewEngine\Render\RenderWindow.cpp" />
     <ClCompile Include="NewEngine\Render\Pipeline\RootSignature.cpp" />
     <ClCompile Include="NewEngine\Render\ScissorRectangle.cpp" />
+    <ClCompile Include="NewEngine\Render\ShaderCompiler\InputLayout.cpp" />
+    <ClCompile Include="NewEngine\Render\ShaderCompiler\Shader.cpp" />
     <ClCompile Include="NewEngine\Render\ShaderCompiler\ShaderCompiler.cpp" />
     <ClCompile Include="NewEngine\Render\ShaderCompiler\ShaderCompilerManager.cpp" />
+    <ClCompile Include="NewEngine\Render\ShaderCompiler\ShaderManager.cpp" />
     <ClCompile Include="NewEngine\Render\Viewport.cpp" />
     <ClCompile Include="NewEngine\Object\Other\Texture\TextureManager.cpp" />
     <ClCompile Include="NewEngine\Sound\SoundManager.cpp" />
@@ -336,6 +340,7 @@
     <ClInclude Include="Application\SourceCode\Field\Cloud.h" />
     <ClInclude Include="Application\SourceCode\PostEffect\LensFlare.h" />
     <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h" />
+    <ClInclude Include="NewEngine\Debugger\PipelineWindow.h" />
     <ClInclude Include="NewEngine\Debugger\ShaderWindow.h" />
     <ClInclude Include="Application\SourceCode\UI\BossGaugeUI.h" />
     <ClInclude Include="Application\SourceCode\UI\CameraTargetUI.h" />
@@ -481,8 +486,11 @@
     <ClInclude Include="NewEngine\Render\RenderWindow.h" />
     <ClInclude Include="NewEngine\Render\Pipeline\RootSignature.h" />
     <ClInclude Include="NewEngine\Render\ScissorRectangle.h" />
+    <ClInclude Include="NewEngine\Render\ShaderCompiler\InputLayout.h" />
+    <ClInclude Include="NewEngine\Render\ShaderCompiler\Shader.h" />
     <ClInclude Include="NewEngine\Render\ShaderCompiler\ShaderCompiler.h" />
     <ClInclude Include="NewEngine\Render\ShaderCompiler\ShaderCompilerManager.h" />
+    <ClInclude Include="NewEngine\Render\ShaderCompiler\ShaderManager.h" />
     <ClInclude Include="NewEngine\Render\VertexBufferData.h" />
     <ClInclude Include="NewEngine\Render\Viewport.h" />
     <ClInclude Include="NewEngine\Object\Other\Texture\TextureManager.h" />
@@ -491,6 +499,7 @@
     <ClInclude Include="NewEngine\stdafx.h" />
     <ClInclude Include="NewEngine\Util\BezierCurve.h" />
     <ClInclude Include="NewEngine\Util\Color.h" />
+    <ClInclude Include="NewEngine\Util\NewEngineConstant.h" />
     <ClInclude Include="NewEngine\Util\Easing.h" />
     <ClInclude Include="NewEngine\Util\Frustum.h" />
     <ClInclude Include="NewEngine\Util\Layer.h" />
@@ -501,6 +510,7 @@
     <ClInclude Include="NewEngine\Util\NewEngineSetting.h" />
     <ClInclude Include="NewEngine\Util\Singleton.h" />
     <ClInclude Include="NewEngine\Sound\Sound.h" />
+    <ClInclude Include="NewEngine\Util\StandardLib.h" />
     <ClInclude Include="NewEngine\Util\Timer.h" />
     <ClInclude Include="NewEngine\Util\Transform.h" />
     <ClInclude Include="NewEngine\Util\Util.h" />
@@ -527,22 +537,24 @@
     <None Include="Application\Shader\PostEffect\Vignette\Vignette.hlsli" />
     <None Include="Application\Shader\WorldVolumetricFog\WorldVolumetricFog.hlsli" />
     <None Include="NewEngine\Shader\Blur.hlsli" />
-    <None Include="NewEngine\Shader\GPUEmitter\GPUEmitter.hlsli" />
+    <None Include="Assets\Shader\NewEngine\GPUEmitter\GPUEmitter.hlsli" />
     <None Include="Application\Shader\PostEffect\ToneMapping\ToneMapping.hlsli" />
-    <None Include="NewEngine\Shader\ParticleObject\ParticleObject.hlsli" />
-    <None Include="NewEngine\Shader\VolumetricFog\VolumetricFog.hlsli" />
-    <None Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSprite.hlsli" />
-    <None Include="NewEngine\Shader\ColliderObject\ColliderObject.hlsli" />
     <None Include="NewEngine\Shader\Emitter\Emitter.hlsli" />
-    <None Include="NewEngine\Shader\FbxModel\FbxModel.hlsli" />
+    <None Include="NewEngine\Shader\GPUEmitter\GPUEmitter.hlsli" />
+    <None Include="NewEngine\Shader\ParticleObject\ParticleObject.hlsli" />
+    <None Include="Assets\Shader\NewEngine\VolumetricFog\VolumetricFog.hlsli" />
+    <None Include="Assets\Shader\NewEngine\CircleGaugeSprite\CircleGaugeSprite.hlsli" />
+    <None Include="NewEngine\Shader\ColliderObject\ColliderObject.hlsli" />
+    <None Include="Assets\Shader\NewEngine\Emitter\Emitter.hlsli" />
+    <None Include="Assets\Shader\NewEngine\FbxModel\FbxModel.hlsli" />
     <None Include="NewEngine\Shader\Lighting.hlsli" />
-    <None Include="NewEngine\Shader\Line\Line.hlsli" />
+    <None Include="Assets\Shader\NewEngine\Line\Line.hlsli" />
     <None Include="NewEngine\Shader\Object3D\Object3D.hlsli" />
     <None Include="NewEngine\Shader\ParticleMesh\ParticleMesh.hlsli" />
-    <None Include="NewEngine\Shader\PostEffect\PostEffect.hlsli" />
+    <None Include="Assets\Shader\NewEngine\PostEffect\PostEffect.hlsli" />
     <None Include="NewEngine\Shader\ShaderIO.hlsli" />
-    <None Include="NewEngine\Shader\Sprite\Sprite.hlsli" />
-    <None Include="NewEngine\Shader\Util\Util.hlsli" />
+    <None Include="Assets\Shader\NewEngine\Sprite\Sprite.hlsli" />
+    <None Include="Assets\Shader\Util.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Application\Shader\Effect\AttackExplosionEffect\AttackExplosionEffectInitCS.hlsl">
@@ -895,6 +907,66 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="Assets\Shader\NewEngine\GPUEmitter\GPUEmitterCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Assets\Shader\NewEngine\GPUEmitter\GPUEmitterGS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Assets\Shader\NewEngine\GPUEmitter\GPUEmitterPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Assets\Shader\NewEngine\GPUEmitter\GPUEmitterVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\PostEffect\ToneMapping\ToneMappingPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Application\Shader\PostEffect\ToneMapping\ToneMappingVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\Emitter\EmitterCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\Emitter\EmitterGS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\Emitter\EmitterPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="NewEngine\Shader\Emitter\EmitterVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterCS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
@@ -914,18 +986,6 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterVS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\PostEffect\ToneMapping\ToneMappingPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\PostEffect\ToneMapping\ToneMappingVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
@@ -955,25 +1015,25 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\VolumetricFog\VolumetricFogPS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\VolumetricFog\VolumetricFogPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\VolumetricFog\VolumetricFogVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\VolumetricFog\VolumetricFogVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSpritePS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\CircleGaugeSprite\CircleGaugeSpritePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSpriteVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\CircleGaugeSprite\CircleGaugeSpriteVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
@@ -987,39 +1047,39 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Emitter\EmitterGS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\Emitter\EmitterGS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Emitter\EmitterPS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\Emitter\EmitterPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Emitter\EmitterVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\Emitter\EmitterVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\FbxModel\FbxModelPS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\FbxModel\FbxModelPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\FbxModel\FbxModelVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\FbxModel\FbxModelVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Line\LinePS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\Line\LinePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Line\LineVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\Line\LineVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
@@ -1049,7 +1109,7 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Sprite\SpritePS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\Sprite\SpritePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -1067,19 +1127,19 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\PostEffect\PostEffectPS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\PostEffect\PostEffectPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\PostEffect\PostEffectVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\PostEffect\PostEffectVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Sprite\SpriteVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\Sprite\SpriteVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>

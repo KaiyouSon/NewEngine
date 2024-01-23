@@ -1,5 +1,5 @@
 #include "CircleGaugeSprite.hlsli"
-#include "../Util/Util.hlsli"
+#include "../../Util.hlsli"
 
 Texture2D<float4> tex : register(t0);
 SamplerState smp : register(s0);

@@ -1,4 +1,4 @@
-#include "Emitter.hlsli"
+#include "GPUEmitter.hlsli"
 
 struct ArrayData
 {

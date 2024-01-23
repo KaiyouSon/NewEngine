@@ -2,6 +2,7 @@
 #include "NewEngine.h"
 #include "AssimpLoader.h"
 #include "MotionManager.h"
+#include "ShaderManager.h"
 #include "FieldDataManager.h"
 
 ///////////////////////////////////////////////////////////////

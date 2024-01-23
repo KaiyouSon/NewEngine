@@ -3,6 +3,7 @@
 #include "MappingWindow.h"
 #include "RendererWindow.h"
 #include "ShaderWindow.h"
+#include "PipelineWindow.h"
 
 // 前方宣言
 template<typename T> class Singleton;
@@ -16,6 +17,7 @@ private:
 	bool mIsNextFrame;
 
 private:
+	std::unique_ptr<PipelineWindow> mPipelineWindow;
 	std::unique_ptr<ShaderWindow> mShaderWindow;
 	std::unique_ptr<MappingWindow> mMappingWindow;
 	std::unique_ptr<RendererWindow> mRendererWindow;

@@ -15,8 +15,19 @@ private:
 private:
 	void CreatePipelineState(const GraphicsPipelineSetting::PipelineBlend pipelineBlend);
 
+private:
+	void ShaderSetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc);
+	void CullSetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc);
+	void FillSetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc);
+	void InputLayoutSetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc);
+	void RenderTargetBlendSetting(
+		const GraphicsPipelineSetting::PipelineBlend pipelineBlend,
+		D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc);
+	void PrimitiveTopologySetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc);
+
 public:
 	GraphicsPipeline();
+	GraphicsPipeline(const GraphicsPipelineSetting& setting);
 	void Create(const GraphicsPipelineSetting& setting);
 	void DrawCommand(const BlendMode blendMode);
 

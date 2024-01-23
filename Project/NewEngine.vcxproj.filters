@@ -256,9 +256,6 @@
     <Filter Include="Shader\Engine\Sprite">
       <UniqueIdentifier>{0be0cd81-a9ac-42a9-87bb-1de3191c8cf7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="NewEngine\Source\Render\ShaderCompiler">
-      <UniqueIdentifier>{476a86bb-2911-4c35-83df-34e09e6cec09}</UniqueIdentifier>
-    </Filter>
     <Filter Include="NewEngine\Header\Render\ShaderCompiler">
       <UniqueIdentifier>{ede8b782-52bf-48fb-9310-c6ec24d25802}</UniqueIdentifier>
     </Filter>
@@ -414,6 +411,9 @@
     </Filter>
     <Filter Include="Shader\Application\PostEffect\LensFlare">
       <UniqueIdentifier>{77b07f40-b7bb-40b6-a559-0229951ea397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewEngine\Source\Render\Shader">
+      <UniqueIdentifier>{476a86bb-2911-4c35-83df-34e09e6cec09}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -682,10 +682,10 @@
       <Filter>NewEngine\Source\Render\Pipeline</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Render\ShaderCompiler\ShaderCompiler.cpp">
-      <Filter>NewEngine\Source\Render\ShaderCompiler</Filter>
+      <Filter>NewEngine\Source\Render\Shader</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Render\ShaderCompiler\ShaderCompilerManager.cpp">
-      <Filter>NewEngine\Source\Render\ShaderCompiler</Filter>
+      <Filter>NewEngine\Source\Render\Shader</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Render\Pipeline\ComputePipeline.cpp">
       <Filter>NewEngine\Source\Render\Pipeline</Filter>
@@ -962,6 +962,18 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\PostEffect\LensFlare.cpp">
       <Filter>Application\Source\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\PipelineWindow.cpp">
+      <Filter>NewEngine\Source\Debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\ShaderCompiler\Shader.cpp">
+      <Filter>NewEngine\Source\Render\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\ShaderCompiler\ShaderManager.cpp">
+      <Filter>NewEngine\Source\Render\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Render\ShaderCompiler\InputLayout.cpp">
+      <Filter>NewEngine\Source\Render\Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1550,6 +1562,24 @@
     <ClInclude Include="Application\SourceCode\PostEffect\LensFlare.h">
       <Filter>Application\Header\PostEffect</Filter>
     </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\PipelineWindow.h">
+      <Filter>NewEngine\Header\Debugger</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\ShaderCompiler\Shader.h">
+      <Filter>NewEngine\Header\Render\ShaderCompiler</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Util\NewEngineConstant.h">
+      <Filter>NewEngine\Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\ShaderCompiler\ShaderManager.h">
+      <Filter>NewEngine\Header\Render\ShaderCompiler</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Util\StandardLib.h">
+      <Filter>NewEngine\Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Render\ShaderCompiler\InputLayout.h">
+      <Filter>NewEngine\Header\Render\ShaderCompiler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NewEngine\Shader\Blur.hlsli">
@@ -1582,38 +1612,38 @@
     <None Include="Application\Shader\Grass\Grass.hlsli">
       <Filter>Shader\Application\Grass</Filter>
     </None>
-    <None Include="NewEngine\Shader\Emitter\Emitter.hlsli">
+    <None Include="Assets\Shader\NewEngine\Emitter\Emitter.hlsli">
       <Filter>Shader\Engine\Emitter</Filter>
     </None>
-    <None Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSprite.hlsli">
+    <None Include="Assets\Shader\NewEngine\CircleGaugeSprite\CircleGaugeSprite.hlsli">
       <Filter>Shader\Engine\CircleGaugeSprite</Filter>
     </None>
-    <None Include="NewEngine\Shader\Line\Line.hlsli">
+    <None Include="Assets\Shader\NewEngine\Line\Line.hlsli">
       <Filter>Shader\Engine\Line</Filter>
     </None>
     <None Include="NewEngine\Shader\ColliderObject\ColliderObject.hlsli">
       <Filter>Shader\Engine\ColliderObject</Filter>
     </None>
-    <None Include="NewEngine\Shader\FbxModel\FbxModel.hlsli">
+    <None Include="Assets\Shader\NewEngine\FbxModel\FbxModel.hlsli">
       <Filter>Shader\Engine\FbxModel</Filter>
     </None>
     <None Include="NewEngine\Shader\Object3D\Object3D.hlsli">
       <Filter>Shader\Engine\Object3D</Filter>
     </None>
-    <None Include="NewEngine\Shader\PostEffect\PostEffect.hlsli">
+    <None Include="Assets\Shader\NewEngine\PostEffect\PostEffect.hlsli">
       <Filter>Shader\Engine\PostEffect</Filter>
     </None>
-    <None Include="NewEngine\Shader\Sprite\Sprite.hlsli">
+    <None Include="Assets\Shader\NewEngine\Sprite\Sprite.hlsli">
       <Filter>Shader\Engine\Sprite</Filter>
     </None>
     <None Include=".editorconfig" />
     <None Include="NewEngine\Shader\ParticleMesh\ParticleMesh.hlsli">
       <Filter>Shader\Engine\ParticleMesh</Filter>
     </None>
-    <None Include="NewEngine\Shader\Util\Util.hlsli">
+    <None Include="Assets\Shader\Util.hlsli">
       <Filter>Shader\Engine\Util</Filter>
     </None>
-    <None Include="NewEngine\Shader\VolumetricFog\VolumetricFog.hlsli">
+    <None Include="Assets\Shader\NewEngine\VolumetricFog\VolumetricFog.hlsli">
       <Filter>Shader\Engine\VolumetricFog</Filter>
     </None>
     <None Include="Application\Shader\PostEffect\Vignette\Vignette.hlsli">
@@ -1640,7 +1670,7 @@
     <None Include="Application\Shader\WorldVolumetricFog\WorldVolumetricFog.hlsli">
       <Filter>Shader\Application\WorldVolumetricFog</Filter>
     </None>
-    <None Include="NewEngine\Shader\GPUEmitter\GPUEmitter.hlsli">
+    <None Include="Assets\Shader\NewEngine\GPUEmitter\GPUEmitter.hlsli">
       <Filter>Shader\Engine\GPUEmitter</Filter>
     </None>
     <None Include="Application\Shader\PostEffect\ToneMapping\ToneMapping.hlsli">
@@ -1655,6 +1685,8 @@
     <None Include="Application\Shader\PostEffect\LensFlare\LensFlare.hlsli">
       <Filter>Shader\Application\PostEffect\LensFlare</Filter>
     </None>
+    <None Include="NewEngine\Shader\GPUEmitter\GPUEmitter.hlsli" />
+    <None Include="NewEngine\Shader\Emitter\Emitter.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Application\Shader\Cloud\CloudPS.hlsl">
@@ -1705,25 +1737,25 @@
     <FxCompile Include="Application\Shader\RespawnPointEffect\RespawnPointEffectCS.hlsl">
       <Filter>Shader\Application\Effect</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Emitter\EmitterGS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\Emitter\EmitterGS.hlsl">
       <Filter>Shader\Engine\Emitter</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Emitter\EmitterPS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\Emitter\EmitterPS.hlsl">
       <Filter>Shader\Engine\Emitter</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Emitter\EmitterVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\Emitter\EmitterVS.hlsl">
       <Filter>Shader\Engine\Emitter</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSpritePS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\CircleGaugeSprite\CircleGaugeSpritePS.hlsl">
       <Filter>Shader\Engine\CircleGaugeSprite</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\CircleGaugeSprite\CircleGaugeSpriteVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\CircleGaugeSprite\CircleGaugeSpriteVS.hlsl">
       <Filter>Shader\Engine\CircleGaugeSprite</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Line\LinePS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\Line\LinePS.hlsl">
       <Filter>Shader\Engine\Line</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Line\LineVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\Line\LineVS.hlsl">
       <Filter>Shader\Engine\Line</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\ColliderObject\ColliderObjectPS.hlsl">
@@ -1732,10 +1764,10 @@
     <FxCompile Include="NewEngine\Shader\ColliderObject\ColliderObjectVS.hlsl">
       <Filter>Shader\Engine\ColliderObject</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\FbxModel\FbxModelPS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\FbxModel\FbxModelPS.hlsl">
       <Filter>Shader\Engine\FbxModel</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\FbxModel\FbxModelVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\FbxModel\FbxModelVS.hlsl">
       <Filter>Shader\Engine\FbxModel</Filter>
     </FxCompile>
     <FxCompile Include="NewEngine\Shader\Object3D\Object3DPS.hlsl">
@@ -1744,16 +1776,16 @@
     <FxCompile Include="NewEngine\Shader\Object3D\Object3DVS.hlsl">
       <Filter>Shader\Engine\Object3D</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\PostEffect\PostEffectPS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\PostEffect\PostEffectPS.hlsl">
       <Filter>Shader\Engine\PostEffect</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\PostEffect\PostEffectVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\PostEffect\PostEffectVS.hlsl">
       <Filter>Shader\Engine\PostEffect</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Sprite\SpritePS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\Sprite\SpritePS.hlsl">
       <Filter>Shader\Engine\Sprite</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Sprite\SpriteVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\Sprite\SpriteVS.hlsl">
       <Filter>Shader\Engine\Sprite</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\RespawnPointEffect\RespawnPointEffectVS.hlsl">
@@ -1771,10 +1803,10 @@
     <FxCompile Include="NewEngine\Shader\ParticleMesh\ParticleMeshCS.hlsl">
       <Filter>Shader\Engine\ParticleMesh</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\VolumetricFog\VolumetricFogVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\VolumetricFog\VolumetricFogVS.hlsl">
       <Filter>Shader\Engine\VolumetricFog</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\VolumetricFog\VolumetricFogPS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\VolumetricFog\VolumetricFogPS.hlsl">
       <Filter>Shader\Engine\VolumetricFog</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\Effect\LogoExplosionEffect\LogoExplosionEffectInitCS.hlsl">
@@ -1906,16 +1938,16 @@
     <FxCompile Include="Application\Shader\Grass\GrassCS.hlsl">
       <Filter>Shader\Application\Grass</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterCS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\GPUEmitter\GPUEmitterCS.hlsl">
       <Filter>Shader\Engine\GPUEmitter</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterGS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\GPUEmitter\GPUEmitterGS.hlsl">
       <Filter>Shader\Engine\GPUEmitter</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterPS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\GPUEmitter\GPUEmitterPS.hlsl">
       <Filter>Shader\Engine\GPUEmitter</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\GPUEmitter\GPUEmitterVS.hlsl">
       <Filter>Shader\Engine\GPUEmitter</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\PostEffect\ToneMapping\ToneMappingPS.hlsl">
@@ -1942,5 +1974,13 @@
     <FxCompile Include="Application\Shader\PostEffect\LensFlare\LensFlareVS.hlsl">
       <Filter>Shader\Application\PostEffect\LensFlare</Filter>
     </FxCompile>
+    <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterCS.hlsl" />
+    <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterGS.hlsl" />
+    <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterPS.hlsl" />
+    <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterVS.hlsl" />
+    <FxCompile Include="NewEngine\Shader\Emitter\EmitterGS.hlsl" />
+    <FxCompile Include="NewEngine\Shader\Emitter\EmitterPS.hlsl" />
+    <FxCompile Include="NewEngine\Shader\Emitter\EmitterVS.hlsl" />
+    <FxCompile Include="NewEngine\Shader\Emitter\EmitterCS.hlsl" />
   </ItemGroup>
 </Project>

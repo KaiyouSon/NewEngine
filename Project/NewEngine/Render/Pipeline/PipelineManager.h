@@ -15,6 +15,7 @@ private:
 public:
 	// GraphicsPipelineの生成
 	static void CreateGraphicsPipeline(const GraphicsPipelineSetting& setting, const std::string tag);
+	static void CreateGraphicsPipeline2(const GraphicsPipelineSetting& setting, const std::string tag);
 	static void ReCreateGraphicsPipeline(const std::string tag);
 	static void ReCreateGraphicsPipeline(const GraphicsPipelineSetting& setting, const std::string tag);
 

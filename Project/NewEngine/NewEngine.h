@@ -40,21 +40,7 @@
 #include "Renderer.h"
 
 // c++
-#include <memory>
-#include <vector>
-#include <string>
-#include <list>
-#include <array>
-#include <map>
-#include <unordered_map>
-#include <future>
-#include <thread>
-#include <algorithm>
-#include <queue>
-#include <functional>
-#include <Windows.h>
-#include <math.h>
-#include <stdint.h>
+#include "StandardLib.h"
 
 // エンジンのクラス
 class NewEngine

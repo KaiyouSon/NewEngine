@@ -58,6 +58,13 @@ enum class TopologyType
 	TriangleStrip,
 };
 
+// 塗りつぶし
+enum class FillMode
+{
+	Solid,
+	Wireframe,
+};
+
 // カリングの種類
 enum class CullMode
 {
@@ -137,7 +144,7 @@ enum class ShaderType
 	Geometry,
 	Pixel,
 	Compute,
-	Size,
+	Count,
 };
 
 enum class LightType

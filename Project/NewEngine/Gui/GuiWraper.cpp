@@ -81,13 +81,13 @@ void GuiWraper::Destroy()
 
 void GuiWraper::DrawGuiSetting()
 {
-	GuiWraper* instance = GetInstance().get();
-	BeginWindow("Gui Setting", -1, &instance->isOpenGuiSetting);
-	DrawColorEdit("Window BG Color", instance->windowBgColor);
-	DrawColorEdit("MenuBar BG Color", instance->menuBarBgColor);
-	DrawColorEdit("Title BG Active Color", instance->titleBgActiveColor);
-	DrawColorEdit("Title BG Collapsed Color", instance->titleBgCollapsedColor);
-	EndWindow();
+	//GuiWraper* instance = GetInstance().get();
+	//BeginWindow("Gui Setting", -1, &instance->isOpenGuiSetting);
+	//DrawColorEdit("Window BG Color", instance->windowBgColor);
+	//DrawColorEdit("MenuBar BG Color", instance->menuBarBgColor);
+	//DrawColorEdit("Title BG Active Color", instance->titleBgActiveColor);
+	//DrawColorEdit("Title BG Collapsed Color", instance->titleBgCollapsedColor);
+	//EndWindow();
 }
 
 bool GuiWraper::BeginWindow(const char* name, const Vec2& size, bool* isOpen)
@@ -163,6 +163,21 @@ bool GuiWraper::BeginPopModal(const char* tag)
 void GuiWraper::EndPopModal()
 {
 	ImGui::EndPopup();
+}
+
+bool GuiWraper::BeginTreeNode(const std::string& tag, const bool isOpenNode)
+{
+	uint32_t nodeFlag =
+		(isOpenNode == false) ?
+		ImGuiTreeNodeFlags_None :
+		ImGuiTreeNodeFlags_DefaultOpen;
+
+	return ImGui::TreeNodeEx(tag.c_str(), nodeFlag);
+}
+
+void GuiWraper::EndTreeNode()
+{
+	ImGui::TreePop();
 }
 
 bool GuiWraper::DrawCollapsingHeader(const char* name)
@@ -279,8 +294,15 @@ void GuiWraper::DrawColorEdit(const char* label, Color& color)
 
 bool GuiWraper::DrawInputInt(const char* label, int32_t& v)
 {
-	bool flag = ImGui::InputInt(label, &v);
-	return flag;
+	return ImGui::InputInt(label, &v);
+}
+
+bool GuiWraper::DrawInputInt(const char* label, uint32_t& v)
+{
+	int intv = v;
+	bool result = ImGui::InputInt(label, &intv);
+	v = Max(0, intv);
+	return result;
 }
 
 bool GuiWraper::DrawInputText(const char* label, std::string& str)

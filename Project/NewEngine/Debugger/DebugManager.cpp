@@ -4,7 +4,8 @@
 DebugManager::DebugManager() :
 	mShaderWindow(std::make_unique<ShaderWindow>()),
 	mMappingWindow(std::make_unique<MappingWindow>()),
-	mRendererWindow(std::make_unique<RendererWindow>())
+	mRendererWindow(std::make_unique<RendererWindow>()),
+	mPipelineWindow(std::make_unique<PipelineWindow>())
 {
 
 }
@@ -31,6 +32,8 @@ void DebugManager::Update()
 
 void DebugManager::DrawDebugGui()
 {
+	//mPipelineWindow->DrawDebugGui();
+
 	if (mIsActive == false)
 	{
 		return;

@@ -1,5 +1,7 @@
 #pragma once
 #include "NewEngineEnum.h"
+#include "Shader.h"
+#include "InputLayout.h"
 #include "Vec2.h"
 #include "Color.h"
 #include <d3d12.h>
@@ -76,13 +78,6 @@ struct GraphicsPipelineSetting
 		Inv = 0b1000,
 	};
 
-	// 塗りつぶし
-	enum FillMode
-	{
-		Solid,
-		Wireframe,
-	};
-
 	// 書き込むモード
 	enum RenderTargetBlendMask
 	{
@@ -93,6 +88,11 @@ struct GraphicsPipelineSetting
 		WriteAlpha = 8,
 		WriteAll = ((WriteRed | WriteGreen) | WriteBlue) | WriteAlpha,
 	};
+
+	Shader* vs = nullptr;
+	Shader* gs = nullptr;
+	Shader* ps = nullptr;
+	InputLayout* inputLayout = nullptr;
 
 	// パイプライン種類
 	uint8_t pipelineBlend;
