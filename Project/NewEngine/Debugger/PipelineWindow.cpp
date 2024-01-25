@@ -29,8 +29,7 @@ void PipelineWindow::CreatePipeline()
 {
 	if (Gui::BeginTreeNode("Pipeline"))
 	{
-		enum PipelineType { Graphics, Compute };
-		static uint32_t pipelineType = Graphics;
+		static uint32_t pipelineType = (uint32_t)PipelineType::Graphics;
 
 		if (Gui::BeginTreeNode("Pipeline Type", true))
 		{
@@ -39,9 +38,9 @@ void PipelineWindow::CreatePipeline()
 			Gui::EndTreeNode();
 		}
 
-		switch (pipelineType)
+		switch ((PipelineType)pipelineType)
 		{
-		case Graphics:
+		case PipelineType::Graphics:
 			CreateGraphicsPipeline();
 			break;
 		}

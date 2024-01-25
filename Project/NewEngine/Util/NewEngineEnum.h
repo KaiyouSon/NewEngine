@@ -171,3 +171,9 @@ enum class GraphicsType
 {
 	DistanceFog,
 };
+
+enum class PipelineType
+{
+	Graphics,
+	Compute
+};

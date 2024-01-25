@@ -1,4 +1,5 @@
 #include "CreateManager.h"
+#include "ShaderManager.h"
 
 /// ------------------------------------------------------------- ///
 /// --- シェダーコンパイラーの生成 ------------------------------ ///
@@ -7,210 +8,100 @@ void CreateManager::CreateShaderCompiler()
 {
 	std::string path1 = "NewEngine/Shader/";
 
-	ShaderCompilerSetting setting;
-
 	// 天球用
-	ShaderCompilerManager::Create(AppShaderDirectory + "Skydome", "Skydome");
+	ShaderManager::CompileAllType(AppShaderDirectory2 + "Skydome", "Skydome");
 
 	// 草用
-	ShaderCompilerManager::Create(AppShaderDirectory + "Grass", "Grass");
-
-	// ビネット用
-	ShaderCompilerManager::Create(AppShaderDirectory + "PostEffect/Vignette", "Vignette");
-
-	// 木の枝用
-	ShaderCompilerManager::Create(AppShaderDirectory + "Branch", "Branch");
-
-	// リスポーン地点用（下の波紋用）
-	ShaderCompilerManager::Create(AppShaderDirectory + "RespawnPoint/Ripple", "Ripple");
-
-	// リスポーン地点用（浮いてる菱形用）
-	ShaderCompilerManager::Create(AppShaderDirectory + "RespawnPoint/Rhombus", "Rhombus");
-
-	// 高輝度箇所抽出用（RenderTexture）
-	ShaderCompilerManager::Create(AppShaderDirectory + "PostEffect/HighLumi", "HighLumi");
-
-	// ガウシアンブラー用（RenderTexture）
-	ShaderCompilerManager::Create(AppShaderDirectory + "PostEffect/GaussianBlur", "GaussianBlur");
-
-	// 合成用（RenderTexture）
-	ShaderCompilerManager::Create(AppShaderDirectory + "PostEffect/Composite", "Composite");
-
-	// リスポーン時の遷移用
-	ShaderCompilerManager::Create(AppShaderDirectory + "Transition/RespawnTransition", "RespawnTransition");
-
-	// ShadowObj用
-	ShaderCompilerManager::Create(AppShaderDirectory + "ShadowObj", "ShadowObj");
-
-	// ShadowMap用
-	ShaderCompilerManager::Create(AppShaderDirectory + "ShadowMap", "ShadowMap");
-
-	// 軌跡用
-	ShaderCompilerManager::Create(AppShaderDirectory + "Trajectory", "Trajectory");
-
-	// レンズフレア用
-	ShaderCompilerManager::Create(AppShaderDirectory + "PostEffect/LensFlare", "LensFlare");
+	ShaderManager::CompileAllType(AppShaderDirectory2 + "Grass", "Grass");
 
 	// 雲用
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(3);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[2] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	setting.vsFilePath = AppShaderDirectory + "Cloud/CloudVS.hlsl";
-	setting.psFilePath = AppShaderDirectory + "Cloud/CloudPS.hlsl";
-	ShaderCompilerManager::Create(setting, "Cloud");
+	ShaderManager::CompileAllType(AppShaderDirectory2 + "Cloud", "Cloud");
+
+	// 木の枝用
+	ShaderManager::CompileAllType(AppShaderDirectory2 + "Branch", "Branch");
+
+	// リスポーン地点用（下の波紋用）
+	ShaderManager::CompileAllType(AppShaderDirectory2 + "RespawnPoint/Ripple", "Ripple");
+
+	// リスポーン地点用（浮いてる菱形用）
+	ShaderManager::CompileAllType(AppShaderDirectory2 + "RespawnPoint/Rhombus", "Rhombus");
+
+	// 軌跡用
+	ShaderManager::CompileAllType(AppShaderDirectory2 + "Trajectory", "Trajectory");
 
 	// リスポーンエフェクト用
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "RespawnPointEffect/RespawnPointEffectCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "RespawnPointEffect/RespawnPointEffectVS.hlsl";
-	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
-	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
-	ShaderCompilerManager::Create(setting, "RespawnPointEffect");
+	ShaderManager::CompileAllType(AppShaderDirectory2 + "RespawnPointEffect", "RespawnPointEffect");
 
-	// タイトルのロゴ爆散用（初期化）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "Effect/LogoExplosionEffect/LogoExplosionEffectInitCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "Effect/LogoExplosionEffect/LogoExplosionEffectVS.hlsl";
-	setting.gsFilePath = path1 + "ParticleMesh/ParticleMeshGS.hlsl";
-	setting.psFilePath = path1 + "ParticleMesh/ParticleMeshPS.hlsl";
-	ShaderCompilerManager::Create(setting, "LogoExplosionEffectInit");
+	// ポストプロセス
+	{
+		// ビネット用
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "PostEffect/Vignette");
 
-	// タイトルのロゴ爆散用（更新）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "Effect/LogoExplosionEffect/LogoExplosionEffectUpdateCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "Effect/LogoExplosionEffect/LogoExplosionEffectVS.hlsl";
-	setting.gsFilePath = path1 + "ParticleMesh/ParticleMeshGS.hlsl";
-	setting.psFilePath = path1 + "ParticleMesh/ParticleMeshPS.hlsl";
-	ShaderCompilerManager::Create(setting, "LogoExplosionEffectUpdate");
+		// 高輝度箇所抽出用（RenderTexture）
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "PostEffect/HighLumi");
 
-	// 誘導エフェクト用（初期化）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "Effect/LeadEffect/LeadEffectInitCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "Effect/LeadEffect/LeadEffectVS.hlsl";
-	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
-	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
-	ShaderCompilerManager::Create(setting, "LeadEffectInit");
+		// ガウシアンブラー用（RenderTexture）
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "PostEffect/GaussianBlur");
 
-	// 誘導エフェクト用（更新）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "Effect/LeadEffect/LeadEffectUpdateCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "Effect/LeadEffect/LeadEffectVS.hlsl";
-	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
-	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
-	ShaderCompilerManager::Create(setting, "LeadEffectUpdate");
+		// 合成用（RenderTexture）
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "PostEffect/Composite");
 
-	// プレイヤー回復エフェクト用（初期化）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectInitCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectVS.hlsl";
-	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
-	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
-	ShaderCompilerManager::Create(setting, "PlayerRecoveryEffectInit");
+		// レンズフレア用
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "PostEffect/LensFlare");
 
-	// プレイヤー回復エフェクト用（更新）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectUpdateCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "Effect/PlayerRecoveryEffect/PlayerRecoveryEffectVS.hlsl";
-	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
-	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
-	ShaderCompilerManager::Create(setting, "PlayerRecoveryEffectUpdate");
+		// ラジアルブラー用（RenderTexture）
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "PostEffect/RadialBlur");
 
-	// 空中のエフェクト用（初期化）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "Effect/AirEffect/AirEffectInitCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "Effect/AirEffect/AirEffectVS.hlsl";
-	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
-	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
-	ShaderCompilerManager::Create(setting, "AirEffectInit");
+		// トーンマッピング用（RenderTexture）
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "PostEffect/ToneMapping");
 
-	// 空中のエフェクト用（更新）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "Effect/AirEffect/AirEffectUpdateCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "Effect/AirEffect/AirEffectVS.hlsl";
-	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
-	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
-	ShaderCompilerManager::Create(setting, "AirEffectUpdate");
+		// リスポーン時の遷移用
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "Transition/RespawnTransition");
 
-	// ボスの攻撃軌跡のエフェクト用（初期化用）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "Effect/BossAttackTrajectoryEffect/BossAttackTrajectoryEffectInitCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "Effect/BossAttackTrajectoryEffect/BossAttackTrajectoryEffectVS.hlsl";
-	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
-	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
-	ShaderCompilerManager::Create(setting, "BossAttackTrajectoryEffectInit");
+		// ShadowObj用
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "ShadowObj");
 
-	// ボスの攻撃軌跡のエフェクト用（更新用）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "Effect/BossAttackTrajectoryEffect/BossAttackTrajectoryEffectUpdateCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "Effect/BossAttackTrajectoryEffect/BossAttackTrajectoryEffectVS.hlsl";
-	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
-	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
-	ShaderCompilerManager::Create(setting, "BossAttackTrajectoryEffectUpdate");
+		// ShadowMap用
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "ShadowMap");
+	}
 
-	// ポンデリング/太陽用（初期化用）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "PonDeRing/PonDeRingInitCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "PonDeRing/PonDeRingVS.hlsl";
-	setting.gsFilePath = path1 + "ParticleObject/ParticleObjectGS.hlsl";
-	setting.psFilePath = path1 + "ParticleObject/ParticleObjectPS.hlsl";
-	ShaderCompilerManager::Create(setting, "PonDeRingInit");
+	// GPUパーティクル関連
+	{
+		// タイトルのロゴ爆散用
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "Effect/LogoExplosionEffect");
 
-	// ポンデリング/太陽用（更新用）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "PonDeRing/PonDeRingUpdateCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "PonDeRing/PonDeRingVS.hlsl";
-	setting.gsFilePath = path1 + "ParticleObject/ParticleObjectGS.hlsl";
-	setting.psFilePath = path1 + "ParticleObject/ParticleObjectPS.hlsl";
-	ShaderCompilerManager::Create(setting, "PonDeRingUpdate");
+		// 誘導エフェクト用
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "Effect/LeadEffect");
 
-	// 攻撃の爆発のエフェクト（初期化用）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "Effect/AttackExplosionEffect/AttackExplosionEffectInitCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "Effect/AttackExplosionEffect/AttackExplosionEffectVS.hlsl";
-	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
-	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
-	ShaderCompilerManager::Create(setting, "AttackExplosionEffectInit");
+		// プレイヤー回復エフェクト用
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "Effect/PlayerRecoveryEffect");
 
-	// 攻撃の爆発のエフェクト（更新用）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "Effect/AttackExplosionEffect/AttackExplosionEffectUpdateCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "Effect/AttackExplosionEffect/AttackExplosionEffectVS.hlsl";
-	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
-	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
-	ShaderCompilerManager::Create(setting, "AttackExplosionEffectUpdate");
+		// 空中のエフェクト用
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "Effect/AirEffect");
 
-	// 煙のエフェクト（初期化用）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "Effect/SmokeEffect/SmokeEffectInitCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "Effect/SmokeEffect/SmokeEffectVS.hlsl";
-	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
-	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
-	ShaderCompilerManager::Create(setting, "SmokeEffectInit");
+		// ボスの攻撃軌跡のエフェクト用
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "Effect/BossAttackTrajectoryEffect");
 
-	// 煙のエフェクト（更新用）
-	setting = ShaderCompilerSetting();
-	setting.csFilePath = AppShaderDirectory + "Effect/SmokeEffect/SmokeEffectUpdateCS.hlsl";
-	setting.vsFilePath = AppShaderDirectory + "Effect/SmokeEffect/SmokeEffectVS.hlsl";
-	setting.gsFilePath = path1 + "Emitter/EmitterGS.hlsl";
-	setting.psFilePath = path1 + "Emitter/EmitterPS.hlsl";
-	ShaderCompilerManager::Create(setting, "SmokeEffectUpdate");
+		// 攻撃の爆発のエフェクト
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "Effect/AttackExplosionEffect");
 
-	// ワールドのボリュメトリックフォグ
-	setting = ShaderCompilerSetting();
-	setting.mInputLayoutSettings.resize(2);
-	setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32B32_FLOAT);
-	setting.vsFilePath = AppShaderDirectory + "WorldVolumetricFog/WorldVolumetricFogVS.hlsl";
-	setting.psFilePath = AppShaderDirectory + "WorldVolumetricFog/WorldVolumetricFogPS.hlsl";
-	ShaderCompilerManager::Create(setting, "WorldVolumetricFog");
+		// 煙のエフェクト
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "Effect/SmokeEffect");
 
-	// ラジアルブラー用（RenderTexture）
-	ShaderCompilerManager::Create(AppShaderDirectory + "PostEffect/RadialBlur", "RadialBlur");
+		// ポンデリング/太陽用
+		ShaderManager::CompileAllType(AppShaderDirectory2 + "PonDeRing");
+	}
 
-	// トーンマッピング用（RenderTexture）
-	ShaderCompilerManager::Create(AppShaderDirectory + "PostEffect/ToneMapping", "ToneMapping");
+
+	//// ワールドのボリュメトリックフォグ
+	//ShaderCompilerSetting setting;
+	//setting = ShaderCompilerSetting();
+	//setting.mInputLayoutSettings.resize(2);
+	//setting.mInputLayoutSettings[0] = InputLayoutSetting("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
+	//setting.mInputLayoutSettings[1] = InputLayoutSetting("TEXCOORD", DXGI_FORMAT_R32G32B32_FLOAT);
+	//setting.vsFilePath = AppShaderDirectory + "WorldVolumetricFog/WorldVolumetricFogVS.hlsl";
+	//setting.psFilePath = AppShaderDirectory + "WorldVolumetricFog/WorldVolumetricFogPS.hlsl";
+	//ShaderCompilerManager::Create(setting, "WorldVolumetricFog");
 }
 
 /// ------------------------------------------------------------- ///
@@ -221,14 +112,20 @@ void CreateManager::CreateGraphicsPipeline()
 	GraphicsPipelineSetting setting;
 	D3D12_DEPTH_STENCIL_DESC  depthStencilDesc{};
 
-	setting = GraphicsPipelineSetting();
 	setting = PipelineManager::GetGraphicsPipelineSetting("Object3D");
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Skydome");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Skydome");
+	setting.inputLayout = ShaderManager::GetInputLayout("Skydome");
 	setting.shaderCompilerTag = "Skydome";
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
-	PipelineManager::CreateGraphicsPipeline(setting, "Object3D");
+	PipelineManager::CreateGraphicsPipeline(setting, "Skydome");
 
 	// 草用
 	setting = PipelineManager::GetGraphicsPipeline("Emitter")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Grass");
+	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "Grass");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Grass");
+	setting.inputLayout = ShaderManager::GetInputLayout("Grass");
 	setting.shaderCompilerTag = "Grass";
 	setting.rootSignatureSetting.maxCbvRootParameter = 5;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
@@ -240,6 +137,10 @@ void CreateManager::CreateGraphicsPipeline()
 	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
 	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
 	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Cloud");
+	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "Cloud");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Cloud");
+	setting.inputLayout = ShaderManager::GetInputLayout("Cloud");
 	setting.shaderCompilerTag = "Cloud";
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
@@ -248,6 +149,9 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// ビネット用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Vignette");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Vignette");
+	setting.inputLayout = ShaderManager::GetInputLayout("Vignette");
 	setting.shaderCompilerTag = "Vignette";
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
@@ -255,12 +159,19 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// 木の枝用
 	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Branch");
+	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "Branch");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Branch");
+	setting.inputLayout = ShaderManager::GetInputLayout("Branch");
 	setting.shaderCompilerTag = "Branch";
 	setting.cullMode = CullMode::None;
 	PipelineManager::CreateGraphicsPipeline(setting, "Branch");
 
 	// リスポーン地点用（下の波紋用）
 	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Ripple");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Ripple");
+	setting.inputLayout = ShaderManager::GetInputLayout("Ripple");
 	setting.shaderCompilerTag = "Ripple";
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
@@ -268,6 +179,9 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// リスポーン地点用（浮いてる菱形用）
 	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Rhombus");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Rhombus");
+	setting.inputLayout = ShaderManager::GetInputLayout("Rhombus");
 	setting.shaderCompilerTag = "Rhombus";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleList;
@@ -275,30 +189,45 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// 高輝度箇所抽出用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "HighLumi");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "HighLumi");
+	setting.inputLayout = ShaderManager::GetInputLayout("HighLumi");
 	setting.shaderCompilerTag = "HighLumi";
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "HighLumi");
 
 	// ガウシアンブラー用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "GaussianBlur");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GaussianBlur");
+	setting.inputLayout = ShaderManager::GetInputLayout("GaussianBlur");
 	setting.shaderCompilerTag = "GaussianBlur";
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "GaussianBlur");
 
 	// 合成用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Composite");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Composite");
+	setting.inputLayout = ShaderManager::GetInputLayout("Composite");
 	setting.shaderCompilerTag = "Composite";
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Composite");
 
 	// リスポーン時の遷移用
 	setting = PipelineManager::GetGraphicsPipeline("Sprite")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "RespawnTransition");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "RespawnTransition");
+	setting.inputLayout = ShaderManager::GetInputLayout("RespawnTransition");
 	setting.shaderCompilerTag = "RespawnTransition";
 	setting.rootSignatureSetting.maxCbvRootParameter = 4;
 	PipelineManager::CreateGraphicsPipeline(setting, "RespawnTransition");
 
 	// ShadowObj用
 	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "ShadowObj");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "ShadowObj");
+	setting.inputLayout = ShaderManager::GetInputLayout("ShadowObj");
 	setting.shaderCompilerTag = "ShadowObj";
 	setting.cullMode = CullMode::None;
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
@@ -307,6 +236,9 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// ShadowMap用
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "ShadowMap");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "ShadowMap");
+	setting.inputLayout = ShaderManager::GetInputLayout("ShadowMap");
 	setting.shaderCompilerTag = "ShadowMap";
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
@@ -314,40 +246,82 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// リスポーンエフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "RespawnPointEffect");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "RespawnPointEffect");
+	setting.inputLayout = ShaderManager::GetInputLayout("RespawnPointEffect");
+	setting.inputLayout = nullptr;
 	setting.shaderCompilerTag = "RespawnPointEffect";
 	PipelineManager::CreateGraphicsPipeline(setting, "RespawnPointEffect");
 
 	// タイトルのロゴ爆散用
 	setting = PipelineManager::GetGraphicsPipeline("ParticleMesh")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "LogoExplosionEffect");
+	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "ParticleMesh");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "ParticleMesh");
+	setting.inputLayout = nullptr;
 	setting.shaderCompilerTag = "LogoExplosionEffectInit";
 	PipelineManager::CreateGraphicsPipeline(setting, "LogoExplosionEffect");
 
 	// 誘導エフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "LeadEffect");
+	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "GPUEmitter");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GPUEmitter");
+	setting.inputLayout = nullptr;
 	setting.shaderCompilerTag = "LeadEffectInit";
 	PipelineManager::CreateGraphicsPipeline(setting, "LeadEffect");
 
 	// プレイヤー回復エフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "PlayerRecoveryEffect");
+	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "GPUEmitter");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GPUEmitter");
+	setting.inputLayout = nullptr;
 	setting.shaderCompilerTag = "PlayerRecoveryEffectInit";
 	PipelineManager::CreateGraphicsPipeline(setting, "PlayerRecoveryEffect");
 
 	// 空中のエフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "AirEffect");
+	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "GPUEmitter");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GPUEmitter");
+	setting.inputLayout = nullptr;
 	setting.shaderCompilerTag = "AirEffectInit";
 	PipelineManager::CreateGraphicsPipeline(setting, "AirEffect");
 
 	// ボスの攻撃軌跡のエフェクト用
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "BossAttackTrajectoryEffect");
+	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "GPUEmitter");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GPUEmitter");
+	setting.inputLayout = nullptr;
 	setting.shaderCompilerTag = "BossAttackTrajectoryEffectInit";
 	PipelineManager::CreateGraphicsPipeline(setting, "BossAttackTrajectoryEffect");
+
+	// 攻撃の爆発のエフェクト
+	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "AttackExplosionEffect");
+	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "GPUEmitter");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GPUEmitter");
+	setting.inputLayout = nullptr;
+	setting.shaderCompilerTag = "AttackExplosionEffectInit";
+	PipelineManager::CreateGraphicsPipeline(setting, "AttackExplosionEffect");
+
+	// 煙のエフェクト
+	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "SmokeEffect");
+	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "GPUEmitter");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GPUEmitter");
+	setting.inputLayout = nullptr;
+	setting.shaderCompilerTag = "SmokeEffectInit";
+	PipelineManager::CreateGraphicsPipeline(setting, "SmokeEffect");
 
 	// 深度値のみ書き込み用
 	{
 		// 3Dオブジェクト
 		setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
 		setting.renderTargetBlendMask = GraphicsPipelineSetting::WriteNone;
-		PipelineManager::CreateGraphicsPipeline2(setting, "Object3DWriteNone");
+		PipelineManager::CreateGraphicsPipeline(setting, "Object3DWriteNone");
 
 		// 草
 		setting = PipelineManager::GetGraphicsPipeline("Grass")->GetSetting();
@@ -372,6 +346,9 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// 軌跡用
 	setting = PipelineManager::GetGraphicsPipeline("Object3D")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Trajectory");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Trajectory");
+	setting.inputLayout = ShaderManager::GetInputLayout("Trajectory");
 	setting.shaderCompilerTag = "Trajectory";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
@@ -382,31 +359,29 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// ポンデリング/太陽用
 	setting = PipelineManager::GetGraphicsPipeline("ParticleObject")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "PonDeRing");
+	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "ParticleObject");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "ParticleObject");
 	setting.shaderCompilerTag = "PonDeRingInit";
 	PipelineManager::CreateGraphicsPipeline(setting, "PonDeRing");
 
-	// 攻撃の爆発のエフェクト
-	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
-	setting.shaderCompilerTag = "AttackExplosionEffectInit";
-	PipelineManager::CreateGraphicsPipeline(setting, "AttackExplosionEffect");
 
-	// 攻撃の爆発のエフェクト
-	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
-	setting.shaderCompilerTag = "SmokeEffectInit";
-	PipelineManager::CreateGraphicsPipeline(setting, "SmokeEffect");
 
-	// 攻撃の爆発のエフェクト
-	depthStencilDesc = D3D12_DEPTH_STENCIL_DESC();
-	depthStencilDesc.DepthEnable = false;
-	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
-	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
-	setting = PipelineManager::GetGraphicsPipeline("VolumetricFog")->GetSetting();
-	setting.shaderCompilerTag = "WorldVolumetricFog";
-	setting.depthStencilDesc = depthStencilDesc;
-	PipelineManager::CreateGraphicsPipeline(setting, "WorldVolumetricFog");
+	//// 攻撃の爆発のエフェクト
+	//depthStencilDesc = D3D12_DEPTH_STENCIL_DESC();
+	//depthStencilDesc.DepthEnable = false;
+	//depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+	//depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
+	//setting = PipelineManager::GetGraphicsPipeline("VolumetricFog")->GetSetting();
+	//setting.shaderCompilerTag = "WorldVolumetricFog";
+	//setting.depthStencilDesc = depthStencilDesc;
+	//PipelineManager::CreateGraphicsPipeline(setting, "WorldVolumetricFog");
 
 	// ラジアルブラー用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "RadialBlur");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "RadialBlur");
+	setting.inputLayout = ShaderManager::GetInputLayout("RadialBlur");
 	setting.shaderCompilerTag = "RadialBlur";
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
@@ -414,6 +389,9 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// トーンマッピング用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "ToneMapping");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "ToneMapping");
+	setting.inputLayout = ShaderManager::GetInputLayout("ToneMapping");
 	setting.shaderCompilerTag = "ToneMapping";
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
@@ -421,6 +399,9 @@ void CreateManager::CreateGraphicsPipeline()
 
 	// レンズフレア用（PostEffect）
 	setting = PipelineManager::GetGraphicsPipeline("PostEffect")->GetSetting();
+	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "LensFlare");
+	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "LensFlare");
+	setting.inputLayout = ShaderManager::GetInputLayout("LensFlare");
 	setting.shaderCompilerTag = "LensFlare";
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "LensFlare");
@@ -434,7 +415,7 @@ void CreateManager::CreateComputePipeline()
 	// リスポーンエフェクト用
 	ComputePipelineSetting setting;
 	setting = ComputePipelineSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("RespawnPointEffect");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "RespawnPointEffect");
 	setting.rootSignatureSetting.maxCbvRootParameter = 0;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 2;
@@ -442,19 +423,19 @@ void CreateManager::CreateComputePipeline()
 
 	// タイトルのロゴ爆散用（初期化）
 	setting = PipelineManager::GetComputePipeline("ParticleMesh")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("LogoExplosionEffectInit");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "LogoExplosionEffectInit");
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	PipelineManager::CreateComputePipeline(setting, "LogoExplosionEffectInit");
 
 	// タイトルのロゴ爆散用（更新）
 	setting = PipelineManager::GetComputePipeline("ParticleMesh")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("LogoExplosionEffectUpdate");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "LogoExplosionEffectUpdate");
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	PipelineManager::CreateComputePipeline(setting, "LogoExplosionEffectUpdate");
 
 	// 誘導エフェクト用（初期化）
 	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("LeadEffectInit");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "LeadEffectInit");
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 2;
@@ -462,7 +443,7 @@ void CreateManager::CreateComputePipeline()
 
 	// 誘導エフェクト用（更新）
 	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("LeadEffectUpdate");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "LeadEffectUpdate");
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 2;
@@ -470,7 +451,7 @@ void CreateManager::CreateComputePipeline()
 
 	// プレイヤー回復エフェクト用（初期化）
 	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("PlayerRecoveryEffectInit");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "PlayerRecoveryEffectInit");
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 1;
@@ -478,7 +459,7 @@ void CreateManager::CreateComputePipeline()
 
 	// プレイヤー回復エフェクト用（更新）
 	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("PlayerRecoveryEffectUpdate");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "PlayerRecoveryEffectUpdate");
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 1;
@@ -486,7 +467,7 @@ void CreateManager::CreateComputePipeline()
 
 	// 空中のエフェクト用（初期化）
 	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("AirEffectInit");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "AirEffectInit");
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 2;
@@ -494,7 +475,7 @@ void CreateManager::CreateComputePipeline()
 
 	// 空中のエフェクト用（更新）
 	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("AirEffectUpdate");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "AirEffectUpdate");
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 2;
@@ -502,7 +483,7 @@ void CreateManager::CreateComputePipeline()
 
 	// ボスの攻撃軌跡のエフェクト用（初期化用）
 	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttackTrajectoryEffectInit");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "BossAttackTrajectoryEffectInit");
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 2;
@@ -510,7 +491,7 @@ void CreateManager::CreateComputePipeline()
 
 	// ボスの攻撃軌跡のエフェクト用（更新用）
 	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("BossAttackTrajectoryEffectUpdate");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "BossAttackTrajectoryEffectUpdate");
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 0;
 	setting.rootSignatureSetting.maxUavDescritorRange = 2;
@@ -518,7 +499,7 @@ void CreateManager::CreateComputePipeline()
 
 	// ポンデリング/太陽用（初期化用）
 	setting = PipelineManager::GetComputePipeline("ParticleObject")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("PonDeRingInit");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "PonDeRingInit");
 	setting.rootSignatureSetting.maxCbvRootParameter = 1;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	setting.rootSignatureSetting.maxUavDescritorRange = 1;
@@ -526,7 +507,7 @@ void CreateManager::CreateComputePipeline()
 
 	// ポンデリング/太陽用（更新用）
 	setting = PipelineManager::GetComputePipeline("ParticleObject")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("PonDeRingUpdate");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "PonDeRingUpdate");
 	setting.rootSignatureSetting.maxCbvRootParameter = 1;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	setting.rootSignatureSetting.maxUavDescritorRange = 1;
@@ -534,24 +515,24 @@ void CreateManager::CreateComputePipeline()
 
 	// 攻撃の爆発のエフェクト（初期化用）
 	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("AttackExplosionEffectInit");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "AttackExplosionEffectInit");
 	setting.rootSignatureSetting.maxCbvRootParameter = 1;
 	PipelineManager::CreateComputePipeline(setting, "AttackExplosionEffectInit");
 
 	// 攻撃の爆発のエフェクト（更新用）
 	setting = PipelineManager::GetComputePipeline("GPUEmitter")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("AttackExplosionEffectUpdate");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "AttackExplosionEffectUpdate");
 	setting.rootSignatureSetting.maxCbvRootParameter = 1;
 	PipelineManager::CreateComputePipeline(setting, "AttackExplosionEffectUpdate");
 
-	// ボスの攻撃軌跡のエフェクト用（初期化用）
+	// 煙のエフェクト用（初期化用）
 	setting = PipelineManager::GetComputePipeline("BossAttackTrajectoryEffectInit")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("SmokeEffectInit");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "SmokeEffectInit");
 	PipelineManager::CreateComputePipeline(setting, "SmokeEffectInit");
 
-	// ボスの攻撃軌跡のエフェクト用（更新用）
+	// 煙のエフェクト用（更新用）
 	setting = PipelineManager::GetComputePipeline("BossAttackTrajectoryEffectUpdate")->GetSetting();
-	setting.shaderObject = ShaderCompilerManager::GetShaderCompiler("SmokeEffectUpdate");
+	setting.cs = ShaderManager::GetShader(ShaderType::Compute, "SmokeEffectUpdate");
 	PipelineManager::CreateComputePipeline(setting, "SmokeEffectUpdate");
 }
 

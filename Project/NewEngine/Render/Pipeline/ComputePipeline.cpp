@@ -20,9 +20,9 @@ void ComputePipeline::Create(const ComputePipelineSetting& setting)
 	D3D12_COMPUTE_PIPELINE_STATE_DESC pipelineDesc{};
 
 	// シェーダーオブジェクトのCS (Compute Shader) ブロブの設定
-	if (mSetting.shaderObject->GetShaderBlob(ShaderType::Compute) != nullptr)
+	if (mSetting.cs->GetShaderBlob())
 	{
-		pipelineDesc.CS = CD3DX12_SHADER_BYTECODE(mSetting.shaderObject->GetShaderBlob(ShaderType::Compute));
+		pipelineDesc.CS = CD3DX12_SHADER_BYTECODE(mSetting.cs->GetShaderBlob());
 	}
 
 	// ノードマスクの設定

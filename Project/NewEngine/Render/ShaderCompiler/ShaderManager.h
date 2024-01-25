@@ -23,8 +23,8 @@ private:
 
 public:
 	// コンパイル関連
-	static void Compile(const std::filesystem::path& folderPath, const ShaderType shaderType, const std::string& tag);
-	static void CompileAllType(const std::filesystem::path& folderPath, const std::string& tag);
+	static void Compile(const std::string& filePath, const ShaderType shaderType, const std::string& tag);
+	static void CompileAllType(const std::filesystem::path& folderPath, const std::string& tag = std::string());
 
 public:
 	// 取得関連

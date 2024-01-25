@@ -1,7 +1,8 @@
 #include "Shader.h"
 #include <d3dcompiler.h>
 
-Shader::Shader(const std::string& filePath, const ShaderType shaderType)
+Shader::Shader(const std::string& filePath, const ShaderType shaderType, const std::string& shaderTag) :
+	mShaderType(shaderType), mShaderTag(shaderTag)
 {
 	// 設定してないならコンパイルしない
 	if (filePath.empty() == true)
@@ -78,4 +79,9 @@ void Shader::ShowErrorMessage()
 ID3DBlob* Shader::GetShaderBlob()
 {
 	return mShaderBlob.Get();
+}
+
+std::string Shader::GetShaderTag()
+{
+	return mShaderTag;
 }

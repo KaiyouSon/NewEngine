@@ -17,10 +17,10 @@ GraphicsPipeline::GraphicsPipeline() : mResult(HRESULT())
 GraphicsPipeline::GraphicsPipeline(const GraphicsPipelineSetting& setting) :
 	mSetting(setting)
 {
-	// 深度ステンシル
-	mSetting.depthStencilDesc.DepthEnable = true;
-	mSetting.depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 深度書き込み許可
-	mSetting.depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// デフォルトの深度テスト
+	//// 深度ステンシル
+	//mSetting.depthStencilDesc.DepthEnable = true;
+	//mSetting.depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	// 深度書き込み許可
+	//mSetting.depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	// デフォルトの深度テスト
 
 	// パイプラインブレンド設定のビット
 	mPSOs.resize(4);
@@ -308,6 +308,11 @@ void GraphicsPipeline::FillSetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineD
 }
 void GraphicsPipeline::InputLayoutSetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc)
 {
+	if (!mSetting.inputLayout)
+	{
+		return;
+	}
+
 	pipelineDesc.InputLayout.pInputElementDescs = mSetting.inputLayout->GetInputLayout().data();
 	pipelineDesc.InputLayout.NumElements = (uint32_t)mSetting.inputLayout->GetInputLayout().size();
 }

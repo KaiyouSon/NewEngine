@@ -11,30 +11,11 @@ ShaderManager::ShaderManager()
 	mShaderTags[(uint32_t)ShaderType::Compute] = "CS";
 }
 
-void ShaderManager::Compile(const std::filesystem::path& folderPath, const ShaderType shaderType, const std::string& tag)
+void ShaderManager::Compile(const std::string& filePath, const ShaderType shaderType, const std::string& tag)
 {
-	std::string filePath = folderPath.string() + "/" + folderPath.filename().string();
-	switch (shaderType)
-	{
-	case ShaderType::Vertex:
-		// インプットレイアウトの読み込み
-		GetInstance()->LoadInputLayout(filePath + ".ilt", tag);
-		filePath += "VS.hlsl";
-		break;
-	case ShaderType::Geometry:
-		filePath += "GS.hlsl";
-		break;
-	case ShaderType::Pixel:
-		filePath += "PS.hlsl";
-		break;
-	case ShaderType::Compute:
-		filePath += "CS.hlsl";
-		break;
-	}
-
 	// シェーダーファイルのコンパイル
 	std::unique_ptr<Shader> shader =
-		std::make_unique<Shader>(filePath, shaderType);
+		std::make_unique<Shader>(filePath, shaderType, tag);
 
 	// ペアを作成してマップに格納
 	std::pair pair = std::make_pair(tag, std::move(shader));
@@ -43,6 +24,8 @@ void ShaderManager::Compile(const std::filesystem::path& folderPath, const Shade
 
 void ShaderManager::CompileAllType(const std::filesystem::path& folderPath, const std::string& tag)
 {
+	std::string dataTag = tag;
+
 	// フォルダ内にある分読み込む
 	for (const auto& entry : fs::directory_iterator(folderPath))
 	{
@@ -54,33 +37,45 @@ void ShaderManager::CompileAllType(const std::filesystem::path& folderPath, cons
 		// インプットレイアウトの読み込み
 		if (ext == ".ilt")
 		{
-			GetInstance()->LoadInputLayout(path.string(), tag);
-		}
-
-		// hlslファイルじゃなければ飛ばす
-		if (ext != ".hlsl")
-		{
-			continue;
-		}
-
-		const uint32_t length = (uint32_t)(path.string().length() - ext.length());
-
-		// 該当の識別子のシェーダーをコンパイルする
-		for (uint32_t i = 0; i < (uint32_t)GetInstance()->mShaderTags.size(); i++)
-		{
-			const uint32_t pos = (uint32_t)path.string().find(GetInstance()->mShaderTags[i]);
-			if (pos != std::string::npos && pos + 2 == length)
+			// タグが設定してない場合はファイル名をタグとして使う
+			if (tag.empty())
 			{
-				// シェーダーファイルのコンパイル
-				ShaderType shaderType = (ShaderType)i;
-				std::unique_ptr<Shader> shader =
-					std::make_unique<Shader>(path.string(), shaderType);
+				dataTag = path.stem().string();
+			}
 
-				// ペアを作成してマップに格納
-				std::pair pair = std::make_pair(tag, std::move(shader));
-				GetInstance()->mShaderMaps[(uint32_t)shaderType].insert(std::move(pair));
+			GetInstance()->LoadInputLayout(path.string(), dataTag);
+		}
+		else if (ext == ".hlsl")
+		{
+			// タグが設定してない場合はファイル名をタグとして使う
+			if (tag.empty())
+			{
+				dataTag = path.stem().string();
+
+				// 識別子を削除
+				dataTag.erase(dataTag.size() - 2);
+			}
+
+			const uint32_t length = (uint32_t)(path.string().length() - ext.length());
+
+			// 該当の識別子のシェーダーをコンパイルする
+			for (uint32_t i = 0; i < (uint32_t)GetInstance()->mShaderTags.size(); i++)
+			{
+				const uint32_t pos = (uint32_t)path.string().find(GetInstance()->mShaderTags[i]);
+				if (pos != std::string::npos && pos + 2 == length)
+				{
+					// シェーダーファイルのコンパイル
+					ShaderType shaderType = (ShaderType)i;
+					std::unique_ptr<Shader> shader =
+						std::make_unique<Shader>(path.string(), shaderType, dataTag);
+
+					// ペアを作成してマップに格納
+					std::pair pair = std::make_pair(dataTag, std::move(shader));
+					GetInstance()->mShaderMaps[(uint32_t)shaderType].insert(std::move(pair));
+				}
 			}
 		}
+
 	}
 }
 

@@ -89,6 +89,7 @@ struct GraphicsPipelineSetting
 		WriteAll = ((WriteRed | WriteGreen) | WriteBlue) | WriteAlpha,
 	};
 
+	PipelineType pipelineType;
 	Shader* vs = nullptr;
 	Shader* gs = nullptr;
 	Shader* ps = nullptr;
@@ -127,8 +128,7 @@ struct GraphicsPipelineSetting
 // コンピュートパイプラインの設定構造体
 struct ComputePipelineSetting
 {
-	// シェーダーコンパイラオブジェクト
-	ShaderCompiler* shaderObject;
+	Shader* cs = nullptr;
 
 	// RootSignature設定
 	RootSignatureSetting rootSignatureSetting;

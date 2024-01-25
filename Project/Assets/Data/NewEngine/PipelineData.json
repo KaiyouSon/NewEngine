@@ -1,0 +1,458 @@
+{
+    "Pipeline": [
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "GS Tag": "Emitter",
+            "PS Tag": "Emitter",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "Emitter",
+            "Topology Type": 0,
+            "VS Tag": "Emitter"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "Branch",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "Branch",
+            "Topology Type": 3,
+            "VS Tag": "Branch"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "CircleGaugeSprite",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "CircleGaugeSprite",
+            "Topology Type": 4,
+            "VS Tag": "CircleGaugeSprite"
+        },
+        {
+            "Cull Mode": 2,
+            "Fill Mode": 0,
+            "PS Tag": "Object3D",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "Object3D",
+            "Topology Type": 3,
+            "VS Tag": "Object3D"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "GS Tag": "GPUEmitter",
+            "PS Tag": "GPUEmitter",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "PlayerRecoveryEffect",
+            "Topology Type": 0,
+            "VS Tag": "PlayerRecoveryEffect"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "PostEffect",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "PostEffect",
+            "Topology Type": 4,
+            "VS Tag": "PostEffect"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "GS Tag": "GPUEmitter",
+            "PS Tag": "GPUEmitter",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "LeadEffect",
+            "Topology Type": 0,
+            "VS Tag": "LeadEffect"
+        },
+        {
+            "Cull Mode": 2,
+            "Fill Mode": 0,
+            "PS Tag": "Object3DSMOff",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "Object3DSMOff",
+            "Topology Type": 3,
+            "VS Tag": "Object3DSMOff"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "Trajectory",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "Trajectory",
+            "Topology Type": 4,
+            "VS Tag": "Trajectory"
+        },
+        {
+            "Cull Mode": 2,
+            "Fill Mode": 0,
+            "PS Tag": "FbxModel",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "FbxModel",
+            "Topology Type": 3,
+            "VS Tag": "FbxModel"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "GS Tag": "ParticleMesh",
+            "PS Tag": "ParticleMesh",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "LogoExplosionEffect",
+            "Topology Type": 0,
+            "VS Tag": "LogoExplosionEffect"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "GS Tag": "ParticleObject",
+            "PS Tag": "ParticleObject",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 1203172192,
+            "Tag": "ParticleObject",
+            "Topology Type": 0,
+            "VS Tag": "ParticleObject"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "Sprite",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "Sprite",
+            "Topology Type": 4,
+            "VS Tag": "Sprite"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "Line",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "Line",
+            "Topology Type": 2,
+            "VS Tag": "Line"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "ShadowMap",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "ShadowMap",
+            "Topology Type": 4,
+            "VS Tag": "ShadowMap"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "GS Tag": "Grass",
+            "PS Tag": "Grass",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "Grass",
+            "Topology Type": 0,
+            "VS Tag": "Grass"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "GS Tag": "GPUEmitter",
+            "PS Tag": "GPUEmitter",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "GPUEmitter",
+            "Topology Type": 0,
+            "VS Tag": "GPUEmitter"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "GS Tag": "GPUEmitter",
+            "PS Tag": "GPUEmitter",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "AirEffect",
+            "Topology Type": 0,
+            "VS Tag": "AirEffect"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "GS Tag": "GPUEmitter",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "RespawnPointEffect",
+            "Topology Type": 0,
+            "VS Tag": "RespawnPointEffect"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 1,
+            "PS Tag": "ColliderObject",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "ColliderObject",
+            "Topology Type": 3,
+            "VS Tag": "ColliderObject"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "GS Tag": "ParticleMesh",
+            "PS Tag": "ParticleMesh",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "ParticleMesh",
+            "Topology Type": 0,
+            "VS Tag": "ParticleMesh"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "Vignette",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "Vignette",
+            "Topology Type": 4,
+            "VS Tag": "Vignette"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "VolumetricFog",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 0,
+            "Tag": "VolumetricFog",
+            "Topology Type": 3,
+            "VS Tag": "VolumetricFog"
+        },
+        {
+            "Cull Mode": 2,
+            "Fill Mode": 0,
+            "PS Tag": "Skydome",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "Skydome",
+            "Topology Type": 3,
+            "VS Tag": "Skydome"
+        },
+        {
+            "Cull Mode": 2,
+            "Fill Mode": 0,
+            "PS Tag": "Cloud",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "Cloud",
+            "Topology Type": 3,
+            "VS Tag": "Cloud"
+        },
+        {
+            "Cull Mode": 2,
+            "Fill Mode": 0,
+            "PS Tag": "Ripple",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "Ripple",
+            "Topology Type": 3,
+            "VS Tag": "Ripple"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "Rhombus",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "Rhombus",
+            "Topology Type": 3,
+            "VS Tag": "Rhombus"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "HighLumi",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "HighLumi",
+            "Topology Type": 4,
+            "VS Tag": "HighLumi"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "GaussianBlur",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "GaussianBlur",
+            "Topology Type": 4,
+            "VS Tag": "GaussianBlur"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "Composite",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "Composite",
+            "Topology Type": 4,
+            "VS Tag": "Composite"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "RespawnTransition",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "RespawnTransition",
+            "Topology Type": 4,
+            "VS Tag": "RespawnTransition"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "ShadowObj",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "ShadowObj",
+            "Topology Type": 3,
+            "VS Tag": "ShadowObj"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "Rhombus",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "RhombusWriteNone",
+            "Topology Type": 3,
+            "VS Tag": "Rhombus"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "GS Tag": "GPUEmitter",
+            "PS Tag": "GPUEmitter",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "BossAttackTrajectoryEffect",
+            "Topology Type": 0,
+            "VS Tag": "BossAttackTrajectoryEffect"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "GS Tag": "GPUEmitter",
+            "PS Tag": "GPUEmitter",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "AttackExplosionEffect",
+            "Topology Type": 0,
+            "VS Tag": "AttackExplosionEffect"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "GS Tag": "GPUEmitter",
+            "PS Tag": "GPUEmitter",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "SmokeEffect",
+            "Topology Type": 0,
+            "VS Tag": "SmokeEffect"
+        },
+        {
+            "Cull Mode": 2,
+            "Fill Mode": 0,
+            "PS Tag": "Object3D",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "Object3DWriteNone",
+            "Topology Type": 3,
+            "VS Tag": "Object3D"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "GS Tag": "Grass",
+            "PS Tag": "Grass",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "GrassWriteNone",
+            "Topology Type": 0,
+            "VS Tag": "Grass"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "Branch",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "BranchWriteNone",
+            "Topology Type": 3,
+            "VS Tag": "Branch"
+        },
+        {
+            "Cull Mode": 2,
+            "Fill Mode": 0,
+            "PS Tag": "Ripple",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "RippleWriteNone",
+            "Topology Type": 3,
+            "VS Tag": "Ripple"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "GS Tag": "ParticleObject",
+            "PS Tag": "ParticleObject",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 1203172192,
+            "Tag": "PonDeRing",
+            "Topology Type": 0,
+            "VS Tag": "PonDeRing"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "LensFlare",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "LensFlare",
+            "Topology Type": 4,
+            "VS Tag": "LensFlare"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "RadialBlur",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "RadialBlur",
+            "Topology Type": 4,
+            "VS Tag": "RadialBlur"
+        },
+        {
+            "Cull Mode": 0,
+            "Fill Mode": 0,
+            "PS Tag": "ToneMapping",
+            "Pipeline Blend": 1,
+            "Pipeline Type": 3435973836,
+            "Tag": "ToneMapping",
+            "Topology Type": 4,
+            "VS Tag": "ToneMapping"
+        }
+    ]
+}

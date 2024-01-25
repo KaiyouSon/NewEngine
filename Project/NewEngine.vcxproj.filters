@@ -415,6 +415,9 @@
     <Filter Include="NewEngine\Source\Render\Shader">
       <UniqueIdentifier>{476a86bb-2911-4c35-83df-34e09e6cec09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Engine\Object3DSMOff">
+      <UniqueIdentifier>{dc00647b-45c5-41e1-ad5f-0de59394f591}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -1568,9 +1571,6 @@
     <ClInclude Include="NewEngine\Render\ShaderCompiler\Shader.h">
       <Filter>NewEngine\Header\Render\ShaderCompiler</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Util\NewEngineConstant.h">
-      <Filter>NewEngine\Header\Util</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Render\ShaderCompiler\ShaderManager.h">
       <Filter>NewEngine\Header\Render\ShaderCompiler</Filter>
     </ClInclude>
@@ -1579,6 +1579,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Render\ShaderCompiler\InputLayout.h">
       <Filter>NewEngine\Header\Render\ShaderCompiler</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Util\NewEngineConstant.h">
+      <Filter>NewEngine\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1591,25 +1594,25 @@
     <None Include="NewEngine\Shader\ShaderIO.hlsli">
       <Filter>Shader\Engine\Util</Filter>
     </None>
-    <None Include="Application\Shader\Cloud\Cloud.hlsli">
+    <None Include="Assets\Shader\Application\Cloud\Cloud.hlsli">
       <Filter>Shader\Application\Cloud</Filter>
     </None>
-    <None Include="Application\Shader\ShadowObj\ShadowObj.hlsli">
+    <None Include="Assets\Shader\Application\ShadowObj\ShadowObj.hlsli">
       <Filter>Shader\Application\ShaderMap</Filter>
     </None>
-    <None Include="Application\Shader\ShadowMap\ShadowMap.hlsli">
+    <None Include="Assets\Shader\Application\ShadowMap\ShadowMap.hlsli">
       <Filter>Shader\Application\ShaderMap</Filter>
     </None>
-    <None Include="Application\Shader\Transition\RespawnTransition\RespawnTransition.hlsli">
+    <None Include="Assets\Shader\Application\Transition\RespawnTransition\RespawnTransition.hlsli">
       <Filter>Shader\Application\Transition</Filter>
     </None>
-    <None Include="Application\Shader\PostEffect\GaussianBlur\GaussianBlur.hlsli">
+    <None Include="Assets\Shader\Application\PostEffect\GaussianBlur\GaussianBlur.hlsli">
       <Filter>Shader\Application\PostEffect\GaussianBlur</Filter>
     </None>
-    <None Include="Application\Shader\Branch\Branch.hlsli">
+    <None Include="Assets\Shader\Application\Branch\Branch.hlsli">
       <Filter>Shader\Application\Branch</Filter>
     </None>
-    <None Include="Application\Shader\Grass\Grass.hlsli">
+    <None Include="Assets\Shader\Application\Grass\Grass.hlsli">
       <Filter>Shader\Application\Grass</Filter>
     </None>
     <None Include="Assets\Shader\NewEngine\Emitter\Emitter.hlsli">
@@ -1621,14 +1624,11 @@
     <None Include="Assets\Shader\NewEngine\Line\Line.hlsli">
       <Filter>Shader\Engine\Line</Filter>
     </None>
-    <None Include="NewEngine\Shader\ColliderObject\ColliderObject.hlsli">
+    <None Include="Assets\Shader\NewEngine\ColliderObject\ColliderObject.hlsli">
       <Filter>Shader\Engine\ColliderObject</Filter>
     </None>
     <None Include="Assets\Shader\NewEngine\FbxModel\FbxModel.hlsli">
       <Filter>Shader\Engine\FbxModel</Filter>
-    </None>
-    <None Include="NewEngine\Shader\Object3D\Object3D.hlsli">
-      <Filter>Shader\Engine\Object3D</Filter>
     </None>
     <None Include="Assets\Shader\NewEngine\PostEffect\PostEffect.hlsli">
       <Filter>Shader\Engine\PostEffect</Filter>
@@ -1637,7 +1637,7 @@
       <Filter>Shader\Engine\Sprite</Filter>
     </None>
     <None Include=".editorconfig" />
-    <None Include="NewEngine\Shader\ParticleMesh\ParticleMesh.hlsli">
+    <None Include="Assets\Shader\NewEngine\ParticleMesh\ParticleMesh.hlsli">
       <Filter>Shader\Engine\ParticleMesh</Filter>
     </None>
     <None Include="Assets\Shader\Util.hlsli">
@@ -1646,25 +1646,25 @@
     <None Include="Assets\Shader\NewEngine\VolumetricFog\VolumetricFog.hlsli">
       <Filter>Shader\Engine\VolumetricFog</Filter>
     </None>
-    <None Include="Application\Shader\PostEffect\Vignette\Vignette.hlsli">
+    <None Include="Assets\Shader\Application\PostEffect\Vignette\Vignette.hlsli">
       <Filter>Shader\Application\PostEffect\Vignette</Filter>
     </None>
-    <None Include="Application\Shader\PostEffect\Composite\Composite.hlsli">
+    <None Include="Assets\Shader\Application\PostEffect\Composite\Composite.hlsli">
       <Filter>Shader\Application\PostEffect\Composite</Filter>
     </None>
-    <None Include="Application\Shader\PostEffect\HighLumi\HighLumi.hlsli">
+    <None Include="Assets\Shader\Application\PostEffect\HighLumi\HighLumi.hlsli">
       <Filter>Shader\Application\PostEffect\HighLumi</Filter>
     </None>
-    <None Include="Application\Shader\Skydome\Skydome.hlsli">
+    <None Include="Assets\Shader\Application\Skydome\Skydome.hlsli">
       <Filter>Shader\Application\Skydome</Filter>
     </None>
-    <None Include="Application\Shader\Trajectory\Trajectory.hlsli">
+    <None Include="Assets\Shader\Application\Trajectory\Trajectory.hlsli">
       <Filter>Shader\Application\Trajectory</Filter>
     </None>
-    <None Include="NewEngine\Shader\ParticleObject\ParticleObject.hlsli">
+    <None Include="Assets\Shader\NewEngine\ParticleObject\ParticleObject.hlsli">
       <Filter>Shader\Engine\ParticleObject</Filter>
     </None>
-    <None Include="Application\Shader\PostEffect\RadialBlur\RadialBlur.hlsli">
+    <None Include="Assets\Shader\Application\PostEffect\RadialBlur\RadialBlur.hlsli">
       <Filter>Shader\Application\PostEffect\RadialBlur</Filter>
     </None>
     <None Include="Application\Shader\WorldVolumetricFog\WorldVolumetricFog.hlsli">
@@ -1673,68 +1673,72 @@
     <None Include="Assets\Shader\NewEngine\GPUEmitter\GPUEmitter.hlsli">
       <Filter>Shader\Engine\GPUEmitter</Filter>
     </None>
-    <None Include="Application\Shader\PostEffect\ToneMapping\ToneMapping.hlsli">
+    <None Include="Assets\Shader\Application\PostEffect\ToneMapping\ToneMapping.hlsli">
       <Filter>Shader\Application\PostEffect\ToneMapping</Filter>
     </None>
-    <None Include="Application\Shader\RespawnPoint\Rhombus\Rhombus.hlsli">
+    <None Include="Assets\Shader\Application\RespawnPoint\Rhombus\Rhombus.hlsli">
       <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
     </None>
-    <None Include="Application\Shader\RespawnPoint\Ripple\Ripple.hlsli">
+    <None Include="Assets\Shader\Application\RespawnPoint\Ripple\Ripple.hlsli">
       <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
     </None>
-    <None Include="Application\Shader\PostEffect\LensFlare\LensFlare.hlsli">
+    <None Include="Assets\Shader\Application\PostEffect\LensFlare\LensFlare.hlsli">
       <Filter>Shader\Application\PostEffect\LensFlare</Filter>
     </None>
-    <None Include="NewEngine\Shader\GPUEmitter\GPUEmitter.hlsli" />
-    <None Include="NewEngine\Shader\Emitter\Emitter.hlsli" />
+    <None Include="Assets\Shader\NewEngine\Object3D\Object3D.hlsli">
+      <Filter>Shader\Engine\Object3DSMOff</Filter>
+    </None>
+    <None Include="Assets\Shader\NewEngine\Object3DSMOff\Object3DSMOff.hlsli">
+      <Filter>Shader\Engine\Object3D</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Application\Shader\Cloud\CloudPS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Cloud\CloudPS.hlsl">
       <Filter>Shader\Application\Cloud</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Cloud\CloudVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Cloud\CloudVS.hlsl">
       <Filter>Shader\Application\Cloud</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\ShadowObj\ShadowObjVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\ShadowObj\ShadowObjVS.hlsl">
       <Filter>Shader\Application\ShaderMap</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\ShadowObj\ShadowObjPS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\ShadowObj\ShadowObjPS.hlsl">
       <Filter>Shader\Application\ShaderMap</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\ShadowMap\ShadowMapVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\ShadowMap\ShadowMapVS.hlsl">
       <Filter>Shader\Application\ShaderMap</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\ShadowMap\ShadowMapPS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\ShadowMap\ShadowMapPS.hlsl">
       <Filter>Shader\Application\ShaderMap</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Transition\RespawnTransition\RespawnTransitionPS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Transition\RespawnTransition\RespawnTransitionPS.hlsl">
       <Filter>Shader\Application\Transition</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Transition\RespawnTransition\RespawnTransitionVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Transition\RespawnTransition\RespawnTransitionVS.hlsl">
       <Filter>Shader\Application\Transition</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PostEffect\GaussianBlur\GaussianBlurPS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PostEffect\GaussianBlur\GaussianBlurPS.hlsl">
       <Filter>Shader\Application\PostEffect\GaussianBlur</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PostEffect\GaussianBlur\GaussianBlurVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PostEffect\GaussianBlur\GaussianBlurVS.hlsl">
       <Filter>Shader\Application\PostEffect\GaussianBlur</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Branch\BranchVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Branch\BranchVS.hlsl">
       <Filter>Shader\Application\Branch</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Branch\BranchPS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Branch\BranchPS.hlsl">
       <Filter>Shader\Application\Branch</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Grass\GrassVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Grass\GrassVS.hlsl">
       <Filter>Shader\Application\Grass</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Grass\GrassPS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Grass\GrassPS.hlsl">
       <Filter>Shader\Application\Grass</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Grass\GrassGS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Grass\GrassGS.hlsl">
       <Filter>Shader\Application\Grass</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RespawnPointEffect\RespawnPointEffectCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\RespawnPointEffect\RespawnPointEffectCS.hlsl">
       <Filter>Shader\Application\Effect</Filter>
     </FxCompile>
     <FxCompile Include="Assets\Shader\NewEngine\Emitter\EmitterGS.hlsl">
@@ -1758,10 +1762,10 @@
     <FxCompile Include="Assets\Shader\NewEngine\Line\LineVS.hlsl">
       <Filter>Shader\Engine\Line</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ColliderObject\ColliderObjectPS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\ColliderObject\ColliderObjectPS.hlsl">
       <Filter>Shader\Engine\ColliderObject</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ColliderObject\ColliderObjectVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\ColliderObject\ColliderObjectVS.hlsl">
       <Filter>Shader\Engine\ColliderObject</Filter>
     </FxCompile>
     <FxCompile Include="Assets\Shader\NewEngine\FbxModel\FbxModelPS.hlsl">
@@ -1769,12 +1773,6 @@
     </FxCompile>
     <FxCompile Include="Assets\Shader\NewEngine\FbxModel\FbxModelVS.hlsl">
       <Filter>Shader\Engine\FbxModel</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Object3D\Object3DPS.hlsl">
-      <Filter>Shader\Engine\Object3D</Filter>
-    </FxCompile>
-    <FxCompile Include="NewEngine\Shader\Object3D\Object3DVS.hlsl">
-      <Filter>Shader\Engine\Object3D</Filter>
     </FxCompile>
     <FxCompile Include="Assets\Shader\NewEngine\PostEffect\PostEffectPS.hlsl">
       <Filter>Shader\Engine\PostEffect</Filter>
@@ -1788,19 +1786,19 @@
     <FxCompile Include="Assets\Shader\NewEngine\Sprite\SpriteVS.hlsl">
       <Filter>Shader\Engine\Sprite</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RespawnPointEffect\RespawnPointEffectVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\RespawnPointEffect\RespawnPointEffectVS.hlsl">
       <Filter>Shader\Application\Effect</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ParticleMesh\ParticleMeshPS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\ParticleMesh\ParticleMeshPS.hlsl">
       <Filter>Shader\Engine\ParticleMesh</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ParticleMesh\ParticleMeshVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\ParticleMesh\ParticleMeshVS.hlsl">
       <Filter>Shader\Engine\ParticleMesh</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ParticleMesh\ParticleMeshGS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\ParticleMesh\ParticleMeshGS.hlsl">
       <Filter>Shader\Engine\ParticleMesh</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ParticleMesh\ParticleMeshCS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\ParticleMesh\ParticleMeshCS.hlsl">
       <Filter>Shader\Engine\ParticleMesh</Filter>
     </FxCompile>
     <FxCompile Include="Assets\Shader\NewEngine\VolumetricFog\VolumetricFogVS.hlsl">
@@ -1809,124 +1807,124 @@
     <FxCompile Include="Assets\Shader\NewEngine\VolumetricFog\VolumetricFogPS.hlsl">
       <Filter>Shader\Engine\VolumetricFog</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\LogoExplosionEffect\LogoExplosionEffectInitCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\LogoExplosionEffect\LogoExplosionEffectInitCS.hlsl">
       <Filter>Shader\Application\Effect\LogoExplosionEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\LogoExplosionEffect\LogoExplosionEffectUpdateCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\LogoExplosionEffect\LogoExplosionEffectUpdateCS.hlsl">
       <Filter>Shader\Application\Effect\LogoExplosionEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\LogoExplosionEffect\LogoExplosionEffectVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\LogoExplosionEffect\LogoExplosionEffectVS.hlsl">
       <Filter>Shader\Application\Effect\LogoExplosionEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PostEffect\Vignette\VignettePS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PostEffect\Vignette\VignettePS.hlsl">
       <Filter>Shader\Application\PostEffect\Vignette</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PostEffect\Vignette\VignetteVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PostEffect\Vignette\VignetteVS.hlsl">
       <Filter>Shader\Application\PostEffect\Vignette</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PostEffect\Composite\CompositePS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PostEffect\Composite\CompositePS.hlsl">
       <Filter>Shader\Application\PostEffect\Composite</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PostEffect\Composite\CompositeVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PostEffect\Composite\CompositeVS.hlsl">
       <Filter>Shader\Application\PostEffect\Composite</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PostEffect\HighLumi\HighLumiPS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PostEffect\HighLumi\HighLumiPS.hlsl">
       <Filter>Shader\Application\PostEffect\HighLumi</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PostEffect\HighLumi\HighLumiVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PostEffect\HighLumi\HighLumiVS.hlsl">
       <Filter>Shader\Application\PostEffect\HighLumi</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\LeadEffect\LeadEffectInitCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\LeadEffect\LeadEffectInitCS.hlsl">
       <Filter>Shader\Application\Effect\LeadEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\LeadEffect\LeadEffectVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\LeadEffect\LeadEffectVS.hlsl">
       <Filter>Shader\Application\Effect\LeadEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\LeadEffect\LeadEffectUpdateCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\LeadEffect\LeadEffectUpdateCS.hlsl">
       <Filter>Shader\Application\Effect\LeadEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\PlayerRecoveryEffect\PlayerRecoveryEffectVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\PlayerRecoveryEffect\PlayerRecoveryEffectVS.hlsl">
       <Filter>Shader\Application\Effect\PlayerRecoveryEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\PlayerRecoveryEffect\PlayerRecoveryEffectInitCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\PlayerRecoveryEffect\PlayerRecoveryEffectInitCS.hlsl">
       <Filter>Shader\Application\Effect\PlayerRecoveryEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\PlayerRecoveryEffect\PlayerRecoveryEffectUpdateCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\PlayerRecoveryEffect\PlayerRecoveryEffectUpdateCS.hlsl">
       <Filter>Shader\Application\Effect\PlayerRecoveryEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\AirEffect\AirEffectVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\AirEffect\AirEffectVS.hlsl">
       <Filter>Shader\Application\Effect\AirEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\AirEffect\AirEffectInitCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\AirEffect\AirEffectInitCS.hlsl">
       <Filter>Shader\Application\Effect\AirEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\AirEffect\AirEffectUpdateCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\AirEffect\AirEffectUpdateCS.hlsl">
       <Filter>Shader\Application\Effect\AirEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Skydome\SkydomeVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Skydome\SkydomeVS.hlsl">
       <Filter>Shader\Application\Skydome</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Skydome\SkydomePS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Skydome\SkydomePS.hlsl">
       <Filter>Shader\Application\Skydome</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Trajectory\TrajectoryVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Trajectory\TrajectoryVS.hlsl">
       <Filter>Shader\Application\Trajectory</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Trajectory\TrajectoryPS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Trajectory\TrajectoryPS.hlsl">
       <Filter>Shader\Application\Trajectory</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\BossAttackTrajectoryEffect\BossAttackTrajectoryEffectInitCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\BossAttackTrajectoryEffect\BossAttackTrajectoryEffectInitCS.hlsl">
       <Filter>Shader\Application\Effect\BossAttackTrajectoryEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\BossAttackTrajectoryEffect\BossAttackTrajectoryEffectVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\BossAttackTrajectoryEffect\BossAttackTrajectoryEffectVS.hlsl">
       <Filter>Shader\Application\Effect\BossAttackTrajectoryEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\BossAttackTrajectoryEffect\BossAttackTrajectoryEffectUpdateCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\BossAttackTrajectoryEffect\BossAttackTrajectoryEffectUpdateCS.hlsl">
       <Filter>Shader\Application\Effect\BossAttackTrajectoryEffect</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ParticleObject\ParticleObjectVS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\ParticleObject\ParticleObjectVS.hlsl">
       <Filter>Shader\Engine\ParticleObject</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ParticleObject\ParticleObjectCS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\ParticleObject\ParticleObjectCS.hlsl">
       <Filter>Shader\Engine\ParticleObject</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ParticleObject\ParticleObjectPS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\ParticleObject\ParticleObjectPS.hlsl">
       <Filter>Shader\Engine\ParticleObject</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\ParticleObject\ParticleObjectGS.hlsl">
+    <FxCompile Include="Assets\Shader\NewEngine\ParticleObject\ParticleObjectGS.hlsl">
       <Filter>Shader\Engine\ParticleObject</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PonDeRing\PonDeRingUpdateCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PonDeRing\PonDeRingUpdateCS.hlsl">
       <Filter>Shader\Application\PonDeRing</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PonDeRing\PonDeRingInitCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PonDeRing\PonDeRingInitCS.hlsl">
       <Filter>Shader\Application\PonDeRing</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PonDeRing\PonDeRingVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PonDeRing\PonDeRingVS.hlsl">
       <Filter>Shader\Application\PonDeRing</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PostEffect\RadialBlur\RadialBlurVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PostEffect\RadialBlur\RadialBlurVS.hlsl">
       <Filter>Shader\Application\PostEffect\RadialBlur</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PostEffect\RadialBlur\RadialBlurPS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PostEffect\RadialBlur\RadialBlurPS.hlsl">
       <Filter>Shader\Application\PostEffect\RadialBlur</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\AttackExplosionEffect\AttackExplosionEffectInitCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\AttackExplosionEffect\AttackExplosionEffectInitCS.hlsl">
       <Filter>Shader\Application\Effect\AttackExplosionEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\AttackExplosionEffect\AttackExplosionEffectVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\AttackExplosionEffect\AttackExplosionEffectVS.hlsl">
       <Filter>Shader\Application\Effect\AttackExplosionEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\AttackExplosionEffect\AttackExplosionEffectUpdateCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\AttackExplosionEffect\AttackExplosionEffectUpdateCS.hlsl">
       <Filter>Shader\Application\Effect\AttackExplosionEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\SmokeEffect\SmokeEffectInitCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\SmokeEffect\SmokeEffectInitCS.hlsl">
       <Filter>Shader\Application\Effect\SmokeEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\SmokeEffect\SmokeEffectVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\SmokeEffect\SmokeEffectVS.hlsl">
       <Filter>Shader\Application\Effect\SmokeEffect</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\Effect\SmokeEffect\SmokeEffectUpdateCS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\Effect\SmokeEffect\SmokeEffectUpdateCS.hlsl">
       <Filter>Shader\Application\Effect\SmokeEffect</Filter>
     </FxCompile>
     <FxCompile Include="Application\Shader\WorldVolumetricFog\WorldVolumetricFogVS.hlsl">
@@ -1934,9 +1932,6 @@
     </FxCompile>
     <FxCompile Include="Application\Shader\WorldVolumetricFog\WorldVolumetricFogPS.hlsl">
       <Filter>Shader\Application\WorldVolumetricFog</Filter>
-    </FxCompile>
-    <FxCompile Include="Application\Shader\Grass\GrassCS.hlsl">
-      <Filter>Shader\Application\Grass</Filter>
     </FxCompile>
     <FxCompile Include="Assets\Shader\NewEngine\GPUEmitter\GPUEmitterCS.hlsl">
       <Filter>Shader\Engine\GPUEmitter</Filter>
@@ -1950,37 +1945,41 @@
     <FxCompile Include="Assets\Shader\NewEngine\GPUEmitter\GPUEmitterVS.hlsl">
       <Filter>Shader\Engine\GPUEmitter</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PostEffect\ToneMapping\ToneMappingPS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PostEffect\ToneMapping\ToneMappingPS.hlsl">
       <Filter>Shader\Application\PostEffect\ToneMapping</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PostEffect\ToneMapping\ToneMappingVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PostEffect\ToneMapping\ToneMappingVS.hlsl">
       <Filter>Shader\Application\PostEffect\ToneMapping</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RespawnPoint\Rhombus\RhombusPS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\RespawnPoint\Rhombus\RhombusPS.hlsl">
       <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RespawnPoint\Rhombus\RhombusVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\RespawnPoint\Rhombus\RhombusVS.hlsl">
       <Filter>Shader\Application\RespawnPoint\Rhombus</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RespawnPoint\Ripple\RipplePS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\RespawnPoint\Ripple\RipplePS.hlsl">
       <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\RespawnPoint\Ripple\RippleVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\RespawnPoint\Ripple\RippleVS.hlsl">
       <Filter>Shader\Application\RespawnPoint\Ripple</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PostEffect\LensFlare\LensFlarePS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PostEffect\LensFlare\LensFlarePS.hlsl">
       <Filter>Shader\Application\PostEffect\LensFlare</Filter>
     </FxCompile>
-    <FxCompile Include="Application\Shader\PostEffect\LensFlare\LensFlareVS.hlsl">
+    <FxCompile Include="Assets\Shader\Application\PostEffect\LensFlare\LensFlareVS.hlsl">
       <Filter>Shader\Application\PostEffect\LensFlare</Filter>
     </FxCompile>
-    <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterCS.hlsl" />
-    <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterGS.hlsl" />
-    <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterPS.hlsl" />
-    <FxCompile Include="NewEngine\Shader\GPUEmitter\GPUEmitterVS.hlsl" />
-    <FxCompile Include="NewEngine\Shader\Emitter\EmitterGS.hlsl" />
-    <FxCompile Include="NewEngine\Shader\Emitter\EmitterPS.hlsl" />
-    <FxCompile Include="NewEngine\Shader\Emitter\EmitterVS.hlsl" />
-    <FxCompile Include="NewEngine\Shader\Emitter\EmitterCS.hlsl" />
+    <FxCompile Include="Assets\Shader\NewEngine\Object3D\Object3DPS.hlsl">
+      <Filter>Shader\Engine\Object3DSMOff</Filter>
+    </FxCompile>
+    <FxCompile Include="Assets\Shader\NewEngine\Object3D\Object3DVS.hlsl">
+      <Filter>Shader\Engine\Object3DSMOff</Filter>
+    </FxCompile>
+    <FxCompile Include="Assets\Shader\NewEngine\Object3DSMOff\Object3DSMOffPS.hlsl">
+      <Filter>Shader\Engine\Object3D</Filter>
+    </FxCompile>
+    <FxCompile Include="Assets\Shader\NewEngine\Object3DSMOff\Object3DSMOffVS.hlsl">
+      <Filter>Shader\Engine\Object3D</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

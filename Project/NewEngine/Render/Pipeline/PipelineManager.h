@@ -15,19 +15,22 @@ private:
 public:
 	// GraphicsPipelineの生成
 	static void CreateGraphicsPipeline(const GraphicsPipelineSetting& setting, const std::string tag);
-	static void CreateGraphicsPipeline2(const GraphicsPipelineSetting& setting, const std::string tag);
 	static void ReCreateGraphicsPipeline(const std::string tag);
 	static void ReCreateGraphicsPipeline(const GraphicsPipelineSetting& setting, const std::string tag);
 
 	// ComputePipelineの生成
 	static void CreateComputePipeline(const ComputePipelineSetting& setting, const std::string tag);
 
+public:
+	// 読み書き関連
+	//static void LoadPipelineData();
+	static void SavePipelineData();
+
+public:
 	// ゲッター
 	static GraphicsPipeline* GetGraphicsPipeline(const std::string tag);
 	static ComputePipeline* GetComputePipeline(const std::string tag);
-
 	static GraphicsPipelineSetting GetGraphicsPipelineSetting(const std::string tag);
-
 	static std::unordered_map<std::string, std::unique_ptr<GraphicsPipeline>>* GetGraphicsPipelineMap();
 
 };

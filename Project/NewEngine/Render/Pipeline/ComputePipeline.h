@@ -1,7 +1,7 @@
 #pragma once
 #include "NewEngineSetting.h"
 #include "RootSignature.h"
-#include <memory>
+#include "StandardLib.h"
 
 // ComputePipelineのクラス
 class ComputePipeline

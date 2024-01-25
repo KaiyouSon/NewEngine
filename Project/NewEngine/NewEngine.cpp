@@ -14,6 +14,8 @@ NewEngine::NewEngine(const NewEngineSetting& setting) :
 
 NewEngine::~NewEngine()
 {
+	PipelineManager::SavePipelineData();
+
 	// GUIの破棄
 	Gui::Destroy();
 
@@ -25,6 +27,7 @@ NewEngine::~NewEngine()
 
 	// RenderBaseの破棄
 	RenderBase::Destroy();
+
 }
 
 void NewEngine::Setting()
