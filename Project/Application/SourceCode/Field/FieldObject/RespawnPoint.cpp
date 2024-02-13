@@ -51,8 +51,10 @@ void RespawnPoint::Update()
 		mAngle.Reset();
 	}
 
-	mRipple->Update(&mParent);
-	mRhombus->Update(&mParent);
+	mRipple->SetParent(&mParent);
+	mRhombus->SetParent(&mParent);
+	mRipple->Update();
+	mRhombus->Update();
 }
 
 void RespawnPoint::Draw(const bool isDrawDepth)

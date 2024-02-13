@@ -1,0 +1,38 @@
+{
+    "objects": [
+        {
+            "component": [
+                null,
+                {
+                    "transform": {
+                        "pos": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rot": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                },
+                {
+                    "textureData": [
+                        {
+                            "textag": "White",
+                            "textype": 0
+                        }
+                    ]
+                }
+            ],
+            "type": 1
+        }
+    ],
+    "tag": "Load"
+}

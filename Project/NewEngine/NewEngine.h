@@ -38,6 +38,7 @@
 #include "RenderBase.h"
 #include "RenderWindow.h"
 #include "Renderer.h"
+#include "json.hpp"
 
 // c++
 #include "StandardLib.h"

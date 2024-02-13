@@ -25,8 +25,10 @@ void Tree::Update()
 		ColliderDrawer::GetInstance()->Bind(&mCollider);
 	}
 
-	mTree->Update(&mParent);
-	mBranch->Update(&mParent);
+	mTree->SetParent(&mParent);
+	mBranch->SetParent(&mParent);
+	mTree->Update();
+	mBranch->Update();
 }
 
 void Tree::Draw(const bool isDrawDepth)

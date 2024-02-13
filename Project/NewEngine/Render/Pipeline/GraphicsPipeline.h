@@ -35,4 +35,5 @@ public: // ゲッター
 	RootSignature* GetRootSignature();
 	GraphicsPipelineSetting GetSetting();
 	ID3D12PipelineState* GetPSO(const BlendMode blendMode);
+
 };

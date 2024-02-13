@@ -21,7 +21,7 @@ private:
 	std::unique_ptr<ShaderWindow> mShaderWindow;
 	std::unique_ptr<MappingWindow> mMappingWindow;
 	std::unique_ptr<RendererWindow> mRendererWindow;
-
+	
 public:
 	void Init();
 	void Update();

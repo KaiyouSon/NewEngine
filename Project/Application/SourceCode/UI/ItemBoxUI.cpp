@@ -5,10 +5,10 @@ ItemBoxUI::ItemBoxUI() :
 	mLight(std::make_unique<Sprite>()),
 	mIsLightActive(false)
 {
-	mFrame->SetTexture(TextureManager::GetTexture("ItemBoxFrame"));
+	mFrame->SetTexture("ItemBoxFrame");
 	mFrame->SetSize(Vec2(144, 160));
 
-	mLight->SetTexture(TextureManager::GetTexture("ItemBoxLight"));
+	mLight->SetTexture("ItemBoxLight");
 	mLight->SetSize(Vec2(144, 160));
 
 	mLight->color = Color(0x897a51);
@@ -40,8 +40,10 @@ void ItemBoxUI::Update(Transform* parent)
 		}
 	}
 
-	mFrame->Update(parent);
-	mLight->Update(parent);
+	mFrame->SetParent(parent);
+	mLight->SetParent(parent);
+	mFrame->Update();
+	mLight->Update();
 }
 
 void ItemBoxUI::DrawFrame()

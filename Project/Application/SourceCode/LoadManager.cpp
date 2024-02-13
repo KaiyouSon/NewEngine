@@ -78,7 +78,7 @@ void LoadManager::GameSceneTextureLoad()
 	TextureManager::LoadTexture("Text/ColonStr.dds", "ColonStr");
 	TextureManager::LoadTexture("Text/Negotiation/RestInLightStr.dds", "RestInLightStr");
 	TextureManager::LoadTexture("Text/Negotiation/OpenStr.dds", "OpenStr");
-	TextureManager::LoadTexture("Text/ExitStr.dds", "ExitStr");
+
 	TextureManager::LoadTexture("Text/Operation/Operation1Text.dds", "Operation1Text");
 	TextureManager::LoadTexture("Text/Operation/Operation2Text.dds", "Operation2Text");
 	TextureManager::LoadTexture("Text/Operation/Operation3Text.dds", "Operation3Text");
@@ -295,6 +295,8 @@ bool LoadManager::TextureLoad()
 	TextureManager::LoadTexture("Noice/BlurNoice.dds", "BlurNoice");
 	TextureManager::LoadTexture("Noice/ScreenNoice.dds", "ScreenNoice");
 
+	TextureManager::LoadTexture("Text/ExitStr.dds", "ExitStr");
+
 	// シャドウマップ
 	RenderTextureSetting setting = RenderTextureSetting(Vec2(1920, 1080) * 2, Vec2(1920, 1080) * 2, true);
 	TextureManager::CreateRenderTexture(setting, "ShadowMap");
@@ -347,6 +349,9 @@ LoadManager::LoadManager() : mIsLoaded(false)
 }
 void LoadManager::Load()
 {
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "ViewScene");
+
+
 	// モデルで使うから先に作っとく
 	TextureManager::CreateColorTexture(Color::white, "White");
 

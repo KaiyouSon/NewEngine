@@ -17,7 +17,8 @@ void Wall::Update()
 		ColliderDrawer::GetInstance()->Bind(&mCollider);
 	}
 
-	mWall->Update(&mParent);
+	mWall->SetParent(&mParent);
+	mWall->Update();
 }
 void Wall::Draw(const bool isDrawDepth)
 {

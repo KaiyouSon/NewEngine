@@ -29,8 +29,8 @@ void LogoScene::CreateInstance()
 
 void LogoScene::Init()
 {
-	mLogoSprite->SetTexture(TextureManager::GetTexture("NewEngineTitle"));
-	mBackSprite->SetTexture(TextureManager::GetTexture("Black"));
+	mLogoSprite->SetTexture("NewEngineTitle");
+	mBackSprite->SetTexture("Black");
 
 	mLogoSprite->pos = GetWindowHalfSize();
 	mBackSprite->pos = GetWindowHalfSize();

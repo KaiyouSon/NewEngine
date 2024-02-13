@@ -6,13 +6,13 @@ GaugeUI::GaugeUI()
 	for (uint32_t i = 0; i < mSprites.size(); i++)
 	{
 		mSprites[i] = std::make_unique<Sprite>();
-		mSprites[i]->SetTexture(TextureManager::GetTexture("Gauge"));
+		mSprites[i]->SetTexture("Gauge");
 		mSprites[i]->SetAnchorPoint(Vec2(0.f, 0.5f));
 	}
-	mSprites[BackFrame]->SetTexture(TextureManager::GetTexture("White"));
+	mSprites[BackFrame]->SetTexture("White");
 	mSprites[BackFrame]->color = Color(0.f, 0.f, 0.f, 155.f);
 
-	mSprites[BackColor]->SetTexture(TextureManager::GetTexture("White"));
+	mSprites[BackColor]->SetTexture("White");
 	mSprites[BackColor]->color = Color(0x776116);
 
 	mStayTimer.SetLimitTimer(60);

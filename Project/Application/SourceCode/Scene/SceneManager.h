@@ -2,6 +2,7 @@
 #include "IScene.h"
 #include "Util.h"
 #include "LightManager.h"
+#include "Scene.h"
 #include <future>
 #include <thread>
 
@@ -27,9 +28,31 @@ private:
 	ChangeStep mChangeStep;
 	bool mIsReturn;
 
+private:
+	std::unordered_map<std::string, std::unique_ptr<Scene>> mSceneMap;
+	std::vector<std::string> mSceneNames;
+
+public:
+	std::unique_ptr<Scene> mCurrentScene;
+	std::function<void()> mChangeSceneFunc;
+	std::vector<std::function<void()>> mPostDrawProcessFuncs;
+
+	void LoadSceneToDirectroy();
+
+	void LoadSceneToJson(const std::string& sceneName);
+	void SaveSceneToJson(const std::string& sceneName);
+
 public:
 	SceneManager();
 	~SceneManager();
+
+public:
+	static void CreateScene(const std::string& tag);
+	static void ChangeScene(const std::string& sceneName);
+	static std::unordered_map<std::string, std::unique_ptr<Scene>>* GetSceneMap();
+	static std::vector<std::string>* GetSceneNames();
+
+	static void AddPostDrawProcessFunc(const std::function<void()>& func);
 
 public:
 	void Init();
@@ -38,6 +61,7 @@ public:
 	void DrawPass();
 	void Draw();
 	void DrawDebugGui();
+	void PostDrawProcess();
 
 public:
 	template<typename T>

@@ -1,6 +1,8 @@
 #include "NewEngine.h"
 #include "LoadManager.h"
 #include "DebugManager.h"
+#include "GameObjectManager.h"
+#include "MainWindow.h"
 using namespace Microsoft::WRL;
 
 bool NewEngine::sIsClose = false;
@@ -108,6 +110,7 @@ void NewEngine::Update()
 	{
 		LightManager::GetInstance()->Update();
 		SceneManager::GetInstance()->Update();
+		SceneManager::GetInstance()->mCurrentScene->GetGameObjectManager()->Update();
 		DebugManager::GetInstance()->SetisNextFrame(false);
 	}
 }
@@ -125,6 +128,7 @@ void NewEngine::Draw()
 
 	ColliderDrawer::GetInstance()->DrawCollider();
 	SceneManager::GetInstance()->DrawDebugGui();
+	MainWindow::GetInstance()->DrawDebugGui();
 	DebugManager::GetInstance()->DrawDebugGui();
 }
 
@@ -144,6 +148,11 @@ void NewEngine::PrevDraw()
 	SceneManager::GetInstance()->ExecuteCS();
 	SceneManager::GetInstance()->DrawPass();
 
+	RenderTexture* rt = TextureManager::GetRenderTexture("ViewScene");
+	rt->PrevDrawScene();
+	SceneManager::GetInstance()->mCurrentScene->GetGameObjectManager()->Draw();
+	rt->PostDrawScene();
+
 	RenderBase::GetInstance()->PreDraw();
 	Gui::PreDraw();
 }
@@ -159,6 +168,8 @@ void NewEngine::PostDraw()
 	Gui::PostDraw();
 	RenderBase::GetInstance()->PostDraw();
 	DebugManager::GetInstance()->ReCompile();
+
+	SceneManager::GetInstance()->PostDrawProcess();
 }
 
 void NewEngine::FrameControl()

@@ -13,7 +13,8 @@ void SkyIsland::Init()
 
 void SkyIsland::Update()
 {
-	mSkyIsland->Update(&mParent);
+	mSkyIsland->SetParent(&mParent);
+	mSkyIsland->Update();
 }
 
 void SkyIsland::Draw(const bool isDrawDepth)

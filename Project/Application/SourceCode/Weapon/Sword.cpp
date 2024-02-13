@@ -29,11 +29,12 @@ void Sword::Update(Transform* parent)
 {
 	mTrajectory->PrevUpdate();
 
-	weapon->Update(parent);
+	weapon->SetParent(parent);
+	weapon->Update();
 
-	Vec3 yAxis = weapon->GetTransform().GetWorldMat().GetYAxis();
-	Vec3 zAxis = weapon->GetTransform().GetWorldMat().GetZAxis();
-	Vec3 pos = weapon->GetTransform().GetWorldMat().GetTrans();
+	Vec3 yAxis = weapon->GetTransform()->GetWorldMat().GetYAxis();
+	Vec3 zAxis = weapon->GetTransform()->GetWorldMat().GetZAxis();
+	Vec3 pos = weapon->GetTransform()->GetWorldMat().GetTrans();
 
 	mTrajectory->SetTargetPos(
 		pos + zAxis.Norm() * 2.f,
@@ -63,8 +64,8 @@ void Sword::DrawModel()
 
 Vec3 Sword::GetTipPos()
 {
-	Vec3 zAxis = weapon->GetTransform().GetWorldMat().GetZAxis();
-	Vec3 pos = weapon->GetTransform().GetWorldMat().GetTrans();
+	Vec3 zAxis = weapon->GetTransform()->GetWorldMat().GetZAxis();
+	Vec3 pos = weapon->GetTransform()->GetWorldMat().GetTrans();
 
 	return pos + zAxis.Norm() * 10.f;
 }
@@ -79,7 +80,7 @@ void Sword::ColliderUpdate()
 	}
 	else
 	{
-		Vec3 zAxis = weapon->GetTransform().GetWorldMat().GetZAxis();
+		Vec3 zAxis = weapon->GetTransform()->GetWorldMat().GetZAxis();
 
 		collider.startPos = weapon->GetWorldPos() - zAxis.Norm() * 8.f;
 		collider.endPos = weapon->GetWorldPos() + zAxis.Norm() * 8.f;

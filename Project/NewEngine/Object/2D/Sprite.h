@@ -8,30 +8,23 @@
 #include "NewEngineEnum.h"
 #include <vector>
 
+#include "GameObject.h"
+
 // 前方宣言
 class TextureAnimation;
 
 // スプライトのクラス
-class Sprite
+class Sprite : public GameObject
 {
 private:
 	std::vector<VertexBufferData::VSprite> mVertices;
 	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> mVertexBuffer;
 	std::unique_ptr<Material> mMaterial;
 	GraphicsPipeline* mGraphicsPipeline;
-	Transform mTransform;
-	Transform* mParent;
-	Texture* mTexture;
-	Vec2 mAnchorPoint;
-	Vec2 mSize;
-	FlipType mFlipType;
-	BlendMode mBlendMode;
 
-public:
-	Vec2 pos;
-	Vec2 scale;
-	float rot;
-	Color color;
+private:
+	// コンポーネント関連
+	SpriteInfo* mInfo;
 
 private: // マテリアル関連
 	void MaterialInit();
@@ -47,7 +40,9 @@ private:
 
 public:
 	Sprite();
-	void Update(Transform* parent = nullptr);
+	Sprite(const std::string& name);
+	void Update() override;
+	void AppedToRenderer() override;
 	void Draw(const std::string& layerTag, const BlendMode blendMode = BlendMode::Alpha);
 
 	template<typename T>
@@ -60,8 +55,7 @@ public:
 
 public: //セッター
 
-	// テクスチャー
-	void SetTexture(Texture* texture);
+	void SetTexture(const std::string& textureTag, [[maybe_unused]] const bool isChangeSize = true) override;
 
 	// 描画範囲
 	void SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos);

@@ -12,7 +12,8 @@ void ItemUI::Init()
 
 void ItemUI::Update(Transform* parent)
 {
-	mItemUI->Update(parent);
+	mItemUI->SetParent(parent);
+	mItemUI->Update();
 }
 
 void ItemUI::DrawFrontSprite()
@@ -27,7 +28,7 @@ void ItemUI::SettingsByType()
 		// HPボトル
 	case ItemType::HPBottle:
 	{
-		mItemUI->SetTexture(TextureManager::GetTexture("BottleUI"));
+		mItemUI->SetTexture("BottleUI");
 		mItemUI->SetTextureRect(Vec2(0, 0), Vec2(256, 256));
 		mItemUI->SetSize(256);
 	}
@@ -36,7 +37,7 @@ void ItemUI::SettingsByType()
 	// MPボトル
 	case ItemType::MPBottle:
 	{
-		mItemUI->SetTexture(TextureManager::GetTexture("BottleUI"));
+		mItemUI->SetTexture("BottleUI");
 		mItemUI->SetTextureRect(Vec2(256, 0), Vec2(512, 256));
 		mItemUI->SetSize(256);
 	}
@@ -45,7 +46,7 @@ void ItemUI::SettingsByType()
 	// MPボトル
 	case ItemType::EmptyBottle:
 	{
-		mItemUI->SetTexture(TextureManager::GetTexture("BottleUI"));
+		mItemUI->SetTexture("BottleUI");
 		mItemUI->SetTextureRect(Vec2(512, 0), Vec2(768, 256));
 		mItemUI->SetSize(256);
 	}
@@ -54,7 +55,7 @@ void ItemUI::SettingsByType()
 	// MPボトル
 	case ItemType::Club:
 	{
-		mItemUI->SetTexture(TextureManager::GetTexture("ClubUI"));
+		mItemUI->SetTexture("ClubUI");
 		mItemUI->SetTextureRect(Vec2(0, 0), Vec2(256, 256));
 		mItemUI->SetSize(256);
 	}

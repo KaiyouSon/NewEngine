@@ -9,7 +9,7 @@ ItemBoxUIGroup::ItemBoxUIGroup() :
 		mItemUIs[i] = std::make_unique<ItemUI>();
 	}
 
-	mNumber->SetTexture(TextureManager::GetTexture("NumberSheets"));
+	mNumber->SetTexture("NumberSheets");
 	mNumber->SetSize(96);
 }
 
@@ -85,7 +85,8 @@ void ItemBoxUIGroup::Update()
 		mItemBoxUIs[i]->Update(&mParent);
 		mItemUIs[i]->Update(&mParent);
 	}
-	mNumber->Update(&mParent);
+	mNumber->SetParent(&mParent);
+	mNumber->Update();
 }
 
 void ItemBoxUIGroup::Draw()

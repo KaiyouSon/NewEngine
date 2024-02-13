@@ -10,6 +10,7 @@ protected:
 	std::unique_ptr<BufferResource> mBufferResource;
 	Vec3 mInitalSize;
 	TextureType mType;
+	std::string mTag;
 
 public:
 	ITexture();
@@ -20,4 +21,5 @@ public:
 	BufferResource* GetBufferResource();
 	Vec3 GetInitalSize();
 	TextureType GetTextureType();
+	std::string GetTag();
 };

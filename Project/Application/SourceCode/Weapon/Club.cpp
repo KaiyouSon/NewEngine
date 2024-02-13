@@ -25,7 +25,8 @@ void Club::Init()
 
 void Club::Update(Transform* parent)
 {
-	weapon->Update(parent);
+	weapon->SetParent(parent);
+	weapon->Update();
 
 	collider.startPos;
 }
@@ -50,7 +51,7 @@ void Club::ColliderUpdate()
 	}
 	else
 	{
-		Vec3 upVec = weapon->GetTransform().GetWorldMat().GetYAxis().Norm();
+		Vec3 upVec = weapon->GetTransform()->GetWorldMat().GetYAxis().Norm();
 
 		collider.startPos = weapon->GetWorldPos() - upVec * 1.5f;
 		collider.endPos = weapon->GetWorldPos() + upVec * 6.5f;

@@ -350,43 +350,43 @@ void RenderBase::ShaderCompilerInit()
 	ShaderCompilerSetting setting;
 
 	// Object3D用
-	ShaderManager::CompileAllType(EngineShaderDirectory2 + "Object3D", "Object3D");
+	ShaderManager::CompileAllType(EngineShaderDirectory + "Object3D", "Object3D");
 
 	// Object3D(影なし)用
-	ShaderManager::CompileAllType(EngineShaderDirectory2 + "Object3DSMOff", "Object3DSMOff");
+	ShaderManager::CompileAllType(EngineShaderDirectory + "Object3DSMOff", "Object3DSMOff");
 
 	// Fbxモデル用
-	ShaderManager::CompileAllType(EngineShaderDirectory2 + "FbxModel", "FbxModel");
+	ShaderManager::CompileAllType(EngineShaderDirectory + "FbxModel", "FbxModel");
 
 	// スプライト用
-	ShaderManager::CompileAllType(EngineShaderDirectory2 + "Sprite", "Sprite");
+	ShaderManager::CompileAllType(EngineShaderDirectory + "Sprite", "Sprite");
 
 	// 円ゲージスプライト用
-	ShaderManager::CompileAllType(EngineShaderDirectory2 + "CircleGaugeSprite", "CircleGaugeSprite");
+	ShaderManager::CompileAllType(EngineShaderDirectory + "CircleGaugeSprite", "CircleGaugeSprite");
 
 	// ポストエフェクト用（デフォルトシェーダー）
-	ShaderManager::CompileAllType(EngineShaderDirectory2 + "PostEffect", "PostEffect");
+	ShaderManager::CompileAllType(EngineShaderDirectory + "PostEffect", "PostEffect");
 
 	// 線用
-	ShaderManager::CompileAllType(EngineShaderDirectory2 + "Line", "Line");
+	ShaderManager::CompileAllType(EngineShaderDirectory + "Line", "Line");
 
 	// エミッター用
-	ShaderManager::CompileAllType(EngineShaderDirectory2 + "Emitter", "Emitter");
+	ShaderManager::CompileAllType(EngineShaderDirectory + "Emitter", "Emitter");
 
 	// GPUエミッター用
-	ShaderManager::CompileAllType(EngineShaderDirectory2 + "GPUEmitter", "GPUEmitter");
+	ShaderManager::CompileAllType(EngineShaderDirectory + "GPUEmitter", "GPUEmitter");
 
 	// ParticleMesh用
-	ShaderManager::CompileAllType(EngineShaderDirectory2 + "ParticleMesh", "ParticleMesh");
+	ShaderManager::CompileAllType(EngineShaderDirectory + "ParticleMesh", "ParticleMesh");
 
 	// ParticleObject用
-	ShaderManager::CompileAllType(EngineShaderDirectory2 + "ParticleObject", "ParticleObject");
+	ShaderManager::CompileAllType(EngineShaderDirectory + "ParticleObject", "ParticleObject");
 
 	// ColliderObject用
-	ShaderManager::CompileAllType(EngineShaderDirectory2 + "ColliderObject", "ColliderObject");
+	ShaderManager::CompileAllType(EngineShaderDirectory + "ColliderObject", "ColliderObject");
 
 	// ボリューメトリックフォグ用
-	ShaderManager::CompileAllType(EngineShaderDirectory2 + "VolumetricFog", "VolumetricFog");
+	ShaderManager::CompileAllType(EngineShaderDirectory + "VolumetricFog", "VolumetricFog");
 }
 void RenderBase::GraphicsPipelineInit()
 {

@@ -198,6 +198,8 @@ void GameScene::Update()
 		if (DebugManager::GetInstance()->GetisActive() == false)
 		{
 			//CameraManager::GetInstance()->Update();
+			Camera::DebugCameraUpdate();
+
 		}
 		else
 		{
@@ -230,49 +232,64 @@ void GameScene::DrawPass()
 {
 	ShadowMap::GetInstance()->DrawPass();
 
-	// ラジアルブラー
-	mPostEffectManager->DrawRadialBlurPass(
-		[this]()
-		{
-			// プレイヤーの深度のみ書き込む
-			mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
-			mPlayer->DrawModel();
-			mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
+	//// ラジアルブラー
+	//mPostEffectManager->DrawRadialBlurPass(
+	//	[this]()
+	//	{
+	//		// プレイヤーの深度のみ書き込む
+	//		mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+	//		mPlayer->DrawModel();
+	//		mPlayer->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 
-			// プレイヤーの深度のみ書き込む
-			mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
-			mBoss->DrawModel();
-			mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
+	//		// プレイヤーの深度のみ書き込む
+	//		mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DWriteNone"));
+	//		mBoss->DrawModel();
+	//		mBoss->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3D"));
 
-			// フィールド
-			mField->DrawModel(true);
-			mField->DrawSun();
-		},
-		[this]()
-		{
-			DrawCurrentSceneObject();
-		});
+	//		// フィールド
+	//		mField->DrawModel(true);
+	//		mField->DrawSun();
+	//	},
+	//	[this]()
+	//	{
+	//		DrawCurrentSceneObject();
+	//	});
 
-	// ブルーム
-	mPostEffectManager->DrawBloomPass(
-		[this]()
-		{
-			DrawDepthToEffectBloom();
-		},
-		[this]()
-		{
-			mPostEffectManager->DrawPostEffect(PostEffectType::RadialBlur);
-		});
+	//// ブルーム
+	//mPostEffectManager->DrawBloomPass(
+	//	[this]()
+	//	{
+	//		DrawDepthToEffectBloom();
+	//	},
+	//	[this]()
+	//	{
+	//		mPostEffectManager->DrawPostEffect(PostEffectType::RadialBlur);
+	//	});
 
-	// トーンマッピング
-	mPostEffectManager->DrawToneMappingPass(
-		[this]()
-		{
-			mPostEffectManager->DrawPostEffect(PostEffectType::Bloom);
-		});
+	//// トーンマッピング
+	//mPostEffectManager->DrawToneMappingPass(
+	//	[this]()
+	//	{
+	//		mPostEffectManager->DrawPostEffect(PostEffectType::Bloom);
+	//	});
 
-	// レンズフレア
-	//mPostEffectManager->DrawLensFlarePass(
+	//// レンズフレア
+	////mPostEffectManager->DrawLensFlarePass(
+	////	[this]()
+	////	{
+	////		mPostEffectManager->DrawPostEffect(PostEffectType::ToneMapping);
+	////	},
+	////	[this]()
+	////	{
+	////		mField->DrawModel();
+	////		mField->DrawSun();
+
+	////		mPlayer->DrawModel();
+	////		mBoss->DrawModel();
+	////	});
+
+	//// ビネット
+	//mPostEffectManager->DrawVignettePass(
 	//	[this]()
 	//	{
 	//		mPostEffectManager->DrawPostEffect(PostEffectType::ToneMapping);
@@ -285,28 +302,15 @@ void GameScene::DrawPass()
 	//		mPlayer->DrawModel();
 	//		mBoss->DrawModel();
 	//	});
-
-	// ビネット
-	mPostEffectManager->DrawVignettePass(
-		[this]()
-		{
-			mPostEffectManager->DrawPostEffect(PostEffectType::ToneMapping);
-		},
-		[this]()
-		{
-			mField->DrawModel();
-			mField->DrawSun();
-
-			mPlayer->DrawModel();
-			mBoss->DrawModel();
-		});
 }
 void GameScene::Draw()
 {
-	mPostEffectManager->DrawPostEffect(PostEffectType::Vignette);
+	DrawCurrentSceneObject();
+
+	//mPostEffectManager->DrawPostEffect(PostEffectType::Vignette);
 	//mPostEffectManager->DrawPostEffect(PostEffectType::LensFlare);
 
-	//mUiManager->DrawFrontSprite();
+	mUiManager->DrawFrontSprite();
 	mMenuManager->DrawFrontSprite();
 	ShadowMap::GetInstance()->DrawPostEffect();
 }

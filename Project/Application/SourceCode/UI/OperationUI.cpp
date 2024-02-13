@@ -13,7 +13,7 @@ void OperationUI::Init()
 	for (uint32_t i = 0; i < mPair.size(); i++)
 	{
 		std::string tag = "Operation" + std::to_string(i + 1) + "Text";
-		mPair[i]->mText->SetTexture(TextureManager::GetTexture(tag));
+		mPair[i]->mText->SetTexture(tag);
 
 		float baseY = 348.f;
 		float offsetY = (float)i * 64.f;
@@ -44,7 +44,7 @@ OperationUI::Pair::Pair() :
 	mBack(std::make_unique<Sprite>()),
 	mText(std::make_unique<Sprite>())
 {
-	mBack->SetTexture(TextureManager::GetTexture("OperationBack"));
+	mBack->SetTexture("OperationBack");
 
 	mBack->SetAnchorPoint(Vec2(0.0f, 0.5f));
 	mText->SetAnchorPoint(Vec2(0.0f, 0.5f));

@@ -11,7 +11,7 @@ GuiWraper::GuiWraper() :
 	isOpenGuiSetting(true),
 	windowBgColor(Color::black + 5),
 	menuBarBgColor(Color::black + 10),
-	titleBgActiveColor(Color::black),
+	titleBgActiveColor(Color::black + 5),
 	titleBgCollapsedColor(Color::black + 5)
 {
 }
@@ -20,6 +20,11 @@ ImVec4 GuiWraper::ToImVec4(const Color color)
 {
 	Color to01 = color / 255.f;
 	return { to01.r,to01.g,to01.b,to01.a };
+}
+
+Vec2 GuiWraper::ToVec2(const ImVec2 v)
+{
+	return Vec2(v.x, v.y);
 }
 
 void GuiWraper::Init()
@@ -51,10 +56,17 @@ void GuiWraper::PreDraw()
 
 	// ウィンドウの背景色を変更する
 	ImGuiStyle& style = ImGui::GetStyle();
-	style.Colors[ImGuiCol_WindowBg] = GetInstance()->ToImVec4(instance->windowBgColor);
-	style.Colors[ImGuiCol_MenuBarBg] = GetInstance()->ToImVec4(instance->menuBarBgColor);
-	style.Colors[ImGuiCol_TitleBgActive] = GetInstance()->ToImVec4(instance->titleBgActiveColor);
-	style.Colors[ImGuiCol_TitleBgCollapsed] = GetInstance()->ToImVec4(instance->titleBgCollapsedColor);
+	style.Colors[ImGuiCol_WindowBg] = ToImVec4(instance->windowBgColor);
+	style.Colors[ImGuiCol_MenuBarBg] = ToImVec4(instance->menuBarBgColor);
+	style.Colors[ImGuiCol_TitleBgActive] = ToImVec4(instance->titleBgActiveColor);
+	style.Colors[ImGuiCol_TitleBgCollapsed] = ToImVec4(instance->titleBgCollapsedColor);
+
+	// CollapsingHeaderの色を変更
+	style.Colors[ImGuiCol_Header] = ToImVec4(instance->titleBgCollapsedColor + 10);  // ヘッダーの背景色
+	style.Colors[ImGuiCol_HeaderHovered] = ToImVec4(instance->windowBgColor + 10);  // ヘッダーのホバー時の背景色
+
+	// popの色
+	style.Colors[ImGuiCol_PopupBg] = style.Colors[ImGuiCol_WindowBg];
 
 	ImGui::NewFrame();
 
@@ -108,14 +120,13 @@ bool GuiWraper::BeginWindow(const char* name, const Vec2& size, bool* isOpen)
 
 void GuiWraper::BeginFullWindow(const char* name)
 {
-	// 繧ｦ繧｣繝ｳ繝峨え縺ｮ險ｭ螳・
 	const ImGuiViewport* viewport = ImGui::GetMainViewport();
 	ImGui::SetNextWindowPos(viewport->WorkPos);
 	ImGui::SetNextWindowSize(viewport->WorkSize);
 	ImGui::SetNextWindowViewport(viewport->ID);
 
 	ImGuiWindowFlags windowFlags =
-		ImGuiWindowFlags_NoTitleBar |                // タイトルバーを非表示にする
+		ImGuiWindowFlags_NoTitleBar |               // タイトルバーを非表示にする
 		ImGuiWindowFlags_NoResize |                 // ウィンドウのリサイズを禁止する
 		ImGuiWindowFlags_NoMove |                   // ウィンドウの移動を禁止する
 		ImGuiWindowFlags_MenuBar |                  // メニューバーを表示する
@@ -180,9 +191,14 @@ void GuiWraper::EndTreeNode()
 	ImGui::TreePop();
 }
 
-bool GuiWraper::DrawCollapsingHeader(const char* name)
+bool GuiWraper::DrawCollapsingHeader(const char* name, const bool isOpenNode)
 {
-	return ImGui::CollapsingHeader(name);
+	uint32_t nodeFlag =
+		(isOpenNode == false) ?
+		ImGuiTreeNodeFlags_None :
+		ImGuiTreeNodeFlags_DefaultOpen;
+
+	return ImGui::CollapsingHeader(name, nodeFlag);
 }
 
 bool GuiWraper::BeginMenuBar()
@@ -230,14 +246,17 @@ void GuiWraper::DrawTab()
 	ImGui::SameLine();
 }
 
-void GuiWraper::DrawColumns(uint32_t space, const bool& isBorder)
+void GuiWraper::DrawColumns(const uint32_t column, const bool& isBorder)
 {
-	ImGui::Columns(space, 0, isBorder);
+	ImGui::Columns(column, 0, isBorder);
 }
 
-void GuiWraper::NextColumn()
+void GuiWraper::NextColumn(const uint32_t column)
 {
-	ImGui::NextColumn();
+	for (uint32_t i = 0; i < column; i++)
+	{
+		ImGui::NextColumn();
+	}
 }
 
 void GuiWraper::DrawLine()
@@ -266,8 +285,13 @@ bool GuiWraper::DrawRadioButton(const char* label, uint32_t* current, const uint
 	return flag;
 }
 
-void GuiWraper::DrawSlider1(const char* label, float& v, const float& moveSpeed)
+void GuiWraper::DrawSlider1(const char* label, float& v, const float& moveSpeed, const float guiWidth)
 {
+	if (guiWidth > 0)
+	{
+		ImGui::SetNextItemWidth(guiWidth);
+	}
+
 	ImGui::DragFloat(label, &v, moveSpeed);
 }
 
@@ -305,8 +329,13 @@ bool GuiWraper::DrawInputInt(const char* label, uint32_t& v)
 	return result;
 }
 
-bool GuiWraper::DrawInputText(const char* label, std::string& str)
+bool GuiWraper::DrawInputText(const char* label, std::string& str, const float guiWidth)
 {
+	if (guiWidth > 0)
+	{
+		ImGui::SetNextItemWidth(guiWidth);
+	}
+
 	char* cstr = const_cast<char*>(str.c_str());
 	bool result = ImGui::InputText(label, cstr, 30);
 	str = cstr;

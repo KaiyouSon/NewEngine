@@ -24,6 +24,7 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 
 	// モデルデータを生成
 	std::unique_ptr<Model> model = std::make_unique<ObjModel>();
+	model->tag = tag;
 	model->name = fileName;
 
 	std::string objfile = fileName + ".obj";
@@ -185,13 +186,14 @@ Model* ModelManager::LoadObjModel(const std::string fileName, const std::string 
 }
 
 // fbxファイルの読み込み
-Model* ModelManager::LoadFbxModel(const std::string fileName, const std::string modelTag)
+Model* ModelManager::LoadFbxModel(const std::string fileName, const std::string tag)
 {
 	// 排他制御
 	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
 
 	// Fbxモデルの作成
 	std::unique_ptr<FbxModel> model = std::make_unique<FbxModel>();
+	model->tag = tag;
 	model->name = fileName;
 
 	// Fbxファイルへのパス
@@ -207,7 +209,7 @@ Model* ModelManager::LoadFbxModel(const std::string fileName, const std::string 
 
 	if (model->scene == nullptr)
 	{
-		std::string log = "[FbxModel Load] FileName : " + fileName + ", Tag : " + modelTag + " の読み込みに失敗しました";
+		std::string log = "[FbxModel Load] FileName : " + fileName + ", Tag : " + tag + " の読み込みに失敗しました";
 		OutputDebugLog(log.c_str());
 
 		assert(0 && "Fbxファイルの読み込みに失敗しました");
@@ -222,12 +224,12 @@ Model* ModelManager::LoadFbxModel(const std::string fileName, const std::string 
 	model->mesh.indexBuffer.Create(model->mesh.indices);
 
 	// モデルをマップに追加
-	GetInstance()->mModelMap.insert(std::make_pair(modelTag, std::move(model)));
+	GetInstance()->mModelMap.insert(std::make_pair(tag, std::move(model)));
 
-	std::string log = "[FbxModel Load] FileName : " + fileName + ", Tag : " + modelTag + " が正常に読み込まれました";
+	std::string log = "[FbxModel Load] FileName : " + fileName + ", Tag : " + tag + " が正常に読み込まれました";
 	OutputDebugLog(log.c_str());
 
-	return GetInstance()->mModelMap[modelTag].get();
+	return GetInstance()->mModelMap[tag].get();
 }
 
 // .mtlファイルの読み込み
@@ -359,7 +361,7 @@ Model* ModelManager::GetModel(const std::string tag)
 	{
 		std::string log;
 		log = "[Model Error] Tag : " + tag + ", is nullptr";
-		return nullptr;
+		return GetInstance()->mModelMap["Sphere"].get();
 	}
 	else
 	{

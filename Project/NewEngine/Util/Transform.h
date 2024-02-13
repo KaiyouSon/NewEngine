@@ -1,9 +1,10 @@
 #pragma once
 #include "Mat4.h"
 #include "Billboard.h"
+#include "Component.h"
 
 // トランスフォームクラス
-class Transform
+class Transform : public Component
 {
 private:
 	Mat4 mScaleMat;  // スケール行列
@@ -17,11 +18,18 @@ public:
 	Vec3 pos;     // 位置
 	Vec3 scale;   // スケール
 	Vec3 rot;     // 回転
+	Transform* parent;
 
 public:
 	Transform();
+	Transform(GameObject* gameObj);
 	Transform(const Vec3 pos, const Vec3 scale, const Vec3 rot);
-	void Update();
+	void Update() override;
+
+public:
+	nlohmann::json SaveToJson() override;
+	void LoadToJson(const nlohmann::json& componentField) override;
+	void ShowDataToInspector() override;
 
 public: // 行列取得
 	Mat4 GetTransMat();

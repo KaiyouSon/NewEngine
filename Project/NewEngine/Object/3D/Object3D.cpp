@@ -12,15 +12,16 @@ bool Object3D::isAllLighting = false;
 float Object3D::sShadowBias = 0.0005f;
 
 Object3D::Object3D() :
-	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0), offset(0, 0), tiling(1, 1),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DSMOff")),
-	mTexture(TextureManager::GetTexture("White")), mModel(nullptr), mParent(nullptr),
+	mTexture(TextureManager::GetTexture("White")), //mModel(nullptr),
 	mDissolveTex(TextureManager::GetTexture("DissolveTexture")),
 	mDepthTex(TextureManager::GetRenderTexture("ShadowMap")->GetDepthTexture()),
 	isLighting(false), mIsWriteShadow(false), mIsWriteDepth(false),
 	mMaterial(std::make_unique<Material>()), mCamera(&Camera::current),
 	isUseDissolve(false), dissolve(0.f), colorPower(1), dissolveColor(Color::red)
 {
+	InitToObject3D();
+
 	// マテリアルの初期化
 	MaterialInit();
 
@@ -30,9 +31,37 @@ Object3D::Object3D() :
 	}
 
 	mWhiteTex = TextureManager::GetTexture("White");
+
+	mModelData = mComponentManager->GetComponent<ModelData>();
 }
 
-void Object3D::Update(Transform* parent)
+Object3D::Object3D(const std::string& name) :
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DSMOff")),
+	mTexture(TextureManager::GetTexture("White")), //mModel(nullptr),
+	mDissolveTex(TextureManager::GetTexture("DissolveTexture")),
+	mDepthTex(TextureManager::GetRenderTexture("ShadowMap")->GetDepthTexture()),
+	isLighting(false), mIsWriteShadow(false), mIsWriteDepth(false),
+	mMaterial(std::make_unique<Material>()), mCamera(&Camera::current),
+	isUseDissolve(false), dissolve(0.f), colorPower(1), dissolveColor(Color::red)
+{
+	this->name = name;
+
+	InitToObject3D();
+
+	// マテリアルの初期化
+	MaterialInit();
+
+	if (isAllLighting == true)
+	{
+		isLighting = true;
+	}
+
+	mWhiteTex = TextureManager::GetTexture("White");
+
+	mModelData = mComponentManager->GetComponent<ModelData>();
+}
+
+void Object3D::Update()
 {
 	// カメラが設定してない場合
 	if (mCamera == nullptr || mCamera == &Camera::current)
@@ -40,25 +69,7 @@ void Object3D::Update(Transform* parent)
 		mCamera = &Camera::current;
 	}
 
-	mTransform.pos = pos;
-	mTransform.scale = scale;
-	mTransform.rot = rot;
-	mTransform.Update();
-
-	if (parent != nullptr)
-	{
-		mParent = parent;
-
-		Mat4 mat = mTransform.GetWorldMat();
-		mat *= mParent->GetWorldMat();
-		mTransform.SetWorldMat(mat);
-	}
-	else if (mParent != nullptr)
-	{
-		Mat4 mat = mTransform.GetWorldMat();
-		mat *= mParent->GetWorldMat();
-		mTransform.SetWorldMat(mat);
-	}
+	BaseUpdate();
 
 	if (mIsWriteDepth == true)
 	{
@@ -68,7 +79,16 @@ void Object3D::Update(Transform* parent)
 	// マテリアルの転送
 	MaterialTransfer();
 }
-void Object3D::Draw(const std::string& layerTag, const BlendMode blendMode)
+void Object3D::AppedToRenderer()
+{
+	Renderer::GetInstance()->Register("Object3D",
+		[this]()
+		{
+			DrawCommands();
+		});
+}
+
+void Object3D::Draw(const std::string& _layerTag, const BlendMode _blendMode)
 {
 	//float radius = scale.Max();
 	//if (Camera::current.IsVisible(pos, radius) == false)
@@ -76,8 +96,8 @@ void Object3D::Draw(const std::string& layerTag, const BlendMode blendMode)
 	//	return;
 	//}
 
-	mBlendMode = blendMode;
-	layerTag;
+	blendMode = _blendMode;
+	_layerTag;
 
 	//Renderer::GetInstance()->Register(layerTag,
 	//	[this]()
@@ -133,13 +153,13 @@ void Object3D::MaterialTransfer()
 	{
 		mCamera->GetViewLookToMat() * mCamera->GetPerspectiveProjectionMat(),
 		lightViewCamera.GetViewLookToMat() * lightViewCamera.GetOrthoGrphicProjectionMat(),
-		mTransform.GetWorldMat(),
+		mTransform->GetWorldMat(),
 		mCamera->pos,
 		lightViewCamera.pos
 	};
 	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), transform3DShadowData);
 
-	if (mModel == nullptr)
+	if (!mModelData->GetModel())
 	{
 		return;
 	}
@@ -151,8 +171,8 @@ void Object3D::MaterialTransfer()
 		materialColorData =
 		{
 			Color::one - 0.4f,
-			mModel->material.diffuse,
-			mModel->material.specular,
+			mModelData->GetModel()->material.diffuse,
+			mModelData->GetModel()->material.specular,
 		};
 	}
 	else
@@ -166,9 +186,9 @@ void Object3D::MaterialTransfer()
 	TransferDataToConstantBuffer(mMaterial->constantBuffers[2].get(), colorData);
 
 	// スキン情報
-	if (mModel->format == ModelFormat::Fbx)
+	if (mModelData->GetModel()->format == ModelFormat::Fbx)
 	{
-		auto fbxModel = static_cast<FbxModel*>(mModel);
+		auto fbxModel = static_cast<FbxModel*>(mModelData->GetModel());
 		fbxModel->PlayAnimetion();
 
 		CSkin skinData{};
@@ -206,16 +226,16 @@ void Object3D::MaterialDrawCommands()
 // --- 描画コマンド ----------------------------------------------------- //
 void Object3D::DrawCommands()
 {
-	if (mTexture == nullptr || mModel == nullptr) return;
+	if (mTextureData->GetCurrentTexture() == nullptr || mModelData->GetModel() == nullptr) return;
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
 	// GraphicsPipeline描画コマンド
-	mGraphicsPipeline->DrawCommand(mBlendMode);
+	mGraphicsPipeline->DrawCommand(blendMode);
 
 	// VBVとIBVの設定コマンド
-	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mModel->mesh.vertexBuffer.GetvbViewAddress());
-	renderBase->GetCommandList()->IASetIndexBuffer(mModel->mesh.indexBuffer.GetibViewAddress());
+	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mModelData->GetModel()->mesh.vertexBuffer.GetvbViewAddress());
+	renderBase->GetCommandList()->IASetIndexBuffer(mModelData->GetModel()->mesh.indexBuffer.GetibViewAddress());
 
 	MaterialDrawCommands();
 
@@ -225,7 +245,7 @@ void Object3D::DrawCommands()
 
 	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTexture->GetBufferResource()->srvHandle.gpu);
+	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTextureData->GetCurrentTexture()->GetBufferResource()->srvHandle.gpu);
 
 	if (isUseDissolve == true)
 	{
@@ -244,7 +264,7 @@ void Object3D::DrawCommands()
 			(uint32_t)startIndex + 2, mDepthTex->GetBufferResource()->srvHandle.gpu);
 	}
 
-	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModel->mesh.indices.size(), 1, 0, 0, 0);
+	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModelData->GetModel()->mesh.indices.size(), 1, 0, 0, 0);
 }
 
 // --- セッター --------------------------------------------------------- //
@@ -252,11 +272,11 @@ void Object3D::DrawCommands()
 // モデル
 void Object3D::SetModel(Model* model)
 {
-	mModel = model;
-	mTexture = mModel->texture;
+	mModelData->SetModel(model->tag);
+	mTextureData->SetCurrentTexture(mModelData->GetModel()->texture->GetTag());
 
 	// パイプライン変更
-	if (mModel->format == ModelFormat::Obj)
+	if (mModelData->GetModel()->format == ModelFormat::Obj)
 	{
 		if (mIsWriteShadow == true)
 		{
@@ -267,14 +287,49 @@ void Object3D::SetModel(Model* model)
 			mGraphicsPipeline = PipelineManager::GetGraphicsPipeline("Object3DSMOff");
 		}
 	}
-	if (mModel->format == ModelFormat::Fbx)
+	if (mModelData->GetModel()->format == ModelFormat::Fbx)
+	{
+		mGraphicsPipeline = PipelineManager::GetGraphicsPipeline("FbxModel");
+	}
+}
+
+void Object3D::SetModel(const std::string& tag)
+{
+	mModelData->SetModel(tag);
+	mTextureData->SetCurrentTexture(mModelData->GetModel()->texture->GetTag());
+
+	// パイプライン変更
+	if (mModelData->GetModel()->format == ModelFormat::Obj)
+	{
+		if (mIsWriteShadow == true)
+		{
+			mGraphicsPipeline = PipelineManager::GetGraphicsPipeline("Object3D");
+		}
+		else
+		{
+			mGraphicsPipeline = PipelineManager::GetGraphicsPipeline("Object3DSMOff");
+		}
+	}
+	if (mModelData->GetModel()->format == ModelFormat::Fbx)
 	{
 		mGraphicsPipeline = PipelineManager::GetGraphicsPipeline("FbxModel");
 	}
 }
 
 // テクスチャー
-void Object3D::SetTexture(Texture* texture) { mTexture = texture; }
+void Object3D::SetTexture(Texture* texture) { mTextureData->SetCurrentTexture(texture->GetTag()); }
+
+// テクスチャー
+void Object3D::SetTexture(const std::string& textureTag, [[maybe_unused]] const bool isChangeSize)
+{
+	ITexture* tex = TextureManager::GetTexture(textureTag);
+	if (!tex)
+	{
+		return;
+	}
+
+	mTextureData->SetCurrentTexture(textureTag);
+}
 
 // グラフィックスパイプライン
 void Object3D::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline) { mGraphicsPipeline = graphicsPipeline; }
@@ -283,9 +338,9 @@ void Object3D::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline) { mGraphi
 void Object3D::SetAnimation(const uint32_t animationIndex, const uint32_t maxFrame, const bool isPlay)
 {
 	// スキン情報
-	if (mModel->format == ModelFormat::Fbx)
+	if (mModelData->GetModel()->format == ModelFormat::Fbx)
 	{
-		auto fbxModel = static_cast<FbxModel*>(mModel);
+		auto fbxModel = static_cast<FbxModel*>(mModelData->GetModel());
 
 		fbxModel->animation.index = animationIndex;
 		fbxModel->animation.timer.SetLimitTimer(maxFrame);
@@ -311,15 +366,9 @@ void Object3D::SetisShadow(const bool isWriteShadow, const bool isWriteDepth)
 	}
 }
 
-// 親
-void Object3D::SetParent(Transform* parent)
-{
-	mParent = parent;
-}
-
 void Object3D::SetBillboardType(const BillboardType type)
 {
-	mTransform.SetBillboardType(type);
+	mTransform->SetBillboardType(type);
 }
 
 // --- ゲッター -------------------------------------------------------- //
@@ -327,28 +376,16 @@ void Object3D::SetBillboardType(const BillboardType type)
 // ワールド座標
 Vec3 Object3D::GetWorldPos()
 {
-	Vec3 worldPos = Vec3MulMat4(pos, mTransform.GetWorldMat(), true);
+	Vec3 worldPos = Vec3MulMat4(pos, mTransform->GetWorldMat(), true);
 	return worldPos;
 }
 
 // ワールドスケール
 Vec3 Object3D::GetWorldScale()
 {
-	Vec3 worldScale = mTransform.GetWorldMat().GetScale();
+	Vec3 worldScale = mTransform->GetWorldMat().GetScale();
 	return worldScale;
 }
 
-// トランスフォーム
-Transform Object3D::GetTransform()
-{
-	return mTransform;
-}
-
-// 親
-Transform* Object3D::GetParent()
-{
-	return mParent;
-}
-
 // モデル
-Model* Object3D::GetModel() { return mModel; }
+Model* Object3D::GetModel() { return mModelData->GetModel(); }

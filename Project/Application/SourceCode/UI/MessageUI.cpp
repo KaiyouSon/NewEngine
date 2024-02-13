@@ -8,12 +8,12 @@ MessageUI::MessageUI() :
 	mMessageSignUI(std::make_unique<Sprite>()),
 	mMessage(std::make_unique<Sprite>())
 {
-	mBack->SetTexture(TextureManager::GetTexture("MessageBack"));
-	mButton->SetTexture(TextureManager::GetTexture("Buttons"));
-	mColon->SetTexture(TextureManager::GetTexture("ColonStr"));
-	mText->SetTexture(TextureManager::GetTexture("ExitStr"));
-	mMessageSignUI->SetTexture(TextureManager::GetTexture("MessageSignUI"));
-	mMessage->SetTexture(TextureManager::GetTexture("TutorialStr1"));
+	mBack->SetTexture("MessageBack");
+	mButton->SetTexture("Buttons");
+	mColon->SetTexture("ColonStr");
+	mText->SetTexture("ExitStr");
+	mMessageSignUI->SetTexture("MessageSignUI");
+	mMessage->SetTexture("TutorialStr1");
 
 	mMessage->SetAnchorPoint(Vec2(0.0f, 0.5f));
 
@@ -54,12 +54,19 @@ void MessageUI::Update()
 	mColon->color.a = mAlpha;
 	mText->color.a = mAlpha;
 
-	mBack->Update(&mParent);
-	mButton->Update(&mParent);
-	mColon->Update(&mParent);
-	mText->Update(&mParent);
-	mMessageSignUI->Update(&mParent);
-	mMessage->Update(&mParent);
+	mBack->SetParent(&mParent);
+	mButton->SetParent(&mParent);
+	mColon->SetParent(&mParent);
+	mText->SetParent(&mParent);
+	mMessageSignUI->SetParent(&mParent);
+	mMessage->SetParent(&mParent);
+
+	mBack->Update();
+	mButton->Update();
+	mColon->Update();
+	mText->Update();
+	mMessageSignUI->Update();
+	mMessage->Update();
 }
 
 void MessageUI::Draw()
@@ -79,5 +86,5 @@ void MessageUI::Draw()
 
 void MessageUI::SetTexture(Texture* texture)
 {
-	mMessage->SetTexture(texture);
+	mMessage->SetTexture(texture->GetTag());
 }

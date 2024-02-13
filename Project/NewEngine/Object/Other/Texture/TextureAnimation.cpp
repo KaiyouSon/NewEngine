@@ -17,17 +17,17 @@ void TextureAnimation::Play(const int& maxTimer, Sprite* sprite)
 		return;
 	}
 
-	if (mAnimetionTimer == true)
-	{
-		mLeftTopPos.x += mWidth;
-		mRightDownPos.x += mWidth;
-		if (mRightDownPos.x > sprite->mTexture->GetBufferResource()->buffer->GetDesc().Width)
-		{
-			mLeftTopPos = mInitLeftTopPos;
-			mRightDownPos = mInitRightDownPos;
-		}
-		mAnimetionTimer.Reset();
-	}
+	//if (mAnimetionTimer == true)
+	//{
+	//	mLeftTopPos.x += mWidth;
+	//	mRightDownPos.x += mWidth;
+	//	if (mRightDownPos.x > sprite->mTexture->GetBufferResource()->buffer->GetDesc().Width)
+	//	{
+	//		mLeftTopPos = mInitLeftTopPos;
+	//		mRightDownPos = mInitRightDownPos;
+	//	}
+	//	mAnimetionTimer.Reset();
+	//}
 
 	sprite->SetSize(mInitRightDownPos);
 	sprite->SetTextureRect(mLeftTopPos, mRightDownPos);

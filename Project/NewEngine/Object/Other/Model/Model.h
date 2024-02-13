@@ -9,6 +9,7 @@
 struct Model
 {
 	std::string name;
+	std::string tag;
 	Mesh mesh;
 	MaterialColor material;
 	ModelFormat format;

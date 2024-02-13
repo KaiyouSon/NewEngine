@@ -1,5 +1,26 @@
 #pragma once
 
+// オブジェクトタイプ
+enum class GameObjectType
+{
+	Object3D,
+	Sprite
+};
+
+// コンポネントの種類
+enum class ComponentType
+{
+	Unkwone,
+
+	// オブジェクト情報
+	Object3DInfo,
+	SpriteInfo,
+	Transform,
+	TextureData,
+	ModelData,
+	GraphicsPipeline,
+};
+
 // ブレンドモード
 enum class BlendMode
 {

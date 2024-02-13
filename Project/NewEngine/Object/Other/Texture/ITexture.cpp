@@ -19,3 +19,8 @@ TextureType ITexture::GetTextureType()
 {
 	return mType;
 }
+
+std::string ITexture::GetTag()
+{
+	return mTag;
+}

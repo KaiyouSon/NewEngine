@@ -99,16 +99,21 @@ void Grass::Update(Transform* parent)
 	mTransform.pos = pos;
 	mTransform.scale = scale;
 	mTransform.rot = rot;
-	mTransform.Update();
-
 	if (parent != nullptr)
 	{
 		mParent = parent;
-
-		Mat4 mat = mTransform.GetWorldMat();
-		mat *= mParent->GetWorldMat();
-		mTransform.SetWorldMat(mat);
+		mTransform.parent = mParent;
 	}
+	mTransform.Update();
+
+	//if (parent != nullptr)
+	//{
+	//	mParent = parent;
+
+	//	Mat4 mat = mTransform.GetWorldMat();
+	//	mat *= mParent->GetWorldMat();
+	//	mTransform.SetWorldMat(mat);
+	//}
 
 	// マテリアルの初期化
 	MaterialTransfer();

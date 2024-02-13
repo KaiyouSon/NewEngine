@@ -38,7 +38,7 @@ GraphicsPipelineSetting::GraphicsPipelineSetting() :
 	pipelineBlend(PipelineBlend::Alpha),
 	fillMode(FillMode::Solid),
 	cullMode(CullMode::Back),
-	renderTargetBlendMask(WriteAll),
+	renderTargetBlendMask(WriteRGB),
 	topologyType(TopologyType::TriangleList),
 	shaderCompilerTag("empty"),
 	depthStencilDesc(D3D12_DEPTH_STENCIL_DESC()),

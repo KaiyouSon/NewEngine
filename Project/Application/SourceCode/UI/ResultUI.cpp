@@ -7,9 +7,9 @@ ResultUI::ResultUI() :
 	mText(std::make_unique<Sprite>()),
 	mTextAfterImage(std::make_unique<Sprite>())
 {
-	mBack->SetTexture(TextureManager::GetTexture("ResultBack"));
-	mText->SetTexture(TextureManager::GetTexture("YouDiedStr"));
-	mTextAfterImage->SetTexture(TextureManager::GetTexture("EnemyFelledStr"));
+	mBack->SetTexture("ResultBack");
+	mText->SetTexture("YouDiedStr");
+	mTextAfterImage->SetTexture("EnemyFelledStr");
 }
 void ResultUI::Init()
 {
@@ -46,9 +46,13 @@ void ResultUI::Update()
 		}
 	}
 
-	mBack->Update(&mParent);
-	mText->Update(&mParent);
-	mTextAfterImage->Update(&mParent);
+	mBack->SetParent(&mParent);
+	mText->SetParent(&mParent);
+	mTextAfterImage->SetParent(&mParent);
+
+	mBack->Update();
+	mText->Update();
+	mTextAfterImage->Update();
 }
 void ResultUI::Draw()
 {
@@ -199,11 +203,11 @@ void ResultUI::SetResultType(const ResultType resultType)
 	switch (mResultType)
 	{
 	case ResultType::EnemyFelledText:
-		mText->SetTexture(TextureManager::GetTexture("EnemyFelledStr"));
+		mText->SetTexture("EnemyFelledStr");
 		break;
 
 	case ResultType::YouDiedText:
-		mText->SetTexture(TextureManager::GetTexture("YouDiedStr"));
+		mText->SetTexture("YouDiedStr");
 		break;
 
 	default:

@@ -7,14 +7,14 @@ LogoutMenu::LogoutMenu() :
 	mBack(std::make_unique<Sprite>()),
 	mTextLight(std::make_unique<Sprite>())
 {
-	mBack->SetTexture(TextureManager::GetTexture("MenuBack"));
-	mTextLight->SetTexture(TextureManager::GetTexture("MenuTextLight"));
+	mBack->SetTexture("MenuBack");
+	mTextLight->SetTexture("MenuTextLight");
 	mTextLight->scale = 0.75f;
 
 	for (uint32_t i = 0; i < mTextFrames.size(); i++)
 	{
 		mTextFrames[i] = std::make_unique<Sprite>();
-		mTextFrames[i]->SetTexture(TextureManager::GetTexture("MenuTextFrame"));
+		mTextFrames[i]->SetTexture("MenuTextFrame");
 
 		Vec2 pos = GetWindowHalfSize() - Vec2::up * 80;
 		Vec2 offset = Vec2::up * (float)i * 240;
@@ -26,8 +26,8 @@ LogoutMenu::LogoutMenu() :
 		mTexts[i]->scale = 0.35f;
 	}
 
-	mTexts[0]->SetTexture(TextureManager::GetTexture("BackToTitleStr"));
-	mTexts[1]->SetTexture(TextureManager::GetTexture("CloseGameStr"));
+	mTexts[0]->SetTexture("BackToTitleStr");
+	mTexts[1]->SetTexture("CloseGameStr");
 
 	Init();
 }

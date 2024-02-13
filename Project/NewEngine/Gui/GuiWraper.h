@@ -16,8 +16,9 @@ private:
 	Color titleBgActiveColor;
 	Color titleBgCollapsedColor;
 
-private:
-	ImVec4 ToImVec4(const Color color);
+public:
+	static ImVec4 ToImVec4(const Color color);
+	static Vec2 ToVec2(const ImVec2 v);
 
 public:
 	static void Init();
@@ -41,7 +42,7 @@ public:
 	static bool BeginTreeNode(const std::string& tag, const bool isOpenNode = false);
 	static void EndTreeNode();
 
-	static bool DrawCollapsingHeader(const char* name);
+	static bool DrawCollapsingHeader(const char* name, const bool isOpenNode = false);
 
 	// メニューバー関連
 	static bool BeginMenuBar();
@@ -54,8 +55,8 @@ public:
 
 	static void DrawTab();
 	static void DrawLine();
-	static void DrawColumns(uint32_t space = 1, const bool& isBorder = false);
-	static void NextColumn();
+	static void DrawColumns(const uint32_t column = 1, const bool& isBorder = false);
+	static void NextColumn(const uint32_t column = 1);
 
 	// 文字列
 	static void DrawString(const char* fmt, ...);
@@ -69,7 +70,7 @@ public:
 	static bool DrawImageButton(ITexture* texture, const Vec2& size);
 
 	// スライダー描画
-	static void DrawSlider1(const char* label, float& v, const float& moveSpeed = 1.f);
+	static void DrawSlider1(const char* label, float& v, const float& moveSpeed = 1.f, const float guiWidth = 0);
 	static void DrawSlider2(const char* label, Vec2& v, const float& moveSpeed = 1.f);
 	static void DrawSlider3(const char* label, Vec3& v, const float& moveSpeed = 1.f);
 
@@ -79,7 +80,7 @@ public:
 	// 入力関連
 	static bool DrawInputInt(const char* label, int32_t& v);
 	static bool DrawInputInt(const char* label, uint32_t& v);
-	static bool DrawInputText(const char* label, std::string& str);
+	static bool DrawInputText(const char* label, std::string& str, const float guiWidth = 0);
 
 	// 画像関連
 	static void DrawImage(ITexture* texture, const Vec2& size);

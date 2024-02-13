@@ -86,6 +86,7 @@ struct GraphicsPipelineSetting
 		WriteGreen = 2,
 		WriteBlue = 4,
 		WriteAlpha = 8,
+		WriteRGB = (WriteRed | WriteGreen) | WriteBlue,
 		WriteAll = ((WriteRed | WriteGreen) | WriteBlue) | WriteAlpha,
 	};
 

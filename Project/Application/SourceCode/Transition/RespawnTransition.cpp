@@ -7,7 +7,7 @@ RespawnTransition::RespawnTransition()
 	for (uint32_t i = 0; i < mTransition.size(); i++)
 	{
 		mTransition[i] = std::make_unique<Sprite>();
-		mTransition[i]->SetTexture(TextureManager::GetTexture("ScreenNoice"));
+		mTransition[i]->SetTexture("ScreenNoice");
 		mTransition[i]->SetGraphicsPipeline(PipelineManager::GetGraphicsPipeline("RespawnTransition"));
 		mTransition[i]->AddMaterial<ConstantBuffer<CRespawnTransition>>();
 		mTransition[i]->AddMaterial<ConstantBuffer<CUVParameter>>();

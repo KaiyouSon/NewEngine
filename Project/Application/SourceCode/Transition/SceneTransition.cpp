@@ -12,12 +12,12 @@ SceneTransition::SceneTransition() :
 void SceneTransition::Generate()
 {
 	// 初期設定
-	mTransition->SetTexture(TextureManager::GetTexture("White"));
+	mTransition->SetTexture("White");
 	mTransition->pos = GetWindowHalfSize();
 	mTransition->scale = GetWindowSize();
 	mTransition->color = Color::black;
 
-	mLoadSprite->SetTexture(TextureManager::GetTexture("TitleLogo"));
+	mLoadSprite->SetTexture("TitleLogo");
 	mLoadSprite->pos = GetWindowSize() - 64.f;
 	mLoadSprite->scale = 0.1f;
 

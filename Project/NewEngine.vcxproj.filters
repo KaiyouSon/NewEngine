@@ -418,6 +418,18 @@
     <Filter Include="Shader\Engine\Object3DSMOff">
       <UniqueIdentifier>{dc00647b-45c5-41e1-ad5f-0de59394f591}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Uncategorized\Source\Component">
+      <UniqueIdentifier>{e7457436-5950-4ca2-bc98-ab71ce71445d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uncategorized\Header\Component">
+      <UniqueIdentifier>{6fa4e386-7990-4af5-83cc-29b430d5884f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uncategorized\Header\Component\GameObjectInfo">
+      <UniqueIdentifier>{ac33af36-62e6-4201-ae2c-f1fed99633c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uncategorized\Source\Component\GameObjectInfo">
+      <UniqueIdentifier>{4d3b6fa4-89c7-4445-99e9-4751072a7f7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -490,9 +502,6 @@
       <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Util\Random.cpp">
-      <Filter>NewEngine\Source\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Util\Transform.cpp">
       <Filter>NewEngine\Source\Util</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Util\Util.cpp">
@@ -978,6 +987,54 @@
     <ClCompile Include="NewEngine\Render\ShaderCompiler\InputLayout.cpp">
       <Filter>NewEngine\Source\Render\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Object\GameObject.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\GameObjectManager.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\HierarchyWindow.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\MainWindow.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\InspectorWindow.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\AssetsWindow.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\ViewWindow.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Component.cpp">
+      <Filter>Uncategorized\Source\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\ComponentManager.cpp">
+      <Filter>Uncategorized\Source\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Component\TextureData.cpp">
+      <Filter>Uncategorized\Source\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Util\Transform.cpp">
+      <Filter>Uncategorized\Source\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Component\SpriteInfo.cpp">
+      <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Scene\Scene.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Component\ModelData.cpp">
+      <Filter>Uncategorized\Source\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Component\PipelineData.cpp">
+      <Filter>Uncategorized\Source\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Component\Object3DInfo.cpp">
+      <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1053,9 +1110,6 @@
       <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Util\Singleton.h">
-      <Filter>NewEngine\Header\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Util\Transform.h">
       <Filter>NewEngine\Header\Util</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Util\Util.h">
@@ -1582,6 +1636,54 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Util\NewEngineConstant.h">
       <Filter>NewEngine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\GameObject.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\GameObjectManager.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\HierarchyWindow.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\MainWindow.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\InspectorWindow.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\AssetsWindow.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\ViewWindow.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Component.h">
+      <Filter>Uncategorized\Header\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\ComponentManager.h">
+      <Filter>Uncategorized\Header\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Component\TextureData.h">
+      <Filter>Uncategorized\Header\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Util\Transform.h">
+      <Filter>Uncategorized\Header\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Component\SpriteInfo.h">
+      <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Scene\Scene.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Component\ModelData.h">
+      <Filter>Uncategorized\Header\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Component\PipelineData.h">
+      <Filter>Uncategorized\Header\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Component\Object3DInfo.h">
+      <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

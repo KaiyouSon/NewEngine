@@ -6,90 +6,88 @@
 /// ------------------------------------------------------------- ///
 void CreateManager::CreateShaderCompiler()
 {
-	std::string path1 = "NewEngine/Shader/";
-
 	// 天球用
-	ShaderManager::CompileAllType(AppShaderDirectory2 + "Skydome", "Skydome");
+	ShaderManager::CompileAllType(AppShaderDirectory + "Skydome", "Skydome");
 
 	// 草用
-	ShaderManager::CompileAllType(AppShaderDirectory2 + "Grass", "Grass");
+	ShaderManager::CompileAllType(AppShaderDirectory + "Grass", "Grass");
 
 	// 雲用
-	ShaderManager::CompileAllType(AppShaderDirectory2 + "Cloud", "Cloud");
+	ShaderManager::CompileAllType(AppShaderDirectory + "Cloud", "Cloud");
 
 	// 木の枝用
-	ShaderManager::CompileAllType(AppShaderDirectory2 + "Branch", "Branch");
+	ShaderManager::CompileAllType(AppShaderDirectory + "Branch", "Branch");
 
 	// リスポーン地点用（下の波紋用）
-	ShaderManager::CompileAllType(AppShaderDirectory2 + "RespawnPoint/Ripple", "Ripple");
+	ShaderManager::CompileAllType(AppShaderDirectory + "RespawnPoint/Ripple", "Ripple");
 
 	// リスポーン地点用（浮いてる菱形用）
-	ShaderManager::CompileAllType(AppShaderDirectory2 + "RespawnPoint/Rhombus", "Rhombus");
+	ShaderManager::CompileAllType(AppShaderDirectory + "RespawnPoint/Rhombus", "Rhombus");
 
 	// 軌跡用
-	ShaderManager::CompileAllType(AppShaderDirectory2 + "Trajectory", "Trajectory");
+	ShaderManager::CompileAllType(AppShaderDirectory + "Trajectory", "Trajectory");
 
 	// リスポーンエフェクト用
-	ShaderManager::CompileAllType(AppShaderDirectory2 + "RespawnPointEffect", "RespawnPointEffect");
+	ShaderManager::CompileAllType(AppShaderDirectory + "RespawnPointEffect", "RespawnPointEffect");
 
 	// ポストプロセス
 	{
 		// ビネット用
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "PostEffect/Vignette");
+		ShaderManager::CompileAllType(AppShaderDirectory + "PostEffect/Vignette");
 
 		// 高輝度箇所抽出用（RenderTexture）
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "PostEffect/HighLumi");
+		ShaderManager::CompileAllType(AppShaderDirectory + "PostEffect/HighLumi");
 
 		// ガウシアンブラー用（RenderTexture）
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "PostEffect/GaussianBlur");
+		ShaderManager::CompileAllType(AppShaderDirectory + "PostEffect/GaussianBlur");
 
 		// 合成用（RenderTexture）
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "PostEffect/Composite");
+		ShaderManager::CompileAllType(AppShaderDirectory + "PostEffect/Composite");
 
 		// レンズフレア用
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "PostEffect/LensFlare");
+		ShaderManager::CompileAllType(AppShaderDirectory + "PostEffect/LensFlare");
 
 		// ラジアルブラー用（RenderTexture）
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "PostEffect/RadialBlur");
+		ShaderManager::CompileAllType(AppShaderDirectory + "PostEffect/RadialBlur");
 
 		// トーンマッピング用（RenderTexture）
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "PostEffect/ToneMapping");
+		ShaderManager::CompileAllType(AppShaderDirectory + "PostEffect/ToneMapping");
 
 		// リスポーン時の遷移用
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "Transition/RespawnTransition");
+		ShaderManager::CompileAllType(AppShaderDirectory + "Transition/RespawnTransition");
 
 		// ShadowObj用
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "ShadowObj");
+		ShaderManager::CompileAllType(AppShaderDirectory + "ShadowObj");
 
 		// ShadowMap用
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "ShadowMap");
+		ShaderManager::CompileAllType(AppShaderDirectory + "ShadowMap");
 	}
 
 	// GPUパーティクル関連
 	{
 		// タイトルのロゴ爆散用
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "Effect/LogoExplosionEffect");
+		ShaderManager::CompileAllType(AppShaderDirectory + "Effect/LogoExplosionEffect");
 
 		// 誘導エフェクト用
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "Effect/LeadEffect");
+		ShaderManager::CompileAllType(AppShaderDirectory + "Effect/LeadEffect");
 
 		// プレイヤー回復エフェクト用
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "Effect/PlayerRecoveryEffect");
+		ShaderManager::CompileAllType(AppShaderDirectory + "Effect/PlayerRecoveryEffect");
 
 		// 空中のエフェクト用
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "Effect/AirEffect");
+		ShaderManager::CompileAllType(AppShaderDirectory + "Effect/AirEffect");
 
 		// ボスの攻撃軌跡のエフェクト用
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "Effect/BossAttackTrajectoryEffect");
+		ShaderManager::CompileAllType(AppShaderDirectory + "Effect/BossAttackTrajectoryEffect");
 
 		// 攻撃の爆発のエフェクト
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "Effect/AttackExplosionEffect");
+		ShaderManager::CompileAllType(AppShaderDirectory + "Effect/AttackExplosionEffect");
 
 		// 煙のエフェクト
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "Effect/SmokeEffect");
+		ShaderManager::CompileAllType(AppShaderDirectory + "Effect/SmokeEffect");
 
 		// ポンデリング/太陽用
-		ShaderManager::CompileAllType(AppShaderDirectory2 + "PonDeRing");
+		ShaderManager::CompileAllType(AppShaderDirectory + "PonDeRing");
 	}
 
 

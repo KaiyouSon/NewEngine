@@ -81,7 +81,7 @@ void TextureManager::LoadTexture(const std::string filePath, const std::string t
 
 	// マップに格納
 	GetInstance()->mTextureMap.
-		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
+		insert(std::make_pair(tag, std::move(std::make_unique<Texture>(tag))));
 
 	Texture* texture = dynamic_cast<Texture*>(GetInstance()->mTextureMap[tag].get());
 	TexMetadata metadata{};
@@ -162,7 +162,7 @@ Texture* TextureManager::LoadMaterialTexture(const std::string filePath, const s
 
 	// マップに格納
 	GetInstance()->mTextureMap.
-		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
+		insert(std::make_pair(tag, std::move(std::make_unique<Texture>(tag))));
 
 	Texture* texture = dynamic_cast<Texture*>(GetInstance()->mTextureMap[tag].get());
 	TexMetadata metadata{};
@@ -242,7 +242,7 @@ void TextureManager::CreateColorTexture(const Color color, const std::string tag
 
 	// マップに格納
 	GetInstance()->mTextureMap.
-		insert(std::make_pair(tag, std::move(std::make_unique<Texture>())));
+		insert(std::make_pair(tag, std::move(std::make_unique<Texture>(tag))));
 
 	// リソース設定
 	D3D12_RESOURCE_DESC resourceDesc =
@@ -640,7 +640,10 @@ Texture* TextureManager::GetTexture(const std::string tag)
 	{
 		std::string log;
 		log = "[Texture Error] Tag : " + tag + ", is nullptr";
-		return nullptr;
+
+		Texture* texture = dynamic_cast<Texture*>(
+			GetInstance()->mTextureMap["White"].get());
+		return texture;
 	}
 	else
 	{

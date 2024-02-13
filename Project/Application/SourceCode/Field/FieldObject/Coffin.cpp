@@ -24,8 +24,11 @@ void Coffin::Update()
 {
 	ColliderDrawer::GetInstance()->Bind(&mBottomCollider);
 
-	mCoffinTop->Update(&mParent);
-	mCoffinBottom->Update(&mParent);
+	mCoffinTop->SetParent(&mParent);
+	mCoffinBottom->SetParent(&mParent);
+
+	mCoffinTop->Update();
+	mCoffinBottom->Update();
 }
 void Coffin::Draw(const bool isDrawDepth)
 {

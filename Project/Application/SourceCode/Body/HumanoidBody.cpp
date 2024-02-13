@@ -44,43 +44,57 @@ void HumanoidBody::BaseUpdate()
 	mParts[(uint32_t)PartID::Transform]->scale = scale;
 
 	mParts[(uint32_t)PartID::Transform]->Update();
-	Transform transform = mParts[(uint32_t)PartID::Transform]->GetTransform();
+	Transform* transform = mParts[(uint32_t)PartID::Transform]->GetTransform();
 
 	// 体
-	mParts[(uint32_t)PartID::Body]->Update(&transform);
-	Transform body = mParts[(uint32_t)PartID::Body]->GetTransform();
+	mParts[(uint32_t)PartID::Body]->SetParent(transform);
+	mParts[(uint32_t)PartID::Body]->Update();
+	Transform* body = mParts[(uint32_t)PartID::Body]->GetTransform();
 
 	// 頭
-	mParts[(uint32_t)PartID::Head]->Update(&body);
+	mParts[(uint32_t)PartID::Head]->SetParent(body);
+	mParts[(uint32_t)PartID::Head]->Update();
 
 	// 左手
-	mParts[(uint32_t)PartID::LeftArm]->Update(&body);
-	Transform leftArm = mParts[(uint32_t)PartID::LeftArm]->GetTransform();
-	mParts[(uint32_t)PartID::LeftHand]->Update(&leftArm);
+	mParts[(uint32_t)PartID::LeftArm]->SetParent(body);
+	mParts[(uint32_t)PartID::LeftArm]->Update();
+	Transform* leftArm = mParts[(uint32_t)PartID::LeftArm]->GetTransform();
+
+	mParts[(uint32_t)PartID::LeftHand]->SetParent(leftArm);
+	mParts[(uint32_t)PartID::LeftHand]->Update();
 	if (mWeapons[0] != nullptr)
 	{
-		Transform leftHand = mParts[(uint32_t)PartID::LeftHand]->GetTransform();
-		mWeapons[0]->Update(&leftHand);
+		Transform* leftHand = mParts[(uint32_t)PartID::LeftHand]->GetTransform();
+		mWeapons[0]->Update(leftHand);
 	}
 	// 左足
-	mParts[(uint32_t)PartID::LeftThigh]->Update(&body);
-	Transform leftThigh = mParts[(uint32_t)PartID::LeftThigh]->GetTransform();
-	mParts[(uint32_t)PartID::LeftLeg]->Update(&leftThigh);
+	mParts[(uint32_t)PartID::LeftThigh]->SetParent(body);
+	mParts[(uint32_t)PartID::LeftThigh]->Update();
+	Transform* leftThigh = mParts[(uint32_t)PartID::LeftThigh]->GetTransform();
+
+	mParts[(uint32_t)PartID::LeftLeg]->SetParent(leftThigh);
+	mParts[(uint32_t)PartID::LeftLeg]->Update();
 
 	// 右手
-	mParts[(uint32_t)PartID::RightArm]->Update(&body);
-	Transform rightArm = mParts[(uint32_t)PartID::RightArm]->GetTransform();
-	mParts[(uint32_t)PartID::RightHand]->Update(&rightArm);
+	mParts[(uint32_t)PartID::RightArm]->SetParent(body);
+	mParts[(uint32_t)PartID::RightArm]->Update();
+	Transform* rightArm = mParts[(uint32_t)PartID::RightArm]->GetTransform();
+
+	mParts[(uint32_t)PartID::RightHand]->SetParent(rightArm);
+	mParts[(uint32_t)PartID::RightHand]->Update();
 	if (mWeapons[1] != nullptr)
 	{
-		Transform rightHand = mParts[(uint32_t)PartID::RightHand]->GetTransform();
-		mWeapons[1]->Update(&rightHand);
+		Transform* rightHand = mParts[(uint32_t)PartID::RightHand]->GetTransform();
+		mWeapons[1]->Update(rightHand);
 	}
 
 	// 右足
-	mParts[(uint32_t)PartID::RightThigh]->Update(&body);
-	Transform rightThigh = mParts[(uint32_t)PartID::RightThigh]->GetTransform();
-	mParts[(uint32_t)PartID::RightLeg]->Update(&rightThigh);
+	mParts[(uint32_t)PartID::RightThigh]->SetParent(body);
+	mParts[(uint32_t)PartID::RightThigh]->Update();
+	Transform* rightThigh = mParts[(uint32_t)PartID::RightThigh]->GetTransform();
+
+	mParts[(uint32_t)PartID::RightLeg]->SetParent(rightThigh);
+	mParts[(uint32_t)PartID::RightLeg]->Update();
 }
 void HumanoidBody::BaseDrawModel()
 {

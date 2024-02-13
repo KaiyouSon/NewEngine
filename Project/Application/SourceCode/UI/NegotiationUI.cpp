@@ -7,15 +7,15 @@ NegotiationUI::NegotiationUI() :
 	mColon(std::make_unique<Sprite>()),
 	mText(std::make_unique<Sprite>())
 {
-	mBackFrame->SetTexture(TextureManager::GetTexture("NegotiationBack"));
+	mBackFrame->SetTexture("NegotiationBack");
 
-	mButton->SetTexture(TextureManager::GetTexture("Buttons"));
+	mButton->SetTexture("Buttons");
 	mButton->SetTextureRect(Vec2(96, 96), Vec2(192, 192));
 	mButton->SetSize(96);
 
-	mColon->SetTexture(TextureManager::GetTexture("ColonStr"));
+	mColon->SetTexture("ColonStr");
 
-	mText->SetTexture(TextureManager::GetTexture("ReadMessageStr"));
+	mText->SetTexture("ReadMessageStr");
 }
 
 void NegotiationUI::Init()
@@ -91,15 +91,15 @@ void NegotiationUI::SetTextType(const TextType type)
 	switch (mType)
 	{
 	case TextType::ReadMessageText:
-		mText->SetTexture(TextureManager::GetTexture("ReadMessageStr"));
+		mText->SetTexture("ReadMessageStr");
 		break;
 
 	case TextType::RestInLightText:
-		mText->SetTexture(TextureManager::GetTexture("RestInLightStr"));
+		mText->SetTexture("RestInLightStr");
 		break;
 
 	case TextType::OpenText:
-		mText->SetTexture(TextureManager::GetTexture("OpenStr"));
+		mText->SetTexture("OpenStr");
 		break;
 	}
 }

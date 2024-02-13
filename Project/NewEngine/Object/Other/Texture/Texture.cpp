@@ -6,6 +6,15 @@ DirectX12WarningDisableBegin
 #include <d3dx12.h>
 DirectX12WarningDisableEnd
 
+Texture::Texture() 
+{
+
+}
+Texture::Texture(const std::string& tag)
+{
+	mTag = tag;
+}
+
 // テクスチャーのバッファ生成する関数
 void Texture::Create(const D3D12_RESOURCE_DESC& resourceDesc, uint32_t mipLevels)
 {
