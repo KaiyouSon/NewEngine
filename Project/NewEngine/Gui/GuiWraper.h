@@ -86,6 +86,10 @@ public:
 	static void DrawImage(ITexture* texture, const Vec2& size);
 	static void DrawImage(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle, const Vec2& size);
 
+	// ドラッグ&ドロップ関連
+	static bool DragDropSource(const std::string& label, const std::string& text);
+	static bool DragDropTarget(const std::string& label);
+
 private:
 	GuiWraper();
 	friend Singleton<GuiWraper>;

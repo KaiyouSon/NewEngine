@@ -69,7 +69,17 @@ void MainWindow::SetCurrentObjName(const std::string currentObjName)
 	mCurrentObjName = currentObjName;
 }
 
+void MainWindow::SetDragDropAssetsTag(const std::string dragDropAssetsTag)
+{
+	mDragDropAssetsTag = dragDropAssetsTag;
+}
+
 std::string MainWindow::GetCurrentObjName()
 {
 	return mCurrentObjName;
+}
+
+std::string MainWindow::GetDragDropAssetsTag()
+{
+	return mDragDropAssetsTag;
 }

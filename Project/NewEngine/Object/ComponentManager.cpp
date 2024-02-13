@@ -18,6 +18,11 @@ void ComponentManager::LoadToJson(const nlohmann::json& componentsField)
 	uint32_t count = 0;
 	for (const auto& component : mComponents)
 	{
+		if (componentsField.size() <= count)
+		{
+			break;
+		}
+
 		component->LoadToJson(componentsField[count]);
 		count++;
 	}

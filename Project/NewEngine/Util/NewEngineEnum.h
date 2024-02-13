@@ -18,7 +18,7 @@ enum class ComponentType
 	Transform,
 	TextureData,
 	ModelData,
-	GraphicsPipeline,
+	PipelineData,
 };
 
 // ブレンドモード

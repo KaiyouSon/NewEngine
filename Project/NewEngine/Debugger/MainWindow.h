@@ -18,6 +18,7 @@ private:
 
 private:
 	std::string mCurrentObjName;
+	std::string mDragDropAssetsTag;
 	bool mIsActive;
 
 public:
@@ -29,10 +30,12 @@ public:
 public:
 	// セッター
 	void SetCurrentObjName(const std::string currentObjName);
+	void SetDragDropAssetsTag(const std::string dragDropAssetsTag);
 
 public:
 	// ゲッター
 	std::string GetCurrentObjName();
+	std::string GetDragDropAssetsTag();
 
 private:
 	friend Singleton<MainWindow>;

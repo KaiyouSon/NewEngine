@@ -372,6 +372,37 @@ void GuiWraper::DrawImage(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle, const Ve
 	ImGui::Image(handle, textureSize);
 }
 
+bool GuiWraper::DragDropSource(const std::string& label, const std::string& text)
+{
+	bool result = false;
+	if (ImGui::BeginDragDropSource())
+	{
+		// ドラッグされたオブジェクトの識別子を指定
+		ImGui::SetDragDropPayload(label.c_str(), nullptr, 0);
+		ImGui::Text(text.c_str());
+		ImGui::EndDragDropSource();
+
+		result = true;
+	}
+
+	return result;
+}
+
+bool GuiWraper::DragDropTarget(const std::string& label)
+{
+	bool result = false;
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(label.c_str()))
+		{
+			result = true;
+		}
+		ImGui::EndDragDropTarget();
+	}
+
+	return result;
+}
+
 bool GuiWraper::DrawImageButton(ITexture* texture, const Vec2& size)
 {
 	if (texture == nullptr) return false;

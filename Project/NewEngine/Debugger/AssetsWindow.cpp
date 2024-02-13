@@ -1,4 +1,5 @@
 #include "AssetsWindow.h"
+#include "MainWindow.h"
 #include "ModelManager.h"
 #include "SceneManager.h"
 #include "StandardLib.h"
@@ -123,6 +124,12 @@ void AssetsWindow::ShowTextureAssets()
 		Gui::DrawString("Size : %dx%d", (uint32_t)tex->GetInitalSize().x, (uint32_t)tex->GetInitalSize().y);
 
 		Gui::DrawImageButton(tex.get(), buttonSize);
+
+		if (Gui::DragDropSource("DragDrop Texture", tag))
+		{
+			MainWindow::GetInstance()->SetDragDropAssetsTag(tag);
+		}
+
 		Gui::NextColumn();
 
 		count++;

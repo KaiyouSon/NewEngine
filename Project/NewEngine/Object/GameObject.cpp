@@ -16,6 +16,7 @@ void GameObject::InitToObject3D()
 	mComponentManager->AddComponent<Transform>();
 	mComponentManager->AddComponent<ModelData>();
 	mComponentManager->AddComponent<TextureData>();
+	mComponentManager->AddComponent<PipelineData>();
 
 	mTransform = mComponentManager->GetComponent<Transform>();
 	mTextureData = mComponentManager->GetComponent<TextureData>();

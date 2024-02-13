@@ -7,6 +7,7 @@ Object3DInfo::Object3DInfo()
 
 Object3DInfo::Object3DInfo(GameObject* gameObj) : Component(gameObj)
 {
+	mChangingName = mGameObj->name;
 	mComponentInfo.type = ComponentType::Object3DInfo;
 }
 
@@ -32,11 +33,10 @@ void Object3DInfo::ShowDataToInspector()
 
 	if (Gui::DrawCollapsingHeader("Object Info", true))
 	{
-		static std::string tempName = mGameObj->name;
-		Gui::DrawInputText("Object Name", tempName);
+		Gui::DrawInputText("Object Name", mChangingName);
 		if (!ImGui::IsItemActive())
 		{
-			castObj->name = tempName;
+			castObj->name = mChangingName;
 		}
 	}
 }

@@ -1,4 +1,5 @@
 #include "TextureData.h"
+#include "MainWindow.h"
 
 TextureData::TextureData()
 {
@@ -94,6 +95,7 @@ void TextureData::ShowDataToInspector()
 						ImGui::SetItemDefaultFocus();
 						currentComboIndex = index;
 						previewTag = tag;
+
 						SetTexture(tex.get(), i);
 						if (mCurrentTexIndex == i)
 						{
@@ -104,7 +106,21 @@ void TextureData::ShowDataToInspector()
 				}
 				ImGui::EndCombo();
 			}
+
+			if (Gui::DragDropTarget("DragDrop Texture"))
+			{
+				std::string tag = MainWindow::GetInstance()->GetDragDropAssetsTag();
+				previewTag = tag;
+
+				SetTexture(tag, i);
+				if (mCurrentTexIndex == i)
+				{
+					mGameObj->SetTexture(previewTag);
+				}
+			}
 		}
+
+
 
 		Gui::DrawColumns(3);
 		Gui::NextColumn();
