@@ -94,6 +94,14 @@ void Transform::ShowDataToInspector()
 {
 	if (Gui::DrawCollapsingHeader("Transform", true))
 	{
+		std::string text = "Parent : empty";
+		if (parent)
+		{
+			text = "Parent : " + parent->mGameObj->name;
+		}
+
+		Gui::DrawString(text.c_str());
+
 		const float moveSpeed = 1.f;
 		Gui::DrawSlider3("Pos", mGameObj->pos, moveSpeed);
 		Gui::DrawSlider3("Rot", mGameObj->rot, moveSpeed);

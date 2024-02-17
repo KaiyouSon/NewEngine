@@ -10,7 +10,7 @@ AssetsWindow::AssetsWindow() :
 {
 }
 
-void AssetsWindow::DrawDebugGui()
+void AssetsWindow::DrawGuiWindow()
 {
 	Gui::BeginWindow("Assets");
 

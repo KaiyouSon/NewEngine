@@ -5,7 +5,7 @@ ViewWindow::ViewWindow() :
 {
 }
 
-void ViewWindow::DrawDebugGui()
+void ViewWindow::DrawGuiWindow()
 {
 	mAspect =
 	{

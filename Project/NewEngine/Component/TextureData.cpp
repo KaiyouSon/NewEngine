@@ -120,8 +120,6 @@ void TextureData::ShowDataToInspector()
 			}
 		}
 
-
-
 		Gui::DrawColumns(3);
 		Gui::NextColumn();
 		if (Gui::DrawButton("Add Texture", Vec2(96, 24)))

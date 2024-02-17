@@ -3,7 +3,7 @@
 #include "GameObjectManager.h"
 #include "ModelManager.h"
 
-void InspectorWindow::DrawDebugGui()
+void InspectorWindow::DrawGuiWindow()
 {
 	mCurrentObjTag = MainWindow::GetInstance()->GetCurrentObjName();
 	mCurrentObj = GetGameObject(mCurrentObjTag);

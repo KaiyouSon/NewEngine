@@ -1,7 +1,8 @@
 #pragma once
+#include "IGuiWindow.h"
 #include "GameObject.h"
 
-class InspectorWindow
+class InspectorWindow : public IGuiWindow
 {
 private:
 	std::string mCurrentObjTag;
@@ -14,6 +15,6 @@ private:
 	void AddComponetButton();
 
 public:
-	void DrawDebugGui();
+	void DrawGuiWindow() override;
 };
 

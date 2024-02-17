@@ -3,16 +3,17 @@
 #include "InspectorWindow.h"
 #include "AssetsWindow.h"
 #include "ViewWindow.h"
+#include "ConsoleWindow.h"
 #include "NewEngine.h"
 #include "GameObjectManager.h"
 
-MainWindow::MainWindow() :
-	mHierarchyWindow(std::make_unique<HierarchyWindow>()),
-	mInspectorWindow(std::make_unique<InspectorWindow>()),
-	mAssetsWindow(std::make_unique<AssetsWindow>()),
-	mViewWindow(std::make_unique<ViewWindow>()),
-	mIsActive(false)
+MainWindow::MainWindow() : mIsActive(false)
 {
+	mWindows.push_back(std::move(std::make_unique<HierarchyWindow>()));
+	mWindows.push_back(std::move(std::make_unique<InspectorWindow>()));
+	mWindows.push_back(std::move(std::make_unique<AssetsWindow>()));
+	mWindows.push_back(std::move(std::make_unique<ViewWindow>()));
+	mWindows.push_back(std::move(std::make_unique<ConsoleWindow>()));
 }
 
 void MainWindow::DrawDebugGui()
@@ -22,11 +23,6 @@ void MainWindow::DrawDebugGui()
 		mIsActive = (mIsActive == false) ? true : false;
 	}
 
-	//if (Key::GetKey(DIK_LCONTROL) && Key::GetKeyDown(DIK_S))
-	//{
-	//	SaveSceneData();
-	//}
-
 	if (!mIsActive)
 	{
 		return;
@@ -35,33 +31,10 @@ void MainWindow::DrawDebugGui()
 	Gui::BeginFullWindow("MainWindow");
 	Gui::EndFullWindow();
 
-	mHierarchyWindow->DrawDebugGui();
-	mInspectorWindow->DrawDebugGui();
-	mAssetsWindow->DrawDebugGui();
-	mViewWindow->DrawDebugGui();
-}
-
-void MainWindow::SaveSceneData()
-{
-	//nlohmann::json jsonArray = nlohmann::json::array();
-	//jsonArray.push_back({ {"tag","test"} });
-	//for (const auto& [tag, obj] : *GameObjectManager::GetInstance()->GetGameObjectMap())
-	//{
-	//	nlohmann::json componentData = obj->GetComponentManager()->SaveToJson();
-
-	//	nlohmann::json typeData;
-	//	typeData["Type"] = { "Object3D" };
-
-	//	nlohmann::json objectData;
-	//	objectData["object"].push_back(componentData);
-	//	objectData["object"].push_back(typeData);
-
-	//	jsonArray.push_back(objectData);
-	//}
-	//nlohmann::json jsonData = nlohmann::json{ {"scene",jsonArray} };
-
-	//std::ofstream file(EngineDataDirectory + "TestScene.json");
-	//file << std::setw(4) << jsonData << std::endl;
+	for (const auto& window : mWindows)
+	{
+		window->DrawGuiWindow();
+	}
 }
 
 void MainWindow::SetCurrentObjName(const std::string currentObjName)

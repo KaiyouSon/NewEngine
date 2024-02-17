@@ -1,12 +1,11 @@
 #pragma once
+#include "IGuiWindow.h"
 
-class HierarchyWindow
+class HierarchyWindow : public IGuiWindow
 {
 private:
 	void CreateGameObjectPop();
 
 public:
-	void DrawDebugGui();
-
+	void DrawGuiWindow() override;
 };
-

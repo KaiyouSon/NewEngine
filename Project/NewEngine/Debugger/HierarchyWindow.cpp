@@ -3,7 +3,7 @@
 #include "SceneManager.h"
 #include "GameObjectManager.h"
 
-void HierarchyWindow::DrawDebugGui()
+void HierarchyWindow::DrawGuiWindow()
 {
 	Gui::BeginWindow("Hierarchy");
 
@@ -24,6 +24,22 @@ void HierarchyWindow::DrawDebugGui()
 			if (ImGui::IsItemClicked())
 			{
 				MainWindow::GetInstance()->SetCurrentObjName(obj->name);
+			}
+
+			std::string& dragDropGameObjName = MainWindow::GetInstance()->mDragDropGameObjName;
+			if (Gui::DragDropSource("DragDrop GameObject", obj->name))
+			{
+				dragDropGameObjName = obj->name;
+			}
+
+			if (Gui::DragDropTarget("DragDrop GameObject"))
+			{
+				if (!dragDropGameObjName.empty())
+				{
+					GameObject* child = GetGameObject(dragDropGameObjName);
+					child->SetParent(obj->GetTransform());
+					dragDropGameObjName.clear();
+				}
 			}
 		}
 	}

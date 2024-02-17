@@ -148,7 +148,9 @@
     <ClCompile Include="NewEngine\Component\PipelineData.cpp" />
     <ClCompile Include="NewEngine\Component\SpriteInfo.cpp" />
     <ClCompile Include="NewEngine\Component\TextureData.cpp" />
+    <ClCompile Include="NewEngine\Debugger\ConsoleWindow.cpp" />
     <ClCompile Include="NewEngine\Debugger\HierarchyWindow.cpp" />
+    <ClCompile Include="NewEngine\Debugger\IGuiWindow.cpp" />
     <ClCompile Include="NewEngine\Debugger\InspectorWindow.cpp" />
     <ClCompile Include="NewEngine\Debugger\MainWindow.cpp" />
     <ClCompile Include="NewEngine\Debugger\PipelineWindow.cpp" />
@@ -360,7 +362,9 @@
     <ClInclude Include="NewEngine\Component\PipelineData.h" />
     <ClInclude Include="NewEngine\Component\SpriteInfo.h" />
     <ClInclude Include="NewEngine\Component\TextureData.h" />
+    <ClInclude Include="NewEngine\Debugger\ConsoleWindow.h" />
     <ClInclude Include="NewEngine\Debugger\HierarchyWindow.h" />
+    <ClInclude Include="NewEngine\Debugger\IGuiWindow.h" />
     <ClInclude Include="NewEngine\Debugger\InspectorWindow.h" />
     <ClInclude Include="NewEngine\Debugger\MainWindow.h" />
     <ClInclude Include="NewEngine\Debugger\PipelineWindow.h" />

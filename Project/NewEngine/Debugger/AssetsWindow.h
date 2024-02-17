@@ -1,6 +1,7 @@
 #pragma once
+#include "IGuiWindow.h"
 
-class AssetsWindow
+class AssetsWindow : public IGuiWindow
 {
 private:
 	enum WindowState
@@ -31,5 +32,5 @@ private:
 
 public:
 	AssetsWindow();
-	void DrawDebugGui();
+	void DrawGuiWindow() override;
 };

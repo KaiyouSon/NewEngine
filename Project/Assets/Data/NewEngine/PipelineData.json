@@ -120,7 +120,7 @@
             "GS Tag": "ParticleObject",
             "PS Tag": "ParticleObject",
             "Pipeline Blend": 1,
-            "Pipeline Type": 739243104,
+            "Pipeline Type": 2161898432,
             "Tag": "ParticleObject",
             "Topology Type": 0,
             "VS Tag": "ParticleObject"
@@ -419,7 +419,7 @@
             "GS Tag": "ParticleObject",
             "PS Tag": "ParticleObject",
             "Pipeline Blend": 1,
-            "Pipeline Type": 739243104,
+            "Pipeline Type": 2161898432,
             "Tag": "PonDeRing",
             "Topology Type": 0,
             "VS Tag": "PonDeRing"

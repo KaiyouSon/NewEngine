@@ -430,6 +430,12 @@
     <Filter Include="Uncategorized\Source\Component\GameObjectInfo">
       <UniqueIdentifier>{4d3b6fa4-89c7-4445-99e9-4751072a7f7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Uncategorized\Source\GuiWindow">
+      <UniqueIdentifier>{f367f55d-4e4c-4efc-8555-cd3275b8e917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uncategorized\Header\GuiWindow">
+      <UniqueIdentifier>{af48dad7-692b-4b00-8e8f-8ffc171e02bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -993,19 +999,7 @@
     <ClCompile Include="NewEngine\Object\GameObjectManager.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Debugger\HierarchyWindow.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Debugger\MainWindow.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Debugger\InspectorWindow.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Debugger\AssetsWindow.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Debugger\ViewWindow.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\Component.cpp">
@@ -1034,6 +1028,24 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Component\Object3DInfo.cpp">
       <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\IGuiWindow.cpp">
+      <Filter>Uncategorized\Source\GuiWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\HierarchyWindow.cpp">
+      <Filter>Uncategorized\Source\GuiWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\InspectorWindow.cpp">
+      <Filter>Uncategorized\Source\GuiWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\AssetsWindow.cpp">
+      <Filter>Uncategorized\Source\GuiWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\ViewWindow.cpp">
+      <Filter>Uncategorized\Source\GuiWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\ConsoleWindow.cpp">
+      <Filter>Uncategorized\Source\GuiWindow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1643,19 +1655,7 @@
     <ClInclude Include="NewEngine\Object\GameObjectManager.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Debugger\HierarchyWindow.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Debugger\MainWindow.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Debugger\InspectorWindow.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Debugger\AssetsWindow.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Debugger\ViewWindow.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Component.h">
@@ -1684,6 +1684,24 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Component\Object3DInfo.h">
       <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\HierarchyWindow.h">
+      <Filter>Uncategorized\Header\GuiWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\InspectorWindow.h">
+      <Filter>Uncategorized\Header\GuiWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\IGuiWindow.h">
+      <Filter>Uncategorized\Header\GuiWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\AssetsWindow.h">
+      <Filter>Uncategorized\Header\GuiWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\ViewWindow.h">
+      <Filter>Uncategorized\Header\GuiWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\ConsoleWindow.h">
+      <Filter>Uncategorized\Header\GuiWindow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
