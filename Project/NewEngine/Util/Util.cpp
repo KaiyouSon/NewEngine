@@ -138,3 +138,17 @@ void OutputDebugLog(const char* fmt, ...)
 #endif
 
 }
+
+// ファイルを指定した場所にコピペする処理
+void CopyFileToDestination(const WCHAR* srcPath, const WCHAR* destFolder)
+{
+	WCHAR szFileName[MAX_PATH];
+	wcscpy_s(szFileName, srcPath);
+	PathStripPath(const_cast<LPWSTR>(szFileName));
+
+	std::wstring szDestination = destFolder;
+	szDestination += L"\\";
+	szDestination += szFileName;
+
+	CopyFile(srcPath, szDestination.c_str(), false);
+}

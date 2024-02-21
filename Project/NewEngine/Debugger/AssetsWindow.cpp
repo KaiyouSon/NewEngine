@@ -14,6 +14,8 @@ void AssetsWindow::DrawGuiWindow()
 {
 	Gui::BeginWindow("Assets");
 
+	mIsMouseInWindow = ImGui::IsWindowHovered();
+
 	CreateAssetsPop();
 
 	// ファイルパネル
@@ -55,6 +57,12 @@ void AssetsWindow::DrawGuiWindow()
 	}
 
 	Gui::EndWindow();
+}
+
+bool AssetsWindow::GetMouseInWindow()
+{
+	AssetsWindow temp;
+	return temp.mIsMouseInWindow;
 }
 
 void AssetsWindow::ShowMainLevel()

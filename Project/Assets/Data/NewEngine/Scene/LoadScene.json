@@ -9,6 +9,12 @@
                                 0.5,
                                 0.5
                             ],
+                            "color": [
+                                255.0,
+                                255.0,
+                                255.0,
+                                255.0
+                            ],
                             "component_info": {
                                 "index": 0,
                                 "type": 1
@@ -61,7 +67,7 @@
                         }
                     }
                 ],
-                "name": "sprite0",
+                "name": "Sprite0",
                 "type": 1
             }
         },
@@ -74,13 +80,19 @@
                                 0.5,
                                 0.5
                             ],
+                            "color": [
+                                255.0,
+                                255.0,
+                                255.0,
+                                255.0
+                            ],
                             "component_info": {
                                 "index": 0,
                                 "type": 1
                             },
                             "flip_mode": 0,
                             "sprite_size": [
-                                256.0,
+                                864.0,
                                 128.0
                             ]
                         }
@@ -93,7 +105,7 @@
                             },
                             "pos": [
                                 960.0,
-                                850.0,
+                                900.0,
                                 0.0
                             ],
                             "rot": [
@@ -102,8 +114,8 @@
                                 0.0
                             ],
                             "scale": [
-                                1.0,
-                                1.0,
+                                0.30000001192092896,
+                                0.30000001192092896,
                                 1.0
                             ]
                         }
@@ -119,14 +131,14 @@
                             },
                             "textures": [
                                 {
-                                    "texture_tag": "ExitStr",
+                                    "texture_tag": "PressButton",
                                     "texture_type": 0
                                 }
                             ]
                         }
                     }
                 ],
-                "name": "sprite1",
+                "name": "Sprite1",
                 "type": 1
             }
         },
@@ -134,22 +146,37 @@
             "object": {
                 "components": [
                     {
-                        "object3D_info": {
+                        "sprite_info": {
+                            "anchor_point": [
+                                0.5,
+                                0.5
+                            ],
+                            "color": [
+                                247.0,
+                                158.0,
+                                0.0,
+                                255.0
+                            ],
                             "component_info": {
                                 "index": 0,
-                                "type": 1
-                            }
+                                "type": 2
+                            },
+                            "flip_mode": 0,
+                            "sprite_size": [
+                                512.0,
+                                128.0
+                            ]
                         }
                     },
                     {
                         "transform": {
                             "component_info": {
                                 "index": 1,
-                                "type": 3
+                                "type": 0
                             },
                             "pos": [
-                                0.0,
-                                0.0,
+                                960.0,
+                                900.0,
                                 0.0
                             ],
                             "rot": [
@@ -158,26 +185,16 @@
                                 0.0
                             ],
                             "scale": [
-                                10.0,
-                                10.0,
-                                10.0
+                                1.5,
+                                0.800000011920929,
+                                1.0
                             ]
-                        }
-                    },
-                    {
-                        "model_data": {
-                            "component_info": {
-                                "index": 2,
-                                "type": 5
-                            },
-                            "model_format": 0,
-                            "model_tag": "Tree"
                         }
                     },
                     {
                         "texture_data": {
                             "component_info": {
-                                "index": 3,
+                                "index": 2,
                                 "type": 4
                             },
                             "current_texture": {
@@ -185,16 +202,157 @@
                             },
                             "textures": [
                                 {
-                                    "texture_tag": "Wall/Wall2Texture",
+                                    "texture_tag": "PressButtonBack",
                                     "texture_type": 0
                                 }
                             ]
                         }
-                    },
-                    null
+                    }
                 ],
-                "name": "Object0",
-                "type": 0
+                "name": "Sprite2",
+                "type": 1
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "sprite_info": {
+                            "anchor_point": [
+                                0.5,
+                                0.5
+                            ],
+                            "color": [
+                                255.0,
+                                255.0,
+                                255.0,
+                                255.0
+                            ],
+                            "component_info": {
+                                "index": 0,
+                                "type": 2
+                            },
+                            "flip_mode": 0,
+                            "sprite_size": [
+                                704.0,
+                                128.0
+                            ]
+                        }
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                960.0,
+                                320.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.75,
+                                1.75,
+                                0.10000000149011612
+                            ]
+                        }
+                    },
+                    {
+                        "texture_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 4
+                            },
+                            "current_texture": {
+                                "index": 0
+                            },
+                            "textures": [
+                                {
+                                    "texture_tag": "GameTitle",
+                                    "texture_type": 0
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "name": "Sprite3",
+                "type": 1
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "sprite_info": {
+                            "anchor_point": [
+                                0.5,
+                                0.5
+                            ],
+                            "color": [
+                                255.0,
+                                255.0,
+                                255.0,
+                                255.0
+                            ],
+                            "component_info": {
+                                "index": 0,
+                                "type": 2
+                            },
+                            "flip_mode": 0,
+                            "sprite_size": [
+                                512.0,
+                                128.0
+                            ]
+                        }
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                960.0,
+                                900.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                0.30000001192092896,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "texture_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 4
+                            },
+                            "current_texture": {
+                                "index": 0
+                            },
+                            "textures": [
+                                {
+                                    "texture_tag": "PressButtonBack",
+                                    "texture_type": 0
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "name": "Sprite4",
+                "type": 1
             }
         }
     ],

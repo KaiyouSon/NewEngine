@@ -1,6 +1,7 @@
 #pragma once
+#include "IGuiWindow.h"
 
-class RendererWindow
+class RendererWindow : public IGuiWindow
 {
 private:
 	enum State
@@ -11,7 +12,6 @@ private:
 	};
 
 private:
-	bool mIsShow;
 	bool mIsOpenPop;
 	std::string mDestroyTag; // 削除するレイヤーのタグを保存するよう
 
@@ -20,7 +20,7 @@ private:
 	void AddLayerSetting();
 
 public:
-	void DrawDebugGui();
+	void DrawGuiWindow() override;
 
 public:
 	void SetisShow(const bool isShow);

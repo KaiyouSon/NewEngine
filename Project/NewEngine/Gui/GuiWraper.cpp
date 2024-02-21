@@ -27,6 +27,13 @@ Vec2 GuiWraper::ToVec2(const ImVec2 v)
 	return Vec2(v.x, v.y);
 }
 
+void GuiWraper::SetNextItemToCenterWidth(const float itemWidth)
+{
+	// 中心の描画する
+	float width = ImGui::GetContentRegionAvail().x;
+	ImGui::SetCursorPosX(width / 2 - itemWidth / 2);
+}
+
 void GuiWraper::Init()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();
@@ -201,6 +208,19 @@ bool GuiWraper::DrawCollapsingHeader(const char* name, const bool isOpenNode)
 	return ImGui::CollapsingHeader(name, nodeFlag);
 }
 
+void GuiWraper::DrawMainMenuBar(const std::function<void()>& menuBarFunc)
+{
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (menuBarFunc)
+		{
+			menuBarFunc();
+		}
+
+		ImGui::EndMainMenuBar();
+	}
+}
+
 bool GuiWraper::BeginMenuBar()
 {
 	return ImGui::BeginMenuBar();
@@ -221,9 +241,9 @@ void GuiWraper::EndMenu()
 	ImGui::EndMenu();
 }
 
-bool GuiWraper::MenuItem(const char* name)
+bool GuiWraper::MenuItem(const std::string label, const std::string text, bool selected)
 {
-	return ImGui::MenuItem(name);
+	return ImGui::MenuItem(label.c_str(), text.c_str(), selected);
 }
 
 void GuiWraper::EndWindow()

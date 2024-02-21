@@ -1047,6 +1047,12 @@
     <ClCompile Include="NewEngine\Debugger\ConsoleWindow.cpp">
       <Filter>Uncategorized\Source\GuiWindow</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\AssetsManager.cpp">
+      <Filter>Uncategorized\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Component\GameObjectInfo.cpp">
+      <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1702,6 +1708,12 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Debugger\ConsoleWindow.h">
       <Filter>Uncategorized\Header\GuiWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\AssetsManager.h">
+      <Filter>Uncategorized\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Component\GameObjectInfo.h">
+      <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

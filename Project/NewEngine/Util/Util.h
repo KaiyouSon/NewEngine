@@ -14,6 +14,7 @@
 #include "NewEngineEnum.h"
 #include "NewEngineSetting.h"
 #include "NewEngineConstant.h"
+#include "StandardLib.h"
 #include <functional>
 
 static const int maxBoneIndices = 4;
@@ -110,3 +111,6 @@ void ProcessAtReleaseBuild(std::function<void()> lambdaFunc);
 
 // デバッグログを出力する
 void OutputDebugLog(const char* fmt, ...);
+
+// ファイルを指定した場所にコピペする処理
+void CopyFileToDestination(const WCHAR* srcPath, const WCHAR* destFolder);

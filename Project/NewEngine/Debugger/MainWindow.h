@@ -16,10 +16,26 @@ private:
 	std::vector<std::unique_ptr<IGuiWindow>> mWindows;
 
 private:
+	enum class WindowType
+	{
+		HierarchyWindow,
+		InspectorWindow,
+		AssetsWindow,
+		ViewWindow,
+		ConsoleWindow,
+		RendererWindow,
+	};
+
+private:
 	std::string mCurrentObjName;
 	std::string mDragDropAssetsTag;
 	std::string mDragDropGameObjName;
 	bool mIsActive;
+
+private:
+	void ShowWindow(const std::string& windowLabel, const WindowType type);
+	void FileMenuUpdate();
+	void WindowMenuUpdate();
 
 public:
 	void DrawDebugGui();

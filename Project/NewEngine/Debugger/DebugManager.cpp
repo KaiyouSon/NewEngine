@@ -97,7 +97,7 @@ void DebugManager::DrawDebugGui()
 
 	mShaderWindow->DrawDebugGui();
 	mMappingWindow->DrawDebugGui();
-	mRendererWindow->DrawDebugGui();
+	//mRendererWindow->DrawDebugGui();
 }
 
 void DebugManager::ReCompile()

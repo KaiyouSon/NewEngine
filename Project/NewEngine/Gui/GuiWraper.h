@@ -3,7 +3,7 @@
 #include "Util.h"
 #include "Texture.h"
 #include "Singleton.h"
-#include <stdint.h>
+#include "StandardLib.h"
 
 // ImGuiのラッピング関数
 class GuiWraper : public Singleton<GuiWraper>
@@ -19,6 +19,10 @@ private:
 public:
 	static ImVec4 ToImVec4(const Color color);
 	static Vec2 ToVec2(const ImVec2 v);
+
+public:
+	// レイアウト関連
+	static void SetNextItemToCenterWidth(const float itemWidth);
 
 public:
 	static void Init();
@@ -44,12 +48,15 @@ public:
 
 	static bool DrawCollapsingHeader(const char* name, const bool isOpenNode = false);
 
+public:
 	// メニューバー関連
+	static void DrawMainMenuBar(const std::function<void()>& menuBarFunc = nullptr);
+
 	static bool BeginMenuBar();
 	static void EndMenuBar();
 	static bool BeginMenu(const char* name);
 	static void EndMenu();
-	static bool MenuItem(const char* name);
+	static bool MenuItem(const std::string label, const std::string text = std::string(), bool selected = false);
 
 	static void DrawDemoWindow(bool& flag);
 
@@ -90,8 +97,50 @@ public:
 	static bool DragDropSource(const std::string& label, const std::string& text);
 	static bool DragDropTarget(const std::string& label);
 
+public:
+	/// <summary>
+	/// std::unordered_map (std::string, T) 型のmapをImGui::Combo()で表示する関数のラッピング関数
+	/// </summary>
+	/// <param name="label : Comboのラベル"></param>
+	/// <param name="previewLabel : 現在表示してるCombo要素のラベル"></param>
+	/// <param name="currentComboIndex : 現在表示してるCombo要素のindex"></param>
+	/// <param name="unorderedMap : std::unordered_map (std::string, T)型のmapデータ"></param>
+	/// <param name="selecedFunc : 選択時のコールバック関数"></param>
+	template<typename T>
+	static void DrawItemsMapCombo(
+		const std::string& label, std::string& previewLabel,
+		uint32_t& currentComboIndex, const std::unordered_map<std::string, T>& unorderedMap,
+		const std::function<void()>& selecedFunc = nullptr);
+
 private:
 	GuiWraper();
 	friend Singleton<GuiWraper>;
 
 }typedef Gui;
+
+template<typename T>
+inline void GuiWraper::DrawItemsMapCombo(
+	const std::string& label, std::string& previewLabel,
+	uint32_t& currentComboIndex, const std::unordered_map<std::string, T>& unorderedMap,
+	const std::function<void()>& selecedFunc)
+{
+	if (ImGui::BeginCombo(label.c_str(), previewLabel.c_str()))
+	{
+		uint32_t index = 0;
+		for (const auto& [tag, item] : unorderedMap)
+		{
+			const bool isSelected = (currentComboIndex == index);
+			if (ImGui::Selectable(tag.c_str(), isSelected))
+			{
+				ImGui::SetItemDefaultFocus();
+				currentComboIndex = index;
+				previewLabel = tag;
+
+				// 選択時に実行する関数
+				selecedFunc();
+			}
+			index++;
+		}
+		ImGui::EndCombo();
+	}
+}

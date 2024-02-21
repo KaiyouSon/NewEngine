@@ -17,3 +17,4 @@
 #include <stdint.h>
 #include <filesystem>
 #include <fstream>
+#include <shlwapi.h>

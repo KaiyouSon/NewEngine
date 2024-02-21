@@ -1,16 +1,16 @@
 #include "RendererWindow.h"
 #include "Renderer.h"
 
-void RendererWindow::DrawDebugGui()
+void RendererWindow::DrawGuiWindow()
 {
-	if (mIsShow == false)
+	if (mIsActive == false)
 	{
 		return;
 	}
 
 	auto& renderer = Renderer::GetInstance();
 
-	Gui::BeginWindow("Renderer Window", -1, &mIsShow);
+	Gui::BeginWindow("Renderer Window", -1, &mIsActive);
 
 	// メニューバー
 	if (Gui::BeginMenuBar())
@@ -52,7 +52,9 @@ void RendererWindow::DrawDebugGui()
 		Gui::DrawLine();
 	}
 
-	if (Gui::DrawButton("Add Layer", Vec2(160, 20)))
+	const Vec2 buttonSize = Vec2(160, 20);
+	Gui::SetNextItemToCenterWidth(buttonSize.x);
+	if (Gui::DrawButton("Add Layer", buttonSize))
 	{
 		Gui::OpenPopModal("Add Layer Setting");
 		mIsOpenPop = true;
@@ -149,5 +151,5 @@ void RendererWindow::AddLayerSetting()
 
 void RendererWindow::SetisShow(const bool isShow)
 {
-	mIsShow = isShow;
+	mIsActive = isShow;
 }

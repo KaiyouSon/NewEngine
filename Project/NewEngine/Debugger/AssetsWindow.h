@@ -33,4 +33,7 @@ private:
 public:
 	AssetsWindow();
 	void DrawGuiWindow() override;
+
+public:
+	static bool GetMouseInWindow();
 };

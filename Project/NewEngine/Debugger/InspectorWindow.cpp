@@ -38,7 +38,6 @@ void InspectorWindow::AddComponetButton()
 
 	// 中心の描画する
 	float width = ImGui::GetContentRegionAvail().x;
-	ImGui::SetCursorPosX((width - buttonSize.x) / 2.f);
 	ImGui::SetCursorPosX(width / 2 - buttonSize.x / 2);
 
 	Gui::DrawButton("Add Component", buttonSize);

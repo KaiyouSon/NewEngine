@@ -26,6 +26,7 @@ nlohmann::json SpriteInfo::SaveToJson()
 	spriteInfoData["sprite_info"]["flip_mode"] = (uint32_t)flipType;
 	spriteInfoData["sprite_info"]["anchor_point"] = { anchorPoint.x,anchorPoint.y };
 	spriteInfoData["sprite_info"]["sprite_size"] = { spriteSize.x,spriteSize.y };
+	spriteInfoData["sprite_info"]["color"] = { mColor.r,mColor.g,mColor.b,mColor.a };
 	return spriteInfoData;
 }
 
@@ -37,11 +38,12 @@ void SpriteInfo::LoadToJson(const nlohmann::json& componentField)
 	anchorPoint.y = componentField["sprite_info"]["anchor_point"][1];
 	spriteSize.x = componentField["sprite_info"]["sprite_size"][0];
 	spriteSize.y = componentField["sprite_info"]["sprite_size"][1];
+	mColor.r = componentField["sprite_info"]["color"][0];
+	mColor.g = componentField["sprite_info"]["color"][1];
+	mColor.b = componentField["sprite_info"]["color"][2];
+	mColor.a = componentField["sprite_info"]["color"][3];
 
-	Sprite* castObj = dynamic_cast<Sprite*>(mGameObj);
-	castObj->SetFlipType(flipType);
-	castObj->SetAnchorPoint(anchorPoint);
-	castObj->SetSize(spriteSize);
+	SetParamToObj();
 }
 
 void SpriteInfo::ShowDataToInspector()
@@ -59,6 +61,10 @@ void SpriteInfo::ShowDataToInspector()
 		Gui::DrawSlider2("Anchor Point", anchorPoint, 0.01f);
 		Gui::DrawSlider2("Sprite Size", spriteSize);
 
+		DrawLayerTagGUI();
+
+		Gui::DrawColorEdit("Color", mColor);
+
 		if (Gui::BeginTreeNode("Flip Mode", true))
 		{
 			uint32_t cast = (uint32_t)flipType;
@@ -70,8 +76,25 @@ void SpriteInfo::ShowDataToInspector()
 			Gui::EndTreeNode();
 		}
 
-		castObj->SetFlipType(flipType);
-		castObj->SetAnchorPoint(anchorPoint);
-		castObj->SetSize(spriteSize);
+		SetParamToObj();
 	}
+}
+
+void SpriteInfo::DrawLayerTagGUI()
+{
+	std::string label = "LayerTag";
+	std::string previewTag = "Test";
+	static uint32_t currentComboIndex = 0;
+
+	Gui::DrawItemsMapCombo(label, previewTag, currentComboIndex, *Renderer::GetLayerMap());
+}
+
+void SpriteInfo::SetParamToObj()
+{
+	Sprite* castObj = dynamic_cast<Sprite*>(mGameObj);
+
+	castObj->SetFlipType(flipType);
+	castObj->SetAnchorPoint(anchorPoint);
+	castObj->SetSize(spriteSize);
+	castObj->color = mColor;
 }

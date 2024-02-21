@@ -84,29 +84,22 @@ void TextureData::ShowDataToInspector()
 			std::string previewTag = mTextures[i]->GetTag();
 
 			std::string label = "Texture " + std::to_string(i);
-			if (ImGui::BeginCombo(label.c_str(), previewTag.c_str()))
+
+			// Comboが選択された時の処理
+			std::function<void()> selectedFunc =
+				[&]()
 			{
-				uint32_t index = 0;
-				for (const auto& [tag, tex] : *TextureManager::GetTextureMap())
+				SetTexture(previewTag, i);
+				if (mCurrentTexIndex == i)
 				{
-					const bool isSelected = (currentComboIndex == index);
-					if (ImGui::Selectable(tag.c_str(), isSelected))
-					{
-						ImGui::SetItemDefaultFocus();
-						currentComboIndex = index;
-						previewTag = tag;
-
-						SetTexture(tex.get(), i);
-						if (mCurrentTexIndex == i)
-						{
-							mGameObj->SetTexture(previewTag);
-						}
-					}
-					index++;
+					mGameObj->SetTexture(previewTag);
 				}
-				ImGui::EndCombo();
-			}
+			};
 
+			// TextureMapをComboで表示する
+			Gui::DrawItemsMapCombo(label, previewTag, currentComboIndex, *TextureManager::GetTextureMap(), selectedFunc);
+
+			// ドロップしたときの処理
 			if (Gui::DragDropTarget("DragDrop Texture"))
 			{
 				std::string tag = MainWindow::GetInstance()->GetDragDropAssetsTag();

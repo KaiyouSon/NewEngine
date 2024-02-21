@@ -143,6 +143,8 @@
     <ClCompile Include="Application\SourceCode\Field\Cloud.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\LensFlare.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp" />
+    <ClCompile Include="NewEngine\AssetsManager.cpp" />
+    <ClCompile Include="NewEngine\Component\GameObjectInfo.cpp" />
     <ClCompile Include="NewEngine\Component\ModelData.cpp" />
     <ClCompile Include="NewEngine\Component\Object3DInfo.cpp" />
     <ClCompile Include="NewEngine\Component\PipelineData.cpp" />
@@ -357,6 +359,8 @@
     <ClInclude Include="Application\SourceCode\Field\Cloud.h" />
     <ClInclude Include="Application\SourceCode\PostEffect\LensFlare.h" />
     <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h" />
+    <ClInclude Include="NewEngine\AssetsManager.h" />
+    <ClInclude Include="NewEngine\Component\GameObjectInfo.h" />
     <ClInclude Include="NewEngine\Component\ModelData.h" />
     <ClInclude Include="NewEngine\Component\Object3DInfo.h" />
     <ClInclude Include="NewEngine\Component\PipelineData.h" />

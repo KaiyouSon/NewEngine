@@ -6,7 +6,12 @@ ConsoleWindow::ConsoleWindow()
 
 void ConsoleWindow::DrawGuiWindow()
 {
-	Gui::BeginWindow("Console");
+	if (mIsActive == false)
+	{
+		return;
+	}
+
+	Gui::BeginWindow("Console", -1, &mIsActive);
 
 	for (const auto& text : mTextList)
 	{

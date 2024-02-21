@@ -127,3 +127,8 @@ void Renderer::LoadData()
 
 	file.close();
 }
+
+std::unordered_map<std::string, Layer>* Renderer::GetLayerMap()
+{
+	return &GetInstance()->mLayerMap;
+}

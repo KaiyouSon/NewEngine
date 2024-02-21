@@ -24,17 +24,17 @@ void LoadManager::TitleSceneLoad()
 }
 void LoadManager::TitleSceneUnLoad()
 {
-	TextureManager::DestroyTexture("Particle1");
-	TextureManager::DestroyTexture("GameTitle");
-	TextureManager::DestroyTexture("PressButton");
-	TextureManager::DestroyTexture("PressButtonBack");
+	//TextureManager::DestroyTexture("Particle1");
+	//TextureManager::DestroyTexture("GameTitle");
+	//TextureManager::DestroyTexture("PressButton");
+	//TextureManager::DestroyTexture("PressButtonBack");
 
-	// ブルーム用
-	TextureManager::DestroyRenderTexture("BloomHighLumi");
-	TextureManager::DestroyRenderTexture("BloomGaussianBlur");
-	TextureManager::DestroyRenderTexture("BloomGaussianBlurHalf");
-	TextureManager::DestroyRenderTexture("Bloom");
-	TextureManager::DestroyRenderTexture("BloomTarget");
+	//// ブルーム用
+	//TextureManager::DestroyRenderTexture("BloomHighLumi");
+	//TextureManager::DestroyRenderTexture("BloomGaussianBlur");
+	//TextureManager::DestroyRenderTexture("BloomGaussianBlurHalf");
+	//TextureManager::DestroyRenderTexture("Bloom");
+	//TextureManager::DestroyRenderTexture("BloomTarget");
 }
 
 ///////////////////////////////////////////////////////////////
@@ -300,6 +300,8 @@ bool LoadManager::TextureLoad()
 	// シャドウマップ
 	RenderTextureSetting setting = RenderTextureSetting(Vec2(1920, 1080) * 2, Vec2(1920, 1080) * 2, true);
 	TextureManager::CreateRenderTexture(setting, "ShadowMap");
+
+	TitleSceneLoad();
 
 	// 非同期終わったよ～
 	return true;

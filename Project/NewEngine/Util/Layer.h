@@ -7,7 +7,7 @@
 struct Layer
 {
 	std::string tag;
-	int32_t depth;	// 小さい順に先に描画
+	int32_t depth;	// 小さい順から先に描画
 	LayerType type;
 	std::vector<std::function<void()>> funcs; // 描画関数群
 

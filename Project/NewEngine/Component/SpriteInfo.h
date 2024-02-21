@@ -1,15 +1,17 @@
 #pragma once
 #include "Component.h"
+#include "GameObjectInfo.h"
 
-class SpriteInfo : public Component
+class SpriteInfo : public Component, GameObjectInfo
 {
-private:
-	std::string mChangingName;
-
 public:
 	Vec2 anchorPoint;
 	Vec2 spriteSize;
 	FlipType flipType;
+
+private:
+	void DrawLayerTagGUI();
+	void SetParamToObj();
 
 public:
 	SpriteInfo();

@@ -1,7 +1,10 @@
 #include "RenderWindow.h"
 #include "imgui_impl_win32.h"
+#include "AssetsWindow.h"
 #include <Windows.h>
+#include <shlwapi.h>
 #pragma comment(lib,"winmm.lib")
+#pragma comment(lib,"shlwapi.lib") 
 
 RenderWindow::RenderWindow() :
 	mSize(Vec2(1920, 1080)), mTitle("empty")
@@ -20,6 +23,7 @@ void RenderWindow::CreateGameWindow()
 	mWndClass.lpszClassName = L"NewEngine";      // ウィンドウクラス名
 	mWndClass.hInstance = GetModuleHandle(nullptr);  // インスタンスハンドル
 	mWndClass.hCursor = LoadCursor(NULL, IDC_ARROW);  // カーソル設定
+	mWndClass.style = CS_OWNDC; // ドラッグ&ドロップを可能にするためにCS_OWNDCスタイルを追加
 
 	// ウィンドウクラスの登録
 	RegisterClassEx(&mWndClass);
@@ -46,6 +50,9 @@ void RenderWindow::CreateGameWindow()
 
 	// ゲームウィンドウを表示
 	ShowWindow(mHwnd, SW_SHOW);
+
+	// ファイルのドロップを許可
+	DragAcceptFiles(mHwnd, true);
 }
 
 // ゲームウィンドウの終了
@@ -99,6 +106,44 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		// ウィンドウが破棄される前の処理を追加
 		// OSにプログラム終了を通知し、メッセージキューからプログラムを終了する
 		PostQuitMessage(0);
+		return 0;
+
+	case WM_DROPFILES:
+		// ドロップの処理
+
+		if (!AssetsWindow::GetMouseInWindow())
+		{
+			return 0;
+		}
+
+		HDROP hDrop = (HDROP)wParam;
+		UINT numFiles = DragQueryFile(hDrop, 0xFFFFFFFF, NULL, 0);
+		for (UINT i = 0; i < numFiles; ++i)
+		{
+			WCHAR szFilePath[MAX_PATH];
+			DragQueryFile(hDrop, i, szFilePath, MAX_PATH);
+			// ここでファイルのパスを使用して処理を行う
+
+			// ファイルパスから拡張子を取得
+			WCHAR* ext = PathFindExtension(szFilePath);
+			if (!ext)
+			{
+				continue;
+			}
+
+			// pngファイルであれば
+			if (lstrcmpi(ext, L".png") == 0)
+			{
+				OutputDebugLog("PngFile");
+
+				// プロジェクトの指定フォルダにコピー
+				CopyFileToDestination(szFilePath, WAppTextureDirectory.c_str());
+
+
+			}
+		}
+
+		DragFinish(hDrop);
 		return 0;
 	}
 
