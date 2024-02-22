@@ -1,5 +1,5 @@
 {
-    "name": "Load",
+    "name": "Title",
     "objects": [
         {
             "object": {
@@ -22,7 +22,7 @@
                             },
                             "flip_mode": 0,
                             "sprite_size": [
-                                856.0,
+                                640.0,
                                 640.0
                             ]
                         }

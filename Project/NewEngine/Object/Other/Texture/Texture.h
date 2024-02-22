@@ -14,8 +14,8 @@ private:
 
 public:
 	Texture();
-	Texture(const std::string& tag);
-	
+	Texture(const std::string tag, const std::string& path = std::string());
+
 	// テクスチャーのバッファ生成する関数
 	void Create(const D3D12_RESOURCE_DESC& resourceDesc, uint32_t mipLevels = 1);
 

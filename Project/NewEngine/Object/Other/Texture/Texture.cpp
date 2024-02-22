@@ -6,13 +6,14 @@ DirectX12WarningDisableBegin
 #include <d3dx12.h>
 DirectX12WarningDisableEnd
 
-Texture::Texture() 
+Texture::Texture()
 {
 
 }
-Texture::Texture(const std::string& tag)
+Texture::Texture(const std::string tag, const std::string& path)
 {
 	mTag = tag;
+	mPath = path;
 }
 
 // テクスチャーのバッファ生成する関数

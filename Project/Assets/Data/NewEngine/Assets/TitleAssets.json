@@ -1,0 +1,16 @@
+{
+    "textures": [
+        {
+            "path": "Assets/Texture/Application/Trajectory.png"
+        },
+        {
+            "path": "Assets/Texture/Application/Grass/Weed.png"
+        },
+        {
+            "path": "Assets/Texture/Application/Branch.png"
+        },
+        {
+            "path": "Assets/Texture/Application/DissolveTexture.png"
+        }
+    ]
+}

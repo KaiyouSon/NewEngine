@@ -40,7 +40,7 @@ public:
 	void LoadSceneToDirectroy();
 
 	void LoadSceneToJson(const std::string& sceneName);
-	void SaveSceneToJson(const std::string& sceneName);
+	void SaveSceneToJson();
 
 public:
 	SceneManager();

@@ -1,8 +1,8 @@
 #include "RenderWindow.h"
 #include "imgui_impl_win32.h"
 #include "AssetsWindow.h"
-#include <Windows.h>
-#include <shlwapi.h>
+#include "StandardLib.h"
+
 #pragma comment(lib,"winmm.lib")
 #pragma comment(lib,"shlwapi.lib") 
 
@@ -137,9 +137,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				OutputDebugLog("PngFile");
 
 				// プロジェクトの指定フォルダにコピー
-				CopyFileToDestination(szFilePath, WAppTextureDirectory.c_str());
+				std::wstring wNewPath;
+				CopyFileToDestination(szFilePath, WAppTextureDirectory.c_str(), &wNewPath);
 
-
+				// テクスチャをロードする
+				std::string path = WStrToStr(wNewPath);
+				LoadTexture(path);
 			}
 		}
 

@@ -19,6 +19,12 @@ static const std::string AppShaderDirectory = "Assets/Shader/Application/";
 static const std::string EngineDataDirectory = "Assets/Data/NewEngine/";
 
 /// <summary>
+/// ディレクトリーパス : "Assets/Texture/Application/"
+/// </summary>
+/// <returns>std::string</returns>
+static const std::string AppTextureDirectory = "Assets/Texture/Application/";
+
+/// <summary>
 /// ディレクトリーパス : "Assets/Data/NewEngine/"
 /// </summary>
 /// <returns>std::wstring</returns>

@@ -18,3 +18,5 @@
 #include <filesystem>
 #include <fstream>
 #include <shlwapi.h>
+#include <Windows.h>
+#include <shlwapi.h>

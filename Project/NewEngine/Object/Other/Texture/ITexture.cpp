@@ -24,3 +24,8 @@ std::string ITexture::GetTag()
 {
 	return mTag;
 }
+
+std::string ITexture::GetPath()
+{
+	return mPath.c_str();
+}

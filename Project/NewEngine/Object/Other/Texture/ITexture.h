@@ -11,6 +11,7 @@ protected:
 	Vec3 mInitalSize;
 	TextureType mType;
 	std::string mTag;
+	std::string mPath;
 
 public:
 	ITexture();
@@ -22,4 +23,5 @@ public:
 	Vec3 GetInitalSize();
 	TextureType GetTextureType();
 	std::string GetTag();
+	std::string GetPath();
 };

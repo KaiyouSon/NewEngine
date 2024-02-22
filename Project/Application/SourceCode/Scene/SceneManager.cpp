@@ -40,8 +40,8 @@ void SceneManager::LoadSceneToJson(const std::string& sceneName)
 	nlohmann::json deserialized;
 	file >> deserialized;
 
-	std::string sceneTag = deserialized["tag"];
-	std::unique_ptr<Scene> scene = std::make_unique<Scene>(sceneTag);
+	std::string name = deserialized["name"];
+	std::unique_ptr<Scene> scene = std::make_unique<Scene>(name);
 
 	// "objects"フィールドの各オブジェクトを処理
 	for (nlohmann::json& object : deserialized["objects"])
@@ -54,24 +54,9 @@ void SceneManager::LoadSceneToJson(const std::string& sceneName)
 	mCurrentScene = std::move(scene);
 }
 
-void SceneManager::SaveSceneToJson(const std::string& sceneName)
+void SceneManager::SaveSceneToJson()
 {
-	nlohmann::json data;
-	data["tag"] = mCurrentScene->GetTag();
-
-	nlohmann::json objectsData;
-	for (const auto& obj : *mCurrentScene->GetGameObjectManager()->GetGameObjects())
-	{
-		nlohmann::json objectData;
-		objectData["object"] = obj->SaveToJson();
-
-		objectsData.push_back(objectData);
-	}
-
-	data["objects"] = objectsData;
-
-	std::ofstream file(EngineDataDirectory + "Scene/" + sceneName + "Scene.json");
-	file << std::setw(4) << data << std::endl;
+	mCurrentScene->SaveToJson();
 }
 
 SceneManager::SceneManager()
@@ -95,7 +80,7 @@ SceneManager::SceneManager()
 
 	LoadSceneToDirectroy();
 
-	LoadSceneToJson("Load");
+	LoadSceneToJson("Title");
 }
 
 SceneManager::~SceneManager()
@@ -148,7 +133,7 @@ void SceneManager::Update()
 {
 	if (Key::GetKey(DIK_LCONTROL) && Key::GetKeyDown(DIK_S))
 	{
-		SaveSceneToJson(mCurrentScene->GetTag());
+		SaveSceneToJson();
 	}
 
 	if (mChangeStep == Changed)

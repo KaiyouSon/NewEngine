@@ -9,7 +9,7 @@ void HierarchyWindow::DrawGuiWindow()
 
 	CreateGameObjectPop();
 
-	std::string label = SceneManager::GetInstance()->mCurrentScene->GetTag();
+	std::string label = SceneManager::GetInstance()->mCurrentScene->GetName();
 	if (Gui::DrawCollapsingHeader(label.c_str(), true))
 	{
 		for (const auto& obj : *GetGameObjects())

@@ -140,15 +140,38 @@ void OutputDebugLog(const char* fmt, ...)
 }
 
 // ファイルを指定した場所にコピペする処理
-void CopyFileToDestination(const WCHAR* srcPath, const WCHAR* destFolder)
+void CopyFileToDestination(const WCHAR* srcPath, const WCHAR* destFolder, std::wstring* newPath)
 {
 	WCHAR szFileName[MAX_PATH];
 	wcscpy_s(szFileName, srcPath);
 	PathStripPath(const_cast<LPWSTR>(szFileName));
 
 	std::wstring szDestination = destFolder;
-	szDestination += L"\\";
 	szDestination += szFileName;
 
 	CopyFile(srcPath, szDestination.c_str(), false);
+
+	if (newPath)
+	{
+		*newPath = szDestination;
+	}
+}
+
+void Loop(const uint32_t count, std::function<void()> func)
+{
+	for (uint32_t i = 0; i < count; i++)
+	{
+		func();
+	}
+}
+
+std::string WStrToStr(const std::wstring& wstr)
+{
+	int32_t bufferSize = WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, NULL, 0, NULL, NULL);
+
+	std::string str;
+	str.resize(bufferSize - 1); // NULL終端文字を含まないように調整
+	WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, &str[0], bufferSize, NULL, NULL);
+
+	return str;
 }
