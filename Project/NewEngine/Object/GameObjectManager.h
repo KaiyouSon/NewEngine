@@ -13,6 +13,7 @@ public:
 public:
 	// Json関連
 	void LoadToJson(nlohmann::json& objectsField);
+	nlohmann::json SaveToJson();
 
 public:
 	void AddGameObject(const GameObjectType type, const std::string name);

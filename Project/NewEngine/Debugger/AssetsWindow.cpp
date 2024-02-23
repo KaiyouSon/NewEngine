@@ -4,6 +4,8 @@
 #include "SceneManager.h"
 #include "StandardLib.h"
 
+namespace fs = std::filesystem;
+
 AssetsWindow::AssetsWindow() :
 	state(MainLevel),
 	padding(16.f), buttonSize(128.f), columnCount(0)
@@ -93,22 +95,30 @@ void AssetsWindow::ShowSceneAssets()
 {
 	DrawBackButton();
 
-	for (const auto& tag : *SceneManager::GetSceneNames())
+	fs::path folderPath = EngineDataDirectory + "Scene";// +SceneManager::GetInstance()->mCurrentScene->GetName() + "Scene.json";
+	for (const auto entry : fs::directory_iterator(folderPath))
 	{
+		const fs::path path = entry.path();
+		const fs::path relativePath = relative(path, folderPath);	// 相対パス
+		const std::string filename = relativePath.filename().string();
+		const std::string sceneName = SubString(filename, "Scene.json");
+
 		// 検索機能
-		std::string::size_type pos = tag.find(search);
+		std::string::size_type pos = sceneName.find(search);
 		if (pos == std::string::npos)
 		{
 			continue;
 		}
 
 		Gui::DrawColumns(columnCount);
-		Gui::DrawButton(tag.c_str(), buttonSize);
+		Gui::DrawButton(sceneName.c_str(), buttonSize);
 		Gui::NextColumn();
 
 		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 		{
-			SceneManager::ChangeScene(tag);
+			static std::string selectSceneName;
+			selectSceneName = sceneName;
+			SceneManager::ChangeScene(selectSceneName);
 		}
 	}
 }
@@ -118,7 +128,7 @@ void AssetsWindow::ShowTextureAssets()
 	DrawBackButton();
 
 	int count = 1;
-	for (const auto& [tag, tex] : *TextureManager::GetTextureMap())
+	for (const auto& [tag, tex] : *gAssetsManager->GetTextureMap(TextureType::Default))
 	{
 		// 検索機能
 		std::string::size_type pos = tag.find(search);

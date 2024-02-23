@@ -10,12 +10,21 @@ public:
 	void LoadTexture(const std::string& path);
 
 public:
-	void SaveToJson(const std::string& sceneName);
-	void LoadToJson(const std::string& sceneName);
+	void LoadAssets(const std::string& sceneName);
+
+	void LoadTextures(const std::string& folderPath);
+
+	Texture* GetTexture(const std::string& tag);
+
 
 public:
 	void Load();
 	void UnLoad();
+
+public:
+	// ゲッター
+	std::unordered_map<std::string, std::unique_ptr<ITexture>>* GetTextureMap(const TextureType texType);
 };
 
 void LoadTexture(const std::string& path);
+extern AssetsManager* gAssetsManager;

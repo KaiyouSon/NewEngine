@@ -2,53 +2,42 @@
 namespace fs = std::filesystem;
 using namespace DirectX;
 
-void AssetsManager::SaveToJson(const std::string& sceneName)
+AssetsManager* gAssetsManager = nullptr;
+
+void AssetsManager::LoadAssets(const std::string& sceneName)
 {
-	nlohmann::json textureAssets;
-	for (uint32_t i = 0; i < mTextureMapArrays.size(); i++)
-	{
-		for (const auto& [tag, tex] : mTextureMapArrays[i])
-		{
-			nlohmann::json assetsData;
-			assetsData["path"] = tex->GetPath();
+	mTextureMapArrays[(uint32_t)TextureType::Default].clear();
 
-			textureAssets.push_back(assetsData);
-		}
-	}
-
-	nlohmann::json data;
-	data["textures"] = textureAssets;
-
-	std::ofstream file(EngineDataDirectory + "Assets/" + sceneName + "Assets.json");
-	file << std::setw(4) << data << std::endl;
+	// テクスチャのロード
+	LoadTextures(AppTextureDirectory + sceneName);
 }
 
-void AssetsManager::LoadToJson(const std::string& sceneName)
+void AssetsManager::LoadTextures(const std::string& folderPath)
 {
-	std::string path = EngineDataDirectory + "Assets/" + sceneName + "Assets.json";
-
-	// ファイルを開く
-	std::ifstream file(path);
-	// ファイルが開けない場合はアサーションエラー
-	if (file.fail())
+	fs::path fsFolderPath = folderPath;
+	if (!fs::is_directory(fsFolderPath))
 	{
-		assert(0);
+		return;
 	}
 
-	// JSONをデシリアライズ
-	nlohmann::json deserialized;
-	file >> deserialized;
-
-	// "objects"フィールドの各オブジェクトを処理
-	for (nlohmann::json& tex : deserialized["textures"])
+	for (const auto& entry : fs::directory_iterator(fsFolderPath))
 	{
-		std::string texPath = tex["path"];
-		LoadTexture(texPath);
+		if (fs::is_directory(entry))
+		{
+			LoadTextures(entry.path().string());
+		}
+		else
+		{
+			fs::path path = entry.path();
+			LoadTexture(path.string());
+		}
 	}
+}
 
-	file.close();
-
-	//LoadTexture(AppTextureDirectory + "Grass/Weed.png");
+Texture* AssetsManager::GetTexture(const std::string& tag)
+{
+	Texture* tex = dynamic_cast<Texture*>(mTextureMapArrays[(uint32_t)TextureType::Default][tag].get());
+	return tex;
 }
 
 void AssetsManager::Load()
@@ -59,6 +48,11 @@ void AssetsManager::Load()
 
 void AssetsManager::UnLoad()
 {
+}
+
+std::unordered_map<std::string, std::unique_ptr<ITexture>>* AssetsManager::GetTextureMap(const TextureType texType)
+{
+	return &mTextureMapArrays[(uint32_t)texType];
 }
 
 void AssetsManager::LoadTexture(const std::string& path)

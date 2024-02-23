@@ -11,14 +11,14 @@ private:
 	std::unique_ptr<AssetsManager> mAssetsManager;
 
 private:
-	void SaveGameObjectData(nlohmann::json& data);
+	void SaveSceneData();
 	void SaveAseetesData();
 
 public:
 	Scene();
-	Scene(const std::string& name);
 
 public:
+	void LoadToJson(const std::string& sceneName);
 	void SaveToJson();
 
 public:

@@ -1,48 +1,65 @@
 #include "Scene.h"
 
-Scene::Scene()
-{
-
-}
-
-Scene::Scene(const std::string& name) :
-	mName(name),
+Scene::Scene() :
+	mName(std::string()),
 	mGameObjectManager(std::make_unique<GameObjectManager>()),
 	mAssetsManager(std::make_unique<AssetsManager>())
 {
-	mAssetsManager->LoadToJson(mName);
+}
+
+void Scene::LoadToJson(const std::string& sceneName)
+{
+	std::string path = EngineDataDirectory + "Scene/" + sceneName + "Scene.json";
+
+	// ファイルを開く
+	std::ifstream file(path);
+	// ファイルが開けない場合はアサーションエラー
+	if (file.fail())
+	{
+		assert(0);
+	}
+
+	// JSONをデシリアライズ
+	nlohmann::json deserialized;
+	file >> deserialized;
+
+	mName = deserialized["name"];
+
+	// アセットのロード
+	mAssetsManager->LoadAssets(mName);
+
+	mGameObjectManager->GetGameObjects()->clear();
+
+	// "objects"フィールドの各オブジェクトを処理
+	for (nlohmann::json& object : deserialized["objects"])
+	{
+		mGameObjectManager->LoadToJson(object["object"]);
+	}
+
+	file.close();
 }
 
 void Scene::SaveToJson()
 {
+	// アセットのデータを保存
 	SaveAseetesData();
 
+	// シーンのデータを保存
+	SaveSceneData();
+}
+
+void Scene::SaveSceneData()
+{
 	nlohmann::json data;
 	data["name"] = mName;
-
-	SaveGameObjectData(data);
+	data["objects"] = mGameObjectManager->SaveToJson();
 
 	std::ofstream file(EngineDataDirectory + "Scene/" + mName + "Scene.json");
 	file << std::setw(4) << data << std::endl;
 }
 
-void Scene::SaveGameObjectData(nlohmann::json& data)
-{
-	nlohmann::json objectsData;
-	for (const auto& obj : *mGameObjectManager->GetGameObjects())
-	{
-		nlohmann::json objectData;
-		objectData["object"] = obj->SaveToJson();
-
-		objectsData.push_back(objectData);
-	}
-
-	data["objects"] = objectsData;
-}
-
 void Scene::SaveAseetesData()
 {
-	mAssetsManager->SaveToJson(mName);
 }
 
 std::string Scene::GetName()

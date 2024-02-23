@@ -29,7 +29,6 @@ private:
 	bool mIsReturn;
 
 private:
-	std::unordered_map<std::string, std::unique_ptr<Scene>> mSceneMap;
 	std::vector<std::string> mSceneNames;
 
 public:

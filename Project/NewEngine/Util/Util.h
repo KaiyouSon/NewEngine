@@ -119,3 +119,5 @@ void CopyFileToDestination(const WCHAR* srcPath, const WCHAR* destFolder, std::w
 void Loop(const uint32_t count, std::function<void()> func);
 
 std::string WStrToStr(const std::wstring& wstr);
+
+std::string SubString(const std::string& mainStr, const std::string& subStr);

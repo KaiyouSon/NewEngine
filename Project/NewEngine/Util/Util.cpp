@@ -175,3 +175,17 @@ std::string WStrToStr(const std::wstring& wstr)
 
 	return str;
 }
+
+std::string SubString(const std::string& mainStr, const std::string& subStr)
+{
+	std::string result = mainStr;
+
+	uint32_t pos = (uint32_t)result.find(subStr);
+	if (pos != std::string::npos)
+	{
+		// 文字列が見つかった場合
+		result.erase(pos, subStr.length()); // 見つかった位置からtoRemoveの長さ分削除する
+	}
+
+	return result;
+}

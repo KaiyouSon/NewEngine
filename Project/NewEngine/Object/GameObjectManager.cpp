@@ -26,6 +26,20 @@ void GameObjectManager::LoadToJson(nlohmann::json& objectsField)
 	mGameObjects.back()->LoadToJson(objectsField);
 }
 
+nlohmann::json GameObjectManager::SaveToJson()
+{
+	nlohmann::json objectsData;
+	for (const auto& obj : mGameObjects)
+	{
+		nlohmann::json objectData;
+		objectData["object"] = obj->SaveToJson();
+
+		objectsData.push_back(objectData);
+	}
+
+	return objectsData;
+}
+
 void GameObjectManager::AddGameObject(const GameObjectType type, const std::string name)
 {
 	std::unique_ptr<GameObject> obj;

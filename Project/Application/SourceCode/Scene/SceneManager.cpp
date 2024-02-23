@@ -26,32 +26,8 @@ void SceneManager::LoadSceneToDirectroy()
 
 void SceneManager::LoadSceneToJson(const std::string& sceneName)
 {
-	std::string path = EngineDataDirectory + "Scene/" + sceneName + "Scene.json";
-
-	// ファイルを開く
-	std::ifstream file(path);
-	// ファイルが開けない場合はアサーションエラー
-	if (file.fail())
-	{
-		assert(0);
-	}
-
-	// JSONをデシリアライズ
-	nlohmann::json deserialized;
-	file >> deserialized;
-
-	std::string name = deserialized["name"];
-	std::unique_ptr<Scene> scene = std::make_unique<Scene>(name);
-
-	// "objects"フィールドの各オブジェクトを処理
-	for (nlohmann::json& object : deserialized["objects"])
-	{
-		scene->GetGameObjectManager()->LoadToJson(object["object"]);
-	}
-
-	file.close();
-
-	mCurrentScene = std::move(scene);
+	mCurrentScene->LoadToJson(sceneName);
+	gAssetsManager = mCurrentScene->GetAssetsManager();
 }
 
 void SceneManager::SaveSceneToJson()
@@ -78,8 +54,11 @@ SceneManager::SceneManager()
 		});
 
 
+	// シーンの一覧を文字列としてロード
 	LoadSceneToDirectroy();
 
+	// シーンをロード
+	mCurrentScene = std::make_unique<Scene>();
 	LoadSceneToJson("Title");
 }
 
@@ -87,12 +66,20 @@ SceneManager::~SceneManager()
 {
 }
 
-void SceneManager::CreateScene(const std::string& tag)
+void SceneManager::CreateScene(const std::string& sceneName)
 {
-	std::unique_ptr<Scene> scene = std::make_unique<Scene>(tag);
+	// JSONオブジェクトを作成
+	nlohmann::json data;
+	data["name"] = sceneName;
 
-	// mapに挿入
-	GetInstance()->mSceneMap.insert(std::make_pair(tag, std::move(scene)));
+	// JSONをファイルに書き込む
+	std::string path = EngineDataDirectory + "Scene/" + sceneName + "Scene.json";
+
+	std::ofstream outputFile(path);
+	outputFile << std::setw(4) << data << std::endl;
+	outputFile.close();
+
+	GetInstance()->mSceneNames.push_back(sceneName);
 }
 
 void SceneManager::ChangeScene(const std::string& sceneName)
@@ -105,7 +92,7 @@ void SceneManager::ChangeScene(const std::string& sceneName)
 
 std::unordered_map<std::string, std::unique_ptr<Scene>>* SceneManager::GetSceneMap()
 {
-	return &GetInstance()->mSceneMap;
+	return nullptr;
 }
 
 std::vector<std::string>* SceneManager::GetSceneNames()
