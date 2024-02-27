@@ -66,6 +66,7 @@ void TitleScene::Update()
 	mTitleUI->Update();
 	EffectManager::GetInstance()->Update();
 
+	Camera::DebugCameraUpdate();
 	// シーン切り替えの処理
 	SceneChangeUpdate();
 }

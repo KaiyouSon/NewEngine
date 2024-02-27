@@ -137,8 +137,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				OutputDebugLog("PngFile");
 
 				// プロジェクトの指定フォルダにコピー
+				std::string sceneName = SceneManager::GetInstance()->mCurrentScene->GetName() + "/";
+				std::wstring wDestFolder = WAppTextureDirectory + std::wstring(sceneName.begin(), sceneName.end());
 				std::wstring wNewPath;
-				CopyFileToDestination(szFilePath, WAppTextureDirectory.c_str(), &wNewPath);
+				CopyFileToDestination(szFilePath, wDestFolder.c_str(), &wNewPath);
 
 				// テクスチャをロードする
 				std::string path = WStrToStr(wNewPath);

@@ -150,6 +150,7 @@ void NewEngine::PrevDraw()
 
 	RenderTexture* rt = TextureManager::GetRenderTexture("ViewScene");
 	rt->PrevDrawScene();
+	SceneManager::GetInstance()->mCurrentScene->GetGameObjectManager()->ExecuteCS();
 	SceneManager::GetInstance()->mCurrentScene->GetGameObjectManager()->Draw();
 	rt->PostDrawScene();
 

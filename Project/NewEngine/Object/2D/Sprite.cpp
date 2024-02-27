@@ -57,6 +57,9 @@ void Sprite::Update()
 	// 頂点データの転送
 	mVertexBuffer->TransferToBuffer(mVertices);
 }
+void Sprite::ExecuteCS()
+{
+}
 void Sprite::AppedToRenderer()
 {
 	Renderer::GetInstance()->Register("BackSprite",
@@ -216,10 +219,26 @@ void Sprite::DrawCommands()
 
 // --- セッター -------------------------------------------------------- //
 
+void Sprite::SetTexture(Texture* texture, const bool isChangeSize)
+{
+	ITexture* tex = texture;
+	if (!tex)
+	{
+		return;
+	}
+
+	mTextureData->SetCurrentTexture(texture);
+	if (isChangeSize)
+	{
+		SetSize(Vec2(tex->GetInitalSize().x, tex->GetInitalSize().y));
+	}
+}
+
 // テクスチャー
 void Sprite::SetTexture(const std::string& textureTag, [[maybe_unused]] const bool isChangeSize)
 {
-	ITexture* tex = TextureManager::GetTexture(textureTag);
+	//ITexture* tex = TextureManager::GetTexture(textureTag);
+	ITexture* tex = gAssetsManager->GetTexture(textureTag);
 	if (!tex)
 	{
 		return;

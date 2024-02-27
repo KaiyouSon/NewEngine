@@ -305,28 +305,35 @@ bool GuiWraper::DrawRadioButton(const char* label, uint32_t* current, const uint
 	return flag;
 }
 
-void GuiWraper::DrawSlider1(const char* label, float& v, const float& moveSpeed, const float guiWidth)
+void GuiWraper::DrawSlider1(const std::string& label, float& v, const float& moveSpeed, const float guiWidth)
 {
 	if (guiWidth > 0)
 	{
 		ImGui::SetNextItemWidth(guiWidth);
 	}
 
-	ImGui::DragFloat(label, &v, moveSpeed);
+	ImGui::DragFloat(label.c_str(), &v, moveSpeed);
 }
 
-void GuiWraper::DrawSlider2(const char* label, Vec2& v, const float& moveSpeed)
+void GuiWraper::DrawSlider2(const std::string& label, Vec2& v, const float& moveSpeed)
 {
 	float temp[2] = { v.x,v.y };
-	ImGui::DragFloat2(label, temp, moveSpeed);
+	ImGui::DragFloat2(label.c_str(), temp, moveSpeed);
 	v.x = temp[0]; v.y = temp[1];
 }
 
-void GuiWraper::DrawSlider3(const char* label, Vec3& v, const float& moveSpeed)
+void GuiWraper::DrawSlider3(const std::string& label, Vec3& v, const float& moveSpeed)
 {
 	float temp[3] = { v.x,v.y,v.z };
-	ImGui::DragFloat3(label, temp, moveSpeed);
+	ImGui::DragFloat3(label.c_str(), temp, moveSpeed);
 	v.x = temp[0];	v.y = temp[1];	v.z = temp[2];
+}
+
+void GuiWraper::DrawSlider4(const std::string& label, Vec4& v, const float& moveSpeed)
+{
+	float temp[4] = { v.x,v.y,v.z,v.w };
+	ImGui::DragFloat4(label.c_str(), temp, moveSpeed);
+	v.x = temp[0];	v.y = temp[1];	v.z = temp[2];	v.w = temp[3];
 }
 
 void GuiWraper::DrawColorEdit(const char* label, Color& color)

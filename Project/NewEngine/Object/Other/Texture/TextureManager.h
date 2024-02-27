@@ -12,6 +12,8 @@
 
 template<typename T> class Singleton;
 
+class AssetsManager;
+
 // テクスチャーを管理するクラス
 class TextureManager : public Singleton<TextureManager>
 {
@@ -22,11 +24,19 @@ private:
 	std::unordered_map<std::string, std::unique_ptr<VolumeTexture>> mVolumeTextureMap;
 	std::unordered_map<std::string, std::unique_ptr<RenderTexture>> mRenderTextureMap;
 
+#pragma region new
+private:
+	std::array<std::unordered_map<std::string, std::unique_ptr<ITexture>>, (uint32_t)TextureType::Count> mTextureMapArrays;
 	std::mutex mMutex;	// 排他制御
+
+public:
+	void LoadTexture(const std::string& path);
+	void LoadMaterialTexture(const std::string& path);
 
 private:
 	void LoadTextureFromPNG(const std::string filePath, DirectX::ScratchImage& scratchImg, DirectX::TexMetadata& metadata);
 	void LoadTextureFromDDS(const std::string filePath, DirectX::ScratchImage& scratchImg, DirectX::TexMetadata& metadata);
+#pragma endregion
 
 public:	// 生成関連
 
@@ -103,6 +113,10 @@ public:	// マップの取得関連
 public:
 	// コマンド実行
 	static void ExcuteComandList();
+
+
+private:
+	friend AssetsManager;
 
 private:
 	// 繧ｷ繝ｳ繧ｰ繝ｫ繝医Φ

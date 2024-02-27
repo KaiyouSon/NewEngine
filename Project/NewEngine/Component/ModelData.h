@@ -1,7 +1,7 @@
 #pragma once
 #include "StandardLib.h"
 
-struct Model;
+class Model;
 
 class ModelData : public Component
 {

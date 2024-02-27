@@ -1,4 +1,431 @@
 {
     "name": "Game",
-    "objects": null
+    "objects": [
+        {
+            "object": {
+                "components": [
+                    {
+                        "sprite_info": {
+                            "anchor_point": [
+                                0.0,
+                                0.5
+                            ],
+                            "color": [
+                                255.0,
+                                255.0,
+                                255.0,
+                                255.0
+                            ],
+                            "component_info": {
+                                "index": 0,
+                                "type": 2
+                            },
+                            "flip_mode": 0,
+                            "sprite_size": [
+                                272.0,
+                                64.0
+                            ]
+                        }
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                -10.0,
+                                348.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                2.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "texture_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 4
+                            },
+                            "current_texture": {
+                                "index": 0
+                            },
+                            "textures": [
+                                {
+                                    "texture_tag": "OperationBack",
+                                    "texture_type": 0
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "name": "Sprite0",
+                "type": 1
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "sprite_info": {
+                            "anchor_point": [
+                                0.0,
+                                0.5
+                            ],
+                            "color": [
+                                255.0,
+                                255.0,
+                                255.0,
+                                255.0
+                            ],
+                            "component_info": {
+                                "index": 0,
+                                "type": 2
+                            },
+                            "flip_mode": 0,
+                            "sprite_size": [
+                                272.0,
+                                64.0
+                            ]
+                        }
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                -10.0,
+                                412.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                2.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "texture_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 4
+                            },
+                            "current_texture": {
+                                "index": 0
+                            },
+                            "textures": [
+                                {
+                                    "texture_tag": "OperationBack",
+                                    "texture_type": 0
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "name": "Sprite1",
+                "type": 1
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "sprite_info": {
+                            "anchor_point": [
+                                0.0,
+                                0.5
+                            ],
+                            "color": [
+                                255.0,
+                                255.0,
+                                255.0,
+                                255.0
+                            ],
+                            "component_info": {
+                                "index": 0,
+                                "type": 2
+                            },
+                            "flip_mode": 0,
+                            "sprite_size": [
+                                272.0,
+                                64.0
+                            ]
+                        }
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                -10.0,
+                                476.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                2.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "texture_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 4
+                            },
+                            "current_texture": {
+                                "index": 0
+                            },
+                            "textures": [
+                                {
+                                    "texture_tag": "OperationBack",
+                                    "texture_type": 0
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "name": "Sprite2",
+                "type": 1
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "sprite_info": {
+                            "anchor_point": [
+                                0.0,
+                                0.5
+                            ],
+                            "color": [
+                                255.0,
+                                255.0,
+                                255.0,
+                                255.0
+                            ],
+                            "component_info": {
+                                "index": 0,
+                                "type": 2
+                            },
+                            "flip_mode": 0,
+                            "sprite_size": [
+                                272.0,
+                                64.0
+                            ]
+                        }
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                -10.0,
+                                540.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                2.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "texture_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 4
+                            },
+                            "current_texture": {
+                                "index": 0
+                            },
+                            "textures": [
+                                {
+                                    "texture_tag": "OperationBack",
+                                    "texture_type": 0
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "name": "Sprite3",
+                "type": 1
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "sprite_info": {
+                            "anchor_point": [
+                                0.0,
+                                0.5
+                            ],
+                            "color": [
+                                255.0,
+                                255.0,
+                                255.0,
+                                255.0
+                            ],
+                            "component_info": {
+                                "index": 0,
+                                "type": 2
+                            },
+                            "flip_mode": 0,
+                            "sprite_size": [
+                                272.0,
+                                64.0
+                            ]
+                        }
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                -10.0,
+                                604.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                2.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "texture_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 4
+                            },
+                            "current_texture": {
+                                "index": 0
+                            },
+                            "textures": [
+                                {
+                                    "texture_tag": "OperationBack",
+                                    "texture_type": 0
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "name": "Sprite4",
+                "type": 1
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "sprite_info": {
+                            "anchor_point": [
+                                0.0,
+                                0.5
+                            ],
+                            "color": [
+                                255.0,
+                                255.0,
+                                255.0,
+                                255.0
+                            ],
+                            "component_info": {
+                                "index": 0,
+                                "type": 2
+                            },
+                            "flip_mode": 0,
+                            "sprite_size": [
+                                576.0,
+                                128.0
+                            ]
+                        }
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                16.0,
+                                348.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                0.3499999940395355,
+                                0.3499999940395355,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "texture_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 4
+                            },
+                            "current_texture": {
+                                "index": 0
+                            },
+                            "textures": [
+                                {
+                                    "texture_tag": "Operation1Text",
+                                    "texture_type": 0
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "name": "Sprite5",
+                "type": 1
+            }
+        }
+    ]
 }

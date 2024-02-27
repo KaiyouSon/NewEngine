@@ -8,6 +8,7 @@ private:
 
 public:
 	void Update();
+	void ExecuteCS();
 	void Draw();
 
 public:

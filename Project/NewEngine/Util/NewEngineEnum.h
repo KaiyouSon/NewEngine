@@ -4,7 +4,8 @@
 enum class GameObjectType
 {
 	Object3D,
-	Sprite
+	Sprite,
+	ParticleMesh,
 };
 
 // コンポネントの種類
@@ -19,6 +20,7 @@ enum class ComponentType
 	TextureData,
 	ModelData,
 	PipelineData,
+	ParticleData,
 };
 
 // ブレンドモード
@@ -152,11 +154,11 @@ enum class ViewType
 enum class TextureType
 {
 	Default,
-	Color,
 	Material,
 	Depth,
 	Render,
 	Volume,
+	Count,
 };
 
 enum class ShaderType

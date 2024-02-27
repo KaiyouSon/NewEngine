@@ -79,6 +79,9 @@ void Object3D::Update()
 	// マテリアルの転送
 	MaterialTransfer();
 }
+void Object3D::ExecuteCS()
+{
+}
 void Object3D::AppedToRenderer()
 {
 	Renderer::GetInstance()->Register("Object3D",

@@ -77,9 +77,10 @@ public:
 	static bool DrawImageButton(ITexture* texture, const Vec2& size);
 
 	// スライダー描画
-	static void DrawSlider1(const char* label, float& v, const float& moveSpeed = 1.f, const float guiWidth = 0);
-	static void DrawSlider2(const char* label, Vec2& v, const float& moveSpeed = 1.f);
-	static void DrawSlider3(const char* label, Vec3& v, const float& moveSpeed = 1.f);
+	static void DrawSlider1(const std::string& label, float& v, const float& moveSpeed = 1.f, const float guiWidth = 0);
+	static void DrawSlider2(const std::string& label, Vec2& v, const float& moveSpeed = 1.f);
+	static void DrawSlider3(const std::string& label, Vec3& v, const float& moveSpeed = 1.f);
+	static void DrawSlider4(const std::string& label, Vec4& v, const float& moveSpeed = 1.f);
 
 	// カラーエディター描画
 	static void DrawColorEdit(const char* label, Color& color);

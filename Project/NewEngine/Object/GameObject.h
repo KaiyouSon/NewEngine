@@ -33,6 +33,9 @@ protected:
 	// オブジェクト3D時の初期化
 	void InitToObject3D();
 
+	// パーティクルメッシュの初期化
+	void InitToParticleMesh();
+
 	// スプライト時の初期化
 	void InitToSprite();
 
@@ -47,6 +50,7 @@ public:
 	GameObject();
 	virtual ~GameObject() {}
 	virtual void Update() = 0;
+	virtual void ExecuteCS() = 0;
 	virtual void AppedToRenderer() = 0;
 	virtual void Draw(const std::string& _layerTag = "", const BlendMode _blendMode = BlendMode::Alpha) = 0;
 

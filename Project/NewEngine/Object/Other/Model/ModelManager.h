@@ -16,6 +16,13 @@ private:
 	std::mutex mMutex;	// 排他制御
 	std::string mDirectoryPath;
 
+#pragma region new
+
+public:
+	void LoadModel(const std::string fileName, const bool isSmoothing = false);
+
+#pragma endregion
+
 public: // ロード関連
 
 	// objモデルのロード

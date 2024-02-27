@@ -2,10 +2,17 @@
 #include "Model.h"
 
 // objモデル
-struct ObjModel : public Model
+class ObjModel : public Model
 {
-	ObjModel()
-	{
-		format = ModelFormat::Obj;
-	}
+private:
+	void LoadPositions(std::istringstream& lineStream, std::vector<Vec3>& positions);
+	void LoadTexcoords(std::istringstream& lineStream, std::vector<Vec2>& texcoords);
+	void LoadNormals(std::istringstream& lineStream, std::vector<Vec3>& normals);
+
+
+public:
+	ObjModel();
+	ObjModel(const std::string tag, const std::string& path);
+
+	void Create(const bool isSmoothing);
 };

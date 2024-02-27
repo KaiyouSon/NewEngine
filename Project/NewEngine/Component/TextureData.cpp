@@ -97,7 +97,9 @@ void TextureData::ShowDataToInspector()
 			};
 
 			// TextureMapをComboで表示する
-			Gui::DrawItemsMapCombo(label, previewTag, currentComboIndex, *TextureManager::GetTextureMap(), selectedFunc);
+			Gui::DrawItemsMapCombo(
+				label, previewTag, currentComboIndex,
+				*gAssetsManager->GetTextureMap(TextureType::Default), selectedFunc);
 
 			// ドロップしたときの処理
 			if (Gui::DragDropTarget("DragDrop Texture"))
@@ -105,10 +107,13 @@ void TextureData::ShowDataToInspector()
 				std::string tag = MainWindow::GetInstance()->GetDragDropAssetsTag();
 				previewTag = tag;
 
-				SetTexture(tag, i);
 				if (mCurrentTexIndex == i)
 				{
 					mGameObj->SetTexture(previewTag);
+				}
+				else
+				{
+					SetTexture(tag, i);
 				}
 			}
 		}
@@ -120,13 +125,12 @@ void TextureData::ShowDataToInspector()
 			mTextures.push_back(TextureManager::GetTexture("White"));
 		}
 		Gui::DrawColumns(1);
-
 	}
 }
 
 void TextureData::SetTexture(const std::string& tag, const uint32_t index)
 {
-	ITexture* tex = TextureManager::GetTexture(tag);
+	ITexture* tex = gAssetsManager->GetTexture(tag);
 	if (!tex)
 	{
 		return;
@@ -147,7 +151,7 @@ void TextureData::SetTexture(ITexture* tex, const uint32_t index)
 
 void TextureData::SetCurrentTexture(const std::string& tag)
 {
-	ITexture* tex = TextureManager::GetTexture(tag);
+	ITexture* tex = gAssetsManager->GetTexture(tag);
 	if (!tex)
 	{
 		return;
@@ -164,4 +168,14 @@ ITexture* TextureData::GetTexture(const uint32_t index)
 ITexture* TextureData::GetCurrentTexture()
 {
 	return mCrrentTex;
+}
+
+void TextureData::SetCurrentTexture(ITexture* tex)
+{
+	if (!tex)
+	{
+		return;
+	}
+
+	mCrrentTex = tex;
 }

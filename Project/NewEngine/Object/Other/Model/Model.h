@@ -6,14 +6,20 @@
 #include <string>
 
 // モデルのインターフェース
-struct Model
+class Model
 {
+protected:
+	std::string mPath;
+
+public:
 	std::string name;
 	std::string tag;
 	Mesh mesh;
 	MaterialColor material;
 	ModelFormat format;
-	Texture* texture = TextureManager::GetTexture("White");
+	Texture* texture;
 
+public:
+	Model();
 	virtual ~Model() {}
 };

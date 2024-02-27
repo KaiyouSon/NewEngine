@@ -55,6 +55,7 @@ public:
 	Object3D();
 	Object3D(const std::string& name);
 	void Update() override;
+	void ExecuteCS() override;
 	void AppedToRenderer() override;
 	void Draw(const std::string& _layerTag = "", const BlendMode blendMode = BlendMode::Alpha) override;
 

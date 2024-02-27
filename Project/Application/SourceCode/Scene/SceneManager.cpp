@@ -27,7 +27,6 @@ void SceneManager::LoadSceneToDirectroy()
 void SceneManager::LoadSceneToJson(const std::string& sceneName)
 {
 	mCurrentScene->LoadToJson(sceneName);
-	gAssetsManager = mCurrentScene->GetAssetsManager();
 }
 
 void SceneManager::SaveSceneToJson()
@@ -78,6 +77,14 @@ void SceneManager::CreateScene(const std::string& sceneName)
 	std::ofstream outputFile(path);
 	outputFile << std::setw(4) << data << std::endl;
 	outputFile.close();
+
+	// テクスチャ用のフォルダーを作成
+	std::string texDirectoryPath = AppTextureDirectory + sceneName;
+	std::filesystem::create_directories(texDirectoryPath);
+
+	// モデル用のフォルダーを作成
+	std::string modelDirectoryPath = AppModelDirectory + sceneName;
+	std::filesystem::create_directories(modelDirectoryPath);
 
 	GetInstance()->mSceneNames.push_back(sceneName);
 }

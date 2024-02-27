@@ -7,21 +7,109 @@
 using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
+
+void ParticleMesh::Update()
+{
+	BaseUpdate();
+
+	// マテリアルの転送
+	MaterialTransfer();
+}
+
+void ParticleMesh::AppedToRenderer()
+{
+}
+
+void ParticleMesh::Draw(const std::string& _layerTag, const BlendMode _blendMode)
+{
+	_layerTag;
+	_blendMode;
+
+	if (!mParticleTexture) return;
+	if (!mParticleDataSB->GetBufferResource()) return;
+
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
+	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
+
+	// GraphicsPipeline描画コマンド
+	mGraphicsPipeline->DrawCommand(blendMode);
+
+	MaterialDrawCommands();
+
+	// SRVの設定
+	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
+	cmdList->SetGraphicsRootDescriptorTable(startIndex, mParticleTexture->GetBufferResource()->srvHandle.gpu);
+
+	if (mParticleDataSB->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_UNORDERED_ACCESS)
+	{
+		// GENERIC_READ -> UNORDERED_ACCESS に変更
+		renderBase->TransitionBufferState(
+			mParticleDataSB->GetBufferResource(),
+			D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+			D3D12_RESOURCE_STATE_GENERIC_READ);
+	}
+
+	// CSの結果
+	cmdList->SetGraphicsRootDescriptorTable(
+		startIndex + 1, mParticleDataSB->GetBufferResource()->srvHandle.gpu);
+
+	cmdList->DrawInstanced(mMaxParticle, 1, 0, 0);
+}
+
+void ParticleMesh::SetTexture(const std::string& textureTag, [[maybe_unused]] const bool isChangeSize)
+{
+	textureTag;
+
+	ITexture* tex = gAssetsManager->GetTexture(textureTag);
+	if (!tex)
+	{
+		return;
+	}
+
+	mTextureData->SetCurrentTexture(textureTag);
+	mMeshTexture = mTextureData->GetCurrentTexture();
+}
+
+
 ParticleMesh::ParticleMesh() :
-	pos(0, 0, 0), scale(1, 1, 1), rot(0, 0, 0),
-	offset(0, 0), tiling(1, 1),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ParticleMesh")),
 	mComputePipeline(PipelineManager::GetComputePipeline("ParticleMesh")),
 	mMeshTexture(TextureManager::GetTexture("White")),
 	mParticleTexture(TextureManager::GetTexture("White")),
-	mParticleData(std::make_unique<StructuredBuffer>()),
+	mParticleDataSB(std::make_unique<StructuredBuffer>()),
 	mCSMaterial(std::make_unique<Material>())
 {
+	InitToParticleMesh();
+
 	// マテリアルの初期化
 	MaterialInit();
 	CSMaterialInit();
 
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
+
+	mParticleData = mComponentManager->GetComponent<ParticleData>();
+}
+
+ParticleMesh::ParticleMesh(const std::string& name) :
+	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("ParticleMesh")),
+	mComputePipeline(PipelineManager::GetComputePipeline("ParticleMesh")),
+	mMeshTexture(TextureManager::GetTexture("White")),
+	mParticleTexture(TextureManager::GetTexture("Particle1")),
+	mParticleDataSB(std::make_unique<StructuredBuffer>()),
+	mCSMaterial(std::make_unique<Material>())
+{
+	this->name = name;
+
+	InitToParticleMesh();
+
+	// マテリアルの初期化
+	MaterialInit();
+	CSMaterialInit();
+
+	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
+
+	mParticleData = mComponentManager->GetComponent<ParticleData>();
+	SetParticleData<ParticleParameter::Default>(10000);
 }
 
 void ParticleMesh::ExecuteCS()
@@ -42,57 +130,6 @@ void ParticleMesh::ExecuteCS()
 
 	// ディスパッチ
 	cmdList->Dispatch(1, 1, 1);
-}
-void ParticleMesh::Update(Transform* parent)
-{
-	mTransform.pos = pos;
-	mTransform.scale = scale;
-	mTransform.rot = rot;
-	mTransform.Update();
-
-	if (parent != nullptr)
-	{
-		mParent = parent;
-
-		Mat4 mat = mTransform.GetWorldMat();
-		mat *= mParent->GetWorldMat();
-		mTransform.SetWorldMat(mat);
-	}
-
-	// マテリアルの転送
-	MaterialTransfer();
-
-}
-void ParticleMesh::Draw(const BlendMode blendMode)
-{
-	if (mParticleTexture == nullptr) return;
-
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
-	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
-
-	// GraphicsPipeline描画コマンド
-	mGraphicsPipeline->DrawCommand(blendMode);
-
-	MaterialDrawCommands();
-
-	// SRVの設定
-	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
-	cmdList->SetGraphicsRootDescriptorTable(startIndex, mParticleTexture->GetBufferResource()->srvHandle.gpu);
-
-	if (mParticleData->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_UNORDERED_ACCESS)
-	{
-		// GENERIC_READ -> UNORDERED_ACCESS に変更
-		renderBase->TransitionBufferState(
-			mParticleData->GetBufferResource(),
-			D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
-			D3D12_RESOURCE_STATE_GENERIC_READ);
-	}
-
-	// CSの結果
-	cmdList->SetGraphicsRootDescriptorTable(
-		startIndex + 1, mParticleData->GetBufferResource()->srvHandle.gpu);
-
-	cmdList->DrawInstanced(mMaxParticle, 1, 0, 0);
 }
 
 // --- マテリアル関連 --------------------------------------------------- //
@@ -124,7 +161,7 @@ void ParticleMesh::MaterialTransfer()
 	CTransformP transformPData =
 	{
 		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
-		mTransform.GetWorldMat(),
+		mTransform->GetWorldMat(),
 		mBillboard.GetMat(),
 	};
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformPData);
@@ -191,18 +228,18 @@ void ParticleMesh::CSMaterialDrawCommands()
 	uint32_t srvStartIndex = mComputePipeline->GetRootSignature()->GetSRVStartIndex();
 	cmdList->SetComputeRootDescriptorTable(srvStartIndex, mMeshTexture->GetBufferResource()->srvHandle.gpu);
 
-	if (mParticleData->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_GENERIC_READ)
+	if (mParticleDataSB->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_GENERIC_READ)
 	{
 		// GENERIC_READ -> UNORDERED_ACCESS に変更
 		renderBase->TransitionBufferState(
-			mParticleData->GetBufferResource(),
+			mParticleDataSB->GetBufferResource(),
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
 	}
 
 	// UAV
 	uint32_t uavStartIndex = mComputePipeline->GetRootSignature()->GetUAVStartIndex();
-	cmdList->SetComputeRootDescriptorTable(uavStartIndex, mParticleData->GetBufferResource()->uavHandle.gpu);
+	cmdList->SetComputeRootDescriptorTable(uavStartIndex, mParticleDataSB->GetBufferResource()->uavHandle.gpu);
 	// その他のUAVデータ
 	for (uint32_t i = 0; i < mStructuredBuffers.size(); i++)
 	{
@@ -232,17 +269,12 @@ void ParticleMesh::SetComputePipeline(ComputePipeline* computePipeline) { mCompu
 
 Vec3 ParticleMesh::GetWorldPos()
 {
-	Vec3 worldPos = Vec3MulMat4(pos, mTransform.GetWorldMat(), true);
+	Vec3 worldPos = Vec3MulMat4(pos, mTransform->GetWorldMat(), true);
 	return worldPos;
 }
 
 Vec3 ParticleMesh::GetWorldScale()
 {
-	Vec3 worldScale = mTransform.GetWorldMat().GetScale();
+	Vec3 worldScale = mTransform->GetWorldMat().GetScale();
 	return worldScale;
-}
-
-Transform ParticleMesh::GetTransform()
-{
-	return mTransform;
 }

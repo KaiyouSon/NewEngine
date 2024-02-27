@@ -24,4 +24,8 @@ public:
 	void SetCurrentTexture(const std::string& tag);
 	ITexture* GetTexture(const uint32_t index = 0);
 	ITexture* GetCurrentTexture();
+
+public:
+	// 仮
+	void SetCurrentTexture(ITexture* tex);
 };

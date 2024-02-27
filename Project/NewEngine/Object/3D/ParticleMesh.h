@@ -10,34 +10,31 @@
 #include "StructuredBuffer.h"
 #include "DescriptorHeapManager.h"
 
+#include "GameObject.h"
+
 // GPUパーティクルを用いて、メッシュの貼り付けるクラス
-class ParticleMesh
+class ParticleMesh : public GameObject
 {
 private:
-	std::unique_ptr<StructuredBuffer> mParticleData;
+	// コンポネント関連
+	ParticleData* mParticleData;
+
+
+private:
+	std::unique_ptr<StructuredBuffer> mParticleDataSB;
 	std::vector<std::unique_ptr<StructuredBuffer>> mStructuredBuffers;
 
 	uint32_t mMaxParticle;
-	Texture* mMeshTexture;
+	ITexture* mMeshTexture;
 	Texture* mParticleTexture;
 
 	Vec3 mWorldPos;
 	Vec3 mWorldScale;
-	Transform mTransform;
-	Transform* mParent;
 	Material mMaterial;
 	std::unique_ptr<Material> mCSMaterial;
 	GraphicsPipeline* mGraphicsPipeline;
 	ComputePipeline* mComputePipeline;
 	Billboard mBillboard;
-
-public:
-	Vec3 pos;
-	Vec3 scale;
-	Vec3 rot;
-	Color color;
-	Vec2 tiling;
-	Vec2 offset;
 
 private:
 	void MaterialInit();
@@ -50,9 +47,16 @@ private:
 
 public:
 	ParticleMesh();
-	void ExecuteCS();
-	void Update(Transform* parent = nullptr);
-	void Draw(const BlendMode blendMode = BlendMode::Alpha);
+	ParticleMesh(const std::string& name);
+
+	void Update() override;
+	void ExecuteCS() override;
+	void AppedToRenderer() override;
+	void Draw(const std::string& _layerTag = "", const BlendMode _blendMode = BlendMode::Alpha) override;
+
+public:
+	void SetTexture(const std::string& textureTag, [[maybe_unused]] const bool isChangeSize = true) override;
+
 
 public:
 	template<typename T>
@@ -108,24 +112,23 @@ public: // セッター
 
 		// SRVとUAVを作成
 		uint32_t dataSize = sizeof(T) * mMaxParticle;
-		mParticleData->Create(dataSize);
+		mParticleDataSB->Create(dataSize);
 
 		DescriptorHeapManager::GetDescriptorHeap("SRV")->
-			CreateSRV(mParticleData->GetBufferResource(), mMaxParticle, sizeof(T));
+			CreateSRV(mParticleDataSB->GetBufferResource(), mMaxParticle, sizeof(T));
 
 		// GENERIC_READ -> UNORDERED_ACCESS に変更
 		RenderBase::GetInstance()->TransitionBufferState(
-			mParticleData->GetBufferResource(),
+			mParticleDataSB->GetBufferResource(),
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
-		mParticleData->GetBufferResource()->buffer->GetDesc();
+		mParticleDataSB->GetBufferResource()->buffer->GetDesc();
 
 		DescriptorHeapManager::GetDescriptorHeap("SRV")->
-			CreateUAV(mParticleData->GetBufferResource(), mMaxParticle, sizeof(T));
+			CreateUAV(mParticleDataSB->GetBufferResource(), mMaxParticle, sizeof(T));
 	}
 
 public: // ゲッター
 	Vec3 GetWorldPos();
 	Vec3 GetWorldScale();
-	Transform GetTransform();
 };

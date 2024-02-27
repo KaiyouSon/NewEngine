@@ -5,6 +5,14 @@
 
 namespace ParticleParameter
 {
+	struct Default
+	{
+		Vec3 pos;			float pad1;
+		Vec2 scale;			Vec2 pad2;
+		float shininess;	Vec3 pad3;
+		Color color;
+	};
+
 	struct PParam0
 	{
 		Vec3 curPos;

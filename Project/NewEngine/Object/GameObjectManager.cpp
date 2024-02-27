@@ -9,6 +9,14 @@ void GameObjectManager::Update()
 	}
 }
 
+void GameObjectManager::ExecuteCS()
+{
+	for (const auto& obj : mGameObjects)
+	{
+		obj->ExecuteCS();
+	}
+}
+
 void GameObjectManager::Draw()
 {
 	for (const auto& obj : mGameObjects)
@@ -50,6 +58,9 @@ void GameObjectManager::AddGameObject(const GameObjectType type, const std::stri
 		break;
 	case GameObjectType::Sprite:
 		obj = std::make_unique<Sprite>(name);
+		break;
+	case GameObjectType::ParticleMesh:
+		obj = std::make_unique<ParticleMesh>(name);
 	}
 	mGameObjects.push_back(std::move(obj));
 }

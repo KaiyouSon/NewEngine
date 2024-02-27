@@ -147,6 +147,7 @@
     <ClCompile Include="NewEngine\Component\GameObjectInfo.cpp" />
     <ClCompile Include="NewEngine\Component\ModelData.cpp" />
     <ClCompile Include="NewEngine\Component\Object3DInfo.cpp" />
+    <ClCompile Include="NewEngine\Component\ParticleData.cpp" />
     <ClCompile Include="NewEngine\Component\PipelineData.cpp" />
     <ClCompile Include="NewEngine\Component\SpriteInfo.cpp" />
     <ClCompile Include="NewEngine\Component\TextureData.cpp" />
@@ -255,6 +256,7 @@
     <ClCompile Include="NewEngine\Math\Quaternion.cpp" />
     <ClCompile Include="NewEngine\Math\Vec2.cpp" />
     <ClCompile Include="NewEngine\Math\Vec3.cpp" />
+    <ClCompile Include="NewEngine\Math\Vec4.cpp" />
     <ClCompile Include="NewEngine\NewEngine.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)/NewEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -363,6 +365,7 @@
     <ClInclude Include="NewEngine\Component\GameObjectInfo.h" />
     <ClInclude Include="NewEngine\Component\ModelData.h" />
     <ClInclude Include="NewEngine\Component\Object3DInfo.h" />
+    <ClInclude Include="NewEngine\Component\ParticleData.h" />
     <ClInclude Include="NewEngine\Component\PipelineData.h" />
     <ClInclude Include="NewEngine\Component\SpriteInfo.h" />
     <ClInclude Include="NewEngine\Component\TextureData.h" />
@@ -470,6 +473,7 @@
     <ClInclude Include="NewEngine\Math\Quaternion.h" />
     <ClInclude Include="NewEngine\Math\Vec2.h" />
     <ClInclude Include="NewEngine\Math\Vec3.h" />
+    <ClInclude Include="NewEngine\Math\Vec4.h" />
     <ClInclude Include="NewEngine\NewEngine.h" />
     <ClInclude Include="NewEngine\Object\2D\CircleGaugeSprite.h" />
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h" />

@@ -22,6 +22,21 @@ void GameObject::InitToObject3D()
 	mTextureData = mComponentManager->GetComponent<TextureData>();
 }
 
+void GameObject::InitToParticleMesh()
+{
+	layerTag = "Object3D";
+	mType = GameObjectType::ParticleMesh;
+
+	//mComponentManager->AddComponent<Object3DInfo>();
+	mComponentManager->AddComponent<Transform>();
+	mComponentManager->AddComponent<TextureData>();
+	mComponentManager->AddComponent<PipelineData>();
+	mComponentManager->AddComponent<ParticleData>();
+
+	mTransform = mComponentManager->GetComponent<Transform>();
+	mTextureData = mComponentManager->GetComponent<TextureData>();
+}
+
 void GameObject::InitToSprite()
 {
 	layerTag = "BackSprite";

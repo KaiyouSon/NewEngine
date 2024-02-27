@@ -17,6 +17,99 @@ TextureManager::TextureManager() : mMutex(std::mutex{})
 /// --- 生成関連 ------------------------------------------------------------------------------------------------------ ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void TextureManager::LoadTexture(const std::string& path)
+{
+	fs::path fspath = path;
+	std::string tag = fspath.filename().string();
+
+	// 拡張子を含む最後の'.'以降を削除
+	uint32_t pos = (uint32_t)tag.find_last_of('.');
+	if (pos != std::string::npos)
+	{
+		tag = tag.substr(0, pos);
+	}
+
+	// マップに格納
+	std::unique_ptr<ITexture> itex = std::make_unique<Texture>(tag, path);
+	std::pair pair = std::make_pair(tag, std::move(itex));
+	mTextureMapArrays[(uint32_t)TextureType::Default].insert(std::move(pair));
+
+	// キャストする
+	Texture* tex = dynamic_cast<Texture*>(mTextureMapArrays[(uint32_t)TextureType::Default][tag].get());
+
+	TexMetadata metadata = TexMetadata();
+	ScratchImage scratchImg = ScratchImage();
+
+	// ロード
+	if (fspath.extension() == ".png")
+	{
+		LoadTextureFromPNG(path, scratchImg, metadata);
+	}
+	else if (fspath.extension() == ".dds")
+	{
+		LoadTextureFromDDS(path, scratchImg, metadata);
+	}
+
+	// テクスチャーのバッファ生成
+	tex->Create(scratchImg, metadata);
+
+	// SRV作成
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(tex->GetBufferResource());
+
+	// アップロード
+	tex->UpLoad();
+}
+
+void TextureManager::LoadMaterialTexture(const std::string& path)
+{
+	fs::path fspath = path;
+	std::string tag = fspath.filename().string();
+
+	// 拡張子を含む最後の'.'以降を削除
+	uint32_t pos = (uint32_t)tag.find_last_of('.');
+	if (pos != std::string::npos)
+	{
+		tag = tag.substr(0, pos);
+	}
+
+	// マップに格納
+	std::unique_ptr<ITexture> itex = std::make_unique<Texture>(tag, path);
+	std::pair pair = std::make_pair(tag, std::move(itex));
+	mTextureMapArrays[(uint32_t)TextureType::Default].insert(std::move(pair));
+
+	// キャストする
+	Texture* tex = dynamic_cast<Texture*>(mTextureMapArrays[(uint32_t)TextureType::Material][tag].get());
+
+	TexMetadata metadata = TexMetadata();
+	ScratchImage scratchImg = ScratchImage();
+
+	// ロード
+	if (fspath.extension() == ".png")
+	{
+		LoadTextureFromPNG(path, scratchImg, metadata);
+	}
+	else if (fspath.extension() == ".dds")
+	{
+		LoadTextureFromDDS(path, scratchImg, metadata);
+	}
+
+	// テクスチャーのバッファ生成
+	tex->Create(scratchImg, metadata);
+
+	// SRV作成
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(tex->GetBufferResource());
+
+	// アップロード
+	tex->UpLoad();
+}
+
+
+
+
+
+
+
+
 void TextureManager::LoadTextureFromPNG(
 	const std::string filePath, ScratchImage& scratchImg, TexMetadata& metadata)
 {

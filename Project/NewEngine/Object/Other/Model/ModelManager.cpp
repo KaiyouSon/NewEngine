@@ -5,6 +5,7 @@
 #include <sstream>
 
 using namespace VertexBufferData;
+namespace fs = std::filesystem;
 
 ModelManager::ModelManager() :
 	mDirectoryPath("Application/Resources/Model/")
@@ -15,6 +16,22 @@ ModelManager::ModelManager() :
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// --- ロード関連 ---------------------------------------------------------------------------------------------------- ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void ModelManager::LoadModel(const std::string fileName, const bool isSmoothing)
+{
+	fs::path fspath = fileName;
+	std::string tag = fspath.filename().string();
+
+	// マップに格納
+	std::unique_ptr<Model> model = std::make_unique<ObjModel>(tag, fileName);
+	std::pair pair = std::make_pair(tag, std::move(model));
+	mModelMap.insert(std::move(pair));
+
+	// キャストする
+	ObjModel* objModel = dynamic_cast<ObjModel*>(mModelMap[tag].get());
+
+	objModel->Create(isSmoothing);
+}
 
 // objモデルのロード
 Model* ModelManager::LoadObjModel(const std::string fileName, const std::string tag, const bool isSmoothing)

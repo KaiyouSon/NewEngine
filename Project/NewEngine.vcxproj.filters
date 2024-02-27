@@ -436,6 +436,24 @@
     <Filter Include="Uncategorized\Header\GuiWindow">
       <UniqueIdentifier>{af48dad7-692b-4b00-8e8f-8ffc171e02bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Uncategorized\Source\Assets">
+      <UniqueIdentifier>{b2828c90-8941-4724-b521-ac26649ac811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uncategorized\Header\Assets">
+      <UniqueIdentifier>{fb10c72a-93f0-4177-a5b2-c4610f2b4bee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uncategorized\Source\GameObject">
+      <UniqueIdentifier>{8bf570c7-294a-467f-bbe6-7a210d731bfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uncategorized\Source\GameObject\3D">
+      <UniqueIdentifier>{f89d75ff-5e08-4261-8ff6-641b57201e05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uncategorized\Header\GameObject">
+      <UniqueIdentifier>{b357d024-d30d-4525-9340-d13a5ec34ade}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uncategorized\Header\GameObject\3D">
+      <UniqueIdentifier>{e1d70362-5ed4-4e57-9c25-dcd9e1c21bd9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -496,9 +514,6 @@
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\Line.cpp">
-      <Filter>NewEngine\Source\Object\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Object\3D\Object3D.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Util\Color.cpp">
@@ -837,16 +852,10 @@
     <ClCompile Include="Application\SourceCode\UI\OperationUI.cpp">
       <Filter>Application\Source\UI</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\Other\Model\ModelManager.cpp">
-      <Filter>NewEngine\Source\Object\Other\Model</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\Model\AssimpLoader.cpp">
       <Filter>NewEngine\Source\Object\Other\Model</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\Other\Texture\TextureAnimation.cpp">
-      <Filter>NewEngine\Source\Object\Other\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Object\Other\Texture\TextureManager.cpp">
       <Filter>NewEngine\Source\Object\Other\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Motion\Boss\BossAttack2Motion.cpp">
@@ -913,9 +922,6 @@
       <Filter>Application\Source\Effect</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\ParticleObject.cpp">
-      <Filter>NewEngine\Source\Object\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Object\3D\ParticleMesh.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Field\FieldObject\Sun.cpp">
@@ -993,9 +999,6 @@
     <ClCompile Include="NewEngine\Render\ShaderCompiler\InputLayout.cpp">
       <Filter>NewEngine\Source\Render\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\GameObject.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\GameObjectManager.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
@@ -1047,11 +1050,32 @@
     <ClCompile Include="NewEngine\Debugger\ConsoleWindow.cpp">
       <Filter>Uncategorized\Source\GuiWindow</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\AssetsManager.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Component\GameObjectInfo.cpp">
       <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\AssetsManager.cpp">
+      <Filter>Uncategorized\Source\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\Texture\TextureManager.cpp">
+      <Filter>Uncategorized\Source\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\Other\Model\ModelManager.cpp">
+      <Filter>Uncategorized\Source\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\Object3D.cpp">
+      <Filter>Uncategorized\Source\GameObject\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\GameObject.cpp">
+      <Filter>Uncategorized\Source\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\ParticleMesh.cpp">
+      <Filter>Uncategorized\Source\GameObject\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Component\ParticleData.cpp">
+      <Filter>Uncategorized\Source\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Math\Vec4.cpp">
+      <Filter>Uncategorized\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1113,9 +1137,6 @@
       <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\Line.h">
-      <Filter>NewEngine\Header\Object\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Object\3D\Object3D.h">
       <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Util\Color.h">
@@ -1523,16 +1544,10 @@
     <ClInclude Include="Application\SourceCode\UI\ItemUI.h">
       <Filter>Application\Header\UI\Member</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\Other\Texture\TextureManager.h">
-      <Filter>NewEngine\Header\Object\Other\Texture</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\Texture\TextureAnimation.h">
       <Filter>NewEngine\Header\Object\Other\Texture</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\Other\Model\AssimpLoader.h">
-      <Filter>NewEngine\Header\Object\Other\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Object\Other\Model\ModelManager.h">
       <Filter>NewEngine\Header\Object\Other\Model</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\UI\CameraTargetUI.h">
@@ -1572,9 +1587,6 @@
       <Filter>Application\Header\Effect</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\ParticleObject.h">
-      <Filter>NewEngine\Header\Object\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Object\3D\ParticleMesh.h">
       <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Field\FieldObject\Sun.h">
@@ -1655,9 +1667,6 @@
     <ClInclude Include="NewEngine\Util\NewEngineConstant.h">
       <Filter>NewEngine\Header</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\GameObject.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Object\GameObjectManager.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
@@ -1709,11 +1718,32 @@
     <ClInclude Include="NewEngine\Debugger\ConsoleWindow.h">
       <Filter>Uncategorized\Header\GuiWindow</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\AssetsManager.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Component\GameObjectInfo.h">
       <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\AssetsManager.h">
+      <Filter>Uncategorized\Header\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\Texture\TextureManager.h">
+      <Filter>Uncategorized\Header\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\Other\Model\ModelManager.h">
+      <Filter>Uncategorized\Header\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\Object3D.h">
+      <Filter>Uncategorized\Header\GameObject\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\GameObject.h">
+      <Filter>Uncategorized\Header\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\ParticleMesh.h">
+      <Filter>Uncategorized\Header\GameObject\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Component\ParticleData.h">
+      <Filter>Uncategorized\Header\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Math\Vec4.h">
+      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

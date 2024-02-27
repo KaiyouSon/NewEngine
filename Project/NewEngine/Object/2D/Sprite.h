@@ -42,6 +42,7 @@ public:
 	Sprite();
 	Sprite(const std::string& name);
 	void Update() override;
+	void ExecuteCS() override;
 	void AppedToRenderer() override;
 	void Draw(const std::string& layerTag, const BlendMode blendMode = BlendMode::Alpha);
 
@@ -55,6 +56,7 @@ public:
 
 public: //セッター
 
+	void SetTexture(Texture*texture, [[maybe_unused]] const bool isChangeSize = true);
 	void SetTexture(const std::string& textureTag, [[maybe_unused]] const bool isChangeSize = true) override;
 
 	// 描画範囲

@@ -13,17 +13,17 @@ TitleUI::TitleUI() :
 
 void TitleUI::Init()
 {
-	mGameTitle->SetTexture("GameTitle");
+	mGameTitle->SetTexture(TextureManager::GetTexture("GameTitle"));
 	mGameTitle->pos = Vec2(GetWindowHalfSize().x, 320);
 	mGameTitle->scale = 1.75f;
 
-	mPressButton->SetTexture("PressButton");
+	mPressButton->SetTexture(TextureManager::GetTexture("PressButton"));
 	mPressButton->pos = Vec2(GetWindowHalfSize().x, 900);
 	mPressButton->scale = 0.3f;
 
 	for (uint32_t i = 0; i < mPressButtonBacks.size(); i++)
 	{
-		mPressButtonBacks[i]->SetTexture("PressButtonBack");
+		mPressButtonBacks[i]->SetTexture(TextureManager::GetTexture("PressButtonBack"));
 		mPressButtonBacks[i]->pos = Vec2(GetWindowHalfSize().x, 900);
 	}
 	mPressButtonBacks[0]->scale = Vec2(1.5f, 0.8f);
@@ -31,7 +31,7 @@ void TitleUI::Init()
 	mPressButtonBacks[1]->scale = Vec2(1.f, 0.3f);
 	mPressButtonBacks[1]->color = Color::white;
 
-	mPressButtonAfterImage->SetTexture("PressButton");
+	mPressButtonAfterImage->SetTexture(TextureManager::GetTexture("PressButton"));
 	mPressButtonAfterImage->pos = Vec2(GetWindowHalfSize().x, 900);
 	mPressButtonAfterImage->scale = 0.3f;
 

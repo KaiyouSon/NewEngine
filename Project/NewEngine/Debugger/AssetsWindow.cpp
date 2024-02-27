@@ -130,6 +130,11 @@ void AssetsWindow::ShowTextureAssets()
 	int count = 1;
 	for (const auto& [tag, tex] : *gAssetsManager->GetTextureMap(TextureType::Default))
 	{
+		if (!tex)
+		{
+			continue;
+		}
+
 		// 検索機能
 		std::string::size_type pos = tag.find(search);
 		if (pos == std::string::npos)

@@ -88,6 +88,14 @@ void HierarchyWindow::CreateGameObjectPop()
 		}
 		Gui::DrawLine();
 
+		// パーティクルメッシュなら
+		if (Gui::MenuItem("Particle Mesh"))
+		{
+			name = "Particle Mesh" + std::to_string(mapSize);
+			AddGameObject(GameObjectType::ParticleMesh, name);
+		}
+		Gui::DrawLine();
+
 		ImGui::EndPopup();
 	}
 }
