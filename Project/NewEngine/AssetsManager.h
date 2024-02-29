@@ -2,12 +2,17 @@
 #include "StandardLib.h"
 #include "TextureManager.h"
 #include "ModelManager.h"
+#include "MaterialManager.h"
 
 class AssetsManager
 {
 private:
 	TextureManager mTextureManager;
+	std::unique_ptr<MaterialManager> mMaterialManager;
 	//ModelManager mModelManager;
+
+public:
+	AssetsManager();
 
 public:
 	void LoadTexture(const std::string& path);
@@ -20,6 +25,7 @@ public:
 	void LoadModels(const std::string& folderPath);
 
 	Texture* GetTexture(const std::string& tag);
+	Material* GetMaterial(const std::string& tag);
 
 public:
 	// ゲッター

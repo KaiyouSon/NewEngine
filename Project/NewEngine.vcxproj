@@ -148,6 +148,7 @@
     <ClCompile Include="NewEngine\Component\ModelData.cpp" />
     <ClCompile Include="NewEngine\Component\Object3DInfo.cpp" />
     <ClCompile Include="NewEngine\Component\ParticleData.cpp" />
+    <ClCompile Include="NewEngine\Component\ParticleMeshInfo.cpp" />
     <ClCompile Include="NewEngine\Component\PipelineData.cpp" />
     <ClCompile Include="NewEngine\Component\SpriteInfo.cpp" />
     <ClCompile Include="NewEngine\Component\TextureData.cpp" />
@@ -251,6 +252,7 @@
     <ClCompile Include="NewEngine\Light\SpotLight.cpp" />
     <ClCompile Include="NewEngine\main.cpp" />
     <ClCompile Include="NewEngine\Debugger\MappingWindow.cpp" />
+    <ClCompile Include="NewEngine\MaterialManager.cpp" />
     <ClCompile Include="NewEngine\Math\Mat4.cpp" />
     <ClCompile Include="NewEngine\Math\MathUtil.cpp" />
     <ClCompile Include="NewEngine\Math\Quaternion.cpp" />
@@ -366,6 +368,7 @@
     <ClInclude Include="NewEngine\Component\ModelData.h" />
     <ClInclude Include="NewEngine\Component\Object3DInfo.h" />
     <ClInclude Include="NewEngine\Component\ParticleData.h" />
+    <ClInclude Include="NewEngine\Component\ParticleMeshInfo.h" />
     <ClInclude Include="NewEngine\Component\PipelineData.h" />
     <ClInclude Include="NewEngine\Component\SpriteInfo.h" />
     <ClInclude Include="NewEngine\Component\TextureData.h" />
@@ -468,6 +471,7 @@
     <ClInclude Include="NewEngine\Debugger\MappingWindow.h" />
     <ClInclude Include="NewEngine\Light\PointLight.h" />
     <ClInclude Include="NewEngine\Light\SpotLight.h" />
+    <ClInclude Include="NewEngine\MaterialManager.h" />
     <ClInclude Include="NewEngine\Math\Mat4.h" />
     <ClInclude Include="NewEngine\Math\MathUtil.h" />
     <ClInclude Include="NewEngine\Math\Quaternion.h" />

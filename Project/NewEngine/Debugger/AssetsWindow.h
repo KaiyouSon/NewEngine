@@ -10,6 +10,7 @@ private:
 		SceneAssets,
 		TextureAssets,
 		ModelAssets,
+		MaterialAssets,
 	};
 
 private:
@@ -17,6 +18,7 @@ private:
 	void ShowSceneAssets();
 	void ShowTextureAssets();
 	void ShowModelAssets();
+	void ShowMaterialAssets();
 
 	void DrawBackButton();
 

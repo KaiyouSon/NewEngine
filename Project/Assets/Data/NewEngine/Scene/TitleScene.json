@@ -289,9 +289,23 @@
             "object": {
                 "components": [
                     {
-                        "transform": {
+                        "particle_mesh_info": {
+                            "color": [
+                                255.0,
+                                255.0,
+                                255.0,
+                                255.0
+                            ],
                             "component_info": {
                                 "index": 0,
+                                "type": 3
+                            }
+                        }
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
                                 "type": 0
                             },
                             "pos": [
@@ -307,15 +321,15 @@
                             "scale": [
                                 0.009999999776482582,
                                 0.009999999776482582,
-                                0.009999999776482582
+                                1.0
                             ]
                         }
                     },
                     {
                         "texture_data": {
                             "component_info": {
-                                "index": 1,
-                                "type": 4
+                                "index": 2,
+                                "type": 5
                             },
                             "current_texture": {
                                 "index": 0

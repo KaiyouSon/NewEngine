@@ -14,12 +14,15 @@ void PipelineManager::CreateGraphicsPipeline(const GraphicsPipelineSetting& sett
 
 void PipelineManager::ReCreateGraphicsPipeline(const std::string tag)
 {
-	sGraphicsPipelineMap[tag]->Create(sGraphicsPipelineMap[tag]->GetSetting());
+	tag;
+	//sGraphicsPipelineMap[tag]->Create(sGraphicsPipelineMap[tag]->GetSetting());
 }
 
 void PipelineManager::ReCreateGraphicsPipeline(const GraphicsPipelineSetting& setting, const std::string tag)
 {
-	sGraphicsPipelineMap[tag]->Create(setting);
+	tag;
+	setting;
+	//sGraphicsPipelineMap[tag]->Create(setting);
 }
 
 // ComputePipelineの生成
@@ -41,7 +44,7 @@ void PipelineManager::SavePipelineData()
 		nlohmann::json jsonLayer = nlohmann::json
 		{
 			{ "Tag", tag },
-			{ "Pipeline Blend", setting.pipelineBlend },
+			{ "Pipeline Blend", setting.renderTargetBlendMode },
 			{ "Pipeline Type", (uint32_t)setting.pipelineType },
 			{ "Fill Mode", (uint32_t)setting.fillMode },
 			{ "Cull Mode", (uint32_t)setting.cullMode },

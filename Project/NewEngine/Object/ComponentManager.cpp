@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "ComponentManager.h"
 
 ComponentManager::ComponentManager(GameObject* gameObj) :mGameObj(gameObj)

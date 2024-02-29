@@ -29,7 +29,6 @@ private:
 private: // マテリアル関連
 	void MaterialInit();
 	void MaterialTransfer();
-	void MaterialDrawCommands();
 
 private:
 	void TransferVertexCoord();
@@ -56,7 +55,7 @@ public:
 
 public: //セッター
 
-	void SetTexture(Texture*texture, [[maybe_unused]] const bool isChangeSize = true);
+	void SetTexture(Texture* texture, [[maybe_unused]] const bool isChangeSize = true);
 	void SetTexture(const std::string& textureTag, [[maybe_unused]] const bool isChangeSize = true) override;
 
 	// 描画範囲

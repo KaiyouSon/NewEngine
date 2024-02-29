@@ -53,29 +53,29 @@ void PipelineWindow::CreateGraphicsPipeline()
 {
 	GraphicsPipelineSetting setting;
 
-	// ブレンド設定
-	if (Gui::BeginTreeNode("Pipeline Blend", true))
-	{
-		static bool isUseAlpha = true;
-		Gui::DrawCheckBox("Alpha", &isUseAlpha);
-		if (isUseAlpha == true) { setting.pipelineBlend |= GraphicsPipelineSetting::Alpha; }
-		Gui::DrawTab();
+	//// ブレンド設定
+	//if (Gui::BeginTreeNode("Pipeline Blend", true))
+	//{
+	//	static bool isUseAlpha = true;
+	//	Gui::DrawCheckBox("Alpha", &isUseAlpha);
+	//	if (isUseAlpha == true) { setting.renderTargetBlendMode |= GraphicsPipelineSetting::Alpha; }
+	//	Gui::DrawTab();
 
-		static bool isUseAdd = false;
-		Gui::DrawCheckBox("Add", &isUseAdd);
-		if (isUseAdd == true) { setting.pipelineBlend |= GraphicsPipelineSetting::Add; }
-		Gui::DrawTab();
+	//	static bool isUseAdd = false;
+	//	Gui::DrawCheckBox("Add", &isUseAdd);
+	//	if (isUseAdd == true) { setting.renderTargetBlendMode |= GraphicsPipelineSetting::Add; }
+	//	Gui::DrawTab();
 
-		static bool isUseSub = false;
-		Gui::DrawCheckBox("Sub  ", &isUseSub);
-		if (isUseSub == true) { setting.pipelineBlend |= GraphicsPipelineSetting::Sub; }
-		Gui::DrawTab();
+	//	static bool isUseSub = false;
+	//	Gui::DrawCheckBox("Sub  ", &isUseSub);
+	//	if (isUseSub == true) { setting.renderTargetBlendMode |= GraphicsPipelineSetting::Sub; }
+	//	Gui::DrawTab();
 
-		static bool isUseInv = false;
-		Gui::DrawCheckBox("Inv", &isUseInv);
-		if (isUseInv == true) { setting.pipelineBlend |= GraphicsPipelineSetting::Inv; }
-		Gui::EndTreeNode();
-	}
+	//	static bool isUseInv = false;
+	//	Gui::DrawCheckBox("Inv", &isUseInv);
+	//	if (isUseInv == true) { setting.renderTargetBlendMode |= GraphicsPipelineSetting::Inv; }
+	//	Gui::EndTreeNode();
+	//}
 
 	// 塗りつぶしモード
 	if (Gui::BeginTreeNode("Fill Mode", true))

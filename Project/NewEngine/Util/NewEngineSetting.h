@@ -69,13 +69,14 @@ struct RootSignatureSetting
 // グラフィックスパイプラインの設定構造体
 struct GraphicsPipelineSetting
 {
-	// パイプライン生成用
-	enum PipelineBlend
+	// ブレンドモード
+	enum RenderTargetBlendMode
 	{
-		Alpha = 0b0001,
-		Add = 0b0010,
-		Sub = 0b0100,
-		Inv = 0b1000,
+		Alpha = 1,
+		Add = 2,
+		Sub = 4,
+		Inv = 8,
+		All = ((Alpha | Add) | Sub) | Inv
 	};
 
 	// 書き込むモード
@@ -97,7 +98,7 @@ struct GraphicsPipelineSetting
 	InputLayout* inputLayout = nullptr;
 
 	// パイプライン種類
-	uint8_t pipelineBlend;
+	RenderTargetBlendMode renderTargetBlendMode;
 
 	// 塗りつぶしモード
 	FillMode fillMode;

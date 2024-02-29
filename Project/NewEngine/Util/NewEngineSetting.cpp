@@ -35,7 +35,7 @@ RootSignatureSetting::RootSignatureSetting(
 }
 
 GraphicsPipelineSetting::GraphicsPipelineSetting() :
-	pipelineBlend(PipelineBlend::Alpha),
+	renderTargetBlendMode(RenderTargetBlendMode::Alpha),
 	fillMode(FillMode::Solid),
 	cullMode(CullMode::Back),
 	renderTargetBlendMask(WriteRGB),

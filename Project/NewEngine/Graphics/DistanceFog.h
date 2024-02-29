@@ -1,7 +1,7 @@
 #pragma once
 
 // 前方宣言
-struct Material;
+class Material;
 
 // 距離フォグのクラス
 class DistanceFog

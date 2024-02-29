@@ -46,6 +46,11 @@ nlohmann::json TextureData::SaveToJson()
 
 void TextureData::LoadToJson(const nlohmann::json& componentField)
 {
+	if (!componentField.contains("texture_data"))
+	{
+		return;
+	}
+
 	nlohmann::json textureDataField = componentField["texture_data"];
 	mComponentInfo.LoadToJson(textureDataField);
 

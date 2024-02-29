@@ -73,7 +73,6 @@ void Sprite::Draw(const std::string& _layerTag, const BlendMode _blendMode)
 	blendMode = _blendMode;
 	_layerTag;
 
-
 	//Renderer::GetInstance()->Register(_layerTag,
 	//	[this]()
 	//	{
@@ -85,43 +84,37 @@ void Sprite::Draw(const std::string& _layerTag, const BlendMode _blendMode)
 // --- マテリアル関連 --------------------------------------------------- //
 void Sprite::MaterialInit()
 {
-	// インスタンス生成
-	std::unique_ptr<IConstantBuffer> iConstantBuffer;
+	mMaterial->Copy(*gAssetsManager->GetMaterial("BasicSprite"));
 
-	// 2D行列
-	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform2D>>();
-	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
-
-	// 色
-	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
-	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
-
-	// 初期化
+	if (mMaterial->constantBuffers.empty())
+	{
+		mMaterial->AddConstantBuffer<CTransform2D>();	// 2D行列
+		mMaterial->AddConstantBuffer<CColor>();			// 色
+	}
+	else
+	{
+		mMaterial->SetConstantBuffer<CTransform2D>(0);	// 2D行列
+		mMaterial->SetConstantBuffer<CColor>(1);		// 色
+	}
 	mMaterial->Init();
 }
 void Sprite::MaterialTransfer()
 {
+	if (!mMaterial)
+	{
+		return;
+	}
+
 	// マトリックス
 	CTransform2D transform2DData =
 	{
 		mTransform->GetWorldMat() * Camera::current.GetOrthoGrphicProjectionMat()
 	};
-	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), transform2DData);
+	mMaterial->TransferDataToConstantBuffer(0, transform2DData);
 
 	// 色データ
 	CColor colorData = { color.To01() };
-	TransferDataToConstantBuffer(mMaterial->constantBuffers[1].get(), colorData);
-}
-void Sprite::MaterialDrawCommands()
-{
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
-
-	for (uint32_t i = 0; i < mMaterial->constantBuffers.size(); i++)
-	{
-		// CBVの設定コマンド
-		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-			i, mMaterial->constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
-	}
+	mMaterial->TransferDataToConstantBuffer(1, colorData);
 }
 
 // --- 頂点データ関連 --------------------------------------------------- //
@@ -195,24 +188,24 @@ void Sprite::DrawCommands()
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// GraphicsPipeline描画コマンド
-	mGraphicsPipeline->DrawCommand(blendMode);
+	// マテリアルの描画コマンド
+	mMaterial->DrawCommands(mTextureData);
+
+	// 後消す
+	{
+		uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
+		uint32_t endIndex = mGraphicsPipeline->GetRootSignature()->GetUAVStartIndex();
+
+		for (uint32_t i = startIndex; i < endIndex; i++)
+		{
+			// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
+			renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+				startIndex, tex->GetBufferResource()->srvHandle.gpu);
+		}
+	}
 
 	// VBVとIBVの設定コマンド
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
-
-	// マテリアルの描画コマンド
-	MaterialDrawCommands();
-
-	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
-	uint32_t endIndex = mGraphicsPipeline->GetRootSignature()->GetUAVStartIndex();
-
-	for (uint32_t i = startIndex; i < endIndex; i++)
-	{
-		// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			startIndex, tex->GetBufferResource()->srvHandle.gpu);
-	}
 
 	renderBase->GetCommandList()->DrawInstanced((uint16_t)mVertices.size(), 1, 0, 0);
 }

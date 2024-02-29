@@ -415,7 +415,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Object3D");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Object3D");
 	setting.inputLayout = ShaderManager::GetInputLayout("Object3D");
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "Object3D";
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
@@ -428,7 +428,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Object3DSMOff");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Object3DSMOff");
 	setting.inputLayout = ShaderManager::GetInputLayout("Object3DSMOff");
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "Object3DSMOff";
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
@@ -442,7 +442,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "FbxModel");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "FbxModel");
 	setting.inputLayout = ShaderManager::GetInputLayout("FbxModel");
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "FbxModel";
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
@@ -456,12 +456,12 @@ void RenderBase::GraphicsPipelineInit()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Sprite");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Sprite");
 	setting.inputLayout = ShaderManager::GetInputLayout("Sprite");
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "Sprite";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
-	setting.rootSignatureSetting.maxCbvRootParameter = 3;
+	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Sprite");
 
@@ -470,7 +470,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "CircleGaugeSprite");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "CircleGaugeSprite");
 	setting.inputLayout = ShaderManager::GetInputLayout("CircleGaugeSprite");
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "CircleGaugeSprite";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
@@ -484,7 +484,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "PostEffect");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "PostEffect");
 	setting.inputLayout = ShaderManager::GetInputLayout("PostEffect");
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "PostEffect";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
@@ -498,7 +498,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Line");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Line");
 	setting.inputLayout = ShaderManager::GetInputLayout("Line");
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "Line";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::LineStrip;
@@ -513,7 +513,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "Emitter");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Emitter");
 	setting.inputLayout = ShaderManager::GetInputLayout("Emitter");
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "Emitter";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
@@ -528,7 +528,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "GPUEmitter");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GPUEmitter");
 	setting.inputLayout = ShaderManager::GetInputLayout("GPUEmitter");
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "GPUEmitter";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
@@ -542,7 +542,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "ColliderObject");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "ColliderObject");
 	setting.inputLayout = ShaderManager::GetInputLayout("ColliderObject");
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "ColliderObject";
 	setting.cullMode = CullMode::None;
 	setting.fillMode = FillMode::Wireframe;
@@ -557,7 +557,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "ParticleMesh");
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "ParticleMesh");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "ParticleMesh");
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "ParticleMesh";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
@@ -568,7 +568,7 @@ void RenderBase::GraphicsPipelineInit()
 
 	// ParticleObject用
 	setting = GraphicsPipelineSetting();
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "ParticleObject");
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "ParticleObject");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "ParticleObject");
@@ -585,7 +585,7 @@ void RenderBase::GraphicsPipelineInit()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "VolumetricFog");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "VolumetricFog");
 	setting.inputLayout = ShaderManager::GetInputLayout("VolumetricFog");
-	setting.pipelineBlend = GraphicsPipelineSetting::Alpha;
+	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
 	setting.shaderCompilerTag = "VolumetricFog";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleList;

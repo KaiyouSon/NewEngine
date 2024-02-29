@@ -56,6 +56,9 @@ void AssetsWindow::DrawGuiWindow()
 	case ModelAssets:
 		ShowModelAssets();
 		break;
+
+	case MaterialAssets:
+		ShowMaterialAssets();
 	}
 
 	Gui::EndWindow();
@@ -71,26 +74,31 @@ void AssetsWindow::ShowMainLevel()
 {
 	Gui::DrawColumns(columnCount);
 
-	if (Gui::DrawButton("Scene Assets", buttonSize))
+	if (Gui::DrawButton("Scene", buttonSize))
 	{
 		state = SceneAssets;
 	}
 	Gui::NextColumn();
 
-	if (Gui::DrawButton("Texture Assets", buttonSize))
+	if (Gui::DrawButton("Texture", buttonSize))
 	{
 		state = TextureAssets;
 	}
 	Gui::NextColumn();
 
-	if (Gui::DrawButton("Model Assets", buttonSize))
+	if (Gui::DrawButton("Model", buttonSize))
 	{
 		state = ModelAssets;
+	}
+	Gui::NextColumn();
+
+	if (Gui::DrawButton("Material", buttonSize))
+	{
+		state = MaterialAssets;
 	}
 
 	Gui::DrawColumns(1);
 }
-
 void AssetsWindow::ShowSceneAssets()
 {
 	DrawBackButton();
@@ -122,7 +130,6 @@ void AssetsWindow::ShowSceneAssets()
 		}
 	}
 }
-
 void AssetsWindow::ShowTextureAssets()
 {
 	DrawBackButton();
@@ -163,7 +170,6 @@ void AssetsWindow::ShowTextureAssets()
 	}
 	Gui::DrawColumns(1);
 }
-
 void AssetsWindow::ShowModelAssets()
 {
 	DrawBackButton();
@@ -194,6 +200,35 @@ void AssetsWindow::ShowModelAssets()
 		}
 	}
 	Gui::DrawColumns(1);
+}
+void AssetsWindow::ShowMaterialAssets()
+{
+	DrawBackButton();
+
+	fs::path folderPath = EngineMaterialDirectory;
+	for (const auto entry : fs::directory_iterator(folderPath))
+	{
+		const fs::path path = entry.path();
+		const fs::path relativePath = relative(path, folderPath);	// 相対パス
+		const std::string filename = relativePath.filename().string();
+		const std::string sceneName = SubString(filename, "Material.json");
+
+		// 検索機能
+		std::string::size_type pos = sceneName.find(search);
+		if (pos == std::string::npos)
+		{
+			continue;
+		}
+
+		Gui::DrawColumns(columnCount);
+		Gui::DrawButton(sceneName.c_str(), buttonSize);
+		Gui::NextColumn();
+
+		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+		{
+
+		}
+	}
 }
 
 void AssetsWindow::DrawBackButton()

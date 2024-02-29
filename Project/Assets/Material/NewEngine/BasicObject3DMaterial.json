@@ -1,0 +1,19 @@
+{
+    "gp_setting" : {
+        "cull_mode": 2,
+        "fill_mode": 0,
+        "topology_type": 4,
+        "rtv_num" : 1,
+        "rt_blend_mode": 1,
+        "rt_blend_mask" : 7,
+        "ps": "Sprite",
+        "vs": "Sprite",
+        "il": "Sprite",
+        "tag": "Sprite"
+    },
+    "rs_setting" : {
+        "max_cbv" : 3,
+        "max_srv" : 1,
+        "max_uav" : 0
+    }
+}

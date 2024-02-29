@@ -1,14 +1,15 @@
 #pragma once
 #include "Component.h"
+#include "GameObjectInfo.h"
 
-class PipelineData : public Component
+class ParticleMeshInfo : public Component, GameObjectInfo
 {
 private:
-	GraphicsPipeline* mGraphicsPipeline;
+	void SetParamToObj();
 
 public:
-	PipelineData();
-	PipelineData(GameObject* gameObj);
+	ParticleMeshInfo();
+	ParticleMeshInfo(GameObject* gameObj);
 	void Update() override;
 
 public:
@@ -16,4 +17,3 @@ public:
 	void LoadToJson(const nlohmann::json& componentField) override;
 	void ShowDataToInspector() override;
 };
-

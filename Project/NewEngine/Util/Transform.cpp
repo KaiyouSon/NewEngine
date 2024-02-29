@@ -69,6 +69,11 @@ nlohmann::json Transform::SaveToJson()
 
 void Transform::LoadToJson(const nlohmann::json& componentField)
 {
+	if (!componentField.contains("transform"))
+	{
+		return;
+	}
+
 	nlohmann::json transformField = componentField["transform"];
 
 	mComponentInfo.LoadToJson(transformField);

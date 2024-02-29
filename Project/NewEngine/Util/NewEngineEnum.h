@@ -16,6 +16,8 @@ enum class ComponentType
 	// オブジェクト情報
 	Object3DInfo,
 	SpriteInfo,
+	ParticleMeshInfo,
+
 	Transform,
 	TextureData,
 	ModelData,
@@ -30,6 +32,7 @@ enum class BlendMode
 	Add,
 	Sub,
 	Inv,
+	Count,
 };
 
 // 時間単位

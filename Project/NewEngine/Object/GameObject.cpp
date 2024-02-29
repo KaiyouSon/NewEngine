@@ -27,7 +27,7 @@ void GameObject::InitToParticleMesh()
 	layerTag = "Object3D";
 	mType = GameObjectType::ParticleMesh;
 
-	//mComponentManager->AddComponent<Object3DInfo>();
+	mComponentManager->AddComponent<ParticleMeshInfo>();
 	mComponentManager->AddComponent<Transform>();
 	mComponentManager->AddComponent<TextureData>();
 	mComponentManager->AddComponent<PipelineData>();

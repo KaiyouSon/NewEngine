@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "Object3DInfo.h"
+#include "ParticleMeshInfo.h"
 #include "SpriteInfo.h"
 #include "Transform.h"
 #include "ModelData.h"

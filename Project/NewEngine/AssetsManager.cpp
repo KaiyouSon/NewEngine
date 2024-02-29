@@ -4,12 +4,20 @@ using namespace DirectX;
 
 AssetsManager* gAssetsManager = nullptr;
 
+AssetsManager::AssetsManager() :
+	mMaterialManager(std::make_unique<MaterialManager>())
+{
+}
+
 void AssetsManager::LoadAssets(const std::string& sceneName)
 {
 	mTextureManager.mTextureMapArrays[(uint32_t)TextureType::Default].clear();
 
 	// テクスチャのロード
 	LoadTextures(AppTextureDirectory + sceneName);
+
+	// マテリアルのロード
+	mMaterialManager->LoadMaterial(EngineMaterialDirectory + "BasicSpriteMaterial.json");
 }
 
 void AssetsManager::LoadTextures(const std::string& folderPath)
@@ -60,6 +68,11 @@ Texture* AssetsManager::GetTexture(const std::string& tag)
 {
 	Texture* tex = dynamic_cast<Texture*>(mTextureManager.mTextureMapArrays[(uint32_t)TextureType::Default][tag].get());
 	return tex;
+}
+
+Material* AssetsManager::GetMaterial(const std::string& tag)
+{
+	return mMaterialManager->GetMaterial(tag);
 }
 
 std::unordered_map<std::string, std::unique_ptr<ITexture>>* AssetsManager::GetTextureMap(const TextureType texType)

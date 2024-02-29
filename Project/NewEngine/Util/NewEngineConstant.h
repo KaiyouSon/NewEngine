@@ -1,6 +1,18 @@
 #pragma once
 
 /// <summary>
+/// ディレクトリーパス : "Assets/Material/NewEngine/"
+/// </summary>
+/// <returns>std::string</returns>
+static const std::string EngineMaterialDirectory = "Assets/Material/NewEngine/";
+
+/// <summary>
+/// ディレクトリーパス : "Assets/Material/Application/"
+/// </summary>
+/// <returns>std::string</returns>
+static const std::string AppMaterialDirectory = "Assets/Material/Application/";
+
+/// <summary>
 /// ディレクトリーパス : "Assets/Data/NewEngine/"
 /// </summary>
 /// <returns>std::string</returns>
