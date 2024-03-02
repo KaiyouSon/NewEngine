@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "Object3DInfo.h"
 #include "ParticleMeshInfo.h"
+#include "CameraInfo.h"
 #include "SpriteInfo.h"
 #include "Transform.h"
 #include "ModelData.h"

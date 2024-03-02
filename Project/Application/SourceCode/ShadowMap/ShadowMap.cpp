@@ -160,7 +160,7 @@ void ShadowMap::Bind(Object3D& object)
 	mIndex++;
 }
 
-Camera ShadowMap::GetLightCamera()
+Camera* ShadowMap::GetLightCamera()
 {
-	return lightCamera;
+	return &lightCamera;
 }

@@ -6,6 +6,7 @@ enum class GameObjectType
 	Object3D,
 	Sprite,
 	ParticleMesh,
+	Camera,
 };
 
 // コンポネントの種類
@@ -17,12 +18,19 @@ enum class ComponentType
 	Object3DInfo,
 	SpriteInfo,
 	ParticleMeshInfo,
+	CameraInfo,
 
 	Transform,
 	TextureData,
 	ModelData,
 	PipelineData,
 	ParticleData,
+};
+
+enum class CameraType
+{
+	Perspective,	// 3D用
+	Orthographic,	// 2D用
 };
 
 // ブレンドモード

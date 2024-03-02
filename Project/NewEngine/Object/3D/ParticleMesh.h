@@ -30,7 +30,7 @@ private:
 
 	Vec3 mWorldPos;
 	Vec3 mWorldScale;
-	Material mMaterial;
+	std::unique_ptr<Material> mMaterial;
 	std::unique_ptr<Material> mCSMaterial;
 	GraphicsPipeline* mGraphicsPipeline;
 	ComputePipeline* mComputePipeline;

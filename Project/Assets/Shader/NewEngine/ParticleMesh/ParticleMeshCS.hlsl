@@ -42,7 +42,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
         result.pos.x = Random01(seed) * size.x;
         seed.x = Random01(seed);
         seed.y = Random01(seed);
-        result.pos.y = Random01(seed) * size.y;
+        result.pos.y = Random01(seed) * -size.y;
         
         // スケール
         seed.x = Random01(seed);
@@ -53,12 +53,12 @@ void main(uint3 DTid : SV_DispatchThreadID)
         result.shininess = 1.f;
         
         // 色
-        result.color = tex.Load(int3(result.pos.x, result.pos.y, 0));
+        result.color = tex.Load(int3(result.pos.x, -result.pos.y, 0));
         
         // 中心に
         float2 offsetPos = -size / 2.f;
         result.pos.x += offsetPos.x;
-        result.pos.y += offsetPos.y;
+        result.pos.y -= offsetPos.y;
         
         // 出力データを書き込む
         outputData[i] = result;

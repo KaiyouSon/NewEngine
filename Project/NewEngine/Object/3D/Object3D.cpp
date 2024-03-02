@@ -149,7 +149,8 @@ void Object3D::MaterialInit()
 }
 void Object3D::MaterialTransfer()
 {
-	Camera lightViewCamera = ShadowMap::GetInstance()->GetLightCamera();
+	Camera lightViewCamera;
+	lightViewCamera.Copy(*ShadowMap::GetInstance()->GetLightCamera());
 
 	// マトリックス
 	CTransform3DShadow transform3DShadowData =

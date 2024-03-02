@@ -103,14 +103,15 @@ void ShaderWindow::ShowFilePanel(const std::string& folderPath)
 
 void ShaderWindow::ReCreatePipeline(const std::string& tag)
 {
-	for (const auto& pair : *PipelineManager::GetGraphicsPipelineMap())
-	{
-		// タグが一致しているならパイプラインを再生成する
-		if (pair.second->GetSetting().shaderCompilerTag == tag)
-		{
-			PipelineManager::ReCreateGraphicsPipeline(tag);
-		}
-	}
+	tag;
+	//for (const auto& pair : *PipelineManager::GetGraphicsPipelineMap())
+	//{
+	//	// タグが一致しているならパイプラインを再生成する
+	//	if (pair.second->GetSetting().shaderCompilerTag == tag)
+	//	{
+	//		PipelineManager::ReCreateGraphicsPipeline(tag);
+	//	}
+	//}
 }
 
 void ShaderWindow::SetisShow(const bool isShow)

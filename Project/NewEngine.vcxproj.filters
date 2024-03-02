@@ -513,9 +513,6 @@
     <ClCompile Include="NewEngine\Math\Vec3.cpp">
       <Filter>NewEngine\Source\Math</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\3D\Camera.cpp">
-      <Filter>NewEngine\Source\Object\3D</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\Line.cpp">
       <Filter>NewEngine\Source\Object\3D</Filter>
     </ClCompile>
@@ -1089,6 +1086,12 @@
     <ClCompile Include="NewEngine\MaterialManager.cpp">
       <Filter>Uncategorized\Source\Assets</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\Camera.cpp">
+      <Filter>Uncategorized\Source\GameObject\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Component\CameraInfo.cpp">
+      <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1141,9 +1144,6 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Math\Vec3.h">
       <Filter>NewEngine\Header\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Object\3D\Camera.h">
-      <Filter>NewEngine\Header\Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\Line.h">
       <Filter>NewEngine\Header\Object\3D</Filter>
@@ -1762,6 +1762,12 @@
     </ClInclude>
     <ClInclude Include="NewEngine\MaterialManager.h">
       <Filter>Uncategorized\Header\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\Camera.h">
+      <Filter>Uncategorized\Header\GameObject\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Component\CameraInfo.h">
+      <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

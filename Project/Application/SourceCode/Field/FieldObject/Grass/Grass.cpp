@@ -186,7 +186,8 @@ void Grass::MaterialInit()
 }
 void Grass::MaterialTransfer()
 {
-	Camera lightViewCamera = ShadowMap::GetInstance()->GetLightCamera();
+	Camera lightViewCamera;
+	lightViewCamera.Copy(*ShadowMap::GetInstance()->GetLightCamera());
 
 	mBillboard.CalculateBillboardMat();
 

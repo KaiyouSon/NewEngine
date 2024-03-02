@@ -416,7 +416,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Object3D");
 	setting.inputLayout = ShaderManager::GetInputLayout("Object3D");
 	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
-	setting.shaderCompilerTag = "Object3D";
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
@@ -429,7 +428,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Object3DSMOff");
 	setting.inputLayout = ShaderManager::GetInputLayout("Object3DSMOff");
 	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
-	setting.shaderCompilerTag = "Object3DSMOff";
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
@@ -443,7 +441,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "FbxModel");
 	setting.inputLayout = ShaderManager::GetInputLayout("FbxModel");
 	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
-	setting.shaderCompilerTag = "FbxModel";
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc1;
@@ -457,7 +454,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Sprite");
 	setting.inputLayout = ShaderManager::GetInputLayout("Sprite");
 	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
-	setting.shaderCompilerTag = "Sprite";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
@@ -471,7 +467,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "CircleGaugeSprite");
 	setting.inputLayout = ShaderManager::GetInputLayout("CircleGaugeSprite");
 	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
-	setting.shaderCompilerTag = "CircleGaugeSprite";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
@@ -485,7 +480,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "PostEffect");
 	setting.inputLayout = ShaderManager::GetInputLayout("PostEffect");
 	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
-	setting.shaderCompilerTag = "PostEffect";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.depthStencilDesc = depthStencilDesc2;
@@ -499,7 +493,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Line");
 	setting.inputLayout = ShaderManager::GetInputLayout("Line");
 	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
-	setting.shaderCompilerTag = "Line";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::LineStrip;
 	setting.depthStencilDesc = depthStencilDesc1;
@@ -514,7 +507,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Emitter");
 	setting.inputLayout = ShaderManager::GetInputLayout("Emitter");
 	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
-	setting.shaderCompilerTag = "Emitter";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc1;
@@ -529,7 +521,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GPUEmitter");
 	setting.inputLayout = ShaderManager::GetInputLayout("GPUEmitter");
 	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
-	setting.shaderCompilerTag = "GPUEmitter";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc1;
@@ -543,7 +534,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "ColliderObject");
 	setting.inputLayout = ShaderManager::GetInputLayout("ColliderObject");
 	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
-	setting.shaderCompilerTag = "ColliderObject";
 	setting.cullMode = CullMode::None;
 	setting.fillMode = FillMode::Wireframe;
 	setting.topologyType = TopologyType::TriangleList;
@@ -558,7 +548,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "ParticleMesh");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "ParticleMesh");
 	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
-	setting.shaderCompilerTag = "ParticleMesh";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc4;
@@ -572,7 +561,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "ParticleObject");
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "ParticleObject");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "ParticleObject");
-	setting.shaderCompilerTag = "ParticleObject";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::Point;
 	setting.depthStencilDesc = depthStencilDesc4;
@@ -586,7 +574,6 @@ void RenderBase::GraphicsPipelineInit()
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "VolumetricFog");
 	setting.inputLayout = ShaderManager::GetInputLayout("VolumetricFog");
 	setting.renderTargetBlendMode = GraphicsPipelineSetting::Alpha;
-	setting.shaderCompilerTag = "VolumetricFog";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc4;

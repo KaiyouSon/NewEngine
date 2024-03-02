@@ -61,6 +61,9 @@ void GameObjectManager::AddGameObject(const GameObjectType type, const std::stri
 		break;
 	case GameObjectType::ParticleMesh:
 		obj = std::make_unique<ParticleMesh>(name);
+		break;
+	case GameObjectType::Camera:
+		obj = std::make_unique<Camera>(name);
 	}
 	mGameObjects.push_back(std::move(obj));
 }

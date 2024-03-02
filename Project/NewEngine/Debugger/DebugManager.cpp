@@ -74,7 +74,7 @@ void DebugManager::DrawDebugGui()
 
 	Gui::DrawSlider1("Far Z", Camera::current.oFarZ);
 	Gui::DrawSlider1("Near Z", Camera::current.oNearZ);
-	Gui::DrawSlider1("Fov Angle", Camera::current.fov);
+	Gui::DrawSlider1("Fov Angle", Camera::current.fovAngle);
 	Gui::DrawLine();
 
 	// 処理を止める

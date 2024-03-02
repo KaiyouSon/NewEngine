@@ -15,12 +15,14 @@ public:
 	AssetsManager();
 
 public:
+	void LoadMaterial(const std::string& path);
 	void LoadTexture(const std::string& path);
 	void LoadModel(const std::string& path);
 
 public:
 	void LoadAssets(const std::string& sceneName);
 
+	void LoadMaterials(const std::string folderPath);
 	void LoadTextures(const std::string& folderPath);
 	void LoadModels(const std::string& folderPath);
 

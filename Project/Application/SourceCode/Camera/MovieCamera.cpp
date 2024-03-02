@@ -28,7 +28,7 @@ void MovieCamera::Update()
 	}
 
 	// 現在のカメラに代入
-	Camera::current = *mCamera;
+	Camera::current.Copy(*mCamera);
 }
 
 void MovieCamera::SetMovieEvent(MovieEvent* movieEvent)

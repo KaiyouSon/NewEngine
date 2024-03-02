@@ -114,14 +114,26 @@ void Material::LoadToJson(const std::string& path)
 	mGPSetting.rtvNum = gpSettingField["rtv_num"];
 
 	std::string shaderTag;
-	shaderTag = gpSettingField["vs"];
-	mGPSetting.vs = ShaderManager::GetShader(ShaderType::Vertex, shaderTag);
-
-	shaderTag = gpSettingField["ps"];
-	mGPSetting.ps = ShaderManager::GetShader(ShaderType::Pixel, shaderTag);
-
-	shaderTag = gpSettingField["il"];
-	mGPSetting.inputLayout = ShaderManager::GetInputLayout(shaderTag);
+	if (gpSettingField.contains("vs"))
+	{
+		shaderTag = gpSettingField["vs"];
+		mGPSetting.vs = ShaderManager::GetShader(ShaderType::Vertex, shaderTag);
+	}
+	if (gpSettingField.contains("gs"))
+	{
+		shaderTag = gpSettingField["gs"];
+		mGPSetting.gs = ShaderManager::GetShader(ShaderType::Geometry, shaderTag);
+	}
+	if (gpSettingField.contains("ps"))
+	{
+		shaderTag = gpSettingField["ps"];
+		mGPSetting.ps = ShaderManager::GetShader(ShaderType::Pixel, shaderTag);
+	}
+	if (gpSettingField.contains("il"))
+	{
+		shaderTag = gpSettingField["il"];
+		mGPSetting.inputLayout = ShaderManager::GetInputLayout(shaderTag);
+	}
 
 	// ルートシグネーチャ設定の読み込み
 	nlohmann::json rsSettingField = deserialized["rs_setting"];

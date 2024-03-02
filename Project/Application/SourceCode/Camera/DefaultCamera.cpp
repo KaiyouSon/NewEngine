@@ -84,13 +84,13 @@ void DefaultCamera::Update()
 		EaseCamera();
 
 		// イーズアウト処理後は現在のカメラを更新
-		Camera::current = *mCamera;
+		Camera::current.Copy(*mCamera);
 		mControlPitch = Angle(Camera::current.rot.x);
 		mControlYaw = Angle(Camera::current.rot.y);
 	}
 	else
 	{
 		// イーズアウト処理後は現在のカメラを更新
-		Camera::current = *mCamera;
+		Camera::current.Copy(*mCamera);
 	}
 }

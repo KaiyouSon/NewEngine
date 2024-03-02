@@ -39,6 +39,9 @@ protected:
 	// スプライト時の初期化
 	void InitToSprite();
 
+	// カメラ時の初期化
+	void InitToCamera();
+
 protected:
 	void BaseUpdate();
 

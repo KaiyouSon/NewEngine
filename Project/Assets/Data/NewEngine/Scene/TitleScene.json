@@ -321,7 +321,7 @@
                             "scale": [
                                 0.009999999776482582,
                                 0.009999999776482582,
-                                1.0
+                                0.009999999776482582
                             ]
                         }
                     },
@@ -347,6 +347,55 @@
                 ],
                 "name": "Particle Mesh5",
                 "type": 2
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "camera_info": {
+                            "camera_type": 0,
+                            "component_info": {
+                                "index": 0,
+                                "type": 4
+                            },
+                            "fov_angle": 45.0,
+                            "o_near_far_clip": [
+                                0.0,
+                                0.0
+                            ],
+                            "p_near_far_clip": [
+                                0.0,
+                                0.0
+                            ]
+                        }
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                ],
+                "name": "Camera5",
+                "type": 3
             }
         }
     ]

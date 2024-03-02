@@ -106,56 +106,6 @@ void GraphicsPipeline::Create(const Material& material)
 	mRootSignature = std::make_unique<RootSignature>();
 	mRootSignature->Create(material.mRSSetting);
 
-	//ID3D12Device* device = RenderBase::GetInstance()->GetDevice();
-
-	//D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
-
-	//// シェーダーコード設定
-	//ShaderSetting(pipelineDesc);
-
-	//// サンプルマスク設定
-	//pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
-
-	//// カリングモード設定
-	//CullSetting(pipelineDesc);
-
-	//// フィルモード設定
-	//FillSetting(pipelineDesc);
-
-	//// 深度ステンシル設定
-	//pipelineDesc.DepthStencilState = mSetting.depthStencilDesc;
-	//if (mSetting.depthStencilDesc.DepthEnable == (BOOL)true)
-	//{
-	//	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
-	//}
-
-	//// レンダーターゲットブレンド設定
-	//RenderTargetBlendSetting(pipelineDesc);
-
-	//// 入力レイアウト設定
-	//InputLayoutSetting(pipelineDesc);
-
-	//// プリミティブトポロジ設定
-	//PrimitiveTopologySetting(pipelineDesc);
-
-	//// レンダーターゲット設定
-	//pipelineDesc.NumRenderTargets = (uint32_t)mSetting.rtvNum;
-	//for (size_t i = 0; i < mSetting.rtvNum; i++)
-	//{
-	//	pipelineDesc.RTVFormats[i] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-	//}
-
-	//pipelineDesc.SampleDesc.Count = 1;
-
-	//// ルートシグネチャ設定
-	//pipelineDesc.pRootSignature = mRootSignature->GetRootSignature();
-
-	//// パイプラインステート作成
-	//mResult = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mPipelineStateObject));
-	//assert(SUCCEEDED(mResult));
-
-
-	//shaderCompiler = ShaderCompilerManager::GetShaderCompiler(mSetting.shaderCompilerTag);
 	// パイプラインブレンド設定のビット
 	uint32_t bit = (uint32_t)mSetting.renderTargetBlendMode;
 	mPSOs.resize((uint32_t)BlendMode::Count);

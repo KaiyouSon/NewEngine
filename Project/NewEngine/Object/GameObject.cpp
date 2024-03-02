@@ -21,7 +21,6 @@ void GameObject::InitToObject3D()
 	mTransform = mComponentManager->GetComponent<Transform>();
 	mTextureData = mComponentManager->GetComponent<TextureData>();
 }
-
 void GameObject::InitToParticleMesh()
 {
 	layerTag = "Object3D";
@@ -36,7 +35,6 @@ void GameObject::InitToParticleMesh()
 	mTransform = mComponentManager->GetComponent<Transform>();
 	mTextureData = mComponentManager->GetComponent<TextureData>();
 }
-
 void GameObject::InitToSprite()
 {
 	layerTag = "BackSprite";
@@ -49,13 +47,25 @@ void GameObject::InitToSprite()
 	mTransform = mComponentManager->GetComponent<Transform>();
 	mTextureData = mComponentManager->GetComponent<TextureData>();
 }
+void GameObject::InitToCamera()
+{
+	mType = GameObjectType::Camera;
+
+	mComponentManager->AddComponent<CameraInfo>();
+	mComponentManager->AddComponent<Transform>();
+
+	mTransform = mComponentManager->GetComponent<Transform>();
+}
 
 void GameObject::BaseUpdate()
 {
-	mTransform->pos = pos;
-	mTransform->scale = scale;
-	mTransform->rot = rot;
-	mTransform->parent = mParent;
+	if (mTransform)
+	{
+		mTransform->pos = pos;
+		mTransform->scale = scale;
+		mTransform->rot = rot;
+		mTransform->parent = mParent;
+	}
 
 	mComponentManager->Update();
 }
@@ -68,7 +78,6 @@ nlohmann::json GameObject::SaveToJson()
 
 	return objData;
 }
-
 void GameObject::LoadToJson(nlohmann::json& objectField)
 {
 	nlohmann::json componentField = objectField["components"];
@@ -80,22 +89,20 @@ Transform* GameObject::GetTransform()
 {
 	return mTransform;
 }
-
 Transform* GameObject::GetParent()
 {
 	return mParent;
 }
-
 GameObjectType GameObject::GetType()
 {
 	return mType;
 }
-
 ComponentManager* GameObject::GetComponentManager()
 {
 	return mComponentManager.get();
 }
 
+// セッター
 void GameObject::SetParent(Transform* parent)
 {
 	mParent = parent;

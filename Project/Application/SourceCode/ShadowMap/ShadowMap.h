@@ -34,7 +34,7 @@ public:
 
 public:
 	void Bind(Object3D& object);
-	Camera GetLightCamera();
+	Camera* GetLightCamera();
 
 private:
 	friend Singleton<ShadowMap>;

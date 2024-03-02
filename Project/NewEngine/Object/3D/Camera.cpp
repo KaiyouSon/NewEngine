@@ -4,35 +4,62 @@
 Camera Camera::current = {};
 
 Camera::Camera() :
-	pos(0, 0, -30), rot(0, 0, 0), fov(Radian(45)),
+	cameraType(CameraType::Perspective), fovAngle(45),
 	oNearZ(0), oFarZ(1), rect(0, 1920, 0, 1080),
 	pNearZ(0.1f), pFarZ(10000.0f)
 {
+	InitToCamera();
+	mInfo = mComponentManager->GetComponent<CameraInfo>();
+
+	// 初期化処理
+	Update();
+}
+
+Camera::Camera(const std::string& name) :
+	cameraType(CameraType::Perspective), fovAngle(45),
+	oNearZ(0), oFarZ(1), rect(0, 1920, 0, 1080),
+	pNearZ(0.1f), pFarZ(10000.0f)
+{
+	this->name = name;
+
+	InitToCamera();
+	mInfo = mComponentManager->GetComponent<CameraInfo>();
+
 	// 初期化処理
 	Update();
 }
 
 void Camera::Update()
 {
-	// 位置と姿勢の変換行列を計算
-	Transform transform;
-	transform.rot = rot;
-	transform.Update();
-	Vec3 v1 = pos;
-	Vec3 v2 = transform.GetWorldMat().GetZAxis();
-	Vec3 v3 = transform.GetWorldMat().GetYAxis();
+	BaseUpdate();
 
-	// LookTo 方式のビュー行列を計算
-	mViewLookToMat = ConvertViewProjectionMatLookTo(v1, v2, v3);
-	mViewLookAtMat = ConvertViewProjectionMatLookAt(v1, v1 * 10, { 0,1,0 });
+	mViewMat = mTransform->GetWorldMat().Inverse();
 
 	// 正射影行列を計算
-	//mOrthographicProjectionMat = ConvertOrthographicProjectionMat(GetWindowSize().x, GetWindowSize().y);
-	mOrthographicProjectionMat = ConvertOrthographicProjectionMat(rect, oNearZ, oFarZ);
-
+	if (cameraType == CameraType::Orthographic)
+	{
+		mProjectionMat = ConvertOrthographicProjectionMat(rect, oNearZ, oFarZ);
+	}
 	// 透視投影行列を計算
-	mPerspectiveProjectionMat = ConvertPerspectiveProjectionMat(
-		fov, (float)GetWindowSize().x / GetWindowSize().y, pNearZ, pFarZ);
+	else
+	{
+		mProjectionMat = ConvertPerspectiveProjectionMat(
+			Radian(fovAngle), (float)GetWindowSize().x / GetWindowSize().y, pNearZ, pFarZ);
+	}
+
+	// 後消す
+	{
+		// LookTo 方式のビュー行列を計算
+		mViewLookToMat = mViewMat;
+
+		// 正射影行列を計算
+		//mOrthographicProjectionMat = ConvertOrthographicProjectionMat(GetWindowSize().x, GetWindowSize().y);
+		mOrthographicProjectionMat = ConvertOrthographicProjectionMat(rect, oNearZ, oFarZ);
+
+		// 透視投影行列を計算
+		mPerspectiveProjectionMat = ConvertPerspectiveProjectionMat(
+			Radian(fovAngle), (float)GetWindowSize().x / GetWindowSize().y, pNearZ, pFarZ);
+	}
 
 	// 試錐台を計算
 	CalcViewFrustum();
@@ -120,5 +147,23 @@ Mat4 Camera::GetOrthoGrphicProjectionMat()
 Mat4 Camera::GetPerspectiveProjectionMat()
 {
 	return mPerspectiveProjectionMat;
+}
+
+void Camera::Copy(const Camera& camera)
+{
+	this->pos = camera.pos;
+	this->rot = camera.rot;
+	this->oNearZ = camera.oNearZ;
+	this->oFarZ = camera.oFarZ;
+	this->pNearZ = camera.pNearZ;
+	this->pFarZ = camera.pFarZ;
+	this->fovAngle = camera.fovAngle;
+	this->rect = rect;
+	this->viewFrustum = camera.viewFrustum;
+
+	this->mViewLookToMat = camera.mViewLookToMat;
+	this->mViewLookAtMat = camera.mViewLookAtMat;
+	this->mOrthographicProjectionMat = camera.mOrthographicProjectionMat;
+	this->mPerspectiveProjectionMat = camera.mPerspectiveProjectionMat;
 }
 

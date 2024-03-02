@@ -69,33 +69,41 @@ void HierarchyWindow::CreateGameObjectPop()
 
 	if (ImGui::BeginPopup("Create GameObjcet"))
 	{
-		uint32_t mapSize = (uint32_t)GetGameObjects()->size();
-		std::string name;
-
-		// オブジェクトなら
-		if (Gui::MenuItem("Object3D"))
+		if (Gui::BeginMenu("3D Object"))
 		{
-			name = "Object" + std::to_string(mapSize);
-			AddGameObject(GameObjectType::Object3D, name);
-		}
-		Gui::DrawLine();
+			// オブジェクト3Dなら
+			ShowObjectMenuItem("Object3D", GameObjectType::Object3D);
 
-		// スプライトなら
-		if (Gui::MenuItem("Sprite"))
-		{
-			name = "Sprite" + std::to_string(mapSize);
-			AddGameObject(GameObjectType::Sprite, name);
-		}
-		Gui::DrawLine();
+			// パーティクルメッシュ
+			ShowObjectMenuItem("Particle Mesh", GameObjectType::ParticleMesh, false);
 
-		// パーティクルメッシュなら
-		if (Gui::MenuItem("Particle Mesh"))
-		{
-			name = "Particle Mesh" + std::to_string(mapSize);
-			AddGameObject(GameObjectType::ParticleMesh, name);
+			Gui::EndMenu();
 		}
-		Gui::DrawLine();
+		if (Gui::BeginMenu("2D Object"))
+		{
+			// スプライト
+			ShowObjectMenuItem("Sprite", GameObjectType::Sprite, false);
+			Gui::EndMenu();
+		}
+
+		// カメラ
+		ShowObjectMenuItem("Camera", GameObjectType::Camera, false);
 
 		ImGui::EndPopup();
+	}
+}
+
+void HierarchyWindow::ShowObjectMenuItem(const std::string& label, const GameObjectType type, const bool isDrawLine)
+{
+	if (Gui::MenuItem(label))
+	{
+		uint32_t mapSize = (uint32_t)GetGameObjects()->size();
+		std::string name = label + std::to_string(mapSize);
+		AddGameObject(type, name);
+	}
+
+	if (isDrawLine)
+	{
+		Gui::DrawLine();
 	}
 }

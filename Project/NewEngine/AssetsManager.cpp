@@ -17,7 +17,30 @@ void AssetsManager::LoadAssets(const std::string& sceneName)
 	LoadTextures(AppTextureDirectory + sceneName);
 
 	// マテリアルのロード
+	LoadMaterials(EngineMaterialDirectory);	// 一回エンジンのロード
 	mMaterialManager->LoadMaterial(EngineMaterialDirectory + "BasicSpriteMaterial.json");
+}
+
+void AssetsManager::LoadMaterials(const std::string folderPath)
+{
+	fs::path fsFolderPath = folderPath;
+	if (!fs::is_directory(fsFolderPath))
+	{
+		return;
+	}
+
+	for (const auto& entry : fs::directory_iterator(fsFolderPath))
+	{
+		if (fs::is_directory(entry))
+		{
+			LoadMaterials(entry.path().string());
+		}
+		else
+		{
+			fs::path path = entry.path();
+			LoadMaterial(path.string());
+		}
+	}
 }
 
 void AssetsManager::LoadTextures(const std::string& folderPath)
@@ -78,6 +101,11 @@ Material* AssetsManager::GetMaterial(const std::string& tag)
 std::unordered_map<std::string, std::unique_ptr<ITexture>>* AssetsManager::GetTextureMap(const TextureType texType)
 {
 	return &mTextureManager.mTextureMapArrays[(uint32_t)texType];
+}
+
+void AssetsManager::LoadMaterial(const std::string& path)
+{
+	mMaterialManager->LoadMaterial(path);
 }
 
 void AssetsManager::LoadTexture(const std::string& path)

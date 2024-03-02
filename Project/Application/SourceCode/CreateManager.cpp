@@ -114,7 +114,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Skydome");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Skydome");
 	setting.inputLayout = ShaderManager::GetInputLayout("Skydome");
-	setting.shaderCompilerTag = "Skydome";
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "Skydome");
 
@@ -124,7 +123,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "Grass");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Grass");
 	setting.inputLayout = ShaderManager::GetInputLayout("Grass");
-	setting.shaderCompilerTag = "Grass";
 	setting.rootSignatureSetting.maxCbvRootParameter = 5;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Grass");
@@ -139,7 +137,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "Cloud");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Cloud");
 	setting.inputLayout = ShaderManager::GetInputLayout("Cloud");
-	setting.shaderCompilerTag = "Cloud";
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	setting.depthStencilDesc = depthStencilDesc;
@@ -150,7 +147,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Vignette");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Vignette");
 	setting.inputLayout = ShaderManager::GetInputLayout("Vignette");
-	setting.shaderCompilerTag = "Vignette";
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Vignette");
@@ -161,7 +157,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "Branch");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Branch");
 	setting.inputLayout = ShaderManager::GetInputLayout("Branch");
-	setting.shaderCompilerTag = "Branch";
 	setting.cullMode = CullMode::None;
 	PipelineManager::CreateGraphicsPipeline(setting, "Branch");
 
@@ -170,7 +165,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Ripple");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Ripple");
 	setting.inputLayout = ShaderManager::GetInputLayout("Ripple");
-	setting.shaderCompilerTag = "Ripple";
 	setting.cullMode = CullMode::Back;
 	setting.topologyType = TopologyType::TriangleList;
 	PipelineManager::CreateGraphicsPipeline(setting, "Ripple");
@@ -180,7 +174,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Rhombus");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Rhombus");
 	setting.inputLayout = ShaderManager::GetInputLayout("Rhombus");
-	setting.shaderCompilerTag = "Rhombus";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleList;
 	PipelineManager::CreateGraphicsPipeline(setting, "Rhombus");
@@ -190,7 +183,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "HighLumi");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "HighLumi");
 	setting.inputLayout = ShaderManager::GetInputLayout("HighLumi");
-	setting.shaderCompilerTag = "HighLumi";
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	PipelineManager::CreateGraphicsPipeline(setting, "HighLumi");
 
@@ -199,7 +191,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "GaussianBlur");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GaussianBlur");
 	setting.inputLayout = ShaderManager::GetInputLayout("GaussianBlur");
-	setting.shaderCompilerTag = "GaussianBlur";
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "GaussianBlur");
 
@@ -208,7 +199,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Composite");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Composite");
 	setting.inputLayout = ShaderManager::GetInputLayout("Composite");
-	setting.shaderCompilerTag = "Composite";
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "Composite");
 
@@ -217,7 +207,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "RespawnTransition");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "RespawnTransition");
 	setting.inputLayout = ShaderManager::GetInputLayout("RespawnTransition");
-	setting.shaderCompilerTag = "RespawnTransition";
 	setting.rootSignatureSetting.maxCbvRootParameter = 4;
 	PipelineManager::CreateGraphicsPipeline(setting, "RespawnTransition");
 
@@ -226,7 +215,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "ShadowObj");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "ShadowObj");
 	setting.inputLayout = ShaderManager::GetInputLayout("ShadowObj");
-	setting.shaderCompilerTag = "ShadowObj";
 	setting.cullMode = CullMode::None;
 	setting.rootSignatureSetting.maxCbvRootParameter = 2;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
@@ -237,7 +225,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "ShadowMap");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "ShadowMap");
 	setting.inputLayout = ShaderManager::GetInputLayout("ShadowMap");
-	setting.shaderCompilerTag = "ShadowMap";
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "ShadowMap");
@@ -246,9 +233,7 @@ void CreateManager::CreateGraphicsPipeline()
 	setting = PipelineManager::GetGraphicsPipeline("GPUEmitter")->GetSetting();
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "RespawnPointEffect");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "RespawnPointEffect");
-	setting.inputLayout = ShaderManager::GetInputLayout("RespawnPointEffect");
 	setting.inputLayout = nullptr;
-	setting.shaderCompilerTag = "RespawnPointEffect";
 	PipelineManager::CreateGraphicsPipeline(setting, "RespawnPointEffect");
 
 	// タイトルのロゴ爆散用
@@ -257,7 +242,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "ParticleMesh");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "ParticleMesh");
 	setting.inputLayout = nullptr;
-	setting.shaderCompilerTag = "LogoExplosionEffectInit";
 	PipelineManager::CreateGraphicsPipeline(setting, "LogoExplosionEffect");
 
 	// 誘導エフェクト用
@@ -266,7 +250,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "GPUEmitter");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GPUEmitter");
 	setting.inputLayout = nullptr;
-	setting.shaderCompilerTag = "LeadEffectInit";
 	PipelineManager::CreateGraphicsPipeline(setting, "LeadEffect");
 
 	// プレイヤー回復エフェクト用
@@ -275,7 +258,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "GPUEmitter");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GPUEmitter");
 	setting.inputLayout = nullptr;
-	setting.shaderCompilerTag = "PlayerRecoveryEffectInit";
 	PipelineManager::CreateGraphicsPipeline(setting, "PlayerRecoveryEffect");
 
 	// 空中のエフェクト用
@@ -284,7 +266,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "GPUEmitter");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GPUEmitter");
 	setting.inputLayout = nullptr;
-	setting.shaderCompilerTag = "AirEffectInit";
 	PipelineManager::CreateGraphicsPipeline(setting, "AirEffect");
 
 	// ボスの攻撃軌跡のエフェクト用
@@ -293,7 +274,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "GPUEmitter");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GPUEmitter");
 	setting.inputLayout = nullptr;
-	setting.shaderCompilerTag = "BossAttackTrajectoryEffectInit";
 	PipelineManager::CreateGraphicsPipeline(setting, "BossAttackTrajectoryEffect");
 
 	// 攻撃の爆発のエフェクト
@@ -302,7 +282,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "GPUEmitter");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GPUEmitter");
 	setting.inputLayout = nullptr;
-	setting.shaderCompilerTag = "AttackExplosionEffectInit";
 	PipelineManager::CreateGraphicsPipeline(setting, "AttackExplosionEffect");
 
 	// 煙のエフェクト
@@ -311,7 +290,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "GPUEmitter");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "GPUEmitter");
 	setting.inputLayout = nullptr;
-	setting.shaderCompilerTag = "SmokeEffectInit";
 	PipelineManager::CreateGraphicsPipeline(setting, "SmokeEffect");
 
 	// 深度値のみ書き込み用
@@ -347,7 +325,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "Trajectory");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "Trajectory");
 	setting.inputLayout = ShaderManager::GetInputLayout("Trajectory");
-	setting.shaderCompilerTag = "Trajectory";
 	setting.cullMode = CullMode::None;
 	setting.topologyType = TopologyType::TriangleStrip;
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
@@ -360,7 +337,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "PonDeRing");
 	setting.gs = ShaderManager::GetShader(ShaderType::Geometry, "ParticleObject");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "ParticleObject");
-	setting.shaderCompilerTag = "PonDeRingInit";
 	PipelineManager::CreateGraphicsPipeline(setting, "PonDeRing");
 
 
@@ -380,7 +356,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "RadialBlur");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "RadialBlur");
 	setting.inputLayout = ShaderManager::GetInputLayout("RadialBlur");
-	setting.shaderCompilerTag = "RadialBlur";
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "RadialBlur");
@@ -390,7 +365,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "ToneMapping");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "ToneMapping");
 	setting.inputLayout = ShaderManager::GetInputLayout("ToneMapping");
-	setting.shaderCompilerTag = "ToneMapping";
 	setting.rootSignatureSetting.maxCbvRootParameter = 3;
 	setting.rootSignatureSetting.maxSrvDescritorRange = 1;
 	PipelineManager::CreateGraphicsPipeline(setting, "ToneMapping");
@@ -400,7 +374,6 @@ void CreateManager::CreateGraphicsPipeline()
 	setting.vs = ShaderManager::GetShader(ShaderType::Vertex, "LensFlare");
 	setting.ps = ShaderManager::GetShader(ShaderType::Pixel, "LensFlare");
 	setting.inputLayout = ShaderManager::GetInputLayout("LensFlare");
-	setting.shaderCompilerTag = "LensFlare";
 	setting.rootSignatureSetting.maxSrvDescritorRange = 2;
 	PipelineManager::CreateGraphicsPipeline(setting, "LensFlare");
 }

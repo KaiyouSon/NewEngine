@@ -135,27 +135,31 @@ void ParticleMesh::ExecuteCS()
 // --- マテリアル関連 --------------------------------------------------- //
 void ParticleMesh::MaterialInit()
 {
-	// インターフェース
-	std::unique_ptr<IConstantBuffer> iConstantBuffer;
+	mMaterial = std::make_unique<Material>();
+	//mMaterial->Copy(*gAssetsManager->GetMaterial("BasicParticleMesh"));
 
-	// トランスフォーム
-	iConstantBuffer = std::make_unique<ConstantBuffer<CTransformP>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
-
-	// 色
-	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
-
-	// UVパラメーター
-	iConstantBuffer = std::make_unique<ConstantBuffer<CUVParameter>>();
-	mMaterial.constantBuffers.push_back(std::move(iConstantBuffer));
-
-	// 初期化
-	mMaterial.Init();
+	if (mMaterial->constantBuffers.empty())
+	{
+		mMaterial->AddConstantBuffer<CTransformP>();	// 2D行列
+		mMaterial->AddConstantBuffer<CColor>();			// 色
+		mMaterial->AddConstantBuffer<CUVParameter>();	// UVパラメータ
+	}
+	else
+	{
+		mMaterial->SetConstantBuffer<CTransform2D>(0);	// 2D行列
+		mMaterial->SetConstantBuffer<CColor>(1);		// 色
+		mMaterial->SetConstantBuffer<CUVParameter>(2);	// UVパラメータ
+	}
+	mMaterial->Init();
 }
 void ParticleMesh::MaterialTransfer()
 {
 	mBillboard.CalculateBillboardMat();
+
+	if (!mMaterial)
+	{
+		return;
+	}
 
 	// トランスフォーム
 	CTransformP transformPData =
@@ -164,25 +168,25 @@ void ParticleMesh::MaterialTransfer()
 		mTransform->GetWorldMat(),
 		mBillboard.GetMat(),
 	};
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformPData);
+	mMaterial->TransferDataToConstantBuffer(0, transformPData);
 
-	// 色
-	CColor colorData = { color / 255 };
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[1].get(), colorData);
+	// 色データ
+	CColor colorData = { color.To01() };
+	mMaterial->TransferDataToConstantBuffer(1, colorData);
 
 	// UVパラメーター
 	CUVParameter uvData = { offset,tiling };
-	TransferDataToConstantBuffer(mMaterial.constantBuffers[2].get(), uvData);
+	mMaterial->TransferDataToConstantBuffer(2, uvData);
 }
 void ParticleMesh::MaterialDrawCommands()
 {
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	for (uint32_t i = 0; i < mMaterial.constantBuffers.size(); i++)
+	for (uint32_t i = 0; i < mMaterial->constantBuffers.size(); i++)
 	{
 		// CBV縺ｮ險ｭ螳壹さ繝槭Φ繝・
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-			i, mMaterial.constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
+			i, mMaterial->constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
 	}
 }
 
