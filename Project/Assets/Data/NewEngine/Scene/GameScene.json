@@ -426,6 +426,72 @@
                 "name": "Sprite5",
                 "type": 1
             }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object3D_info": {
+                            "component_info": {
+                                "index": 0,
+                                "type": 1
+                            }
+                        }
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                -16.0,
+                                0.0,
+                                285.0
+                            ],
+                            "rot": [
+                                0.0,
+                                -90.0,
+                                0.0
+                            ],
+                            "scale": [
+                                100.0,
+                                100.0,
+                                100.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 7
+                            },
+                            "model_format": 0,
+                            "model_tag": "SkyIsland1"
+                        }
+                    },
+                    {
+                        "texture_data": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 6
+                            },
+                            "current_texture": {
+                                "index": 0
+                            },
+                            "textures": [
+                                {
+                                    "texture_tag": "White",
+                                    "texture_type": 0
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "name": "Object3D6",
+                "type": 0
+            }
         }
     ]
 }

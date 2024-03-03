@@ -83,6 +83,15 @@ void HierarchyWindow::CreateGameObjectPop()
 		{
 			// スプライト
 			ShowObjectMenuItem("Sprite", GameObjectType::Sprite, false);
+
+			Gui::EndMenu();
+		}
+		if (Gui::BeginMenu("Light"))
+		{
+			Gui::MenuItem("Directional Light");	Gui::DrawLine();
+			Gui::MenuItem("Point Light");		Gui::DrawLine();
+			Gui::MenuItem("Spot Light");		Gui::DrawLine();
+
 			Gui::EndMenu();
 		}
 

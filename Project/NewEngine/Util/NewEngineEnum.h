@@ -7,6 +7,7 @@ enum class GameObjectType
 	Sprite,
 	ParticleMesh,
 	Camera,
+	DirectionalLight,
 };
 
 // コンポネントの種類
