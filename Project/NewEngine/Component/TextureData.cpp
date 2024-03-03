@@ -165,6 +165,16 @@ void TextureData::SetCurrentTexture(const std::string& tag)
 	mCrrentTex = tex;
 }
 
+void TextureData::SetCurrentTexture(ITexture* tex)
+{
+	if (!tex)
+	{
+		return;
+	}
+
+	mCrrentTex = tex;
+}
+
 ITexture* TextureData::GetTexture(const uint32_t index)
 {
 	return mTextures[index];
@@ -175,12 +185,4 @@ ITexture* TextureData::GetCurrentTexture()
 	return mCrrentTex;
 }
 
-void TextureData::SetCurrentTexture(ITexture* tex)
-{
-	if (!tex)
-	{
-		return;
-	}
 
-	mCrrentTex = tex;
-}

@@ -26,8 +26,8 @@ void Scene::LoadToJson(const std::string& sceneName)
 	mName = deserialized["name"];
 
 	// アセットのロード
-	mAssetsManager->LoadAssets(mName);
 	gAssetsManager = mAssetsManager.get();
+	mAssetsManager->LoadAssets(mName);
 
 	mGameObjectManager->GetGameObjects()->clear();
 

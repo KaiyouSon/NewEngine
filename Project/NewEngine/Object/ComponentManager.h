@@ -7,8 +7,6 @@
 #include "Transform.h"
 #include "ModelData.h"
 #include "TextureData.h"
-#include "PipelineData.h"
-#include "ParticleData.h"
 
 class ComponentManager
 {

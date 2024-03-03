@@ -86,8 +86,6 @@ ParticleMesh::ParticleMesh() :
 	CSMaterialInit();
 
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
-
-	mParticleData = mComponentManager->GetComponent<ParticleData>();
 }
 
 ParticleMesh::ParticleMesh(const std::string& name) :
@@ -108,7 +106,6 @@ ParticleMesh::ParticleMesh(const std::string& name) :
 
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
 
-	mParticleData = mComponentManager->GetComponent<ParticleData>();
 	SetParticleData<ParticleParameter::Default>(10000);
 }
 

@@ -104,22 +104,22 @@ void MappingWindow::ShowModelMap()
 	Gui::DrawString("Model Map");
 	Gui::DrawLine();
 
-	for (const auto& pair : *ModelManager::GetModelMap())
-	{
-		if (Gui::DrawCollapsingHeader(pair.first.c_str()))
-		{
-			switch (pair.second->format)
-			{
-			case ModelFormat::Obj:
-				Gui::DrawString("Model Format : Obj");
-				break;
-			case ModelFormat::Fbx:
-				Gui::DrawString("Model Format : Fbx");
-				break;
-			}
-		}
-		Gui::DrawLine();
-	}
+	//for (const auto& pair : *ModelManager::GetModelMap())
+	//{
+	//	if (Gui::DrawCollapsingHeader(pair.first.c_str()))
+	//	{
+	//		switch (pair.second->format)
+	//		{
+	//		case ModelFormat::Obj:
+	//			Gui::DrawString("Model Format : Obj");
+	//			break;
+	//		case ModelFormat::Fbx:
+	//			Gui::DrawString("Model Format : Fbx");
+	//			break;
+	//		}
+	//	}
+	//	Gui::DrawLine();
+	//}
 }
 void MappingWindow::ShowSoundMap()
 {

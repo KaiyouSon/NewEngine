@@ -39,23 +39,35 @@ void LightManager::Update()
 	CLightGroup lightGroupData;
 
 	// 平行光源のデータを転送する
-	for (uint32_t i = 0; i < mLightGroup.directionalLights.size(); i++)
+	if (mLightGroup.directionalLights.size() == 0)
 	{
-		// 宣言したライトの数よりも多かったらbreakする
-		if (i > DirectionalLightSize)
-		{
-			OutputDebugLog("[Direction Light] warring : Not enough Directional Lights");
-			break;
-		}
-
-		DirectionalLight* light = dynamic_cast<DirectionalLight*>(mLightGroup.directionalLights[i]);
-
 		// 色
-		lightGroupData.directionalLightsData[i].color = light->color.To01();
+		lightGroupData.directionalLightsData[0].color = Color::one;
 		// ベクトル
-		lightGroupData.directionalLightsData[i].vec = light->pos.Norm();
+		lightGroupData.directionalLightsData[0].vec = Vec3::down;
 		// アクティブフラグ
-		lightGroupData.directionalLightsData[i].isActive = light->isActive;
+		lightGroupData.directionalLightsData[0].isActive = true;
+	}
+	else
+	{
+		for (uint32_t i = 0; i < mLightGroup.directionalLights.size(); i++)
+		{
+			// 宣言したライトの数よりも多かったらbreakする
+			if (i > DirectionalLightSize)
+			{
+				OutputDebugLog("[Direction Light] warring : Not enough Directional Lights");
+				break;
+			}
+
+			DirectionalLight* light = dynamic_cast<DirectionalLight*>(mLightGroup.directionalLights[i]);
+
+			// 色
+			lightGroupData.directionalLightsData[i].color = light->color.To01();
+			// ベクトル
+			lightGroupData.directionalLightsData[i].vec = light->pos.Norm();
+			// アクティブフラグ
+			lightGroupData.directionalLightsData[i].isActive = light->isActive;
+		}
 	}
 
 	// 点光源のデータを転送する

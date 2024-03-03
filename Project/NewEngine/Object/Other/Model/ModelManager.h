@@ -20,6 +20,10 @@ private:
 
 public:
 	void LoadModel(const std::string fileName, const bool isSmoothing = false);
+	void LoadModel(const std::wstring fileName, const bool isSmoothing = false);
+
+	Model* GetModel2(const std::string& tag);
+	std::unordered_map<std::string, std::unique_ptr<Model>>* GetModelMap();
 
 #pragma endregion
 
@@ -40,12 +44,12 @@ public: // 破棄関連
 	static void DestroyModel(const std::string tag);
 
 public:	// モデルの取得関連
-	static Model* GetModel(const std::string tag);
+	static Model* GetModel(std::string tag);
 
 public: // モデルのマップの取得関連
-	static std::unordered_map<std::string, std::unique_ptr<Model>>* GetModelMap();
+	static std::unordered_map<std::string, std::unique_ptr<Model>>* GetModelMap2();
 
-private:
-	ModelManager();
+public:
 	friend Singleton<ModelManager>;
+	ModelManager();
 };

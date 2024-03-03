@@ -275,10 +275,10 @@ void LoadManager::GameSceneModelUnLoad()
 ///////////////////////////////////////////////////////////////
 bool LoadManager::ModelLoad()
 {
-	ModelManager::LoadObjModel("Cube", "Cube");
-	ModelManager::LoadObjModel("Sphere", "Sphere");
-	ModelManager::LoadObjModel("Plane", "Plane");
-	ModelManager::LoadObjModel("Capsule", "Capsule");
+	//ModelManager::LoadObjModel("Cube", "Cube");
+	//ModelManager::LoadObjModel("Sphere", "Sphere");
+	//ModelManager::LoadObjModel("Plane", "Plane");
+	//ModelManager::LoadObjModel("Capsule", "Capsule");
 
 	// 非同期終わったよ～
 	return true;

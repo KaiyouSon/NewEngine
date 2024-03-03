@@ -17,7 +17,11 @@ public:
 	Mesh mesh;
 	MaterialColor material;
 	ModelFormat format;
-	Texture* texture;
+	ITexture* texture;
+
+	Color ambient;		// アンビエント
+	Color diffuse;		// ディフューズ
+	Color specular;		// スペキュラー
 
 public:
 	Model();

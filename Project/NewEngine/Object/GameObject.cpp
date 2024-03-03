@@ -16,7 +16,6 @@ void GameObject::InitToObject3D()
 	mComponentManager->AddComponent<Transform>();
 	mComponentManager->AddComponent<ModelData>();
 	mComponentManager->AddComponent<TextureData>();
-	mComponentManager->AddComponent<PipelineData>();
 
 	mTransform = mComponentManager->GetComponent<Transform>();
 	mTextureData = mComponentManager->GetComponent<TextureData>();
@@ -29,8 +28,6 @@ void GameObject::InitToParticleMesh()
 	mComponentManager->AddComponent<ParticleMeshInfo>();
 	mComponentManager->AddComponent<Transform>();
 	mComponentManager->AddComponent<TextureData>();
-	mComponentManager->AddComponent<PipelineData>();
-	mComponentManager->AddComponent<ParticleData>();
 
 	mTransform = mComponentManager->GetComponent<Transform>();
 	mTextureData = mComponentManager->GetComponent<TextureData>();

@@ -175,7 +175,7 @@ void AssetsWindow::ShowModelAssets()
 	DrawBackButton();
 
 	int count = 1;
-	for (const auto& [tag, model] : *ModelManager::GetModelMap())
+	for (const auto& [tag, model] : *gAssetsManager->GetModelMap())
 	{
 		// 検索機能
 		std::string::size_type pos = tag.find(search);

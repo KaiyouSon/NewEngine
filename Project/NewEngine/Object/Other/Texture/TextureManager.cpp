@@ -60,7 +60,7 @@ void TextureManager::LoadTexture(const std::string& path)
 	tex->UpLoad();
 }
 
-void TextureManager::LoadMaterialTexture(const std::string& path)
+ITexture* TextureManager::LoadMaterialTexture(const std::string& path)
 {
 	fs::path fspath = path;
 	std::string tag = fspath.filename().string();
@@ -75,7 +75,7 @@ void TextureManager::LoadMaterialTexture(const std::string& path)
 	// マップに格納
 	std::unique_ptr<ITexture> itex = std::make_unique<Texture>(tag, path);
 	std::pair pair = std::make_pair(tag, std::move(itex));
-	mTextureMapArrays[(uint32_t)TextureType::Default].insert(std::move(pair));
+	mTextureMapArrays[(uint32_t)TextureType::Material].insert(std::move(pair));
 
 	// キャストする
 	Texture* tex = dynamic_cast<Texture*>(mTextureMapArrays[(uint32_t)TextureType::Material][tag].get());
@@ -101,6 +101,8 @@ void TextureManager::LoadMaterialTexture(const std::string& path)
 
 	// アップロード
 	tex->UpLoad();
+
+	return tex;
 }
 
 

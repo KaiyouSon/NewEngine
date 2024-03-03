@@ -31,7 +31,7 @@ private:
 
 public:
 	void LoadTexture(const std::string& path);
-	void LoadMaterialTexture(const std::string& path);
+	ITexture* LoadMaterialTexture(const std::string& path);
 
 private:
 	void LoadTextureFromPNG(const std::string filePath, DirectX::ScratchImage& scratchImg, DirectX::TexMetadata& metadata);

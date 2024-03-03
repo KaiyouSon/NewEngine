@@ -22,10 +22,7 @@ public:
 	void SetTexture(const std::string& tag, const uint32_t index = 0);
 	void SetTexture(ITexture* tex, const uint32_t index = 0);
 	void SetCurrentTexture(const std::string& tag);
+	void SetCurrentTexture(ITexture* tex);
 	ITexture* GetTexture(const uint32_t index = 0);
 	ITexture* GetCurrentTexture();
-
-public:
-	// 仮
-	void SetCurrentTexture(ITexture* tex);
 };

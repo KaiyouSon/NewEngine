@@ -30,7 +30,24 @@ void ModelManager::LoadModel(const std::string fileName, const bool isSmoothing)
 	// キャストする
 	ObjModel* objModel = dynamic_cast<ObjModel*>(mModelMap[tag].get());
 
-	objModel->Create(isSmoothing);
+	objModel->LoadObjFile(isSmoothing);
+	objModel->LoadMtlFile();
+}
+void ModelManager::LoadModel(const std::wstring fileName, const bool isSmoothing)
+{
+	fs::path fspath = fileName;
+	std::string tag = fspath.filename().string();
+
+	// マップに格納
+	std::unique_ptr<Model> model = std::make_unique<ObjModel>(tag, fspath.string());
+	std::pair pair = std::make_pair(tag, std::move(model));
+	mModelMap.insert(std::move(pair));
+
+	// キャストする
+	ObjModel* objModel = dynamic_cast<ObjModel*>(mModelMap[tag].get());
+
+	objModel->LoadObjFile(isSmoothing);
+	objModel->LoadMtlFile();
 }
 
 // objモデルのロード
@@ -368,7 +385,7 @@ void ModelManager::DestroyModel(const std::string tag)
 /// --- モデルの取得関連 ---------------------------------------------------------------------------------------------- ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Model* ModelManager::GetModel(const std::string tag)
+Model* ModelManager::GetModel(std::string tag)
 {
 	// 排他制御
 	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
@@ -394,7 +411,28 @@ Model* ModelManager::GetModel(const std::string tag)
 /// --- モデルのマップの取得関連 -------------------------------------------------------------------------------------- ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-std::unordered_map<std::string, std::unique_ptr<Model>>* ModelManager::GetModelMap()
+std::unordered_map<std::string, std::unique_ptr<Model>>* ModelManager::GetModelMap2()
 {
 	return &GetInstance()->mModelMap;
 }
+
+Model* ModelManager::GetModel2(const std::string& tag)
+{
+	// 排他制御
+	std::lock_guard<std::mutex> lock(GetInstance()->mMutex);
+
+	Model* result = nullptr;
+
+	auto it = mModelMap.find(tag);
+	if (it != mModelMap.end())
+	{
+		return mModelMap[tag].get();
+	}
+	return result;
+}
+
+std::unordered_map<std::string, std::unique_ptr<Model>>* ModelManager::GetModelMap()
+{
+	return &mModelMap;
+}
+

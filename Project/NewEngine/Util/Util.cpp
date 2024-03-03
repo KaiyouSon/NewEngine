@@ -2,6 +2,8 @@
 #include "RenderBase.h"
 #include "Camera.h"
 
+namespace fs = std::filesystem;
+
 // 浮動小数点数の符号を取得する
 uint32_t Sign(const float a)
 {
@@ -154,6 +156,29 @@ void CopyFileToDestination(const WCHAR* srcPath, const WCHAR* destFolder, std::w
 	if (newPath)
 	{
 		*newPath = szDestination;
+	}
+}
+
+void CopyFolderToDestination(const std::wstring srcFolder, const std::wstring destFolder, std::wstring* newPath)
+{
+	fs::create_directories(destFolder);
+
+	for (const auto& entry : fs::directory_iterator(srcFolder))
+	{
+		if (entry.is_regular_file())
+		{
+			std::wstring fileName = entry.path().filename();
+			std::wstring srcPath = srcFolder + L"/" + fileName;
+			std::wstring destPath = destFolder + L"/" + fileName;
+
+			// ファイルをコピー
+			CopyFile(srcPath.c_str(), destPath.c_str(), FALSE);
+		}
+	}
+
+	if (newPath)
+	{
+		*newPath = destFolder;
 	}
 }
 

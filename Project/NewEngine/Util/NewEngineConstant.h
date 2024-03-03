@@ -43,6 +43,12 @@ static const std::string AppTextureDirectory = "Assets/Texture/Application/";
 static const std::string AppModelDirectory = "Assets/Model/Application/";
 
 /// <summary>
+/// ディレクトリーパス : "Assets/Model/Application/"
+/// </summary>
+/// <returns>std::wstring</returns>
+static const std::wstring WAppModelDirectory = L"Assets/Model/Application/";
+
+/// <summary>
 /// ディレクトリーパス : "Assets/Data/NewEngine/"
 /// </summary>
 /// <returns>std::wstring</returns>

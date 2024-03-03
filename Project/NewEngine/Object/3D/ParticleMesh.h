@@ -16,11 +16,6 @@
 class ParticleMesh : public GameObject
 {
 private:
-	// コンポネント関連
-	ParticleData* mParticleData;
-
-
-private:
 	std::unique_ptr<StructuredBuffer> mParticleDataSB;
 	std::vector<std::unique_ptr<StructuredBuffer>> mStructuredBuffers;
 

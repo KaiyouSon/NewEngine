@@ -7,30 +7,30 @@ uint32_t ColliderDrawer::index = 0;
 void ColliderDrawer::Load()
 {
 	// コライダーモデルのロード
-	ModelManager::LoadObjModel("Collider/CircleCollider", "CircleCollider");
-	ModelManager::LoadObjModel("Collider/SquareCollider", "SquareCollider");
-	ModelManager::LoadObjModel("Collider/SphereCollider", "SphereCollider");
-	ModelManager::LoadObjModel("Collider/CubeCollider", "CubeCollider");
-	ModelManager::LoadObjModel("Collider/CapsuleColliderParts1", "CapsuleColliderParts1");
-	ModelManager::LoadObjModel("Collider/CapsuleColliderParts2", "CapsuleColliderParts2");
+	//ModelManager::LoadObjModel("Collider/CircleCollider", "CircleCollider");
+	//ModelManager::LoadObjModel("Collider/SquareCollider", "SquareCollider");
+	//ModelManager::LoadObjModel("Collider/SphereCollider", "SphereCollider");
+	//ModelManager::LoadObjModel("Collider/CubeCollider", "CubeCollider");
+	//ModelManager::LoadObjModel("Collider/CapsuleColliderParts1", "CapsuleColliderParts1");
+	//ModelManager::LoadObjModel("Collider/CapsuleColliderParts2", "CapsuleColliderParts2");
 
-	// 円
-	mModels.insert(std::make_pair("CircleCollider", ModelManager::GetModel("CircleCollider")));
+	//// 円
+	//mModels.insert(std::make_pair("CircleCollider", ModelManager::GetModel("CircleCollider")));
 
-	// 矩形
-	mModels.insert(std::make_pair("SquareCollider", ModelManager::GetModel("SquareCollider")));
+	//// 矩形
+	//mModels.insert(std::make_pair("SquareCollider", ModelManager::GetModel("SquareCollider")));
 
-	// 球体
-	mModels.insert(std::make_pair("SphereCollider", ModelManager::GetModel("SphereCollider")));
+	//// 球体
+	//mModels.insert(std::make_pair("SphereCollider", ModelManager::GetModel("SphereCollider")));
 
-	// キューブ
-	mModels.insert(std::make_pair("CubeCollider", ModelManager::GetModel("CubeCollider")));
+	//// キューブ
+	//mModels.insert(std::make_pair("CubeCollider", ModelManager::GetModel("CubeCollider")));
 
-	// 半球体
-	mModels.insert(std::make_pair("CapsuleColliderParts1", ModelManager::GetModel("CapsuleColliderParts1")));
+	//// 半球体
+	//mModels.insert(std::make_pair("CapsuleColliderParts1", ModelManager::GetModel("CapsuleColliderParts1")));
 
-	// 円柱(上下に面がない)
-	mModels.insert(std::make_pair("CapsuleColliderParts2", ModelManager::GetModel("CapsuleColliderParts2")));
+	//// 円柱(上下に面がない)
+	//mModels.insert(std::make_pair("CapsuleColliderParts2", ModelManager::GetModel("CapsuleColliderParts2")));
 }
 
 void ColliderDrawer::Init()

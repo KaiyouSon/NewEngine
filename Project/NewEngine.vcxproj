@@ -148,9 +148,7 @@
     <ClCompile Include="NewEngine\Component\GameObjectInfo.cpp" />
     <ClCompile Include="NewEngine\Component\ModelData.cpp" />
     <ClCompile Include="NewEngine\Component\Object3DInfo.cpp" />
-    <ClCompile Include="NewEngine\Component\ParticleData.cpp" />
     <ClCompile Include="NewEngine\Component\ParticleMeshInfo.cpp" />
-    <ClCompile Include="NewEngine\Component\PipelineData.cpp" />
     <ClCompile Include="NewEngine\Component\SpriteInfo.cpp" />
     <ClCompile Include="NewEngine\Component\TextureData.cpp" />
     <ClCompile Include="NewEngine\Debugger\ConsoleWindow.cpp" />
@@ -369,9 +367,7 @@
     <ClInclude Include="NewEngine\Component\GameObjectInfo.h" />
     <ClInclude Include="NewEngine\Component\ModelData.h" />
     <ClInclude Include="NewEngine\Component\Object3DInfo.h" />
-    <ClInclude Include="NewEngine\Component\ParticleData.h" />
     <ClInclude Include="NewEngine\Component\ParticleMeshInfo.h" />
-    <ClInclude Include="NewEngine\Component\PipelineData.h" />
     <ClInclude Include="NewEngine\Component\SpriteInfo.h" />
     <ClInclude Include="NewEngine\Component\TextureData.h" />
     <ClInclude Include="NewEngine\Debugger\ConsoleWindow.h" />

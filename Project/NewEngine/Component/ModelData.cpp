@@ -25,7 +25,8 @@ Model* ModelData::GetModel()
 
 void ModelData::SetModel(const std::string& tag)
 {
-	mModel = ModelManager::GetModel(tag);
+	//mModel = ModelManager::GetModel(tag);
+	mModel = gAssetsManager->GetModel(tag);
 }
 
 nlohmann::json ModelData::SaveToJson()
@@ -55,13 +56,13 @@ void ModelData::ShowDataToInspector()
 	if (Gui::DrawCollapsingHeader("Model Data", true))
 	{
 		static uint32_t currentComboIndex = 0;
-		std::string previewTag = mModel->tag;
+		std::string previewTag = mModel ? mModel->tag : "empty";
 
 		std::string label = "Current Model";
 		if (ImGui::BeginCombo(label.c_str(), previewTag.c_str()))
 		{
 			uint32_t index = 0;
-			for (const auto& [tag, tex] : *ModelManager::GetModelMap())
+			for (const auto& [tag, tex] : *gAssetsManager->GetModelMap())
 			{
 				const bool isSelected = (currentComboIndex == index);
 				if (ImGui::Selectable(tag.c_str(), isSelected))
@@ -76,6 +77,17 @@ void ModelData::ShowDataToInspector()
 				index++;
 			}
 			ImGui::EndCombo();
+		}
+
+		if (mModel)
+		{
+			if (Gui::BeginTreeNode("Model Texture", true))
+			{
+				Vec2 size = 256;
+				Gui::DrawImage(mModel->texture, size);
+
+				Gui::EndTreeNode();
+			}
 		}
 	}
 }

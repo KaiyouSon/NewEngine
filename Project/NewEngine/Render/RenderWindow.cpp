@@ -4,7 +4,9 @@
 #include "StandardLib.h"
 
 #pragma comment(lib,"winmm.lib")
-#pragma comment(lib,"shlwapi.lib") 
+#pragma comment(lib,"shlwapi.lib")
+
+namespace fs = std::filesystem;
 
 RenderWindow::RenderWindow() :
 	mSize(Vec2(1920, 1080)), mTitle("empty")
@@ -131,20 +133,40 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				continue;
 			}
 
+			std::string sceneName = SceneManager::GetInstance()->mCurrentScene->GetName() + "/";
+			std::wstring wsceneName = std::wstring(sceneName.begin(), sceneName.end());
+
 			// pngファイルであれば
 			if (lstrcmpi(ext, L".png") == 0)
 			{
-				OutputDebugLog("PngFile");
-
 				// プロジェクトの指定フォルダにコピー
-				std::string sceneName = SceneManager::GetInstance()->mCurrentScene->GetName() + "/";
-				std::wstring wDestFolder = WAppTextureDirectory + std::wstring(sceneName.begin(), sceneName.end());
+				std::wstring wDestFolder = WAppTextureDirectory + wsceneName;
 				std::wstring wNewPath;
 				CopyFileToDestination(szFilePath, wDestFolder.c_str(), &wNewPath);
 
 				// テクスチャをロードする
 				std::string path = WStrToStr(wNewPath);
-				LoadTexture(path);
+				gAssetsManager->LoadTexture(path);
+				//LoadTexture(path);
+			}
+			// フォルダーなら
+			else
+			{
+				fs::path fsFilePath = szFilePath;
+				std::wstring folderName = fsFilePath.filename().wstring();
+				std::wstring objFilePath = fsFilePath.wstring() + L"/" + folderName + L".obj";
+
+				// objファイルが存在するなら
+				if (fs::exists(objFilePath))
+				{
+					// プロジェクトの指定フォルダにコピー
+					std::wstring wDestFolder = WAppModelDirectory + wsceneName + folderName;
+					std::wstring wNewPath;
+					CopyFolderToDestination(szFilePath, wDestFolder.c_str(), &wNewPath);
+
+					// モデルをロードする
+					gAssetsManager->LoadModel(szFilePath);
+				}
 			}
 		}
 

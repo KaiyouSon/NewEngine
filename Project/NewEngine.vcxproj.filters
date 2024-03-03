@@ -1026,9 +1026,6 @@
     <ClCompile Include="NewEngine\Component\ModelData.cpp">
       <Filter>Uncategorized\Source\Component</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Component\PipelineData.cpp">
-      <Filter>Uncategorized\Source\Component</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Component\Object3DInfo.cpp">
       <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
     </ClCompile>
@@ -1070,9 +1067,6 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Object\3D\ParticleMesh.cpp">
       <Filter>Uncategorized\Source\GameObject\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Component\ParticleData.cpp">
-      <Filter>Uncategorized\Source\Component</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Math\Vec4.cpp">
       <Filter>Uncategorized\Source</Filter>
@@ -1703,9 +1697,6 @@
     <ClInclude Include="NewEngine\Component\ModelData.h">
       <Filter>Uncategorized\Header\Component</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Component\PipelineData.h">
-      <Filter>Uncategorized\Header\Component</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Component\Object3DInfo.h">
       <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
     </ClInclude>
@@ -1747,9 +1738,6 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Object\3D\ParticleMesh.h">
       <Filter>Uncategorized\Header\GameObject\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Component\ParticleData.h">
-      <Filter>Uncategorized\Header\Component</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Math\Vec4.h">
       <Filter>Uncategorized\Header</Filter>

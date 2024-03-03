@@ -172,11 +172,15 @@ void Object3D::MaterialTransfer()
 	CMaterialColor materialColorData;
 	if (isLighting == true && isAllLighting == true)
 	{
+		Model* model = mModelData->GetModel();
 		materialColorData =
 		{
-			Color::one - 0.4f,
-			mModelData->GetModel()->material.diffuse,
-			mModelData->GetModel()->material.specular,
+			model->ambient,
+			model->diffuse,
+			model->specular,
+			//Color::one - 0.4f,
+			//mModelData->GetModel()->material.diffuse,
+			//mModelData->GetModel()->material.specular,
 		};
 	}
 	else
@@ -230,7 +234,7 @@ void Object3D::MaterialDrawCommands()
 // --- 描画コマンド ----------------------------------------------------- //
 void Object3D::DrawCommands()
 {
-	if (mTextureData->GetCurrentTexture() == nullptr || mModelData->GetModel() == nullptr) return;
+	if (mModelData->GetModel() == nullptr) return;
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
@@ -300,7 +304,7 @@ void Object3D::SetModel(Model* model)
 void Object3D::SetModel(const std::string& tag)
 {
 	mModelData->SetModel(tag);
-	mTextureData->SetCurrentTexture(mModelData->GetModel()->texture->GetTag());
+	mTextureData->SetCurrentTexture(mModelData->GetModel()->texture);
 
 	// パイプライン変更
 	if (mModelData->GetModel()->format == ModelFormat::Obj)

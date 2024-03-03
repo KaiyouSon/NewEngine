@@ -115,6 +115,9 @@ void OutputDebugLog(const char* fmt, ...);
 // ファイルを指定した場所にコピペする処理
 void CopyFileToDestination(const WCHAR* srcPath, const WCHAR* destFolder, std::wstring* newPath = nullptr);
 
+// フォルダ内のファイルをすべてコピーする
+void CopyFolderToDestination(const std::wstring srcFolder, const std::wstring destFolder, std::wstring* newPath = nullptr);
+
 // 簡易的なfor文
 void Loop(const uint32_t count, std::function<void()> func);
 
