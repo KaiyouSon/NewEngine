@@ -8,6 +8,8 @@ enum class GameObjectType
 	ParticleMesh,
 	Camera,
 	DirectionalLight,
+	PointLight,
+	SpotLight,
 };
 
 // コンポネントの種類
@@ -20,6 +22,9 @@ enum class ComponentType
 	SpriteInfo,
 	ParticleMeshInfo,
 	CameraInfo,
+	DirectionalLightInfo,
+	PointLightInfo,
+	SpotLightInfo,
 
 	Transform,
 	TextureData,

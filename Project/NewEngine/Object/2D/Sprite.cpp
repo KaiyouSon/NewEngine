@@ -49,6 +49,11 @@ Sprite::Sprite(const std::string& name) :
 
 void Sprite::Update()
 {
+	if (isActive == false)
+	{
+		return;
+	}
+
 	BaseUpdate();
 
 	// マテリアルの転送
@@ -62,6 +67,11 @@ void Sprite::ExecuteCS()
 }
 void Sprite::AppedToRenderer()
 {
+	if (isActive == false)
+	{
+		return;
+	}
+
 	Renderer::GetInstance()->Register("BackSprite",
 		[this]()
 		{
@@ -70,6 +80,11 @@ void Sprite::AppedToRenderer()
 }
 void Sprite::Draw(const std::string& _layerTag, const BlendMode _blendMode)
 {
+	if (isActive == false)
+	{
+		return;
+	}
+
 	blendMode = _blendMode;
 	_layerTag;
 

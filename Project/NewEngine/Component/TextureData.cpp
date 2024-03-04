@@ -66,8 +66,11 @@ void TextureData::LoadToJson(const nlohmann::json& componentField)
 
 	nlohmann::json currentTextureField = textureDataField["current_texture"];
 	mCurrentTexIndex = currentTextureField["index"];
-	mCrrentTex = mTextures[mCurrentTexIndex];
-	mGameObj->SetTexture(mCrrentTex->GetTag(), false);
+	if (!mCrrentTex)
+	{
+		mCrrentTex = mTextures[mCurrentTexIndex];
+		mGameObj->SetTexture(mCrrentTex->GetTag(), false);
+	}
 }
 
 void TextureData::ShowDataToInspector()

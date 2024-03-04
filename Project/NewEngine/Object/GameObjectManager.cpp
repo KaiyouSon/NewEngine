@@ -64,6 +64,16 @@ void GameObjectManager::AddGameObject(const GameObjectType type, const std::stri
 		break;
 	case GameObjectType::Camera:
 		obj = std::make_unique<Camera>(name);
+		break;
+	case GameObjectType::DirectionalLight:
+		obj = std::make_unique<DirectionalLight>(name);
+		break;
+	case GameObjectType::PointLight:
+		obj = std::make_unique<PointLight>(name);
+		break;
+	case GameObjectType::SpotLight:
+		obj = std::make_unique<SpotLight>(name);
+		break;
 	}
 	mGameObjects.push_back(std::move(obj));
 }

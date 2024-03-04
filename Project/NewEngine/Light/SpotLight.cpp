@@ -2,10 +2,34 @@
 #include "LightManager.h"
 
 SpotLight::SpotLight() :
-	pos(Vec3::up * 5), vec(Vec3::down),
-	color(Color::white), colorRate(1), radius(10),
-	decay(1), cosAngle(30, 60), isActive(false)
+	vec(Vec3::down), colorRate(1), radius(10),
+	decay(1), cosAngle(30, 60)
 {
-	mType = LightType::SpotLight;
-	LightManager::GetInstance()->Register(this);
+}
+SpotLight::SpotLight(const std::string& name) :
+	vec(Vec3::down), colorRate(1), radius(10),
+	decay(1), cosAngle(30, 60)
+{
+	this->name = name;
+
+	InitComponents();
+
+	LightManager::GetInstance()->RegisterLight(this);
+}
+
+SpotLight::~SpotLight()
+{
+	LightManager::GetInstance()->UnRegisterLight(mType);
+}
+
+void SpotLight::Update()
+{
+}
+
+void SpotLight::InitComponents()
+{
+	mType = GameObjectType::SpotLight;
+
+	mComponentManager->AddComponent<SpotLightInfo>();
+	mComponentManager->AddComponent<Transform>();
 }

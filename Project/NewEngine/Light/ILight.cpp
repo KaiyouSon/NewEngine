@@ -2,5 +2,5 @@
 
 LightType ILight::GetLightType()
 {
-    return mType;
+    return mLightType;
 }

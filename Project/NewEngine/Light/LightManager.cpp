@@ -32,14 +32,113 @@ void LightManager::Init()
 	mLightGroup.pointLights.clear();
 	mLightGroup.spotLights.clear();
 }
-
 void LightManager::Update()
 {
 	// ライトグループのデータ
 	CLightGroup lightGroupData;
 
-	// 平行光源のデータを転送する
-	if (mLightGroup.directionalLights.size() == 0)
+	//平行光源のデータを転送する
+	TransferDirectionalLightData(lightGroupData);
+
+	// 点光源のデータを転送する
+	TransferPointLightData(lightGroupData);
+
+	// スポットライトのデータを転送する
+	TransferSpotLightData(lightGroupData);
+
+	// データ転送
+	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), lightGroupData);
+}
+void LightManager::DrawCommands(const uint32_t index)
+{
+	RenderBase* renderBase = RenderBase::GetInstance();
+
+	// マテリアルとトランスフォームのCBVの設定コマンド
+	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+		index, mMaterial->constantBuffers[0]->bufferResource->buffer->GetGPUVirtualAddress());
+}
+
+void LightManager::RegisterLight(GameObject* lightObj)
+{
+	// インターフェースのタイプよって登録先を決める
+	switch (lightObj->GetType())
+	{
+	case GameObjectType::DirectionalLight:
+		// 平行光源に登録
+		mLightGroup.directionalLights.push_back(lightObj);
+		break;
+
+	case GameObjectType::PointLight:
+		// 点光源に登録
+		mLightGroup.pointLights.push_back(lightObj);
+		break;
+
+	case GameObjectType::SpotLight:
+		// 点光源に登録
+		mLightGroup.spotLights.push_back(lightObj);
+		break;
+	}
+}
+void LightManager::UnRegisterLight(const GameObjectType type)
+{
+	if (!this)
+	{
+		return;
+	}
+
+	switch (type)
+	{
+	case GameObjectType::DirectionalLight:
+		if (!mLightGroup.directionalLights.empty())
+		{
+			mLightGroup.directionalLights.pop_back();
+		}
+		break;
+	case GameObjectType::PointLight:
+		if (!mLightGroup.pointLights.empty())
+		{
+			mLightGroup.pointLights.pop_back();
+		}
+		break;
+	case GameObjectType::SpotLight:
+		if (!mLightGroup.spotLights.empty())
+		{
+			mLightGroup.spotLights.pop_back();
+		}
+		break;
+	}
+}
+
+void LightManager::TransferDirectionalLightData(CLightGroup& lightGroupData)
+{
+	// アクティブの平行光源が存在するフラグ
+	bool isHaveActive = false;
+	for (uint32_t i = 0; i < mLightGroup.directionalLights.size(); i++)
+	{
+		// 宣言したライトの数よりも多かったらbreakする
+		if (i > DirectionalLightSize)
+		{
+			OutputDebugLog("[Direction Light] warring : Not enough Directional Lights");
+			break;
+		}
+
+		DirectionalLight* light = dynamic_cast<DirectionalLight*>(mLightGroup.directionalLights[i]);
+		if (!light->isActive)
+		{
+			continue;
+		}
+
+		// アクティブの平行光源が存在する
+		isHaveActive = true;
+
+		// 色
+		lightGroupData.directionalLightsData[0].color = light->color.To01();
+		// ベクトル
+		lightGroupData.directionalLightsData[0].vec = light->pos.Norm();
+		// アクティブフラグ
+		lightGroupData.directionalLightsData[0].isActive = light->isActive;
+	}
+	if (!isHaveActive)
 	{
 		// 色
 		lightGroupData.directionalLightsData[0].color = Color::one;
@@ -48,28 +147,9 @@ void LightManager::Update()
 		// アクティブフラグ
 		lightGroupData.directionalLightsData[0].isActive = true;
 	}
-	else
-	{
-		for (uint32_t i = 0; i < mLightGroup.directionalLights.size(); i++)
-		{
-			// 宣言したライトの数よりも多かったらbreakする
-			if (i > DirectionalLightSize)
-			{
-				OutputDebugLog("[Direction Light] warring : Not enough Directional Lights");
-				break;
-			}
-
-			DirectionalLight* light = dynamic_cast<DirectionalLight*>(mLightGroup.directionalLights[i]);
-
-			// 色
-			lightGroupData.directionalLightsData[i].color = light->color.To01();
-			// ベクトル
-			lightGroupData.directionalLightsData[i].vec = light->pos.Norm();
-			// アクティブフラグ
-			lightGroupData.directionalLightsData[i].isActive = light->isActive;
-		}
-	}
-
+}
+void LightManager::TransferPointLightData(CLightGroup& lightGroupData)
+{
 	// 点光源のデータを転送する
 	for (uint32_t i = 0; i < mLightGroup.pointLights.size(); i++)
 	{
@@ -100,7 +180,9 @@ void LightManager::Update()
 		// アクティブフラグ
 		lightGroupData.pointLightsData[i].isActive = light->isActive;
 	}
-
+}
+void LightManager::TransferSpotLightData(CLightGroup& lightGroupData)
+{
 	// スポットライトのデータを転送する
 	for (uint32_t i = 0; i < mLightGroup.spotLights.size(); i++)
 	{
@@ -137,39 +219,5 @@ void LightManager::Update()
 		// 角度減衰
 		lightGroupData.spotLightsData[i].cosAngle.x = cosf(Radian(light->cosAngle.x));
 		lightGroupData.spotLightsData[i].cosAngle.y = cosf(Radian(light->cosAngle.y));
-	}
-
-	// データ転送
-	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), lightGroupData);
-}
-void LightManager::DrawCommands(const uint32_t index)
-{
-	RenderBase* renderBase = RenderBase::GetInstance();
-
-	// マテリアルとトランスフォームのCBVの設定コマンド
-	renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-		index, mMaterial->constantBuffers[0]->bufferResource->buffer->GetGPUVirtualAddress());
-}
-
-void LightManager::Register(ILight* iLight)
-{
-	// インターフェースのタイプよって登録先を決める
-
-	switch (iLight->GetLightType())
-	{
-	case LightType::DirectionalLight:
-		// 平行光源に登録
-		mLightGroup.directionalLights.push_back(iLight);
-		break;
-
-	case LightType::PointLight:
-		// 点光源に登録
-		mLightGroup.pointLights.push_back(iLight);
-		break;
-
-	case LightType::SpotLight:
-		// 点光源に登録
-		mLightGroup.spotLights.push_back(iLight);
-		break;
 	}
 }

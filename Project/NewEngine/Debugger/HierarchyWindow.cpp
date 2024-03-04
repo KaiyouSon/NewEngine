@@ -88,9 +88,9 @@ void HierarchyWindow::CreateGameObjectPop()
 		}
 		if (Gui::BeginMenu("Light"))
 		{
-			Gui::MenuItem("Directional Light");	Gui::DrawLine();
-			Gui::MenuItem("Point Light");		Gui::DrawLine();
-			Gui::MenuItem("Spot Light");		Gui::DrawLine();
+			ShowObjectMenuItem("Directional Light", GameObjectType::DirectionalLight);
+			ShowObjectMenuItem("Point Light", GameObjectType::PointLight);
+			ShowObjectMenuItem("Spot Light", GameObjectType::SpotLight);
 
 			Gui::EndMenu();
 		}

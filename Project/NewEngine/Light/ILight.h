@@ -5,7 +5,7 @@
 class ILight
 {
 protected:
-	LightType mType;
+	LightType mLightType;
 
 public:
 	virtual ~ILight() {}

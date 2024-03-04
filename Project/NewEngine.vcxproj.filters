@@ -460,6 +460,12 @@
     <Filter Include="Uncategorized\Header\GameObject\2D">
       <UniqueIdentifier>{c5ab2f9a-341d-4bcf-aceb-7b71ded1a950}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Uncategorized\Source\GameObject\Light">
+      <UniqueIdentifier>{c0353768-8049-4588-96be-5aa2fec393b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uncategorized\Header\GameObject\Light">
+      <UniqueIdentifier>{c815b3db-98f9-4c1a-bf1f-0ecc76cc8842}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -551,9 +557,6 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Math\Quaternion.cpp">
       <Filter>NewEngine\Source\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Light\LightManager.cpp">
-      <Filter>NewEngine\Source\Light</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Render\Pipeline\RootSignature.cpp">
       <Filter>NewEngine\Source\Render</Filter>
@@ -906,12 +909,6 @@
     <ClCompile Include="Application\SourceCode\Field\FieldObject\SkyIsland.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Light\PointLight.cpp">
-      <Filter>NewEngine\Source\Light</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Light\DirectionalLight.cpp">
-      <Filter>NewEngine\Source\Light</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Light\ILight.cpp">
       <Filter>NewEngine\Source\Light</Filter>
     </ClCompile>
@@ -926,9 +923,6 @@
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Field\FieldObject\Sun.cpp">
       <Filter>Application\Source\Field\FiedlObject</Filter>
-    </ClCompile>
-    <ClCompile Include="NewEngine\Light\SpotLight.cpp">
-      <Filter>NewEngine\Source\Light</Filter>
     </ClCompile>
     <ClCompile Include="Application\SourceCode\Effect\AttackExplosionEffect.cpp">
       <Filter>Application\Source\Effect</Filter>
@@ -999,9 +993,6 @@
     <ClCompile Include="NewEngine\Render\ShaderCompiler\InputLayout.cpp">
       <Filter>NewEngine\Source\Render\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Object\GameObjectManager.cpp">
-      <Filter>Uncategorized\Source</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Debugger\MainWindow.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
@@ -1017,7 +1008,7 @@
     <ClCompile Include="NewEngine\Util\Transform.cpp">
       <Filter>Uncategorized\Source\Component</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Component\SpriteInfo.cpp">
+    <ClCompile Include="NewEngine\Component\GameObjectInfo\SpriteInfo.cpp">
       <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Scene\Scene.cpp">
@@ -1026,7 +1017,7 @@
     <ClCompile Include="NewEngine\Component\ModelData.cpp">
       <Filter>Uncategorized\Source\Component</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Component\Object3DInfo.cpp">
+    <ClCompile Include="NewEngine\Component\GameObjectInfo\Object3DInfo.cpp">
       <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Debugger\IGuiWindow.cpp">
@@ -1047,7 +1038,7 @@
     <ClCompile Include="NewEngine\Debugger\ConsoleWindow.cpp">
       <Filter>Uncategorized\Source\GuiWindow</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Component\GameObjectInfo.cpp">
+    <ClCompile Include="NewEngine\Component\GameObjectInfo\GameObjectInfo.cpp">
       <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\AssetsManager.cpp">
@@ -1071,7 +1062,7 @@
     <ClCompile Include="NewEngine\Math\Vec4.cpp">
       <Filter>Uncategorized\Source</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Component\ParticleMeshInfo.cpp">
+    <ClCompile Include="NewEngine\Component\GameObjectInfo\ParticleMeshInfo.cpp">
       <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp">
@@ -1083,7 +1074,31 @@
     <ClCompile Include="NewEngine\Object\3D\Camera.cpp">
       <Filter>Uncategorized\Source\GameObject\3D</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Component\CameraInfo.cpp">
+    <ClCompile Include="NewEngine\Component\GameObjectInfo\CameraInfo.cpp">
+      <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Light\DirectionalLight.cpp">
+      <Filter>Uncategorized\Source\GameObject\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Object\GameObjectManager.cpp">
+      <Filter>Uncategorized\Source\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Light\LightManager.cpp">
+      <Filter>Uncategorized\Source\GameObject\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Component\GameObjectInfo\DirectionalLightInfo.cpp">
+      <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Light\PointLight.cpp">
+      <Filter>Uncategorized\Source\GameObject\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Component\GameObjectInfo\PointLightInfo.cpp">
+      <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Light\SpotLight.cpp">
+      <Filter>Uncategorized\Source\GameObject\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Component\GameObjectInfo\SpotLightInfo.cpp">
       <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1183,9 +1198,6 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Math\Quaternion.h">
       <Filter>NewEngine\Header\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Light\LightManager.h">
-      <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Render\Pipeline\RootSignature.h">
       <Filter>NewEngine\Header\Render</Filter>
@@ -1574,15 +1586,6 @@
     <ClInclude Include="Application\SourceCode\Field\FieldObject\SkyIsland.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Light\PointLight.h">
-      <Filter>NewEngine\Header\Light</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Light\DirectionalLight.h">
-      <Filter>NewEngine\Header\Light</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Light\ILight.h">
-      <Filter>NewEngine\Header\Light</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SourceCode\Trajectory.h">
       <Filter>Application\Header</Filter>
     </ClInclude>
@@ -1594,9 +1597,6 @@
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Field\FieldObject\Sun.h">
       <Filter>Application\Header\Field\FieldObject</Filter>
-    </ClInclude>
-    <ClInclude Include="NewEngine\Light\SpotLight.h">
-      <Filter>NewEngine\Header\Light</Filter>
     </ClInclude>
     <ClInclude Include="Application\SourceCode\Effect\AttackExplosionEffect.h">
       <Filter>Application\Header\Effect</Filter>
@@ -1670,9 +1670,6 @@
     <ClInclude Include="NewEngine\Util\NewEngineConstant.h">
       <Filter>NewEngine\Header</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Object\GameObjectManager.h">
-      <Filter>Uncategorized\Header</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Debugger\MainWindow.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
@@ -1688,7 +1685,7 @@
     <ClInclude Include="NewEngine\Util\Transform.h">
       <Filter>Uncategorized\Header\Component</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Component\SpriteInfo.h">
+    <ClInclude Include="NewEngine\Component\GameObjectInfo\SpriteInfo.h">
       <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Scene\Scene.h">
@@ -1697,7 +1694,7 @@
     <ClInclude Include="NewEngine\Component\ModelData.h">
       <Filter>Uncategorized\Header\Component</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Component\Object3DInfo.h">
+    <ClInclude Include="NewEngine\Component\GameObjectInfo\Object3DInfo.h">
       <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Debugger\HierarchyWindow.h">
@@ -1718,7 +1715,7 @@
     <ClInclude Include="NewEngine\Debugger\ConsoleWindow.h">
       <Filter>Uncategorized\Header\GuiWindow</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Component\GameObjectInfo.h">
+    <ClInclude Include="NewEngine\Component\GameObjectInfo\GameObjectInfo.h">
       <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\AssetsManager.h">
@@ -1742,7 +1739,7 @@
     <ClInclude Include="NewEngine\Math\Vec4.h">
       <Filter>Uncategorized\Header</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Component\ParticleMeshInfo.h">
+    <ClInclude Include="NewEngine\Component\GameObjectInfo\ParticleMeshInfo.h">
       <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Object\2D\Sprite.h">
@@ -1754,7 +1751,34 @@
     <ClInclude Include="NewEngine\Object\3D\Camera.h">
       <Filter>Uncategorized\Header\GameObject\3D</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Component\CameraInfo.h">
+    <ClInclude Include="NewEngine\Component\GameObjectInfo\CameraInfo.h">
+      <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Light\DirectionalLight.h">
+      <Filter>Uncategorized\Header\GameObject\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\GameObjectManager.h">
+      <Filter>Uncategorized\Header\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Light\LightManager.h">
+      <Filter>Uncategorized\Header\GameObject\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Component\GameObjectInfo\DirectionalLightInfo.h">
+      <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Light\PointLight.h">
+      <Filter>Uncategorized\Header\GameObject\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Component\GameObjectInfo\PointLightInfo.h">
+      <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Light\SpotLight.h">
+      <Filter>Uncategorized\Header\GameObject\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Light\ILight.h">
+      <Filter>NewEngine\Header\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Component\GameObjectInfo\SpotLightInfo.h">
       <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
     </ClInclude>
   </ItemGroup>

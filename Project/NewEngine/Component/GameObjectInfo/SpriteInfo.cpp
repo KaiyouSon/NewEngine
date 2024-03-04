@@ -21,27 +21,33 @@ void SpriteInfo::Update()
 
 nlohmann::json SpriteInfo::SaveToJson()
 {
+	Sprite* castObj = dynamic_cast<Sprite*>(mGameObj);
+
 	nlohmann::json spriteInfoData;
 	spriteInfoData["sprite_info"] = mComponentInfo.SaveToJson();
+	spriteInfoData["sprite_info"]["is_active"] = castObj->isActive;
 	spriteInfoData["sprite_info"]["flip_mode"] = (uint32_t)flipType;
 	spriteInfoData["sprite_info"]["anchor_point"] = { anchorPoint.x,anchorPoint.y };
 	spriteInfoData["sprite_info"]["sprite_size"] = { spriteSize.x,spriteSize.y };
-	spriteInfoData["sprite_info"]["color"] = { mColor.r,mColor.g,mColor.b,mColor.a };
+	spriteInfoData["sprite_info"]["color"] = { castObj->color.r,castObj->color.g,castObj->color.b,castObj->color.a };
 	return spriteInfoData;
 }
 
 void SpriteInfo::LoadToJson(const nlohmann::json& componentField)
 {
+	Sprite* castObj = dynamic_cast<Sprite*>(mGameObj);
+
 	mComponentInfo.LoadToJson(componentField["sprite_info"]);
+	castObj->isActive = componentField["sprite_info"]["is_active"];
 	flipType = (FlipType)componentField["sprite_info"]["flip_mode"];
 	anchorPoint.x = componentField["sprite_info"]["anchor_point"][0];
 	anchorPoint.y = componentField["sprite_info"]["anchor_point"][1];
 	spriteSize.x = componentField["sprite_info"]["sprite_size"][0];
 	spriteSize.y = componentField["sprite_info"]["sprite_size"][1];
-	mColor.r = componentField["sprite_info"]["color"][0];
-	mColor.g = componentField["sprite_info"]["color"][1];
-	mColor.b = componentField["sprite_info"]["color"][2];
-	mColor.a = componentField["sprite_info"]["color"][3];
+	castObj->color.r = componentField["sprite_info"]["color"][0];
+	castObj->color.g = componentField["sprite_info"]["color"][1];
+	castObj->color.b = componentField["sprite_info"]["color"][2];
+	castObj->color.a = componentField["sprite_info"]["color"][3];
 
 	SetParamToObj();
 }
@@ -52,6 +58,8 @@ void SpriteInfo::ShowDataToInspector()
 
 	if (Gui::DrawCollapsingHeader("Object Info", true))
 	{
+		Gui::DrawCheckBox("Active Flag", &castObj->isActive);
+
 		Gui::DrawInputText("Object Name", mChangingName);
 		if (!ImGui::IsItemActive())
 		{
@@ -63,7 +71,7 @@ void SpriteInfo::ShowDataToInspector()
 
 		DrawLayerTagGUI();
 
-		Gui::DrawColorEdit("Color", mColor);
+		Gui::DrawColorEdit("Color", castObj->color);
 
 		if (Gui::BeginTreeNode("Flip Mode", true))
 		{
@@ -96,5 +104,5 @@ void SpriteInfo::SetParamToObj()
 	castObj->SetFlipType(flipType);
 	castObj->SetAnchorPoint(anchorPoint);
 	castObj->SetSize(spriteSize);
-	castObj->color = mColor;
+	//castObj->color = mColor;
 }

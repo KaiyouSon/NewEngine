@@ -28,6 +28,7 @@ public:
 	Vec2 offset;
 	BlendMode blendMode;
 	std::string layerTag;
+	bool isActive;
 
 protected:
 	// オブジェクト3D時の初期化

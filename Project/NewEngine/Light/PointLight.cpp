@@ -2,9 +2,33 @@
 #include "LightManager.h"
 
 PointLight::PointLight() :
-	pos(Vec3::up), colorRate(Vec3::one),
-	radius(10.f), decay(1.f), color(Color::white), isActive(true)
+	colorRate(Vec3::one), radius(10.f), decay(1.f)
 {
-	mType = LightType::PointLight;
-	LightManager::GetInstance()->Register(this);
+}
+
+PointLight::PointLight(const std::string& name) :
+	colorRate(Vec3::one), radius(10.f), decay(1.f)
+{
+	this->name = name;
+
+	InitComponents();
+
+	LightManager::GetInstance()->RegisterLight(this);
+}
+
+PointLight::~PointLight()
+{
+	LightManager::GetInstance()->UnRegisterLight(mType);
+}
+
+void PointLight::Update()
+{
+}
+
+void PointLight::InitComponents()
+{
+	mType = GameObjectType::PointLight;
+
+	mComponentManager->AddComponent<PointLightInfo>();
+	mComponentManager->AddComponent<Transform>();
 }

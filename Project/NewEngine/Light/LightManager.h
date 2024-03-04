@@ -28,18 +28,20 @@ private:
 		std::array<ConstantBufferData::CSpotLight, SpotLightSize> spotLightsData;
 	};
 
-
 private:
 	struct LightGroup
 	{
-		std::vector<ILight*> directionalLights;
-		std::vector<ILight*> pointLights;
-		std::vector<ILight*> spotLights;
+		std::vector<GameObject*> directionalLights;
+		std::vector<GameObject*> pointLights;
+		std::vector<GameObject*> spotLights;
 	};
 	LightGroup mLightGroup;
 
 private:
 	void MaterialInit();
+	void TransferDirectionalLightData(CLightGroup& lightGroupData);
+	void TransferPointLightData(CLightGroup& lightGroupData);
+	void TransferSpotLightData(CLightGroup& lightGroupData);
 
 public:
 	void Init();
@@ -47,7 +49,8 @@ public:
 	void DrawCommands(const uint32_t index);
 
 public:
-	void Register(ILight* iLight);
+	void RegisterLight(GameObject* lightObj);
+	void UnRegisterLight(const GameObjectType type);
 
 private:
 	friend Singleton<LightManager>;

@@ -1,9 +1,33 @@
 #include "DirectionalLight.h"
 #include "LightManager.h"
 
-DirectionalLight::DirectionalLight() :
-	pos(Vec3::up), color(Color::white), isActive(true)
+DirectionalLight::DirectionalLight()
 {
-	mType = LightType::DirectionalLight;
-	LightManager::GetInstance()->Register(this);
+}
+
+DirectionalLight::DirectionalLight(const std::string& name)
+{
+	this->name = name;
+
+	//コンポネントの初期化
+	InitComponents();
+
+	LightManager::GetInstance()->RegisterLight(this);
+}
+
+DirectionalLight::~DirectionalLight()
+{
+	LightManager::GetInstance()->UnRegisterLight(mType);
+}
+
+void DirectionalLight::Update()
+{
+}
+
+void DirectionalLight::InitComponents()
+{
+	mType = GameObjectType::DirectionalLight;
+
+	mComponentManager->AddComponent<DirectionalLightInfo>();
+	mComponentManager->AddComponent<Transform>();
 }

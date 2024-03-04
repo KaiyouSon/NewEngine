@@ -1,7 +1,7 @@
 #include "GameObject.h"
 
 GameObject::GameObject() :
-	pos(0), scale(1), rot(0), offset(0), tiling(1), mParent(nullptr),
+	pos(0), scale(1), rot(0), offset(0), tiling(1), isActive(true), mParent(nullptr),
 	mComponentManager(std::make_unique<ComponentManager>(this))
 {
 	blendMode = BlendMode::Alpha;

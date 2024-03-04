@@ -109,7 +109,11 @@ void Transform::ShowDataToInspector()
 
 		const float moveSpeed = 1.f;
 		Gui::DrawSlider3("Pos", mGameObj->pos, moveSpeed);
-		Gui::DrawSlider3("Rot", mGameObj->rot, moveSpeed);
+
+		Vec3 angle = Angle(mGameObj->rot);
+		Gui::DrawSlider3("Rot", angle, moveSpeed);
+		mGameObj->rot = Radian(angle);
+
 		Gui::DrawSlider3("Scale", mGameObj->scale, moveSpeed);
 	}
 }

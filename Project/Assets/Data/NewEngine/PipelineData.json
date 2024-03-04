@@ -120,7 +120,7 @@
             "GS Tag": "ParticleObject",
             "PS Tag": "ParticleObject",
             "Pipeline Blend": 1,
-            "Pipeline Type": 1226637312,
+            "Pipeline Type": 69074944,
             "Tag": "ParticleObject",
             "Topology Type": 0,
             "VS Tag": "ParticleObject"
@@ -234,7 +234,7 @@
             "Fill Mode": 0,
             "PS Tag": "VolumetricFog",
             "Pipeline Blend": 1,
-            "Pipeline Type": 1073156864,
+            "Pipeline Type": 2059053824,
             "Tag": "VolumetricFog",
             "Topology Type": 3,
             "VS Tag": "VolumetricFog"
@@ -419,7 +419,7 @@
             "GS Tag": "ParticleObject",
             "PS Tag": "ParticleObject",
             "Pipeline Blend": 1,
-            "Pipeline Type": 1226637312,
+            "Pipeline Type": 69074944,
             "Tag": "PonDeRing",
             "Topology Type": 0,
             "VS Tag": "PonDeRing"
