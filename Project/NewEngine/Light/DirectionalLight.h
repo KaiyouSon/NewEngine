@@ -12,6 +12,7 @@ public:
 	DirectionalLight(const std::string& name);
 	~DirectionalLight();
 	void Update() override;
+	void Copy([[maybe_unused]] GameObject* gameObj) override {};
 
 private:
 	//使わない関数群

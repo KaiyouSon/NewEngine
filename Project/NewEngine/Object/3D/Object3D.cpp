@@ -125,6 +125,11 @@ void Object3D::Draw(const std::string& _layerTag, const BlendMode _blendMode)
 	DrawCommands();
 }
 
+void Object3D::Copy(GameObject* gameObj)
+{
+	color = gameObj->color;
+}
+
 // --- マテリアル関連 --------------------------------------------------- //
 void Object3D::MaterialInit()
 {

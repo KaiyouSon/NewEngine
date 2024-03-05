@@ -40,6 +40,9 @@ private:
 	void CSMaterialTransfer();
 	void CSMaterialDrawCommands();
 
+private:
+	void DrawCommands();
+
 public:
 	ParticleMesh();
 	ParticleMesh(const std::string& name);
@@ -48,6 +51,7 @@ public:
 	void ExecuteCS() override;
 	void AppedToRenderer() override;
 	void Draw(const std::string& _layerTag = "", const BlendMode _blendMode = BlendMode::Alpha) override;
+	void Copy([[maybe_unused]] GameObject* gameObj) override {};
 
 public:
 	void SetTexture(const std::string& textureTag, [[maybe_unused]] const bool isChangeSize = true) override;

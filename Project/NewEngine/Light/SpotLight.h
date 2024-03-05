@@ -20,6 +20,7 @@ public:
 	SpotLight(const std::string& name);
 	~SpotLight();
 	void Update() override;
+	void Copy([[maybe_unused]] GameObject* gameObj) override {};
 
 private:
 	//使わない関数群

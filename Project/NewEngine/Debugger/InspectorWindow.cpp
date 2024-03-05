@@ -19,6 +19,19 @@ void InspectorWindow::DrawGuiWindow()
 		AddComponetButton();
 	}
 
+	if (Key::GetKey(DIK_LCONTROL))
+	{
+		if (Key::GetKeyDown(DIK_C))
+		{
+			mCopyObj = gCurrentScene->GetGameObjectManager()->GetGameObject(mCurrentObjTag);
+		}
+		else if (Key::GetKeyDown(DIK_V))
+		{
+			gCurrentScene->GetGameObjectManager()->CreateGameObject(mCopyObj);
+		}
+	}
+
+
 	Gui::EndWindow();
 }
 

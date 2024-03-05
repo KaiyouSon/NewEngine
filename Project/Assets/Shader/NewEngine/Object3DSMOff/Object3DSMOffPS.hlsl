@@ -32,7 +32,7 @@ float4 main(V2P i) : SV_TARGET
     resultColor = CalcDissolve(newUV, resultColor);
     
     // 距離フォグ
-    resultColor = CalcDistanceFog(i.wpos.xyz, resultColor);
+    //resultColor = CalcDistanceFog(i.wpos.xyz, resultColor);
     
     return resultColor;
 }

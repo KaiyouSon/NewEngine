@@ -58,6 +58,7 @@ public:
 	void ExecuteCS() override;
 	void AppedToRenderer() override;
 	void Draw(const std::string& _layerTag = "", const BlendMode blendMode = BlendMode::Alpha) override;
+	void Copy(GameObject* gameObj) override;
 
 public: // セッター
 	void SetModel(Model* model);

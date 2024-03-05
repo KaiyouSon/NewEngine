@@ -59,6 +59,7 @@ public:
 	virtual void Draw(const std::string& _layerTag = "", const BlendMode _blendMode = BlendMode::Alpha) = 0;
 
 public:
+	virtual void Copy(GameObject* gameObj) = 0;
 	virtual void SetTexture(const std::string& textureTag, [[maybe_unused]] const bool isChangeSize = true) = 0;
 
 public:

@@ -16,7 +16,7 @@ public:
 	PointLight(const std::string& name);
 	~PointLight();
 	void Update() override;
-
+	void Copy([[maybe_unused]] GameObject* gameObj) override {};
 private:
 	//使わない関数群
 	void ExecuteCS() override {};

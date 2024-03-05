@@ -86,6 +86,15 @@ void GameObjectManager::AddGameObject(const GameObjectType type, const std::stri
 	mGameObjects.push_back(std::move(obj));
 }
 
+void GameObjectManager::CreateGameObject(GameObject* gameObj)
+{
+	std::string name = gameObj->name + " " + std::to_string(mGameObjects.size());
+	AddGameObject(gameObj->GetType(), name);
+
+	GameObject* obj = mGameObjects.back().get();
+	obj->Copy(gameObj);
+};
+
 void GameObjectManager::DestroyGameObject(const std::string name)
 {
 	std::erase_if(mGameObjects,

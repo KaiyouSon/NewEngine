@@ -10,14 +10,54 @@ using namespace ConstantBufferData;
 
 void ParticleMesh::Update()
 {
+	if (!isActive)
+	{
+		return;
+	}
+
 	BaseUpdate();
 
 	// マテリアルの転送
 	MaterialTransfer();
 }
 
+void ParticleMesh::ExecuteCS()
+{
+	if (!isActive)
+	{
+		return;
+	}
+
+	if (mMeshTexture == nullptr)
+	{
+		return;
+	}
+
+	RenderBase* renderBase = RenderBase::GetInstance();
+	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
+
+	CSMaterialTransfer();
+
+	mComputePipeline->DrawCommand();
+
+	CSMaterialDrawCommands();
+
+	// ディスパッチ
+	cmdList->Dispatch(1, 1, 1);
+}
+
 void ParticleMesh::AppedToRenderer()
 {
+	if (!isActive)
+	{
+		return;
+	}
+
+	gCurrentScene->GetRenderer()->Register(layerTag,
+		[this]()
+		{
+			DrawCommands();
+		});
 }
 
 void ParticleMesh::Draw(const std::string& _layerTag, const BlendMode _blendMode)
@@ -109,26 +149,38 @@ ParticleMesh::ParticleMesh(const std::string& name) :
 	SetParticleData<ParticleParameter::Default>(10000);
 }
 
-void ParticleMesh::ExecuteCS()
+void ParticleMesh::DrawCommands()
 {
-	if (mMeshTexture == nullptr)
-	{
-		return;
-	}
+	if (!mParticleTexture) return;
+	if (!mParticleDataSB->GetBufferResource()) return;
 
-	RenderBase* renderBase = RenderBase::GetInstance();
+	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 	ID3D12GraphicsCommandList* cmdList = renderBase->GetCommandList();
 
-	CSMaterialTransfer();
+	// GraphicsPipeline描画コマンド
+	mGraphicsPipeline->DrawCommand(blendMode);
 
-	mComputePipeline->DrawCommand();
+	MaterialDrawCommands();
 
-	CSMaterialDrawCommands();
+	// SRVの設定
+	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
+	cmdList->SetGraphicsRootDescriptorTable(startIndex, mParticleTexture->GetBufferResource()->srvHandle.gpu);
 
-	// ディスパッチ
-	cmdList->Dispatch(1, 1, 1);
+	if (mParticleDataSB->GetBufferResource()->bufferState == D3D12_RESOURCE_STATE_UNORDERED_ACCESS)
+	{
+		// GENERIC_READ -> UNORDERED_ACCESS に変更
+		renderBase->TransitionBufferState(
+			mParticleDataSB->GetBufferResource(),
+			D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+			D3D12_RESOURCE_STATE_GENERIC_READ);
+	}
+
+	// CSの結果
+	cmdList->SetGraphicsRootDescriptorTable(
+		startIndex + 1, mParticleDataSB->GetBufferResource()->srvHandle.gpu);
+
+	cmdList->DrawInstanced(mMaxParticle, 1, 0, 0);
 }
-
 // --- マテリアル関連 --------------------------------------------------- //
 void ParticleMesh::MaterialInit()
 {
@@ -247,6 +299,8 @@ void ParticleMesh::CSMaterialDrawCommands()
 		cmdList->SetComputeRootDescriptorTable(uavStartIndex + i + 1, mStructuredBuffers[i]->GetBufferResource()->uavHandle.gpu);
 	}
 }
+
+
 
 // --- セッター -------------------------------------------------------- //ko
 

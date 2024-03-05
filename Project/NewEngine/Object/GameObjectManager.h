@@ -19,6 +19,7 @@ public:
 
 public:
 	void AddGameObject(const GameObjectType type, const std::string name);
+	void CreateGameObject(GameObject* gameObj);
 	void DestroyGameObject(const std::string name);
 
 public:

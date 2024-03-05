@@ -593,9 +593,9 @@
                             {
                                 "base_info": {
                                     "color": [
-                                        255.0,
-                                        255.0,
-                                        255.0,
+                                        196.0,
+                                        193.0,
+                                        120.0,
                                         255.0
                                     ],
                                     "is_active": true,
@@ -657,79 +657,6 @@
                 ],
                 "name": "Object3D7",
                 "type": 0
-            }
-        },
-        {
-            "object": {
-                "components": [
-                    {
-                        "object_info": [
-                            {
-                                "component_info": {
-                                    "index": 0,
-                                    "type": 7
-                                }
-                            },
-                            {
-                                "base_info": {
-                                    "color": [
-                                        255.0,
-                                        0.0,
-                                        0.0,
-                                        255.0
-                                    ],
-                                    "is_active": true,
-                                    "layer_tag": ""
-                                }
-                            },
-                            {
-                                "spot_light_info": {
-                                    "color_rate": [
-                                        1.0,
-                                        1.0,
-                                        1.0
-                                    ],
-                                    "cos_angle": [
-                                        30.0,
-                                        60.0
-                                    ],
-                                    "decay": 1.0,
-                                    "light_vec": [
-                                        0.0,
-                                        -1.0,
-                                        0.0
-                                    ],
-                                    "radius": 10.0
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "transform": {
-                            "component_info": {
-                                "index": 1,
-                                "type": 0
-                            },
-                            "pos": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rot": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ]
-                        }
-                    }
-                ],
-                "name": "Spot Light10",
-                "type": 6
             }
         }
     ]

@@ -44,6 +44,7 @@ public:
 	void ExecuteCS() override;
 	void AppedToRenderer() override;
 	void Draw(const std::string& layerTag, const BlendMode blendMode = BlendMode::Alpha);
+	void Copy([[maybe_unused]] GameObject* gameObj) override {};
 
 	template<typename T>
 	void AddMaterial()
