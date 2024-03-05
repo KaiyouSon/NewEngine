@@ -10,8 +10,11 @@ public:
 	FlipType flipType;
 
 private:
-	void DrawLayerTagGUI();
 	void SetParamToObj();
+
+private:
+	nlohmann::json SaveSpriteInfoToJson();
+	void LoadSpriteInfoToJson(const nlohmann::json& componentField);
 
 public:
 	SpriteInfo();

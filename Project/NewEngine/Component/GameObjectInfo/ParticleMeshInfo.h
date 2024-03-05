@@ -4,9 +4,6 @@
 
 class ParticleMeshInfo : public Component, GameObjectInfo
 {
-private:
-	void SetParamToObj();
-
 public:
 	ParticleMeshInfo();
 	ParticleMeshInfo(GameObject* gameObj);

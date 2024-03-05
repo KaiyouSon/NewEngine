@@ -20,35 +20,26 @@ void DirectionalLightInfo::Update()
 
 nlohmann::json DirectionalLightInfo::SaveToJson()
 {
-	nlohmann::json directionalLightInfoData;
-	directionalLightInfoData["directional_light_info"] = mComponentInfo.SaveToJson();
-	directionalLightInfoData["directional_light_info"]["is_active"] = mCastObj->isActive;
-	directionalLightInfoData["directional_light_info"]["color"] = { mCastObj->color.r,mCastObj->color.g,mCastObj->color.b,mCastObj->color.a };
-	return directionalLightInfoData;
+	nlohmann::json objectInfoData;
+	objectInfoData["object_info"].push_back(mComponentInfo.SaveToJson());
+	objectInfoData["object_info"].push_back(SaveBaseInfoToJson(mGameObj));
+	return objectInfoData;
 }
 
 void DirectionalLightInfo::LoadToJson(const nlohmann::json& componentField)
 {
-	mComponentInfo.LoadToJson(componentField["directional_light_info"]);
-	mCastObj->isActive = componentField["directional_light_info"]["is_active"];
-	mCastObj->color.r = componentField["directional_light_info"]["color"][0];
-	mCastObj->color.g = componentField["directional_light_info"]["color"][1];
-	mCastObj->color.b = componentField["directional_light_info"]["color"][2];
-	mCastObj->color.a = componentField["directional_light_info"]["color"][3];
+	mComponentInfo.LoadToJson(componentField["object_info"][0]);
+	LoadBaseInfoToJson(mGameObj, componentField["object_info"][1]);
 }
 
 void DirectionalLightInfo::ShowDataToInspector()
 {
 	if (Gui::DrawCollapsingHeader("Object Info", true))
 	{
-		Gui::DrawCheckBox("Active Flag", &mCastObj->isActive);
-
-		Gui::DrawInputText("Object Name", mChangingName);
-		if (!ImGui::IsItemActive())
+		if (Gui::BeginTreeNode("Base Info", true))
 		{
-			mCastObj->name = mChangingName;
+			ShowLightObjectDataToInspector(mGameObj);
+			Gui::EndTreeNode();
 		}
-
-		Gui::DrawColorEdit("Color", mCastObj->color);
 	}
 }

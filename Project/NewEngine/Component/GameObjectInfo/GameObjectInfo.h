@@ -3,10 +3,17 @@
 
 class GameObjectInfo
 {
+
 protected:
 	std::string mChangingName;
-	std::string mLayerTag;
-	Color mColor;
+
+protected:
+	void ShowGameObjectDataToInspector(GameObject* gameObj);
+	void ShowLightObjectDataToInspector(GameObject* gameObj);
+
+protected:
+	void LoadBaseInfoToJson(GameObject* gameObj, const nlohmann::json& componentField);
+	nlohmann::json SaveBaseInfoToJson(GameObject* gameObj);
 
 public:
 	GameObjectInfo();

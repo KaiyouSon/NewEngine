@@ -5,29 +5,39 @@
             "object": {
                 "components": [
                     {
-                        "sprite_info": {
-                            "anchor_point": [
-                                0.5,
-                                0.5
-                            ],
-                            "color": [
-                                255.0,
-                                255.0,
-                                255.0,
-                                255.0
-                            ],
-                            "component_info": {
-                                "index": 0,
-                                "type": 1
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 2
+                                }
                             },
-                            "flip_mode": 0,
-                            "is_active": true,
-                            "layer_tag": "FrontSprite",
-                            "sprite_size": [
-                                864.0,
-                                128.0
-                            ]
-                        }
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "FrontSprite"
+                                }
+                            },
+                            {
+                                "sprite_info": {
+                                    "anchor_point": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "flip_mode": 0,
+                                    "sprite_size": [
+                                        864.0,
+                                        128.0
+                                    ]
+                                }
+                            }
+                        ]
                     },
                     {
                         "transform": {
@@ -78,29 +88,39 @@
             "object": {
                 "components": [
                     {
-                        "sprite_info": {
-                            "anchor_point": [
-                                0.5,
-                                0.5
-                            ],
-                            "color": [
-                                247.0,
-                                158.0,
-                                15.0,
-                                255.0
-                            ],
-                            "component_info": {
-                                "index": 0,
-                                "type": 2
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 2
+                                }
                             },
-                            "flip_mode": 0,
-                            "is_active": true,
-                            "layer_tag": "FrontSprite",
-                            "sprite_size": [
-                                512.0,
-                                128.0
-                            ]
-                        }
+                            {
+                                "base_info": {
+                                    "color": [
+                                        247.0,
+                                        158.0,
+                                        15.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "FrontSprite"
+                                }
+                            },
+                            {
+                                "sprite_info": {
+                                    "anchor_point": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "flip_mode": 0,
+                                    "sprite_size": [
+                                        512.0,
+                                        128.0
+                                    ]
+                                }
+                            }
+                        ]
                     },
                     {
                         "transform": {
@@ -151,29 +171,39 @@
             "object": {
                 "components": [
                     {
-                        "sprite_info": {
-                            "anchor_point": [
-                                0.5,
-                                0.5
-                            ],
-                            "color": [
-                                255.0,
-                                255.0,
-                                255.0,
-                                255.0
-                            ],
-                            "component_info": {
-                                "index": 0,
-                                "type": 2
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 2
+                                }
                             },
-                            "flip_mode": 0,
-                            "is_active": true,
-                            "layer_tag": "FrontSprite",
-                            "sprite_size": [
-                                704.0,
-                                128.0
-                            ]
-                        }
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "FrontSprite"
+                                }
+                            },
+                            {
+                                "sprite_info": {
+                                    "anchor_point": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "flip_mode": 0,
+                                    "sprite_size": [
+                                        704.0,
+                                        128.0
+                                    ]
+                                }
+                            }
+                        ]
                     },
                     {
                         "transform": {
@@ -224,29 +254,39 @@
             "object": {
                 "components": [
                     {
-                        "sprite_info": {
-                            "anchor_point": [
-                                0.5,
-                                0.5
-                            ],
-                            "color": [
-                                255.0,
-                                255.0,
-                                255.0,
-                                255.0
-                            ],
-                            "component_info": {
-                                "index": 0,
-                                "type": 2
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 2
+                                }
                             },
-                            "flip_mode": 0,
-                            "is_active": true,
-                            "layer_tag": "FrontSprite",
-                            "sprite_size": [
-                                512.0,
-                                128.0
-                            ]
-                        }
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "FrontSprite"
+                                }
+                            },
+                            {
+                                "sprite_info": {
+                                    "anchor_point": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "flip_mode": 0,
+                                    "sprite_size": [
+                                        512.0,
+                                        128.0
+                                    ]
+                                }
+                            }
+                        ]
                     },
                     {
                         "transform": {
@@ -297,18 +337,26 @@
             "object": {
                 "components": [
                     {
-                        "particle_mesh_info": {
-                            "color": [
-                                255.0,
-                                255.0,
-                                255.0,
-                                255.0
-                            ],
-                            "component_info": {
-                                "index": 0,
-                                "type": 3
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 3
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
                             }
-                        }
+                        ]
                     },
                     {
                         "transform": {

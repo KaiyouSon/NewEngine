@@ -7,8 +7,6 @@ Object3DInfo::Object3DInfo()
 
 Object3DInfo::Object3DInfo(GameObject* gameObj) : Component(gameObj)
 {
-	mCastObj = dynamic_cast<Object3D*>(mGameObj);
-
 	mChangingName = mGameObj->name;
 	mComponentInfo.type = ComponentType::Object3DInfo;
 }
@@ -19,43 +17,26 @@ void Object3DInfo::Update()
 
 nlohmann::json Object3DInfo::SaveToJson()
 {
-	nlohmann::json object3DInfoData;
-
-	object3DInfoData["object3D_info"] = mComponentInfo.SaveToJson();
-	object3DInfoData["object3D_info"]["is_active"] = mCastObj->isActive;
-	object3DInfoData["object3D_info"]["color"] =
-	{
-		mCastObj->color.r,
-		mCastObj->color.g,
-		mCastObj->color.b,
-		mCastObj->color.a
-	};
-	return object3DInfoData;
+	nlohmann::json objectInfoData;
+	objectInfoData["object_info"].push_back(mComponentInfo.SaveToJson());
+	objectInfoData["object_info"].push_back(SaveBaseInfoToJson(mGameObj));
+	return objectInfoData;
 }
 
 void Object3DInfo::LoadToJson(const nlohmann::json& componentField)
 {
-	mComponentInfo.LoadToJson(componentField["object3D_info"]);
-	//mCastObj->isActive = componentField["object3D_info"]["is_active"];
-	//mCastObj->isActive = componentField["object3D_info"]["is_active"];
-	//mCastObj->color.r = componentField["object3D_info"]["color"][0];
-	//mCastObj->color.g = componentField["object3D_info"]["color"][1];
-	//mCastObj->color.b = componentField["object3D_info"]["color"][2];
-	//mCastObj->color.a = componentField["object3D_info"]["color"][3];
+	mComponentInfo.LoadToJson(componentField["object_info"][0]);
+	LoadBaseInfoToJson(mGameObj, componentField["object_info"][1]);
 }
 
 void Object3DInfo::ShowDataToInspector()
 {
 	if (Gui::DrawCollapsingHeader("Object Info", true))
 	{
-		Gui::DrawCheckBox("Active Flag", &mCastObj->isActive);
-
-		Gui::DrawInputText("Object Name", mChangingName);
-		if (!ImGui::IsItemActive())
+		if (Gui::BeginTreeNode("Base Info", true))
 		{
-			mCastObj->name = mChangingName;
+			ShowGameObjectDataToInspector(mGameObj);
+			Gui::EndTreeNode();
 		}
-
-		Gui::DrawColorEdit("Color", mCastObj->color);
 	}
 }
