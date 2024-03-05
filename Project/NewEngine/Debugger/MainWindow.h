@@ -28,8 +28,9 @@ private:
 
 private:
 	std::string mCurrentObjName;
-	std::string mDragDropAssetsTag;
 	std::string mDragDropGameObjName;
+	std::string mDragDropAssetsTag;
+	std::string mDragDropLayerTag;
 	bool mIsActive;
 
 private:
@@ -44,11 +45,13 @@ public:
 	// セッター
 	void SetCurrentObjName(const std::string currentObjName);
 	void SetDragDropAssetsTag(const std::string dragDropAssetsTag);
+	void SetDragDropLayerTag(const std::string dragDropLayerTag);
 
 public:
 	// ゲッター
 	std::string GetCurrentObjName();
 	std::string GetDragDropAssetsTag();
+	std::string GetDragDropLayerTag();
 
 private:
 	friend HierarchyWindow;

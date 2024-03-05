@@ -3,8 +3,15 @@
 Scene::Scene() :
 	mName(std::string()),
 	mGameObjectManager(std::make_unique<GameObjectManager>()),
-	mAssetsManager(std::make_unique<AssetsManager>())
+	mAssetsManager(std::make_unique<AssetsManager>()),
+	mRenderer(std::make_unique<Renderer>())
 {
+}
+
+void Scene::DrawGameObject()
+{
+	mGameObjectManager->AppedToRenderer();
+	mRenderer->DrawObject();
 }
 
 void Scene::LoadToJson(const std::string& sceneName)
@@ -38,13 +45,12 @@ void Scene::LoadToJson(const std::string& sceneName)
 	}
 
 	file.close();
+
+	mRenderer->LoadToJson(sceneName);
 }
 
 void Scene::SaveToJson()
 {
-	// アセットのデータを保存
-	SaveAseetesData();
-
 	// シーンのデータを保存
 	SaveSceneData();
 }
@@ -57,10 +63,6 @@ void Scene::SaveSceneData()
 
 	std::ofstream file(EngineDataDirectory + "Scene/" + mName + "Scene.json");
 	file << std::setw(4) << data << std::endl;
-}
-
-void Scene::SaveAseetesData()
-{
 }
 
 std::string Scene::GetName()
@@ -76,4 +78,9 @@ GameObjectManager* Scene::GetGameObjectManager()
 AssetsManager* Scene::GetAssetsManager()
 {
 	return mAssetsManager.get();
+}
+
+Renderer* Scene::GetRenderer()
+{
+	return mRenderer.get();
 }

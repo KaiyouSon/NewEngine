@@ -12,8 +12,6 @@ class Renderer : public Singleton<Renderer>
 private:
 	std::vector<Layer> mLayers;
 
-	std::unordered_map<std::string, Layer> mLayerMap;
-
 private:
 	void FieldObjectLayer(const Layer& layer);
 
@@ -26,13 +24,13 @@ public:
 	void DestroyLayer(const std::string& tag);
 	void Register(const std::string& tag, const std::function<void()>& func);
 	void SaveData();
-	void LoadData();
+	void LoadToJson(const std::string& sceneName);
 
 public:
-	static std::unordered_map<std::string, Layer>* GetLayerMap();
+	std::vector<Layer>* GetLayers();
+	Renderer();
 
 private:
 	friend Singleton<Renderer>;
 	friend RendererWindow;
-	Renderer();
 };

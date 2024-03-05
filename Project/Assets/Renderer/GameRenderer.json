@@ -1,0 +1,19 @@
+{
+    "layer": [
+        {
+            "depth": -100,
+            "tag": "BackSprite",
+            "type": 1
+        },
+        {
+            "depth": 0,
+            "tag": "Object3D",
+            "type": 1
+        },
+        {
+            "depth": 100,
+            "tag": "FrontSprite",
+            "type": 1
+        }
+    ]
+}

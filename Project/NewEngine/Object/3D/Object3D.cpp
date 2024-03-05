@@ -63,6 +63,11 @@ Object3D::Object3D(const std::string& name) :
 
 void Object3D::Update()
 {
+	if (!isActive)
+	{
+		return;
+	}
+
 	// カメラが設定してない場合
 	if (mCamera == nullptr || mCamera == &Camera::current)
 	{
@@ -84,7 +89,12 @@ void Object3D::ExecuteCS()
 }
 void Object3D::AppedToRenderer()
 {
-	Renderer::GetInstance()->Register("Object3D",
+	if (!isActive)
+	{
+		return;
+	}
+
+	gCurrentScene->GetRenderer()->Register(layerTag,
 		[this]()
 		{
 			DrawCommands();
@@ -93,6 +103,11 @@ void Object3D::AppedToRenderer()
 
 void Object3D::Draw(const std::string& _layerTag, const BlendMode _blendMode)
 {
+	if (!isActive)
+	{
+		return;
+	}
+
 	//float radius = scale.Max();
 	//if (Camera::current.IsVisible(pos, radius) == false)
 	//{

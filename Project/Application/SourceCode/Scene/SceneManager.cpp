@@ -9,6 +9,8 @@
 std::unique_ptr<IScene> SceneManager::sCurrentScene = nullptr;
 std::unique_ptr<IScene> SceneManager::sNextScene = nullptr;
 
+Scene* gCurrentScene = nullptr;
+
 void SceneManager::LoadSceneToDirectroy()
 {
 	std::filesystem::path sceneDirectroy = EngineDataDirectory + "Scene";
@@ -58,6 +60,7 @@ SceneManager::SceneManager()
 
 	// シーンをロード
 	mCurrentScene = std::make_unique<Scene>();
+	gCurrentScene = mCurrentScene.get();
 	LoadSceneToJson("Game");
 }
 
@@ -203,6 +206,7 @@ void SceneManager::Draw()
 		sCurrentScene->Draw();
 	}
 
+	//mCurrentScene->DrawGameObject();
 	TransitionManager::GetInstance()->DrawFrontSprite();
 }
 

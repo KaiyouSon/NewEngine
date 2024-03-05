@@ -9,6 +9,7 @@ private:
 public:
 	void Update();
 	void ExecuteCS();
+	void AppedToRenderer();
 	void Draw();
 
 public:

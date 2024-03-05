@@ -1,4 +1,5 @@
 #include "SpriteInfo.h"
+#include "MainWindow.h"
 
 SpriteInfo::SpriteInfo() :
 	anchorPoint(0.5f), spriteSize(100), flipType(FlipType::None)
@@ -26,6 +27,7 @@ nlohmann::json SpriteInfo::SaveToJson()
 	nlohmann::json spriteInfoData;
 	spriteInfoData["sprite_info"] = mComponentInfo.SaveToJson();
 	spriteInfoData["sprite_info"]["is_active"] = castObj->isActive;
+	spriteInfoData["sprite_info"]["layer_tag"] = castObj->layerTag;
 	spriteInfoData["sprite_info"]["flip_mode"] = (uint32_t)flipType;
 	spriteInfoData["sprite_info"]["anchor_point"] = { anchorPoint.x,anchorPoint.y };
 	spriteInfoData["sprite_info"]["sprite_size"] = { spriteSize.x,spriteSize.y };
@@ -39,6 +41,7 @@ void SpriteInfo::LoadToJson(const nlohmann::json& componentField)
 
 	mComponentInfo.LoadToJson(componentField["sprite_info"]);
 	castObj->isActive = componentField["sprite_info"]["is_active"];
+	castObj->layerTag = componentField["sprite_info"]["layer_tag"];
 	flipType = (FlipType)componentField["sprite_info"]["flip_mode"];
 	anchorPoint.x = componentField["sprite_info"]["anchor_point"][0];
 	anchorPoint.y = componentField["sprite_info"]["anchor_point"][1];
@@ -65,11 +68,10 @@ void SpriteInfo::ShowDataToInspector()
 		{
 			castObj->name = mChangingName;
 		}
+		DrawLayerTagGUI();
 
 		Gui::DrawSlider2("Anchor Point", anchorPoint, 0.01f);
 		Gui::DrawSlider2("Sprite Size", spriteSize);
-
-		DrawLayerTagGUI();
 
 		Gui::DrawColorEdit("Color", castObj->color);
 
@@ -84,17 +86,24 @@ void SpriteInfo::ShowDataToInspector()
 			Gui::EndTreeNode();
 		}
 
+		//Gui::DrawItemsMapCombo("Layer Tag", "Test", 0, Renderer::GetLayerMap());
+
 		SetParamToObj();
 	}
 }
 
 void SpriteInfo::DrawLayerTagGUI()
 {
-	std::string label = "LayerTag";
-	std::string previewTag = "Test";
-	static uint32_t currentComboIndex = 0;
+	Sprite* mCastObj = dynamic_cast<Sprite*>(mGameObj);
+	std::string layerTag = mCastObj->layerTag;
+	Gui::DrawInputText("Layer Tag", layerTag);
 
-	Gui::DrawItemsMapCombo(label, previewTag, currentComboIndex, *Renderer::GetLayerMap());
+	// ドロップしたときの処理
+	if (Gui::DragDropTarget("DragDrop Layer"))
+	{
+		std::string tag = MainWindow::GetInstance()->GetDragDropLayerTag();
+		mCastObj->layerTag = tag;
+	}
 }
 
 void SpriteInfo::SetParamToObj()

@@ -23,7 +23,7 @@ void RendererWindow::DrawGuiWindow()
 			}
 			else if (Gui::MenuItem("Load"))
 			{
-				renderer->LoadData();
+				//renderer->LoadData();
 			}
 
 			Gui::EndMenu();
@@ -35,7 +35,7 @@ void RendererWindow::DrawGuiWindow()
 
 	for (auto& layer : renderer->mLayers)
 	{
-		if (Gui::DrawCollapsingHeader(layer.tag.c_str()))
+		if (Gui::BeginTreeNode(layer.tag, true))
 		{
 			std::string inputIntLabel = layer.tag + " Depth";
 			Gui::DrawInputInt(inputIntLabel.c_str(), (int32_t&)layer.depth);
@@ -47,6 +47,8 @@ void RendererWindow::DrawGuiWindow()
 				mIsOpenPop = true;
 				mDestroyTag = layer.tag;
 			}
+
+			Gui::EndTreeNode();
 		}
 
 		Gui::DrawLine();

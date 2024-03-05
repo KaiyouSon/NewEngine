@@ -1,10 +1,13 @@
 #pragma once
 #include "Component.h"
+#include "GameObjectInfo.h"
 
-class Object3DInfo : public Component
+class Object3D;
+
+class Object3DInfo : public Component, GameObjectInfo
 {
 private:
-	std::string mChangingName;
+	Object3D* mCastObj;
 
 public:
 	Object3DInfo();

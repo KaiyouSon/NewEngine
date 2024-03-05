@@ -17,6 +17,14 @@ void GameObjectManager::ExecuteCS()
 	}
 }
 
+void GameObjectManager::AppedToRenderer()
+{
+	for (const auto& obj : mGameObjects)
+	{
+		obj->AppedToRenderer();
+	}
+}
+
 void GameObjectManager::Draw()
 {
 	for (const auto& obj : mGameObjects)

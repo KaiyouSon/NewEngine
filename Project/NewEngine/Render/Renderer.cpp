@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Renderer.h"
 #include "json.hpp"
 
@@ -10,7 +9,7 @@ Renderer::Renderer()
 	//AddLayer(Layer("Object3D", 10));
 	//AddLayer(Layer("FrontSprite", 20));
 
-	LoadData();
+	//LoadData();
 }
 
 void Renderer::FieldObjectLayer(const Layer& layer)
@@ -28,12 +27,6 @@ void Renderer::DrawPass()
 
 void Renderer::DrawObject()
 {
-	std::sort(mLayers.begin(), mLayers.end(),
-		[](const Layer& a, const Layer& b)
-		{
-			return a.depth < b.depth;
-		});
-
 	for (auto& layer : mLayers)
 	{
 		if (layer.type == LayerType::Pass)
@@ -53,6 +46,12 @@ void Renderer::DrawObject()
 void Renderer::AddLayer(const Layer& layer)
 {
 	mLayers.push_back(layer);
+
+	std::sort(mLayers.begin(), mLayers.end(),
+		[](const Layer& a, const Layer& b)
+		{
+			return a.depth < b.depth;
+		});
 }
 
 void Renderer::DestroyLayer(const std::string& tag)
@@ -96,12 +95,13 @@ void Renderer::SaveData()
 	file << std::setw(4) << jsonData << std::endl;
 }
 
-void Renderer::LoadData()
+void Renderer::LoadToJson(const std::string& sceneName)
 {
 	mLayers.clear();
 
 	// JSONファイルの読み込み
-	std::ifstream file("NewEngine/Data/RendererData.json");
+	std::string path = RendererDirectory + sceneName + "Renderer.json";
+	std::ifstream file(path);
 	if (!file.is_open())
 	{
 		return;
@@ -122,13 +122,16 @@ void Renderer::LoadData()
 			object["depth"],
 			object["type"],
 		};
+
+
+
 		AddLayer(layer);
 	}
 
 	file.close();
 }
 
-std::unordered_map<std::string, Layer>* Renderer::GetLayerMap()
+std::vector<Layer>* Renderer::GetLayers()
 {
-	return &GetInstance()->mLayerMap;
+	return &mLayers;
 }

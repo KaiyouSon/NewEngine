@@ -123,3 +123,5 @@ public:
 
 	static void SetChangeStepToCreateInstance();
 };
+
+extern Scene* gCurrentScene;

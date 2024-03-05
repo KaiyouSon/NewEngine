@@ -59,6 +59,10 @@ void AssetsWindow::DrawGuiWindow()
 
 	case MaterialAssets:
 		ShowMaterialAssets();
+		break;
+
+	case RendererLayers:
+		ShowRendererLayers();
 	}
 
 	Gui::EndWindow();
@@ -95,6 +99,12 @@ void AssetsWindow::ShowMainLevel()
 	if (Gui::DrawButton("Material", buttonSize))
 	{
 		state = MaterialAssets;
+	}
+	Gui::NextColumn();
+
+	if (Gui::DrawButton("Renderer", buttonSize))
+	{
+		state = RendererLayers;
 	}
 
 	Gui::DrawColumns(1);
@@ -229,6 +239,58 @@ void AssetsWindow::ShowMaterialAssets()
 
 		}
 	}
+}
+void AssetsWindow::ShowRendererLayers()
+{
+	DrawBackButton();
+
+	for (const auto& layer : *gCurrentScene->GetRenderer()->GetLayers())
+	{
+		std::string tag = layer.tag;
+
+		// 検索機能
+		std::string::size_type pos = tag.find(search);
+		if (pos == std::string::npos)
+		{
+			continue;
+		}
+
+		Gui::DrawColumns(columnCount);
+		Gui::DrawButton(tag.c_str(), buttonSize);
+		if (Gui::DragDropSource("DragDrop Layer", tag))
+		{
+			MainWindow::GetInstance()->SetDragDropLayerTag(tag);
+		}
+
+		Gui::DrawString("Depth = %d", layer.depth);
+
+		Gui::NextColumn();
+	}
+
+	//fs::path folderPath = EngineMaterialDirectory;
+	//for (const auto entry : fs::directory_iterator(folderPath))
+	//{
+	//	const fs::path path = entry.path();
+	//	const fs::path relativePath = relative(path, folderPath);	// 相対パス
+	//	const std::string filename = relativePath.filename().string();
+	//	const std::string sceneName = SubString(filename, "Material.json");
+
+	//	// 検索機能
+	//	std::string::size_type pos = sceneName.find(search);
+	//	if (pos == std::string::npos)
+	//	{
+	//		continue;
+	//	}
+
+	//	Gui::DrawColumns(columnCount);
+	//	Gui::DrawButton(sceneName.c_str(), buttonSize);
+	//	Gui::NextColumn();
+
+	//	if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+	//	{
+
+	//	}
+	//}
 }
 
 void AssetsWindow::DrawBackButton()

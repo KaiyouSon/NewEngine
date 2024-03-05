@@ -11,6 +11,7 @@ private:
 		TextureAssets,
 		ModelAssets,
 		MaterialAssets,
+		RendererLayers,
 	};
 
 private:
@@ -19,6 +20,7 @@ private:
 	void ShowTextureAssets();
 	void ShowModelAssets();
 	void ShowMaterialAssets();
+	void ShowRendererLayers();
 
 	void DrawBackButton();
 

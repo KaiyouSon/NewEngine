@@ -72,7 +72,7 @@ void Sprite::AppedToRenderer()
 		return;
 	}
 
-	Renderer::GetInstance()->Register("BackSprite",
+	gCurrentScene->GetRenderer()->Register(layerTag,
 		[this]()
 		{
 			DrawCommands();

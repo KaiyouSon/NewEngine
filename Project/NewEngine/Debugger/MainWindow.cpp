@@ -100,6 +100,11 @@ void MainWindow::SetDragDropAssetsTag(const std::string dragDropAssetsTag)
 	mDragDropAssetsTag = dragDropAssetsTag;
 }
 
+void MainWindow::SetDragDropLayerTag(const std::string dragDropLayerTag)
+{
+	mDragDropLayerTag = dragDropLayerTag;
+}
+
 std::string MainWindow::GetCurrentObjName()
 {
 	return mCurrentObjName;
@@ -108,4 +113,9 @@ std::string MainWindow::GetCurrentObjName()
 std::string MainWindow::GetDragDropAssetsTag()
 {
 	return mDragDropAssetsTag;
+}
+
+std::string MainWindow::GetDragDropLayerTag()
+{
+	return mDragDropLayerTag;
 }
