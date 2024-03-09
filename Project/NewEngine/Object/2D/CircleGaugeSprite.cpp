@@ -91,7 +91,7 @@ void CircleGaugeSprite::MaterialTransfer()
 	// マトリックス
 	CTransform2D transform2DData =
 	{
-		mTransform.GetWorldMat() * Camera::current.GetOrthoGrphicProjectionMat()
+		mTransform.GetWorldMat() * Camera::current.GetOrthogrphicMat()
 	};
 	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), transform2DData);
 

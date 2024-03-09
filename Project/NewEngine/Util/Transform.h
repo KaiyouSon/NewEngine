@@ -25,6 +25,7 @@ public:
 	Transform(GameObject* gameObj);
 	Transform(const Vec3 pos, const Vec3 scale, const Vec3 rot);
 	void Update() override;
+	void CopyComponent(Component* component) override;
 
 public:
 	nlohmann::json SaveToJson() override;

@@ -193,7 +193,7 @@ void VolumetricFog::MaterialTransfer()
 	// トランスフォーム
 	CTransformVolumetricFog transformData =
 	{
-		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
+		Camera::current.GetViewMat() * Camera::current.GetPerspectiveMat(),
 		mTransform.GetWorldMat(),
 		mTransform.GetRotMat(),
 		Camera::current.pos,

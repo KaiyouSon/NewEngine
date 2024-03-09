@@ -56,6 +56,15 @@ void Transform::Update()
 	}
 }
 
+void Transform::CopyComponent(Component* component)
+{
+	auto castComponent = dynamic_cast<Transform*>(component);
+
+	mGameObj->pos = castComponent->pos;;
+	mGameObj->rot = castComponent->rot;
+	mGameObj->scale = castComponent->scale;
+}
+
 nlohmann::json Transform::SaveToJson()
 {
 	nlohmann::json transformData;

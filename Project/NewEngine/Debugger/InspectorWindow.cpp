@@ -39,6 +39,11 @@ void InspectorWindow::ShowGameObjectData()
 {
 	for (const auto& component : *mCurrentObj->GetComponentManager()->GetComponents())
 	{
+		if (!component)
+		{
+			continue;
+		}
+
 		component->ShowDataToInspector();
 		Gui::DrawLine();
 	}

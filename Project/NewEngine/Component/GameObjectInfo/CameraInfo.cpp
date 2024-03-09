@@ -25,7 +25,6 @@ nlohmann::json CameraInfo::SaveToJson()
 	cameraInfoData["camera_info"]["fov_angle"] = castObj->fovAngle;
 	cameraInfoData["camera_info"]["p_near_far_clip"] = { castObj->pNearFarClip.x,castObj->pNearFarClip.y };
 	cameraInfoData["camera_info"]["o_near_far_clip"] = { castObj->oNearFarClip.x,castObj->oNearFarClip.y };
-	cameraInfoData["camera_info"]["camera_type"] = (uint32_t)castObj->cameraType;
 	return cameraInfoData;
 }
 
@@ -39,7 +38,6 @@ void CameraInfo::LoadToJson(const nlohmann::json& componentField)
 	castObj->pNearFarClip.y = componentField["camera_info"]["p_near_far_clip"][1];
 	castObj->oNearFarClip.x = componentField["camera_info"]["o_near_far_clip"][0];
 	castObj->oNearFarClip.y = componentField["camera_info"]["o_near_far_clip"][1];
-	castObj->cameraType = (CameraType)componentField["camera_info"]["camera_type"];
 }
 
 void CameraInfo::ShowDataToInspector()
@@ -56,23 +54,13 @@ void CameraInfo::ShowDataToInspector()
 
 		Gui::DrawSlider1("Fov Angle", castObj->fovAngle, 0.01f);
 
-		Vec2 nearFarClip;
-		if (castObj->cameraType == CameraType::Perspective)
+		if (Gui::BeginTreeNode("Near Far Clip", true))
 		{
-			nearFarClip = castObj->pNearFarClip;
-		}
-		else
-		{
-			nearFarClip = castObj->oNearFarClip;
-		}
-		Gui::DrawSlider2("Near Far Clip", nearFarClip, 0.01f);
+			// 正射影行列を計算
+			Gui::DrawSlider2("Orthographic", castObj->pNearFarClip, 0.01f);
 
-		if (Gui::BeginTreeNode("Camera Type", true))
-		{
-			uint32_t cameraType = (uint32_t)castObj->cameraType;
-			Gui::DrawRadioButton("Perspective ", &cameraType, (uint32_t)CameraType::Perspective);
-			Gui::DrawRadioButton("Orthographic", &cameraType, (uint32_t)CameraType::Orthographic, false);
-			castObj->cameraType = (CameraType)cameraType;
+			// 透視投影行列を計算
+			Gui::DrawSlider2("Perspective", castObj->oNearFarClip, 0.01f);
 
 			Gui::EndTreeNode();
 		}

@@ -18,6 +18,14 @@ void ModelData::Update()
 {
 }
 
+void ModelData::CopyComponent(Component* component)
+{
+	auto castComponent = dynamic_cast<ModelData*>(component);
+
+	Object3D* castObj = dynamic_cast<Object3D*>(mGameObj);
+	castObj->SetModel(castComponent->mModel);
+}
+
 Model* ModelData::GetModel()
 {
 	return mModel;

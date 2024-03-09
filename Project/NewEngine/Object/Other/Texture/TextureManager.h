@@ -32,6 +32,7 @@ private:
 public:
 	void LoadTexture(const std::string& path);
 	ITexture* LoadMaterialTexture(const std::string& path);
+	std::unique_ptr<RenderTexture> CreateRenderTexture(const Vec2 size = Vec2(1920, 1080));
 
 private:
 	void LoadTextureFromPNG(const std::string filePath, DirectX::ScratchImage& scratchImg, DirectX::TexMetadata& metadata);

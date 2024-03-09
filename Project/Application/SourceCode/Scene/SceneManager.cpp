@@ -139,6 +139,8 @@ void SceneManager::Update()
 	}
 
 	Camera::current.Update();
+	Camera::debugCamera.Update();
+	Camera::debugCamera.DebugUpdate();
 	sCurrentScene->Update();
 	TransitionManager::GetInstance()->Update();
 }

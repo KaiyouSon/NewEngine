@@ -33,12 +33,6 @@ enum class ComponentType
 	ParticleData,
 };
 
-enum class CameraType
-{
-	Perspective,	// 3D用
-	Orthographic,	// 2D用
-};
-
 // ブレンドモード
 enum class BlendMode
 {

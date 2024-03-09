@@ -76,13 +76,13 @@ void ShadowObj::MaterialTransfer()
 	// マトリックス
 	CTransformShadowObj transformShadowObjData =
 	{
-		mCamera->GetViewLookToMat() * mCamera->GetOrthoGrphicProjectionMat(),
+		mCamera->GetViewMat() * mCamera->GetOrthogrphicMat(),
 		mTransform.GetWorldMat(),
 	};
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformShadowObjData);
 	CLightView lightViewData =
 	{
-		mCamera->GetViewLookToMat() * mCamera->GetOrthoGrphicProjectionMat(),
+		mCamera->GetViewMat() * mCamera->GetOrthogrphicMat(),
 		mCamera->pos
 	};
 

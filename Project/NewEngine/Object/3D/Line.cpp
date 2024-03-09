@@ -83,7 +83,7 @@ void Line::MaterialTransfer()
 	// マトリックス
 	CTransform3D transform3DData =
 	{
-		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
+		Camera::current.GetViewMat() * Camera::current.GetPerspectiveMat(),
 		mTransform.GetWorldMat(),
 		Camera::current.pos
 	};

@@ -62,8 +62,8 @@ Vec2 WorldToScreen(const Vec3 worldPos)
 		ConvertViewportMat(*RenderBase::GetInstance()->GetViewport());
 
 	Mat4 finalMat =
-		Camera::current.GetViewLookToMat() *
-		Camera::current.GetPerspectiveProjectionMat() *
+		Camera::current.GetViewMat() *
+		Camera::current.GetPerspectiveMat() *
 		viewportMat;
 
 	Vec3 result = Vec3MulMat4(worldPos, finalMat, true);
@@ -74,8 +74,8 @@ Vec2 WorldToScreen(const Vec3 worldPos)
 // スクリーン座標をワールド座標に変換する
 Vec3 ScreenToWorld(const Vec2 screenPos)
 {
-	Mat4 viewMat = Camera::current.GetViewLookToMat();
-	Mat4 projMat = Camera::current.GetPerspectiveProjectionMat();
+	Mat4 viewMat = Camera::current.GetViewMat();
+	Mat4 projMat = Camera::current.GetPerspectiveMat();
 	Mat4 viewportMat = ConvertViewportMat(*RenderBase::GetInstance()->GetViewport());
 	Mat4 conpositeMat = viewMat * projMat * viewportMat;
 

@@ -5,13 +5,14 @@ class TextureData : public Component
 {
 private:
 	std::vector<ITexture*> mTextures;
-	ITexture* mCrrentTex;
+	ITexture* mCurrentTex;
 	uint32_t mCurrentTexIndex;
 
 public:
 	TextureData();
 	TextureData(GameObject* gameObj);
 	void Update() override;
+	void CopyComponent(Component* component) override { component; };
 
 public:
 	nlohmann::json SaveToJson() override;

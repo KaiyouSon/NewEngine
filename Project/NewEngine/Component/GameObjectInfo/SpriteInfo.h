@@ -20,6 +20,7 @@ public:
 	SpriteInfo();
 	SpriteInfo(GameObject* gameObj);
 	void Update() override;
+	void CopyComponent(Component* component) override { component; };
 
 public:
 	nlohmann::json SaveToJson() override;

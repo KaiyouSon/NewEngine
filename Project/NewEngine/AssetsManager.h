@@ -28,6 +28,10 @@ public:
 	void LoadTextures(const std::string& folderPath);
 	void LoadModels(const std::string& folderPath);
 
+	std::unique_ptr<RenderTexture> CreateRenderTexture(const Vec2 size = Vec2(1920, 1080));
+
+public:
+	// ゲッター
 	Texture* GetTexture(const std::string& tag);
 	Material* GetMaterial(const std::string& tag);
 	Model* GetModel(const std::string& tag);

@@ -194,8 +194,8 @@ void Grass::MaterialTransfer()
 	// トランスフォーム
 	CTransformGrass transformGrassData =
 	{
-		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
-		lightViewCamera.GetViewLookToMat() * lightViewCamera.GetOrthoGrphicProjectionMat(),
+		Camera::current.GetViewMat() * Camera::current.GetPerspectiveMat(),
+		lightViewCamera.GetViewMat() * lightViewCamera.GetOrthogrphicMat(),
 		mTransform.GetWorldMat(),
 		mBillboard.GetMat(),
 		Camera::current.pos,

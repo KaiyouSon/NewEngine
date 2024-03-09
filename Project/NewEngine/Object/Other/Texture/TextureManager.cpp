@@ -105,6 +105,17 @@ ITexture* TextureManager::LoadMaterialTexture(const std::string& path)
 	return tex;
 }
 
+std::unique_ptr<RenderTexture> TextureManager::CreateRenderTexture(const Vec2 size)
+{
+	std::unique_ptr<RenderTexture> renderTexture = std::make_unique<RenderTexture>();
+
+	// 生成
+	RenderTextureSetting setting = RenderTextureSetting(size);
+	renderTexture->Create(setting);
+
+	return std::move(renderTexture);
+}
+
 
 
 

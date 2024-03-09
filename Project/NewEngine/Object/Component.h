@@ -23,6 +23,7 @@ public:
 	Component(GameObject* gameObj);
 	virtual ~Component() {}
 	virtual void Update() = 0;
+	virtual void CopyComponent(Component* component) = 0;
 
 public:
 	virtual nlohmann::json SaveToJson() = 0;
@@ -32,4 +33,8 @@ public:
 public:
 	// セッター
 	void SetComponentInfo(const uint32_t index);
+
+public:
+	// ゲッター
+	ComponentType GetComponentType();
 };

@@ -67,7 +67,7 @@ void ShadowMap::Update()
 
 	CTransformShadowObj data =
 	{
-		lightCamera.GetViewLookToMat() * lightCamera.GetOrthoGrphicProjectionMat(),
+		lightCamera.GetViewMat() * lightCamera.GetOrthogrphicMat(),
 		Mat4::Identity(),
 	};
 

@@ -1026,9 +1026,6 @@
     <ClCompile Include="NewEngine\Debugger\AssetsWindow.cpp">
       <Filter>Uncategorized\Source\GuiWindow</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Debugger\ViewWindow.cpp">
-      <Filter>Uncategorized\Source\GuiWindow</Filter>
-    </ClCompile>
     <ClCompile Include="NewEngine\Debugger\ConsoleWindow.cpp">
       <Filter>Uncategorized\Source\GuiWindow</Filter>
     </ClCompile>
@@ -1099,6 +1096,12 @@
       <Filter>Uncategorized\Source\GuiWindow</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Debugger\RendererWindow.cpp">
+      <Filter>Uncategorized\Source\GuiWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Component\ComponentFactor.cpp">
+      <Filter>Uncategorized\Source\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Debugger\SceneWindow.cpp">
       <Filter>Uncategorized\Source\GuiWindow</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1703,9 +1706,6 @@
     <ClInclude Include="NewEngine\Debugger\AssetsWindow.h">
       <Filter>Uncategorized\Header\GuiWindow</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Debugger\ViewWindow.h">
-      <Filter>Uncategorized\Header\GuiWindow</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\Debugger\ConsoleWindow.h">
       <Filter>Uncategorized\Header\GuiWindow</Filter>
     </ClInclude>
@@ -1779,6 +1779,12 @@
       <Filter>Uncategorized\Header\GuiWindow</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Debugger\RendererWindow.h">
+      <Filter>Uncategorized\Header\GuiWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Component\ComponentFactor.h">
+      <Filter>Uncategorized\Header\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Debugger\SceneWindow.h">
       <Filter>Uncategorized\Header\GuiWindow</Filter>
     </ClInclude>
   </ItemGroup>

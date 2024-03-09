@@ -2,7 +2,7 @@
 #include "HierarchyWindow.h"
 #include "InspectorWindow.h"
 #include "AssetsWindow.h"
-#include "ViewWindow.h"
+#include "SceneWindow.h"
 #include "ConsoleWindow.h"
 #include "NewEngine.h"
 #include "GameObjectManager.h"
@@ -12,7 +12,7 @@ MainWindow::MainWindow() : mIsActive(false)
 	mWindows.push_back(std::move(std::make_unique<HierarchyWindow>()));
 	mWindows.push_back(std::move(std::make_unique<InspectorWindow>()));
 	mWindows.push_back(std::move(std::make_unique<AssetsWindow>()));
-	mWindows.push_back(std::move(std::make_unique<ViewWindow>()));
+	mWindows.push_back(std::move(std::make_unique<SceneWindow>()));
 	mWindows.push_back(std::move(std::make_unique<ConsoleWindow>()));
 	mWindows.push_back(std::move(std::make_unique<RendererWindow>()));
 }

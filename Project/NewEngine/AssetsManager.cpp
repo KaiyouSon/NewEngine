@@ -97,6 +97,11 @@ void AssetsManager::LoadModels(const std::string& folderPath)
 	}
 }
 
+std::unique_ptr<RenderTexture> AssetsManager::CreateRenderTexture(const Vec2 size)
+{
+	return std::move(mTextureManager.CreateRenderTexture(size));
+}
+
 Texture* AssetsManager::GetTexture(const std::string& tag)
 {
 	Texture* tex = dynamic_cast<Texture*>(mTextureManager.mTextureMapArrays[(uint32_t)TextureType::Default][tag].get());
@@ -128,7 +133,7 @@ void AssetsManager::LoadTexture(const std::string& path)
 {
 	mTextureManager.LoadTexture(path);
 }
-ITexture* AssetsManager::LoadMaterialTexture(const std::string & path)
+ITexture* AssetsManager::LoadMaterialTexture(const std::string& path)
 {
 	return mTextureManager.LoadMaterialTexture(path);
 }

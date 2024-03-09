@@ -150,7 +150,7 @@ void PostEffect::MaterialTransfer()
 	// トランスフォーム
 	CTransform2D transformData =
 	{
-		mTransform.GetWorldMat() * Camera::current.GetOrthoGrphicProjectionMat()
+		mTransform.GetWorldMat() * Camera::current.GetOrthogrphicMat()
 	};
 	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), transformData);
 

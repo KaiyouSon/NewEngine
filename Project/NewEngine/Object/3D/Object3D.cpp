@@ -80,9 +80,6 @@ void Object3D::Update()
 	{
 		ShadowMap::GetInstance()->Bind(*this);
 	}
-
-	// マテリアルの転送
-	MaterialTransfer();
 }
 void Object3D::ExecuteCS()
 {
@@ -93,6 +90,9 @@ void Object3D::AppedToRenderer()
 	{
 		return;
 	}
+
+	// マテリアルの転送
+	MaterialTransfer();
 
 	gCurrentScene->GetRenderer()->Register(layerTag,
 		[this]()
@@ -117,6 +117,9 @@ void Object3D::Draw(const std::string& _layerTag, const BlendMode _blendMode)
 	blendMode = _blendMode;
 	_layerTag;
 
+	// マテリアルの転送
+	MaterialTransfer();
+
 	//Renderer::GetInstance()->Register(layerTag,
 	//	[this]()
 	//	{
@@ -128,6 +131,7 @@ void Object3D::Draw(const std::string& _layerTag, const BlendMode _blendMode)
 void Object3D::Copy(GameObject* gameObj)
 {
 	color = gameObj->color;
+	mComponentManager->Copy(gameObj->GetComponentManager());
 }
 
 // --- マテリアル関連 --------------------------------------------------- //
@@ -172,11 +176,13 @@ void Object3D::MaterialTransfer()
 	Camera lightViewCamera;
 	lightViewCamera.Copy(*ShadowMap::GetInstance()->GetLightCamera());
 
+	mCamera->Copy(Camera::current);
+
 	// マトリックス
 	CTransform3DShadow transform3DShadowData =
 	{
-		mCamera->GetViewLookToMat() * mCamera->GetPerspectiveProjectionMat(),
-		lightViewCamera.GetViewLookToMat() * lightViewCamera.GetOrthoGrphicProjectionMat(),
+		mCamera->GetViewMat() * mCamera->GetPerspectiveMat(),
+		lightViewCamera.GetViewMat() * lightViewCamera.GetOrthogrphicMat(),
 		mTransform->GetWorldMat(),
 		mCamera->pos,
 		lightViewCamera.pos
@@ -301,7 +307,7 @@ void Object3D::DrawCommands()
 void Object3D::SetModel(Model* model)
 {
 	mModelData->SetModel(model->tag);
-	mTextureData->SetCurrentTexture(mModelData->GetModel()->texture->GetTag());
+	mTextureData->SetCurrentTexture(mModelData->GetModel()->texture);
 
 	// パイプライン変更
 	if (mModelData->GetModel()->format == ModelFormat::Obj)

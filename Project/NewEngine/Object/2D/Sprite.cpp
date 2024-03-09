@@ -123,7 +123,7 @@ void Sprite::MaterialTransfer()
 	// マトリックス
 	CTransform2D transform2DData =
 	{
-		mTransform->GetWorldMat() * Camera::current.GetOrthoGrphicProjectionMat()
+		mTransform->GetWorldMat() * Camera::current.GetOrthogrphicMat()
 	};
 	mMaterial->TransferDataToConstantBuffer(0, transform2DData);
 

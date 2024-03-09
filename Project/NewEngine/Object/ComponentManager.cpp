@@ -1,4 +1,5 @@
 #include "ComponentManager.h"
+#include "ComponentFactor.h"
 
 ComponentManager::ComponentManager(GameObject* gameObj) :mGameObj(gameObj)
 {
@@ -8,8 +9,29 @@ void ComponentManager::Update()
 {
 	for (const auto& component : mComponents)
 	{
+		if (!component)
+		{
+			continue;
+		}
+
 		component->Update();
 	}
+}
+
+void ComponentManager::Copy(ComponentManager* componentManager)
+{
+	for (uint32_t i = 0; i < componentManager->mComponents.size(); i++)
+	{
+		if (i < mComponents.size())
+		{
+			const auto& thisComponent = mComponents[i];
+			const auto& otherComponent = componentManager->mComponents[i];
+
+			thisComponent->CopyComponent(otherComponent.get());
+		}
+	}
+
+	//mComponents.push_back(std::move(ComponentFactor::CreateComponent(component->GetComponentType())));
 }
 
 void ComponentManager::LoadToJson(const nlohmann::json& componentsField)

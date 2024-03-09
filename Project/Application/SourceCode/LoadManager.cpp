@@ -351,7 +351,7 @@ LoadManager::LoadManager() : mIsLoaded(false)
 }
 void LoadManager::Load()
 {
-	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "ViewScene");
+	TextureManager::CreateRenderTexture(Vec2(1920, 1080), "Scene");
 
 
 	// モデルで使うから先に作っとく

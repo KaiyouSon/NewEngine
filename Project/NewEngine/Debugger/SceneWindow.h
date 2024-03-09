@@ -2,12 +2,12 @@
 #include "IGuiWindow.h"
 #include "Util.h"
 
-class ViewWindow : public IGuiWindow
+class SceneWindow : public IGuiWindow
 {
 private:
 	Vec2 mAspect;
 
 public:
-	ViewWindow();
+	SceneWindow();
 	void DrawGuiWindow() override;
 };

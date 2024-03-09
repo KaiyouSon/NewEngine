@@ -120,7 +120,7 @@ void ParticleObject::MaterialTransfer()
 	// トランスフォーム
 	CTransformP transformPData =
 	{
-		Camera::current.GetViewLookToMat() * Camera::current.GetPerspectiveProjectionMat(),
+		Camera::current.GetViewMat() * Camera::current.GetPerspectiveMat(),
 		mTransform.GetWorldMat(),
 		mBillboard.GetMat(),
 	};

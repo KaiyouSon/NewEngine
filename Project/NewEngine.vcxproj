@@ -144,6 +144,7 @@
     <ClCompile Include="Application\SourceCode\PostEffect\LensFlare.cpp" />
     <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp" />
     <ClCompile Include="NewEngine\AssetsManager.cpp" />
+    <ClCompile Include="NewEngine\Component\ComponentFactor.cpp" />
     <ClCompile Include="NewEngine\Component\GameObjectInfo\CameraInfo.cpp" />
     <ClCompile Include="NewEngine\Component\GameObjectInfo\DirectionalLightInfo.cpp" />
     <ClCompile Include="NewEngine\Component\GameObjectInfo\GameObjectInfo.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="NewEngine\Debugger\MainWindow.cpp" />
     <ClCompile Include="NewEngine\Debugger\PipelineWindow.cpp" />
     <ClCompile Include="NewEngine\Debugger\AssetsWindow.cpp" />
+    <ClCompile Include="NewEngine\Debugger\SceneWindow.cpp" />
     <ClCompile Include="NewEngine\Debugger\ShaderWindow.cpp" />
     <ClCompile Include="Application\SourceCode\UI\BossGaugeUI.cpp" />
     <ClCompile Include="Application\SourceCode\UI\CameraTargetUI.cpp" />
@@ -237,7 +239,6 @@
     <ClCompile Include="Application\SourceCode\Field\FieldObject\SkyIsland.cpp" />
     <ClCompile Include="NewEngine\Debugger\DebugManager.cpp" />
     <ClCompile Include="NewEngine\Debugger\RendererWindow.cpp" />
-    <ClCompile Include="NewEngine\Debugger\ViewWindow.cpp" />
     <ClCompile Include="NewEngine\Graphics\DistanceFog.cpp" />
     <ClCompile Include="NewEngine\Graphics\GraphicsManager.cpp" />
     <ClCompile Include="NewEngine\Graphics\LightShaft.cpp" />
@@ -366,6 +367,7 @@
     <ClInclude Include="Application\SourceCode\PostEffect\LensFlare.h" />
     <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h" />
     <ClInclude Include="NewEngine\AssetsManager.h" />
+    <ClInclude Include="NewEngine\Component\ComponentFactor.h" />
     <ClInclude Include="NewEngine\Component\GameObjectInfo\CameraInfo.h" />
     <ClInclude Include="NewEngine\Component\GameObjectInfo\DirectionalLightInfo.h" />
     <ClInclude Include="NewEngine\Component\GameObjectInfo\GameObjectInfo.h" />
@@ -383,6 +385,7 @@
     <ClInclude Include="NewEngine\Debugger\MainWindow.h" />
     <ClInclude Include="NewEngine\Debugger\PipelineWindow.h" />
     <ClInclude Include="NewEngine\Debugger\AssetsWindow.h" />
+    <ClInclude Include="NewEngine\Debugger\SceneWindow.h" />
     <ClInclude Include="NewEngine\Debugger\ShaderWindow.h" />
     <ClInclude Include="Application\SourceCode\UI\BossGaugeUI.h" />
     <ClInclude Include="Application\SourceCode\UI\CameraTargetUI.h" />
@@ -459,7 +462,6 @@
     <ClInclude Include="Application\SourceCode\Field\FieldObject\SkyIsland.h" />
     <ClInclude Include="NewEngine\Debugger\DebugManager.h" />
     <ClInclude Include="NewEngine\Debugger\RendererWindow.h" />
-    <ClInclude Include="NewEngine\Debugger\ViewWindow.h" />
     <ClInclude Include="NewEngine\Graphics\DistanceFog.h" />
     <ClInclude Include="NewEngine\Graphics\GraphicsManager.h" />
     <ClInclude Include="NewEngine\Graphics\LightShaft.h" />

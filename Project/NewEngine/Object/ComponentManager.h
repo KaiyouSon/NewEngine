@@ -21,6 +21,7 @@ public:
 	ComponentManager() {}
 	ComponentManager(GameObject* gameObj);
 	void Update();
+	void Copy(ComponentManager* componentManager);
 
 public:
 	void LoadToJson(const nlohmann::json& componentsField);

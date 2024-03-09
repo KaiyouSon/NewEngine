@@ -12,6 +12,7 @@ public:
 	ModelData();
 	ModelData(GameObject* gameObj);
 	void Update() override;
+	void CopyComponent(Component* component) override;
 
 public:
 	Model* GetModel();

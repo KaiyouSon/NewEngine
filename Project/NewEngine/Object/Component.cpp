@@ -14,7 +14,6 @@ nlohmann::json ComponentInfo::SaveToJson()
 	return componentInfoData;
 }
 
-
 Component::Component()
 {
 }
@@ -27,4 +26,9 @@ Component::Component(GameObject* gameObj) :
 void Component::SetComponentInfo(const uint32_t index)
 {
 	mComponentInfo.index = index;
+}
+
+ComponentType Component::GetComponentType()
+{
+	return mComponentInfo.type;
 }

@@ -2,10 +2,10 @@
 #include "NewEngine.h"
 
 Camera Camera::current = {};
+Camera Camera::debugCamera = {};
 
 Camera::Camera() :
-	cameraType(CameraType::Perspective), fovAngle(45),
-	oNearZ(0), oFarZ(1), rect(0, 1920, 0, 1080),
+	fovAngle(45), oNearZ(0), oFarZ(1), rect(0, 1920, 0, 1080),
 	pNearZ(0.1f), pFarZ(10000.0f)
 {
 	InitToCamera();
@@ -16,8 +16,7 @@ Camera::Camera() :
 }
 
 Camera::Camera(const std::string& name) :
-	cameraType(CameraType::Perspective), fovAngle(45),
-	oNearZ(0), oFarZ(1), rect(0, 1920, 0, 1080),
+	fovAngle(45), oNearZ(0), oFarZ(1), rect(0, 1920, 0, 1080),
 	pNearZ(0.1f), pFarZ(10000.0f)
 {
 	this->name = name;
@@ -33,36 +32,56 @@ void Camera::Update()
 {
 	BaseUpdate();
 
+	// ビュー行列を計算
 	mViewMat = mTransform->GetWorldMat().Inverse();
 
 	// 正射影行列を計算
-	if (cameraType == CameraType::Orthographic)
-	{
-		mProjectionMat = ConvertOrthographicProjectionMat(rect, oNearZ, oFarZ);
-	}
+	mOrthographicMat = ConvertOrthographicProjectionMat(rect, oNearZ, oFarZ);
+
 	// 透視投影行列を計算
-	else
-	{
-		mProjectionMat = ConvertPerspectiveProjectionMat(
-			Radian(fovAngle), (float)GetWindowSize().x / GetWindowSize().y, pNearZ, pFarZ);
-	}
-
-	// 後消す
-	{
-		// LookTo 方式のビュー行列を計算
-		mViewLookToMat = mViewMat;
-
-		// 正射影行列を計算
-		//mOrthographicProjectionMat = ConvertOrthographicProjectionMat(GetWindowSize().x, GetWindowSize().y);
-		mOrthographicProjectionMat = ConvertOrthographicProjectionMat(rect, oNearZ, oFarZ);
-
-		// 透視投影行列を計算
-		mPerspectiveProjectionMat = ConvertPerspectiveProjectionMat(
-			Radian(fovAngle), (float)GetWindowSize().x / GetWindowSize().y, pNearZ, pFarZ);
-	}
+	mPerspectiveMat = ConvertPerspectiveProjectionMat(
+		Radian(fovAngle), (float)GetWindowSize().x / GetWindowSize().y, pNearZ, pFarZ);
 
 	// 試錐台を計算
 	CalcViewFrustum();
+}
+
+void Camera::DebugUpdate()
+{
+	const Vec3 frontVec =
+	{
+		sinf(rot.y),
+		-sinf(rot.x),
+		cosf(rot.y),
+	};
+
+	// 回転
+	if (Mouse::GetClick(MouseCode::Wheel) && !Key::GetKey(DIK_LSHIFT))
+	{
+		if (Mouse::GetMoveVec().x != 0 || Mouse::GetMoveVec().y != 0)
+		{
+			const float moveSpeed = 0.005f;
+			rot.x += Mouse::GetMoveVec().y * moveSpeed;
+			rot.y += Mouse::GetMoveVec().x * moveSpeed;
+		}
+	}
+
+	// 平行移動
+	if (Mouse::GetClick(MouseCode::Wheel) && Key::GetKey(DIK_LSHIFT))
+	{
+		if (Mouse::GetMoveVec().x != 0 || Mouse::GetMoveVec().y != 0)
+		{
+			const Vec3 rightVec = Vec3::Cross(frontVec, { 0,1,0 });
+			pos += rightVec * Mouse::GetMoveVec().x * 0.1f;
+		}
+	}
+
+	// スクロール
+	if (Mouse::GetWheelMoveVec() != 0)
+	{
+		const float moveSpeed = 0.025f;
+		pos += frontVec * Mouse::GetWheelMoveVec() * moveSpeed;
+	}
 }
 
 void Camera::DebugCameraUpdate()
@@ -106,7 +125,7 @@ void Camera::DebugCameraUpdate()
 // 試錐台を計算
 void Camera::CalcViewFrustum()
 {
-	Mat4 viewProjMat = mViewLookToMat * mPerspectiveProjectionMat;
+	Mat4 viewProjMat = mViewLookToMat * mPerspectiveMat;
 	Vec3 trans = viewProjMat.GetTrans();
 
 	viewFrustum.planes[(uint32_t)FrustamPlanePos::Left] = Vec3(trans + viewProjMat.GetXAxis()).Norm();
@@ -132,21 +151,17 @@ bool Camera::IsVisible(const Vec3 objPos, const float radius)
 	return true;
 }
 
-Mat4 Camera::GetViewLookToMat()
+Mat4 Camera::GetViewMat()
 {
-	return mViewLookToMat;
+	return mViewMat;
 }
-Mat4 Camera::GetViewLookAtMat()
+Mat4 Camera::GetOrthogrphicMat()
 {
-	return mViewLookAtMat;
+	return mOrthographicMat;
 }
-Mat4 Camera::GetOrthoGrphicProjectionMat()
+Mat4 Camera::GetPerspectiveMat()
 {
-	return mOrthographicProjectionMat;
-}
-Mat4 Camera::GetPerspectiveProjectionMat()
-{
-	return mPerspectiveProjectionMat;
+	return mPerspectiveMat;
 }
 
 void Camera::Copy(const Camera& camera)
@@ -163,7 +178,7 @@ void Camera::Copy(const Camera& camera)
 
 	this->mViewLookToMat = camera.mViewLookToMat;
 	this->mViewLookAtMat = camera.mViewLookAtMat;
-	this->mOrthographicProjectionMat = camera.mOrthographicProjectionMat;
-	this->mPerspectiveProjectionMat = camera.mPerspectiveProjectionMat;
+	this->mOrthographicMat = camera.mOrthographicMat;
+	this->mPerspectiveMat = camera.mPerspectiveMat;
 }
 

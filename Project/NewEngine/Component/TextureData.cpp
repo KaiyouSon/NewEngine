@@ -33,13 +33,13 @@ nlohmann::json TextureData::SaveToJson()
 		texturesData.push_back(textureInfoData);
 	}
 
-	nlohmann::json mCrrentTexData;
-	mCrrentTexData["index"] = mCurrentTexIndex;
+	nlohmann::json mCurrentTexData;
+	mCurrentTexData["index"] = mCurrentTexIndex;
 
 	nlohmann::json textureData;
 	textureData["texture_data"] = mComponentInfo.SaveToJson();
 	textureData["texture_data"]["textures"] = texturesData;
-	textureData["texture_data"]["current_texture"] = mCrrentTexData;
+	textureData["texture_data"]["current_texture"] = mCurrentTexData;
 
 	return textureData;
 }
@@ -66,10 +66,10 @@ void TextureData::LoadToJson(const nlohmann::json& componentField)
 
 	nlohmann::json currentTextureField = textureDataField["current_texture"];
 	mCurrentTexIndex = currentTextureField["index"];
-	if (!mCrrentTex)
+	if (!mCurrentTex)
 	{
-		mCrrentTex = mTextures[mCurrentTexIndex];
-		mGameObj->SetTexture(mCrrentTex->GetTag(), false);
+		mCurrentTex = mTextures[mCurrentTexIndex];
+		mGameObj->SetTexture(mCurrentTex->GetTag(), false);
 	}
 }
 
@@ -165,7 +165,7 @@ void TextureData::SetCurrentTexture(const std::string& tag)
 		return;
 	}
 
-	mCrrentTex = tex;
+	mCurrentTex = tex;
 }
 
 void TextureData::SetCurrentTexture(ITexture* tex)
@@ -175,7 +175,7 @@ void TextureData::SetCurrentTexture(ITexture* tex)
 		return;
 	}
 
-	mCrrentTex = tex;
+	mCurrentTex = tex;
 }
 
 ITexture* TextureData::GetTexture(const uint32_t index)
@@ -185,7 +185,7 @@ ITexture* TextureData::GetTexture(const uint32_t index)
 
 ITexture* TextureData::GetCurrentTexture()
 {
-	return mCrrentTex;
+	return mCurrentTex;
 }
 
 

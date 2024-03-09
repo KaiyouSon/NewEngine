@@ -77,11 +77,11 @@ void ColliderObject::MaterialTransfer()
 		is3D == true ?
 		// 3Dの場合
 		transform.GetWorldMat() *
-		mCamera->GetViewLookToMat() *
-		mCamera->GetPerspectiveProjectionMat():
+		mCamera->GetViewMat() *
+		mCamera->GetPerspectiveMat():
 		// 2Dの場合
 		transform.GetWorldMat() *
-		mCamera->GetOrthoGrphicProjectionMat()
+		mCamera->GetOrthogrphicMat()
 	};
 	TransferDataToConstantBuffer(mMaterial.constantBuffers[0].get(), transformColliderData);
 

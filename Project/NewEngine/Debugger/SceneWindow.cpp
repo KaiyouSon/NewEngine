@@ -1,11 +1,11 @@
-#include "ViewWindow.h"
+#include "SceneWindow.h"
 
-ViewWindow::ViewWindow() :
+SceneWindow::SceneWindow() :
 	mAspect(16.f / 9.f, 9.f / 16.f)
 {
 }
 
-void ViewWindow::DrawGuiWindow()
+void SceneWindow::DrawGuiWindow()
 {
 	mAspect =
 	{
@@ -13,7 +13,7 @@ void ViewWindow::DrawGuiWindow()
 		GetWindowSize().y / GetWindowSize().x
 	};
 
-	Gui::BeginWindow("View");
+	Gui::BeginWindow("Scene");
 	Vec2 windowSize = Gui::ToVec2(ImGui::GetContentRegionAvail());
 
 	Vec2 maxSize =
@@ -27,6 +27,6 @@ void ViewWindow::DrawGuiWindow()
 		Min(windowSize.y, maxSize.y)
 	};
 
-	Gui::DrawImage(TextureManager::GetRenderTexture("ViewScene"), size);
+	Gui::DrawImage(TextureManager::GetRenderTexture("Scene"), size);
 	Gui::EndWindow();
 }
