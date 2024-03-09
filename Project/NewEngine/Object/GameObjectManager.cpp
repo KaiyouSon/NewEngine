@@ -1,6 +1,8 @@
 #include "GameObjectManager.h"
 #include "SceneManager.h"
 
+#include "EmptyObject.h"
+
 void GameObjectManager::Update()
 {
 	for (const auto& obj : mGameObjects)
@@ -61,6 +63,9 @@ void GameObjectManager::AddGameObject(const GameObjectType type, const std::stri
 	std::unique_ptr<GameObject> obj;
 	switch (type)
 	{
+	case GameObjectType::EmptyObject:
+		obj = std::make_unique<EmptyObject>(name);
+		break;
 	case GameObjectType::Object3D:
 		obj = std::make_unique<Object3D>(name);
 		break;

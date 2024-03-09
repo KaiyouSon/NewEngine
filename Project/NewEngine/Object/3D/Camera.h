@@ -47,8 +47,6 @@ public:
 	static void DebugCameraUpdate();
 
 	bool IsVisible(const Vec3 objPos, const float radius);
-	//Mat4 GetViewMat();
-	//Mat4 GetViewLookAtMat();
 	Mat4 GetViewMat();
 	Mat4 GetOrthogrphicMat();
 	Mat4 GetPerspectiveMat();

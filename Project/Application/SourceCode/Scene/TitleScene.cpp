@@ -117,30 +117,30 @@ void TitleScene::SceneChangeUpdate()
 		}
 	}
 
-	if (mTitleUI->GetisEnd() == true)
-	{
-		auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
+	//if (mTitleUI->GetisEnd() == true)
+	//{
+	//	auto currentTransition = TransitionManager::GetInstance()->GetCurrentTransition();
 
-		// トランジションがnullかつボタン押してないなら
-		if (currentTransition == nullptr)
-		{
-			if (mIsPush == true)
-			{
-				TransitionManager::GetInstance()->Start(TransitionType::Scene);
-				mIsPush = false;
-			}
-		}
-		else
-		{
-			if (currentTransition->GetType() == TransitionType::Scene &&
-				currentTransition->GetStep() == TransitionStep::Progress)
-			{
-				SceneManager::ChangeScene<GameScene>();
-				if (SceneManager::GetisChanged() == true)
-				{
-					TransitionManager::GetInstance()->End();
-				}
-			}
-		}
-	}
+	//	// トランジションがnullかつボタン押してないなら
+	//	if (currentTransition == nullptr)
+	//	{
+	//		if (mIsPush == true)
+	//		{
+	//			TransitionManager::GetInstance()->Start(TransitionType::Scene);
+	//			mIsPush = false;
+	//		}
+	//	}
+	//	else
+	//	{
+	//		if (currentTransition->GetType() == TransitionType::Scene &&
+	//			currentTransition->GetStep() == TransitionStep::Progress)
+	//		{
+	//			SceneManager::ChangeScene<GameScene>();
+	//			if (SceneManager::GetisChanged() == true)
+	//			{
+	//				TransitionManager::GetInstance()->End();
+	//			}
+	//		}
+	//	}
+	//}
 }

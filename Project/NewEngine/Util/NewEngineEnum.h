@@ -10,6 +10,7 @@ enum class GameObjectType
 	DirectionalLight,
 	PointLight,
 	SpotLight,
+	EmptyObject,
 };
 
 // コンポネントの種類
@@ -25,6 +26,7 @@ enum class ComponentType
 	DirectionalLightInfo,
 	PointLightInfo,
 	SpotLightInfo,
+	EmptyObjectInfo,
 
 	Transform,
 	TextureData,

@@ -10,6 +10,7 @@ protected:
 protected:
 	void ShowGameObjectDataToInspector(GameObject* gameObj);
 	void ShowLightObjectDataToInspector(GameObject* gameObj);
+	void ShowEmptyObjectDataToInspector(GameObject* gameObj);
 
 protected:
 	void LoadBaseInfoToJson(GameObject* gameObj, const nlohmann::json& componentField);

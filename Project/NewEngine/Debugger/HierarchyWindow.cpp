@@ -71,7 +71,7 @@ void HierarchyWindow::CreateGameObjectPop()
 	{
 		if (Gui::BeginMenu("3D Object"))
 		{
-			// オブジェクト3Dなら
+			// オブジェクト3D
 			ShowObjectMenuItem("Object3D", GameObjectType::Object3D);
 
 			// パーティクルメッシュ
@@ -98,6 +98,9 @@ void HierarchyWindow::CreateGameObjectPop()
 		// カメラ
 		ShowObjectMenuItem("Camera", GameObjectType::Camera, false);
 
+		// EmptyObject
+		ShowObjectMenuItem("Empty Object", GameObjectType::EmptyObject, false);
+
 		ImGui::EndPopup();
 	}
 }
@@ -107,7 +110,7 @@ void HierarchyWindow::ShowObjectMenuItem(const std::string& label, const GameObj
 	if (Gui::MenuItem(label))
 	{
 		uint32_t mapSize = (uint32_t)GetGameObjects()->size();
-		std::string name = label + std::to_string(mapSize);
+		std::string name = label + " " + std::to_string(mapSize);
 		AddGameObject(type, name);
 	}
 

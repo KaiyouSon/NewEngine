@@ -7,6 +7,7 @@
 #include "DirectionalLightInfo.h"
 #include "PointLightInfo.h"
 #include "SpotLightInfo.h"
+#include "EmptyObjectInfo.h"
 #include "Transform.h"
 #include "ModelData.h"
 #include "TextureData.h"

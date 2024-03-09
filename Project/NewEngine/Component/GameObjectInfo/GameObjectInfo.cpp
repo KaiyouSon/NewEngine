@@ -42,6 +42,17 @@ void GameObjectInfo::ShowLightObjectDataToInspector(GameObject* gameObj)
 	Gui::DrawColorEdit("Color", gameObj->color);
 }
 
+void GameObjectInfo::ShowEmptyObjectDataToInspector(GameObject* gameObj)
+{
+	Gui::DrawCheckBox("Active Flag", &gameObj->isActive);
+
+	Gui::DrawInputText("Object Name", mChangingName);
+	if (!ImGui::IsItemActive())
+	{
+		gameObj->name = mChangingName;
+	}
+}
+
 void GameObjectInfo::LoadBaseInfoToJson(GameObject* gameObj, const nlohmann::json& componentField)
 {
 	if (!componentField.contains("base_info"))

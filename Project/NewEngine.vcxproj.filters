@@ -466,6 +466,12 @@
     <Filter Include="Uncategorized\Header\GameObject\Light">
       <UniqueIdentifier>{c815b3db-98f9-4c1a-bf1f-0ecc76cc8842}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Uncategorized\Source\GameObject\Empty">
+      <UniqueIdentifier>{776d23e9-14f7-4313-8638-66cdecb154d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uncategorized\Header\GameObject\Empty">
+      <UniqueIdentifier>{fd03c382-7e58-44ce-986d-861c1c3198ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -1104,6 +1110,12 @@
     <ClCompile Include="NewEngine\Debugger\SceneWindow.cpp">
       <Filter>Uncategorized\Source\GuiWindow</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Object\3D\EmptyObject.cpp">
+      <Filter>Uncategorized\Source\GameObject\Empty</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Component\GameObjectInfo\EmptyObjectInfo.cpp">
+      <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1709,9 +1721,6 @@
     <ClInclude Include="NewEngine\Debugger\ConsoleWindow.h">
       <Filter>Uncategorized\Header\GuiWindow</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Component\GameObjectInfo\GameObjectInfo.h">
-      <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
-    </ClInclude>
     <ClInclude Include="NewEngine\AssetsManager.h">
       <Filter>Uncategorized\Header\Assets</Filter>
     </ClInclude>
@@ -1786,6 +1795,12 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Debugger\SceneWindow.h">
       <Filter>Uncategorized\Header\GuiWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Object\3D\EmptyObject.h">
+      <Filter>Uncategorized\Header\GameObject\Empty</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Component\GameObjectInfo\EmptyObjectInfo.h">
+      <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

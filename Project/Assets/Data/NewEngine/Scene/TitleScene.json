@@ -5,6 +5,59 @@
             "object": {
                 "components": [
                     {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 8
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": ""
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                ],
+                "name": "Game Manager",
+                "type": 7
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
                         "camera_info": {
                             "camera_type": 0,
                             "component_info": {

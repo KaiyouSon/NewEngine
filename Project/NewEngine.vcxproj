@@ -147,6 +147,7 @@
     <ClCompile Include="NewEngine\Component\ComponentFactor.cpp" />
     <ClCompile Include="NewEngine\Component\GameObjectInfo\CameraInfo.cpp" />
     <ClCompile Include="NewEngine\Component\GameObjectInfo\DirectionalLightInfo.cpp" />
+    <ClCompile Include="NewEngine\Component\GameObjectInfo\EmptyObjectInfo.cpp" />
     <ClCompile Include="NewEngine\Component\GameObjectInfo\GameObjectInfo.cpp" />
     <ClCompile Include="NewEngine\Component\ModelData.cpp" />
     <ClCompile Include="NewEngine\Component\GameObjectInfo\Object3DInfo.cpp" />
@@ -270,6 +271,7 @@
     <ClCompile Include="NewEngine\Object\2D\PostEffect.cpp" />
     <ClCompile Include="NewEngine\Object\2D\RenderTexture.cpp" />
     <ClCompile Include="NewEngine\Object\2D\Sprite.cpp" />
+    <ClCompile Include="NewEngine\Object\3D\EmptyObject.cpp" />
     <ClCompile Include="NewEngine\Object\3D\VolumetricFog.cpp" />
     <ClCompile Include="NewEngine\Object\3D\ParticleMesh.cpp" />
     <ClCompile Include="NewEngine\Object\ComponentManager.cpp" />
@@ -370,7 +372,7 @@
     <ClInclude Include="NewEngine\Component\ComponentFactor.h" />
     <ClInclude Include="NewEngine\Component\GameObjectInfo\CameraInfo.h" />
     <ClInclude Include="NewEngine\Component\GameObjectInfo\DirectionalLightInfo.h" />
-    <ClInclude Include="NewEngine\Component\GameObjectInfo\GameObjectInfo.h" />
+    <ClInclude Include="NewEngine\Component\GameObjectInfo\EmptyObjectInfo.h" />
     <ClInclude Include="NewEngine\Component\ModelData.h" />
     <ClInclude Include="NewEngine\Component\GameObjectInfo\Object3DInfo.h" />
     <ClInclude Include="NewEngine\Component\GameObjectInfo\ParticleMeshInfo.h" />
@@ -489,6 +491,7 @@
     <ClInclude Include="NewEngine\Object\2D\PostEffect.h" />
     <ClInclude Include="NewEngine\Object\2D\RenderTexture.h" />
     <ClInclude Include="NewEngine\Object\2D\Sprite.h" />
+    <ClInclude Include="NewEngine\Object\3D\EmptyObject.h" />
     <ClInclude Include="NewEngine\Object\3D\ParticleObject.h" />
     <ClInclude Include="NewEngine\Object\3D\VolumetricFog.h" />
     <ClInclude Include="NewEngine\Object\3D\ParticleMesh.h" />
