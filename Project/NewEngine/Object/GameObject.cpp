@@ -40,6 +40,7 @@ void GameObject::InitToSprite()
 	mComponentManager->AddComponent<SpriteInfo>();
 	mComponentManager->AddComponent<Transform>();
 	mComponentManager->AddComponent<TextureData>();
+	mComponentManager->AddComponent<ScriptsComponent>();
 
 	mTransform = mComponentManager->GetComponent<Transform>();
 	mTextureData = mComponentManager->GetComponent<TextureData>();

@@ -12,6 +12,7 @@ private:
 		ModelAssets,
 		MaterialAssets,
 		RendererLayers,
+		ScriptsData,
 	};
 
 private:
@@ -21,8 +22,13 @@ private:
 	void ShowModelAssets();
 	void ShowMaterialAssets();
 	void ShowRendererLayers();
+	void ShowScriptsData();
 
 	void DrawBackButton();
+
+
+private:
+	void CreateClassFile(const std::string& name);
 
 public:
 	void CreateAssetsPop();

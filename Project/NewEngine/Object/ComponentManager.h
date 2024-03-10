@@ -11,6 +11,7 @@
 #include "Transform.h"
 #include "ModelData.h"
 #include "TextureData.h"
+#include "ScriptsComponent.h"
 
 class ComponentManager
 {

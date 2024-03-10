@@ -105,6 +105,11 @@ void MainWindow::SetDragDropLayerTag(const std::string dragDropLayerTag)
 	mDragDropLayerTag = dragDropLayerTag;
 }
 
+void MainWindow::SetDragDropScriptTag(const std::string dragDropScriptTag)
+{
+	mDragDropScriptTag = dragDropScriptTag;
+}
+
 std::string MainWindow::GetCurrentObjName()
 {
 	return mCurrentObjName;
@@ -118,4 +123,9 @@ std::string MainWindow::GetDragDropAssetsTag()
 std::string MainWindow::GetDragDropLayerTag()
 {
 	return mDragDropLayerTag;
+}
+
+std::string MainWindow::GetDragDropScriptTag()
+{
+	return mDragDropScriptTag;
 }

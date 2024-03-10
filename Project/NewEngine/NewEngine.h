@@ -7,6 +7,7 @@
 #include "GPUEmitter.h"
 #include "ParticleMesh.h"
 #include "ParticleObject.h"
+#include "GameObject.h"
 
 #include "DirectionalLight.h"
 #include "PointLight.h"
@@ -39,6 +40,9 @@
 #include "RenderWindow.h"
 #include "Renderer.h"
 #include "json.hpp"
+
+#include "ScriptManager.h"
+#include "Script.h"
 
 // c++
 #include "StandardLib.h"

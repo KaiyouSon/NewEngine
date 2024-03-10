@@ -63,6 +63,12 @@ void AssetsWindow::DrawGuiWindow()
 
 	case RendererLayers:
 		ShowRendererLayers();
+		break;
+
+	case ScriptsData:
+		ShowScriptsData();
+		break;
+
 	}
 
 	Gui::EndWindow();
@@ -105,6 +111,12 @@ void AssetsWindow::ShowMainLevel()
 	if (Gui::DrawButton("Renderer", buttonSize))
 	{
 		state = RendererLayers;
+	}
+	Gui::NextColumn();
+
+	if (Gui::DrawButton("Scripts", buttonSize))
+	{
+		state = ScriptsData;
 	}
 
 	Gui::DrawColumns(1);
@@ -292,6 +304,43 @@ void AssetsWindow::ShowRendererLayers()
 	//	}
 	//}
 }
+void AssetsWindow::ShowScriptsData()
+{
+	DrawBackButton();
+
+	fs::path folderPath = AppScriptsDirectory;
+	for (const auto entry : fs::directory_iterator(folderPath))
+	{
+		const fs::path path = entry.path();
+		const fs::path relativePath = relative(path, folderPath);	// 相対パス
+		const std::string filename = relativePath.filename().string();
+
+		// 検索機能
+		std::string::size_type pos = filename.find(search);
+		if (pos == std::string::npos)
+		{
+			continue;
+		}
+
+		Gui::DrawColumns(columnCount);
+		Gui::DrawButton(filename.c_str(), buttonSize);
+
+		std::string ext = relativePath.filename().extension().string();
+		std::string tag = SubString(filename, ext);
+
+		if (Gui::DragDropSource("DragDrop Script", tag))
+		{
+			MainWindow::GetInstance()->SetDragDropScriptTag(tag);
+		}
+
+		Gui::NextColumn();
+
+		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+		{
+
+		}
+	}
+}
 
 void AssetsWindow::DrawBackButton()
 {
@@ -299,6 +348,49 @@ void AssetsWindow::DrawBackButton()
 	{
 		state = MainLevel;
 	}
+}
+
+void AssetsWindow::CreateClassFile(const std::string& name)
+{
+	std::string path;
+	std::ofstream file;
+
+	// Headerファイルの作成
+	path = AppScriptsDirectory + name + ".h";
+	file = std::ofstream(path);
+	file << "#pragma once" << std::endl;
+	file << "#include \"NewEngine.h\"" << std::endl;
+	file << "#include \"Script.h\"" << std::endl;
+	file << std::endl;
+	file << "class " + name + " : public Script" << std::endl;
+	file << "{" << std::endl;
+	file << "public:" << std::endl;
+	file << "	" + name + "();" << std::endl;
+	file << "	void Init(); " << std::endl;
+	file << "	void Update();" << std::endl;
+	file << "};" << std::endl;
+	file.close();
+
+	// Cppファイルの作成
+	path = AppScriptsDirectory + name + ".cpp";
+	file = std::ofstream(path);
+	file << "#include \"" + name + ".h\"" << std::endl;
+	file << std::endl;
+	file << name + "::" + name + "()" << std::endl;
+	file << "{" << std::endl;
+	file << std::endl;
+	file << "}" << std::endl;
+	file << std::endl;
+	file << "void " + name + "::Init()" << std::endl;
+	file << "{" << std::endl;
+	file << std::endl;
+	file << "}" << std::endl;
+	file << std::endl;
+	file << "void " + name + "::Update()" << std::endl;
+	file << "{" << std::endl;
+	file << std::endl;
+	file << "}" << std::endl;
+	file.close();
 }
 
 void AssetsWindow::CreateAssetsPop()
@@ -319,6 +411,24 @@ void AssetsWindow::CreateAssetsPop()
 			mIsOpenCreateScenePopModel = true;
 		}
 		Gui::DrawLine();
+
+		if (Gui::BeginMenu("Script"))
+		{
+			if (Gui::MenuItem("Cpp"))
+			{
+			}
+
+			if (Gui::MenuItem("Header"))
+			{
+			}
+
+			if (Gui::MenuItem("Class"))
+			{
+				CreateClassFile("What");
+			}
+
+			Gui::EndMenu();
+		}
 
 		ImGui::EndPopup();
 	}

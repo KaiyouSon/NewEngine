@@ -58,6 +58,8 @@ SceneManager::SceneManager()
 	// シーンの一覧を文字列としてロード
 	LoadSceneToDirectroy();
 
+	ScriptManager::GetInstance()->Register();
+
 	// シーンをロード
 	mCurrentScene = std::make_unique<Scene>();
 	gCurrentScene = mCurrentScene.get();

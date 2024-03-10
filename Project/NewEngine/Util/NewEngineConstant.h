@@ -43,6 +43,12 @@ static const std::string AppTextureDirectory = "Assets/Texture/Application/";
 static const std::string AppModelDirectory = "Assets/Model/Application/";
 
 /// <summary>
+/// ディレクトリーパス : "Scripts/Application/"
+/// </summary>
+/// <returns>std::string</returns>
+static const std::string AppScriptsDirectory = "Scripts/Application/";
+
+/// <summary>
 /// ディレクトリーパス : "Assets/Renderer/"
 /// </summary>
 /// <returns>std::string</returns>

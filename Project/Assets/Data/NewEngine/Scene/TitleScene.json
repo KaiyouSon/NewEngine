@@ -59,7 +59,6 @@
                 "components": [
                     {
                         "camera_info": {
-                            "camera_type": 0,
                             "component_info": {
                                 "index": 0,
                                 "type": 4
@@ -182,7 +181,7 @@
                         }
                     }
                 ],
-                "name": "Sprite1",
+                "name": "Button",
                 "type": 1
             }
         },
@@ -265,7 +264,7 @@
                         }
                     }
                 ],
-                "name": "Sprite2",
+                "name": "Back",
                 "type": 1
             }
         },
@@ -348,7 +347,7 @@
                         }
                     }
                 ],
-                "name": "Sprite3",
+                "name": "TitleString",
                 "type": 1
             }
         },
@@ -431,7 +430,7 @@
                         }
                     }
                 ],
-                "name": "Sprite4",
+                "name": "Back2",
                 "type": 1
             }
         },
@@ -503,6 +502,89 @@
                 ],
                 "name": "Particle Mesh5",
                 "type": 2
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 2
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": false,
+                                    "layer_tag": "BackSprite"
+                                }
+                            },
+                            {
+                                "sprite_info": {
+                                    "anchor_point": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "flip_mode": 0,
+                                    "sprite_size": [
+                                        864.0,
+                                        128.0
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                960.0,
+                                900.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                0.30000001192092896,
+                                0.30000001192092896,
+                                0.30000001192092896
+                            ]
+                        }
+                    },
+                    {
+                        "texture_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 10
+                            },
+                            "current_texture": {
+                                "index": 0
+                            },
+                            "textures": [
+                                {
+                                    "texture_tag": "PressButton",
+                                    "texture_type": 0
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "name": "AfterImage",
+                "type": 1
             }
         }
     ]

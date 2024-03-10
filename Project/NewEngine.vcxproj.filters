@@ -472,6 +472,12 @@
     <Filter Include="Uncategorized\Header\GameObject\Empty">
       <UniqueIdentifier>{fd03c382-7e58-44ce-986d-861c1c3198ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Uncategorized\Source\Script">
+      <UniqueIdentifier>{58a59f79-9eeb-4744-aecd-f13b20602334}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uncategorized\Header\Script">
+      <UniqueIdentifier>{407aa70d-9046-4b44-8503-458c880a57a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -1115,6 +1121,18 @@
     </ClCompile>
     <ClCompile Include="NewEngine\Component\GameObjectInfo\EmptyObjectInfo.cpp">
       <Filter>Uncategorized\Source\Component\GameObjectInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Application\AfterImage.cpp">
+      <Filter>Application\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Component\ScriptsComponent.cpp">
+      <Filter>Uncategorized\Source\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Script.cpp">
+      <Filter>Uncategorized\Source\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\ScriptManager.cpp">
+      <Filter>Uncategorized\Source\Script</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1801,6 +1819,18 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Component\GameObjectInfo\EmptyObjectInfo.h">
       <Filter>Uncategorized\Header\Component\GameObjectInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Application\AfterImage.h">
+      <Filter>Application\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Component\ScriptsComponent.h">
+      <Filter>Uncategorized\Header\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Script.h">
+      <Filter>Uncategorized\Header\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\ScriptManager.h">
+      <Filter>Uncategorized\Header\Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
