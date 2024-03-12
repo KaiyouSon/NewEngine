@@ -14,6 +14,11 @@ ScriptsComponent::ScriptsComponent(GameObject* gameObj) : Component(gameObj)
 
 void ScriptsComponent::Update()
 {
+	if (!gCurrentScene->GetisActive())
+	{
+		return;
+	}
+
 	for (auto& script : mScripts)
 	{
 		if (!script)

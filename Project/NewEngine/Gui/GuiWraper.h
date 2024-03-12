@@ -33,7 +33,7 @@ public:
 	static void DrawGuiSetting();
 
 public:
-	static bool BeginWindow(const char* name, const Vec2& size = -1, bool* isOpen = nullptr);
+	static bool BeginWindow(const char* name, const Vec2& size = -1, bool* isOpen = nullptr, bool isUseMenuBar = true);
 	static void EndWindow();
 	static void BeginFullWindow(const char* name);
 	static void EndFullWindow();
@@ -73,6 +73,7 @@ public:
 
 	// ボタン関連
 	static bool DrawButton(const char* label, const Vec2& size);
+	static bool DrawButtonToWidthCenter(const std::string& label, const Vec2& size);
 	static bool DrawRadioButton(const char* label, uint32_t* current, const uint32_t index, const bool isTab = true);
 	static bool DrawImageButton(ITexture* texture, const Vec2& size);
 

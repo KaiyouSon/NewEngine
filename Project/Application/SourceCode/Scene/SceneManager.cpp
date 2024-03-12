@@ -145,6 +145,8 @@ void SceneManager::Update()
 	Camera::debugCamera.DebugUpdate();
 	sCurrentScene->Update();
 	TransitionManager::GetInstance()->Update();
+
+	mCurrentScene->UpdateGameObject();
 }
 
 void SceneManager::ExecuteCS()

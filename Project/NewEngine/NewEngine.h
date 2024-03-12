@@ -57,6 +57,9 @@ private:
 	static bool sIsClose;
 	bool mIsLoaded;
 
+public:
+	static TextureManager mTextureManager;
+
 private:
 	void Setting();
 

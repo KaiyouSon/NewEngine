@@ -1,11 +1,16 @@
 #include "Scene.h"
 
 Scene::Scene() :
-	mName(std::string()),
+	mName(std::string()), mIsActive(false),
 	mGameObjectManager(std::make_unique<GameObjectManager>()),
 	mAssetsManager(std::make_unique<AssetsManager>()),
 	mRenderer(std::make_unique<Renderer>())
 {
+}
+
+void Scene::UpdateGameObject()
+{
+	mGameObjectManager->Update();
 }
 
 void Scene::DrawGameObject()
@@ -65,6 +70,11 @@ void Scene::SaveSceneData()
 	file << std::setw(4) << data << std::endl;
 }
 
+void Scene::SetisActive(const bool isActive)
+{
+	mIsActive = isActive;
+}
+
 std::string Scene::GetName()
 {
 	return mName;
@@ -83,4 +93,9 @@ AssetsManager* Scene::GetAssetsManager()
 Renderer* Scene::GetRenderer()
 {
 	return mRenderer.get();
+}
+
+bool Scene::GetisActive()
+{
+	return mIsActive;
 }

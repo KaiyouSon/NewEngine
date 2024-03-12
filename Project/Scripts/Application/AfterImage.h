@@ -4,7 +4,8 @@
 class AfterImage : public Script
 {
 private:
-	Sprite* obj;
+	bool isStart;
+
 
 public:
 	AfterImage();

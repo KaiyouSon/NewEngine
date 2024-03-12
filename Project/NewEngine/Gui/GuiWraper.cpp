@@ -109,19 +109,21 @@ void GuiWraper::DrawGuiSetting()
 	//EndWindow();
 }
 
-bool GuiWraper::BeginWindow(const char* name, const Vec2& size, bool* isOpen)
+bool GuiWraper::BeginWindow(const char* name, const Vec2& size, bool* isOpen, bool isUseMenuBar)
 {
+	ImGuiWindowFlags windowFlags = ImGuiWindowFlags_None;
+
 	if (size.x != -1 && size.y != -1)
 	{
 		ImGui::SetNextWindowSize({ size.x,size.y });
-
-		ImGuiWindowFlags windowFlags =
-			ImGuiWindowFlags_MenuBar |
-			ImGuiWindowFlags_NoResize;
-		return ImGui::Begin(name, isOpen, windowFlags);
+		windowFlags |= ImGuiWindowFlags_NoResize;
 	}
 
-	ImGuiWindowFlags windowFlags = ImGuiWindowFlags_MenuBar;
+	if (isUseMenuBar == true)
+	{
+		windowFlags |= ImGuiWindowFlags_MenuBar;
+	}
+
 	return ImGui::Begin(name, isOpen, windowFlags);
 }
 
@@ -259,6 +261,15 @@ void GuiWraper::DrawDemoWindow(bool& flag)
 bool GuiWraper::DrawButton(const char* label, const Vec2& size)
 {
 	return ImGui::Button(label, { size.x,size.y });
+}
+
+bool GuiWraper::DrawButtonToWidthCenter(const std::string& label, const Vec2& size)
+{
+	// 中心の描画する
+	float width = ImGui::GetContentRegionAvail().x;
+	ImGui::SetCursorPosX(width / 2 - size.x / 2);
+
+	return Gui::DrawButton(label.c_str(), size);
 }
 
 void GuiWraper::DrawTab()

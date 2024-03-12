@@ -80,6 +80,9 @@ void NewEngine::Init()
 	// ロード
 	LoadManager::GetInstance()->Load();
 
+	mTextureManager.LoadTexture("NewEngine/PlayUI.png", "PlayUI");
+
+
 	// ロード終了なら
 	bool isLoaded = LoadManager::GetInstance()->GetisLoaded();
 	if (isLoaded == true)
@@ -110,7 +113,6 @@ void NewEngine::Update()
 	{
 		LightManager::GetInstance()->Update();
 		SceneManager::GetInstance()->Update();
-		SceneManager::GetInstance()->mCurrentScene->GetGameObjectManager()->Update();
 		DebugManager::GetInstance()->SetisNextFrame(false);
 	}
 }
