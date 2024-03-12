@@ -16,6 +16,7 @@ protected:
 
 	Transform* mTransform;
 	TextureData* mTextureData;
+	MaterialComponent* mMaterialComponent;
 	GraphicsPipeline* mGraphicsPipelineTest;
 
 public:

@@ -3,6 +3,15 @@
 #include "ShaderManager.h"
 #include "TextureData.h"
 
+Material::Material()
+{
+
+}
+Material::Material(const std::string& name) :name(name)
+{
+
+}
+
 void Material::Init()
 {
 	// CBの生成
@@ -62,6 +71,7 @@ void Material::DrawCommands(TextureData* textureData, const BlendMode blendMode)
 
 void Material::Copy(const Material& material)
 {
+	name = material.name;
 	mRSSetting = material.mRSSetting;
 	mGPSetting = material.mGPSetting;
 
@@ -71,6 +81,7 @@ void Material::Copy(const Material& material)
 	// パイプライン生成
 	mGraphicsPipeline = std::make_unique<GraphicsPipeline>();
 	mGraphicsPipeline->Create(*this);
+
 }
 
 void Material::CreateJsonFile()

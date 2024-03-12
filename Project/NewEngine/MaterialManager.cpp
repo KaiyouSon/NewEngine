@@ -5,13 +5,13 @@ namespace fs = std::filesystem;
 void MaterialManager::LoadMaterial(const std::string& path)
 {
 	fs::path fspath = path;
-	std::string tag = fspath.filename().string();
-	tag = SubString(tag, "Material.json");
+	std::string name = fspath.filename().string();
+	name = SubString(name, "Material.json");
 
-	std::shared_ptr<Material> material = std::make_shared<Material>();
+	std::shared_ptr<Material> material = std::make_shared<Material>(name);
 	material->LoadToJson(path);
 
-	std::pair pair = std::make_pair(tag, std::move(material));
+	std::pair pair = std::make_pair(name, std::move(material));
 	mMaterialMap.insert(std::move(pair));
 }
 

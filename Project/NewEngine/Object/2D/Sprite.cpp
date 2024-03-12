@@ -9,7 +9,6 @@ using namespace ConstantBufferData;
 
 Sprite::Sprite() :
 	mVertexBuffer(std::make_unique<VertexBuffer<VSprite>>()),
-	mMaterial(std::make_unique<Material>()),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Sprite"))
 {
 	InitComponents();
@@ -27,7 +26,6 @@ Sprite::Sprite() :
 
 Sprite::Sprite(const std::string& name) :
 	mVertexBuffer(std::make_unique<VertexBuffer<VSprite>>()),
-	mMaterial(std::make_unique<Material>()),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Sprite"))
 {
 	this->name = name;
@@ -97,8 +95,6 @@ void Sprite::Draw(const std::string& _layerTag, const BlendMode _blendMode)
 // --- マテリアル関連 --------------------------------------------------- //
 void Sprite::MaterialInit()
 {
-	mMaterial->Copy(*gAssetsManager->GetMaterial("BasicSprite"));
-
 	if (mMaterial->constantBuffers.empty())
 	{
 		mMaterial->AddConstantBuffer<CTransform2D>();	// 2D行列
@@ -197,11 +193,16 @@ void Sprite::InitComponents()
 	mComponentManager->AddComponent<SpriteInfo>();
 	mComponentManager->AddComponent<Transform>();
 	mComponentManager->AddComponent<TextureData>();
+	mComponentManager->AddComponent<MaterialComponent>();
 	mComponentManager->AddComponent<ScriptsComponent>();
 
 	mInfo = mComponentManager->GetComponent<SpriteInfo>();
 	mTransform = mComponentManager->GetComponent<Transform>();
 	mTextureData = mComponentManager->GetComponent<TextureData>();
+	mMaterialComponent = mComponentManager->GetComponent<MaterialComponent>();
+
+	mMaterialComponent->SetMaterial("BasicSprite");
+	mMaterial = mMaterialComponent->GetMaterial();
 }
 
 // --- 描画コマンド ----------------------------------------------------- //

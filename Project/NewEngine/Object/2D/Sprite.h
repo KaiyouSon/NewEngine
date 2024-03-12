@@ -19,7 +19,7 @@ class Sprite : public GameObject
 private:
 	std::vector<VertexBufferData::VSprite> mVertices;
 	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> mVertexBuffer;
-	std::unique_ptr<Material> mMaterial;
+	Material* mMaterial;
 	GraphicsPipeline* mGraphicsPipeline;
 
 private:

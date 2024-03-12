@@ -12,6 +12,7 @@
 #include "ModelData.h"
 #include "TextureData.h"
 #include "ScriptsComponent.h"
+#include "MaterialComponent.h"
 
 class ComponentManager
 {

@@ -179,7 +179,17 @@
                                 }
                             ]
                         }
-                    }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 15
+                            },
+                            "material_name": "BasicSprite"
+                        }
+                    },
+                    null
                 ],
                 "name": "Sprite0",
                 "type": 1
@@ -262,7 +272,17 @@
                                 }
                             ]
                         }
-                    }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 15
+                            },
+                            "material_name": "BasicSprite"
+                        }
+                    },
+                    null
                 ],
                 "name": "Sprite1",
                 "type": 1
@@ -345,7 +365,17 @@
                                 }
                             ]
                         }
-                    }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 15
+                            },
+                            "material_name": "BasicSprite"
+                        }
+                    },
+                    null
                 ],
                 "name": "Sprite2",
                 "type": 1
@@ -428,7 +458,17 @@
                                 }
                             ]
                         }
-                    }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 15
+                            },
+                            "material_name": "BasicSprite"
+                        }
+                    },
+                    null
                 ],
                 "name": "Sprite3",
                 "type": 1
@@ -511,7 +551,17 @@
                                 }
                             ]
                         }
-                    }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 15
+                            },
+                            "material_name": "BasicSprite"
+                        }
+                    },
+                    null
                 ],
                 "name": "Sprite4",
                 "type": 1
@@ -594,7 +644,17 @@
                                 }
                             ]
                         }
-                    }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 15
+                            },
+                            "material_name": "BasicSprite"
+                        }
+                    },
+                    null
                 ],
                 "name": "Sprite5",
                 "type": 1

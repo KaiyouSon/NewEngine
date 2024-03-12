@@ -34,6 +34,7 @@ enum class ComponentType
 	PipelineData,
 	ParticleData,
 	ScriptsComponent,
+	MaterialComponent,
 };
 
 // ブレンドモード

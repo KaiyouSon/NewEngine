@@ -21,6 +21,7 @@ public:
 
 	std::vector<Shader> mShaders;
 	std::string mMaterialPath;
+	std::string name;
 
 private:
 	void CreateJsonFile();
@@ -34,6 +35,8 @@ public:
 
 	void Init();
 public:
+	Material();
+	Material(const std::string& name);
 	void Create();
 	void DrawCommands(TextureData* textureData, const BlendMode blendMode = BlendMode::Alpha);
 

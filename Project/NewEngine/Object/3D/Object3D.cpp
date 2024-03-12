@@ -13,7 +13,7 @@ float Object3D::sShadowBias = 0.0005f;
 
 Object3D::Object3D() :
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DSMOff")),
-	mTexture(TextureManager::GetTexture("White")), //mModel(nullptr),
+	mTexture(TextureManager::GetTexture("White")),
 	mDissolveTex(TextureManager::GetTexture("DissolveTexture")),
 	mDepthTex(TextureManager::GetRenderTexture("ShadowMap")->GetDepthTexture()),
 	isLighting(false), mIsWriteShadow(false), mIsWriteDepth(false),
@@ -37,7 +37,7 @@ Object3D::Object3D() :
 
 Object3D::Object3D(const std::string& name) :
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DSMOff")),
-	mTexture(TextureManager::GetTexture("White")), //mModel(nullptr),
+	mTexture(TextureManager::GetTexture("White")),
 	mDissolveTex(TextureManager::GetTexture("DissolveTexture")),
 	mDepthTex(TextureManager::GetRenderTexture("ShadowMap")->GetDepthTexture()),
 	isLighting(false), mIsWriteShadow(false), mIsWriteDepth(false),
