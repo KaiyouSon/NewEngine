@@ -35,6 +35,7 @@ private:
 	void TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightDownPos);
 
 private:
+	void InitComponents();
 	void DrawCommands();
 
 public:

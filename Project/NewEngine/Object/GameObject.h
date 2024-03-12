@@ -31,19 +31,6 @@ public:
 	bool isActive;
 
 protected:
-	// オブジェクト3D時の初期化
-	void InitToObject3D();
-
-	// パーティクルメッシュの初期化
-	void InitToParticleMesh();
-
-	// スプライト時の初期化
-	void InitToSprite();
-
-	// カメラ時の初期化
-	void InitToCamera();
-
-protected:
 	void BaseUpdate();
 
 public:

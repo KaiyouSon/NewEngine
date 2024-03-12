@@ -20,7 +20,7 @@ Object3D::Object3D() :
 	mMaterial(std::make_unique<Material>()), mCamera(&Camera::current),
 	isUseDissolve(false), dissolve(0.f), colorPower(1), dissolveColor(Color::red)
 {
-	InitToObject3D();
+	InitComponents();
 
 	// マテリアルの初期化
 	MaterialInit();
@@ -46,7 +46,7 @@ Object3D::Object3D(const std::string& name) :
 {
 	this->name = name;
 
-	InitToObject3D();
+	InitComponents();
 
 	// マテリアルの初期化
 	MaterialInit();
@@ -255,6 +255,20 @@ void Object3D::MaterialDrawCommands()
 		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
 			i, mMaterial->constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
 	}
+}
+
+void Object3D::InitComponents()
+{
+	layerTag = "Object3D";
+	mType = GameObjectType::Object3D;
+
+	mComponentManager->AddComponent<Object3DInfo>();
+	mComponentManager->AddComponent<Transform>();
+	mComponentManager->AddComponent<ModelData>();
+	mComponentManager->AddComponent<TextureData>();
+
+	mTransform = mComponentManager->GetComponent<Transform>();
+	mTextureData = mComponentManager->GetComponent<TextureData>();
 }
 
 // --- 描画コマンド ----------------------------------------------------- //

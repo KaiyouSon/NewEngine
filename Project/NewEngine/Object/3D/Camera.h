@@ -36,6 +36,7 @@ private:
 	CameraInfo* mInfo;
 
 private:
+	void InitComponents();
 	void CalcViewFrustum();	// 試錐台を計算
 
 public:

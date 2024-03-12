@@ -9,7 +9,7 @@ private:
 
 public:
 	AfterImage();
-	void Init();
+	void Init() override;
 	void Update() override;
 
 public:

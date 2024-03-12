@@ -49,6 +49,7 @@ private:
 	void MaterialDrawCommands();
 
 private:
+	void InitComponents();
 	void DrawCommands();
 
 public:

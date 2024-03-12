@@ -12,8 +12,7 @@ Sprite::Sprite() :
 	mMaterial(std::make_unique<Material>()),
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Sprite"))
 {
-	InitToSprite();
-	mInfo = mComponentManager->GetComponent<SpriteInfo>();
+	InitComponents();
 
 	mVertices.resize(4);
 	mVertices[0].uv = { 0.0f,1.0f };
@@ -33,8 +32,7 @@ Sprite::Sprite(const std::string& name) :
 {
 	this->name = name;
 
-	InitToSprite();
-	mInfo = mComponentManager->GetComponent<SpriteInfo>();
+	InitComponents();
 
 	mVertices.resize(4);
 	mVertices[0].uv = { 0.0f,1.0f };
@@ -189,6 +187,21 @@ void Sprite::TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightDownPos)
 	mVertices[(uint32_t)Point::LU].uv = Vec2(left, up);		 //左上
 	mVertices[(uint32_t)Point::RD].uv = Vec2(right, down);	 //右下
 	mVertices[(uint32_t)Point::RU].uv = Vec2(right, up);	 //右上
+}
+
+void Sprite::InitComponents()
+{
+	layerTag = "BackSprite";
+	mType = GameObjectType::Sprite;
+
+	mComponentManager->AddComponent<SpriteInfo>();
+	mComponentManager->AddComponent<Transform>();
+	mComponentManager->AddComponent<TextureData>();
+	mComponentManager->AddComponent<ScriptsComponent>();
+
+	mInfo = mComponentManager->GetComponent<SpriteInfo>();
+	mTransform = mComponentManager->GetComponent<Transform>();
+	mTextureData = mComponentManager->GetComponent<TextureData>();
 }
 
 // --- 描画コマンド ----------------------------------------------------- //

@@ -119,7 +119,7 @@ ParticleMesh::ParticleMesh() :
 	mParticleDataSB(std::make_unique<StructuredBuffer>()),
 	mCSMaterial(std::make_unique<Material>())
 {
-	InitToParticleMesh();
+	InitComponents();
 
 	// マテリアルの初期化
 	MaterialInit();
@@ -138,7 +138,7 @@ ParticleMesh::ParticleMesh(const std::string& name) :
 {
 	this->name = name;
 
-	InitToParticleMesh();
+	InitComponents();
 
 	// マテリアルの初期化
 	MaterialInit();
@@ -147,6 +147,19 @@ ParticleMesh::ParticleMesh(const std::string& name) :
 	mBillboard.SetBillboardType(BillboardType::AllAxisBillboard);
 
 	SetParticleData<ParticleParameter::Default>(10000);
+}
+
+void ParticleMesh::InitComponents()
+{
+	layerTag = "Object3D";
+	mType = GameObjectType::ParticleMesh;
+
+	mComponentManager->AddComponent<ParticleMeshInfo>();
+	mComponentManager->AddComponent<Transform>();
+	mComponentManager->AddComponent<TextureData>();
+
+	mTransform = mComponentManager->GetComponent<Transform>();
+	mTextureData = mComponentManager->GetComponent<TextureData>();
 }
 
 void ParticleMesh::DrawCommands()

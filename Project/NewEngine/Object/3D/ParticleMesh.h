@@ -41,6 +41,7 @@ private:
 	void CSMaterialDrawCommands();
 
 private:
+	void InitComponents();
 	void DrawCommands();
 
 public:

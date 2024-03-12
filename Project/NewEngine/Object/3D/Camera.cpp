@@ -8,7 +8,7 @@ Camera::Camera() :
 	fovAngle(45), oNearZ(0), oFarZ(1), rect(0, 1920, 0, 1080),
 	pNearZ(0.1f), pFarZ(10000.0f)
 {
-	InitToCamera();
+	InitComponents();
 	mInfo = mComponentManager->GetComponent<CameraInfo>();
 
 	// 初期化処理
@@ -21,7 +21,7 @@ Camera::Camera(const std::string& name) :
 {
 	this->name = name;
 
-	InitToCamera();
+	InitComponents();
 	mInfo = mComponentManager->GetComponent<CameraInfo>();
 
 	// 初期化処理
@@ -120,6 +120,16 @@ void Camera::DebugCameraUpdate()
 		const float moveSpeed = 0.025f;
 		current.pos += frontVec * Mouse::GetWheelMoveVec() * moveSpeed;
 	}
+}
+
+void Camera::InitComponents()
+{
+	mType = GameObjectType::Camera;
+
+	mComponentManager->AddComponent<CameraInfo>();
+	mComponentManager->AddComponent<Transform>();
+
+	mTransform = mComponentManager->GetComponent<Transform>();
 }
 
 // 試錐台を計算

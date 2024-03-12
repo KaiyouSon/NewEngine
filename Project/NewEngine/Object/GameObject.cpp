@@ -7,54 +7,6 @@ GameObject::GameObject() :
 	blendMode = BlendMode::Alpha;
 }
 
-void GameObject::InitToObject3D()
-{
-	layerTag = "Object3D";
-	mType = GameObjectType::Object3D;
-
-	mComponentManager->AddComponent<Object3DInfo>();
-	mComponentManager->AddComponent<Transform>();
-	mComponentManager->AddComponent<ModelData>();
-	mComponentManager->AddComponent<TextureData>();
-
-	mTransform = mComponentManager->GetComponent<Transform>();
-	mTextureData = mComponentManager->GetComponent<TextureData>();
-}
-void GameObject::InitToParticleMesh()
-{
-	layerTag = "Object3D";
-	mType = GameObjectType::ParticleMesh;
-
-	mComponentManager->AddComponent<ParticleMeshInfo>();
-	mComponentManager->AddComponent<Transform>();
-	mComponentManager->AddComponent<TextureData>();
-
-	mTransform = mComponentManager->GetComponent<Transform>();
-	mTextureData = mComponentManager->GetComponent<TextureData>();
-}
-void GameObject::InitToSprite()
-{
-	layerTag = "BackSprite";
-	mType = GameObjectType::Sprite;
-
-	mComponentManager->AddComponent<SpriteInfo>();
-	mComponentManager->AddComponent<Transform>();
-	mComponentManager->AddComponent<TextureData>();
-	mComponentManager->AddComponent<ScriptsComponent>();
-
-	mTransform = mComponentManager->GetComponent<Transform>();
-	mTextureData = mComponentManager->GetComponent<TextureData>();
-}
-void GameObject::InitToCamera()
-{
-	mType = GameObjectType::Camera;
-
-	mComponentManager->AddComponent<CameraInfo>();
-	mComponentManager->AddComponent<Transform>();
-
-	mTransform = mComponentManager->GetComponent<Transform>();
-}
-
 void GameObject::BaseUpdate()
 {
 	if (mTransform)
