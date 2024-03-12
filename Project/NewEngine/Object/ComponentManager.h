@@ -10,7 +10,7 @@
 #include "EmptyObjectInfo.h"
 #include "Transform.h"
 #include "ModelData.h"
-#include "TextureData.h"
+#include "TextureComponent.h"
 #include "ScriptsComponent.h"
 #include "MaterialComponent.h"
 

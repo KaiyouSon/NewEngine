@@ -7,7 +7,7 @@
 #include <memory>
 
 class GraphicsPipeline;
-class TextureData;
+class TextureComponent;
 
 // マテリアルのクラス（後SRV,UAVもまとめるようにする）
 class Material
@@ -38,8 +38,9 @@ public:
 	Material();
 	Material(const std::string& name);
 	void Create();
-	void DrawCommands(TextureData* textureData, const BlendMode blendMode = BlendMode::Alpha);
-
+	void DrawCommands(TextureComponent* textureData, const BlendMode blendMode = BlendMode::Alpha);
+	void DrawCommands(std::vector<ITexture*> textures, const BlendMode blendMode = BlendMode::Alpha);
+	
 	void Copy(const Material& material);
 
 public:

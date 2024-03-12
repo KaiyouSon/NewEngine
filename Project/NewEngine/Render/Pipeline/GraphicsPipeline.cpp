@@ -206,11 +206,12 @@ void GraphicsPipeline::CreatePipelineState(const GraphicsPipelineSetting::Render
 	FillSetting(pipelineDesc);
 
 	// 深度ステンシル設定
-	pipelineDesc.DepthStencilState = mSetting.depthStencilDesc;
-	if (mSetting.depthStencilDesc.DepthEnable == (BOOL)true)
-	{
-		pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
-	}
+	DephtStencilSetting(pipelineDesc);
+	//pipelineDesc.DepthStencilState = mSetting.depthStencilDesc;
+	//if (mSetting.depthStencilDesc.DepthEnable == (BOOL)true)
+	//{
+	//	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+	//}
 
 	// レンダーターゲットブレンド設定
 	RenderTargetBlendSetting(pipelineDesc);
@@ -308,6 +309,30 @@ void GraphicsPipeline::FillSetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineD
 		break;
 	}
 	pipelineDesc.RasterizerState.DepthClipEnable = true;
+}
+void GraphicsPipeline::DephtStencilSetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc)
+{
+	auto dsSetting = mSetting.depthStensilSetting;
+
+	// descの設定
+	D3D12_DEPTH_STENCIL_DESC dsDesc = D3D12_DEPTH_STENCIL_DESC();
+	dsDesc.DepthEnable = dsSetting.isDepthEnable;
+	dsDesc.DepthWriteMask = (D3D12_DEPTH_WRITE_MASK)dsSetting.depthWriteMask;
+	dsDesc.DepthFunc = (D3D12_COMPARISON_FUNC)dsSetting.depthComparisonFunc;
+	pipelineDesc.DepthStencilState = dsDesc;
+
+	// フォーマットの指定
+	if (dsSetting.isDepthEnable)
+	{
+		DXGI_FORMAT dxFormat = DXGI_FORMAT_UNKNOWN;
+		switch (dsSetting.dsvFormat)
+		{
+		case DepthStensilSetting::DSVFormat::D32Float:
+			dxFormat = DXGI_FORMAT_D32_FLOAT;
+			break;
+		}
+		pipelineDesc.DSVFormat = dxFormat;
+	}
 }
 void GraphicsPipeline::InputLayoutSetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc)
 {

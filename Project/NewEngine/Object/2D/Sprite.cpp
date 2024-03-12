@@ -8,8 +8,7 @@ using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
 Sprite::Sprite() :
-	mVertexBuffer(std::make_unique<VertexBuffer<VSprite>>()),
-	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Sprite"))
+	mVertexBuffer(std::make_unique<VertexBuffer<VSprite>>())
 {
 	InitComponents();
 
@@ -23,10 +22,8 @@ Sprite::Sprite() :
 	// マテリアルの初期化
 	MaterialInit();
 }
-
 Sprite::Sprite(const std::string& name) :
-	mVertexBuffer(std::make_unique<VertexBuffer<VSprite>>()),
-	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Sprite"))
+	mVertexBuffer(std::make_unique<VertexBuffer<VSprite>>())
 {
 	this->name = name;
 
@@ -170,7 +167,7 @@ void Sprite::TransferUVCoord(const Vec2 leftTopPos, const Vec2 rightDownPos)
 {
 	enum class Point { LD, LU, RD, RU };
 
-	ITexture* tex = mTextureData->GetTexture();
+	ITexture* tex = mTextureComponent->GetTexture();
 
 	// 四辺
 	float left = leftTopPos.x / tex->GetInitalSize().x;
@@ -192,13 +189,13 @@ void Sprite::InitComponents()
 
 	mComponentManager->AddComponent<SpriteInfo>();
 	mComponentManager->AddComponent<Transform>();
-	mComponentManager->AddComponent<TextureData>();
+	mComponentManager->AddComponent<TextureComponent>();
 	mComponentManager->AddComponent<MaterialComponent>();
 	mComponentManager->AddComponent<ScriptsComponent>();
 
 	mInfo = mComponentManager->GetComponent<SpriteInfo>();
 	mTransform = mComponentManager->GetComponent<Transform>();
-	mTextureData = mComponentManager->GetComponent<TextureData>();
+	mTextureComponent = mComponentManager->GetComponent<TextureComponent>();
 	mMaterialComponent = mComponentManager->GetComponent<MaterialComponent>();
 
 	mMaterialComponent->SetMaterial("BasicSprite");
@@ -208,34 +205,19 @@ void Sprite::InitComponents()
 // --- 描画コマンド ----------------------------------------------------- //
 void Sprite::DrawCommands()
 {
-	ITexture* tex = mTextureData->GetCurrentTexture();
+	ITexture* tex = mTextureComponent->GetTexture();
 	if (tex == nullptr)
 	{
 		return;
 	}
 
-
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
 	// マテリアルの描画コマンド
-	mMaterial->DrawCommands(mTextureData);
-
-	// 後消す
-	{
-		uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
-		uint32_t endIndex = mGraphicsPipeline->GetRootSignature()->GetUAVStartIndex();
-
-		for (uint32_t i = startIndex; i < endIndex; i++)
-		{
-			// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-			renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-				startIndex, tex->GetBufferResource()->srvHandle.gpu);
-		}
-	}
+	mMaterial->DrawCommands(mTextureComponent);
 
 	// VBVとIBVの設定コマンド
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mVertexBuffer->GetvbViewAddress());
-
 	renderBase->GetCommandList()->DrawInstanced((uint16_t)mVertices.size(), 1, 0, 0);
 }
 
@@ -249,7 +231,7 @@ void Sprite::SetTexture(Texture* texture, const bool isChangeSize)
 		return;
 	}
 
-	mTextureData->SetCurrentTexture(texture);
+	mTextureComponent->SetTexture(texture);
 	if (isChangeSize)
 	{
 		SetSize(Vec2(tex->GetInitalSize().x, tex->GetInitalSize().y));
@@ -266,7 +248,7 @@ void Sprite::SetTexture(const std::string& textureTag, [[maybe_unused]] const bo
 		return;
 	}
 
-	mTextureData->SetCurrentTexture(textureTag);
+	mTextureComponent->SetTexture(textureTag);
 	if (isChangeSize)
 	{
 		SetSize(Vec2(tex->GetInitalSize().x, tex->GetInitalSize().y));
@@ -310,5 +292,6 @@ void Sprite::SetFlipType(const FlipType flipType)
 // グラフィックスパイプライン
 void Sprite::SetGraphicsPipeline(GraphicsPipeline* graphicsPipeline)
 {
-	mGraphicsPipeline = graphicsPipeline;
+	graphicsPipeline;
+	//mGraphicsPipeline = graphicsPipeline;
 }

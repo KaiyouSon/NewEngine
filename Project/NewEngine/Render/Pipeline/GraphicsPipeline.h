@@ -21,6 +21,7 @@ private:
 	void ShaderSetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc);
 	void CullSetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc);
 	void FillSetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc);
+	void DephtStencilSetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc);
 	void InputLayoutSetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc);
 	void RenderTargetBlendSetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc);
 	void PrimitiveTopologySetting(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc);

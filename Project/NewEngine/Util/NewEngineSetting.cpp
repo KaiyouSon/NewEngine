@@ -73,3 +73,8 @@ RenderTextureSetting::RenderTextureSetting(Vec2 texSize, Vec2 depthSize, uint32_
 	texSize(texSize), depthSize(depthSize), rtvNum(rtvNum), isUseDepthTexture(isUseDepthTexture)
 {
 }
+
+DepthStensilSetting::DepthStensilSetting() :
+	isDepthEnable(true), depthWriteMask(All), depthComparisonFunc(Less), dsvFormat(D32Float)
+{
+}

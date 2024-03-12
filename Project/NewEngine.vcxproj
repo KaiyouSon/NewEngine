@@ -157,7 +157,7 @@
     <ClCompile Include="NewEngine\Component\GameObjectInfo\SpotLightInfo.cpp" />
     <ClCompile Include="NewEngine\Component\GameObjectInfo\SpriteInfo.cpp" />
     <ClCompile Include="NewEngine\Component\ScriptsComponent.cpp" />
-    <ClCompile Include="NewEngine\Component\TextureData.cpp" />
+    <ClCompile Include="NewEngine\Component\TextureComponent.cpp" />
     <ClCompile Include="NewEngine\Debugger\ConsoleWindow.cpp" />
     <ClCompile Include="NewEngine\Debugger\HierarchyWindow.cpp" />
     <ClCompile Include="NewEngine\Debugger\IGuiWindow.cpp" />
@@ -386,7 +386,7 @@
     <ClInclude Include="NewEngine\Component\GameObjectInfo\SpotLightInfo.h" />
     <ClInclude Include="NewEngine\Component\GameObjectInfo\SpriteInfo.h" />
     <ClInclude Include="NewEngine\Component\ScriptsComponent.h" />
-    <ClInclude Include="NewEngine\Component\TextureData.h" />
+    <ClInclude Include="NewEngine\Component\TextureComponent.h" />
     <ClInclude Include="NewEngine\Debugger\ConsoleWindow.h" />
     <ClInclude Include="NewEngine\Debugger\HierarchyWindow.h" />
     <ClInclude Include="NewEngine\Debugger\IGuiWindow.h" />

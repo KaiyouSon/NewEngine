@@ -164,22 +164,25 @@
                         }
                     },
                     {
-                        "texture_data": {
+                        "texture_component": {
                             "component_info": {
                                 "index": 2,
-                                "type": 3
+                                "type": 10
                             },
-                            "current_texture": {
-                                "index": 0
-                            },
-                            "textures": [
-                                {
-                                    "texture_tag": "PressButton",
-                                    "texture_type": 0
-                                }
-                            ]
+                            "texture_tag": "PressButton",
+                            "texture_type": 0
                         }
-                    }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 15
+                            },
+                            "material_name": "BasicSprite"
+                        }
+                    },
+                    null
                 ],
                 "name": "Button",
                 "type": 1
@@ -247,22 +250,25 @@
                         }
                     },
                     {
-                        "texture_data": {
+                        "texture_component": {
                             "component_info": {
                                 "index": 2,
-                                "type": 4
+                                "type": 10
                             },
-                            "current_texture": {
-                                "index": 0
-                            },
-                            "textures": [
-                                {
-                                    "texture_tag": "PressButtonBack",
-                                    "texture_type": 0
-                                }
-                            ]
+                            "texture_tag": "PressButtonBack",
+                            "texture_type": 0
                         }
-                    }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 15
+                            },
+                            "material_name": "BasicSprite"
+                        }
+                    },
+                    null
                 ],
                 "name": "Back",
                 "type": 1
@@ -330,22 +336,25 @@
                         }
                     },
                     {
-                        "texture_data": {
+                        "texture_component": {
                             "component_info": {
                                 "index": 2,
-                                "type": 4
+                                "type": 10
                             },
-                            "current_texture": {
-                                "index": 0
-                            },
-                            "textures": [
-                                {
-                                    "texture_tag": "GameTitle",
-                                    "texture_type": 0
-                                }
-                            ]
+                            "texture_tag": "GameTitle",
+                            "texture_type": 0
                         }
-                    }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 15
+                            },
+                            "material_name": "BasicSprite"
+                        }
+                    },
+                    null
                 ],
                 "name": "TitleString",
                 "type": 1
@@ -413,22 +422,25 @@
                         }
                     },
                     {
-                        "texture_data": {
+                        "texture_component": {
                             "component_info": {
                                 "index": 2,
-                                "type": 4
+                                "type": 10
                             },
-                            "current_texture": {
-                                "index": 0
-                            },
-                            "textures": [
-                                {
-                                    "texture_tag": "PressButtonBack",
-                                    "texture_type": 0
-                                }
-                            ]
+                            "texture_tag": "PressButtonBack",
+                            "texture_type": 0
                         }
-                    }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 15
+                            },
+                            "material_name": "BasicSprite"
+                        }
+                    },
+                    null
                 ],
                 "name": "Back2",
                 "type": 1
@@ -483,20 +495,13 @@
                         }
                     },
                     {
-                        "texture_data": {
+                        "texture_component": {
                             "component_info": {
                                 "index": 2,
-                                "type": 5
+                                "type": 10
                             },
-                            "current_texture": {
-                                "index": 0
-                            },
-                            "textures": [
-                                {
-                                    "texture_tag": "TitleLogo",
-                                    "texture_type": 0
-                                }
-                            ]
+                            "texture_tag": "TitleLogo",
+                            "texture_type": 0
                         }
                     }
                 ],
@@ -566,22 +571,25 @@
                         }
                     },
                     {
-                        "texture_data": {
+                        "texture_component": {
                             "component_info": {
                                 "index": 2,
                                 "type": 10
                             },
-                            "current_texture": {
-                                "index": 0
-                            },
-                            "textures": [
-                                {
-                                    "texture_tag": "PressButton",
-                                    "texture_type": 0
-                                }
-                            ]
+                            "texture_tag": "White",
+                            "texture_type": 0
                         }
-                    }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 15
+                            },
+                            "material_name": "BasicSprite"
+                        }
+                    },
+                    null
                 ],
                 "name": "AfterImage",
                 "type": 1

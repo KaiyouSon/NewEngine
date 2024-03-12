@@ -29,7 +29,7 @@ enum class ComponentType
 	EmptyObjectInfo,
 
 	Transform,
-	TextureData,
+	TextureComponent,
 	ModelData,
 	PipelineData,
 	ParticleData,

@@ -1,7 +1,7 @@
 #include "Material.h"
 #include "RenderBase.h"
 #include "ShaderManager.h"
-#include "TextureData.h"
+#include "TextureComponent.h"
 
 Material::Material()
 {
@@ -36,7 +36,39 @@ void Material::Create()
 	mGraphicsPipeline->Create(*this);
 }
 
-void Material::DrawCommands(TextureData* textureData, const BlendMode blendMode)
+void Material::DrawCommands(TextureComponent* textureData, const BlendMode blendMode)
+{
+	RenderBase* renderBase = RenderBase::GetInstance();
+
+	// GraphicsPipeline描画コマンド
+	mGraphicsPipeline->DrawCommand(blendMode);
+
+	// CBVの描画コマンド
+	const uint32_t cbvStartIndex = 0;
+	const uint32_t cbvEndIndex = mRSSetting.maxCbvRootParameter;
+	for (uint32_t i = cbvStartIndex; i < cbvEndIndex; i++)
+	{
+		if (!constantBuffers[i])
+		{
+			continue;
+		}
+
+		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
+			i, constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
+	}
+
+	// SRVの描画コマンド
+	const uint32_t srvStartIndex = cbvEndIndex;
+	const uint32_t srvEndIndex = mRSSetting.maxCbvRootParameter + mRSSetting.maxSrvDescritorRange;
+	for (uint32_t i = srvStartIndex; i < srvEndIndex; i++)
+	{
+		// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
+		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+			i, textureData->GetTexture()->GetBufferResource()->srvHandle.gpu);
+	}
+}
+
+void Material::DrawCommands(std::vector<ITexture*> textures, const BlendMode blendMode)
 {
 	RenderBase* renderBase = RenderBase::GetInstance();
 
@@ -64,9 +96,8 @@ void Material::DrawCommands(TextureData* textureData, const BlendMode blendMode)
 	{
 		// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
 		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			i, textureData->GetTexture(texIndex)->GetBufferResource()->srvHandle.gpu);
+			i, textures[texIndex]->GetBufferResource()->srvHandle.gpu);
 	}
-
 }
 
 void Material::Copy(const Material& material)
@@ -144,6 +175,14 @@ void Material::LoadToJson(const std::string& path)
 	{
 		shaderTag = gpSettingField["il"];
 		mGPSetting.inputLayout = ShaderManager::GetInputLayout(shaderTag);
+	}
+
+	if (gpSettingField.contains("ds_setting"))
+	{
+		mGPSetting.depthStensilSetting.isDepthEnable = gpSettingField["ds_setting"]["is_depth_enable"];
+		mGPSetting.depthStensilSetting.depthWriteMask = gpSettingField["ds_setting"]["depth_write_mask"];
+		mGPSetting.depthStensilSetting.depthComparisonFunc = gpSettingField["ds_setting"]["depth_comparison_func"];
+		mGPSetting.depthStensilSetting.dsvFormat = gpSettingField["ds_setting"]["dsv_format"];
 	}
 
 	// ルートシグネーチャ設定の読み込み

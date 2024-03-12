@@ -164,20 +164,13 @@
                         }
                     },
                     {
-                        "texture_data": {
+                        "texture_component": {
                             "component_info": {
                                 "index": 2,
-                                "type": 4
+                                "type": 10
                             },
-                            "current_texture": {
-                                "index": 0
-                            },
-                            "textures": [
-                                {
-                                    "texture_tag": "OperationBack",
-                                    "texture_type": 0
-                                }
-                            ]
+                            "texture_tag": "OperationBack",
+                            "texture_type": 0
                         }
                     },
                     {
@@ -257,20 +250,13 @@
                         }
                     },
                     {
-                        "texture_data": {
+                        "texture_component": {
                             "component_info": {
                                 "index": 2,
-                                "type": 4
+                                "type": 10
                             },
-                            "current_texture": {
-                                "index": 0
-                            },
-                            "textures": [
-                                {
-                                    "texture_tag": "OperationBack",
-                                    "texture_type": 0
-                                }
-                            ]
+                            "texture_tag": "OperationBack",
+                            "texture_type": 0
                         }
                     },
                     {
@@ -350,20 +336,13 @@
                         }
                     },
                     {
-                        "texture_data": {
+                        "texture_component": {
                             "component_info": {
                                 "index": 2,
-                                "type": 4
+                                "type": 10
                             },
-                            "current_texture": {
-                                "index": 0
-                            },
-                            "textures": [
-                                {
-                                    "texture_tag": "OperationBack",
-                                    "texture_type": 0
-                                }
-                            ]
+                            "texture_tag": "OperationBack",
+                            "texture_type": 0
                         }
                     },
                     {
@@ -443,20 +422,13 @@
                         }
                     },
                     {
-                        "texture_data": {
+                        "texture_component": {
                             "component_info": {
                                 "index": 2,
-                                "type": 4
+                                "type": 10
                             },
-                            "current_texture": {
-                                "index": 0
-                            },
-                            "textures": [
-                                {
-                                    "texture_tag": "OperationBack",
-                                    "texture_type": 0
-                                }
-                            ]
+                            "texture_tag": "OperationBack",
+                            "texture_type": 0
                         }
                     },
                     {
@@ -536,20 +508,13 @@
                         }
                     },
                     {
-                        "texture_data": {
+                        "texture_component": {
                             "component_info": {
                                 "index": 2,
-                                "type": 4
+                                "type": 10
                             },
-                            "current_texture": {
-                                "index": 0
-                            },
-                            "textures": [
-                                {
-                                    "texture_tag": "OperationBack",
-                                    "texture_type": 0
-                                }
-                            ]
+                            "texture_tag": "OperationBack",
+                            "texture_type": 0
                         }
                     },
                     {
@@ -629,20 +594,13 @@
                         }
                     },
                     {
-                        "texture_data": {
+                        "texture_component": {
                             "component_info": {
                                 "index": 2,
-                                "type": 4
+                                "type": 10
                             },
-                            "current_texture": {
-                                "index": 0
-                            },
-                            "textures": [
-                                {
-                                    "texture_tag": "Operation1Text",
-                                    "texture_type": 0
-                                }
-                            ]
+                            "texture_tag": "Operation1Text",
+                            "texture_type": 0
                         }
                     },
                     {
@@ -719,20 +677,13 @@
                         }
                     },
                     {
-                        "texture_data": {
+                        "texture_component": {
                             "component_info": {
                                 "index": 3,
-                                "type": 6
+                                "type": 10
                             },
-                            "current_texture": {
-                                "index": 0
-                            },
-                            "textures": [
-                                {
-                                    "texture_tag": "White",
-                                    "texture_type": 0
-                                }
-                            ]
+                            "texture_tag": "SkyIsland1",
+                            "texture_type": 0
                         }
                     }
                 ],
@@ -799,20 +750,13 @@
                         }
                     },
                     {
-                        "texture_data": {
+                        "texture_component": {
                             "component_info": {
                                 "index": 3,
-                                "type": 9
+                                "type": 10
                             },
-                            "current_texture": {
-                                "index": 0
-                            },
-                            "textures": [
-                                {
-                                    "texture_tag": "White",
-                                    "texture_type": 0
-                                }
-                            ]
+                            "texture_tag": "Skydome",
+                            "texture_type": 0
                         }
                     }
                 ],

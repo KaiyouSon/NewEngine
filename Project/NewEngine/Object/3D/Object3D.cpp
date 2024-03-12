@@ -16,8 +16,7 @@ Object3D::Object3D() :
 	mTexture(TextureManager::GetTexture("White")),
 	mDissolveTex(TextureManager::GetTexture("DissolveTexture")),
 	mDepthTex(TextureManager::GetRenderTexture("ShadowMap")->GetDepthTexture()),
-	isLighting(false), mIsWriteShadow(false), mIsWriteDepth(false),
-	mMaterial(std::make_unique<Material>()), mCamera(&Camera::current),
+	isLighting(false), mIsWriteShadow(false), mIsWriteDepth(false), mCamera(&Camera::current),
 	isUseDissolve(false), dissolve(0.f), colorPower(1), dissolveColor(Color::red)
 {
 	InitComponents();
@@ -34,14 +33,12 @@ Object3D::Object3D() :
 
 	mModelData = mComponentManager->GetComponent<ModelData>();
 }
-
 Object3D::Object3D(const std::string& name) :
 	mGraphicsPipeline(PipelineManager::GetGraphicsPipeline("Object3DSMOff")),
 	mTexture(TextureManager::GetTexture("White")),
 	mDissolveTex(TextureManager::GetTexture("DissolveTexture")),
 	mDepthTex(TextureManager::GetRenderTexture("ShadowMap")->GetDepthTexture()),
-	isLighting(false), mIsWriteShadow(false), mIsWriteDepth(false),
-	mMaterial(std::make_unique<Material>()), mCamera(&Camera::current),
+	isLighting(false), mIsWriteShadow(false), mIsWriteDepth(false), mCamera(&Camera::current),
 	isUseDissolve(false), dissolve(0.f), colorPower(1), dissolveColor(Color::red)
 {
 	this->name = name;
@@ -137,38 +134,26 @@ void Object3D::Copy(GameObject* gameObj)
 // --- マテリアル関連 --------------------------------------------------- //
 void Object3D::MaterialInit()
 {
-	// インスタンス生成
-	std::unique_ptr<IConstantBuffer> iConstantBuffer;
-
-	// 3D行列
-	iConstantBuffer = std::make_unique<ConstantBuffer<CTransform3DShadow>>();
-	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
-
-	// マテリアルカラー
-	iConstantBuffer = std::make_unique<ConstantBuffer<CMaterialColor>>();
-	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
-
-	// 色
-	iConstantBuffer = std::make_unique<ConstantBuffer<CColor>>();
-	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
-
-	// スキニング
-	iConstantBuffer = std::make_unique<ConstantBuffer<CSkin>>();
-	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
-
-	// UV情報
-	iConstantBuffer = std::make_unique<ConstantBuffer<CUVParameter>>();
-	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
-
-	// ディゾルブ
-	iConstantBuffer = std::make_unique<ConstantBuffer<CDissolve>>();
-	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
-
-	// 影
-	iConstantBuffer = std::make_unique<ConstantBuffer<CShadowMap>>();
-	mMaterial->constantBuffers.push_back(std::move(iConstantBuffer));
-
-	// 初期化
+	if (mMaterial->constantBuffers.empty())
+	{
+		mMaterial->AddConstantBuffer<CTransform3DShadow>();
+		mMaterial->AddConstantBuffer<CMaterialColor>();
+		mMaterial->AddConstantBuffer<CColor>();
+		mMaterial->AddConstantBuffer<CSkin>();
+		mMaterial->AddConstantBuffer<CUVParameter>();
+		mMaterial->AddConstantBuffer<CDissolve>();
+		mMaterial->AddConstantBuffer<CShadowMap>();
+	}
+	else
+	{
+		mMaterial->SetConstantBuffer<CTransform3DShadow>(0);
+		mMaterial->SetConstantBuffer<CMaterialColor>(1);
+		mMaterial->SetConstantBuffer<CColor>(2);
+		mMaterial->SetConstantBuffer<CSkin>(3);
+		mMaterial->SetConstantBuffer<CUVParameter>(4);
+		mMaterial->SetConstantBuffer<CDissolve>(5);
+		mMaterial->SetConstantBuffer<CShadowMap>(6);
+	}
 	mMaterial->Init();
 }
 void Object3D::MaterialTransfer()
@@ -187,7 +172,6 @@ void Object3D::MaterialTransfer()
 		mCamera->pos,
 		lightViewCamera.pos
 	};
-	TransferDataToConstantBuffer(mMaterial->constantBuffers[0].get(), transform3DShadowData);
 
 	if (!mModelData->GetModel())
 	{
@@ -213,48 +197,41 @@ void Object3D::MaterialTransfer()
 	{
 		materialColorData = { Color::one, Color::zero, Color::zero };
 	}
-	TransferDataToConstantBuffer(mMaterial->constantBuffers[1].get(), materialColorData);
 
 	// 色データ
 	CColor colorData = { color / 255 };
-	TransferDataToConstantBuffer(mMaterial->constantBuffers[2].get(), colorData);
 
 	// スキン情報
+	CSkin skinData{};
 	if (mModelData->GetModel()->format == ModelFormat::Fbx)
 	{
 		auto fbxModel = static_cast<FbxModel*>(mModelData->GetModel());
 		fbxModel->PlayAnimetion();
 
-		CSkin skinData{};
 		for (uint32_t i = 0; i < fbxModel->bones.size(); i++)
 		{
 			skinData.bones[i] = fbxModel->bones[i].currentMat;
 		}
-		TransferDataToConstantBuffer(mMaterial->constantBuffers[3].get(), skinData);
 	}
 
 	// UVデータ
 	CUVParameter uvData = { offset,tiling };
-	TransferDataToConstantBuffer(mMaterial->constantBuffers[4].get(), uvData);
 
 	// ディゾルブ
 	CDissolve dissolveData = { dissolve,colorPower,Vec2(0,0), dissolveColor.To01() };
-	TransferDataToConstantBuffer(mMaterial->constantBuffers[5].get(), dissolveData);
 
 	// シャドウマップ
 	CShadowMap shadowMapData = { mIsWriteShadow, sShadowBias };
-	TransferDataToConstantBuffer(mMaterial->constantBuffers[6].get(), shadowMapData);
-}
-void Object3D::MaterialDrawCommands()
-{
-	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// CBVの設定コマンド
-	for (uint32_t i = 0; i < mMaterial->constantBuffers.size(); i++)
-	{
-		renderBase->GetCommandList()->SetGraphicsRootConstantBufferView(
-			i, mMaterial->constantBuffers[i]->bufferResource->buffer->GetGPUVirtualAddress());
-	}
+	// 転送
+	mMaterial->TransferDataToConstantBuffer(0, transform3DShadowData);
+	mMaterial->TransferDataToConstantBuffer(1, materialColorData);
+	mMaterial->TransferDataToConstantBuffer(2, colorData);
+	mMaterial->TransferDataToConstantBuffer(3, skinData);
+	mMaterial->TransferDataToConstantBuffer(4, uvData);
+	mMaterial->TransferDataToConstantBuffer(5, dissolveData);
+	mMaterial->TransferDataToConstantBuffer(6, shadowMapData);
+
 }
 
 void Object3D::InitComponents()
@@ -265,10 +242,20 @@ void Object3D::InitComponents()
 	mComponentManager->AddComponent<Object3DInfo>();
 	mComponentManager->AddComponent<Transform>();
 	mComponentManager->AddComponent<ModelData>();
-	mComponentManager->AddComponent<TextureData>();
+	mComponentManager->AddComponent<TextureComponent>();
+	mComponentManager->AddComponent<MaterialComponent>();
 
 	mTransform = mComponentManager->GetComponent<Transform>();
-	mTextureData = mComponentManager->GetComponent<TextureData>();
+	mTextureComponent = mComponentManager->GetComponent<TextureComponent>();
+	mMaterialComponent = mComponentManager->GetComponent<MaterialComponent>();
+
+	mMaterialComponent->SetMaterial("BasicObject3D");
+	mMaterial = mMaterialComponent->GetMaterial();
+
+	mTextures.resize(3);
+	mTextures[0] = mTextureComponent->GetTexture();
+	mTextures[1] = mDissolveTex;
+	mTextures[2] = mDepthTex;
 }
 
 // --- 描画コマンド ----------------------------------------------------- //
@@ -278,39 +265,36 @@ void Object3D::DrawCommands()
 
 	RenderBase* renderBase = RenderBase::GetInstance();// .get();
 
-	// GraphicsPipeline描画コマンド
-	mGraphicsPipeline->DrawCommand(blendMode);
+	mTextures[0] = mTextureComponent->GetTexture();
+	mMaterial->DrawCommands(mTextures, blendMode);
 
 	// VBVとIBVの設定コマンド
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mModelData->GetModel()->mesh.vertexBuffer.GetvbViewAddress());
 	renderBase->GetCommandList()->IASetIndexBuffer(mModelData->GetModel()->mesh.indexBuffer.GetibViewAddress());
 
-	MaterialDrawCommands();
+	LightManager::GetInstance()->DrawCommands(7);
+	//GraphicsManager::DrawCommands(GraphicsType::DistanceFog, end + 1);
 
-	uint32_t end = (uint32_t)mMaterial->constantBuffers.size();
-	LightManager::GetInstance()->DrawCommands(end);
-	GraphicsManager::DrawCommands(GraphicsType::DistanceFog, end + 1);
+	//// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
+	//uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
+	//renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTextureComponent->GetTexture()->GetBufferResource()->srvHandle.gpu);
 
-	// SRVヒープの先頭にあるSRVをルートパラメータ2番に設定
-	uint32_t startIndex = mGraphicsPipeline->GetRootSignature()->GetSRVStartIndex();
-	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(startIndex, mTextureData->GetCurrentTexture()->GetBufferResource()->srvHandle.gpu);
+	//if (isUseDissolve == true)
+	//{
+	//	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+	//		(uint32_t)startIndex + 1, mDissolveTex->GetBufferResource()->srvHandle.gpu);
+	//}
+	//else
+	//{
+	//	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+	//		(uint32_t)startIndex + 1, mWhiteTex->GetBufferResource()->srvHandle.gpu);
+	//}
 
-	if (isUseDissolve == true)
-	{
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			(uint32_t)startIndex + 1, mDissolveTex->GetBufferResource()->srvHandle.gpu);
-	}
-	else
-	{
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			(uint32_t)startIndex + 1, mWhiteTex->GetBufferResource()->srvHandle.gpu);
-	}
-
-	if (mIsWriteShadow == true)
-	{
-		renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
-			(uint32_t)startIndex + 2, mDepthTex->GetBufferResource()->srvHandle.gpu);
-	}
+	//if (mIsWriteShadow == true)
+	//{
+	//	renderBase->GetCommandList()->SetGraphicsRootDescriptorTable(
+	//		(uint32_t)startIndex + 2, mDepthTex->GetBufferResource()->srvHandle.gpu);
+	//}
 
 	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModelData->GetModel()->mesh.indices.size(), 1, 0, 0, 0);
 }
@@ -321,7 +305,7 @@ void Object3D::DrawCommands()
 void Object3D::SetModel(Model* model)
 {
 	mModelData->SetModel(model->tag);
-	mTextureData->SetCurrentTexture(mModelData->GetModel()->texture);
+	mTextureComponent->SetTexture(mModelData->GetModel()->texture);
 
 	// パイプライン変更
 	if (mModelData->GetModel()->format == ModelFormat::Obj)
@@ -344,7 +328,7 @@ void Object3D::SetModel(Model* model)
 void Object3D::SetModel(const std::string& tag)
 {
 	mModelData->SetModel(tag);
-	mTextureData->SetCurrentTexture(mModelData->GetModel()->texture);
+	mTextureComponent->SetTexture(mModelData->GetModel()->texture);
 
 	// パイプライン変更
 	if (mModelData->GetModel()->format == ModelFormat::Obj)
@@ -365,7 +349,7 @@ void Object3D::SetModel(const std::string& tag)
 }
 
 // テクスチャー
-void Object3D::SetTexture(Texture* texture) { mTextureData->SetCurrentTexture(texture->GetTag()); }
+void Object3D::SetTexture(Texture* texture) { mTextureComponent->SetTexture(texture->GetTag()); }
 
 // テクスチャー
 void Object3D::SetTexture(const std::string& textureTag, [[maybe_unused]] const bool isChangeSize)
@@ -376,7 +360,7 @@ void Object3D::SetTexture(const std::string& textureTag, [[maybe_unused]] const 
 		return;
 	}
 
-	mTextureData->SetCurrentTexture(textureTag);
+	mTextureComponent->SetTexture(textureTag);
 }
 
 // グラフィックスパイプライン

@@ -7,7 +7,6 @@
 using namespace VertexBufferData;
 using namespace ConstantBufferData;
 
-
 void ParticleMesh::Update()
 {
 	if (!isActive)
@@ -16,6 +15,11 @@ void ParticleMesh::Update()
 	}
 
 	BaseUpdate();
+
+	if (mTextureComponent->GetTexture()->GetTag() != "White")
+	{
+		mMeshTexture = mTextureComponent->GetTexture();
+	}
 
 	// マテリアルの転送
 	MaterialTransfer();
@@ -98,16 +102,14 @@ void ParticleMesh::Draw(const std::string& _layerTag, const BlendMode _blendMode
 
 void ParticleMesh::SetTexture(const std::string& textureTag, [[maybe_unused]] const bool isChangeSize)
 {
-	textureTag;
-
 	ITexture* tex = gAssetsManager->GetTexture(textureTag);
 	if (!tex)
 	{
 		return;
 	}
 
-	mTextureData->SetCurrentTexture(textureTag);
-	mMeshTexture = mTextureData->GetCurrentTexture();
+	mTextureComponent->SetTexture(textureTag);
+	mMeshTexture = mTextureComponent->GetTexture();
 }
 
 
@@ -156,10 +158,10 @@ void ParticleMesh::InitComponents()
 
 	mComponentManager->AddComponent<ParticleMeshInfo>();
 	mComponentManager->AddComponent<Transform>();
-	mComponentManager->AddComponent<TextureData>();
+	mComponentManager->AddComponent<TextureComponent>();
 
 	mTransform = mComponentManager->GetComponent<Transform>();
-	mTextureData = mComponentManager->GetComponent<TextureData>();
+	mTextureComponent = mComponentManager->GetComponent<TextureComponent>();
 }
 
 void ParticleMesh::DrawCommands()

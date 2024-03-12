@@ -9,7 +9,13 @@
         "ps": "Sprite",
         "vs": "Sprite",
         "il": "Sprite",
-        "tag": "Sprite"
+        "tag": "Sprite",
+        "ds_setting" : {
+            "is_depth_enable" : false,
+            "depth_write_mask" : 1,
+            "depth_comparison_func" : 2,
+            "dsv_format" : 0
+        }
     },
     "rs_setting" : {
         "max_cbv" : 2,

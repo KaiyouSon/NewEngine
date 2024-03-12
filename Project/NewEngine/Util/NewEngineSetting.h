@@ -66,6 +66,40 @@ struct RootSignatureSetting
 		const uint32_t maxUavDescritorRange);
 };
 
+// 深度の設定
+struct DepthStensilSetting
+{
+	enum DepthWriteMask
+	{
+		Zero,
+		All,
+	};
+
+	enum DepthComparisonFunc
+	{
+		Never = 1,
+		Less,
+		Equal,
+		LessEqual,
+		Greater,
+		NotEqual,
+		GreaterEqual,
+		Always
+	};
+
+	enum DSVFormat
+	{
+		D32Float
+	};
+
+	bool isDepthEnable;
+	DepthWriteMask depthWriteMask;
+	DepthComparisonFunc depthComparisonFunc;
+	DSVFormat dsvFormat;
+
+	DepthStensilSetting();
+};
+
 // グラフィックスパイプラインの設定構造体
 struct GraphicsPipelineSetting
 {
@@ -114,6 +148,7 @@ struct GraphicsPipelineSetting
 
 	// 深度
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc;
+	DepthStensilSetting depthStensilSetting;
 
 	// RTV数
 	uint32_t rtvNum;

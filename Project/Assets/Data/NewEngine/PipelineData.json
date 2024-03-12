@@ -109,7 +109,7 @@
             "GS Tag": "ParticleMesh",
             "PS Tag": "ParticleMesh",
             "Pipeline Blend": 1,
-            "Pipeline Type": 1701734656,
+            "Pipeline Type": 0,
             "Tag": "LogoExplosionEffect",
             "Topology Type": 0,
             "VS Tag": "LogoExplosionEffect"
@@ -120,7 +120,7 @@
             "GS Tag": "ParticleObject",
             "PS Tag": "ParticleObject",
             "Pipeline Blend": 1,
-            "Pipeline Type": 761856000,
+            "Pipeline Type": 3435973836,
             "Tag": "ParticleObject",
             "Topology Type": 0,
             "VS Tag": "ParticleObject"
@@ -214,7 +214,7 @@
             "GS Tag": "ParticleMesh",
             "PS Tag": "ParticleMesh",
             "Pipeline Blend": 1,
-            "Pipeline Type": 1701734656,
+            "Pipeline Type": 0,
             "Tag": "ParticleMesh",
             "Topology Type": 0,
             "VS Tag": "ParticleMesh"
@@ -234,7 +234,7 @@
             "Fill Mode": 0,
             "PS Tag": "VolumetricFog",
             "Pipeline Blend": 1,
-            "Pipeline Type": 763354624,
+            "Pipeline Type": 1141897600,
             "Tag": "VolumetricFog",
             "Topology Type": 3,
             "VS Tag": "VolumetricFog"
@@ -419,7 +419,7 @@
             "GS Tag": "ParticleObject",
             "PS Tag": "ParticleObject",
             "Pipeline Blend": 1,
-            "Pipeline Type": 761856000,
+            "Pipeline Type": 3435973836,
             "Tag": "PonDeRing",
             "Topology Type": 0,
             "VS Tag": "PonDeRing"

@@ -20,7 +20,6 @@ private:
 	std::vector<VertexBufferData::VSprite> mVertices;
 	std::unique_ptr<VertexBuffer<VertexBufferData::VSprite>> mVertexBuffer;
 	Material* mMaterial;
-	GraphicsPipeline* mGraphicsPipeline;
 
 private:
 	// コンポーネント関連

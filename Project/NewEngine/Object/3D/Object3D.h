@@ -13,7 +13,6 @@
 class Object3D : public GameObject
 {
 private:
-	std::unique_ptr<Material> mMaterial;
 	Vec3 mWorldPos;
 	Vec3 mWorldScale;
 	//Model* mModel;
@@ -24,6 +23,9 @@ private:
 	Camera* mCamera;
 	bool mIsWriteShadow;
 	bool mIsWriteDepth;
+
+	Material* mMaterial;
+	std::vector<ITexture*> mTextures;
 
 private:
 	// コンポーネント関連
@@ -46,7 +48,6 @@ public:
 private:
 	void MaterialInit();
 	void MaterialTransfer();
-	void MaterialDrawCommands();
 
 private:
 	void InitComponents();

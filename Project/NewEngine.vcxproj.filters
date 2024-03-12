@@ -1008,7 +1008,7 @@
     <ClCompile Include="NewEngine\Object\ComponentManager.cpp">
       <Filter>Uncategorized\Source\Component</Filter>
     </ClCompile>
-    <ClCompile Include="NewEngine\Component\TextureData.cpp">
+    <ClCompile Include="NewEngine\Component\TextureComponent.cpp">
       <Filter>Uncategorized\Source\Component</Filter>
     </ClCompile>
     <ClCompile Include="NewEngine\Util\Transform.cpp">
@@ -1709,7 +1709,7 @@
     <ClInclude Include="NewEngine\Object\ComponentManager.h">
       <Filter>Uncategorized\Header\Component</Filter>
     </ClInclude>
-    <ClInclude Include="NewEngine\Component\TextureData.h">
+    <ClInclude Include="NewEngine\Component\TextureComponent.h">
       <Filter>Uncategorized\Header\Component</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Util\Transform.h">

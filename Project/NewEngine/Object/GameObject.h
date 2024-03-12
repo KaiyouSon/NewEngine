@@ -15,7 +15,7 @@ protected:
 	std::unique_ptr<ComponentManager> mComponentManager;
 
 	Transform* mTransform;
-	TextureData* mTextureData;
+	TextureComponent* mTextureComponent;
 	MaterialComponent* mMaterialComponent;
 	GraphicsPipeline* mGraphicsPipelineTest;
 
