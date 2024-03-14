@@ -52,6 +52,11 @@ ComponentManager* GameObject::GetComponentManager()
 	return mComponentManager.get();
 }
 
+ScriptsComponent* GameObject::GetScriptsComponent()
+{
+	return mScriptsComponent;
+}
+
 // セッター
 void GameObject::SetParent(Transform* parent)
 {

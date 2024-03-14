@@ -12,6 +12,19 @@ ScriptsComponent::ScriptsComponent(GameObject* gameObj) : Component(gameObj)
 	mComponentInfo.type = ComponentType::ScriptsComponent;
 }
 
+void ScriptsComponent::Init()
+{
+	for (auto& script : mScripts)
+	{
+		if (!script)
+		{
+			continue;
+		}
+
+		script->Init();
+	}
+}
+
 void ScriptsComponent::Update()
 {
 	if (!gCurrentScene->GetisActive())
@@ -32,12 +45,45 @@ void ScriptsComponent::Update()
 
 nlohmann::json ScriptsComponent::SaveToJson()
 {
-	return nlohmann::json();
+	nlohmann::json scriptsComponent;
+	scriptsComponent["scripts_component"] = mComponentInfo.SaveToJson();
+
+	nlohmann::json scriptsData = nlohmann::json::array();
+	for (auto& script : mScripts)
+	{
+		nlohmann::json scriptData;
+		if (script)
+		{
+			scriptData["script_tag"] = script->GetTag();
+		}
+		else
+		{
+			scriptData["script_tag"] = std::string();
+		}
+
+		scriptsData.push_back(scriptData);
+	}
+
+	scriptsComponent["scripts_component"]["scripts"] = scriptsData;
+	return scriptsComponent;
 }
 
 void ScriptsComponent::LoadToJson(const nlohmann::json& componentField)
 {
-	componentField;
+	nlohmann::json scriptsComponent = componentField["scripts_component"];
+	mComponentInfo.LoadToJson(scriptsComponent);
+
+	for (auto& scriptData : scriptsComponent["scripts"])
+	{
+		mScripts.emplace_back();
+
+		std::string scriptTag = scriptData["script_tag"];
+		if (!scriptTag.empty())
+		{
+			mScripts.back() = ScriptManager::GetInstance()->GetScript(scriptTag)->CreateInstence();
+			mScripts.back()->SetGameObject(mGameObj);
+		}
+	}
 }
 
 void ScriptsComponent::ShowDataToInspector()
@@ -46,10 +92,10 @@ void ScriptsComponent::ShowDataToInspector()
 	{
 		for (uint32_t i = 0; i < mScripts.size(); i++)
 		{
-			static std::string tag = "test";
-
-			std::string lable = "Script " + std::to_string(i);
-			Gui::DrawInputText(lable.c_str(), tag);
+			const std::string tag = mScripts[i] == nullptr ? "empty " + std::to_string(i) : mScripts[i]->GetTag();
+			const float windowWidth = ImGui::GetContentRegionAvail().x;
+			const Vec2 buttonSize = Vec2(windowWidth, 20);
+			Gui::DrawButton(tag.c_str(), buttonSize);
 
 			if (Gui::DragDropTarget("DragDrop Script"))
 			{

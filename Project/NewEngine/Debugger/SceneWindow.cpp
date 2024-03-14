@@ -61,6 +61,7 @@ void SceneWindow::DrawPlayButton(const Vec2 buttonSize, const Vec2 windowSize)
 	{
 		bool flag = isSceneActive ? false : true;
 		gCurrentScene->SetisActive(flag);
+		gCurrentScene->GetGameObjectManager()->InitScriptComponent();
 	}
 	if (ImGui::IsItemHovered())
 	{

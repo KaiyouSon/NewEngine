@@ -109,6 +109,17 @@ void GameObjectManager::DestroyGameObject(const std::string name)
 		});
 }
 
+void GameObjectManager::InitScriptComponent()
+{
+	for (const auto& obj : mGameObjects)
+	{
+		if (obj->GetScriptsComponent())
+		{
+			obj->GetScriptsComponent()->Init();
+		}
+	}
+}
+
 GameObject* GameObjectManager::GetGameObject(const std::string name)
 {
 	for (const auto& obj : mGameObjects)

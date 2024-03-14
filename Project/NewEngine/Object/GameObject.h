@@ -17,6 +17,7 @@ protected:
 	Transform* mTransform;
 	TextureComponent* mTextureComponent;
 	MaterialComponent* mMaterialComponent;
+	ScriptsComponent* mScriptsComponent;
 	GraphicsPipeline* mGraphicsPipelineTest;
 
 public:
@@ -56,6 +57,8 @@ public:
 	Transform* GetParent();
 	GameObjectType GetType();
 	ComponentManager* GetComponentManager();
+	ScriptsComponent* GetScriptsComponent();
+
 
 public:
 	// セッター

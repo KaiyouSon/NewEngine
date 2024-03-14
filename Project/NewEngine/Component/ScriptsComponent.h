@@ -10,6 +10,7 @@ private:
 public:
 	ScriptsComponent();
 	ScriptsComponent(GameObject* gameObj);
+	void Init();
 	void Update() override;
 	void CopyComponent(Component* component) override { component; };
 

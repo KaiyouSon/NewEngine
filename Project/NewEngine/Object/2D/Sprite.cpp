@@ -197,6 +197,7 @@ void Sprite::InitComponents()
 	mTransform = mComponentManager->GetComponent<Transform>();
 	mTextureComponent = mComponentManager->GetComponent<TextureComponent>();
 	mMaterialComponent = mComponentManager->GetComponent<MaterialComponent>();
+	mScriptsComponent = mComponentManager->GetComponent<ScriptsComponent>();
 
 	mMaterialComponent->SetMaterial("BasicSprite");
 	mMaterial = mMaterialComponent->GetMaterial();

@@ -48,6 +48,15 @@
                                 1.0
                             ]
                         }
+                    },
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
                     }
                 ],
                 "name": "Game Manager",
@@ -182,7 +191,15 @@
                             "material_name": "BasicSprite"
                         }
                     },
-                    null
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
                 ],
                 "name": "Button",
                 "type": 1
@@ -268,7 +285,15 @@
                             "material_name": "BasicSprite"
                         }
                     },
-                    null
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
                 ],
                 "name": "Back",
                 "type": 1
@@ -354,7 +379,15 @@
                             "material_name": "BasicSprite"
                         }
                     },
-                    null
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
                 ],
                 "name": "TitleString",
                 "type": 1
@@ -440,7 +473,15 @@
                             "material_name": "BasicSprite"
                         }
                     },
-                    null
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
                 ],
                 "name": "Back2",
                 "type": 1
@@ -528,7 +569,7 @@
                                         255.0,
                                         255.0
                                     ],
-                                    "is_active": false,
+                                    "is_active": true,
                                     "layer_tag": "BackSprite"
                                 }
                             },
@@ -576,7 +617,7 @@
                                 "index": 2,
                                 "type": 10
                             },
-                            "texture_tag": "White",
+                            "texture_tag": "PressButton",
                             "texture_type": 0
                         }
                     },
@@ -589,7 +630,19 @@
                             "material_name": "BasicSprite"
                         }
                     },
-                    null
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 14
+                            },
+                            "scripts": [
+                                {
+                                    "script_tag": "AfterImage"
+                                }
+                            ]
+                        }
+                    }
                 ],
                 "name": "AfterImage",
                 "type": 1

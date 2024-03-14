@@ -17,6 +17,7 @@ void EmptyObject::InitComponents()
 
 	mComponentManager->AddComponent<EmptyObjectInfo>();
 	mComponentManager->AddComponent<Transform>();
+	mComponentManager->AddComponent<ScriptsComponent>();
 
 	mTransform = mComponentManager->GetComponent<Transform>();
 }
