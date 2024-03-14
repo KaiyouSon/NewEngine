@@ -50,6 +50,11 @@ void ComponentManager::LoadToJson(const nlohmann::json& componentsField)
 			break;
 		}
 
+		if (componentsField[count].is_null())
+		{
+			continue;
+		}
+
 		component->LoadToJson(componentsField[count]);
 		count++;
 	}

@@ -1,7 +1,24 @@
 #include "GameManager.h"
 
-void ScriptRegistrar::RegisterScript()
+GameManager::GameManager()
 {
-	static std::shared_ptr<Script> instance = std::make_unique<AfterImager>();
-	ScriptManager::GetInstance()->RegisterScript(instance, instance->GetTag());
+	tag = "GameManager";
+}
+
+void GameManager::Init()
+{
+}
+
+void GameManager::Update()
+{
+	if (Key::GetKeyDown(DIK_1))
+	{
+		static std::string sceneName = "Game";
+		SceneManager::ChangeScene(sceneName);
+	}
+}
+
+std::shared_ptr<Script> GameManager::CreateInstence()
+{
+	return std::make_shared<GameManager>();
 }

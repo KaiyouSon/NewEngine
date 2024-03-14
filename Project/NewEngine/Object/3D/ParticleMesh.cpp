@@ -1,5 +1,4 @@
 #include "ParticleMesh.h"
-#include "ParticleMesh.h"
 #include "RenderBase.h"
 #include "LightManager.h"
 #include "Camera.h"
@@ -111,6 +110,7 @@ void ParticleMesh::SetTexture(const std::string& textureTag, [[maybe_unused]] co
 	mTextureComponent->SetTexture(textureTag);
 	mMeshTexture = mTextureComponent->GetTexture();
 }
+
 
 
 ParticleMesh::ParticleMesh() :

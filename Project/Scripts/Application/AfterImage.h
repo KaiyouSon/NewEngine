@@ -4,6 +4,7 @@
 class AfterImage : public Script
 {
 private:
+	bool mIsAfterImage;
 	uint32_t mAfterImageStep;
 
 public:

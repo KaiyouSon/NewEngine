@@ -55,7 +55,11 @@
                                 "index": 2,
                                 "type": 14
                             },
-                            "scripts": []
+                            "scripts": [
+                                {
+                                    "script_tag": "GameManager"
+                                }
+                            ]
                         }
                     }
                 ],

@@ -347,6 +347,7 @@
     <ClCompile Include="Application\SourceCode\Trajectory.cpp" />
     <ClCompile Include="NewEngine\Object\3D\ParticleObject.cpp" />
     <ClCompile Include="Scripts\Application\AfterImage.cpp" />
+    <ClCompile Include="Scripts\Application\GameManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\1.School\3.3年前期\TL1\CG5_Task01\Project\External\nlohmann\json.hpp" />
@@ -583,6 +584,7 @@
     <ClInclude Include="NewEngine\NewEngineDefine.h" />
     <ClInclude Include="Application\SourceCode\Trajectory.h" />
     <ClInclude Include="Scripts\Application\AfterImage.h" />
+    <ClInclude Include="Scripts\Application\GameManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

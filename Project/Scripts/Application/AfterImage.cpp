@@ -7,9 +7,9 @@ AfterImage::AfterImage()
 
 void AfterImage::Init()
 {
+	mIsAfterImage = false;
 	mAfterImageStep = 0;
 
-	mGameObject->isActive = false;
 	mGameObject->scale = 0.3f;
 	mGameObject->color.a = 255.f;
 }
@@ -18,10 +18,11 @@ void AfterImage::Update()
 {
 	if (Key::GetKeyDown(DIK_SPACE))
 	{
-		mGameObject->isActive = true;
+		Init();
+		mIsAfterImage = true;
 	}
 
-	if (!mGameObject->isActive)
+	if (!mIsAfterImage)
 	{
 		return;
 	}

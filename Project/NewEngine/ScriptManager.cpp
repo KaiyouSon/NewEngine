@@ -1,9 +1,14 @@
 #include "ScriptManager.h"
 #include "AfterImage.h"
+#include "GameManager.h"
 
 void ScriptManager::Register()
 {
-	std::shared_ptr<Script> instance = std::make_unique<AfterImage>();
+	std::shared_ptr<Script> instance;
+	instance = std::make_unique<AfterImage>();
+	ScriptManager::GetInstance()->RegisterScript(instance, instance->GetTag());
+
+	instance = std::make_unique<GameManager>();
 	ScriptManager::GetInstance()->RegisterScript(instance, instance->GetTag());
 }
 

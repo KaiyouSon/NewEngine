@@ -1,3 +1,115 @@
 {
-    "name": "Default"
+    "name": "Default",
+    "objects": [
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 8
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": ""
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
+                ],
+                "name": "Game Manager",
+                "type": 7
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "camera_info": {
+                            "component_info": {
+                                "index": 0,
+                                "type": 4
+                            },
+                            "fov_angle": 45.0,
+                            "o_near_far_clip": [
+                                0.0,
+                                0.0
+                            ],
+                            "p_near_far_clip": [
+                                0.0,
+                                0.0
+                            ]
+                        }
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                ],
+                "name": "Main Camera",
+                "type": 3
+            }
+        }
+    ]
 }

@@ -1,8 +1,13 @@
 #pragma once
 #include "NewEngine.h"
 
-class ScriptRegistrar
+class GameManager : public Script
 {
 public:
-	void RegisterScript();
+	GameManager();
+	void Init() override;
+	void Update() override;
+
+public:
+	std::shared_ptr<Script> CreateInstence() override;
 };

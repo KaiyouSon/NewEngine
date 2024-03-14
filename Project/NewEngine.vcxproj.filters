@@ -1140,6 +1140,9 @@
     <ClCompile Include="NewEngine\Component\DissolveComponent.cpp">
       <Filter>Uncategorized\Source\Component</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Application\GameManager.cpp">
+      <Filter>Application\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1843,6 +1846,9 @@
     </ClInclude>
     <ClInclude Include="NewEngine\Component\DissolveComponent.h">
       <Filter>Uncategorized\Header\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Application\GameManager.h">
+      <Filter>Application\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

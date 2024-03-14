@@ -16,7 +16,7 @@ enum class GameObjectType
 // コンポネントの種類
 enum class ComponentType
 {
-	Unkwone,
+	Unknown,
 
 	// オブジェクト情報
 	Object3DInfo,
