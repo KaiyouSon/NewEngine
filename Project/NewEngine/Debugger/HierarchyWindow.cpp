@@ -14,24 +14,15 @@ void HierarchyWindow::DrawGuiWindow()
 	{
 		for (const auto& obj : *GetGameObjects())
 		{
-			if (Gui::BeginTreeNode(obj->name))
+			if (obj->GetParent())
 			{
-
-				Gui::EndTreeNode();
+				continue;
 			}
 
-			// ツリーノードがクリックされたかどうかを検出
-			if (ImGui::IsItemClicked())
-			{
-				MainWindow::GetInstance()->SetCurrentObjName(obj->name);
-			}
+			// 再帰で親子関係を確認できるようにしてる
+			RecursiveShowObject(obj.get());
 
 			std::string& dragDropGameObjName = MainWindow::GetInstance()->mDragDropGameObjName;
-			if (Gui::DragDropSource("DragDrop GameObject", obj->name))
-			{
-				dragDropGameObjName = obj->name;
-			}
-
 			if (Gui::DragDropTarget("DragDrop GameObject"))
 			{
 				if (!dragDropGameObjName.empty())
@@ -105,6 +96,57 @@ void HierarchyWindow::CreateGameObjectPop()
 	}
 }
 
+void HierarchyWindow::RecursiveShowObject(GameObject* obj)
+{
+	std::string& dragDropGameObjName = MainWindow::GetInstance()->mDragDropGameObjName;
+
+	if (Gui::BeginTreeNode(obj->name))
+	{
+		// 子オブジェクトの描画
+		for (const auto& child : *GetGameObjects())
+		{
+			if (child->GetParent() == obj->GetTransform())
+			{
+				RecursiveShowObject(child.get());
+
+				//if (Gui::DragDropTarget("DragDrop GameObject"))
+				//{
+				//	if (!dragDropGameObjName.empty())
+				//	{
+				//		GameObject* childchild = GetGameObject(dragDropGameObjName);
+				//		childchild->SetParent(obj->GetTransform());
+				//		dragDropGameObjName.clear();
+				//	}
+				//}
+
+				//// 子オブジェクトの処理
+				//if (Gui::BeginTreeNode(child->name))
+				//{
+				//	// ここに子オブジェクトの描画処理を記述する
+				//	Gui::EndTreeNode();
+				//}
+				//if (ImGui::IsItemClicked())
+				//{
+				//	isSelectChild = true;
+				//	MainWindow::GetInstance()->SetCurrentObjName(child->name);
+				//}
+			}
+		}
+		Gui::EndTreeNode();
+	}
+
+	if (ImGui::IsItemClicked())
+	{
+		MainWindow::GetInstance()->SetCurrentObjName(obj->name);
+	}
+
+	//std::string& dragDropGameObjName = MainWindow::GetInstance()->mDragDropGameObjName;
+	if (Gui::DragDropSource("DragDrop GameObject", obj->name))
+	{
+		dragDropGameObjName = obj->name;
+	}
+}
+
 void HierarchyWindow::ShowObjectMenuItem(const std::string& label, const GameObjectType type, const bool isDrawLine)
 {
 	if (Gui::MenuItem(label))
@@ -119,3 +161,4 @@ void HierarchyWindow::ShowObjectMenuItem(const std::string& label, const GameObj
 		Gui::DrawLine();
 	}
 }
+
