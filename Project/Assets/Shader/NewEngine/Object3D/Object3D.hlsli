@@ -39,10 +39,17 @@ cbuffer ConstantBufferDataUVParameter : register(b4)
 
 cbuffer ConstantBufferDissolve : register(b5)
 {
+    float4 dissolveColor;
     float dissolve;
     float colorPower;
-    float4 dissolveColor;
 }
+
+//cbuffer ConstantBufferDissolve : register(b5)
+//{
+//    float dissolve;
+//    float colorPower;
+//    float4 dissolveColor;
+//}
 
 cbuffer ConstantBufferShadow : register(b6)
 {

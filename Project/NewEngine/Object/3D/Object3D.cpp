@@ -217,9 +217,6 @@ void Object3D::MaterialTransfer()
 	// UVデータ
 	CUVParameter uvData = { offset,tiling };
 
-	// ディゾルブ
-	CDissolve dissolveData = { dissolve,colorPower,Vec2(0,0), dissolveColor.To01() };
-
 	// シャドウマップ
 	CShadowMap shadowMapData = { mIsWriteShadow, sShadowBias };
 
@@ -229,9 +226,14 @@ void Object3D::MaterialTransfer()
 	mMaterial->TransferDataToConstantBuffer(2, colorData);
 	mMaterial->TransferDataToConstantBuffer(3, skinData);
 	mMaterial->TransferDataToConstantBuffer(4, uvData);
-	mMaterial->TransferDataToConstantBuffer(5, dissolveData);
 	mMaterial->TransferDataToConstantBuffer(6, shadowMapData);
 
+	// ディゾルブのコンポネント
+	mDissolveComponent = mComponentManager->GetComponent<DissolveComponent>();
+	if (mDissolveComponent)
+	{
+		mDissolveComponent->TransferData();
+	}
 }
 
 void Object3D::InitComponents()
@@ -244,17 +246,24 @@ void Object3D::InitComponents()
 	mComponentManager->AddComponent<ModelData>();
 	mComponentManager->AddComponent<TextureComponent>();
 	mComponentManager->AddComponent<MaterialComponent>();
+	mComponentManager->AddComponent<DissolveComponent>();
 
 	mTransform = mComponentManager->GetComponent<Transform>();
 	mTextureComponent = mComponentManager->GetComponent<TextureComponent>();
 	mMaterialComponent = mComponentManager->GetComponent<MaterialComponent>();
+	mDissolveComponent = mComponentManager->GetComponent<DissolveComponent>();
 
 	mMaterialComponent->SetMaterial("BasicObject3D");
 	mMaterial = mMaterialComponent->GetMaterial();
 
 	mTextures.resize(3);
 	mTextures[0] = mTextureComponent->GetTexture();
-	mTextures[1] = mDissolveTex;
+
+	if (mDissolveComponent)
+	{
+		mTextures[1] = mDissolveComponent->GetTexture();
+	}
+
 	mTextures[2] = mDepthTex;
 }
 
@@ -271,6 +280,11 @@ void Object3D::DrawCommands()
 	// VBVとIBVの設定コマンド
 	renderBase->GetCommandList()->IASetVertexBuffers(0, 1, mModelData->GetModel()->mesh.vertexBuffer.GetvbViewAddress());
 	renderBase->GetCommandList()->IASetIndexBuffer(mModelData->GetModel()->mesh.indexBuffer.GetibViewAddress());
+
+	if (mDissolveComponent)
+	{
+		mDissolveComponent->DrawCommands(5);
+	}
 
 	LightManager::GetInstance()->DrawCommands(7);
 	//GraphicsManager::DrawCommands(GraphicsType::DistanceFog, end + 1);

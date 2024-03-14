@@ -190,10 +190,9 @@ namespace ConstantBufferData
 
 	struct CDissolve
 	{
+		Color dissolveColor;
 		float dissolve;
 		float colorPower;
-		Vec2 pad;
-		Color dissolveColor;
 	};
 
 	struct CShadowMap

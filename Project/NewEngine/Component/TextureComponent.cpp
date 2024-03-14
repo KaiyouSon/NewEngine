@@ -66,7 +66,6 @@ void TextureComponent::ShowDataToInspector()
 
 			Gui::EndTreeNode();
 		}
-
 	}
 }
 

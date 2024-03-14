@@ -7,7 +7,7 @@ ComponentManager::ComponentManager(GameObject* gameObj) :mGameObj(gameObj)
 
 void ComponentManager::Update()
 {
-	for (const auto& component : mComponents)
+	for (auto& component : mComponents)
 	{
 		if (!component)
 		{
@@ -16,6 +16,12 @@ void ComponentManager::Update()
 
 		component->Update();
 	}
+
+	std::erase_if(mComponents,
+		[](const std::unique_ptr<Component>& component)
+		{
+			return !component->GetIsUsing();
+		});
 }
 
 void ComponentManager::Copy(ComponentManager* componentManager)

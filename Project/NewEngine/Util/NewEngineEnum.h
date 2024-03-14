@@ -35,6 +35,7 @@ enum class ComponentType
 	ParticleData,
 	ScriptsComponent,
 	MaterialComponent,
+	DissolveComponent,
 };
 
 // ブレンドモード

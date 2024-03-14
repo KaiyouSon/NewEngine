@@ -30,6 +30,7 @@ private:
 private:
 	// コンポーネント関連
 	ModelData* mModelData;
+	DissolveComponent* mDissolveComponent;
 
 private:
 	// テクスチャ

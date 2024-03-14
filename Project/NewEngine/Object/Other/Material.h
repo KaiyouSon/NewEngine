@@ -14,6 +14,7 @@ class Material
 {
 private:
 	std::unique_ptr<GraphicsPipeline> mGraphicsPipeline;
+	uint32_t componentUsedCbvNum;
 
 public:
 	RootSignatureSetting mRSSetting;
@@ -40,8 +41,11 @@ public:
 	void Create();
 	void DrawCommands(TextureComponent* textureData, const BlendMode blendMode = BlendMode::Alpha);
 	void DrawCommands(std::vector<ITexture*> textures, const BlendMode blendMode = BlendMode::Alpha);
-	
+
 	void Copy(const Material& material);
+
+public:
+	uint32_t GetCBVEndIndex();
 
 public:
 	template<typename T>

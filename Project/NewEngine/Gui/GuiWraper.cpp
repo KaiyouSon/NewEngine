@@ -200,12 +200,17 @@ void GuiWraper::EndTreeNode()
 	ImGui::TreePop();
 }
 
-bool GuiWraper::DrawCollapsingHeader(const char* name, const bool isOpenNode)
+bool GuiWraper::DrawCollapsingHeader(const char* name, const bool isOpenNode, bool* isCloseButton)
 {
 	uint32_t nodeFlag =
 		(isOpenNode == false) ?
 		ImGuiTreeNodeFlags_None :
 		ImGuiTreeNodeFlags_DefaultOpen;
+
+	if (isCloseButton)
+	{
+		return ImGui::CollapsingHeader(name, isCloseButton, nodeFlag);
+	}
 
 	return ImGui::CollapsingHeader(name, nodeFlag);
 }

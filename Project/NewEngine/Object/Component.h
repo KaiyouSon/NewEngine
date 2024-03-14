@@ -17,6 +17,7 @@ class Component
 protected:
 	ComponentInfo mComponentInfo;
 	GameObject* mGameObj;
+	bool mIsUsing;
 
 public:
 	Component();
@@ -37,4 +38,5 @@ public:
 public:
 	// ゲッター
 	ComponentType GetComponentType();
+	bool GetIsUsing();
 };

@@ -19,7 +19,7 @@ Component::Component()
 }
 
 Component::Component(GameObject* gameObj) :
-	mGameObj(gameObj)
+	mGameObj(gameObj), mIsUsing(true)
 {
 }
 
@@ -31,4 +31,9 @@ void Component::SetComponentInfo(const uint32_t index)
 ComponentType Component::GetComponentType()
 {
 	return mComponentInfo.type;
+}
+
+bool Component::GetIsUsing()
+{
+	return mIsUsing;
 }

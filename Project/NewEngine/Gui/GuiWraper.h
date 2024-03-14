@@ -46,7 +46,7 @@ public:
 	static bool BeginTreeNode(const std::string& tag, const bool isOpenNode = false);
 	static void EndTreeNode();
 
-	static bool DrawCollapsingHeader(const char* name, const bool isOpenNode = false);
+	static bool DrawCollapsingHeader(const char* name, const bool isOpenNode = false, bool* isCloseButton = nullptr);
 
 public:
 	// メニューバー関連

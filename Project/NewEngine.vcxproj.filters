@@ -1137,6 +1137,9 @@
     <ClCompile Include="NewEngine\Component\MaterialComponent.cpp">
       <Filter>Uncategorized\Source\Component</Filter>
     </ClCompile>
+    <ClCompile Include="NewEngine\Component\DissolveComponent.cpp">
+      <Filter>Uncategorized\Source\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEngine\Render\Buffer\ConstantBuffer.h">
@@ -1836,6 +1839,9 @@
       <Filter>Uncategorized\Header\Script</Filter>
     </ClInclude>
     <ClInclude Include="NewEngine\Component\MaterialComponent.h">
+      <Filter>Uncategorized\Header\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Component\DissolveComponent.h">
       <Filter>Uncategorized\Header\Component</Filter>
     </ClInclude>
   </ItemGroup>

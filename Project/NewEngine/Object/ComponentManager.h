@@ -13,6 +13,7 @@
 #include "TextureComponent.h"
 #include "ScriptsComponent.h"
 #include "MaterialComponent.h"
+#include "DissolveComponent.h"
 
 class ComponentManager
 {

@@ -145,6 +145,7 @@
     <ClCompile Include="Application\SourceCode\PostEffect\RadialBlur.cpp" />
     <ClCompile Include="NewEngine\AssetsManager.cpp" />
     <ClCompile Include="NewEngine\Component\ComponentFactor.cpp" />
+    <ClCompile Include="NewEngine\Component\DissolveComponent.cpp" />
     <ClCompile Include="NewEngine\Component\GameObjectInfo\CameraInfo.cpp" />
     <ClCompile Include="NewEngine\Component\GameObjectInfo\DirectionalLightInfo.cpp" />
     <ClCompile Include="NewEngine\Component\GameObjectInfo\EmptyObjectInfo.cpp" />
@@ -375,6 +376,7 @@
     <ClInclude Include="Application\SourceCode\PostEffect\RadialBlur.h" />
     <ClInclude Include="NewEngine\AssetsManager.h" />
     <ClInclude Include="NewEngine\Component\ComponentFactor.h" />
+    <ClInclude Include="NewEngine\Component\DissolveComponent.h" />
     <ClInclude Include="NewEngine\Component\GameObjectInfo\CameraInfo.h" />
     <ClInclude Include="NewEngine\Component\GameObjectInfo\DirectionalLightInfo.h" />
     <ClInclude Include="NewEngine\Component\GameObjectInfo\EmptyObjectInfo.h" />

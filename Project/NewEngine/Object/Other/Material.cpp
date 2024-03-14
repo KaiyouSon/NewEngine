@@ -14,6 +14,9 @@ Material::Material(const std::string& name) :name(name)
 
 void Material::Init()
 {
+	// コンポネントで使用するCBVのかず
+	componentUsedCbvNum = 2;
+
 	// CBの生成
 	for (const auto& buffer : constantBuffers)
 	{
@@ -77,7 +80,7 @@ void Material::DrawCommands(std::vector<ITexture*> textures, const BlendMode ble
 
 	// CBVの描画コマンド
 	const uint32_t cbvStartIndex = 0;
-	const uint32_t cbvEndIndex = mRSSetting.maxCbvRootParameter;
+	const uint32_t cbvEndIndex = mRSSetting.maxCbvRootParameter - componentUsedCbvNum;
 	for (uint32_t i = cbvStartIndex; i < cbvEndIndex; i++)
 	{
 		if (!constantBuffers[i])
@@ -90,7 +93,7 @@ void Material::DrawCommands(std::vector<ITexture*> textures, const BlendMode ble
 	}
 
 	// SRVの描画コマンド
-	const uint32_t srvStartIndex = cbvEndIndex;
+	const uint32_t srvStartIndex = mRSSetting.maxCbvRootParameter;
 	const uint32_t srvEndIndex = mRSSetting.maxCbvRootParameter + mRSSetting.maxSrvDescritorRange;
 	for (uint32_t i = srvStartIndex, texIndex = 0; i < srvEndIndex; i++, texIndex++)
 	{
@@ -113,6 +116,11 @@ void Material::Copy(const Material& material)
 	mGraphicsPipeline = std::make_unique<GraphicsPipeline>();
 	mGraphicsPipeline->Create(*this);
 
+}
+
+uint32_t Material::GetCBVEndIndex()
+{
+	return mRSSetting.maxCbvRootParameter - componentUsedCbvNum;
 }
 
 void Material::CreateJsonFile()
