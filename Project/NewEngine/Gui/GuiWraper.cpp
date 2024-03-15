@@ -442,7 +442,6 @@ bool GuiWraper::DragDropTarget(const std::string& label)
 		}
 		ImGui::EndDragDropTarget();
 	}
-
 	return result;
 }
 

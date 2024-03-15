@@ -21,19 +21,36 @@ void HierarchyWindow::DrawGuiWindow()
 
 			// 再帰で親子関係を確認できるようにしてる
 			RecursiveShowObject(obj.get());
-
-			std::string& dragDropGameObjName = MainWindow::GetInstance()->mDragDropGameObjName;
-			if (Gui::DragDropTarget("DragDrop GameObject"))
-			{
-				if (!dragDropGameObjName.empty())
-				{
-					GameObject* child = GetGameObject(dragDropGameObjName);
-					child->SetParent(obj->GetTransform());
-					dragDropGameObjName.clear();
-				}
-			}
 		}
 	}
+
+	if (isDrag)
+	{
+		Gui::DrawLine();
+
+		ImGui::PushStyleColor(ImGuiCol_Button, Gui::ToImVec4(Color::black + 25));
+		float width = ImGui::GetContentRegionAvail().x;
+		if (Gui::DrawButton("Parent-Child Cancel", Vec2(width, 32)))
+		{
+			mDragDropSourceObjName.clear();
+			isDrag = false;
+		}
+		ImGui::PopStyleColor();
+
+		if (Gui::DragDropTarget("DragDrop GameObject"))
+		{
+			if (!mDragDropSourceObjName.empty())
+			{
+				GameObject* child = GetGameObject(mDragDropSourceObjName);
+				child->SetParent(nullptr);
+
+				mDragDropSourceObjName.clear();
+				isDrag = false;
+			}
+		}
+
+	}
+
 
 	if (ImGui::IsWindowHovered())
 	{
@@ -98,9 +115,16 @@ void HierarchyWindow::CreateGameObjectPop()
 
 void HierarchyWindow::RecursiveShowObject(GameObject* obj)
 {
-	std::string& dragDropGameObjName = MainWindow::GetInstance()->mDragDropGameObjName;
+	bool isNodeOpen = Gui::BeginTreeNode(obj->name);
 
-	if (Gui::BeginTreeNode(obj->name))
+	if (ImGui::IsItemClicked())
+	{
+		MainWindow::GetInstance()->SetCurrentObjName(obj->name);
+	}
+
+	DragAndDropObject(obj);
+
+	if (isNodeOpen)
 	{
 		// 子オブジェクトの描画
 		for (const auto& child : *GetGameObjects())
@@ -108,42 +132,30 @@ void HierarchyWindow::RecursiveShowObject(GameObject* obj)
 			if (child->GetParent() == obj->GetTransform())
 			{
 				RecursiveShowObject(child.get());
-
-				//if (Gui::DragDropTarget("DragDrop GameObject"))
-				//{
-				//	if (!dragDropGameObjName.empty())
-				//	{
-				//		GameObject* childchild = GetGameObject(dragDropGameObjName);
-				//		childchild->SetParent(obj->GetTransform());
-				//		dragDropGameObjName.clear();
-				//	}
-				//}
-
-				//// 子オブジェクトの処理
-				//if (Gui::BeginTreeNode(child->name))
-				//{
-				//	// ここに子オブジェクトの描画処理を記述する
-				//	Gui::EndTreeNode();
-				//}
-				//if (ImGui::IsItemClicked())
-				//{
-				//	isSelectChild = true;
-				//	MainWindow::GetInstance()->SetCurrentObjName(child->name);
-				//}
 			}
 		}
 		Gui::EndTreeNode();
 	}
+}
 
-	if (ImGui::IsItemClicked())
-	{
-		MainWindow::GetInstance()->SetCurrentObjName(obj->name);
-	}
-
-	//std::string& dragDropGameObjName = MainWindow::GetInstance()->mDragDropGameObjName;
+void HierarchyWindow::DragAndDropObject(GameObject* obj)
+{
 	if (Gui::DragDropSource("DragDrop GameObject", obj->name))
 	{
-		dragDropGameObjName = obj->name;
+		mDragDropSourceObjName = obj->name;
+		isDrag = true;
+	}
+
+	if (!mDragDropSourceObjName.empty())
+	{
+		if (Gui::DragDropTarget("DragDrop GameObject"))
+		{
+			GameObject* child = GetGameObject(mDragDropSourceObjName);
+			child->SetParent(obj->GetTransform());
+
+			mDragDropSourceObjName.clear();
+			isDrag = false;
+		}
 	}
 }
 

@@ -48,6 +48,15 @@
                                 1.0
                             ]
                         }
+                    },
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
                     }
                 ],
                 "name": "Game Manager",
@@ -182,7 +191,15 @@
                             "material_name": "BasicSprite"
                         }
                     },
-                    null
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
                 ],
                 "name": "Sprite0",
                 "type": 1
@@ -268,7 +285,15 @@
                             "material_name": "BasicSprite"
                         }
                     },
-                    null
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
                 ],
                 "name": "Sprite1",
                 "type": 1
@@ -354,7 +379,15 @@
                             "material_name": "BasicSprite"
                         }
                     },
-                    null
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
                 ],
                 "name": "Sprite2",
                 "type": 1
@@ -440,7 +473,15 @@
                             "material_name": "BasicSprite"
                         }
                     },
-                    null
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
                 ],
                 "name": "Sprite3",
                 "type": 1
@@ -526,7 +567,15 @@
                             "material_name": "BasicSprite"
                         }
                     },
-                    null
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
                 ],
                 "name": "Sprite4",
                 "type": 1
@@ -612,7 +661,15 @@
                             "material_name": "BasicSprite"
                         }
                     },
-                    null
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
                 ],
                 "name": "Sprite5",
                 "type": 1
@@ -685,7 +742,17 @@
                             "texture_tag": "SkyIsland1",
                             "texture_type": 0
                         }
-                    }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
                 ],
                 "name": "Object3D6",
                 "type": 0
@@ -758,10 +825,144 @@
                             "texture_tag": "Skydome",
                             "texture_type": 0
                         }
-                    }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
                 ],
                 "name": "Object3D7",
                 "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 8
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": ""
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
+                ],
+                "name": "OperatorUI",
+                "type": 7
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 8
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": ""
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
+                ],
+                "name": "BackFrame",
+                "type": 7
             }
         }
     ]

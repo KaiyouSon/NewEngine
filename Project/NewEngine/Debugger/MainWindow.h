@@ -28,7 +28,6 @@ private:
 
 private:
 	std::string mCurrentObjName;
-	std::string mDragDropGameObjName;
 	std::string mDragDropAssetsTag;
 	std::string mDragDropLayerTag;
 	std::string mDragDropScriptTag;
