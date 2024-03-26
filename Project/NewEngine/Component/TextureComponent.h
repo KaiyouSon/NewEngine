@@ -4,14 +4,13 @@
 class TextureComponent : public Component
 {
 private:
-	std::vector<ITexture*> mTextures;
 	ITexture* mTexture;
 
 public:
 	TextureComponent();
 	TextureComponent(GameObject* gameObj);
 	void Update() override;
-	void CopyComponent(Component* component) override { component; };
+	void CopyComponent(Component* component) override;
 
 public:
 	nlohmann::json SaveToJson() override;

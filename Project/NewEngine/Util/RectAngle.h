@@ -12,4 +12,7 @@ struct RectAngle
 	RectAngle();
 	RectAngle(const float left, const float right, const float top, const float bottom);
 	RectAngle(const Vec2 leftTop, const Vec2 rightBottom);
+
+	Vec2 GetLeftTop();
+	Vec2 GetRightBottom();
 };

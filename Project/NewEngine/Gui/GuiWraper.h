@@ -72,7 +72,7 @@ public:
 	static void DrawCheckBox(const char* label, bool* flag);
 
 	// ボタン関連
-	static bool DrawButton(const char* label, const Vec2& size);
+	static bool DrawButton(const char* label, const Vec2& size = -1);
 	static bool DrawButtonToWidthCenter(const std::string& label, const Vec2& size);
 	static bool DrawRadioButton(const char* label, uint32_t* current, const uint32_t index, const bool isTab = true);
 	static bool DrawImageButton(ITexture* texture, const Vec2& size);

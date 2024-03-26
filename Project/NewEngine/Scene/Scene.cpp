@@ -51,6 +51,8 @@ void Scene::LoadToJson(const std::string& sceneName)
 
 	file.close();
 
+	// 全てのオブジェクトロードし終わったら親子関係を設定する
+	mGameObjectManager->SettingParentAfterLoad();
 	mRenderer->LoadToJson(sceneName);
 }
 

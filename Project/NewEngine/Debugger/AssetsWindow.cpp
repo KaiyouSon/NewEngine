@@ -215,6 +215,11 @@ void AssetsWindow::ShowModelAssets()
 		Gui::DrawButton(tag.c_str(), buttonSize);
 		Gui::NextColumn();
 
+		if (Gui::DragDropSource("DragDrop Model", tag))
+		{
+			MainWindow::GetInstance()->SetDragDropTag(tag, MainWindow::Model);
+		}
+
 		count++;
 		if (count % columnCount == 0)
 		{

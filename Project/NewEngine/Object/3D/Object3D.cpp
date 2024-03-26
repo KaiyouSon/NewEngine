@@ -60,7 +60,7 @@ Object3D::Object3D(const std::string& name) :
 
 void Object3D::Update()
 {
-	if (!isActive)
+	if (!CheckActive())
 	{
 		return;
 	}
@@ -83,7 +83,7 @@ void Object3D::ExecuteCS()
 }
 void Object3D::AppedToRenderer()
 {
-	if (!isActive)
+	if (!CheckActive())
 	{
 		return;
 	}
@@ -97,7 +97,6 @@ void Object3D::AppedToRenderer()
 			DrawCommands();
 		});
 }
-
 void Object3D::Draw(const std::string& _layerTag, const BlendMode _blendMode)
 {
 	if (!isActive)
@@ -310,7 +309,7 @@ void Object3D::DrawCommands()
 	//		(uint32_t)startIndex + 2, mDepthTex->GetBufferResource()->srvHandle.gpu);
 	//}
 
-	renderBase->GetCommandList()->DrawIndexedInstanced((uint16_t)mModelData->GetModel()->mesh.indices.size(), 1, 0, 0, 0);
+	renderBase->GetCommandList()->DrawIndexedInstanced((uint32_t)mModelData->GetModel()->mesh.indices.size(), 1, 0, 0, 0);
 }
 
 // --- セッター --------------------------------------------------------- //

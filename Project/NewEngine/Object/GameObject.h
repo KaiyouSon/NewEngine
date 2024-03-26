@@ -4,11 +4,18 @@
 #include "StandardLib.h"
 #include "ComponentManager.h"
 
+class GameObjectManager;
+class GameObjectInfo;
+
 class GameObject
 {
+private:
+	std::string mParentTag;
+
 protected:
-	Transform* mParent;
 	GameObjectType mType;
+	GameObject* mParent;
+	std::vector<GameObject*> mChilds;
 
 protected:
 	// コンポーネント関連
@@ -34,6 +41,7 @@ public:
 
 protected:
 	void BaseUpdate();
+	bool CheckActive();
 
 public:
 	nlohmann::json SaveToJson();
@@ -52,16 +60,26 @@ public:
 	virtual void SetTexture(const std::string& textureTag, [[maybe_unused]] const bool isChangeSize = true) = 0;
 
 public:
+	void ParentChildCancel();
+
+public:
 	// ゲッター
 	Transform* GetTransform();
-	Transform* GetParent();
+	GameObject* GetParent();
 	GameObjectType GetType();
 	ComponentManager* GetComponentManager();
 	ScriptsComponent* GetScriptsComponent();
-
+	std::vector<GameObject*> GetChilds();
 
 public:
 	// セッター
 	void SetParent(Transform* parent);
+	void SetParent(GameObject* parent);
+
+	void SetChild(GameObject* child);
+
+private:
+	friend GameObjectManager;
+	friend GameObjectInfo;
 };
 

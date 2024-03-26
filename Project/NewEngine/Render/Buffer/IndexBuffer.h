@@ -14,7 +14,7 @@ private:
 
 public:
 	IndexBuffer();
-	void Create(const std::vector<uint16_t>& indices);
+	void Create(const std::vector<uint32_t>& indices);
 
 public: // ゲッター
 	D3D12_INDEX_BUFFER_VIEW* GetibViewAddress();

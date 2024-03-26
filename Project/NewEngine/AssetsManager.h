@@ -18,6 +18,7 @@ public:
 	void LoadMaterial(const std::string& path);
 	void LoadTexture(const std::string& path);
 	ITexture* LoadMaterialTexture(const std::string& path);
+	ITexture* LoadMaterialTexture(const std::wstring& wpath);
 	void LoadModel(const std::string& path);
 	void LoadModel(const std::wstring& wpath);
 

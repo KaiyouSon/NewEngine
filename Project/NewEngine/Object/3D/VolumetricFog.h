@@ -14,7 +14,7 @@ class VolumetricFog
 private:
 	std::vector<VertexBufferData::VVolumetricFog> mVertices;
 	std::unique_ptr<VertexBuffer<VertexBufferData::VVolumetricFog>> mVertexBuffer;
-	std::vector<uint16_t> mIndices;
+	std::vector<uint32_t> mIndices;
 	std::unique_ptr<IndexBuffer> mIndexBuffer;
 	Vec3 mWorldPos;
 	Vec3 mWorldScale;

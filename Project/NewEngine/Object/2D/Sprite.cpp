@@ -42,7 +42,7 @@ Sprite::Sprite(const std::string& name) :
 
 void Sprite::Update()
 {
-	if (isActive == false)
+	if (!CheckActive())
 	{
 		return;
 	}
@@ -60,7 +60,7 @@ void Sprite::ExecuteCS()
 }
 void Sprite::AppedToRenderer()
 {
-	if (isActive == false)
+	if (!CheckActive())
 	{
 		return;
 	}
@@ -87,6 +87,14 @@ void Sprite::Draw(const std::string& _layerTag, const BlendMode _blendMode)
 	//		DrawCommands();
 	//	});
 	DrawCommands();
+}
+
+void Sprite::Copy(GameObject* gameObj)
+{
+	isActive = gameObj->isActive;
+	layerTag = gameObj->layerTag;
+	color = gameObj->color;
+	mComponentManager->Copy(gameObj->GetComponentManager());
 }
 
 // --- マテリアル関連 --------------------------------------------------- //
@@ -240,9 +248,8 @@ void Sprite::SetTexture(Texture* texture, const bool isChangeSize)
 }
 
 // テクスチャー
-void Sprite::SetTexture(const std::string& textureTag, [[maybe_unused]] const bool isChangeSize)
+void Sprite::SetTexture(const std::string& textureTag, const bool isChangeSize)
 {
-	//ITexture* tex = TextureManager::GetTexture(textureTag);
 	ITexture* tex = gAssetsManager->GetTexture(textureTag);
 	if (!tex)
 	{
@@ -252,15 +259,25 @@ void Sprite::SetTexture(const std::string& textureTag, [[maybe_unused]] const bo
 	mTextureComponent->SetTexture(textureTag);
 	if (isChangeSize)
 	{
-		SetSize(Vec2(tex->GetInitalSize().x, tex->GetInitalSize().y));
+		Vec2 texSize = Vec2(tex->GetInitalSize().x, tex->GetInitalSize().y);
+
+		SetSize(texSize);
+		SetTextureRect(0, texSize);
 	}
 }
 
 // 描画範囲
 void Sprite::SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos)
 {
+	mInfo->rect = RectAngle(leftTopPos, rightDownPos);
+
 	TransferUVCoord(leftTopPos, rightDownPos);
 	mVertexBuffer->TransferToBuffer(mVertices);
+}
+
+void Sprite::SetTextureRect(RectAngle rect)
+{
+	SetTextureRect(rect.GetLeftTop(), rect.GetRightBottom());
 }
 
 // サイズ

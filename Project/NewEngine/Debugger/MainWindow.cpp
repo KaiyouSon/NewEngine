@@ -90,6 +90,11 @@ void MainWindow::DrawDebugGui()
 	}
 }
 
+void MainWindow::SetDragDropTag(const std::string dragDropTag, const DragDropTagType type)
+{
+	mDragDropTags[type] = dragDropTag;
+}
+
 void MainWindow::SetCurrentObjName(const std::string currentObjName)
 {
 	mCurrentObjName = currentObjName;
@@ -108,6 +113,11 @@ void MainWindow::SetDragDropLayerTag(const std::string dragDropLayerTag)
 void MainWindow::SetDragDropScriptTag(const std::string dragDropScriptTag)
 {
 	mDragDropScriptTag = dragDropScriptTag;
+}
+
+std::string MainWindow::GetDragDropTag(const DragDropTagType type)
+{
+	return mDragDropTags[type];
 }
 
 std::string MainWindow::GetCurrentObjName()

@@ -26,9 +26,18 @@ private:
 		RendererWindow,
 	};
 
+public:
+	enum DragDropTagType
+	{
+		Model,
+		Count,
+	};
+
 private:
+	std::array<std::string, DragDropTagType::Count> mDragDropTags;
 	std::string mCurrentObjName;
 	std::string mDragDropAssetsTag;
+	std::string mDragDropModelTag;
 	std::string mDragDropLayerTag;
 	std::string mDragDropScriptTag;
 	bool mIsActive;
@@ -43,6 +52,8 @@ public:
 
 public:
 	// セッター
+	void SetDragDropTag(const std::string dragDropTag, const DragDropTagType type);
+
 	void SetCurrentObjName(const std::string currentObjName);
 	void SetDragDropAssetsTag(const std::string dragDropAssetsTag);
 	void SetDragDropLayerTag(const std::string dragDropLayerTag);
@@ -50,6 +61,8 @@ public:
 
 public:
 	// ゲッター
+	std::string GetDragDropTag(const DragDropTagType type);
+
 	std::string GetCurrentObjName();
 	std::string GetDragDropAssetsTag();
 	std::string GetDragDropLayerTag();

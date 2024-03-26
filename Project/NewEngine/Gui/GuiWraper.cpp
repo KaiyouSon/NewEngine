@@ -265,7 +265,14 @@ void GuiWraper::DrawDemoWindow(bool& flag)
 
 bool GuiWraper::DrawButton(const char* label, const Vec2& size)
 {
-	return ImGui::Button(label, { size.x,size.y });
+	Vec2 buttonSize = size;
+	if (buttonSize.x <= 0 && buttonSize.y <= 0)
+	{
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		buttonSize = Vec2(windowWidth, 20);
+	}
+
+	return ImGui::Button(label, { buttonSize.x,buttonSize.y });
 }
 
 bool GuiWraper::DrawButtonToWidthCenter(const std::string& label, const Vec2& size)

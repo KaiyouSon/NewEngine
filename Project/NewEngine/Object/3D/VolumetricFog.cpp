@@ -96,13 +96,13 @@ void VolumetricFog::VertexDataInit()
 		uint16_t mul = i * 4;
 
 		// 0,1,2...4,5,6
-		for (uint16_t j = 0; j < 3; j++)
+		for (uint32_t j = 0; j < 3; j++)
 		{
 			mIndices.push_back(j + mul);
 		}
 
 		// 2,1,3...6,5,7
-		for (uint16_t j = 3; j > 0; j--)
+		for (uint32_t j = 3; j > 0; j--)
 		{
 			if (j == 1)
 			{

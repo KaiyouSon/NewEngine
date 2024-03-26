@@ -58,6 +58,19 @@ nlohmann::json GameObjectManager::SaveToJson()
 	return objectsData;
 }
 
+void GameObjectManager::SettingParentAfterLoad()
+{
+	for (const auto& obj : mGameObjects)
+	{
+		if (obj->mParentTag.empty())
+		{
+			continue;
+		}
+
+		obj->SetParent(GetGameObject(obj->mParentTag));
+	}
+}
+
 void GameObjectManager::AddGameObject(const GameObjectType type, const std::string name)
 {
 	std::unique_ptr<GameObject> obj;
@@ -91,13 +104,20 @@ void GameObjectManager::AddGameObject(const GameObjectType type, const std::stri
 	mGameObjects.push_back(std::move(obj));
 }
 
-void GameObjectManager::CreateGameObject(GameObject* gameObj)
+GameObject* GameObjectManager::CreateGameObject(GameObject* gameObj)
 {
+	if (!gameObj)
+	{
+		return nullptr;
+	}
+
 	std::string name = gameObj->name + " " + std::to_string(mGameObjects.size());
 	AddGameObject(gameObj->GetType(), name);
 
 	GameObject* obj = mGameObjects.back().get();
 	obj->Copy(gameObj);
+
+	return obj;
 };
 
 void GameObjectManager::DestroyGameObject(const std::string name)
@@ -105,7 +125,18 @@ void GameObjectManager::DestroyGameObject(const std::string name)
 	std::erase_if(mGameObjects,
 		[&](const std::unique_ptr<GameObject>& obj)
 		{
-			return obj->name == name;
+			bool isSameName = obj->name == name;
+			if (isSameName)
+			{
+				for (auto* child : obj->GetChilds())
+				{
+					GameObject* nullObj = nullptr;
+					child->SetParent(nullObj);
+				}
+
+			}
+
+			return isSameName;
 		});
 }
 

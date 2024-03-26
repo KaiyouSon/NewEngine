@@ -13,7 +13,7 @@ private:
 public:
 	std::vector<VertexBufferData::VFbxModel> vertices;
 	VertexBuffer<VertexBufferData::VFbxModel> vertexBuffer;
-	std::vector<uint16_t> indices;
+	std::vector<uint32_t> indices;
 	IndexBuffer indexBuffer;
 
 public:
@@ -24,7 +24,7 @@ public:
 	void AddVertex(const VertexBufferData::VFbxModel vertex);
 
 	// インデックスデータを追加
-	void AddIndex(const uint16_t index);
+	void AddIndex(const uint32_t index);
 
 	// 頂点バッファとインデックスバッファを作成
 	void CreateBuffer();

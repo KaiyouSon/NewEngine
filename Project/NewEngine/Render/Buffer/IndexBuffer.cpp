@@ -6,12 +6,12 @@ IndexBuffer::IndexBuffer() : mBufferResource(nullptr)
 {
 }
 
-void IndexBuffer::Create(const std::vector<uint16_t>& indices)
+void IndexBuffer::Create(const std::vector<uint32_t>& indices)
 {
 	mBufferResource = std::make_unique<BufferResource>();
 
 	// インデックスデータのサイズを計算
-	uint32_t sizeIB = static_cast<uint32_t>(sizeof(uint16_t) * indices.size());
+	uint32_t sizeIB = static_cast<uint32_t>(sizeof(uint32_t) * indices.size());
 
 	// アップロードヒーププロパティ
 	D3D12_HEAP_PROPERTIES heapProp{};
@@ -44,7 +44,7 @@ void IndexBuffer::Create(const std::vector<uint16_t>& indices)
 	mBufferResource->buffer->SetName(L"IndexBuffer");
 
 	// リソースをマップしてデータをコピー
-	uint16_t* indexMap = nullptr;
+	uint32_t* indexMap = nullptr;
 	result = mBufferResource->buffer->Map(0, nullptr, (void**)&indexMap);
 	assert(SUCCEEDED(result));
 	// インデックスデータをコピー
@@ -57,7 +57,7 @@ void IndexBuffer::Create(const std::vector<uint16_t>& indices)
 
 	// リソースビューを設定
 	mBufferView.BufferLocation = mBufferResource->buffer->GetGPUVirtualAddress();
-	mBufferView.Format = DXGI_FORMAT_R16_UINT;
+	mBufferView.Format = DXGI_FORMAT_R32_UINT;
 	mBufferView.SizeInBytes = sizeIB;
 }
 

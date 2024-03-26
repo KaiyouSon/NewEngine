@@ -63,7 +63,7 @@ SceneManager::SceneManager()
 	// シーンをロード
 	mCurrentScene = std::make_unique<Scene>();
 	gCurrentScene = mCurrentScene.get();
-	LoadSceneToJson("Title");
+	LoadSceneToJson("Game");
 }
 
 SceneManager::~SceneManager()

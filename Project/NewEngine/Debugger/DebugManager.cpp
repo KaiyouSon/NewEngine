@@ -93,7 +93,7 @@ void DebugManager::DrawDebugGui()
 
 	Gui::EndWindow();
 
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
 
 	mShaderWindow->DrawDebugGui();
 	mMappingWindow->DrawDebugGui();

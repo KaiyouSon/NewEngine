@@ -33,7 +33,7 @@ void AssimpLoader::ParseMeshVertices(FbxModel* model, aiMesh* mesh)
 }
 void AssimpLoader::ParseMeshFaces(FbxModel* model, aiMesh* mesh)
 {
-	std::vector<uint16_t>& indices = model->mesh.indices;
+	std::vector<uint32_t>& indices = model->mesh.indices;
 	indices.resize(mesh->mNumFaces * 3);
 
 	// フェンス
@@ -43,7 +43,7 @@ void AssimpLoader::ParseMeshFaces(FbxModel* model, aiMesh* mesh)
 
 		for (uint32_t j = 0; j < face.mNumIndices; j++)
 		{
-			indices[i * 3 + j] = static_cast<uint16_t>(face.mIndices[j]);
+			indices[i * 3 + j] = static_cast<uint32_t>(face.mIndices[j]);
 		}
 	}
 }

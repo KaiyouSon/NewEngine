@@ -24,36 +24,27 @@ void HierarchyWindow::DrawGuiWindow()
 		}
 	}
 
+	// 親子関係解除のボタン
 	if (isDrag)
 	{
-		Gui::DrawLine();
-
-		ImGui::PushStyleColor(ImGuiCol_Button, Gui::ToImVec4(Color::black + 25));
-		float width = ImGui::GetContentRegionAvail().x;
-		if (Gui::DrawButton("Parent-Child Cancel", Vec2(width, 32)))
-		{
-			mDragDropSourceObjName.clear();
-			isDrag = false;
-		}
-		ImGui::PopStyleColor();
-
-		if (Gui::DragDropTarget("DragDrop GameObject"))
-		{
-			if (!mDragDropSourceObjName.empty())
-			{
-				GameObject* child = GetGameObject(mDragDropSourceObjName);
-				child->SetParent(nullptr);
-
-				mDragDropSourceObjName.clear();
-				isDrag = false;
-			}
-		}
-
+		ParentChildCancelButton();
 	}
-
 
 	if (ImGui::IsWindowHovered())
 	{
+		if (Key::GetKey(DIK_LCONTROL))
+		{
+			if (Key::GetKeyDown(DIK_C))
+			{
+				std::string currentObj = MainWindow::GetInstance()->GetCurrentObjName();
+				mCopyObj = gCurrentScene->GetGameObjectManager()->GetGameObject(currentObj);
+			}
+			else if (Key::GetKeyDown(DIK_V))
+			{
+				gCurrentScene->GetGameObjectManager()->CreateGameObject(mCopyObj);
+			}
+		}
+
 		if (Key::GetKeyDown(DIK_DELETE))
 		{
 			SceneManager::AddPostDrawProcessFunc([]()
@@ -127,12 +118,13 @@ void HierarchyWindow::RecursiveShowObject(GameObject* obj)
 	if (isNodeOpen)
 	{
 		// 子オブジェクトの描画
-		for (const auto& child : *GetGameObjects())
+		//for (const auto& child : *GetGameObjects())
+		for (const auto& child : obj->GetChilds())
 		{
-			if (child->GetParent() == obj->GetTransform())
-			{
-				RecursiveShowObject(child.get());
-			}
+			RecursiveShowObject(child);
+			//if (child->GetParent() == obj->GetTransform())
+			//{
+			//}
 		}
 		Gui::EndTreeNode();
 	}
@@ -150,8 +142,35 @@ void HierarchyWindow::DragAndDropObject(GameObject* obj)
 	{
 		if (Gui::DragDropTarget("DragDrop GameObject"))
 		{
-			GameObject* child = GetGameObject(mDragDropSourceObjName);
-			child->SetParent(obj->GetTransform());
+			obj->SetChild(GetGameObject(mDragDropSourceObjName));
+			//GameObject* child = GetGameObject(mDragDropSourceObjName);
+			//child->SetParent(obj->GetTransform());
+
+			mDragDropSourceObjName.clear();
+			isDrag = false;
+		}
+	}
+}
+
+void HierarchyWindow::ParentChildCancelButton()
+{
+	Gui::DrawLine();
+
+	ImGui::PushStyleColor(ImGuiCol_Button, Gui::ToImVec4(Color::black + 25));
+	float width = ImGui::GetContentRegionAvail().x;
+	if (Gui::DrawButton("Parent-Child Cancel", Vec2(width, 32)))
+	{
+		mDragDropSourceObjName.clear();
+		isDrag = false;
+	}
+	ImGui::PopStyleColor();
+
+	if (Gui::DragDropTarget("DragDrop GameObject"))
+	{
+		if (!mDragDropSourceObjName.empty())
+		{
+			//GameObject* child = GetGameObject(mDragDropSourceObjName);
+			//child->SetParent(nullptr);
 
 			mDragDropSourceObjName.clear();
 			isDrag = false;

@@ -2,7 +2,8 @@
 #include "MainWindow.h"
 
 SpriteInfo::SpriteInfo() :
-	anchorPoint(0.5f), spriteSize(100), flipType(FlipType::None)
+	anchorPoint(0.5f), spriteSize(100),
+	rect(0, spriteSize), flipType(FlipType::None)
 {
 	mChangingName = "nullptr";
 	mComponentInfo.type = ComponentType::SpriteInfo;
@@ -10,7 +11,8 @@ SpriteInfo::SpriteInfo() :
 
 SpriteInfo::SpriteInfo(GameObject* gameObj) :
 	Component(gameObj),
-	anchorPoint(0.5f), spriteSize(100), flipType(FlipType::None)
+	anchorPoint(0.5f), spriteSize(100),
+	rect(0, spriteSize), flipType(FlipType::None)
 {
 	mChangingName = mGameObj->name;
 	mComponentInfo.type = ComponentType::SpriteInfo;
@@ -18,6 +20,15 @@ SpriteInfo::SpriteInfo(GameObject* gameObj) :
 
 void SpriteInfo::Update()
 {
+}
+
+void SpriteInfo::CopyComponent(Component* component)
+{
+	auto castComponent = dynamic_cast<SpriteInfo*>(component);
+
+	anchorPoint = castComponent->anchorPoint;
+	spriteSize = castComponent->spriteSize;
+	flipType = castComponent->flipType;
 }
 
 nlohmann::json SpriteInfo::SaveToJson()
@@ -53,6 +64,16 @@ void SpriteInfo::ShowDataToInspector()
 			Gui::DrawSlider2("Anchor Point", anchorPoint, 0.01f);
 			Gui::DrawSlider2("Sprite Size", spriteSize);
 
+			if (Gui::BeginTreeNode("Texture Rect", true))
+			{
+				Vec2 leftTop = rect.GetLeftTop(), rightBottom = rect.GetRightBottom();
+				Gui::DrawSlider2("Left  Top   ", leftTop);
+				Gui::DrawSlider2("Right Bottom", rightBottom);
+				rect = RectAngle(leftTop, rightBottom);
+
+				Gui::EndTreeNode();
+			}
+
 			if (Gui::BeginTreeNode("Flip Mode", true))
 			{
 				uint32_t cast = (uint32_t)flipType;
@@ -78,6 +99,7 @@ void SpriteInfo::SetParamToObj()
 	castObj->SetFlipType(flipType);
 	castObj->SetAnchorPoint(anchorPoint);
 	castObj->SetSize(spriteSize);
+	castObj->SetTextureRect(rect);
 }
 
 nlohmann::json SpriteInfo::SaveSpriteInfoToJson()
@@ -86,6 +108,8 @@ nlohmann::json SpriteInfo::SaveSpriteInfoToJson()
 	result["sprite_info"]["flip_mode"] = (uint32_t)flipType;
 	result["sprite_info"]["anchor_point"] = { anchorPoint.x,anchorPoint.y };
 	result["sprite_info"]["sprite_size"] = { spriteSize.x,spriteSize.y };
+	result["sprite_info"]["rect_left_top"] = { rect.GetLeftTop().x,rect.GetLeftTop().y };
+	result["sprite_info"]["rect_right_bottom"] = { rect.GetRightBottom().x,rect.GetRightBottom().y };
 	return result;
 }
 

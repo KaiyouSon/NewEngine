@@ -10,9 +10,9 @@ public:
 	EmptyObject();
 	EmptyObject(const std::string& name);
 	void Update() override;
+	void Copy(GameObject* gameObj) override;
 
 private:
-	void Copy([[maybe_unused]] GameObject* gameObj) override {};
 	void ExecuteCS() override {}
 	void AppedToRenderer() override {}
 	void Draw([[maybe_unused]] const std::string& _layerTag = "", [[maybe_unused]] const BlendMode _blendMode = BlendMode::Alpha) override {}

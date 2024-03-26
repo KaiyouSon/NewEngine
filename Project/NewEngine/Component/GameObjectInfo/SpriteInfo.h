@@ -8,6 +8,7 @@ public:
 	Vec2 anchorPoint;
 	Vec2 spriteSize;
 	FlipType flipType;
+	RectAngle rect;
 
 private:
 	void SetParamToObj();
@@ -20,7 +21,7 @@ public:
 	SpriteInfo();
 	SpriteInfo(GameObject* gameObj);
 	void Update() override;
-	void CopyComponent(Component* component) override { component; };
+	void CopyComponent(Component* component) override;
 
 public:
 	nlohmann::json SaveToJson() override;

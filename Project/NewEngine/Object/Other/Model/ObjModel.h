@@ -1,5 +1,6 @@
 #pragma once
 #include "Model.h"
+#include "AssimpLoader.h"
 
 // objモデル
 class ObjModel : public Model
@@ -8,15 +9,16 @@ private:
 	std::string mMtlFilePath;
 
 private:
-	void LoadPositions(std::istringstream& lineStream, std::vector<Vec3>& positions);
-	void LoadTexcoords(std::istringstream& lineStream, std::vector<Vec2>& texcoords);
-	void LoadNormals(std::istringstream& lineStream, std::vector<Vec3>& normals);
 
+	void LoadMtlFile();
+
+	Vec3 GetVertexPos(const aiScene* scene, const uint32_t index);
+	Vec2 GetTexcoords(const aiScene* scene, const uint32_t index);
+	Vec3 GetNormals(const aiScene* scene, const uint32_t index);
 
 public:
 	ObjModel();
 	ObjModel(const std::string tag, const std::string& path);
 
-	void LoadObjFile(const bool isSmoothing);
-	void LoadMtlFile();
+	void Load();
 };

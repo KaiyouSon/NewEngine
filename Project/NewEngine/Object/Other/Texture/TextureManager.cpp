@@ -105,6 +105,51 @@ ITexture* TextureManager::LoadMaterialTexture(const std::string& path)
 	return tex;
 }
 
+ITexture* TextureManager::LoadMaterialTexture(const std::wstring& wpath)
+{
+	fs::path fspath = wpath;
+	std::string tag = fspath.filename().string();
+
+	// 拡張子を含む最後の'.'以降を削除
+	uint32_t pos = (uint32_t)tag.find_last_of('.');
+	if (pos != std::string::npos)
+	{
+		tag = tag.substr(0, pos);
+	}
+
+	// マップに格納
+	std::unique_ptr<ITexture> itex = std::make_unique<Texture>(tag);
+	std::pair pair = std::make_pair(tag, std::move(itex));
+	mTextureMapArrays[(uint32_t)TextureType::Material].insert(std::move(pair));
+
+	// キャストする
+	Texture* tex = dynamic_cast<Texture*>(mTextureMapArrays[(uint32_t)TextureType::Material][tag].get());
+
+	TexMetadata metadata = TexMetadata();
+	ScratchImage scratchImg = ScratchImage();
+
+	// ロード
+	if (fspath.extension() == ".png")
+	{
+		LoadTextureFromPNG(wpath, scratchImg, metadata);
+	}
+	else if (fspath.extension() == ".dds")
+	{
+		LoadTextureFromDDS(wpath, scratchImg, metadata);
+	}
+
+	// テクスチャーのバッファ生成
+	tex->Create(scratchImg, metadata);
+
+	// SRV作成
+	DescriptorHeapManager::GetDescriptorHeap("SRV")->CreateSRV(tex->GetBufferResource());
+
+	// アップロード
+	tex->UpLoad();
+
+	return tex;
+}
+
 std::unique_ptr<RenderTexture> TextureManager::CreateRenderTexture(const Vec2 size)
 {
 	std::unique_ptr<RenderTexture> renderTexture = std::make_unique<RenderTexture>();
@@ -177,6 +222,40 @@ void TextureManager::LoadTextureFromDDS(
 
 		assert(0 && "テクスチャ読み込みに失敗しました");
 	}
+}
+
+void TextureManager::LoadTextureFromPNG(const std::wstring wfilePath, DirectX::ScratchImage& scratchImg, DirectX::TexMetadata& metadata)
+{
+	// WICを使用してテクスチャデータを読み込む
+	HRESULT result = LoadFromWICFile(
+		wfilePath.c_str(),
+		WIC_FLAGS_NONE,
+		&metadata, scratchImg);
+
+	// ミップマップを生成する
+	ScratchImage mipChain{};
+	result = GenerateMipMaps(
+		scratchImg.GetImages(),
+		scratchImg.GetImageCount(),
+		scratchImg.GetMetadata(),
+		TEX_FILTER_DEFAULT, 0, mipChain);
+	if (SUCCEEDED(result))
+	{
+		scratchImg = std::move(mipChain);
+		metadata = scratchImg.GetMetadata();
+	}
+
+	// テクスチャのフォーマットをSRGBに設定
+	metadata.format = MakeSRGB(metadata.format);
+}
+
+void TextureManager::LoadTextureFromDDS(const std::wstring wfilePath, DirectX::ScratchImage& scratchImg, DirectX::TexMetadata& metadata)
+{
+	// DDSを使用してテクスチャデータを読み込む
+	LoadFromDDSFile(
+		wfilePath.c_str(),
+		DDS_FLAGS_NONE,
+		&metadata, scratchImg);
 }
 
 // テクスチャーをロード

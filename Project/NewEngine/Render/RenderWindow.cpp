@@ -165,7 +165,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 					CopyFolderToDestination(szFilePath, wDestFolder.c_str(), &wNewPath);
 
 					// モデルをロードする
-					gAssetsManager->LoadModel(szFilePath);
+					gAssetsManager->LoadModel(wNewPath);
 				}
 			}
 		}

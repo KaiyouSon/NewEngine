@@ -7,7 +7,6 @@ class InspectorWindow : public IGuiWindow
 private:
 	std::string mCurrentObjTag;
 	GameObject* mCurrentObj;
-	GameObject* mCopyObj;
 
 private:
 	void ShowGameObjectData();

@@ -4,8 +4,9 @@
 class HierarchyWindow : public IGuiWindow
 {
 private:
-	bool isDrag;
 	std::string mDragDropSourceObjName;
+	GameObject* mCopyObj;
+	bool isDrag;
 
 private:
 	void CreateGameObjectPop();
@@ -13,6 +14,7 @@ private:
 
 	void RecursiveShowObject(GameObject* obj);
 	void DragAndDropObject(GameObject* obj);
+	void ParentChildCancelButton();
 
 public:
 	void DrawGuiWindow() override;

@@ -3,9 +3,13 @@
 
 class GameObjectInfo
 {
-
 protected:
 	std::string mChangingName;
+
+private:
+	void ShowActiveGui(GameObject* gameObj);
+	void ShowNameGui(GameObject* gameObj);
+	void ShowLayerTagGui(GameObject* gameObj);
 
 protected:
 	void ShowGameObjectDataToInspector(GameObject* gameObj);

@@ -137,6 +137,10 @@ ITexture* AssetsManager::LoadMaterialTexture(const std::string& path)
 {
 	return mTextureManager.LoadMaterialTexture(path);
 }
+ITexture* AssetsManager::LoadMaterialTexture(const std::wstring& wpath)
+{
+	return mTextureManager.LoadMaterialTexture(wpath);
+}
 void AssetsManager::LoadModel(const std::string& path)
 {
 	mModelManager.LoadModel(path);

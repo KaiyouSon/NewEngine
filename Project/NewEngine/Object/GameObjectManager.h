@@ -16,10 +16,11 @@ public:
 	// Json関連
 	void LoadToJson(nlohmann::json& objectsField);
 	nlohmann::json SaveToJson();
+	void SettingParentAfterLoad();
 
 public:
 	void AddGameObject(const GameObjectType type, const std::string name);
-	void CreateGameObject(GameObject* gameObj);
+	GameObject* CreateGameObject(GameObject* gameObj);
 	void DestroyGameObject(const std::string name);
 	void InitScriptComponent();
 

@@ -44,7 +44,7 @@ public:
 	void ExecuteCS() override;
 	void AppedToRenderer() override;
 	void Draw(const std::string& layerTag, const BlendMode blendMode = BlendMode::Alpha);
-	void Copy([[maybe_unused]] GameObject* gameObj) override {};
+	void Copy(GameObject* gameObj) override;
 
 	template<typename T>
 	void AddMaterial()
@@ -57,10 +57,11 @@ public:
 public: //セッター
 
 	void SetTexture(Texture* texture, [[maybe_unused]] const bool isChangeSize = true);
-	void SetTexture(const std::string& textureTag, [[maybe_unused]] const bool isChangeSize = true) override;
+	void SetTexture(const std::string& textureTag, const bool isChangeSize = true) override;
 
 	// 描画範囲
 	void SetTextureRect(const Vec2 leftTopPos, const Vec2 rightDownPos);
+	void SetTextureRect(RectAngle rect);
 
 	//　サイズ
 	void SetSize(const Vec2 size);

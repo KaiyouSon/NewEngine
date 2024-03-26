@@ -19,6 +19,8 @@ ModelManager::ModelManager() :
 
 void ModelManager::LoadModel(const std::string fileName, const bool isSmoothing)
 {
+	isSmoothing;
+
 	fs::path fspath = fileName;
 	std::string tag = fspath.filename().string();
 
@@ -30,11 +32,13 @@ void ModelManager::LoadModel(const std::string fileName, const bool isSmoothing)
 	// キャストする
 	ObjModel* objModel = dynamic_cast<ObjModel*>(mModelMap[tag].get());
 
-	objModel->LoadObjFile(isSmoothing);
-	objModel->LoadMtlFile();
+	objModel->Load();
+	//objModel->LoadMtlFile();
 }
 void ModelManager::LoadModel(const std::wstring fileName, const bool isSmoothing)
 {
+	isSmoothing;
+
 	fs::path fspath = fileName;
 	std::string tag = fspath.filename().string();
 
@@ -46,8 +50,7 @@ void ModelManager::LoadModel(const std::wstring fileName, const bool isSmoothing
 	// キャストする
 	ObjModel* objModel = dynamic_cast<ObjModel*>(mModelMap[tag].get());
 
-	objModel->LoadObjFile(isSmoothing);
-	objModel->LoadMtlFile();
+	objModel->Load();
 }
 
 // objモデルのロード
@@ -348,7 +351,11 @@ void ModelManager::LoadMtlFile(std::string filePath, Model* model)
 			std::string textureTag = model->name + "Texture";
 
 			// テクスチャをロード
-			model->texture = TextureManager::LoadMaterialTexture(directoryPath + textureName, textureTag);
+			std::string path = directoryPath + textureName;
+			std::wstring wpath = std::wstring(path.begin(), path.end());
+			model->texture = gAssetsManager->LoadMaterialTexture(wpath);
+
+			//TextureManager::LoadMaterialTexture(wpath, textureTag);
 		}
 	}
 

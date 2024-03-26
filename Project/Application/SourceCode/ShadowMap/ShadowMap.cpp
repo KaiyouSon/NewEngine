@@ -149,7 +149,7 @@ void ShadowMap::Bind(Object3D& object)
 
 	if (object.GetParent())
 	{
-		mParents[mIndex] = *object.GetParent();
+		mParents[mIndex] = *object.GetParent()->GetTransform();
 	}
 	else
 	{

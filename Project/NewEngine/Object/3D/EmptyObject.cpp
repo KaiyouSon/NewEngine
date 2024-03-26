@@ -31,3 +31,15 @@ void EmptyObject::Update()
 
 	BaseUpdate();
 }
+
+void EmptyObject::Copy(GameObject* gameObj)
+{
+	color = gameObj->color;
+	mComponentManager->Copy(gameObj->GetComponentManager());
+
+	for (const auto& child : gameObj->GetChilds())
+	{
+		GameObject* obj = gCurrentScene->GetGameObjectManager()->CreateGameObject(child);
+		obj->SetParent(this);
+	}
+}

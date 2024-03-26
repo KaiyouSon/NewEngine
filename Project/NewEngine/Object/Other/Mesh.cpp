@@ -33,7 +33,7 @@ void Mesh::AddVertex(const VertexBufferData::VFbxModel vertex)
 	vertices.emplace_back(vertex);
 }
 
-void Mesh::AddIndex(const uint16_t index)
+void Mesh::AddIndex(const uint32_t index)
 {
 	indices.emplace_back(index);
 }

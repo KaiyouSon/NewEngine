@@ -17,6 +17,14 @@ void TextureComponent::Update()
 {
 }
 
+void TextureComponent::CopyComponent(Component* component)
+{
+	auto castComponent = dynamic_cast<TextureComponent*>(component);
+
+	mTexture = castComponent->mTexture;
+	SetTexture(mTexture);
+}
+
 nlohmann::json TextureComponent::SaveToJson()
 {
 	nlohmann::json textureComponent;
@@ -37,7 +45,18 @@ void TextureComponent::LoadToJson(const nlohmann::json& componentField)
 	mComponentInfo.LoadToJson(textureComponentField);
 
 	std::string name = textureComponentField["texture_tag"];
-	SetTexture(name);
+
+	// スプライトなら
+	Sprite* spriteObj = dynamic_cast<Sprite*>(mGameObj);
+	if (spriteObj)
+	{
+		spriteObj->SetTexture(name);
+		//if(spriteObj->)
+	}
+	else
+	{
+		SetTexture(name);
+	}
 }
 
 void TextureComponent::ShowDataToInspector()
@@ -46,23 +65,34 @@ void TextureComponent::ShowDataToInspector()
 	{
 		std::string label = mTexture->GetTag();
 
-		const float windowWidth = ImGui::GetContentRegionAvail().x;
-		const Vec2 buttonSize = Vec2(windowWidth, 20);
-		Gui::DrawButton(label.c_str(), buttonSize);
-
-		// ドロップしたときの処理
-		if (Gui::DragDropTarget("DragDrop Texture"))
-		{
-			std::string tag = MainWindow::GetInstance()->GetDragDropAssetsTag();
-			SetTexture(tag);
-		}
+		//const float windowWidth = ImGui::GetContentRegionAvail().x;
+		//const Vec2 buttonSize = Vec2(windowWidth, 20);
+		//Gui::DrawButton(label.c_str(), buttonSize);
 
 		if (Gui::BeginTreeNode("Main Texture", true))
 		{
-			Gui::DrawString("Size : %dx%d",
-				(uint32_t)mTexture->GetInitalSize().x, (uint32_t)mTexture->GetInitalSize().y);
+			Vec2 texSize = Vec2(mTexture->GetInitalSize().x, mTexture->GetInitalSize().y);
+
+			Gui::DrawString("Tag  : %s", mTexture->GetTag().c_str());
+			Gui::DrawString("Size : %dx%d", (uint32_t)texSize.x, (uint32_t)texSize.y);
 
 			Gui::DrawImage(mTexture, 256);
+
+			// ドロップしたときの処理
+			if (Gui::DragDropTarget("DragDrop Texture"))
+			{
+				std::string tag = MainWindow::GetInstance()->GetDragDropAssetsTag();
+				SetTexture(tag);
+
+				// スプライトなら
+				Sprite* spriteObj = dynamic_cast<Sprite*>(mGameObj);
+				if (spriteObj)
+				{
+					spriteObj->SetSize(texSize);
+					spriteObj->SetTextureRect(0, texSize);
+				}
+			}
+
 
 			Gui::EndTreeNode();
 		}
