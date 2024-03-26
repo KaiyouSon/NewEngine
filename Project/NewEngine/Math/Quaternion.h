@@ -20,7 +20,7 @@ struct Quaternion
 	Quaternion Conjugate() const;    // 共役クォータニオンを返す
 	Quaternion Inverse() const;        // 逆クォータニオンを返す
 
-	// 転送回転
+	// 任意軸回転
 	Quaternion AnyAxisRotation(const Vec3 v, const float radian);
 
 	static float Dot(const Quaternion q1, const Quaternion q2);        // ドット積を計算
@@ -29,6 +29,7 @@ struct Quaternion
 	static Quaternion MakeAxisAngle(const Vec3 v, const float radian);
 	static Quaternion DirectionToDirection(const Vec3 v1, const Vec3 v2);
 	static Quaternion Lerp(const Quaternion s, const Quaternion e, const float f);
+	static Vec3 RotateVector(const Quaternion& q, const Vec3& v);
 
 	Quaternion operator-() const;
 

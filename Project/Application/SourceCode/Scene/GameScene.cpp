@@ -198,12 +198,12 @@ void GameScene::Update()
 		if (DebugManager::GetInstance()->GetisActive() == false)
 		{
 			//CameraManager::GetInstance()->Update();
-			Camera::DebugCameraUpdate();
+			//Camera::DebugCameraUpdate();
 
 		}
 		else
 		{
-			Camera::DebugCameraUpdate();
+			//Camera::DebugCameraUpdate();
 			if (Key::GetKey(DIK_C))
 			{
 				if (Key::GetKeyDown(DIK_1))

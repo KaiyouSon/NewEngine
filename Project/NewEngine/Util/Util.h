@@ -35,9 +35,9 @@ T Min(const T a, const T b)
 }
 
 // 浮動小数点数の符号を取得する（-1, 0, 1）
-uint32_t Sign(const float a);
-Vec2 Sign(const Vec2 a);
-Vec3 Sign(const Vec3 a);
+int32_t Sign(const float a, const float limit = 0);
+Vec2 Sign(const Vec2 a, const Vec2 limit = 0);
+Vec3 Sign(const Vec3 a, const Vec3 limit = 0);
 
 // 値を指定範囲内にクランプする
 template<typename T>
@@ -52,6 +52,21 @@ T Clamp(const T value, const T min = 0, const T max = 1)
 		return max;
 	}
 	return value;
+}
+
+
+template<typename T>
+T ClampReverse(const T value, const T min = 0, const T max = 1)
+{
+	if (value < min)
+	{
+		return value;
+	}
+	if (value > max)
+	{
+		return value;
+	}
+	return 0;
 }
 
 // 値を指定された速度で収束させる

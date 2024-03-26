@@ -5,21 +5,31 @@
 namespace fs = std::filesystem;
 
 // 浮動小数点数の符号を取得する
-uint32_t Sign(const float a)
+int32_t Sign(const float a, const float limit)
 {
-	return a >= 0 ? 1 : -1;
+	int32_t result = 0;
+
+	if (a > limit)
+	{
+		result = 1;
+	}
+	else if (a < -limit)
+	{
+		result = -1;
+	}
+	return result;
 }
 
 // 2次元ベクトルの各要素に対して符号を取得する
-Vec2 Sign(const Vec2 a)
+Vec2 Sign(const Vec2 a, const Vec2 limit)
 {
-	return { (float)Sign(a.x), (float)Sign(a.y) };
+	return { (float)Sign(a.x,limit.x), (float)Sign(a.y,limit.y) };
 }
 
 // 3次元ベクトルの各要素に対して符号を取得する
-Vec3 Sign(const Vec3 a)
+Vec3 Sign(const Vec3 a, const Vec3 limit)
 {
-	return { (float)Sign(a.x), (float)Sign(a.y), (float)Sign(a.z) };
+	return { (float)Sign(a.x,limit.x), (float)Sign(a.y,limit.y), (float)Sign(a.z,limit.z) };
 }
 
 // 整数の桁数を取得する

@@ -48,21 +48,49 @@ void Camera::Update()
 
 void Camera::DebugUpdate()
 {
-	const Vec3 frontVec =
-	{
-		sinf(rot.y),
-		-sinf(rot.x),
-		cosf(rot.y),
-	};
+	static Vec3 target = 0;
 
 	// 回転
 	if (Mouse::GetClick(MouseCode::Wheel) && !Key::GetKey(DIK_LSHIFT))
 	{
-		if (Mouse::GetMoveVec().x != 0 || Mouse::GetMoveVec().y != 0)
+		// クリック時の座標保存
+		static Vec3 clickedPos = 0;
+		static float pitchAngle = 0;
+		static float yawAngle = 0;
+
+		static Quaternion cameraQuaternion(0.0f, 0.0f, 0.0f, 1.0f);
+		if (Mouse::GetClickDown(MouseCode::Wheel))
 		{
-			const float moveSpeed = 0.005f;
-			rot.x += Mouse::GetMoveVec().y * moveSpeed;
-			rot.y += Mouse::GetMoveVec().x * moveSpeed;
+			cameraQuaternion = pos;
+			clickedPos = pos - target;
+			pitchAngle = 0;
+			yawAngle = 0;
+		}
+		//if (pos != 0)
+		//{
+		const float moveSpeed = 0.5f;
+		Vec2 mouseMove =
+		{
+			ClampReverse(Mouse::GetMoveVec().x, -2.f, 2.f),
+			ClampReverse(Mouse::GetMoveVec().y, -2.f, 2.f),
+		};
+
+		if (Mouse::GetMoveVec() != 0)
+		{
+			// 球面座標移動
+			Vec2 vel = Vec2(mouseMove.y, mouseMove.x) * moveSpeed;
+
+			pitchAngle += vel.x;
+			yawAngle += vel.y;
+
+			Quaternion pitchRotation = Quaternion::MakeAxisAngle(Vec3::right, Radian(pitchAngle));
+			Quaternion yawRotation = Quaternion::MakeAxisAngle(Vec3::up, Radian(yawAngle));
+			cameraQuaternion = yawRotation * pitchRotation * clickedPos;
+			pos = cameraQuaternion + target;
+
+			// 回転
+			rot.x += Radian(vel.x / 2);
+			rot.y += Radian(vel.y / 2);
 		}
 	}
 
@@ -71,16 +99,36 @@ void Camera::DebugUpdate()
 	{
 		if (Mouse::GetMoveVec().x != 0 || Mouse::GetMoveVec().y != 0)
 		{
-			const Vec3 rightVec = Vec3::Cross(frontVec, { 0,1,0 });
-			pos += rightVec * Mouse::GetMoveVec().x * 0.1f;
+			const float moveSpeed = 1.f;
+			const Vec3 moveAxis = -mViewMat.GetXAxis() + mViewMat.GetYAxis();
+			const Vec3 vel = moveAxis.Norm() * Mouse::GetMoveVec() * moveSpeed;
+			pos += vel;
+			target += vel;
 		}
 	}
 
 	// スクロール
-	if (Mouse::GetWheelMoveVec() != 0)
+	if (Mouse::GetWheelMoveVec() != 0 && !Mouse::GetClick(MouseCode::Wheel))
 	{
-		const float moveSpeed = 0.025f;
-		pos += frontVec * Mouse::GetWheelMoveVec() * moveSpeed;
+		float dis = (target - pos).Length();
+		float speedRate = dis * 0.01f;
+		if (speedRate < 0.01f)
+		{
+			speedRate = 0.01f;
+
+			if (Mouse::GetWheelMoveVec() > 0)
+			{
+				speedRate = 0;
+			}
+		}
+		else if (speedRate >= 10)
+		{
+			speedRate = 10;
+		}
+
+		const float moveSpeed = 0.05f * speedRate;
+		Vec3 vec = Vec3(-mViewMat.GetZAxis().x, -mViewMat.GetZAxis().y, mViewMat.GetZAxis().z);
+		pos += vec * Mouse::GetWheelMoveVec() * moveSpeed;
 	}
 }
 

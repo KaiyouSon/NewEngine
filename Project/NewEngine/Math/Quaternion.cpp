@@ -123,6 +123,15 @@ Quaternion Quaternion::Lerp(const Quaternion s, const Quaternion e, const float 
 	return dis * f + s;
 }
 
+Vec3 Quaternion::RotateVector(const Quaternion& q, const Vec3& v)
+{
+	Quaternion p = { v.x, v.y, v.z, 0 };
+
+	Quaternion result = q * p * q.Conjugate();
+
+	return { result.x, result.y, result.z };
+}
+
 Quaternion Quaternion::operator-() const { return { -x,-y,-z,-w }; }
 
 Quaternion Quaternion::operator+(const Quaternion other) const
