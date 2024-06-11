@@ -140,8 +140,8 @@ void SceneManager::Update()
 		mChangeStep = None;
 	}
 
-	Camera::current.Update();
 	Camera::current.DebugUpdate();
+	Camera::current.Update();
 	//Camera::debugCamera.Update();
 	//Camera::debugCamera.DebugUpdate();
 	sCurrentScene->Update();

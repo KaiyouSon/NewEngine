@@ -7051,11 +7051,11 @@
                             "pos": [
                                 -2605.35009765625,
                                 161.99899291992188,
-                                668.7440185546875
+                                -630.2559814453125
                             ],
                             "rot": [
                                 0.0,
-                                1.9709999561309814,
+                                -0.36651909351348877,
                                 0.0
                             ],
                             "scale": [
@@ -7217,13 +7217,13 @@
                                 "type": 0
                             },
                             "pos": [
-                                -2828.610107421875,
+                                -2447.75,
                                 -1155.0,
-                                -93.8208999633789
+                                1598.260009765625
                             ],
                             "rot": [
                                 0.0,
-                                0.0,
+                                0.034906577318906784,
                                 0.0
                             ],
                             "scale": [
@@ -7497,6 +7497,1656 @@
                 ],
                 "name": "Object3D 89 93",
                 "parent_tag": "Tower 1",
+                "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 8
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": ""
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                -2828.610107421875,
+                                -1155.0,
+                                93.8208999633789
+                            ],
+                            "rot": [
+                                0.0,
+                                0.034906577318906784,
+                                0.0
+                            ],
+                            "scale": [
+                                15.0,
+                                15.0,
+                                15.0
+                            ]
+                        }
+                    },
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
+                ],
+                "name": "Tower 1 94",
+                "parent_tag": "All Tower",
+                "type": 7
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 1
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 11
+                            },
+                            "model_format": 0,
+                            "model_tag": "Tower"
+                        }
+                    },
+                    {
+                        "texture_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 10
+                            },
+                            "texture_tag": "Tower",
+                            "texture_type": 0
+                        }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
+                ],
+                "name": "Object3D 89 95",
+                "parent_tag": "Tower 1 94",
+                "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 1
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                34.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 11
+                            },
+                            "model_format": 0,
+                            "model_tag": "Tower"
+                        }
+                    },
+                    {
+                        "texture_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 10
+                            },
+                            "texture_tag": "Tower",
+                            "texture_type": 0
+                        }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
+                ],
+                "name": "Object3D 89 96",
+                "parent_tag": "Tower 1 94",
+                "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 1
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                68.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 11
+                            },
+                            "model_format": 0,
+                            "model_tag": "Tower"
+                        }
+                    },
+                    {
+                        "texture_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 10
+                            },
+                            "texture_tag": "Tower",
+                            "texture_type": 0
+                        }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
+                ],
+                "name": "Object3D 89 97",
+                "parent_tag": "Tower 1 94",
+                "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 1
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                102.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 11
+                            },
+                            "model_format": 0,
+                            "model_tag": "Tower"
+                        }
+                    },
+                    {
+                        "texture_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 10
+                            },
+                            "texture_tag": "Tower",
+                            "texture_type": 0
+                        }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
+                ],
+                "name": "Object3D 89 98",
+                "parent_tag": "Tower 1 94",
+                "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 5
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": ""
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                ],
+                "name": "Directional Light 99",
+                "parent_tag": "",
+                "type": 4
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 8
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": ""
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                982.9739990234375,
+                                -3527.0,
+                                3231.510009765625
+                            ],
+                            "rot": [
+                                0.0,
+                                0.034906577318906784,
+                                0.0
+                            ],
+                            "scale": [
+                                30.0,
+                                30.0,
+                                30.0
+                            ]
+                        }
+                    },
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
+                ],
+                "name": "Tower 1 100",
+                "parent_tag": "All Tower",
+                "type": 7
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 1
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 11
+                            },
+                            "model_format": 0,
+                            "model_tag": "Tower"
+                        }
+                    },
+                    {
+                        "texture_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 10
+                            },
+                            "texture_tag": "Tower",
+                            "texture_type": 0
+                        }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
+                ],
+                "name": "Object3D 89 101",
+                "parent_tag": "Tower 1 100",
+                "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 1
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                34.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 11
+                            },
+                            "model_format": 0,
+                            "model_tag": "Tower"
+                        }
+                    },
+                    {
+                        "texture_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 10
+                            },
+                            "texture_tag": "Tower",
+                            "texture_type": 0
+                        }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
+                ],
+                "name": "Object3D 89 102",
+                "parent_tag": "Tower 1 100",
+                "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 1
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                68.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 11
+                            },
+                            "model_format": 0,
+                            "model_tag": "Tower"
+                        }
+                    },
+                    {
+                        "texture_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 10
+                            },
+                            "texture_tag": "Tower",
+                            "texture_type": 0
+                        }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
+                ],
+                "name": "Object3D 89 103",
+                "parent_tag": "Tower 1 100",
+                "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 1
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                102.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 11
+                            },
+                            "model_format": 0,
+                            "model_tag": "Tower"
+                        }
+                    },
+                    {
+                        "texture_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 10
+                            },
+                            "texture_tag": "Tower",
+                            "texture_type": 0
+                        }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
+                ],
+                "name": "Object3D 89 104",
+                "parent_tag": "Tower 1 100",
+                "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 8
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": ""
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                2138.39990234375,
+                                -1649.0999755859375,
+                                -2666.580078125
+                            ],
+                            "rot": [
+                                0.2787988483905792,
+                                -0.10581527650356293,
+                                -0.23303979635238647
+                            ],
+                            "scale": [
+                                15.0,
+                                15.0,
+                                15.0
+                            ]
+                        }
+                    },
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
+                ],
+                "name": "Tower 1 101",
+                "parent_tag": "All Tower",
+                "type": 7
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 1
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 11
+                            },
+                            "model_format": 0,
+                            "model_tag": "Tower"
+                        }
+                    },
+                    {
+                        "texture_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 10
+                            },
+                            "texture_tag": "Tower",
+                            "texture_type": 0
+                        }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
+                ],
+                "name": "Object3D 89 106",
+                "parent_tag": "Tower 1 101",
+                "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 1
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                34.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 11
+                            },
+                            "model_format": 0,
+                            "model_tag": "Tower"
+                        }
+                    },
+                    {
+                        "texture_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 10
+                            },
+                            "texture_tag": "Tower",
+                            "texture_type": 0
+                        }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
+                ],
+                "name": "Object3D 89 107",
+                "parent_tag": "Tower 1 101",
+                "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 1
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                68.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 11
+                            },
+                            "model_format": 0,
+                            "model_tag": "Tower"
+                        }
+                    },
+                    {
+                        "texture_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 10
+                            },
+                            "texture_tag": "Tower",
+                            "texture_type": 0
+                        }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
+                ],
+                "name": "Object3D 89 108",
+                "parent_tag": "Tower 1 101",
+                "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 1
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                102.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 11
+                            },
+                            "model_format": 0,
+                            "model_tag": "Tower"
+                        }
+                    },
+                    {
+                        "texture_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 10
+                            },
+                            "texture_tag": "Tower",
+                            "texture_type": 0
+                        }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
+                ],
+                "name": "Object3D 89 109",
+                "parent_tag": "Tower 1 101",
+                "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 8
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": ""
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                2582.969970703125,
+                                -1155.0,
+                                -1868.489990234375
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                15.0,
+                                15.0,
+                                15.0
+                            ]
+                        }
+                    },
+                    {
+                        "scripts_component": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 14
+                            },
+                            "scripts": []
+                        }
+                    }
+                ],
+                "name": "Tower 1 102",
+                "parent_tag": "All Tower",
+                "type": 7
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 1
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 11
+                            },
+                            "model_format": 0,
+                            "model_tag": "Tower"
+                        }
+                    },
+                    {
+                        "texture_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 10
+                            },
+                            "texture_tag": "Tower",
+                            "texture_type": 0
+                        }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
+                ],
+                "name": "Object3D 89 111",
+                "parent_tag": "Tower 1 102",
+                "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 1
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                34.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 11
+                            },
+                            "model_format": 0,
+                            "model_tag": "Tower"
+                        }
+                    },
+                    {
+                        "texture_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 10
+                            },
+                            "texture_tag": "Tower",
+                            "texture_type": 0
+                        }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
+                ],
+                "name": "Object3D 89 112",
+                "parent_tag": "Tower 1 102",
+                "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 1
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                68.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 11
+                            },
+                            "model_format": 0,
+                            "model_tag": "Tower"
+                        }
+                    },
+                    {
+                        "texture_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 10
+                            },
+                            "texture_tag": "Tower",
+                            "texture_type": 0
+                        }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
+                ],
+                "name": "Object3D 89 113",
+                "parent_tag": "Tower 1 102",
+                "type": 0
+            }
+        },
+        {
+            "object": {
+                "components": [
+                    {
+                        "object_info": [
+                            {
+                                "component_info": {
+                                    "index": 0,
+                                    "type": 1
+                                }
+                            },
+                            {
+                                "base_info": {
+                                    "color": [
+                                        255.0,
+                                        255.0,
+                                        255.0,
+                                        255.0
+                                    ],
+                                    "is_active": true,
+                                    "layer_tag": "Object3D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "transform": {
+                            "component_info": {
+                                "index": 1,
+                                "type": 0
+                            },
+                            "pos": [
+                                0.0,
+                                102.0,
+                                0.0
+                            ],
+                            "rot": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    {
+                        "model_data": {
+                            "component_info": {
+                                "index": 2,
+                                "type": 11
+                            },
+                            "model_format": 0,
+                            "model_tag": "Tower"
+                        }
+                    },
+                    {
+                        "texture_component": {
+                            "component_info": {
+                                "index": 3,
+                                "type": 10
+                            },
+                            "texture_tag": "Tower",
+                            "texture_type": 0
+                        }
+                    },
+                    {
+                        "material_component": {
+                            "component_info": {
+                                "index": 4,
+                                "type": 15
+                            },
+                            "material_name": "BasicObject3D"
+                        }
+                    },
+                    null
+                ],
+                "name": "Object3D 89 114",
+                "parent_tag": "Tower 1 102",
                 "type": 0
             }
         }
