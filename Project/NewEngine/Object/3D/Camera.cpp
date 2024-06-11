@@ -19,6 +19,8 @@ Camera::Camera(const std::string& name) :
 	fovAngle(45), oNearZ(0), oFarZ(1), rect(0, 1920, 0, 1080),
 	pNearZ(0.1f), pFarZ(10000.0f)
 {
+	pos.z = -50;
+
 	this->name = name;
 
 	InitComponents();
@@ -50,60 +52,62 @@ void Camera::DebugUpdate()
 {
 	static Vec3 target = 0;
 
+	Vec2 mouseMove =
+	{
+		ClampReverse(Mouse::GetMoveVec().x, -2.f, 2.f),
+		ClampReverse(Mouse::GetMoveVec().y, -2.f, 2.f),
+	};
+
 	// 回転
 	if (Mouse::GetClick(MouseCode::Wheel) && !Key::GetKey(DIK_LSHIFT))
 	{
-		// クリック時の座標保存
-		static Vec3 clickedPos = 0;
-		static float pitchAngle = 0;
+		const float moveSpeed = 0.1f;
 		static float yawAngle = 0;
+		static float pitchAngle = 0;
 
-		static Quaternion cameraQuaternion(0.0f, 0.0f, 0.0f, 1.0f);
-		if (Mouse::GetClickDown(MouseCode::Wheel))
+		if (mouseMove != 0)
 		{
-			cameraQuaternion = pos;
-			clickedPos = pos - target;
-			pitchAngle = 0;
-			yawAngle = 0;
+			yawAngle += mouseMove.x * moveSpeed;
+			pitchAngle += mouseMove.y * moveSpeed;
 		}
-		//if (pos != 0)
-		//{
-		const float moveSpeed = 0.5f;
-		Vec2 mouseMove =
+
+		static Vec3 vec;
+
+		float yawRadian = Radian(yawAngle);
+		float pitchRadian = Radian(pitchAngle);
+
+		// 方向ベクトル
+		vec =
 		{
-			ClampReverse(Mouse::GetMoveVec().x, -2.f, 2.f),
-			ClampReverse(Mouse::GetMoveVec().y, -2.f, 2.f),
+			-sinf(yawRadian) * cosf(pitchRadian),
+			+sinf(pitchRadian),
+			-cosf(yawRadian) * cosf(pitchRadian),
 		};
 
-		if (Mouse::GetMoveVec() != 0)
-		{
-			// 球面座標移動
-			Vec2 vel = Vec2(mouseMove.y, mouseMove.x) * moveSpeed;
+		// 球面座標
+		float length = Vec3::Distance(target, pos);
+		pos = target + vec.Norm() * length;
 
-			pitchAngle += vel.x;
-			yawAngle += vel.y;
-
-			Quaternion pitchRotation = Quaternion::MakeAxisAngle(Vec3::right, Radian(pitchAngle));
-			Quaternion yawRotation = Quaternion::MakeAxisAngle(Vec3::up, Radian(yawAngle));
-			cameraQuaternion = yawRotation * pitchRotation * clickedPos;
-			pos = cameraQuaternion + target;
-
-			// 回転
-			rot.x += Radian(vel.x / 2);
-			rot.y += Radian(vel.y / 2);
-		}
+		// 回転
+		rot.x = pitchRadian;
+		rot.y = yawRadian;
 	}
 
 	// 平行移動
 	if (Mouse::GetClick(MouseCode::Wheel) && Key::GetKey(DIK_LSHIFT))
 	{
-		if (Mouse::GetMoveVec().x != 0 || Mouse::GetMoveVec().y != 0)
+		const float moveSpeed = 0.25f;
+		Vec3 frontVec = (target - pos).Norm();
+		Vec3 rightVec = Vec3::Cross(frontVec, Vec3::up);
+		Vec3 upVec = Vec3::Cross(rightVec, frontVec);
+		rightVec = Vec3::Cross(frontVec, upVec);
+		if (mouseMove != 0)
 		{
-			const float moveSpeed = 1.f;
-			const Vec3 moveAxis = -mViewMat.GetXAxis() + mViewMat.GetYAxis();
-			const Vec3 vel = moveAxis.Norm() * Mouse::GetMoveVec() * moveSpeed;
-			pos += vel;
-			target += vel;
+			const Vec3 xVel = rightVec * mouseMove.x * moveSpeed;
+			const Vec3 yVel = upVec * mouseMove.y * moveSpeed;
+
+			pos += xVel + yVel;
+			target += xVel + yVel;
 		}
 	}
 
@@ -112,18 +116,18 @@ void Camera::DebugUpdate()
 	{
 		float dis = (target - pos).Length();
 		float speedRate = dis * 0.01f;
-		if (speedRate < 0.01f)
+		if (speedRate < 0.1f)
 		{
-			speedRate = 0.01f;
+			speedRate = 0.1f;
 
 			if (Mouse::GetWheelMoveVec() > 0)
 			{
 				speedRate = 0;
 			}
 		}
-		else if (speedRate >= 10)
+		else if (speedRate >= 5)
 		{
-			speedRate = 10;
+			speedRate = 5;
 		}
 
 		const float moveSpeed = 0.05f * speedRate;

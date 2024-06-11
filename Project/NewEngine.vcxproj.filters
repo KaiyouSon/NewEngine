@@ -478,6 +478,12 @@
     <Filter Include="Uncategorized\Header\Script">
       <UniqueIdentifier>{407aa70d-9046-4b44-8503-458c880a57a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Uncategorized\Source\GUI">
+      <UniqueIdentifier>{5140473b-a006-4929-b122-fb112d77496c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uncategorized\Header\GUI">
+      <UniqueIdentifier>{11a60a01-b73d-4b70-a576-77dbeb18657a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewEngine\Render\Buffer\IndexBuffer.cpp">
@@ -1142,6 +1148,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\Application\GameManager.cpp">
       <Filter>Application\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewEngine\Gui\GUIStyleCustom.cpp">
+      <Filter>Uncategorized\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1849,6 +1858,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Application\GameManager.h">
       <Filter>Application\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NewEngine\Gui\GUIStyleCustom.h">
+      <Filter>Uncategorized\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 #include "RenderWindow.h"
 #include "TextureManager.h"
 #include "Util.h"
+#include "GUIStyleCustom.h"
 #include <imgui.h>
 #include <imgui_impl_dx12.h>
 #include <imgui_impl_win32.h>
@@ -42,6 +43,8 @@ void GuiWraper::Init()
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
 
+	GUIStyleCustom::SetToDarkStyle();
+
 	ImGui_ImplWin32_Init(RenderWindow::GetInstance()->GetHwnd());
 	ImGui_ImplDX12_Init(
 		renderBase->GetDevice(),
@@ -54,26 +57,29 @@ void GuiWraper::Init()
 
 void GuiWraper::PreDraw()
 {
-	GuiWraper* instance = GetInstance().get();
+	//GuiWraper* instance = GetInstance().get();
 
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
-	// ウィンドウの背景色を変更する
-	ImGuiStyle& style = ImGui::GetStyle();
-	style.Colors[ImGuiCol_WindowBg] = ToImVec4(instance->windowBgColor);
-	style.Colors[ImGuiCol_MenuBarBg] = ToImVec4(instance->menuBarBgColor);
-	style.Colors[ImGuiCol_TitleBgActive] = ToImVec4(instance->titleBgActiveColor);
-	style.Colors[ImGuiCol_TitleBgCollapsed] = ToImVec4(instance->titleBgCollapsedColor);
+	GUIStyleCustom::SetToDarkStyle();
 
-	// CollapsingHeaderの色を変更
-	style.Colors[ImGuiCol_Header] = ToImVec4(instance->titleBgCollapsedColor + 10);  // ヘッダーの背景色
-	style.Colors[ImGuiCol_HeaderHovered] = ToImVec4(instance->windowBgColor + 10);  // ヘッダーのホバー時の背景色
 
-	// popの色
-	style.Colors[ImGuiCol_PopupBg] = style.Colors[ImGuiCol_WindowBg];
+	//// ウィンドウの背景色を変更する
+	//ImGuiStyle& style = ImGui::GetStyle();
+	//style.Colors[ImGuiCol_WindowBg] = ToImVec4(instance->windowBgColor);
+	//style.Colors[ImGuiCol_MenuBarBg] = ToImVec4(instance->menuBarBgColor);
+	//style.Colors[ImGuiCol_TitleBgActive] = ToImVec4(instance->titleBgActiveColor);
+	//style.Colors[ImGuiCol_TitleBgCollapsed] = ToImVec4(instance->titleBgCollapsedColor);
+
+	//// CollapsingHeaderの色を変更
+	//style.Colors[ImGuiCol_Header] = ToImVec4(instance->titleBgCollapsedColor + 10);  // ヘッダーの背景色
+	//style.Colors[ImGuiCol_HeaderHovered] = ToImVec4(instance->windowBgColor + 10);  // ヘッダーのホバー時の背景色
+
+	//// popの色
+	//style.Colors[ImGuiCol_PopupBg] = style.Colors[ImGuiCol_WindowBg];
 
 	ImGui::NewFrame();
 

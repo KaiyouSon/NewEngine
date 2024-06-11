@@ -13,99 +13,101 @@ EffectManager::EffectManager()
 
 void EffectManager::Init()
 {
-	// インスタンス生成
-	mBloodSprayEffect = std::make_unique<BloodSprayEffect>();
+	//// インスタンス生成
+	//mBloodSprayEffect = std::make_unique<BloodSprayEffect>();
 
-	// 初期化
-	mBloodSprayEffect->Init();
+	//// 初期化
+	//mBloodSprayEffect->Init();
 
-	mEffects.clear();
+	//mEffects.clear();
 
-	// 空中のエフェクトのエミッタ生成
-	GenerateAirEffect(Vec3::up * 10.f);
+	//// 空中のエフェクトのエミッタ生成
+	//GenerateAirEffect(Vec3::up * 10.f);
 
-	// ボスの攻撃のエミッタ生成
-	GenerateBossAttackTrajectoryEffect();
+	//// ボスの攻撃のエミッタ生成
+	//GenerateBossAttackTrajectoryEffect();
 
-	// 煙のエミッタ生成
-	for (uint32_t i = 0; i < (uint32_t)SmokeEffectIndex::Size; i++)
-	{
-		GenerateSmokeEffect();
-	}
+	//// 煙のエミッタ生成
+	//for (uint32_t i = 0; i < (uint32_t)SmokeEffectIndex::Size; i++)
+	//{
+	//	GenerateSmokeEffect();
+	//}
 }
 void EffectManager::Update()
 {
-	// デバッグのみ実行
-	ProcessAtDebugBuild([this]
-		{
-			if (Key::GetKeyDown(DIK_G))
-			{
-				GenerateAttackExplosionEffect(Vec3::up * 10.f);
+	//// デバッグのみ実行
+	//ProcessAtDebugBuild([this]
+	//	{
+	//		if (Key::GetKeyDown(DIK_G))
+	//		{
+	//			GenerateAttackExplosionEffect(Vec3::up * 10.f);
 
-				//GenerateBossAttackTrajectoryEffect();
-			}
-		});
+	//			//GenerateBossAttackTrajectoryEffect();
+	//		}
+	//	});
 
 
-	ExecuteAirEffect(Camera::current.pos);
+	//ExecuteAirEffect(Camera::current.pos);
 
-	mBloodSprayEffect->Update();
+	//mBloodSprayEffect->Update();
 
-	// 削除処理
-	std::erase_if(mEffects,
-		[](const std::unique_ptr<IEffect>& effect)
-		{
-			return effect->GetisActive() == false;
-		});
+	//// 削除処理
+	//std::erase_if(mEffects,
+	//	[](const std::unique_ptr<IEffect>& effect)
+	//	{
+	//		return effect->GetisActive() == false;
+	//	});
 
-	for (uint32_t i = 0; i < mEffects.size(); i++)
-	{
-		mEffects[i]->Update();
-	}
+	//for (uint32_t i = 0; i < mEffects.size(); i++)
+	//{
+	//	mEffects[i]->Update();
+	//}
 
-	for (uint32_t i = 0; i < mSmokeEffects.size(); i++)
-	{
-		mSmokeEffects[i]->Update();
-	}
+	//for (uint32_t i = 0; i < mSmokeEffects.size(); i++)
+	//{
+	//	mSmokeEffects[i]->Update();
+	//}
 }
 void EffectManager::ExecuteCS()
 {
-	for (uint32_t i = 0; i < mEffects.size(); i++)
-	{
-		mEffects[i]->ExecuteCS();
-	}
+	//for (uint32_t i = 0; i < mEffects.size(); i++)
+	//{
+	//	mEffects[i]->ExecuteCS();
+	//}
 
-	for (uint32_t i = 0; i < mSmokeEffects.size(); i++)
-	{
-		mSmokeEffects[i]->ExecuteCS();
-	}
+	//for (uint32_t i = 0; i < mSmokeEffects.size(); i++)
+	//{
+	//	mSmokeEffects[i]->ExecuteCS();
+	//}
 }
 void EffectManager::DrawEffect(const bool isBloom)
 {
-	// ブルームかけるやつ
-	if (isBloom == true)
-	{
-		for (uint32_t i = 0; i < mEffects.size(); i++)
-		{
-			mEffects[i]->Draw();
-		}
-	}
-	// ブルームかけたくないやつ
-	else
-	{
-		// 血
-		mBloodSprayEffect->DrawModel();
+	isBloom;
 
-		for (uint32_t i = 0; i < mEffects.size(); i++)
-		{
-			mEffects[i]->Draw();
-		}
+	//// ブルームかけるやつ
+	//if (isBloom == true)
+	//{
+	//	for (uint32_t i = 0; i < mEffects.size(); i++)
+	//	{
+	//		mEffects[i]->Draw();
+	//	}
+	//}
+	//// ブルームかけたくないやつ
+	//else
+	//{
+	//	// 血
+	//	mBloodSprayEffect->DrawModel();
 
-		for (uint32_t i = 0; i < mSmokeEffects.size(); i++)
-		{
-			mSmokeEffects[i]->Draw();
-		}
-	}
+	//	for (uint32_t i = 0; i < mEffects.size(); i++)
+	//	{
+	//		mEffects[i]->Draw();
+	//	}
+
+	//	for (uint32_t i = 0; i < mSmokeEffects.size(); i++)
+	//	{
+	//		mSmokeEffects[i]->Draw();
+	//	}
+	//}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
